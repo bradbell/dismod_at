@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -172,64 +172,67 @@ void get_avgint_table(
 	double                          age_max             ,
 	double                          time_min            ,
 	double                          time_max            ,
-	CppAD::vector<avgint_struct>& avgint_table      ,
-	CppAD::vector<double>&          avgint_cov_value       )
+	CppAD::vector<avgint_struct>&   avgint_table        ,
+	CppAD::vector<double>&          avgint_cov_value    )
 {	using std::string;
-	// TODO: This could be more efficient if we only allcated one temporary
-	// column at a time (to use with get_table column)
-
+	//
 	string table_name  = "avgint";
+	string column_name;
 	size_t n_avgint      = check_table_id(db, table_name);
+	//
+	// avgint_table
+	{	// read avgint_table
 
-	string column_name = "integrand_id";
-	CppAD::vector<int>    integrand_id;
-	get_table_column(db, table_name, column_name, integrand_id);
-	assert( n_avgint == integrand_id.size() );
+		column_name        = "integrand_id";
+		CppAD::vector<int>    integrand_id;
+		get_table_column(db, table_name, column_name, integrand_id);
+		assert( n_avgint == integrand_id.size() );
 
-	column_name        = "node_id";
-	CppAD::vector<int>    node_id;
-	get_table_column(db, table_name, column_name, node_id);
-	assert( n_avgint == node_id.size() );
+		column_name        = "node_id";
+		CppAD::vector<int>    node_id;
+		get_table_column(db, table_name, column_name, node_id);
+		assert( n_avgint == node_id.size() );
 
-	column_name        = "weight_id";
-	CppAD::vector<int>    weight_id;
-	get_table_column(db, table_name, column_name, weight_id);
-	assert( n_avgint == weight_id.size() );
+		column_name        = "weight_id";
+		CppAD::vector<int>    weight_id;
+		get_table_column(db, table_name, column_name, weight_id);
+		assert( n_avgint == weight_id.size() );
 
-	column_name           =  "age_lower";
-	CppAD::vector<double>     age_lower;
-	get_table_column(db, table_name, column_name, age_lower);
-	assert( n_avgint == age_lower.size() );
+		column_name           =  "age_lower";
+		CppAD::vector<double>     age_lower;
+		get_table_column(db, table_name, column_name, age_lower);
+		assert( n_avgint == age_lower.size() );
 
-	column_name           =  "age_upper";
-	CppAD::vector<double>     age_upper;
-	get_table_column(db, table_name, column_name, age_upper);
-	assert( n_avgint == age_upper.size() );
+		column_name           =  "age_upper";
+		CppAD::vector<double>     age_upper;
+		get_table_column(db, table_name, column_name, age_upper);
+		assert( n_avgint == age_upper.size() );
 
-	column_name           =  "time_lower";
-	CppAD::vector<double>     time_lower;
-	get_table_column(db, table_name, column_name, time_lower);
-	assert( n_avgint == time_lower.size() );
+		column_name           =  "time_lower";
+		CppAD::vector<double>     time_lower;
+		get_table_column(db, table_name, column_name, time_lower);
+		assert( n_avgint == time_lower.size() );
 
-	column_name           =  "time_upper";
-	CppAD::vector<double>     time_upper;
-	get_table_column(db, table_name, column_name, time_upper);
-	assert( n_avgint == time_upper.size() );
+		column_name           =  "time_upper";
+		CppAD::vector<double>     time_upper;
+		get_table_column(db, table_name, column_name, time_upper);
+		assert( n_avgint == time_upper.size() );
 
-	// fill in all but the covariate values
-	assert( avgint_table.size() == 0 );
-	avgint_table.resize(n_avgint);
-	for(size_t i = 0; i < n_avgint; i++)
-	{	avgint_table[i].integrand_id  = integrand_id[i];
-		avgint_table[i].node_id       = node_id[i];
-		avgint_table[i].weight_id     = weight_id[i];
-		avgint_table[i].age_lower     = age_lower[i];
-		avgint_table[i].age_upper     = age_upper[i];
-		avgint_table[i].time_lower    = time_lower[i];
-		avgint_table[i].time_upper    = time_upper[i];
+		// set avgint_table
+		assert( avgint_table.size() == 0 );
+		avgint_table.resize(n_avgint);
+		for(size_t i = 0; i < n_avgint; i++)
+		{	avgint_table[i].integrand_id  = integrand_id[i];
+			avgint_table[i].node_id       = node_id[i];
+			avgint_table[i].weight_id     = weight_id[i];
+			avgint_table[i].age_lower     = age_lower[i];
+			avgint_table[i].age_upper     = age_upper[i];
+			avgint_table[i].time_lower    = time_lower[i];
+			avgint_table[i].time_upper    = time_upper[i];
+		}
 	}
-
-	// now get the covariate values
+	//
+	// set avgint_cov_value
 	assert( avgint_cov_value.size() == 0 );
 	avgint_cov_value.resize(n_avgint * n_covariate);
 	for(size_t j = 0; j < n_covariate; j++)
