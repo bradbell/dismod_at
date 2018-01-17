@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -297,7 +297,6 @@ pack_object_     (pack_object)
 	assert( n_time_ode > 1 );
 	//
 	using std::string;
-	size_t i, j, k;
 	//
 	// minimum_meas_cv_: set to nan (until replace_like is called)
 	minimum_meas_cv_ = std::numeric_limits<double>::quiet_NaN();
@@ -319,7 +318,7 @@ pack_object_     (pack_object)
 	data_subset_obj_.resize(n_subset);
 	assert( subset_cov_value.size() == n_covariate * n_subset );
 	data_cov_value_.resize(n_subset * n_covariate);
-	for(i = 0; i < n_subset; i++)
+	for(size_t i = 0; i < n_subset; i++)
 	{	data_subset_obj_[i].original_id  = subset_object[i].original_id;
 		data_subset_obj_[i].integrand_id = subset_object[i].integrand_id;
 		data_subset_obj_[i].node_id      = subset_object[i].node_id;
@@ -328,7 +327,7 @@ pack_object_     (pack_object)
 		data_subset_obj_[i].age_upper    = subset_object[i].age_upper;
 		data_subset_obj_[i].time_lower   = subset_object[i].time_lower;
 		data_subset_obj_[i].time_upper   = subset_object[i].time_upper;
-		for(j = 0; j < n_covariate_; j++)
+		for(size_t j = 0; j < n_covariate_; j++)
 			data_cov_value_[i * n_covariate_ + j] =
 				subset_cov_value[i * n_covariate + j];
 	}
@@ -437,7 +436,7 @@ pack_object_     (pack_object)
 
 		// initialize coefficient sum for each ode grid point within limits
 		CppAD::vector<double> c_sum(n_age * n_time);
-		for(k = 0; k < n_age * n_time; k++)
+		for(size_t k = 0; k < n_age * n_time; k++)
 			c_sum[k] = 0.0;
 
 		// weighting for this data point
@@ -452,7 +451,7 @@ pack_object_     (pack_object)
 		double eps = std::numeric_limits<double>::epsilon() * 100.0;
 		CppAD::vector<double> w(4), c(4);
 		std::pair<double, double> w_pair, c_pair;
-		for(i = 0; i < n_age-1; i++)
+		for(size_t i = 0; i < n_age-1; i++)
 		{	// age ode grid points
 			double a1 = age_min + (i_min + i) * ode_step_size;
 			double a2 = a1 + ode_step_size;
@@ -466,7 +465,7 @@ pack_object_     (pack_object)
 			std::pair<double, double> a_pair(a1, a2);
 			std::pair<double, double> b_pair(b1, b2);
 			//
-			for(j = 0; j < n_time-1; j++)
+			for(size_t j = 0; j < n_time-1; j++)
 			{	// time ode grid points
 				double t1 = time_min + (j_min + j) * ode_step_size;
 				double t2 = t1 + ode_step_size;
@@ -578,7 +577,7 @@ pack_object_     (pack_object)
 		}
 		// compute normalization factor
 		double sum = 0.0;
-		for(k = 0; k < n_age * n_time; k++)
+		for(size_t k = 0; k < n_age * n_time; k++)
 			sum += c_sum[k];
 		assert( sum > 0.0 );
 
@@ -598,7 +597,7 @@ pack_object_     (pack_object)
 		data_info_[subset_id].n_time    = n_time;
 		//
 		data_info_[subset_id].c_ode.resize(n_age * n_time);
-		for(k = 0; k < n_age * n_time; k++)
+		for(size_t k = 0; k < n_age * n_time; k++)
 			data_info_[subset_id].c_ode[k] = c_sum[k] / sum;
 
 		// Does this data point depend on the random effects
@@ -640,10 +639,10 @@ pack_object_     (pack_object)
 					pack_object.rate_info(rate_id[ell], child).smooth_id;
 				if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 				{	const smooth_info& s_info = s_info_vec[smooth_id];
-					size_t             n_age  = s_info.age_size();
-					size_t             n_time = s_info.time_size();
-					for(size_t i = 0; i < n_age; i++)
-					{	for(size_t j = 0; j < n_time; j++)
+					size_t             n_a  = s_info.age_size();
+					size_t             n_t = s_info.time_size();
+					for(size_t i = 0; i < n_a; i++)
+					{	for(size_t j = 0; j < n_t; j++)
 						{	size_t prior_id    = s_info.value_prior_id(i, j);
 							// if prior_id is null then const_value is not null
 							if( prior_id != DISMOD_AT_NULL_SIZE_T )
@@ -1320,11 +1319,11 @@ CppAD::vector<Float> data_model::sci_ode(
 		{	S_out.resize(nk);
 			C_out.resize(nk);
 			for(size_t k = 0; k < nk; ++k)
-			{	size_t ell = 2 * (child * n_ode + ode_index[k_start + k]);
+			{	size_t l = 2 * (child * n_ode + ode_index[k_start + k]);
 				if( child < n_child_ && child_ran_zero_[child] )
-					ell = 2 * (n_child_ * n_ode + ode_index[k_start + k]);
-				S_out[k]   = reference_sc[ell + 0];
-				C_out[k]   = reference_sc[ell + 1];
+					l = 2 * (n_child_ * n_ode + ode_index[k_start + k]);
+				S_out[k]   = reference_sc[l + 0];
+				C_out[k]   = reference_sc[l + 1];
 			}
 		}
 		else
@@ -1335,8 +1334,8 @@ CppAD::vector<Float> data_model::sci_ode(
 			// S and C for this cohort
 			S_out.resize(0);
 			C_out.resize(0);
-			size_t i_max     = ode_index[k_start + nk - 1] / n_time_ode_;
-			size_t j_max     = ode_index[k_start + nk - 1] % n_time_ode_;
+			i_max     = ode_index[k_start + nk - 1] / n_time_ode_;
+			j_max     = ode_index[k_start + nk - 1] % n_time_ode_;
 			Float  step_size = Float(ode_step_size_);
 			//
 			solve_ode(eigen_ode2_case_number_ ,
@@ -1496,7 +1495,7 @@ template <class Float>
 Float data_model::avg_no_ode(
 	size_t                        subset_id ,
 	const CppAD::vector<Float>&   pack_vec  ) const
-{	size_t i, j, k, ell;
+{
 	assert( pack_object_.size() == pack_vec.size() );
 
 	// integrand_id
@@ -1504,7 +1503,7 @@ Float data_model::avg_no_ode(
 
 	// covariate information for this data point
 	CppAD::vector<double> x(n_covariate_);
-	for(j = 0; j < n_covariate_; j++)
+	for(size_t j = 0; j < n_covariate_; j++)
 			x[j] = data_cov_value_[subset_id * n_covariate_ + j];
 
 	// data_info information for this data point
@@ -1522,9 +1521,9 @@ Float data_model::avg_no_ode(
 	// ode subgrid that we need integrand at
 	size_t n_ode = n_age * n_time;
 	CppAD::vector<size_t> ode_index(n_ode);
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
-		{	k = i * n_time + j;
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; j++)
+		{	size_t k = i * n_time + j;
 			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
 		}
 	}
@@ -1565,7 +1564,7 @@ Float data_model::avg_no_ode(
 
 	// value for the rate on the ode subgrid
 	CppAD::vector< CppAD::vector<Float> > rate_ode(2);
-	for(ell = 0; ell < 2; ell++) if( rate_id[ell] < number_rate_enum )
+	for(size_t ell = 0; ell < 2; ell++) if( rate_id[ell] < number_rate_enum )
 	{	rate_ode[ell].resize(n_ode);
 		//
 		// extract subvector information for the parent rate
@@ -1574,14 +1573,14 @@ Float data_model::avg_no_ode(
 		size_t smooth_id = info.smooth_id;
 		size_t n_var;
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-		{	for(k = 0; k < n_ode; k++)
+		{	for(size_t k = 0; k < n_ode; k++)
 				rate_ode[ell][k] = 0.0;
 		}
 		else
 		{	n_var     = info.n_var;
 			//
 			CppAD::vector<Float> rate_si(n_var);
-			for(k = 0; k < n_var; k++)
+			for(size_t k = 0; k < n_var; k++)
 				rate_si[k] = pack_vec[info.offset + k];
 			//
 			// interpolate onto the ode grid
@@ -1591,7 +1590,7 @@ Float data_model::avg_no_ode(
 		//
 		// initialize sum of effects to zero
 		CppAD::vector<Float> effect_ode(n_ode);
-		for(k = 0; k < n_ode; k++)
+		for(size_t k = 0; k < n_ode; k++)
 			effect_ode[k] = 0.0;
 		//
 		// include child random effect
@@ -1602,13 +1601,13 @@ Float data_model::avg_no_ode(
 			{	n_var     = info.n_var;
 				//
 				CppAD::vector<Float> var_si(n_var);
-				for(k = 0; k < n_var; k++)
+				for(size_t k = 0; k < n_var; k++)
 					var_si[k] = pack_vec[info.offset + k];
 				//
 				CppAD::vector<Float> var_ode =
 					si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 				//
-				for(k = 0; k < n_ode; k++)
+				for(size_t k = 0; k < n_ode; k++)
 					effect_ode[k] += var_ode[k];
 			}
 		}
@@ -1622,13 +1621,13 @@ Float data_model::avg_no_ode(
 			double x_j = x[ info.covariate_id ];
 			//
 			CppAD::vector<Float> var_si(n_var);
-			for(k = 0; k < n_var; k++)
+			for(size_t k = 0; k < n_var; k++)
 				var_si[k] = pack_vec[info.offset + k];
 			//
 			CppAD::vector<Float> var_ode =
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
-			for(k = 0; k < n_ode; k++)
+			for(size_t k = 0; k < n_ode; k++)
 				effect_ode[k] += var_ode[k] * x_j;
 		}
 		//
@@ -1641,18 +1640,18 @@ Float data_model::avg_no_ode(
 			double x_j = x[ info.covariate_id ];
 			//
 			CppAD::vector<Float> var_si(n_var);
-			for(k = 0; k < n_var; k++)
+			for(size_t k = 0; k < n_var; k++)
 				var_si[k] = pack_vec[info.offset + k];
 			//
 			CppAD::vector<Float> var_ode =
 				si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 			//
-			for(k = 0; k < n_ode; k++)
+			for(size_t k = 0; k < n_ode; k++)
 				effect_ode[k] += var_ode[k] * x_j;
 		}
 		//
 		// apply the total effect
-		for(k = 0; k < n_ode; k++)
+		for(size_t k = 0; k < n_ode; k++)
 			rate_ode[ell][k] *= exp( effect_ode[k] );
 	}
 	CppAD::vector<Float> var_ode(n_ode);
@@ -1676,13 +1675,13 @@ Float data_model::avg_no_ode(
 
 		case mtwith_enum:
 		// chi = rate_ode[0], omega = rate_ode[1]
-		for(k = 0; k < n_ode; k++)
+		for(size_t k = 0; k < n_ode; k++)
 			var_ode[k] = rate_ode[0][k] + rate_ode[1][k];
 		break;
 
 		case relrisk_enum:
 		// chi = rate_ode[0], omega = rate_ode[1]
-		for(k = 0; k < n_ode; k++)
+		for(size_t k = 0; k < n_ode; k++)
 			var_ode[k]  = 1.0 + rate_ode[0][k] / rate_ode[1][k];
 		break;
 
@@ -1690,7 +1689,7 @@ Float data_model::avg_no_ode(
 		assert( false );
 	}
 	Float avg = Float(0.0);
-	for(k = 0; k < n_ode; k++)
+	for(size_t k = 0; k < n_ode; k++)
 		avg += c_ode[k] * var_ode[k];
 	//
 	return avg;
@@ -2055,13 +2054,13 @@ residual_struct<Float> data_model::like_one(
 	const CppAD::vector<Float>&   pack_vec  ,
 	const Float&                  avg       ,
 	Float&                        delta_out ) const
-{	size_t i, j, k;
+{
 	assert( pack_object_.size() == pack_vec.size() );
 	assert( replace_like_called_ );
 
 	// covariate information for this data point
 	CppAD::vector<double> x(n_covariate_);
-	for(j = 0; j < n_covariate_; j++)
+	for(size_t j = 0; j < n_covariate_; j++)
 		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
 	double Delta         = data_subset_obj_[subset_id].meas_std;
 	double eta           = data_subset_obj_[subset_id].eta;
@@ -2082,16 +2081,16 @@ residual_struct<Float> data_model::like_one(
 	// ode subgrid that we covariates at
 	size_t n_ode = n_age * n_time;
 	CppAD::vector<size_t> ode_index(n_ode);
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
-		{	k = i * n_time + j;
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; j++)
+		{	size_t k = i * n_time + j;
 			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
 		}
 	}
 
 	// measurement std covariates effect on the ode subgrid
 	CppAD::vector<Float> meas_cov_ode(n_ode);
-	for(k = 0; k < n_ode; k++)
+	for(size_t k = 0; k < n_ode; k++)
 		meas_cov_ode[k] = 0.0;
 	size_t n_cov = pack_object_.mulcov_meas_std_n_cov(integrand_id);
 	pack_info::subvec_info  info;
@@ -2102,17 +2101,17 @@ residual_struct<Float> data_model::like_one(
 		double x_j = x[ info.covariate_id ];
 		//
 		CppAD::vector<Float> var_si(n_var);
-		for(k = 0; k < n_var; k++)
+		for(size_t k = 0; k < n_var; k++)
 			var_si[k] = pack_vec[info.offset + k];
 		//
 		CppAD::vector<Float> var_ode =
 			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 		//
-		for(k = 0; k < n_ode; k++)
+		for(size_t k = 0; k < n_ode; k++)
 			meas_cov_ode[k] += var_ode[k] * x_j;
 	}
 	Float std_effect = Float(0.0);
-	for(k = 0; k < n_ode; k++)
+	for(size_t k = 0; k < n_ode; k++)
 		std_effect += c_ode[k] * meas_cov_ode[k];
 	//
 	// Compute the adusted standard deviation

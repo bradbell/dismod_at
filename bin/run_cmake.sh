@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -32,6 +32,7 @@
 #	hpp
 #	pthread
 #	checkpointing
+#	Wshadow
 # &&
 #
 # &section bin/run_cmake.sh: User Configuration Options&&
@@ -107,7 +108,7 @@ cmake_cxx_compiler=''
 # &head extra_cxx_flags&&
 # Extra C++ flags used during compilation:
 # &codep
-extra_cxx_flags='-std=c++11 -Wall -DCPPAD_DEBUG_AND_RELEASE'
+extra_cxx_flags='-std=c++11 -Wall -Wshadow -DCPPAD_DEBUG_AND_RELEASE'
 # &&
 # An alternative might be '-Wall'.
 #
