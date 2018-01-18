@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -33,7 +33,6 @@ $end
 bool interp_weight_xam(void)
 {
 	bool   ok = true;
-	size_t i, j;
 	using  std::string;
 	using  CppAD::vector;
 
@@ -44,18 +43,18 @@ bool interp_weight_xam(void)
 	size_t n_time = 3;
 	vector<size_t> age_id(n_age),    time_id(n_time);
 	vector<double> age_table(n_age), time_table(n_time);
-	for(i = 0; i < n_age; i++)
+	for(size_t i = 0; i < n_age; i++)
 	{	age_id[i]    = i;
-		age_table[i] = 10.0 * i;
+		age_table[i] = 10.0 * double(i);
 	}
-	for(j = 0; j < n_time; j++)
+	for(size_t j = 0; j < n_time; j++)
 	{	time_id[j]    = j;
-		time_table[j] = 1990.0 + 10 * j;
+		time_table[j] = 1990.0 + 10 * double(j);
 	}
 	vector<double> weight(n_age * n_time);
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
-			weight[i * n_time + j] = i * j + 1;
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; j++)
+			weight[i * n_time + j] = double(i * j + 1);
 	}
 	dismod_at::weight_info w_info(
 		age_table, time_table, age_id, time_id, weight

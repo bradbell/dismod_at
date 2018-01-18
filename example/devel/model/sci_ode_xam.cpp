@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -135,12 +135,12 @@ bool sci_ode_xam(void)
 	//
 	// n_age_ode
 	size_t n_age_ode     =  1;
-	while( age_min + (n_age_ode-1) * ode_step_size < age_max )
+	while( age_min + double(n_age_ode-1) * ode_step_size < age_max )
 			n_age_ode++;
 	//
 	// n_time_ode
 	size_t n_time_ode     =  1;
-	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
+	while( time_min + double(n_time_ode-1) * ode_step_size < time_max )
 			n_time_ode++;
 	//
 	// node_table:
@@ -161,9 +161,9 @@ bool sci_ode_xam(void)
 	vector<double> data_cov_value(data_table.size() * n_covariate);
 	size_t data_id = 0;
 	data_table[data_id].integrand_id =
-		n_integrand - size_t(dismod_at::prevalence_enum) - 1;
-	data_table[data_id].node_id      = 1; // child node
-	data_table[data_id].weight_id    = 0;
+		int(n_integrand) - int(dismod_at::prevalence_enum) - 1;
+	data_table[data_id].node_id      =  int( 1 ); // child node
+	data_table[data_id].weight_id    =  int( 0 );
 	data_table[data_id].age_lower    = 40.0;
 	data_table[data_id].age_upper    = 60.0;
 	data_table[data_id].time_lower   = 1990.0;
@@ -171,13 +171,13 @@ bool sci_ode_xam(void)
 	data_table[data_id].meas_value   = 0.0;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].eta          = 1e-6;
-	data_table[data_id].density_id   = dismod_at::uniform_enum;
+	data_table[data_id].density_id   =  int( dismod_at::uniform_enum );
 	//
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
-		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
+	{	smooth_table[smooth_id].n_age  =  int( s_info_vec[smooth_id].age_size() );
+		smooth_table[smooth_id].n_time =  int( s_info_vec[smooth_id].time_size() );
 	}
 	// mulcov_table
 	vector<dismod_at::mulcov_struct> mulcov_table(0);
@@ -187,9 +187,9 @@ bool sci_ode_xam(void)
 	{	size_t smooth_id = 0;
 		if( rate_id == dismod_at::pini_enum )
 			smooth_id = 1; // only one age
-		rate_table[rate_id].parent_smooth_id = smooth_id;
-		rate_table[rate_id].child_smooth_id = smooth_id;
-		rate_table[rate_id].child_nslist_id = DISMOD_AT_NULL_INT;
+		rate_table[rate_id].parent_smooth_id =  int( smooth_id );
+		rate_table[rate_id].child_smooth_id =  int( smooth_id );
+		rate_table[rate_id].child_nslist_id =  int( DISMOD_AT_NULL_INT );
 	}
 	// child_info
 	dismod_at::child_info child_object(
@@ -298,7 +298,7 @@ bool sci_ode_xam(void)
 	{
 		for(size_t j = 0; j < n_time_sub; j++)
 		{
-			double age = (i_min + i) * ode_step_size + age_min;
+			age        = double(i_min + i) * ode_step_size + age_min;
 			double S   = exp( - beta * (age - age_min) );
 			double C   = 1.0 - S;
 			double P   = C / (S + C);

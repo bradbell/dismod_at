@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -34,7 +34,6 @@ $end
 
 bool prior_random_xam(void)
 {	bool   ok = true;
-	size_t i, j;
 	using CppAD::vector;
 	using std::cout;
 	using std::endl;
@@ -49,14 +48,14 @@ bool prior_random_xam(void)
 	// age_table
 	size_t n_age_table = 10;
 	vector<double> age_table(n_age_table);
-	for(i = 0; i < n_age_table; i++)
-		age_table[i] = 100 * i / double(n_age_table - 1);
+	for(size_t i = 0; i < n_age_table; i++)
+		age_table[i] = 100 * double(i) / double(n_age_table - 1);
 	//
 	// time_table
 	size_t n_time_table = 5;
 	vector<double> time_table(n_time_table);
-	for(i = 0; i < n_time_table; i++)
-		time_table[i] = (2015 - 1975) * i / double(n_time_table - 1);
+	for(size_t i = 0; i < n_time_table; i++)
+		time_table[i] = (2015 - 1975) * double(i) / double(n_time_table - 1);
 	// ----------------------- prior table ---------------------------------
 	size_t n_prior_table = 6;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
@@ -125,8 +124,8 @@ bool prior_random_xam(void)
 	dage_prior_id.resize(n_grid);
 	dtime_prior_id.resize(n_grid);
 	const_value.resize(n_grid);
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
 			dage_prior_id[ i * n_time + j ]  = prior_id_laplace;
 			dtime_prior_id[ i * n_time + j ] = prior_id_log_gaussian;
@@ -161,8 +160,8 @@ bool prior_random_xam(void)
 	dage_prior_id.resize(n_grid);
 	dtime_prior_id.resize(n_grid);
 	const_value.resize(n_grid);
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian;
 			dage_prior_id[ i * n_time + j ]  = prior_id_laplace;
 			dtime_prior_id[ i * n_time + j ] = prior_id_log_gaussian;
@@ -181,14 +180,16 @@ bool prior_random_xam(void)
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
-		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
+	{	smooth_table[smooth_id].n_age  =
+			int( s_info_vec[smooth_id].age_size() );
+		smooth_table[smooth_id].n_time =
+			int( s_info_vec[smooth_id].time_size() );
 		smooth_table[smooth_id].mulstd_value_prior_id =
-				s_info_vec[smooth_id].mulstd_value();
+			int( s_info_vec[smooth_id].mulstd_value() );
 		smooth_table[smooth_id].mulstd_dage_prior_id =
-				s_info_vec[smooth_id].mulstd_dage();
+			int( s_info_vec[smooth_id].mulstd_dage() );
 		smooth_table[smooth_id].mulstd_dtime_prior_id =
-				s_info_vec[smooth_id].mulstd_dtime();
+			int( s_info_vec[smooth_id].mulstd_dtime() );
 	}
 	//
 	// mulcov_table
@@ -199,14 +200,14 @@ bool prior_random_xam(void)
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	if( rate_id == dismod_at::pini_enum )
 		{	// smoothing must have only one age
-			rate_table[rate_id].parent_smooth_id = smooth_id_1_by_2;
-			rate_table[rate_id].child_smooth_id  = smooth_id_1_by_2;
-			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
+			rate_table[rate_id].parent_smooth_id =  int( smooth_id_1_by_2 );
+			rate_table[rate_id].child_smooth_id  =  int( smooth_id_1_by_2 );
+			rate_table[rate_id].child_nslist_id  =  int( DISMOD_AT_NULL_INT );
 		}
 		else
-		{	rate_table[rate_id].parent_smooth_id = smooth_id_3_by_2;
-			rate_table[rate_id].child_smooth_id  = smooth_id_3_by_2;
-			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
+		{	rate_table[rate_id].parent_smooth_id =  int( smooth_id_3_by_2 );
+			rate_table[rate_id].child_smooth_id  =  int( smooth_id_3_by_2 );
+			rate_table[rate_id].child_nslist_id  =  int( DISMOD_AT_NULL_INT );
 		}
 	}
 	// pack_object
@@ -240,9 +241,9 @@ bool prior_random_xam(void)
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();
-			for(i = 0; i < n_age; i++)
+			for(size_t i = 0; i < n_age; i++)
 			{	double age = age_table[ s_info.age_id(i) ];
-				for(j = 0; j < n_time; j++)
+				for(size_t j = 0; j < n_time; j++)
 				{	double time = time_table[ s_info.time_id(j) ];
 					size_t index   = info.offset + i * n_time + j;
 					pack_vec[index] = age * time / (age_max * time_max);
@@ -262,7 +263,7 @@ bool prior_random_xam(void)
 	residual_vec = prior_object.random(pack_vec);
 	double logden    = 0.0;
 	size_t count_abs = 0;
-	for(i = 0; i < residual_vec.size(); i++)
+	for(size_t i = 0; i < residual_vec.size(); i++)
 	{	logden += residual_vec[i].logden_smooth;
 		switch( residual_vec[i].density )
 		{	case dismod_at::laplace_enum:
@@ -291,8 +292,8 @@ bool prior_random_xam(void)
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();
-			for(i = 0; i < n_age; i++)
-			{	for(j = 0; j < n_time; j++)
+			for(size_t i = 0; i < n_age; i++)
+			{	for(size_t j = 0; j < n_time; j++)
 				{	size_t index   = info.offset + i * n_time + j;
 					double var     = pack_vec[index];
 					double wres    = (mean_v - var) / std_v;

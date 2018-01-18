@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -79,8 +79,8 @@ bool data_subset_xam(void)
 	vector<double> data_cov_value( n_data * n_covariate );
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	data_table[data_id]         = record;
-		data_table[data_id].node_id = data_id;
-		data_cov_value[ data_id * n_covariate + 1 ] = 100. * data_id;
+		data_table[data_id].node_id =  int( data_id );
+		data_cov_value[ data_id * n_covariate + 1 ] = 100. * double(data_id);
 	}
 	data_cov_value[ 0 * n_covariate + 0] = -0.5; // sex reference
 	data_cov_value[ 1 * n_covariate + 0] = -0.5; // sex reference

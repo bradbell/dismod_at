@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -89,9 +89,9 @@ bool pack_info_xam(void)
 		size_t n_age  = smooth_table[child_smooth_id].n_age;
 		size_t n_time = smooth_table[child_smooth_id].n_time;
 		n_random += n_child * n_age * n_time;
-		rate_table[rate_id].parent_smooth_id = parent_smooth_id;
-		rate_table[rate_id].child_smooth_id  = child_smooth_id;
-		rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
+		rate_table[rate_id].parent_smooth_id =  int( parent_smooth_id );
+		rate_table[rate_id].child_smooth_id  =  int( child_smooth_id );
+		rate_table[rate_id].child_nslist_id  =  int( DISMOD_AT_NULL_INT );
 	}
 	//
 	// pack_object
@@ -122,9 +122,9 @@ bool pack_info_xam(void)
 	// set mulstd
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
-		{	size_t offset    =	pack_object.mulstd_offset(smooth_id, k);
+		{	offset = pack_object.mulstd_offset(smooth_id, k);
 			if( offset != DISMOD_AT_NULL_SIZE_T )
-			{	pack_vec[offset] = smooth_id + k;
+			{	pack_vec[offset] = double(smooth_id + k);
 				count++;
 			}
 		}
@@ -135,7 +135,7 @@ bool pack_info_xam(void)
 	{	for(size_t j = 0; j <= n_child;  j++)
 		{	info = pack_object.rate_info(rate_id, j);
 			for(size_t k = 0; k < info.n_var; k++)
-			{	pack_vec[info.offset + k] = rate_id + 3 + j + k;
+			{	pack_vec[info.offset + k] = double(rate_id + 3 + j + k);
 				count++;
 			}
 		}
@@ -148,7 +148,7 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-			{	pack_vec[offset + k] = integrand_id + 4 + k;
+			{	pack_vec[offset + k] = double(integrand_id + 4 + k);
 				count++;
 			}
 		}
@@ -161,7 +161,7 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-			{	pack_vec[offset + k] = integrand_id + 5 + k;
+			{	pack_vec[offset + k] = double(integrand_id + 5 + k);
 				count++;
 			}
 		}
@@ -174,7 +174,7 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-			{	pack_vec[offset + k] = rate_id + 6 + k;
+			{	pack_vec[offset + k] = double(rate_id + 6 + k);
 				count++;
 			}
 		}
@@ -188,7 +188,7 @@ bool pack_info_xam(void)
 	{	for(size_t k = 0; k < 3; k++)
 		{	offset =	pack_object.mulstd_offset(smooth_id, k);
 			if( offset != DISMOD_AT_NULL_SIZE_T )
-				ok &= pack_vec[offset] == smooth_id + k;
+				ok &= pack_vec[offset] == double(smooth_id + k);
 		}
 	}
 	// check rates
@@ -196,7 +196,7 @@ bool pack_info_xam(void)
 	{	for(size_t j = 0; j <= n_child;  j++)
 		{	info = pack_object.rate_info(rate_id, j);
 			for(size_t k = 0; k < info.n_var; k++)
-				ok &= pack_vec[info.offset + k] == rate_id + 3 + j + k;
+				ok &= pack_vec[info.offset + k] == double(rate_id + 3 + j + k);
 		}
 	}
 	// check mulcov_meas_value
@@ -211,7 +211,7 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				ok &= pack_vec[offset + k] == integrand_id + 4 + k;
+				ok &= pack_vec[offset + k] == double(integrand_id + 4 + k);
 			size_t smooth_id = info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
@@ -230,7 +230,7 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				ok &= pack_vec[offset + k] == integrand_id + 5 + k;
+				ok &= pack_vec[offset + k] == double(integrand_id + 5 + k);
 			size_t smooth_id = info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
@@ -249,7 +249,7 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				ok &= pack_vec[offset + k] == rate_id + 6 + k;
+				ok &= pack_vec[offset + k] == double(rate_id + 6 + k);
 			size_t smooth_id = info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
@@ -270,7 +270,7 @@ bool pack_info_xam(void)
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
-				ok &= pack_vec[offset + k] == rate_id + 6 + k;
+				ok &= pack_vec[offset + k] == double(rate_id + 6 + k);
 			size_t smooth_id = info.smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
