@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -34,7 +34,6 @@ $end
 bool bilinear_interp_xam(void)
 {
 	bool   ok = true;
-	size_t i, j;
 	using  std::string;
 	using  CppAD::vector;
 
@@ -42,20 +41,20 @@ bool bilinear_interp_xam(void)
 
 	size_t n_x = 4, n_y = 3;
 	vector<double> x_grid(n_x), y_grid(n_y), z_grid(n_x * n_y);
-	for(i = 0; i < n_x; i++)
-		x_grid[i] = 10.0 * i;
-	for(j = 0; j < n_y; j++)
-		y_grid[j] = 1990.0 + 10 * j;
-	for(i = 0; i < n_x; i++)
-	{	for(j = 0; j < n_y; j++)
+	for(size_t i = 0; i < n_x; i++)
+		x_grid[i] = 10.0 * double(i);
+	for(size_t j = 0; j < n_y; j++)
+		y_grid[j] = 1990.0 + 10 * double(j);
+	for(size_t i = 0; i < n_x; i++)
+	{	for(size_t j = 0; j < n_y; j++)
 			z_grid[i * n_y + j] = x_grid[i] * y_grid[j] + 1.0;
 	}
 
 	// check case where both x and y are interpolated
 	double x = 10.0 * 2.5;
 	double y = 1990.0 + 10 * 1.5;
-	i = 0;
-	j = 0;
+	size_t i = 0;
+	size_t j = 0;
 	// evaluate the interpolant
 	double z = dismod_at::bilinear_interp(
 		x, y, x_grid, y_grid, z_grid, i, j

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -36,7 +36,7 @@ namespace {
 	vector<Float> iota, rho, chi, omega;
 
 	Float interpolate(const Float& a, size_t k, const vector<Float>& v)
-	{	Float ak    = k * step_size;
+	{	Float ak    = double(k) * step_size;
 		Float akp   = ak + step_size;
 		Float vk    = v[k];
 		Float vkp   = v[k + 1];
@@ -49,7 +49,7 @@ namespace {
 		void Ode(const Float& a, const vector<Float>& y, vector<Float>& yp)
 		{
 			size_t k = iota.size() - 2;
-			while( a < k * step_size && k > 0)
+			while( a < double(k) * step_size && k > 0)
 				k--;
 			Float iota_a  = interpolate(a, k, iota);
 			Float rho_a   = interpolate(a, k, rho);
@@ -66,7 +66,6 @@ namespace {
 
 bool solve_ode_xam(void)
 {	bool   ok = true;
-	size_t k;
 
 	// check integral along diagonal starting at age zero, time zero
 	size_t i_max  = 5;
@@ -92,13 +91,13 @@ bool solve_ode_xam(void)
 	Fun F;
 	size_t M = 100;
 	Float ai = 0.0;
-	Float af = i_max * step_size;
+	Float af = double(i_max) * step_size;
 	vector<Float> yi(2);
 	yi[0] = 1.0 - pini;
 	yi[1] = pini;
 	vector<Float> yf = CppAD::Runge45(F, M, ai, af, yi);
 	//
-	k = i_max;
+	size_t k = i_max;
 	ok &= fabs( 1.0 - S_out[k] / yf[0] ) < 1e-6;
 	ok &= fabs( 1.0 - C_out[k] / yf[1] ) < 1e-6;
 	//

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -33,7 +33,6 @@ $end
 bool smooth2ode_xam(void)
 {
 	bool   ok = true;
-	size_t i, j, k;
 	using  std::string;
 	using  CppAD::vector;
 	typedef CppAD::AD<double> Float;
@@ -45,13 +44,13 @@ bool smooth2ode_xam(void)
 	size_t n_time_si = 3;
 	vector<size_t> age_id(n_age_si),    time_id(n_time_si);
 	vector<double> age_table(n_age_si), time_table(n_time_si);
-	for(i = 0; i < n_age_si; i++)
+	for(size_t i = 0; i < n_age_si; i++)
 	{	age_id[i]    = i;
-		age_table[i] = 10.0 * i;
+		age_table[i] = 10.0 * double(i);
 	}
-	for(j = 0; j < n_time_si; j++)
+	for(size_t j = 0; j < n_time_si; j++)
 	{	time_id[j]    = j;
-		time_table[j] = 1990.0 + 10 * j;
+		time_table[j] = 1990.0 + 10 * double(j);
 	}
 	// these values are not used
 	vector<size_t> value_prior_id(n_age_si * n_time_si);
@@ -82,12 +81,12 @@ bool smooth2ode_xam(void)
 	size_t n_age_ode = 1;
 	double age_min = age_table[0];
 	double age_max = age_table[ age_table.size() - 1 ];
-	while(age_min + (n_age_ode-1)*ode_step_size < age_max )
+	while(age_min + double(n_age_ode-1) * ode_step_size < age_max )
 		n_age_ode++;
 	size_t n_time_ode = 1;
 	double time_min = time_table[0];
 	double time_max = time_table[ time_table.size() - 1 ];
-	while(time_min + (n_time_ode-1)*ode_step_size < time_max )
+	while(time_min + double(n_time_ode-1) * ode_step_size < time_max )
 		n_time_ode++;
 
 	// construct the interpolation object
@@ -98,19 +97,20 @@ bool smooth2ode_xam(void)
 
 	// variable values on smoothing grid
 	CppAD::vector<Float> var_si(n_age_si * n_time_si);
-	for(i = 0; i < n_age_si; i++)
-	{	for(j = 0; j < n_time_si; j++)
+	for(size_t i = 0; i < n_age_si; i++)
+	{	for(size_t j = 0; j < n_time_si; j++)
 			var_si[i * n_time_si + j] = i*i + j*j;
 	}
 
 	// ode grid points at which to interpolate
 	CppAD::vector<size_t> ode_index;
-	i = 0;
-	j = 0;
-	while( i < n_age_ode && j < n_time_ode )
-	{	ode_index.push_back( i * n_time_ode + j );
-		i++;
-		j++;
+	{	size_t i = 0;
+		size_t j = 0;
+		while( i < n_age_ode && j < n_time_ode )
+		{	ode_index.push_back( i * n_time_ode + j );
+			i++;
+			j++;
+		}
 	}
 
 	// interpolate from smoothing to ode grid
@@ -121,23 +121,23 @@ bool smooth2ode_xam(void)
 	//
 	CppAD::vector<double> vdbl_si(n_age_si * n_time_si);
 	CppAD::vector<double> age_si(n_age_si), time_si(n_time_si);
-	for(i = 0; i < n_age_si; i++)
+	for(size_t i = 0; i < n_age_si; i++)
 	{	age_si[i] = age_table[ age_id[i] ];
-		for(j = 0; j < n_time_si; j++)
-			vdbl_si[i * n_time_si + j] = i*i + j*j;
+		for(size_t j = 0; j < n_time_si; j++)
+			vdbl_si[i * n_time_si + j] = double(i*i + j*j);
 	}
-	for(j = 0; j < n_time_si; j++)
+	for(size_t j = 0; j < n_time_si; j++)
 		time_si[j] = time_table[ time_id[j] ];
 	//
 	size_t i_si = 0, j_si = 0;
-	for(k = 0; k < ode_index.size(); k++)
+	for(size_t k = 0; k < ode_index.size(); k++)
 	{
 		Float  v_ode = var_ode[k];
 		//
 		size_t i_ode  = ode_index[k] / n_time_ode;
 		size_t j_ode  = ode_index[k] % n_time_ode;
-		double age    = age_table[0]  + ode_step_size * i_ode;
-		double time   = time_table[0] + ode_step_size * j_ode;
+		double age    = age_table[0]  + ode_step_size * double(i_ode);
+		double time   = time_table[0] + ode_step_size * double(j_ode);
 		double  check = dismod_at::bilinear_interp(
 			age, time, age_si, time_si, vdbl_si, i_si, j_si
 		);
