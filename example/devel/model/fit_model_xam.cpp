@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -35,7 +35,6 @@ $end
 
 bool fit_model_xam(void)
 {	bool   ok = true;
-	size_t i, j;
 	using CppAD::vector;
 	double inf = std::numeric_limits<double>::infinity();
 	double nan = std::numeric_limits<double>::quiet_NaN();
@@ -45,14 +44,14 @@ bool fit_model_xam(void)
 	// age_table = [ 0 , 20, 40, 60, 80, 100 ]
 	size_t n_age_table = 6;
 	vector<double> age_table(n_age_table);
-	for(i = 0; i < n_age_table; i++)
-		age_table[i] = 100. * i / double(n_age_table - 1);
+	for(size_t i = 0; i < n_age_table; i++)
+		age_table[i] = 100. * double(i) / double(n_age_table - 1);
 	//
 	// time_table = [ 1995, 2005, 2015 ]
 	size_t n_time_table = 3;
 	vector<double> time_table(n_time_table);
-	for(i = 0; i < n_time_table; i++)
-		time_table[i] = 1995. + (2015- 1995) * i / double(n_time_table-1);
+	for(size_t i = 0; i < n_time_table; i++)
+		time_table[i] = 1995. + (2015- 1995) * double(i) / double(n_time_table-1);
 	// ----------------------- prior table ---------------------------------
 	size_t n_prior_table = 4;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
@@ -130,8 +129,8 @@ bool fit_model_xam(void)
 	const_value.resize(n_grid);
 	//
 	// smooth_id_gaussian_zero
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; j++)
 		{	value_prior_id[ i * n_time + j ] = prior_id_gaussian_zero;
 			dage_prior_id[ i * n_time + j ]  = prior_id_gaussian_zero;
 			dtime_prior_id[ i * n_time + j ] = prior_id_gaussian_zero;
@@ -146,8 +145,8 @@ bool fit_model_xam(void)
 	);
 	//
 	// smooth_id_positive
-	for(i = 0; i < n_age; i++)
-	{	for(j = 0; j < n_time; j++)
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; j++)
 			value_prior_id[ i * n_time + j ] = prior_id_positive;
 	}
 	size_t smooth_id_positive = 1;
@@ -160,11 +159,13 @@ bool fit_model_xam(void)
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
-		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
-		smooth_table[smooth_id].mulstd_value_prior_id = mulstd_value;
-		smooth_table[smooth_id].mulstd_dage_prior_id  = mulstd_dage;
-		smooth_table[smooth_id].mulstd_dtime_prior_id = mulstd_dtime;
+	{	smooth_table[smooth_id].n_age =
+			int( s_info_vec[smooth_id].age_size() );
+		smooth_table[smooth_id].n_time =
+			int( s_info_vec[smooth_id].time_size() );
+		smooth_table[smooth_id].mulstd_value_prior_id = int( mulstd_value );
+		smooth_table[smooth_id].mulstd_dage_prior_id  = int( mulstd_dage );
+		smooth_table[smooth_id].mulstd_dtime_prior_id = int( mulstd_dtime );
 	}
 	//
 	// mulcov_table
@@ -175,14 +176,16 @@ bool fit_model_xam(void)
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	if( rate_id == dismod_at::pini_enum )
 		{	// smoothing must have only one age
-			rate_table[rate_id].parent_smooth_id = smooth_id_positive;
-			rate_table[rate_id].child_smooth_id  = smooth_id_gaussian_zero;
+			rate_table[rate_id].parent_smooth_id = int( smooth_id_positive );
+			rate_table[rate_id].child_smooth_id  =
+				int( smooth_id_gaussian_zero );
 			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		}
 		else
 		{	// eventually plan to use a 3 by 2 smoothing here
-			rate_table[rate_id].parent_smooth_id = smooth_id_positive;
-			rate_table[rate_id].child_smooth_id  = smooth_id_gaussian_zero;
+			rate_table[rate_id].parent_smooth_id = int( smooth_id_positive );
+			rate_table[rate_id].child_smooth_id  =
+				int( smooth_id_gaussian_zero );
 			rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
 		}
 	}
@@ -190,7 +193,7 @@ bool fit_model_xam(void)
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
 	vector<dismod_at::integrand_enum> integrand_table(n_integrand);
-	for(i = 0; i < n_integrand; i++)
+	for(size_t i = 0; i < n_integrand; i++)
 	{	integrand_table[i] = dismod_at::integrand_enum(i);
 	}
 	//

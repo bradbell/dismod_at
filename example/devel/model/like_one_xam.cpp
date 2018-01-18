@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -30,7 +30,6 @@ $end
 
 bool like_one_xam(void)
 {	bool   ok = true;
-	size_t i, j, k;
 	using CppAD::abs;
 	using CppAD::vector;
 	using std::cout;
@@ -80,7 +79,7 @@ bool like_one_xam(void)
 	// weight value should not matter when constant
 	size_t n_si = n_age_si * n_time_si;
 	vector<double> weight(n_si);
-	for(k = 0; k < n_si; k++)
+	for(size_t k = 0; k < n_si; k++)
 		weight[k] = 0.5;
 	dismod_at::weight_info w_info(
 		age_table, time_table, age_id, time_id, weight
@@ -130,18 +129,18 @@ bool like_one_xam(void)
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
 	vector<dismod_at::integrand_enum> integrand_table(n_integrand);
-	for(i = 0; i < n_integrand; i++)
+	for(size_t i = 0; i < n_integrand; i++)
 	{	integrand_table[i] = dismod_at::integrand_enum(i);
 	}
 	//
 	// n_age_ode
 	size_t n_age_ode     =  1;
-	while( age_min + (n_age_ode-1) * ode_step_size < age_max )
+	while( age_min + double(n_age_ode-1) * ode_step_size < age_max )
 			n_age_ode++;
 	//
 	// n_time_ode
 	size_t n_time_ode     =  1;
-	while( time_min + (n_time_ode-1) * ode_step_size < time_max )
+	while( time_min + double(n_time_ode-1) * ode_step_size < time_max )
 			n_time_ode++;
 	//
 	// node_table:
@@ -165,9 +164,9 @@ bool like_one_xam(void)
 	// parent node, time and age integrantion.
 	for(size_t data_id = 0; data_id < 2; data_id++)
 	{
-		data_table[data_id].integrand_id = dismod_at::mtother_enum;
-		data_table[data_id].node_id    = 0;
-		data_table[data_id].weight_id  = 0;
+		data_table[data_id].integrand_id =  int( dismod_at::mtother_enum );
+		data_table[data_id].node_id    =  int( 0 );
+		data_table[data_id].weight_id  =  int( 0 );
 		data_table[data_id].age_lower  = 35.0;
 		data_table[data_id].age_upper  = 55.0;
 		data_table[data_id].time_lower = 1990.0;
@@ -176,16 +175,18 @@ bool like_one_xam(void)
 		data_table[data_id].meas_std   = data_table[data_id].meas_value / 10.;
 		data_table[data_id].eta        = 1e-4;
 		if( data_id == 0 )
-			data_table[data_id].density_id = dismod_at::gaussian_enum;
+		data_table[data_id].density_id =  int( dismod_at::gaussian_enum );
 		else
-			data_table[data_id].density_id = dismod_at::log_gaussian_enum;
+		data_table[data_id].density_id = int( dismod_at::log_gaussian_enum );
 	}
 	//
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
-		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
+	{	smooth_table[smooth_id].n_age  =
+			int( s_info_vec[smooth_id].age_size() );
+		smooth_table[smooth_id].n_time =
+			int( s_info_vec[smooth_id].time_size() );
 	}
 	// mulcov_table
 	vector<dismod_at::mulcov_struct> mulcov_table(0);
@@ -195,9 +196,9 @@ bool like_one_xam(void)
 	{	size_t smooth_id = 0;
 		if( rate_id == dismod_at::pini_enum )
 			smooth_id = 1; // only one age
-		rate_table[rate_id].parent_smooth_id = smooth_id;
-		rate_table[rate_id].child_smooth_id  = smooth_id;
-		rate_table[rate_id].child_nslist_id  = DISMOD_AT_NULL_INT;
+		rate_table[rate_id].parent_smooth_id =  int( smooth_id );
+		rate_table[rate_id].child_smooth_id  =  int( smooth_id );
+		rate_table[rate_id].child_nslist_id  =  int( DISMOD_AT_NULL_INT );
 	}
 	// child_info
 	dismod_at::child_info child_object(
@@ -255,10 +256,10 @@ bool like_one_xam(void)
 	for(size_t child_id = 0; child_id <= n_child; child_id++)
 	{	info = pack_object.rate_info(dismod_at::omega_enum, child_id);
 		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-		for(i = 0; i < s_info.age_size(); i++)
-		{	double age = age_table[ s_info.age_id(i) ];
-			for(j = 0; j < s_info.time_size(); j++)
-			{	double time    = time_table[ s_info.time_id(j) ];
+		for(size_t i = 0; i < s_info.age_size(); i++)
+		{	age = age_table[ s_info.age_id(i) ];
+			for(size_t j = 0; j < s_info.time_size(); j++)
+			{	time    = time_table[ s_info.time_id(j) ];
 				size_t index   = info.offset + i * s_info.time_size() + j;
 				pack_vec[index] = age * time / (age_max*time_max);
 			}
