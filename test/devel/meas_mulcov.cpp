@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -38,7 +38,6 @@ namespace {
 }
 bool meas_mulcov(void)
 {	bool   ok = true;
-	size_t i, j, k;
 	using CppAD::vector;
 	using std::cout;
 	typedef CppAD::AD<double> Float;
@@ -87,7 +86,7 @@ bool meas_mulcov(void)
 	// weight value should not matter when constant
 	size_t n_si = n_age_si * n_time_si;
 	vector<double> weight(n_si);
-	for(k = 0; k < n_si; k++)
+	for(size_t k = 0; k < n_si; k++)
 		weight[k] = 0.5;
 	dismod_at::weight_info w_info(
 		age_table, time_table, age_id, time_id, weight
@@ -138,18 +137,18 @@ bool meas_mulcov(void)
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
 	vector<dismod_at::integrand_enum> integrand_table(n_integrand);
-	for(i = 0; i < n_integrand; i++)
+	for(size_t i = 0; i < n_integrand; i++)
 	{	integrand_table[i] = dismod_at::integrand_enum(i);
 	}
 	//
 	// n_age_ode
 	size_t n_age_ode     =  1;
-	while( age_min + (n_age_ode-1) * ode_step_size < age_max_ )
+	while( age_min + double(n_age_ode-1) * ode_step_size < age_max_ )
 			n_age_ode++;
 	//
 	// n_time_ode
 	size_t n_time_ode     =  1;
-	while( time_min + (n_time_ode-1) * ode_step_size < time_max_ )
+	while( time_min + double(n_time_ode-1) * ode_step_size < time_max_ )
 			n_time_ode++;
 	//
 	// node_table:    0
@@ -184,9 +183,9 @@ bool meas_mulcov(void)
 	double time_lower = time_min;
 	double time_upper = time_lower + ode_step_size;
 	size_t data_id = 0;
-	data_table[data_id].integrand_id = dismod_at::mtother_enum;
-	data_table[data_id].node_id      = 0;
-	data_table[data_id].weight_id    = 0;
+	data_table[data_id].integrand_id =  int( dismod_at::mtother_enum );
+	data_table[data_id].node_id      =  int( 0 );
+	data_table[data_id].weight_id    =  int( 0 );
 	data_table[data_id].age_lower    = age_lower;
 	data_table[data_id].age_upper    = age_upper;
 	data_table[data_id].time_lower   = time_lower;
@@ -194,15 +193,15 @@ bool meas_mulcov(void)
 	data_table[data_id].meas_value   = 1e-2;
 	data_table[data_id].meas_std     = 1e-3;
 	data_table[data_id].eta          = 1e-6;
-	data_table[data_id].density_id   = dismod_at::gaussian_enum;
+	data_table[data_id].density_id   =  int( dismod_at::gaussian_enum );
 	//
 	data_cov_value[0] = x_j;
 	//
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	smooth_table[smooth_id].n_age  = s_info_vec[smooth_id].age_size();
-		smooth_table[smooth_id].n_time = s_info_vec[smooth_id].time_size();
+	{	smooth_table[smooth_id].n_age  =  int( s_info_vec[smooth_id].age_size() );
+		smooth_table[smooth_id].n_time =  int( s_info_vec[smooth_id].time_size() );
 	}
 	// mul_cov
 	size_t omega_rate_id = dismod_at::omega_enum;
@@ -210,10 +209,10 @@ bool meas_mulcov(void)
 	mulcov_table[0].mulcov_type = dismod_at::meas_value_enum;
 	mulcov_table[1].mulcov_type = dismod_at::meas_std_enum;
 	for(size_t mulcov_id = 0; mulcov_id < 2; mulcov_id++)
-	{	mulcov_table[mulcov_id].rate_id        = DISMOD_AT_NULL_INT;
-		mulcov_table[mulcov_id].integrand_id   = dismod_at::mtother_enum;
-		mulcov_table[mulcov_id].covariate_id   = 0;
-		mulcov_table[mulcov_id].smooth_id      = 0;
+	{	mulcov_table[mulcov_id].rate_id        =  int( DISMOD_AT_NULL_INT );
+		mulcov_table[mulcov_id].integrand_id   =  int( dismod_at::mtother_enum );
+		mulcov_table[mulcov_id].covariate_id   =  int( 0 );
+		mulcov_table[mulcov_id].smooth_id      =  int( 0 );
 	}
 	// rate_table
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);
@@ -221,9 +220,9 @@ bool meas_mulcov(void)
 	{	size_t smooth_id = 0;
 		if( rate_id == dismod_at::pini_enum )
 			smooth_id = 1; // only one age
-		rate_table[rate_id].parent_smooth_id = smooth_id;
-		rate_table[rate_id].child_smooth_id =  smooth_id;
-		rate_table[rate_id].child_nslist_id = DISMOD_AT_NULL_INT;
+		rate_table[rate_id].parent_smooth_id =  int( smooth_id );
+		rate_table[rate_id].child_smooth_id =   int( smooth_id );
+		rate_table[rate_id].child_nslist_id =  int( DISMOD_AT_NULL_INT );
 	}
 	// child_info
 	dismod_at::child_info child_object(
@@ -281,8 +280,8 @@ bool meas_mulcov(void)
 	for(size_t child_id = 0; child_id <= n_child; child_id++)
 	{	info = pack_object.rate_info(omega_rate_id, child_id);
 		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-		for(i = 0; i < s_info.age_size(); i++)
-		{	for(j = 0; j < s_info.time_size(); j++)
+		for(size_t i = 0; i < s_info.age_size(); i++)
+		{	for(size_t j = 0; j < s_info.time_size(); j++)
 			{	size_t index   = info.offset + i * s_info.time_size() + j;
 				pack_vec[index] = 1.0;
 			}
@@ -290,15 +289,15 @@ bool meas_mulcov(void)
 	}
 	size_t mtother_id = dismod_at::mtother_enum;
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
-	for(k = 0; k < 2; k++)
+	for(size_t k = 0; k < 2; k++)
 	{	if( k == 0 )
 			info = pack_object.mulcov_meas_value_info(mtother_id, 0);
 		else
 			info = pack_object.mulcov_meas_std_info(mtother_id, 0);
-		for(i = 0; i < s_info.age_size(); i++)
-		{	double age = age_table[ s_info.age_id(i) ];
-			for(j = 0; j < s_info.time_size(); j++)
-			{	double time    = time_table[ s_info.time_id(j) ];
+		for(size_t i = 0; i < s_info.age_size(); i++)
+		{	age = age_table[ s_info.age_id(i) ];
+			for(size_t j = 0; j < s_info.time_size(); j++)
+			{	time           = time_table[ s_info.time_id(j) ];
 				size_t index   = info.offset + i * s_info.time_size() + j;
 				pack_vec[index] = mulcov(age, time);
 			}
