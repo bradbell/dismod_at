@@ -34,6 +34,7 @@
 #	checkpointing
 #	Wshadow
 #	Wconversion
+#	Wpedantic
 # &&
 #
 # &section bin/run_cmake.sh: User Configuration Options&&
@@ -109,7 +110,7 @@ cmake_cxx_compiler=''
 # &head extra_cxx_flags&&
 # Extra C++ flags used during compilation:
 # &codep
-extra_cxx_flags='-std=c++11 -Wall -Wshadow -Wconversion'
+extra_cxx_flags='-std=c++11 -Wpedantic -Wall -Wshadow -Wconversion'
 # &&
 # An alternative might be '-Wall'.
 #

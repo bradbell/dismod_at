@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -525,6 +525,7 @@ $end
 	options += "String  sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_fixed"];
+	options += "\nNumeric acceptable_tol " + option_map["tolerance_fixed"];
 	options += "\nNumeric bound_frac " + option_map["bound_frac_fixed"];
 	options += "\nInteger print_level " + option_map["print_level_fixed"];
 	options += "\nString derivative_test "+option_map["derivative_test_fixed"];
@@ -540,6 +541,7 @@ $end
 	options += "String  sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_random"];
+	options += "\nNumeric acceptable_tol " + option_map["tolerance_random"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
 	options += "\nInteger print_level " + option_map["print_level_random"];
 	options += "\nInteger print_level " + option_map["print_level_random"];
@@ -912,6 +914,7 @@ $end
 	options += "String  sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_random"];
+	options += "\nNumeric acceptable_tol " + option_map["tolerance_random"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
 	options += "\nInteger print_level " + option_map["print_level_random"];
 	options += "\nString derivative_test "
