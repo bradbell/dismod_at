@@ -115,7 +115,6 @@ A:active { color : purple }
 
 <font color="#009900">bool</font> <b><font color="#000000">avg_no_ode_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">,</font> k<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>abs<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
@@ -165,7 +164,7 @@ A:active { color : purple }
      <i><font color="#9A1900">// weight value should not matter when constant</font></i>
      <font color="#008080">size_t</font> n_si <font color="#990000">=</font> n_age_si <font color="#990000">*</font> n_time_si<font color="#990000">;</font>
      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">weight</font></b><font color="#990000">(</font>n_si<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_si<font color="#990000">;</font> k<font color="#990000">++)</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_si<font color="#990000">;</font> k<font color="#990000">++)</font>
           weight<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
      dismod_at<font color="#990000">::</font><font color="#008080">weight_info</font> <b><font color="#000000">w_info</font></b><font color="#990000">(</font>
           age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> age_id<font color="#990000">,</font> time_id<font color="#990000">,</font> weight
@@ -216,18 +215,18 @@ A:active { color : purple }
      <i><font color="#9A1900">// integrand_table</font></i>
      <font color="#008080">size_t</font> n_integrand <font color="#990000">=</font> dismod_at<font color="#990000">::</font>number_integrand_enum<font color="#990000">;</font>
      <font color="#008080">vector&lt;dismod_at::integrand_enum&gt;</font> <b><font color="#000000">integrand_table</font></b><font color="#990000">(</font>n_integrand<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_integrand<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_integrand<font color="#990000">;</font> i<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    integrand_table<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">integrand_enum</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// n_age_ode</font></i>
      <font color="#008080">size_t</font> n_age_ode     <font color="#990000">=</font>  <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> age_min <font color="#990000">+</font> <font color="#990000">(</font>n_age_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">&lt;</font> age_max <font color="#990000">)</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> age_min <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>n_age_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">&lt;</font> age_max <font color="#990000">)</font>
                n_age_ode<font color="#990000">++;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// n_time_ode</font></i>
      <font color="#008080">size_t</font> n_time_ode     <font color="#990000">=</font>  <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> time_min <font color="#990000">+</font> <font color="#990000">(</font>n_time_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">&lt;</font> time_max <font color="#990000">)</font>
+     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> time_min <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>n_time_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">&lt;</font> time_max <font color="#990000">)</font>
                n_time_ode<font color="#990000">++;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// node_table:    0</font></i>
@@ -294,8 +293,10 @@ A:active { color : purple }
      <i><font color="#9A1900">// smooth_table</font></i>
      <font color="#008080">vector&lt;dismod_at::smooth_struct&gt;</font> <b><font color="#000000">smooth_table</font></b><font color="#990000">(</font>s_info_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> smooth_id <font color="#990000">&lt;</font> s_info_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> smooth_id<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_age  <font color="#990000">=</font> s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">].</font><b><font color="#000000">age_size</font></b><font color="#990000">();</font>
-          smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_time <font color="#990000">=</font> s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">].</font><b><font color="#000000">time_size</font></b><font color="#990000">();</font>
+     <font color="#FF0000">{</font>    smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_age  <font color="#990000">=</font>
+               <font color="#009900">int</font><font color="#990000">(</font> s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">].</font><b><font color="#000000">age_size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+          smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_time <font color="#990000">=</font>
+               <font color="#009900">int</font><font color="#990000">(</font> s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">].</font><b><font color="#000000">time_size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">// mul_cov</font></i>
      <font color="#008080">vector&lt;dismod_at::mulcov_struct&gt;</font> <b><font color="#000000">mulcov_table</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
@@ -305,9 +306,9 @@ A:active { color : purple }
      <font color="#FF0000">{</font>    <font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> rate_id <font color="#990000">==</font> dismod_at<font color="#990000">::</font>pini_enum <font color="#990000">)</font>
                smooth_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// only one age</font></i>
-          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">=</font> smooth_id<font color="#990000">;</font>
-          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_smooth_id <font color="#990000">=</font> smooth_id<font color="#990000">;</font>
-          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_nslist_id <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">=</font> <font color="#009900">int</font><font color="#990000">(</font> smooth_id <font color="#990000">);</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_smooth_id  <font color="#990000">=</font> <font color="#009900">int</font><font color="#990000">(</font> smooth_id <font color="#990000">);</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_nslist_id  <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">// child_info</font></i>
      dismod_at<font color="#990000">::</font><font color="#008080">child_info</font> <b><font color="#000000">child_object</font></b><font color="#990000">(</font>
@@ -363,10 +364,10 @@ A:active { color : purple }
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> child_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> child_id <font color="#990000">&lt;=</font> n_child<font color="#990000">;</font> child_id<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    info <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">rate_info</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>omega_enum<font color="#990000">,</font> child_id<font color="#990000">);</font>
           dismod_at<font color="#990000">::</font>smooth_info<font color="#990000">&amp;</font> s_info <font color="#990000">=</font> s_info_vec<font color="#990000">[</font>info<font color="#990000">.</font>smooth_id<font color="#990000">];</font>
-          <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s_info<font color="#990000">.</font><b><font color="#000000">age_size</font></b><font color="#990000">();</font> i<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <font color="#009900">double</font> age <font color="#990000">=</font> age_table<font color="#990000">[</font> s_info<font color="#990000">.</font><b><font color="#000000">age_id</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">];</font>
-               <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> s_info<font color="#990000">.</font><b><font color="#000000">time_size</font></b><font color="#990000">();</font> j<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    <font color="#009900">double</font> time    <font color="#990000">=</font> time_table<font color="#990000">[</font> s_info<font color="#990000">.</font><b><font color="#000000">time_id</font></b><font color="#990000">(</font>j<font color="#990000">)</font> <font color="#990000">];</font>
+          <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s_info<font color="#990000">.</font><b><font color="#000000">age_size</font></b><font color="#990000">();</font> i<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    age <font color="#990000">=</font> age_table<font color="#990000">[</font> s_info<font color="#990000">.</font><b><font color="#000000">age_id</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">];</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> s_info<font color="#990000">.</font><b><font color="#000000">time_size</font></b><font color="#990000">();</font> j<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    time           <font color="#990000">=</font> time_table<font color="#990000">[</font> s_info<font color="#990000">.</font><b><font color="#000000">time_id</font></b><font color="#990000">(</font>j<font color="#990000">)</font> <font color="#990000">];</font>
                     <font color="#008080">size_t</font> index   <font color="#990000">=</font> info<font color="#990000">.</font>offset <font color="#990000">+</font> i <font color="#990000">*</font> s_info<font color="#990000">.</font><b><font color="#000000">time_size</font></b><font color="#990000">()</font> <font color="#990000">+</font> j<font color="#990000">;</font>
                     <b><font color="#0000FF">if</font></b><font color="#990000">(</font> child_id <font color="#990000">==</font> n_child <font color="#990000">)</font>
                          pack_vec<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">=</font> age <font color="#990000">*</font> time <font color="#990000">/</font> <font color="#990000">(</font>age_max<font color="#990000">*</font>time_max<font color="#990000">);</font>

@@ -148,7 +148,7 @@ A:active { color : purple }
      <font color="#FF0000">{</font>    <font color="#008080">size_t</font> parent_smooth_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> rate_id <font color="#990000">==</font> dismod_at<font color="#990000">::</font>pini_enum <font color="#990000">)</font>
                parent_smooth_id  <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">=</font> parent_smooth_id<font color="#990000">;</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">=</font>  <font color="#009900">int</font><font color="#990000">(</font> parent_smooth_id <font color="#990000">);</font>
           <font color="#008080">size_t</font> n_age    <font color="#990000">=</font> smooth_table<font color="#990000">[</font>parent_smooth_id<font color="#990000">].</font>n_age<font color="#990000">;</font>
           <font color="#008080">size_t</font> n_time   <font color="#990000">=</font> smooth_table<font color="#990000">[</font>parent_smooth_id<font color="#990000">].</font>n_time<font color="#990000">;</font>
           n_fixed_effect <font color="#990000">+=</font> n_age <font color="#990000">*</font> n_time<font color="#990000">;</font>

@@ -185,9 +185,9 @@ A:active { color : purple }
           <font color="#008080">size_t</font> n_age  <font color="#990000">=</font> smooth_table<font color="#990000">[</font>child_smooth_id<font color="#990000">].</font>n_age<font color="#990000">;</font>
           <font color="#008080">size_t</font> n_time <font color="#990000">=</font> smooth_table<font color="#990000">[</font>child_smooth_id<font color="#990000">].</font>n_time<font color="#990000">;</font>
           n_random <font color="#990000">+=</font> n_child <font color="#990000">*</font> n_age <font color="#990000">*</font> n_time<font color="#990000">;</font>
-          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">=</font> parent_smooth_id<font color="#990000">;</font>
-          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_smooth_id  <font color="#990000">=</font> child_smooth_id<font color="#990000">;</font>
-          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_nslist_id  <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">=</font>  <font color="#009900">int</font><font color="#990000">(</font> parent_smooth_id <font color="#990000">);</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_smooth_id  <font color="#990000">=</font>  <font color="#009900">int</font><font color="#990000">(</font> child_smooth_id <font color="#990000">);</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_nslist_id  <font color="#990000">=</font>  <font color="#009900">int</font><font color="#990000">(</font> DISMOD_AT_NULL_INT <font color="#990000">);</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// pack_object</font></i>
@@ -218,9 +218,9 @@ A:active { color : purple }
      <i><font color="#9A1900">// set mulstd</font></i>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> smooth_id <font color="#990000">&lt;</font> n_smooth<font color="#990000">;</font> smooth_id<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">3</font><font color="#990000">;</font> k<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    <font color="#008080">size_t</font> offset    <font color="#990000">=</font>  pack_object<font color="#990000">.</font><b><font color="#000000">mulstd_offset</font></b><font color="#990000">(</font>smooth_id<font color="#990000">,</font> k<font color="#990000">);</font>
+          <font color="#FF0000">{</font>    offset <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulstd_offset</font></b><font color="#990000">(</font>smooth_id<font color="#990000">,</font> k<font color="#990000">);</font>
                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> offset <font color="#990000">!=</font> DISMOD_AT_NULL_SIZE_T <font color="#990000">)</font>
-               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>offset<font color="#990000">]</font> <font color="#990000">=</font> smooth_id <font color="#990000">+</font> k<font color="#990000">;</font>
+               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>offset<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>smooth_id <font color="#990000">+</font> k<font color="#990000">);</font>
                     count<font color="#990000">++;</font>
                <font color="#FF0000">}</font>
           <font color="#FF0000">}</font>
@@ -231,7 +231,7 @@ A:active { color : purple }
      <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;=</font> n_child<font color="#990000">;</font>  j<font color="#990000">++)</font>
           <font color="#FF0000">{</font>    info <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">rate_info</font></b><font color="#990000">(</font>rate_id<font color="#990000">,</font> j<font color="#990000">);</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>info<font color="#990000">.</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> rate_id <font color="#990000">+</font> <font color="#993399">3</font> <font color="#990000">+</font> j <font color="#990000">+</font> k<font color="#990000">;</font>
+               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>info<font color="#990000">.</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>rate_id <font color="#990000">+</font> <font color="#993399">3</font> <font color="#990000">+</font> j <font color="#990000">+</font> k<font color="#990000">);</font>
                     count<font color="#990000">++;</font>
                <font color="#FF0000">}</font>
           <font color="#FF0000">}</font>
@@ -244,7 +244,7 @@ A:active { color : purple }
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> integrand_id <font color="#990000">+</font> <font color="#993399">4</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>integrand_id <font color="#990000">+</font> <font color="#993399">4</font> <font color="#990000">+</font> k<font color="#990000">);</font>
                     count<font color="#990000">++;</font>
                <font color="#FF0000">}</font>
           <font color="#FF0000">}</font>
@@ -257,7 +257,7 @@ A:active { color : purple }
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> integrand_id <font color="#990000">+</font> <font color="#993399">5</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>integrand_id <font color="#990000">+</font> <font color="#993399">5</font> <font color="#990000">+</font> k<font color="#990000">);</font>
                     count<font color="#990000">++;</font>
                <font color="#FF0000">}</font>
           <font color="#FF0000">}</font>
@@ -270,7 +270,7 @@ A:active { color : purple }
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> rate_id <font color="#990000">+</font> <font color="#993399">6</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+               <font color="#FF0000">{</font>    pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>rate_id <font color="#990000">+</font> <font color="#993399">6</font> <font color="#990000">+</font> k<font color="#990000">);</font>
                     count<font color="#990000">++;</font>
                <font color="#FF0000">}</font>
           <font color="#FF0000">}</font>
@@ -284,7 +284,7 @@ A:active { color : purple }
      <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> <font color="#993399">3</font><font color="#990000">;</font> k<font color="#990000">++)</font>
           <font color="#FF0000">{</font>    offset <font color="#990000">=</font>  pack_object<font color="#990000">.</font><b><font color="#000000">mulstd_offset</font></b><font color="#990000">(</font>smooth_id<font color="#990000">,</font> k<font color="#990000">);</font>
                <b><font color="#0000FF">if</font></b><font color="#990000">(</font> offset <font color="#990000">!=</font> DISMOD_AT_NULL_SIZE_T <font color="#990000">)</font>
-                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset<font color="#990000">]</font> <font color="#990000">==</font> smooth_id <font color="#990000">+</font> k<font color="#990000">;</font>
+                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset<font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>smooth_id <font color="#990000">+</font> k<font color="#990000">);</font>
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">// check rates</font></i>
@@ -292,7 +292,7 @@ A:active { color : purple }
      <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;=</font> n_child<font color="#990000">;</font>  j<font color="#990000">++)</font>
           <font color="#FF0000">{</font>    info <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">rate_info</font></b><font color="#990000">(</font>rate_id<font color="#990000">,</font> j<font color="#990000">);</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>info<font color="#990000">.</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> rate_id <font color="#990000">+</font> <font color="#993399">3</font> <font color="#990000">+</font> j <font color="#990000">+</font> k<font color="#990000">;</font>
+                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>info<font color="#990000">.</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>rate_id <font color="#990000">+</font> <font color="#993399">3</font> <font color="#990000">+</font> j <font color="#990000">+</font> k<font color="#990000">);</font>
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">// check mulcov_meas_value</font></i>
@@ -307,7 +307,7 @@ A:active { color : purple }
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> integrand_id <font color="#990000">+</font> <font color="#993399">4</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>integrand_id <font color="#990000">+</font> <font color="#993399">4</font> <font color="#990000">+</font> k<font color="#990000">);</font>
                <font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> info<font color="#990000">.</font>smooth_id<font color="#990000">;</font>
                <font color="#008080">size_t</font> n_age     <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_age<font color="#990000">;</font>
                <font color="#008080">size_t</font> n_time    <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_time<font color="#990000">;</font>
@@ -326,7 +326,7 @@ A:active { color : purple }
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> integrand_id <font color="#990000">+</font> <font color="#993399">5</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>integrand_id <font color="#990000">+</font> <font color="#993399">5</font> <font color="#990000">+</font> k<font color="#990000">);</font>
                <font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> info<font color="#990000">.</font>smooth_id<font color="#990000">;</font>
                <font color="#008080">size_t</font> n_age     <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_age<font color="#990000">;</font>
                <font color="#008080">size_t</font> n_time    <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_time<font color="#990000">;</font>
@@ -345,7 +345,7 @@ A:active { color : purple }
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> rate_id <font color="#990000">+</font> <font color="#993399">6</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>rate_id <font color="#990000">+</font> <font color="#993399">6</font> <font color="#990000">+</font> k<font color="#990000">);</font>
                <font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> info<font color="#990000">.</font>smooth_id<font color="#990000">;</font>
                <font color="#008080">size_t</font> n_age     <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_age<font color="#990000">;</font>
                <font color="#008080">size_t</font> n_time    <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_time<font color="#990000">;</font>
@@ -366,7 +366,7 @@ A:active { color : purple }
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
-                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> rate_id <font color="#990000">+</font> <font color="#993399">6</font> <font color="#990000">+</font> k<font color="#990000">;</font>
+                    ok <font color="#990000">&amp;=</font> pack_vec<font color="#990000">[</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>rate_id <font color="#990000">+</font> <font color="#993399">6</font> <font color="#990000">+</font> k<font color="#990000">);</font>
                <font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> info<font color="#990000">.</font>smooth_id<font color="#990000">;</font>
                <font color="#008080">size_t</font> n_age     <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_age<font color="#990000">;</font>
                <font color="#008080">size_t</font> n_time    <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_time<font color="#990000">;</font>

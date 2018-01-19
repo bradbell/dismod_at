@@ -124,7 +124,6 @@ A:active { color : purple }
 <font color="#009900">bool</font> <b><font color="#000000">interp_weight_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>
      <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
-     <font color="#008080">size_t</font> i<font color="#990000">,</font> j<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b>  std<font color="#990000">::</font>string<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b>  CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
 
@@ -135,18 +134,18 @@ A:active { color : purple }
      <font color="#008080">size_t</font> n_time <font color="#990000">=</font> <font color="#993399">3</font><font color="#990000">;</font>
      <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">age_id</font></b><font color="#990000">(</font>n_age<font color="#990000">),</font>    <b><font color="#000000">time_id</font></b><font color="#990000">(</font>n_time<font color="#990000">);</font>
      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">age_table</font></b><font color="#990000">(</font>n_age<font color="#990000">),</font> <b><font color="#000000">time_table</font></b><font color="#990000">(</font>n_time<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age<font color="#990000">;</font> i<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    age_id<font color="#990000">[</font>i<font color="#990000">]</font>    <font color="#990000">=</font> i<font color="#990000">;</font>
-          age_table<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> i<font color="#990000">;</font>
+          age_table<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">10.0</font> <font color="#990000">*</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">);</font>
      <font color="#FF0000">}</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time<font color="#990000">;</font> j<font color="#990000">++)</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time<font color="#990000">;</font> j<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    time_id<font color="#990000">[</font>j<font color="#990000">]</font>    <font color="#990000">=</font> j<font color="#990000">;</font>
-          time_table<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1990.0</font> <font color="#990000">+</font> <font color="#993399">10</font> <font color="#990000">*</font> j<font color="#990000">;</font>
+          time_table<font color="#990000">[</font>j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1990.0</font> <font color="#990000">+</font> <font color="#993399">10</font> <font color="#990000">*</font> <font color="#009900">double</font><font color="#990000">(</font>j<font color="#990000">);</font>
      <font color="#FF0000">}</font>
      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">weight</font></b><font color="#990000">(</font>n_age <font color="#990000">*</font> n_time<font color="#990000">);</font>
-     <b><font color="#0000FF">for</font></b><font color="#990000">(</font>i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font>j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time<font color="#990000">;</font> j<font color="#990000">++)</font>
-               weight<font color="#990000">[</font>i <font color="#990000">*</font> n_time <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> i <font color="#990000">*</font> j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age<font color="#990000">;</font> i<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_time<font color="#990000">;</font> j<font color="#990000">++)</font>
+               weight<font color="#990000">[</font>i <font color="#990000">*</font> n_time <font color="#990000">+</font> j<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">*</font> j <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">);</font>
      <font color="#FF0000">}</font>
      dismod_at<font color="#990000">::</font><font color="#008080">weight_info</font> <b><font color="#000000">w_info</font></b><font color="#990000">(</font>
           age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> age_id<font color="#990000">,</font> time_id<font color="#990000">,</font> weight
