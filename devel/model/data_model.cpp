@@ -361,7 +361,10 @@ pack_object_     (pack_object)
 					{	size_t prior_id    = s_info.value_prior_id(i, j);
 						// if prior_id is null then const_value is not null
 						if( prior_id != DISMOD_AT_NULL_SIZE_T )
-						{	double lower = prior_table[prior_id].lower;
+						{
+# ifndef NDEBUG
+							double lower = prior_table[prior_id].lower;
+# endif
 							double upper = prior_table[prior_id].upper;
 							assert( upper == inf  || upper == lower );
 							assert( lower == -inf || upper == lower );
