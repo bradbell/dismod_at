@@ -34,6 +34,16 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 01-20$$
+The $cref/method/simulate_command/Method/$$
+used to simulate data was simplified and documented.
+To be specific, the average integrand, instead of the simulated
+data value, was used to compute the transformed standard deviation
+$cref/sigma
+	/statistic
+	/Log-Transformed Standard Deviation, sigma
+/$$.
+
 $head 01-18$$
 $list number$$
 The flags $code -Wpedantic$$, $code -Wshadow$$ and $code -Wconversion$$

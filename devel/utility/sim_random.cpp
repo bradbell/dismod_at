@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -58,9 +58,10 @@ $codei%
 	double %mu%
 %$$
 In the case were $icode density$$ is
-$code gaussian_enum$$ or $code laplace_enum$$,
+$code gaussian_enum$$, $code laplace_enum$$ or $code students_enum$$,
 it is the mean for the distribution that we are simulating.
-Otherwise it is the transformed mean.
+Otherwise $codei%log( %mu% + %eta% )%$$ is the mean of the
+log-transformed data.
 
 $head delta$$
 This argument has prototype
