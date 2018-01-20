@@ -1273,7 +1273,7 @@ void simulate_command(
 	CppAD::vector<double> reference_sc =
 		data_object.reference_ode(truth_var, parent_only);
 	//
-	for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
+	// for each measurement in the data_subset table
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	//
 		// compute the average integrand, avg
@@ -1318,16 +1318,20 @@ void simulate_command(
 		double eta          = data_subset_obj[subset_id].eta;
 		double nu           = data_subset_obj[subset_id].nu;
 		//
-		// compute the simulated measurement value
-		double sim_value   = dismod_at::sim_random(
-			density, avg, sim_delta, eta, nu
-		);
-		//
-		size_t simulate_id = sim_index * n_subset + subset_id;
-		row_value[simulate_id * n_col + 0] = to_string( sim_index );
-		row_value[simulate_id * n_col + 1] = to_string( subset_id );
-		row_value[simulate_id * n_col + 2] = to_string( sim_value );
-		row_value[simulate_id * n_col + 3] = to_string( meas_std );
+		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
+		{	// for each simulate_index
+			//
+			// compute the simulated measurement value
+			double sim_value   = dismod_at::sim_random(
+				density, avg, sim_delta, eta, nu
+			);
+			//
+			size_t simulate_id = sim_index * n_subset + subset_id;
+			row_value[simulate_id * n_col + 0] = to_string( sim_index );
+			row_value[simulate_id * n_col + 1] = to_string( subset_id );
+			row_value[simulate_id * n_col + 2] = to_string( sim_value );
+			row_value[simulate_id * n_col + 3] = to_string( meas_std );
+		}
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
