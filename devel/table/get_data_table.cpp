@@ -348,6 +348,11 @@ void get_data_table(
 		{	msg = "meas_std is less than or equal zero";
 			error_exit(msg, table_name, data_id);
 		}
+		double meas_value = data_table[data_id].meas_value;
+		if( std::isnan( meas_value ) )
+		{	msg = "meas_value is null";
+			error_exit(msg, table_name, data_id);
+		}
 		//
 		double eta       = data_table[data_id].eta;
 		bool eta_null    = std::isnan(eta);

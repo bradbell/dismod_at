@@ -49,6 +49,10 @@ was corrected to allow for negative values in
 $cref/linear/simulate_command/y/Linear/$$ cases.
 (The mistake fixed here was made during the changes on
 $cref/01-20/whats_new_2018/01-20/$$; see below.)
+$lnext
+Check for and abort with an error message when there is a $code null$$
+value in the data table
+$cref/meas_value/data_table/meas_value/$$ column.
 $lend
 
 
