@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180119  ',' ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180120  ',' ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command test executable path example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir checkpoint_newton_step system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
@@ -73,7 +73,7 @@ Keyword =
 'fit_var_table  The Optimization Results for Variables  ',' lagrange multipliers fit_var_id fit_var_value residual_value residual_dage residual_dtime lagrange_value lagrange_dage lagrange_dtime example ',
 'fit_data_subset_table  The Model and Weighted Residuals Corresponding to a Fit  ',' fit_data_subset_id avg_integrand weighted_residual example ',
 'truth_var_table  True Values Used During Simulations  ',' discussion truth_var_id truth_var_value example ',
-'simulate_table  The Simulated Table: Samples Simulated Measurements  ',' simulate_id simulate_index data_subset_id meas_value meas_std example ',
+'simulate_table  The Simulated Table: Samples Simulated Measurements  ',' simulate_id simulate_index data_subset_id simulate_value simulate_delta example ',
 'sample_table  The Sample Table: Samples of Variable Values  ',' simulated data user\'s choice sample_id sample_index var_id var_value example ',
 'predict_table  The Predict Table: Average Integrand Predictions  ',' see also purpose avgint subset node covariates predict_id sample_index avgint_id avg_integrand example ',
 'model  The Age-Time Dismod Model  ',' ',
@@ -94,7 +94,7 @@ Keyword =
 'init_command  The Variable Command  ',' syntax purpose changing values database var_table data_subset_table start_var_table scale_var_table example ',
 'depend_command  The Depend Command  ',' syntax database depend_var_table example ',
 'fit_command  The Fit Command  ',' syntax database variables fixed random both simulate_index simulate_table fit_var_table fit_data_subset_table effects example ',
-'simulate_command  The Simulate Command  ',' syntax database number_simulate truth_var_table data_table simulate_table meas_value meas_std example ',
+'simulate_command  The Simulate Command  ',' syntax database number_simulate truth_var_table simulate_table simulate_value simulate_delta linear log-transformed example ',
 'sample_command  The Sample Command  ',' syntax database number_sample method simulate asymptotic simulate_table fit_var_table sample_table bounds example ',
 'predict_command  The Predict Command  ',' syntax database source sample fit_var truth_var predict_table example ',
 'set_command.py  variable Command: Example and Test  ',' truth_var table ',
@@ -110,7 +110,7 @@ Keyword =
 'create_table.py  create_table and Unicode: Example and Test  ',' ',
 'create_database  Create a Dismod_at Database  ',' syntax purpose primary key name column file_name age_list time_list integrand_list node_table weight_table covariate_table avgint_table avgint_extra_columns data_table data_extra_columns prior_table smooth_table const_value nslist_table rate_table mulcov_table option_table example ',
 'create_database.py  create_database: Example and Test  ',' ',
-'db2csv_command  Create Csv Files that Summarize The Database  ',' syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed depend tru_value sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_std covariates predict.csv avgint_id avgint_extra_columns s_index example ',
+'db2csv_command  Create Csv Files that Summarize The Database  ',' syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed depend tru_value sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ',
 'db2csv_command.py  init Command: Example and Test  ',' ',
 'get_name_type  Get Column Names and Types in a Table  ',' syntax connection table_name col_name col_type primary key example ',
 'get_name_type.py  get_name_type: Example and Test  ',' ',
@@ -262,11 +262,11 @@ Keyword =
 'depend  Compute Data or Prior Dependencies  ',' ',
 'data_depend  Which Variables The Data Model Depends On  ',' syntax prototype pack_vec data_object ',
 'prior_depend  Which Variables The Prior Depends On  ',' syntax prototype pack_vec prior_object ',
-'whats_new_2018  Changes and Additions to Dismod_at During 2018  ',' 01-18 01-16 01-12 01-09 ',
+'whats_new_2018  Changes and Additions to Dismod_at During 2018  ',' 01-20 01-18 01-16 01-12 01-09 ',
 'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
 'whats_new_2016  Changes and Additions to Dismod_at During 2016  ',' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ',
 'whats_new_2015  Changes and Additions to Dismod_at During 2015  ',' 12-29 12-24 12-15 12-14 12-10 12-09 11-23 11-22 11-21 11-20 11-17 11-16 11-15 11-14 11-12 11-10 11-09 11-07 11-06 11-05 11-04 11-03 11-02 11-01 10-30 10-29 10-28 10-27 10-26 10-25 10-24 10-20 10-19 10-16 10-15 10-14 09-18 09-03 08-31 08-27 08-21 08-18 08-15 08-14 08-13 08-12 08-09 08-08 08-04 08-03 08-02 08-01 07-29 07-28 07-27 07-25 07-24 07-23 07-22 07-21 07-20 07-19 07-17 07-16 07-15 07-14 07-13 07-11 07-10 07-09 07-08 07-07 07-05 07-04 07-03 07-01 06-30 06-29 06-27 06-26 06-25 06-24 06-23 06-22 ',
-'wish_list  Dismod_at Wish List  ',' ode solution step size large excess mortality conditionals checkpointing simulated data lagrange multipliers documentation real world example user examples model simulating sampling random effects special hessian starting tracing optimization windows install '
+'wish_list  Dismod_at Wish List  ',' ode solution step size large excess mortality conditionals checkpointing lagrange multipliers documentation real world example user examples model simulating data sampling random effects special hessian starting tracing optimization windows install '
 ]
 
 var MaxList = 100;

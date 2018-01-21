@@ -91,7 +91,7 @@ var list_current0 = [
 'db2csv_command.htm#data.csv.avgint',
 'db2csv_command.htm#data.csv.residual',
 'db2csv_command.htm#data.csv.sim_value',
-'db2csv_command.htm#data.csv.sim_std',
+'db2csv_command.htm#data.csv.sim_delta',
 'db2csv_command.htm#data.csv.Covariates',
 'db2csv_command.htm#predict.csv',
 'db2csv_command.htm#predict.csv.avgint_id',

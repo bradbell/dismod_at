@@ -183,7 +183,7 @@ sim_row  <font color="#990000">=</font> simulate_table<font color="#990000">[</f
 <i><font color="#9A1900"># For this case, data_subset_id is same as data_id</font></i>
 <b><font color="#0000FF">assert</font></b> sim_row<font color="#990000">[</font><font color="#FF0000">'data_subset_id'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
 <i><font color="#9A1900"># There are no measurement standard deviation covariates, so</font></i>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> sim_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font> <font color="#990000">/</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-7</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> sim_row<font color="#990000">[</font><font color="#FF0000">'simulate_delta'</font><font color="#990000">]</font> <font color="#990000">/</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-7</font>
 <i><font color="#9A1900"># Compute the model value for the measurement (with no noise)</font></i>
 <i><font color="#9A1900"># Note that age_lower is equal age_upper</font></i>
 age            <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>
@@ -191,9 +191,9 @@ income         <font color="#990000">=</font> data_row<font color="#990000">[</f
 adjusted_omega <font color="#990000">=</font> omega_world <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font>income_multiplier <font color="#990000">*</font> income<font color="#990000">)</font>
 model_value    <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> adjusted_omega <font color="#990000">*</font> age <font color="#990000">)</font>
 <i><font color="#9A1900"># check if model value is within 3 standard deviations of the simulated value</font></i>
-meas_value <font color="#990000">=</font> sim_row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>
-meas_std   <font color="#990000">=</font> sim_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> model_value <font color="#990000">-</font> meas_value <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">3.0</font> <font color="#990000">*</font> meas_std
+simulate_value <font color="#990000">=</font> sim_row<font color="#990000">[</font><font color="#FF0000">'simulate_value'</font><font color="#990000">]</font>
+simulate_delta   <font color="#990000">=</font> sim_row<font color="#990000">[</font><font color="#FF0000">'simulate_delta'</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> model_value <font color="#990000">-</font> simulate_value <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">3.0</font> <font color="#990000">*</font> simulate_delta
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'simulate_command: OK'</font><font color="#990000">)</font></tt></pre>

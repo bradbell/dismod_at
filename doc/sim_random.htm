@@ -210,9 +210,12 @@ This argument has prototype
 In the case were 
 <code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
  is
-<code><font color="blue">gaussian_enum</font></code> or <code><font color="blue">laplace_enum</font></code>,
+<code><font color="blue">gaussian_enum</font></code>, <code><font color="blue">laplace_enum</font></code> or <code><font color="blue">students_enum</font></code>,
 it is the mean for the distribution that we are simulating.
-Otherwise it is the transformed mean.
+Otherwise 
+<code><font color="blue"><span style='white-space: nowrap'>log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)</span></font></code>
+ is the mean of the
+log-transformed data.
 
 <br>
 <br>

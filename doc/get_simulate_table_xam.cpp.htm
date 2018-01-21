@@ -151,8 +151,8 @@ A:active { color : purple }
           <font color="#FF0000">" simulate_id    integer primary key,"</font>
           <font color="#FF0000">" simulate_index integer,"</font>
           <font color="#FF0000">" data_subset_id integer,"</font>
-          <font color="#FF0000">" meas_value     real,"</font>
-          <font color="#FF0000">" meas_std       real"</font>
+          <font color="#FF0000">" simulate_value real,"</font>
+          <font color="#FF0000">" simulate_delta real"</font>
      <font color="#FF0000">")"</font><font color="#990000">,</font>
      <font color="#FF0000">"insert into simulate values(0, 0, 0, 0e-3, 6e-4)"</font><font color="#990000">,</font>
      <font color="#FF0000">"insert into simulate values(1, 0, 1, 1e-3, 5e-4)"</font><font color="#990000">,</font>
@@ -185,19 +185,19 @@ A:active { color : purple }
      ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">].</font>data_subset_id <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
      ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">].</font>data_subset_id <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>meas_value   <font color="#990000">==</font> <font color="#993399">0e-3</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>meas_value   <font color="#990000">==</font> <font color="#993399">1e-3</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>meas_value   <font color="#990000">==</font> <font color="#993399">2e-3</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>meas_value   <font color="#990000">==</font> <font color="#993399">0e-3</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">].</font>meas_value   <font color="#990000">==</font> <font color="#993399">1e-3</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">].</font>meas_value   <font color="#990000">==</font> <font color="#993399">2e-3</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>simulate_value <font color="#990000">==</font> <font color="#993399">0e-3</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>simulate_value <font color="#990000">==</font> <font color="#993399">1e-3</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>simulate_value <font color="#990000">==</font> <font color="#993399">2e-3</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>simulate_value <font color="#990000">==</font> <font color="#993399">0e-3</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">].</font>simulate_value <font color="#990000">==</font> <font color="#993399">1e-3</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">].</font>simulate_value <font color="#990000">==</font> <font color="#993399">2e-3</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>meas_std     <font color="#990000">==</font> <font color="#993399">6e-4</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>meas_std     <font color="#990000">==</font> <font color="#993399">5e-4</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>meas_std     <font color="#990000">==</font> <font color="#993399">4e-4</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>meas_std     <font color="#990000">==</font> <font color="#993399">3e-4</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">].</font>meas_std     <font color="#990000">==</font> <font color="#993399">2e-4</font><font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">].</font>meas_std     <font color="#990000">==</font> <font color="#993399">1e-4</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>simulate_delta <font color="#990000">==</font> <font color="#993399">6e-4</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>simulate_delta <font color="#990000">==</font> <font color="#993399">5e-4</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>simulate_delta <font color="#990000">==</font> <font color="#993399">4e-4</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>simulate_delta <font color="#990000">==</font> <font color="#993399">3e-4</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">].</font>simulate_delta <font color="#990000">==</font> <font color="#993399">2e-4</font><font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> simulate_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">].</font>simulate_delta <font color="#990000">==</font> <font color="#993399">1e-4</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// close database and return</font></i>
      <b><font color="#000000">sqlite3_close</font></b><font color="#990000">(</font>db<font color="#990000">);</font>

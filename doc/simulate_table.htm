@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Simulated Table: Samples Simulated Measurements</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Simulated Table: Samples Simulated Measurements">
-<meta name="keywords" id="keywords" content=" the simulated table: samples measurements simulate_id simulate_index data_subset_id meas_value meas_std example ">
+<meta name="keywords" id="keywords" content=" the simulated table: samples measurements simulate_id simulate_index data_subset_id simulate_value simulate_delta example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,8 +98,8 @@ A:active { color : purple }
 <option>simulate_id</option>
 <option>simulate_index</option>
 <option>data_subset_id</option>
-<option>meas_value</option>
-<option>meas_std</option>
+<option>simulate_value</option>
+<option>simulate_delta</option>
 <option>Example</option>
 </select>
 </td>
@@ -180,9 +180,9 @@ and
 
 <br>
 <br>
-<b><big><a name="meas_value" id="meas_value">meas_value</a></big></b>
+<b><big><a name="simulate_value" id="simulate_value">simulate_value</a></big></b>
 <br>
-The column has type <code><font color="blue">real</font></code> and is
+This column has type <code><font color="blue">real</font></code> and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
@@ -190,17 +190,12 @@ i.e., it can act as a replacement for the value
 
 <br>
 <br>
-<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
+<b><big><a name="simulate_delta" id="simulate_delta">simulate_delta</a></big></b>
 <br>
 The column has type <code><font color="blue">real</font></code> and is
-the simulated measurement standard deviation
-that for the specified row of the data table;
-i.e., it acts as a replacement for the value
-<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
- where the simulated
-
-<code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i></code>
- is used.
+the adjusted measurement standard deviation used in the simulation; i.e.,
+<a href="simulate_command.htm#delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
+.
 
 <br>
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed depend tru_value sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_std covariates predict.csv avgint_id avgint_extra_columns s_index example ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed depend tru_value sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -143,7 +143,7 @@ A:active { color : purple }
 <option>---..avgint</option>
 <option>---..residual</option>
 <option>---..sim_value</option>
-<option>---..sim_std</option>
+<option>---..sim_delta</option>
 <option>---..Covariates</option>
 <option>predict.csv</option>
 <option>---..avgint_id</option>
@@ -685,10 +685,9 @@ for this row.
 <b><a name="data.csv.sim_value" id="data.csv.sim_value">sim_value</a></b>
 <br>
 If the <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
- has been run, this is one of the
-<a href="simulate_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- for
-data values for the specified
+ has been run, this is the
+<a href="simulate_table.htm#simulate_value" target="_top"><span style='white-space: nowrap'>simulate_value</span></a>
+ for this
 <a href="db2csv_command.htm#data.csv.data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
  and
 <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
@@ -704,14 +703,18 @@ value zero is used for the
 
 <br>
 <br>
-<b><a name="data.csv.sim_std" id="data.csv.sim_std">sim_std</a></b>
+<b><a name="data.csv.sim_delta" id="data.csv.sim_delta">sim_delta</a></b>
 <br>
 This is the
-<a href="simulate_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
- for the
+<a href="simulate_table.htm#simulate_delta" target="_top"><span style='white-space: nowrap'>simulate_delta</span></a>
+ for this
+<a href="db2csv_command.htm#data.csv.data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+ the
 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ (see 
 <code><i><font color="black"><span style='white-space: nowrap'>sim_value</span></font></i></code>
- in this table.
+ above).
 
 <br>
 <br>

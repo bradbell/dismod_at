@@ -45,8 +45,8 @@ var list_current0 = [
 'simulate_table.htm#simulate_id',
 'simulate_table.htm#simulate_index',
 'simulate_table.htm#data_subset_id',
-'simulate_table.htm#meas_value',
-'simulate_table.htm#meas_std',
+'simulate_table.htm#simulate_value',
+'simulate_table.htm#simulate_delta',
 'simulate_table.htm#Example'
 ];
 function choose_across0(item)

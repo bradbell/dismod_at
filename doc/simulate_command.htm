@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Simulate Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Simulate Command">
-<meta name="keywords" id="keywords" content=" the simulate command syntax database number_simulate truth_var_table data_table simulate_table meas_value meas_std example ">
+<meta name="keywords" id="keywords" content=" the simulate command syntax database number_simulate truth_var_table simulate_table simulate_value simulate_delta d delta y linear log-transformed example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -91,10 +91,15 @@ A:active { color : purple }
 <option>database</option>
 <option>number_simulate</option>
 <option>truth_var_table</option>
-<option>data_table</option>
 <option>simulate_table</option>
-<option>---..meas_value</option>
-<option>---..meas_std</option>
+<option>---..simulate_value</option>
+<option>---..simulate_delta</option>
+<option>d</option>
+<option>delta</option>
+<option>A</option>
+<option>y</option>
+<option>---..Linear</option>
+<option>---..Log-Transformed</option>
 <option>Example</option>
 </select>
 </td>
@@ -135,7 +140,7 @@ data set.
 <br>
 The <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
  is an addition input table for this command.
-It specifies the true values for the
+It specifies the values for the
 <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
  used during the simulation.
 This table can be create by the
@@ -148,40 +153,21 @@ or the user can create it directly with the aid of the
 
 <br>
 <br>
-<b><big><a name="data_table" id="data_table">data_table</a></big></b>
-<br>
-It the data
-<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
- is
-<code><font color="blue">log_gaussian</font></code> or <code><font color="blue">log_laplace</font></code>,
-<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- is used to
-log-transform the standard deviations.
-If the density is <code><font color="blue">gaussian</font></code> or <code><font color="blue">laplace</font></code>,
-the simulation standard deviation is the same as
-<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
- and negative simulated measurements
-are not converted to zero.
-
-<br>
-<br>
 <b><big><a name="simulate_table" id="simulate_table">simulate_table</a></big></b>
 <br>
 A new <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
- is created.
-It contains simulated measurement values
-<a href="simulate_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- and standard deviations
-<a href="simulate_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
-.
-These values can be used in place of the data table values for
-<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- and
-<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
-.
+ is created by this command.
+It contains simulated measurements and
+adjusted standard deviations.
 Only the <a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
  that are in the
 data_subset table are included in the simulated measurements.
+In addition, 
+<code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i></code>
+ values are simulated
+for such 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
 Hence the number of rows in <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
  is
 
@@ -191,49 +177,126 @@ Hence the number of rows in <a href="simulate_table.htm" target="_top"><span sty
 
 <br>
 <br>
-<b><a name="simulate_table.meas_value" id="simulate_table.meas_value">meas_value</a></b>
+<b><a name="simulate_table.simulate_value" id="simulate_table.simulate_value">simulate_value</a></b>
 <br>
-Negative simulated data values are converted to zero. Hence
+The column contains the value of
+<a href="simulate_command.htm#y" target="_top"><span style='white-space: nowrap'>y</span></a>
+ for each 
+<code><i><font color="black"><span style='white-space: nowrap'>subset_data_id</span></font></i></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i></code>
- in the simulate table are all non-negative.
+and each 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+.
 
 <br>
 <br>
-<b><a name="simulate_table.meas_std" id="simulate_table.meas_std">meas_std</a></b>
+<b><a name="simulate_table.simulate_delta" id="simulate_table.simulate_delta">simulate_delta</a></b>
 <br>
-It the data
-<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
- is
-<code><font color="blue">uniform</font></code>, <code><font color="blue">gaussian</font></code>, or <code><font color="blue">laplace</font></code>,
+The column contains the value of
+<a href="simulate_command.htm#delta" target="_top"><span style='white-space: nowrap'>y</span></a>
+ for each 
+<code><i><font color="black"><span style='white-space: nowrap'>subset_data_id</span></font></i></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
- in the simulate table
-is set so that the adjusted standard deviation
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>delta</span></a>
+and each 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+.
+Note that the value of <small>@(@
+\delta
+@)@</small> only depends on 
+<code><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i></code>
+.
 
-is the same as for the data table.
-Note that a small minimum is chosen if the condition above
-would require 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
- to be near zero or negative.
-<code><span style='white-space: nowrap'><br>
 <br>
-</span></code>It the data
-<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
- is <code><font color="blue">log_gaussian</font></code>
-or <code><font color="blue">log_laplace</font></code>, 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
- in the simulate table
-is set so that the log-transformed standard deviation
-<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+<br>
+<b><big><a name="d" id="d">d</a></big></b>
+<br>
+We use <small>@(@
+d
+@)@</small> to denote the
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ and
+<a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
 
-is the same as for the data table.
-Note that the adjusted standard deviation is used in the log transformation.
-Also note that a small minimum is chosen if the condition above
-would require 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
- to be near zero or negative.
+corresponding to this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="delta" id="delta">delta</a></big></b>
+<br>
+We use <small>@(@
+\delta
+@)@</small> to denote the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+
+corresponding to this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="A" id="A">A</a></big></b>
+<br>
+We use <small>@(@
+A
+@)@</small> denote the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+
+corresponding to the value for the model variables and
+this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="y" id="y">y</a></big></b>
+
+
+<br>
+<br>
+<b><a name="y.Linear" id="y.Linear">Linear</a></b>
+<br>
+If <small>@(@
+d
+@)@</small> is Gaussian, Laplace, or Students,
+<small>@[@
+
+	y = A + e
+
+@]@</small>
+where <small>@(@
+e
+@)@</small> is simulated from the corresponding distribution
+with mean zero and standard deviation <small>@(@
+\delta
+@)@</small>.
+
+<br>
+<br>
+<b><a name="y.Log-Transformed" id="y.Log-Transformed">Log-Transformed</a></b>
+<br>
+If <small>@(@
+d
+@)@</small> is Log-Gaussian, Log-Laplace, or Log-Students,
+<small>@[@
+
+	e = \log( y + \eta ) - \log( A + \eta )
+
+@]@</small>
+<small>@(@
+e
+@)@</small> is simulated from the corresponding linear distribution
+with mean zero and standard deviation <small>@(@
+\delta
+@)@</small>.
+It follows that
+<small>@[@
+
+	y = \max\{ 0 , \exp(e) * ( A + \eta ) - \eta \}
+
+@]@</small>
+
 
 
 <br>

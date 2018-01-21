@@ -27,7 +27,6 @@ var list_current0 = [
 'wish_list.htm#ODE Solution.Large Excess Mortality',
 'wish_list.htm#ODE Solution.Conditionals',
 'wish_list.htm#ODE Solution.Checkpointing',
-'wish_list.htm#Simulated Data',
 'wish_list.htm#Lagrange Multipliers',
 'wish_list.htm#Documentation',
 'wish_list.htm#Documentation.Real World Example',

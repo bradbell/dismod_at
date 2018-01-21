@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Contents</option>
+<option>01-20</option>
 <option>01-18</option>
 <option>01-16</option>
 <option>01-12</option>
@@ -95,6 +96,32 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="01-20" id="01-20">01-20</a></big></b>
+
+<ol type="1"><li>
+The method used by the <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+ was simplified and documented.
+To be specific, the average integrand, instead of the simulated
+data value, was used to compute the transformed standard deviation
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+.
+</li><li>
+
+The fields 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+
+in the simulate table were changed to
+<a href="simulate_table.htm#simulate_value" target="_top"><span style='white-space: nowrap'>simulate_value</span></a>
+ and
+<a href="simulate_table.htm#simulate_delta" target="_top"><span style='white-space: nowrap'>simulate_delta</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="01-18" id="01-18">01-18</a></big></b>
 
 <ol type="1"><li>
