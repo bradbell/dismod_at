@@ -180,31 +180,32 @@ Hence the number of rows in <a href="simulate_table.htm" target="_top"><span sty
 <br>
 <b><a name="simulate_table.simulate_value" id="simulate_table.simulate_value">simulate_value</a></b>
 <br>
-The column contains the value of
-<a href="simulate_command.htm#y" target="_top"><span style='white-space: nowrap'>y</span></a>
- for each 
+This value is different for each 
 <code><i><font color="black"><span style='white-space: nowrap'>subset_data_id</span></font></i></code>
 
 and each 
 <code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+.
+In the <a href="simulate_command.htm#y.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+ case,
+this column contains the value 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+.
+In the <a href="simulate_command.htm#y.Log-Transformed" target="_top"><span style='white-space: nowrap'>log-transformed</span></a>
+ case,
+this column contains the value 
+<code><font color="blue"><span style='white-space: nowrap'>max(</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;0)</span></font></code>
 .
 
 <br>
 <br>
 <b><a name="simulate_table.simulate_delta" id="simulate_table.simulate_delta">simulate_delta</a></b>
 <br>
-The column contains the value of
-<a href="simulate_command.htm#delta" target="_top"><span style='white-space: nowrap'>y</span></a>
- for each 
-<code><i><font color="black"><span style='white-space: nowrap'>subset_data_id</span></font></i></code>
+This column contains the value of
+<a href="simulate_command.htm#delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
 
-and each 
-<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
-.
-Note that the value of <small>@(@
-\delta
-@)@</small> only depends on 
-<code><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i></code>
+and is different for each 
+<code><i><font color="black"><span style='white-space: nowrap'>subset_data_id</span></font></i></code>
 .
 
 <br>
@@ -258,9 +259,11 @@ We use <small>@(@
 @)@</small> to denote the
 <a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
 
-\[
-	\sigma = log( A + \eta + \delta ) - \log(A + \eta)
-\]
+<small>@[@
+
+	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
+
+@]@</small>
 
 <br>
 <br>
@@ -315,7 +318,7 @@ with mean zero and standard deviation <small>@(@
 It follows that
 <small>@[@
 
-	y = \max\{ 0 \W{,} \exp(e) * ( A + \eta ) - \eta \}
+	y = \exp(e) * ( A + \eta )
 
 @]@</small>
 The corresponding
