@@ -831,6 +831,20 @@ In this case, it is suggest that you
 first fit with $icode variables$$ equal to $code fixed$$
 and then fit with $icode variables$$ equal to $code both$$.
 
+$head Convergence Problems$$
+The derivative of the fixed effects objective,
+at the prior mean for the fixed effects,
+is used to scale the fixed effects objective.
+If the optimal value for a fixed effect is equal to its prior mean,
+its partial derivative at the prior mean is often near zero.
+Near zero derivatives, at the prior mean, cause the scaling to be unstable
+and result in convergence problems.
+You may be able to fix this
+by using a uniform distribution, and a different prior mean,
+for a fixed effect that does not change.
+If this does not work, the data will not determine that fixed effect
+and you may have to constrain it to have the value you want.
+
 $children%example/get_started/fit_command.py
 %$$
 $head Example$$
