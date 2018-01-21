@@ -34,6 +34,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 01-21$$
+Include discussion of the
+$cref/weighted residual/statistic/Weighted Residual Function, R/$$
+in the $cref simulate_command$$ documentation.
+
 $head 01-20$$
 $list number$$
 The method used by the $cref simulate_command$$ was simplified and documented.

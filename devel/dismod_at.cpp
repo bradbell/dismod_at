@@ -1185,27 +1185,55 @@ $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 corresponding to the value for the model variables and
 this $icode data_id$$.
 
+$head sigma$$
+We use $latex \sigma$$ to denote the
+$cref/log-transformed standard deviation
+	/statistic
+	/Log-Transformed Standard Deviation, sigma
+/$$
+\[
+	\sigma = log( A + \eta + \delta ) - \log(A + \eta)
+\]
+
 $head y$$
 
 $subhead Linear$$
-If $latex d$$ is Gaussian, Laplace, or Students,
+If $latex d$$ is Gaussian, Laplace, or Student's-t,
 $latex \[
 	y = A + e
 \]$$
 where $latex e$$ is simulated from the corresponding distribution
 with mean zero and standard deviation $latex \delta$$.
+The corresponding
+$cref/weighted residual
+	/statistic
+	/Weighted Residual Function, R
+	/Gaussian, Laplace, Student's-t
+/$$ is
+$latex \[
+	R = e / \delta
+\]$$
 
 $subhead Log-Transformed$$
-If $latex d$$ is Log-Gaussian, Log-Laplace, or Log-Students,
+If $latex d$$ is Log-Gaussian, Log-Laplace, or Log-Student's-t,
 $latex \[
 	e = \log( y + \eta ) - \log( A + \eta )
 \] $$
 $latex e$$ is simulated from the corresponding linear distribution
-with mean zero and standard deviation $latex \delta$$.
+with mean zero and standard deviation $latex \sigma$$.
 It follows that
 $latex \[
-	y = \max\{ 0 , \exp(e) * ( A + \eta ) - \eta \}
+	y = \max\{ 0 \W{,} \exp(e) * ( A + \eta ) - \eta \}
 \] $$
+The corresponding
+$cref/weighted residual
+	/statistic
+	/Weighted Residual Function, R
+	/Gaussian, Laplace, Student's-t
+/$$ is
+$latex \[
+	R = e / \sigma
+\]$$
 
 
 $children%example/get_started/simulate_command.py
