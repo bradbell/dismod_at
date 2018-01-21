@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -43,8 +43,8 @@ bool get_simulate_table_xam(void)
 		" simulate_id    integer primary key,"
 		" simulate_index integer,"
 		" data_subset_id integer,"
-		" meas_value     real,"
-		" meas_std       real"
+		" simulate_value real,"
+		" simulate_delta real"
 	")",
 	"insert into simulate values(0, 0, 0, 0e-3, 6e-4)",
 	"insert into simulate values(1, 0, 1, 1e-3, 5e-4)",
@@ -77,19 +77,19 @@ bool get_simulate_table_xam(void)
 	ok  &= simulate_table[4].data_subset_id == 1;
 	ok  &= simulate_table[5].data_subset_id == 2;
 	//
-	ok  &= simulate_table[0].meas_value   == 0e-3;
-	ok  &= simulate_table[1].meas_value   == 1e-3;
-	ok  &= simulate_table[2].meas_value   == 2e-3;
-	ok  &= simulate_table[3].meas_value   == 0e-3;
-	ok  &= simulate_table[4].meas_value   == 1e-3;
-	ok  &= simulate_table[5].meas_value   == 2e-3;
+	ok  &= simulate_table[0].simulate_value == 0e-3;
+	ok  &= simulate_table[1].simulate_value == 1e-3;
+	ok  &= simulate_table[2].simulate_value == 2e-3;
+	ok  &= simulate_table[3].simulate_value == 0e-3;
+	ok  &= simulate_table[4].simulate_value == 1e-3;
+	ok  &= simulate_table[5].simulate_value == 2e-3;
 	//
-	ok  &= simulate_table[0].meas_std     == 6e-4;
-	ok  &= simulate_table[1].meas_std     == 5e-4;
-	ok  &= simulate_table[2].meas_std     == 4e-4;
-	ok  &= simulate_table[3].meas_std     == 3e-4;
-	ok  &= simulate_table[4].meas_std     == 2e-4;
-	ok  &= simulate_table[5].meas_std     == 1e-4;
+	ok  &= simulate_table[0].simulate_delta == 6e-4;
+	ok  &= simulate_table[1].simulate_delta == 5e-4;
+	ok  &= simulate_table[2].simulate_delta == 4e-4;
+	ok  &= simulate_table[3].simulate_delta == 3e-4;
+	ok  &= simulate_table[4].simulate_delta == 2e-4;
+	ok  &= simulate_table[5].simulate_delta == 1e-4;
 	//
 	// close database and return
 	sqlite3_close(db);

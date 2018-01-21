@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -49,7 +49,7 @@ $section Changes and Additions to Dismod_at During 2016$$
 
 $head 12-03$$
 $list number$$
-The $cref/meas_std/simulate_table/meas_std/$$ was added to the
+The $icode meas_std$$ filed was added to the
 simulate table.
 $lnext
 The option arguments were added to each
@@ -75,7 +75,7 @@ The $cref/message_type/log_table/message_type/$$ $code warning$$
 was missing in the log file documentation. It has been added.
 $lnext
 Change the $cref simulate_command$$ so that it adjusts
-$cref/meas_std/simulate_command/simulate_table/meas_std/$$
+$icode meas_std$$ simulate table field
 to be relative to the simulated measurements instead of
 using the data table
 $cref/meas_std/data_table/meas_std/$$.

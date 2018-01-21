@@ -802,7 +802,7 @@ $head simulate_index$$
 If $icode simulate_index$$ is present, it must be less than
 $cref/number_simulate/simulate_command/number_simulate/$$.
 In this case the corresponding simulate table
-$cref/meas_value/simulate_table/meas_value/$$ entries
+$cref/simulate_value/simulate_table/simulate_value/$$ entries
 are used in place of the data table
 $cref/meas_value/data_table/meas_value/$$ entries.
 All the rest of the inputs are the same as when $icode simulated_index$$
@@ -904,7 +904,7 @@ void fit_command(
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t simulate_id = n_subset * sim_index + subset_id;
 			data_subset_obj[subset_id].meas_value =
-				simulate_table[simulate_id].meas_value;
+				simulate_table[simulate_id].simulate_value;
 		}
 	}
 	data_object.replace_like(minimum_meas_cv, data_subset_obj);
@@ -1145,8 +1145,8 @@ $cref var_table$$ (created by the $cref init_command$$).
 
 $head simulate_table$$
 A new $cref simulate_table$$ is created by this command.
-It contains simulated measurement values and
-adjusted measurement standard deviations.
+It contains simulated measurements and
+adjusted standard deviations.
 Only the $cref/data_id/data_subset_table/data_id/$$ that are in the
 data_subset table are included in the simulated measurements.
 In addition, $icode number_simulate$$ values are simulated
@@ -1154,23 +1154,24 @@ for such $icode data_id$$.
 Hence the number of rows in $cref simulate_table$$ is
 $icode number_simulate$$ times the number of rows in $cref data_subset_table$$.
 
-$subhead meas_value$$
-Negative simulated data values are converted to zero. Hence
-$icode meas_value$$ in the simulate table are all non-negative.
+$subhead simulate_value$$
+The column contains the value of
+$cref/y/simulate_command/y/$$ for each $icode subset_data_id$$
+and each $icode simulate_index$$.
 
-$subhead meas_std$$
-Currently the measurement standard deviations in the simulate
-and data table are the same, but this may change in the future.
+$subhead simulate_delta$$
+The column contains the value of
+$cref/y/simulate_command/delta/$$ for each $icode subset_data_id$$
+and each $icode simulate_index$$.
+Note that the value of $latex \delta$$ only depends on $icode data_subset_id$$.
 
-$head Method$$
-
-$subhead d$$
+$head d$$
 We use $latex d$$ to denote the
 $cref/density_id/data_table/density_id/$$ and
 $cref/eta/data_table/eta/$$
 corresponding to this $icode data_id$$.
 
-$subhead delta$$
+$head delta$$
 We use $latex \delta$$ to denote the
 $cref/adjusted standard deviation
 	/data_like
@@ -1178,7 +1179,7 @@ $cref/adjusted standard deviation
 /$$
 corresponding to this $icode data_id$$.
 
-$subhead A$$
+$head A$$
 We use $latex A$$ denote the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 corresponding to the value for the model variables and
@@ -1203,7 +1204,7 @@ $latex e$$ is simulated from the corresponding linear distribution
 with mean zero and standard deviation $latex \delta$$.
 It follows that
 $latex \[
-	y = \exp(e) * ( A + \eta ) - \eta
+	y = \max\{ 0 , \exp(e) * ( A + \eta ) - \eta \}
 \] $$
 
 
@@ -1261,11 +1262,11 @@ void simulate_command(
 	col_type[1]   = "integer";
 	col_unique[1] = false;
 	//
-	col_name[2]   = "meas_value";
+	col_name[2]   = "simulate_value";
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
-	col_name[3]   = "meas_std";
+	col_name[3]   = "simulate_delta";
 	col_type[3]   = "real";
 	col_unique[3] = false;
 	//
@@ -1314,7 +1315,6 @@ void simulate_command(
 		dismod_at::density_enum density =
 			dismod_at::density_enum( data_subset_obj[subset_id].density_id );
 		//
-		double meas_std     = data_subset_obj[subset_id].meas_std;
 		double eta          = data_subset_obj[subset_id].eta;
 		double nu           = data_subset_obj[subset_id].nu;
 		//
@@ -1325,12 +1325,13 @@ void simulate_command(
 			double sim_value   = dismod_at::sim_random(
 				density, avg, sim_delta, eta, nu
 			);
+			sim_value = std::max(sim_value, 0.0);
 			//
 			size_t simulate_id = sim_index * n_subset + subset_id;
 			row_value[simulate_id * n_col + 0] = to_string( sim_index );
 			row_value[simulate_id * n_col + 1] = to_string( subset_id );
 			row_value[simulate_id * n_col + 2] = to_string( sim_value );
-			row_value[simulate_id * n_col + 3] = to_string( meas_std );
+			row_value[simulate_id * n_col + 3] = to_string( sim_delta );
 		}
 	}
 	dismod_at::create_table(
@@ -1544,7 +1545,7 @@ void sample_command(
 					dismod_at::error_exit(msg, table_name, simulate_id);
 				}
 				data_subset_obj[subset_id].meas_value =
-					simulate_table[simulate_id].meas_value;
+					simulate_table[simulate_id].simulate_value;
 			}
 			// replace_like
 			data_object.replace_like(minimum_meas_cv, data_subset_obj);

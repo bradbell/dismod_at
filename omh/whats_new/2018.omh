@@ -35,14 +35,20 @@ $childtable%
 %$$
 
 $head 01-20$$
-The $cref/method/simulate_command/Method/$$
-used to simulate data was simplified and documented.
+$list number$$
+The method used by the $cref simulate_command$$ was simplified and documented.
 To be specific, the average integrand, instead of the simulated
 data value, was used to compute the transformed standard deviation
 $cref/sigma
 	/statistic
 	/Log-Transformed Standard Deviation, sigma
 /$$.
+$lnext
+The fields $icode meas_value$$ and $icode meas_std$$
+in the simulate table were changed to
+$cref/simulate_value/simulate_table/simulate_value/$$ and
+$cref/simulate_delta/simulate_table/simulate_delta/$$.
+$lend
 
 $head 01-18$$
 $list number$$

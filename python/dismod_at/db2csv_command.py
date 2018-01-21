@@ -290,9 +290,8 @@
 # for this row.
 #
 # $subhead sim_value$$
-# If the $cref simulate_command$$ has been run, this is one of the
-# $cref/meas_value/simulate_table/meas_value/$$ for
-# data values for the specified
+# If the $cref simulate_command$$ has been run, this is the
+# $cref/simulate_value/simulate_table/simulate_value/$$ for this
 # $cref/data_id/db2csv_command/data.csv/data_id/$$ and
 # $cref/simulate_index/fit_command/simulate_index/$$
 # in the previous fit command.
@@ -301,10 +300,11 @@
 # in the previous fit command, the
 # value zero is used for the $icode simulate_index$$.
 #
-# $subhead sim_std$$
+# $subhead sim_delta$$
 # This is the
-# $cref/meas_std/simulate_table/meas_std/$$ for the
-# $icode sim_value$$ in this table.
+# $cref/simulate_delta/simulate_table/simulate_delta/$$ for this
+# $cref/data_id/db2csv_command/data.csv/data_id/$$ the
+# $icode simulate_index$$ (see $icode sim_value$$ above).
 #
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
@@ -914,7 +914,7 @@ def db2csv_command(database_file_arg) :
 	]
 	if simulate_index != None :
 		header.append('sim_value')
-		header.append('sim_std')
+		header.append('sim_delta')
 	for row in table_data['covariate'] :
 		header.append( row['covariate_name'] )
 	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
@@ -982,10 +982,10 @@ def db2csv_command(database_file_arg) :
 			row_out['residual'] = convert2output( row['weighted_residual'] )
 		if simulate_index != None :
 			simulate_id =  n_subset * simulate_index + subset_id
-			sim_value = table_data['simulate'][simulate_id]['meas_value']
-			sim_std   = table_data['simulate'][simulate_id]['meas_std']
+			sim_value = table_data['simulate'][simulate_id]['simulate_value']
+			sim_delta = table_data['simulate'][simulate_id]['simulate_delta']
 			row_out['sim_value'] = convert2output( sim_value )
-			row_out['sim_std']   = convert2output( sim_std )
+			row_out['sim_delta'] = convert2output( sim_delta )
 		csv_writer.writerow(row_out)
 		subset_id += 1
 	csv_file.close()

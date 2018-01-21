@@ -708,8 +708,7 @@ bad measurement standard deviations that are two or more orders of
 magnitude small than the corresponding measurement values.
 $lnext
 Change the simulate command so only the $code log_gaussian$$ and
-$code log_laplace$$ negative data is set to zero; see
-$cref/meas_value/simulate_command/simulate_table/meas_value/$$.
+$code log_laplace$$ negative data is set to zero.
 (It used to also do this in the $code gaussian$$ and $code laplace$$ cases.)
 $lend
 

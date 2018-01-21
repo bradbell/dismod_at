@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -66,13 +66,6 @@ extended to include derivatives with respect to parameters; see
 $href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
 	%checkpoint_extended_ode
 %$$.
-
-$head Simulated Data$$
-It seems to me that
-$cref/meas_std/simulate_table/meas_std/$$ from the simulate table should
-be used when ever one is fitting simulated data.
-It is not clear to me, looking at the source code and documentation, that this
-is clearly the case. This needs to be checked and fixed if in error.
 
 $head Lagrange Multipliers$$
 Change the Lagrange multipliers

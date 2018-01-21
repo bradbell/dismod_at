@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -51,19 +51,16 @@ for $icode simulate_index$$ equal zero to $icode%number_simulate%-1%$$
 and $icode data_subset_id$$ equal zero to $codei%n_subset%-1%$$.
 
 
-$head meas_value$$
-The column has type $code real$$ and is
+$head simulate_value$$
+This column has type $code real$$ and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
 
-$head meas_std$$
+$head simulate_delta$$
 The column has type $code real$$ and is
-the simulated measurement standard deviation
-that for the specified row of the data table;
-i.e., it acts as a replacement for the value
-$cref/meas_std/data_table/meas_std/$$ where the simulated
-$icode meas_value$$ is used.
+the adjusted measurement standard deviation used in the simulation; i.e.,
+$cref/delta/simulate_command/delta/$$.
 
 $head Example$$
 See the $cref simulate_command.py$$ example and test.

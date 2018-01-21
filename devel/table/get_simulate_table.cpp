@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -57,12 +57,15 @@ $code int$$ $cnext $code data_subset_id$$ $cnext
 	The $cref/data_subset_id/data_subset_table/data_subset_id/$$
 	for this simulated measurement.
 $rnext
-$code double$$ $cnext $code meas_value$$ $cnext
+$code double$$ $cnext $code simulate_value$$ $cnext
 	The $cref/meas_value/data_table/meas_value/$$
 	for this simulated measurement.
 $rnext
-$code double$$ $cnext $code meas_std$$ $cnext
-	The $cref/meas_std/data_table/meas_std/$$
+$code double$$ $cnext $code simulate_delta$$ $cnext
+	The $cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+	/$$
 	for this simulated measurement.
 $tend
 
@@ -98,22 +101,22 @@ CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, data_subset_id);
 	assert( data_subset_id.size() == n_simulate );
 
-	column_name             =  "meas_value";
-	CppAD::vector<double>       meas_value;
-	get_table_column(db, table_name, column_name, meas_value);
-	assert( meas_value.size() == n_simulate );
+	column_name             =  "simulate_value";
+	CppAD::vector<double>       simulate_value;
+	get_table_column(db, table_name, column_name, simulate_value);
+	assert( simulate_value.size() == n_simulate );
 
-	column_name             =  "meas_std";
-	CppAD::vector<double>       meas_std;
-	get_table_column(db, table_name, column_name, meas_std);
-	assert( meas_std.size() == n_simulate );
+	column_name             =  "simulate_delta";
+	CppAD::vector<double>       simulate_delta;
+	get_table_column(db, table_name, column_name, simulate_delta);
+	assert( simulate_delta.size() == n_simulate );
 
 	CppAD::vector<simulate_struct> simulate_table(n_simulate);
 	for(size_t i = 0; i < n_simulate; i++)
 	{	simulate_table[i].simulate_index   = simulate_index[i];
 		simulate_table[i].data_subset_id   = data_subset_id[i];
-		simulate_table[i].meas_value       = meas_value[i];
-		simulate_table[i].meas_std         = meas_std[i];
+		simulate_table[i].simulate_value   = simulate_value[i];
+		simulate_table[i].simulate_delta   = simulate_delta[i];
 	}
 	return simulate_table;
 }
