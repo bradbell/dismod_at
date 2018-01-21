@@ -45,6 +45,7 @@ var list_current0 = [
 'simulate_command.htm#d',
 'simulate_command.htm#delta',
 'simulate_command.htm#A',
+'simulate_command.htm#sigma',
 'simulate_command.htm#y',
 'simulate_command.htm#y.Linear',
 'simulate_command.htm#y.Log-Transformed',
