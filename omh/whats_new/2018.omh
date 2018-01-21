@@ -35,9 +35,22 @@ $childtable%
 %$$
 
 $head 01-21$$
+$list number$$
 Include discussion of the
 $cref/weighted residual/statistic/Weighted Residual Function, R/$$
 in the $cref simulate_command$$ documentation.
+$lnext
+Some other minor improvements and corrections were made
+to the documentation.
+$lnext
+The calculation of the
+$cref/simulate_value/simulate_command/simulate_table/simulate_value/$$
+was corrected to allow for negative values in
+$cref/linear/simulate_command/y/Linear/$$ cases.
+(The mistake fixed here was made during the changes on
+$cref/01-20/whats_new_2018/01-20/$$; see below.)
+$lend
+
 
 $head 01-20$$
 $list number$$

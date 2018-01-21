@@ -1155,15 +1155,17 @@ Hence the number of rows in $cref simulate_table$$ is
 $icode number_simulate$$ times the number of rows in $cref data_subset_table$$.
 
 $subhead simulate_value$$
-The column contains the value of
-$cref/y/simulate_command/y/$$ for each $icode subset_data_id$$
+This value is different for each $icode subset_data_id$$
 and each $icode simulate_index$$.
+In the $cref/linear/simulate_command/y/Linear/$$ case,
+this column contains the value $icode y$$.
+In the $cref/log-transformed/simulate_command/y/Log-Transformed/$$ case,
+this column contains the value $codei%max(%y%, 0)%$$.
 
 $subhead simulate_delta$$
-The column contains the value of
-$cref/y/simulate_command/delta/$$ for each $icode subset_data_id$$
-and each $icode simulate_index$$.
-Note that the value of $latex \delta$$ only depends on $icode data_subset_id$$.
+This column contains the value of
+$cref/delta/simulate_command/delta/$$
+and is different for each $icode subset_data_id$$.
 
 $head d$$
 We use $latex d$$ to denote the
@@ -1191,9 +1193,9 @@ $cref/log-transformed standard deviation
 	/statistic
 	/Log-Transformed Standard Deviation, sigma
 /$$
-\[
-	\sigma = log( A + \eta + \delta ) - \log(A + \eta)
-\]
+$latex \[
+	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
+\] $$
 
 $head y$$
 
@@ -1223,7 +1225,7 @@ $latex e$$ is simulated from the corresponding linear distribution
 with mean zero and standard deviation $latex \sigma$$.
 It follows that
 $latex \[
-	y = \max\{ 0 \W{,} \exp(e) * ( A + \eta ) - \eta \}
+	y = \exp(e) * ( A + \eta )
 \] $$
 The corresponding
 $cref/weighted residual
@@ -1353,7 +1355,10 @@ void simulate_command(
 			double sim_value   = dismod_at::sim_random(
 				density, avg, sim_delta, eta, nu
 			);
-			sim_value = std::max(sim_value, 0.0);
+			if( density == dismod_at::log_gaussian_enum
+			||  density == dismod_at::log_laplace_enum
+			||  density == dismod_at::log_students_enum )
+				sim_value = std::max(sim_value, 0.0);
 			//
 			size_t simulate_id = sim_index * n_subset + subset_id;
 			row_value[simulate_id * n_col + 0] = to_string( sim_index );
