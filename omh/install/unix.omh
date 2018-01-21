@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -164,7 +164,7 @@ $codei%
 can be used to install this package.
 
 $subhead cppad_mixed$$
-The $href%http://moby.ihme.washington.edu/bradbell/cppad_mixed%cppad_mixed%$$
+The $href%https://bradbell.github.io/cppad_mixed%cppad_mixed%$$
 C++ random effects modeling package.
 Starting in the $code dismod_at.git$$ directory, the command
 $codei%

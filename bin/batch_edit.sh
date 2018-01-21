@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -22,7 +22,7 @@ rename_cmd='s|integrand_ode|sci_ode|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|random_neq_bnd|bound_ran_neq|g
+s|http://moby.ihme.washington.edu/bradbell/|https://bradbell.github.io/|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
