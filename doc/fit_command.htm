@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index simulate_table fit_var_table fit_data_subset_table effects example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index simulate_table fit_var_table fit_data_subset_table effects convergence problems example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -98,6 +98,7 @@ A:active { color : purple }
 <option>fit_var_table</option>
 <option>fit_data_subset_table</option>
 <option>Random Effects</option>
+<option>Convergence Problems</option>
 <option>Example</option>
 </select>
 </td>
@@ -253,6 +254,23 @@ first fit with
 and then fit with 
 <code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
  equal to <code><font color="blue">both</font></code>.
+
+<br>
+<br>
+<b><big><a name="Convergence Problems" id="Convergence Problems">Convergence Problems</a></big></b>
+<br>
+The derivative of the fixed effects objective,
+at the prior mean for the fixed effects,
+is used to scale the fixed effects objective.
+If the optimal value for a fixed effect is equal to its prior mean,
+its partial derivative at the prior mean is often near zero.
+Near zero derivatives, at the prior mean, cause the scaling to be unstable
+and result in convergence problems.
+You may be able to fix this
+by using a uniform distribution, and a different prior mean,
+for a fixed effect that does not change.
+If this does not work, the data will not determine that fixed effect
+and you may have to constrain it to have the value you want.
 
 
 <br>

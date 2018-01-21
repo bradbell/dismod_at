@@ -46,6 +46,7 @@ var list_current0 = [
 'fit_command.htm#fit_var_table',
 'fit_command.htm#fit_data_subset_table',
 'fit_command.htm#Random Effects',
+'fit_command.htm#Convergence Problems',
 'fit_command.htm#Example'
 ];
 function choose_across0(item)
