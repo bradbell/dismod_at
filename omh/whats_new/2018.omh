@@ -34,6 +34,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 01-22$$
+Advance to $code cppad_mixed-20180122$$.
+This only makes sure the new version works
+and should not result in any change to $code dismod-at$$.
+
 $head 01-21$$
 $list number$$
 Include discussion of the

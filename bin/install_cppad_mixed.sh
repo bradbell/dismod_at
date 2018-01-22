@@ -23,8 +23,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='05edd6df76ea0f4ff525ea28e97776d40de0a61a'
-version='20180117'
+hash_key='429160976054ec711ec3806af0514ddcbe80d332'
+version='20180121'
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
 #
@@ -33,9 +33,6 @@ bool_sparsity='no'
 #
 # use cholmod (not eigen) for LDLT factorization (where possible)
 ldlt_cholmod='yes'
-#
-# use atomic Cholesky factorization (strongly suggest no)
-use_atomic_cholesky='no'
 #
 # hide the re-scaling from ipopt
 hide_ipopt_scaling='yes'
@@ -139,7 +136,6 @@ cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 cmake_args="$cmake_args -D cmake_libdir=$cmake_libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
-cmake_args="$cmake_args -D use_atomic_cholesky=$use_atomic_cholesky"
 cmake_args="$cmake_args -D checkpoint_newton_step=$checkpoint_newton_step"
 cmake_args="$cmake_args -D optimize_cppad_function=$optimize_cppad_function"
 cmake_args="$cmake_args -D hide_ipopt_scaling=$hide_ipopt_scaling"
