@@ -121,7 +121,7 @@ The packages listed below are required by dismod_at
 and may not have standard system installs
 
 $subhead run_cmake.sh$$
-The settings in $cref%dismod_at.git/bin/run_cmake.sh%run_cmake.sh%$$
+The settings in $cref%bin/run_cmake.sh%run_cmake.sh%$$
 are used by the
 scripts that install the special requirements. You must first change
 these settings to the appropriate values for your system before

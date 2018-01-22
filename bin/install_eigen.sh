@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -34,7 +34,7 @@ eval $cmd
 cmd=`grep '^eigen_prefix=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
-dismod_at_dir=`echo $eigen_prefix | sed -e 's|/dismod_at/.*|/dismod_at|'`
+dismod_at_dir=`echo $eigen_prefix | sed -e 's|/dismod_at/eigen$|/dismod_at|'`
 if echo "$dismod_at_dir" | grep '/dismod_at$' > /dev/null
 then
 	bin/build_type.sh install_eigen $dismod_at_dir $build_type

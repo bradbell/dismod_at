@@ -46,52 +46,60 @@ verbose_makefile='no'
 # &&
 #
 # &head build_type&&
-# Use either 'debug' or 'release' for the type of this build:
+# Use either &code debug&& or &code release&& for the type of this build:
 # &codep
 build_type='debug'
 # &&
-# Note that if &icode dismod_at_prefix&& ends in &code dismod_at&&,
-# &code run_cmake.sh&& will use a link from the prefix to
-# &icode%dismod_at_prefix%.debug%&& or
-# &icode%dismod_at_prefix%.release%&&
-# depending on the choice &icode build_type&&.
 #
 # &head dismod_at_prefix&&
 # Prefix where dismod_at will be installed:
 # &codep
 dismod_at_prefix="$HOME/prefix/dismod_at"
 # &&
+# If &icode dismod_at_prefix&& ends in &code dismod_at&&,
+# &code run_cmake.sh&& will use a soft link from this prefix to
+# &icode%dismod_at_prefix%.debug%&& or
+# &icode%dismod_at_prefix%.release%&&
+# depending on the choice for &icode build_type&&.
 #
-# &head Prefixes&&
-# Prefixes where the
-# &cref/special requirements/install_unix/Special Requirements/&&
-# will be installed:
+# &head eigen_prefix&&
+# Prefix where
+# &cref/eigen/install_unix/Special Requirements/eigen/&&
+# is installed:
 # &codep
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
+# &&
+# If this prefix ends in &code /dismod_at/eigen&&,
+# &code bin/install_eigen.sh&& will use a soft link from this prefix to
+# &icode%eigen_prefix%.debug%&& or
+# &icode%eigen_prefix%.release%&&
+# depending on the choice for &icode build_type&&.
+#
+# &head Other Prefixes&&
+# Prefixes where the other
+# &cref/special requirements/install_unix/Special Requirements/&&
+# are installed:
+# &codep
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 suitesparse_prefix="$HOME/prefix/dismod_at"
 # &&
-# Note that the Eigen package is installed in a special prefix
-# so that we can suppress warnings coming from its include files
-# (without suppressing warnings from other include files).
+# If these prefixes end in &code /dismod_at&&,
+# &code bin/install_ipopt.sh&&,
+# &code bin/install_cppad.sh&&, and
+# &code bin/install_suitesparse.sh&&,
+# will use a soft link from the corresponding &icode prefix&& to
+# &icode%prefix%.debug%&& or
+# &icode%prefix%.release%&&
+# depending on the choice for &icode build_type&&.
 #
-# &subhead Debug and Release&&
-# If &icode dismod_at_prefix&& ends in &code dismod_at&&,
-# all the prefixes must be the same,
-# except for the Eigen prefix which has an extra sub-directory at the end.
-# In this case,
-# &code bin/run_cmake.sh&& will switch between a debug and release
-# version of &code dismod_at&&,
-# depending on &cref/build_type/run_cmake.sh/build_type/&&.
-# The debug version will have an extra &code .debug&& and the release version
-# will have an extra &code .release&& at the end of the prefix.
-# In addition, a soft link will be used to map the prefix to either
-# the debug or release version.
-# Note that the same technique will be used to map the &code build&&
+# &head Debug and Release&&
+# If a soft link is used for the install,
+# the same technique will be used to map the &code build&&
 # directory to the debug or release version.
-# Also note that if you are using both a debug and release, both versions
-# of the &cref/special requirements/install_unix/Special Requirements/&&
+# If you are using both a debug and release versions of dismod_at,
+# both versions of the
+# &cref/special requirements/install_unix/Special Requirements/&&
 # will need to be installed.
 #
 # &head python3_executable&&
@@ -99,7 +107,7 @@ suitesparse_prefix="$HOME/prefix/dismod_at"
 # &codep
 python3_executable='/usr/bin/python3'
 # &&
-# An alternative might be &code '/usr/local/anaconda3-current/bin/python'&&.
+# An alternative might be &code /usr/local/anaconda3-current/bin/python&&.
 #
 # &head Choosing C++ Compiler&&
 # Which c++ compiler should cmake use (empty means cmake will choose it).
@@ -112,7 +120,7 @@ cmake_cxx_compiler=''
 # &codep
 extra_cxx_flags='-std=c++11 -Wpedantic -Wall -Wshadow -Wconversion'
 # &&
-# An alternative might be '-Wall'.
+# An alternative might be &code -Wall&&.
 #
 # &head cmake_libdir&&
 # Sub-directory of each prefix where libraries are installed.
