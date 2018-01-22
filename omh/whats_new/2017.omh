@@ -510,7 +510,7 @@ up when the object results in a $code nan$$.
 $head 09-02$$
 $list number$$
 Instructions were added for building both the debug and release
-$cref/build_type/run_cmake.sh/build_type/$$
+$cref/debug and release/run_cmake.sh/Debug and Release/$$
 version of $code dismod_at$$ on the same system.
 $lnext
 The $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
