@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,6 +14,23 @@ $spell
 $$
 
 $section The dismod_at Ode Grid$$
+
+$head Purpose$$
+The $cref/ordinary differential equation
+	/avg_integrand
+	/Ordinary Differential Equation
+/$$
+is solved along cohort lines, i.e., lines where
+time minus age is constant.
+On the other hand, data points are specified for a rectangular interval
+in age and time; see
+$cref/age_lower/data_table/age_lower/$$ and
+$cref/age_upper/data_table/age_upper/$$.
+In order to compute the model for the data
+$cref/A_i/avg_integrand/Average Integrand, A_i/$$
+we solve the ODE on a grid and then interpolate to get the
+integral over the rectangular interval specified for each data point.
+
 
 $head Delta s$$
 We use the notation $latex \Delta s$$ for the
