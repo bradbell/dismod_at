@@ -37,6 +37,7 @@ var list_down1 = [
 'ode_grid.htm'
 ];
 var list_current0 = [
+'ode_grid.htm#Purpose',
 'ode_grid.htm#Delta s',
 'ode_grid.htm#a_min, a_max',
 'ode_grid.htm#t_min, t_max',

@@ -53,19 +53,8 @@ var list_down0 = [
 var list_current0 = [
 'integrand_table.htm#integrand_id',
 'integrand_table.htm#integrand_name',
-'integrand_table.htm#integrand_name.Sincidence',
-'integrand_table.htm#integrand_name.remission',
-'integrand_table.htm#integrand_name.mtexcess',
-'integrand_table.htm#integrand_name.mtother',
-'integrand_table.htm#integrand_name.mtwith',
-'integrand_table.htm#integrand_name.susceptible',
-'integrand_table.htm#integrand_name.withC',
-'integrand_table.htm#integrand_name.prevalence',
-'integrand_table.htm#integrand_name.Tincidence',
-'integrand_table.htm#integrand_name.mtspecific',
-'integrand_table.htm#integrand_name.mtall',
-'integrand_table.htm#integrand_name.mtstandard',
-'integrand_table.htm#integrand_name.relrisk',
+'integrand_table.htm#integrand_name.ODE',
+'integrand_table.htm#integrand_name.Names',
 'integrand_table.htm#Example'
 ];
 function choose_across0(item)

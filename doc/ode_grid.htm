@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The dismod_at Ode Grid</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The dismod_at Ode Grid">
-<meta name="keywords" id="keywords" content=" the dismod_at ode grid delta s a_min a_max t_min t_max number age points m a_i time n t_j ">
+<meta name="keywords" id="keywords" content=" the dismod_at ode grid purpose delta s a_min a_max t_min t_max number age points m a_i time n t_j ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -87,6 +87,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
+<option>Purpose</option>
 <option>Delta s</option>
 <option>a_min, a_max</option>
 <option>t_min, t_max</option>
@@ -103,6 +104,27 @@ A:active { color : purple }
 
 
 <center><b><big><big>The dismod_at Ode Grid</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+
+is solved along cohort lines, i.e., lines where
+time minus age is constant.
+On the other hand, data points are specified for a rectangular interval
+in age and time; see
+<a href="data_table.htm#age_lower" target="_top"><span style='white-space: nowrap'>age_lower</span></a>
+ and
+<a href="data_table.htm#age_upper" target="_top"><span style='white-space: nowrap'>age_upper</span></a>
+.
+In order to compute the model for the data
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>A_i</span></a>
+
+we solve the ODE on a grid and then interpolate to get the
+integral over the rectangular interval specified for each data point.
+
+
+<br>
 <br>
 <b><big><a name="Delta s" id="Delta s">Delta s</a></big></b>
 <br>
