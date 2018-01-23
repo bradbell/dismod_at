@@ -27,9 +27,6 @@
 # log files (stdout for certain programs)
 *.log
 #
-# error files (stderr for certain programs)
-*.err
-#
 # python compiled files
 *.pyc
 #
