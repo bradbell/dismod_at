@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -22,6 +22,7 @@ $spell
 	mtspecific
 	mtstandard
 	relrisk
+	covariate
 $$
 
 $section The Integrand Table$$
@@ -40,57 +41,74 @@ This column is unique; i.e., each name can only appear once in this table.
 Only the $cref/integrand_id/data_table/integrand_id/$$ that appear
 in the data table need appear in the integrand table.
 
-$subhead Sincidence$$
-The susceptible incidence rate;
-see $cref/Sincidence/avg_integrand/I_i(a,t)/Sincidence/$$.
+$subhead ODE$$
+If the column ODE below is yes, and a data point has a
+$cref/rate covariate/mulcov_table/mulcov_type/rate_value/$$
+that is not equal to its
+$cref/reference/covariate_table/reference/$$ value, the
+$cref/differential equation/avg_integrand/Differential Equation/$$
+needs to be solved for each cohort, in the $cref ode_grid$$,
+that intersects or surrounds the age-time span for this data point.
+This computation is preformed each time the $cref model_variables$$ change.
 
-$subhead remission$$
-The remission rate;
-see $cref/remission/avg_integrand/I_i(a,t)/remission/$$.
-
-$subhead mtexcess$$
-The excess mortality rate;
-see $cref/mtexcess/avg_integrand/I_i(a,t)/mtexcess/$$.
-
-$subhead mtother$$
-The other cause mortality rate;
-see $cref/mtother/avg_integrand/I_i(a,t)/mtother/$$.
-
-$subhead mtwith$$
-The mtwith rate;
-see $cref/mtwith/avg_integrand/I_i(a,t)/mtwith/$$.
-
-$subhead susceptible$$
-The susceptible fraction of the population;
-see $cref/susceptible/avg_integrand/I_i(a,t)/susceptible/$$.
-
-$subhead withC$$
-The with condition fraction of the population;
-see $cref/withC/avg_integrand/I_i(a,t)/withC/$$.
-
-$subhead prevalence$$
-The prevalence of the condition;
-see $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$.
-
-$subhead Tincidence$$
-The total incidence rate;
-see $cref/Tincidence/avg_integrand/I_i(a,t)/Tincidence/$$.
-
-$subhead mtspecific$$
-The cause specific mortality rate;
-see $cref/mtspecific/avg_integrand/I_i(a,t)/mtspecific/$$.
-
-$subhead mtall$$
-The all cause mortality rate;
-see $cref/mtall/avg_integrand/I_i(a,t)/mtall/$$.
-
-$subhead mtstandard$$
-The standardized mortality ratio;
-see $cref/mtstandard/avg_integrand/I_i(a,t)/mtstandard/$$.
-
-$subhead relrisk$$
-The relative risk;
-see $cref/relrisk/avg_integrand/I_i(a,t)/relrisk/$$.
+$subhead Names$$
+$table
+	Integrand Name
+	$cnext Description
+	$cnext ODE
+$rnext
+	$cref/Sincidence/avg_integrand/I_i(a,t)/Sincidence/$$
+	$cnext incidence rate relative to susceptible population
+	$cnext no
+$rnext
+	$cref/remission/avg_integrand/I_i(a,t)/remission/$$
+	$cnext remission rate
+	$cnext no
+$rnext
+	$cref/mtexcess/avg_integrand/I_i(a,t)/mtexcess/$$
+	$cnext excess mortality rate
+	$cnext no
+$rnext
+	$cref/mtother/avg_integrand/I_i(a,t)/mtother/$$
+	$cnext other cause mortality rate
+	$cnext no
+$rnext
+	$cref/mtwith/avg_integrand/I_i(a,t)/mtwith/$$
+	$cnext with condition mortality rate
+	$cnext no
+$rnext
+	$cref/susceptible/avg_integrand/I_i(a,t)/susceptible/$$
+	$cnext susceptible fraction of the population
+	$cnext yes
+$rnext
+	$cref/withC/avg_integrand/I_i(a,t)/withC/$$
+	$cnext with condition fraction of the population
+	$cnext yes
+$rnext
+	$cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
+	$cnext prevalence of the condition
+	$cnext yes
+$rnext
+	$cref/Tincidence/avg_integrand/I_i(a,t)/Tincidence/$$
+	$cnext incidence rate relative to total population
+	$cnext yes
+$rnext
+	$cref/mtspecific/avg_integrand/I_i(a,t)/mtspecific/$$
+	$cnext cause specific mortality rate
+	$cnext yes
+$rnext
+	$cref/mtall/avg_integrand/I_i(a,t)/mtall/$$
+	$cnext all cause mortality rate
+	$cnext yes
+$rnext
+	$cref/mtstandard/avg_integrand/I_i(a,t)/mtstandard/$$
+	$cnext standardized mortality ratio
+	$cnext yes
+$rnext
+	$cref/relrisk/avg_integrand/I_i(a,t)/relrisk/$$
+	$cnext relative risk
+	$cnext no
+$tend
 
 $children%example/table/integrand_table.py
 %$$

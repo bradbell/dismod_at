@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -34,9 +34,10 @@
 # $cref/children/option_table/parent_node_id/Children/$$ or
 # $cref/random effects/model_variables/Random Effects, u/$$.
 # $lnext
-# There is only one measurement and it is for
-# $cref/mtother/integrand_table/integrand_name/mtother/$$
-# (at age 50).
+# There is only one measurement and it is for the
+# $cref/integrand_name/integrand_table/integrand_name/$$
+# $cref/mtother/avg_integrand/I_i(a,t)/mtother/$$
+# and at age 50 and year 2000.
 # $lnext
 # There is one
 # $cref/covariate/covariate_table/$$ income and a corresponding

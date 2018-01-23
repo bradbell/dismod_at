@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -31,6 +31,7 @@ $spell
 	susceptible
 	covariates
 	dismod
+	Integrands
 $$
 
 $section Model for the Average Integrand$$
@@ -243,8 +244,10 @@ We use $latex I_i (a, t)$$ to denote the integrand as a function of
 age and time.
 Depending on the value of
 see $cref/integrand_id/data_table/integrand_id/$$ for data index $latex i$$,
-the function $latex I_i (a, t)$$ is defined as follows
-(with the subscript $latex i$$ once again dropped to simplify notation):
+the function $latex I_i (a, t)$$ is defined below
+(with the subscript $latex i$$ once again dropped to simplify notation.
+Integrands that do not use $latex S(a, t)$$, $latex C(a, t)$$
+or $latex P(a, t)$$, do not require solving the differential equation.
 
 $subhead Sincidence$$
 $latex I (a, t) = \iota (a,t)$$
@@ -262,26 +265,26 @@ $subhead mtwith$$
 $latex I (a, t) = \omega (a,t) + \chi (a,t)$$
 
 $subhead susceptible$$
-$latex I (a, t) = S(a, t)$$
+$latex I (a, t) = S(a,t)$$
 
 $subhead withC$$
-$latex I (a, t) = C(a, t)$$
+$latex I (a, t) = C(a,t)$$
 
 $subhead prevalence$$
-$latex I (a, t) = p(a,t) = C(a,t) / [ S(a,t) + C(a,t) ] $$
+$latex I (a, t) = P(a,t) = C(a,t) / [ S(a,t) + C(a,t) ] $$
 
 $subhead Tincidence$$
-$latex I (a, t) = \iota(a, t) [ 1 - p(a,t) ]$$
+$latex I (a, t) = \iota(a,t) [ 1 - P(a,t) ]$$
 
 $subhead mtspecific$$
-$latex I (a, t) = \chi (a,t) p(a, t)$$
+$latex I (a, t) = \chi (a,t) P(a,t)$$
 
 $subhead mtall$$
-$latex I (a, t) = \omega (a,t) + \chi (a,t) p(a,t)$$
+$latex I (a, t) = \omega (a,t) + \chi (a,t) P(a,t)$$
 
 $subhead mtstandard$$
 $latex I (a, t) =
-	[ \omega (a,t) + \chi (a,t) ] / [ \omega (a,t) + \chi (a,t) p(a,t) ]
+	[ \omega (a,t) + \chi (a,t) ] / [ \omega (a,t) + \chi (a,t) P(a,t) ]
 $$
 
 $subhead relrisk$$
