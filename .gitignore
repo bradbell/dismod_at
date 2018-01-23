@@ -24,11 +24,8 @@
 # vim swap files
 *.swp
 #
-# log files (stdout for certain programs)
+# log files
 *.log
-#
-# error files (stderr for certain programs)
-*.err
 #
 # python compiled files
 *.pyc
