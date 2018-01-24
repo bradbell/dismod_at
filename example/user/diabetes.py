@@ -14,6 +14,7 @@
 #	covariate
 #	covariates
 #	jk
+#	mulcov
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -51,10 +52,17 @@
 # There is one weighting, with the constant value one,
 # in the $cref weight_table$$ and $cref weight_grid_table$$.
 #
+# $head Smooth Table and Grid$$
+# The following smoothing grids are defined:
+# $table
+# Name          $cnext Description $cnext
+# smooth_mulcov $cnext N(0, 1) and constant in (age, time)
+# $tend
+#
 # $head Covariate Table$$
 # The following information is placed in the $cref covariate_table$$
 # $table
-# name $cnext Description $cnext reference  $cnext max_difference $rnext
+# Name $cnext Description $cnext reference  $cnext max_difference $rnext
 # one     $cnext constant value = 1        $cnext 0     $cnext null $rnext
 # sex     $cnext .5=male -.5=female        $cnext 0     $cnext 0.6  $rnext
 # BMI     $cnext body mass index           $cnext 27    $cnext null $rnext
@@ -129,7 +137,7 @@ def constant_weight_fun(a, t) :
 # covariate multiplies are gaussian with mean zero, and variance one.
 # Note that there are no forward differences for covariate multipliers.
 def fun_mulcov(a, t) :
-	return ('prior_gauss_01', None, None)
+	return ('prior_N(0,1)', None, None)
 #
 # note that the a, t values are not used for this case
 def fun_rate_child(a, t) :
@@ -139,12 +147,21 @@ def fun_iota_parent(a, t) :
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
+	# avgint table: empty
+	avgint_table = list()
+	#
+	# ----------------------------------------------------------------------
+	# nslist_table:
+	nslist_table = dict()
+	# ----------------------------------------------------------------------
 	# age table:
 	age_list    = [ j * 5.0 for j in range(21) ]
 	#
+	# ----------------------------------------------------------------------
 	# time table:
 	time_list   = [ 1990.0 + i * 5.0 for i in range(7) ]
 	#
+	# ----------------------------------------------------------------------
 	# integrand table:
 	integrand_list = [ 'prevalence' ]
 	#
@@ -156,15 +173,41 @@ def example_db (file_name) :
 		{ 'name':'Massachuesetts', 'parent':'US' } ,
 	]
 	#
+	# ----------------------------------------------------------------------
 	# weight table and weight_grid table:
 	name    = 'constant'
 	fun     = constant_weight_fun
-	age_id  = 0
-	time_id = 0
 	weight_table = [
-		{ 'name':name,  'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
+		{ 'name':name,  'age_id':[0], 'time_id':[0], 'fun':fun }
+	]
+	# ----------------------------------------------------------------------
+	# prior_table, smooth_table, and smooth_grid_table
+	prior_table = [
+		{
+			# prior_N(0,1)
+			'name':     'prior_N(0,1)',
+			'density':  'gaussian',
+			'mean':     0.0,
+			'std':      1.0,
+		} , {
+	]
+	# smooth table
+	smooth_table   = list()
+	#
+	# smooth_mulcov
+	name           = 'smooth_mulcov'
+	fun            = fun_rate_child
+	smooth_table = [
+		{'name':name, 'age_id':[0], 'time_id':[0], 'fun':fun }
 	]
 	#
+	# no standard deviation multipliers
+	for dictionary in smooth_table :
+		for name in [ 'value' , 'dage', 'dtime' ] :
+			key   = 'mulstd_' + name + '_prior_name'
+			value = None
+			dictionary[key] = value
+	# -----------------------------------------------------------------------
 	# covariate table:
 	covariate_table = [
 		{'name':'one',     'reference':0.0,  'max_difference':None } ,
@@ -176,7 +219,8 @@ def example_db (file_name) :
 	#
 	# mulcov table:
 	mulcov_table = [
-		{	# alpha for iota and sex
+		{
+			# alpha for iota and sex
 			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  'iota',
@@ -213,12 +257,26 @@ def example_db (file_name) :
 			'smooth':    'smooth_mulcov'
 		}
 	]
-	#
-	# avgint table: empty
-	avgint_table = list()
-	#
-	# nslist_table:
-	nslist_table = dict()
+	# ----------------------------------------------------------------------
+	# rate table:
+	rate_table = [
+		{	'name':          'iota',
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_iota_child',
+		} , {
+			'name':          'rho',
+			'parent_smooth': None,
+			'child_smooth':  None,
+		} , {
+			'name':          'chi',
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child',
+		} , {
+			'name':          'omega',
+			'parent_smooth': 'smooth_rate_parent',
+			'child_smooth':  'smooth_rate_child',
+		}
+	]
 	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
@@ -242,68 +300,6 @@ def example_db (file_name) :
 		row['integrand'] = integrand_list[0]
 		row['meas_std']  = 1e-3
 		data_table.append( copy.copy(row) )
-	#
-	# ----------------------------------------------------------------------
-	# prior_table
-	prior_table = [
-		{	# prior_gauss_zero
-			'name':     'prior_gauss_zero',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      0.01,
-		},{ # prior_loggauss_zero
-			'name':     'prior_loggauss_zero',
-			'density':  'log_gaussian',
-			'mean':     0.0,
-			'std':      0.1,
-			'eta':      1e-6
-		},{ # prior_iota_parent
-			'name':     'prior_iota_parent',
-			'density':  'uniform',
-			'lower':    iota_parent / 100.,
-			'upper':    1.0,
-			'mean':     0.1,
-		},{ # prior_mulcov
-			'name':     'prior_mulcov',
-			'density':  'uniform',
-			'lower':    -2.0,
-			'upper':    +2.0,
-			'mean':     0.0,
-		}
-	]
-	# ----------------------------------------------------------------------
-	# smooth table
-	name           = 'smooth_rate_child'
-	fun            = fun_rate_child
-	age_id         = int( len( age_list ) / 2 )
-	time_id        = int( len( time_list ) / 2 )
-	smooth_table = [
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	]
-	name = 'smooth_iota_parent'
-	fun  = fun_iota_parent
-	smooth_table.append(
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	)
-	name = 'smooth_mulcov'
-	fun  = fun_mulcov
-	smooth_table.append(
-		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	)
-	# no standard deviation multipliers
-	for dictionary in smooth_table :
-		for name in [ 'value' , 'dage', 'dtime' ] :
-			key   = 'mulstd_' + name + '_prior_name'
-			value = None
-			dictionary[key] = value
-	# ----------------------------------------------------------------------
-	# rate table:
-	rate_table = [
-		{	'name':          'iota',
-			'parent_smooth': 'smooth_iota_parent',
-			'child_smooth':  'smooth_rate_child',
-		}
-	]
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
