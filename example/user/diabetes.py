@@ -11,6 +11,7 @@
 # $spell
 #	mtall
 #	mtspecific
+#	Covariate
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -44,6 +45,22 @@
 # as informing $cref/iota/rate_table/rate_name/iota/$$.
 # We assume that $cref/rho/rate_table/rate_name/rho/$$ is zero.
 #
+# $head Weight Table and Grid$$
+# There is one weighting, with the constant value one,
+# in the $cref weight_table$$ and $cref weight_grid_table$$.
+#
+# $head Covariate Table$$
+# The following information is placed in the $cref covariate_table$$
+# $table
+# name $cnext Description $cnext reference  $cnext max_difference $rnext
+# one     $cnext constant value = 1        $cnext 0     $cnext null $rnext
+# sex     $cnext .5=male -.5=female        $cnext 0     $cnext 0.6  $rnext
+# BMI     $cnext body mass index           $cnext 27    $cnext null $rnext
+# LDI     $cnext lag distributed income    $cnext 10    $cnext null $rnext
+# MS_2000 $cnext market scan data for 2000 $cnext 0     $cnext null $rnext
+# MS_2010 $cnext market scan data for 2010 $cnext 0     $cnext null $rnext
+# MS_2012 $cnext market scan data for 2012 $cnext 0     $cnext null
+# $tend
 #
 # $code
 # $srcfile%
@@ -106,23 +123,23 @@ def example_db (file_name) :
 		{ 'name':'California',     'parent':'US' } ,
 		{ 'name':'Massachuesetts', 'parent':'US' } ,
 	]
-	for i in range(n_children) :
-		name = 'child_' + str(i + 1)
-		node_table.append( { 'name':name, 'parent':'world' } )
 	#
-	# weight table:
-	# The constant function 1.0, note any valid age and time id would work
+	# weight table and weight_grid table:
 	name    = 'constant'
 	fun     = constant_weight_fun
-	age_id  = int( len(age_list) / 2 )
-	time_id = int( len(time_list) / 2 )
+	age_id  = 0
+	time_id = 0
 	weight_table = [
 		{ 'name':name,  'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
 	]
 	#
 	# covariate table:
 	covariate_table = [
-		{'name':'income', 'reference':0.5}
+		{'name':'one',     'reference':0.0,  'max_difference':None } ,
+		{'name':'sex',     'reference':0.0,  'max_difference':0.6  } ,
+		{'name':'BMI',     'reference':27.0, 'max_difference':None } ,
+		{'name':'LDI',     'reference':10.0, 'max_difference':None } ,
+		{'name':'MS_2000', 'reference':0.0,  'max_difference':None } ,
 	]
 	#
 	# mulcov table:
