@@ -250,45 +250,84 @@ Integrands that do not use $latex S(a, t)$$, $latex C(a, t)$$
 or $latex P(a, t)$$, do not require solving the differential equation.
 
 $subhead Sincidence$$
-$latex I (a, t) = \iota (a,t)$$
+The incidence rate relative to susceptible population is
+$latex \[
+ I (a, t) = \iota (a,t)
+\] $$
 
 $subhead remission$$
-$latex I (a, t) = \rho (a,t) $$
+The remission rate is
+$latex \[
+ I (a, t) = \rho (a,t)
+\] $$
 
 $subhead mtexcess$$
-$latex I (a, t) = \chi (a,t)$$
+The excess mortality rate is
+$latex \[
+ I (a, t) = \chi (a,t)
+\] $$
 
 $subhead mtother$$
-$latex I (a, t) = \omega (a,t)$$
+The other cause mortality rate is
+$latex \[
+ I (a, t) = \omega (a,t)
+\] $$
 
 $subhead mtwith$$
-$latex I (a, t) = \omega (a,t) + \chi (a,t)$$
+The with condition mortality rate is
+$latex \[
+ I (a, t) = \omega (a,t) + \chi (a,t)
+\] $$
 
 $subhead susceptible$$
-$latex I (a, t) = S(a,t)$$
+The susceptible fraction of the population is
+$latex \[
+ I (a, t) = S(a,t)
+\] $$
 
 $subhead withC$$
-$latex I (a, t) = C(a,t)$$
+The with condition fraction of the population is
+$latex \[
+ I (a, t) = C(a,t)
+\] $$
 
 $subhead prevalence$$
-$latex I (a, t) = P(a,t) = C(a,t) / [ S(a,t) + C(a,t) ] $$
+The prevalence of the condition is
+$latex \[
+ I (a, t) = P(a,t) = C(a,t) / [ S(a,t) + C(a,t) ]
+\] $$
 
 $subhead Tincidence$$
-$latex I (a, t) = \iota(a,t) [ 1 - P(a,t) ]$$
+The  incidence rate relative to the total population is
+$latex \[
+ I (a, t) = \iota(a,t) [ 1 - P(a,t) ]
+\] $$
 
 $subhead mtspecific$$
-$latex I (a, t) = \chi (a,t) P(a,t)$$
+The cause specific mortality rate is
+$latex \[
+ I (a, t) = \chi (a,t) P(a,t)
+\] $$
 
 $subhead mtall$$
-$latex I (a, t) = \omega (a,t) + \chi (a,t) P(a,t)$$
+The all cause mortality rate is
+$latex \[
+ I (a, t) = \omega (a,t) + \chi (a,t) P(a,t)
+\] $$
 
 $subhead mtstandard$$
-$latex I (a, t) =
+The standardized mortality ratio is
+$latex \[
+ I (a, t) =
 	[ \omega (a,t) + \chi (a,t) ] / [ \omega (a,t) + \chi (a,t) P(a,t) ]
-$$
+
+\] $$
 
 $subhead relrisk$$
-$latex I (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t) $$
+The relative risk is
+$latex \[
+ I (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t)
+\] $$
 
 $head Measurement Value Covariates$$
 
