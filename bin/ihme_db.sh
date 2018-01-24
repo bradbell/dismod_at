@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -21,9 +21,9 @@ then
 	exit 1
 fi
 ok='yes'
-person="$1"
-database="$2"
-direction="$3"
+direction="$1"
+person="$2"
+database="$3"
 if [ "$4" != '' ]
 then
 	ok='no'
@@ -44,7 +44,7 @@ fi
 if [ "$ok" == 'no' ]
 then
 cat << EOF
-usage: bin/ihme_db.sh person database direction'
+usage: bin/ihme_db.sh direction person database'
        person:    is alex or greg
        database:  file name of the database in directory used by person.
        direction: is get or put
@@ -81,6 +81,7 @@ then
 		echo_eval mkdir -p build/ihme_db
 	fi
 	echo_eval cp $database_path build/ihme_db/$database
+	echo_eval chmod -x build/ihme_db/$database
 else
 	echo_eval cp build/ihme_db/$database $database
 fi
