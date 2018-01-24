@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -238,9 +238,13 @@
 # are the prior names for the value, difference in age,
 # and difference in time corresponding to this smoothing name.
 # $lnext
-# The $icode age_id$$ and $icode time_id$$ must be in increasing order,
-# $icode da$$ is not used when age $icode%a% = %age_id%[-1]%$$ and
-# $icode dt$$ is not used when time $icode%t% = %time_id%[-1]%$$.
+# The $icode age_id$$ and $icode time_id$$ must be in increasing order.
+# $lnext
+# $icode da$$ is not used, and can be None,
+# when age $icode%a% = %age_id%[-1]%$$
+# $lnext
+# $icode dt$$ is not used, and can be None,
+# when time $icode%t% = %time_id%[-1]%$$.
 # $lend
 #
 # $subhead const_value$$
@@ -589,12 +593,17 @@ def create_database(
 		for j in age_id :
 			for k in time_id :
 				(v,da,dt) = fun(age_list[j], time_list[k])
-				da        = global_prior_name2id[da]
-				dt        = global_prior_name2id[dt]
+				#
 				if j == max_j :
 					da = None
+				else :
+					da = global_prior_name2id[da]
+				#
 				if k == max_k :
 					dt = None
+				else :
+					dt = global_prior_name2id[dt]
+				#
 				const_value = None
 				if isinstance(v, float) :
 					const_value = v

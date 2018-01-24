@@ -57,15 +57,15 @@ os.chdir('build/example/user')
 def constant_one_fun(a, t) :
 	return 1.0
 def fun_iota_world(a, t) :
-	return ('prior_iota_world',   'prior_difference', 'prior_difference')
+	return ('prior_iota_world', None, None)
 def fun_iota_child(a, t) :
-	return ('prior_iota_child',   'prior_difference', 'prior_difference')
+	return ('prior_iota_child', None, None)
 def fun_chi_world(a, t) :
-	return (chi_true['world'],    'prior_difference', 'prior_difference')
+	return (chi_true['world'],  None, None)
 def fun_chi_child_1(a, t) :
-	return (chi_true['child_1'],  'prior_difference', 'prior_difference')
+	return (chi_true['child_1'], None, None)
 def fun_chi_child_2(a, t) :
-	return (chi_true['child_2'],  'prior_difference', 'prior_difference')
+	return (chi_true['child_2'], None, None)
 # ------------------------------------------------------------------------
 # function that creates example database
 def example_db (file_name) :
@@ -129,12 +129,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{	# prior_difference
-			'name':     'prior_difference',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      0.1,
-		},{ # prior_iota_world
+		{ # prior_iota_world
 			'name':     'prior_iota_world',
 			'density':  'uniform',
 			'lower':    iota_true['world'] / 10.,

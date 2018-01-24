@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -55,9 +55,9 @@ os.chdir('build/example/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 def fun_iota(a, t) :
-	return ('prior_iota', 'prior_gauss_zero', 'prior_gauss_zero')
+	return ('prior_iota', None, None)
 def fun_chi(a, t) :
-	return (chi_true, 'prior_gauss_zero', 'prior_gauss_zero')
+	return (chi_true, None, None)
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -120,12 +120,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{	# prior_gauss_zero
-			'name':     'prior_gauss_zero',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      0.01,
-		},{ # prior_iota
+		{ # prior_iota
 			'name':     'prior_iota',
 			'density':  'uniform',
 			'lower':    iota_true / 10.,

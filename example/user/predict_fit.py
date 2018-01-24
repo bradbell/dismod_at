@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -53,9 +53,9 @@ os.chdir('build/example/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 def fun_rate_child(a, t) :
-	return ('prior_rate_child', 'prior_zero', 'prior_dtime_child')
+	return ('prior_rate_child', None, 'prior_dtime_child')
 def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', 'prior_zero', 'prior_dtime_parent')
+	return ('prior_rate_parent', None, 'prior_dtime_parent')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -139,13 +139,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{   # prior_zero
-			'name':     'prior_zero',
-			'density':  'uniform',
-			'lower':    0.0,
-			'upper':    0.0,
-			'mean':     0.0,
-		},{ # prior_rate_parent
+		{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-2 * iota_north_america,

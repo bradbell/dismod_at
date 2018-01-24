@@ -22,6 +22,8 @@ $spell
 	Wconversion
 	Wpedantic
 	optimizer
+	da
+	dt
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -33,6 +35,16 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 01-24$$
+Change the specification for the
+$cref/smooth_table/create_database/smooth_table/$$ function
+$codei%
+	(%v%, %da%, %dt%) = %fun%(%a%, %t%)
+%$$
+so that $code None$$ can be returned for $icode da$$ and $icode dt$$
+when there is no such forward difference.
+In addition, change the $cref user$$ examples to use this feature.
 
 $head 01-23$$
 $list number$$
