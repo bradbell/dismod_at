@@ -11,7 +11,9 @@
 # $spell
 #	mtall
 #	mtspecific
-#	Covariate
+#	covariate
+#	covariates
+#	jk
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -62,6 +64,31 @@
 # MS_2012 $cnext market scan data for 2012 $cnext 0     $cnext null
 # $tend
 #
+# $head Covariate Multiplier Table$$
+# All of the covariate multipliers use that same smoothing which corresponds
+# to a constant in age and time. The value is a Gaussian with mean zero
+# and variable one.
+#
+# $subhead Rate Value$$
+# There are two rate value covariate multipliers,
+# $cref/alpha_jk/avg_integrand/Rate Functions/alpha_jk/$$
+# that are used to adjust
+# $cref/iota/rate_table/rate_name/iota/$$.
+# A separate multiplier is applied to the covariates
+# $code sex$$ and $code BMI$$.
+#
+# $subhead Measurement Value$$
+# There are three measurement value covariate multipliers
+# $cref/beta_j/avg_integrand/Measurement Value Covariates/beta_j/$$
+# that is used to adjust the prevalence measurements.
+# A separate multiplier is applied to the covariates
+# $code MS_2000$$, $code MS_2010$$ and $code MS_2012$$.
+#
+# $subhead Measurement Standard Deviations$$
+# There is one measurement standard deviation covariate multiplier
+# $cref/gamma_j/data_like/Measurement Standard Deviation Covariates/gamma_j/$$
+# that is for prevalence measurements and multiplies the $code one$$ covariate.
+#
 # $code
 # $srcfile%
 #	example/user/diabetes.py
@@ -94,16 +121,21 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
-# Note that the a, t values are not used for this example
+#
+# weight table has constant value 1.0
 def constant_weight_fun(a, t) :
 	return 1.0
+#
+# covariate multiplies are gaussian with mean zero, and variance one.
+# Note that there are no forward differences for covariate multipliers.
+def fun_mulcov(a, t) :
+	return ('prior_gauss_01', None, None)
+#
 # note that the a, t values are not used for this case
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 def fun_iota_parent(a, t) :
 	return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
-def fun_mulcov(a, t) :
-	return ('prior_mulcov', 'prior_gauss_zero', 'prior_gauss_zero')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -144,10 +176,40 @@ def example_db (file_name) :
 	#
 	# mulcov table:
 	mulcov_table = [
-		{
-			'covariate': 'income',
+		{	# alpha for iota and sex
+			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  'iota',
+			'smooth':    'smooth_mulcov'
+		} , {
+			# alpha for iota and BMI
+			'covariate': 'BMI',
+			'type':      'rate_value',
+			'effected':  'iota',
+			'smooth':    'smooth_mulcov'
+		} , {
+			# beta for prevalence and MS_2000
+			'covariate': 'MS_2000',
+			'type':      'meas_value',
+			'effected':  'prevalence',
+			'smooth':    'smooth_mulcov'
+		} , {
+			# beta for prevalence and MS_2010
+			'covariate': 'MS_2010',
+			'type':      'meas_value',
+			'effected':  'prevalence',
+			'smooth':    'smooth_mulcov'
+		} , {
+			# beta for prevalence and MS_2012
+			'covariate': 'MS_2012',
+			'type':      'meas_value',
+			'effected':  'prevalence',
+			'smooth':    'smooth_mulcov'
+		} , {
+			# gamma for prevalence and one
+			'covariate': 'MS_2012',
+			'type':      'meas_std',
+			'effected':  'prevalence',
 			'smooth':    'smooth_mulcov'
 		}
 	]
