@@ -95,7 +95,7 @@
 # LDI     $cnext lag distributed income    $cnext 10    $cnext null $rnext
 # MS_2000 $cnext market scan data for 2000 $cnext 0     $cnext null $rnext
 # MS_2010 $cnext market scan data for 2010 $cnext 0     $cnext null $rnext
-# MS_2012 $cnext market scan data for 2012 $cnext 0     $cnext null
+# MS_2015 $cnext market scan data for 2015 $cnext 0     $cnext null
 # $tend
 #
 # $head Covariate Multiplier Table$$
@@ -116,7 +116,7 @@
 # $cref/beta_j/avg_integrand/Measurement Value Covariates/beta_j/$$
 # that is used to adjust the prevalence measurements.
 # A separate multiplier is applied to the covariates
-# $code MS_2000$$, $code MS_2010$$ and $code MS_2012$$.
+# $code MS_2000$$, $code MS_2010$$ and $code MS_2015$$.
 #
 # $subhead Measurement Standard Deviations$$
 # There is one measurement standard deviation covariate multiplier
@@ -202,9 +202,6 @@ def example_db (file_name) :
 	fun['omega_child']     = fun_chi_child
 	fun['pini_parent']     = fun_pini_parent
 	fun['pini_child']      = fun_pini_child
-	# ----------------------------------------------------------------------
-	# avgint table: empty
-	avgint_table = list()
 	#
 	# ----------------------------------------------------------------------
 	# nslist_table:
@@ -229,8 +226,8 @@ def example_db (file_name) :
 	time_index_rate_child  = [0, 6]
 	# ----------------------------------------------------------------------
 	# integrand table:
-	integrand_list = [ 'prevalence' ]
-	#
+	integrand_list = [ 'mtall', 'mtspecific', 'prevalence' ]
+	# ----------------------------------------------------------------------
 	# node table:
 	node_table = [
 		{ 'name':'US',             'parent':''   } ,
@@ -313,11 +310,13 @@ def example_db (file_name) :
 	# -----------------------------------------------------------------------
 	# covariate table:
 	covariate_table = [
-		{'name':'one',     'reference':0.0,  'max_difference':None } ,
 		{'name':'sex',     'reference':0.0,  'max_difference':0.6  } ,
 		{'name':'BMI',     'reference':27.0, 'max_difference':None } ,
 		{'name':'LDI',     'reference':10.0, 'max_difference':None } ,
 		{'name':'MS_2000', 'reference':0.0,  'max_difference':None } ,
+		{'name':'MS_2010', 'reference':0.0,  'max_difference':None } ,
+		{'name':'MS_2015', 'reference':0.0,  'max_difference':None } ,
+		{'name':'one',     'reference':0.0,  'max_difference':None } ,
 	]
 	#
 	# mulcov table:
@@ -347,14 +346,14 @@ def example_db (file_name) :
 			'effected':  'prevalence',
 			'smooth':    'smooth_mulcov'
 		} , {
-			# beta for prevalence and MS_2012
-			'covariate': 'MS_2012',
+			# beta for prevalence and MS_2015
+			'covariate': 'MS_2015',
 			'type':      'meas_value',
 			'effected':  'prevalence',
 			'smooth':    'smooth_mulcov'
 		} , {
 			# gamma for prevalence and one
-			'covariate': 'MS_2012',
+			'covariate': 'MS_2015',
 			'type':      'meas_std',
 			'effected':  'prevalence',
 			'smooth':    'smooth_mulcov'
@@ -381,46 +380,74 @@ def example_db (file_name) :
 		}
 	]
 	# ----------------------------------------------------------------------
-	# data table:
-	data_table = list()
-	# values that are the same for all data rows
-	row = {
-		'meas_value':  0.0,             # not used (will be simulated)
-		'density':     'log_gaussian',
-		'weight':      'constant',
-		'hold_out':     False,
-		'time_lower':   2000.,
-		'time_upper':   2000.
-	}
-	# values that change between rows:
-	for data_id in range( n_data ) :
-		fraction         = data_id / float(n_data-1)
-		age              = age_list[0] + (age_list[-1] - age_list[0])*fraction
-		row['age_lower'] = age
-		row['age_upper'] = age
-		row['node']      = 'child_' + str( (data_id % n_children) + 1 )
-		row['income']    = fraction
-		row['integrand'] = integrand_list[0]
-		row['meas_std']  = 1e-3
-		data_table.append( copy.copy(row) )
+	# data table, avgint_table:
+	data_table   = list()
+	avgint_table = list()
+	#
+	# for each integrand, age, time
+	n_integrad = len(interand_list)
+	n_age      = len(age_list)
+	n_time     = len(time_list)
+	for k1 in range(n_integrand * n_age * n_time) :
+		i_integrand = int( iat / (n_age * n_time) )
+		k2          = k1 % (n_age * n_time)
+		i_age       = int( k2 / n_time)
+		i_time      = k2 % n_time
+		#
+		age         = age_list[i_age]
+		time        = time_list[i_time]
+		integrand   = integrand_list[i_integrand]
+		#
+		# sex
+		if k1 % 2 == 0 :
+			sex = -0.5
+		else
+			sex = +0.5
+		#
+		# market scan
+		if k1 % 3 == 0 :
+			ms = (1, 0, 0)
+		elif k1 % 3 == 1 :
+			ms = (0, 1, 0)
+		else :
+			ms = (0, 0, 1)
+		#
+		# body mass index
+		bmi = 20 + k1 % 16
+		#
+		#
+		row = {
+			'density':     'log_gaussian',
+			'weight':      'weight_constant',
+			'age_lower':    age,
+			'age_upper':    age,
+			'time_lower':   time,
+			'time_upper':   time,
+			'x_sex':        sex,
+			'MS_2000':      ms[0],
+			'x_MS_2010':    ms[1],
+			'x_MS_2015':    ms[2],
+			'x_BMI':        bmi,
+		}
+		avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'ode_step_size',          'value':'10.0'         },
-		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'parent_node_name',       'value':'US'                },
+		{ 'name':'ode_step_size',          'value':'10.0'              },
+		{ 'name':'random_seed',            'value':'0'                 },
 
-		{ 'name':'quasi_fixed',            'value':'true'         },
-		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
-		{ 'name':'max_num_iter_fixed',     'value':'100'          },
-		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'         },
+		{ 'name':'quasi_fixed',            'value':'true'              },
+		{ 'name':'derivative_test_fixed',  'value':'first-order'       },
+		{ 'name':'max_num_iter_fixed',     'value':'20'                },
+		{ 'name':'print_level_fixed',      'value':'5'                 },
+		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
 
-		{ 'name':'derivative_test_random', 'value':'second-order' },
-		{ 'name':'max_num_iter_random',    'value':'100'          },
-		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-8'         }
+		{ 'name':'derivative_test_random', 'value':'second-order'      },
+		{ 'name':'max_num_iter_random',    'value':'50'                },
+		{ 'name':'print_level_random',     'value':'0'                 },
+		{ 'name':'tolerance_random',       'value':'1e-8'              }
 	]
 	# ----------------------------------------------------------------------
 	# create database
@@ -453,11 +480,12 @@ print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
+sys.exit(0)
 # -----------------------------------------------------------------------
 # read database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-var_table        = dismod_at.get_table_dict(connection, 'var')
+new            = False
+connection     = dismod_at.create_connection(file_name, new)
+var_table      = dismod_at.get_table_dict(connection, 'var')
 rate_table     = dismod_at.get_table_dict(connection, 'rate')
 covariate_table= dismod_at.get_table_dict(connection, 'covariate')
 # -----------------------------------------------------------------------
