@@ -58,9 +58,12 @@
 # $latex \[
 #	S(0) = 1 \; S'(a) = - \alpha x \omega S(a)
 # \] $$
-# where $latex \omega$$ is the other cause mortality rate,
+# where $latex \omega$$ is the other cause mortality rate
+# before the covariate effect,
 # $latex x$$ is the value of the income for this measurement, and
-# $latex \alpha$$ is the covariate multiplier;
+# $latex \alpha$$ is the covariate multiplier and
+# $latex \alpha x \omega$$ is the other cause mortality after the
+# covariate effect;
 # see $cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
 # The solution is $latex S(a) = \exp( - \alpha x \omega \; a )$$.
 #
