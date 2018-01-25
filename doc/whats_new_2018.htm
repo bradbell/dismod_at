@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,8 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Contents</option>
+<option>01-25</option>
+<option>01-24</option>
 <option>01-23</option>
 <option>01-22</option>
 <option>01-21</option>
@@ -99,6 +101,34 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="01-25" id="01-25">01-25</a></big></b>
+<br>
+Add mention that the <a href="simulate_command.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+
+is not used during the simulate command.
+
+<br>
+<br>
+<b><big><a name="01-24" id="01-24">01-24</a></big></b>
+<br>
+Change the specification for the
+<a href="create_database.htm#smooth_table" target="_top"><span style='white-space: nowrap'>smooth_table</span></a>
+ function
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>da</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+so that <code><font color="blue">None</font></code> can be returned for 
+<code><i><font color="black"><span style='white-space: nowrap'>da</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i></code>
+
+when there is no such forward difference.
+In addition, change the <a href="user.htm" target="_top"><span style='white-space: nowrap'>user</span></a>
+ examples to use this feature.
+
+<br>
+<br>
 <b><big><a name="01-23" id="01-23">01-23</a></big></b>
 
 <ol type="1"><li>

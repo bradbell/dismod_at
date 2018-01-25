@@ -8,7 +8,7 @@ var list_across0 = [
 var list_up0 = [
 'dismod_at.htm',
 'user.htm',
-'user_const_value.py.htm'
+'user_diabetes.py.htm'
 ];
 var list_down2 = [
 'install_unix.htm',
@@ -41,6 +41,25 @@ var list_down1 = [
 'user_re_scale.py.htm',
 'user_speed.py.htm',
 'user_students.py.htm'
+];
+var list_current0 = [
+'user_diabetes.py.htm#Under Construction',
+'user_diabetes.py.htm#Node Table',
+'user_diabetes.py.htm#Age Table',
+'user_diabetes.py.htm#Time Table',
+'user_diabetes.py.htm#Integrand Table',
+'user_diabetes.py.htm#Weight Table and Grid',
+'user_diabetes.py.htm#Smooth Table and Grid',
+'user_diabetes.py.htm#Smooth Table and Grid.smooth_mulcov',
+'user_diabetes.py.htm#Smooth Table and Grid.smooth_chi_parent',
+'user_diabetes.py.htm#Smooth Table and Grid.smooth_chi_child',
+'user_diabetes.py.htm#Smooth Table and Grid.smooth_iota_parent',
+'user_diabetes.py.htm#Smooth Table and Grid.smooth_iota_child',
+'user_diabetes.py.htm#Covariate Table',
+'user_diabetes.py.htm#Covariate Multiplier Table',
+'user_diabetes.py.htm#Covariate Multiplier Table.Rate Value',
+'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Value',
+'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Standard Deviations'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

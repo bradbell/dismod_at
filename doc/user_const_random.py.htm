@@ -73,6 +73,7 @@ A:active { color : purple }
 <option>user_const_random.py</option>
 <option>user_const_value.py</option>
 <option>user_continue_fit.py</option>
+<option>user_diabetes.py</option>
 <option>user_diff_constraint.py</option>
 <option>user_fit_fixed.py</option>
 <option>user_fit_random.py</option>
@@ -128,15 +129,15 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">constant_one_fun</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
      <b><font color="#0000FF">return</font></b> <font color="#993399">1.0</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_world</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_world'</font><font color="#990000">,</font>   <font color="#FF0000">'prior_difference'</font><font color="#990000">,</font> <font color="#FF0000">'prior_difference'</font><font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_world'</font><font color="#990000">,</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_child'</font><font color="#990000">,</font>   <font color="#FF0000">'prior_difference'</font><font color="#990000">,</font> <font color="#FF0000">'prior_difference'</font><font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_child'</font><font color="#990000">,</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_chi_world</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>chi_true<font color="#990000">[</font><font color="#FF0000">'world'</font><font color="#990000">],</font>    <font color="#FF0000">'prior_difference'</font><font color="#990000">,</font> <font color="#FF0000">'prior_difference'</font><font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>chi_true<font color="#990000">[</font><font color="#FF0000">'world'</font><font color="#990000">],</font>  None<font color="#990000">,</font> None<font color="#990000">)</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_chi_child_1</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>chi_true<font color="#990000">[</font><font color="#FF0000">'child_1'</font><font color="#990000">],</font>  <font color="#FF0000">'prior_difference'</font><font color="#990000">,</font> <font color="#FF0000">'prior_difference'</font><font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>chi_true<font color="#990000">[</font><font color="#FF0000">'child_1'</font><font color="#990000">],</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_chi_child_2</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>chi_true<font color="#990000">[</font><font color="#FF0000">'child_2'</font><font color="#990000">],</font>  <font color="#FF0000">'prior_difference'</font><font color="#990000">,</font> <font color="#FF0000">'prior_difference'</font><font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>chi_true<font color="#990000">[</font><font color="#FF0000">'child_2'</font><font color="#990000">],</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># function that creates example database</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">example_db</font></b> <font color="#990000">(</font>file_name<font color="#990000">)</font> <font color="#990000">:</font>
@@ -200,12 +201,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># prior_table</font></i>
      prior_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font>    <i><font color="#9A1900"># prior_difference</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_difference'</font><font color="#990000">,</font>
-               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.1</font><font color="#990000">,</font>
-          <font color="#990000">},{</font> <i><font color="#9A1900"># prior_iota_world</font></i>
+          <font color="#990000">{</font> <i><font color="#9A1900"># prior_iota_world</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_iota_world'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    iota_true<font color="#990000">[</font><font color="#FF0000">'world'</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.,</font>

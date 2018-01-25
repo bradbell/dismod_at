@@ -28,6 +28,8 @@ var list_down0 = [
 ];
 var list_current0 = [
 'whats_new_2018.htm#Contents',
+'whats_new_2018.htm#01-25',
+'whats_new_2018.htm#01-24',
 'whats_new_2018.htm#01-23',
 'whats_new_2018.htm#01-22',
 'whats_new_2018.htm#01-21',

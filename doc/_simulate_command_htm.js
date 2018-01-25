@@ -38,6 +38,7 @@ var list_current0 = [
 'simulate_command.htm#Syntax',
 'simulate_command.htm#database',
 'simulate_command.htm#number_simulate',
+'simulate_command.htm#meas_value',
 'simulate_command.htm#truth_var_table',
 'simulate_command.htm#simulate_table',
 'simulate_command.htm#simulate_table.simulate_value',

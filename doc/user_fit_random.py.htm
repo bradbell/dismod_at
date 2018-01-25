@@ -73,6 +73,7 @@ A:active { color : purple }
 <option>user_const_random.py</option>
 <option>user_const_value.py</option>
 <option>user_continue_fit.py</option>
+<option>user_diabetes.py</option>
 <option>user_diff_constraint.py</option>
 <option>user_fit_fixed.py</option>
 <option>user_fit_random.py</option>
@@ -141,9 +142,9 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">constant_weight_fun</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
      <b><font color="#0000FF">return</font></b> <font color="#993399">1.0</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_rate_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_rate_child'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_rate_child'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">)</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_rate_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_rate_parent'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_rate_parent'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">example_db</font></b> <font color="#990000">(</font>file_name<font color="#990000">)</font> <font color="#990000">:</font>
      <b><font color="#000080">import</font></b> dismod_at

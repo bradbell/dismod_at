@@ -571,84 +571,150 @@ P(a, t)
 <br>
 <br>
 <b><a name="I_i(a,t).Sincidence" id="I_i(a,t).Sincidence">Sincidence</a></b>
+<br>
+The incidence rate relative to susceptible population is
+<small>@[@
+
+ I (a, t) = \iota (a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = \iota (a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).remission" id="I_i(a,t).remission">remission</a></b>
+<br>
+The remission rate is
+<small>@[@
+
+ I (a, t) = \rho (a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = \rho (a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).mtexcess" id="I_i(a,t).mtexcess">mtexcess</a></b>
+<br>
+The excess mortality rate is
+<small>@[@
+
+ I (a, t) = \chi (a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = \chi (a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).mtother" id="I_i(a,t).mtother">mtother</a></b>
+<br>
+The other cause mortality rate is
+<small>@[@
+
+ I (a, t) = \omega (a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = \omega (a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).mtwith" id="I_i(a,t).mtwith">mtwith</a></b>
+<br>
+The with condition mortality rate is
+<small>@[@
+
+ I (a, t) = \omega (a,t) + \chi (a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = \omega (a,t) + \chi (a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).susceptible" id="I_i(a,t).susceptible">susceptible</a></b>
+<br>
+The susceptible fraction of the population is
+<small>@[@
+
+ I (a, t) = S(a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = S(a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).withC" id="I_i(a,t).withC">withC</a></b>
+<br>
+The with condition fraction of the population is
+<small>@[@
+
+ I (a, t) = C(a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = C(a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).prevalence" id="I_i(a,t).prevalence">prevalence</a></b>
+<br>
+The prevalence of the condition is
+<small>@[@
+
+ I (a, t) = P(a,t) = C(a,t) / [ S(a,t) + C(a,t) ]
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = P(a,t) = C(a,t) / [ S(a,t) + C(a,t) ]
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).Tincidence" id="I_i(a,t).Tincidence">Tincidence</a></b>
+<br>
+The  incidence rate relative to the total population is
+<small>@[@
+
+ I (a, t) = \iota(a,t) [ 1 - P(a,t) ]
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = \iota(a,t) [ 1 - P(a,t) ]
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).mtspecific" id="I_i(a,t).mtspecific">mtspecific</a></b>
+<br>
+The cause specific mortality rate is
+<small>@[@
+
+ I (a, t) = \chi (a,t) P(a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = \chi (a,t) P(a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).mtall" id="I_i(a,t).mtall">mtall</a></b>
+<br>
+The all cause mortality rate is
+<small>@[@
+
+ I (a, t) = \omega (a,t) + \chi (a,t) P(a,t)
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = \omega (a,t) + \chi (a,t) P(a,t)
-@)@</small><br>
+<br>
 <b><a name="I_i(a,t).mtstandard" id="I_i(a,t).mtstandard">mtstandard</a></b>
-
 <br>
-<small>@(@
-I (a, t) =
+The standardized mortality ratio is
+<small>@[@
+
+ I (a, t) =
 	[ \omega (a,t) + \chi (a,t) ] / [ \omega (a,t) + \chi (a,t) P(a,t) ]
-@)@</small><br>
-<b><a name="I_i(a,t).relrisk" id="I_i(a,t).relrisk">relrisk</a></b>
+
+
+@]@</small>
 
 <br>
-<small>@(@
-I (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t)
-@)@</small><br>
+<br>
+<b><a name="I_i(a,t).relrisk" id="I_i(a,t).relrisk">relrisk</a></b>
+<br>
+The relative risk is
+<small>@[@
+
+ I (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t)
+
+@]@</small>
+
+<br>
+<br>
 <b><big><a name="Measurement Value Covariates" id="Measurement Value Covariates">Measurement Value Covariates</a></big></b>
 
 

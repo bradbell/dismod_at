@@ -26,6 +26,7 @@ var list_down0 = [
 'user_const_random.py.htm',
 'user_const_value.py.htm',
 'user_continue_fit.py.htm',
+'user_diabetes.py.htm',
 'user_diff_constraint.py.htm',
 'user_fit_fixed.py.htm',
 'user_fit_random.py.htm',
