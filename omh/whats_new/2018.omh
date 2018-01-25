@@ -36,6 +36,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 01-25$$
+Add mention that the $cref/meas_value/simulate_command/meas_value/$$
+is not used during the simulate command.
+
 $head 01-24$$
 Change the specification for the
 $cref/smooth_table/create_database/smooth_table/$$ function

@@ -1148,6 +1148,10 @@ $head number_simulate$$
 Is the number of simulations. Each simulation contains a complete
 data set.
 
+$head meas_value$$
+The $cref/meas_value/data_table/meas_value/$$ in the data
+table is not used.
+
 $head truth_var_table$$
 The $cref truth_var_table$$ is an addition input table for this command.
 It specifies the values for the
