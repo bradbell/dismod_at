@@ -158,7 +158,7 @@ os.chdir('build/example/user')
 # functions used for priors in smoothing
 #
 # weight table has constant value 1.0
-def fun_constant_weight(a, t) :
+def fun_constant_one(a, t) :
 	return 1.0
 #
 # Note that there are no forward differences for covariate multiplier grids.
@@ -193,7 +193,7 @@ def fun_pini_child(a, t)
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	fun                    = dict()
-	fun['constant_weight'] = fun_constant_weight
+	fun['constant_one']    = fun_constant_one
 	fun['iota_parent']     = fun_iota_parent
 	fun['iota_child']      = fun_iota_child
 	fun['chi_parent']      = fun_chi_parent
@@ -241,11 +241,13 @@ def example_db (file_name) :
 	#
 	# ----------------------------------------------------------------------
 	# weight table and weight_grid table:
-	name    = 'constant'
-	fun     = constant_weight_fun
-	weight_table = [
-		{ 'name':name,  'age_id':[0], 'time_id':[0], 'fun':fun }
-	]
+	name    = 'weight_constant'
+	weight_table = [ {
+		'name':      'weight_constant',
+		'age_id':    [0],
+		'time_id':   [0],
+		'fun':       fun['constant_one']
+	} ]
 	# ----------------------------------------------------------------------
 	# prior_table, smooth_table, and smooth_grid_table
 	prior_table = [
@@ -384,7 +386,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'meas_value':  0.0,             # not used (will be simulated)
-		'density':     'gaussian',
+		'density':     'log_gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   2000.,

@@ -12,5 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 </pre>
 
 # Documentation
-https://bradbell.github.io/dismod\_at/doc/index.html
+[documentation link (also at top of this page)](
+	https://bradbell.github.io/dismod_at/doc/index.html
+)
 
