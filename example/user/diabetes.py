@@ -15,6 +15,7 @@
 #	covariates
 #	jk
 #	mulcov
+#	smoothings
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -53,11 +54,36 @@
 # in the $cref weight_table$$ and $cref weight_grid_table$$.
 #
 # $head Smooth Table and Grid$$
-# The following smoothing grids are defined:
-# $table
-# Name          $cnext Description $cnext
-# smooth_mulcov $cnext N(0, 1) and constant in (age, time)
-# $tend
+# The smoothings for omega are the same as for chi.
+#
+# $subhead smooth_mulcov$$
+# This smoothing is used for the covariate multipliers.
+# It has one grid point (functions are constant in age and time).
+# The value has an N(0, 1) prior distribution.
+#
+# $subhead smooth_chi_parent$$
+# This smoothing's age and time grid include every age and time point.
+# The value at each grid point has a U(0, 1) distribution.
+#
+# $subhead smooth_chi_child$$
+# This smoothing's age (time) grid has two points,
+# one at the minimum age (time) and one at the maximum age (time).
+# The value at each grid point has an N(0, 1) distribution.
+#
+# $subhead smooth_iota_parent$$
+# This smoothing's time grid includes every time point.
+# The age grid for this smoothing has one point age the minimum age
+# and all the age points that are greater than or equal 20.
+# The value at each grid point has a U(0, 0) distribution if the age
+# is less than or equal 20 and U(0, 1) otherwise.
+#
+# $subhead smooth_iota_child$$
+# This smoothing's time grid has two points,
+# one at the minimum time and one at the maximum time.
+# The age grid for this smoothing has three points,
+# one at the minimum age, one at age 20, and one at the maximum age.
+# The value at each grid point has a U(0, 0) distribution if the
+# age is less than or equal 20 and N(0, 1) otherwise.
 #
 # $head Covariate Table$$
 # The following information is placed in the $cref covariate_table$$
@@ -129,23 +155,53 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
+# functions used for priors in smoothing
 #
 # weight table has constant value 1.0
-def constant_weight_fun(a, t) :
+def fun_constant_weight(a, t) :
 	return 1.0
 #
-# covariate multiplies are gaussian with mean zero, and variance one.
-# Note that there are no forward differences for covariate multipliers.
+# Note that there are no forward differences for covariate multiplier grids.
 def fun_mulcov(a, t) :
 	return ('prior_N(0,1)', None, None)
+fun['mulcov'] = fun_mulcov
 #
-# note that the a, t values are not used for this case
-def fun_rate_child(a, t) :
-	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+# priors used in smoothing for iota
 def fun_iota_parent(a, t) :
-	return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+	if a <= 20.0 :
+		return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
+	else :
+		return ('prior_U(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+def run_iota_child(a, t) :
+	if a <= 20.0
+		return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
+	else :
+		return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+#
+# priors used in smoothing for chi and omega
+def fun_chi_parent(a, t) :
+	return ('prior_U(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+def fun_chi_child(a, t) :
+	return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+#
+# priors used in smoothing for pini
+def fun_pini_parent(a, t)
+	return ('prior_U(0,1)', None, 'prior_diff_rate')
+def fun_pini_child(a, t)
+	return ('prior_N(0,1)', None, 'prior_diff_rate')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
+	# ----------------------------------------------------------------------
+	fun                    = dict()
+	fun['constant_weight'] = fun_constant_weight
+	fun['iota_parent']     = fun_iota_parent
+	fun['iota_child']      = fun_iota_child
+	fun['chi_parent']      = fun_chi_parent
+	fun['chi_child']       = fun_chi_child
+	fun['omega_parent']    = fun_chi_parent
+	fun['omega_child']     = fun_chi_child
+	fun['pini_parent']     = fun_pini_parent
+	fun['pini_child']      = fun_pini_child
 	# ----------------------------------------------------------------------
 	# avgint table: empty
 	avgint_table = list()
@@ -154,13 +210,23 @@ def example_db (file_name) :
 	# nslist_table:
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
-	# age table:
-	age_list    = [ j * 5.0 for j in range(21) ]
+	# age lists
+	age_index                 = dict()
+	age_list                  = [ j * 5.0 for j in range(21) ]
+	age_index_all             = range(21)
+	age_index['iota_parent']  = [ 0 , 4] + range(5, 21)
+	age_index['iota_child']   = [ 0, 4, 20]
+	age_index['chi_parent']   = age_index_all
+	age_index['chi_child']    = [ 0, 20 ]
+	age_index['omega_parent'] = age_index['chi_parent']
+	age_index['omega_child']  = age_index['chi_child']
 	#
 	# ----------------------------------------------------------------------
-	# time table:
-	time_list   = [ 1990.0 + i * 5.0 for i in range(7) ]
-	#
+	# time lists
+	time_list              = [ 1990.0 + i * 5.0 for i in range(7) ]
+	time_index_all         = range(7)
+	time_index_rate_parent = time_index_all
+	time_index_rate_child  = [0, 6]
 	# ----------------------------------------------------------------------
 	# integrand table:
 	integrand_list = [ 'prevalence' ]
@@ -190,6 +256,19 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      1.0,
 		} , {
+			# prior_U(0,1)
+			'name':     'prior_U(0,1)',
+			'density':  'uniform',
+			'lower':    0.0,
+			'upper':    1.0,
+		} , {
+			# prior_diff_rate
+			'name':     'prior_diff_rate',
+			'density':  'log_gaussian',
+			'mean':     0.0,
+			'std':      0.1,
+			'eta':      1e-4,
+		}
 	]
 	# smooth table
 	smooth_table   = list()
@@ -197,9 +276,31 @@ def example_db (file_name) :
 	# smooth_mulcov
 	name           = 'smooth_mulcov'
 	fun            = fun_rate_child
-	smooth_table = [
-		{'name':name, 'age_id':[0], 'time_id':[0], 'fun':fun }
-	]
+	smooth_table.append( {
+		'name':     'smooth_mulcov',
+		'age_id':   [0],
+		'time_id':  [0],
+		'fun':      fun['mulcov']
+	} )
+	for rate in [ 'pini', 'iota', 'chi', 'omega' ] :
+		#
+		# smooth_rate_parent
+		name = rate + '_parent'
+		smooth_table.append( {
+			'name':        'smooth_' + name  ,
+			'age_id':       age_index[name]  ,
+			'time_id':      time_rate_parent ,
+			'fun':          fun[name]
+		} )
+		#
+		# smooth_rate_child
+		name = rate + '_child'
+		smooth_table.append( {
+			'name':        'smooth_' + name  ,
+			'age_id':       age_index[name]  ,
+			'time_id':      time_rate_parent ,
+			'fun':          fun[name]
+		} )
 	#
 	# no standard deviation multipliers
 	for dictionary in smooth_table :
@@ -261,7 +362,7 @@ def example_db (file_name) :
 	# rate table:
 	rate_table = [
 		{	'name':          'iota',
-			'parent_smooth': 'smooth_rate_parent',
+			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_iota_child',
 		} , {
 			'name':          'rho',
