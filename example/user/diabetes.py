@@ -92,7 +92,6 @@
 # one     $cnext constant value = 1        $cnext 0     $cnext null $rnext
 # sex     $cnext .5=male -.5=female        $cnext 0     $cnext 0.6  $rnext
 # BMI     $cnext body mass index           $cnext 27    $cnext null $rnext
-# LDI     $cnext lag distributed income    $cnext 10    $cnext null $rnext
 # MS_2000 $cnext market scan data for 2000 $cnext 0     $cnext null $rnext
 # MS_2010 $cnext market scan data for 2010 $cnext 0     $cnext null $rnext
 # MS_2015 $cnext market scan data for 2015 $cnext 0     $cnext null
@@ -168,9 +167,9 @@ def fun_mulcov(a, t) :
 # priors used in smoothing for iota
 def fun_iota_parent(a, t) :
 	if a <= 20.0 :
-		return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
+		return ('prior_U(1e-8,1e-8)', 'prior_diff_rate', 'prior_diff_rate')
 	else :
-		return ('prior_U(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+		return ('prior_U(1e-8,1)', 'prior_diff_rate', 'prior_diff_rate')
 def fun_iota_child(a, t) :
 	if a <= 20.0 :
 		return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
@@ -266,6 +265,27 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    1.0,
 		} , {
+			# prior_U(1e-8,1)
+			'name':     'prior_U(1e-8,1)',
+			'density':  'uniform',
+			'mean':     0.1,     # only affects initial optimizer value
+			'lower':    1e-8,
+			'upper':    1.0,
+		} , {
+			# prior_U(0,0)
+			'name':     'prior_U(0,0)',
+			'density':  'uniform',
+			'mean':     0.0,
+			'lower':    0.0,
+			'upper':    0.0,
+		} , {
+			# prior_U(1e-8,1e-8)
+			'name':     'prior_U(1e-8,1e-8)',
+			'density':  'uniform',
+			'mean':     1e-8,
+			'lower':    1e-8,
+			'upper':    1e-8,
+		} , {
 			# prior_diff_rate
 			'name':     'prior_diff_rate',
 			'density':  'log_gaussian',
@@ -315,7 +335,6 @@ def example_db (file_name) :
 	covariate_table = [
 		{'name':'sex',     'reference':0.0,  'max_difference':0.6  } ,
 		{'name':'BMI',     'reference':27.0, 'max_difference':None } ,
-		{'name':'LDI',     'reference':10.0, 'max_difference':None } ,
 		{'name':'MS_2000', 'reference':0.0,  'max_difference':None } ,
 		{'name':'MS_2010', 'reference':0.0,  'max_difference':None } ,
 		{'name':'MS_2015', 'reference':0.0,  'max_difference':None } ,
@@ -374,12 +393,12 @@ def example_db (file_name) :
 			'child_smooth':  None,
 		} , {
 			'name':          'chi',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': 'smooth_chi_parent',
+			'child_smooth':  'smooth_chi_child',
 		} , {
 			'name':          'omega',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': 'smooth_omega_parent',
+			'child_smooth':  'smooth_omega_child',
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -387,19 +406,25 @@ def example_db (file_name) :
 	data_table   = list()
 	avgint_table = list()
 	#
-	# for each integrand, age, time
+	# for each integrand, age, time, node
 	n_integrand = len(integrand_list)
 	n_age       = len(age_list)
 	n_time      = len(time_list)
-	for k1 in range(n_integrand * n_age * n_time) :
-		i_integrand = int( k1 / (n_age * n_time) )
-		k2          = k1 % (n_age * n_time)
-		i_age       = int( k2 / n_time)
-		i_time      = k2 % n_time
+	n_node      = len(node_table)
+	for k1 in range(n_integrand * n_age * n_time * n_node) :
+		i_integrand = int( k1 / (n_age * n_time * n_node) )
+		k2          = k1 % (n_age * n_time * n_node)
+		#
+		i_age       = int( k2 / (n_time * n_node) )
+		k3          = k2 % n_time
+		#
+		i_time      = int( k3 / n_node )
+		i_node      = k3 % n_node
 		#
 		age         = age_list[i_age]
 		time        = time_list[i_time]
 		integrand   = integrand_list[i_integrand]
+		node        = node_table[i_node]['name']
 		#
 		# sex
 		if k1 % 2 == 0 :
@@ -420,17 +445,20 @@ def example_db (file_name) :
 		#
 		#
 		row = {
+			'node':        node,
+			'integrand':   integrand,
 			'density':     'log_gaussian',
 			'weight':      'weight_constant',
 			'age_lower':    age,
 			'age_upper':    age,
 			'time_lower':   time,
 			'time_upper':   time,
-			'x_sex':        sex,
+			'sex':          sex,
 			'MS_2000':      ms[0],
-			'x_MS_2010':    ms[1],
-			'x_MS_2015':    ms[2],
-			'x_BMI':        bmi,
+			'MS_2010':      ms[1],
+			'MS_2015':      ms[2],
+			'BMI':          bmi,
+			'one':          1,
 		}
 		avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
