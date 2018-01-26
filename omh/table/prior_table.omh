@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -12,6 +12,7 @@ $begin prior_table$$
 $spell
 	optimizer
 	std
+	var
 $$
 
 $section The Prior Table$$
@@ -53,6 +54,17 @@ It must hold that
 $codei%
 	%lower% <= %mean% <= %upper%
 %$$
+
+$subhead uniform$$
+If $icode density_id$$ corresponds to a
+$cref/uniform/density_table/density_name/uniform/$$,
+and $cref/start_var_table/init_command/start_var_table/$$
+is set to the prior mean,
+the value of $icode mean$$ only affects the
+starting point for the optimization.
+Otherwise, when the density is uniform, the value of $icode mean$$
+has no effect.
+
 
 $head std$$
 This column has type $code real$$ and specifies the standard deviation

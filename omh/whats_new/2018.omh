@@ -36,6 +36,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 01-26$$
+A special discussion of the prior mean,
+in the case where the density is
+$cref/uniform/prior_table/mean/uniform/$$,
+was added.
+
 $head 01-25$$
 Add mention that the $cref/meas_value/simulate_command/meas_value/$$
 is not used during the simulate command.

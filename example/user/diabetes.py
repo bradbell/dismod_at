@@ -164,7 +164,6 @@ def fun_constant_one(a, t) :
 # Note that there are no forward differences for covariate multiplier grids.
 def fun_mulcov(a, t) :
 	return ('prior_N(0,1)', None, None)
-fun['mulcov'] = fun_mulcov
 #
 # priors used in smoothing for iota
 def fun_iota_parent(a, t) :
@@ -172,8 +171,8 @@ def fun_iota_parent(a, t) :
 		return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
 	else :
 		return ('prior_U(0,1)', 'prior_diff_rate', 'prior_diff_rate')
-def run_iota_child(a, t) :
-	if a <= 20.0
+def fun_iota_child(a, t) :
+	if a <= 20.0 :
 		return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
 	else :
 		return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
@@ -185,14 +184,15 @@ def fun_chi_child(a, t) :
 	return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
 #
 # priors used in smoothing for pini
-def fun_pini_parent(a, t)
+def fun_pini_parent(a, t) :
 	return ('prior_U(0,1)', None, 'prior_diff_rate')
-def fun_pini_child(a, t)
+def fun_pini_child(a, t) :
 	return ('prior_N(0,1)', None, 'prior_diff_rate')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	fun                    = dict()
+	fun['mulcov']          = fun_mulcov
 	fun['constant_one']    = fun_constant_one
 	fun['iota_parent']     = fun_iota_parent
 	fun['iota_child']      = fun_iota_child
@@ -211,12 +211,16 @@ def example_db (file_name) :
 	age_index                 = dict()
 	age_list                  = [ j * 5.0 for j in range(21) ]
 	age_index_all             = range(21)
-	age_index['iota_parent']  = [ 0 , 4] + range(5, 21)
-	age_index['iota_child']   = [ 0, 4, 20]
+	#
+	age_index['iota_parent']  = [ 0 , 4] + list( range(5, 21) )
 	age_index['chi_parent']   = age_index_all
-	age_index['chi_child']    = [ 0, 20 ]
 	age_index['omega_parent'] = age_index['chi_parent']
+	age_index['pini_parent']  = [ 0 ]
+	#
+	age_index['iota_child']   = [ 0, 4, 20]
+	age_index['chi_child']    = [ 0, 20 ]
 	age_index['omega_child']  = age_index['chi_child']
+	age_index['pini_child']   = [ 0 ]
 	#
 	# ----------------------------------------------------------------------
 	# time lists
@@ -258,6 +262,7 @@ def example_db (file_name) :
 			# prior_U(0,1)
 			'name':     'prior_U(0,1)',
 			'density':  'uniform',
+			'mean':     0.1,     # only affects initial optimizer value
 			'lower':    0.0,
 			'upper':    1.0,
 		} , {
@@ -273,8 +278,6 @@ def example_db (file_name) :
 	smooth_table   = list()
 	#
 	# smooth_mulcov
-	name           = 'smooth_mulcov'
-	fun            = fun_rate_child
 	smooth_table.append( {
 		'name':     'smooth_mulcov',
 		'age_id':   [0],
@@ -288,7 +291,7 @@ def example_db (file_name) :
 		smooth_table.append( {
 			'name':        'smooth_' + name  ,
 			'age_id':       age_index[name]  ,
-			'time_id':      time_rate_parent ,
+			'time_id':      time_index_rate_parent ,
 			'fun':          fun[name]
 		} )
 		#
@@ -297,7 +300,7 @@ def example_db (file_name) :
 		smooth_table.append( {
 			'name':        'smooth_' + name  ,
 			'age_id':       age_index[name]  ,
-			'time_id':      time_rate_parent ,
+			'time_id':      time_index_rate_parent ,
 			'fun':          fun[name]
 		} )
 	#
@@ -385,11 +388,11 @@ def example_db (file_name) :
 	avgint_table = list()
 	#
 	# for each integrand, age, time
-	n_integrad = len(interand_list)
-	n_age      = len(age_list)
-	n_time     = len(time_list)
+	n_integrand = len(integrand_list)
+	n_age       = len(age_list)
+	n_time      = len(time_list)
 	for k1 in range(n_integrand * n_age * n_time) :
-		i_integrand = int( iat / (n_age * n_time) )
+		i_integrand = int( k1 / (n_age * n_time) )
 		k2          = k1 % (n_age * n_time)
 		i_age       = int( k2 / n_time)
 		i_time      = k2 % n_time
@@ -401,7 +404,7 @@ def example_db (file_name) :
 		# sex
 		if k1 % 2 == 0 :
 			sex = -0.5
-		else
+		else :
 			sex = +0.5
 		#
 		# market scan
@@ -480,85 +483,6 @@ print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
-sys.exit(0)
-# -----------------------------------------------------------------------
-# read database
-new            = False
-connection     = dismod_at.create_connection(file_name, new)
-var_table      = dismod_at.get_table_dict(connection, 'var')
-rate_table     = dismod_at.get_table_dict(connection, 'rate')
-covariate_table= dismod_at.get_table_dict(connection, 'covariate')
-# -----------------------------------------------------------------------
-# truth table:
-tbl_name     = 'truth_var'
-col_name     = [ 'truth_var_value' ]
-col_type     = [ 'real' ]
-row_list     = list()
-var_id2true  = list()
-for var_id in range( len(var_table) ) :
-	var_info        = var_table[var_id]
-	truth_var_value = None
-	var_type = var_info['var_type']
-	if var_type == 'mulcov_rate_value' :
-		rate_id   = var_info['rate_id']
-		rate_name = rate_table[rate_id]['rate_name']
-		if rate_name == 'iota' :
-			covariate_id   = var_info['covariate_id']
-			covariate_name = covariate_table[covariate_id]['covariate_name' ]
-			assert( covariate_name == 'income' )
-			truth_var_value = mulcov_income_iota_true
-		else :
-			assert( False )
-	else :
-		assert( var_type == 'rate' )
-		rate_id   = var_info['rate_id']
-		rate_name = rate_table[rate_id]['rate_name']
-		node_id   = var_info['node_id']
-		# node zero is the world
-		if node_id == 0 and rate_name == 'iota' :
-			truth_var_value = iota_parent
-		else :
-			truth_var_value = 0.0
-	var_id2true.append( truth_var_value )
-	row_list.append( [ truth_var_value ] )
-dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-connection.close()
-# -----------------------------------------------------------------------
-# Simulate and then fit the data
-for command in [ 'simulate', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'simulate' :
-		number_simulate = '1'
-		cmd.append(number_simulate)
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	if command == 'fit' :
-		simulate_index = '0';
-		cmd.append(simulate_index)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
-# -----------------------------------------------------------------------
-# check fit results
-new          = False
-connection   = dismod_at.create_connection(file_name, new)
-fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
-connection.close()
-#
-max_error    = 0.0
-for var_id in range( len(var_table) ) :
-	row      = fit_var_table[var_id]
-	fit_value  = row['fit_var_value']
-	true_value = var_id2true[var_id]
-	if true_value == 0.0 :
-		max_error = max(abs(fit_value) , max_error)
-	else :
-		max_error = max( abs(fit_value / true_value - 1.0), max_error)
-if max_error > 5e-2 :
-	print('max_error = ', max_error)
-	assert(False)
 # -----------------------------------------------------------------------------
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
