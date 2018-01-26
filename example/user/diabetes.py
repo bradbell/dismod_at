@@ -126,6 +126,19 @@
 # $cref/gamma_j/data_like/Measurement Standard Deviation Covariates/gamma_j/$$
 # that is for prevalence measurements and multiplies the $code one$$ covariate.
 #
+# $head Truth$$
+# The start_age is 0, The end_age is 100,
+# the start_time is 1990, and the end_time is 2020.
+# The values in the $cref truth_var_table$$ are generated using bilinear
+# interpolation of specified values at
+# (start_age, start_time), (start_age, end_time), (end_age, start_time)
+# and (end_age, end_time).
+# There was an exception, if the age was less than or equal 20.0,
+# the value zero was used for parent and child iota rate.
+# See the function $code true_rate$$ below.
+#
+#
+#
 # $code
 # $srcfile%
 #	example/user/diabetes.py
@@ -235,11 +248,54 @@ def true_rate(node, rate, a, t) :
 		else :
 			assert False
 		#
+		# set iota truth to zero when age is less than or equal 20.
 		if a <= 20.0 :
 			ret = 0.0
 		else :
 			ret = bilinear(grid_value, a, t)
-	#
+	# -------------------------------------------------------------------------
+	elif rate == 'omega' :
+		if node == 'US' :
+			grid_value['start_age, start_time'] = 2e-4
+			grid_value['start_age, end_time']   = 1e-4
+			grid_value['end_age, start_time']   = 2e-1
+			grid_value['end_age, end_time']     = 1e-1
+		elif node in ['Alabama', 'Wisconsin'] :
+			grid_value['start_age, start_time'] = 4e-4
+			grid_value['start_age, end_time']   = 2e-4
+			grid_value['end_age, start_time']   = 4e-1
+			grid_value['end_age, end_time']     = 2e-1
+		elif node in [ 'California', 'Massachusetts' ] :
+			grid_value['start_age, start_time'] = 1.0e-4
+			grid_value['start_age, end_time']   = 0.5e-4
+			grid_value['end_age, start_time']   = 1.0e-1
+			grid_value['end_age, end_time']     = 0.5e-1
+		else :
+			assert False
+		#
+		ret = bilinear(grid_value, a, t)
+	# -------------------------------------------------------------------------
+	elif rate == 'chi' :
+		if node == 'US' :
+			grid_value['start_age, start_time'] = 2e-3
+			grid_value['start_age, end_time']   = 1e-3
+			grid_value['end_age, start_time']   = 2e-1
+			grid_value['end_age, end_time']     = 1e-1
+		elif node in ['Alabama', 'Wisconsin'] :
+			grid_value['start_age, start_time'] = 4e-3
+			grid_value['start_age, end_time']   = 2e-3
+			grid_value['end_age, start_time']   = 4e-1
+			grid_value['end_age, end_time']     = 2e-1
+		elif node in [ 'California', 'Massachusetts' ] :
+			grid_value['start_age, start_time'] = 1.0e-3
+			grid_value['start_age, end_time']   = 0.5e-3
+			grid_value['end_age, start_time']   = 1.0e-1
+			grid_value['end_age, end_time']     = 0.5e-1
+		else :
+			assert False
+		#
+		ret = bilinear(grid_value, a, t)
+	# -------------------------------------------------------------------------
 	if ret < 0.0 :
 		import pdb; pdb.set_trace()
 	return ret
