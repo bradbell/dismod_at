@@ -158,38 +158,61 @@ os.chdir('build/example/user')
 time_grid = { 'start':1990.0, 'end': 2020, 'number': 7 }
 age_grid  = { 'start':0.0,    'end': 100,  'number': 21 }
 #
-def truth(node, rate, a, t) :
-	if rate == 'iota' :
-		if node == 'US' :
-			value = 0.0
-		elif node == 'Alabama' :
-			value = 0.0
-		elif node == 'California' :
-			value = 0.0
-		elif node == 'Massachusett' :
-			value = 0.0
-	elif rate == 'chi' :
-		if node == 'US' :
-			value = 0.0
-		elif node == 'Alabama' :
-			value = 0.0
-		elif node == 'California' :
-			value = 0.0
-		elif node == 'Massachusett' :
-			value = 0.0
-	elif rate == 'omega' :
-		if node == 'US' :
-			value = 0.0
-		elif node == 'Alabama' :
-			value = 0.0
-		elif node == 'California' :
-			value = 0.0
-		elif node == 'Massachusett' :
-			value = 0.0
-	else :
-		assert False
+def bilinear(grid_value, a, t) :
+	# denominator
+	da  = age_grid['end'] - age_grid['start']
+	dt  = time_grid['end'] - time_grid['start']
+	den = da * dt;
+	num = 0.0
 	#
-	return value
+	# value at start age and start time
+	da   = age_grid['end'] - a
+	dt   = time_grid['end'] - t
+	num += grid_value['start_age, start_time'] * da * dt
+	#
+	# value at start age and end time
+	da   = age_grid['end'] - a
+	dt   = t - time_grid['start']
+	num += grid_value['start_age, end_time'] * da * dt
+	#
+	# value at end age and start time
+	da   = a - age_grid['start']
+	dt   = time_grid['end'] - t
+	num += grid_value['end_age, start_time'] * da * dt
+	#
+	# value at end age and end time
+	da   = a - age_grid['start']
+	dt   = t - time_grid['start']
+	num += grid_value['end_age, end_time'] * da * dt
+	#
+	return num / den
+#
+def true_rate(node, rate, a, t) :
+	# default
+	grid_value = {
+		'start_age, start_time': 0.0,
+		'start_age, end_time':   0.0,
+		'end_age, start_time':   0.0,
+		'end_age, end_time':     0.0
+	}
+	if rate == 'pini' :
+		if node == 'US' :
+			grid_value['start_age, start_time'] = 1e-3
+			grid_value['start_age, end_time']   = 1e-3
+		elif node in ['Alabama', 'Wisconsin'] :
+			grid_value['start_age, start_time'] = 2e-3
+			grid_value['start_age, end_time']   = 2e-3
+		elif node in [ 'California', 'Massachusetts' ] :
+			grid_value['start_age, start_time'] = 0.5e-3
+			grid_value['start_age, end_time']   = 0.5e-3
+		else :
+			assert False
+		#
+		# pini is constant in age
+		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
+		grid_value['end_age, end_time']   = grid_value['start_age, end_time']
+	#
+	return bilinear(grid_value, a, t)
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ------------------------------------------------------------------------
@@ -279,6 +302,7 @@ def example_db (file_name) :
 		{ 'name':'Alabama',        'parent':'US' } ,
 		{ 'name':'California',     'parent':'US' } ,
 		{ 'name':'Massachusetts',  'parent':'US' } ,
+		{ 'name':'Wisconsin',      'parent':'US' } ,
 	]
 	#
 	# ----------------------------------------------------------------------
@@ -426,7 +450,11 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
-		{	'name':          'iota',
+		{	'name':          'pini',
+			'parent_smooth': 'smooth_pini_parent',
+			'child_smooth':  'smooth_pini_child',
+		} , {
+			'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_iota_child',
 		} , {
@@ -570,7 +598,6 @@ tbl_name     = 'truth_var'
 col_name     = [ 'truth_var_value' ]
 col_type     = [ 'real' ]
 row_list     = list()
-var_id2true  = list()
 for var_id in range( len(var_table) ) :
 	row          = var_table[var_id]
 	var_type     = row['var_type']
@@ -579,17 +606,15 @@ for var_id in range( len(var_table) ) :
 	if var_type.startswith('mulcov_') :
 		covariate = covariate_table[ row['covariate_id' ] ] ['covariate_name']
 	#
+	value = 0.0
 	if var_type == 'rate' :
-		node = node_table[ row['node_id'] ] ['node_name']
-		rate = rate_table[ row['rate_id'] ] ['rate_name']
-	elif var_type == 'mulcov_rate_value' :
-		rate = rate_table[ row['rate_id'] ] ['rate_name']
-	elif var_type == 'mulcov_meas_value' :
-		integrand = integrand_table[ row['integrand_id'] ]['integrand_name']
-	elif var_type == 'mulcov_meas_std' :
-		integrand = integrand_table[ row['integrand_id'] ]['integrand_name']
-	else :
-		assert False
+		node  = node_table[ row['node_id'] ] ['node_name']
+		rate  = rate_table[ row['rate_id'] ] ['rate_name']
+		value = true_rate(node, rate, age, time)
+	row_list.append( [ value ] )
+dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+connection.close()
+# -----------------------------------------------------------------------------
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
