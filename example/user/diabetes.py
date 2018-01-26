@@ -154,6 +154,43 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
+# values used to simulate truth
+time_grid = { 'start':1990.0, 'end': 2020, 'number': 7 }
+age_grid  = { 'start':0.0,    'end': 100,  'number': 21 }
+#
+def truth(node, rate, a, t) :
+	if rate == 'iota' :
+		if node == 'US' :
+			value = 0.0
+		elif node == 'Alabama' :
+			value = 0.0
+		elif node == 'California' :
+			value = 0.0
+		elif node == 'Massachusett' :
+			value = 0.0
+	elif rate == 'chi' :
+		if node == 'US' :
+			value = 0.0
+		elif node == 'Alabama' :
+			value = 0.0
+		elif node == 'California' :
+			value = 0.0
+		elif node == 'Massachusett' :
+			value = 0.0
+	elif rate == 'omega' :
+		if node == 'US' :
+			value = 0.0
+		elif node == 'Alabama' :
+			value = 0.0
+		elif node == 'California' :
+			value = 0.0
+		elif node == 'Massachusett' :
+			value = 0.0
+	else :
+		assert False
+	#
+	return value
+# ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ------------------------------------------------------------------------
 	# functions used for priors in smoothing
@@ -207,16 +244,21 @@ def example_db (file_name) :
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# age lists
+	start                     = age_grid['start']
+	end                       = age_grid['end']
+	number                    = age_grid['number']
+	d_age                     = (end - start) / (number - 1)
+	iota_start                = int( 20.0 / d_age + 0.5 )
 	age_index                 = dict()
-	age_list                  = [ j * 5.0 for j in range(21) ]
-	age_index_all             = range(21)
+	age_list                  = [ start + j * d_age for j in range(number) ]
+	age_index_all             = range(number)
 	#
-	age_index['iota_parent']  = [ 0 , 4] + list( range(5, 21) )
+	age_index['iota_parent']  = [ 0 , iota_start] + list( range(5, 21) )
 	age_index['chi_parent']   = age_index_all
 	age_index['omega_parent'] = age_index['chi_parent']
 	age_index['pini_parent']  = [ 0 ]
 	#
-	age_index['iota_child']   = [ 0, 4, 20]
+	age_index['iota_child']   = [ 0, iota_start, 20]
 	age_index['chi_child']    = [ 0, 20 ]
 	age_index['omega_child']  = age_index['chi_child']
 	age_index['pini_child']   = [ 0 ]
