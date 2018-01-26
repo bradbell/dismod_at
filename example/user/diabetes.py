@@ -154,41 +154,41 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
-# functions used for priors in smoothing
-#
-# weight table has constant value 1.0
-def fun_constant_one(a, t) :
-	return 1.0
-#
-# Note that there are no forward differences for covariate multiplier grids.
-def fun_mulcov(a, t) :
-	return ('prior_N(0,1)', None, None)
-#
-# priors used in smoothing for iota
-def fun_iota_parent(a, t) :
-	if a <= 20.0 :
-		return ('prior_U(1e-8,1e-8)', 'prior_diff_rate', 'prior_diff_rate')
-	else :
-		return ('prior_U(1e-8,1)', 'prior_diff_rate', 'prior_diff_rate')
-def fun_iota_child(a, t) :
-	if a <= 20.0 :
-		return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
-	else :
-		return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
-#
-# priors used in smoothing for chi and omega
-def fun_chi_parent(a, t) :
-	return ('prior_U(0,1)', 'prior_diff_rate', 'prior_diff_rate')
-def fun_chi_child(a, t) :
-	return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
-#
-# priors used in smoothing for pini
-def fun_pini_parent(a, t) :
-	return ('prior_U(0,1)', None, 'prior_diff_rate')
-def fun_pini_child(a, t) :
-	return ('prior_N(0,1)', None, 'prior_diff_rate')
-# ------------------------------------------------------------------------
 def example_db (file_name) :
+	# ------------------------------------------------------------------------
+	# functions used for priors in smoothing
+	#
+	# weight table has constant value 1.0
+	def fun_constant_one(a, t) :
+		return 1.0
+	#
+	# Note that there are no forward differences for covariate multiplier grids.
+	def fun_mulcov(a, t) :
+		return ('prior_N(0,1)', None, None)
+	#
+	# priors used in smoothing for iota
+	def fun_iota_parent(a, t) :
+		if a <= 20.0 :
+			return ('prior_U(1e-8,1e-8)', 'prior_diff_rate', 'prior_diff_rate')
+		else :
+			return ('prior_U(1e-8,1)', 'prior_diff_rate', 'prior_diff_rate')
+	def fun_iota_child(a, t) :
+		if a <= 20.0 :
+			return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
+		else :
+			return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+	#
+	# priors used in smoothing for chi and omega
+	def fun_chi_parent(a, t) :
+		return ('prior_U(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+	def fun_chi_child(a, t) :
+		return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+	#
+	# priors used in smoothing for pini
+	def fun_pini_parent(a, t) :
+		return ('prior_U(0,1)', None, 'prior_diff_rate')
+	def fun_pini_child(a, t) :
+		return ('prior_N(0,1)', None, 'prior_diff_rate')
 	# ----------------------------------------------------------------------
 	fun                    = dict()
 	fun['mulcov']          = fun_mulcov
