@@ -236,7 +236,7 @@ def example_db (file_name) :
 		{ 'name':'US',             'parent':''   } ,
 		{ 'name':'Alabama',        'parent':'US' } ,
 		{ 'name':'California',     'parent':'US' } ,
-		{ 'name':'Massachuesetts', 'parent':'US' } ,
+		{ 'name':'Massachusetts',  'parent':'US' } ,
 	]
 	#
 	# ----------------------------------------------------------------------
@@ -511,7 +511,43 @@ print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
+# -----------------------------------------------------------------------
+# read database tables
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+var_table       = dismod_at.get_table_dict(connection, 'var')
+rate_table      = dismod_at.get_table_dict(connection, 'rate')
+covariate_table = dismod_at.get_table_dict(connection, 'covariate')
+integrand_table = dismod_at.get_table_dict(connection, 'integrand')
+node_table      = dismod_at.get_table_dict(connection, 'node')
+time_table      = dismod_at.get_table_dict(connection, 'time')
+age_table       = dismod_at.get_table_dict(connection, 'age')
 # -----------------------------------------------------------------------------
+# create truth table
+tbl_name     = 'truth_var'
+col_name     = [ 'truth_var_value' ]
+col_type     = [ 'real' ]
+row_list     = list()
+var_id2true  = list()
+for var_id in range( len(var_table) ) :
+	row          = var_table[var_id]
+	var_type     = row['var_type']
+	age          = age_table[ row['age_id'] ] ['age']
+	time         = time_table[ row['time_id'] ] ['time']
+	if var_type.startswith('mulcov_') :
+		covariate = covariate_table[ row['covariate_id' ] ] ['covariate_name']
+	#
+	if var_type == 'rate' :
+		node = node_table[ row['node_id'] ] ['node_name']
+		rate = rate_table[ row['rate_id'] ] ['rate_name']
+	elif var_type == 'mulcov_rate_value' :
+		rate = rate_table[ row['rate_id'] ] ['rate_name']
+	elif var_type == 'mulcov_meas_value' :
+		integrand = integrand_table[ row['integrand_id'] ]['integrand_name']
+	elif var_type == 'mulcov_meas_std' :
+		integrand = integrand_table[ row['integrand_id'] ]['integrand_name']
+	else :
+		assert False
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
