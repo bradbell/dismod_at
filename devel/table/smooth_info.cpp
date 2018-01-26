@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -486,8 +486,8 @@ smooth_info::smooth_info(
 	if( n_age != size_t( smooth_table[smooth_id].n_age ) )
 	{	table_name = "smooth";
 		msg  = "In smooth_grid table with smooth_id = " + to_string(smooth_id);
-		msg += ", n_age = " + to_string(n_age) + ".\n";
-		msg +=  "In smooth table n_age = ";
+		msg += "\nnumber of unique age values is " + to_string(n_age) + ".\n";
+		msg +=  "In smooth table, corresponding n_age = ";
 		msg += to_string( smooth_table[smooth_id].n_age ) + ".";
 		error_exit(msg, table_name, smooth_id);
 	}

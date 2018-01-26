@@ -37,10 +37,16 @@ $childtable%
 %$$
 
 $head 01-26$$
+$list number$$
 A special discussion of the prior mean,
 in the case where the density is
 $cref/uniform/prior_table/mean/uniform/$$,
 was added.
+$lnext
+Improve error message when number of unique ages in
+$cref smooth_grid_table$$ does not agree with
+the corresponding $cref/n_age/smooth_table/n_age/$$ in smooth table.
+$lend
 
 $head 01-25$$
 Add mention that the $cref/meas_value/simulate_command/meas_value/$$

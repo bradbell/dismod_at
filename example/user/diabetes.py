@@ -30,10 +30,12 @@
 # Alabama, California, Massachusetts, and Wisconsin.
 #
 # $head Age Table$$
-# The $cref age_table$$ is 0, 5, 10, ... , 100.
+# The $cref age_table$$ is uniformly spaced starting at age zero,
+# ending at age 100. There is one extra age point added at age 21.
 #
 # $head Time Table$$
-# The $cref time_table$$ is 1990, 1995, ... , 2020.
+# The $cref time_table$$ is uniformly spaced starting at time 1990
+# and ending at time 2020.
 #
 # $head Integrand Table$$
 # The $cref integrand_table$$ is
@@ -70,9 +72,12 @@
 # one at the minimum age (time) and one at the maximum age (time).
 # The value at each grid point has an N(0, 1) distribution.
 #
+# $subhead smooth_omega$$
+# The smoothings for omega are the same as for chi.
+#
 # $subhead smooth_iota_parent$$
 # This smoothing's time grid includes every time point.
-# The age grid for this smoothing has one point age the minimum age
+# The age grid for this smoothing has one point age zero,
 # and all the age points that are greater than or equal 20.
 # The value at each grid point has a U(1e-8, 1e-8) distribution if the age
 # is less than or equal 20 and U(1e-8, 1) otherwise.
@@ -80,10 +85,9 @@
 # $subhead smooth_iota_child$$
 # This smoothing's time grid has two points,
 # one at the minimum time and one at the maximum time.
-# The age grid for this smoothing has three points,
-# one at the minimum age, one at age 20, and one at the maximum age.
-# The value at each grid point has a U(0, 0) distribution if the
-# age is less than or equal 20 and N(0, 1) otherwise.
+# The age grid for this smoothing also has two points,
+# at age zero the value has a U(0, 0) distribution,
+# at age 100 is has an N(0, 1) distribution.
 #
 # $head Covariate Table$$
 # The following information is placed in the $cref covariate_table$$
@@ -157,7 +161,7 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # values used to simulate truth
 time_grid = { 'start':1990.0, 'end': 2020, 'number': 7 }
-age_grid  = { 'start':0.0,    'end': 100,  'number': 21 }
+age_grid  = { 'start':0.0,    'end': 100,  'number': 22 }
 #
 def bilinear(grid_value, a, t) :
 	# denominator
@@ -296,20 +300,30 @@ def example_db (file_name) :
 	start                     = age_grid['start']
 	end                       = age_grid['end']
 	number                    = age_grid['number']
-	d_age                     = (end - start) / (number - 1)
-	iota_start                = int( 20.0 / d_age + 0.5 )
+	d_age                     = (end - start) / (number - 2)
 	age_index                 = dict()
-	age_list                  = [ start + j * d_age for j in range(number) ]
+	age_list                  = [ start + j * d_age for j in range(number-1) ]
+	age_list                 += [ 21.0 ]
+	age_list                  = sorted( age_list )
 	age_index_all             = range(number)
+	iota_start                = None
+	for i in range(number) :
+		if age_list[i] == 21.0 :
+			assert iota_start == None
+			iota_start = i
 	#
-	age_index['iota_parent']  = [ 0 , iota_start] + list( range(5, 21) )
-	age_index['chi_parent']   = age_index_all
-	age_index['omega_parent'] = age_index['chi_parent']
-	age_index['pini_parent']  = [ 0 ]
+	tmp = list( range(iota_start, number) )
+	if iota_start > 1 :
+		age_index['iota_parent']  = [0, iota_start - 1] + tmp
+	else :
+		age_index['iota_parent']  = [ 0 ] + tmp
+	age_index['chi_parent']       = age_index_all
+	age_index['omega_parent']     = age_index['chi_parent']
+	age_index['pini_parent']      = [ 0 ]
 	#
-	age_index['iota_child']   = [ 0, iota_start, 20]
-	age_index['chi_child']    = [ 0, 20 ]
-	age_index['omega_child']  = age_index['chi_child']
+	age_index['iota_child']   = [ 0, number-1 ]
+	age_index['chi_child']    = [ 0, number-1 ]
+	age_index['omega_child']  = [ 0, number-1 ]
 	age_index['pini_child']   = [ 0 ]
 	#
 	# ----------------------------------------------------------------------
