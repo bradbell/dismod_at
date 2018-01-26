@@ -495,8 +495,8 @@ smooth_info::smooth_info(
 	if( n_time != size_t( smooth_table[smooth_id].n_time ) )
 	{	table_name = "smooth";
 		msg  = "In smooth_grid table with smooth_id = " + to_string(smooth_id);
-		msg += ", n_time = " + to_string(n_time) + ".\n";
-		msg +=  "In smooth table n_time = ";
+		msg += "\nnumber of unique time values is " + to_string(n_time) + ".\n";
+		msg +=  "In smooth table, corresponding n_time = ";
 		msg += to_string( smooth_table[smooth_id].n_time ) + ".";
 		error_exit(msg, table_name, smooth_id);
 	}
