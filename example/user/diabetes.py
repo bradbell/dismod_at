@@ -74,8 +74,8 @@
 # This smoothing's time grid includes every time point.
 # The age grid for this smoothing has one point age the minimum age
 # and all the age points that are greater than or equal 20.
-# The value at each grid point has a U(0, 0) distribution if the age
-# is less than or equal 20 and U(0, 1) otherwise.
+# The value at each grid point has a U(1e-8, 1e-8) distribution if the age
+# is less than or equal 20 and U(1e-8, 1) otherwise.
 #
 # $subhead smooth_iota_child$$
 # This smoothing's time grid has two points,
@@ -136,6 +136,7 @@ import os
 import distutils.dir_util
 import subprocess
 import copy
+import math
 test_program = 'example/user/diabetes.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -189,30 +190,55 @@ def bilinear(grid_value, a, t) :
 #
 def true_rate(node, rate, a, t) :
 	# default
-	grid_value = {
-		'start_age, start_time': 0.0,
-		'start_age, end_time':   0.0,
-		'end_age, start_time':   0.0,
-		'end_age, end_time':     0.0
-	}
+	grid_value = dict()
+	ret = 0.0
+	# -------------------------------------------------------------------------
 	if rate == 'pini' :
 		if node == 'US' :
-			grid_value['start_age, start_time'] = 1e-3
-			grid_value['start_age, end_time']   = 1e-3
+			grid_value['start_age, start_time'] = 1e-2
+			grid_value['start_age, end_time']   = 1e-2
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 2e-3
-			grid_value['start_age, end_time']   = 2e-3
+			grid_value['start_age, start_time'] = 2e-2
+			grid_value['start_age, end_time']   = 2e-2
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = 0.5e-3
-			grid_value['start_age, end_time']   = 0.5e-3
+			grid_value['start_age, start_time'] = 0.5e-2
+			grid_value['start_age, end_time']   = 0.5e-2
 		else :
 			assert False
 		#
 		# pini is constant in age
 		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
 		grid_value['end_age, end_time']   = grid_value['start_age, end_time']
+		#
+		ret = bilinear(grid_value, a, t)
+	# -------------------------------------------------------------------------
+	elif rate == 'iota' :
+		if node == 'US' :
+			grid_value['start_age, start_time'] = 1e-3
+			grid_value['start_age, end_time']   = 2e-3
+			grid_value['end_age, start_time']   = 3e-3
+			grid_value['end_age, end_time']     = 4e-3
+		elif node in ['Alabama', 'Wisconsin'] :
+			grid_value['start_age, start_time'] = 2e-3
+			grid_value['start_age, end_time']   = 4e-3
+			grid_value['end_age, start_time']   = 6e-3
+			grid_value['end_age, end_time']     = 8e-3
+		elif node in [ 'California', 'Massachusetts' ] :
+			grid_value['start_age, start_time'] = 0.5e-3
+			grid_value['start_age, end_time']   = 1.0e-3
+			grid_value['end_age, start_time']   = 1.5e-3
+			grid_value['end_age, end_time']     = 2.0e-3
+		else :
+			assert False
+		#
+		if a <= 20.0 :
+			ret = 0.0
+		else :
+			ret = bilinear(grid_value, a, t)
 	#
-	return bilinear(grid_value, a, t)
+	if ret < 0.0 :
+		import pdb; pdb.set_trace()
+	return ret
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ------------------------------------------------------------------------
@@ -611,6 +637,10 @@ for var_id in range( len(var_table) ) :
 		node  = node_table[ row['node_id'] ] ['node_name']
 		rate  = rate_table[ row['rate_id'] ] ['rate_name']
 		value = true_rate(node, rate, age, time)
+		if value != 0.0 :
+			if node != 'US' :
+				parent_value  = true_rate('US', rate, age, time)
+				value     = math.log( value  / parent_value )
 	row_list.append( [ value ] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
