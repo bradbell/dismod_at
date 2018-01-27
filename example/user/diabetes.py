@@ -382,10 +382,14 @@ def example_db (file_name) :
 	#
 	# ----------------------------------------------------------------------
 	# time lists
-	time_list              = [ 1990.0 + i * 5.0 for i in range(7) ]
-	time_index_all         = range(7)
+	start                  = time_grid['start']
+	end                    = time_grid['end']
+	number                 = time_grid['number']
+	d_time                 = (end - start) / (number - 1)
+	time_list              = [ start + i * d_time for i in range(number) ]
+	time_index_all         = range(number)
 	time_index_rate_parent = time_index_all
-	time_index_rate_child  = [0, 6]
+	time_index_rate_child  = [0, number-1]
 	# ----------------------------------------------------------------------
 	# integrand table:
 	integrand_list = [ 'mtall', 'mtspecific', 'prevalence' ]
@@ -577,13 +581,13 @@ def example_db (file_name) :
 	n_node      = len(node_table)
 	for k1 in range(n_integrand * n_age * n_time * n_node) :
 		i_integrand = int( k1 / (n_age * n_time * n_node) )
-		k2          = k1 % (n_age * n_time * n_node)
+		k2          =      k1 % (n_age * n_time * n_node)
 		#
 		i_age       = int( k2 / (n_time * n_node) )
-		k3          = k2 % n_time
+		k3          =      k2 % (n_time * n_node)
 		#
 		i_time      = int( k3 / n_node )
-		i_node      = k3 % n_node
+		i_node      =      k3 % n_node
 		#
 		age         = age_list[i_age]
 		time        = time_list[i_time]
