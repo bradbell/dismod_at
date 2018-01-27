@@ -739,6 +739,14 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------------
+file_name      = 'example.db'
+program        = '../../devel/dismod_at'
+cmd            = [ program, file_name, 'predict', 'truth_var' ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at predict truth_var command failed')
+# -----------------------------------------------------------------------------
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
