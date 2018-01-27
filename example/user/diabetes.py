@@ -131,11 +131,17 @@
 # the start_time is 1990, and the end_time is 2020.
 # The values in the $cref truth_var_table$$ are generated using bilinear
 # interpolation of specified values at
-# (start_age, start_time), (start_age, end_time), (end_age, start_time)
+# (start_age, start_time),
+# (start_age, end_time),
+# (end_age, start_time)
 # and (end_age, end_time).
 # There was an exception, if the age was less than or equal 20.0,
-# the value zero was used for parent and child iota rate.
+# the value zero was used for parent and child iota and chi rates.
 # See the function $code true_rate$$ below.
+# This make initial prevalence
+# $cref/pini/rate_table/rate_name/$$ correspond to Type I Diabetes,
+# $cref/iota/rate_table/rate_name/$$ is the incidence of Type II Diabetes,
+# and $cref/avg_integrand/I_i(a,t)/prevalence/$$ is the sum of the two types.
 #
 # $code
 # $srcfile%
@@ -174,9 +180,9 @@ os.chdir('build/example/user')
 time_grid = { 'start':1990.0, 'end': 2020, 'number': 7 }
 age_grid  = { 'start':0.0,    'end': 100,  'number': 22 }
 #
-def bilinear(is_iota, grid_value, a, t) :
+def bilinear(age_20, grid_value, a, t) :
 	age_start = age_grid['start']
-	if is_iota :
+	if age_20 :
 		age_start = 20.0
 	# denominator
 	da  = age_grid['end'] - age_start
@@ -210,7 +216,7 @@ def true_rate(node, rate, a, t) :
 	# default
 	grid_value = dict()
 	ret        = 0.0
-	is_iota    = rate == 'iota'
+	age_20     = rate == 'iota' or rate == 'chi'
 	# -------------------------------------------------------------------------
 	if rate == 'pini' :
 		if node == 'US' :
@@ -229,7 +235,7 @@ def true_rate(node, rate, a, t) :
 		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
 		grid_value['end_age, end_time']   = grid_value['start_age, end_time']
 		#
-		ret = bilinear(is_iota, grid_value, a, t)
+		ret = bilinear(age_20, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'iota' :
 		if node == 'US' :
@@ -254,7 +260,7 @@ def true_rate(node, rate, a, t) :
 		if a <= 20.0 :
 			ret = 0.0
 		else :
-			ret = bilinear(is_iota, grid_value, a, t)
+			ret = bilinear(age_20, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'omega' :
 		if node == 'US' :
@@ -275,28 +281,32 @@ def true_rate(node, rate, a, t) :
 		else :
 			assert False
 		#
-		ret = bilinear(is_iota, grid_value, a, t)
+		ret = bilinear(age_20, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'chi' :
 		if node == 'US' :
-			grid_value['start_age, start_time'] = 2e-3
-			grid_value['start_age, end_time']   = 1e-3
-			grid_value['end_age, start_time']   = 2e-1
-			grid_value['end_age, end_time']     = 1e-1
-		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 4e-3
-			grid_value['start_age, end_time']   = 2e-3
-			grid_value['end_age, start_time']   = 4e-1
-			grid_value['end_age, end_time']     = 2e-1
-		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = 1.0e-3
-			grid_value['start_age, end_time']   = 0.5e-3
+			grid_value['start_age, start_time'] = 1.0e-1
+			grid_value['start_age, end_time']   = 0.5e-1
 			grid_value['end_age, start_time']   = 1.0e-1
 			grid_value['end_age, end_time']     = 0.5e-1
+		elif node in ['Alabama', 'Wisconsin'] :
+			grid_value['start_age, start_time'] = 2.0e-1
+			grid_value['start_age, end_time']   = 1.0e-1
+			grid_value['end_age, start_time']   = 2.0e-1
+			grid_value['end_age, end_time']     = 1.0e-1
+		elif node in [ 'California', 'Massachusetts' ] :
+			grid_value['start_age, start_time'] = 0.5e-1
+			grid_value['start_age, end_time']   = 0.25e-1
+			grid_value['end_age, start_time']   = 0.5e-1
+			grid_value['end_age, end_time']     = 0.25e-1
 		else :
 			assert False
 		#
-		ret = bilinear(is_iota, grid_value, a, t)
+		# set chi truth to zero when age is less than or equal 20.
+		if a <= 20.0 :
+			ret = 0.0
+		else :
+			ret = bilinear(age_20, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	if ret < 0.0 :
 		import pdb; pdb.set_trace()
@@ -314,7 +324,7 @@ def example_db (file_name) :
 	def fun_mulcov(a, t) :
 		return ('prior_N(0,1)', None, None)
 	#
-	# priors used in smoothing for iota
+	# priors used in smoothing for iota and chi
 	def fun_iota_parent(a, t) :
 		if a <= 20.0 :
 			return ('prior_U(1e-8,1e-8)', 'prior_diff_rate', 'prior_diff_rate')
@@ -326,10 +336,10 @@ def example_db (file_name) :
 		else :
 			return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
 	#
-	# priors used in smoothing for chi and omega
-	def fun_chi_parent(a, t) :
+	# priors used in smoothing for omega
+	def fun_omega_parent(a, t) :
 		return ('prior_U(0,1)', 'prior_diff_rate', 'prior_diff_rate')
-	def fun_chi_child(a, t) :
+	def fun_omega_child(a, t) :
 		return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
 	#
 	# priors used in smoothing for pini
@@ -343,10 +353,10 @@ def example_db (file_name) :
 	fun['constant_one']    = fun_constant_one
 	fun['iota_parent']     = fun_iota_parent
 	fun['iota_child']      = fun_iota_child
-	fun['chi_parent']      = fun_chi_parent
-	fun['chi_child']       = fun_chi_child
-	fun['omega_parent']    = fun_chi_parent
-	fun['omega_child']     = fun_chi_child
+	fun['chi_parent']      = fun_iota_parent
+	fun['chi_child']       = fun_iota_child
+	fun['omega_parent']    = fun_omega_parent
+	fun['omega_child']     = fun_omega_child
 	fun['pini_parent']     = fun_pini_parent
 	fun['pini_child']      = fun_pini_child
 	#
@@ -375,8 +385,8 @@ def example_db (file_name) :
 		age_index['iota_parent']  = [0, iota_start - 1] + tmp
 	else :
 		age_index['iota_parent']  = [ 0 ] + tmp
-	age_index['chi_parent']       = age_index_all
-	age_index['omega_parent']     = age_index['chi_parent']
+	age_index['chi_parent']       = age_index['iota_parent']
+	age_index['omega_parent']     = age_index_all
 	age_index['pini_parent']      = [ 0 ]
 	#
 	age_index['iota_child']   = [ 0, number-1 ]
