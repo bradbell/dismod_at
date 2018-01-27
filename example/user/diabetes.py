@@ -174,9 +174,12 @@ os.chdir('build/example/user')
 time_grid = { 'start':1990.0, 'end': 2020, 'number': 7 }
 age_grid  = { 'start':0.0,    'end': 100,  'number': 22 }
 #
-def bilinear(grid_value, a, t) :
+def bilinear(is_iota, grid_value, a, t) :
+	age_start = age_grid['start']
+	if is_iota :
+		age_start = 20.0
 	# denominator
-	da  = age_grid['end'] - age_grid['start']
+	da  = age_grid['end'] - age_start
 	dt  = time_grid['end'] - time_grid['start']
 	den = da * dt;
 	num = 0.0
@@ -192,12 +195,12 @@ def bilinear(grid_value, a, t) :
 	num += grid_value['start_age, end_time'] * da * dt
 	#
 	# value at end age and start time
-	da   = a - age_grid['start']
+	da   = a - age_start
 	dt   = time_grid['end'] - t
 	num += grid_value['end_age, start_time'] * da * dt
 	#
 	# value at end age and end time
-	da   = a - age_grid['start']
+	da   = a - age_start
 	dt   = t - time_grid['start']
 	num += grid_value['end_age, end_time'] * da * dt
 	#
@@ -206,7 +209,8 @@ def bilinear(grid_value, a, t) :
 def true_rate(node, rate, a, t) :
 	# default
 	grid_value = dict()
-	ret = 0.0
+	ret        = 0.0
+	is_iota    = rate == 'iota'
 	# -------------------------------------------------------------------------
 	if rate == 'pini' :
 		if node == 'US' :
@@ -225,7 +229,7 @@ def true_rate(node, rate, a, t) :
 		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
 		grid_value['end_age, end_time']   = grid_value['start_age, end_time']
 		#
-		ret = bilinear(grid_value, a, t)
+		ret = bilinear(is_iota, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'iota' :
 		if node == 'US' :
@@ -250,7 +254,7 @@ def true_rate(node, rate, a, t) :
 		if a <= 20.0 :
 			ret = 0.0
 		else :
-			ret = bilinear(grid_value, a, t)
+			ret = bilinear(is_iota, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'omega' :
 		if node == 'US' :
@@ -271,7 +275,7 @@ def true_rate(node, rate, a, t) :
 		else :
 			assert False
 		#
-		ret = bilinear(grid_value, a, t)
+		ret = bilinear(is_iota, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'chi' :
 		if node == 'US' :
@@ -292,7 +296,7 @@ def true_rate(node, rate, a, t) :
 		else :
 			assert False
 		#
-		ret = bilinear(grid_value, a, t)
+		ret = bilinear(is_iota, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	if ret < 0.0 :
 		import pdb; pdb.set_trace()
