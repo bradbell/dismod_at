@@ -137,8 +137,6 @@
 # the value zero was used for parent and child iota rate.
 # See the function $code true_rate$$ below.
 #
-#
-#
 # $code
 # $srcfile%
 #	example/user/diabetes.py
@@ -537,7 +535,7 @@ def example_db (file_name) :
 			'smooth':    'smooth_mulcov'
 		} , {
 			# gamma for prevalence and one
-			'covariate': 'MS_2015',
+			'covariate': 'one',
 			'type':      'meas_std',
 			'effected':  'prevalence',
 			'smooth':    'smooth_mulcov'
@@ -599,16 +597,17 @@ def example_db (file_name) :
 			sex = +0.5
 		#
 		# market scan
-		if k1 % 3 == 0 :
+		if k1 % 4 == 0 :
+			ms = (0, 0, 0)
+		elif k1 % 4 == 1 :
 			ms = (1, 0, 0)
-		elif k1 % 3 == 1 :
+		elif k1 % 4 == 2 :
 			ms = (0, 1, 0)
 		else :
 			ms = (0, 0, 1)
 		#
 		# body mass index
 		bmi = 20 + k1 % 16
-		#
 		#
 		row = {
 			'node':        node,
@@ -711,6 +710,31 @@ for var_id in range( len(var_table) ) :
 			if node != 'US' :
 				parent_value  = true_rate('US', rate, age, time)
 				value     = math.log( value  / parent_value )
+	elif var_type == 'mulcov_rate_value' :
+		rate  = rate_table[ row['rate_id'] ] ['rate_name']
+		assert rate == 'iota'
+		if covariate == 'BMI' :
+			value = 0.5 / 16.0
+		elif covariate == 'sex' :
+			value = 0.5
+		else :
+			assert False
+	elif var_type == 'mulcov_meas_value' :
+		integrand  = integrand_table[ row['integrand_id'] ] ['integrand_name']
+		assert integrand == 'prevalence'
+		if covariate == 'MS_2000' :
+			value = - 0.75
+		elif covariate == 'MS_2010' :
+			value = - 0.5
+		elif covariate == 'MS_2015' :
+			value = - 0.25
+		else :
+			assert False
+	elif var_type == 'mulcov_meas_std' :
+		integrand  = integrand_table[ row['integrand_id'] ] ['integrand_name']
+		assert integrand == 'prevalence'
+		assert covariate == 'one'
+		value = 1e-3
 	row_list.append( [ value ] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
