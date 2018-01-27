@@ -47,6 +47,15 @@ Improve error message when number of unique ages (times)
 $cref smooth_grid_table$$ does not agree with
 the corresponding $cref/n_age/smooth_table/n_age/$$
 ( $cref/n_time/smooth_table/n_time/$$ ) in smooth table.
+$lnext
+The definition of the
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+/$$
+for the log transformed densities was changed so that the standard deviation
+effect multiplies
+$cref/Delta_i/data_like/Data Table Notation/Delta_i/$$.
 $lend
 
 $head 01-25$$

@@ -734,7 +734,7 @@ for var_id in range( len(var_table) ) :
 		integrand  = integrand_table[ row['integrand_id'] ] ['integrand_name']
 		assert integrand == 'prevalence'
 		assert covariate == 'one'
-		value = 1e-3
+		value = 0.5
 	row_list.append( [ value ] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
