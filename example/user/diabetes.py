@@ -147,6 +147,14 @@
 # and $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$ integrand
 # is for the sum of the two types.
 #
+# $head Predict$$
+# The $cref predict_command$$ is used to compute the
+# $cref/avg_integrand/predict_table/avg_integrand/$$ corresponding to the
+# true values for the variables.
+# This is then used to create a version of the $cref data_table$$
+# with no noise, but modeled with a standard deviation corresponding
+# to a 20 percent coefficient of variation.
+#
 # $code
 # $srcfile%
 #	example/user/diabetes.py
@@ -769,16 +777,84 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at predict truth_var command failed')
 #
+# -----------------------------------------------------------------------------
+# add data to data table
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 predict_table   = dismod_at.get_table_dict(connection, 'predict')
-# -----------------------------------------------------------------------------
-# create data table
+avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
+density_table   = dismod_at.get_table_dict(connection, 'density')
+#
+# get column names and types for data table
+tbl_name             = 'data'
+(col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
+#
+# remove the primary key from col_name and col_type
+assert col_name[0] == 'data_id'
+del col_name[0]
+del col_type[0]
+#
+# list of row values to place in data table
+row_list = list()
+#
+# density_id for log_gaussian
+density_id = None
+for i in range( len( density_table ) ) :
+	if density_table[i]['density_name'] == 'log_gaussian' :
+		density_id = i
+#
 for predict_id in range( len(predict_table) ) :
+	#
+	# get prediction for average integrand
 	row = predict_table[predict_id]
 	assert row['sample_index'] == 0
 	assert row['avgint_id']    == predict_id
-
+	avg_integrand = row['avg_integrand']
+	#
+	# initial row using information in avgint table
+	row = copy.copy( avgint_table[predict_id] )
+	#
+	# add information, that is not in avgint_table, to row
+	eta        = 1e-7                          # a very small eta
+	meas_value = avg_integrand                 # no noise version of meas_value
+	meas_std   = max(eta, 0.2 * avg_integrand) #  20% coefficient of variation
+	row['density_id'] = density_id
+	row['hold_out']   = 0
+	row['meas_std']   = meas_std
+	row['meas_value'] = meas_value
+	row['eta']        = eta
+	row['nu']         = None
+	#
+	# values in same order as col_name
+	row_value = list()
+	for key in col_name :
+		if key != 'data_id' :
+			row_value.append( row[key] )
+	#
+	row_list.append( row_value )
+#
+# drop the old data table
+command = 'DROP TABLE data'
+dismod_at.sql_command(connection, command)
+#
+# create the new data table
+dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list )
+# -----------------------------------------------------------------------------
+# Do a fit using data without noise
+#
+file_name      = 'example.db'
+program        = '../../devel/dismod_at'
+cmd            = [ program, file_name, 'init' ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at init command failed')
+cmd            = [ program, file_name, 'fit', 'fixed' ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at init command failed')
+# -----------------------------------------------------------------------------
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
