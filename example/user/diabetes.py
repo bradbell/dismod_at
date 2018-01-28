@@ -171,7 +171,7 @@ import os
 import distutils.dir_util
 import subprocess
 import copy
-import math
+from math import log
 test_program = 'example/user/diabetes.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -237,11 +237,11 @@ def true_rate(node, rate, a, t) :
 			grid_value['start_age, start_time'] = 1e-2
 			grid_value['start_age, end_time']   = 1e-2
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 2e-2
-			grid_value['start_age, end_time']   = 2e-2
+			grid_value['start_age, start_time'] = log(1.0)
+			grid_value['start_age, end_time']   = log(1.0)
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = 0.5e-2
-			grid_value['start_age, end_time']   = 0.5e-2
+			grid_value['start_age, start_time'] = log(1.0)
+			grid_value['start_age, end_time']   = log(1.0)
 		else :
 			assert False
 		#
@@ -258,15 +258,15 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 3e-3
 			grid_value['end_age, end_time']     = 4e-3
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 2e-3
-			grid_value['start_age, end_time']   = 4e-3
-			grid_value['end_age, start_time']   = 6e-3
-			grid_value['end_age, end_time']     = 8e-3
+			grid_value['start_age, start_time'] = log(1.0)
+			grid_value['start_age, end_time']   = log(1.0)
+			grid_value['end_age, start_time']   = log(1.0)
+			grid_value['end_age, end_time']     = log(1.0)
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = 0.5e-3
-			grid_value['start_age, end_time']   = 1.0e-3
-			grid_value['end_age, start_time']   = 1.5e-3
-			grid_value['end_age, end_time']     = 2.0e-3
+			grid_value['start_age, start_time'] = log(1.0)
+			grid_value['start_age, end_time']   = log(1.0)
+			grid_value['end_age, start_time']   = log(1.0)
+			grid_value['end_age, end_time']     = log(1.0)
 		else :
 			assert False
 		#
@@ -283,15 +283,15 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 2e-1
 			grid_value['end_age, end_time']     = 1e-1
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 4e-4
-			grid_value['start_age, end_time']   = 2e-4
-			grid_value['end_age, start_time']   = 4e-1
-			grid_value['end_age, end_time']     = 2e-1
+			grid_value['start_age, start_time'] = log(1.0)
+			grid_value['start_age, end_time']   = log(1.0)
+			grid_value['end_age, start_time']   = log(1.0)
+			grid_value['end_age, end_time']     = log(1.0)
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = 1.0e-4
-			grid_value['start_age, end_time']   = 0.5e-4
-			grid_value['end_age, start_time']   = 1.0e-1
-			grid_value['end_age, end_time']     = 0.5e-1
+			grid_value['start_age, start_time'] = log(1.0)
+			grid_value['start_age, end_time']   = log(1.0)
+			grid_value['end_age, start_time']   = log(1.0)
+			grid_value['end_age, end_time']     = log(1.0)
 		else :
 			assert False
 		#
@@ -304,15 +304,15 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 1.0e-1
 			grid_value['end_age, end_time']     = 0.5e-1
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 2.0e-1
-			grid_value['start_age, end_time']   = 1.0e-1
-			grid_value['end_age, start_time']   = 2.0e-1
-			grid_value['end_age, end_time']     = 1.0e-1
+			grid_value['start_age, start_time'] = log(1.0)
+			grid_value['start_age, end_time']   = log(1.0)
+			grid_value['end_age, start_time']   = log(1.0)
+			grid_value['end_age, end_time']     = log(1.0)
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = 0.5e-1
-			grid_value['start_age, end_time']   = 0.25e-1
-			grid_value['end_age, start_time']   = 0.5e-1
-			grid_value['end_age, end_time']     = 0.25e-1
+			grid_value['start_age, start_time'] = log(1.0)
+			grid_value['start_age, end_time']   = log(1.0)
+			grid_value['end_age, start_time']   = log(1.0)
+			grid_value['end_age, end_time']     = log(1.0)
 		else :
 			assert False
 		#
@@ -734,10 +734,6 @@ def create_truth_var_table() :
 			node  = node_table[ row['node_id'] ] ['node_name']
 			rate  = rate_table[ row['rate_id'] ] ['rate_name']
 			value = true_rate(node, rate, age, time)
-			if value != 0.0 :
-				if node != 'US' :
-					parent_value  = true_rate('US', rate, age, time)
-					value     = math.log( value  / parent_value )
 		elif var_type == 'mulcov_rate_value' :
 			rate  = rate_table[ row['rate_id'] ] ['rate_name']
 			assert rate == 'iota'
