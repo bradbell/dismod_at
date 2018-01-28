@@ -704,6 +704,69 @@ def example_db (file_name) :
 	)
 	# ----------------------------------------------------------------------
 	return
+# -----------------------------------------------------------------------
+def create_truth_var_table() :
+	new             = False
+	connection      = dismod_at.create_connection(file_name, new)
+	var_table       = dismod_at.get_table_dict(connection, 'var')
+	rate_table      = dismod_at.get_table_dict(connection, 'rate')
+	covariate_table = dismod_at.get_table_dict(connection, 'covariate')
+	integrand_table = dismod_at.get_table_dict(connection, 'integrand')
+	node_table      = dismod_at.get_table_dict(connection, 'node')
+	time_table      = dismod_at.get_table_dict(connection, 'time')
+	age_table       = dismod_at.get_table_dict(connection, 'age')
+	# -------------------------------------------------------------------------
+	# create truth table
+	tbl_name     = 'truth_var'
+	col_name     = [ 'truth_var_value' ]
+	col_type     = [ 'real' ]
+	row_list     = list()
+	for var_id in range( len(var_table) ) :
+		row          = var_table[var_id]
+		var_type     = row['var_type']
+		age          = age_table[ row['age_id'] ] ['age']
+		time         = time_table[ row['time_id'] ] ['time']
+		if var_type.startswith('mulcov_') :
+			covariate = covariate_table[row['covariate_id' ]]['covariate_name']
+		#
+		value = 0.0
+		if var_type == 'rate' :
+			node  = node_table[ row['node_id'] ] ['node_name']
+			rate  = rate_table[ row['rate_id'] ] ['rate_name']
+			value = true_rate(node, rate, age, time)
+			if value != 0.0 :
+				if node != 'US' :
+					parent_value  = true_rate('US', rate, age, time)
+					value     = math.log( value  / parent_value )
+		elif var_type == 'mulcov_rate_value' :
+			rate  = rate_table[ row['rate_id'] ] ['rate_name']
+			assert rate == 'iota'
+			if covariate == 'BMI' :
+				value = 0.5 / 16.0
+			elif covariate == 'sex' :
+				value = 0.5
+			else :
+				assert False
+		elif var_type == 'mulcov_meas_value' :
+			integrand  = integrand_table[row['integrand_id']]['integrand_name']
+			assert integrand == 'prevalence'
+			if covariate == 'MS_2000' :
+				value = - 0.75
+			elif covariate == 'MS_2010' :
+				value = - 0.5
+			elif covariate == 'MS_2015' :
+				value = - 0.25
+			else :
+				assert False
+		elif var_type == 'mulcov_meas_std' :
+			integrand  = integrand_table[row['integrand_id']]['integrand_name']
+			assert integrand == 'prevalence'
+			assert covariate == 'one'
+			value = 0.5
+		row_list.append( [ value ] )
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	connection.close()
+	return
 # ===========================================================================
 # Run the init command to create the var table
 file_name      = 'example.db'
@@ -715,67 +778,8 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
 # -----------------------------------------------------------------------
-# read database tables
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-var_table       = dismod_at.get_table_dict(connection, 'var')
-rate_table      = dismod_at.get_table_dict(connection, 'rate')
-covariate_table = dismod_at.get_table_dict(connection, 'covariate')
-integrand_table = dismod_at.get_table_dict(connection, 'integrand')
-node_table      = dismod_at.get_table_dict(connection, 'node')
-time_table      = dismod_at.get_table_dict(connection, 'time')
-age_table       = dismod_at.get_table_dict(connection, 'age')
-# -----------------------------------------------------------------------------
-# create truth table
-tbl_name     = 'truth_var'
-col_name     = [ 'truth_var_value' ]
-col_type     = [ 'real' ]
-row_list     = list()
-for var_id in range( len(var_table) ) :
-	row          = var_table[var_id]
-	var_type     = row['var_type']
-	age          = age_table[ row['age_id'] ] ['age']
-	time         = time_table[ row['time_id'] ] ['time']
-	if var_type.startswith('mulcov_') :
-		covariate = covariate_table[ row['covariate_id' ] ] ['covariate_name']
-	#
-	value = 0.0
-	if var_type == 'rate' :
-		node  = node_table[ row['node_id'] ] ['node_name']
-		rate  = rate_table[ row['rate_id'] ] ['rate_name']
-		value = true_rate(node, rate, age, time)
-		if value != 0.0 :
-			if node != 'US' :
-				parent_value  = true_rate('US', rate, age, time)
-				value     = math.log( value  / parent_value )
-	elif var_type == 'mulcov_rate_value' :
-		rate  = rate_table[ row['rate_id'] ] ['rate_name']
-		assert rate == 'iota'
-		if covariate == 'BMI' :
-			value = 0.5 / 16.0
-		elif covariate == 'sex' :
-			value = 0.5
-		else :
-			assert False
-	elif var_type == 'mulcov_meas_value' :
-		integrand  = integrand_table[ row['integrand_id'] ] ['integrand_name']
-		assert integrand == 'prevalence'
-		if covariate == 'MS_2000' :
-			value = - 0.75
-		elif covariate == 'MS_2010' :
-			value = - 0.5
-		elif covariate == 'MS_2015' :
-			value = - 0.25
-		else :
-			assert False
-	elif var_type == 'mulcov_meas_std' :
-		integrand  = integrand_table[ row['integrand_id'] ] ['integrand_name']
-		assert integrand == 'prevalence'
-		assert covariate == 'one'
-		value = 0.5
-	row_list.append( [ value ] )
-dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-connection.close()
+# create truth_var table
+create_truth_var_table()
 # -----------------------------------------------------------------------------
 # create predict table
 cmd            = [ program, file_name, 'predict', 'truth_var' ]
@@ -849,6 +853,7 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list )
 # -----------------------------------------------------------------------------
 # Do a fit using data without noise
 #
+# must re-initailize to get data_subset to correspond to data
 file_name      = 'example.db'
 program        = '../../devel/dismod_at'
 cmd            = [ program, file_name, 'init' ]
@@ -861,6 +866,10 @@ print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
+#
+# The re-initialize erases the truth_var table.
+# Create a new version of truth_var table (that fit corresponds to)
+create_truth_var_table()
 # -----------------------------------------------------------------------------
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
