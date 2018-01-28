@@ -62,7 +62,9 @@
 # $subhead smooth_mulcov$$
 # This smoothing is used for the covariate multipliers.
 # It has one grid point (functions are constant in age and time).
-# The value has an N(0, 1) prior distribution.
+# The value has an N_+(0, 1) prior distribution; i.e.,
+# a normal distribution with mean zero, variance one,
+# and truncated using lower limit zero.
 #
 # $subhead smooth_chi_parent$$
 # This smoothing's age and time grid include every age and time point.
@@ -334,7 +336,7 @@ def example_db (file_name) :
 	#
 	# Note that there are no forward differences for covariate multiplier grids.
 	def fun_mulcov(a, t) :
-		return ('prior_N(0,1)', None, None)
+		return ('prior_N_+(0,1)', None, None)
 	#
 	# priors used in smoothing for iota and chi
 	def fun_iota_parent(a, t) :
@@ -447,6 +449,13 @@ def example_db (file_name) :
 			'density':  'gaussian',
 			'mean':     0.0,
 			'std':      1.0,
+		} , {
+			# prior_N_+(0,1)
+			'name':     'prior_N_+(0,1)',
+			'density':  'gaussian',
+			'mean':     0.0,
+			'std':      1.0,
+			'lower':    0.0,
 		} , {
 			# prior_U(0,1)
 			'name':     'prior_U(0,1)',
@@ -666,12 +675,10 @@ def example_db (file_name) :
 		{ 'name':'random_seed',            'value':'0'                 },
 
 		{ 'name':'quasi_fixed',            'value':'true'              },
-		{ 'name':'derivative_test_fixed',  'value':'first-order'       },
 		{ 'name':'max_num_iter_fixed',     'value':'20'                },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
 
-		{ 'name':'derivative_test_random', 'value':'second-order'      },
 		{ 'name':'max_num_iter_random',    'value':'50'                },
 		{ 'name':'print_level_random',     'value':'0'                 },
 		{ 'name':'tolerance_random',       'value':'1e-8'              }

@@ -38,11 +38,17 @@ $childtable%
 %$$
 
 $head 01-28$$
+$list number$$
 Add mention that
 $cref/sample_index/predict_table/sample_index/$$ is always zero when the
 source for the predict command is
 $cref/fit_var/predict_command/source/fit_var/$$ or
 $cref/truth_var/predict_command/source/truth_var/$$.
+$lnext
+Mention that under normal circumstances,
+$cref/derivative_test/option_table/Optimizer/derivative_test/$$
+should be $code none$$.
+$lend
 
 $head 01-26$$
 $list number$$

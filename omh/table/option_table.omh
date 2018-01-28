@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -283,7 +283,10 @@ $subhead derivative_test$$
 If $icode option_name$$ is
 $code derivative_test_fixed$$ ($code derivative_test_random$$),
 the corresponding $icode option_value$$
-is one of the following:
+is one of the choices below.
+Under normal circumstances, you should use $code none$$ for this option
+because the other choices will take more execution time
+and are for program validation.
 $table
 $icode option_value$$ $cnext Description $rnext
 $code none$$          $cnext
