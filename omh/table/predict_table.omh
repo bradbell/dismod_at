@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -51,8 +51,12 @@ Its initial value is zero, and it increments by one for each row.
 $head sample_index$$
 This column has type $code integer$$ and specifies the set of
 $cref model_variables$$ that the $icode avg_integrand$$ corresponds to.
-To be specific, the model variables are those that have the sample
-$icode sample$$ index in the $cref/sample_table/sample_table/sample_index/$$.
+If $cref/source/predict_command/source/$$ is
+$code fit_var$$ or $code truth_var$$, $icode sample_index$$ is
+always zero.
+Otherwise $icode source$$ is $code sample$$ and $icode sample_index$$
+is the corresponding value in the
+$cref/sample_table/sample_table/sample_index/$$.
 This column is monotone non-decreasing; i.e. the value in each row
 is greater than or equal the value in the previous row.
 Each

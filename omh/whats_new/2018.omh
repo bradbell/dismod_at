@@ -24,6 +24,7 @@ $spell
 	optimizer
 	da
 	dt
+	var
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -35,6 +36,13 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 01-28$$
+Add mention that
+$cref/sample_index/predict_table/sample_index/$$ is always zero when the
+source for the predict command is
+$cref/fit_var/predict_command/source/fit_var/$$ or
+$cref/truth_var/predict_command/source/truth_var/$$.
 
 $head 01-26$$
 $list number$$

@@ -1757,13 +1757,15 @@ $subhead fit_var$$
 If $icode source$$ is $code fit_var$$,
 the values in the $cref fit_var_table$$ are used for the predictions.
 In this case there is only one set of model variables that the
-predictions are computed for.
+predictions are computed for and
+$cref/sample_index/predict_table/sample_index/$$ is always zero.
 
 $subhead truth_var$$
 If $icode source$$ is $code truth_var$$,
 the values in the $cref truth_var_table$$ are used for the predictions.
 In this case there is only one set of model variables that the
-predictions are computed for.
+predictions are computed for and
+$cref/sample_index/predict_table/sample_index/$$ is always zero.
 
 $head predict_table$$
 A new $cref predict_table$$ is created each time this command is run.

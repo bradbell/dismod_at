@@ -16,6 +16,7 @@
 #	jk
 #	mulcov
 #	smoothings
+#	pini
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -138,10 +139,13 @@
 # There was an exception, if the age was less than or equal 20.0,
 # the value zero was used for parent and child iota and chi rates.
 # See the function $code true_rate$$ below.
-# This make initial prevalence
-# $cref/pini/rate_table/rate_name/$$ correspond to Type I Diabetes,
-# $cref/iota/rate_table/rate_name/$$ is the incidence of Type II Diabetes,
-# and $cref/avg_integrand/I_i(a,t)/prevalence/$$ is the sum of the two types.
+# This makes the model for initial prevalence
+# $cref/pini/rate_table/rate_name/pini/$$ correspond to Type I Diabetes
+# and the model for incidence
+# $cref/iota/rate_table/rate_name/iota/$$ is for Type II Diabetes,
+# and the
+# and $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$ integrand
+# is for the sum of the two types.
 #
 # $code
 # $srcfile%
@@ -615,6 +619,7 @@ def example_db (file_name) :
 			sex = +0.5
 		#
 		# market scan
+		d_age = (age_grid['end'] - age_grid['start']) / (number - 2)
 		if k1 % 4 == 0 :
 			ms = (0, 0, 0)
 		elif k1 % 4 == 1 :
@@ -757,14 +762,23 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------------
-file_name      = 'example.db'
-program        = '../../devel/dismod_at'
+# create predict table
 cmd            = [ program, file_name, 'predict', 'truth_var' ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at predict truth_var command failed')
+#
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+predict_table   = dismod_at.get_table_dict(connection, 'predict')
 # -----------------------------------------------------------------------------
+# create data table
+for predict_id in range( len(predict_table) ) :
+	row = predict_table[predict_id]
+	assert row['sample_index'] == 0
+	assert row['avgint_id']    == predict_id
+
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
