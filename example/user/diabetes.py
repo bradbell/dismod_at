@@ -357,27 +357,27 @@ def example_db (file_name) :
 	def fun_iota_parent(a, t) :
 		# 2DO
 		# if a <= 20.0 :
-		#	return ('prior_U(1e-8,1e-8)', 'prior_diff_rate', 'prior_diff_rate')
+		#	return ('prior_U(1e-8,1e-8)', 'prior_diff_age', 'prior_diff_time')
 		# else :
-		return ('prior_U(1e-8,1)', 'prior_diff_rate', 'prior_diff_rate')
+		return ('prior_U(1e-8,1)', 'prior_diff_age', 'prior_diff_time')
 	def fun_iota_child(a, t) :
 		# 2DO
 		# if a <= 20.0 :
-		#	return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
+		#	return ('prior_U(0,0)', 'prior_diff_age', 'prior_diff_time')
 		# else :
-		return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+		return ('prior_N(0,1)', 'prior_diff_age', 'prior_diff_time')
 	#
 	# priors used in smoothing for omega
 	def fun_omega_parent(a, t) :
-		return ('prior_U(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+		return ('prior_U(0,1)', 'prior_diff_age', 'prior_diff_time')
 	def fun_omega_child(a, t) :
-		return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+		return ('prior_N(0,1)', 'prior_diff_age', 'prior_diff_time')
 	#
 	# priors used in smoothing for pini
 	def fun_pini_parent(a, t) :
-		return ('prior_U(0,1)', None, 'prior_diff_rate')
+		return ('prior_U(0,1)', None, 'prior_diff_time')
 	def fun_pini_child(a, t) :
-		return ('prior_N(0,1)', None, 'prior_diff_rate')
+		return ('prior_N(0,1)', None, 'prior_diff_time')
 	# ----------------------------------------------------------------------
 	fun                       = dict()
 	fun['mulcov_rate_value']  = fun_mulcov_rate_value
@@ -392,16 +392,16 @@ def example_db (file_name) :
 	fun['omega_child']        = fun_omega_child
 	fun['pini_parent']        = fun_pini_parent
 	fun['pini_child']         = fun_pini_child
-	#
+	# ----------------------------------------------------------------------
+	d_age =  ( age_grid['end'] -  age_grid['start'])/( age_grid['number'] - 2)
+	d_time = (time_grid['end'] - time_grid['start'])/(time_grid['number'] - 1)
 	# ----------------------------------------------------------------------
 	# nslist_table:
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# age lists
 	start                     = age_grid['start']
-	end                       = age_grid['end']
 	number                    = age_grid['number']
-	d_age                     = (end - start) / (number - 2)
 	age_index                 = dict()
 	age_list                  = [ start + j * d_age for j in range(number-1) ]
 	age_list                 += [ 21.0 ]
@@ -430,9 +430,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# time lists
 	start                  = time_grid['start']
-	end                    = time_grid['end']
 	number                 = time_grid['number']
-	d_time                 = (end - start) / (number - 1)
 	time_list              = [ start + i * d_time for i in range(number) ]
 	time_index_all         = range(number)
 	time_index_rate_parent = time_index_all
@@ -504,11 +502,18 @@ def example_db (file_name) :
 			'lower':    1e-8,
 			'upper':    1e-8,
 		} , {
-			# prior_diff_rate
-			'name':     'prior_diff_rate',
+			# prior_diff_age
+			'name':     'prior_diff_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      0.01 * d_age ,
+			'eta':      1e-4,
+		} , {
+			# prior_diff_time
+			'name':     'prior_diff_time',
+			'density':  'log_gaussian',
+			'mean':     0.0,
+			'std':      0.01 * d_time ,
 			'eta':      1e-4,
 		}
 	]
@@ -664,7 +669,6 @@ def example_db (file_name) :
 			sex = +0.5
 		#
 		# market scan
-		d_age = (age_grid['end'] - age_grid['start'])/(age_grid['number'] - 2)
 		if k1 % 4 == 0 :
 			ms = (0, 0, 0)
 		elif k1 % 4 == 1 :
@@ -916,7 +920,7 @@ connection      = dismod_at.create_connection(file_name, new)
 var_table       = dismod_at.get_table_dict(connection, 'var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
-eps             = 0.1
+eps             = 0.15
 for var_id in range( len(var_table) ) :
 	truth_var_value = truth_var_table[var_id]['truth_var_value']
 	fit_var_value   = fit_var_table[var_id]['fit_var_value']
