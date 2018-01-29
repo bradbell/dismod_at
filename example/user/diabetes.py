@@ -9,7 +9,7 @@
 # ---------------------------------------------------------------------------
 # $begin user_diabetes.py$$ $newlinech #$$
 # $spell
-#	mtall
+#	mtother
 #	mtspecific
 #	covariate
 #	covariates
@@ -40,9 +40,9 @@
 #
 # $head Integrand Table$$
 # The $cref integrand_table$$ is
-# mtall, mtspecific, prevalence.
+# mtother, mtspecific, prevalence.
 # We think of
-# $cref/mtall/avg_integrand/I_i(a,t)/mtall/$$
+# $cref/mtother/avg_integrand/I_i(a,t)/mtother/$$
 # as informing $cref/omega/rate_table/rate_name/omega/$$,
 # $cref/mtspecific/avg_integrand/I_i(a,t)/mtspecific/$$
 # as informing $cref/chi/rate_table/rate_name/chi/$$,
@@ -426,7 +426,7 @@ def example_db (file_name) :
 	time_index_rate_child  = [0, number-1]
 	# ----------------------------------------------------------------------
 	# integrand table:
-	integrand_list = [ 'mtall', 'mtspecific', 'prevalence' ]
+	integrand_list = [ 'mtother', 'mtspecific', 'prevalence' ]
 	# ----------------------------------------------------------------------
 	# node table:
 	node_table = [
