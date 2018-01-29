@@ -335,8 +335,13 @@ def example_db (file_name) :
 		return 1.0
 	#
 	# Note that there are no forward differences for covariate multiplier grids.
-	def fun_mulcov(a, t) :
+	def fun_mulcov_meas_std(a, t) :
 		return ('prior_N_+(0,1)', None, None)
+	def fun_mulcov_meas_value(a, t) :
+		return ('prior_N(0,1)', None, None)
+	def fun_mulcov_rate_value(a, t) :
+		return ('prior_N(0,1)', None, None)
+	#
 	#
 	# priors used in smoothing for iota and chi
 	def fun_iota_parent(a, t) :
@@ -362,17 +367,19 @@ def example_db (file_name) :
 	def fun_pini_child(a, t) :
 		return ('prior_N(0,1)', None, 'prior_diff_rate')
 	# ----------------------------------------------------------------------
-	fun                    = dict()
-	fun['mulcov']          = fun_mulcov
-	fun['constant_one']    = fun_constant_one
-	fun['iota_parent']     = fun_iota_parent
-	fun['iota_child']      = fun_iota_child
-	fun['chi_parent']      = fun_iota_parent
-	fun['chi_child']       = fun_iota_child
-	fun['omega_parent']    = fun_omega_parent
-	fun['omega_child']     = fun_omega_child
-	fun['pini_parent']     = fun_pini_parent
-	fun['pini_child']      = fun_pini_child
+	fun                       = dict()
+	fun['mulcov_rate_value']  = fun_mulcov_rate_value
+	fun['mulcov_meas_value']  = fun_mulcov_meas_value
+	fun['mulcov_meas_std']    = fun_mulcov_meas_std
+	fun['constant_one']       = fun_constant_one
+	fun['iota_parent']        = fun_iota_parent
+	fun['iota_child']         = fun_iota_child
+	fun['chi_parent']         = fun_iota_parent
+	fun['chi_child']          = fun_iota_child
+	fun['omega_parent']       = fun_omega_parent
+	fun['omega_child']        = fun_omega_child
+	fun['pini_parent']        = fun_pini_parent
+	fun['pini_child']         = fun_pini_child
 	#
 	# ----------------------------------------------------------------------
 	# nslist_table:
@@ -497,12 +504,14 @@ def example_db (file_name) :
 	smooth_table   = list()
 	#
 	# smooth_mulcov
-	smooth_table.append( {
-		'name':     'smooth_mulcov',
-		'age_id':   [0],
-		'time_id':  [0],
-		'fun':      fun['mulcov']
-	} )
+	for cov_type in [ 'rate_value', 'meas_value', 'meas_std' ] :
+		var_type = 'mulcov_' + cov_type
+		smooth_table.append( {
+			'name':     'smooth_' + var_type,
+			'age_id':   [0],
+			'time_id':  [0],
+			'fun':      fun[var_type]
+		} )
 	for rate in [ 'pini', 'iota', 'chi', 'omega' ] :
 		#
 		# smooth_rate_parent
@@ -547,37 +556,37 @@ def example_db (file_name) :
 			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  'iota',
-			'smooth':    'smooth_mulcov'
+			'smooth':    'smooth_mulcov_rate_value'
 		} , {
 			# alpha for iota and BMI
 			'covariate': 'BMI',
 			'type':      'rate_value',
 			'effected':  'iota',
-			'smooth':    'smooth_mulcov'
+			'smooth':    'smooth_mulcov_rate_value'
 		} , {
 			# beta for prevalence and MS_2000
 			'covariate': 'MS_2000',
 			'type':      'meas_value',
 			'effected':  'prevalence',
-			'smooth':    'smooth_mulcov'
+			'smooth':    'smooth_mulcov_meas_value'
 		} , {
 			# beta for prevalence and MS_2010
 			'covariate': 'MS_2010',
 			'type':      'meas_value',
 			'effected':  'prevalence',
-			'smooth':    'smooth_mulcov'
+			'smooth':    'smooth_mulcov_meas_value'
 		} , {
 			# beta for prevalence and MS_2015
 			'covariate': 'MS_2015',
 			'type':      'meas_value',
 			'effected':  'prevalence',
-			'smooth':    'smooth_mulcov'
+			'smooth':    'smooth_mulcov_meas_value'
 		} , {
 			# gamma for prevalence and one
 			'covariate': 'one',
 			'type':      'meas_std',
 			'effected':  'prevalence',
-			'smooth':    'smooth_mulcov'
+			'smooth':    'smooth_mulcov_meas_std'
 		}
 	]
 	# ----------------------------------------------------------------------
