@@ -230,7 +230,9 @@ def true_rate(node, rate, a, t) :
 	# default
 	grid_value = dict()
 	ret        = 0.0
-	age_20     = rate == 'iota' or rate == 'chi'
+	# 2DO
+	# age_20   = rate == 'iota' or rate == 'chi'
+	age_20     = False
 	# -------------------------------------------------------------------------
 	if rate == 'pini' :
 		if node == 'US' :
@@ -271,10 +273,11 @@ def true_rate(node, rate, a, t) :
 			assert False
 		#
 		# set iota truth to zero when age is less than or equal 20.
-		if a <= 20.0 :
-			ret = 0.0
-		else :
-			ret = bilinear(age_20, grid_value, a, t)
+		# 2DO
+		# if a <= 20.0 :
+			# ret = 0.0
+		# else :
+		ret = bilinear(age_20, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'omega' :
 		if node == 'US' :
@@ -317,10 +320,11 @@ def true_rate(node, rate, a, t) :
 			assert False
 		#
 		# set chi truth to zero when age is less than or equal 20.
-		if a <= 20.0 :
-			ret = 0.0
-		else :
-			ret = bilinear(age_20, grid_value, a, t)
+		# 2DO
+		# if a <= 20.0 :
+		#	ret = 0.0
+		# else :
+		ret = bilinear(age_20, grid_value, a, t)
 	# -------------------------------------------------------------------------
 	if ret < 0.0 :
 		import pdb; pdb.set_trace()
@@ -345,15 +349,17 @@ def example_db (file_name) :
 	#
 	# priors used in smoothing for iota and chi
 	def fun_iota_parent(a, t) :
-		if a <= 20.0 :
-			return ('prior_U(1e-8,1e-8)', 'prior_diff_rate', 'prior_diff_rate')
-		else :
-			return ('prior_U(1e-8,1)', 'prior_diff_rate', 'prior_diff_rate')
+		# 2DO
+		# if a <= 20.0 :
+		#	return ('prior_U(1e-8,1e-8)', 'prior_diff_rate', 'prior_diff_rate')
+		# else :
+		return ('prior_U(1e-8,1)', 'prior_diff_rate', 'prior_diff_rate')
 	def fun_iota_child(a, t) :
-		if a <= 20.0 :
-			return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
-		else :
-			return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
+		# 2DO
+		# if a <= 20.0 :
+		#	return ('prior_U(0,0)', 'prior_diff_rate', 'prior_diff_rate')
+		# else :
+		return ('prior_N(0,1)', 'prior_diff_rate', 'prior_diff_rate')
 	#
 	# priors used in smoothing for omega
 	def fun_omega_parent(a, t) :
