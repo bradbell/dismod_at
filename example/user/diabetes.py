@@ -393,7 +393,7 @@ def example_db (file_name) :
 	fun['pini_parent']        = fun_pini_parent
 	fun['pini_child']         = fun_pini_child
 	# ----------------------------------------------------------------------
-	d_age =  ( age_grid['end'] -  age_grid['start'])/( age_grid['number'] - 2)
+	d_age =  ( age_grid['end'] -  age_grid['start'])/( age_grid['number'] - 1)
 	d_time = (time_grid['end'] - time_grid['start'])/(time_grid['number'] - 1)
 	# ----------------------------------------------------------------------
 	# nslist_table:
@@ -403,24 +403,13 @@ def example_db (file_name) :
 	start                     = age_grid['start']
 	number                    = age_grid['number']
 	age_index                 = dict()
-	age_list                  = [ start + j * d_age for j in range(number-1) ]
-	age_list                 += [ 21.0 ]
+	age_list                  = [ start + j * d_age for j in range(number) ]
 	age_list                  = sorted( age_list )
 	age_index_all             = range(number)
-	iota_start                = None
-	for i in range(number) :
-		if age_list[i] == 21.0 :
-			assert iota_start == None
-			iota_start = i
-	#
-	tmp = list( range(iota_start, number) )
-	if iota_start > 1 :
-		age_index['iota_parent']  = [0, iota_start - 1] + tmp
-	else :
-		age_index['iota_parent']  = [ 0 ] + tmp
-	age_index['chi_parent']       = age_index['iota_parent']
-	age_index['omega_parent']     = age_index_all
-	age_index['pini_parent']      = [ 0 ]
+	age_index['iota_parent']  = age_index_all
+	age_index['chi_parent']   = age_index_all
+	age_index['omega_parent'] = age_index_all
+	age_index['pini_parent']  = [ 0 ]
 	#
 	age_index['iota_child']   = [ 0, number-1 ]
 	age_index['chi_child']    = [ 0, number-1 ]
