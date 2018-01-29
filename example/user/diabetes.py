@@ -340,11 +340,17 @@ def example_db (file_name) :
 	#
 	# Note that there are no forward differences for covariate multiplier grids.
 	def fun_mulcov_meas_std(a, t) :
-		return ('prior_N_+(0,1)', None, None)
+		# 2DO
+		# return ('prior_N_+(0,1)', None, None)
+		return('prior_U(0,0)', None, None)
 	def fun_mulcov_meas_value(a, t) :
-		return ('prior_N(0,1)', None, None)
+		# 2DO
+		# return ('prior_N(0,1)', None, None)
+		return('prior_U(0,0)', None, None)
 	def fun_mulcov_rate_value(a, t) :
-		return ('prior_N(0,1)', None, None)
+		# 2DO
+		# return ('prior_N(0,1)', None, None)
+		return('prior_U(0,0)', None, None)
 	#
 	#
 	# priors used in smoothing for iota and chi
@@ -749,31 +755,32 @@ def create_truth_var_table() :
 			node  = node_table[ row['node_id'] ] ['node_name']
 			rate  = rate_table[ row['rate_id'] ] ['rate_name']
 			value = true_rate(node, rate, age, time)
-		elif var_type == 'mulcov_rate_value' :
-			rate  = rate_table[ row['rate_id'] ] ['rate_name']
-			assert rate == 'iota'
-			if covariate == 'BMI' :
-				value = 0.5 / 16.0
-			elif covariate == 'sex' :
-				value = 0.5
-			else :
-				assert False
-		elif var_type == 'mulcov_meas_value' :
-			integrand  = integrand_table[row['integrand_id']]['integrand_name']
-			assert integrand == 'prevalence'
-			if covariate == 'MS_2000' :
-				value = - 0.75
-			elif covariate == 'MS_2010' :
-				value = - 0.5
-			elif covariate == 'MS_2015' :
-				value = - 0.25
-			else :
-				assert False
-		elif var_type == 'mulcov_meas_std' :
-			integrand  = integrand_table[row['integrand_id']]['integrand_name']
-			assert integrand == 'prevalence'
-			assert covariate == 'one'
-			value = 0.5
+		# 2DO
+		#elif var_type == 'mulcov_rate_value' :
+		#	rate  = rate_table[ row['rate_id'] ] ['rate_name']
+		#	assert rate == 'iota'
+		#	if covariate == 'BMI' :
+		#		value = 0.5 / 16.0
+		#	elif covariate == 'sex' :
+		#		value = 0.5
+		#	else :
+		#		assert False
+		#elif var_type == 'mulcov_meas_value' :
+		#	integrand  = integrand_table[row['integrand_id']]['integrand_name']
+		#	assert integrand == 'prevalence'
+		#	if covariate == 'MS_2000' :
+		#		value = - 0.75
+		#	elif covariate == 'MS_2010' :
+		#		value = - 0.5
+		#	elif covariate == 'MS_2015' :
+		#		value = - 0.25
+		#	else :
+		#		assert False
+		#elif var_type == 'mulcov_meas_std' :
+		#	integrand  = integrand_table[row['integrand_id']]['integrand_name']
+		#	assert integrand == 'prevalence'
+		#	assert covariate == 'one'
+		#	value = 0.5
 		row_list.append( [ value ] )
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	connection.close()
