@@ -155,7 +155,7 @@
 # true values for the variables.
 # This is then used to create a version of the $cref data_table$$
 # with no noise, but modeled with a standard deviation corresponding
-# to a 20 percent coefficient of variation.
+# to a 10 percent coefficient of variation.
 #
 # $code
 # $srcfile%
@@ -635,15 +635,22 @@ def example_db (file_name) :
 	n_age       = len(age_list)
 	n_time      = len(time_list)
 	n_node      = len(node_table)
-	for k1 in range(n_integrand * n_age * n_time * n_node) :
-		i_integrand = int( k1 / (n_age * n_time * n_node) )
-		k2          =      k1 % (n_age * n_time * n_node)
+	n_repeat    = 2
+	for k1 in range(n_integrand * n_age * n_time * n_node * n_repeat) :
+		den         = n_age * n_time * n_node * n_repeat
+		i_integrand = int( k1 / den )
+		k2          =      k1 % den
 		#
-		i_age       = int( k2 / (n_time * n_node) )
-		k3          =      k2 % (n_time * n_node)
+		den         = n_time * n_node * n_repeat
+		i_age       = int( k2 / den )
+		k3          =      k2 % den
 		#
-		i_time      = int( k3 / n_node )
-		i_node      =      k3 % n_node
+		den         = n_node * n_repeat
+		i_time      = int( k3 / den )
+		k4          =      k3 % den
+		#
+		den         = n_repeat
+		i_node      = int( k4 / den )
 		#
 		age         = age_list[i_age]
 		time        = time_list[i_time]
@@ -804,7 +811,7 @@ cmd            = [ program, file_name, 'predict', 'truth_var' ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
-	sys.exit('The dismod_at predict truth_var command failed')
+	sys.exit('The dismod_at predict command failed')
 #
 # -----------------------------------------------------------------------------
 # add data to data table
@@ -846,7 +853,7 @@ for predict_id in range( len(predict_table) ) :
 	# add information, that is not in avgint_table, to row
 	eta        = 1e-7                          # a very small eta
 	meas_value = avg_integrand                 # no noise version of meas_value
-	meas_std   = max(eta, 0.2 * avg_integrand) #  20% coefficient of variation
+	meas_std   = max(eta, 0.1 * avg_integrand) #  10% coefficient of variation
 	row['density_id'] = density_id
 	row['hold_out']   = 0
 	row['meas_std']   = meas_std
@@ -869,9 +876,10 @@ dismod_at.sql_command(connection, command)
 # create the new data table
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list )
 # -----------------------------------------------------------------------------
-# Do a fit using data without noise
+# Do a fit of the data
+fit_with_noise_in_data = True
 #
-# must re-initailize to get data_subset to correspond to data
+# re-initailize to get data_subset table to correspond to new data
 file_name      = 'example.db'
 program        = '../../devel/dismod_at'
 cmd            = [ program, file_name, 'init' ]
@@ -879,15 +887,27 @@ print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
-cmd            = [ program, file_name, 'fit', 'fixed' ]
+#
+# Initializing erases the truth_var table.
+# Create a new version of truth_var table that will correspond to fit
+create_truth_var_table()
+#
+# Simulate a data set corresponding to the truth
+number_simulate = '1'
+cmd             = [ program, file_name, 'simulate', number_simulate ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+	sys.exit('The dismod_at simulate command failed')
 #
-# The re-initialize erases the truth_var table.
-# Create a new version of truth_var table (that fit corresponds to)
-create_truth_var_table()
+cmd            = [ program, file_name, 'fit', 'fixed' ]
+if fit_with_noise_in_data :
+	simulate_index = '0'
+	cmd += [ simulate_index ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at fit command failed')
 # -----------------------------------------------------------------------------
 # compare truth and fit
 file_name      = 'example.db'
@@ -896,14 +916,14 @@ connection      = dismod_at.create_connection(file_name, new)
 var_table       = dismod_at.get_table_dict(connection, 'var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
-eps             = 1e-3
+eps             = 0.1
 for var_id in range( len(var_table) ) :
 	truth_var_value = truth_var_table[var_id]['truth_var_value']
 	fit_var_value   = fit_var_table[var_id]['fit_var_value']
 	if truth_var_value == 0.0 :
-		assert abs(truth_var_value - fit_var_value) < eps
+		assert abs(truth_var_value - fit_var_value) <= eps
 	else :
-		assert abs(fit_var_value / truth_var_value - 1.0) < eps
+		assert abs(fit_var_value / truth_var_value - 1.0) <= eps
 #
 # -----------------------------------------------------------------------------
 print('diabetes.py: OK')
