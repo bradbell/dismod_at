@@ -190,9 +190,12 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
-# values used to simulate truth
+# model parameters that can be changed
 time_grid = { 'start':1990.0, 'end': 2020, 'number': 2 }
 age_grid  = { 'start':0.0,    'end': 100,  'number': 3 }
+#
+fit_with_noise_in_data = True
+# ------------------------------------------------------------------------
 #
 def bilinear(age_20, grid_value, a, t) :
 	age_start = age_grid['start']
@@ -629,7 +632,10 @@ def example_db (file_name) :
 	n_age       = len(age_list)
 	n_time      = len(time_list)
 	n_node      = len(node_table)
-	n_repeat    = 3
+	if fit_with_noise_in_data :
+		n_repeat = 3
+	else :
+		n_repeat = 1
 	for k1 in range(n_integrand * n_age * n_time * n_node * n_repeat) :
 		den         = n_age * n_time * n_node * n_repeat
 		i_integrand = int( k1 / den )
@@ -870,7 +876,6 @@ dismod_at.sql_command(connection, command)
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list )
 # -----------------------------------------------------------------------------
 # Do a fit of the data
-fit_with_noise_in_data = True
 #
 # re-initailize to get data_subset table to correspond to new data
 file_name      = 'example.db'
