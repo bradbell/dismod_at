@@ -640,7 +640,7 @@ def example_db (file_name) :
 	n_age       = len(age_list)
 	n_time      = len(time_list)
 	n_node      = len(node_table)
-	n_repeat    = 2
+	n_repeat    = 3
 	for k1 in range(n_integrand * n_age * n_time * n_node * n_repeat) :
 		den         = n_age * n_time * n_node * n_repeat
 		i_integrand = int( k1 / den )
@@ -709,7 +709,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'true'              },
 		{ 'name':'max_num_iter_fixed',     'value':'50'                },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
+		{ 'name':'tolerance_fixed',        'value':'1e-5'              },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                },
 		{ 'name':'print_level_random',     'value':'0'                 },
