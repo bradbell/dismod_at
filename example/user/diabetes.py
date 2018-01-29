@@ -191,8 +191,8 @@ distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # values used to simulate truth
-time_grid = { 'start':1990.0, 'end': 2020, 'number': 7 }
-age_grid  = { 'start':0.0,    'end': 100,  'number': 22 }
+time_grid = { 'start':1990.0, 'end': 2020, 'number': 2 }
+age_grid  = { 'start':0.0,    'end': 100,  'number': 3 }
 #
 def bilinear(age_20, grid_value, a, t) :
 	age_start = age_grid['start']
@@ -636,7 +636,7 @@ def example_db (file_name) :
 			sex = +0.5
 		#
 		# market scan
-		d_age = (age_grid['end'] - age_grid['start']) / (number - 2)
+		d_age = (age_grid['end'] - age_grid['start'])/(age_grid['number'] - 2)
 		if k1 % 4 == 0 :
 			ms = (0, 0, 0)
 		elif k1 % 4 == 1 :
