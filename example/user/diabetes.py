@@ -889,6 +889,23 @@ if flag != 0 :
 # Create a new version of truth_var table (that fit corresponds to)
 create_truth_var_table()
 # -----------------------------------------------------------------------------
+# compare truth and fit
+file_name      = 'example.db'
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+var_table       = dismod_at.get_table_dict(connection, 'var')
+truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+eps             = 1e-3
+for var_id in range( len(var_table) ) :
+	truth_var_value = truth_var_table[var_id]['truth_var_value']
+	fit_var_value   = fit_var_table[var_id]['fit_var_value']
+	if truth_var_value == 0.0 :
+		assert abs(truth_var_value - fit_var_value) < eps
+	else :
+		assert abs(fit_var_value / truth_var_value - 1.0) < eps
+#
+# -----------------------------------------------------------------------------
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
