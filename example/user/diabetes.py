@@ -696,7 +696,7 @@ def example_db (file_name) :
 		{ 'name':'random_seed',            'value':'0'                 },
 
 		{ 'name':'quasi_fixed',            'value':'true'              },
-		{ 'name':'max_num_iter_fixed',     'value':'20'                },
+		{ 'name':'max_num_iter_fixed',     'value':'50'                },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
 
