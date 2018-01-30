@@ -538,7 +538,7 @@ def example_db (file_name) :
 		smooth_table.append( {
 			'name':        'smooth_' + name  ,
 			'age_id':       age_index[name]  ,
-			'time_id':      time_index_rate_parent ,
+			'time_id':      time_index_rate_child ,
 			'fun':          fun[name]
 		} )
 	#
