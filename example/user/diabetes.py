@@ -195,6 +195,7 @@ time_grid = { 'start':1990.0, 'end': 2020, 'number': 2 }
 age_grid  = { 'start':0.0,    'end': 100,  'number': 3 }
 #
 fit_with_noise_in_data = True
+noise_cv               = 0.1
 # ------------------------------------------------------------------------
 #
 def bilinear(age_20, grid_value, a, t) :
@@ -850,9 +851,9 @@ for predict_id in range( len(predict_table) ) :
 	row = copy.copy( avgint_table[predict_id] )
 	#
 	# add information, that is not in avgint_table, to row
-	eta        = 1e-7                          # a very small eta
-	meas_value = avg_integrand                 # no noise version of meas_value
-	meas_std   = max(eta, 0.1 * avg_integrand) #  10% coefficient of variation
+	eta        = 1e-7                     # a very small eta
+	meas_value = avg_integrand            # no noise version of meas_value
+	meas_std   = noise_cv * avg_integrand # noise in simulated data
 	row['density_id'] = density_id
 	row['hold_out']   = 0
 	row['meas_std']   = meas_std
