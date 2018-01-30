@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -82,6 +82,8 @@ $cref/upper/prior_table/upper/$$, and
 $cref/mean/prior_table/mean/$$, equal to $icode const_value$$
 and
 $cref/density/prior_table/density_id/$$ is $code uniform$$.
+If $icode const_value$$ is null (not null),
+$icode value_prior_id$$ must not be null (must be null).
 See the $cref/const_value/create_database/smooth_table/const_value/$$
 heading for instructions on using this with $cref create_database$$.
 

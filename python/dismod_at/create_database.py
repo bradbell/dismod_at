@@ -210,46 +210,56 @@
 # This is a list of $code dict$$
 # that define the rows of the $cref smooth_table$$ and
 # $cref smooth_grid_table$$.
-# The dictionary $icode%smooth_table%[%i%]%$$ has the following:
-# $table
-# Key     $cnext Value Type  $pre  $$ $cnext Description       $rnext
-# name    $cnext $code str$$         $cnext name of $th i$$ smoothing  $rnext
-# age_id  $cnext list of $code int$$ $cnext indices for age values     $rnext
-# time_id $cnext list of $code int$$ $cnext indices for time values    $rnext
-# mulstd_value_prior_name    $cnext $code str$$   $cnext
-#	name of prior for $cref/
-#		mulstd_value_prior_name/smooth_table/mulstd_value_prior_id/$$
-#	$rnext
-# mulstd_dage_prior_name   $cnext $code str$$   $cnext
-#	name of prior for $cref/
-#		mulstd_dage_prior_name/smooth_table/mulstd_dage_prior_id/$$
-#	$rnext
-# mulstd_dtime_prior_name   $cnext $code str$$   $cnext
-#	name of prior for $cref/
-#		mulstd_dtime_prior_name/smooth_table/mulstd_dtime_prior_id/$$
-#	$rnext
-# fun     $cnext function  $cnext $codei%(%v%,%da%,%dt%)=%fun%(%a%, %t%)%$$
-# $tend
-# $list number$$
-# The value $code None$$ is used to represent $code null$$ for
-# the smoothing multipliers names; e.g., $icode mulstd_value_prior_name$$.
-# $lnext
+# The dictionary $icode%smooth_table%[%i%]%$$ has the following keys:
+#
+# $subhead name$$
+# an $code str$$ specifying the name used to reference the $th i$$ smoothing.
+#
+# $subhead age_id$$
+# a list of $code int$$ specifying the age values for this smoothing
+# as indices in $cref/age_list/create_database/age_list/$$.
+#
+# $subhead time_id$$
+# a list of $code int$$ specifying the time values for this smoothing
+# as indices in $cref/time_list/create_database/time_list/$$.
+#
+# $subhead mulstd_value_prior_name$$
+# an $code str$$ specifying the prior used for the value multiplier
+# for the $th i$$ smoothing; see
+# $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$
+# This key is optional and its default value is $code None$$ which corresponds
+# to $code null$$ in the database.
+#
+# $subhead mulstd_dage_prior_name$$
+# an $code str$$ specifying the prior used for the age difference multiplier
+# for the $th i$$ smoothing; see
+# $cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
+# This key is optional and its default value is $code None$$ which corresponds
+# to $code null$$ in the database.
+#
+# $subhead mulstd_dtime_prior_name$$
+# an $code str$$ specifying the prior used for the time difference multiplier
+# for the $th i$$ smoothing; see
+# $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
+# This key is optional and its default value is $code None$$ which corresponds
+# to $code null$$ in the database.
+#
+# $subhead fun$$
+# This is a function with the following syntax:
+# $codei%
+#	(%v%, %da%, %dt%) = %fun%(%a%, %t%)
+# %$$
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
-# are the prior names for the value, difference in age,
-# and difference in time corresponding to this smoothing name.
-# $lnext
-# The $icode age_id$$ and $icode time_id$$ must be in increasing order.
-# $lnext
-# $icode da$$ is not used, and can be None,
-# when age $icode%a% = %age_id%[-1]%$$
-# $lnext
-# $icode dt$$ is not used, and can be None,
+# are the names for the value prior, age difference prior,
+# and time difference prior corresponding to the $th i$$ smoothing.
+# The value $icode da$$ is not used, and can be None,
+# when age $icode%a% = %age_id%[-1]%$$.
+# The value $icode dt$$ is not used, and can be None,
 # when time $icode%t% = %time_id%[-1]%$$.
-# $lend
 #
 # $subhead const_value$$
-# If the return value $icode v$$ is a $code float$$,
-# the value of the function, at the corresponding age and time,
+# The $icode fun$$ return value $icode v$$ may be a $code float$$.
+# In this case, the value of the smoothing, at the corresponding age and time,
 # is constrained to be $icode v$$ using the
 # $cref/const_value/smooth_grid_table/const_value/$$ column in the
 # $code smooth_grid$$ table.

@@ -37,6 +37,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 01-30$$
+Improve the documentation for the
+$cref/smooth_table/create_database/smooth_table/$$ argument to the
+$code create_database$$ python function.
+
 $head 01-28$$
 $list number$$
 Add mention that
