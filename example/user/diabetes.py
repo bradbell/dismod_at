@@ -192,7 +192,7 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # model parameters that can be changed
 time_grid = { 'start':1990.0, 'end': 2020, 'number': 2 }
-age_grid  = { 'start':0.0,    'end': 100,  'number': 3 }
+age_grid  = { 'start':0.0,    'end': 100,  'number': 6 }
 #
 fit_with_noise_in_data = True
 noise_cv               = 0.1
@@ -503,14 +503,14 @@ def example_db (file_name) :
 			'name':     'prior_diff_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.02 * d_age ,
+			'std':      0.1,
 			'eta':      1e-4,
 		} , {
 			# prior_diff_time
 			'name':     'prior_diff_time',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.01 * d_time ,
+			'std':      0.5,
 			'eta':      1e-4,
 		}
 	]
@@ -951,6 +951,7 @@ truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 eps             = 0.15
 ok              = True
+max_err         = 0.0
 for var_id in range( len(var_table) ) :
 	truth_var_value = truth_var_table[var_id]['truth_var_value']
 	fit_var_value   = fit_var_table[var_id]['fit_var_value']
@@ -960,6 +961,8 @@ for var_id in range( len(var_table) ) :
 		ok     &= flag
 		if not flag :
 			print('var_id = ', var_id, ', rel_err = ', rel_err)
+		max_err = max( max_err, abs(rel_err) )
+print(max_err)
 assert ok
 # -----------------------------------------------------------------------------
 print('diabetes.py: OK')
