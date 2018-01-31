@@ -191,8 +191,8 @@ distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # model parameters that can be changed
-time_grid = { 'start':1990.0, 'end': 2020, 'number': 2 }
-age_grid  = { 'start':0.0,    'end': 100,  'number': 6 }
+time_grid = { 'start':1990.0, 'end': 2020, 'number': 3  }
+age_grid  = { 'start':0.0,    'end': 100,  'number': 11 }
 #
 fit_with_noise_in_data = True
 noise_cv               = 0.1
@@ -503,14 +503,14 @@ def example_db (file_name) :
 			'name':     'prior_diff_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      0.01,
 			'eta':      1e-4,
 		} , {
 			# prior_diff_time
 			'name':     'prior_diff_time',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.5,
+			'std':      0.1,
 			'eta':      1e-4,
 		}
 	]
@@ -737,7 +737,7 @@ def example_db (file_name) :
 		{ 'name':'random_seed',            'value':'0'                 },
 
 		{ 'name':'quasi_fixed',            'value':'true'              },
-		{ 'name':'max_num_iter_fixed',     'value':'50'                },
+		{ 'name':'max_num_iter_fixed',     'value':'80'                },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-3'              },
 
