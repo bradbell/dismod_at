@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create a Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create a Dismod_at Database">
-<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_list node_table weight_table covariate_table avgint_table avgint_extra_columns data_table data_extra_columns prior_table smooth_table const_value nslist_table rate_table mulcov_table option_table example ">
+<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_list node_table weight_table covariate_table avgint_table avgint_extra_columns data_table data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table option_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -108,6 +108,13 @@ A:active { color : purple }
 <option>---..data_extra_columns</option>
 <option>prior_table</option>
 <option>smooth_table</option>
+<option>---..name</option>
+<option>---..age_id</option>
+<option>---..time_id</option>
+<option>---..mulstd_value_prior_name</option>
+<option>---..mulstd_dage_prior_name</option>
+<option>---..mulstd_dtime_prior_name</option>
+<option>---..fun</option>
 <option>---..const_value</option>
 <option>nslist_table</option>
 <option>rate_table</option>
@@ -545,59 +552,72 @@ that define the rows of the <a href="smooth_table.htm" target="_top"><span style
 .
 The dictionary 
 <code><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- has the following:
-<table><tr><td align='left'  valign='top'>
+ has the following keys:
 
-Key     </td><td align='left'  valign='top'>
- Value Type  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
- Description       </td></tr><tr><td align='left'  valign='top'>
+<br>
+<br>
+<b><a name="smooth_table.name" id="smooth_table.name">name</a></b>
+<br>
+an <code><font color="blue">str</font></code> specifying the name used to reference the <code><i>i</i></code>-th smoothing.
 
-name    </td><td align='left'  valign='top'>
- <code><font color="blue">str</font></code>         </td><td align='left'  valign='top'>
- name of <code><i>i</i></code>-th smoothing  </td></tr><tr><td align='left'  valign='top'>
-
-age_id  </td><td align='left'  valign='top'>
- list of <code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
- indices for age values     </td></tr><tr><td align='left'  valign='top'>
-
-time_id </td><td align='left'  valign='top'>
- list of <code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
- indices for time values    </td></tr><tr><td align='left'  valign='top'>
-
-mulstd_value_prior_name    </td><td align='left'  valign='top'>
- <code><font color="blue">str</font></code>   </td><td align='left'  valign='top'>
-
-	name of prior for <a href="smooth_table.htm#mulstd_value_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_value_prior_name</span></a>
-
-	</td></tr><tr><td align='left'  valign='top'>
-
-mulstd_dage_prior_name   </td><td align='left'  valign='top'>
- <code><font color="blue">str</font></code>   </td><td align='left'  valign='top'>
-
-	name of prior for <a href="smooth_table.htm#mulstd_dage_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_name</span></a>
-
-	</td></tr><tr><td align='left'  valign='top'>
-
-mulstd_dtime_prior_name   </td><td align='left'  valign='top'>
- <code><font color="blue">str</font></code>   </td><td align='left'  valign='top'>
-
-	name of prior for <a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_name</span></a>
-
-	</td></tr><tr><td align='left'  valign='top'>
-
-fun     </td><td align='left'  valign='top'>
- function  </td><td align='left'  valign='top'>
- 
-<code><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>da</span></font></i><font color="blue"><span style='white-space: nowrap'>,</span></font><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i><font color="blue"><span style='white-space: nowrap'>)=</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
-
-</td></tr>
-</table>
-<ol type="1"><li>The value <code><font color="blue">None</font></code> is used to represent <code><font color="blue">null</font></code> for
-the smoothing multipliers names; e.g., 
-<code><i><font color="black"><span style='white-space: nowrap'>mulstd_value_prior_name</span></font></i></code>
+<br>
+<br>
+<b><a name="smooth_table.age_id" id="smooth_table.age_id">age_id</a></b>
+<br>
+a list of <code><font color="blue">int</font></code> specifying the age values for this smoothing
+as indices in <a href="create_database.htm#age_list" target="_top"><span style='white-space: nowrap'>age_list</span></a>
 .
-</li><li>
 
+<br>
+<br>
+<b><a name="smooth_table.time_id" id="smooth_table.time_id">time_id</a></b>
+<br>
+a list of <code><font color="blue">int</font></code> specifying the time values for this smoothing
+as indices in <a href="create_database.htm#time_list" target="_top"><span style='white-space: nowrap'>time_list</span></a>
+.
+
+<br>
+<br>
+<b><a name="smooth_table.mulstd_value_prior_name" id="smooth_table.mulstd_value_prior_name">mulstd_value_prior_name</a></b>
+<br>
+an <code><font color="blue">str</font></code> specifying the prior used for the value multiplier
+for the <code><i>i</i></code>-th smoothing; see
+<a href="smooth_table.htm#mulstd_value_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_value_prior_id</span></a>
+
+This key is optional and its default value is <code><font color="blue">None</font></code> which corresponds
+to <code><font color="blue">null</font></code> in the database.
+
+<br>
+<br>
+<b><a name="smooth_table.mulstd_dage_prior_name" id="smooth_table.mulstd_dage_prior_name">mulstd_dage_prior_name</a></b>
+<br>
+an <code><font color="blue">str</font></code> specifying the prior used for the age difference multiplier
+for the <code><i>i</i></code>-th smoothing; see
+<a href="smooth_table.htm#mulstd_dage_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_id</span></a>
+
+This key is optional and its default value is <code><font color="blue">None</font></code> which corresponds
+to <code><font color="blue">null</font></code> in the database.
+
+<br>
+<br>
+<b><a name="smooth_table.mulstd_dtime_prior_name" id="smooth_table.mulstd_dtime_prior_name">mulstd_dtime_prior_name</a></b>
+<br>
+an <code><font color="blue">str</font></code> specifying the prior used for the time difference multiplier
+for the <code><i>i</i></code>-th smoothing; see
+<a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_id</span></a>
+
+This key is optional and its default value is <code><font color="blue">None</font></code> which corresponds
+to <code><font color="blue">null</font></code> in the database.
+
+<br>
+<br>
+<b><a name="smooth_table.fun" id="smooth_table.fun">fun</a></b>
+<br>
+This is a function with the following syntax:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>da</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
 The <code><font color="blue">str</font></code> results 
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
 , 
@@ -605,42 +625,31 @@ The <code><font color="blue">str</font></code> results
 , and 
 <code><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i></code>
 
-are the prior names for the value, difference in age,
-and difference in time corresponding to this smoothing name.
-</li><li>
-
-The 
-<code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
- and 
-<code><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i></code>
- must be in increasing order.
-</li><li>
-
-
+are the names for the value prior, age difference prior,
+and time difference prior corresponding to the <code><i>i</i></code>-th smoothing.
+The value 
 <code><i><font color="black"><span style='white-space: nowrap'>da</span></font></i></code>
  is not used, and can be None,
 when age 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[-1]</span></font></code>
-
-</li><li>
-
-
+.
+The value 
 <code><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i></code>
  is not used, and can be None,
 when time 
 <code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[-1]</span></font></code>
 .
-</li></ol>
-
 
 <br>
 <br>
 <b><a name="smooth_table.const_value" id="smooth_table.const_value">const_value</a></b>
 <br>
-If the return value 
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i></code>
+ return value 
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
- is a <code><font color="blue">float</font></code>,
-the value of the function, at the corresponding age and time,
+ may be a <code><font color="blue">float</font></code>.
+In this case, the value of the smoothing, at the corresponding age and time,
 is constrained to be 
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
  using the

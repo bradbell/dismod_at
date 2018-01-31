@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,10 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Contents</option>
+<option>01-31</option>
+<option>01-30</option>
+<option>01-28</option>
+<option>01-26</option>
 <option>01-25</option>
 <option>01-24</option>
 <option>01-23</option>
@@ -101,6 +105,96 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="01-31" id="01-31">01-31</a></big></b>
+
+<ol type="1"><li>
+The <a href="db2csv_command.htm#variable.csv.start" target="_top"><span style='white-space: nowrap'>start</span></a>
+ column
+was added to the <code><font color="blue">variable.csv</font></code> file created by the
+<a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+.
+</li><li>
+
+The <a href="db2csv_command.py.htm" target="_top"><span style='white-space: nowrap'>db2csv_command.py</span></a>
+ example was improved
+to better demonstrate (and test) which field in
+<a href="db2csv_command.htm#variable.csv" target="_top"><span style='white-space: nowrap'>variable.csv</span></a>
+
+are empty
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="01-30" id="01-30">01-30</a></big></b>
+<br>
+Improve the documentation for the
+<a href="create_database.htm#smooth_table" target="_top"><span style='white-space: nowrap'>smooth_table</span></a>
+ argument to the
+<code><font color="blue">create_database</font></code> python function.
+
+<br>
+<br>
+<b><big><a name="01-28" id="01-28">01-28</a></big></b>
+
+<ol type="1"><li>
+Add mention that
+<a href="predict_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
+ is always zero when the
+source for the predict command is
+<a href="predict_command.htm#source.fit_var" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+ or
+<a href="predict_command.htm#source.truth_var" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
+.
+</li><li>
+
+Mention that under normal circumstances,
+<a href="option_table.htm#Optimizer.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+
+should be <code><font color="blue">none</font></code>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="01-26" id="01-26">01-26</a></big></b>
+
+<ol type="1"><li>
+A special discussion of the prior mean,
+in the case where the density is
+<a href="prior_table.htm#mean.uniform" target="_top"><span style='white-space: nowrap'>uniform</span></a>
+,
+was added.
+</li><li>
+
+Improve error message when number of unique ages (times)
+<a href="smooth_grid_table.htm" target="_top"><span style='white-space: nowrap'>smooth_grid_table</span></a>
+ does not agree with
+the corresponding <a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
+
+( <a href="smooth_table.htm#n_time" target="_top"><span style='white-space: nowrap'>n_time</span></a>
+ ) in smooth table.
+</li><li>
+
+The definition of the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+
+for the log transformed densities was changed so that the standard deviation
+effect multiplies
+<a href="data_like.htm#Data Table Notation.Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
+.
+</li><li>
+
+There was a bug in how <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ determined the reference value
+for covariates in the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+.
+This has been fixed.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="01-25" id="01-25">01-25</a></big></b>
 <br>
 Add mention that the <a href="simulate_command.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Prior Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Prior Table">
-<meta name="keywords" id="keywords" content=" the prior table prior_id prior_name density_id lower upper mean std eta null scaling nu example ">
+<meta name="keywords" id="keywords" content=" the prior table prior_id prior_name density_id lower upper mean uniform std eta null scaling nu example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -112,6 +112,7 @@ A:active { color : purple }
 <option>lower</option>
 <option>upper</option>
 <option>mean</option>
+<option>---..uniform</option>
 <option>std</option>
 <option>eta</option>
 <option>---..null</option>
@@ -186,6 +187,28 @@ It must hold that
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+<br>
+<b><a name="mean.uniform" id="mean.uniform">uniform</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
+ corresponds to a
+<a href="density_table.htm#density_name.uniform" target="_top"><span style='white-space: nowrap'>uniform</span></a>
+,
+and <a href="init_command.htm#start_var_table" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+
+is set to the prior mean,
+the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i></code>
+ only affects the
+starting point for the optimization.
+Otherwise, when the density is uniform, the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i></code>
+
+has no effect.
+
+
+<br>
 <br>
 <b><big><a name="std" id="std">std</a></big></b>
 <br>

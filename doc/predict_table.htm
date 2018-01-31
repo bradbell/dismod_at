@@ -180,10 +180,19 @@ This column has type <code><font color="blue">integer</font></code> and specifie
  that the 
 <code><i><font color="black"><span style='white-space: nowrap'>avg_integrand</span></font></i></code>
  corresponds to.
-To be specific, the model variables are those that have the sample
+If <a href="predict_command.htm#source" target="_top"><span style='white-space: nowrap'>source</span></a>
+ is
+<code><font color="blue">fit_var</font></code> or <code><font color="blue">truth_var</font></code>, 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ is
+always zero.
+Otherwise 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ is <code><font color="blue">sample</font></code> and 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>sample</span></font></i></code>
- index in the <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+is the corresponding value in the
+<a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
 .
 This column is monotone non-decreasing; i.e. the value in each row
 is greater than or equal the value in the previous row.

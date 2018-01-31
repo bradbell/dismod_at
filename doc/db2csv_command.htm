@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed depend tru_value sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed start depend truth sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,8 +110,9 @@ A:active { color : purple }
 <option>---..covariate</option>
 <option>---..node</option>
 <option>---..fixed</option>
+<option>---..start</option>
 <option>---..depend</option>
-<option>---..tru_value</option>
+<option>---..truth</option>
 <option>---..sam_avg</option>
 <option>---..sam_std</option>
 <option>---..fit_value</option>
@@ -344,6 +345,15 @@ otherwise it is <code><font color="blue">false</font></code>.
 
 <br>
 <br>
+<b><a name="variable.csv.start" id="variable.csv.start">start</a></b>
+<br>
+is the
+<a href="start_var_table.htm#start_var_value" target="_top"><span style='white-space: nowrap'>start_var_value</span></a>
+
+for this variable.
+
+<br>
+<br>
 <b><a name="variable.csv.depend" id="variable.csv.depend">depend</a></b>
 <br>
 If the <a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var_table</span></a>
@@ -355,11 +365,12 @@ If the <a href="depend_var_table.htm" target="_top"><span style='white-space: no
 
 <br>
 <br>
-<b><a name="variable.csv.tru_value" id="variable.csv.tru_value">tru_value</a></b>
+<b><a name="variable.csv.truth" id="variable.csv.truth">truth</a></b>
 <br>
-If the truth_var table exists, this is the corresponding
+If the truth_var table exists, this is the
 <a href="truth_var_table.htm#truth_var_value" target="_top"><span style='white-space: nowrap'>truth_var_value</span></a>
-.
+
+for this variable.
 
 <br>
 <br>

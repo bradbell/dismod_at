@@ -47,19 +47,16 @@ var list_current0 = [
 'user_diabetes.py.htm#Node Table',
 'user_diabetes.py.htm#Age Table',
 'user_diabetes.py.htm#Time Table',
+'user_diabetes.py.htm#omega',
 'user_diabetes.py.htm#Integrand Table',
 'user_diabetes.py.htm#Weight Table and Grid',
-'user_diabetes.py.htm#Smooth Table and Grid',
-'user_diabetes.py.htm#Smooth Table and Grid.smooth_mulcov',
-'user_diabetes.py.htm#Smooth Table and Grid.smooth_chi_parent',
-'user_diabetes.py.htm#Smooth Table and Grid.smooth_chi_child',
-'user_diabetes.py.htm#Smooth Table and Grid.smooth_iota_parent',
-'user_diabetes.py.htm#Smooth Table and Grid.smooth_iota_child',
 'user_diabetes.py.htm#Covariate Table',
 'user_diabetes.py.htm#Covariate Multiplier Table',
 'user_diabetes.py.htm#Covariate Multiplier Table.Rate Value',
 'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Value',
-'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Standard Deviations'
+'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Standard Deviations',
+'user_diabetes.py.htm#Truth',
+'user_diabetes.py.htm#Predict'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

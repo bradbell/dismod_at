@@ -57,6 +57,7 @@ var list_current0 = [
 'prior_table.htm#lower',
 'prior_table.htm#upper',
 'prior_table.htm#mean',
+'prior_table.htm#mean.uniform',
 'prior_table.htm#std',
 'prior_table.htm#eta',
 'prior_table.htm#eta.null',
