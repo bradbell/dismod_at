@@ -18,7 +18,8 @@
 /build.debug/
 #
 # directories that are used for stashing files
-/new/
+# (any new directory and new.* in top directory)
+new/
 /new.*/
 #
 # vim swap files
