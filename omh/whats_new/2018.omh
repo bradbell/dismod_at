@@ -37,6 +37,18 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 01-31$$
+$list number$$
+The $cref/start/db2csv_command/variable.csv/start/$$ column
+was added to the $code variable.csv$$ file created by the
+$cref db2csv_command$$.
+$lnext
+The $cref db2csv_command.py$$ example was improved
+to better demonstrate (and test) which field in
+$cref/variable.csv/db2csv_command/variable.csv/$$
+are empty
+$lend
+
 $head 01-30$$
 Improve the documentation for the
 $cref/smooth_table/create_database/smooth_table/$$ argument to the

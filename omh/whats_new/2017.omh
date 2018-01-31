@@ -281,7 +281,7 @@ Advance to cppad_mixed-20171009.
 
 $head 10-06$$
 $list number$$
-Add the $cref/tru_value/db2csv_command/variable.csv/tru_value/$$
+Add the $cref/truth/db2csv_command/variable.csv/truth/$$
 column to the $code variable.csv$$ file create by the
 $cref db2csv_command$$.
 $lnext

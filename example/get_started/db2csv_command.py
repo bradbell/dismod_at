@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -141,16 +141,28 @@ assert near_equal(row['meas_std'],   meas_std,   1e-5)
 # -----------------------------------------------------------------------
 # variable.csv
 variable_table = get_table('variable')
-# note  that res_value is empty because value prior is uniform
-empty_field  = [ 'integrand', 'tru_value', 'sam_avg', 'sam_std' ]
-empty_field += [ 'res_value', 'res_dage', 'res_dtime' ]
-empty_field += [ 'std_v', 'eta_v', 'nu_v' ]
+#
+# note that res_value is empty because value prior is uniform
+always_empty  = [ 'integrand', 'depend', 'truth', 'sam_avg', 'sam_std' ]
+always_empty += [ 'res_value', 'res_dage', 'res_dtime' ]
+always_empty += [ 'std_v', 'eta_v', 'nu_v' ]
 for prefix in [ 'lower', 'upper', 'mean', 'std', 'eta', 'nu', 'density' ] :
 	for suffix in ['_a', '_t'] :
-		empty_field.append( prefix + suffix )
+		always_empty.append( prefix + suffix )
 for row in variable_table :
-	for field in empty_field :
-		assert row[field] == ''
+	empty_field = copy.copy( always_empty )
+	if row['var_type'] != 'rate' and row['var_type'] != 'mulcov_rate_value' :
+		empty_field.append('rate')
+	if row['var_type'].startswith('mulcov_') :
+		empty_field.append('node')
+	else :
+		empty_field.append('covariate')
+	for field in row :
+		if field in empty_field :
+			assert row[field] == ''
+		else :
+			assert row[field] != ''
+	#
 	assert row['rate']               == 'omega'
 	assert row['fixed']              == 'true'
 	assert row['density_v']          == 'uniform'

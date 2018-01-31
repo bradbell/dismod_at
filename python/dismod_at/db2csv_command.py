@@ -118,6 +118,11 @@
 # $cref/fixed effect/model_variables/Fixed Effects, theta/$$,
 # otherwise it is $code false$$.
 #
+# $subhead start$$
+# is the
+# $cref/start_var_value/start_var_table/start_var_value/$$
+# for this variable.
+#
 # $subhead depend$$
 # If the $cref depend_var_table$$ exists, this has one of the following:
 # $code none$$ if neither the data nor the prior depends on this variable,
@@ -125,9 +130,10 @@
 # $code prior$$ if only the prior depends on this variable,
 # $code both$$ if both the data and the prior depend on this variable.
 #
-# $subhead tru_value$$
-# If the truth_var table exists, this is the corresponding
-# $cref/truth_var_value/truth_var_table/truth_var_value/$$.
+# $subhead truth$$
+# If the truth_var table exists, this is the
+# $cref/truth_var_value/truth_var_table/truth_var_value/$$
+# for this variable.
 #
 # $subhead sam_avg$$
 # If the sample table exists,
@@ -535,6 +541,7 @@ def db2csv_command(database_file_arg) :
 		'rate',
 		'smooth',
 		'smooth_grid',
+		'start_var',
 		'time',
 		'var',
 		'weight'
@@ -781,8 +788,9 @@ def db2csv_command(database_file_arg) :
 		'covariate',
 		'node',
 		'fixed',
+		'start',
 		'depend',
-		'tru_value',
+		'truth',
 		'sam_avg',
 		'sam_std',
 		'fit_value',
@@ -827,6 +835,10 @@ def db2csv_command(database_file_arg) :
 			if row_in['node_id'] != parent_node_id :
 				row_out['fixed'] = 'false'
 		#
+		# The start_var table value
+			row_out['start'] = \
+				 table_lookup('start_var', var_id, 'start_var_value')
+		#
 		if have_table['depend_var'] :
 			data_depend  = table_data['depend_var'][var_id]['data_depend']
 			prior_depend = table_data['depend_var'][var_id]['prior_depend']
@@ -842,7 +854,7 @@ def db2csv_command(database_file_arg) :
 			else :
 				row_out['depend'] = 'none'
 		if have_table['truth_var'] :
-			row_out['tru_value'] = \
+			row_out['truth'] = \
 				 table_lookup('truth_var', var_id, 'truth_var_value')
 		if have_table['fit_var'] :
 			row_out['fit_value'] = \

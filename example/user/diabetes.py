@@ -191,8 +191,8 @@ distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # model parameters that can be changed
-time_grid = { 'start':1990.0, 'end': 2020, 'number': 3  }
-age_grid  = { 'start':0.0,    'end': 100,  'number': 11 }
+time_grid = { 'start':1990.0, 'end': 2020, 'number': 2  }
+age_grid  = { 'start':0.0,    'end': 100,  'number': 6  }
 #
 fit_with_noise_in_data = True
 noise_cv               = 0.1
@@ -503,14 +503,14 @@ def example_db (file_name) :
 			'name':     'prior_diff_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.01,
+			'std':      0.1,
 			'eta':      1e-4,
 		} , {
 			# prior_diff_time
 			'name':     'prior_diff_time',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      0.5,
 			'eta':      1e-4,
 		}
 	]
@@ -910,8 +910,6 @@ dismod_at.sql_command(connection, command)
 # create the new data table
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list )
 # -----------------------------------------------------------------------------
-# Do a fit of the data
-#
 # re-initailize to get data_subset table to correspond to new data
 file_name      = 'example.db'
 program        = '../../devel/dismod_at'
@@ -925,6 +923,32 @@ if flag != 0 :
 # Create a new version of truth_var table that will correspond to fit
 create_truth_var_table()
 #
+# drop the start_var table created by init
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+command = 'DROP TABLE start_var'
+dismod_at.sql_command(connection, command)
+#
+# create new start_var table
+rate_table      = dismod_at.get_table_dict(connection, 'rate')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
+tbl_name        = 'start_var'
+col_name        = [ 'start_var_value' ]
+col_type        = [ 'real' ]
+row_list        = list()
+for var_id in range( len(var_table) ) :
+	truth_var_value  = truth_var_table[var_id]['truth_var_value']
+	var_type         = var_table[var_id]['var_type']
+	rate_id          = var_table[var_id]['rate_id']
+	start_var_value  = truth_var_value
+	if var_type == 'rate' :
+			if rate_table[rate_id]['rate_name'] != 'omega' :
+				start_var_value = 3.0 * truth_var_value
+	row_list.append( [start_var_value] )
+dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+connection.close()
+#
 # Simulate a data set corresponding to the truth
 number_simulate = '1'
 cmd             = [ program, file_name, 'simulate', number_simulate ]
@@ -933,6 +957,7 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
 #
+# Do a fit
 cmd            = [ program, file_name, 'fit', 'fixed' ]
 if fit_with_noise_in_data :
 	simulate_index = '0'
