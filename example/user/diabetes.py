@@ -371,11 +371,12 @@ def example_db (file_name) :
 		# else :
 		return ('prior_N(0,1)', 'prior_diff_age', 'prior_diff_time')
 	#
-	# priors used in smoothing for omega
-	def fun_omega_parent(a, t) :
-		return ('prior_U(0,1)', 'prior_diff_age', 'prior_diff_time')
-	def fun_omega_child(a, t) :
-		return ('prior_N(0,1)', 'prior_diff_age', 'prior_diff_time')
+	# priors used to constrain omega to true value
+	def fun_omega(node) :
+		def fun_omega_node(a, t) :
+			true_value = true_rate(node, 'omega', a, t)
+			return (true_value, 'prior_diff_age', 'prior_diff_time')
+		return fun_omega_node
 	#
 	# priors used in smoothing for pini
 	def fun_pini_parent(a, t) :
@@ -392,8 +393,6 @@ def example_db (file_name) :
 	fun['iota_child']         = fun_iota_child
 	fun['chi_parent']         = fun_iota_parent
 	fun['chi_child']          = fun_iota_child
-	fun['omega_parent']       = fun_omega_parent
-	fun['omega_child']        = fun_omega_child
 	fun['pini_parent']        = fun_pini_parent
 	fun['pini_child']         = fun_pini_child
 	# ----------------------------------------------------------------------
@@ -430,7 +429,7 @@ def example_db (file_name) :
 	time_index_rate_child  = [0, number-1]
 	# ----------------------------------------------------------------------
 	# integrand table:
-	integrand_list = [ 'mtother', 'mtspecific', 'prevalence' ]
+	integrand_list = [ 'mtspecific', 'prevalence' ]
 	# ----------------------------------------------------------------------
 	# node table:
 	node_table = [
@@ -522,7 +521,7 @@ def example_db (file_name) :
 			'time_id':  [0],
 			'fun':      fun[var_type]
 		} )
-	for rate in [ 'pini', 'iota', 'chi', 'omega' ] :
+	for rate in [ 'pini', 'iota', 'chi' ] :
 		#
 		# smooth_rate_parent
 		name = rate + '_parent'
@@ -538,9 +537,35 @@ def example_db (file_name) :
 		smooth_table.append( {
 			'name':        'smooth_' + name  ,
 			'age_id':       age_index[name]  ,
-			'time_id':      time_index_rate_child ,
+			'time_id':      time_index_rate_parent ,
 			'fun':          fun[name]
 		} )
+	nslist_table['nslist_omega_child'] = list()
+	for node_id in range( len(node_table) ) :
+		node = node_table[node_id]['name']
+		name = 'smooth_omega_' + node
+		smoothing = { 'name': name }
+		if node == 'US' :
+			smoothing['age_id']  = age_index['omega_parent']
+			smoothing['time_id'] = time_index_rate_parent
+		else :
+			smoothing['age_id']  = age_index['omega_child']
+			smoothing['time_id'] = time_index_rate_child
+			nslist_table['nslist_omega_child'].append( (node, name) )
+		#
+		if node == 'US' :
+			smoothing['fun'] = fun_omega('US')
+		elif node == 'Alabama' :
+			smoothing['fun'] = fun_omega('Alabama')
+		elif node == 'California' :
+			smoothing['fun'] = fun_omega('California')
+		elif node == 'Massachusetts' :
+			smoothing['fun'] = fun_omega('Massachusetts')
+		elif node == 'Wisconsin' :
+			smoothing['fun'] = fun_omega('Wisconsin')
+		else :
+			assert False
+		smooth_table.append( smoothing )
 	#
 	# no standard deviation multipliers
 	for dictionary in smooth_table :
@@ -605,10 +630,12 @@ def example_db (file_name) :
 		{	'name':          'pini',
 			'parent_smooth': 'smooth_pini_parent',
 			'child_smooth':  'smooth_pini_child',
+			'child_nslist':  None,
 		} , {
 			'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_iota_child',
+			'child_nslist':  None,
 		} , {
 			'name':          'rho',
 			'parent_smooth': None,
@@ -617,10 +644,12 @@ def example_db (file_name) :
 			'name':          'chi',
 			'parent_smooth': 'smooth_chi_parent',
 			'child_smooth':  'smooth_chi_child',
+			'child_nslist':  None,
 		} , {
 			'name':          'omega',
-			'parent_smooth': 'smooth_omega_parent',
-			'child_smooth':  'smooth_omega_child',
+			'parent_smooth': 'smooth_omega_US',
+			'child_smooth':  None,
+			'child_nslist':  'nslist_omega_child',
 		}
 	]
 	# ----------------------------------------------------------------------
