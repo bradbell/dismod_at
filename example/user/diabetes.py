@@ -22,7 +22,7 @@
 # $section An Example Fitting Simulated Diabetes Data$$
 #
 # $head Under Construction$$
-# This example is under construction and not yet tested.
+# This example is under construction.
 #
 # $head Node Table$$
 # The $cref node_table$$ only contains the
@@ -32,65 +32,31 @@
 #
 # $head Age Table$$
 # The $cref age_table$$ is uniformly spaced starting at age zero,
-# ending at age 100. There is one extra age point added at age 21.
+# ending at age 100.
 #
 # $head Time Table$$
 # The $cref time_table$$ is uniformly spaced starting at time 1990
 # and ending at time 2020.
 #
+# $head omega$$
+# We are constraint $cref/omega/rate_table/rate_name/omega/$$ to have
+# the value used during simulation of the data.
+#
 # $head Integrand Table$$
 # The $cref integrand_table$$ is
-# mtother, mtspecific, prevalence.
+# mtspecific, prevalence.
 # We think of
-# $cref/mtother/avg_integrand/I_i(a,t)/mtother/$$
-# as informing $cref/omega/rate_table/rate_name/omega/$$,
 # $cref/mtspecific/avg_integrand/I_i(a,t)/mtspecific/$$
 # as informing $cref/chi/rate_table/rate_name/chi/$$,
 # $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
 # as informing $cref/iota/rate_table/rate_name/iota/$$, and
-# $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
-# as informing $cref/iota/rate_table/rate_name/iota/$$.
+# $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$ at age zero
+# as informing $cref/pini/rate_table/rate_name/pini/$$.
 # We assume that $cref/rho/rate_table/rate_name/rho/$$ is zero.
 #
 # $head Weight Table and Grid$$
 # There is one weighting, with the constant value one,
 # in the $cref weight_table$$ and $cref weight_grid_table$$.
-#
-# $head Smooth Table and Grid$$
-# The smoothings for omega are the same as for chi.
-#
-# $subhead smooth_mulcov$$
-# This smoothing is used for the covariate multipliers.
-# It has one grid point (functions are constant in age and time).
-# The value has an N_+(0, 1) prior distribution; i.e.,
-# a normal distribution with mean zero, variance one,
-# and truncated using lower limit zero.
-#
-# $subhead smooth_chi_parent$$
-# This smoothing's age and time grid include every age and time point.
-# The value at each grid point has a U(0, 1) distribution.
-#
-# $subhead smooth_chi_child$$
-# This smoothing's age (time) grid has two points,
-# one at the minimum age (time) and one at the maximum age (time).
-# The value at each grid point has an N(0, 1) distribution.
-#
-# $subhead smooth_omega$$
-# The smoothings for omega are the same as for chi.
-#
-# $subhead smooth_iota_parent$$
-# This smoothing's time grid includes every time point.
-# The age grid for this smoothing has one point age zero,
-# and all the age points that are greater than or equal 20.
-# The value at each grid point has a U(1e-8, 1e-8) distribution if the age
-# is less than or equal 20 and U(1e-8, 1) otherwise.
-#
-# $subhead smooth_iota_child$$
-# This smoothing's time grid has two points,
-# one at the minimum time and one at the maximum time.
-# The age grid for this smoothing also has two points,
-# at age zero the value has a U(0, 0) distribution,
-# at age 100 is has an N(0, 1) distribution.
 #
 # $head Covariate Table$$
 # The following information is placed in the $cref covariate_table$$
@@ -108,6 +74,7 @@
 # All of the covariate multipliers use that same smoothing which corresponds
 # to a constant in age and time. The value is a Gaussian with mean zero
 # and variable one.
+# (The covariates multipliers are currently set to zero.)
 #
 # $subhead Rate Value$$
 # There are two rate value covariate multipliers,
@@ -138,16 +105,6 @@
 # (start_age, end_time),
 # (end_age, start_time)
 # and (end_age, end_time).
-# There was an exception, if the age was less than or equal 20.0,
-# the value zero was used for parent and child iota and chi rates.
-# See the function $code true_rate$$ below.
-# This makes the model for initial prevalence
-# $cref/pini/rate_table/rate_name/pini/$$ correspond to Type I Diabetes
-# and the model for incidence
-# $cref/iota/rate_table/rate_name/iota/$$ is for Type II Diabetes,
-# and the
-# and $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$ integrand
-# is for the sum of the two types.
 #
 # $head Predict$$
 # The $cref predict_command$$ is used to compute the
@@ -155,7 +112,7 @@
 # true values for the variables.
 # This is then used to create a version of the $cref data_table$$
 # with no noise, but modeled with a standard deviation corresponding
-# to a 10 percent coefficient of variation.
+# to a coefficient of variation.
 #
 # $code
 # $srcfile%
@@ -198,10 +155,9 @@ fit_with_noise_in_data = True
 noise_cv               = 0.1
 # ------------------------------------------------------------------------
 #
-def bilinear(age_20, grid_value, a, t) :
+def bilinear(grid_value, a, t) :
 	age_start = age_grid['start']
-	if age_20 :
-		age_start = 20.0
+	#
 	# denominator
 	da  = age_grid['end'] - age_start
 	dt  = time_grid['end'] - time_grid['start']
@@ -234,9 +190,6 @@ def true_rate(node, rate, a, t) :
 	# default
 	grid_value = dict()
 	ret        = 0.0
-	# 2DO
-	# age_20   = rate == 'iota' or rate == 'chi'
-	age_20     = False
 	# -------------------------------------------------------------------------
 	if rate == 'pini' :
 		if node == 'US' :
@@ -255,7 +208,7 @@ def true_rate(node, rate, a, t) :
 		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
 		grid_value['end_age, end_time']   = grid_value['start_age, end_time']
 		#
-		ret = bilinear(age_20, grid_value, a, t)
+		ret = bilinear(grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'iota' :
 		if node == 'US' :
@@ -276,12 +229,7 @@ def true_rate(node, rate, a, t) :
 		else :
 			assert False
 		#
-		# set iota truth to zero when age is less than or equal 20.
-		# 2DO
-		# if a <= 20.0 :
-			# ret = 0.0
-		# else :
-		ret = bilinear(age_20, grid_value, a, t)
+		ret = bilinear(grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'omega' :
 		if node == 'US' :
@@ -302,7 +250,7 @@ def true_rate(node, rate, a, t) :
 		else :
 			assert False
 		#
-		ret = bilinear(age_20, grid_value, a, t)
+		ret = bilinear(grid_value, a, t)
 	# -------------------------------------------------------------------------
 	elif rate == 'chi' :
 		if node == 'US' :
@@ -323,12 +271,7 @@ def true_rate(node, rate, a, t) :
 		else :
 			assert False
 		#
-		# set chi truth to zero when age is less than or equal 20.
-		# 2DO
-		# if a <= 20.0 :
-		#	ret = 0.0
-		# else :
-		ret = bilinear(age_20, grid_value, a, t)
+		ret = bilinear(grid_value, a, t)
 	# -------------------------------------------------------------------------
 	if ret < 0.0 :
 		import pdb; pdb.set_trace()
@@ -344,31 +287,17 @@ def example_db (file_name) :
 	#
 	# Note that there are no forward differences for covariate multiplier grids.
 	def fun_mulcov_meas_std(a, t) :
-		# 2DO
-		# return ('prior_N_+(0,1)', None, None)
 		return('prior_U(0,0)', None, None)
 	def fun_mulcov_meas_value(a, t) :
-		# 2DO
-		# return ('prior_N(0,1)', None, None)
 		return('prior_U(0,0)', None, None)
 	def fun_mulcov_rate_value(a, t) :
-		# 2DO
-		# return ('prior_N(0,1)', None, None)
 		return('prior_U(0,0)', None, None)
 	#
 	#
 	# priors used in smoothing for iota and chi
 	def fun_iota_parent(a, t) :
-		# 2DO
-		# if a <= 20.0 :
-		#	return ('prior_U(1e-8,1e-8)', 'prior_diff_age', 'prior_diff_time')
-		# else :
 		return ('prior_U(1e-8,1)', 'prior_diff_age', 'prior_diff_time')
 	def fun_iota_child(a, t) :
-		# 2DO
-		# if a <= 20.0 :
-		#	return ('prior_U(0,0)', 'prior_diff_age', 'prior_diff_time')
-		# else :
 		return ('prior_N(0,1)', 'prior_diff_age', 'prior_diff_time')
 	#
 	# use const_value to constrain omega to true value
@@ -796,32 +725,7 @@ def create_truth_var_table() :
 			node  = node_table[ row['node_id'] ] ['node_name']
 			rate  = rate_table[ row['rate_id'] ] ['rate_name']
 			value = true_rate(node, rate, age, time)
-		# 2DO
-		#elif var_type == 'mulcov_rate_value' :
-		#	rate  = rate_table[ row['rate_id'] ] ['rate_name']
-		#	assert rate == 'iota'
-		#	if covariate == 'BMI' :
-		#		value = 0.5 / 16.0
-		#	elif covariate == 'sex' :
-		#		value = 0.5
-		#	else :
-		#		assert False
-		#elif var_type == 'mulcov_meas_value' :
-		#	integrand  = integrand_table[row['integrand_id']]['integrand_name']
-		#	assert integrand == 'prevalence'
-		#	if covariate == 'MS_2000' :
-		#		value = - 0.75
-		#	elif covariate == 'MS_2010' :
-		#		value = - 0.5
-		#	elif covariate == 'MS_2015' :
-		#		value = - 0.25
-		#	else :
-		#		assert False
-		#elif var_type == 'mulcov_meas_std' :
-		#	integrand  = integrand_table[row['integrand_id']]['integrand_name']
-		#	assert integrand == 'prevalence'
-		#	assert covariate == 'one'
-		#	value = 0.5
+		#
 		row_list.append( [ value ] )
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	connection.close()
