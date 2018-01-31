@@ -371,11 +371,11 @@ def example_db (file_name) :
 		# else :
 		return ('prior_N(0,1)', 'prior_diff_age', 'prior_diff_time')
 	#
-	# priors used to constrain omega to true value
+	# use const_value to constrain omega to true value
 	def fun_omega(node) :
 		def fun_omega_node(a, t) :
 			true_value = true_rate(node, 'omega', a, t)
-			return (true_value, 'prior_diff_age', 'prior_diff_time')
+			return (true_value, 'prior_U(-inf,inf)', 'prior_U(-inf,inf)')
 		return fun_omega_node
 	#
 	# priors used in smoothing for pini
@@ -487,6 +487,11 @@ def example_db (file_name) :
 			'lower':    0.0,
 			'upper':    0.0,
 		} , {
+			# prior_U(-inf,inf)
+			'name':     'prior_U(-inf,inf)',
+			'density':  'uniform',
+			'mean':     0.0,
+		} , {
 			# prior_U(1e-8,1e-8)
 			'name':     'prior_U(1e-8,1e-8)',
 			'density':  'uniform',
@@ -498,7 +503,7 @@ def example_db (file_name) :
 			'name':     'prior_diff_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.01 * d_age ,
+			'std':      0.02 * d_age ,
 			'eta':      1e-4,
 		} , {
 			# prior_diff_time
