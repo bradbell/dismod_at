@@ -214,9 +214,9 @@ def true_rate(node, rate, a, t) :
 	elif rate == 'iota' :
 		if node == 'US' :
 			grid_value['start_age, start_time'] = 2e-3
-			grid_value['start_age, end_time']   = 2e-3
+			grid_value['start_age, end_time']   = 4e-3
 			grid_value['end_age, start_time']   = 2e-2
-			grid_value['end_age, end_time']     = 2e-2
+			grid_value['end_age, end_time']     = 4e-2
 		elif node in ['Alabama', 'Wisconsin'] :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
