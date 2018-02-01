@@ -37,6 +37,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-01$$
+Added time variation to $cref/iota/rate_table/rate_name/iota/$$ in the
+$cref user_diabetes.py$$ example.
+This example is still under construction, but it has some interesting
+techniques for simulating data and testing models.
+
 $head 01-31$$
 $list number$$
 The $cref/start/db2csv_command/variable.csv/start/$$ column
