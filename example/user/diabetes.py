@@ -100,7 +100,7 @@
 # The start_age is 0, The end_age is 100,
 # the start_time is 1990, and the end_time is 2020.
 # The values in the $cref truth_var_table$$ are generated using bilinear
-# interpolation of specified values at
+# interpolation of the log of the specified values at
 # (start_age, start_time),
 # (start_age, end_time),
 # (end_age, start_time)
@@ -128,7 +128,7 @@ import os
 import distutils.dir_util
 import subprocess
 import copy
-from math import log
+import math
 test_program = 'example/user/diabetes.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -155,7 +155,7 @@ fit_with_noise_in_data = True
 noise_cv               = 0.1
 # ------------------------------------------------------------------------
 #
-def bilinear(grid_value, a, t) :
+def log_bilinear(grid_value, a, t) :
 	age_start = age_grid['start']
 	#
 	# denominator
@@ -167,40 +167,39 @@ def bilinear(grid_value, a, t) :
 	# value at start age and start time
 	da   = age_grid['end'] - a
 	dt   = time_grid['end'] - t
-	num += grid_value['start_age, start_time'] * da * dt
+	num += math.log( grid_value['start_age, start_time'] ) * da * dt
 	#
 	# value at start age and end time
 	da   = age_grid['end'] - a
 	dt   = t - time_grid['start']
-	num += grid_value['start_age, end_time'] * da * dt
+	num += math.log( grid_value['start_age, end_time'] ) * da * dt
 	#
 	# value at end age and start time
 	da   = a - age_start
 	dt   = time_grid['end'] - t
-	num += grid_value['end_age, start_time'] * da * dt
+	num += math.log( grid_value['end_age, start_time'] ) * da * dt
 	#
 	# value at end age and end time
 	da   = a - age_start
 	dt   = t - time_grid['start']
-	num += grid_value['end_age, end_time'] * da * dt
+	num += math.log( grid_value['end_age, end_time'] ) * da * dt
 	#
-	return num / den
+	return math.exp( num / den )
 #
 def true_rate(node, rate, a, t) :
 	# default
 	grid_value = dict()
-	ret        = 0.0
 	# -------------------------------------------------------------------------
 	if rate == 'pini' :
 		if node == 'US' :
 			grid_value['start_age, start_time'] = 1e-2
 			grid_value['start_age, end_time']   = 1e-2
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = log(1.0)
-			grid_value['start_age, end_time']   = log(1.0)
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = log(1.0)
-			grid_value['start_age, end_time']   = log(1.0)
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
 		else :
 			assert False
 		#
@@ -208,7 +207,9 @@ def true_rate(node, rate, a, t) :
 		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
 		grid_value['end_age, end_time']   = grid_value['start_age, end_time']
 		#
-		ret = bilinear(grid_value, a, t)
+		ret = log_bilinear(grid_value, a, t)
+		if node != 'US' :
+			ret = math.log(ret)
 	# -------------------------------------------------------------------------
 	elif rate == 'iota' :
 		if node == 'US' :
@@ -217,19 +218,21 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 2e-2
 			grid_value['end_age, end_time']     = 2e-2
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = log(1.0)
-			grid_value['start_age, end_time']   = log(1.0)
-			grid_value['end_age, start_time']   = log(1.0)
-			grid_value['end_age, end_time']     = log(1.0)
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = log(1.0)
-			grid_value['start_age, end_time']   = log(1.0)
-			grid_value['end_age, start_time']   = log(1.0)
-			grid_value['end_age, end_time']     = log(1.0)
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		else :
 			assert False
 		#
-		ret = bilinear(grid_value, a, t)
+		ret = log_bilinear(grid_value, a, t)
+		if node != 'US' :
+			ret = math.log(ret)
 	# -------------------------------------------------------------------------
 	elif rate == 'omega' :
 		if node == 'US' :
@@ -238,19 +241,21 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 3e-2
 			grid_value['end_age, end_time']     = 3e-2
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = log(1.0)
-			grid_value['start_age, end_time']   = log(1.0)
-			grid_value['end_age, start_time']   = log(1.0)
-			grid_value['end_age, end_time']     = log(1.0)
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = log(1.0)
-			grid_value['start_age, end_time']   = log(1.0)
-			grid_value['end_age, start_time']   = log(1.0)
-			grid_value['end_age, end_time']     = log(1.0)
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		else :
 			assert False
 		#
-		ret = bilinear(grid_value, a, t)
+		ret = log_bilinear(grid_value, a, t)
+		if node != 'US' :
+			ret = math.log(ret)
 	# -------------------------------------------------------------------------
 	elif rate == 'chi' :
 		if node == 'US' :
@@ -259,22 +264,25 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 4e-2
 			grid_value['end_age, end_time']     = 4e-2
 		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = log(1.0)
-			grid_value['start_age, end_time']   = log(1.0)
-			grid_value['end_age, start_time']   = log(1.0)
-			grid_value['end_age, end_time']     = log(1.0)
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		elif node in [ 'California', 'Massachusetts' ] :
-			grid_value['start_age, start_time'] = log(1.0)
-			grid_value['start_age, end_time']   = log(1.0)
-			grid_value['end_age, start_time']   = log(1.0)
-			grid_value['end_age, end_time']     = log(1.0)
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		else :
 			assert False
 		#
-		ret = bilinear(grid_value, a, t)
+		ret = log_bilinear(grid_value, a, t)
+		if node != 'US' :
+			ret = math.log(ret)
 	# -------------------------------------------------------------------------
-	if ret < 0.0 :
-		import pdb; pdb.set_trace()
+	else :
+		assert False
+	#
 	return ret
 # ------------------------------------------------------------------------
 def example_db (file_name) :
