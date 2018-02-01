@@ -293,12 +293,17 @@ def example_db (file_name) :
 	def fun_mulcov_rate_value(a, t) :
 		return('prior_U(0,0)', None, None)
 	#
-	#
-	# priors used in smoothing for iota and chi
+	# priors used in smoothing for iota
 	def fun_iota_parent(a, t) :
-		return ('prior_U(1e-8,1)', 'prior_diff_age', 'prior_diff_time')
+		return ('prior_U(1e-8,1)', 'prior_diff_iota_age', 'prior_diff_time')
 	def fun_iota_child(a, t) :
-		return ('prior_N(0,1)', 'prior_diff_age', 'prior_diff_time')
+		return ('prior_N(0,1)', 'prior_diff_iota_age', 'prior_diff_time')
+	#
+	# priors used in smoothing for chi
+	def fun_chi_parent(a, t) :
+		return ('prior_U(1e-8,1)', 'prior_diff_chi_age', 'prior_diff_time')
+	def fun_chi_child(a, t) :
+		return ('prior_N(0,1)', 'prior_diff_chi_age', 'prior_diff_time')
 	#
 	# use const_value to constrain omega to true value
 	def fun_omega(node) :
@@ -320,8 +325,8 @@ def example_db (file_name) :
 	fun['constant_one']       = fun_constant_one
 	fun['iota_parent']        = fun_iota_parent
 	fun['iota_child']         = fun_iota_child
-	fun['chi_parent']         = fun_iota_parent
-	fun['chi_child']          = fun_iota_child
+	fun['chi_parent']         = fun_chi_parent
+	fun['chi_child']          = fun_chi_child
 	fun['pini_parent']        = fun_pini_parent
 	fun['pini_child']         = fun_pini_child
 	# ----------------------------------------------------------------------
@@ -428,8 +433,15 @@ def example_db (file_name) :
 			'lower':    1e-8,
 			'upper':    1e-8,
 		} , {
-			# prior_diff_age
-			'name':     'prior_diff_age',
+			# prior_diff_iota_age
+			'name':     'prior_diff_iota_age',
+			'density':  'log_gaussian',
+			'mean':     0.0,
+			'std':      0.1,
+			'eta':      1e-4,
+		} , {
+			# prior_diff_chi_age
+			'name':     'prior_diff_chi_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
 			'std':      0.1,
@@ -668,7 +680,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'true'              },
 		{ 'name':'max_num_iter_fixed',     'value':'80'                },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-3'              },
+		{ 'name':'tolerance_fixed',        'value':'1e-2'              },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                },
 		{ 'name':'print_level_random',     'value':'0'                 },
