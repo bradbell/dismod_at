@@ -149,7 +149,7 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # model parameters that can be changed
 time_grid = { 'start':1990.0, 'end': 2020, 'number': 2  }
-age_grid  = { 'start':0.0,    'end': 100,  'number': 6  }
+age_grid  = { 'start':0.0,    'end': 100,  'number': 7  }
 #
 fit_with_noise_in_data = True
 noise_cv               = 0.1
@@ -213,8 +213,8 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	elif rate == 'iota' :
 		if node == 'US' :
-			grid_value['start_age, start_time'] = 2e-2
-			grid_value['start_age, end_time']   = 2e-2
+			grid_value['start_age, start_time'] = 2e-3
+			grid_value['start_age, end_time']   = 2e-3
 			grid_value['end_age, start_time']   = 2e-2
 			grid_value['end_age, end_time']     = 2e-2
 		elif node in ['Alabama', 'Wisconsin'] :
@@ -445,7 +445,7 @@ def example_db (file_name) :
 			'name':     'prior_diff_iota_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      0.4,
 			'eta':      1e-4,
 		} , {
 			# prior_diff_chi_age
