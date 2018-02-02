@@ -236,10 +236,10 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	elif rate == 'omega' :
 		if node == 'US' :
-			grid_value['start_age, start_time'] = 3e-2
-			grid_value['start_age, end_time']   = 3e-2
-			grid_value['end_age, start_time']   = 3e-2
-			grid_value['end_age, end_time']     = 3e-2
+			grid_value['start_age, start_time'] = 3e-3
+			grid_value['start_age, end_time']   = 2e-3
+			grid_value['end_age, start_time']   = 3e-1
+			grid_value['end_age, end_time']     = 2e-1
 		elif node in ['Alabama', 'Wisconsin'] :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
@@ -259,10 +259,10 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	elif rate == 'chi' :
 		if node == 'US' :
-			grid_value['start_age, start_time'] = 4e-2
-			grid_value['start_age, end_time']   = 4e-2
-			grid_value['end_age, start_time']   = 4e-2
-			grid_value['end_age, end_time']     = 4e-2
+			grid_value['start_age, start_time'] = 4e-3
+			grid_value['start_age, end_time']   = 2e-3
+			grid_value['end_age, start_time']   = 1e-1
+			grid_value['end_age, end_time']     = 2e-1
 		elif node in ['Alabama', 'Wisconsin'] :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
@@ -452,7 +452,7 @@ def example_db (file_name) :
 			'name':     'prior_diff_chi_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      0.3,
 			'eta':      1e-4,
 		} , {
 			# prior_diff_time
