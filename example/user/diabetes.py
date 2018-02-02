@@ -303,15 +303,15 @@ def example_db (file_name) :
 	#
 	# priors used in smoothing for iota
 	def fun_iota_parent(a, t) :
-		return ('prior_U(1e-8,1)', 'prior_diff_iota_age', 'prior_diff_time')
+		return ('prior_U(1e-8,1)', 'prior_parent_age', 'prior_parent_time')
 	def fun_iota_child(a, t) :
-		return ('prior_N(0,1)', 'prior_diff_iota_age', 'prior_diff_time')
+		return ('prior_N(0,1)', 'prior_child_age', 'prior_child_time')
 	#
 	# priors used in smoothing for chi
 	def fun_chi_parent(a, t) :
-		return ('prior_U(1e-8,1)', 'prior_diff_chi_age', 'prior_diff_time')
+		return ('prior_U(1e-8,1)', 'prior_parent_age', 'prior_parent_time')
 	def fun_chi_child(a, t) :
-		return ('prior_N(0,1)', 'prior_diff_chi_age', 'prior_diff_time')
+		return ('prior_N(0,1)', 'prior_child_age', 'prior_child_time')
 	#
 	# use const_value to constrain omega to true value
 	def fun_omega(node) :
@@ -322,9 +322,9 @@ def example_db (file_name) :
 	#
 	# priors used in smoothing for pini
 	def fun_pini_parent(a, t) :
-		return ('prior_U(0,1)', None, 'prior_diff_time')
+		return ('prior_U(0,1)', None, 'prior_parent_time')
 	def fun_pini_child(a, t) :
-		return ('prior_N(0,1)', None, 'prior_diff_time')
+		return ('prior_N(0,1)', None, 'prior_child_time')
 	# ----------------------------------------------------------------------
 	fun                       = dict()
 	fun['mulcov_rate_value']  = fun_mulcov_rate_value
@@ -441,25 +441,32 @@ def example_db (file_name) :
 			'lower':    1e-8,
 			'upper':    1e-8,
 		} , {
-			# prior_diff_iota_age
-			'name':     'prior_diff_iota_age',
+			# prior_parent_age
+			'name':     'prior_parent_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
 			'std':      0.3,
 			'eta':      1e-5,
 		} , {
-			# prior_diff_chi_age
-			'name':     'prior_diff_chi_age',
-			'density':  'log_gaussian',
-			'mean':     0.0,
-			'std':      0.3,
-			'eta':      1e-5,
-		} , {
-			# prior_diff_time
-			'name':     'prior_diff_time',
+			# prior_parent_time
+			'name':     'prior_parent_time',
 			'density':  'log_gaussian',
 			'mean':     0.0,
 			'std':      0.4,
+			'eta':      1e-5,
+		} , {
+			# prior_child_age
+			'name':     'prior_child_age',
+			'density':  'gaussian',
+			'mean':     0.0,
+			'std':      0.2,
+			'eta':      1e-5,
+		} , {
+			# prior_child_time
+			'name':     'prior_child_time',
+			'density':  'gaussian',
+			'mean':     0.0,
+			'std':      0.2,
 			'eta':      1e-5,
 		}
 	]
