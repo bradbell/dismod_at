@@ -38,9 +38,17 @@ $childtable%
 %$$
 
 $head 02-02$$
-Added age and time variation to
-omega and chi in the $cref user_diabetes.py$$ example
-(which is still under construction).
+All these changes are to $cref user_diabetes.py$$
+which is still under construction.
+$list number$$
+Added age and time variation to omega and chi.
+$lnext
+Increased number of optimizer iterations because
+there is feed back from the initial iota to prevalence at all ages.
+$lnext
+Increase number of age grid points to 9
+so ages are closer to being integer valued.
+$lend
 
 $head 02-01$$
 Added time variation to $cref/iota/rate_table/rate_name/iota/$$ in the

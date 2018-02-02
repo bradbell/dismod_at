@@ -4,7 +4,7 @@
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-#	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 220 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin user_diabetes.py$$ $newlinech #$$
@@ -149,7 +149,7 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # model parameters that can be changed
 time_grid = { 'start':1990.0, 'end': 2020, 'number': 2  }
-age_grid  = { 'start':0.0,    'end': 100,  'number': 8  }
+age_grid  = { 'start':0.0,    'end': 100,  'number': 9  }
 #
 fit_with_noise_in_data = True
 noise_cv               = 0.1
@@ -213,10 +213,10 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	elif rate == 'iota' :
 		if node == 'US' :
-			grid_value['start_age, start_time'] = 2e-3
-			grid_value['start_age, end_time']   = 4e-3
-			grid_value['end_age, start_time']   = 2e-2
-			grid_value['end_age, end_time']     = 4e-2
+			grid_value['start_age, start_time'] = 1e-3
+			grid_value['start_age, end_time']   = 2e-3
+			grid_value['end_age, start_time']   = 1e-2
+			grid_value['end_age, end_time']     = 2e-2
 		elif node in ['Alabama', 'Wisconsin'] :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
@@ -259,10 +259,10 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	elif rate == 'chi' :
 		if node == 'US' :
-			grid_value['start_age, start_time'] = 4e-3
-			grid_value['start_age, end_time']   = 2e-3
-			grid_value['end_age, start_time']   = 1e-1
-			grid_value['end_age, end_time']     = 2e-1
+			grid_value['start_age, start_time'] = 4.0e-3
+			grid_value['start_age, end_time']   = 2.0e-3
+			grid_value['end_age, start_time']   = 1.0e-1
+			grid_value['end_age, end_time']     = 0.5e-1
 		elif node in ['Alabama', 'Wisconsin'] :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
@@ -446,21 +446,21 @@ def example_db (file_name) :
 			'density':  'log_gaussian',
 			'mean':     0.0,
 			'std':      0.3,
-			'eta':      1e-4,
+			'eta':      1e-5,
 		} , {
 			# prior_diff_chi_age
 			'name':     'prior_diff_chi_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
 			'std':      0.3,
-			'eta':      1e-4,
+			'eta':      1e-5,
 		} , {
 			# prior_diff_time
 			'name':     'prior_diff_time',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.5,
-			'eta':      1e-4,
+			'std':      0.4,
+			'eta':      1e-5,
 		}
 	]
 	# smooth table
@@ -686,7 +686,7 @@ def example_db (file_name) :
 		{ 'name':'random_seed',            'value':'0'                 },
 
 		{ 'name':'quasi_fixed',            'value':'true'              },
-		{ 'name':'max_num_iter_fixed',     'value':'80'                },
+		{ 'name':'max_num_iter_fixed',     'value':'200'               },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-2'              },
 
