@@ -149,7 +149,7 @@ and ending at time 2020.
 <br>
 <b><big><a name="omega" id="omega">omega</a></big></b>
 <br>
-We are constraint <a href="rate_table.htm#rate_name.omega" target="_top"><span style='white-space: nowrap'>omega</span></a>
+We constrain <a href="rate_table.htm#rate_name.omega" target="_top"><span style='white-space: nowrap'>omega</span></a>
  to have
 the value used during simulation of the data.
 
@@ -158,8 +158,8 @@ the value used during simulation of the data.
 <b><big><a name="Integrand Table" id="Integrand Table">Integrand Table</a></big></b>
 <br>
 The <a href="integrand_table.htm" target="_top"><span style='white-space: nowrap'>integrand_table</span></a>
- is
-mtspecific, prevalence.
+ just contains mtspecific and prevalence.
+We constrain omega to a specific value.
 We think of
 <a href="avg_integrand.htm#I_i(a,t).mtspecific" target="_top"><span style='white-space: nowrap'>mtspecific</span></a>
 
@@ -229,6 +229,9 @@ MS_2015 </td><td align='left'  valign='top'>
  null
 </td></tr>
 </table>
+(This information is not yet used.)
+
+<br>
 <br>
 <b><big><a name="Covariate Multiplier Table" id="Covariate Multiplier Table">Covariate Multiplier Table</a></big></b>
 <br>
@@ -326,7 +329,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># model parameters that can be changed</font></i>
 time_grid <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">2020</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font> <font color="#993399">2</font>  <font color="#990000">}</font>
-age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">0.0</font><font color="#990000">,</font>    <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">100</font><font color="#990000">,</font>  <font color="#FF0000">'number'</font><font color="#990000">:</font> <font color="#993399">8</font>  <font color="#990000">}</font>
+age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">0.0</font><font color="#990000">,</font>    <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">100</font><font color="#990000">,</font>  <font color="#FF0000">'number'</font><font color="#990000">:</font> <font color="#993399">9</font>  <font color="#990000">}</font>
 <i><font color="#9A1900">#</font></i>
 fit_with_noise_in_data <font color="#990000">=</font> True
 noise_cv               <font color="#990000">=</font> <font color="#993399">0.1</font>
@@ -390,10 +393,10 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">elif</font></b> rate <font color="#990000">==</font> <font color="#FF0000">'iota'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2e-3</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">4e-3</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">2e-2</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">4e-2</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e-3</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">2e-3</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1e-2</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">2e-2</font>
           <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'Wisconsin'</font><font color="#990000">]</font> <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
@@ -413,10 +416,10 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">elif</font></b> rate <font color="#990000">==</font> <font color="#FF0000">'omega'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3e-2</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">3e-2</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">3e-2</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">3e-2</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3e-3</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">2e-3</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">3e-1</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">2e-1</font>
           <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'Wisconsin'</font><font color="#990000">]</font> <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
@@ -436,10 +439,10 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">elif</font></b> rate <font color="#990000">==</font> <font color="#FF0000">'chi'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4e-2</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">4e-2</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">4e-2</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">4e-2</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0e-3</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">2.0e-3</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0e-1</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">0.5e-1</font>
           <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'Wisconsin'</font><font color="#990000">]</font> <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
@@ -480,15 +483,15 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># priors used in smoothing for iota</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(1e-8,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_diff_iota_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_diff_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(1e-8,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_diff_iota_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_diff_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_child_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_child_time'</font><font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># priors used in smoothing for chi</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_chi_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(1e-8,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_diff_chi_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_diff_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(1e-8,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_chi_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_diff_chi_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_diff_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_child_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_child_time'</font><font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># use const_value to constrain omega to true value</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font>node<font color="#990000">)</font> <font color="#990000">:</font>
@@ -499,9 +502,9 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># priors used in smoothing for pini</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_pini_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(0,1)'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_diff_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(0,1)'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_pini_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_diff_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_child_time'</font><font color="#990000">)</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      fun                       <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
      fun<font color="#990000">[</font><font color="#FF0000">'mulcov_rate_value'</font><font color="#990000">]</font>  <font color="#990000">=</font> fun_mulcov_rate_value
@@ -618,26 +621,33 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">1e-8</font><font color="#990000">,</font>
                <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1e-8</font><font color="#990000">,</font>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
-               <i><font color="#9A1900"># prior_diff_iota_age</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_diff_iota_age'</font><font color="#990000">,</font>
+               <i><font color="#9A1900"># prior_parent_age</font></i>
+               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_parent_age'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
                <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.3</font><font color="#990000">,</font>
-               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-4</font><font color="#990000">,</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-5</font><font color="#990000">,</font>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
-               <i><font color="#9A1900"># prior_diff_chi_age</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_diff_chi_age'</font><font color="#990000">,</font>
+               <i><font color="#9A1900"># prior_parent_time</font></i>
+               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_parent_time'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.1</font><font color="#990000">,</font>
-               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-4</font><font color="#990000">,</font>
+               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.4</font><font color="#990000">,</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-5</font><font color="#990000">,</font>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
-               <i><font color="#9A1900"># prior_diff_time</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_diff_time'</font><font color="#990000">,</font>
-               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
+               <i><font color="#9A1900"># prior_child_age</font></i>
+               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_child_age'</font><font color="#990000">,</font>
+               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.5</font><font color="#990000">,</font>
-               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-4</font><font color="#990000">,</font>
+               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.2</font><font color="#990000">,</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-5</font><font color="#990000">,</font>
+          <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
+               <i><font color="#9A1900"># prior_child_time</font></i>
+               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_child_time'</font><font color="#990000">,</font>
+               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
+               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.2</font><font color="#990000">,</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-5</font><font color="#990000">,</font>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># smooth table</font></i>
@@ -863,7 +873,7 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'true'</font>              <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'80'</font>                <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'200'</font>               <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'5'</font>                 <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-2'</font>              <font color="#990000">},</font>
 
