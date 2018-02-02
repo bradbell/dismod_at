@@ -39,12 +39,12 @@
 # and ending at time 2020.
 #
 # $head omega$$
-# We are constraint $cref/omega/rate_table/rate_name/omega/$$ to have
+# We constrain $cref/omega/rate_table/rate_name/omega/$$ to have
 # the value used during simulation of the data.
 #
 # $head Integrand Table$$
-# The $cref integrand_table$$ is
-# mtspecific, prevalence.
+# The $cref integrand_table$$ just contains mtspecific and prevalence.
+# We constrain omega to a specific value.
 # We think of
 # $cref/mtspecific/avg_integrand/I_i(a,t)/mtspecific/$$
 # as informing $cref/chi/rate_table/rate_name/chi/$$,
@@ -69,6 +69,7 @@
 # MS_2010 $cnext market scan data for 2010 $cnext 0     $cnext null $rnext
 # MS_2015 $cnext market scan data for 2015 $cnext 0     $cnext null
 # $tend
+# (This information is not yet used.)
 #
 # $head Covariate Multiplier Table$$
 # All of the covariate multipliers use that same smoothing which corresponds
