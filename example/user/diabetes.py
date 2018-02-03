@@ -17,6 +17,8 @@
 #	mulcov
 #	smoothings
 #	pini
+#	cv
+#	std
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -114,6 +116,50 @@
 # with no noise, but modeled with a standard deviation corresponding
 # to a coefficient of variation.
 #
+# $head Problem Parameters$$
+#
+# $subhead age_grid$$
+# This sets the start age, end age, and number of age grid points.
+# The interval between age grid points is the end age, minus the start age,
+# divided by the number of grid points minus one.
+# $srccode%py%
+age_grid  = { 'start':0.0,    'end': 100,  'number': 9  }
+# %$$
+#
+# $subhead time_grid$$
+# This sets the start time, end time, and number of time grid points.
+# The interval between time grid points is the end time, minus the start time,
+# divided by the number of grid points minus one.
+# $srccode%py%
+time_grid = { 'start':1990.0, 'end': 2020, 'number': 2  }
+# %$$
+#
+# $subhead fit_with_nose_in_data$$
+# If this variable is true, simulated measurements with noise are used
+# for the fit. Otherwise, the model value for the
+# $cref avg_integrand$$ is used, without noise, for each data point.
+# (The measurements, without noise, are stored in
+# $cref/meas_value/data_table/meas_value/$$).
+# $srccode%py%
+fit_with_noise_in_data = True
+# %$$
+#
+# $subhead noise_cv$$
+# For each measurement without noise, the corresponding
+# $cref/meas_std/data_table/meas_std/$$ is computed as
+# $codei%meas_std% = %noise_cv% * %meas_value%$$.
+# $srccode%py%
+noise_cv = 0.1
+# %$$
+#
+# $subhead node_list$$
+# The first element of this list is the parent node,
+# the others are the child nodes. There must be an even number of children;
+# i.e., an odd number of elements in this list.
+# $srccode%py%
+node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin' ]
+# %$$
+#
 # $code
 # $srcfile%
 #	example/user/diabetes.py
@@ -147,17 +193,6 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
-# model parameters that can be changed
-time_grid = { 'start':1990.0, 'end': 2020, 'number': 2  }
-age_grid  = { 'start':0.0,    'end': 100,  'number': 9  }
-#
-fit_with_noise_in_data = True
-noise_cv               = 0.1
-#
-# first node is parent, others are children, must be odd number of nodes
-node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin', ]
-# ------------------------------------------------------------------------
-#
 def log_bilinear(grid_value, a, t) :
 	age_start = age_grid['start']
 	#
