@@ -950,10 +950,10 @@ def db2csv_command(database_file_arg) :
 		for column in data_extra_columns :
 			row_out[column] = row_in[column]
 		#
-		row_out['age_lo']      = row_in['age_lower']
-		row_out['age_up']      = row_in['age_upper']
-		row_out['time_lo']     = row_in['time_lower']
-		row_out['time_up']     = row_in['time_upper']
+		row_out['age_lo']      = convert2output( row_in['age_lower'] )
+		row_out['age_up']      = convert2output( row_in['age_upper'] )
+		row_out['time_lo']     = convert2output( row_in['time_lower'] )
+		row_out['time_up']     = convert2output( row_in['time_upper'] )
 		row_out['out']         = row_in['hold_out']
 		row_out['meas_std']    = convert2output( row_in['meas_std'] )
 		row_out['eta']         = convert2output( row_in['eta'] )

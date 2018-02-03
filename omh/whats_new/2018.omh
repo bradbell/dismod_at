@@ -38,7 +38,14 @@ $childtable%
 %$$
 
 $head 02-03$$
-All these changes are to $cref user_diabetes.py$$
+The age and time limits in the
+$cref/data.csv/db2csv_command/data.csv/$$ file were rounded off
+(as are most of its other columns)
+to reduce the space used when viewing the columns in a spread sheet program.
+$pre
+
+$$
+The changes below are for $cref user_diabetes.py$$:
 $list number$$
 Make the standard deviations in the parent rate differences
 $cref/problem parameters/user_diabetes.py/Problem Parameters/$$.
