@@ -138,22 +138,28 @@ age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.3 }
 time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.4  }
 # %$$
 #
-# $subhead fit_with_nose_in_data$$
-# If this variable is true, simulated measurements with noise are used
-# for the fit. Otherwise, the model value for the
-# $cref avg_integrand$$ is used, without noise, for each data point.
-# (The measurements, without noise, are stored in
-# $cref/meas_value/data_table/meas_value/$$).
+# $subhead meas_cv$$
+# For this example, the data table column
+# $cref/meas_value/data_table/meas_value/$$ does not have any noise; i.e.,
+# the values in that column are the corresponding
+# $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
+# The corresponding
+# $cref/meas_std/data_table/meas_std/$$ is computed as
+# $codei%meas_std% = %meas_cv% * %meas_value%$$.
+# This determines the noise level used by the
+# $cref simulate_command$$.
 # $srccode%py%
-fit_with_noise_in_data = True
+meas_cv = 0.1
 # %$$
 #
-# $subhead noise_cv$$
-# For each measurement without noise, the corresponding
-# $cref/meas_std/data_table/meas_std/$$ is computed as
-# $codei%meas_std% = %noise_cv% * %meas_value%$$.
+# $subhead fit_with_nose_in_data$$
+# If this variable is true, simulated measurements with noise are used
+# to fit the $cref model_variables$$.
+# Otherwise, the measurements without noise
+# $cref/meas_value/data_table/meas_value/$$
+# are used to fit the model variables.
 # $srccode%py%
-noise_cv = 0.1
+fit_with_noise_in_data = True
 # %$$
 #
 # $subhead node_list$$
@@ -845,7 +851,7 @@ for predict_id in range( len(predict_table) ) :
 	# add information, that is not in avgint_table, to row
 	eta        = 1e-7                     # a very small eta
 	meas_value = avg_integrand            # no noise version of meas_value
-	meas_std   = noise_cv * avg_integrand # noise in simulated data
+	meas_std   = meas_cv * avg_integrand # noise in simulated data
 	row['density_id'] = density_id
 	row['hold_out']   = 0
 	row['meas_std']   = meas_std
