@@ -316,7 +316,9 @@ def example_db (file_name) :
 	#
 	# use const_value to constrain omega to true value
 	def fun_omega(node) :
-		def fun_omega_node(a, t) :
+		# Use default argument to bind the value of node at point of
+		# definition instead of at point of call.
+		def fun_omega_node(a, t, node = node) :
 			true_value = true_rate(node, 'omega', a, t)
 			return (true_value, 'prior_U(-inf,inf)', 'prior_U(-inf,inf)')
 		return fun_omega_node
@@ -515,18 +517,7 @@ def example_db (file_name) :
 			smoothing['time_id'] = time_index_rate_child
 			nslist_table['nslist_omega_child'].append( (node, name) )
 		#
-		if node == 'US' :
-			smoothing['fun'] = fun_omega('US')
-		elif node == 'Alabama' :
-			smoothing['fun'] = fun_omega('Alabama')
-		elif node == 'California' :
-			smoothing['fun'] = fun_omega('California')
-		elif node == 'Massachusetts' :
-			smoothing['fun'] = fun_omega('Massachusetts')
-		elif node == 'Wisconsin' :
-			smoothing['fun'] = fun_omega('Wisconsin')
-		else :
-			assert False
+		smoothing['fun'] = fun_omega(node)
 		smooth_table.append( smoothing )
 	#
 	# no standard deviation multipliers
