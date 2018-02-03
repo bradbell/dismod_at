@@ -31,14 +31,6 @@
 # $cref/parent/node_table/parent/$$ and child nodes specified by
 # the $code node_list$$.
 #
-# $head Age Table$$
-# The $cref age_table$$ is uniformly spaced starting at age zero,
-# ending at age 100.
-#
-# $head Time Table$$
-# The $cref time_table$$ is uniformly spaced starting at time 1990
-# and ending at time 2020.
-#
 # $head omega$$
 # We constrain $cref/omega/rate_table/rate_name/omega/$$ to have
 # the value used during simulation of the data.
@@ -119,19 +111,31 @@
 # $head Problem Parameters$$
 #
 # $subhead age_grid$$
-# This sets the start age, end age, and number of age grid points.
+# This sets the start age, end age, number of age grid points. and
+# standard deviation in the log-Gaussian used to smooth the
+# $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
+# age differences.
+# This is also the set of ages in the $cref age_table$$.
 # The interval between age grid points is the end age, minus the start age,
 # divided by the number of grid points minus one.
+# The standard deviation is for the log-Gaussian in the prior used to smooth
+# the difference of parent rates between age grid points.
 # $srccode%py%
-age_grid  = { 'start':0.0,    'end': 100,  'number': 9  }
+age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.3 }
 # %$$
 #
 # $subhead time_grid$$
-# This sets the start time, end time, and number of time grid points.
+# This sets the start time, end time, number of time grid points. and
+# standard deviation in the log-Gaussian used to smooth the
+# $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
+# time differences.
+# This is also the set of times in the $cref time_table$$.
 # The interval between time grid points is the end time, minus the start time,
 # divided by the number of grid points minus one.
+# The standard deviation is for the log-Gaussian in the prior used to smooth
+# the difference of parent rates between time grid points.
 # $srccode%py%
-time_grid = { 'start':1990.0, 'end': 2020, 'number': 2  }
+time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.4  }
 # %$$
 #
 # $subhead fit_with_nose_in_data$$
@@ -156,8 +160,10 @@ noise_cv = 0.1
 # The first element of this list is the parent node,
 # the others are the child nodes. There must be an even number of children;
 # i.e., an odd number of elements in this list.
+# The case with zero child; i.e., one element in the list, is OK.
 # $srccode%py%
 node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin' ]
+node_list = [ 'US' ]
 # %$$
 #
 # $code
@@ -373,17 +379,16 @@ def example_db (file_name) :
 	fun['pini_parent']        = fun_pini_parent
 	fun['pini_child']         = fun_pini_child
 	# ----------------------------------------------------------------------
-	d_age =  ( age_grid['end'] -  age_grid['start'])/( age_grid['number'] - 1)
-	d_time = (time_grid['end'] - time_grid['start'])/(time_grid['number'] - 1)
-	# ----------------------------------------------------------------------
 	# nslist_table:
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# age lists
 	start                     = age_grid['start']
+	end                       = age_grid['end']
 	number                    = age_grid['number']
+	interval                  = (end - start) / (number - 1)
 	age_index                 = dict()
-	age_list                  = [ start + j * d_age for j in range(number) ]
+	age_list                  = [ start + j * interval for j in range(number) ]
 	age_list                  = sorted( age_list )
 	age_index_all             = range(number)
 	age_index['iota_parent']  = age_index_all
@@ -399,8 +404,10 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# time lists
 	start                  = time_grid['start']
+	end                    = time_grid['end']
 	number                 = time_grid['number']
-	time_list              = [ start + i * d_time for i in range(number) ]
+	interval               = (end - start) / (number - 1)
+	time_list              = [ start + i * interval for i in range(number) ]
 	time_index_all         = range(number)
 	time_index_rate_parent = time_index_all
 	time_index_rate_child  = [0, number-1]
@@ -477,14 +484,14 @@ def example_db (file_name) :
 			'name':     'prior_parent_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.3,
+			'std':      age_grid['std'],
 			'eta':      1e-5,
 		} , {
 			# prior_parent_time
 			'name':     'prior_parent_time',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      0.4,
+			'std':      time_grid['std'],
 			'eta':      1e-5,
 		} , {
 			# prior_child_age
@@ -909,7 +916,7 @@ if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
 #
 # Do a fit
-cmd            = [ program, file_name, 'fit', 'fixed' ]
+cmd            = [ program, file_name, 'fit', 'both' ]
 if fit_with_noise_in_data :
 	simulate_index = '0'
 	cmd += [ simulate_index ]

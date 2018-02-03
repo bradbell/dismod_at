@@ -37,6 +37,16 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-03$$
+All these changes are to $cref user_diabetes.py$$
+$list number$$
+Make the standard deviations in the parent rate differences
+$cref/problem parameters/user_diabetes.py/Problem Parameters/$$.
+$lnext
+Change $cref/node_list/user_diabetes.py/Problem Parameters/node_list/$$
+example to only the parent node.
+$lend
+
 $head 02-02$$
 All these changes are to $cref user_diabetes.py$$
 which is still under construction.
