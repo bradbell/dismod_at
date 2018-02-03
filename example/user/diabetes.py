@@ -717,6 +717,27 @@ def example_db (file_name) :
 			'one':          1,
 		}
 		avgint_table.append( copy.copy(row) )
+		#
+		if i_age > 0 and i_time > 0 :
+			age  = (age_list[i_age]   + age_list[i_age-1])   / 2.0
+			time = (time_list[i_time] + time_list[i_time-1]) / 2.0
+		row = {
+			'node':        node,
+			'integrand':   integrand,
+			'density':     'log_gaussian',
+			'weight':      'weight_constant',
+			'age_lower':    age,
+			'age_upper':    age,
+			'time_lower':   time,
+			'time_upper':   time,
+			'sex':          sex,
+			'MS_2000':      ms[0],
+			'MS_2010':      ms[1],
+			'MS_2015':      ms[2],
+			'BMI':          bmi,
+			'one':          1,
+		}
+		avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
@@ -908,7 +929,7 @@ for var_id in range( len(var_table) ) :
 	start_var_value  = truth_var_value
 	if var_type == 'rate' :
 			if rate_table[rate_id]['rate_name'] != 'omega' :
-				start_var_value = 3.0 * truth_var_value
+				start_var_value = truth_var_value / 3.0
 	row_list.append( [start_var_value] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
