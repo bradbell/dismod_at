@@ -121,7 +121,7 @@
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between age grid points.
 # $srccode%py%
-age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.3 }
+age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.5 }
 # %$$
 #
 # $subhead time_grid$$
@@ -135,7 +135,16 @@ age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.3 }
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between time grid points.
 # $srccode%py%
-time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.4  }
+time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.5  }
+# %$$
+#
+# $subhead ode_step_size$$
+# This specifies the
+# $cref/ode_step_size/option_table/ode_step_size/$$.
+# It is suggest that this value be less than the intervals in the
+# age and time grids.
+# $srccode%py%
+ode_step_size = 5.0
 # %$$
 #
 # $subhead meas_cv$$
@@ -150,6 +159,15 @@ time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.4  }
 # $cref simulate_command$$.
 # $srccode%py%
 meas_cv = 0.1
+# %$$
+#
+# $subhead meas_repeat$$
+# This is the number of times each noiseless measurement is repeated
+# which must be a positive integer.
+# Note that the simulated measurements will be different, because
+# the noise for each measurement will be different.
+# $srccode%py%
+meas_repeat = 3
 # %$$
 #
 # $subhead fit_with_nose_in_data$$
@@ -655,24 +673,20 @@ def example_db (file_name) :
 	n_age       = len(age_list)
 	n_time      = len(time_list)
 	n_node      = len(node_table)
-	if fit_with_noise_in_data :
-		n_repeat = 3
-	else :
-		n_repeat = 1
-	for k1 in range(n_integrand * n_age * n_time * n_node * n_repeat) :
-		den         = n_age * n_time * n_node * n_repeat
+	for k1 in range(n_integrand * n_age * n_time * n_node * meas_repeat) :
+		den         = n_age * n_time * n_node * meas_repeat
 		i_integrand = int( k1 / den )
 		k2          =      k1 % den
 		#
-		den         = n_time * n_node * n_repeat
+		den         = n_time * n_node * meas_repeat
 		i_age       = int( k2 / den )
 		k3          =      k2 % den
 		#
-		den         = n_node * n_repeat
+		den         = n_node * meas_repeat
 		i_time      = int( k3 / den )
 		k4          =      k3 % den
 		#
-		den         = n_repeat
+		den         = meas_repeat
 		i_node      = int( k4 / den )
 		#
 		age         = age_list[i_age]
@@ -742,7 +756,7 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':parent_node         },
-		{ 'name':'ode_step_size',          'value':'10.0'              },
+		{ 'name':'ode_step_size',          'value':ode_step_size       },
 		{ 'name':'random_seed',            'value':'0'                 },
 
 		{ 'name':'quasi_fixed',            'value':'true'              },
@@ -928,7 +942,7 @@ for var_id in range( len(var_table) ) :
 	start_var_value  = truth_var_value
 	if var_type == 'rate' :
 			if rate_table[rate_id]['rate_name'] != 'omega' :
-				start_var_value = truth_var_value / 3.0
+				start_var_value = truth_var_value / 2.0
 	row_list.append( [start_var_value] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
