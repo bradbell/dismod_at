@@ -14,7 +14,7 @@ Keyword =
 'user_const_random.py  Fitting With Non-Zero Constant Random Effects in Smoothing Grid  ',' ',
 'user_const_value.py  Fitting Using const_value in Smoothing Grid  ',' ',
 'user_continue_fit.py  Continuing a Fit From Where it Left Off  ',' option table ',
-'user_diabetes.py  An Example Fitting Simulated Diabetes Data  ',' under construction node table age time omega integrand weight grid covariate multiplier rate value measurement standard deviations truth predict ',
+'user_diabetes.py  An Example Fitting Simulated Diabetes Data  ',' under construction node table age time omega integrand weight grid covariate multiplier rate value measurement standard deviations truth predict problem parameters age_grid time_grid fit_with_nose_in_data noise_cv node_list ',
 'user_diff_constraint.py  Constraints on Differences in Age and Time  ',' ',
 'user_fit_fixed.py  Fitting Just Fixed Effects  ',' discussion ',
 'user_fit_random.py  Fitting Just Random Effects  ',' discussion ',

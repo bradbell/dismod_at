@@ -56,7 +56,13 @@ var list_current0 = [
 'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Value',
 'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Standard Deviations',
 'user_diabetes.py.htm#Truth',
-'user_diabetes.py.htm#Predict'
+'user_diabetes.py.htm#Predict',
+'user_diabetes.py.htm#Problem Parameters',
+'user_diabetes.py.htm#Problem Parameters.age_grid',
+'user_diabetes.py.htm#Problem Parameters.time_grid',
+'user_diabetes.py.htm#Problem Parameters.fit_with_nose_in_data',
+'user_diabetes.py.htm#Problem Parameters.noise_cv',
+'user_diabetes.py.htm#Problem Parameters.node_list'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

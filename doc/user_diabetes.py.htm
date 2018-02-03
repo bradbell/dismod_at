@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Example Fitting Simulated Diabetes Data</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Example Fitting Simulated Diabetes Data">
-<meta name="keywords" id="keywords" content=" example fitting simulated diabetes data under construction node table age time omega integrand weight grid covariate multiplier rate value measurement standard deviations truth predict ">
+<meta name="keywords" id="keywords" content=" example fitting simulated diabetes data under construction node table age time omega integrand weight grid covariate multiplier rate value measurement standard deviations truth predict problem parameters age_grid time_grid fit_with_nose_in_data noise_cv node_list ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -107,6 +107,12 @@ A:active { color : purple }
 <option>---..Measurement Standard Deviations</option>
 <option>Truth</option>
 <option>Predict</option>
+<option>Problem Parameters</option>
+<option>---..age_grid</option>
+<option>---..time_grid</option>
+<option>---..fit_with_nose_in_data</option>
+<option>---..noise_cv</option>
+<option>---..node_list</option>
 </select>
 </td>
 </tr></table><br>
@@ -125,9 +131,8 @@ This example is under construction.
 The <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node_table</span></a>
  only contains the
 <a href="node_table.htm#parent" target="_top"><span style='white-space: nowrap'>parent</span></a>
- node US,
-and the child nodes
-Alabama, California, Massachusetts, and Wisconsin.
+ and child nodes specified by
+the <code><font color="blue">node_list</font></code>.
 
 <br>
 <br>
@@ -301,8 +306,65 @@ This is then used to create a version of the <a href="data_table.htm" target="_t
 with no noise, but modeled with a standard deviation corresponding
 to a coefficient of variation.
 
-<code><font color="blue">
-<pre><tt><i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
+<br>
+<br>
+<b><big><a name="Problem Parameters" id="Problem Parameters">Problem Parameters</a></big></b>
+
+
+<br>
+<br>
+<b><a name="Problem Parameters.age_grid" id="Problem Parameters.age_grid">age_grid</a></b>
+<br>
+This sets the start age, end age, and number of age grid points.
+The interval between age grid points is the end age, minus the start age,
+divided by the number of grid points minus one.
+<pre style='display:inline'><tt>
+age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">0.0</font><font color="#990000">,</font>    <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">100</font><font color="#990000">,</font>  <font color="#FF0000">'number'</font><font color="#990000">:</font> <font color="#993399">9</font>  <font color="#990000">}</font>
+</tt></pre>
+<br>
+<b><a name="Problem Parameters.time_grid" id="Problem Parameters.time_grid">time_grid</a></b>
+<br>
+This sets the start time, end time, and number of time grid points.
+The interval between time grid points is the end time, minus the start time,
+divided by the number of grid points minus one.
+<pre style='display:inline'><tt>
+time_grid <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">2020</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font> <font color="#993399">2</font>  <font color="#990000">}</font>
+</tt></pre>
+<br>
+<b><a name="Problem Parameters.fit_with_nose_in_data" id="Problem Parameters.fit_with_nose_in_data">fit_with_nose_in_data</a></b>
+<br>
+If this variable is true, simulated measurements with noise are used
+for the fit. Otherwise, the model value for the
+<a href="avg_integrand.htm" target="_top"><span style='white-space: nowrap'>avg_integrand</span></a>
+ is used, without noise, for each data point.
+(The measurements, without noise, are stored in
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+).
+<pre style='display:inline'><tt>
+fit_with_noise_in_data <font color="#990000">=</font> True
+</tt></pre>
+<br>
+<b><a name="Problem Parameters.noise_cv" id="Problem Parameters.noise_cv">noise_cv</a></b>
+<br>
+For each measurement without noise, the corresponding
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ is computed as
+
+<code><font color="blue"><span style='white-space: nowrap'>meas_std</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>noise_cv</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>meas_value</span></font></code>
+.
+<pre style='display:inline'><tt>
+noise_cv <font color="#990000">=</font> <font color="#993399">0.1</font>
+</tt></pre>
+<br>
+<b><a name="Problem Parameters.node_list" id="Problem Parameters.node_list">node_list</a></b>
+<br>
+The first element of this list is the parent node,
+the others are the child nodes. There must be an even number of children;
+i.e., an odd number of elements in this list.
+<pre style='display:inline'><tt>
+node_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'US'</font><font color="#990000">,</font> <font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'California'</font><font color="#990000">,</font> <font color="#FF0000">'Massachusetts'</font><font color="#990000">,</font> <font color="#FF0000">'Wisconsin'</font> <font color="#990000">]</font>
+</tt></pre>
+<code><font color="blue"><pre><tt><i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
@@ -327,14 +389,6 @@ local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><fon
 distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># model parameters that can be changed</font></i>
-time_grid <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">2020</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font> <font color="#993399">2</font>  <font color="#990000">}</font>
-age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">0.0</font><font color="#990000">,</font>    <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">100</font><font color="#990000">,</font>  <font color="#FF0000">'number'</font><font color="#990000">:</font> <font color="#993399">9</font>  <font color="#990000">}</font>
-<i><font color="#9A1900">#</font></i>
-fit_with_noise_in_data <font color="#990000">=</font> True
-noise_cv               <font color="#990000">=</font> <font color="#993399">0.1</font>
-<i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">log_bilinear</font></b><font color="#990000">(</font>grid_value<font color="#990000">,</font> a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
      age_start <font color="#990000">=</font> age_grid<font color="#990000">[</font><font color="#FF0000">'start'</font><font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
@@ -367,97 +421,92 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      <b><font color="#0000FF">return</font></b> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> num <font color="#990000">/</font> den <font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">true_rate</font></b><font color="#990000">(</font>node<font color="#990000">,</font> rate<font color="#990000">,</font> a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
+     parent_node <font color="#990000">=</font> node_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+     <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> parent_node <font color="#990000">:</font>
+          even_child <font color="#990000">=</font> node_list<font color="#990000">.</font><b><font color="#000000">index</font></b><font color="#990000">(</font>node<font color="#990000">)</font> <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">0</font>
      <i><font color="#9A1900"># default</font></i>
      grid_value <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">if</font></b> rate <font color="#990000">==</font> <font color="#FF0000">'pini'</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> parent_node <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e-2</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1e-2</font>
-          <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'Wisconsin'</font><font color="#990000">]</font> <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
-          <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'California'</font><font color="#990000">,</font> <font color="#FF0000">'Massachusetts'</font> <font color="#990000">]</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">elif</font></b> even_child <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               <b><font color="#0000FF">assert</font></b> False
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
           <i><font color="#9A1900">#</font></i>
           <i><font color="#9A1900"># pini is constant in age</font></i>
           grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font>
           grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>
           <i><font color="#9A1900">#</font></i>
           ret <font color="#990000">=</font> <b><font color="#000000">log_bilinear</font></b><font color="#990000">(</font>grid_value<font color="#990000">,</font> a<font color="#990000">,</font> t<font color="#990000">)</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> parent_node <font color="#990000">:</font>
                ret <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>ret<font color="#990000">)</font>
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">elif</font></b> rate <font color="#990000">==</font> <font color="#FF0000">'iota'</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> parent_node <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1e-3</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">2e-3</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1e-2</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">2e-2</font>
-          <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'Wisconsin'</font><font color="#990000">]</font> <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
-          <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'California'</font><font color="#990000">,</font> <font color="#FF0000">'Massachusetts'</font> <font color="#990000">]</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">elif</font></b> even_child <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               <b><font color="#0000FF">assert</font></b> False
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
           <i><font color="#9A1900">#</font></i>
           ret <font color="#990000">=</font> <b><font color="#000000">log_bilinear</font></b><font color="#990000">(</font>grid_value<font color="#990000">,</font> a<font color="#990000">,</font> t<font color="#990000">)</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> parent_node <font color="#990000">:</font>
                ret <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>ret<font color="#990000">)</font>
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">elif</font></b> rate <font color="#990000">==</font> <font color="#FF0000">'omega'</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> parent_node <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">3e-3</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">2e-3</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">3e-1</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">2e-1</font>
-          <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'Wisconsin'</font><font color="#990000">]</font> <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
-          <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'California'</font><font color="#990000">,</font> <font color="#FF0000">'Massachusetts'</font> <font color="#990000">]</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">elif</font></b> even_child <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               <b><font color="#0000FF">assert</font></b> False
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
           <i><font color="#9A1900">#</font></i>
           ret <font color="#990000">=</font> <b><font color="#000000">log_bilinear</font></b><font color="#990000">(</font>grid_value<font color="#990000">,</font> a<font color="#990000">,</font> t<font color="#990000">)</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> parent_node <font color="#990000">:</font>
                ret <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>ret<font color="#990000">)</font>
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">elif</font></b> rate <font color="#990000">==</font> <font color="#FF0000">'chi'</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> parent_node <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">4.0e-3</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">2.0e-3</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0e-1</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">0.5e-1</font>
-          <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'Wisconsin'</font><font color="#990000">]</font> <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
-          <b><font color="#0000FF">elif</font></b> node <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'California'</font><font color="#990000">,</font> <font color="#FF0000">'Massachusetts'</font> <font color="#990000">]</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">elif</font></b> even_child <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               <b><font color="#0000FF">assert</font></b> False
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1.0</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#993399">1.0</font>
           <i><font color="#9A1900">#</font></i>
           ret <font color="#990000">=</font> <b><font color="#000000">log_bilinear</font></b><font color="#990000">(</font>grid_value<font color="#990000">,</font> a<font color="#990000">,</font> t<font color="#990000">)</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> parent_node <font color="#990000">:</font>
                ret <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>ret<font color="#990000">)</font>
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
@@ -495,7 +544,9 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># use const_value to constrain omega to true value</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font>node<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_omega_node</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
+          <i><font color="#9A1900"># Use default argument to bind the value of node at point of</font></i>
+          <i><font color="#9A1900"># definition instead of at point of call.</font></i>
+          <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_omega_node</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">,</font> node <font color="#990000">=</font> node<font color="#990000">)</font> <font color="#990000">:</font>
                true_value <font color="#990000">=</font> <b><font color="#000000">true_rate</font></b><font color="#990000">(</font>node<font color="#990000">,</font> <font color="#FF0000">'omega'</font><font color="#990000">,</font> a<font color="#990000">,</font> t<font color="#990000">)</font>
                <b><font color="#0000FF">return</font></b> <font color="#990000">(</font>true_value<font color="#990000">,</font> <font color="#FF0000">'prior_U(-inf,inf)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_U(-inf,inf)'</font><font color="#990000">)</font>
           <b><font color="#0000FF">return</font></b> fun_omega_node
@@ -554,13 +605,10 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'mtspecific'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># node table:</font></i>
-     node_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'US'</font><font color="#990000">,</font>             <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">''</font>   <font color="#990000">}</font> <font color="#990000">,</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Alabama'</font><font color="#990000">,</font>        <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'US'</font> <font color="#990000">}</font> <font color="#990000">,</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'California'</font><font color="#990000">,</font>     <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'US'</font> <font color="#990000">}</font> <font color="#990000">,</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Massachusetts'</font><font color="#990000">,</font>  <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'US'</font> <font color="#990000">}</font> <font color="#990000">,</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Wisconsin'</font><font color="#990000">,</font>      <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'US'</font> <font color="#990000">}</font> <font color="#990000">,</font>
-     <font color="#990000">]</font>
+     parent_node <font color="#990000">=</font> node_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+     node_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font>parent_node<font color="#990000">,</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">''</font> <font color="#990000">}</font> <font color="#990000">]</font>
+     <b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>node_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+          node_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font>node_list<font color="#990000">[</font>i<font color="#990000">],</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font>parent_node <font color="#990000">}</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># weight table and weight_grid table:</font></i>
@@ -682,11 +730,10 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
                <font color="#FF0000">'fun'</font><font color="#990000">:</font>          fun<font color="#990000">[</font>name<font color="#990000">]</font>
           <font color="#990000">}</font> <font color="#990000">)</font>
      nslist_table<font color="#990000">[</font><font color="#FF0000">'nslist_omega_child'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">for</font></b> node_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>node_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-          node <font color="#990000">=</font> node_table<font color="#990000">[</font>node_id<font color="#990000">][</font><font color="#FF0000">'name'</font><font color="#990000">]</font>
+     <b><font color="#0000FF">for</font></b> node <b><font color="#0000FF">in</font></b> node_list <font color="#990000">:</font>
           name <font color="#990000">=</font> <font color="#FF0000">'smooth_omega_'</font> <font color="#990000">+</font> node
           smoothing <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font> name <font color="#990000">}</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> parent_node <font color="#990000">:</font>
                smoothing<font color="#990000">[</font><font color="#FF0000">'age_id'</font><font color="#990000">]</font>  <font color="#990000">=</font> age_index<font color="#990000">[</font><font color="#FF0000">'omega_parent'</font><font color="#990000">]</font>
                smoothing<font color="#990000">[</font><font color="#FF0000">'time_id'</font><font color="#990000">]</font> <font color="#990000">=</font> time_index_rate_parent
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
@@ -694,18 +741,7 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
                smoothing<font color="#990000">[</font><font color="#FF0000">'time_id'</font><font color="#990000">]</font> <font color="#990000">=</font> time_index_rate_child
                nslist_table<font color="#990000">[</font><font color="#FF0000">'nslist_omega_child'</font><font color="#990000">].</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">(</font>node<font color="#990000">,</font> name<font color="#990000">)</font> <font color="#990000">)</font>
           <i><font color="#9A1900">#</font></i>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> <font color="#FF0000">'US'</font> <font color="#990000">:</font>
-               smoothing<font color="#990000">[</font><font color="#FF0000">'fun'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font><font color="#FF0000">'US'</font><font color="#990000">)</font>
-          <b><font color="#0000FF">elif</font></b> node <font color="#990000">==</font> <font color="#FF0000">'Alabama'</font> <font color="#990000">:</font>
-               smoothing<font color="#990000">[</font><font color="#FF0000">'fun'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font><font color="#FF0000">'Alabama'</font><font color="#990000">)</font>
-          <b><font color="#0000FF">elif</font></b> node <font color="#990000">==</font> <font color="#FF0000">'California'</font> <font color="#990000">:</font>
-               smoothing<font color="#990000">[</font><font color="#FF0000">'fun'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font><font color="#FF0000">'California'</font><font color="#990000">)</font>
-          <b><font color="#0000FF">elif</font></b> node <font color="#990000">==</font> <font color="#FF0000">'Massachusetts'</font> <font color="#990000">:</font>
-               smoothing<font color="#990000">[</font><font color="#FF0000">'fun'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font><font color="#FF0000">'Massachusetts'</font><font color="#990000">)</font>
-          <b><font color="#0000FF">elif</font></b> node <font color="#990000">==</font> <font color="#FF0000">'Wisconsin'</font> <font color="#990000">:</font>
-               smoothing<font color="#990000">[</font><font color="#FF0000">'fun'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font><font color="#FF0000">'Wisconsin'</font><font color="#990000">)</font>
-          <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               <b><font color="#0000FF">assert</font></b> False
+          smoothing<font color="#990000">[</font><font color="#FF0000">'fun'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font>node<font color="#990000">)</font>
           smooth_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> smoothing <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># no standard deviation multipliers</font></i>
@@ -788,7 +824,7 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
                <font color="#FF0000">'child_nslist'</font><font color="#990000">:</font>  None<font color="#990000">,</font>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>          <font color="#FF0000">'omega'</font><font color="#990000">,</font>
-               <font color="#FF0000">'parent_smooth'</font><font color="#990000">:</font> <font color="#FF0000">'smooth_omega_US'</font><font color="#990000">,</font>
+               <font color="#FF0000">'parent_smooth'</font><font color="#990000">:</font> <font color="#FF0000">'smooth_omega_'</font> <font color="#990000">+</font> parent_node<font color="#990000">,</font>
                <font color="#FF0000">'child_smooth'</font><font color="#990000">:</font>  None<font color="#990000">,</font>
                <font color="#FF0000">'child_nslist'</font><font color="#990000">:</font>  <font color="#FF0000">'nslist_omega_child'</font><font color="#990000">,</font>
           <font color="#990000">}</font>
@@ -868,7 +904,7 @@ noise_cv               <font color="#990000">=</font> <font color="#993399">0.1<
      <i><font color="#9A1900"># option_table</font></i>
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font> <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'US'</font>                <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font>parent_node         <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'10.0'</font>              <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
 
