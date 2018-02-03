@@ -385,9 +385,6 @@ def example_db (file_name) :
 	fun['pini_parent']        = fun_pini_parent
 	fun['pini_child']         = fun_pini_child
 	# ----------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
-	# ----------------------------------------------------------------------
 	# age lists
 	start                     = age_grid['start']
 	end                       = age_grid['end']
@@ -437,7 +434,7 @@ def example_db (file_name) :
 		'fun':       fun['constant_one']
 	} ]
 	# ----------------------------------------------------------------------
-	# prior_table, smooth_table, and smooth_grid_table
+	# prior_table
 	prior_table = [
 		{
 			# prior_N(0,1)
@@ -515,8 +512,10 @@ def example_db (file_name) :
 			'eta':      1e-5,
 		}
 	]
-	# smooth table
+	# ----------------------------------------------------------------------
+	# smooth table and nslist_table
 	smooth_table   = list()
+	nslist_table   = dict()
 	#
 	# smooth_mulcov
 	for cov_type in [ 'rate_value', 'meas_value', 'meas_std' ] :
