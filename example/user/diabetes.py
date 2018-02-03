@@ -26,9 +26,8 @@
 #
 # $head Node Table$$
 # The $cref node_table$$ only contains the
-# $cref/parent/node_table/parent/$$ node US,
-# and the child nodes
-# Alabama, California, Massachusetts, and Wisconsin.
+# $cref/parent/node_table/parent/$$ and child nodes specified by
+# the $code node_list$$.
 #
 # $head Age Table$$
 # The $cref age_table$$ is uniformly spaced starting at age zero,
@@ -154,6 +153,9 @@ age_grid  = { 'start':0.0,    'end': 100,  'number': 9  }
 #
 fit_with_noise_in_data = True
 noise_cv               = 0.1
+#
+# first node is parent, others are children, must be odd number of nodes
+node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin', ]
 # ------------------------------------------------------------------------
 #
 def log_bilinear(grid_value, a, t) :
@@ -188,97 +190,92 @@ def log_bilinear(grid_value, a, t) :
 	return math.exp( num / den )
 #
 def true_rate(node, rate, a, t) :
+	parent_node = node_list[0]
+	if node != parent_node :
+		even_child = node_list.index(node) % 2 == 0
 	# default
 	grid_value = dict()
 	# -------------------------------------------------------------------------
 	if rate == 'pini' :
-		if node == 'US' :
+		if node == parent_node :
 			grid_value['start_age, start_time'] = 1e-2
 			grid_value['start_age, end_time']   = 1e-2
-		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-		elif node in [ 'California', 'Massachusetts' ] :
+		elif even_child :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
 		else :
-			assert False
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
 		#
 		# pini is constant in age
 		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
 		grid_value['end_age, end_time']   = grid_value['start_age, end_time']
 		#
 		ret = log_bilinear(grid_value, a, t)
-		if node != 'US' :
+		if node != parent_node :
 			ret = math.log(ret)
 	# -------------------------------------------------------------------------
 	elif rate == 'iota' :
-		if node == 'US' :
+		if node == parent_node :
 			grid_value['start_age, start_time'] = 1e-3
 			grid_value['start_age, end_time']   = 2e-3
 			grid_value['end_age, start_time']   = 1e-2
 			grid_value['end_age, end_time']     = 2e-2
-		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
-		elif node in [ 'California', 'Massachusetts' ] :
+		elif even_child :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
 			grid_value['end_age, start_time']   = 1.0
 			grid_value['end_age, end_time']     = 1.0
 		else :
-			assert False
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		#
 		ret = log_bilinear(grid_value, a, t)
-		if node != 'US' :
+		if node != parent_node :
 			ret = math.log(ret)
 	# -------------------------------------------------------------------------
 	elif rate == 'omega' :
-		if node == 'US' :
+		if node == parent_node :
 			grid_value['start_age, start_time'] = 3e-3
 			grid_value['start_age, end_time']   = 2e-3
 			grid_value['end_age, start_time']   = 3e-1
 			grid_value['end_age, end_time']     = 2e-1
-		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
-		elif node in [ 'California', 'Massachusetts' ] :
+		elif even_child :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
 			grid_value['end_age, start_time']   = 1.0
 			grid_value['end_age, end_time']     = 1.0
 		else :
-			assert False
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		#
 		ret = log_bilinear(grid_value, a, t)
-		if node != 'US' :
+		if node != parent_node :
 			ret = math.log(ret)
 	# -------------------------------------------------------------------------
 	elif rate == 'chi' :
-		if node == 'US' :
+		if node == parent_node :
 			grid_value['start_age, start_time'] = 4.0e-3
 			grid_value['start_age, end_time']   = 2.0e-3
 			grid_value['end_age, start_time']   = 1.0e-1
 			grid_value['end_age, end_time']     = 0.5e-1
-		elif node in ['Alabama', 'Wisconsin'] :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
-		elif node in [ 'California', 'Massachusetts' ] :
+		elif even_child :
 			grid_value['start_age, start_time'] = 1.0
 			grid_value['start_age, end_time']   = 1.0
 			grid_value['end_age, start_time']   = 1.0
 			grid_value['end_age, end_time']     = 1.0
 		else :
-			assert False
+			grid_value['start_age, start_time'] = 1.0
+			grid_value['start_age, end_time']   = 1.0
+			grid_value['end_age, start_time']   = 1.0
+			grid_value['end_age, end_time']     = 1.0
 		#
 		ret = log_bilinear(grid_value, a, t)
-		if node != 'US' :
+		if node != parent_node :
 			ret = math.log(ret)
 	# -------------------------------------------------------------------------
 	else :
@@ -377,13 +374,10 @@ def example_db (file_name) :
 	integrand_list = [ 'mtspecific', 'prevalence' ]
 	# ----------------------------------------------------------------------
 	# node table:
-	node_table = [
-		{ 'name':'US',             'parent':''   } ,
-		{ 'name':'Alabama',        'parent':'US' } ,
-		{ 'name':'California',     'parent':'US' } ,
-		{ 'name':'Massachusetts',  'parent':'US' } ,
-		{ 'name':'Wisconsin',      'parent':'US' } ,
-	]
+	parent_node = node_list[0]
+	node_table = [ { 'name':parent_node, 'parent':'' } ]
+	for i in range(1, len(node_list) ) :
+		node_table.append( { 'name':node_list[i], 'parent':parent_node } )
 	#
 	# ----------------------------------------------------------------------
 	# weight table and weight_grid table:
@@ -505,11 +499,10 @@ def example_db (file_name) :
 			'fun':          fun[name]
 		} )
 	nslist_table['nslist_omega_child'] = list()
-	for node_id in range( len(node_table) ) :
-		node = node_table[node_id]['name']
+	for node in node_list :
 		name = 'smooth_omega_' + node
 		smoothing = { 'name': name }
-		if node == 'US' :
+		if node == parent_node :
 			smoothing['age_id']  = age_index['omega_parent']
 			smoothing['time_id'] = time_index_rate_parent
 		else :
@@ -600,7 +593,7 @@ def example_db (file_name) :
 			'child_nslist':  None,
 		} , {
 			'name':          'omega',
-			'parent_smooth': 'smooth_omega_US',
+			'parent_smooth': 'smooth_omega_' + parent_node,
 			'child_smooth':  None,
 			'child_nslist':  'nslist_omega_child',
 		}
@@ -680,7 +673,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':'US'                },
+		{ 'name':'parent_node_name',       'value':parent_node         },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'random_seed',            'value':'0'                 },
 
