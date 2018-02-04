@@ -25,6 +25,7 @@
 #	str
 #	bool
 #	var
+#	rel
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -234,14 +235,33 @@ quasi_fixed = 'true'
 # %$$
 #
 # $subhead truth2start$$
-# This is a $code float$$ that is used to map each
-# $cref/truth_var_value/truth_var_table/truth_var_value/$$
-# to the corresponding
-# $cref/start_var_value/start_var_table/start_var_value/$$.
-# To be specific, the starting value is the true value times
+# This is a $code float$$ that is used to map
+# $codei%
+#	%start_var_value% = %truth2start% * %truth_var_value%
+# %$$
+# where for each model variable,
+# $cref/truth_var_value/truth_var_table/truth_var_value/$$ is the true value
+# used to simulate the data and
+# $cref/start_var_value/start_var_table/start_var_value/$$ is the initial
+# value of the variable during the fit.
 # $icode truth2start$$:
 # $srccode%py%
 truth2start = 0.5
+# %$$
+#
+# $subhead max_abs_rel_err$$
+# This is a $code float$$ that specifies the maximum absolute relative error.
+# To be specific
+# $codei%
+#	%max_abs_rel_err% >= %fit_var_value% / %truth_var_value% - 1.0
+# %$$
+# where for each model variable,
+# $cref/truth_var_value/truth_var_table/truth_var_value/$$ is the true value
+# used to simulate the data and
+# $cref/fit_var_value/fit_var_table/fit_var_value/$$ is result of the fit.
+# A python assertion is generated if the condition above is not satisfied.
+# $srccode%py%
+max_abs_rel_err = 0.2
 # %$$
 #
 # $head Source Code$$
@@ -1024,7 +1044,6 @@ connection      = dismod_at.create_connection(file_name, new)
 var_table       = dismod_at.get_table_dict(connection, 'var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
-eps             = 0.15
 ok              = True
 max_err         = 0.0
 for var_id in range( len(var_table) ) :
@@ -1032,7 +1051,7 @@ for var_id in range( len(var_table) ) :
 	fit_var_value   = fit_var_table[var_id]['fit_var_value']
 	if truth_var_value != 0.0 :
 		rel_err = fit_var_value / truth_var_value - 1.0
-		flag    = abs( rel_err ) <= eps
+		flag    = abs( rel_err ) <= max_abs_rel_err
 		ok     &= flag
 		if not flag :
 			print('var_id = ', var_id, ', rel_err = ', rel_err)

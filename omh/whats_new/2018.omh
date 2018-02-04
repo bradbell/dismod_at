@@ -25,6 +25,7 @@ $spell
 	da
 	dt
 	var
+	rel
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -41,7 +42,8 @@ $head 02-04$$
 The changes below are for $cref user_diabetes.py$$:
 $list number$$
 Add
-$cref/truth2start/user_diabetes.py/Problem Parameters/truth2start/$$
+$cref/truth2start/user_diabetes.py/Problem Parameters/truth2start/$$,
+$cref/max_abs_rel_err/user_diabetes.py/Problem Parameters/max_abs_rel_err/$$,
 to the problem parameters.
 $lend
 
