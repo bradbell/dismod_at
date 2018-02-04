@@ -51,8 +51,11 @@ $cref/truth2start/user_diabetes.py/Problem Parameters/truth2start/$$,
 $cref/max_abs_rel_err/user_diabetes.py/Problem Parameters/max_abs_rel_err/$$,
 to the problem parameters.
 $lnext
-Add fitting of the covariate multiplier for market scan 2000
-and body mass covariates.
+Add fitting of multipliers for the following covariates:
+market scan 2000 on
+$cref/meas_value/mulcov_table/mulcov_type/meas_value/$$,
+body mass index and sex on the
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ for iota.
 $lend
 
 $head 02-03$$

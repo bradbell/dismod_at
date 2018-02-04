@@ -225,14 +225,17 @@ quasi_fixed = 'true'
 # $codei%
 #	%start_var_value% = %truth2start% * %truth_var_value%
 # %$$
-# where for each model variable,
+# for each model variable that is not constrained to a specific value.
+# The notation
 # $cref/truth_var_value/truth_var_table/truth_var_value/$$ is the true value
 # used to simulate the data and
 # $cref/start_var_value/start_var_table/start_var_value/$$ is the initial
 # value of the variable during the fit.
+# An error will result if the starting value for a variable is not within
+# the upper and lower limits for a variable.
 # $icode truth2start$$:
 # $srccode%py%
-truth2start = 0.5
+truth2start = 2.0
 # %$$
 #
 # $subhead max_abs_rel_err$$
@@ -584,8 +587,8 @@ def example_db (file_name) :
 			'name':     'prior_sex',
 			'density':  'uniform',
 			'mean':     0.0,
-			'lower':    0.0,
-			'upper':    0.0,
+			'lower':    -2.0,
+			'upper':    +2.0,
 		} , {
 			# prior_bmi
 			'name':     'prior_bmi',
@@ -746,7 +749,7 @@ def example_db (file_name) :
 		node        = node_table[i_node]['name']
 		#
 		# sex
-		if k1 % 4 < 2 :
+		if k1 % 2 == 0 :
 			sex = -0.5
 		else :
 			sex = +0.5
@@ -803,7 +806,7 @@ def example_db (file_name) :
 		{ 'name':'random_seed',            'value':'0'                 },
 
 		{ 'name':'quasi_fixed',            'value':quasi_fixed         },
-		{ 'name':'max_num_iter_fixed',     'value':'200'               },
+		{ 'name':'max_num_iter_fixed',     'value':'300'               },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-2'              },
 
@@ -859,7 +862,7 @@ def create_truth_var_table() :
 		if var_type.startswith('mulcov_') :
 			covariate = covariate_table[row['covariate_id' ]]['covariate_name']
 			if covariate == 'sex' :
-				value = 0.0
+				value = 0.5
 			elif covariate == 'bmi' :
 				value = 0.02
 			elif covariate == 'ms_2000' :
