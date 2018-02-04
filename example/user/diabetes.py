@@ -105,6 +105,16 @@
 #
 # $head Problem Parameters$$
 #
+# $subhead node_list$$
+# The first element of this list is the parent node,
+# the others are the child nodes. There must be an even number of children;
+# i.e., an odd number of elements in this list.
+# The case with zero child; i.e., one element in the list, is OK.
+# $srccode%py%
+node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin' ]
+node_list = [ 'US' ]
+# %$$
+#
 # $subhead integrand_list$$
 # This is a list of
 # $cref/integrand names/integrand_table/integrand_name/$$
@@ -134,7 +144,7 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between age grid points.
 # $srccode%py%
-age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.5 }
+age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.2 }
 # %$$
 #
 # $subhead time_grid$$
@@ -148,7 +158,7 @@ age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.5 }
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between time grid points.
 # $srccode%py%
-time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.5  }
+time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':1.0  }
 # %$$
 #
 # $subhead ode_step_size$$
@@ -201,14 +211,15 @@ meas_repeat = 3
 fit_with_noise_in_data = True
 # %$$
 #
-# $subhead node_list$$
-# The first element of this list is the parent node,
-# the others are the child nodes. There must be an even number of children;
-# i.e., an odd number of elements in this list.
-# The case with zero child; i.e., one element in the list, is OK.
+# $subhead quasi_fixed$$
+# If this variable is true, a Quasi-Newton method is used to
+# optimize the fixed effects.
+# This only requires function values and
+# first derivatives for the objective and constraints.
+# If it is false, a Newton method is used.
+# This requires second derivatives.
 # $srccode%py%
-node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin' ]
-node_list = [ 'US' ]
+quasi_fixed = False
 # %$$
 #
 # $head Source Code$$
@@ -772,13 +783,17 @@ def example_db (file_name) :
 		avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# option_table
+	if quasi_fixed :
+		quasi_fixed_str='true'
+	else :
+		quasi_fixed_str='false'
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':parent_node         },
-		{ 'name':'ode_step_size',          'value':ode_step_size       },
+		{ 'name':'parent_node_name',       'value':str(parent_node)    },
+		{ 'name':'ode_step_size',          'value':str(ode_step_size)  },
 		{ 'name':'random_seed',            'value':'0'                 },
 
-		{ 'name':'quasi_fixed',            'value':'true'              },
+		{ 'name':'quasi_fixed',            'value':quasi_fixed_str     },
 		{ 'name':'max_num_iter_fixed',     'value':'200'               },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-2'              },

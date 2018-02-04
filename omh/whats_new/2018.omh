@@ -53,10 +53,12 @@ $lnext
 Change $cref/node_list/user_diabetes.py/Problem Parameters/node_list/$$
 example to only the parent node.
 $lnext
-Add $cref/ode_step_size/user_diabetes.py/Problem Parameters/ode_step_size/$$
-and
-$cref/meas_repeat/user_diabetes.py/Problem Parameters/meas_repeat/$$
-to thee problem parameters.
+Add
+$cref/integrand_list/user_diabetes.py/Problem Parameters/integrand_list/$$,
+$cref/ode_step_size/user_diabetes.py/Problem Parameters/ode_step_size/$$,
+$cref/meas_repeat/user_diabetes.py/Problem Parameters/meas_repeat/$$,
+$cref/quasi_fixed/user_diabetes.py/Problem Parameters/quasi_fixed/$$,
+to the problem parameters.
 $lend
 
 $head 02-02$$
