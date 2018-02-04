@@ -596,9 +596,11 @@ def example_db (file_name) :
 		} , {
 			# prior_ms_2000
 			'name':     'prior_ms_2000',
-			'density':  'gaussian',
+			'density':  'uniform',
 			'mean':     0.0,
-			'std':      1.0
+			'lower':    -1.0,
+			'upper':    +1.0,
+			'mean':     0.0,
 		}
 	]
 	# ----------------------------------------------------------------------
