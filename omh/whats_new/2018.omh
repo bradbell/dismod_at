@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin whats_new_2018$$
 $spell
 	Dismod
+	covariate
 	covariates
 	mulcov
 	csv
@@ -39,12 +40,18 @@ $childtable%
 %$$
 
 $head 02-04$$
+The variable.csv $cref/start/db2csv_command/variable.csv/start/$$ column
+was only correct when
+$cref/var_type/db2csv_command/variable.csv/var_type/$$ was $code rate$$.
+This has been fixed.
 The changes below are for $cref user_diabetes.py$$:
 $list number$$
 Add
 $cref/truth2start/user_diabetes.py/Problem Parameters/truth2start/$$,
 $cref/max_abs_rel_err/user_diabetes.py/Problem Parameters/max_abs_rel_err/$$,
 to the problem parameters.
+$lnext
+Add fitting of the covariate multiplier for market scan 2000 data.
 $lend
 
 $head 02-03$$

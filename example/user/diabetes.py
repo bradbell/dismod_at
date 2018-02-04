@@ -53,39 +53,29 @@
 # There is one weighting, with the constant value one,
 # in the $cref weight_table$$ and $cref weight_grid_table$$.
 #
-# $head Covariate Table$$
-# The following information is placed in the $cref covariate_table$$
+# $head Covariates$$
+#
+# $subhead Covariate Table$$
+# The covariate table has the following values:
 # $table
-# Name $cnext Description $cnext reference  $cnext max_difference $rnext
-# sex     $cnext .5=male -.5=female        $cnext 0     $cnext 0.6  $rnext
-# bmi     $cnext body mass index           $cnext 27    $cnext null $rnext
-# ms_2000 $cnext market scan data for 2000 $cnext 0     $cnext null
+# covariate_name    $cnext reference      $cnext max_difference $rnext
+# sex               $cnext 0              $cnext 0.6            $rnext
+# bmi               $cnext 28             $cnext null           $rnext
+# ms_2000           $cnext 0              $cnext null
 # $tend
-# (This information is not yet used.)
 #
-# $head Covariate Multiplier Table$$
-# All of the covariate multipliers use that same smoothing which corresponds
-# to a constant in age and time. The value is a Gaussian with mean zero
-# and variable one.
-# (The covariates multipliers are currently set to zero.)
+# $subhead Data Table$$
+# The $cref/covariate/data_table/Covariates/$$ columns in the
+# data table have the following values:
+# $icode sex$$ is $code 0.5$$ for male and $code -0.5$$ for female,
+# $icode bmi$$ is body mass index $codei%20 <= %bmi% <= 36%$$,
+# $icode ms_2000$$ is $code 1.0$$ if this is year 2000 market scan data
+# and $code 0.0$$ otherwise.
 #
-# $subhead Rate Value$$
-# There are two rate value covariate multipliers,
-# $cref/alpha_jk/avg_integrand/Rate Functions/alpha_jk/$$
-# that are used to adjust
-# $cref/iota/rate_table/rate_name/iota/$$.
-# A separate multiplier is applied to the covariates
-# $code sex$$ and $code bmi$$.
-#
-# $subhead Measurement Value$$
-# There are three measurement value covariate multipliers
-# $cref/beta_j/avg_integrand/Measurement Value Covariates/beta_j/$$
-# that is used to adjust the prevalence measurements.
-#
-# $subhead Measurement Standard Deviations$$
-# There is one measurement standard deviation covariate multiplier
-# $cref/gamma_j/data_like/Measurement Standard Deviation Covariates/gamma_j/$$
-# that is for prevalence measurements and multiplies the $code one$$ covariate.
+# $subhead Multiplier Table$$
+# The bmi and sex covariates multipliers are constrained to be zero
+# (are not yet used). The ms_2000 multiplier has an N(0, 1) prior
+# and true value of 0.25.
 #
 # $head Truth Table$$
 # The values in the $cref truth_var_table$$ are generated using bilinear
@@ -428,12 +418,12 @@ def example_db (file_name) :
 		return 1.0
 	#
 	# Note that there are no forward differences for covariate multiplier grids.
-	def fun_mulcov_meas_std(a, t) :
-		return('prior_U(0,0)', None, None)
-	def fun_mulcov_meas_value(a, t) :
-		return('prior_U(0,0)', None, None)
-	def fun_mulcov_rate_value(a, t) :
-		return('prior_U(0,0)', None, None)
+	def fun_mulcov_sex(a, t) :
+		return('prior_sex',          None, None)
+	def fun_mulcov_bmi(a, t) :
+		return('prior_bmi',         None, None)
+	def fun_mulcov_ms_2000(a, t) :
+		return('prior_ms_2000',     None, None)
 	#
 	# priors used in smoothing for iota
 	def fun_iota_parent(a, t) :
@@ -463,9 +453,9 @@ def example_db (file_name) :
 		return ('prior_N(0,1)', None, 'prior_child_time')
 	# ----------------------------------------------------------------------
 	fun                       = dict()
-	fun['mulcov_rate_value']  = fun_mulcov_rate_value
-	fun['mulcov_meas_value']  = fun_mulcov_meas_value
-	fun['mulcov_meas_std']    = fun_mulcov_meas_std
+	fun['mulcov_sex']         = fun_mulcov_sex
+	fun['mulcov_bmi']         = fun_mulcov_bmi
+	fun['mulcov_ms_2000']     = fun_mulcov_ms_2000
 	fun['constant_one']       = fun_constant_one
 	fun['iota_parent']        = fun_iota_parent
 	fun['iota_child']         = fun_iota_child
@@ -529,13 +519,6 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      1.0,
 		} , {
-			# prior_N_+(0,1)
-			'name':     'prior_N_+(0,1)',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      1.0,
-			'lower':    0.0,
-		} , {
 			# prior_U(0,1)
 			'name':     'prior_U(0,1)',
 			'density':  'uniform',
@@ -596,6 +579,26 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      0.2,
 			'eta':      1e-5,
+		} , {
+			# prior_sex
+			'name':     'prior_sex',
+			'density':  'uniform',
+			'mean':     0.0,
+			'lower':    0.0,
+			'upper':    0.0,
+		} , {
+			# prior_bmi
+			'name':     'prior_bmi',
+			'density':  'uniform',
+			'mean':     0.0,
+			'lower':    0.0,
+			'upper':    0.0,
+		} , {
+			# prior_ms_2000
+			'name':     'prior_ms_2000',
+			'density':  'gaussian',
+			'mean':     0.0,
+			'std':      1.0
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -604,13 +607,12 @@ def example_db (file_name) :
 	nslist_table   = dict()
 	#
 	# smooth_mulcov
-	for cov_type in [ 'rate_value', 'meas_value', 'meas_std' ] :
-		var_type = 'mulcov_' + cov_type
+	for cov in [ 'sex', 'bmi', 'ms_2000' ] :
 		smooth_table.append( {
-			'name':     'smooth_' + var_type,
+			'name':     'smooth_mulcov_' + cov,
 			'age_id':   [0],
 			'time_id':  [0],
-			'fun':      fun[var_type]
+			'fun':      fun['mulcov_' + cov]
 		} )
 	for rate in [ 'pini', 'iota', 'chi' ] :
 		#
@@ -667,19 +669,19 @@ def example_db (file_name) :
 			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  'iota',
-			'smooth':    'smooth_mulcov_rate_value'
+			'smooth':    'smooth_mulcov_sex'
 		} , {
 			# alpha for iota and bmi
 			'covariate': 'bmi',
 			'type':      'rate_value',
 			'effected':  'iota',
-			'smooth':    'smooth_mulcov_rate_value'
+			'smooth':    'smooth_mulcov_bmi'
 		} , {
 			# beta for prevalence and ms_2000
 			'covariate': 'ms_2000',
 			'type':      'meas_value',
 			'effected':  'prevalence',
-			'smooth':    'smooth_mulcov_meas_value'
+			'smooth':    'smooth_mulcov_ms_2000'
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -742,16 +744,19 @@ def example_db (file_name) :
 		node        = node_table[i_node]['name']
 		#
 		# sex
-		if k1 % 2 == 0 :
+		if k1 % 4 < 2 :
 			sex = -0.5
 		else :
 			sex = +0.5
 		#
 		# market scan
-		ms_2000 = k1 % 2
+		if k1 % 6 < 3 :
+			ms_2000 = 1.0
+		else :
+			ms_2000 = 0.0
 		#
 		# body mass index
-		bmi = 20 + k1 % 16
+		bmi = 20 + k1 % 17
 		#
 		row = {
 			'node':        node,
@@ -843,18 +848,26 @@ def create_truth_var_table() :
 	col_type     = [ 'real' ]
 	row_list     = list()
 	for var_id in range( len(var_table) ) :
+		value = None
+		#
 		row          = var_table[var_id]
 		var_type     = row['var_type']
 		age          = age_table[ row['age_id'] ] ['age']
 		time         = time_table[ row['time_id'] ] ['time']
 		if var_type.startswith('mulcov_') :
 			covariate = covariate_table[row['covariate_id' ]]['covariate_name']
-		#
-		value = 0.0
-		if var_type == 'rate' :
+			if covariate == 'sex' :
+				value = 0.0
+			elif covariate == 'bmi' :
+				value = 0.0
+			elif covariate == 'ms_2000' :
+				value = 0.25
+		elif var_type == 'rate' :
 			node  = node_table[ row['node_id'] ] ['node_name']
 			rate  = rate_table[ row['rate_id'] ] ['rate_name']
 			value = true_rate(node, rate, age, time)
+		else :
+			assert False
 		#
 		row_list.append( [ value ] )
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -975,10 +988,10 @@ for var_id in range( len(var_table) ) :
 	truth_var_value  = truth_var_table[var_id]['truth_var_value']
 	var_type         = var_table[var_id]['var_type']
 	rate_id          = var_table[var_id]['rate_id']
-	start_var_value  = truth_var_value
+	start_var_value  = truth2start * truth_var_value
 	if var_type == 'rate' :
-			if rate_table[rate_id]['rate_name'] != 'omega' :
-				start_var_value = truth2start * truth_var_value
+			if rate_table[rate_id]['rate_name'] == 'omega' :
+				start_var_value  = truth_var_value
 	row_list.append( [start_var_value] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()

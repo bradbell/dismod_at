@@ -836,8 +836,8 @@ def db2csv_command(database_file_arg) :
 				row_out['fixed'] = 'false'
 		#
 		# The start_var table value
-			row_out['start'] = \
-				 table_lookup('start_var', var_id, 'start_var_value')
+		row_out['start'] = \
+			 table_lookup('start_var', var_id, 'start_var_value')
 		#
 		if have_table['depend_var'] :
 			data_depend  = table_data['depend_var'][var_id]['data_depend']
