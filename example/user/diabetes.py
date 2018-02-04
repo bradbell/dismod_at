@@ -591,8 +591,8 @@ def example_db (file_name) :
 			'name':     'prior_bmi',
 			'density':  'uniform',
 			'mean':     0.0,
-			'lower':    0.0,
-			'upper':    0.0,
+			'lower':    -0.1,
+			'upper':    +0.1
 		} , {
 			# prior_ms_2000
 			'name':     'prior_ms_2000',
@@ -861,7 +861,7 @@ def create_truth_var_table() :
 			if covariate == 'sex' :
 				value = 0.0
 			elif covariate == 'bmi' :
-				value = 0.0
+				value = 0.02
 			elif covariate == 'ms_2000' :
 				value = 0.25
 		elif var_type == 'rate' :
