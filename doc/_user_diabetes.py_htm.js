@@ -43,26 +43,29 @@ var list_down1 = [
 'user_students.py.htm'
 ];
 var list_current0 = [
-'user_diabetes.py.htm#Under Construction',
+'user_diabetes.py.htm#Running This example',
 'user_diabetes.py.htm#Node Table',
-'user_diabetes.py.htm#Age Table',
-'user_diabetes.py.htm#Time Table',
-'user_diabetes.py.htm#omega',
-'user_diabetes.py.htm#Integrand Table',
+'user_diabetes.py.htm#Constraints',
 'user_diabetes.py.htm#Weight Table and Grid',
-'user_diabetes.py.htm#Covariate Table',
-'user_diabetes.py.htm#Covariate Multiplier Table',
-'user_diabetes.py.htm#Covariate Multiplier Table.Rate Value',
-'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Value',
-'user_diabetes.py.htm#Covariate Multiplier Table.Measurement Standard Deviations',
-'user_diabetes.py.htm#Truth',
+'user_diabetes.py.htm#Covariates',
+'user_diabetes.py.htm#Covariates.Covariate Table',
+'user_diabetes.py.htm#Covariates.Data Table',
+'user_diabetes.py.htm#Covariates.Multiplier Table',
+'user_diabetes.py.htm#Truth Table',
 'user_diabetes.py.htm#Predict',
 'user_diabetes.py.htm#Problem Parameters',
+'user_diabetes.py.htm#Problem Parameters.node_list',
+'user_diabetes.py.htm#Problem Parameters.integrand_list',
 'user_diabetes.py.htm#Problem Parameters.age_grid',
 'user_diabetes.py.htm#Problem Parameters.time_grid',
+'user_diabetes.py.htm#Problem Parameters.ode_step_size',
+'user_diabetes.py.htm#Problem Parameters.meas_cv',
+'user_diabetes.py.htm#Problem Parameters.meas_repeat',
 'user_diabetes.py.htm#Problem Parameters.fit_with_nose_in_data',
-'user_diabetes.py.htm#Problem Parameters.noise_cv',
-'user_diabetes.py.htm#Problem Parameters.node_list'
+'user_diabetes.py.htm#Problem Parameters.quasi_fixed',
+'user_diabetes.py.htm#Problem Parameters.truth2start',
+'user_diabetes.py.htm#Problem Parameters.max_abs_rel_err',
+'user_diabetes.py.htm#Source Code'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

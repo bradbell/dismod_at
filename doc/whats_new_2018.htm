@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,8 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Contents</option>
+<option>02-04</option>
+<option>02-03</option>
 <option>02-02</option>
 <option>02-01</option>
 <option>01-31</option>
@@ -107,6 +109,74 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="02-04" id="02-04">02-04</a></big></b>
+<br>
+The variable.csv <a href="db2csv_command.htm#variable.csv.start" target="_top"><span style='white-space: nowrap'>start</span></a>
+ column
+was only correct when
+<a href="db2csv_command.htm#variable.csv.var_type" target="_top"><span style='white-space: nowrap'>var_type</span></a>
+ was <code><font color="blue">rate</font></code>.
+This has been fixed.
+The changes below are for <a href="user_diabetes.py.htm" target="_top"><span style='white-space: nowrap'>user_diabetes.py</span></a>
+:
+<ol type="1"><li>
+Add
+<a href="user_diabetes.py.htm#Problem Parameters.truth2start" target="_top"><span style='white-space: nowrap'>truth2start</span></a>
+,
+<a href="user_diabetes.py.htm#Problem Parameters.max_abs_rel_err" target="_top"><span style='white-space: nowrap'>max_abs_rel_err</span></a>
+,
+to the problem parameters.
+</li><li>
+
+Add fitting of multipliers for the following covariates:
+market scan 2000 on
+<a href="mulcov_table.htm#mulcov_type.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+,
+body mass index and sex on the
+<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
+ for iota.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="02-03" id="02-03">02-03</a></big></b>
+<br>
+The age and time limits in the
+<a href="db2csv_command.htm#data.csv" target="_top"><span style='white-space: nowrap'>data.csv</span></a>
+ file were rounded off
+(as are most of its other columns)
+to reduce the space used when viewing the columns in a spread sheet program.
+<code><span style='white-space: nowrap'><br>
+<br>
+</span></code>The changes below are for <a href="user_diabetes.py.htm" target="_top"><span style='white-space: nowrap'>user_diabetes.py</span></a>
+:
+<ol type="1"><li>
+Make the standard deviations in the parent rate differences
+<a href="user_diabetes.py.htm#Problem Parameters" target="_top"><span style='white-space: nowrap'>problem&nbsp;parameters</span></a>
+.
+</li><li>
+
+Change <a href="user_diabetes.py.htm#Problem Parameters.node_list" target="_top"><span style='white-space: nowrap'>node_list</span></a>
+
+example to only the parent node.
+</li><li>
+
+Add
+<a href="user_diabetes.py.htm#Problem Parameters.integrand_list" target="_top"><span style='white-space: nowrap'>integrand_list</span></a>
+,
+<a href="user_diabetes.py.htm#Problem Parameters.ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+,
+<a href="user_diabetes.py.htm#Problem Parameters.meas_repeat" target="_top"><span style='white-space: nowrap'>meas_repeat</span></a>
+,
+<a href="user_diabetes.py.htm#Problem Parameters.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+,
+to the problem parameters.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="02-02" id="02-02">02-02</a></big></b>
 <br>
 All these changes are to <a href="user_diabetes.py.htm" target="_top"><span style='white-space: nowrap'>user_diabetes.py</span></a>
