@@ -22,6 +22,8 @@
 #	integrand
 #	integrands
 #	py
+#	str
+#	bool
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -106,6 +108,7 @@
 # $head Problem Parameters$$
 #
 # $subhead node_list$$
+# This is a $code list$$ with $code str$$ elements.
 # The first element of this list is the parent node,
 # the others are the child nodes. There must be an even number of children;
 # i.e., an odd number of elements in this list.
@@ -116,7 +119,7 @@ node_list = [ 'US' ]
 # %$$
 #
 # $subhead integrand_list$$
-# This is a list of
+# This is a $code list$$ with $code str$$ elements that are
 # $cref/integrand names/integrand_table/integrand_name/$$
 # that will have measurements in the $cref data_table$$
 # and $cref simulate_table$$.
@@ -134,7 +137,8 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # %$$
 #
 # $subhead age_grid$$
-# This sets the start age, end age, number of age grid points. and
+# This is a $code dict$$ with $code float$$ values containing
+# the start age, end age, number of age grid points. and
 # standard deviation in the log-Gaussian used to smooth the
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
 # age differences.
@@ -148,7 +152,8 @@ age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.2 }
 # %$$
 #
 # $subhead time_grid$$
-# This sets the start time, end time, number of time grid points. and
+# This is a $code dict$$ with $code float$$ values containing
+# the start time, end time, number of time grid points. and
 # standard deviation in the log-Gaussian used to smooth the
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
 # time differences.
@@ -162,31 +167,33 @@ time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':1.0  }
 # %$$
 #
 # $subhead ode_step_size$$
-# This specifies the
+# This is a $code str$$ that specifies the
 # $cref/ode_step_size/option_table/ode_step_size/$$.
 # It is suggest that this value be less than the intervals in the
 # age and time grids.
 # $srccode%py%
-ode_step_size = 5.0
+ode_step_size = '5.0'
 # %$$
 #
 # $subhead meas_cv$$
+# This is a $code float$$ that specifies the measurement standard deviations
+# $cref/meas_std/data_table/meas_std/$$ by
+# $codei%
+#	%meas_std% = %meas_cv% * %meas_value%
+# %$$
 # For this example, the data table column
 # $cref/meas_value/data_table/meas_value/$$ does not have any noise; i.e.,
 # the values in that column are the corresponding
 # $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
-# The corresponding
-# $cref/meas_std/data_table/meas_std/$$ is computed as
-# $codei%meas_std% = %meas_cv% * %meas_value%$$.
-# This determines the noise level used by the
+# The $icode meas_std$$ determines the noise level used by the
 # $cref simulate_command$$.
 # $srccode%py%
 meas_cv = 0.1
 # %$$
 #
 # $subhead meas_repeat$$
-# This is the number of times each noiseless measurement is repeated
-# which must be a positive integer.
+# This is a positive $code int$$ that specifies
+# the number of times each noiseless measurement is repeated.
 # Note that the simulated measurements will be different, because
 # the noise for each measurement will be different.
 # There are $icode meas_repeat$$
@@ -202,8 +209,9 @@ meas_repeat = 3
 # %$$
 #
 # $subhead fit_with_nose_in_data$$
-# If this variable is true, simulated measurements with noise are used
-# to fit the $cref model_variables$$.
+# This is a $code bool$$ that specifies if measurement noise is included
+# when fitting the data; i.e., if simulated measurements are used to
+# fit the $cref model_variables$$.
 # Otherwise, the measurements without noise
 # $cref/meas_value/data_table/meas_value/$$
 # are used to fit the model variables.
@@ -212,14 +220,16 @@ fit_with_noise_in_data = True
 # %$$
 #
 # $subhead quasi_fixed$$
-# If this variable is true, a Quasi-Newton method is used to
+# This is a $code str$$ that is either $code true$$ or $code false$$.
+# If true, a Quasi-Newton method is used to
 # optimize the fixed effects.
 # This only requires function values and
 # first derivatives for the objective and constraints.
 # If it is false, a Newton method is used.
-# This requires second derivatives.
+# This requires second derivatives in which case initialization
+# and function evaluations take longer.
 # $srccode%py%
-quasi_fixed = False
+quasi_fixed = 'true'
 # %$$
 #
 # $head Source Code$$
@@ -783,17 +793,13 @@ def example_db (file_name) :
 		avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# option_table
-	if quasi_fixed :
-		quasi_fixed_str='true'
-	else :
-		quasi_fixed_str='false'
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':str(parent_node)    },
-		{ 'name':'ode_step_size',          'value':str(ode_step_size)  },
+		{ 'name':'parent_node_name',       'value':parent_node         },
+		{ 'name':'ode_step_size',          'value':ode_step_size       },
 		{ 'name':'random_seed',            'value':'0'                 },
 
-		{ 'name':'quasi_fixed',            'value':quasi_fixed_str     },
+		{ 'name':'quasi_fixed',            'value':quasi_fixed         },
 		{ 'name':'max_num_iter_fixed',     'value':'200'               },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-2'              },
@@ -976,7 +982,7 @@ for var_id in range( len(var_table) ) :
 	start_var_value  = truth_var_value
 	if var_type == 'rate' :
 			if rate_table[rate_id]['rate_name'] != 'omega' :
-				start_var_value = truth_var_value / 2.0
+				start_var_value = truth_var_value / 3.0
 	row_list.append( [start_var_value] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
