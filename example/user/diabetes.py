@@ -19,33 +19,30 @@
 #	pini
 #	cv
 #	std
+#	integrand
+#	integrands
+#	py
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
 #
-# $head Under Construction$$
-# This example is under construction.
+# $head Running This example$$
+# If $icode python3$$ is the name of the python 3 program on your system,
+# $codei%
+#	%python3% example/user/diabetes.py
+# %$$
+# will run this program.
 #
 # $head Node Table$$
 # The $cref node_table$$ only contains the
 # $cref/parent/node_table/parent/$$ and child nodes specified by
 # the $code node_list$$.
 #
-# $head omega$$
-# We constrain $cref/omega/rate_table/rate_name/omega/$$ to have
-# the value used during simulation of the data.
-#
-# $head Integrand Table$$
-# The $cref integrand_table$$ just contains mtspecific and prevalence.
-# We constrain omega to a specific value.
-# We think of
-# $cref/mtspecific/avg_integrand/I_i(a,t)/mtspecific/$$
-# as informing $cref/chi/rate_table/rate_name/chi/$$,
-# $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
-# as informing $cref/iota/rate_table/rate_name/iota/$$, and
-# $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$ at age zero
-# as informing $cref/pini/rate_table/rate_name/pini/$$.
-# We assume that $cref/rho/rate_table/rate_name/rho/$$ is zero.
+# $head Constraints$$
+# The model rate $cref/omega/rate_table/rate_name/omega/$$
+# is constrained to have the value used during simulation of the data.
+# The model rate $cref/rho/rate_table/rate_name/rho/$$
+# is constrained to be zero.
 #
 # $head Weight Table and Grid$$
 # There is one weighting, with the constant value one,
@@ -90,11 +87,9 @@
 # $cref/gamma_j/data_like/Measurement Standard Deviation Covariates/gamma_j/$$
 # that is for prevalence measurements and multiplies the $code one$$ covariate.
 #
-# $head Truth$$
-# The start_age is 0, The end_age is 100,
-# the start_time is 1990, and the end_time is 2020.
+# $head Truth Table$$
 # The values in the $cref truth_var_table$$ are generated using bilinear
-# interpolation of the log of the specified values at
+# interpolation of the log of values specified at
 # (start_age, start_time),
 # (start_age, end_time),
 # (end_age, start_time)
@@ -109,6 +104,24 @@
 # to a coefficient of variation.
 #
 # $head Problem Parameters$$
+#
+# $subhead integrand_list$$
+# This is a list of
+# $cref/integrand names/integrand_table/integrand_name/$$
+# that will have measurements in the $cref data_table$$
+# and $cref simulate_table$$.
+# As mentioned in the
+# $cref/constraints/user_diabetes.py/Constraints/$$ above, the rates
+# $icode rho$$ and $icode omega$$ are know during the estimation (fitting)
+# process.
+# The integrands must inform the estimation of
+# the model rates for
+# $cref/pini/rate_table/rate_name/pini/$$,
+# $cref/iota/rate_table/rate_name/iota/$$, and
+# $cref/chi/rate_table/rate_name/chi/$$.
+# $srccode%py%
+integrand_list = [ 'mtspecific', 'prevalence' ]
+# %$$
 #
 # $subhead age_grid$$
 # This sets the start age, end age, number of age grid points. and
@@ -166,6 +179,14 @@ meas_cv = 0.1
 # which must be a positive integer.
 # Note that the simulated measurements will be different, because
 # the noise for each measurement will be different.
+# There are $icode meas_repeat$$
+# data points for each integrand in the integrand list,
+# each age in the age grid,
+# each time in the time grid,
+# each node in the node list.
+# In addition if an age is not the first age and time is not the first time,
+# there is a data point in the middle of the age-time interval that ends
+# at that (age, time).
 # $srccode%py%
 meas_repeat = 3
 # %$$
@@ -190,6 +211,7 @@ node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin' ]
 node_list = [ 'US' ]
 # %$$
 #
+# $head Source Code$$
 # $code
 # $srcfile%
 #	example/user/diabetes.py
@@ -432,9 +454,6 @@ def example_db (file_name) :
 	time_index_all         = range(number)
 	time_index_rate_parent = time_index_all
 	time_index_rate_child  = [0, number-1]
-	# ----------------------------------------------------------------------
-	# integrand table:
-	integrand_list = [ 'mtspecific', 'prevalence' ]
 	# ----------------------------------------------------------------------
 	# node table:
 	parent_node = node_list[0]
