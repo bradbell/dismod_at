@@ -26,6 +26,7 @@
 #	bool
 #	var
 #	rel
+#	bmi
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -56,12 +57,9 @@
 # The following information is placed in the $cref covariate_table$$
 # $table
 # Name $cnext Description $cnext reference  $cnext max_difference $rnext
-# one     $cnext constant value = 1        $cnext 0     $cnext null $rnext
 # sex     $cnext .5=male -.5=female        $cnext 0     $cnext 0.6  $rnext
-# BMI     $cnext body mass index           $cnext 27    $cnext null $rnext
-# MS_2000 $cnext market scan data for 2000 $cnext 0     $cnext null $rnext
-# MS_2010 $cnext market scan data for 2010 $cnext 0     $cnext null $rnext
-# MS_2015 $cnext market scan data for 2015 $cnext 0     $cnext null
+# bmi     $cnext body mass index           $cnext 27    $cnext null $rnext
+# ms_2000 $cnext market scan data for 2000 $cnext 0     $cnext null
 # $tend
 # (This information is not yet used.)
 #
@@ -77,14 +75,12 @@
 # that are used to adjust
 # $cref/iota/rate_table/rate_name/iota/$$.
 # A separate multiplier is applied to the covariates
-# $code sex$$ and $code BMI$$.
+# $code sex$$ and $code bmi$$.
 #
 # $subhead Measurement Value$$
 # There are three measurement value covariate multipliers
 # $cref/beta_j/avg_integrand/Measurement Value Covariates/beta_j/$$
 # that is used to adjust the prevalence measurements.
-# A separate multiplier is applied to the covariates
-# $code MS_2000$$, $code MS_2010$$ and $code MS_2015$$.
 #
 # $subhead Measurement Standard Deviations$$
 # There is one measurement standard deviation covariate multiplier
@@ -660,11 +656,8 @@ def example_db (file_name) :
 	# covariate table:
 	covariate_table = [
 		{'name':'sex',     'reference':0.0,  'max_difference':0.6  } ,
-		{'name':'BMI',     'reference':27.0, 'max_difference':None } ,
-		{'name':'MS_2000', 'reference':0.0,  'max_difference':None } ,
-		{'name':'MS_2010', 'reference':0.0,  'max_difference':None } ,
-		{'name':'MS_2015', 'reference':0.0,  'max_difference':None } ,
-		{'name':'one',     'reference':0.0,  'max_difference':None } ,
+		{'name':'bmi',     'reference':27.0, 'max_difference':None } ,
+		{'name':'ms_2000', 'reference':0.0,  'max_difference':None } ,
 	]
 	#
 	# mulcov table:
@@ -676,35 +669,17 @@ def example_db (file_name) :
 			'effected':  'iota',
 			'smooth':    'smooth_mulcov_rate_value'
 		} , {
-			# alpha for iota and BMI
-			'covariate': 'BMI',
+			# alpha for iota and bmi
+			'covariate': 'bmi',
 			'type':      'rate_value',
 			'effected':  'iota',
 			'smooth':    'smooth_mulcov_rate_value'
 		} , {
-			# beta for prevalence and MS_2000
-			'covariate': 'MS_2000',
+			# beta for prevalence and ms_2000
+			'covariate': 'ms_2000',
 			'type':      'meas_value',
 			'effected':  'prevalence',
 			'smooth':    'smooth_mulcov_meas_value'
-		} , {
-			# beta for prevalence and MS_2010
-			'covariate': 'MS_2010',
-			'type':      'meas_value',
-			'effected':  'prevalence',
-			'smooth':    'smooth_mulcov_meas_value'
-		} , {
-			# beta for prevalence and MS_2015
-			'covariate': 'MS_2015',
-			'type':      'meas_value',
-			'effected':  'prevalence',
-			'smooth':    'smooth_mulcov_meas_value'
-		} , {
-			# gamma for prevalence and one
-			'covariate': 'one',
-			'type':      'meas_std',
-			'effected':  'prevalence',
-			'smooth':    'smooth_mulcov_meas_std'
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -773,14 +748,7 @@ def example_db (file_name) :
 			sex = +0.5
 		#
 		# market scan
-		if k1 % 4 == 0 :
-			ms = (0, 0, 0)
-		elif k1 % 4 == 1 :
-			ms = (1, 0, 0)
-		elif k1 % 4 == 2 :
-			ms = (0, 1, 0)
-		else :
-			ms = (0, 0, 1)
+		ms_2000 = k1 % 2
 		#
 		# body mass index
 		bmi = 20 + k1 % 16
@@ -795,10 +763,8 @@ def example_db (file_name) :
 			'time_lower':   time,
 			'time_upper':   time,
 			'sex':          sex,
-			'MS_2000':      ms[0],
-			'MS_2010':      ms[1],
-			'MS_2015':      ms[2],
-			'BMI':          bmi,
+			'ms_2000':      ms_2000,
+			'bmi':          bmi,
 			'one':          1,
 		}
 		avgint_table.append( copy.copy(row) )
@@ -816,10 +782,8 @@ def example_db (file_name) :
 			'time_lower':   time,
 			'time_upper':   time,
 			'sex':          sex,
-			'MS_2000':      ms[0],
-			'MS_2010':      ms[1],
-			'MS_2015':      ms[2],
-			'BMI':          bmi,
+			'ms_2000':      ms_2000,
+			'bmi':          bmi,
 			'one':          1,
 		}
 		avgint_table.append( copy.copy(row) )
