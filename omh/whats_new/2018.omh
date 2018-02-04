@@ -37,6 +37,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-04$$
+The changes below are for $cref user_diabetes.py$$:
+$list number$$
+Add
+$cref/truth2start/user_diabetes.py/Problem Parameters/truth2start/$$
+to the problem parameters.
+$lend
+
 $head 02-03$$
 The age and time limits in the
 $cref/data.csv/db2csv_command/data.csv/$$ file were rounded off

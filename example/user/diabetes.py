@@ -24,6 +24,7 @@
 #	py
 #	str
 #	bool
+#	var
 # $$
 #
 # $section An Example Fitting Simulated Diabetes Data$$
@@ -112,7 +113,7 @@
 # The first element of this list is the parent node,
 # the others are the child nodes. There must be an even number of children;
 # i.e., an odd number of elements in this list.
-# The case with zero child; i.e., one element in the list, is OK.
+# The case with zero child; i.e., one element in the list, is OK:
 # $srccode%py%
 node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin' ]
 node_list = [ 'US' ]
@@ -131,7 +132,7 @@ node_list = [ 'US' ]
 # the model rates for
 # $cref/pini/rate_table/rate_name/pini/$$,
 # $cref/iota/rate_table/rate_name/iota/$$, and
-# $cref/chi/rate_table/rate_name/chi/$$.
+# $cref/chi/rate_table/rate_name/chi/$$:
 # $srccode%py%
 integrand_list = [ 'mtspecific', 'prevalence' ]
 # %$$
@@ -146,7 +147,7 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # The interval between age grid points is the end age, minus the start age,
 # divided by the number of grid points minus one.
 # The standard deviation is for the log-Gaussian in the prior used to smooth
-# the difference of parent rates between age grid points.
+# the difference of parent rates between age grid points:
 # $srccode%py%
 age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.2 }
 # %$$
@@ -161,7 +162,7 @@ age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.2 }
 # The interval between time grid points is the end time, minus the start time,
 # divided by the number of grid points minus one.
 # The standard deviation is for the log-Gaussian in the prior used to smooth
-# the difference of parent rates between time grid points.
+# the difference of parent rates between time grid points:
 # $srccode%py%
 time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':1.0  }
 # %$$
@@ -170,7 +171,7 @@ time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':1.0  }
 # This is a $code str$$ that specifies the
 # $cref/ode_step_size/option_table/ode_step_size/$$.
 # It is suggest that this value be less than the intervals in the
-# age and time grids.
+# age and time grids:
 # $srccode%py%
 ode_step_size = '5.0'
 # %$$
@@ -186,7 +187,7 @@ ode_step_size = '5.0'
 # the values in that column are the corresponding
 # $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
 # The $icode meas_std$$ determines the noise level used by the
-# $cref simulate_command$$.
+# $cref simulate_command$$:
 # $srccode%py%
 meas_cv = 0.1
 # %$$
@@ -203,7 +204,7 @@ meas_cv = 0.1
 # each node in the node list.
 # In addition if an age is not the first age and time is not the first time,
 # there is a data point in the middle of the age-time interval that ends
-# at that (age, time).
+# at that (age, time):
 # $srccode%py%
 meas_repeat = 3
 # %$$
@@ -214,7 +215,7 @@ meas_repeat = 3
 # fit the $cref model_variables$$.
 # Otherwise, the measurements without noise
 # $cref/meas_value/data_table/meas_value/$$
-# are used to fit the model variables.
+# are used to fit the model variables:
 # $srccode%py%
 fit_with_noise_in_data = True
 # %$$
@@ -227,9 +228,20 @@ fit_with_noise_in_data = True
 # first derivatives for the objective and constraints.
 # If it is false, a Newton method is used.
 # This requires second derivatives in which case initialization
-# and function evaluations take longer.
+# and function evaluations take longer:
 # $srccode%py%
 quasi_fixed = 'true'
+# %$$
+#
+# $subhead truth2start$$
+# This is a $code float$$ that is used to map each
+# $cref/truth_var_value/truth_var_table/truth_var_value/$$
+# to the corresponding
+# $cref/start_var_value/start_var_table/start_var_value/$$.
+# To be specific, the starting value is the true value times
+# $icode truth2start$$:
+# $srccode%py%
+truth2start = 0.5
 # %$$
 #
 # $head Source Code$$
@@ -982,7 +994,7 @@ for var_id in range( len(var_table) ) :
 	start_var_value  = truth_var_value
 	if var_type == 'rate' :
 			if rate_table[rate_id]['rate_name'] != 'omega' :
-				start_var_value = truth_var_value / 3.0
+				start_var_value = truth2start * truth_var_value
 	row_list.append( [start_var_value] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
