@@ -39,6 +39,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-05$$
+Advance to $code cppad_mixed-20180123$$.
+This is expected to improve the scaling of the fixed effect optimization
+(in some cases).
+
 $head 02-04$$
 The variable.csv $cref/start/db2csv_command/variable.csv/start/$$ column
 was only correct when

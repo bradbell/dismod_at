@@ -197,6 +197,10 @@ $head start_var$$
 This vector is the starting $cref model_variables$$ in the order
 specified by $cref pack_info$$.
 
+$head scalar_var$$
+The object and constraints are scaled using this value for the
+$cref model_variables$$.
+
 $head prior_table$$
 This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
 
