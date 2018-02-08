@@ -39,6 +39,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-08$$
+Add $cref/start_var/set_command/source/start_var/$$ to the possible
+sources for the $code set$$ command.
+
+
 $head 02-05$$
 Advance to $code cppad_mixed-20180123$$.
 This is expected to improve the scaling of the fixed effect optimization

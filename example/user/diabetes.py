@@ -235,7 +235,7 @@ quasi_fixed = 'true'
 # the upper and lower limits for a variable.
 # $icode truth2start$$:
 # $srccode%py%
-truth2start = 2.0
+truth2start = 0.3
 # %$$
 #
 # $subhead max_abs_rel_err$$
@@ -1000,6 +1000,14 @@ for var_id in range( len(var_table) ) :
 	row_list.append( [start_var_value] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
+#
+if False :
+	# copy start_var table to scale_var table
+	cmd = [ program, file_name, 'set' , 'scale_var', 'start_var' ]
+	print( ' '.join(cmd) )
+	flag = subprocess.call( cmd )
+	if flag != 0 :
+		sys.exit('The dismod_at set command failed')
 #
 # Simulate a data set corresponding to the truth
 number_simulate = '1'
