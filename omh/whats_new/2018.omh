@@ -39,6 +39,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-09$$
+Detect and report an error when a data table
+$cref/density/data_table/density_id/$$ is $code log_students$$ and
+$cref/eta/data_table/eta/$$ is less than zero or null.
+
 $head 02-08$$
 $list number$$
 Add $cref/start_var/set_command/source/start_var/$$ to the possible
@@ -49,14 +54,8 @@ This fixes a bug in the Laplace
 $cref/density/data_table/density_id/$$ in the data table when
 $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$ was $code false$$.
 $lnext
-Detect and report an error when
-$cref/density/data_table/density_id/$$ in the data table is
-$code laplace$$ or $code log_laplace$$ and the corresponding
-$cref avg_integrand$$ depends on the random effects.
-$lnext
-Detect and report an error when a data table
-$cref/density/data_table/density_id/$$ is $code log_students$$ and
-$cref/eta/data_table/eta/$$ is less than zero or null.
+Detect and report an error when the density in the data table is
+$cref/laplace/data_table/density_id/Laplace/$$ or $code log_laplace$$.
 $lend
 
 
