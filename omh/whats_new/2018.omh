@@ -40,12 +40,19 @@ $childtable%
 %$$
 
 $head 02-08$$
+$list number$$
 Add $cref/start_var/set_command/source/start_var/$$ to the possible
 sources for the $code set$$ command.
+$lnext
+Advance to $code cppad_mixed-20180208$$.
+This fixes a bug in the Laplace
+$cref/density/data_table/density_id/$$ in the data table when
+$cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$ was $code false$$.
+$lend
 
 
 $head 02-05$$
-Advance to $code cppad_mixed-20180123$$.
+Advance to $code cppad_mixed-20180205$$.
 This is expected to improve the scaling of the fixed effect optimization
 (in some cases).
 
