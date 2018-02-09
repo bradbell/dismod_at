@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -42,6 +42,11 @@ the density function for the measurement nose.
 The $cref/density_name/density_table/density_name/$$
 corresponding to $icode density_id$$ cannot be $code uniform$$.
 (Use $cref/hold_out/data_table/hold_out/$$ to ignore data during fitting.)
+If the density is Laplace or Log-Laplace,
+the $cref avg_integrand$$ cannot depend on any of the random effects.
+For example, this will be true if the
+$cref/node_id/data_table/node_id/$$ is the
+$cref/parent node/option_table/parent_node_id/$$.
 
 $head node_id$$
 This column has type $code integer$$ and is the

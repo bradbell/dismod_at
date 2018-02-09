@@ -788,6 +788,12 @@ $icode%data_subset_obj%[%subset_id%].%field%$$,
 is used as a replacement for
 $icode%subset_object[%subset_id%]%.%field%$$.
 
+$head Laplace Density$$
+The Laplace density is only allowed if the model for the
+$cref avg_integrand$$ does not depend on the value of the random effects.
+If this assumption is violated, an error messages is generated and the
+program exits.
+
 $end
 */
 void data_model::replace_like(
@@ -818,6 +824,17 @@ void data_model::replace_like(
 		data_info_[subset_id].density = density_enum(
 			data_subset_obj[subset_id].density_id
 		);
+		//
+		bool laplace = data_info_[subset_id].density == laplace_enum;
+		laplace     |= data_info_[subset_id].density == log_laplace_enum;
+		if( laplace && data_info_[subset_id].bound_ran_neq )
+		{	std::string msg, table_name;
+			size_t data_id = data_subset_obj_[subset_id].original_id;
+			table_name = "data";
+			msg  = "density_id corresponds to laplace or log_laplace and\n";
+			msg += "model depends on random effects that are not constrained";
+			error_exit(msg, table_name, data_id);
+		}
 	}
 	replace_like_called_ = true;
 	return;
