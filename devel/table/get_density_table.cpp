@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -22,7 +22,9 @@ $index density, get table$$
 $index table, get density$$
 
 $head Syntax$$
-$icode%density_table% = get_density_table(%db%)%$$
+$icode%density_table% = get_density_table(%db%)
+%$$
+$icode%is_log% = log_density(%density_id%)%$$
 
 $head Purpose$$
 To read the $cref density_table$$ and return it as a C++ data structure.
@@ -60,6 +62,13 @@ $code log_laplace_enum$$   $pre  $$ $cnext $code log_laplace$$
 $code log_students_enum$$  $pre  $$ $cnext $code log_students$$
 $tend
 The number of these enum values is $code number_density_enum$$.
+
+$head log_density$$
+The $code log_density$$ argument $icode density_id$$ can have
+any type that can be converted to a $code density_enum$$.
+The return value $icode is_log$$ is true if the corresponding density is
+log_gaussian, log_laplace, or log_students.
+It is false otherwise.
 
 $children%example/devel/table/get_density_table_xam.cpp
 %$$

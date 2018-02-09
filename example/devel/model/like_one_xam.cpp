@@ -279,15 +279,13 @@ bool like_one_xam(void)
 		double y          = data_table[data_id].meas_value;
 		double eta        = 1e-4;
 		size_t density_id = data_table[data_id].density_id;
-		bool log_density = density_id == dismod_at::log_gaussian_enum;
-		log_density     |= density_id == dismod_at::log_laplace_enum;
 
 		// check delta_out
 		ok &= fabs( 1.0 - Value(delta_out) / delta ) <= eps;
 
 		// check wres
 		Float check;
-		if( log_density )
+		if( dismod_at::log_density(density_id) )
 			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(y+eta));
 		else
 			check = (y - avg) / delta;
