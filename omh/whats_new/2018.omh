@@ -40,9 +40,14 @@ $childtable%
 %$$
 
 $head 02-09$$
+$list number$$
 Detect and report an error when a data table
 $cref/density/data_table/density_id/$$ is $code log_students$$ and
 $cref/eta/data_table/eta/$$ is less than zero or null.
+$lnext
+Update the values used for $icode option_name$$ in the
+$cref option_table.py$$ example.
+$lend
 
 $head 02-08$$
 $list number$$

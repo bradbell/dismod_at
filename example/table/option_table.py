@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -30,13 +30,13 @@ def option_table() :
 	col_name = [ 'option_name', 'option_value'  ]
 	col_type = [ 'text unique'  , 'text' ]
 	row_list = [
-		['parent_node_id',  '0'                ] ,
-		['ode_step_size',   '20.0'             ] ,
-		['tolerance',       '1e-8'             ] ,
-		['max_num_iter',    '100'              ] ,
-		['print_level',     '0'                ] ,
-		['derivative_test', 'second-order'     ] ,
-		['rate_case',       'iota_pos_rho_pos' ]
+		['parent_node_id',        '0'                ] ,
+		['ode_step_size',         '20.0'             ] ,
+		['rate_case',             'iota_pos_rho_pos' ] ,
+		['tolerance_fixed',       '1e-8'             ] ,
+		['max_num_iter_fixed',    '100'              ] ,
+		['print_level_fixed',     '0'                ] ,
+		['derivative_test_fixed', 'second-order'     ] ,
 	]
 	tbl_name = 'option'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
