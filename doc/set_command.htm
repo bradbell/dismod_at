@@ -98,6 +98,7 @@ A:active { color : purple }
 <option>source</option>
 <option>---..prior_mean</option>
 <option>---..fit_var</option>
+<option>---..start_var</option>
 <option>---..sample</option>
 <option>Example</option>
 </select>
@@ -218,9 +219,12 @@ Note that this table may also be created directly by the user
 <br>
 <b><big><a name="source" id="source">source</a></big></b>
 <br>
-The set command argument 
+The set command 
 <code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
- must be one of the following:
+ must be one of the following
+(and not be the same as 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+):
 
 <br>
 <br>
@@ -252,6 +256,22 @@ In this case
 
 <br>
 <br>
+<b><a name="source.start_var" id="source.start_var">start_var</a></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ is <code><font color="blue">start_var</font></code>,
+the contents of this table are copied to 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+.
+This is useful when the user creates the <code><font color="blue">start_var</font></code> table
+and wants the <code><font color="blue">scale_var</font></code> table to have the same values.
+In this case, 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+ would be <code><font color="blue">scale_var</font></code>.
+
+<br>
+<br>
 <b><a name="source.sample" id="source.sample">sample</a></b>
 <br>
 If 
@@ -266,7 +286,6 @@ and corresponding to the specified sample index,
 are used for the values in 
 <code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
 .
-
 
 
 <br>

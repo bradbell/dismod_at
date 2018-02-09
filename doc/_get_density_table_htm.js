@@ -74,6 +74,7 @@ var list_current0 = [
 'get_density_table.htm#db',
 'get_density_table.htm#density_table',
 'get_density_table.htm#density_enum',
+'get_density_table.htm#log_density',
 'get_density_table.htm#Example'
 ];
 function choose_across0(item)

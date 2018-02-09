@@ -49,6 +49,7 @@ var list_current0 = [
 'fit_model_ctor.htm#fit_or_sample',
 'fit_model_ctor.htm#pack_object',
 'fit_model_ctor.htm#start_var',
+'fit_model_ctor.htm#scalar_var',
 'fit_model_ctor.htm#prior_table',
 'fit_model_ctor.htm#s_info_vec',
 'fit_model_ctor.htm#data_object',

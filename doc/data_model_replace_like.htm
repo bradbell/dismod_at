@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Set Value Necessary for Likelihood (not for Average Integrand)</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Set Value Necessary for Likelihood (not for Average Integrand)">
-<meta name="keywords" id="keywords" content=" set value necessary likelihood (not average integrand) syntax purpose data_object minimum_meas_cv subset_object n_subset subset_id data_subset_obj ">
+<meta name="keywords" id="keywords" content=" set value necessary likelihood (not average integrand) syntax purpose data_object minimum_meas_cv subset_object n_subset subset_id data_subset_obj laplace density ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -111,6 +111,7 @@ A:active { color : purple }
 <option>---..n_subset</option>
 <option>---..subset_id</option>
 <option>data_subset_obj</option>
+<option>Laplace Density</option>
 </select>
 </td>
 </tr></table><br>
@@ -240,6 +241,16 @@ is used as a replacement for
 
 <code><i><font color="black"><span style='white-space: nowrap'>subset_object[</span></font></i><font color="blue"><span style='white-space: nowrap'>subset_id</span></font><i><font color="black"><span style='white-space: nowrap'>]</span></font></i><font color="blue"><span style='white-space: nowrap'>.</span></font><i><font color="black"><span style='white-space: nowrap'>field</span></font></i></code>
 .
+
+<br>
+<br>
+<b><big><a name="Laplace Density" id="Laplace Density">Laplace Density</a></big></b>
+<br>
+The Laplace density is only allowed if the model for the
+<a href="avg_integrand.htm" target="_top"><span style='white-space: nowrap'>avg_integrand</span></a>
+ does not depend on the value of the random effects.
+If this assumption is violated, an error messages is generated and the
+program exits.
 
 
 <hr>Input File: devel/model/data_model.cpp

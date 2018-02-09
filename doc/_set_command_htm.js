@@ -46,6 +46,7 @@ var list_current0 = [
 'set_command.htm#source',
 'set_command.htm#source.prior_mean',
 'set_command.htm#source.fit_var',
+'set_command.htm#source.start_var',
 'set_command.htm#source.sample',
 'set_command.htm#Example'
 ];

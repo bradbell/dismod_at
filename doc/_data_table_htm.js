@@ -55,6 +55,7 @@ var list_current0 = [
 'data_table.htm#data_name',
 'data_table.htm#integrand_id',
 'data_table.htm#density_id',
+'data_table.htm#density_id.Laplace',
 'data_table.htm#node_id',
 'data_table.htm#node_id.Parent Data Random Effects',
 'data_table.htm#node_id.Child Data Random Effects',

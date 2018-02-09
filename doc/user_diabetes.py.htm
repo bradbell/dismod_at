@@ -435,7 +435,7 @@ the upper and lower limits for a variable.
 <code><i><font color="black"><span style='white-space: nowrap'>truth2start</span></font></i></code>
 :
 <pre style='display:inline'><tt>
-truth2start <font color="#990000">=</font> <font color="#993399">2.0</font>
+truth2start <font color="#990000">=</font> <font color="#993399">0.3</font>
 </tt></pre>
 <br>
 <b><a name="Problem Parameters.max_abs_rel_err" id="Problem Parameters.max_abs_rel_err">max_abs_rel_err</a></b>
@@ -1199,6 +1199,14 @@ row_list        <font color="#990000">=</font> <b><font color="#000000">list</fo
      row_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">[</font>start_var_value<font color="#990000">]</font> <font color="#990000">)</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
 connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+<i><font color="#9A1900">#</font></i>
+<b><font color="#0000FF">if</font></b> False <font color="#990000">:</font>
+     <i><font color="#9A1900"># copy start_var table to scale_var table</font></i>
+     cmd <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font> <font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font> <font color="#990000">]</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
+     flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
+     <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
+          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at set command failed'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># Simulate a data set corresponding to the truth</font></i>
 number_simulate <font color="#990000">=</font> <font color="#FF0000">'1'</font>

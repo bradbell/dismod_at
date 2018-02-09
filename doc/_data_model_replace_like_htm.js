@@ -54,7 +54,8 @@ var list_current0 = [
 'data_model_replace_like.htm#data_object.subset_object',
 'data_model_replace_like.htm#data_object.n_subset',
 'data_model_replace_like.htm#data_object.subset_id',
-'data_model_replace_like.htm#data_subset_obj'
+'data_model_replace_like.htm#data_subset_obj',
+'data_model_replace_like.htm#Laplace Density'
 ];
 function choose_across0(item)
 {	var index          = item.selectedIndex;

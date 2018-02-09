@@ -352,15 +352,13 @@ A:active { color : purple }
           <font color="#009900">double</font> y          <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>meas_value<font color="#990000">;</font>
           <font color="#009900">double</font> eta        <font color="#990000">=</font> <font color="#993399">1e-4</font><font color="#990000">;</font>
           <font color="#008080">size_t</font> density_id <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">].</font>density_id<font color="#990000">;</font>
-          <font color="#009900">bool</font> log_density <font color="#990000">=</font> density_id <font color="#990000">==</font> dismod_at<font color="#990000">::</font>log_gaussian_enum<font color="#990000">;</font>
-          log_density     <font color="#990000">|=</font> density_id <font color="#990000">==</font> dismod_at<font color="#990000">::</font>log_laplace_enum<font color="#990000">;</font>
 
           <i><font color="#9A1900">// check delta_out</font></i>
           ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> <b><font color="#000000">Value</font></b><font color="#990000">(</font>delta_out<font color="#990000">)</font> <font color="#990000">/</font> delta <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
 
           <i><font color="#9A1900">// check wres</font></i>
           <font color="#008080">Float</font> check<font color="#990000">;</font>
-          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> log_density <font color="#990000">)</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> dismod_at<font color="#990000">::</font><b><font color="#000000">log_density</font></b><font color="#990000">(</font>density_id<font color="#990000">)</font> <font color="#990000">)</font>
                check <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font>y<font color="#990000">+</font>eta<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>avg<font color="#990000">+</font>eta<font color="#990000">))</font> <font color="#990000">/</font> <b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> delta<font color="#990000">/(</font>y<font color="#990000">+</font>eta<font color="#990000">));</font>
           <b><font color="#0000FF">else</font></b>
                check <font color="#990000">=</font> <font color="#990000">(</font>y <font color="#990000">-</font> avg<font color="#990000">)</font> <font color="#990000">/</font> delta<font color="#990000">;</font>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,9 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Contents</option>
+<option>02-09</option>
+<option>02-08</option>
+<option>02-05</option>
 <option>02-04</option>
 <option>02-03</option>
 <option>02-02</option>
@@ -109,6 +112,49 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="02-09" id="02-09">02-09</a></big></b>
+<br>
+Detect and report an error when a data table
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
+ is <code><font color="blue">log_students</font></code> and
+<a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ is less than zero or null.
+
+<br>
+<br>
+<b><big><a name="02-08" id="02-08">02-08</a></big></b>
+
+<ol type="1"><li>
+Add <a href="set_command.htm#source.start_var" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+ to the possible
+sources for the <code><font color="blue">set</font></code> command.
+</li><li>
+
+Advance to <code><font color="blue">cppad_mixed-20180208</font></code>.
+This fixes a bug in the Laplace
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
+ in the data table when
+<a href="option_table.htm#Optimizer.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+ was <code><font color="blue">false</font></code>.
+</li><li>
+
+Detect and report an error when the density in the data table is
+<a href="data_table.htm#density_id.Laplace" target="_top"><span style='white-space: nowrap'>laplace</span></a>
+ or <code><font color="blue">log_laplace</font></code>.
+</li></ol>
+
+
+
+<br>
+<br>
+<b><big><a name="02-05" id="02-05">02-05</a></big></b>
+<br>
+Advance to <code><font color="blue">cppad_mixed-20180205</font></code>.
+This is expected to improve the scaling of the fixed effect optimization
+(in some cases).
+
+<br>
+<br>
 <b><big><a name="02-04" id="02-04">02-04</a></big></b>
 <br>
 The variable.csv <a href="db2csv_command.htm#variable.csv.start" target="_top"><span style='white-space: nowrap'>start</span></a>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Data Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Data Table">
-<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id node_id parent random effects child weight_id hold_out meas_value meas_std eta null nu age_lower age_upper time_lower time_upper covariates example ">
+<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id laplace node_id parent random effects child weight_id hold_out meas_value meas_std eta null nu age_lower age_upper time_lower time_upper covariates example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -110,6 +110,7 @@ A:active { color : purple }
 <option>data_name</option>
 <option>integrand_id</option>
 <option>density_id</option>
+<option>---..Laplace</option>
 <option>node_id</option>
 <option>---..Parent Data Random Effects</option>
 <option>---..Child Data Random Effects</option>
@@ -177,6 +178,23 @@ corresponding to
  cannot be <code><font color="blue">uniform</font></code>.
 (Use <a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
  to ignore data during fitting.)
+
+<br>
+<br>
+<b><a name="density_id.Laplace" id="density_id.Laplace">Laplace</a></b>
+<br>
+If the density is <code><font color="blue">laplace</font></code> or <code><font color="blue">log_laplace</font></code>,
+the <a href="avg_integrand.htm" target="_top"><span style='white-space: nowrap'>average_integrand</span></a>
+
+cannot depend on any of the random effects.
+For example, if the
+<a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+ is the
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+,
+the average integrand does not depend on the random effects.
+Also, if the node corresponding to a child that has all its random effects
+constrained, the average integrand does not depend on the random effects.
 
 <br>
 <br>
