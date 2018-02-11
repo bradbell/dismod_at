@@ -61,7 +61,7 @@ var list_current0 = [
 'prior_table.htm#std',
 'prior_table.htm#eta',
 'prior_table.htm#eta.null',
-'prior_table.htm#eta.Scaling',
+'prior_table.htm#eta.Scaling Fixed Effects',
 'prior_table.htm#nu',
 'prior_table.htm#nu.null',
 'prior_table.htm#Example'

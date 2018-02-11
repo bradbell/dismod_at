@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Scaling Values Used During Fit</title>
+<title>Scaling Fixed Effects Objective and Constraints</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Scaling Values Used During Fit">
-<meta name="keywords" id="keywords" content=" scaling values used during fit discussion scale_var_id scale_var_value example ">
+<meta name="description" id="description" content="Scaling Fixed Effects Objective and Constraints">
+<meta name="keywords" id="keywords" content=" scaling fixed effects objective constraints discussion scale_var_id scale_var_value example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -107,20 +107,27 @@ A:active { color : purple }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
-<center><b><big><big>Scaling Values Used During Fit</big></big></b></center>
+<center><b><big><big>Scaling Fixed Effects Objective and Constraints</big></big></b></center>
 <br>
 <b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
 <br>
-The scale_var table contains one value for each of the
-<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+The fixed effects are scaled using the 
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ in the
+corresponding priors; see
+<a href="prior_table.htm#eta.Scaling Fixed Effects" target="_top"><span style='white-space: nowrap'>scaling</span></a>
 .
+The fixed effects objective
+and constraints are scaled using their values at the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ corresponding to the scale_var table.
 The <a href="init_command.htm#scale_var_table" target="_top"><span style='white-space: nowrap'>init_command</span></a>
 
 creates a scale_var table
 using the mean of the priors for the model variables values.
 The <a href="set_command.htm#table_out.scale_var" target="_top"><span style='white-space: nowrap'>set_command</span></a>
 
-can also be used to create a start_var table.
+can also be used to change the start_var table.
 This table may also be created directly by the user
 (with the aid of the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
 ).

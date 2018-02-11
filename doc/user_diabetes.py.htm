@@ -629,13 +629,15 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># priors used in smoothing for iota</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(1e-8,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font> <font color="#990000">\</font>
+               <font color="#FF0000">'prior_pos_parent_value'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_child_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_child_time'</font><font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># priors used in smoothing for chi</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_chi_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(1e-8,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font> <font color="#990000">\</font>
+               <font color="#FF0000">'prior_pos_parent_value'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_chi_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> <font color="#FF0000">'prior_child_age'</font><font color="#990000">,</font> <font color="#FF0000">'prior_child_time'</font><font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
@@ -650,7 +652,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># priors used in smoothing for pini</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_pini_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_U(0,1)'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_pini_parent_value'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_parent_time'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_pini_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_N(0,1)'</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#FF0000">'prior_child_time'</font><font color="#990000">)</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
@@ -721,38 +723,26 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
                <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">1.0</font><font color="#990000">,</font>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
-               <i><font color="#9A1900"># prior_U(0,1)</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_U(0,1)'</font><font color="#990000">,</font>
-               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.1</font><font color="#990000">,</font>     <i><font color="#9A1900"># only affects initial optimizer value</font></i>
-               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
-          <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
-               <i><font color="#9A1900"># prior_U(1e-8,1)</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_U(1e-8,1)'</font><font color="#990000">,</font>
-               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.1</font><font color="#990000">,</font>     <i><font color="#9A1900"># only affects initial optimizer value</font></i>
-               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">1e-8</font><font color="#990000">,</font>
-               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
-          <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
-               <i><font color="#9A1900"># prior_U(0,0)</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_U(0,0)'</font><font color="#990000">,</font>
-               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">0.0</font><font color="#990000">,</font>
-          <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
                <i><font color="#9A1900"># prior_U(-inf,inf)</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_U(-inf,inf)'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
-               <i><font color="#9A1900"># prior_U(1e-8,1e-8)</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_U(1e-8,1e-8)'</font><font color="#990000">,</font>
+               <i><font color="#9A1900"># prior_pini_parent_value</font></i>
+               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_pini_parent_value'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">1e-8</font><font color="#990000">,</font>
+               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.1</font><font color="#990000">,</font>  <i><font color="#9A1900"># setting start_var table so mean has no affect</font></i>
+               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">0.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-5</font><font color="#990000">,</font> <i><font color="#9A1900"># used for log-scaling during optimization</font></i>
+          <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
+               <i><font color="#9A1900"># prior_pos_parent_value</font></i>
+               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_pos_parent_value'</font><font color="#990000">,</font>
+               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
+               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.1</font><font color="#990000">,</font> <i><font color="#9A1900"># setting start_var table so mean has no affect</font></i>
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">1e-8</font><font color="#990000">,</font>
-               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1e-8</font><font color="#990000">,</font>
+               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">0.0</font><font color="#990000">,</font> <i><font color="#9A1900"># used for log-scaling during optimization</font></i>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
                <i><font color="#9A1900"># prior_parent_age</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_parent_age'</font><font color="#990000">,</font>
@@ -1007,7 +997,8 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font>quasi_fixed         <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'300'</font>               <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'5'</font>                 <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-2'</font>              <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-4'</font>              <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'trace-adaptive'</font>    <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_random'</font><font color="#990000">,</font>    <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'50'</font>                <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_random'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>

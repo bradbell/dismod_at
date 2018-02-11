@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180209  ',' ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180211  ',' ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command test executable path example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix eigen_prefix other prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir checkpoint_newton_step system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
@@ -52,7 +52,7 @@ Keyword =
 'nslist_table.py  nslist_table: Example and Test  ',' ',
 'option_table  The Option Table  ',' conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimizer quasi_fixed derivative_test max_num_iter print_level accept_after_max_steps tolerance bound_random bound_frac_fixed example ',
 'option_table.py  option_table: Example and Test  ',' ',
-'prior_table  The Prior Table  ',' prior_id prior_name density_id lower upper mean uniform std eta null scaling example ',
+'prior_table  The Prior Table  ',' prior_id prior_name density_id lower upper mean uniform std eta null scaling fixed effects example ',
 'prior_table.py  prior_table: Example and Test  ',' ',
 'rate_table  The Rate Table  ',' rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id restrictions constant density lower upper bound_random example ',
 'rate_table.py  rate_table: Example and Test  ',' ',
@@ -70,7 +70,7 @@ Keyword =
 'data_subset_table  The Data Subset Table  ',' data_subset_id data_id discussion node covariates example ',
 'depend_var_table  Which Variables The Model Depends On  ',' purpose depend_var_id data_depend prior_depend example ',
 'start_var_table  Starting Values Used During a Fit  ',' discussion start_var_id start_var_value example ',
-'scale_var_table  Scaling Values Used During Fit  ',' discussion scale_var_id scale_var_value example ',
+'scale_var_table  Scaling Fixed Effects Objective and Constraints  ',' discussion scale_var_id scale_var_value example ',
 'fit_var_table  The Optimization Results for Variables  ',' lagrange multipliers fit_var_id fit_var_value residual_value residual_dage residual_dtime lagrange_value lagrange_dage lagrange_dtime example ',
 'fit_data_subset_table  The Model and Weighted Residuals Corresponding to a Fit  ',' fit_data_subset_id avg_integrand weighted_residual example ',
 'truth_var_table  True Values Used During Simulations  ',' discussion truth_var_id truth_var_value example ',
@@ -263,7 +263,7 @@ Keyword =
 'depend  Compute Data or Prior Dependencies  ',' ',
 'data_depend  Which Variables The Data Model Depends On  ',' syntax prototype pack_vec data_object ',
 'prior_depend  Which Variables The Prior Depends On  ',' syntax prototype pack_vec prior_object ',
-'whats_new_2018  Changes and Additions to Dismod_at During 2018  ',' 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ',
+'whats_new_2018  Changes and Additions to Dismod_at During 2018  ',' 02-10 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ',
 'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
 'whats_new_2016  Changes and Additions to Dismod_at During 2016  ',' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ',
 'whats_new_2015  Changes and Additions to Dismod_at During 2015  ',' 12-29 12-24 12-15 12-14 12-10 12-09 11-23 11-22 11-21 11-20 11-17 11-16 11-15 11-14 11-12 11-10 11-09 11-07 11-06 11-05 11-04 11-03 11-02 11-01 10-30 10-29 10-28 10-27 10-26 10-25 10-24 10-20 10-19 10-16 10-15 10-14 09-18 09-03 08-31 08-27 08-21 08-18 08-15 08-14 08-13 08-12 08-09 08-08 08-04 08-03 08-02 08-01 07-29 07-28 07-27 07-25 07-24 07-23 07-22 07-21 07-20 07-19 07-17 07-16 07-15 07-14 07-13 07-11 07-10 07-09 07-08 07-07 07-05 07-04 07-03 07-01 06-30 06-29 06-27 06-26 06-25 06-24 06-23 06-22 ',
