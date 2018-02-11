@@ -452,14 +452,14 @@ $head 05-09$$
 $list number$$
 Change the scaling of fixed effect
 to key off $icode eta$$ not $code null$$ in value priors; see
-$cref/scaling/prior_table/eta/Scaling/$$.
+$cref/scaling/prior_table/eta/Scaling Fixed Effects/$$.
 This enables more user choice over which fixed effects get scaled.
 $lnext
 The error detection for non-positive Hessian (added yesterday) was
 working properly when variables were bound constrained.
 $lnext
 The $cref/sample asymptotic/sample_command/method/asymptotic/$$
-command was using the $cref/scaled/prior_table/eta/Scaling/$$
+command was using the $cref/scaled/prior_table/eta/Scaling Fixed Effects/$$
 information matrix. This has been fixed.
 $lnext
 Advance to $code cppad_mixed-20160511$$.

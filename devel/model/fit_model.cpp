@@ -425,7 +425,7 @@ $head Scaling$$
 During optimization the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$,
 that have $icode eta$$ not $code null$$ in their value prior, are scaled; see
-$cref/scaling/prior_table/eta/Scaling/$$.
+$cref/scaling/prior_table/eta/Scaling Fixed Effects/$$.
 
 $head random_only$$
 If this argument is true,

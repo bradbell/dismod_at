@@ -891,7 +891,7 @@ Advance to cppad_mixed-20171124.
 This version re-scales the problem using the derivatives values at
 the starting point.
 This is in addition to the
-$cref/scaling/prior_table/eta/Scaling/$$ done using $code eta$$.
+$cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ done using $code eta$$.
 
 $head 01-14$$
 The $code adaptive$$ and $code trace-adaptive$$

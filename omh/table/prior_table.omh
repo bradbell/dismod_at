@@ -84,7 +84,7 @@ $subhead null$$
 In the cases that are not log densities,
 this field can be $code null$$.
 
-$subhead Scaling$$
+$subhead Scaling Fixed Effects$$
 If $icode eta$$ is not null, and it is a
 $cref/value prior/smooth_grid_table/value_prior_id/$$ for a
 $cref/fixed effect/model_variables/Fixed Effects, theta/$$,

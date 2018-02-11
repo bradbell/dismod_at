@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -15,16 +15,20 @@ $spell
 	init
 $$
 
-$section Scaling Values Used During Fit$$
+$section Scaling Fixed Effects Objective and Constraints$$
 
 $head Discussion$$
-The scale_var table contains one value for each of the
-$cref model_variables$$.
+The fixed effects are scaled using the $icode eta$$ in the
+corresponding priors; see
+$cref/scaling/prior_table/eta/Scaling Fixed Effects/$$.
+The fixed effects objective
+and constraints are scaled using their values at the
+$cref model_variables$$ corresponding to the scale_var table.
 The $cref/init_command/init_command/scale_var_table/$$
 creates a scale_var table
 using the mean of the priors for the model variables values.
 The $cref/set_command/set_command/table_out/scale_var/$$
-can also be used to create a start_var table.
+can also be used to change the start_var table.
 This table may also be created directly by the user
 (with the aid of the $cref var_table$$).
 

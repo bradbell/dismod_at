@@ -525,14 +525,14 @@ def example_db (file_name) :
 			# prior_U(0,1)
 			'name':     'prior_U(0,1)',
 			'density':  'uniform',
-			'mean':     0.1,     # only affects initial optimizer value
+			'mean':     0.1, # setting start_var table so mean has no affect
 			'lower':    0.0,
 			'upper':    1.0,
 		} , {
 			# prior_U(1e-8,1)
 			'name':     'prior_U(1e-8,1)',
 			'density':  'uniform',
-			'mean':     0.1,     # only affects initial optimizer value
+			'mean':     0.1, # setting start_var table so mean has no affect
 			'lower':    1e-8,
 			'upper':    1.0,
 		} , {
