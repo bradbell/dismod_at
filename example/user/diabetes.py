@@ -220,6 +220,18 @@ fit_with_noise_in_data = True
 quasi_fixed = 'true'
 # %$$
 #
+# $subhead derivative_test_fixed$$
+# This is a $code str$$ that is
+# $cref/derivative_test/option_table/Optimizer/derivative_test/$$
+# option for the fixed effects.
+# The choice $code trace-adaptive$$ can be used to see if the partial
+# derivatives of the objective and constraints after the
+# $cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ of the fixed effects.
+# The choice $code none$$ is normal for a working example.
+# $srccode%py%
+derivative_test_fixed = 'none'
+# %$$
+#
 # $subhead truth2start$$
 # This is a $code float$$ that is used to map
 # $codei%
@@ -790,20 +802,20 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':parent_node         },
-		{ 'name':'ode_step_size',          'value':ode_step_size       },
-		{ 'name':'random_seed',            'value':'0'                 },
+		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'    },
+		{ 'name':'parent_node_name',       'value':parent_node            },
+		{ 'name':'ode_step_size',          'value':ode_step_size          },
+		{ 'name':'random_seed',            'value':'0'                    },
 
-		{ 'name':'quasi_fixed',            'value':quasi_fixed         },
-		{ 'name':'max_num_iter_fixed',     'value':'300'               },
-		{ 'name':'print_level_fixed',      'value':'5'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-4'              },
-		{ 'name':'derivative_test_fixed',  'value':'trace-adaptive'    },
+		{ 'name':'quasi_fixed',            'value':quasi_fixed            },
+		{ 'name':'max_num_iter_fixed',     'value':'300'                  },
+		{ 'name':'print_level_fixed',      'value':'5'                    },
+		{ 'name':'tolerance_fixed',        'value':'1e-4'                 },
+		{ 'name':'derivative_test_fixed',  'value':derivative_test_fixed  },
 
-		{ 'name':'max_num_iter_random',    'value':'50'                },
-		{ 'name':'print_level_random',     'value':'0'                 },
-		{ 'name':'tolerance_random',       'value':'1e-8'              }
+		{ 'name':'max_num_iter_random',    'value':'50'                   },
+		{ 'name':'print_level_random',     'value':'0'                    },
+		{ 'name':'tolerance_random',       'value':'1e-8'                 }
 	]
 	# ----------------------------------------------------------------------
 	# create database

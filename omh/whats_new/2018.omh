@@ -56,6 +56,14 @@ $lnext
 Change the priors for the rates so use log
 $cref/scaling/prior_table/eta/Scaling Fixed Effects/$$
 during the optimization process.
+$lnext
+Add
+$cref/derivative_test_fixed
+	/user_diabetes.py
+	/Problem Parameters
+	/derivative_test_fixed
+/$$
+to the set of problem parameters.
 $lend
 
 $head 02-09$$
