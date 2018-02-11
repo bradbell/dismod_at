@@ -536,24 +536,10 @@ def example_db (file_name) :
 			'lower':    1e-8,
 			'upper':    1.0,
 		} , {
-			# prior_U(0,0)
-			'name':     'prior_U(0,0)',
-			'density':  'uniform',
-			'mean':     0.0,
-			'lower':    0.0,
-			'upper':    0.0,
-		} , {
 			# prior_U(-inf,inf)
 			'name':     'prior_U(-inf,inf)',
 			'density':  'uniform',
 			'mean':     0.0,
-		} , {
-			# prior_U(1e-8,1e-8)
-			'name':     'prior_U(1e-8,1e-8)',
-			'density':  'uniform',
-			'mean':     1e-8,
-			'lower':    1e-8,
-			'upper':    1e-8,
 		} , {
 			# prior_parent_age
 			'name':     'prior_parent_age',

@@ -42,6 +42,10 @@ $childtable%
 $head 02-10$$
 Advance to $code cppad_mixed-20180208$$
 (no change from user's perspective).
+The changes below are for $cref user_diabetes.py$$:
+$list number$$
+Remove two priors that are no longer being used.
+$lend
 
 $head 02-09$$
 $list number$$
