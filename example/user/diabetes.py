@@ -809,6 +809,7 @@ def example_db (file_name) :
 		{ 'name':'max_num_iter_fixed',     'value':'300'               },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-2'              },
+		{ 'name':'derivative_test_fixed',  'value':'none'              },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                },
 		{ 'name':'print_level_random',     'value':'0'                 },
