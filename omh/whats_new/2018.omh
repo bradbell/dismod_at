@@ -64,6 +64,8 @@ $cref/derivative_test_fixed
 	/derivative_test_fixed
 /$$
 to the set of problem parameters.
+$lnext
+Increase the number of points in the age and time grids.
 $lend
 
 $head 02-09$$

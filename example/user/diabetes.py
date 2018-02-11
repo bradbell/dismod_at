@@ -136,7 +136,7 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between age grid points:
 # $srccode%py%
-age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.2 }
+age_grid  = { 'start':0.0, 'end':100, 'number':11, 'std':0.1 }
 # %$$
 #
 # $subhead time_grid$$
@@ -151,7 +151,7 @@ age_grid  = { 'start':0.0, 'end':100, 'number':9, 'std':0.2 }
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between time grid points:
 # $srccode%py%
-time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':1.0  }
+time_grid = { 'start':1990.0, 'end': 2020, 'number':4, 'std':0.2  }
 # %$$
 #
 # $subhead ode_step_size$$
