@@ -62,10 +62,14 @@ $cref/derivative_test_fixed
 	/user_diabetes.py
 	/Problem Parameters
 	/derivative_test_fixed
-/$$
+/$$, and
+$cref/mulcov_dict/user_diabetes.py/Problem Parameters/mulcov_dict/$$
 to the set of problem parameters.
 $lnext
 Increase the number of points in the age and time grids.
+$lnext
+Correct documentation for covariate
+$cref/multipliers/user_diabetes.py/Covariates/Multipliers/$$.
 $lend
 
 $head 02-09$$

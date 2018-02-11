@@ -72,10 +72,21 @@
 # $icode ms_2000$$ is $code 1.0$$ if this is year 2000 market scan data
 # and $code 0.0$$ otherwise.
 #
-# $subhead Multiplier Table$$
-# The bmi and sex covariates multipliers are constrained to be zero
-# (are not yet used). The ms_2000 multiplier has an N(0, 1) prior
-# and true value of 0.25.
+# $subhead Multipliers$$
+# There are three covariate multipliers, one for each covariate.
+# In addition, each covariate multiplier has one grid point; i.e.,
+# the multiplier is constant in age and time.
+# The value for each multiplier has a uniform distribution.
+# $table
+# covariate $cnext affected   $cnext lower $cnext upper $rnext
+# sex       $cnext iota       $cnext -2.0  $cnext +2.0  $rnext
+# bmi       $cnext iota       $cnext -0.1  $cnext +0.1  $rnext
+# ms_2000   $cnext prevalence $cnext -1.0  $cnext +1.0  $rnext
+# $tend
+# Note that the for sex and bmi these are
+# $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ multipliers and
+# for ms_2000 it is a
+# $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ multiplier.
 #
 # $head Truth Table$$
 # The values in the $cref truth_var_table$$ are generated using bilinear
@@ -94,6 +105,15 @@
 # to a coefficient of variation.
 #
 # $head Problem Parameters$$
+#
+# $subhead mulcov_dict$$
+# Below is a dictionary that maps each covariate name
+# to the true value for the corresponding covariate multiplier.
+# These values must satisfy the lower and upper
+# $cref/multiplier/user_diabetes.py/Covariates/Multipliers/$$ limits above:
+# $srccode%py%
+mulcov_dict = { 'sex':0.5, 'bmi':0.02, 'ms_2000':0.25 }
+# %$$
 #
 # $subhead node_list$$
 # This is a $code list$$ with $code str$$ elements.
@@ -864,12 +884,7 @@ def create_truth_var_table() :
 		time         = time_table[ row['time_id'] ] ['time']
 		if var_type.startswith('mulcov_') :
 			covariate = covariate_table[row['covariate_id' ]]['covariate_name']
-			if covariate == 'sex' :
-				value = 0.5
-			elif covariate == 'bmi' :
-				value = 0.02
-			elif covariate == 'ms_2000' :
-				value = 0.25
+			value     = mulcov_dict[covariate]
 		elif var_type == 'rate' :
 			node  = node_table[ row['node_id'] ] ['node_name']
 			rate  = rate_table[ row['rate_id'] ] ['rate_name']
