@@ -63,6 +63,7 @@ var list_current0 = [
 'user_diabetes.py.htm#Problem Parameters.meas_repeat',
 'user_diabetes.py.htm#Problem Parameters.fit_with_nose_in_data',
 'user_diabetes.py.htm#Problem Parameters.quasi_fixed',
+'user_diabetes.py.htm#Problem Parameters.derivative_test_fixed',
 'user_diabetes.py.htm#Problem Parameters.truth2start',
 'user_diabetes.py.htm#Problem Parameters.max_abs_rel_err',
 'user_diabetes.py.htm#Source Code'
