@@ -207,6 +207,11 @@
 # If the corresponding $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 # is $code null$$,
 # the $cref/const_value/smooth_grid_table/const_value/$$ prior is displayed.
+# $lnext
+# If is $code null$$, or has no affect, it is displayed as empty.
+# Note that the fields $icode eta_v$$ always are always displayed for fixed
+# effects because they have a
+# $cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ affect.
 # $lend
 #
 # $head data.csv$$
@@ -466,7 +471,7 @@ def db2csv_command(database_file_arg) :
 		value_in = table_data[table_name][row_id][column_name]
 		return convert2output(value_in)
 	# -------------------------------------------------------------------------
-	def get_prior_info(row_out, prior_id_dict) :
+	def get_prior_info(row_out, prior_id_dict, fixed_effect) :
 		extension2name = {'_v':'value_', '_a':'dage_', '_t':'dtime_' }
 		for extension in extension2name :
 			name         = extension2name[extension]
@@ -496,14 +501,15 @@ def db2csv_command(database_file_arg) :
 				field_out = field_in + extension
 				row_out[field_out] = ''
 				if prior_id != None :
-					value_in = table_data['prior'][prior_id][field_in]
+					value_out = table_data['prior'][prior_id][field_in]
 					if field_in == 'nu' and not students_density :
-						value_in = None
+						value_out = None
 					if field_in == 'eta' and not log_density :
-						value_in = None
+						if extension != '_v' or fixed_effect != 'true' :
+							value_out = None
 					if field_in == 'std' and density_name == 'uniform' :
-							value_in = None
-					row_out[field_out] = convert2output( value_in )
+							value_out = None
+					row_out[field_out] = convert2output( value_out )
 				elif extension == '_v' :
 					if field_in in [ 'lower', 'upper', 'mean' ] :
 						row_out[field_out] = convert2output( const_value )
@@ -884,7 +890,7 @@ def db2csv_command(database_file_arg) :
 			key            = row_in['var_type'] + '_prior_id'
 			prior_id       = smooth_id_dict[key]
 			prior_id_dict['value_prior_id'] = prior_id
-			get_prior_info(row_out, prior_id_dict)
+			get_prior_info(row_out, prior_id_dict, row_out['fixed'])
 		else :
 			age_id    = row_in['age_id']
 			time_id   = row_in['time_id']
@@ -894,7 +900,7 @@ def db2csv_command(database_file_arg) :
 				match = match and row['time_id'] == time_id
 				if match :
 					prior_id_dict = row
-					get_prior_info(row_out, prior_id_dict)
+					get_prior_info(row_out, prior_id_dict, row_out['fixed'])
 		csv_writer.writerow(row_out)
 		var_id += 1
 	# ----------------------------------------------------------------------

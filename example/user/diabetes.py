@@ -430,13 +430,15 @@ def example_db (file_name) :
 	#
 	# priors used in smoothing for iota
 	def fun_iota_parent(a, t) :
-		return ('prior_U(1e-8,1)', 'prior_parent_age', 'prior_parent_time')
+		return ( \
+			'prior_pos_parent_value', 'prior_parent_age', 'prior_parent_time')
 	def fun_iota_child(a, t) :
 		return ('prior_N(0,1)', 'prior_child_age', 'prior_child_time')
 	#
 	# priors used in smoothing for chi
 	def fun_chi_parent(a, t) :
-		return ('prior_U(1e-8,1)', 'prior_parent_age', 'prior_parent_time')
+		return ( \
+			'prior_pos_parent_value', 'prior_parent_age', 'prior_parent_time')
 	def fun_chi_child(a, t) :
 		return ('prior_N(0,1)', 'prior_child_age', 'prior_child_time')
 	#
@@ -451,7 +453,7 @@ def example_db (file_name) :
 	#
 	# priors used in smoothing for pini
 	def fun_pini_parent(a, t) :
-		return ('prior_U(0,1)', None, 'prior_parent_time')
+		return ('prior_pini_parent_value', None, 'prior_parent_time')
 	def fun_pini_child(a, t) :
 		return ('prior_N(0,1)', None, 'prior_child_time')
 	# ----------------------------------------------------------------------
@@ -522,24 +524,26 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      1.0,
 		} , {
-			# prior_U(0,1)
-			'name':     'prior_U(0,1)',
-			'density':  'uniform',
-			'mean':     0.1, # setting start_var table so mean has no affect
-			'lower':    0.0,
-			'upper':    1.0,
-		} , {
-			# prior_U(1e-8,1)
-			'name':     'prior_U(1e-8,1)',
-			'density':  'uniform',
-			'mean':     0.1, # setting start_var table so mean has no affect
-			'lower':    1e-8,
-			'upper':    1.0,
-		} , {
 			# prior_U(-inf,inf)
 			'name':     'prior_U(-inf,inf)',
 			'density':  'uniform',
 			'mean':     0.0,
+		} , {
+			# prior_pini_parent_value
+			'name':     'prior_pini_parent_value',
+			'density':  'uniform',
+			'mean':     0.1,  # setting start_var table so mean has no affect
+			'lower':    0.0,
+			'upper':    1.0,
+			'eta':      1e-5, # used for log-scaling during optimization
+		} , {
+			# prior_pos_parent_value
+			'name':     'prior_pos_parent_value',
+			'density':  'uniform',
+			'mean':     0.1, # setting start_var table so mean has no affect
+			'lower':    1e-8,
+			'upper':    1.0,
+			'eta':      0.0, # used for log-scaling during optimization
 		} , {
 			# prior_parent_age
 			'name':     'prior_parent_age',
@@ -794,8 +798,8 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':quasi_fixed         },
 		{ 'name':'max_num_iter_fixed',     'value':'300'               },
 		{ 'name':'print_level_fixed',      'value':'5'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-2'              },
-		{ 'name':'derivative_test_fixed',  'value':'none'              },
+		{ 'name':'tolerance_fixed',        'value':'1e-4'              },
+		{ 'name':'derivative_test_fixed',  'value':'trace-adaptive'    },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                },
 		{ 'name':'print_level_random',     'value':'0'                 },
