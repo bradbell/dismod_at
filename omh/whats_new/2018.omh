@@ -27,6 +27,7 @@ $spell
 	dt
 	var
 	rel
+	nans
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -45,15 +46,18 @@ $list number$$
 Add two child nodes (random effects) to the
 $cref/node_list/user_diabetes.py/Problem Parameters/node_list/$$.
 $lnext
-Mke the example, with random effects, run faster by:
-increasing the
-$cref/tolerance_fixed/option_table/Optimizer/tolerance/$$,
-reducing the number of points in the
-$cref/age/user_diabetes.py/Problem Parameters/age_grid/ and
-$cref/time/user_diabetes.py/Problem Parameters/age_grid/ grids.
+Changes so the example with random effects runs faster:
+Increase the
+$cref/tolerance_fixed/option_table/Optimizer/tolerance/$$.
+Reduce the number of points in the
+$cref/age/user_diabetes.py/Problem Parameters/age_grid/$$ and
+$cref/time/user_diabetes.py/Problem Parameters/age_grid/$$ grids.
 $lnext
-Set the $cref scale_var_table$$ eqaul to the $cref start_var_table$$
-(to avoid nans during evaluation of the objective).
+Set the $cref scale_var_table$$ equal to the $cref start_var_table$$.
+This avoids nans during evaluation of the objective with random effects.
+$lnext
+Optimize first with no random effects and then use that as a starting
+point for optimizing with random effects.
 $lend
 
 $head 02-11$$
