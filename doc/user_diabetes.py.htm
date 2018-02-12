@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Example Fitting Simulated Diabetes Data</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Example Fitting Simulated Diabetes Data">
-<meta name="keywords" id="keywords" content=" example fitting simulated diabetes data running this node table constraints weight grid covariates covariate multiplier truth predict problem parameters node_list integrand_list age_grid time_grid ode_step_size meas_cv meas_repeat fit_with_nose_in_data quasi_fixed derivative_test_fixed truth2start max_abs_rel_err source code ">
+<meta name="keywords" id="keywords" content=" example fitting simulated diabetes data running this node table constraints weight grid covariates covariate multipliers truth predict problem parameters mulcov_dict node_list integrand_list age_grid time_grid ode_step_size meas_cv meas_repeat fit_with_nose_in_data quasi_fixed derivative_test_fixed truth2start max_abs_rel_err source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -100,10 +100,11 @@ A:active { color : purple }
 <option>Covariates</option>
 <option>---..Covariate Table</option>
 <option>---..Data Table</option>
-<option>---..Multiplier Table</option>
+<option>---..Multipliers</option>
 <option>Truth Table</option>
 <option>Predict</option>
 <option>Problem Parameters</option>
+<option>---..mulcov_dict</option>
 <option>---..node_list</option>
 <option>---..integrand_list</option>
 <option>---..age_grid</option>
@@ -215,11 +216,42 @@ and <code><font color="blue">0.0</font></code> otherwise.
 
 <br>
 <br>
-<b><a name="Covariates.Multiplier Table" id="Covariates.Multiplier Table">Multiplier Table</a></b>
+<b><a name="Covariates.Multipliers" id="Covariates.Multipliers">Multipliers</a></b>
 <br>
-The bmi and sex covariates multipliers are constrained to be zero
-(are not yet used). The ms_2000 multiplier has an N(0, 1) prior
-and true value of 0.25.
+There are three covariate multipliers, one for each covariate.
+In addition, each covariate multiplier has one grid point; i.e.,
+the multiplier is constant in age and time.
+The value for each multiplier has a uniform distribution.
+<table><tr><td align='left'  valign='top'>
+
+covariate </td><td align='left'  valign='top'>
+ affected   </td><td align='left'  valign='top'>
+ lower </td><td align='left'  valign='top'>
+ upper </td></tr><tr><td align='left'  valign='top'>
+
+sex       </td><td align='left'  valign='top'>
+ iota       </td><td align='left'  valign='top'>
+ -2.0  </td><td align='left'  valign='top'>
+ +2.0  </td></tr><tr><td align='left'  valign='top'>
+
+bmi       </td><td align='left'  valign='top'>
+ iota       </td><td align='left'  valign='top'>
+ -0.1  </td><td align='left'  valign='top'>
+ +0.1  </td></tr><tr><td align='left'  valign='top'>
+
+ms_2000   </td><td align='left'  valign='top'>
+ prevalence </td><td align='left'  valign='top'>
+ -1.0  </td><td align='left'  valign='top'>
+ +1.0  </td></tr><tr><td align='left'  valign='top'>
+
+</td></tr>
+</table>
+Note that the for sex and bmi these are
+<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
+ multipliers and
+for ms_2000 it is a
+<a href="mulcov_table.htm#mulcov_type.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ multiplier.
 
 <br>
 <br>
@@ -253,6 +285,17 @@ to a coefficient of variation.
 
 
 <br>
+<br>
+<b><a name="Problem Parameters.mulcov_dict" id="Problem Parameters.mulcov_dict">mulcov_dict</a></b>
+<br>
+Below is a dictionary that maps each covariate name
+to the true value for the corresponding covariate multiplier.
+These values must satisfy the lower and upper
+<a href="user_diabetes.py.htm#Covariates.Multipliers" target="_top"><span style='white-space: nowrap'>multiplier</span></a>
+ limits above:
+<pre style='display:inline'><tt>
+mulcov_dict <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'sex'</font><font color="#990000">:</font><font color="#993399">0.5</font><font color="#990000">,</font> <font color="#FF0000">'bmi'</font><font color="#990000">:</font><font color="#993399">0.02</font><font color="#990000">,</font> <font color="#FF0000">'ms_2000'</font><font color="#990000">:</font><font color="#993399">0.25</font> <font color="#990000">}</font>
+</tt></pre>
 <br>
 <b><a name="Problem Parameters.node_list" id="Problem Parameters.node_list">node_list</a></b>
 <br>
@@ -311,7 +354,7 @@ divided by the number of grid points minus one.
 The standard deviation is for the log-Gaussian in the prior used to smooth
 the difference of parent rates between age grid points:
 <pre style='display:inline'><tt>
-age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">0.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font><font color="#993399">100</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font><font color="#993399">9</font><font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">:</font><font color="#993399">0.2</font> <font color="#990000">}</font>
+age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">0.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font><font color="#993399">100</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font><font color="#993399">11</font><font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">:</font><font color="#993399">0.1</font> <font color="#990000">}</font>
 </tt></pre>
 <br>
 <b><a name="Problem Parameters.time_grid" id="Problem Parameters.time_grid">time_grid</a></b>
@@ -329,7 +372,7 @@ divided by the number of grid points minus one.
 The standard deviation is for the log-Gaussian in the prior used to smooth
 the difference of parent rates between time grid points:
 <pre style='display:inline'><tt>
-time_grid <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">2020</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font><font color="#993399">2</font><font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">:</font><font color="#993399">1.0</font>  <font color="#990000">}</font>
+time_grid <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">2020</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font><font color="#993399">4</font><font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">:</font><font color="#993399">0.2</font>  <font color="#990000">}</font>
 </tt></pre>
 <br>
 <b><a name="Problem Parameters.ode_step_size" id="Problem Parameters.ode_step_size">ode_step_size</a></b>
@@ -1067,12 +1110,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           time         <font color="#990000">=</font> time_table<font color="#990000">[</font> row<font color="#990000">[</font><font color="#FF0000">'time_id'</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">[</font><font color="#FF0000">'time'</font><font color="#990000">]</font>
           <b><font color="#0000FF">if</font></b> var_type<font color="#990000">.</font><b><font color="#000000">startswith</font></b><font color="#990000">(</font><font color="#FF0000">'mulcov_'</font><font color="#990000">)</font> <font color="#990000">:</font>
                covariate <font color="#990000">=</font> covariate_table<font color="#990000">[</font>row<font color="#990000">[</font><font color="#FF0000">'covariate_id'</font> <font color="#990000">]][</font><font color="#FF0000">'covariate_name'</font><font color="#990000">]</font>
-               <b><font color="#0000FF">if</font></b> covariate <font color="#990000">==</font> <font color="#FF0000">'sex'</font> <font color="#990000">:</font>
-                    value <font color="#990000">=</font> <font color="#993399">0.5</font>
-               <b><font color="#0000FF">elif</font></b> covariate <font color="#990000">==</font> <font color="#FF0000">'bmi'</font> <font color="#990000">:</font>
-                    value <font color="#990000">=</font> <font color="#993399">0.02</font>
-               <b><font color="#0000FF">elif</font></b> covariate <font color="#990000">==</font> <font color="#FF0000">'ms_2000'</font> <font color="#990000">:</font>
-                    value <font color="#990000">=</font> <font color="#993399">0.25</font>
+               value     <font color="#990000">=</font> mulcov_dict<font color="#990000">[</font>covariate<font color="#990000">]</font>
           <b><font color="#0000FF">elif</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'rate'</font> <font color="#990000">:</font>
                node  <font color="#990000">=</font> node_table<font color="#990000">[</font> row<font color="#990000">[</font><font color="#FF0000">'node_id'</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">[</font><font color="#FF0000">'node_name'</font><font color="#990000">]</font>
                rate  <font color="#990000">=</font> rate_table<font color="#990000">[</font> row<font color="#990000">[</font><font color="#FF0000">'rate_id'</font><font color="#990000">]</font> <font color="#990000">]</font> <font color="#990000">[</font><font color="#FF0000">'rate_name'</font><font color="#990000">]</font>
