@@ -39,6 +39,23 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-12$$
+The changes below are for $cref user_diabetes.py$$:
+$list number$$
+Add two child nodes (random effects) to the
+$cref/node_list/user_diabetes.py/Problem Parameters/node_list/$$.
+$lnext
+Mke the example, with random effects, run faster by:
+increasing the
+$cref/tolerance_fixed/option_table/Optimizer/tolerance/$$,
+reducing the number of points in the
+$cref/age/user_diabetes.py/Problem Parameters/age_grid/ and
+$cref/time/user_diabetes.py/Problem Parameters/age_grid/ grids.
+$lnext
+Set the $cref scale_var_table$$ eqaul to the $cref start_var_table$$
+(to avoid nans during evaluation of the objective).
+$lend
+
 $head 02-11$$
 $list number$$
 Advance to $code cppad_mixed-20180208$$
@@ -318,8 +335,6 @@ $lnext
 Advance to $code cppad_mixed-20180117$$. This fixes warnings
 with the new compiler flags above.
 $lend
-
-
 
 $head 01-16$$
 The $code data.csv$$ file did not include the

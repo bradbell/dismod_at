@@ -122,8 +122,8 @@ mulcov_dict = { 'sex':0.5, 'bmi':0.02, 'ms_2000':0.25 }
 # i.e., an odd number of elements in this list.
 # The case with zero child; i.e., one element in the list, is OK:
 # $srccode%py%
-node_list = [ 'US', 'Alabama', 'California', 'Massachusetts', 'Wisconsin' ]
 node_list = [ 'US' ]
+node_list = [ 'US', 'Alabama', 'California' ]
 # %$$
 #
 # $subhead integrand_list$$
@@ -156,7 +156,7 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between age grid points:
 # $srccode%py%
-age_grid  = { 'start':0.0, 'end':100, 'number':11, 'std':0.1 }
+age_grid  = { 'start':0.0, 'end':100, 'number':6, 'std':0.4 }
 # %$$
 #
 # $subhead time_grid$$
@@ -171,7 +171,7 @@ age_grid  = { 'start':0.0, 'end':100, 'number':11, 'std':0.1 }
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between time grid points:
 # $srccode%py%
-time_grid = { 'start':1990.0, 'end': 2020, 'number':4, 'std':0.2  }
+time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.5  }
 # %$$
 #
 # $subhead ode_step_size$$
@@ -362,11 +362,11 @@ def true_rate(node, rate, a, t) :
 			grid_value['start_age, start_time'] = 1e-2
 			grid_value['start_age, end_time']   = 1e-2
 		elif even_child :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
+			grid_value['start_age, start_time'] = math.exp(0.1)
+			grid_value['start_age, end_time']   = math.exp(0.1)
 		else :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
+			grid_value['start_age, start_time'] = math.exp(-0.1)
+			grid_value['start_age, end_time']   = math.exp(-0.1)
 		#
 		# pini is constant in age
 		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
@@ -383,15 +383,15 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 1e-2
 			grid_value['end_age, end_time']     = 2e-2
 		elif even_child :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
+			grid_value['start_age, start_time'] = math.exp(.15)
+			grid_value['start_age, end_time']   = math.exp(.15)
+			grid_value['end_age, start_time']   = math.exp(.15)
+			grid_value['end_age, end_time']     = math.exp(.15)
 		else :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
+			grid_value['start_age, start_time'] = math.exp(-.15)
+			grid_value['start_age, end_time']   = math.exp(-.15)
+			grid_value['end_age, start_time']   = math.exp(-.15)
+			grid_value['end_age, end_time']     = math.exp(-.15)
 		#
 		ret = log_bilinear(grid_value, a, t)
 		if node != parent_node :
@@ -404,15 +404,15 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 3e-1
 			grid_value['end_age, end_time']     = 2e-1
 		elif even_child :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
+			grid_value['start_age, start_time'] = math.exp(.20)
+			grid_value['start_age, end_time']   = math.exp(.20)
+			grid_value['end_age, start_time']   = math.exp(.20)
+			grid_value['end_age, end_time']     = math.exp(.20)
 		else :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
+			grid_value['start_age, start_time'] = math.exp(-.20)
+			grid_value['start_age, end_time']   = math.exp(-.20)
+			grid_value['end_age, start_time']   = math.exp(-.20)
+			grid_value['end_age, end_time']     = math.exp(-.20)
 		#
 		ret = log_bilinear(grid_value, a, t)
 		if node != parent_node :
@@ -425,15 +425,15 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = 1.0e-1
 			grid_value['end_age, end_time']     = 0.5e-1
 		elif even_child :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
+			grid_value['start_age, start_time'] = math.exp(.25)
+			grid_value['start_age, end_time']   = math.exp(.25)
+			grid_value['end_age, start_time']   = math.exp(.25)
+			grid_value['end_age, end_time']     = math.exp(.25)
 		else :
-			grid_value['start_age, start_time'] = 1.0
-			grid_value['start_age, end_time']   = 1.0
-			grid_value['end_age, start_time']   = 1.0
-			grid_value['end_age, end_time']     = 1.0
+			grid_value['start_age, start_time'] = math.exp(-.25)
+			grid_value['start_age, end_time']   = math.exp(-.25)
+			grid_value['end_age, start_time']   = math.exp(-.25)
+			grid_value['end_age, end_time']     = math.exp(-.25)
 		#
 		ret = log_bilinear(grid_value, a, t)
 		if node != parent_node :
@@ -515,9 +515,9 @@ def example_db (file_name) :
 	age_index['omega_parent'] = age_index_all
 	age_index['pini_parent']  = [ 0 ]
 	#
-	age_index['iota_child']   = [ 0, number-1 ]
-	age_index['chi_child']    = [ 0, number-1 ]
-	age_index['omega_child']  = [ 0, number-1 ]
+	age_index['iota_child']   = [ 0 ]
+	age_index['chi_child']    = [ 0 ]
+	age_index['omega_child']  = [ 0 ]
 	age_index['pini_child']   = [ 0 ]
 	#
 	# ----------------------------------------------------------------------
@@ -826,11 +826,12 @@ def example_db (file_name) :
 		{ 'name':'parent_node_name',       'value':parent_node            },
 		{ 'name':'ode_step_size',          'value':ode_step_size          },
 		{ 'name':'random_seed',            'value':'0'                    },
+		{ 'name':'bound_random',           'value':'1.0'                  },
 
 		{ 'name':'quasi_fixed',            'value':quasi_fixed            },
 		{ 'name':'max_num_iter_fixed',     'value':'300'                  },
 		{ 'name':'print_level_fixed',      'value':'5'                    },
-		{ 'name':'tolerance_fixed',        'value':'1e-4'                 },
+		{ 'name':'tolerance_fixed',        'value':'1e-3'                 },
 		{ 'name':'derivative_test_fixed',  'value':derivative_test_fixed  },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                   },
@@ -1019,13 +1020,12 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 #
-if False :
-	# copy start_var table to scale_var table
-	cmd = [ program, file_name, 'set' , 'scale_var', 'start_var' ]
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at set command failed')
+# copy start_var table to scale_var table
+cmd = [ program, file_name, 'set' , 'scale_var', 'start_var' ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at set command failed')
 #
 # Simulate a data set corresponding to the truth
 number_simulate = '1'
@@ -1035,7 +1035,24 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
 #
-# Do a fit
+# Do a fit with no random effects
+cmd            = [ program, file_name, 'fit', 'fixed' ]
+if fit_with_noise_in_data :
+	simulate_index = '0'
+	cmd += [ simulate_index ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at fit command failed')
+#
+# copy fit_var table to start_var table
+cmd = [ program, file_name, 'set' , 'start_var', 'fit_var' ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at set command failed')
+#
+# Do a fit with random effects
 cmd            = [ program, file_name, 'fit', 'both' ]
 if fit_with_noise_in_data :
 	simulate_index = '0'
