@@ -465,14 +465,14 @@ def example_db (file_name) :
 		return ( \
 			'prior_pos_parent_value', 'prior_parent_age', 'prior_parent_time')
 	def fun_iota_child(a, t) :
-		return ('prior_N(0,1)', 'prior_child_age', 'prior_child_time')
+		return ('prior_N(0,0.5)', 'prior_child_age', 'prior_child_time')
 	#
 	# priors used in smoothing for chi
 	def fun_chi_parent(a, t) :
 		return ( \
 			'prior_pos_parent_value', 'prior_parent_age', 'prior_parent_time')
 	def fun_chi_child(a, t) :
-		return ('prior_N(0,1)', 'prior_child_age', 'prior_child_time')
+		return ('prior_N(0,0.5)', 'prior_child_age', 'prior_child_time')
 	#
 	# use const_value to constrain omega to true value
 	def fun_omega(node) :
@@ -487,7 +487,7 @@ def example_db (file_name) :
 	def fun_pini_parent(a, t) :
 		return ('prior_pini_parent_value', None, 'prior_parent_time')
 	def fun_pini_child(a, t) :
-		return ('prior_N(0,1)', None, 'prior_child_time')
+		return ('prior_N(0,0.5)', None, 'prior_child_time')
 	# ----------------------------------------------------------------------
 	fun                       = dict()
 	fun['mulcov_sex']         = fun_mulcov_sex
@@ -547,11 +547,11 @@ def example_db (file_name) :
 	# prior_table
 	prior_table = [
 		{
-			# prior_N(0,1)
-			'name':     'prior_N(0,1)',
+			# prior_N(0,0.5)
+			'name':     'prior_N(0,0.5)',
 			'density':  'gaussian',
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      math.sqrt(0.5),
 		} , {
 			# prior_U(-inf,inf)
 			'name':     'prior_U(-inf,inf)',
