@@ -58,6 +58,11 @@ This avoids nans during evaluation of the objective with random effects.
 $lnext
 Optimize first with no random effects and then use that as a starting
 point for optimizing with random effects.
+$lnext
+Fix a list by changing it from time_index_rate_parent to time_index_rate_child.
+$lnext
+Change number of time grid points in random effects from two to one
+(random effects are constant for this example).
 $lend
 
 $head 02-11$$

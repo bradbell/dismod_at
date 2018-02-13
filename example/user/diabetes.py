@@ -508,11 +508,9 @@ def example_db (file_name) :
 	interval                  = (end - start) / (number - 1)
 	age_index                 = dict()
 	age_list                  = [ start + j * interval for j in range(number) ]
-	age_list                  = sorted( age_list )
-	age_index_all             = range(number)
-	age_index['iota_parent']  = age_index_all
-	age_index['chi_parent']   = age_index_all
-	age_index['omega_parent'] = age_index_all
+	age_index['iota_parent']  = range(number)
+	age_index['chi_parent']   = range(number)
+	age_index['omega_parent'] = range(number)
 	age_index['pini_parent']  = [ 0 ]
 	#
 	age_index['iota_child']   = [ 0 ]
@@ -527,9 +525,8 @@ def example_db (file_name) :
 	number                 = time_grid['number']
 	interval               = (end - start) / (number - 1)
 	time_list              = [ start + i * interval for i in range(number) ]
-	time_index_all         = range(number)
-	time_index_rate_parent = time_index_all
-	time_index_rate_child  = [0, number-1]
+	time_index_rate_parent = range(number)
+	time_index_rate_child  = [0]
 	# ----------------------------------------------------------------------
 	# node table:
 	parent_node = node_list[0]
