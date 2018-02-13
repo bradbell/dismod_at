@@ -29,7 +29,7 @@
 #	bmi
 # $$
 #
-# $section An Example Fitting Simulated Diabetes Data$$
+# $section An Example / Speed Test Fitting Simulated Diabetes Data$$
 #
 # $head Running This example$$
 # If $icode python3$$ is the name of the python 3 program on your system,
@@ -37,15 +37,13 @@
 #	%python3% example/user/diabetes.py
 # %$$
 # will run this program.
+# The time required to run the program will be printed at then end.
 #
-# $head Node Table$$
-# The $cref node_table$$ only contains the
-# $cref/parent/node_table/parent/$$ and child nodes specified by
-# the $code node_list$$.
-#
-# $head Constraints$$
+# $head omega$$
 # The model rate $cref/omega/rate_table/rate_name/omega/$$
 # is constrained to have the value used during simulation of the data.
+#
+# $head rho$$
 # The model rate $cref/rho/rate_table/rate_name/rho/$$
 # is constrained to be zero.
 #
@@ -74,9 +72,11 @@
 #
 # $subhead Multipliers$$
 # There are three covariate multipliers, one for each covariate.
+# (In general, a covariate can have more than one multiplier.)
 # In addition, each covariate multiplier has one grid point; i.e.,
 # the multiplier is constant in age and time.
-# The value for each multiplier has a uniform distribution.
+# The value for each multiplier has a uniform distribution
+# with the lower and upper limits below:
 # $table
 # covariate $cnext affected   $cnext lower $cnext upper $rnext
 # sex       $cnext iota       $cnext -2.0  $cnext +2.0  $rnext
@@ -88,7 +88,7 @@
 # for ms_2000 it is a
 # $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ multiplier.
 #
-# $head Truth Table$$
+# $head Truth Var Table$$
 # The values in the $cref truth_var_table$$ are generated using bilinear
 # interpolation of the log of values specified at
 # (start_age, start_time),
@@ -96,18 +96,20 @@
 # (end_age, start_time)
 # and (end_age, end_time).
 #
-# $head Predict$$
+# $head Predict Table$$
 # The $cref predict_command$$ is used to compute the
 # $cref/avg_integrand/predict_table/avg_integrand/$$ corresponding to the
 # true values for the variables.
 # This is then used to create a version of the $cref data_table$$
-# with no noise, but modeled with a standard deviation corresponding
-# to a coefficient of variation.
+# with no noise, and with a standard deviation that is modeled using
+# a coefficient of variation.
 #
 # $head Problem Parameters$$
+# The problem parameters below can (and should) be changed to experiment with
+# how they affect the results.
 #
 # $subhead mulcov_dict$$
-# Below is a dictionary that maps each covariate name
+# This is a dictionary that maps each covariate name
 # to the true value for the corresponding covariate multiplier.
 # These values must satisfy the lower and upper
 # $cref/multiplier/user_diabetes.py/Covariates/Multipliers/$$ limits above:
@@ -120,9 +122,8 @@ mulcov_dict = { 'sex':0.5, 'bmi':0.02, 'ms_2000':0.25 }
 # The first element of this list is the parent node,
 # the others are the child nodes. There must be an even number of children;
 # i.e., an odd number of elements in this list.
-# The case with zero child; i.e., one element in the list, is OK:
+# The case with no child nodes; i.e., one element in the list, is OK:
 # $srccode%py%
-node_list = [ 'US' ]
 node_list = [ 'US', 'Alabama', 'California' ]
 # %$$
 #
@@ -131,45 +132,44 @@ node_list = [ 'US', 'Alabama', 'California' ]
 # $cref/integrand names/integrand_table/integrand_name/$$
 # that will have measurements in the $cref data_table$$
 # and $cref simulate_table$$.
-# As mentioned in the
-# $cref/constraints/user_diabetes.py/Constraints/$$ above, the rates
-# $icode rho$$ and $icode omega$$ are know during the estimation (fitting)
-# process.
+# As mentioned above, the rates
+# $cref/omega/user_diabetes.py/omega/$$  and
+# $cref/rho/user_diabetes.py/rho/$$
+# are know during the estimation (fitting) process.
 # The integrands must inform the estimation of
 # the model rates for
 # $cref/pini/rate_table/rate_name/pini/$$,
 # $cref/iota/rate_table/rate_name/iota/$$, and
-# $cref/chi/rate_table/rate_name/chi/$$:
+# $cref/chi/rate_table/rate_name/chi/$$.
+# Note that measuring prevalence at age zero should determine pini,
+# prevalence at other ages corresponds to integrals of iota, and
+# given prevalence, mtspecific should determine chi.
 # $srccode%py%
 integrand_list = [ 'mtspecific', 'prevalence' ]
 # %$$
 #
 # $subhead age_grid$$
 # This is a $code dict$$ with $code float$$ values containing
-# the start age, end age, number of age grid points. and
-# standard deviation in the log-Gaussian used to smooth the
+# the start age, end age, number of age grid points, and
+# standard deviation of the log-Gaussian used to smooth the
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
 # age differences.
 # This is also the set of ages in the $cref age_table$$.
 # The interval between age grid points is the end age, minus the start age,
 # divided by the number of grid points minus one.
-# The standard deviation is for the log-Gaussian in the prior used to smooth
-# the difference of parent rates between age grid points:
 # $srccode%py%
 age_grid  = { 'start':0.0, 'end':100, 'number':6, 'std':0.4 }
 # %$$
 #
 # $subhead time_grid$$
 # This is a $code dict$$ with $code float$$ values containing
-# the start time, end time, number of time grid points. and
-# standard deviation in the log-Gaussian used to smooth the
+# the start time, end time, number of time grid points, and
+# standard deviation of the log-Gaussian used to smooth the
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
 # time differences.
 # This is also the set of times in the $cref time_table$$.
 # The interval between time grid points is the end time, minus the start time,
 # divided by the number of grid points minus one.
-# The standard deviation is for the log-Gaussian in the prior used to smooth
-# the difference of parent rates between time grid points:
 # $srccode%py%
 time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
 # %$$
@@ -180,7 +180,7 @@ time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
 # It is suggest that this value be less than the intervals in the
 # age and time grids:
 # $srccode%py%
-ode_step_size = '5.0'
+ode_step_size = '10.0'
 # %$$
 #
 # $subhead meas_cv$$
@@ -218,11 +218,12 @@ meas_repeat = 1
 #
 # $subhead fit_with_noise_in_data$$
 # This is a $code bool$$ that specifies if measurement noise is included
-# when fitting the data; i.e., if simulated measurements are used to
+# when fitting the data; i.e., if the column
+# $cref/simulate_value/simulate_table/simulate_value/$$ is used to
 # fit the $cref model_variables$$.
 # Otherwise, the measurements without noise
-# $cref/meas_value/data_table/meas_value/$$
-# are used to fit the model variables:
+# are used to fit the model variables; i.e., the column
+# $cref/meas_value/data_table/meas_value/$$:
 # $srccode%py%
 fit_with_noise_in_data = False
 # %$$
@@ -241,6 +242,7 @@ random_seed = '0'
 # $subhead quasi_fixed$$
 # This $code str$$ that is either $code true$$ or $code false$$ and is the
 # $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$ option value.
+# If it is true, a quasi-Newton method is used.
 # This only requires function values and
 # first derivatives for the objective and constraints.
 # If it is false, a Newton method is used.
@@ -282,6 +284,7 @@ derivative_test_fixed = 'none'
 # value of the variable during the fit.
 # An error will result if the starting value for a variable is not within
 # the upper and lower limits for a variable.
+# The starting values are also used for the $cref scale_var_table$$.
 # $icode truth2start$$:
 # $srccode%py%
 truth2start = 0.3

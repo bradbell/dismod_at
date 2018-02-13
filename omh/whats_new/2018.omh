@@ -60,6 +60,10 @@ makes automated testing faster.
 $lnext
 Change max_abs_rel_err to
 $cref/accept_rel_err/user_diabetes.py/Problem Parameters/accept_rel_err/$$.
+$lnext
+Change
+$cref/ode_step_size/user_diabetes.py/Problem Parameters/ode_step_size/$$
+to be larger to make the automated testing run faster.
 $lend
 
 $head 02-12$$
