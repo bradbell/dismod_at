@@ -9,6 +9,9 @@
 # ---------------------------------------------------------------------------
 # $begin user_diabetes.py$$ $newlinech #$$
 # $spell
+#	ae
+#	ts
+#	te
 #	mtother
 #	mtspecific
 #	covariate
@@ -90,11 +93,31 @@
 #
 # $head Truth Var Table$$
 # The values in the $cref truth_var_table$$ are generated using bilinear
-# interpolation of the log of values specified at
-# (start_age, start_time),
-# (start_age, end_time),
-# (end_age, start_time)
-# and (end_age, end_time).
+# interpolation of the log of values specified points.
+# We use the notation
+# as for age start,
+# ae for age end,
+# ts for time start, and
+# te for time end.
+# The following table gives the values used for the parent rates
+# (note that the parent rate for pini cannot change with age):
+# $table
+# rate  $cnext (as,ts) $cnext (as,te) $cnext (ae,ts) $cnext (ae,te) $rnext
+# pini  $cnext .01     $cnext .01     $cnext .01     $cnext .01     $rnext
+# iota  $cnext .001    $cnext .002    $cnext .01     $cnext .02     $rnext
+# omega $cnext .003    $cnext .002    $cnext .3      $cnext .2      $rnext
+# chi   $cnext .004    $cnext .002    $cnext .1      $cnext .05     $rnext
+# $tend
+# The child rates are in log space, constant in age and time, are positive
+# for even index children, negative for odd indices, and have the
+# following values:
+# $table
+# rate   $cnext even value $cnext odd value $rnext
+# pini   $cnext .1         $cnext -.1       $rnext
+# iota   $cnext .15        $cnext -.15      $rnext
+# omega  $cnext .2         $cnext -.2       $rnext
+# chi    $cnext .25        $cnext -.25      $rnext
+# $tend
 #
 # $head Predict Table$$
 # The $cref predict_command$$ is used to compute the
@@ -381,8 +404,8 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	if rate == 'pini' :
 		if node == parent_node :
-			grid_value['start_age, start_time'] = 1e-2
-			grid_value['start_age, end_time']   = 1e-2
+			grid_value['start_age, start_time'] = .01
+			grid_value['start_age, end_time']   = .01
 		elif even_child :
 			grid_value['start_age, start_time'] = math.exp(0.1)
 			grid_value['start_age, end_time']   = math.exp(0.1)
@@ -400,10 +423,10 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	elif rate == 'iota' :
 		if node == parent_node :
-			grid_value['start_age, start_time'] = 1e-3
-			grid_value['start_age, end_time']   = 2e-3
-			grid_value['end_age, start_time']   = 1e-2
-			grid_value['end_age, end_time']     = 2e-2
+			grid_value['start_age, start_time'] = .001
+			grid_value['start_age, end_time']   = .002
+			grid_value['end_age, start_time']   = .01
+			grid_value['end_age, end_time']     = .02
 		elif even_child :
 			grid_value['start_age, start_time'] = math.exp(.15)
 			grid_value['start_age, end_time']   = math.exp(.15)
@@ -421,10 +444,10 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	elif rate == 'omega' :
 		if node == parent_node :
-			grid_value['start_age, start_time'] = 3e-3
-			grid_value['start_age, end_time']   = 2e-3
-			grid_value['end_age, start_time']   = 3e-1
-			grid_value['end_age, end_time']     = 2e-1
+			grid_value['start_age, start_time'] = .003
+			grid_value['start_age, end_time']   = .002
+			grid_value['end_age, start_time']   = .3
+			grid_value['end_age, end_time']     = .2
 		elif even_child :
 			grid_value['start_age, start_time'] = math.exp(.20)
 			grid_value['start_age, end_time']   = math.exp(.20)
@@ -442,10 +465,10 @@ def true_rate(node, rate, a, t) :
 	# -------------------------------------------------------------------------
 	elif rate == 'chi' :
 		if node == parent_node :
-			grid_value['start_age, start_time'] = 4.0e-3
-			grid_value['start_age, end_time']   = 2.0e-3
-			grid_value['end_age, start_time']   = 1.0e-1
-			grid_value['end_age, end_time']     = 0.5e-1
+			grid_value['start_age, start_time'] = .004
+			grid_value['start_age, end_time']   = .002
+			grid_value['end_age, start_time']   = .1
+			grid_value['end_age, end_time']     = .05
 		elif even_child :
 			grid_value['start_age, start_time'] = math.exp(.25)
 			grid_value['start_age, end_time']   = math.exp(.25)
@@ -1102,6 +1125,7 @@ for var_id in range( len(var_table) ) :
 		max_err = max( max_err, abs(rel_err) )
 assert ok
 # -----------------------------------------------------------------------------
+print('max_err = ', max_err )
 print('elapsed seconds = ', time.time() - start_second)
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
