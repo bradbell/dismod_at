@@ -171,7 +171,7 @@ age_grid  = { 'start':0.0, 'end':100, 'number':6, 'std':0.4 }
 # The standard deviation is for the log-Gaussian in the prior used to smooth
 # the difference of parent rates between time grid points:
 # $srccode%py%
-time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.5  }
+time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
 # %$$
 #
 # $subhead ode_step_size$$
@@ -213,7 +213,7 @@ meas_cv = 0.1
 # there is a data point in the middle of the age-time interval that ends
 # at that (age, time):
 # $srccode%py%
-meas_repeat = 3
+meas_repeat = 1
 # %$$
 #
 # $subhead fit_with_nose_in_data$$
@@ -224,7 +224,7 @@ meas_repeat = 3
 # $cref/meas_value/data_table/meas_value/$$
 # are used to fit the model variables:
 # $srccode%py%
-fit_with_noise_in_data = True
+fit_with_noise_in_data = False
 # %$$
 #
 # $subhead quasi_fixed$$
@@ -822,13 +822,13 @@ def example_db (file_name) :
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'    },
 		{ 'name':'parent_node_name',       'value':parent_node            },
 		{ 'name':'ode_step_size',          'value':ode_step_size          },
-		{ 'name':'random_seed',            'value':'0'                    },
+		{ 'name':'random_seed',            'value':'1234'                 },
 		{ 'name':'bound_random',           'value':'1.0'                  },
 
 		{ 'name':'quasi_fixed',            'value':quasi_fixed            },
 		{ 'name':'max_num_iter_fixed',     'value':'300'                  },
 		{ 'name':'print_level_fixed',      'value':'5'                    },
-		{ 'name':'tolerance_fixed',        'value':'1e-3'                 },
+		{ 'name':'tolerance_fixed',        'value':'1e-4'                 },
 		{ 'name':'derivative_test_fixed',  'value':derivative_test_fixed  },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                   },
