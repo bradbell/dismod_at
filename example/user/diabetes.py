@@ -108,8 +108,10 @@
 # omega $cnext .003    $cnext .002    $cnext .3      $cnext .2      $rnext
 # chi   $cnext .004    $cnext .002    $cnext .1      $cnext .05     $rnext
 # $tend
-# The child rates are in log space, constant in age and time, are positive
-# for even index children, negative for odd indices, and have the
+# The child rates are in log space
+# (see $cref/u_i,k/avg_integrand/Rate Functions/u_i,k/$$),
+# constant in age and time,
+# positive for even index children, negative for odd indices, and have the
 # following values:
 # $table
 # rate   $cnext even value $cnext odd value $rnext
