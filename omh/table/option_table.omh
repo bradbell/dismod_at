@@ -360,6 +360,9 @@ that specifies the desired relative convergence tolerance
 for optimizing the fixed effects (random effects).
 (This is called $code tol$$ in Ipopt documentation.)
 The default value for this option is $code 1e-8$$.
+For the fixed effects, this tolerance is relative to the derivatives
+of the fixed effects objective at the value of the fixed effects in
+$cref scale_var_table$$.
 
 $subhead bound_random$$
 If $icode option_name$$ is

@@ -40,6 +40,28 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-13$$
+The changes below are for $cref user_diabetes.py$$:
+$list number$$
+Add
+$cref/random_seed/user_diabetes.py/Problem Parameters/random_seed/$$
+and
+$cref/tolerance_fixed/user_diabetes.py/Problem Parameters/tolerance_fixed/$$
+to the problem parameters.
+$lnext
+Change
+$cref/fit_with_noise_in_data
+	/user_diabetes.py
+	/Problem Parameters
+	/fit_with_noise_in_data
+/$$
+to be false, so less data can result in tests passing; i.e,
+makes automated testing faster.
+$lnext
+Change max_abs_rel_err to
+$cref/accept_rel_err/user_diabetes.py/Problem Parameters/accept_rel_err/$$.
+$lend
+
 $head 02-12$$
 The changes below are for $cref user_diabetes.py$$:
 $list number$$
@@ -137,7 +159,7 @@ The changes below are for $cref user_diabetes.py$$:
 $list number$$
 Add
 $cref/truth2start/user_diabetes.py/Problem Parameters/truth2start/$$,
-$cref/max_abs_rel_err/user_diabetes.py/Problem Parameters/max_abs_rel_err/$$,
+$cref/accept_rel_err/user_diabetes.py/Problem Parameters/accept_rel_err/$$,
 to the problem parameters.
 $lnext
 Add fitting of multipliers for the following covariates:

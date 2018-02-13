@@ -1,14 +1,14 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# Build check_user_example
+# Build check_example_user
 SET(depends "")
 FOREACH(user_case
 	asymptotic
@@ -40,16 +40,24 @@ ENDFOREACH(user_case)
 #
 ADD_CUSTOM_TARGET( check_example_user DEPENDS ${depends} )
 # ---------------------------------------------------------------------------
-# Build speed_user_example
+# Build check_example_user_speed (not included above)
 SET(random_seed      0)
 SET(n_children       10)
 SET(n_data_per_child 20)
 SET(quasi_fixed     "false")
 #
 ADD_CUSTOM_TARGET(
-	speed_example_user
+	check_example_user_speed
 	${python3_executable} example/user/speed.py
 		${random_seed} ${n_children} ${n_data_per_child} ${quasi_fixed}
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+	DEPENDS dismod_at
+)
+# -----------------------------------------------------------------------------
+# Build check_example_user_diabetes (not included above)
+ADD_CUSTOM_TARGET(
+	check_example_user_diabetes
+	${python3_executable} example/user/diabetes.py
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	DEPENDS dismod_at
 )

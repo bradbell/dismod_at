@@ -216,7 +216,7 @@ meas_cv = 0.1
 meas_repeat = 1
 # %$$
 #
-# $subhead fit_with_nose_in_data$$
+# $subhead fit_with_noise_in_data$$
 # This is a $code bool$$ that specifies if measurement noise is included
 # when fitting the data; i.e., if simulated measurements are used to
 # fit the $cref model_variables$$.
@@ -227,10 +227,20 @@ meas_repeat = 1
 fit_with_noise_in_data = False
 # %$$
 #
+# $subhead random_seed$$
+# This $code str$$ must be a non-negative integer and is the
+# $cref/random_seed/option_table/random_seed/$$ option value.
+# This is used to seed the random number generator used to simulate the
+# noise in the measurement values.
+# The affects the results of the fit when $icode fit_with_noise_in_data$$
+# is true
+# $srccode%py%
+random_seed = '0'
+# %$$
+#
 # $subhead quasi_fixed$$
-# This is a $code str$$ that is either $code true$$ or $code false$$.
-# If true, a Quasi-Newton method is used to
-# optimize the fixed effects.
+# This $code str$$ that is either $code true$$ or $code false$$ and is the
+# $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$ option value.
 # This only requires function values and
 # first derivatives for the objective and constraints.
 # If it is false, a Newton method is used.
@@ -240,8 +250,15 @@ fit_with_noise_in_data = False
 quasi_fixed = 'true'
 # %$$
 #
+# $subhead tolerance_fixed$$
+# This $code str$$ contains the
+# $cref/tolerance_fixed/option_table/Optimizer/tolerance/$$ option value.
+# $srccode%py%
+tolerance_fixed = '1e-4'
+# %$$
+#
 # $subhead derivative_test_fixed$$
-# This is a $code str$$ that is
+# This $code str$$ is the
 # $cref/derivative_test/option_table/Optimizer/derivative_test/$$
 # option for the fixed effects.
 # The choice $code trace-adaptive$$ can be used to see if the partial
@@ -270,19 +287,20 @@ derivative_test_fixed = 'none'
 truth2start = 0.3
 # %$$
 #
-# $subhead max_abs_rel_err$$
-# This is a $code float$$ that specifies the maximum absolute relative error.
-# To be specific
+# $subhead accept_rel_err$$
+# This is a $code float$$ that specifies the absolute relative error
+# to be accepted as passing the test.
+# If the test passes, for each model variable
 # $codei%
-#	%max_abs_rel_err% >= %fit_var_value% / %truth_var_value% - 1.0
+#	%accept_rel_err% >= %fit_var_value% / %truth_var_value% - 1.0
 # %$$
-# where for each model variable,
+# where
 # $cref/truth_var_value/truth_var_table/truth_var_value/$$ is the true value
 # used to simulate the data and
 # $cref/fit_var_value/fit_var_table/fit_var_value/$$ is result of the fit.
 # A python assertion is generated if the condition above is not satisfied.
 # $srccode%py%
-max_abs_rel_err = 0.2
+accept_rel_err = 0.25
 # %$$
 #
 # $head Source Code$$
@@ -301,13 +319,14 @@ import distutils.dir_util
 import subprocess
 import copy
 import math
+import time
 test_program = 'example/user/diabetes.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
 	usage += 'and working directory is the dismod_at distribution directory\n'
 	sys.exit(usage)
-print(test_program)
+start_second = time.time()
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
@@ -822,13 +841,13 @@ def example_db (file_name) :
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'    },
 		{ 'name':'parent_node_name',       'value':parent_node            },
 		{ 'name':'ode_step_size',          'value':ode_step_size          },
-		{ 'name':'random_seed',            'value':'1234'                 },
+		{ 'name':'random_seed',            'value':random_seed            },
 		{ 'name':'bound_random',           'value':'1.0'                  },
 
 		{ 'name':'quasi_fixed',            'value':quasi_fixed            },
 		{ 'name':'max_num_iter_fixed',     'value':'300'                  },
 		{ 'name':'print_level_fixed',      'value':'5'                    },
-		{ 'name':'tolerance_fixed',        'value':'1e-4'                 },
+		{ 'name':'tolerance_fixed',        'value':tolerance_fixed        },
 		{ 'name':'derivative_test_fixed',  'value':derivative_test_fixed  },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                   },
@@ -1073,14 +1092,14 @@ for var_id in range( len(var_table) ) :
 	fit_var_value   = fit_var_table[var_id]['fit_var_value']
 	if truth_var_value != 0.0 :
 		rel_err = fit_var_value / truth_var_value - 1.0
-		flag    = abs( rel_err ) <= max_abs_rel_err
+		flag    = abs( rel_err ) <= accept_rel_err
 		ok     &= flag
 		if not flag :
 			print('var_id = ', var_id, ', rel_err = ', rel_err)
 		max_err = max( max_err, abs(rel_err) )
-print(max_err)
 assert ok
 # -----------------------------------------------------------------------------
+print('elapsed seconds = ', time.time() - start_second)
 print('diabetes.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

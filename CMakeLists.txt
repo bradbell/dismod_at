@@ -285,9 +285,11 @@ ADD_CUSTOM_TARGET(check DEPENDS
 	check_example_get_started
 	check_example_user
 )
-# Note that check_example_user_speed is not inclued in check_example_user
+# check_example_user_speed and check_example_user_diabetes not include above
 ADD_CUSTOM_TARGET(speed DEPENDS
-	speed_example_user
+	check_example_user_speed
+	check_example_user_diabetes
+
 )
 ADD_CUSTOM_TARGET(
 	install_python
