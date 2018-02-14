@@ -548,25 +548,17 @@ def example_db (file_name) :
 	fun['pini_parent']        = fun_pini_parent
 	fun['pini_child']         = fun_pini_child
 	# ----------------------------------------------------------------------
-	# age lists
+	# age_list, age_index_rate_parent, age_indexrate__child
 	start                     = age_grid['start']
 	end                       = age_grid['end']
 	number                    = age_grid['number']
 	interval                  = (end - start) / (number - 1)
-	age_index                 = dict()
 	age_list                  = [ start + j * interval for j in range(number) ]
-	age_index['iota_parent']  = range(number)
-	age_index['chi_parent']   = range(number)
-	age_index['omega_parent'] = range(number)
-	age_index['pini_parent']  = [ 0 ]
-	#
-	age_index['iota_child']   = [ 0 ]
-	age_index['chi_child']    = [ 0 ]
-	age_index['omega_child']  = [ 0 ]
-	age_index['pini_child']   = [ 0 ]
+	age_index_rate_parent     = range(number)
+	age_index_rate_child      = [ 0 ]
 	#
 	# ----------------------------------------------------------------------
-	# time lists
+	# time_list, time_index_rate_parent, time_index_rate_child
 	start                  = time_grid['start']
 	end                    = time_grid['end']
 	number                 = time_grid['number']
@@ -686,33 +678,41 @@ def example_db (file_name) :
 			'fun':      fun['mulcov_' + cov]
 		} )
 	for rate in [ 'pini', 'iota', 'chi' ] :
+		age_index = age_index_rate_parent
+		if rate == 'pini' :
+			age_index = [0]
 		#
 		# smooth_rate_parent
 		name = rate + '_parent'
 		smooth_table.append( {
-			'name':        'smooth_' + name  ,
-			'age_id':       age_index[name]  ,
+			'name':        'smooth_' + name        ,
+			'age_id':       age_index              ,
 			'time_id':      time_index_rate_parent ,
 			'fun':          fun[name]
 		} )
 		#
+		age_index = age_index_rate_child
+		if rate == 'pini' :
+			age_index = [0]
+		#
 		# smooth_rate_child
 		name = rate + '_child'
 		smooth_table.append( {
-			'name':        'smooth_' + name  ,
-			'age_id':       age_index[name]  ,
+			'name':        'smooth_' + name       ,
+			'age_id':       age_index             ,
 			'time_id':      time_index_rate_child ,
 			'fun':          fun[name]
 		} )
+	#
 	nslist_table['nslist_omega_child'] = list()
 	for node in node_list :
 		name = 'smooth_omega_' + node
 		smoothing = { 'name': name }
 		if node == parent_node :
-			smoothing['age_id']  = age_index['omega_parent']
+			smoothing['age_id']  = age_index_rate_parent
 			smoothing['time_id'] = time_index_rate_parent
 		else :
-			smoothing['age_id']  = age_index['omega_child']
+			smoothing['age_id']  = age_index_rate_child
 			smoothing['time_id'] = time_index_rate_child
 			nslist_table['nslist_omega_child'].append( (node, name) )
 		#
