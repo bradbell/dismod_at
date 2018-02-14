@@ -179,6 +179,8 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # standard deviation of the log-Gaussian used to smooth the
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
 # age differences.
+# (This does not include $cref/pini/rate_table/rate_name/pini/$$
+# because it only has one age point.)
 # This is also the set of ages in the $cref age_table$$.
 # The interval between age grid points is the end age, minus the start age,
 # divided by the number of grid points minus one.
@@ -192,6 +194,7 @@ age_grid  = { 'start':0.0, 'end':100, 'number':6, 'std':0.4 }
 # standard deviation of the log-Gaussian used to smooth the
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
 # time differences.
+# (This includes $cref/pini/rate_table/rate_name/pini/$$).
 # This is also the set of times in the $cref time_table$$.
 # The interval between time grid points is the end time, minus the start time,
 # divided by the number of grid points minus one.
@@ -555,7 +558,7 @@ def example_db (file_name) :
 	interval                  = (end - start) / (number - 1)
 	age_list                  = [ start + j * interval for j in range(number) ]
 	age_index_rate_parent     = range(number)
-	age_index_rate_child      = [ 0 ]
+	age_index_rate_child      = [0]
 	#
 	# ----------------------------------------------------------------------
 	# time_list, time_index_rate_parent, time_index_rate_child
