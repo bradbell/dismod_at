@@ -40,6 +40,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-14$$
+Add
+$cref/child_age_grid/user_diabetes.py/Problem Parameters/child_age_grid/$$
+and
+$cref/child_time_grid/user_diabetes.py/Problem Parameters/child_time_grid/$$
+to the diabetes example problem parameters.
+
 $head 02-13$$
 The changes below are for $cref user_diabetes.py$$:
 $list number$$
@@ -76,8 +83,8 @@ Changes so the example with random effects runs faster:
 Increase the
 $cref/tolerance_fixed/option_table/Optimizer/tolerance/$$.
 Reduce the number of points in the
-$cref/age/user_diabetes.py/Problem Parameters/age_grid/$$ and
-$cref/time/user_diabetes.py/Problem Parameters/age_grid/$$ grids.
+$cref/age/user_diabetes.py/Problem Parameters/parent_age_grid/$$ and
+$cref/time/user_diabetes.py/Problem Parameters/parent_time_grid/$$ grids.
 $lnext
 Set the $cref scale_var_table$$ equal to the $cref start_var_table$$.
 This avoids nans during evaluation of the objective with random effects.

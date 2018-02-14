@@ -173,8 +173,9 @@ node_list = [ 'US', 'Alabama', 'California' ]
 integrand_list = [ 'mtspecific', 'prevalence' ]
 # %$$
 #
-# $subhead age_grid$$
-# This is a $code dict$$ with $code float$$ values containing
+# $subhead parent_age_grid$$
+# This is a $code dict$$ with $code float$$ values
+# (except for $icode number$$ which is a positive $code int$$) containing
 # the start age, end age, number of age grid points, and
 # standard deviation of the log-Gaussian used to smooth the
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
@@ -185,11 +186,26 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # The interval between age grid points is the end age, minus the start age,
 # divided by the number of grid points minus one.
 # $srccode%py%
-age_grid  = { 'start':0.0, 'end':100, 'number':6, 'std':0.4 }
+parent_age_grid  = { 'start':0.0, 'end':100.0, 'number':6, 'std':0.4 }
 # %$$
 #
-# $subhead time_grid$$
-# This is a $code dict$$ with $code float$$ values containing
+# $subhead child_age_grid$$
+# This is a $code dict$$ with the following values:
+# The value of $icode index$$ is a list of indices ($code int$$) in the parent
+# age grid where there are
+# $cref/random effects/model_variables/Random Effects, u/$$.
+# Each of these indices must be less than $icode number$$ in the age grid.
+# The value $icode std$$ (a $code float$$) is the standard deviation in the
+# Gaussian used to smooth the child rate values.
+# (This does not include $cref/pini/rate_table/rate_name/pini/$$
+# because it only has one age point.)
+# $srccode%py%
+child_age_grid  = { 'index':[0], 'std':0.2 }
+# %$$
+#
+# $subhead parent_time_grid$$
+# This is a $code dict$$ with $code float$$ values
+# (except for $icode number$$ which is a positive $code int$$) containing
 # the start time, end time, number of time grid points, and
 # standard deviation of the log-Gaussian used to smooth the
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
@@ -199,7 +215,20 @@ age_grid  = { 'start':0.0, 'end':100, 'number':6, 'std':0.4 }
 # The interval between time grid points is the end time, minus the start time,
 # divided by the number of grid points minus one.
 # $srccode%py%
-time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
+parent_time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
+# %$$
+#
+# $subhead child_time_grid$$
+# This is a $code dict$$ with the following values:
+# The value of $icode index$$ is a list of indices ($code int$$) in the parent
+# time grid where there are
+# $cref/random effects/model_variables/Random Effects, u/$$.
+# Each of these indices must be less than $icode number$$ in the time grid.
+# The value $icode std$$ (a $code float$$) is the standard deviation in the
+# Gaussian used to smooth the child rate values.
+# (This includes $cref/pini/rate_table/rate_name/pini/$$).
+# $srccode%py%
+child_time_grid  = { 'index':[0], 'std':0.2 }
 # %$$
 #
 # $subhead ode_step_size$$
@@ -370,32 +399,30 @@ distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def log_bilinear(grid_value, a, t) :
-	age_start = age_grid['start']
-	#
 	# denominator
-	da  = age_grid['end'] - age_start
-	dt  = time_grid['end'] - time_grid['start']
+	da  = parent_age_grid['end'] - parent_age_grid['start']
+	dt  = parent_time_grid['end'] - parent_time_grid['start']
 	den = da * dt;
 	num = 0.0
 	#
 	# value at start age and start time
-	da   = age_grid['end'] - a
-	dt   = time_grid['end'] - t
+	da   = parent_age_grid['end'] - a
+	dt   = parent_time_grid['end'] - t
 	num += math.log( grid_value['start_age, start_time'] ) * da * dt
 	#
 	# value at start age and end time
-	da   = age_grid['end'] - a
-	dt   = t - time_grid['start']
+	da   = parent_age_grid['end'] - a
+	dt   = t - parent_time_grid['start']
 	num += math.log( grid_value['start_age, end_time'] ) * da * dt
 	#
 	# value at end age and start time
-	da   = a - age_start
-	dt   = time_grid['end'] - t
+	da   = a - parent_age_grid['start']
+	dt   = parent_time_grid['end'] - t
 	num += math.log( grid_value['end_age, start_time'] ) * da * dt
 	#
 	# value at end age and end time
-	da   = a - age_start
-	dt   = t - time_grid['start']
+	da   = a - parent_age_grid['start']
+	dt   = t - parent_time_grid['start']
 	num += math.log( grid_value['end_age, end_time'] ) * da * dt
 	#
 	return math.exp( num / den )
@@ -552,23 +579,23 @@ def example_db (file_name) :
 	fun['pini_child']         = fun_pini_child
 	# ----------------------------------------------------------------------
 	# age_list, age_index_rate_parent, age_indexrate__child
-	start                     = age_grid['start']
-	end                       = age_grid['end']
-	number                    = age_grid['number']
+	start                     = parent_age_grid['start']
+	end                       = parent_age_grid['end']
+	number                    = parent_age_grid['number']
 	interval                  = (end - start) / (number - 1)
 	age_list                  = [ start + j * interval for j in range(number) ]
 	age_index_rate_parent     = range(number)
-	age_index_rate_child      = [0]
+	age_index_rate_child      = child_age_grid['index']
 	#
 	# ----------------------------------------------------------------------
 	# time_list, time_index_rate_parent, time_index_rate_child
-	start                  = time_grid['start']
-	end                    = time_grid['end']
-	number                 = time_grid['number']
+	start                  = parent_time_grid['start']
+	end                    = parent_time_grid['end']
+	number                 = parent_time_grid['number']
 	interval               = (end - start) / (number - 1)
 	time_list              = [ start + i * interval for i in range(number) ]
 	time_index_rate_parent = range(number)
-	time_index_rate_child  = [0]
+	time_index_rate_child  = child_time_grid['index']
 	# ----------------------------------------------------------------------
 	# node table:
 	parent_node = node_list[0]
@@ -620,28 +647,28 @@ def example_db (file_name) :
 			'name':     'prior_parent_age',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      age_grid['std'],
+			'std':      parent_age_grid['std'],
 			'eta':      1e-5,
 		} , {
 			# prior_parent_time
 			'name':     'prior_parent_time',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      time_grid['std'],
+			'std':      parent_time_grid['std'],
 			'eta':      1e-5,
 		} , {
 			# prior_child_age
 			'name':     'prior_child_age',
 			'density':  'gaussian',
 			'mean':     0.0,
-			'std':      0.2,
+			'std':      child_age_grid['std'],
 			'eta':      1e-5,
 		} , {
 			# prior_child_time
 			'name':     'prior_child_time',
 			'density':  'gaussian',
 			'mean':     0.0,
-			'std':      0.2,
+			'std':      child_time_grid['std'],
 			'eta':      1e-5,
 		} , {
 			# prior_sex
