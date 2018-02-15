@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -128,9 +128,13 @@ for this rate.
 $head child_nslist_id$$
 This column has type $code integer$$ and is a
 $cref/nslist_id/nslist_pair_table/nslist_id/$$.
-For each smoothing in the list,
-$cref/node_id/nslist_pair_table/node_id/$$ must correspond to a child node
-and all the child nodes must be included.
+If it is not $code null$$, it identifies a list of
+($icode node_id$$, $icode smooth_id$$) pairs.
+The $icode node_id$$ for each of the
+$cref/children/option_table/parent_node_id/Children/$$
+must appear in the list.
+The corresponding smoothing is used for that child
+and the rate corresponding to this row of the rate table.
 
 $subhead null$$
 If $icode child_nslist_list$$ is not $code null$$,

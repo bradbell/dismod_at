@@ -28,6 +28,7 @@ $spell
 	var
 	rel
 	nans
+	nslist
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -41,11 +42,16 @@ $childtable%
 %$$
 
 $head 02-14$$
+$list number$$
 Add
 $cref/child_age_grid/user_diabetes.py/Problem Parameters/child_age_grid/$$
 and
 $cref/child_time_grid/user_diabetes.py/Problem Parameters/child_time_grid/$$
 to the diabetes example problem parameters.
+$lnext
+Improve documentation of
+$cref/child_nslist_id/rate_table/child_nslist_id/$$.
+$lend
 
 $head 02-13$$
 The changes below are for $cref user_diabetes.py$$:
