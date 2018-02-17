@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Example / Speed Test Fitting Simulated Diabetes Data</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Example / Speed Test Fitting Simulated Diabetes Data">
-<meta name="keywords" id="keywords" content=" example / speed test fitting simulated diabetes data running this omega rho weight table grid covariates covariate multipliers truth var predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ">
+<meta name="keywords" id="keywords" content=" example / speed test fitting simulated diabetes data running this omega rho weight table grid covariates covariate multipliers truth var parent rates child predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -102,6 +102,8 @@ A:active { color : purple }
 <option>---..Data Table</option>
 <option>---..Multipliers</option>
 <option>Truth Var Table</option>
+<option>---..Parent Rates</option>
+<option>---..Child Rates</option>
 <option>Predict Table</option>
 <option>Problem Parameters</option>
 <option>---..mulcov_dict</option>
@@ -262,6 +264,11 @@ for ms_2000 it is a
 The values in the <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
  are generated using bilinear
 interpolation of the log of values specified points.
+
+<br>
+<br>
+<b><a name="Truth Var Table.Parent Rates" id="Truth Var Table.Parent Rates">Parent Rates</a></b>
+<br>
 We use the notation
 as for age start,
 ae for age end,
@@ -303,6 +310,9 @@ chi   </td><td align='left'  valign='top'>
 
 </td></tr>
 </table>
+<br>
+<b><a name="Truth Var Table.Child Rates" id="Truth Var Table.Child Rates">Child Rates</a></b>
+<br>
 The child rates are in log space
 (see <a href="avg_integrand.htm#Rate Functions.u_i,k" target="_top"><span style='white-space: nowrap'>u_i,k</span></a>
 ),
@@ -312,8 +322,8 @@ following values:
 <table><tr><td align='left'  valign='top'>
 
 rate   </td><td align='left'  valign='top'>
- even value </td><td align='left'  valign='top'>
- odd value </td></tr><tr><td align='left'  valign='top'>
+ even index </td><td align='left'  valign='top'>
+ odd index </td></tr><tr><td align='left'  valign='top'>
 
 pini   </td><td align='left'  valign='top'>
  .1         </td><td align='left'  valign='top'>
@@ -323,13 +333,33 @@ iota   </td><td align='left'  valign='top'>
  .15        </td><td align='left'  valign='top'>
  -.15      </td></tr><tr><td align='left'  valign='top'>
 
-omega  </td><td align='left'  valign='top'>
- .2         </td><td align='left'  valign='top'>
- -.2       </td></tr><tr><td align='left'  valign='top'>
-
 chi    </td><td align='left'  valign='top'>
  .25        </td><td align='left'  valign='top'>
  -.25      </td></tr><tr><td align='left'  valign='top'>
+
+</td></tr>
+</table>
+There is an exception for omega, which is constrained. It is defined
+on the parent age grid and has the following values:
+<table><tr><td align='left'  valign='top'>
+
+index  </td><td align='left'  valign='top'>
+ (as,ts) </td><td align='left'  valign='top'>
+ (as,te) </td><td align='left'  valign='top'>
+ (ae,ts) </td><td align='left'  valign='top'>
+ (ae,te) </td></tr><tr><td align='left'  valign='top'>
+
+even   </td><td align='left'  valign='top'>
+  .1     </td><td align='left'  valign='top'>
+  .02     </td><td align='left'  valign='top'>
+  .02   </td><td align='left'  valign='top'>
+  .03    </td></tr><tr><td align='left'  valign='top'>
+
+odd    </td><td align='left'  valign='top'>
+ -.1     </td><td align='left'  valign='top'>
+ -.02     </td><td align='left'  valign='top'>
+ -.02   </td><td align='left'  valign='top'>
+ -.03    </td></tr><tr><td align='left'  valign='top'>
 
 </td></tr>
 </table>
