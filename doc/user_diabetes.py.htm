@@ -409,7 +409,15 @@ integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <fo
 <br>
 <b><a name="Problem Parameters.parent_age_grid" id="Problem Parameters.parent_age_grid">parent_age_grid</a></b>
 <br>
-This is a <code><font color="blue">dict</font></code> with <code><font color="blue">float</font></code> values
+This specifies the age grid used for all the parent rate
+<a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
+.
+It is also the age grid used for constraining the child rates using
+<a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
+.
+In addition, it is the set of ages in the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+.
+It is a <code><font color="blue">dict</font></code> with <code><font color="blue">float</font></code> values
 (except for 
 <code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
  which is a positive <code><font color="blue">int</font></code>) containing
@@ -421,8 +429,6 @@ age differences.
 (This does not include <a href="rate_table.htm#rate_name.pini" target="_top"><span style='white-space: nowrap'>pini</span></a>
 
 because it only has one age point.)
-This is also the set of ages in the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
-.
 The interval between age grid points is the end age, minus the start age,
 divided by the number of grid points minus one.
 <pre style='display:inline'><tt>
@@ -431,7 +437,13 @@ parent_age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <
 <br>
 <b><a name="Problem Parameters.child_age_grid" id="Problem Parameters.child_age_grid">child_age_grid</a></b>
 <br>
-This is a <code><font color="blue">dict</font></code> with the following values:
+The is the age grid used for all the child rate
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
+ except for
+omega (see 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_age_grid</span></font></i></code>
+ above).
+It is a <code><font color="blue">dict</font></code> with the following values:
 The value of 
 <code><i><font color="black"><span style='white-space: nowrap'>index</span></font></i></code>
  is a list of indices (<code><font color="blue">int</font></code>) in the parent
@@ -454,7 +466,15 @@ child_age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <f
 <br>
 <b><a name="Problem Parameters.parent_time_grid" id="Problem Parameters.parent_time_grid">parent_time_grid</a></b>
 <br>
-This is a <code><font color="blue">dict</font></code> with <code><font color="blue">float</font></code> values
+This specifies the time grid used for all the parent rate
+<a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
+.
+It is also the time grid used for constraining the child rates using
+In addition, it is the set of times in the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+.
+<a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
+.
+It is a <code><font color="blue">dict</font></code> with <code><font color="blue">float</font></code> values
 (except for 
 <code><i><font color="black"><span style='white-space: nowrap'>number</span></font></i></code>
  which is a positive <code><font color="blue">int</font></code>) containing
@@ -475,7 +495,13 @@ parent_time_grid <font color="#990000">=</font> <font color="#990000">{</font> <
 <br>
 <b><a name="Problem Parameters.child_time_grid" id="Problem Parameters.child_time_grid">child_time_grid</a></b>
 <br>
-This is a <code><font color="blue">dict</font></code> with the following values:
+The is the time grid used for all the child rate
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
+ except for
+omega (see 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_time_grid</span></font></i></code>
+ above).
+It is a <code><font color="blue">dict</font></code> with the following values:
 The value of 
 <code><i><font color="black"><span style='white-space: nowrap'>index</span></font></i></code>
  is a list of indices (<code><font color="blue">int</font></code>) in the parent
@@ -772,6 +798,8 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> parent_node <font color="#990000">:</font>
                ret <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>ret<font color="#990000">)</font>
      <i><font color="#9A1900"># -------------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900"># we are constraining omega to its true value so we do a detailed</font></i>
+     <i><font color="#9A1900"># simulation of the random effect for omega; i.e., it is not constant</font></i>
      <b><font color="#0000FF">elif</font></b> rate <font color="#990000">==</font> <font color="#FF0000">'omega'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> parent_node <font color="#990000">:</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">003</font>
@@ -779,15 +807,15 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">3</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> <font color="#990000">.</font><font color="#993399">2</font>
           <b><font color="#0000FF">elif</font></b> even_child <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(.</font><font color="#993399">20</font><font color="#990000">)</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(.</font><font color="#993399">10</font><font color="#990000">)</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(.</font><font color="#993399">20</font><font color="#990000">)</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(.</font><font color="#993399">20</font><font color="#990000">)</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(.</font><font color="#993399">20</font><font color="#990000">)</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(.</font><font color="#993399">30</font><font color="#990000">)</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(-.</font><font color="#993399">20</font><font color="#990000">)</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, start_time'</font><font color="#990000">]</font> <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(-.</font><font color="#993399">10</font><font color="#990000">)</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'start_age, end_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(-.</font><font color="#993399">20</font><font color="#990000">)</font>
                grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, start_time'</font><font color="#990000">]</font>   <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(-.</font><font color="#993399">20</font><font color="#990000">)</font>
-               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(-.</font><font color="#993399">20</font><font color="#990000">)</font>
+               grid_value<font color="#990000">[</font><font color="#FF0000">'end_age, end_time'</font><font color="#990000">]</font>     <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(-.</font><font color="#993399">30</font><font color="#990000">)</font>
           <i><font color="#9A1900">#</font></i>
           ret <font color="#990000">=</font> <b><font color="#000000">log_bilinear</font></b><font color="#990000">(</font>grid_value<font color="#990000">,</font> a<font color="#990000">,</font> t<font color="#990000">)</font>
           <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> parent_node <font color="#990000">:</font>
@@ -1034,18 +1062,15 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900">#</font></i>
      nslist_table<font color="#990000">[</font><font color="#FF0000">'nslist_omega_child'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <b><font color="#0000FF">for</font></b> node <b><font color="#0000FF">in</font></b> node_list <font color="#990000">:</font>
-          name <font color="#990000">=</font> <font color="#FF0000">'smooth_omega_'</font> <font color="#990000">+</font> node
-          smoothing <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font> name <font color="#990000">}</font>
-          <b><font color="#0000FF">if</font></b> node <font color="#990000">==</font> parent_node <font color="#990000">:</font>
-               smoothing<font color="#990000">[</font><font color="#FF0000">'age_id'</font><font color="#990000">]</font>  <font color="#990000">=</font> age_index_rate_parent
-               smoothing<font color="#990000">[</font><font color="#FF0000">'time_id'</font><font color="#990000">]</font> <font color="#990000">=</font> time_index_rate_parent
-          <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               smoothing<font color="#990000">[</font><font color="#FF0000">'age_id'</font><font color="#990000">]</font>  <font color="#990000">=</font> age_index_rate_child
-               smoothing<font color="#990000">[</font><font color="#FF0000">'time_id'</font><font color="#990000">]</font> <font color="#990000">=</font> time_index_rate_child
-               nslist_table<font color="#990000">[</font><font color="#FF0000">'nslist_omega_child'</font><font color="#990000">].</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">(</font>node<font color="#990000">,</font> name<font color="#990000">)</font> <font color="#990000">)</font>
-          <i><font color="#9A1900">#</font></i>
-          smoothing<font color="#990000">[</font><font color="#FF0000">'fun'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font>node<font color="#990000">)</font>
+          name                 <font color="#990000">=</font> <font color="#FF0000">'smooth_omega_'</font> <font color="#990000">+</font> node
+          smoothing            <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font> name <font color="#990000">}</font>
+          smoothing<font color="#990000">[</font><font color="#FF0000">'age_id'</font><font color="#990000">]</font>  <font color="#990000">=</font> age_index_rate_parent
+          smoothing<font color="#990000">[</font><font color="#FF0000">'time_id'</font><font color="#990000">]</font> <font color="#990000">=</font> time_index_rate_parent
+          smoothing<font color="#990000">[</font><font color="#FF0000">'fun'</font><font color="#990000">]</font>     <font color="#990000">=</font> <b><font color="#000000">fun_omega</font></b><font color="#990000">(</font>node<font color="#990000">)</font>
           smooth_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> smoothing <font color="#990000">)</font>
+          <i><font color="#9A1900">#</font></i>
+          <b><font color="#0000FF">if</font></b> node <font color="#990000">!=</font> parent_node <font color="#990000">:</font>
+               nslist_table<font color="#990000">[</font><font color="#FF0000">'nslist_omega_child'</font><font color="#990000">].</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">(</font>node<font color="#990000">,</font> name<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># no standard deviation multipliers</font></i>
      <b><font color="#0000FF">for</font></b> dictionary <b><font color="#0000FF">in</font></b> smooth_table <font color="#990000">:</font>

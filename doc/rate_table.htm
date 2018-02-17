@@ -348,10 +348,20 @@ for this rate.
 This column has type <code><font color="blue">integer</font></code> and is a
 <a href="nslist_pair_table.htm#nslist_id" target="_top"><span style='white-space: nowrap'>nslist_id</span></a>
 .
-For each smoothing in the list,
-<a href="nslist_pair_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
- must correspond to a child node
-and all the child nodes must be included.
+If it is not <code><font color="blue">null</font></code>, it identifies a list of
+(
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+) pairs.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+ for each of the
+<a href="option_table.htm#parent_node_id.Children" target="_top"><span style='white-space: nowrap'>children</span></a>
+
+must appear in the list.
+The corresponding smoothing is used for that child
+and the rate corresponding to this row of the rate table.
 
 <br>
 <br>
