@@ -95,6 +95,8 @@
 # $head Truth Var Table$$
 # The values in the $cref truth_var_table$$ are generated using bilinear
 # interpolation of the log of values specified points.
+#
+# $subhead Parent Rates$$
 # We use the notation
 # as for age start,
 # ae for age end,
@@ -109,17 +111,25 @@
 # omega $cnext .003    $cnext .002    $cnext .3      $cnext .2      $rnext
 # chi   $cnext .004    $cnext .002    $cnext .1      $cnext .05     $rnext
 # $tend
+#
+# $subhead Child Rates$$
 # The child rates are in log space
 # (see $cref/u_i,k/avg_integrand/Rate Functions/u_i,k/$$),
 # constant in age and time,
 # positive for even index children, negative for odd indices, and have the
 # following values:
 # $table
-# rate   $cnext even value $cnext odd value $rnext
+# rate   $cnext even index $cnext odd index $rnext
 # pini   $cnext .1         $cnext -.1       $rnext
 # iota   $cnext .15        $cnext -.15      $rnext
-# omega  $cnext .2         $cnext -.2       $rnext
 # chi    $cnext .25        $cnext -.25      $rnext
+# $tend
+# There is an exception for omega, which is constrained. It is defined
+# on the parent age grid and has the following values:
+# $table
+# index  $cnext (as,ts) $cnext (as,te) $cnext (ae,ts) $cnext (ae,te) $rnext
+# even   $cnext  .1     $cnext  .02     $cnext  .02   $cnext  .03    $rnext
+# odd    $cnext -.1     $cnext -.02     $cnext -.02   $cnext -.03    $rnext
 # $tend
 #
 # $head Predict Table$$
