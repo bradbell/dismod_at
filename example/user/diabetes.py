@@ -177,7 +177,7 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # $subhead parent_age_grid$$
 # This specifies the age grid used for all the parent rate
 # $cref/smoothings/rate_table/parent_smooth_id/$$.
-# It is also the age grid used for constraining the child rates using
+# It is also the age grid used for constraining the child omega rates using
 # $cref/child_nslist_id/rate_table/child_nslist_id/$$.
 # In addition, it is the set of ages in the $cref age_table$$.
 # It is a $code dict$$ with $code float$$ values
@@ -214,8 +214,9 @@ child_age_grid  = { 'index':[0], 'std':0.2 }
 # $subhead parent_time_grid$$
 # This specifies the time grid used for all the parent rate
 # $cref/smoothings/rate_table/parent_smooth_id/$$.
-# It is also the time grid used for constraining the child rates using
-# In addition, it is the set of times in the $cref age_table$$.
+# It is also the time grid used for constraining the child omega rates using
+# $cref/child_nslist_id/rate_table/child_nslist_id/$$.
+# In addition, it is the set of times in the $cref time_table$$.
 # $cref/child_nslist_id/rate_table/child_nslist_id/$$.
 # It is a $code dict$$ with $code float$$ values
 # (except for $icode number$$ which is a positive $code int$$) containing
