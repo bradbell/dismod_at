@@ -289,7 +289,6 @@ ADD_CUSTOM_TARGET(check DEPENDS
 ADD_CUSTOM_TARGET(speed DEPENDS
 	check_example_user_speed
 	check_example_user_diabetes
-
 )
 ADD_CUSTOM_TARGET(
 	install_python
