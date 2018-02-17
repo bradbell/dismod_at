@@ -41,6 +41,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 02-17$$
+Change the $cref user_diabetes.py$$ example so that it constrains the
+child omega rates to vary with age and time using the
+$cref/parent_age_grid/user_diabetes.py/Problem Parameters/parent_age_grid/$$
+and $icode parent_time_grid$$.
+
 $head 02-14$$
 $list number$$
 Add

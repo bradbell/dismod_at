@@ -9,6 +9,7 @@
 # ---------------------------------------------------------------------------
 # $begin user_diabetes.py$$ $newlinech #$$
 # $spell
+#	nslist
 #	ae
 #	ts
 #	te
@@ -174,7 +175,12 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # %$$
 #
 # $subhead parent_age_grid$$
-# This is a $code dict$$ with $code float$$ values
+# This specifies the age grid used for all the parent rate
+# $cref/smoothings/rate_table/parent_smooth_id/$$.
+# It is also the age grid used for constraining the child rates using
+# $cref/child_nslist_id/rate_table/child_nslist_id/$$.
+# In addition, it is the set of ages in the $cref age_table$$.
+# It is a $code dict$$ with $code float$$ values
 # (except for $icode number$$ which is a positive $code int$$) containing
 # the start age, end age, number of age grid points, and
 # standard deviation of the log-Gaussian used to smooth the
@@ -182,7 +188,6 @@ integrand_list = [ 'mtspecific', 'prevalence' ]
 # age differences.
 # (This does not include $cref/pini/rate_table/rate_name/pini/$$
 # because it only has one age point.)
-# This is also the set of ages in the $cref age_table$$.
 # The interval between age grid points is the end age, minus the start age,
 # divided by the number of grid points minus one.
 # $srccode%py%
@@ -190,7 +195,10 @@ parent_age_grid  = { 'start':0.0, 'end':100.0, 'number':6, 'std':0.4 }
 # %$$
 #
 # $subhead child_age_grid$$
-# This is a $code dict$$ with the following values:
+# The is the age grid used for all the child rate
+# $cref/smoothings/rate_table/child_smooth_id/$$ except for
+# omega (see $icode parent_age_grid$$ above).
+# It is a $code dict$$ with the following values:
 # The value of $icode index$$ is a list of indices ($code int$$) in the parent
 # age grid where there are
 # $cref/random effects/model_variables/Random Effects, u/$$.
@@ -204,7 +212,12 @@ child_age_grid  = { 'index':[0], 'std':0.2 }
 # %$$
 #
 # $subhead parent_time_grid$$
-# This is a $code dict$$ with $code float$$ values
+# This specifies the time grid used for all the parent rate
+# $cref/smoothings/rate_table/parent_smooth_id/$$.
+# It is also the time grid used for constraining the child rates using
+# In addition, it is the set of times in the $cref age_table$$.
+# $cref/child_nslist_id/rate_table/child_nslist_id/$$.
+# It is a $code dict$$ with $code float$$ values
 # (except for $icode number$$ which is a positive $code int$$) containing
 # the start time, end time, number of time grid points, and
 # standard deviation of the log-Gaussian used to smooth the
@@ -219,7 +232,10 @@ parent_time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
 # %$$
 #
 # $subhead child_time_grid$$
-# This is a $code dict$$ with the following values:
+# The is the time grid used for all the child rate
+# $cref/smoothings/rate_table/child_smooth_id/$$ except for
+# omega (see $icode parent_time_grid$$ above).
+# It is a $code dict$$ with the following values:
 # The value of $icode index$$ is a list of indices ($code int$$) in the parent
 # time grid where there are
 # $cref/random effects/model_variables/Random Effects, u/$$.
@@ -474,6 +490,8 @@ def true_rate(node, rate, a, t) :
 		if node != parent_node :
 			ret = math.log(ret)
 	# -------------------------------------------------------------------------
+	# we are constraining omega to its true value so we do a detailed
+	# simulation of the random effect for omega; i.e., it is not constant
 	elif rate == 'omega' :
 		if node == parent_node :
 			grid_value['start_age, start_time'] = .003
@@ -481,15 +499,15 @@ def true_rate(node, rate, a, t) :
 			grid_value['end_age, start_time']   = .3
 			grid_value['end_age, end_time']     = .2
 		elif even_child :
-			grid_value['start_age, start_time'] = math.exp(.20)
+			grid_value['start_age, start_time'] = math.exp(.10)
 			grid_value['start_age, end_time']   = math.exp(.20)
 			grid_value['end_age, start_time']   = math.exp(.20)
-			grid_value['end_age, end_time']     = math.exp(.20)
+			grid_value['end_age, end_time']     = math.exp(.30)
 		else :
-			grid_value['start_age, start_time'] = math.exp(-.20)
+			grid_value['start_age, start_time'] = math.exp(-.10)
 			grid_value['start_age, end_time']   = math.exp(-.20)
 			grid_value['end_age, start_time']   = math.exp(-.20)
-			grid_value['end_age, end_time']     = math.exp(-.20)
+			grid_value['end_age, end_time']     = math.exp(-.30)
 		#
 		ret = log_bilinear(grid_value, a, t)
 		if node != parent_node :
@@ -736,18 +754,15 @@ def example_db (file_name) :
 	#
 	nslist_table['nslist_omega_child'] = list()
 	for node in node_list :
-		name = 'smooth_omega_' + node
-		smoothing = { 'name': name }
-		if node == parent_node :
-			smoothing['age_id']  = age_index_rate_parent
-			smoothing['time_id'] = time_index_rate_parent
-		else :
-			smoothing['age_id']  = age_index_rate_child
-			smoothing['time_id'] = time_index_rate_child
-			nslist_table['nslist_omega_child'].append( (node, name) )
-		#
-		smoothing['fun'] = fun_omega(node)
+		name                 = 'smooth_omega_' + node
+		smoothing            = { 'name': name }
+		smoothing['age_id']  = age_index_rate_parent
+		smoothing['time_id'] = time_index_rate_parent
+		smoothing['fun']     = fun_omega(node)
 		smooth_table.append( smoothing )
+		#
+		if node != parent_node :
+			nslist_table['nslist_omega_child'].append( (node, name) )
 	#
 	# no standard deviation multipliers
 	for dictionary in smooth_table :
