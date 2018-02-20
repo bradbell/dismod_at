@@ -43,7 +43,7 @@ $childtable%
 %$$
 
 $head 02-20$$
-Advance to $code cppad_mixed-20180221$$.
+Advance to $code cppad_mixed-20180220$$.
 This fixes a problem, for some compilers, where some friend functions in
 $code cppad_mixed.hpp$$ were not defined.
 

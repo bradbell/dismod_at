@@ -24,7 +24,7 @@ echo_eval() {
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
 hash_key='842b09750e4880580b20cc88b1ee9e3ccb4edf1b'
-version='20180221'
+version='20180220'
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
 #
@@ -108,9 +108,9 @@ echo_eval git checkout --quiet $hash_key
 check=`bin/version.sh get`
 if [ "$check" != "$version" ]
 then
-	bin/version.sh set $version
+	echo 'install_cppad_mixed.sh: hash_key and version do not agree'
+	exit 1
 fi
-bin/version.sh copy
 #
 if [ ! -e build ]
 then
