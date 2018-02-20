@@ -29,6 +29,7 @@ $spell
 	rel
 	nans
 	nslist
+	hpp
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -40,6 +41,11 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 02-20$$
+Advance to $code cppad_mixed-20180221$$.
+This fixes a problem, for some compilers, where some friend functions in
+$code cppad_mixed.hpp$$ were not defined.
 
 $head 02-17$$
 Change the $cref user_diabetes.py$$ example so that it constrains the
