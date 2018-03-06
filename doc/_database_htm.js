@@ -35,6 +35,7 @@ var list_current0 = [
 'database.htm#Integer Can be Null',
 'database.htm#Real Can be Null, not Nan',
 'database.htm#Bounds That are Null',
+'database.htm#Type Names',
 'database.htm#Contents'
 ];
 function choose_across0(item)

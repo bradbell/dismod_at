@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Contents</option>
+<option>03-06</option>
 <option>02-20</option>
 <option>02-17</option>
 <option>02-14</option>
@@ -118,6 +119,31 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="03-06" id="03-06">03-06</a></big></b>
+
+<ol type="1"><li>
+Some users were using the
+type names <code><font color="blue">INTEGER</font></code>, <code><font color="blue">REAL</font></code>, and <code><font color="blue">TEXT</font></code>.
+The database specifications have been extended to allow for these
+<a href="database.htm#Type Names" target="_top"><span style='white-space: nowrap'>type&nbsp;names</span></a>
+, and the necessary changes were made.
+</li><li>
+
+The error messaging when <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ detected an invalid
+<a href="database.htm#Primary Key" target="_top"><span style='white-space: nowrap'>primary&nbsp;key</span></a>
+ has been improved.
+</li><li>
+
+Change <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ so it checks the type of all the columns
+in the <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="02-20" id="02-20">02-20</a></big></b>
 <br>
 Advance to <code><font color="blue">cppad_mixed-20180220</font></code>.
