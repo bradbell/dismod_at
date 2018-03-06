@@ -448,7 +448,7 @@ def db2csv_command(database_file_arg) :
 					msg = 'expected real in column ' + name
 					msg = 'of table ' + table_name
 					sys.exit(msg)
-			elif ty == 'int' :
+			elif ty == 'integer' :
 				if not isinstance(row[name], int) :
 					msg = 'expected integer in column ' + name
 					msg = 'of table ' + table_name

@@ -30,6 +30,7 @@ $spell
 	nans
 	nslist
 	hpp
+	messaging
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -41,6 +42,17 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 03-06$$
+$list number$$
+Some users were using the
+type names $code INTEGER$$, $code REAL$$, and $code TEXT$$.
+The database specifications have been extended to allow for these
+$cref/type names/database/Type Names/$$, and the necessary changes were made.
+$lnext
+The error messaging when $cref db2csv_command$$ detected an invalid
+$cref/primary key/database/Primary Key/$$ has been improved.
+$lend
 
 $head 02-20$$
 Advance to $code cppad_mixed-20180220$$.

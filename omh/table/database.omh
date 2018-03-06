@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -80,6 +80,11 @@ the value $code nan$$ appears in a table that is read by dismod_at.
 $head Bounds That are Null$$
 If a lower (upper) bound is $code null$$,
 it is interpreted as minus (plus) infinity.
+
+$head Type Names$$
+The types in this database are $code integer$$, $code real$$ and
+$code text$$. The type names $code INTEGER$$, $code REAL$$, and $code TEXT$$
+can also be used.
 
 $childtable%
 	omh/table/input.omh

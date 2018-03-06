@@ -28,15 +28,23 @@ if [ "$4" != '' ]
 then
 	ok='no'
 fi
-if [ "$person" == 'greg' ]
-then
+case $person in
+	greg)
 	database_path="/snfs2/HOME/gma1/tmp/$database"
-elif [ "$person" == 'alex' ]
-then
+	;;
+
+	alex)
 	database_path="/snfs1/Project/dismod_at/test_databases/$database"
-else
+	;;
+
+	katie)
+	dir='/snfs1/Project/dismod_at/shiny/gbd_dismod_at_viz/sqlite_files'
+	database_path="$dir/$database"
+	;;
+
+	*)
 	ok='no'
-fi
+esac
 if [ "$direction" != 'get' ] && [ "$direction" != 'put' ]
 then
 	ok='no'
@@ -45,9 +53,9 @@ if [ "$ok" == 'no' ]
 then
 cat << EOF
 usage: bin/ihme_db.sh direction person database'
-       person:    is alex or greg
+       direction: get or put
+       person:    alex, greg, or katie
        database:  file name of the database in directory used by person.
-       direction: is get or put
 EOF
 	exit 1
 fi

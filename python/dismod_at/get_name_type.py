@@ -1,11 +1,11 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-15 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
-# 	     GNU Affero General Public License version 3.0 or later
+#	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin get_name_type$$ $newlinech #$$
@@ -53,6 +53,7 @@
 # ---------------------------------------------------------------------------
 def get_name_type(connection, tbl_name) :
 	import collections
+	import sys
 	#
 	cmd        = 'pragma table_info(' + tbl_name + ');'
 	cursor    = connection.cursor()
@@ -67,11 +68,15 @@ def get_name_type(connection, tbl_name) :
 		col_type.append(row[2])
 		pk            = row[5]
 		if cid == 0 :
-			assert pk == 1
+			if pk != 1 :
+				sys.exit(tbl_name + ' table: first column not primary key')
 			assert found_pk == False
-			assert col_type[cid] == 'integer'
+			assert col_type[cid].lower() == 'integer'
 			assert col_name[cid] == (tbl_name + '_id')
 			col_type[cid]  =  'integer primary key'
 			found_ok       = True
+		else :
+			if pk != 0 :
+				sys.exit(tbl_name + ' table: muiltiple columns in primary key')
 		cid += 1
 	return (col_name, col_type)
