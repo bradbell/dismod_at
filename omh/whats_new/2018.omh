@@ -52,6 +52,9 @@ $cref/type names/database/Type Names/$$, and the necessary changes were made.
 $lnext
 The error messaging when $cref db2csv_command$$ detected an invalid
 $cref/primary key/database/Primary Key/$$ has been improved.
+$lnext
+Change $cref db2csv_command$$ so it checks the type of all the columns
+in the $cref input$$ tables.
 $lend
 
 $head 02-20$$

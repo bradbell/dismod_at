@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -62,6 +62,7 @@ $cref/measurement standard deviation/data_table/meas_std/$$; see
 $cref/gamma_j/data_like/Measurement Standard Deviation Covariates/gamma_j/$$.
 
 $head rate_id$$
+This column has type $code integer$$.
 If $icode mulcov_type$$ is $code rate_value$$,
 $icode rate_id$$ is the
 $cref/rate_id/rate_table/rate_id/$$ that determines
@@ -70,6 +71,7 @@ If $icode mulcov_type$$ is $code meas_value$$ or $code meas_std$$,
 this column must be $code null$$.
 
 $head integrand_id$$
+This column has type $code integer$$.
 If $icode mulcov_type$$ is $code meas_value$$ or $code meas_std$$,
 $icode integrand_id$$ is the
 $cref/integrand_id/integrand_table/integrand_id/$$ that determines

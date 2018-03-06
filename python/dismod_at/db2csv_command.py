@@ -427,34 +427,21 @@ def db2csv_command(database_file_arg) :
 			result = True
 		return result
 	# -------------------------------------------------------------------------
-	def check_table_columns(table_name, table_columns) :
+	def check_table_columns(connection, table_name, table_columns) :
 		if len( table_name ) == 0 :
 			return True
-		row    = table_data[table_name][0]
-		keys   = row.keys()
+		(col_name, col_type) = dismod_at.get_name_type(connection, table_name)
+		table_info           = dict( zip(col_name, col_type) )
 		for pair in table_columns :
 			name = pair[0]
 			ty   = pair[1]
-			if name not in keys :
+			if name not in table_info :
 				msg = 'expected column ' + name + ' in table ' + table_name
 				sys.exit(msg)
-			if  ty == 'text' :
-				if not isinstance(row[name], str) :
-					msg = 'expected text in column ' + name
-					msg = 'of table ' + table_name
-					sys.exit(msg)
-			elif ty == 'real' :
-				if not isinstance(row[name], float) :
-					msg = 'expected real in column ' + name
-					msg = 'of table ' + table_name
-					sys.exit(msg)
-			elif ty == 'integer' :
-				if not isinstance(row[name], int) :
-					msg = 'expected integer in column ' + name
-					msg = 'of table ' + table_name
-					sys.exit(msg)
-			else :
-				assert False
+			if  ty != table_info[name] :
+				msg  = 'expected type ' + ty ++  ' for column ' + name
+				msg += ' of table ' + table_name
+				sys.exit(msg)
 	# -------------------------------------------------------------------------
 	def convert2output(value_in) :
 		if value_in == None :
@@ -600,15 +587,142 @@ def db2csv_command(database_file_arg) :
 				msg += 'length ' + right + '_table = ' + str(len_right) + '\n'
 				sys.exit(msg)
 	# ----------------------------------------------------------------------
-	# check age table
-	table_name   = 'age'
-	table_columns = [ ('age', 'real') ]
-	check_table_columns(table_name, table_columns)
+	# check types in tables
 	#
-	# check option table
-	table_name   = 'option'
+	# age, time
+	for table_name in [ 'age', 'time' ] :
+		table_columns = [ (table_name, 'real') ]
+		check_table_columns(connection, table_name, table_columns)
+	#
+	# integrand, density
+	for table_name in [ 'integrand', 'density' ]:
+		table_columns = [ (table_name + '_name', 'text') ]
+		check_table_columns(connection, table_name, table_columns)
+	#
+	# covariate
+	table_name    = 'covariate'
+	table_columns = [
+		('covariate_name',  'text'),
+		('reference',       'real'),
+		('max_difference',  'real'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# option
+	table_name    = 'option'
 	table_columns = [ ('option_name', 'text'), ('option_value', 'text') ]
-	check_table_columns(table_name, table_columns)
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# mulcov
+	table_name    = 'mulcov'
+	table_columns = [
+		('mulcov_type',    'text'),
+		('rate_id',        'integer'),
+		('integrand_id',   'integer'),
+		('covariate_id',   'integer'),
+		('smooth_id',      'integer'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# node
+	table_name    = 'node'
+	table_columns = [
+		('node_name',  'text'),
+		('parent',     'integer'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# prior
+	table_name    = 'prior'
+	table_columns = [
+		('prior_name',        'text'),
+		('density_id',     'integer'),
+		('lower',             'real'),
+		('upper',             'real'),
+		('mean',              'real'),
+		('std',               'real'),
+		('eta',               'real'),
+		('nu',                'real'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# rate
+	table_name    = 'rate'
+	table_columns = [
+		('rate_name',             'text'),
+		('parent_smooth_id',   'integer'),
+		('child_smooth_id',    'integer'),
+		('child_nslist_id',    'integer'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# smooth
+	table_name    = 'smooth'
+	table_columns = [
+		('smooth_name',            'text'),
+		('n_age',                  'integer'),
+		('n_time',                 'integer'),
+		('mulstd_value_prior_id',  'integer'),
+		('mulstd_dage_prior_id',   'integer'),
+		('mulstd_dtime_prior_id',  'integer'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# smooth_grid
+	table_name    = 'smooth_grid'
+	table_columns = [
+		('smooth_id',              'integer'),
+		('age_id',                 'integer'),
+		('time_id',                'integer'),
+		('value_prior_id',         'integer'),
+		('dage_prior_id',          'integer'),
+		('dtime_prior_id',         'integer'),
+		('const_value',            'real'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# weight
+	table_name    = 'weight'
+	table_columns = [
+		('weight_name',            'text'),
+		('n_age',                  'integer'),
+		('n_time',                 'integer'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# weight_grid
+	table_name    = 'weight_grid'
+	table_columns = [
+		('weight_id',              'integer'),
+		('age_id',                 'integer'),
+		('time_id',                'integer'),
+		('weight',                 'real'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# avgint
+	table_name    = 'avgint'
+	table_columns = [
+		('integrand_id', 'integer'),
+		('node_id',      'integer'),
+		('weight_id',    'integer'),
+		('age_lower',    'real'),
+		('age_upper',    'real'),
+		('time_lower',   'real'),
+		('time_upper',   'real'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# data
+	table_name     = 'data'
+	table_columns += [
+		('hold_out',      'integer'),
+		('meas_value',    'real'),
+		('meas_std',      'real'),
+		('eta',           'real'),
+		('nu',            'real'),
+	]
+	check_table_columns(connection, table_name, table_columns)
 	# ----------------------------------------------------------------------
 	# parent_node_id
 	parent_node_id     = None
