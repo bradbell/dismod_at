@@ -31,6 +31,7 @@ $spell
 	nslist
 	hpp
 	messaging
+	ty
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -42,6 +43,15 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 03-08$$
+There was a mistake in the error message for wrong column
+type detected in an $cref input$$ table.
+To be specific, a syntax error would occur on the line
+$codep
+	 msg  = 'expected type ' + ty ++  ' for column ' + name
+$$
+This was fixed by changing $code ++$$ to $code +$$.
 
 $head 03-06$$
 $list number$$

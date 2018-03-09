@@ -439,7 +439,7 @@ def db2csv_command(database_file_arg) :
 				msg = 'expected column ' + name + ' in table ' + table_name
 				sys.exit(msg)
 			if  ty != table_info[name] :
-				msg  = 'expected type ' + ty ++  ' for column ' + name
+				msg  = 'expected type ' + ty +  ' for column ' + name
 				msg += ' of table ' + table_name
 				sys.exit(msg)
 	# -------------------------------------------------------------------------
