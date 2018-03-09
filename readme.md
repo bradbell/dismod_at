@@ -3,7 +3,7 @@ dismod\_at: Estimating Disease Rates as Functions of Age and Time
 
 # License
 <pre>
-dismod\_at: Estimating Disease Rates as Functions of Age and Time
+dismod_at: Estimating Disease Rates as Functions of Age and Time
           Copyright (C) 2014-17 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 This program is distributed under the terms of the
