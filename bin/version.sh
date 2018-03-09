@@ -1,16 +1,46 @@
-#! /bin/bash -e
-# -----------------------------------------------------------------------------
+# ! /bin/bash -e
 # This file was written by Bradley M. Bell and is used by multiple packages.
-# It has the same license as the other files in this package.
-# The following settings are different for each package:
-package='dismod_at'
-
-files_with_version_number='doc.omh bin/setup.py.in '
+# This version has the same license as the other files in this package.
 # -----------------------------------------------------------------------------
 echo_eval() {
      echo $*
      eval $*
 }
+# -----------------------------------------------------------------------------
+# package
+if ! grep '^PROJECT([a-zA-Z_]*)$' CMakeLists.txt > /dev/null
+then
+	echo 'Cannot determine package for this directory.'
+	exit 1
+else
+	package=`grep '^PROJECT([a-zA-Z_]*)$' CMakeLists.txt |
+		sed -e 's|PROJECT(||' -e 's|)||'`
+fi
+# -----------------------------------------------------------------------------
+case $package in
+	#
+	cppad)
+	file_list='doc.omh configure.ac'
+	;;
+	#
+	cppad_swig)
+	file_list='doc.omh'
+	;;
+	#
+	cppad_mixed)
+	file_list='doc.omh'
+	;;
+	#
+	dismod_at)
+	file_list='doc.omh bin/setup.py.in'
+	;;
+	#
+	*)
+	echo "version.sh: does not yet reconize the package $package"
+	echo "See $HOME/$package.git/bin/version.sh for how to fix this."
+	exit 1
+	;;
+esac
 # -----------------------------------------------------------------------------
 ok='yes'
 if [ "$1" != 'get' ] \
@@ -106,11 +136,13 @@ EOF
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-for file in $files_with_version_number
+change='no'
+for file in $file_list
 do
-	sed < $file > $file.copy \
-		-e "s|$package-[0-9]\\{8\\}[0-9.]*|${package}-$version|" \
-		-e "s|version *= *'[0-9]\\{8\\}[0-9.]*'|version = '$version'|"
+sed < $file > $file.copy \
+-e "s|$package-[0-9]\\{8\\}[0-9.]*|${package}-$version|" \
+-e "s|version *= *'[0-9]\\{8\\}[0-9.]*'|version = '$version'|" \
+-e "s|AC_INIT(\[cppad\], \[[0-9]\\{8\\}[0-9.]*\]|AC_INIT([cppad], [$version]|"
 	if [ -x "$file" ]
 	then
 		chmod +x $file.copy
@@ -127,6 +159,7 @@ do
 			if [ "$cmd" == 'copy' ]
 			then
 				mv $file.copy $file
+				change='yes'
 			fi
 			if [ "$cmd" == 'check' ]
 			then
@@ -142,6 +175,11 @@ if [ "$ok" != 'yes' ]
 then
 	echo 'version.sh check: Found differences.'
 	exit 1
+fi
+if [ "$change" == 'yes' ]  && [ "$package" == 'cppad' ]
+then
+	# update files that depend on version number in configure.ac
+	bin/autotools.sh automake
 fi
 # ----------------------------------------------------------------------------
 if [ "$cmd" != 'copy' ] && [ "$cmd" != 'check' ]
