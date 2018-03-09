@@ -38,6 +38,8 @@
 # The possible values for the column types are
 # $code integer$$, $code real$$, $code text$$, or
 # $code integer primary key$$.
+# Note that the types in the database are converted to lower case before
+# being returned in $icode col_type$$.
 #
 # $head Primary Key$$
 # This routine assumes the primary key is an integer,  corresponds
@@ -65,13 +67,13 @@ def get_name_type(connection, tbl_name) :
 		assert cid == row[0]
 		#
 		col_name.append(row[1])
-		col_type.append(row[2])
+		col_type.append( row[2].lower() )
 		pk            = row[5]
 		if cid == 0 :
 			if pk != 1 :
 				sys.exit(tbl_name + ' table: first column not primary key')
 			assert found_pk == False
-			assert col_type[cid].lower() == 'integer'
+			assert col_type[cid] == 'integer'
 			assert col_name[cid] == (tbl_name + '_id')
 			col_type[cid]  =  'integer primary key'
 			found_ok       = True
