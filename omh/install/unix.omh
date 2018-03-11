@@ -33,6 +33,7 @@ $spell
 	sqlite
 	devel
 	numpy
+	txt
 $$
 
 $section Installing dismod_at in Unix$$
@@ -107,13 +108,13 @@ You can determine the $icode git_hash$$ and version number
 corresponding to this checkout of the master branch using the commands:
 $codei%
 	git show-ref | grep 'refs/heads/master'
-	bin/version.sh get
+	grep '^SET(dismod_at_version' CMakeLists.txt
 %$$
 You can checkout an old version corresponding to a specific $icode git_hash$$,
 and check its version number, using the commands:
 $codei%
 	git checkout -q %git_hash%
-	bin/version.sh get
+	grep '^SET(dismod_at_version' CMakeLists.txt
 %$$
 
 $head Special Requirements$$

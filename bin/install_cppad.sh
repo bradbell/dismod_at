@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -62,8 +62,13 @@ pwd
 #
 echo_eval cd cppad-$version
 echo_eval git checkout --quiet $hash_key
-bin/version.sh set $version
-bin/version.sh check
+check=`grep '^SET(cppad_version' CMakeLists.txt | \
+	sed -e 's|^[^"]*"\([^"]*\).*|\1|'`
+if [ "$version" != "$check" ]
+then
+	echo 'install_cppad.sh: version number does not agree with hash_key'
+	exit 1
+fi
 #
 if [ ! -e build ]
 then

@@ -32,6 +32,8 @@ $spell
 	hpp
 	messaging
 	ty
+	grep
+	txt
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -43,6 +45,13 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 03-10$$
+The install $cref/download/install_unix/Download/$$ procedure was changed
+to use the following command to determine the version number:
+$codep
+	grep '^SET(dismod_at_version' CMakeLists.txt
+$$
 
 $head 03-08$$
 There was a mistake in the error message for wrong column

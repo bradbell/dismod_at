@@ -105,10 +105,11 @@ then
 fi
 cd cppad_mixed-$version
 echo_eval git checkout --quiet $hash_key
-check=`bin/version.sh get`
-if [ "$check" != "$version" ]
+check=`grep '^SET(cppad_mixed_version' CMakeLists.txt | \
+	sed -e 's|^[^"]*"\([^"]*\).*|\1|'`
+if [ "$version" != "$check" ]
 then
-	echo 'install_cppad_mixed.sh: hash_key and version do not agree'
+	echo 'install_cppad_mixed.sh: version number does not agree with hash_key'
 	exit 1
 fi
 #

@@ -25,11 +25,19 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-bin/version.sh check
-bin/check_devel_xam.sh
-bin/check_include.sh
-bin/check_srcfile.sh
-bin/check_configure.sh
+# run bin/check_*.sh and ~/bradbell/bin/check_copyright.sh
+list=`ls bin/check_*.sh`
+for script in $list check_copyright.sh
+do
+	if [ "$script" != 'bin/check_all.sh' ] \
+	&& [ "$script" != 'bin/check_install.sh' ]
+	then
+		$script
+	fi
+done
+#
+# check version number
+version.sh check
 #
 # check latex in omhelp
 run_omhelp.sh -xml doc
