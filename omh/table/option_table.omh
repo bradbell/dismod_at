@@ -380,11 +380,12 @@ $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 does not include bounds for the random effects.
 
 $lnext
-The bound $icode bound_random$$ does not affect the
-$cref/constant random effects
+The bound $icode bound_random$$ does apply to
+random effects corresponding to
+$cref/constant child value priors
 	/rate_table
-	/Child Restrictions
-	/Constant Random Effects
+	/Child Value Priors
+	/Constant
 /$$.
 The theory for fitting with constant random effects is just fine
 because they are treated a parameters, and not random effects,

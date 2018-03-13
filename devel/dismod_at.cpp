@@ -794,11 +794,13 @@ are optimized.
 
 $subhead fixed$$
 This option optimizes the fixed effects with the
-$cref/constant random effects
+random effects corresponding to
+$cref/constant child value priors
 	/rate_table
-	/Child Restrictions
-	/Constant Random Effects
-/$$ at their constrained values and the other random effects
+	/Child Value Priors
+	/Constant
+/$$
+at their constrained values and the other random effects
 constrained to be zero.
 (This is equivalent to fitting with
 $cref/bound_random/option_table/Optimizer/bound_random/$$ equal to zero.)

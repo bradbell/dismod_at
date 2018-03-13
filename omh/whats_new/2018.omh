@@ -46,6 +46,16 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 03-13$$
+The documentation of the restrictions on the priors for the
+$cref/random effects/model_variables/Random Effects, u/$$ has been improved.
+See
+$cref/child value priors/rate_table/Child Value Priors/$$ and
+$cref/child difference priors/rate_table/Child Difference Priors/$$.
+In addition, the error messages when these restrictions are violated
+has also been improved.
+
+
 $head 03-10$$
 The install $cref/download/install_unix/Download/$$ procedure was changed
 to use the following command to determine the version number:

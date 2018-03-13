@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -88,13 +88,6 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
 rate index $latex k$$,
 age index $latex i$$ and
 time index $latex j$$.
-This density must be Gaussian; see the
-$cref/child restrictions
-	/rate_table
-	/Child Restrictions
-/$$.
-Note that $latex { d_{i,j,k}^a }:\eta$$ and $latex { d_{i,j,k}^t }:\eta$$
-do not matter because the corresponding densities are Gaussian.
 
 
 $head mu_i,j,k$$

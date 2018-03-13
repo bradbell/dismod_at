@@ -17,6 +17,7 @@ $spell
 	pini
 	smoothings
 	covariate
+	cppad
 $$
 
 $section The Rate Table$$
@@ -143,38 +144,58 @@ If both are $code null$$, there are no
 $cref/random effects/model_variables/Random Effects, u/$$.
 for this rate.
 
-$head Child Restrictions$$
-The child smoothing
+$head Child Value Priors$$
+The priors corresponding to child smoothing
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
-$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
-must satisfy the following conditions at each grid point:
+are called child value priors.
 
-$subhead Constant Random Effects$$
+$subhead Constant$$
 If the
 $cref/lower/prior_table/lower/$$ and $cref/upper/prior_table/upper/$$ limit
-are equal, they must be finite and no other conditions need be satisfied.
-Otherwise the other conditions below must be satisfied.
+are equal, they must be finite.
+In this case we refer to a child value prior as constant.
 
-$subhead density$$
+$subhead Not Constant$$
+If a child value prior is not constant, it must satisfy the following
+conditions:
+$list number$$
 The $cref/density_id/prior_table/density_id/$$ must not correspond to
 $cref/laplace/density_table/density_name/laplace/$$ or
 $cref/log_laplace/density_table/density_name/log_laplace/$$.
-
-$subhead lower$$
-The $cref/lower/prior_table/lower/$$ limit must be $code null$$,
-which gets interpreted as minus infinity; see
+$lnext
+The $cref/lower/prior_table/lower/$$ limit
+($cref/upper/prior_table/upper/$$ limit)
+must be $code null$$,
+which gets interpreted as minus infinity (plus infinity); see
 $cref/bounds that are null/database/Bounds That are Null/$$.
-
-$subhead upper$$
-The $cref/upper/prior_table/upper/$$ limit must be $code null$$,
-which gets interpreted as plus infinity; see
-$cref/bounds that are null/database/Bounds That are Null/$$.
-
-$subhead bound_random$$
-If the lower and upper limits are plus and minus infinity,
+$lnext
+Note that
 $cref/bound_random/option_table/Optimizer/bound_random/$$
-is used for the lower and upper limits.
+is used for the lower and upper limits of during the optimization
+of the random effects.
+On the other hand,
+plus and minus infinity is used for the lower and upper limit when
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+approximates the integrals with respect to the
+$cref/random effects/model_variables/Random Effects, u/$$.
+$lend
+
+$head Child Difference Priors$$
+The priors corresponding to child smoothing
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
+are called child difference priors.
+These priors must satisfy the following conditions:
+$list number$$
+The $cref/density_id/prior_table/density_id/$$ must not correspond to
+$cref/laplace/density_table/density_name/laplace/$$ or
+$cref/log_laplace/density_table/density_name/log_laplace/$$.
+$lnext
+The $cref/lower/prior_table/lower/$$ limit
+($cref/upper/prior_table/upper/$$ limit)
+must be $code null$$,
+which gets interpreted as minus infinity (plus infinity).
+$lend
 
 $children%example/table/rate_table.py
 %$$

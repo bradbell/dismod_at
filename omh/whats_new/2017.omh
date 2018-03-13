@@ -314,7 +314,9 @@ $lend
 $head 10-05$$
 $list number$$
 The restrictions on the
-$cref/child rates/rate_table/Child Restrictions/$$ have been changed.
+$cref/child value priors/rate_table/Child Value Priors/$$ and
+$cref/child difference priors/rate_table/Child Difference Priors/$$
+have been changed.
 To be specific, the density need not be Gaussian,
 it can be anything but Laplace and Log-Laplace.
 The user needs to be careful to ensure that the Hessian
@@ -766,10 +768,10 @@ $lend
 $head 04-15$$
 It is now possible to constrain each random effect to have a specific value;
 see
-$cref/constant random effects
+$cref/constant child value priors
 	/rate_table
-	/Child Restrictions
-	/Constant Random Effects
+	/Child Value Priors
+	/Constant
 /$$.
 
 $head 04-09$$

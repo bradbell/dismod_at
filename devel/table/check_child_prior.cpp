@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -158,25 +158,31 @@ void check_child_prior(
 					//
 					// check for an error
 					msg = "";
-					if( density_id == int(laplace_enum) )
-					{	msg += "density is Laplace";
-					}
-					if( density_id == int(log_laplace_enum) )
-					{	msg += "density is Log-Laplace ";
-					}
-					double inf = std::numeric_limits<double>::infinity();
-					if( lower != -inf  && ( lower != upper && upper < inf ) )
-					{	if(msg != "" )
-							msg += ", ";
-						msg += "lower != -inf and not finite and equal uppper";
-					}
-					if( upper != +inf && ( lower != upper && upper < inf ) )
-					{	if(msg != "" )
-							msg += ", ";
-						msg += "upper != +inf and not finite and equal uppper";
+					//
+					// value prior lower and upper equal case
+					bool constant_value_prior = i == 0 && lower == upper;
+					if( not constant_value_prior )
+					{	if( density_id == int(laplace_enum) )
+						{	msg += "density is Laplace";
+						}
+						if( density_id == int(log_laplace_enum) )
+						{	msg += "density is Log-Laplace ";
+						}
+						double inf = std::numeric_limits<double>::infinity();
+						if( lower != -inf  )
+						{	if(msg != "" )
+								msg += ", ";
+							msg += "lower is not -infinity";
+						}
+						if( upper != inf  )
+						{	if(msg != "" )
+							msg += "upper is not +infinity";
+						}
 					}
 					if( msg != "" )
 					{	size_t smooth_id = smooth_grid[grid_id].smooth_id;
+						if( i == 0 )
+							msg += ", and lower not equal upper";
 						msg = name[i]
 						+ "smooth_id = "         + to_string(smooth_id)
 						+ ", smooth_grid_id = "  + to_string(grid_id)

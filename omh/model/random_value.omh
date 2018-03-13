@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -74,12 +74,6 @@ $head d_j$$
 We use $latex d_j$$ to denote the
 $cref/density_id/prior_table/density_id/$$ and
 $cref/eta/prior_table/eta/$$ corresponding to $icode j$$.
-Note that $icode eta$$ does not matter because
-the density name must be $code gaussian$$; see the
-$cref/child restrictions
-	/rate_table
-	/Child Restrictions
-/$$.
 
 $head mu_j$$
 We use $latex \mu_j$$ for the
