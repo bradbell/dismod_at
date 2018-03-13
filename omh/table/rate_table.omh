@@ -18,6 +18,8 @@ $spell
 	smoothings
 	covariate
 	cppad
+	exp
+	ik
 $$
 
 $section The Rate Table$$
@@ -148,6 +150,12 @@ $head Child Value Priors$$
 The priors corresponding to child smoothing
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
 are called child value priors.
+It is important to remember that these priors correspond to the
+$cref/random effects, u/model_variables/Random Effects, u/$$.
+The rate in the differential equation, used for a child,
+is $codei%exp(%u%)*%q%$$
+where $icode q$$ is the corresponding rate for the parent; see
+$cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
 
 $subhead Constant$$
 If the
