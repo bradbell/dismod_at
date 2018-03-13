@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Rate Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Rate Table">
-<meta name="keywords" id="keywords" content=" the rate table rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id child restrictions constant density lower upper bound_random example ">
+<meta name="keywords" id="keywords" content=" the rate table rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id child value priors constant not difference example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -120,12 +120,10 @@ A:active { color : purple }
 <option>---..null</option>
 <option>child_nslist_id</option>
 <option>---..null</option>
-<option>Child Restrictions</option>
-<option>---..Constant Random Effects</option>
-<option>---..density</option>
-<option>---..lower</option>
-<option>---..upper</option>
-<option>---..bound_random</option>
+<option>Child Value Priors</option>
+<option>---..Constant</option>
+<option>---..Not Constant</option>
+<option>Child Difference Priors</option>
 <option>Example</option>
 </select>
 </td>
@@ -380,67 +378,104 @@ for this rate.
 
 <br>
 <br>
-<b><big><a name="Child Restrictions" id="Child Restrictions">Child Restrictions</a></big></b>
+<b><big><a name="Child Value Priors" id="Child Value Priors">Child Value Priors</a></big></b>
 <br>
-The child smoothing
+The priors corresponding to child smoothing
 <a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
 
-<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
- and
-<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+are called child value priors.
+It is important to remember that these priors correspond to the
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects,&nbsp;u</span></a>
+.
+The rate in the differential equation, used for a child,
+is 
+<code><font color="blue"><span style='white-space: nowrap'>exp(</span></font><i><font color="black"><span style='white-space: nowrap'>u</span></font></i><font color="blue"><span style='white-space: nowrap'>)*</span></font><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
 
-must satisfy the following conditions at each grid point:
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>q</span></font></i></code>
+ is the corresponding rate for the parent; see
+<a href="avg_integrand.htm#Rate Functions.r_ik" target="_top"><span style='white-space: nowrap'>r_ik</span></a>
+.
 
 <br>
 <br>
-<b><a name="Child Restrictions.Constant Random Effects" id="Child Restrictions.Constant Random Effects">Constant Random Effects</a></b>
+<b><a name="Child Value Priors.Constant" id="Child Value Priors.Constant">Constant</a></b>
 <br>
 If the
 <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
  and <a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
  limit
-are equal, they must be finite and no other conditions need be satisfied.
-Otherwise the other conditions below must be satisfied.
+are equal, they must be finite.
+In this case we refer to a child value prior as constant.
 
 <br>
 <br>
-<b><a name="Child Restrictions.density" id="Child Restrictions.density">density</a></b>
+<b><a name="Child Value Priors.Not Constant" id="Child Value Priors.Not Constant">Not Constant</a></b>
 <br>
+If a child value prior is not constant, it must satisfy the following
+conditions:
+<ol type="1"><li>
 The <a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
  must not correspond to
 <a href="density_table.htm#density_name.laplace" target="_top"><span style='white-space: nowrap'>laplace</span></a>
  or
 <a href="density_table.htm#density_name.log_laplace" target="_top"><span style='white-space: nowrap'>log_laplace</span></a>
 .
+</li><li>
 
-<br>
-<br>
-<b><a name="Child Restrictions.lower" id="Child Restrictions.lower">lower</a></b>
-<br>
 The <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
- limit must be <code><font color="blue">null</font></code>,
-which gets interpreted as minus infinity; see
+ limit
+(<a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ limit)
+must be <code><font color="blue">null</font></code>,
+which gets interpreted as minus infinity (plus infinity); see
 <a href="database.htm#Bounds That are Null" target="_top"><span style='white-space: nowrap'>bounds&nbsp;that&nbsp;are&nbsp;null</span></a>
 .
+</li><li>
 
-<br>
-<br>
-<b><a name="Child Restrictions.upper" id="Child Restrictions.upper">upper</a></b>
-<br>
-The <a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
- limit must be <code><font color="blue">null</font></code>,
-which gets interpreted as plus infinity; see
-<a href="database.htm#Bounds That are Null" target="_top"><span style='white-space: nowrap'>bounds&nbsp;that&nbsp;are&nbsp;null</span></a>
-.
-
-<br>
-<br>
-<b><a name="Child Restrictions.bound_random" id="Child Restrictions.bound_random">bound_random</a></b>
-<br>
-If the lower and upper limits are plus and minus infinity,
+Note that
 <a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
 
-is used for the lower and upper limits.
+is used for the lower and upper limits of during the optimization
+of the random effects.
+On the other hand,
+plus and minus infinity is used for the lower and upper limit when
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+
+approximates the integrals with respect to the
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Child Difference Priors" id="Child Difference Priors">Child Difference Priors</a></big></b>
+<br>
+The priors corresponding to child smoothing
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+ and
+<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+
+are called child difference priors.
+These priors must satisfy the following conditions:
+<ol type="1"><li>
+The <a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ must not correspond to
+<a href="density_table.htm#density_name.laplace" target="_top"><span style='white-space: nowrap'>laplace</span></a>
+ or
+<a href="density_table.htm#density_name.log_laplace" target="_top"><span style='white-space: nowrap'>log_laplace</span></a>
+.
+</li><li>
+
+The <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
+ limit
+(<a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ limit)
+must be <code><font color="blue">null</font></code>,
+which gets interpreted as minus infinity (plus infinity).
+</li></ol>
+
 
 
 <br>

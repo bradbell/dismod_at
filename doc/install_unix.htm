@@ -213,7 +213,7 @@ corresponding to this checkout of the master branch using the commands:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;show-ref&nbsp;|&nbsp;grep&nbsp;'refs/heads/master'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/version.sh&nbsp;get<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grep&nbsp;'^SET(dismod_at_version'&nbsp;CMakeLists.txt<br>
 </span></font></code>
 You can checkout an old version corresponding to a specific 
 <code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
@@ -222,7 +222,7 @@ and check its version number, using the commands:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/version.sh&nbsp;get<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grep&nbsp;'^SET(dismod_at_version'&nbsp;CMakeLists.txt<br>
 </span></font></code>
 <br>
 <b><big><a name="Special Requirements" id="Special Requirements">Special Requirements</a></big></b>

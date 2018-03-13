@@ -65,12 +65,10 @@ var list_current0 = [
 'rate_table.htm#child_smooth_id.null',
 'rate_table.htm#child_nslist_id',
 'rate_table.htm#child_nslist_id.null',
-'rate_table.htm#Child Restrictions',
-'rate_table.htm#Child Restrictions.Constant Random Effects',
-'rate_table.htm#Child Restrictions.density',
-'rate_table.htm#Child Restrictions.lower',
-'rate_table.htm#Child Restrictions.upper',
-'rate_table.htm#Child Restrictions.bound_random',
+'rate_table.htm#Child Value Priors',
+'rate_table.htm#Child Value Priors.Constant',
+'rate_table.htm#Child Value Priors.Not Constant',
+'rate_table.htm#Child Difference Priors',
 'rate_table.htm#Example'
 ];
 function choose_across0(item)

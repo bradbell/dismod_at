@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,8 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Headings-&gt;</option>
 <option>Contents</option>
+<option>03-13</option>
+<option>03-10</option>
 <option>03-08</option>
 <option>03-06</option>
 <option>02-20</option>
@@ -120,6 +122,31 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="03-13" id="03-13">03-13</a></big></b>
+<br>
+The documentation of the restrictions on the priors for the
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+ has been improved.
+See
+<a href="rate_table.htm#Child Value Priors" target="_top"><span style='white-space: nowrap'>child&nbsp;value&nbsp;priors</span></a>
+ and
+<a href="rate_table.htm#Child Difference Priors" target="_top"><span style='white-space: nowrap'>child&nbsp;difference&nbsp;priors</span></a>
+.
+In addition, the error messages when these restrictions are violated
+has also been improved.
+
+
+<br>
+<br>
+<b><big><a name="03-10" id="03-10">03-10</a></big></b>
+<br>
+The install <a href="install_unix.htm#Download" target="_top"><span style='white-space: nowrap'>download</span></a>
+ procedure was changed
+to use the following command to determine the version number:
+<code><font color='blue'><pre style='display:inline'> 
+     grep '^SET(dismod_at_version' CMakeLists.txt
+</pre></font></code>
+<br>
 <b><big><a name="03-08" id="03-08">03-08</a></big></b>
 <br>
 There was a mistake in the error message for wrong column
