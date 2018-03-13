@@ -75,10 +75,12 @@ this value is not used and can be $code null$$.
 Otherwise, this value must be a positive number.
 
 $head eta$$
-This column has type $code real$$ and is only used in the
-cases where $icode density$$ is $code log_gaussian$$
-or $code log_laplace$$.
+This column has type $code real$$ and only affects the prior
+when the $icode density$$ is
+Log-Gaussian, Log-Laplace or Log-Students.
 In these cases, it is the offset in the corresponding log transformation.
+The value of $icode eta$$ can still affect the scaling of the
+fixed effects (see below).
 
 $subhead null$$
 In the cases that are not log densities,
