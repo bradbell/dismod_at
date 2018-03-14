@@ -172,7 +172,7 @@ is not present in the option table.
 
 <br>
 <br>
-<b><a name="Conventions.Changing Values" id="Conventions.Changing Values">Changing Values</a></b>
+<big><a name="Conventions.Changing Values" id="Conventions.Changing Values">Changing Values</a></big>
 <br>
 This table is special in that you can change almost all its values
 without invalidating the <a href="data_flow.htm#Output Tables" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
@@ -183,7 +183,7 @@ There is one exception; see
 
 <br>
 <br>
-<b><a name="Conventions.option_id" id="Conventions.option_id">option_id</a></b>
+<big><a name="Conventions.option_id" id="Conventions.option_id">option_id</a></big>
 <br>
 This column
 has type <code><font color="blue">integer</font></code> and is the primary key for this table.
@@ -191,7 +191,7 @@ Its initial value is zero, and it increments by one for each row.
 
 <br>
 <br>
-<b><a name="Conventions.option_name" id="Conventions.option_name">option_name</a></b>
+<big><a name="Conventions.option_name" id="Conventions.option_name">option_name</a></big>
 <br>
 This column
 has type <code><font color="blue">text</font></code> and has a different value for every row;
@@ -202,7 +202,7 @@ The possible values for
 
 <br>
 <br>
-<b><a name="Conventions.option_value" id="Conventions.option_value">option_value</a></b>
+<big><a name="Conventions.option_value" id="Conventions.option_value">option_value</a></big>
 <br>
 This column has type <code><font color="blue">text</font></code> and is
 the value for the corresponding option.
@@ -223,7 +223,7 @@ is an integer that specifies the parent
 
 <br>
 <br>
-<b><a name="parent_node_id.parent_node_name" id="parent_node_id.parent_node_name">parent_node_name</a></b>
+<big><a name="parent_node_id.parent_node_name" id="parent_node_id.parent_node_name">parent_node_name</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;parent_node_name</span></font></code>
@@ -250,7 +250,7 @@ the corresponding
 
 <br>
 <br>
-<b><a name="parent_node_id.Default" id="parent_node_id.Default">Default</a></b>
+<big><a name="parent_node_id.Default" id="parent_node_id.Default">Default</a></big>
 <br>
 There is no default value when neither
 
@@ -261,7 +261,7 @@ There is no default value when neither
 
 <br>
 <br>
-<b><a name="parent_node_id.Children" id="parent_node_id.Children">Children</a></b>
+<big><a name="parent_node_id.Children" id="parent_node_id.Children">Children</a></big>
 <br>
 The child nodes are the elements of the
 <a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child&nbsp;group</span></a>
@@ -272,7 +272,7 @@ the specified
 
 <br>
 <br>
-<b><a name="parent_node_id.Data Subset Table" id="parent_node_id.Data Subset Table">Data Subset Table</a></b>
+<big><a name="parent_node_id.Data Subset Table" id="parent_node_id.Data Subset Table">Data Subset Table</a></big>
 <br>
 Rows in the <code><font color="blue">data</font></code> table for which the
 <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
@@ -287,7 +287,7 @@ are not included in the <a href="data_subset_table.htm" target="_top"><span styl
 
 <br>
 <br>
-<b><a name="parent_node_id.Avgint Subset Table" id="parent_node_id.Avgint Subset Table">Avgint Subset Table</a></b>
+<big><a name="parent_node_id.Avgint Subset Table" id="parent_node_id.Avgint Subset Table">Avgint Subset Table</a></big>
 <br>
 Rows in the <code><font color="blue">avgint</font></code> table for which the
 <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
@@ -303,7 +303,7 @@ see the heading Note for the
 
 <br>
 <br>
-<b><a name="parent_node_id.Changing" id="parent_node_id.Changing">Changing</a></b>
+<big><a name="parent_node_id.Changing" id="parent_node_id.Changing">Changing</a></big>
 <br>
 If you change the parent node
 all of the output tables become invalid.
@@ -341,7 +341,7 @@ all of the child must use the same smoothing for this rate.
 
 <br>
 <br>
-<b><a name="zero_sum_random.Default" id="zero_sum_random.Default">Default</a></b>
+<big><a name="zero_sum_random.Default" id="zero_sum_random.Default">Default</a></big>
 <br>
 The default value for this option is null; i.e.,
 no zero sum constraints on the random effects.
@@ -363,7 +363,7 @@ they get displayed in the
 
 <br>
 <br>
-<b><a name="data_extra_columns.Default" id="data_extra_columns.Default">Default</a></b>
+<big><a name="data_extra_columns.Default" id="data_extra_columns.Default">Default</a></big>
 <br>
 The default value for this option is null; i.e.,
 no extra columns displayed in <code><font color="blue">data.csv</font></code>.
@@ -385,7 +385,7 @@ they get displayed in the
 
 <br>
 <br>
-<b><a name="avgint_extra_columns.Default" id="avgint_extra_columns.Default">Default</a></b>
+<big><a name="avgint_extra_columns.Default" id="avgint_extra_columns.Default">Default</a></big>
 <br>
 The default value for this option is null; i.e.,
 no extra columns displayed in <code><font color="blue">predict.csv</font></code>.
@@ -409,7 +409,7 @@ and recorded in the log table.
 
 <br>
 <br>
-<b><a name="warn_on_stderr.Default" id="warn_on_stderr.Default">Default</a></b>
+<big><a name="warn_on_stderr.Default" id="warn_on_stderr.Default">Default</a></big>
 <br>
 The default value for this option is <code><font color="blue">true</font></code>.
 
@@ -440,7 +440,7 @@ in the data likelihood section.
 
 <br>
 <br>
-<b><a name="minimum_meas_cv.Default" id="minimum_meas_cv.Default">Default</a></b>
+<big><a name="minimum_meas_cv.Default" id="minimum_meas_cv.Default">Default</a></big>
 <br>
 The default value for this option is <code><font color="blue">0.0</font></code>.
 
@@ -475,7 +475,7 @@ The
 
 <br>
 <br>
-<b><a name="ode_step_size.Default" id="ode_step_size.Default">Default</a></b>
+<big><a name="ode_step_size.Default" id="ode_step_size.Default">Default</a></big>
 <br>
 The default value for this option is <code><font color="blue">10.0</font></code>,
 which is reasonable if all the rates
@@ -502,7 +502,7 @@ see <a href="log_table.htm#message_type.random_seed" target="_top"><span style='
 
 <br>
 <br>
-<b><a name="random_seed.Default" id="random_seed.Default">Default</a></b>
+<big><a name="random_seed.Default" id="random_seed.Default">Default</a></big>
 <br>
 The default value for this option is <code><font color="blue">0</font></code>.
 
@@ -525,7 +525,7 @@ the corresponding option value must be one of the following:
 
 <br>
 <br>
-<b><a name="rate_case.iota_zero_rho_zero" id="rate_case.iota_zero_rho_zero">iota_zero_rho_zero</a></b>
+<big><a name="rate_case.iota_zero_rho_zero" id="rate_case.iota_zero_rho_zero">iota_zero_rho_zero</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
@@ -543,7 +543,7 @@ the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-s
 
 <br>
 <br>
-<b><a name="rate_case.iota_pos_rho_zero" id="rate_case.iota_pos_rho_zero">iota_pos_rho_zero</a></b>
+<big><a name="rate_case.iota_pos_rho_zero" id="rate_case.iota_pos_rho_zero">iota_pos_rho_zero</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
@@ -562,7 +562,7 @@ the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-s
 
 <br>
 <br>
-<b><a name="rate_case.iota_zero_rho_pos" id="rate_case.iota_zero_rho_pos">iota_zero_rho_pos</a></b>
+<big><a name="rate_case.iota_zero_rho_pos" id="rate_case.iota_zero_rho_pos">iota_zero_rho_pos</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
@@ -581,7 +581,7 @@ the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-s
 
 <br>
 <br>
-<b><a name="rate_case.iota_pos_rho_pos" id="rate_case.iota_pos_rho_pos">iota_pos_rho_pos</a></b>
+<big><a name="rate_case.iota_pos_rho_pos" id="rate_case.iota_pos_rho_pos">iota_pos_rho_pos</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
@@ -600,7 +600,7 @@ must always have lower limit greater than zero.
 
 <br>
 <br>
-<b><a name="rate_case.Default" id="rate_case.Default">Default</a></b>
+<big><a name="rate_case.Default" id="rate_case.Default">Default</a></big>
 <br>
 The default value for this option is <code><font color="blue">iota_pos_rho_zero</font></code>.
 
@@ -615,7 +615,7 @@ for both the fixed and random effects:
 
 <br>
 <br>
-<b><a name="Optimizer.quasi_fixed" id="Optimizer.quasi_fixed">quasi_fixed</a></b>
+<big><a name="Optimizer.quasi_fixed" id="Optimizer.quasi_fixed">quasi_fixed</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -629,7 +629,7 @@ The default value for this option is <code><font color="blue">true</font></code>
 
 <br>
 <br>
-<b><a name="Optimizer.derivative_test" id="Optimizer.derivative_test">derivative_test</a></b>
+<big><a name="Optimizer.derivative_test" id="Optimizer.derivative_test">derivative_test</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -693,7 +693,7 @@ The default value for this option is <code><font color="blue">none</font></code>
 
 <br>
 <br>
-<b><a name="Optimizer.max_num_iter" id="Optimizer.max_num_iter">max_num_iter</a></b>
+<big><a name="Optimizer.max_num_iter" id="Optimizer.max_num_iter">max_num_iter</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -719,7 +719,7 @@ The default value for this option is <code><font color="blue">100</font></code>.
 
 <br>
 <br>
-<b><a name="Optimizer.print_level" id="Optimizer.print_level">print_level</a></b>
+<big><a name="Optimizer.print_level" id="Optimizer.print_level">print_level</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -739,7 +739,7 @@ The default value for this option is <code><font color="blue">0</font></code>.
 
 <br>
 <br>
-<b><a name="Optimizer.accept_after_max_steps" id="Optimizer.accept_after_max_steps">accept_after_max_steps</a></b>
+<big><a name="Optimizer.accept_after_max_steps" id="Optimizer.accept_after_max_steps">accept_after_max_steps</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -754,7 +754,7 @@ The default value for this option is <code><font color="blue">5</font></code>.
 
 <br>
 <br>
-<b><a name="Optimizer.tolerance" id="Optimizer.tolerance">tolerance</a></b>
+<big><a name="Optimizer.tolerance" id="Optimizer.tolerance">tolerance</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -775,7 +775,7 @@ of the fixed effects objective at the value of the fixed effects in
 
 <br>
 <br>
-<b><a name="Optimizer.bound_random" id="Optimizer.bound_random">bound_random</a></b>
+<big><a name="Optimizer.bound_random" id="Optimizer.bound_random">bound_random</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -857,7 +857,7 @@ limits specified by
 
 <br>
 <br>
-<b><a name="Optimizer.bound_frac_fixed" id="Optimizer.bound_frac_fixed">bound_frac_fixed</a></b>
+<big><a name="Optimizer.bound_frac_fixed" id="Optimizer.bound_frac_fixed">bound_frac_fixed</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>

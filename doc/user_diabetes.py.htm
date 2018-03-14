@@ -175,7 +175,7 @@ in the <a href="weight_table.htm" target="_top"><span style='white-space: nowrap
 
 <br>
 <br>
-<b><a name="Covariates.Covariate Table" id="Covariates.Covariate Table">Covariate Table</a></b>
+<big><a name="Covariates.Covariate Table" id="Covariates.Covariate Table">Covariate Table</a></big>
 <br>
 The covariate table has the following values:
 <table><tr><td align='left'  valign='top'>
@@ -198,7 +198,7 @@ ms_2000           </td><td align='left'  valign='top'>
 </td></tr>
 </table>
 <br>
-<b><a name="Covariates.Data Table" id="Covariates.Data Table">Data Table</a></b>
+<big><a name="Covariates.Data Table" id="Covariates.Data Table">Data Table</a></big>
 <br>
 The <a href="data_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariate</span></a>
  columns in the
@@ -218,7 +218,7 @@ and <code><font color="blue">0.0</font></code> otherwise.
 
 <br>
 <br>
-<b><a name="Covariates.Multipliers" id="Covariates.Multipliers">Multipliers</a></b>
+<big><a name="Covariates.Multipliers" id="Covariates.Multipliers">Multipliers</a></big>
 <br>
 There are three covariate multipliers, one for each covariate.
 (In general, a covariate can have more than one multiplier.)
@@ -267,7 +267,7 @@ interpolation of the log of values specified points.
 
 <br>
 <br>
-<b><a name="Truth Var Table.Parent Rates" id="Truth Var Table.Parent Rates">Parent Rates</a></b>
+<big><a name="Truth Var Table.Parent Rates" id="Truth Var Table.Parent Rates">Parent Rates</a></big>
 <br>
 We use the notation
 as for age start,
@@ -311,7 +311,7 @@ chi   </td><td align='left'  valign='top'>
 </td></tr>
 </table>
 <br>
-<b><a name="Truth Var Table.Child Rates" id="Truth Var Table.Child Rates">Child Rates</a></b>
+<big><a name="Truth Var Table.Child Rates" id="Truth Var Table.Child Rates">Child Rates</a></big>
 <br>
 The child rates are in log space
 (see <a href="avg_integrand.htm#Rate Functions.u_i,k" target="_top"><span style='white-space: nowrap'>u_i,k</span></a>
@@ -385,7 +385,7 @@ how they affect the results.
 
 <br>
 <br>
-<b><a name="Problem Parameters.mulcov_dict" id="Problem Parameters.mulcov_dict">mulcov_dict</a></b>
+<big><a name="Problem Parameters.mulcov_dict" id="Problem Parameters.mulcov_dict">mulcov_dict</a></big>
 <br>
 This is a dictionary that maps each covariate name
 to the true value for the corresponding covariate multiplier.
@@ -396,7 +396,7 @@ These values must satisfy the lower and upper
 mulcov_dict <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'sex'</font><font color="#990000">:</font><font color="#993399">0.5</font><font color="#990000">,</font> <font color="#FF0000">'bmi'</font><font color="#990000">:</font><font color="#993399">0.02</font><font color="#990000">,</font> <font color="#FF0000">'ms_2000'</font><font color="#990000">:</font><font color="#993399">0.25</font> <font color="#990000">}</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.node_list" id="Problem Parameters.node_list">node_list</a></b>
+<big><a name="Problem Parameters.node_list" id="Problem Parameters.node_list">node_list</a></big>
 <br>
 This is a <code><font color="blue">list</font></code> with <code><font color="blue">str</font></code> elements.
 The first element of this list is the parent node,
@@ -407,7 +407,7 @@ The case with no child nodes; i.e., one element in the list, is OK:
 node_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'US'</font><font color="#990000">,</font> <font color="#FF0000">'Alabama'</font><font color="#990000">,</font> <font color="#FF0000">'California'</font> <font color="#990000">]</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.integrand_list" id="Problem Parameters.integrand_list">integrand_list</a></b>
+<big><a name="Problem Parameters.integrand_list" id="Problem Parameters.integrand_list">integrand_list</a></big>
 <br>
 This is a <code><font color="blue">list</font></code> with <code><font color="blue">str</font></code> elements that are
 <a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand&nbsp;names</span></a>
@@ -437,7 +437,7 @@ given prevalence, mtspecific should determine chi.
 integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'mtspecific'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.parent_age_grid" id="Problem Parameters.parent_age_grid">parent_age_grid</a></b>
+<big><a name="Problem Parameters.parent_age_grid" id="Problem Parameters.parent_age_grid">parent_age_grid</a></big>
 <br>
 This specifies the age grid used for all the parent rate
 <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
@@ -465,7 +465,7 @@ divided by the number of grid points minus one.
 parent_age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">0.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font><font color="#993399">100.0</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font><font color="#993399">6</font><font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">:</font><font color="#993399">0.4</font> <font color="#990000">}</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.child_age_grid" id="Problem Parameters.child_age_grid">child_age_grid</a></b>
+<big><a name="Problem Parameters.child_age_grid" id="Problem Parameters.child_age_grid">child_age_grid</a></big>
 <br>
 The is the age grid used for all the child rate
 <a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
@@ -494,7 +494,7 @@ because it only has one age point.)
 child_age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'index'</font><font color="#990000">:[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#FF0000">'std'</font><font color="#990000">:</font><font color="#993399">0.2</font> <font color="#990000">}</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.parent_time_grid" id="Problem Parameters.parent_time_grid">parent_time_grid</a></b>
+<big><a name="Problem Parameters.parent_time_grid" id="Problem Parameters.parent_time_grid">parent_time_grid</a></big>
 <br>
 This specifies the time grid used for all the parent rate
 <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
@@ -525,7 +525,7 @@ divided by the number of grid points minus one.
 parent_time_grid <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'start'</font><font color="#990000">:</font><font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#FF0000">'end'</font><font color="#990000">:</font> <font color="#993399">2020</font><font color="#990000">,</font> <font color="#FF0000">'number'</font><font color="#990000">:</font><font color="#993399">2</font><font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">:</font><font color="#993399">0.6</font>  <font color="#990000">}</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.child_time_grid" id="Problem Parameters.child_time_grid">child_time_grid</a></b>
+<big><a name="Problem Parameters.child_time_grid" id="Problem Parameters.child_time_grid">child_time_grid</a></big>
 <br>
 The is the time grid used for all the child rate
 <a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
@@ -553,7 +553,7 @@ Gaussian used to smooth the child rate values.
 child_time_grid  <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'index'</font><font color="#990000">:[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#FF0000">'std'</font><font color="#990000">:</font><font color="#993399">0.2</font> <font color="#990000">}</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.ode_step_size" id="Problem Parameters.ode_step_size">ode_step_size</a></b>
+<big><a name="Problem Parameters.ode_step_size" id="Problem Parameters.ode_step_size">ode_step_size</a></big>
 <br>
 This is a <code><font color="blue">str</font></code> that specifies the
 <a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
@@ -564,7 +564,7 @@ age and time grids:
 ode_step_size <font color="#990000">=</font> <font color="#FF0000">'10.0'</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.meas_cv" id="Problem Parameters.meas_cv">meas_cv</a></b>
+<big><a name="Problem Parameters.meas_cv" id="Problem Parameters.meas_cv">meas_cv</a></big>
 <br>
 This is a <code><font color="blue">float</font></code> that specifies the measurement standard deviations
 <a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
@@ -588,7 +588,7 @@ The
 meas_cv <font color="#990000">=</font> <font color="#993399">0.1</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.meas_repeat" id="Problem Parameters.meas_repeat">meas_repeat</a></b>
+<big><a name="Problem Parameters.meas_repeat" id="Problem Parameters.meas_repeat">meas_repeat</a></big>
 <br>
 This is a positive <code><font color="blue">int</font></code> that specifies
 the number of times each noiseless measurement is repeated.
@@ -608,7 +608,7 @@ at that (age, time):
 meas_repeat <font color="#990000">=</font> <font color="#993399">1</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.fit_with_noise_in_data" id="Problem Parameters.fit_with_noise_in_data">fit_with_noise_in_data</a></b>
+<big><a name="Problem Parameters.fit_with_noise_in_data" id="Problem Parameters.fit_with_noise_in_data">fit_with_noise_in_data</a></big>
 <br>
 This is a <code><font color="blue">bool</font></code> that specifies if measurement noise is included
 when fitting the data; i.e., if the column
@@ -624,7 +624,7 @@ are used to fit the model variables; i.e., the column
 fit_with_noise_in_data <font color="#990000">=</font> False
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.random_seed" id="Problem Parameters.random_seed">random_seed</a></b>
+<big><a name="Problem Parameters.random_seed" id="Problem Parameters.random_seed">random_seed</a></big>
 <br>
 This <code><font color="blue">str</font></code> must be a non-negative integer and is the
 <a href="option_table.htm#random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
@@ -639,7 +639,7 @@ is true
 random_seed <font color="#990000">=</font> <font color="#FF0000">'0'</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.quasi_fixed" id="Problem Parameters.quasi_fixed">quasi_fixed</a></b>
+<big><a name="Problem Parameters.quasi_fixed" id="Problem Parameters.quasi_fixed">quasi_fixed</a></big>
 <br>
 This <code><font color="blue">str</font></code> that is either <code><font color="blue">true</font></code> or <code><font color="blue">false</font></code> and is the
 <a href="option_table.htm#Optimizer.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
@@ -654,7 +654,7 @@ and function evaluations take longer:
 quasi_fixed <font color="#990000">=</font> <font color="#FF0000">'true'</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.tolerance_fixed" id="Problem Parameters.tolerance_fixed">tolerance_fixed</a></b>
+<big><a name="Problem Parameters.tolerance_fixed" id="Problem Parameters.tolerance_fixed">tolerance_fixed</a></big>
 <br>
 This <code><font color="blue">str</font></code> contains the
 <a href="option_table.htm#Optimizer.tolerance" target="_top"><span style='white-space: nowrap'>tolerance_fixed</span></a>
@@ -663,7 +663,7 @@ This <code><font color="blue">str</font></code> contains the
 tolerance_fixed <font color="#990000">=</font> <font color="#FF0000">'1e-4'</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.derivative_test_fixed" id="Problem Parameters.derivative_test_fixed">derivative_test_fixed</a></b>
+<big><a name="Problem Parameters.derivative_test_fixed" id="Problem Parameters.derivative_test_fixed">derivative_test_fixed</a></big>
 <br>
 This <code><font color="blue">str</font></code> is the
 <a href="option_table.htm#Optimizer.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
@@ -678,7 +678,7 @@ The choice <code><font color="blue">none</font></code> is normal for a working e
 derivative_test_fixed <font color="#990000">=</font> <font color="#FF0000">'none'</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.truth2start" id="Problem Parameters.truth2start">truth2start</a></b>
+<big><a name="Problem Parameters.truth2start" id="Problem Parameters.truth2start">truth2start</a></big>
 <br>
 This is a <code><font color="blue">float</font></code> that is used to map
 
@@ -704,7 +704,7 @@ The starting values are also used for the <a href="scale_var_table.htm" target="
 truth2start <font color="#990000">=</font> <font color="#993399">0.3</font>
 </tt></pre>
 <br>
-<b><a name="Problem Parameters.accept_rel_err" id="Problem Parameters.accept_rel_err">accept_rel_err</a></b>
+<big><a name="Problem Parameters.accept_rel_err" id="Problem Parameters.accept_rel_err">accept_rel_err</a></big>
 <br>
 This is a <code><font color="blue">float</font></code> that specifies the absolute relative error
 to be accepted as passing the test.

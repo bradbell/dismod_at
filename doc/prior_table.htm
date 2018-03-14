@@ -188,7 +188,7 @@ It must hold that
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
-<b><a name="mean.uniform" id="mean.uniform">uniform</a></b>
+<big><a name="mean.uniform" id="mean.uniform">uniform</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
@@ -225,23 +225,27 @@ Otherwise, this value must be a positive number.
 <br>
 <b><big><a name="eta" id="eta">eta</a></big></b>
 <br>
-This column has type <code><font color="blue">real</font></code> and is only used in the
-cases where 
+This column has type <code><font color="blue">real</font></code> and only affects the prior
+when the 
 <code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
- is <code><font color="blue">log_gaussian</font></code>
-or <code><font color="blue">log_laplace</font></code>.
+ is
+Log-Gaussian, Log-Laplace or Log-Students.
 In these cases, it is the offset in the corresponding log transformation.
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ can still affect the scaling of the
+fixed effects (see below).
 
 <br>
 <br>
-<b><a name="eta.null" id="eta.null">null</a></b>
+<big><a name="eta.null" id="eta.null">null</a></big>
 <br>
 In the cases that are not log densities,
 this field can be <code><font color="blue">null</font></code>.
 
 <br>
 <br>
-<b><a name="eta.Scaling Fixed Effects" id="eta.Scaling Fixed Effects">Scaling Fixed Effects</a></b>
+<big><a name="eta.Scaling Fixed Effects" id="eta.Scaling Fixed Effects">Scaling Fixed Effects</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
@@ -281,7 +285,7 @@ degrees of freedom in the corresponding distribution.
 
 <br>
 <br>
-<b><a name="nu.null" id="nu.null">null</a></b>
+<big><a name="nu.null" id="nu.null">null</a></big>
 <br>
 In the cases that are not Student densities,
 this field can be <code><font color="blue">null</font></code>.
