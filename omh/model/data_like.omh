@@ -139,11 +139,11 @@ E_i ( \theta )
 \] $$
 For the log-transformed densities, the adjusted standard deviation is
 $latex \[
-delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
+\delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
 \] $$
 For the other densities, the adjusted standard deviation is
 $latex \[
-delta_i ( \theta ) = \Delta_i + E_i (\theta)
+\delta_i ( \theta ) = \Delta_i + E_i (\theta)
 \] $$
 Note that for $latex j \in K_i$$ it should hold that
 $latex 0 \leq x_{i,j}$$, and

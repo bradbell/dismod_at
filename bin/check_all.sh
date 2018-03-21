@@ -27,7 +27,7 @@ echo_eval() {
 # -----------------------------------------------------------------------------
 # run bin/check_*.sh and ~/bradbell/bin/check_copyright.sh
 list=`ls bin/check_*.sh`
-for script in $list check_copyright.sh
+for script in check_copyright.sh $list
 do
 	if [ "$script" != 'bin/check_all.sh' ] \
 	&& [ "$script" != 'bin/check_install.sh' ]

@@ -46,6 +46,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 03-21$$
+In the definition of
+$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$,
+The text
+$latex delta_i ( \theta )$$ was changed to $latex \delta_i ( \theta )$$.
+
 $head 03-13$$
 The documentation of the restrictions on the priors for the
 $cref/random effects/model_variables/Random Effects, u/$$ has been improved.
