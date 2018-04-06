@@ -390,6 +390,17 @@ $head scale_var_table$$
 A new $cref scale_var_table$$ is created using the
 means of the priors for the model variables.
 
+$head Deleted Tables$$
+The following tables are deleted (if they exist) when the
+$code init$$ command is run:
+$cref/depend_var/depend_var_table/$$,
+$cref/fit_var/fit_var_table/$$,
+$cref/truth_var/truth_var_table/$$,
+$cref/fit_data_subset/fit_data_subset_table/$$,
+$cref/simulate/simulate_table/$$,
+$cref/sample/sample_table/$$,
+$cref/predict/predict_table/$$.
+
 $children%example/get_started/init_command.py
 %$$
 $head Example$$
@@ -415,11 +426,15 @@ void init_command(
 	// -----------------------------------------------------------------------
 	const char* drop_list[] = {
 		"var",
-		"data_subset",
-		"start_var",
+		"depend_var",
 		"fit_var",
-		"fit_data_subset",
+		"scale_var",
+		"start_var",
 		"truth_var",
+		//
+		"data_subset",
+		"fit_data_subset",
+		//
 		"simulate",
 		"sample",
 		"predict"

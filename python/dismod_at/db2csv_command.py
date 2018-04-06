@@ -574,9 +574,13 @@ def db2csv_command(database_file_arg) :
 	# ----------------------------------------------------------------------
 	# check tables that are supposed to be the same length
 	pair_list = [
+		[ 'var',            'start_var'],
+		[ 'var',            'depend_var'],
+		[ 'var',            'truth_var'],
 		[ 'var',            'fit_var'],
 		[ 'data_subset',    'fit_data_subset' ]
 	]
+	have_table['start_var'] = True
 	for [left, right] in pair_list :
 		if have_table[right] :
 			len_left  = len( table_data[left]  )

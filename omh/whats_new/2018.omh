@@ -34,6 +34,7 @@ $spell
 	ty
 	grep
 	txt
+	init
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -45,6 +46,17 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 04-06$$
+The $code init$$ command documentation was improved to include a
+list of the $cref/deleted tables/init_command/Deleted Tables/$$.
+The $cref depend_var_table$$ was added to the set of tables deleted by
+the $code init$$ command
+because it must be the same length as the $cref var_table$$ or the
+$cref db2csv_command$$ will fail.
+In addition, the db2csv command was improved so that it prints
+an error message when the length of any of the variable tables is not
+the same as the $cref var_table$$.
 
 $head 03-21$$
 In the definition of
