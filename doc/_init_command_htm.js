@@ -43,6 +43,7 @@ var list_current0 = [
 'init_command.htm#data_subset_table',
 'init_command.htm#start_var_table',
 'init_command.htm#scale_var_table',
+'init_command.htm#Deleted Tables',
 'init_command.htm#Example'
 ];
 function choose_across0(item)
