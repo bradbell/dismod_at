@@ -526,33 +526,38 @@ $end
 
 	// Ipopt fixed effects optimization options
 	std::string options = "";
-	options += "String  sb  yes";
+	options += "String    sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_fixed"];
 	options += "\nNumeric acceptable_tol " + option_map["tolerance_fixed"];
-	options += "\nNumeric bound_frac " + option_map["bound_frac_fixed"];
 	options += "\nInteger print_level " + option_map["print_level_fixed"];
-	options += "\nString derivative_test "+option_map["derivative_test_fixed"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
+	//
 	options += "\nInteger accept_after_max_steps "
 		+ option_map["accept_after_max_steps_fixed"];
+	options += "\nString derivative_test "
+		+ option_map["derivative_test_fixed"];
+	//
+	options += "\nNumeric bound_frac " + option_map["bound_frac_fixed"];
+	options += "\nInteger limited_memory_max_history 30";
 	options += "\n";
 	//
 	std::string fixed_options = options;
 	//
 	// Ipopt random effects optimization options
 	options = "";
-	options += "String  sb  yes";
+	options += "String    sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric tol " + option_map["tolerance_random"];
 	options += "\nNumeric acceptable_tol " + option_map["tolerance_random"];
+	options += "\nInteger print_level " + option_map["print_level_random"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
-	options += "\nInteger print_level " + option_map["print_level_random"];
-	options += "\nInteger print_level " + option_map["print_level_random"];
+	//
 	options += "\nInteger accept_after_max_steps "
 		+ option_map["accept_after_max_steps_random"];
 	options += "\nString derivative_test "
 		+ option_map["derivative_test_random"] + "\n";
+	//
 	std::string random_options = options;
 	//
 	// convert from dismod_at random effects to cppad_mixed random effects
