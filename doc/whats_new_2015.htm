@@ -342,7 +342,7 @@ instead of the values specified in <a href="start_var_table.htm" target="_top"><
 This has been fixed.
 </li><li>
 
-The optimization <a href="option_table.htm#Optimizer.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
+The optimization <a href="option_table.htm#Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
 
 was changed to allow for zero.
 This enables one to use the starting values in the
@@ -564,7 +564,7 @@ Add lower and upper limits to the random effects in
 <code><font color="blue">cppad_mixed optimize_random</font></code> and
 <code><font color="blue">cppad_mixed optimize_fixed</font></code>.
 This is represented by
-<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
  in the option table.
 
 <br>
@@ -883,7 +883,7 @@ a program option for the <code><font color="blue">cppad_mixed</font></code> pack
 
 The option to choose between quasi-Newton and full Newton
 for the fixed effects optimization was moved into the options table; see
-<a href="option_table.htm#Optimizer.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+<a href="option_table.htm#Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
 .
 </li></ol>
 
@@ -979,7 +979,7 @@ A separate <code><font color="blue">cppad_mixed ipopt_options</font></code> was 
 
 The splitting of the optimization options between fixed and random
 effects was extend to the dismod_at API;
-see <a href="option_table.htm#Optimizer" target="_top"><span style='white-space: nowrap'>optimizer&nbsp;options</span></a>
+see <a href="option_table.htm#Fixed and Random" target="_top"><span style='white-space: nowrap'>optimizer&nbsp;options</span></a>
 .
 </li><li>
 
@@ -1366,7 +1366,7 @@ and replace all uses of <a href="put_table_row.htm" target="_top"><span style='w
 <b><big><a name="07-24" id="07-24">07-24</a></big></b>
 
 <ol type="1"><li>
-Add the <a href="option_table.htm#Optimizer.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+Add the <a href="option_table.htm#Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
 
 option (because it is to slow to do all the time).
 </li><li>
@@ -1492,7 +1492,7 @@ Some bugs were fixed in the
 <code><font color="blue">cppad_mixed constraint</font></code> option.
 </li><li>
 
-The <a href="option_table.htm#Optimizer.print_level" target="_top"><span style='white-space: nowrap'>print_level</span></a>
+The <a href="option_table.htm#Fixed and Random.print_level" target="_top"><span style='white-space: nowrap'>print_level</span></a>
  option
 was added to control tracing during optimization,
 use no tracing (zero) as default.

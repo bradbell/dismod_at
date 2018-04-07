@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimizer quasi_fixed derivative_test max_num_iter print_level accept_after_max_steps tolerance bound_random bound_frac_fixed example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -138,15 +138,18 @@ A:active { color : purple }
 <option>---..iota_zero_rho_pos</option>
 <option>---..iota_pos_rho_pos</option>
 <option>---..Default</option>
-<option>Optimizer</option>
-<option>---..quasi_fixed</option>
+<option>Fixed and Random</option>
 <option>---..derivative_test</option>
 <option>---..max_num_iter</option>
 <option>---..print_level</option>
 <option>---..accept_after_max_steps</option>
 <option>---..tolerance</option>
-<option>---..bound_random</option>
+<option>Fixed Only</option>
+<option>---..quasi_fixed</option>
 <option>---..bound_frac_fixed</option>
+<option>---..limited_memory_max_history_fixed</option>
+<option>Random Only</option>
+<option>---..bound_random</option>
 <option>Example</option>
 </select>
 </td>
@@ -606,30 +609,14 @@ The default value for this option is <code><font color="blue">iota_pos_rho_zero<
 
 <br>
 <br>
-<b><big><a name="Optimizer" id="Optimizer">Optimizer</a></big></b>
+<b><big><a name="Fixed and Random" id="Fixed and Random">Fixed and Random</a></big></b>
 <br>
-The following options control the
-<a href="http://www.coin-or.org/Ipopt/documentation/" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
- optimization
-for both the fixed and random effects:
+The following options control the Ipopt optimization
+of both the fixed and random effects:
 
 <br>
 <br>
-<big><a name="Optimizer.quasi_fixed" id="Optimizer.quasi_fixed">quasi_fixed</a></big>
-<br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
- is
-<code><font color="blue">quasi_fixed</font></code>,
-the corresponding possible values are
-<code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
-If it is <code><font color="blue">true</font></code>, a quasi-Newton method is used to optimize
-the fixed effects. Otherwise a full Newton method is used.
-The default value for this option is <code><font color="blue">true</font></code>.
-
-<br>
-<br>
-<big><a name="Optimizer.derivative_test" id="Optimizer.derivative_test">derivative_test</a></big>
+<big><a name="Fixed and Random.derivative_test" id="Fixed and Random.derivative_test">derivative_test</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -639,61 +626,69 @@ the corresponding
 <code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
 
 is one of the choices below.
-Under normal circumstances, you should use <code><font color="blue">none</font></code> for this option
+The default value for this option is <code><font color="blue">none</font></code>.
+(Under normal circumstances, you should use <code><font color="blue">none</font></code>
 because the other choices will take more execution time
-and are for program validation.
+and are for program validation.)
 <table><tr><td align='left'  valign='top'>
 
 
 <code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
- </td><td align='left'  valign='top'>
- Description </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">none</font></code>          </td><td align='left'  valign='top'>
-
-	do not perform derivative test
+	</td><td align='left'  valign='top'>
+ Description
+	</td><td align='left'  valign='top'>
+ Restrictions
 </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">first-order</font></code>   </td><td align='left'  valign='top'>
-
-	test first derivatives at starting point
+<code><font color="blue">none</font></code>
+	</td><td align='left'  valign='top'>
+ do not perform derivative test
+	</td><td align='left'  valign='top'>
+ none
 </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">second-order</font></code>  </td><td align='left'  valign='top'>
-
-	test first and second derivatives at starting point
+<code><font color="blue">first-order</font></code>
+	</td><td align='left'  valign='top'>
+ test first derivatives
+	</td><td align='left'  valign='top'>
+ none
 </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">only-second-order </font></code> </td><td align='left'  valign='top'>
-
-	test second derivatives at starting point
+<code><font color="blue">second-order</font></code>
+	</td><td align='left'  valign='top'>
+ test first and second derivatives
+	</td><td align='left'  valign='top'>
+ in fixed case 
+<code><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i></code>
+ must be false.
 </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">adaptive </font></code> </td><td align='left'  valign='top'>
-
-	a step size adaptive first order derivative test
-	(fixed case only)
+<code><font color="blue">only-second-order </font></code>
+	</td><td align='left'  valign='top'>
+ only test second derivatives
+	</td><td align='left'  valign='top'>
+ in fixed case 
+<code><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i></code>
+ must be false.
 </td></tr><tr><td align='left'  valign='top'>
 
-<code><font color="blue">trace-adaptive </font></code> </td><td align='left'  valign='top'>
+<code><font color="blue">adaptive </font></code>
+	</td><td align='left'  valign='top'>
+ a step size adaptive first order derivative test
+	</td><td align='left'  valign='top'>
+ only for fixed case
+</td></tr><tr><td align='left'  valign='top'>
 
-	trace adaptive test on standard output (fixed case only)
+<code><font color="blue">trace-adaptive </font></code>
+	</td><td align='left'  valign='top'>
+ trace adaptive test on standard output
+	</td><td align='left'  valign='top'>
+ only for fixed case
 </td></tr>
 </table>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i></code>
- is <code><font color="blue">true</font></code>
-the 
-<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
- cannot be
-<code><font color="blue">second-order</font></code> or <code><font color="blue">only-second-order</font></code>.
-The <code><font color="blue">adaptive</font></code> and <code><font color="blue">trace-adaptive</font></code> values are only available
-for the <code><font color="blue">derivative_test_fixed</font></code> option.
-The default value for this option is <code><font color="blue">none</font></code>.
-
 <br>
-<br>
-<big><a name="Optimizer.max_num_iter" id="Optimizer.max_num_iter">max_num_iter</a></big>
+<big><a name="Fixed and Random.max_num_iter" id="Fixed and Random.max_num_iter">max_num_iter</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -719,7 +714,7 @@ The default value for this option is <code><font color="blue">100</font></code>.
 
 <br>
 <br>
-<big><a name="Optimizer.print_level" id="Optimizer.print_level">print_level</a></big>
+<big><a name="Fixed and Random.print_level" id="Fixed and Random.print_level">print_level</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -739,7 +734,7 @@ The default value for this option is <code><font color="blue">0</font></code>.
 
 <br>
 <br>
-<big><a name="Optimizer.accept_after_max_steps" id="Optimizer.accept_after_max_steps">accept_after_max_steps</a></big>
+<big><a name="Fixed and Random.accept_after_max_steps" id="Fixed and Random.accept_after_max_steps">accept_after_max_steps</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -754,7 +749,7 @@ The default value for this option is <code><font color="blue">5</font></code>.
 
 <br>
 <br>
-<big><a name="Optimizer.tolerance" id="Optimizer.tolerance">tolerance</a></big>
+<big><a name="Fixed and Random.tolerance" id="Fixed and Random.tolerance">tolerance</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -775,7 +770,68 @@ of the fixed effects objective at the value of the fixed effects in
 
 <br>
 <br>
-<big><a name="Optimizer.bound_random" id="Optimizer.bound_random">bound_random</a></big>
+<b><big><a name="Fixed Only" id="Fixed Only">Fixed Only</a></big></b>
+<br>
+The following options control the
+<a href="http://www.coin-or.org/Ipopt/documentation/" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
+ optimization
+of the fixed effects:
+
+<br>
+<br>
+<big><a name="Fixed Only.quasi_fixed" id="Fixed Only.quasi_fixed">quasi_fixed</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">quasi_fixed</font></code>,
+the corresponding possible values are
+<code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
+If it is <code><font color="blue">true</font></code>, a quasi-Newton method is used to optimize
+the fixed effects. Otherwise a full Newton method is used.
+The default value for this option is <code><font color="blue">true</font></code>.
+
+<br>
+<br>
+<big><a name="Fixed Only.bound_frac_fixed" id="Fixed Only.bound_frac_fixed">bound_frac_fixed</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">bound_frac_fixed</font></code>
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+
+is greater than zero and lese than or equal one half.
+It determines how much the initial point might have to be modified
+in order to be sufficiently inside the bounds.
+This is called <code><font color="blue">bound_frac</font></code> in the Ipopt documentation.
+The default value for this option is <code><font color="blue">1e-2</font></code>.
+
+<br>
+<br>
+<big><a name="Fixed Only.limited_memory_max_history_fixed" id="Fixed Only.limited_memory_max_history_fixed">limited_memory_max_history_fixed</a></big>
+<br>
+if 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is <code><font color="blue">limited_memory_max_history_fixed</font></code>,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is
+the number of most recent iterations that are taken into account
+for the limited-memory quasi-Newton approximation.
+The default value for this option is <code><font color="blue">30</font></code>.
+
+<br>
+<br>
+<b><big><a name="Random Only" id="Random Only">Random Only</a></big></b>
+<br>
+The following options control the Ipopt optimization
+of the random effects:
+
+<br>
+<br>
+<big><a name="Random Only.bound_random" id="Random Only.bound_random">bound_random</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -853,24 +909,6 @@ limits specified by
 <code><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i></code>
 .
 </li></ol>
-
-
-<br>
-<br>
-<big><a name="Optimizer.bound_frac_fixed" id="Optimizer.bound_frac_fixed">bound_frac_fixed</a></big>
-<br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
- is
-<code><font color="blue">bound_frac_fixed</font></code>
-the corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
-
-is greater than zero and lese than or equal one half.
-It determines how much the initial point might have to be modified
-in order to be sufficiently inside the bounds.
-This is called <code><font color="blue">bound_frac</font></code> in the Ipopt documentation.
-The default value for this option is <code><font color="blue">1e-2</font></code>.
 
 
 

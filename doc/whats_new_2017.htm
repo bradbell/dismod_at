@@ -614,13 +614,13 @@ In addition, remove the corresponding setting to <code><font color="blue">None</
 </li><li>
 
 Change <code><font color="blue">random_bound</font></code> to
-<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
 .
 Change <code><font color="blue">zero_sum_random</font></code> to
 <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
 .
 Change <code><font color="blue">fixed_bound_frac</font></code> to
-<a href="option_table.htm#Optimizer.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
+<a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
 .
 </li></ol>
 
@@ -968,7 +968,7 @@ Advance to <code><font color="blue">cppad_mixed-20170801</font></code> to fix an
 </li><li>
 
 The postscripts <code><font color="blue">fixed</font></code> and <code><font color="blue">random</font></code> were missing from the
-<a href="option_table.htm#Optimizer.accept_after_max_steps" target="_top"><span style='white-space: nowrap'>accept_after_max_steps</span></a>
+<a href="option_table.htm#Fixed and Random.accept_after_max_steps" target="_top"><span style='white-space: nowrap'>accept_after_max_steps</span></a>
 
 documentation.
 </li><li>
@@ -1158,7 +1158,7 @@ Advance to cppad_mixed-20170424.
 The convergence criteria, is now relative to the derivative values
 at the mean of the prior for the fixed effects.
 This also holds for the values printed during the optimization of the
-fixed effects, see <a href="option_table.htm#Optimizer.print_level" target="_top"><span style='white-space: nowrap'>print_level</span></a>
+fixed effects, see <a href="option_table.htm#Fixed and Random.print_level" target="_top"><span style='white-space: nowrap'>print_level</span></a>
 .
 These values used to be relative to the
 <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>starting&nbsp;variables</span></a>
@@ -1300,7 +1300,7 @@ Add <code><font color="blue">random</font></code> to possible choices for
 
 <ol type="1"><li>
 The change on 04-15 introduced a bug whereby non-zero values for
-<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
  were not having
 any effects.
 This has been fixed.
@@ -1312,7 +1312,7 @@ fit command. It is better to use
 <code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
  equal to <code><font color="blue">fixed</font></code>,
 a apposed to changing
-<a href="option_table.htm#Optimizer.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
 
 in the <code><font color="blue">option</font></code> table.
 </li><li>
@@ -1534,7 +1534,7 @@ This is in addition to the
 <b><big><a name="01-14" id="01-14">01-14</a></big></b>
 <br>
 The <code><font color="blue">adaptive</font></code> and <code><font color="blue">trace-adaptive</font></code>
-<a href="option_table.htm#Optimizer.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+<a href="option_table.htm#Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
  options
 generated error messages. This has been fixed and they now work.
 
