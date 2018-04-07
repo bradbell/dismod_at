@@ -44,31 +44,31 @@ bool get_option_table_xam(void)
 	// Furthermore, we have not included max_num_iter_fixed in list
 	// so that its default value of 100 gets used.
 	struct { const char* name; const char* value; } option_list[] = {
-		//
+		// BEGIN_SORT_THIS_LINE_PLUS_1
+		"accept_after_max_steps_fixed",     "6",
+		"accept_after_max_steps_random",    "6",
+		"avgint_extra_columns",             "",
+		"bound_frac_fixed",                 "1e-3",
+		"bound_random",                     "3.0",
+		"data_extra_columns",               "",
+		"derivative_test_fixed",            "second-order",
+		"derivative_test_random",           "first-order",
 		"limited_memory_max_history_fixed", "15",
-		"quasi_fixed",                   "false",
-		"derivative_test_fixed",         "second-order",
-		"derivative_test_random",        "first-order",
-		"max_num_iter_random",           "50",
-		"print_level_fixed",             "5",
-		"print_level_random",            "5",
-		"accept_after_max_steps_fixed",  "6",
-		"accept_after_max_steps_random", "6",
-		"tolerance_fixed",               "1e-7",
-		"tolerance_random",              "1e-7",
-		"bound_random",                  "3.0",
-		"bound_frac_fixed",              "1e-3",
-		//
-		"parent_node_id",                "1",
-		"parent_node_name",              "north_america",
-		"avgint_extra_columns",          "",
-		"data_extra_columns",            "",
-		"warn_on_stderr",                "true",
-		"minimum_meas_cv",               "0.1",
-		"ode_step_size",                 "20.0",
-		"random_seed",                   "123",
-		"zero_sum_random",                "iota  omega",
-		"rate_case",                     "iota_zero_rho_zero"
+		"max_num_iter_random",              "50",
+		"minimum_meas_cv",                  "0.1",
+		"ode_step_size",                    "20.0",
+		"parent_node_id",                   "1",
+		"parent_node_name",                 "north_america",
+		"print_level_fixed",                "5",
+		"print_level_random",               "5",
+		"quasi_fixed",                      "false",
+		"random_seed",                      "123",
+		"rate_case",                        "iota_zero_rho_zero",
+		"tolerance_fixed",                  "1e-7",
+		"tolerance_random",                 "1e-7",
+		"warn_on_stderr",                   "true",
+		"zero_sum_random",                  "iota  omega"
+		// END_SORT_THIS_LINE_MINUS_1
 	};
 	size_t n_option = sizeof(option_list) / sizeof( option_list[0] );
 	//
