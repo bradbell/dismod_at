@@ -131,7 +131,7 @@ cmake_libdir='lib64'
 # &head checkpoint_newton_step&&
 # If &code yes&&, &code cppad_mixed&& will use checkpointing during
 # calculation of second derivatives. This affects optimization when
-# &cref/quasi_fixed/option_table/Optimizer/quasi_fixed/&& is false, and the
+# &cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/&& is false, and the
 # &cref/asymptotic/sample_command/method/asymptotic/&& sampling method.
 # For these computations, checkpointing should use less memory, but
 # take more time.

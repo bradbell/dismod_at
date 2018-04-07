@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -159,7 +159,7 @@ The $code fit_command$$ was using the mean for the variable values,
 instead of the values specified in $cref start_var_table$$.
 This has been fixed.
 $lnext
-The optimization $cref/max_num_iter/option_table/Optimizer/max_num_iter/$$
+The optimization $cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$
 was changed to allow for zero.
 This enables one to use the starting values in the
 $cref fit_var_table$$ and $cref fit_data_subset_table$$ tables.
@@ -296,7 +296,7 @@ Add lower and upper limits to the random effects in
 $code cppad_mixed optimize_random$$ and
 $code cppad_mixed optimize_fixed$$.
 This is represented by
-$cref/bound_random/option_table/Optimizer/bound_random/$$ in the option table.
+$cref/bound_random/option_table/Random Only/bound_random/$$ in the option table.
 
 $head 11-05$$
 $list number$$
@@ -503,7 +503,7 @@ $code cppad_mixed quasi_fixed$$.
 $lnext
 The option to choose between quasi-Newton and full Newton
 for the fixed effects optimization was moved into the options table; see
-$cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
+$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$.
 $lend
 
 $head 10-24$$
@@ -562,7 +562,7 @@ $code cppad_mixed optimize_fixed$$.
 $lnext
 The splitting of the optimization options between fixed and random
 effects was extend to the dismod_at API;
-see $cref/optimizer options/option_table/Optimizer/$$.
+see $cref/optimizer options/option_table/Fixed and Random/$$.
 $lnext
 Advance to a newer version of CppAD (to avoid another bug)
 and hence requires $code bin/install_cppad.sh$$ to be re-run.
@@ -813,7 +813,7 @@ and replace all uses of $cref put_table_row$$ by $code create_table$$
 
 $head 07-24$$
 $list number$$
-Add the $cref/derivative_test/option_table/Optimizer/derivative_test/$$
+Add the $cref/derivative_test/option_table/Fixed and Random/derivative_test/$$
 option (because it is to slow to do all the time).
 $lnext
 Fix the automatic setting of the number of age and time points in the
@@ -889,7 +889,7 @@ The name of the $code argument_table$$ was change to the $cref option_table$$.
 Some bugs were fixed in the
 $code cppad_mixed constraint$$ option.
 $lnext
-The $cref/print_level/option_table/Optimizer/print_level/$$ option
+The $cref/print_level/option_table/Fixed and Random/print_level/$$ option
 was added to control tracing during optimization,
 use no tracing (zero) as default.
 $lnext

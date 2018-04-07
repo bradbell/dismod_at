@@ -325,7 +325,7 @@ random_seed = '0'
 #
 # $subhead quasi_fixed$$
 # This $code str$$ that is either $code true$$ or $code false$$ and is the
-# $cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$ option value.
+# $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ option value.
 # If it is true, a quasi-Newton method is used.
 # This only requires function values and
 # first derivatives for the objective and constraints.
@@ -338,14 +338,14 @@ quasi_fixed = 'true'
 #
 # $subhead tolerance_fixed$$
 # This $code str$$ contains the
-# $cref/tolerance_fixed/option_table/Optimizer/tolerance/$$ option value.
+# $cref/tolerance_fixed/option_table/Fixed and Random/tolerance/$$ option value.
 # $srccode%py%
 tolerance_fixed = '1e-4'
 # %$$
 #
 # $subhead derivative_test_fixed$$
 # This $code str$$ is the
-# $cref/derivative_test/option_table/Optimizer/derivative_test/$$
+# $cref/derivative_test/option_table/Fixed and Random/derivative_test/$$
 # option for the fixed effects.
 # The choice $code trace-adaptive$$ can be used to see if the partial
 # derivatives of the objective and constraints after the

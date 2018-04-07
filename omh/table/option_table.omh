@@ -27,7 +27,6 @@ $spell
 	tol
 	num_iter
 	Ipopt
-	Optimizer
 	inf
 	avgint
 	cv
@@ -265,55 +264,48 @@ must always have lower limit greater than zero.
 $subhead Default$$
 The default value for this option is $code iota_pos_rho_zero$$.
 
-$head Optimizer$$
-The following options control the
-$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimization
-for both the fixed and random effects:
-
-$subhead quasi_fixed$$
-If $icode option_name$$ is
-$code quasi_fixed$$,
-the corresponding possible values are
-$code true$$ or $code false$$.
-If it is $code true$$, a quasi-Newton method is used to optimize
-the fixed effects. Otherwise a full Newton method is used.
-The default value for this option is $code true$$.
+$head Fixed and Random$$
+The following options control the Ipopt optimization
+of both the fixed and random effects:
 
 $subhead derivative_test$$
 If $icode option_name$$ is
 $code derivative_test_fixed$$ ($code derivative_test_random$$),
 the corresponding $icode option_value$$
 is one of the choices below.
-Under normal circumstances, you should use $code none$$ for this option
-because the other choices will take more execution time
-and are for program validation.
-$table
-$icode option_value$$ $cnext Description $rnext
-$code none$$          $cnext
-	do not perform derivative test
-$rnext
-$code first-order$$   $cnext
-	test first derivatives at starting point
-$rnext
-$code second-order$$  $cnext
-	test first and second derivatives at starting point
-$rnext
-$code only-second-order $$ $cnext
-	test second derivatives at starting point
-$rnext
-$code adaptive $$ $cnext
-	a step size adaptive first order derivative test
-	(fixed case only)
-$rnext
-$code trace-adaptive $$ $cnext
-	trace adaptive test on standard output (fixed case only)
-$tend
-If $icode quasi_fixed$$ is $code true$$
-the $icode option_value$$ cannot be
-$code second-order$$ or $code only-second-order$$.
-The $code adaptive$$ and $code trace-adaptive$$ values are only available
-for the $code derivative_test_fixed$$ option.
 The default value for this option is $code none$$.
+(Under normal circumstances, you should use $code none$$
+because the other choices will take more execution time
+and are for program validation.)
+$table
+$icode option_value$$
+	$cnext Description
+	$cnext Restrictions
+$rnext
+$code none$$
+	$cnext do not perform derivative test
+	$cnext none
+$rnext
+$code first-order$$
+	$cnext test first derivatives
+	$cnext none
+$rnext
+$code second-order$$
+	$cnext test first and second derivatives
+	$cnext in fixed case $icode quasi_fixed$$ must be false.
+$rnext
+$code only-second-order $$
+	$cnext only test second derivatives
+	$cnext in fixed case $icode quasi_fixed$$ must be false.
+$rnext
+$code adaptive $$
+	$cnext a step size adaptive first order derivative test
+	$cnext only for fixed case
+$rnext
+$code trace-adaptive $$
+	$cnext trace adaptive test on standard output
+	$cnext only for fixed case
+$tend
 
 $subhead max_num_iter$$
 If $icode option_name$$ is
@@ -363,6 +355,41 @@ The default value for this option is $code 1e-8$$.
 For the fixed effects, this tolerance is relative to the derivatives
 of the fixed effects objective at the value of the fixed effects in
 $cref scale_var_table$$.
+
+$head Fixed Only$$
+The following options control the
+$href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimization
+of the fixed effects:
+
+$subhead quasi_fixed$$
+If $icode option_name$$ is
+$code quasi_fixed$$,
+the corresponding possible values are
+$code true$$ or $code false$$.
+If it is $code true$$, a quasi-Newton method is used to optimize
+the fixed effects. Otherwise a full Newton method is used.
+The default value for this option is $code true$$.
+
+$subhead bound_frac_fixed$$
+If $icode option_name$$ is
+$code bound_frac_fixed$$
+the corresponding $icode option_value$$
+is greater than zero and lese than or equal one half.
+It determines how much the initial point might have to be modified
+in order to be sufficiently inside the bounds.
+This is called $code bound_frac$$ in the Ipopt documentation.
+The default value for this option is $code 1e-2$$.
+
+$subhead limited_memory_max_history_fixed$$
+if $icode option_name$$ is $code limited_memory_max_history_fixed$$,
+the corresponding $icode option_value$$ is
+the number of most recent iterations that are taken into account
+for the limited-memory quasi-Newton approximation.
+The default value for this option is $code 30$$.
+
+$head Random Only$$
+The following options control the Ipopt optimization
+of the random effects:
 
 $subhead bound_random$$
 If $icode option_name$$ is
@@ -415,17 +442,6 @@ effects, does not take $icode bound_random$$ into account.
 On the other hand; the samples of the random effects are withing the
 limits specified by $icode bound_random$$.
 $lend
-
-$subhead bound_frac_fixed$$
-If $icode option_name$$ is
-$code bound_frac_fixed$$
-the corresponding $icode option_value$$
-is greater than zero and lese than or equal one half.
-It determines how much the initial point might have to be modified
-in order to be sufficiently inside the bounds.
-This is called $code bound_frac$$ in the Ipopt documentation.
-The default value for this option is $code 1e-2$$.
-
 
 $children%example/table/option_table.py
 %$$

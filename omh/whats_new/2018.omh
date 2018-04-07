@@ -47,6 +47,29 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-07$$
+$list number$$
+Add
+$cref/limited_memory_max_history_fixed
+	/option_table
+	/Fixed Only
+	/limited_memory_max_history_fixed
+/$$
+to the option table.
+The default for this option was previously hard coded into the program
+and could not be changed.
+As it turns out, we seem to get better convergence with larger values for
+this option when
+$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ true.
+$lnext
+The documentation for the optimizer options have been split up into
+three groups:
+$cref/fixed and random/option_table/Fixed and Random/$$,
+$cref/fixed only/option_table/Fixed Only/$$, and
+$cref/random only/option_table/Random Only/$$.
+$lend
+
+
 $head 04-06$$
 $list number$$
 The $code init$$ command documentation was improved to include a
@@ -170,7 +193,7 @@ $cref/node_list/user_diabetes.py/Problem Parameters/node_list/$$.
 $lnext
 Changes so the example with random effects runs faster:
 Increase the
-$cref/tolerance_fixed/option_table/Optimizer/tolerance/$$.
+$cref/tolerance_fixed/option_table/Fixed and Random/tolerance/$$.
 Reduce the number of points in the
 $cref/age/user_diabetes.py/Problem Parameters/parent_age_grid/$$ and
 $cref/time/user_diabetes.py/Problem Parameters/parent_time_grid/$$ grids.
@@ -238,7 +261,7 @@ $lnext
 Advance to $code cppad_mixed-20180208$$.
 This fixes a bug in the Laplace
 $cref/density/data_table/density_id/$$ in the data table when
-$cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$ was $code false$$.
+$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ was $code false$$.
 $lnext
 Detect and report an error when the density in the data table is
 $cref/laplace/data_table/density_id/Laplace/$$ or $code log_laplace$$.
@@ -341,7 +364,7 @@ $cref/fit_var/predict_command/source/fit_var/$$ or
 $cref/truth_var/predict_command/source/truth_var/$$.
 $lnext
 Mention that under normal circumstances,
-$cref/derivative_test/option_table/Optimizer/derivative_test/$$
+$cref/derivative_test/option_table/Fixed and Random/derivative_test/$$
 should be $code none$$.
 $lend
 
@@ -458,7 +481,7 @@ Fix an un-used variable warning when
 $cref/build_type/run_cmake.sh/build_type/$$ is $code release$$.
 $lnext
 Replace the default acceptable tolerance by the
-$cref/tolerances/option_table/Optimizer/tolerance/$$
+$cref/tolerances/option_table/Fixed and Random/tolerance/$$
 specified in the options table.
 (The acceptable tolerance is used when the optimizer is having trouble
 obtaining the desired tolerance.)

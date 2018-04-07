@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -97,6 +97,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	// option name and its default value
 	// Changes here must also be made in python/dismod_at/db2csv_command.py
 	struct { const char* name; const char* value; } option_list[] = {
+		{ "limited_memory_max_history_fixed", "30"              },
 		{ "accept_after_max_steps_fixed",  "5"                  },
 		{ "accept_after_max_steps_random", "5"                  },
 		{ "avgint_extra_columns",          ""                   },
@@ -252,13 +253,14 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			}
 		}
 		if(
-			name_vec[match] == "accept_after_max_steps_fixed" ||
-			name_vec[match] == "accept_after_max_steps_random"
+			name_vec[match] == "accept_after_max_steps_fixed"   ||
+			name_vec[match] == "accept_after_max_steps_random"  ||
+			name_vec[match] == "limited_memory_max_history_fixed"
 		)
-		{	int max_steps = std::atoi( option_value[option_id].c_str() );
-			bool ok = 0 < max_steps;
+		{	int pos_integer = std::atoi( option_value[option_id].c_str() );
+			bool ok = 0 < pos_integer;
 			if( ! ok )
-			{	msg = "option_value is not positive";
+			{	msg = "option_value is not a positive integer";
 				error_exit(msg, table_name, option_id);
 			}
 		}

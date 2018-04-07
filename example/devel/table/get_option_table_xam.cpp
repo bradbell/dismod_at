@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -45,6 +45,7 @@ bool get_option_table_xam(void)
 	// so that its default value of 100 gets used.
 	struct { const char* name; const char* value; } option_list[] = {
 		//
+		"limited_memory_max_history_fixed", "15",
 		"quasi_fixed",                   "false",
 		"derivative_test_fixed",         "second-order",
 		"derivative_test_random",        "first-order",

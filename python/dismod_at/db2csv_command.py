@@ -815,6 +815,7 @@ def db2csv_command(database_file_arg) :
 	# This table must have the same values as in
 	# devel/table/get_option_table.cpp
 	option_list = [
+		[ "limited_memory_max_history_fixed", "30"],
 		[ "accept_after_max_steps_fixed",  "5"],
 		[ "accept_after_max_steps_random", "5"],
 		[ "avgint_extra_columns",          ""],

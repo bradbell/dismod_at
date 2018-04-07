@@ -342,6 +342,7 @@ bool fit_model_xam(void)
 	//
 	// option_map
 	std::map<std::string, std::string> option_map;
+	option_map["limited_memory_max_history_fixed"] = "30";
 	option_map["derivative_test_fixed"]         = "second-order";
 	option_map["tolerance_fixed"]               = "1e-8";
 	option_map["max_num_iter_fixed"]            = "100";

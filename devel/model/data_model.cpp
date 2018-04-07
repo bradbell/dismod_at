@@ -61,7 +61,7 @@ $codei%
 	double %bound_random%
 %$$
 and is the
-$cref/bound_random/option_table/Optimizer/bound_random/$$.
+$cref/bound_random/option_table/Random Only/bound_random/$$.
 
 
 $head parent_node_id$$

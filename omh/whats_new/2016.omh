@@ -131,7 +131,7 @@ for $icode name$$ equal to $code var$$, $code predict$$, and $code sample$$.
 This makes it clearer that they are copies of the corresponding tables
 as a python list of dictionaries; see $cref get_table_dict$$.
 $lnext
-If $cref/bound_random/option_table/Optimizer/bound_random/$$ was zero,
+If $cref/bound_random/option_table/Random Only/bound_random/$$ was zero,
 the $cref sample_command$$ would terminate with a $code cppad_mixed$$
 error message. This has been fixed. In addition, the random bound documentation
 now includes mention that is not accounted for in the
@@ -227,7 +227,7 @@ $lend
 $head 10-12$$
 $list number$$
 Add the option to set the
-$cref/bound_random/option_table/Optimizer/bound_random/$$ to zero.
+$cref/bound_random/option_table/Random Only/bound_random/$$ to zero.
 $lnext
 Change $icode%name%_dict%$$ to $icode%name%_table%$$ in the python examples.
 For example, $code data_dict$$ was changed to
@@ -298,7 +298,7 @@ $list number$$
 Add the optimizer
 $cref/accept_after_max_steps
 	/option_table
-	/Optimizer
+	/Fixed and Random
 	/accept_after_max_steps
 /$$
 option to both the fixed and random effects optimization.
@@ -417,7 +417,7 @@ when the implicit information matrix is not positive definite
 (for diagnostic purposes).
 $lnext
 Add the $code adaptive$$ and $code trace-adaptive$$ values for the
-$cref/derivative_test/option_table/Optimizer/derivative_test/$$
+$cref/derivative_test/option_table/Fixed and Random/derivative_test/$$
 ($code derivative_test_fixed$$ only).
 $lend
 
@@ -501,7 +501,7 @@ there are no random effects.
 
 $head 05-05$$
 $list number$$
-Change the $cref/max_num_iter/option_table/Optimizer/max_num_iter/$$
+Change the $cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$
 option so that $code -1$$ returns the input $cref model_variables$$,
 and $code 0$$, includes the move of the initial variable values
 (to be inside the constraints).
@@ -509,7 +509,7 @@ $lnext
 Change the $cref option_table$$ so that all entries have default values
 and do not need to appear in the table.
 $lnext
-Add the $cref/bound_frac_fixed/option_table/Optimizer/bound_frac_fixed/$$
+Add the $cref/bound_frac_fixed/option_table/Fixed Only/bound_frac_fixed/$$
 option.
 $lend
 
@@ -696,7 +696,7 @@ is zero, (this does more model checking).
 $head 04-09$$
 Advance to a newer version of cppad_mixed.
 This has a change so that when
-$cref/max_num_iter/option_table/Optimizer/max_num_iter/$$ is zero,
+$cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$ is zero,
 for the fixed effects optimization problem,
 the resulting fixed effects estimate is the same as in the
 $cref start_var_table$$.

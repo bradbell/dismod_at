@@ -179,7 +179,7 @@ $cref/logging/log_message/$$ errors and warnings.
 
 $head bound_random$$
 This is the value of the
-$cref/bound_random/option_table/Optimizer/bound_random/$$
+$cref/bound_random/option_table/Random Only/bound_random/$$
 in the option table.
 
 $head fit_or_sample$$
@@ -223,7 +223,7 @@ $head quasi_fixed$$
 If this argument is true,
 a quasi-Newton method is used when optimizing the fixed effects.
 Otherwise a full Newton method is used; see
-$cref/quasi_fixed/option_table/Optimizer/quasi_fixed/$$.
+$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$.
 
 $head zero_sum_random$$
 If this vector has size $code number_rate_enum$$.
@@ -437,11 +437,15 @@ $head option_map$$
 This argument is effectively $code const$$ and
 must have the following values:
 For $icode name$$ equal to
-$cref/derivative_test/option_table/Optimizer/derivative_test/$$,
-$cref/tolerance/option_table/Optimizer/tolerance/$$,
-$cref/max_num_iter/option_table/Optimizer/max_num_iter/$$,
-$cref/print_level/option_table/Optimizer/print_level/$$,
-$cref/accept_after_max_steps/option_table/Optimizer/accept_after_max_steps/$$,
+$cref/derivative_test/option_table/Fixed and Random/derivative_test/$$,
+$cref/tolerance/option_table/Fixed and Random/tolerance/$$,
+$cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$,
+$cref/print_level/option_table/Fixed and Random/print_level/$$,
+$cref/accept_after_max_steps
+	/option_table
+	/Fixed and Random
+	/accept_after_max_steps
+/$$,
 and for $icode fit$$ equal to $code fixed$$ and $code random$$
 $codei%
 	%option_map%["%name%_%fit%"]
@@ -539,7 +543,8 @@ $end
 		+ option_map["derivative_test_fixed"];
 	//
 	options += "\nNumeric bound_frac " + option_map["bound_frac_fixed"];
-	options += "\nInteger limited_memory_max_history 30";
+	options += "\nInteger limited_memory_max_history "
+		+ option_map["limited_memory_max_history_fixed"];
 	options += "\n";
 	//
 	std::string fixed_options = options;
@@ -556,7 +561,10 @@ $end
 	options += "\nInteger accept_after_max_steps "
 		+ option_map["accept_after_max_steps_random"];
 	options += "\nString derivative_test "
-		+ option_map["derivative_test_random"] + "\n";
+		+ option_map["derivative_test_random"];
+	//
+	options += "\nString hessian_approximation exact";
+	options += "\n";
 	//
 	std::string random_options = options;
 	//

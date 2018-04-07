@@ -178,7 +178,7 @@ which gets interpreted as minus infinity (plus infinity); see
 $cref/bounds that are null/database/Bounds That are Null/$$.
 $lnext
 Note that
-$cref/bound_random/option_table/Optimizer/bound_random/$$
+$cref/bound_random/option_table/Random Only/bound_random/$$
 is used for the lower and upper limits of during the optimization
 of the random effects.
 On the other hand,

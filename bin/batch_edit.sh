@@ -22,7 +22,9 @@ rename_cmd='s|integrand_ode|sci_ode|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|http://moby.ihme.washington.edu/bradbell/|https://bradbell.github.io/|
+s|/option_table/Optimizer/\\([a-z_]*_fixed\\)/|/option_table/Fixed Only/\\1/|
+s|/option_table/Optimizer/\\([a-z_]*_random\\)/|/option_table/Random Only/\\1/|
+s|/option_table/Optimizer/|/option_table/Fixed and Random/|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
