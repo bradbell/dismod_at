@@ -97,30 +97,32 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	// option name and its default value
 	// Changes here must also be made in python/dismod_at/db2csv_command.py
 	struct { const char* name; const char* value; } option_list[] = {
+		// BEGIN_SORT_THIS_LINE_PLUS_1
+		{ "accept_after_max_steps_fixed",     "5"                  },
+		{ "accept_after_max_steps_random",    "5"                  },
+		{ "avgint_extra_columns",             ""                   },
+		{ "bound_frac_fixed",                 "1e-2"               },
+		{ "bound_random",                     ""                   },
+		{ "data_extra_columns",               ""                   },
+		{ "derivative_test_fixed",            "none"               },
+		{ "derivative_test_random",           "none"               },
 		{ "limited_memory_max_history_fixed", "30"              },
-		{ "accept_after_max_steps_fixed",  "5"                  },
-		{ "accept_after_max_steps_random", "5"                  },
-		{ "avgint_extra_columns",          ""                   },
-		{ "data_extra_columns",            ""                   },
-		{ "derivative_test_fixed",         "none"               },
-		{ "derivative_test_random",        "none"               },
-		{ "bound_frac_fixed",              "1e-2"               },
-		{ "max_num_iter_fixed",            "100"                },
-		{ "max_num_iter_random",           "100"                },
-		{ "minimum_meas_cv",               "0.0"                },
-		{ "ode_step_size",                 "10.0"               },
-		{ "parent_node_id",                ""                   },
-		{ "parent_node_name",              ""                   },
-		{ "print_level_fixed",             "0"                  },
-		{ "print_level_random",            "0"                  },
-		{ "quasi_fixed",                   "true"               },
-		{ "bound_random",                  ""                   },
-		{ "random_seed",                   "0"                  },
-		{ "zero_sum_random",               ""                   },
-		{ "rate_case",                     "iota_pos_rho_zero"  },
-		{ "tolerance_fixed",               "1e-8"               },
-		{ "tolerance_random",              "1e-8"               },
-		{ "warn_on_stderr",                "true"               }
+		{ "max_num_iter_fixed",               "100"                },
+		{ "max_num_iter_random",              "100"                },
+		{ "minimum_meas_cv",                  "0.0"                },
+		{ "ode_step_size",                    "10.0"               },
+		{ "parent_node_id",                   ""                   },
+		{ "parent_node_name",                 ""                   },
+		{ "print_level_fixed",                "0"                  },
+		{ "print_level_random",               "0"                  },
+		{ "quasi_fixed",                      "true"               },
+		{ "random_seed",                      "0"                  },
+		{ "rate_case",                        "iota_pos_rho_zero"  },
+		{ "tolerance_fixed",                  "1e-8"               },
+		{ "tolerance_random",                 "1e-8"               },
+		{ "warn_on_stderr",                   "true"               },
+		{ "zero_sum_random",                  ""                   }
+		// END_SORT_THIS_LINE_MINUS_1
 	};
 	size_t n_option = sizeof( option_list ) / sizeof( option_list[0] );
 	CppAD::vector<string> name_vec(n_option), value_vec(n_option);
