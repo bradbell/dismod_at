@@ -106,7 +106,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "data_extra_columns",               ""                   },
 		{ "derivative_test_fixed",            "none"               },
 		{ "derivative_test_random",           "none"               },
-		{ "limited_memory_max_history_fixed", "30"              },
+		{ "limited_memory_max_history_fixed", "30"                 },
 		{ "max_num_iter_fixed",               "100"                },
 		{ "max_num_iter_random",              "100"                },
 		{ "minimum_meas_cv",                  "0.0"                },
