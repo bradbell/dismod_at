@@ -165,8 +165,7 @@ $codei%fit_model %fit_object%(
 	%data_object%,
 	%prior_object%,
 	%quasi_fixed%,
-	%zero_sum_random%,
-	%option_map%
+	%zero_sum_random%
 )
 %$$
 
@@ -454,6 +453,7 @@ is the value in the $cref option_table$$ for the corresponding option.
 It must also have
 $codei%
 	%option_map%["bound_frac_fixed"]
+	%option_map%["limited_memory_max_history_fixed"]
 %$$
 
 $head Prototype$$
