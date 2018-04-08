@@ -1,3 +1,10 @@
+var list_up0 = [
+'dismod_at.htm',
+'devel.htm',
+'devel_model.htm',
+'devel_data_model.htm',
+'data_model_like_all.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,12 +12,19 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'devel.htm',
-'devel_model.htm',
-'devel_data_model.htm',
-'data_model_like_all.htm'
+var list_current0 = [
+'data_model_like_all.htm#Syntax',
+'data_model_like_all.htm#Requirement',
+'data_model_like_all.htm#data_object',
+'data_model_like_all.htm#Float',
+'data_model_like_all.htm#hold_out',
+'data_model_like_all.htm#random_depend',
+'data_model_like_all.htm#pack_vec',
+'data_model_like_all.htm#residual_vec',
+'data_model_like_all.htm#residual_vec.index',
+'data_model_like_all.htm#residual_vec.Include Hold Outs',
+'data_model_like_all.htm#residual_vec.No Hold Outs',
+'data_model_like_all.htm#Log Density'
 ];
 var list_down4 = [
 'install_unix.htm',
@@ -46,31 +60,23 @@ var list_down1 = [
 'data_model_like_one.htm',
 'data_model_like_all.htm'
 ];
-var list_current0 = [
-'data_model_like_all.htm#Syntax',
-'data_model_like_all.htm#Requirement',
-'data_model_like_all.htm#data_object',
-'data_model_like_all.htm#Float',
-'data_model_like_all.htm#hold_out',
-'data_model_like_all.htm#random_depend',
-'data_model_like_all.htm#pack_vec',
-'data_model_like_all.htm#residual_vec',
-'data_model_like_all.htm#residual_vec.index',
-'data_model_like_all.htm#residual_vec.Include Hold Outs',
-'data_model_like_all.htm#residual_vec.No Hold Outs',
-'data_model_like_all.htm#Log Density'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;
@@ -101,10 +107,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

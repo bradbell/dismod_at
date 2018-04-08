@@ -1,3 +1,8 @@
+var list_up0 = [
+'dismod_at.htm',
+'model.htm',
+'fixed_value.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,10 +10,15 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'model.htm',
-'fixed_value.htm'
+var list_current0 = [
+'fixed_value.htm#theta_j',
+'fixed_value.htm#prior_id',
+'fixed_value.htm#lambda_j',
+'fixed_value.htm#mu_j',
+'fixed_value.htm#delta_j',
+'fixed_value.htm#d_j',
+'fixed_value.htm#V_j',
+'fixed_value.htm#V^theta'
 ];
 var list_down2 = [
 'install_unix.htm',
@@ -36,27 +46,23 @@ var list_down1 = [
 'bilinear.htm',
 'ode_grid.htm'
 ];
-var list_current0 = [
-'fixed_value.htm#theta_j',
-'fixed_value.htm#prior_id',
-'fixed_value.htm#lambda_j',
-'fixed_value.htm#mu_j',
-'fixed_value.htm#delta_j',
-'fixed_value.htm#d_j',
-'fixed_value.htm#V_j',
-'fixed_value.htm#V^theta'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;
@@ -75,10 +81,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

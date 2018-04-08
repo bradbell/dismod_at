@@ -1,3 +1,9 @@
+var list_up0 = [
+'dismod_at.htm',
+'devel.htm',
+'devel_utility.htm',
+'solve_ode.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,11 +11,19 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'devel.htm',
-'devel_utility.htm',
-'solve_ode.htm'
+var list_current0 = [
+'solve_ode.htm#Syntax',
+'solve_ode.htm#2DO',
+'solve_ode.htm#Purpose',
+'solve_ode.htm#Notation',
+'solve_ode.htm#Float',
+'solve_ode.htm#i_max',
+'solve_ode.htm#j_max',
+'solve_ode.htm#step_size',
+'solve_ode.htm#pini',
+'solve_ode.htm#rate',
+'solve_ode.htm#S_out, C_out',
+'solve_ode.htm#Example'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -54,31 +68,23 @@ var list_down1 = [
 var list_down0 = [
 'solve_ode_xam.cpp.htm'
 ];
-var list_current0 = [
-'solve_ode.htm#Syntax',
-'solve_ode.htm#2DO',
-'solve_ode.htm#Purpose',
-'solve_ode.htm#Notation',
-'solve_ode.htm#Float',
-'solve_ode.htm#i_max',
-'solve_ode.htm#j_max',
-'solve_ode.htm#step_size',
-'solve_ode.htm#pini',
-'solve_ode.htm#rate',
-'solve_ode.htm#S_out, C_out',
-'solve_ode.htm#Example'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;
@@ -103,10 +109,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

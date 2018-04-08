@@ -31,11 +31,17 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="fit_command.py.htm" target="_top">Prev</a>
-</td><td><a href="simulate_command.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>simulate_command</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,15 +49,30 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>command</option>
-<option>simulate_command</option>
+<td><a href="fit_command.py.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Syntax</option>
+<option>database</option>
+<option>number_simulate</option>
+<option>meas_value</option>
+<option>truth_var_table</option>
+<option>simulate_table</option>
+<option>---..simulate_value</option>
+<option>---..simulate_delta</option>
+<option>d</option>
+<option>delta</option>
+<option>A</option>
+<option>sigma</option>
+<option>y</option>
+<option>---..Linear</option>
+<option>---..Log-Transformed</option>
+<option>Example</option>
 </select>
 </td>
-<td>
+<td><a href="simulate_command.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -82,27 +103,6 @@ A:active { color : purple }
 <select onchange='choose_down0(this)'>
 <option>simulate_command-&gt;</option>
 <option>simulate_command.py</option>
-</select>
-</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>Syntax</option>
-<option>database</option>
-<option>number_simulate</option>
-<option>meas_value</option>
-<option>truth_var_table</option>
-<option>simulate_table</option>
-<option>---..simulate_value</option>
-<option>---..simulate_delta</option>
-<option>d</option>
-<option>delta</option>
-<option>A</option>
-<option>sigma</option>
-<option>y</option>
-<option>---..Linear</option>
-<option>---..Log-Transformed</option>
-<option>Example</option>
 </select>
 </td>
 </tr></table><br>

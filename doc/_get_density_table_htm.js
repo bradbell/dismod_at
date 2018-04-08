@@ -1,3 +1,9 @@
+var list_up0 = [
+'dismod_at.htm',
+'devel.htm',
+'devel_table.htm',
+'get_density_table.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,11 +11,14 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'devel.htm',
-'devel_table.htm',
-'get_density_table.htm'
+var list_current0 = [
+'get_density_table.htm#Syntax',
+'get_density_table.htm#Purpose',
+'get_density_table.htm#db',
+'get_density_table.htm#density_table',
+'get_density_table.htm#density_enum',
+'get_density_table.htm#log_density',
+'get_density_table.htm#Example'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -68,26 +77,23 @@ var list_down1 = [
 var list_down0 = [
 'get_density_table_xam.cpp.htm'
 ];
-var list_current0 = [
-'get_density_table.htm#Syntax',
-'get_density_table.htm#Purpose',
-'get_density_table.htm#db',
-'get_density_table.htm#density_table',
-'get_density_table.htm#density_enum',
-'get_density_table.htm#log_density',
-'get_density_table.htm#Example'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;
@@ -112,10 +118,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

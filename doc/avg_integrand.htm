@@ -31,11 +31,17 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="model_variables.htm" target="_top">Prev</a>
-</td><td><a href="data_like.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>avg_integrand</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,50 +49,10 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>avg_integrand</option>
-</select>
-</td>
-<td>
-<select onchange='choose_down2(this)'>
-<option>dismod_at-&gt;</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2018</option>
-<option>wish_list</option>
-</select>
-</td>
-<td>
-<select onchange='choose_down1(this)'>
-<option>model-&gt;</option>
-<option>model_variables</option>
-<option>avg_integrand</option>
-<option>data_like</option>
-<option>fixed_value</option>
-<option>fixed_diff</option>
-<option>fixed_prior</option>
-<option>random_value</option>
-<option>random_diff</option>
-<option>random_prior</option>
-<option>statistic</option>
-<option>bilinear</option>
-<option>ode_grid</option>
-</select>
-</td>
-<td>avg_integrand</td>
-<td>
+<td><a href="model_variables.htm" target="_top">Prev</a>
+</td><td>
 <select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
+<option>Current-&gt;</option>
 <option>Ordinary Differential Equation</option>
 <option>Data or Avgint Table Notation</option>
 <option>---..i</option>
@@ -133,6 +99,40 @@ A:active { color : purple }
 <option>Average Integrand, A_i</option>
 </select>
 </td>
+<td><a href="data_like.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+</select>
+</td>
+<td>avg_integrand</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }

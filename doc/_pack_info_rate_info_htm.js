@@ -1,3 +1,10 @@
+var list_up0 = [
+'dismod_at.htm',
+'devel.htm',
+'devel_utility.htm',
+'pack_info.htm',
+'pack_info_rate_info.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,12 +12,18 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'devel.htm',
-'devel_utility.htm',
-'pack_info.htm',
-'pack_info_rate_info.htm'
+var list_current0 = [
+'pack_info_rate_info.htm#Syntax',
+'pack_info_rate_info.htm#subvec_info',
+'pack_info_rate_info.htm#pack_object',
+'pack_info_rate_info.htm#rate_id',
+'pack_info_rate_info.htm#j',
+'pack_info_rate_info.htm#info',
+'pack_info_rate_info.htm#info.covariate_id',
+'pack_info_rate_info.htm#info.smooth_id',
+'pack_info_rate_info.htm#info.n_var',
+'pack_info_rate_info.htm#info.offset',
+'pack_info_rate_info.htm#Example'
 ];
 var list_down4 = [
 'install_unix.htm',
@@ -60,30 +73,23 @@ var list_down1 = [
 'pack_info_mulcov_rate.htm',
 'pack_info_xam.cpp.htm'
 ];
-var list_current0 = [
-'pack_info_rate_info.htm#Syntax',
-'pack_info_rate_info.htm#subvec_info',
-'pack_info_rate_info.htm#pack_object',
-'pack_info_rate_info.htm#rate_id',
-'pack_info_rate_info.htm#j',
-'pack_info_rate_info.htm#info',
-'pack_info_rate_info.htm#info.covariate_id',
-'pack_info_rate_info.htm#info.smooth_id',
-'pack_info_rate_info.htm#info.n_var',
-'pack_info_rate_info.htm#info.offset',
-'pack_info_rate_info.htm#Example'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;
@@ -114,10 +120,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

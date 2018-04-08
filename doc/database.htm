@@ -31,11 +31,16 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="user_students.py.htm" target="_top">Prev</a>
-</td><td><a href="input.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,14 +48,25 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>database</option>
+<td><a href="user_students.py.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Comment Columns and Tables</option>
+<option>Primary Key</option>
+<option>Name Column</option>
+<option>Foreign Key</option>
+<option>---..parent</option>
+<option>Text can be Null, not Empty</option>
+<option>Integer Can be Null</option>
+<option>Real Can be Null, not Nan</option>
+<option>Bounds That are Null</option>
+<option>Type Names</option>
+<option>Contents</option>
 </select>
 </td>
-<td>
+<td><a href="input.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down1(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -70,22 +86,6 @@ A:active { color : purple }
 <option>database-&gt;</option>
 <option>input</option>
 <option>data_flow</option>
-</select>
-</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>Comment Columns and Tables</option>
-<option>Primary Key</option>
-<option>Name Column</option>
-<option>Foreign Key</option>
-<option>---..parent</option>
-<option>Text can be Null, not Empty</option>
-<option>Integer Can be Null</option>
-<option>Real Can be Null, not Nan</option>
-<option>Bounds That are Null</option>
-<option>Type Names</option>
-<option>Contents</option>
 </select>
 </td>
 </tr></table><br>

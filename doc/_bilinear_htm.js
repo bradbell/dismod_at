@@ -1,3 +1,8 @@
+var list_up0 = [
+'dismod_at.htm',
+'model.htm',
+'bilinear.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,10 +10,18 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'model.htm',
-'bilinear.htm'
+var list_current0 = [
+'bilinear.htm#Age Grid',
+'bilinear.htm#Time Grid',
+'bilinear.htm#Function Grid',
+'bilinear.htm#Interpolant',
+'bilinear.htm#Interpolant.Bilinear',
+'bilinear.htm#Interpolant.Below Minimum Age',
+'bilinear.htm#Interpolant.Above Maximum Age',
+'bilinear.htm#Interpolant.Below Minimum Time',
+'bilinear.htm#Interpolant.Above Maximum Time',
+'bilinear.htm#Interpolant.Outside Both Limits',
+'bilinear.htm#Plotting'
 ];
 var list_down2 = [
 'install_unix.htm',
@@ -36,30 +49,23 @@ var list_down1 = [
 'bilinear.htm',
 'ode_grid.htm'
 ];
-var list_current0 = [
-'bilinear.htm#Age Grid',
-'bilinear.htm#Time Grid',
-'bilinear.htm#Function Grid',
-'bilinear.htm#Interpolant',
-'bilinear.htm#Interpolant.Bilinear',
-'bilinear.htm#Interpolant.Below Minimum Age',
-'bilinear.htm#Interpolant.Above Maximum Age',
-'bilinear.htm#Interpolant.Below Minimum Time',
-'bilinear.htm#Interpolant.Above Maximum Time',
-'bilinear.htm#Interpolant.Outside Both Limits',
-'bilinear.htm#Plotting'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;
@@ -78,10 +84,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

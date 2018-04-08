@@ -1,3 +1,9 @@
+var list_up0 = [
+'dismod_at.htm',
+'database.htm',
+'data_flow.htm',
+'log_table.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,11 +11,17 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'database.htm',
-'data_flow.htm',
-'log_table.htm'
+var list_current0 = [
+'log_table.htm#log_id',
+'log_table.htm#message_type',
+'log_table.htm#message_type.command',
+'log_table.htm#message_type.random_seed',
+'log_table.htm#message_type.error',
+'log_table.htm#message_type.warning',
+'log_table.htm#table_name',
+'log_table.htm#row_id',
+'log_table.htm#unix_time',
+'log_table.htm#message'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -41,29 +53,23 @@ var list_down1 = [
 'sample_table.htm',
 'predict_table.htm'
 ];
-var list_current0 = [
-'log_table.htm#log_id',
-'log_table.htm#message_type',
-'log_table.htm#message_type.command',
-'log_table.htm#message_type.random_seed',
-'log_table.htm#message_type.error',
-'log_table.htm#message_type.warning',
-'log_table.htm#table_name',
-'log_table.htm#row_id',
-'log_table.htm#unix_time',
-'log_table.htm#message'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;
@@ -88,10 +94,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

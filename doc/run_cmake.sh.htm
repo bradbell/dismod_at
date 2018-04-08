@@ -31,11 +31,17 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="install_unix.htm" target="_top">Prev</a>
-</td><td><a href="example_install.sh.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>install_unix</option>
+<option>run_cmake.sh</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,15 +49,26 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>install_unix</option>
-<option>run_cmake.sh</option>
+<td><a href="install_unix.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>verbose_makefile</option>
+<option>build_type</option>
+<option>dismod_at_prefix</option>
+<option>eigen_prefix</option>
+<option>Other Prefixes</option>
+<option>Debug and Release</option>
+<option>python3_executable</option>
+<option>Choosing C++ Compiler</option>
+<option>extra_cxx_flags</option>
+<option>cmake_libdir</option>
+<option>checkpoint_newton_step</option>
+<option>system_specific_library_list</option>
 </select>
 </td>
-<td>
+<td><a href="example_install.sh.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -74,23 +91,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>run_cmake.sh</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>verbose_makefile</option>
-<option>build_type</option>
-<option>dismod_at_prefix</option>
-<option>eigen_prefix</option>
-<option>Other Prefixes</option>
-<option>Debug and Release</option>
-<option>python3_executable</option>
-<option>Choosing C++ Compiler</option>
-<option>extra_cxx_flags</option>
-<option>cmake_libdir</option>
-<option>checkpoint_newton_step</option>
-<option>system_specific_library_list</option>
-</select>
-</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }

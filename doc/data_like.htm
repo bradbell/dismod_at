@@ -31,11 +31,17 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="avg_integrand.htm" target="_top">Prev</a>
-</td><td><a href="fixed_value.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>data_like</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,15 +49,33 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>data_like</option>
+<td><a href="avg_integrand.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Data Table Notation</option>
+<option>---..i</option>
+<option>---..y_i</option>
+<option>---..Delta_i</option>
+<option>---..a_i</option>
+<option>---..b_i</option>
+<option>---..s_i</option>
+<option>---..t_i</option>
+<option>---..d_i</option>
+<option>---..I_i</option>
+<option>---..x_ij</option>
+<option>---..w_i</option>
+<option>Measurement Standard Deviation Covariates</option>
+<option>---..K_i</option>
+<option>---..gamma_j</option>
+<option>Effects, u, theta</option>
+<option>Average Integrand</option>
+<option>Adjusted Standard Deviation, delta_i</option>
+<option>Weighted Residual and Likelihood</option>
 </select>
 </td>
-<td>
+<td><a href="fixed_value.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -84,30 +108,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>data_like</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>Data Table Notation</option>
-<option>---..i</option>
-<option>---..y_i</option>
-<option>---..Delta_i</option>
-<option>---..a_i</option>
-<option>---..b_i</option>
-<option>---..s_i</option>
-<option>---..t_i</option>
-<option>---..d_i</option>
-<option>---..I_i</option>
-<option>---..x_ij</option>
-<option>---..w_i</option>
-<option>Measurement Standard Deviation Covariates</option>
-<option>---..K_i</option>
-<option>---..gamma_j</option>
-<option>Effects, u, theta</option>
-<option>Average Integrand</option>
-<option>Adjusted Standard Deviation, delta_i</option>
-<option>Weighted Residual and Likelihood</option>
-</select>
-</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }

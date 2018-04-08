@@ -31,11 +31,17 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="whats_new_2018.htm" target="_top">Prev</a>
-</td><td><a href="whats_new_2016.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>whats_new_2018</option>
+<option>whats_new_2017</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,41 +49,10 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>whats_new_2018</option>
-<option>whats_new_2017</option>
-</select>
-</td>
-<td>
-<select onchange='choose_down2(this)'>
-<option>dismod_at-&gt;</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2018</option>
-<option>wish_list</option>
-</select>
-</td>
-<td>
-<select onchange='choose_down1(this)'>
-<option>whats_new_2018-&gt;</option>
-<option>whats_new_2017</option>
-<option>whats_new_2016</option>
-<option>whats_new_2015</option>
-</select>
-</td>
-<td>whats_new_2017</td>
-<td>
+<td><a href="whats_new_2018.htm" target="_top">Prev</a>
+</td><td>
 <select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
+<option>Current-&gt;</option>
 <option>12-30</option>
 <option>12-22</option>
 <option>12-21</option>
@@ -156,6 +131,31 @@ A:active { color : purple }
 <option>01-15</option>
 </select>
 </td>
+<td><a href="whats_new_2016.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>whats_new_2018-&gt;</option>
+<option>whats_new_2017</option>
+<option>whats_new_2016</option>
+<option>whats_new_2015</option>
+</select>
+</td>
+<td>whats_new_2017</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }

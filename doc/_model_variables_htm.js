@@ -1,3 +1,8 @@
+var list_up0 = [
+'dismod_at.htm',
+'model.htm',
+'model_variables.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,10 +10,21 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'model.htm',
-'model_variables.htm'
+var list_current0 = [
+'model_variables.htm#Prior',
+'model_variables.htm#Smoothing',
+'model_variables.htm#Smoothing.Interpolation',
+'model_variables.htm#Number of Children',
+'model_variables.htm#Fixed Effects, theta',
+'model_variables.htm#Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda',
+'model_variables.htm#Fixed Effects, theta.Parent Rates',
+'model_variables.htm#Fixed Effects, theta.Covariate Multipliers',
+'model_variables.htm#Random Effects, u',
+'model_variables.htm#Random Effects, u.Child Rates',
+'model_variables.htm#Age and Time Variation',
+'model_variables.htm#Age and Time Variation.Smoothing Standard Deviation Multiplier',
+'model_variables.htm#Age and Time Variation.Initial Prevalence',
+'model_variables.htm#Age and Time Variation.Other Variables Types'
 ];
 var list_down2 = [
 'install_unix.htm',
@@ -36,33 +52,23 @@ var list_down1 = [
 'bilinear.htm',
 'ode_grid.htm'
 ];
-var list_current0 = [
-'model_variables.htm#Prior',
-'model_variables.htm#Smoothing',
-'model_variables.htm#Smoothing.Interpolation',
-'model_variables.htm#Number of Children',
-'model_variables.htm#Fixed Effects, theta',
-'model_variables.htm#Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda',
-'model_variables.htm#Fixed Effects, theta.Parent Rates',
-'model_variables.htm#Fixed Effects, theta.Covariate Multipliers',
-'model_variables.htm#Random Effects, u',
-'model_variables.htm#Random Effects, u.Child Rates',
-'model_variables.htm#Age and Time Variation',
-'model_variables.htm#Age and Time Variation.Smoothing Standard Deviation Multiplier',
-'model_variables.htm#Age and Time Variation.Initial Prevalence',
-'model_variables.htm#Age and Time Variation.Other Variables Types'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;
@@ -81,10 +87,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

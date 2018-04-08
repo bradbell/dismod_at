@@ -1,3 +1,10 @@
+var list_up0 = [
+'dismod_at.htm',
+'devel.htm',
+'devel_model.htm',
+'prior_model.htm',
+'prior_model_ctor.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,12 +12,14 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'devel.htm',
-'devel_model.htm',
-'prior_model.htm',
-'prior_model_ctor.htm'
+var list_current0 = [
+'prior_model_ctor.htm#Syntax',
+'prior_model_ctor.htm#prior_object',
+'prior_model_ctor.htm#pack_object',
+'prior_model_ctor.htm#age_table',
+'prior_model_ctor.htm#time_table',
+'prior_model_ctor.htm#prior_table',
+'prior_model_ctor.htm#s_info_vec'
 ];
 var list_down4 = [
 'install_unix.htm',
@@ -40,26 +49,23 @@ var list_down1 = [
 'prior_fixed_effect.htm',
 'prior_random_effect.htm'
 ];
-var list_current0 = [
-'prior_model_ctor.htm#Syntax',
-'prior_model_ctor.htm#prior_object',
-'prior_model_ctor.htm#pack_object',
-'prior_model_ctor.htm#age_table',
-'prior_model_ctor.htm#time_table',
-'prior_model_ctor.htm#prior_table',
-'prior_model_ctor.htm#s_info_vec'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;
@@ -90,10 +96,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

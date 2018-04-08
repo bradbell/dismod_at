@@ -1,3 +1,8 @@
+var list_up0 = [
+'dismod_at.htm',
+'model.htm',
+'data_like.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,10 +10,26 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'model.htm',
-'data_like.htm'
+var list_current0 = [
+'data_like.htm#Data Table Notation',
+'data_like.htm#Data Table Notation.i',
+'data_like.htm#Data Table Notation.y_i',
+'data_like.htm#Data Table Notation.Delta_i',
+'data_like.htm#Data Table Notation.a_i',
+'data_like.htm#Data Table Notation.b_i',
+'data_like.htm#Data Table Notation.s_i',
+'data_like.htm#Data Table Notation.t_i',
+'data_like.htm#Data Table Notation.d_i',
+'data_like.htm#Data Table Notation.I_i',
+'data_like.htm#Data Table Notation.x_ij',
+'data_like.htm#Data Table Notation.w_i',
+'data_like.htm#Measurement Standard Deviation Covariates',
+'data_like.htm#Measurement Standard Deviation Covariates.K_i',
+'data_like.htm#Measurement Standard Deviation Covariates.gamma_j',
+'data_like.htm#Effects, u, theta',
+'data_like.htm#Average Integrand',
+'data_like.htm#Adjusted Standard Deviation, delta_i',
+'data_like.htm#Weighted Residual and Likelihood'
 ];
 var list_down2 = [
 'install_unix.htm',
@@ -36,38 +57,23 @@ var list_down1 = [
 'bilinear.htm',
 'ode_grid.htm'
 ];
-var list_current0 = [
-'data_like.htm#Data Table Notation',
-'data_like.htm#Data Table Notation.i',
-'data_like.htm#Data Table Notation.y_i',
-'data_like.htm#Data Table Notation.Delta_i',
-'data_like.htm#Data Table Notation.a_i',
-'data_like.htm#Data Table Notation.b_i',
-'data_like.htm#Data Table Notation.s_i',
-'data_like.htm#Data Table Notation.t_i',
-'data_like.htm#Data Table Notation.d_i',
-'data_like.htm#Data Table Notation.I_i',
-'data_like.htm#Data Table Notation.x_ij',
-'data_like.htm#Data Table Notation.w_i',
-'data_like.htm#Measurement Standard Deviation Covariates',
-'data_like.htm#Measurement Standard Deviation Covariates.K_i',
-'data_like.htm#Measurement Standard Deviation Covariates.gamma_j',
-'data_like.htm#Effects, u, theta',
-'data_like.htm#Average Integrand',
-'data_like.htm#Adjusted Standard Deviation, delta_i',
-'data_like.htm#Weighted Residual and Likelihood'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;
@@ -86,10 +92,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

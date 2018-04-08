@@ -1,3 +1,9 @@
+var list_up0 = [
+'dismod_at.htm',
+'database.htm',
+'data_flow.htm',
+'var_table.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,11 +11,24 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'database.htm',
-'data_flow.htm',
-'var_table.htm'
+var list_current0 = [
+'var_table.htm#var_id',
+'var_table.htm#var_type',
+'var_table.htm#var_type.mulstd_value',
+'var_table.htm#var_type.mulstd_dage',
+'var_table.htm#var_type.mulstd_dtime',
+'var_table.htm#var_type.rate',
+'var_table.htm#var_type.mulcov_rate_value',
+'var_table.htm#var_type.mulcov_meas_value',
+'var_table.htm#var_type.mulcov_meas_std',
+'var_table.htm#smooth_id',
+'var_table.htm#age_id',
+'var_table.htm#time_id',
+'var_table.htm#node_id',
+'var_table.htm#rate_id',
+'var_table.htm#integrand_id',
+'var_table.htm#covariate_id',
+'var_table.htm#Example'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -41,36 +60,23 @@ var list_down1 = [
 'sample_table.htm',
 'predict_table.htm'
 ];
-var list_current0 = [
-'var_table.htm#var_id',
-'var_table.htm#var_type',
-'var_table.htm#var_type.mulstd_value',
-'var_table.htm#var_type.mulstd_dage',
-'var_table.htm#var_type.mulstd_dtime',
-'var_table.htm#var_type.rate',
-'var_table.htm#var_type.mulcov_rate_value',
-'var_table.htm#var_type.mulcov_meas_value',
-'var_table.htm#var_type.mulcov_meas_std',
-'var_table.htm#smooth_id',
-'var_table.htm#age_id',
-'var_table.htm#time_id',
-'var_table.htm#node_id',
-'var_table.htm#rate_id',
-'var_table.htm#integrand_id',
-'var_table.htm#covariate_id',
-'var_table.htm#Example'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;
@@ -95,10 +101,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

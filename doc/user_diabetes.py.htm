@@ -31,11 +31,17 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="user_continue_fit.py.htm" target="_top">Prev</a>
-</td><td><a href="user_diff_constraint.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user</option>
+<option>user_diabetes.py</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,15 +49,45 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>user</option>
-<option>user_diabetes.py</option>
+<td><a href="user_continue_fit.py.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Running This example</option>
+<option>omega</option>
+<option>rho</option>
+<option>Weight Table and Grid</option>
+<option>Covariates</option>
+<option>---..Covariate Table</option>
+<option>---..Data Table</option>
+<option>---..Multipliers</option>
+<option>Truth Var Table</option>
+<option>---..Parent Rates</option>
+<option>---..Child Rates</option>
+<option>Predict Table</option>
+<option>Problem Parameters</option>
+<option>---..mulcov_dict</option>
+<option>---..node_list</option>
+<option>---..integrand_list</option>
+<option>---..parent_age_grid</option>
+<option>---..child_age_grid</option>
+<option>---..parent_time_grid</option>
+<option>---..child_time_grid</option>
+<option>---..ode_step_size</option>
+<option>---..meas_cv</option>
+<option>---..meas_repeat</option>
+<option>---..fit_with_noise_in_data</option>
+<option>---..random_seed</option>
+<option>---..quasi_fixed</option>
+<option>---..tolerance_fixed</option>
+<option>---..derivative_test_fixed</option>
+<option>---..truth2start</option>
+<option>---..accept_rel_err</option>
+<option>Source Code</option>
 </select>
 </td>
-<td>
+<td><a href="user_diff_constraint.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -90,42 +126,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>user_diabetes.py</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>Running This example</option>
-<option>omega</option>
-<option>rho</option>
-<option>Weight Table and Grid</option>
-<option>Covariates</option>
-<option>---..Covariate Table</option>
-<option>---..Data Table</option>
-<option>---..Multipliers</option>
-<option>Truth Var Table</option>
-<option>---..Parent Rates</option>
-<option>---..Child Rates</option>
-<option>Predict Table</option>
-<option>Problem Parameters</option>
-<option>---..mulcov_dict</option>
-<option>---..node_list</option>
-<option>---..integrand_list</option>
-<option>---..parent_age_grid</option>
-<option>---..child_age_grid</option>
-<option>---..parent_time_grid</option>
-<option>---..child_time_grid</option>
-<option>---..ode_step_size</option>
-<option>---..meas_cv</option>
-<option>---..meas_repeat</option>
-<option>---..fit_with_noise_in_data</option>
-<option>---..random_seed</option>
-<option>---..quasi_fixed</option>
-<option>---..tolerance_fixed</option>
-<option>---..derivative_test_fixed</option>
-<option>---..truth2start</option>
-<option>---..accept_rel_err</option>
-<option>Source Code</option>
-</select>
-</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }

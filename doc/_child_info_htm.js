@@ -1,3 +1,9 @@
+var list_up0 = [
+'dismod_at.htm',
+'devel.htm',
+'devel_utility.htm',
+'child_info.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,11 +11,21 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'devel.htm',
-'devel_utility.htm',
-'child_info.htm'
+var list_current0 = [
+'child_info.htm#Syntax',
+'child_info.htm#child_object',
+'child_info.htm#Constructor',
+'child_info.htm#Constructor.parent_node_id',
+'child_info.htm#Constructor.node_table',
+'child_info.htm#Constructor.table',
+'child_info.htm#child_size',
+'child_info.htm#child_size.n_child',
+'child_info.htm#child_id2node_id',
+'child_info.htm#child_id2node_id.child_id',
+'child_info.htm#child_id2node_id.node_id',
+'child_info.htm#table_id2child',
+'child_info.htm#table_id2child.table_id',
+'child_info.htm#table_id2child.child'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -51,33 +67,23 @@ var list_down1 = [
 'solve_ode.htm',
 'split_space.htm'
 ];
-var list_current0 = [
-'child_info.htm#Syntax',
-'child_info.htm#child_object',
-'child_info.htm#Constructor',
-'child_info.htm#Constructor.parent_node_id',
-'child_info.htm#Constructor.node_table',
-'child_info.htm#Constructor.table',
-'child_info.htm#child_size',
-'child_info.htm#child_size.n_child',
-'child_info.htm#child_id2node_id',
-'child_info.htm#child_id2node_id.child_id',
-'child_info.htm#child_id2node_id.node_id',
-'child_info.htm#table_id2child',
-'child_info.htm#table_id2child.table_id',
-'child_info.htm#table_id2child.child'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;
@@ -102,10 +108,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

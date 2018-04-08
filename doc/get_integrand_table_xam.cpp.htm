@@ -31,21 +31,9 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="get_integrand_table.htm" target="_top">Prev</a>
-</td><td><a href="get_mulcov_table.htm" target="_top">Next</a>
-</td><td>
-<select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
-<option>contents</option>
-<option>reference</option>
-<option>index</option>
-<option>search</option>
-<option>external</option>
-</select>
-</td>
 <td>
 <select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
+<option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>devel</option>
 <option>devel_table</option>
@@ -54,6 +42,19 @@ A:active { color : purple }
 </select>
 </td>
 <td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="get_integrand_table.htm" target="_top">Prev</a>
+</td><td>Current</td>
+<td><a href="get_mulcov_table.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down4(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -123,7 +124,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>get_integrand_table_xam.cpp</td>
-<td>Headings</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }

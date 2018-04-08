@@ -31,11 +31,17 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="bilinear.htm" target="_top">Prev</a>
-</td><td><a href="command.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>ode_grid</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,15 +49,22 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>ode_grid</option>
+<td><a href="bilinear.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Purpose</option>
+<option>Delta s</option>
+<option>a_min, a_max</option>
+<option>t_min, t_max</option>
+<option>Number of Age Points, M</option>
+<option>Age, a_i</option>
+<option>Number of Time Points, N</option>
+<option>Time, t_j</option>
 </select>
 </td>
-<td>
+<td><a href="command.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -84,19 +97,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>ode_grid</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>Purpose</option>
-<option>Delta s</option>
-<option>a_min, a_max</option>
-<option>t_min, t_max</option>
-<option>Number of Age Points, M</option>
-<option>Age, a_i</option>
-<option>Number of Time Points, N</option>
-<option>Time, t_j</option>
-</select>
-</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }

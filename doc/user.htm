@@ -31,11 +31,16 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="get_started_db.py.htm" target="_top">Prev</a>
-</td><td><a href="user_asymptotic.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,14 +48,17 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>user</option>
+<td><a href="get_started_db.py.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>See Also</option>
+<option>example.db</option>
+<option>Contents</option>
 </select>
 </td>
-<td>
+<td><a href="user_asymptotic.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down1(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -86,14 +94,6 @@ A:active { color : purple }
 <option>user_re_scale.py</option>
 <option>user_speed.py</option>
 <option>user_students.py</option>
-</select>
-</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>See Also</option>
-<option>example.db</option>
-<option>Contents</option>
 </select>
 </td>
 </tr></table><br>

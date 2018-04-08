@@ -31,21 +31,9 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="data_subset_table.htm" target="_top">Prev</a>
-</td><td><a href="start_var_table.htm" target="_top">Next</a>
-</td><td>
-<select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
-<option>contents</option>
-<option>reference</option>
-<option>index</option>
-<option>search</option>
-<option>external</option>
-</select>
-</td>
 <td>
 <select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
+<option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>database</option>
 <option>data_flow</option>
@@ -53,6 +41,28 @@ A:active { color : purple }
 </select>
 </td>
 <td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="data_subset_table.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Purpose</option>
+<option>depend_var_id</option>
+<option>data_depend</option>
+<option>prior_depend</option>
+<option>Example</option>
+</select>
+</td>
+<td><a href="start_var_table.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down3(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -92,16 +102,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>depend_var_table</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>Purpose</option>
-<option>depend_var_id</option>
-<option>data_depend</option>
-<option>prior_depend</option>
-<option>Example</option>
-</select>
-</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }

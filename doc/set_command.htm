@@ -31,11 +31,17 @@ A:active { color : purple }
 <td>
 <a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td><a href="command.htm" target="_top">Prev</a>
-</td><td><a href="set_command.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>set_command</option>
+</select>
+</td>
+<td>
 <select onchange='choose_across0(this)'>
-<option>Index-&gt;</option>
+<option>Search-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -43,15 +49,28 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Up-&gt;</option>
-<option>dismod_at</option>
-<option>command</option>
-<option>set_command</option>
+<td><a href="command.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Syntax</option>
+<option>database</option>
+<option>option</option>
+<option>---..Warning</option>
+<option>table_out</option>
+<option>---..start_var</option>
+<option>---..scale_var</option>
+<option>---..truth_var</option>
+<option>source</option>
+<option>---..prior_mean</option>
+<option>---..fit_var</option>
+<option>---..start_var</option>
+<option>---..sample</option>
+<option>Example</option>
 </select>
 </td>
-<td>
+<td><a href="set_command.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
@@ -82,25 +101,6 @@ A:active { color : purple }
 <select onchange='choose_down0(this)'>
 <option>set_command-&gt;</option>
 <option>set_command.py</option>
-</select>
-</td>
-<td>
-<select onchange='choose_current0(this)'>
-<option>Headings-&gt;</option>
-<option>Syntax</option>
-<option>database</option>
-<option>option</option>
-<option>---..Warning</option>
-<option>table_out</option>
-<option>---..start_var</option>
-<option>---..scale_var</option>
-<option>---..truth_var</option>
-<option>source</option>
-<option>---..prior_mean</option>
-<option>---..fit_var</option>
-<option>---..start_var</option>
-<option>---..sample</option>
-<option>Example</option>
 </select>
 </td>
 </tr></table><br>

@@ -1,3 +1,9 @@
+var list_up0 = [
+'dismod_at.htm',
+'devel.htm',
+'devel_table.htm',
+'get_table_column.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,11 +11,17 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'devel.htm',
-'devel_table.htm',
-'get_table_column.htm'
+var list_current0 = [
+'get_table_column.htm#Syntax',
+'get_table_column.htm#db',
+'get_table_column.htm#table_name',
+'get_table_column.htm#column_name',
+'get_table_column.htm#column_type',
+'get_table_column.htm#result',
+'get_table_column.htm#result.text',
+'get_table_column.htm#result.integer',
+'get_table_column.htm#result.real',
+'get_table_column.htm#Example'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -68,29 +80,23 @@ var list_down1 = [
 var list_down0 = [
 'get_table_column_xam.cpp.htm'
 ];
-var list_current0 = [
-'get_table_column.htm#Syntax',
-'get_table_column.htm#db',
-'get_table_column.htm#table_name',
-'get_table_column.htm#column_name',
-'get_table_column.htm#column_type',
-'get_table_column.htm#result',
-'get_table_column.htm#result.text',
-'get_table_column.htm#result.integer',
-'get_table_column.htm#result.real',
-'get_table_column.htm#Example'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;
@@ -115,10 +121,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

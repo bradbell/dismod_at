@@ -1,3 +1,8 @@
+var list_up0 = [
+'dismod_at.htm',
+'model.htm',
+'ode_grid.htm'
+];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -5,10 +10,15 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_up0 = [
-'dismod_at.htm',
-'model.htm',
-'ode_grid.htm'
+var list_current0 = [
+'ode_grid.htm#Purpose',
+'ode_grid.htm#Delta s',
+'ode_grid.htm#a_min, a_max',
+'ode_grid.htm#t_min, t_max',
+'ode_grid.htm#Number of Age Points, M',
+'ode_grid.htm#Age, a_i',
+'ode_grid.htm#Number of Time Points, N',
+'ode_grid.htm#Time, t_j'
 ];
 var list_down2 = [
 'install_unix.htm',
@@ -36,27 +46,23 @@ var list_down1 = [
 'bilinear.htm',
 'ode_grid.htm'
 ];
-var list_current0 = [
-'ode_grid.htm#Purpose',
-'ode_grid.htm#Delta s',
-'ode_grid.htm#a_min, a_max',
-'ode_grid.htm#t_min, t_max',
-'ode_grid.htm#Number of Age Points, M',
-'ode_grid.htm#Age, a_i',
-'ode_grid.htm#Number of Time Points, N',
-'ode_grid.htm#Time, t_j'
-];
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
+}
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
 }
-function choose_up0(item)
+function choose_current0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
-		document.location = list_up0[index-1];
+		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;
@@ -75,10 +81,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
