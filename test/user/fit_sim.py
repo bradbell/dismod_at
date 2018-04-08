@@ -238,12 +238,12 @@ def example_db (file_name) :
 		{ 'name':'random_seed',            'value':'0'            },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
-		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
+		{ 'name':'derivative_test_fixed',  'value':'none'         },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'         },
 
-		{ 'name':'derivative_test_random', 'value':'second-order' },
+		{ 'name':'derivative_test_random', 'value':'none'         },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-8'         }

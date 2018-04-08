@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin dismod_at$$
-$comment BEGIN: settings used by all section ---------------------------- $$
+$comment BEGIN: settings used by all sections ---------------------------- $$
 $escape $$
 $aindex section head subhead$$
 $latex
@@ -17,8 +17,7 @@ $latex
 	\newcommand{\B}[1]{ {\bf #1} }
 	\newcommand{\W}[1]{ \; #1 \; }
 $$
-$aindex section head subhead$$
-$comment END: settings used by all section ---------------------------- $$
+$comment END: settings used by all sections ---------------------------- $$
 
 $spell
 	xam
