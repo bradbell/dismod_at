@@ -314,7 +314,7 @@ prior_object_  ( prior_object )
 	{	if( random_lower_[i] == - inf )
 		{	assert( random_upper_[i] == + inf );
 			random_lower_[i] = - bound_random;
-			random_upper_[i]  = bound_random;
+			random_upper_[i] =   bound_random;
 		}
 		else
 			assert( random_lower_[i] == random_upper_[i] );
