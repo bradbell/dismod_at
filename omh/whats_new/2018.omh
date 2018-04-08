@@ -47,6 +47,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-08$$
+Some uses have complained that it is hard to navigate the documentation.
+The links at the top of every page have been changed in an attempt to
+make this clearer.
+
 $head 04-07$$
 $list number$$
 Add

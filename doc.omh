@@ -17,6 +17,18 @@ $latex
 	\newcommand{\B}[1]{ {\bf #1} }
 	\newcommand{\W}[1]{ \; #1 \; }
 $$
+$navigate%
+	Up%Location%
+	Across%Search%
+	Prev%Prev%
+	Current%Current%
+	Next%Next%
+	Down_up_4%_up_4%
+	Down_up_3%_up_3%
+	Down_up_2%_up_2%
+	Down_up_1%_up_1%
+	Down_up_0%_up_0
+%$$
 $comment END: settings used by all sections ---------------------------- $$
 
 $spell
@@ -29,7 +41,7 @@ $spell
 	integrands
 	covariate
 $$
-$section Disease Rates as Functions of Age and Time: dismod_at-20180407$$
+$section Disease Rates as Functions of Age and Time: dismod_at-20180408$$
 
 $childtable%omh/install/unix.omh
 	%example/get_started/get_started.omh
