@@ -35,6 +35,7 @@ $spell
 	grep
 	txt
 	init
+	py
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -46,6 +47,15 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 04-09$$
+There was a mistake in the
+$cref/discussion/get_started_db.py/Discussion/$$ of the
+$code get_started_db.py$$ example.
+The adjusted other cause mortality for this example is
+$latex \exp ( \alpha x ) \omega$$ not $latex \alpha x \omega$$.
+This has been fixed.
+
 
 $head 04-08$$
 Some uses have complained that it is hard to navigate the documentation.

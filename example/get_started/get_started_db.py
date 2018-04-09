@@ -22,7 +22,7 @@
 # $head Syntax$$
 # $codei%get_started_db.get_started_db()%$$
 #
-# $head Purpose$$
+# $head Discussion$$
 # The python command above creates the database $code get_started.db$$
 # in the current working directory.
 # This is a very simple case where:
@@ -56,16 +56,19 @@
 # the susceptible population satisfies the
 # following ODE in age $latex a$$:
 # $latex \[
-#	S(0) = 1 \; S'(a) = - \alpha x \omega S(a)
+#	S(0) = 1 \W{\R{and}} S'(a) = - \exp( \alpha x ) \omega S(a)
 # \] $$
 # where $latex \omega$$ is the other cause mortality rate
 # before the covariate effect,
-# $latex x$$ is the value of the income for this measurement, and
-# $latex \alpha$$ is the covariate multiplier and
-# $latex \alpha x \omega$$ is the other cause mortality after the
-# covariate effect;
+# $latex x$$ is the value of the income for this measurement,
+# $latex \alpha$$ is the covariate multiplier, and
+# $latex \exp ( \alpha x ) \omega$$
+# is the other cause mortality after the covariate effect;
 # see $cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
-# The solution is $latex S(a) = \exp( - \alpha x \omega \; a )$$.
+# The solution is
+# $latex \[
+#	S(a) = \exp \left[ - \exp( \alpha x ) \omega \; a \right]
+# \]$$
 #
 # $head Reference$$
 # See $cref create_database$$.
