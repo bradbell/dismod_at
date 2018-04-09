@@ -12,7 +12,7 @@ var list_across0 = [
 ];
 var list_current0 = [
 'get_started_db.py.htm#Syntax',
-'get_started_db.py.htm#Purpose',
+'get_started_db.py.htm#Discussion',
 'get_started_db.py.htm#Reference',
 'get_started_db.py.htm#Source Code'
 ];

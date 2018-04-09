@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create get_started Input Tables: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create get_started Input Tables: Example and Test">
-<meta name="keywords" id="keywords" content=" create get_started input tables: example test syntax purpose reference source code ">
+<meta name="keywords" id="keywords" content=" create get_started input tables: example test syntax discussion reference source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -54,7 +54,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>Syntax</option>
-<option>Purpose</option>
+<option>Discussion</option>
 <option>Reference</option>
 <option>Source Code</option>
 </select>
@@ -96,7 +96,7 @@ A:active { color : purple }
 
 <br>
 <br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
 <br>
 The python command above creates the database <code><font color="blue">get_started.db</font></code>
 in the current working directory.
@@ -149,7 +149,7 @@ a
 @)@</small>:
 <small>@[@
 
-	S(0) = 1 \; S'(a) = - \alpha x \omega S(a)
+	S(0) = 1 \W{\R{and}} S'(a) = - \exp( \alpha x ) \omega S(a)
 
 @]@</small>
 where <small>@(@
@@ -158,19 +158,22 @@ where <small>@(@
 before the covariate effect,
 <small>@(@
 x
-@)@</small> is the value of the income for this measurement, and
+@)@</small> is the value of the income for this measurement,
 <small>@(@
 \alpha
-@)@</small> is the covariate multiplier and
+@)@</small> is the covariate multiplier, and
 <small>@(@
-\alpha x \omega
-@)@</small> is the other cause mortality after the
-covariate effect;
+\exp ( \alpha x ) \omega
+@)@</small>
+is the other cause mortality after the covariate effect;
 see <a href="avg_integrand.htm#Rate Functions.r_ik" target="_top"><span style='white-space: nowrap'>r_ik</span></a>
 .
-The solution is <small>@(@
-S(a) = \exp( - \alpha x \omega \; a )
-@)@</small>.
+The solution is
+<small>@[@
+
+	S(a) = \exp \left[ - \exp( \alpha x ) \omega \; a \right]
+
+@]@</small>
 
 <br>
 <br>
