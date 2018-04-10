@@ -27,6 +27,7 @@ var list_down1 = [
 'wish_list.htm'
 ];
 var list_down0 = [
+'user_fit_random.py.htm',
 'user_asymptotic.py.htm',
 'user_const_random.py.htm',
 'user_const_value.py.htm',
@@ -34,7 +35,6 @@ var list_down0 = [
 'user_diabetes.py.htm',
 'user_diff_constraint.py.htm',
 'user_fit_fixed.py.htm',
-'user_fit_random.py.htm',
 'user_fit_sim.py.htm',
 'user_jump_at_age.py.htm',
 'user_lasso_covariate.py.htm',
