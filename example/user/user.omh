@@ -42,14 +42,19 @@ $codei%
 which can be inspected using any sqlite viewer; e.g.,
 $href%https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/%firefox%$$.
 
-$childtable%example/user/asymptotic.py
+$comment
+Examples that have a discussion section are at the beginning of this list
+and in suggested read order
+$$
+$childtable%example/user/fit_random.py
+
+	%example/user/asymptotic.py
 	%example/user/const_random.py
 	%example/user/const_value.py
 	%example/user/continue_fit.py
 	%example/user/diabetes.py
 	%example/user/diff_constraint.py
 	%example/user/fit_fixed.py
-	%example/user/fit_random.py
 	%example/user/fit_sim.py
 	%example/user/jump_at_age.py
 	%example/user/lasso_covariate.py

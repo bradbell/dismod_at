@@ -48,6 +48,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-10$$
+The $code fit_random.py$$ user example has been improved including a
+$cref/discussion/user_fit_random.py/Discussion/$$ of what is going on.
+
 $head 04-09$$
 There was a mistake in the
 $cref/discussion/get_started_db.py/Discussion/$$ of the
