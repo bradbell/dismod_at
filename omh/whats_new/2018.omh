@@ -48,6 +48,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-11$$
+Instructions for
+$cref/removing an age or time/smooth_table/Removing an Age or Time/$$
+from a smoothing grid were added.
+This is useful when one determines (through fitting) that there is
+not enough data to determine a variable, or that a variable is nearly
+linear in a region.
+
 $head 04-10$$
 The $code fit_random.py$$ user example has been improved including a
 $cref/discussion/user_fit_random.py/Discussion/$$ of what is going on.

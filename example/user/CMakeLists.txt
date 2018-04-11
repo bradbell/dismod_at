@@ -12,6 +12,7 @@
 SET(depends "")
 FOREACH(user_case
 	asymptotic
+	change_grid
 	const_random
 	const_value
 	continue_fit

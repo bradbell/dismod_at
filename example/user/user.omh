@@ -49,6 +49,7 @@ $$
 $childtable%example/user/fit_random.py
 
 	%example/user/asymptotic.py
+	%example/user/change_grid.py
 	%example/user/const_random.py
 	%example/user/const_value.py
 	%example/user/continue_fit.py
