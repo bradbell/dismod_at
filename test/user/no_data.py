@@ -37,10 +37,8 @@ os.chdir('build/test/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
-def fun_iota_parent_gaussian(a, t) :
-	return ('prior_iota_parent_gaussian', 'prior_diff', 'prior_diff')
-def fun_iota_parent_log_gaussian(a, t) :
-	return ('prior_iota_parent_log_gaussian', 'prior_diff', 'prior_diff')
+def fun_iota_parent(a, t) :
+	return ('prior_value', 'prior_diff', 'prior_diff')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
@@ -87,16 +85,8 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      1.0,
 			'eta':      1e-6
-		},{ # prior_iota_parent_gaussian
-			'name':     'prior_iota_parent_gaussian',
-			'density':  'gaussian',
-			'lower':    1e-2 * iota_mean,
-			'upper':    1e+2 * iota_mean,
-			'mean':     iota_mean,
-			'std':      iota_mean,
-			'eta':      None
-		},{ # prior_iota_parent_log_gaussian
-			'name':     'prior_iota_parent_log_gaussian',
+		},{ # prior_value
+			'name':     'prior_value',
 			'density':  'log_gaussian',
 			'lower':    1e-2 * iota_mean,
 			'upper':    1e+2 * iota_mean,
@@ -117,39 +107,15 @@ def example_db (file_name) :
 			'mulstd_value_prior_name':  None,
 			'mulstd_dage_prior_name':   None,
 			'mulstd_dtime_prior_name':  None,
-			'fun':                      fun_iota_parent_log_gaussian
+			'fun':                      fun_iota_parent
 		}
 	]
 	# ----------------------------------------------------------------------
 	# rate table
-	rate_table = [
-		{
-			'name':          'pini',
-			'parent_smooth': None,
-			'child_smooth':  None,
-			'child_nslist':  None
-		},{
+	rate_table = [ {
 			'name':          'iota',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  None,
-			'child_nslist':  None
-		},{
-			'name':          'rho',
-			'parent_smooth': None,
-			'child_smooth':  None,
-			'child_nslist':  None
-		},{
-			'name':          'chi',
-			'parent_smooth': None,
-			'child_smooth':  None,
-			'child_nslist':  None
-		},{
-			'name':          'omega',
-			'parent_smooth': None,
-			'child_smooth':  None,
-			'child_nslist':  None
-		}
-	]
+			'parent_smooth': 'smooth_rate_parent'
+	} ]
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
@@ -216,8 +182,15 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
+age_table     = dismod_at.get_table_dict(connection, 'age')
+time_table    = dismod_at.get_table_dict(connection, 'time')
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+#
+n_age  = len( age_table )
+n_time = len( time_table )
+n_var  = len( var_table )
+assert n_var == n_age * n_time
 #
 parent_node_id = 0
 eps            = 1e-4
@@ -225,7 +198,7 @@ eps            = 1e-4
 # check parent rates values
 iota_rate_id      = 1
 max_err           = 0.0;
-for var_id in range( len(var_table) ) :
+for var_id in range( n_var ) :
 	row    = var_table[var_id]
 	value  = fit_var_table[var_id]['fit_var_value']
 	assert row['var_type'] == 'rate'
