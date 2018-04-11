@@ -28,6 +28,7 @@ var list_down2 = [
 var list_down1 = [
 'user_fit_random.py.htm',
 'user_asymptotic.py.htm',
+'user_change_grid.py.htm',
 'user_const_random.py.htm',
 'user_const_value.py.htm',
 'user_continue_fit.py.htm',

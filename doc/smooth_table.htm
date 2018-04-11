@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Smoothing Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Smoothing Table">
-<meta name="keywords" id="keywords" content=" the smoothing table smooth_id smooth_name n_age n_time mulstd_value_prior_id null mulstd_dage_prior_id mulstd_dtime_prior_id example ">
+<meta name="keywords" id="keywords" content=" the smoothing table smooth_id smooth_name n_age n_time mulstd_value_prior_id null mulstd_dage_prior_id mulstd_dtime_prior_id removing age time example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,6 +64,8 @@ A:active { color : purple }
 <option>---..null</option>
 <option>mulstd_dtime_prior_id</option>
 <option>---..null</option>
+<option>Removing an Age or Time</option>
+<option>---..Example</option>
 <option>Example</option>
 </select>
 </td>
@@ -118,6 +120,13 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Smoothing Table</big></big></b></center>
+This table creates a group of value and smoothing priors used for
+functions of age and time.
+The age, time values, and priors for each point in a group are
+defined in the <a href="smooth_grid_table.htm" target="_top"><span style='white-space: nowrap'>smooth_grid_table</span></a>
+.
+
+<br>
 <br>
 <b><big><a name="smooth_id" id="smooth_id">smooth_id</a></big></b>
 <br>
@@ -205,6 +214,33 @@ for this
 <br>
 If this variable is not needed,
 use the value <code><font color="blue">null</font></code> (which corresponds to a multiplier of one).
+
+<br>
+<br>
+<b><big><a name="Removing an Age or Time" id="Removing an Age or Time">Removing an Age or Time</a></big></b>
+<br>
+It is possible to remove an age (time) from the
+<a href="smooth_grid_table.htm#Rectangular Grid" target="_top"><span style='white-space: nowrap'>rectangular&nbsp;grid</span></a>
+
+for a specific 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+.
+This is done by decreasing 
+<code><i><font color="black"><span style='white-space: nowrap'>n_age</span></font></i></code>
+ (
+<code><i><font color="black"><span style='white-space: nowrap'>n_time</span></font></i></code>
+) by one
+and setting <a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+ to null
+for the points in the smooth_grid_table that are being removed.
+
+<br>
+<br>
+<big><a name="Removing an Age or Time.Example" id="Removing an Age or Time.Example">Example</a></big>
+
+<br>
+<a href="user_change_grid.py.htm" target="_top"><span style='white-space: nowrap'>user_change_grid.py</span></a>
+
 
 
 <br>

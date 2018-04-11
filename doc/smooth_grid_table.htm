@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Smooth Grid Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Smooth Grid Table">
-<meta name="keywords" id="keywords" content=" the smooth grid table smooth_grid_id smooth_id age_id time_id value_prior_id dage_prior_id dtime_prior_id const_value rectangular example ">
+<meta name="keywords" id="keywords" content=" the smooth grid table smooth_grid_id smooth_id null age_id time_id value_prior_id dage_prior_id dtime_prior_id const_value rectangular example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -56,12 +56,17 @@ A:active { color : purple }
 <option>Current-&gt;</option>
 <option>smooth_grid_id</option>
 <option>smooth_id</option>
+<option>---..null</option>
 <option>age_id</option>
 <option>time_id</option>
 <option>value_prior_id</option>
+<option>---..null</option>
 <option>dage_prior_id</option>
+<option>---..null</option>
 <option>dtime_prior_id</option>
+<option>---..null</option>
 <option>const_value</option>
+<option>---..null</option>
 <option>Rectangular Grid</option>
 <option>Example</option>
 </select>
@@ -122,7 +127,8 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Smooth Grid Table</big></big></b></center>
-This table specifies smoothings for functions of age and time.
+This table specifies the age, time, and value priors, and smoothing priors
+for each <code><font color="blue">/smooth_id/smooth_table/smooth_id/</font></code>
 It has the following columns:
 
 <br>
@@ -143,6 +149,19 @@ the <a href="smooth_table.htm" target="_top"><span style='white-space: nowrap'>s
 Each 
 <code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
  value corresponds to a different smoothing.
+
+<br>
+<br>
+<big><a name="smooth_id.null" id="smooth_id.null">null</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+ is null, the corresponding row of the
+smooth grid table is not used.
+This can be useful for deleting a row or column corresponding to a
+
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+.
 
 <br>
 <br>
@@ -174,6 +193,11 @@ This column has type <code><font color="blue">integer</font></code> and is the
 <a href="prior_table.htm#prior_id" target="_top"><span style='white-space: nowrap'>prior_id</span></a>
  for the function's values
 at the corresponding age and time.
+
+<br>
+<br>
+<big><a name="value_prior_id.null" id="value_prior_id.null">null</a></big>
+<br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>value_prior_id</span></font></i></code>
  is null (not null),
@@ -194,6 +218,11 @@ at the corresponding age and time; see age differences for
  and
 <a href="random_diff.htm#Time Differences" target="_top"><span style='white-space: nowrap'>random</span></a>
  effects.
+
+<br>
+<br>
+<big><a name="dage_prior_id.null" id="dage_prior_id.null">null</a></big>
+<br>
 The prior at the maximum age, for each time, is not used and
 the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>dage_prior_id</span></font></i></code>
@@ -215,6 +244,11 @@ at the corresponding age and time; see time differences for
  and
 <a href="random_diff.htm#Time Differences" target="_top"><span style='white-space: nowrap'>random</span></a>
  effects.
+
+<br>
+<br>
+<big><a name="dtime_prior_id.null" id="dtime_prior_id.null">null</a></big>
+<br>
 The prior at the maximum time, for each time, is not used and
 the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>dtime_prior_id</span></font></i></code>
@@ -228,10 +262,8 @@ All of the other
 <b><big><a name="const_value" id="const_value">const_value</a></big></b>
 <br>
 This column has type <code><font color="blue">real</font></code>.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>const_value</span></font></i></code>
- is not null, it specifies the value of
-the function at the corresponding age and time.
+It specifies a specific value for a function using this smoothing
+at this age and time (when it is not null).
 This case is equivalent to
 <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
 ,
@@ -244,6 +276,11 @@ This case is equivalent to
 and
 <a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
  is <code><font color="blue">uniform</font></code>.
+
+<br>
+<br>
+<big><a name="const_value.null" id="const_value.null">null</a></big>
+<br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>const_value</span></font></i></code>
  is null (not null),

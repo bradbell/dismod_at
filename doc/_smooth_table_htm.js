@@ -22,6 +22,8 @@ var list_current0 = [
 'smooth_table.htm#mulstd_dage_prior_id.null',
 'smooth_table.htm#mulstd_dtime_prior_id',
 'smooth_table.htm#mulstd_dtime_prior_id.null',
+'smooth_table.htm#Removing an Age or Time',
+'smooth_table.htm#Removing an Age or Time.Example',
 'smooth_table.htm#Example'
 ];
 var list_down3 = [

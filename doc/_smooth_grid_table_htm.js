@@ -14,12 +14,17 @@ var list_across0 = [
 var list_current0 = [
 'smooth_grid_table.htm#smooth_grid_id',
 'smooth_grid_table.htm#smooth_id',
+'smooth_grid_table.htm#smooth_id.null',
 'smooth_grid_table.htm#age_id',
 'smooth_grid_table.htm#time_id',
 'smooth_grid_table.htm#value_prior_id',
+'smooth_grid_table.htm#value_prior_id.null',
 'smooth_grid_table.htm#dage_prior_id',
+'smooth_grid_table.htm#dage_prior_id.null',
 'smooth_grid_table.htm#dtime_prior_id',
+'smooth_grid_table.htm#dtime_prior_id.null',
 'smooth_grid_table.htm#const_value',
+'smooth_grid_table.htm#const_value.null',
 'smooth_grid_table.htm#Rectangular Grid',
 'smooth_grid_table.htm#Example'
 ];
