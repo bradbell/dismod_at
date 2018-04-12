@@ -267,8 +267,9 @@ command  <font color="#990000">=</font> <font color="#FF0000">'UPDATE smooth SET
 command <font color="#990000">+=</font> <font color="#FF0000">'WHERE smooth_id == 0;'</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> command<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># remove the middle grid point</font></i>
-remove_index <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> n_age <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
+<i><font color="#9A1900"># Remove the last grid point. Note that there is a new last age and the</font></i>
+<i><font color="#9A1900"># corresponding dage priors are not used (even though they are not null).</font></i>
+remove_index <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> n_age <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">)</font>
 command  <font color="#990000">=</font> <font color="#FF0000">'UPDATE smooth_grid SET smooth_id = null '</font>
 command <font color="#990000">+=</font> <font color="#FF0000">'WHERE smooth_id == 0 AND age_id == '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>remove_index<font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">';'</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> command<font color="#990000">)</font>

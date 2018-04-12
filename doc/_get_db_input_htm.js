@@ -13,6 +13,7 @@ var list_across0 = [
 ];
 var list_current0 = [
 'get_db_input.htm#Syntax',
+'get_db_input.htm#See Also',
 'get_db_input.htm#Purpose',
 'get_db_input.htm#Purpose.Primary Key',
 'get_db_input.htm#Purpose.Initial Prevalence Grid',

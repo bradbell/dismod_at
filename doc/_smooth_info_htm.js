@@ -13,11 +13,13 @@ var list_across0 = [
 ];
 var list_current0 = [
 'smooth_info.htm#Syntax',
-'smooth_info.htm#Syntax.Constructors',
+'smooth_info.htm#Syntax.Default Constructor',
+'smooth_info.htm#Syntax.Normal Constructor',
+'smooth_info.htm#Syntax.Testing Constructor',
 'smooth_info.htm#Syntax.Assignment',
 'smooth_info.htm#Syntax.Member Functions',
 'smooth_info.htm#Purpose',
-'smooth_info.htm#Assumptions',
+'smooth_info.htm#Checks in Normal Constructor',
 'smooth_info.htm#s_info',
 'smooth_info.htm#s_info.age_table',
 'smooth_info.htm#s_info.time_table',

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Extract and Organize Information for One Smoothing</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Extract and Organize Information for One Smoothing">
-<meta name="keywords" id="keywords" content=" extract organize information one smoothing syntax constructors assignment member functions purpose assumptions s_info age_table time_table smooth_id smooth_table smooth_grid_table s_test age_id time_id type_prior_id mulstd_type s_default n_age n_time i j a_id t_id c_value i_type m_type example ">
+<meta name="keywords" id="keywords" content=" extract organize information one smoothing syntax default constructor normal testing assignment member functions purpose checks s_info age_table time_table smooth_id smooth_table smooth_grid_table s_test age_id time_id type_prior_id mulstd_type s_default n_age n_time i j a_id t_id c_value i_type m_type example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -55,11 +55,13 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>Syntax</option>
-<option>---..Constructors</option>
+<option>---..Default Constructor</option>
+<option>---..Normal Constructor</option>
+<option>---..Testing Constructor</option>
 <option>---..Assignment</option>
 <option>---..Member Functions</option>
 <option>Purpose</option>
-<option>Assumptions</option>
+<option>Checks in Normal Constructor</option>
 <option>s_info</option>
 <option>---..age_table</option>
 <option>---..time_table</option>
@@ -167,17 +169,25 @@ A:active { color : purple }
 
 <br>
 <br>
-<big><a name="Syntax.Constructors" id="Syntax.Constructors">Constructors</a></big>
+<big><a name="Syntax.Default Constructor" id="Syntax.Default Constructor">Default Constructor</a></big>
 
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>smooth_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_default</span></font></i><font color="blue"><span style='white-space: nowrap'>()<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Normal Constructor" id="Syntax.Normal Constructor">Normal Constructor</a></big>
+
+<br>
 
 <code><font color="blue"><span style='white-space: nowrap'>smooth_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_grid_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )<br>
 </span></font></code>
+<br>
+<big><a name="Syntax.Testing Constructor" id="Syntax.Testing Constructor">Testing Constructor</a></big>
+
+<br>
 
 <code><font color="blue"><span style='white-space: nowrap'>smooth_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_test</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -228,7 +238,7 @@ tables.
 
 <br>
 <br>
-<b><big><a name="Assumptions" id="Assumptions">Assumptions</a></big></b>
+<b><big><a name="Checks in Normal Constructor" id="Checks in Normal Constructor">Checks in Normal Constructor</a></big></b>
 
 <ol type="1"><li>
 Checks the <code><font color="blue">smooth_grid</font></code> table
@@ -249,16 +259,21 @@ and number of time values in the corresponding rectangular grid in
 .
 </li><li>
 
-Checks that
+Sets
 <a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
- is <code><font color="blue">-1</font></code>
-for the maximum age points and only the maximum age points.
+
+(<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+)
+to <code><font color="blue">DISMOD_AT_NULL_SIZE_T</font></code> for the maximum age (time) points.
 </li><li>
 
 Checks that
-<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
- is <code><font color="blue">-1</font></code>
-for the maximum time points and on the maximum time points.
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
+
+(<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
+)
+is not <code><font color="blue">DISMOD_AT_NULL_SIZE_T</font></code>
+for points that are not at maximum age (time).
 </li></ol>
 
 
