@@ -91,6 +91,7 @@ Keyword =
 'statistic  Some Statistical Function Definitions  ',' notation log-transformed standard deviation sigma weighted residual difference uniform gaussian laplace student\'s-t log-gaussian log-laplace log-student\'s-t log-density ',
 'bilinear  dismod_at Bilinear Interpolation  ',' age grid time function interpolant below minimum above maximum outside both limits plotting ',
 'ode_grid  The dismod_at Ode Grid  ',' purpose delta a_min a_max t_min t_max number age points a_i time t_j ',
+'posterior  Simulating Posterior Distribution for Model Variables  ',' purpose lemma 1 proof remark 2 ',
 'command  The dismod_at Commands  ',' data flow log messages ',
 'set_command  Directly Setting Table Values  ',' syntax database option warning table_out start_var scale_var truth_var source prior_mean fit_var sample example ',
 'init_command  The Variable Command  ',' syntax purpose changing values database var_table data_subset_table start_var_table scale_var_table deleted tables example ',

@@ -1,0 +1,457 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Simulating Posterior Distribution for Model Variables</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Simulating Posterior Distribution for Model Variables">
+<meta name="keywords" id="keywords" content=" simulating posterior distribution model variables purpose lemma 1 proof remark 2 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_posterior_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>posterior</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="ode_grid.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Purpose</option>
+<option>Lemma 1</option>
+<option>---..Proof</option>
+<option>Remark 1</option>
+<option>Lemma 2</option>
+<option>---..Proof</option>
+</select>
+</td>
+<td><a href="command.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+<option>posterior</option>
+</select>
+</td>
+<td>posterior</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+
+<center><b><big><big>Simulating Posterior Distribution for Model Variables</big></big></b></center>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The current version of dismod_at
+<code><font color="blue">sample</font></code> command with method equal to
+<a href="sample_command.htm#method.simulate" target="_top"><span style='white-space: nowrap'>simulate</span></a>
+
+fits simulated random measurements
+in order to sample from the posterior distribution for the parameters.
+<a href="posterior.htm#Lemma 2" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;2</span></a>
+ below shows that,
+because prior information is used with maximum likelihood estimation,
+this yields less variation than it should for the posterior distribution.
+
+<br>
+<br>
+<b><big><a name="Lemma 1" id="Lemma 1">Lemma 1</a></big></b>
+<br>
+Suppose we have random noise
+<small>@(@
+e \in \B{R}^{m \times 1}
+@)@</small> where <small>@(@
+e \sim N( 0 , V )
+@)@</small>,
+where that variance matrix
+<small>@(@
+V \in \B{R}^{m \times m}
+@)@</small> is positive definite.
+Further suppose for some known <small>@(@
+A \in \B{R}^{m \times n}
+@)@</small>
+and an unknown <small>@(@
+\bar{\theta} \in \B{R}^{n \times 1}
+@)@</small>,
+and <small>@(@
+y \in \B{R}^{m \times 1}
+@)@</small> is given by
+<small>@[@
+
+	y = A \bar{\theta} + e
+
+@]@</small>
+The maximum likelihood estimator <small>@(@
+\hat{\theta}
+@)@</small>
+for <small>@(@
+\bar{\theta}
+@)@</small> given <small>@(@
+y
+@)@</small> has mean
+<small>@(@
+\B{E} [ \hat{\theta} ] = \bar{\theta} ]
+@)@</small> and variance
+<small>@[@
+
+\B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+=
+( A^\R{T} V^{-1} A )^{-1}
+=
+- \; \left(
+	\frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+\right)^{-1}
+
+@]@</small>
+
+
+<br>
+<br>
+<big><a name="Lemma 1.Proof" id="Lemma 1.Proof">Proof</a></big>
+<br>
+The probability density for <small>@(@
+y
+@)@</small> given <small>@(@
+\theta
+@)@</small> is
+<small>@[@
+
+\B{p} ( y | \theta )
+=
+\det ( 2 \pi V )^{-1/2} \exp \left[
+	- \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+\right]
+
+@]@</small>
+Dropping the determinant term,
+because it does not depend on <small>@(@
+\theta
+@)@</small>,
+and taking the negative log we get the objective
+<small>@[@
+
+f ( \theta ) = \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+
+@]@</small>
+and the equivalent problem to minimize <small>@(@
+f ( \theta )
+@)@</small> with
+respect to <small>@(@
+\theta \in \B{R}^{n \times 1}
+@)@</small>.
+The derivative <small>@(@
+f^{(1)} ( \theta ) \in \B{R}^{1 \times n}
+@)@</small>
+is given by
+<small>@[@
+
+	f^{(1)} ( \theta ) = - ( y - A \theta )^\R{T} V^{-1} A
+
+@]@</small>
+It follows that
+<small>@[@
+
+- \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+=
+f^{(2)} ( \theta )
+=
+A^\R{T} V^{-1} A
+
+@]@</small>
+This completes the proof of the equation for the second partial
+of <small>@(@
+\B{p} ( y | \theta )
+@)@</small> in the statement of the lemma.
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code>
+The maximum likelihood estimate <small>@(@
+\hat{\theta}
+@)@</small> satisfies the
+equation <small>@(@
+f^{(1)} ( \hat{\theta} ) = 0
+@)@</small>; i.e.,
+<small>@[@
+
+\begin{array}{rcl}
+0 & = & - ( y - A \hat{\theta} )^\R{T} V^{-1} A
+\\
+A^\R{T} V^{-1} y  & = & A^\R{T} V^{-1} A \hat{\theta}
+\\
+\hat{\theta} & =  & ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} y
+\\
+\hat{\theta} & =  &
+( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} ( A \bar{\theta} + e )
+\\
+\hat{\theta}
+& =  &
+\bar{\theta} + ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} e
+\end{array}
+
+@]@</small>
+This expresses the estimate <small>@(@
+\hat{\theta}
+@)@</small> as a deterministic
+function of the noise <small>@(@
+e
+@)@</small>.
+It follows from the last equation for <small>@(@
+\hat{\theta}
+@)@</small> above,
+and the fact that <small>@(@
+\B{E} [ e ] = 0
+@)@</small>,
+that <small>@(@
+\B{E} [ \hat{\theta} ] = \bar{\theta}
+@)@</small>.
+This completes the proof of the equation for the expected value
+of <small>@(@
+\hat{\theta}
+@)@</small> in the statement of the lemma.
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code>
+It also follows, from the equation for <small>@(@
+\hat{\theta}
+@)@</small> above, that
+<small>@[@
+
+\begin{array}{rcl}
+( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T}
+& = &
+( A^\R{T} V^{-1} A )^{-1} A^\R{T}
+V^{-1} e e^\R{T} V^{-1}
+A ( A^\R{T} V^{-1} A )^{-1}
+\\
+\B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+& = &
+( A^\R{T} V^{-1} A )^{-1}
+\end{array}
+
+@]@</small>
+This completes the proof of the equation for the covariance of
+<small>@(@
+\hat{\theta} - \bar{\theta}
+@)@</small> in the statement of the lemma.
+
+<br>
+<br>
+<b><big><a name="Remark 1" id="Remark 1">Remark 1</a></big></b>
+<br>
+For the case in
+<a href="posterior.htm#Lemma 1" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;1</span></a>
+, the second partial of
+<small>@(@
+\log \B{p} ( y | \theta )
+@)@</small> with respect to <small>@(@
+\theta
+@)@</small>
+does not depend on <small>@(@
+\theta
+@)@</small> and <small>@(@
+A V^{-1} A
+@)@</small> is the
+information matrix.
+
+<br>
+<br>
+<b><big><a name="Lemma 2" id="Lemma 2">Lemma 2</a></big></b>
+<br>
+Suppose that in addition to all the information in
+<a href="posterior.htm#Lemma 1" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;1</span></a>
+ we have the prior information
+<small>@(@
+\theta \sim \B{N}( \check{\theta} , P )
+@)@</small>.
+where <small>@(@
+P \in \B{R}^{n \times n}
+@)@</small> is a positive definite matrix.
+For this case we define <small>@(@
+\hat{\theta}
+@)@</small> as the maximizer of
+<small>@(@
+\B{p}( y | \theta ) \B{p}( \theta | \check{\theta} )
+@)@</small>.
+It follows that
+<small>@[@
+
+\B{E} [
+	( \hat{\theta} - \B{E}[ \hat{\theta} ] )
+	( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
+\prec
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+=
+- \; \left(
+	\frac{ \partial^2 } { \partial \theta^2 }
+	\log [ \B{p} ( y | \theta ) \B{p} ( \theta | \check{\theta} ) ]
+\right)^{-1}
+
+@]@</small>
+where <small>@(@
+\prec
+@)@</small> means less than in a positive definite matrix sense.
+
+<br>
+<br>
+<big><a name="Lemma 2.Proof" id="Lemma 2.Proof">Proof</a></big>
+
+<br>
+<small>@[@
+
+\B{p} ( y , \theta | \theta )
+=
+\det ( 2 \pi V )^{-1/2} \det ( 2 \pi P )^{-1/2} \exp \left[
+- \frac{1}{2}
+	( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+- \frac{1}{2}
+	( \theta - \check{\theta} )^\R{T} P^{-1} ( \theta - \check{\theta} )
+\right]
+
+@]@</small>The derivative of the corresponding negative log likelihood is
+<small>@[@
+
+- ( y - A \theta )^\R{T} V^{-1} A  + ( \theta - \check{\theta} )^\R{T} P^{-1}
+
+@]@</small>
+From this point,
+the proof of the equation for the second partial is very similar to
+Lemma 1 and left to the reader.
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code>
+Setting the derivative to zero, we get the corresponding maximum likelihood
+estimate <small>@(@
+\hat{\theta}
+@)@</small> satisfies
+<small>@[@
+
+\begin{array}{rcl}
+( y - A \hat{\theta} )^\R{T} V^{-1} A
+& = &
+( \hat{\theta} - \check{\theta} )^\R{T} P^{-1}
+\\
+A^\R{T} V^{-1} y + P^{-1} \check{\theta}
+& = &
+A^\R{T} V^{-1} A \hat{\theta} + P^{-1} \hat{\theta}
+\\
+\hat{\theta}
+& = &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} y + P^{-1} \check{\theta} )
+\\
+\hat{\theta}
+& = &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A \bar{\theta} + P^{-1} \check{\theta} )
++
+( A^\R{T} V^{-1} A + P^{-1} )^{-1} A^\R{T} V^{-1} e
+\end{array}
+
+@]@</small>
+The first term is deterministic and the second term is mean zero.
+It follows that
+<small>@[@
+
+\begin{array}{rcl}
+\B{E} [ \hat{\theta} ]
+& = &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A \bar{\theta} + P^{-1} \check{\theta} )
+\\
+\B{E} [
+	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+]
+& = &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+A^\R{T} V^{-1} A
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+\end{array}
+
+@]@</small>
+Since the matrix <small>@(@
+P
+@)@</small> is positive definite, we have
+<small>@[@
+
+\begin{array}{rcl}
+A^\R{T} V^{-1} A  & \prec & A^\R{T} V^{-1} A + P^{-1}
+\\
+\B{E} [
+	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+]
+& \prec &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+\end{array}
+
+@]@</small>
+This completes the proof of this lemma.
+
+
+<hr>Input File: omh/model/posterior.omh
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
 'model.htm',
-'data_like.htm'
+'posterior.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -11,25 +11,12 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'data_like.htm#Data Table Notation',
-'data_like.htm#Data Table Notation.i',
-'data_like.htm#Data Table Notation.y_i',
-'data_like.htm#Data Table Notation.Delta_i',
-'data_like.htm#Data Table Notation.a_i',
-'data_like.htm#Data Table Notation.b_i',
-'data_like.htm#Data Table Notation.s_i',
-'data_like.htm#Data Table Notation.t_i',
-'data_like.htm#Data Table Notation.d_i',
-'data_like.htm#Data Table Notation.I_i',
-'data_like.htm#Data Table Notation.x_ij',
-'data_like.htm#Data Table Notation.w_i',
-'data_like.htm#Measurement Standard Deviation Covariates',
-'data_like.htm#Measurement Standard Deviation Covariates.K_i',
-'data_like.htm#Measurement Standard Deviation Covariates.gamma_j',
-'data_like.htm#Effects, u, theta',
-'data_like.htm#Average Integrand',
-'data_like.htm#Adjusted Standard Deviation, delta_i',
-'data_like.htm#Weighted Residual and Likelihood'
+'posterior.htm#Purpose',
+'posterior.htm#Lemma 1',
+'posterior.htm#Lemma 1.Proof',
+'posterior.htm#Remark 1',
+'posterior.htm#Lemma 2',
+'posterior.htm#Lemma 2.Proof'
 ];
 var list_down2 = [
 'install_unix.htm',
