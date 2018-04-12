@@ -68,8 +68,7 @@ $cref/fixed/fixed_diff/Age Differences/$$ and
 $cref/random/random_diff/Time Differences/$$ effects.
 
 $subhead null$$
-The prior at the maximum age, for each time, is not used and
-the corresponding $icode dage_prior_id$$ must be null.
+The prior at the maximum age, for each time, is not used may be null.
 All of the other $icode data_prior_id$$ must not be null.
 
 $head dtime_prior_id$$
@@ -81,8 +80,7 @@ $cref/fixed/fixed_diff/Time Differences/$$ and
 $cref/random/random_diff/Time Differences/$$ effects.
 
 $subhead null$$
-The prior at the maximum time, for each time, is not used and
-the corresponding $icode dtime_prior_id$$ must be null.
+The prior at the maximum time, for each time, is not used and may be null.
 All of the other $icode dtime_prior_id$$ must not be null.
 
 $head const_value$$

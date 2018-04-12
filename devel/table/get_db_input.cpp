@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -24,6 +24,10 @@ $section C++: Get the Data Base Input Tables$$
 
 $head Syntax$$
 $codei%get_db_input(%db%, %db_input%)%$$
+
+$head See Also$$
+See the $code smooth_info$$
+$cref/checks in normal constructor/smooth_info/Checks in Normal Constructor/$$.
 
 $head Purpose$$
 Read all the input tables and return them as a C++ data structure.
@@ -91,7 +95,6 @@ $end
 # include <dismod_at/null_int.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <dismod_at/error_exit.hpp>
-
 
 # define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table)\
 for(size_t row_id = 0; row_id < db_input.in_table ## _table.size(); row_id++) \

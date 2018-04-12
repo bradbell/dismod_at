@@ -36,6 +36,8 @@ $spell
 	txt
 	init
 	py
+	dage
+	dtime
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -47,6 +49,17 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 04-12$$
+The requirements for the
+last age (last time) priors were changed so they do not need to be null;
+see null under
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/null/$$ and
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/null/$$.
+This made it possible to modify the example
+$cref user_change_grid.py$$ so that it removes the
+last age (instead of one in the middle of the grid)
+without having to change any $icode dage_prior_id$$ values.
 
 $head 04-11$$
 Instructions for

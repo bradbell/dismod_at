@@ -25,13 +25,17 @@ $section Extract and Organize Information for One Smoothing$$
 
 $head Syntax$$
 
-$subhead Constructors$$
+$subhead Default Constructor$$
 $codei%smooth_info %s_default%()
 %$$
+
+$subhead Normal Constructor$$
 $codei%smooth_info %s_info%(
 	%age_table%, %time_table%, %smooth_id%, %smooth_table%, %smooth_grid_table%
 )
 %$$
+
+$subhead Testing Constructor$$
 $codei%smooth_info %s_test%(
 	%age_table%, %time_table%, %age_id%, %time_id%,
 	%value_prior_id%, %dage_prior_id%, %dtime_prior_id%, %const_value%,
@@ -64,7 +68,7 @@ Extracts, combines, and organizes the information for one smoothing from
 the $cref/smooth/smooth_table/$$ and $cref/smooth_grid/smooth_grid_table/$$
 tables.
 
-$head Assumptions$$
+$head Checks in Normal Constructor$$
 $list number$$
 Checks the $code smooth_grid$$ table
 $cref/rectangular grid/smooth_grid_table/Rectangular Grid/$$ assumption.
@@ -76,13 +80,16 @@ $cref/n_time/smooth_table/n_time/$$ are the number if age values
 and number of time values in the corresponding rectangular grid in
 $cref smooth_grid_table$$.
 $lnext
-Checks that
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ is $code -1$$
-for the maximum age points and only the maximum age points.
+Sets
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
+($cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$)
+to $code DISMOD_AT_NULL_SIZE_T$$ for the maximum age (time) points.
 $lnext
 Checks that
-$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ is $code -1$$
-for the maximum time points and on the maximum time points.
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
+($cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$)
+is not $code DISMOD_AT_NULL_SIZE_T$$
+for points that are not at maximum age (time).
 $lend
 
 $head s_info$$
@@ -458,7 +465,7 @@ smooth_info::smooth_info(
 	size_t row_id;
 	size_t null_size_t = DISMOD_AT_NULL_SIZE_T;
 
-	// only use of smooth_table is to determine multiplier priors
+	// only priors in the smooth_table are the multiplier priors
 	mulstd_value_   = smooth_table[smooth_id].mulstd_value_prior_id;
 	mulstd_dage_    = smooth_table[smooth_id].mulstd_dage_prior_id;
 	mulstd_dtime_   = smooth_table[smooth_id].mulstd_dtime_prior_id;
@@ -542,16 +549,12 @@ smooth_info::smooth_info(
 			dtime_prior_id_[index] = smooth_grid_table[i].dtime_prior_id;
 			const_value_[index]    = smooth_grid_table[i].const_value;
 			//
-			// check dage_prior_id
-			if( j_age == n_age -1 && dage_prior_id_[index] != null_size_t )
-			{	table_name = "smooth_grid";
-				row_id     = i;
-				msg  = "age_id = " + to_string( age_id_[j_age] );
-				msg += " is the maximum age for smooth_id = ";
-				msg += to_string(smooth_id) + " but dage_prior_id = ";
-				msg += to_string( dage_prior_id_[index] ) + " is not null";
-				error_exit(msg, table_name, row_id);
-			}
+			// set dage_prior_id_ to null for the last age
+			// (may not be null in the smoth_grid table).
+			if( j_age == n_age - 1)
+				dage_prior_id_[index] = null_size_t;
+			//
+			// check dage_piror_id is not null for other ages
 			if( j_age != n_age -1 && dage_prior_id_[index] == null_size_t )
 			{	table_name = "smooth_grid";
 				row_id     = i;
@@ -561,16 +564,12 @@ smooth_info::smooth_info(
 				error_exit(msg, table_name, row_id);
 			}
 			//
-			// check dtime_prior_id
-			if( j_time == n_time -1 && dtime_prior_id_[index] != null_size_t )
-			{	table_name = "smooth_grid";
-				row_id     = i;
-				msg  = "time_id = " + to_string( time_id_[j_time] );
-				msg += " is the maximum time for smooth_id = ";
-				msg += to_string(smooth_id) + " but dtime_prior_id = ";
-				msg += to_string( dtime_prior_id_[index] ) + " is not null";
-				error_exit(msg, table_name, row_id);
-			}
+			// set dtime_prior_id_ to null for the last time
+			// (may not be null in smooth_grid_table).
+			if( j_time == n_time - 1)
+				 dtime_prior_id_[index] = null_size_t;
+			//
+			// check dtime_prior_id_ is not null for other times
 			if( j_time != n_time -1 && dtime_prior_id_[index] == null_size_t )
 			{	table_name = "smooth_grid";
 				row_id     = i;

@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -190,8 +190,9 @@ command  = 'UPDATE smooth SET n_age = ' + str(n_age - 1) + ' '
 command += 'WHERE smooth_id == 0;'
 dismod_at.sql_command(connection, command)
 #
-# remove the middle grid point
-remove_index = int( n_age / 2 )
+# Remove the last grid point. Note that there is a new last age and the
+# corresponding dage priors are not used (even though they are not null).
+remove_index = int( n_age - 1 )
 command  = 'UPDATE smooth_grid SET smooth_id = null '
 command += 'WHERE smooth_id == 0 AND age_id == ' + str(remove_index) + ';'
 dismod_at.sql_command(connection, command)
