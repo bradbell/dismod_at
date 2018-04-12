@@ -1,0 +1,245 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-17 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin posterior$$
+$escape $$
+$spell
+	dismod
+$$
+$latex
+	\newcommand{\R}[1]{ {\rm #1} }
+	\newcommand{\B}[1]{ {\bf #1} }
+	\newcommand{\W}[1]{ \; #1 \; }
+$$
+
+$section Simulating Posterior Distribution for Model Variables$$
+
+$head Purpose$$
+The current version of dismod_at
+$code sample$$ command with method equal to
+$cref/simulate/sample_command/method/simulate/$$
+fits simulated random measurements
+in order to sample from the posterior distribution for the parameters.
+$cref/Lemma 2/posterior/Lemma 2/$$ below shows that,
+because prior information is used with maximum likelihood estimation,
+this yields less variation than it should for the posterior distribution.
+
+$head Lemma 1$$
+Suppose we have random noise
+$latex e \in \B{R}^{m \times 1}$$ where $latex e \sim N( 0 , V )$$,
+where that variance matrix
+$latex V \in \B{R}^{m \times m}$$ is positive definite.
+Further suppose for some known $latex A \in \B{R}^{m \times n}$$
+and an unknown $latex \bar{\theta} \in \B{R}^{n \times 1}$$,
+and $latex y \in \B{R}^{m \times 1}$$ is given by
+$latex \[
+	y = A \bar{\theta} + e
+\]$$
+The maximum likelihood estimator $latex \hat{\theta}$$
+for $latex \bar{\theta}$$ given $latex y$$ has mean
+$latex \B{E} [ \hat{\theta} ] = \bar{\theta} ]$$ and variance
+$latex \[
+\B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+=
+( A^\R{T} V^{-1} A )^{-1}
+=
+- \; \left(
+	\frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+\right)^{-1}
+\] $$
+
+
+$subhead Proof$$
+The probability density for $latex y$$ given $latex \theta$$ is
+$latex \[
+\B{p} ( y | \theta )
+=
+\det ( 2 \pi V )^{-1/2} \exp \left[
+	- \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+\right]
+\] $$
+Dropping the determinant term,
+because it does not depend on $latex \theta$$,
+and taking the negative log we get the objective
+$latex \[
+f ( \theta ) = \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+\] $$
+and the equivalent problem to minimize $latex f ( \theta )$$ with
+respect to $latex \theta \in \B{R}^{n \times 1}$$.
+The derivative $latex f^{(1)} ( \theta ) \in \B{R}^{1 \times n}$$
+is given by
+$latex \[
+	f^{(1)} ( \theta ) = - ( y - A \theta )^\R{T} V^{-1} A
+\] $$
+It follows that
+$latex \[
+- \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+=
+f^{(2)} ( \theta )
+=
+A^\R{T} V^{-1} A
+\] $$
+This completes the proof of the equation for the second partial
+of $latex \B{p} ( y | \theta )$$ in the statement of the lemma.
+$pre
+	$$
+The maximum likelihood estimate $latex \hat{\theta}$$ satisfies the
+equation $latex f^{(1)} ( \hat{\theta} ) = 0$$; i.e.,
+$latex \[
+\begin{array}{rcl}
+0 & = & - ( y - A \hat{\theta} )^\R{T} V^{-1} A
+\\
+A^\R{T} V^{-1} y  & = & A^\R{T} V^{-1} A \hat{\theta}
+\\
+\hat{\theta} & =  & ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} y
+\\
+\hat{\theta} & =  &
+( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} ( A \bar{\theta} + e )
+\\
+\hat{\theta}
+& =  &
+\bar{\theta} + ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} e
+\end{array}
+\] $$
+This expresses the estimate $latex \hat{\theta}$$ as a deterministic
+function of the noise $latex e$$.
+It follows from the last equation for $latex \hat{\theta}$$ above,
+and the fact that $latex \B{E} [ e ] = 0$$,
+that $latex \B{E} [ \hat{\theta} ] = \bar{\theta} $$.
+This completes the proof of the equation for the expected value
+of $latex \hat{\theta}$$ in the statement of the lemma.
+$pre
+	$$
+It also follows, from the equation for $latex \hat{\theta}$$ above, that
+$latex \[
+\begin{array}{rcl}
+( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T}
+& = &
+( A^\R{T} V^{-1} A )^{-1} A^\R{T}
+V^{-1} e e^\R{T} V^{-1}
+A ( A^\R{T} V^{-1} A )^{-1}
+\\
+\B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+& = &
+( A^\R{T} V^{-1} A )^{-1}
+\end{array}
+\] $$
+This completes the proof of the equation for the covariance of
+$latex \hat{\theta} - \bar{\theta} $$ in the statement of the lemma.
+
+$head Remark 1$$
+For the case in
+$cref/Lemma 1/posterior/Lemma 1/$$, the second partial of
+$latex \log \B{p} ( y | \theta )$$ with respect to $latex \theta$$
+does not depend on $latex \theta$$ and $latex A V^{-1} A$$ is the
+information matrix.
+
+$head Lemma 2$$
+Suppose that in addition to all the information in
+$cref/Lemma 1/posterior/Lemma 1/$$ we have the prior information
+$latex \theta \sim \B{N}( \check{\theta} , P )$$.
+where $latex P \in \B{R}^{n \times n}$$ is a positive definite matrix.
+For this case we define $latex \hat{\theta}$$ as the maximizer of
+$latex \B{p}( y | \theta ) \B{p}( \theta | \check{\theta} )$$.
+It follows that
+$latex \[
+\B{E} [
+	( \hat{\theta} - \B{E}[ \hat{\theta} ] )
+	( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
+\prec
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+=
+- \; \left(
+	\frac{ \partial^2 } { \partial \theta^2 }
+	\log [ \B{p} ( y | \theta ) \B{p} ( \theta | \check{\theta} )
+\right)^{-1}
+\]$$
+where $latex \prec$$ means less than in a positive definite matrix sense.
+
+$subhead Proof$$
+$latex \[
+\B{p} ( y , \theta | \theta )
+=
+\det ( 2 \pi V )^{-1/2} \det ( 2 \pi P ) \exp \left[
+- \frac{1}{2}
+	( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+- \frac{1}{2}
+	( \theta - \check{\theta} )^\R{T} P^{-1} ( \theta - \check{\theta} )
+\right]
+\] $$
+The derivative of the corresponding negative log likelihood is
+$latex \[
+- ( y - A \theta )^\R{T} V^{-1} A  + ( \theta - \check{\theta} )^\R{T} P^{-1}
+\] $$
+From this point,
+the proof of the equation for the second partial is very similar to
+Lemma 1 and left to the reader.
+$pre
+	$$
+Setting the derivative to zero, we get the corresponding maximum likelihood
+estimate $latex \hat{\theta}$$ satisfies
+$latex \[
+\begin{array}{rcl}
+( y - A \hat{\theta} )^\R{T} V^{-1} A
+& = &
+( \hat{\theta} - \check{\theta} )^\R{T} P^{-1}
+\\
+A^\R{T} V^{-1} y + P^{-1} \check{\theta}
+& = &
+A^\R{T} V^{-1} A \hat{\theta} + P^{-1} \hat{\theta}
+\\
+\hat{\theta}
+& = &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} y + P^{-1} \check{\theta} )
+\\
+\hat{\theta}
+& = &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A \bar{\theta} + P^{-1} \check{\theta} )
++
+( A^\R{T} V^{-1} A + P^{-1} )^{-1} A^\R{T} V^{-1} e
+\end{array}
+\] $$
+The first term is deterministic and the second term is mean zero.
+It follows that
+$latex \[
+\begin{array}{rcl}
+\B{E} [ \hat{\theta} ]
+& = &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A \bar{\theta} + P^{-1} \check{\theta} )
+\\
+\B{E} [
+	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+]
+& = &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+A^\R{T} V^{-1} A
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+\end{array}
+\] $$
+Since the matrix $latex P$$ is positive definite, we have
+$latex \[
+\begin{array}{rcl}
+A^\R{T} V^{-1} A  & \prec & A^\R{T} V^{-1} A + P^{-1}
+\\
+\B{E} [
+	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+]
+& \prec &
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+\end{array}
+\] $$
+This completes the proof of this lemma.
+
+$end

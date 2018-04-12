@@ -50,7 +50,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+
 $head 04-12$$
+$list number$$
+There is a problem with using the sample command
+$cref/simulate/sample_command/method/simulate/$$ method.
+The new $cref posterior$$ model section discusses the problem.
+$lnext
 The requirements for the
 last age (last time) priors were changed so they do not need to be null;
 see null under
@@ -60,6 +66,10 @@ This made it possible to modify the example
 $cref user_change_grid.py$$ so that it removes the
 last age (instead of one in the middle of the grid)
 without having to change any $icode dage_prior_id$$ values.
+There is a problem with using the sample command
+$cref/simulate/sample_command/method/simulate/$$ method.
+The model section $cref posterior$$ discusses the problem.
+$lend
 
 $head 04-11$$
 Instructions for
