@@ -108,16 +108,16 @@ $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head option$$
-The $code option$$ syntax sets
-$codei%
-	%option_value% = %value%
-%$$
-in the row of the $cref option_table$$ specified by
-$codei%
-	%option_name% = %name%
-%$$
-see $cref/option_name/option_table/Conventions/option_name/$$ and
-$cref/option_value/option_table/Conventions/option_value/$$.
+
+$subhead name$$
+Is the name of the option we are setting.
+It must be a valid
+$cref/option_name/option_table/Conventions/option_name/$$.
+
+$subhead value$$
+Is the new
+$cref/option_value/option_table/Conventions/option_value/$$
+for the specified option name.
 
 $subhead Warning$$
 If $icode option_name$$ is $code parent_node_id$$,
@@ -188,15 +188,26 @@ $end
 
 // ----------------------------------------------------------------------------
 void set_option_command(
-	sqlite3*                                   db          ,
-	const std::string&                         name        ,
-	const std::string&                         value       )
+	sqlite3*                                        db           ,
+	const CppAD::vector<dismod_at::option_struct>&  option_table ,
+	const std::string&                              name         ,
+	const std::string&                              value        )
 {	using std::string;
+	// option_table contains all the valid option names with default values
+	// for the names that are not in the option table, check name is valid
+	bool found = false;
+	for(size_t i = 0; i < option_table.size(); ++i)
+		found |= option_table[i].option_name == name;
+	if( ! found )
+	{	string msg  = "set option name value: ";
+		msg += "name = " + name + " is not a valid option name\n";
+		dismod_at::error_exit(msg);
+	}
 	string table_name  = "option";
 	string column_name = "option_name";
 	CppAD::vector<string> option_name;
 	dismod_at::get_table_column(db, table_name, column_name, option_name);
-	bool found = false;
+	found = false;
 	for(size_t i = 0; i < option_name.size(); i++)
 		found |= option_name[i] == name;
 	string sql_cmd;
@@ -2238,7 +2249,7 @@ int main(int n_arg, const char** argv)
 			}
 			std::string name  = argv[4];
 			std::string value = argv[5];
-			set_option_command(db, name, value);
+			set_option_command(db, db_input.option_table, name, value);
 		}
 		else
 		{	std::string table_out     = argv[3];

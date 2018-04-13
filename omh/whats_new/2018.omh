@@ -51,9 +51,16 @@ $childtable%
 %$$
 
 $head 04-13$$
+$list number$$
 Add some text to make it easier to follow
 the final step in the $cref/proof/posterior/Lemma 2/Proof/$$
 of Lemma 2 of the posterior distribution section.
+$lnext
+Print an error and exit when the
+set option $cref/name/set_command/option/name/$$ is not a valid choice
+(the program used to put the invalid option in the option table).
+$lend
+
 
 $head 04-12$$
 $list number$$
