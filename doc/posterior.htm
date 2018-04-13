@@ -155,7 +155,7 @@ for <small>@(@
 y
 @)@</small> has mean
 <small>@(@
-\B{E} [ \hat{\theta} ] = \bar{\theta} ]
+\B{E} [ \hat{\theta} ] = \bar{\theta}
 @)@</small> and variance
 <small>@[@
 
@@ -436,16 +436,27 @@ P
 @)@</small> is positive definite, we have
 <small>@[@
 
-\begin{array}{rcl}
-A^\R{T} V^{-1} A  & \prec & A^\R{T} V^{-1} A + P^{-1}
-\\
+A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + P^{-1}
+
+@]@</small>
+Replacing
+<small>@(@
+A^\R{T} V^{-1} A
+@)@</small> by
+<small>@(@
+A^\R{T} V^{-1} A + P^{-1}
+@)@</small> in the center of the previous expression
+for the variance of <small>@(@
+\hat{\theta}
+@)@</small> we obtain
+<small>@[@
+
 \B{E} [
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
 ]
-& \prec &
+\prec
 ( A^\R{T} V^{-1} A + P^{-1} )^{-1}
-\end{array}
 
 @]@</small>
 This completes the proof of this lemma.
