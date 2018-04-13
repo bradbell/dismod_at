@@ -50,6 +50,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-13$$
+Add some text to make it easier to follow
+the final step in the $cref/proof/posterior/Lemma 2/Proof/$$
+of Lemma 2 of the posterior distribution section.
 
 $head 04-12$$
 $list number$$

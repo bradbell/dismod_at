@@ -39,7 +39,7 @@ $latex \[
 \]$$
 The maximum likelihood estimator $latex \hat{\theta}$$
 for $latex \bar{\theta}$$ given $latex y$$ has mean
-$latex \B{E} [ \hat{\theta} ] = \bar{\theta} ]$$ and variance
+$latex \B{E} [ \hat{\theta} ] = \bar{\theta} $$ and variance
 $latex \[
 \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
 =
@@ -224,16 +224,19 @@ A^\R{T} V^{-1} A
 \] $$
 Since the matrix $latex P$$ is positive definite, we have
 $latex \[
-\begin{array}{rcl}
-A^\R{T} V^{-1} A  & \prec & A^\R{T} V^{-1} A + P^{-1}
-\\
+A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + P^{-1}
+\] $$
+Replacing
+$latex A^\R{T} V^{-1} A $$ by
+$latex  A^\R{T} V^{-1} A + P^{-1}$$ in the center of the previous expression
+for the variance of $latex \hat{\theta}$$ we obtain
+$latex \[
 \B{E} [
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
 ]
-& \prec &
+\prec
 ( A^\R{T} V^{-1} A + P^{-1} )^{-1}
-\end{array}
 \] $$
 This completes the proof of this lemma.
 
