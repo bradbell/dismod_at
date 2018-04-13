@@ -139,10 +139,12 @@ information matrix.
 $head Lemma 2$$
 Suppose that in addition to all the information in
 $cref/Lemma 1/posterior/Lemma 1/$$ we have the prior information
-$latex \theta \sim \B{N}( \check{\theta} , P )$$.
-where $latex P \in \B{R}^{n \times n}$$ is a positive definite matrix.
+$latex \B{p} ( \theta )$$ where
+$latex \theta \sim \B{N}( \check{\theta} , P )$$,
+the vector $latex \check{\theta} \in \B{R}^{n \times 1}$$ and the matrix
+$latex P \in \B{R}^{n \times n}$$ is a positive definite.
 For this case we define $latex \hat{\theta}$$ as the maximizer of
-$latex \B{p}( y | \theta ) \B{p}( \theta | \check{\theta} )$$.
+$latex \B{p}( y | \theta ) \B{p}( \theta )$$.
 It follows that
 $latex \[
 \B{E} [
@@ -153,14 +155,14 @@ $latex \[
 =
 - \; \left(
 	\frac{ \partial^2 } { \partial \theta^2 }
-	\log [ \B{p} ( y | \theta ) \B{p} ( \theta | \check{\theta} ) ]
+	\log [ \B{p} ( y | \theta ) \B{p} ( \theta ) ]
 \right)^{-1}
 \]$$
 where $latex \prec$$ means less than in a positive definite matrix sense.
 
 $subhead Proof$$
 $latex \[
-\B{p} ( y , \theta | \theta )
+\B{p} ( y | \theta ) \B{p} ( \theta )
 =
 \det ( 2 \pi V )^{-1/2} \det ( 2 \pi P )^{-1/2} \exp \left[
 - \frac{1}{2}
