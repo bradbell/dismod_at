@@ -26,17 +26,15 @@ $cref/Lemma 2/posterior/Lemma 2/$$ below shows that,
 because prior information is used with maximum likelihood estimation,
 this yields less variation than it should for the posterior distribution.
 
+
 $head Lemma 1$$
-Suppose we have random noise
-$latex e \in \B{R}^{m \times 1}$$ where $latex e \sim N( 0 , V )$$,
-where that variance matrix
-$latex V \in \B{R}^{m \times m}$$ is positive definite.
-Further suppose for some known $latex A \in \B{R}^{m \times n}$$
-and an unknown $latex \bar{\theta} \in \B{R}^{n \times 1}$$,
-and $latex y \in \B{R}^{m \times 1}$$ is given by
-$latex \[
-	y = A \bar{\theta} + e
-\]$$
+Suppose we are given
+a matrix $latex A \in \B{R}^{m \times n}$$,
+a positive definite matrix, $latex V \in \B{R}^{m \times m}$$ and
+a $latex y \in \B{R}^{m \times 1}$$.
+Further suppose that there is an
+unknown vector $latex \bar{\theta} \in \B{R}^{n \times 1}$$ such that
+$latex y \sim \B{N} ( A \bar{\theta} , V )$$.
 The maximum likelihood estimator $latex \hat{\theta}$$
 for $latex \bar{\theta}$$ given $latex y$$ has mean
 $latex \B{E} [ \hat{\theta} ] = \bar{\theta} $$ and variance
@@ -94,7 +92,12 @@ $latex \[
 A^\R{T} V^{-1} y  & = & A^\R{T} V^{-1} A \hat{\theta}
 \\
 \hat{\theta} & =  & ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} y
-\\
+\end{array}
+\] $$
+Defining $latex e = y - A \bar{\theta}$$, we have
+$latex \B{E} [ e ] = 0$$ and
+$latex \[
+\begin{array}{rcl}
 \hat{\theta} & =  &
 ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} ( A \bar{\theta} + e )
 \\
