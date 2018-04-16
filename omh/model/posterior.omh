@@ -141,11 +141,13 @@ information matrix.
 
 $head Lemma 2$$
 Suppose that in addition to all the information in
-$cref/Lemma 1/posterior/Lemma 1/$$ we have the prior information
-$latex \B{p} ( \theta )$$ where
-$latex \theta \sim \B{N}( \check{\theta} , P )$$,
-the vector $latex \check{\theta} \in \B{R}^{n \times 1}$$ and the matrix
-$latex P \in \B{R}^{n \times n}$$ is a positive definite.
+$cref/Lemma 1/posterior/Lemma 1/$$ we have
+a matrix $latex B \in \B{R}^{p \times n}$$,
+a positive definite matrix, $latex P \in \B{R}^{p \times p}$$,
+and $latex z \in \B{R}^{p \times 1}$$ where we have
+independent prior information
+$latex B \theta \sim \B{N}( z , P )$$.
+Further suppose $latex B$$ has rank $latex n$$.
 For this case we define $latex \hat{\theta}$$ as the maximizer of
 $latex \B{p}( y | \theta ) \B{p}( \theta )$$.
 It follows that
@@ -154,7 +156,7 @@ $latex \[
 	( \hat{\theta} - \B{E}[ \hat{\theta} ] )
 	( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
 \prec
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 =
 - \; \left(
 	\frac{ \partial^2 } { \partial \theta^2 }
@@ -171,12 +173,12 @@ $latex \[
 - \frac{1}{2}
 	( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
 - \frac{1}{2}
-	( \theta - \check{\theta} )^\R{T} P^{-1} ( \theta - \check{\theta} )
+	( B \theta - z )^\R{T} P^{-1} ( B \theta - z )
 \right]
 \] $$
 The derivative of the corresponding negative log likelihood is
 $latex \[
-- ( y - A \theta )^\R{T} V^{-1} A  + ( \theta - \check{\theta} )^\R{T} P^{-1}
+- ( y - A \theta )^\R{T} V^{-1} A  + ( B \theta - z )^\R{T} P^{-1} B
 \] $$
 From this point,
 the proof of the equation for the second partial is very similar to
@@ -189,23 +191,23 @@ $latex \[
 \begin{array}{rcl}
 ( y - A \hat{\theta} )^\R{T} V^{-1} A
 & = &
-( \hat{\theta} - \check{\theta} )^\R{T} P^{-1}
+( B \hat{\theta} - z )^\R{T} P^{-1} B
 \\
-A^\R{T} V^{-1} y + P^{-1} \check{\theta}
+y^\R{T} V^{-1} A + z^\R{T} P^{-1} B
 & = &
-A^\R{T} V^{-1} A \hat{\theta} + P^{-1} \hat{\theta}
-\\
-\hat{\theta}
-& = &
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
-( A^\R{T} V^{-1} y + P^{-1} \check{\theta} )
+\hat{\theta}^\R{T} A^\R{T} V^{-1} A + \hat{\theta}^\R{T} B^\R{T} P^{-1} B
 \\
 \hat{\theta}
 & = &
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
-( A^\R{T} V^{-1} A \bar{\theta} + P^{-1} \check{\theta} )
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+( A^\R{T} V^{-1} y + B^\R{T} P^{-1} z )
+\\
+\hat{\theta}
+& = &
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
 +
-( A^\R{T} V^{-1} A + P^{-1} )^{-1} A^\R{T} V^{-1} e
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1} A^\R{T} V^{-1} e
 \end{array}
 \] $$
 The first term is deterministic and the second term is mean zero.
@@ -214,26 +216,27 @@ $latex \[
 \begin{array}{rcl}
 \B{E} [ \hat{\theta} ]
 & = &
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
-( A^\R{T} V^{-1} A \bar{\theta} + P^{-1} \check{\theta} )
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
 \\
 \B{E} [
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
 ]
 & = &
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 A^\R{T} V^{-1} A
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 \end{array}
 \] $$
-Since the matrix $latex P$$ is positive definite, we have
+Since the matrix $latex B^\R{T} P^{-1} B$$ is positive definite, we have
 $latex \[
-A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + P^{-1}
+A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + B^\R{T} P^{-1} B
 \] $$
 Replacing
 $latex A^\R{T} V^{-1} A $$ by
-$latex  A^\R{T} V^{-1} A + P^{-1}$$ in the center of the previous expression
+$latex  A^\R{T} V^{-1} A + B^\R{T} P^{-1} B$$
+in the center of the previous expression
 for the variance of $latex \hat{\theta}$$ we obtain
 $latex \[
 \B{E} [
@@ -241,19 +244,14 @@ $latex \[
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
 ]
 \prec
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 \] $$
 This completes the proof of this lemma.
 
 $head Remark 2$$
-If $latex \check{\theta} = \bar{\theta}$$
-in $cref/Lemma 2/posterior/Lemma 2/$$, then
-$latex \B{E} [ \hat{\theta} ]$$ is also equal to $latex \bar{\theta}$$.
-
-$head Remark 3$$
 Suppose we simulate data $latex y$$ as in $cref/Lemma 1/posterior/Lemma 1/$$
-and independent data $latex z \sim \B{N}( \bar{\theta}, P)$$ were
-$latex P$$ is as in $cref/Lemma 2/posterior/Lemma 2/$$.
+and independent data $latex z \sim \B{N}( B \bar{\theta}, P)$$ were
+$latex B$$, $latex P$$ are as in $cref/Lemma 2/posterior/Lemma 2/$$.
 Furthermore, we define $latex \hat{\theta}$$ as the maximizer of
 $latex \[
 	\B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
@@ -262,7 +260,7 @@ It follows from Lemma 1 that $latex \B{E} [ \hat{\theta} ] = \bar{\theta}$$ and
 $latex \[
 \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
 =
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 \] $$
 
 $end

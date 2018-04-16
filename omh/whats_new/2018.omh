@@ -51,9 +51,14 @@ $childtable%
 %$$
 
 $head 04-16$$
+$list number$$
+Add a linear matrix $latex B$$ to the prior in
+$cref/Lemma 2/posterior/Lemma 2/$$ so that it can apply to
+computing the posterior statistics when we have difference priors.
+$lnext
 Add $cref/Remark 2/posterior/Remark 2/$$
-and $cref/Remark 3/posterior/Remark 3/$$
 to the posterior simulation discussion.
+$lend
 
 $head 04-13$$
 $list number$$
