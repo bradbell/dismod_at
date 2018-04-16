@@ -242,4 +242,24 @@ $latex \[
 \] $$
 This completes the proof of this lemma.
 
+$head Remark 2$$
+If $latex \check{\theta} = \bar{\theta}$$
+in $cref/Lemma 2/posterior/Lemma 2/$$, then
+$latex \B{E} [ \hat{\theta} ]$$ is also equal to $latex \bar{\theta}$$.
+
+$head Remark 3$$
+Suppose we simulate data $latex y$$ as in $cref/Lemma 1/posterior/Lemma 1/$$
+and independent data $latex z \sim \B{N}( \bar{\theta}, P)$$ were
+$latex P$$ is as in $cref/Lemma 2/posterior/Lemma 2/$$.
+Furthermore, we define $latex \hat{\theta}$$ as the maximizer of
+$latex \[
+	\B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
+\] $$
+It follows from Lemma 1 that $latex \B{E} [ \hat{\theta} ] = \bar{\theta}$$ and
+$latex \[
+\B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+=
+( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+\] $$
+
 $end
