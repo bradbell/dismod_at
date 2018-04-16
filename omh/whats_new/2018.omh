@@ -50,6 +50,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-16$$
+Add $cref/Remark 2/posterior/Remark 2/$$
+and $cref/Remark 3/posterior/Remark 3/$$
+to the posterior simulation discussion.
+
 $head 04-13$$
 $list number$$
 Add some text to make it easier to follow
