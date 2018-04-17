@@ -21,6 +21,11 @@ namespace dismod_at {
 		size_t  dage_prior_id;
 		size_t  dtime_prior_id;
 	};
+	CppAD::vector<var_prior_struct>  pack_var_prior(
+		const pack_info&                     pack_object  ,
+		const CppAD::vector<smooth_info>&    s_info_vec
+	);
+	//
 	struct diff_prior_struct {
 		enum { dage_enum, dtime_enum } direction;
 		size_t plus_var_id;

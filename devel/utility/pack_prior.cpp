@@ -611,9 +611,7 @@ CppAD::vector<var_prior_struct>  pack_var_prior(
 			set_prior(var2prior, offset, s_info_vec[smooth_id]);
 		}
 	}
-
-
-
+	return var2prior;
 }
 
 
