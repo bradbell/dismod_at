@@ -372,7 +372,7 @@ CppAD::vector<diff_prior_struct> pack_diff_prior(
 		}
 	}
 
-	// get prioirs for measurement covariates
+	// get priors for measurement covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	// measurement mean covariates for this integrand
 		size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
