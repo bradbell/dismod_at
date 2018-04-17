@@ -286,26 +286,32 @@ prior_object_  ( prior_object )
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object.size() == n_var );
 	//
-	// value_prior_id_, const_value_
-	pack_value_prior(value_prior_id_, const_value_, pack_object, s_info_vec);
-	assert( value_prior_id_.size() == n_var );
-	assert( const_value_.size() == n_var );
+	// var2prior_
+	var2prior_ = pack_var_prior(pack_object, s_info_vec);
+	assert( var2prior_.size() == n_var );
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
 	//
 	// random lower in prior
-	d_vector pack_vec = const_value_;
+	d_vector pack_vec(n_var);
 	for(size_t i = 0; i < n_var; i++)
-		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[ value_prior_id_[i] ].lower;
+	{	size_t prior_id = var2prior_[i].value_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[prior_id].lower;
+		else
+			pack_vec[i] = var2prior_[i].const_value;
+	}
 	random_lower_.resize(n_random_);
 	unpack_random(pack_object_, pack_vec, random_lower_);
 	//
 	// random upper in prior
-	pack_vec = const_value_;
 	for(size_t i = 0; i < n_var; i++)
-		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[ value_prior_id_[i] ].upper;
+	{	size_t prior_id = var2prior_[i].value_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[prior_id].upper;
+		else
+			pack_vec[i] = var2prior_[i].const_value;
+	}
 	random_upper_.resize(n_random_);
 	unpack_random(pack_object_, pack_vec, random_upper_);
 	//
@@ -362,7 +368,7 @@ prior_object_  ( prior_object )
 	for(size_t var_id = 0; var_id < n_var; var_id++)
 	{	size_t fixed_id = var_id2fixed_[var_id];
 		if( fixed_id < n_fixed_ )
-		{	size_t prior_id  = value_prior_id_[var_id];
+		{	size_t prior_id  = var2prior_[var_id].value_prior_id;
 			if( prior_id != DISMOD_AT_NULL_SIZE_T )
 			{	prior_struct prior          = prior_table[prior_id];
 				fixed_scale_eta_[fixed_id]  = prior.eta;
@@ -469,33 +475,42 @@ $end
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
-	assert( value_prior_id_.size() == n_var );
+	assert( var2prior_.size() == n_var );
 	d_vector pack_vec( n_var );
 
 	// fixed_lower
 	d_vector fixed_lower(n_fixed_);
-	pack_vec = const_value_;
 	for(size_t i = 0; i < n_var; i++)
-		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[ value_prior_id_[i] ].lower;
+	{	size_t prior_id = var2prior_[i].value_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[prior_id].lower;
+		else
+			pack_vec[i] = var2prior_[i].const_value;
+	}
 	unpack_fixed(pack_object_, pack_vec, fixed_lower);
 	scale_fixed_effect(fixed_lower, fixed_lower);
 
 	// fixed_upper
 	d_vector fixed_upper(n_fixed_);
-	pack_vec = const_value_;
 	for(size_t i = 0; i < n_var; i++)
-		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[ value_prior_id_[i] ].upper;
+	{	size_t prior_id = var2prior_[i].value_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[prior_id].upper;
+		else
+			pack_vec[i] = var2prior_[i].const_value;
+	}
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);
 
 	// fixed_mean
 	d_vector fixed_mean(n_fixed_);
-	pack_vec = const_value_;
 	for(size_t i = 0; i < n_var; i++)
-		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[ value_prior_id_[i] ].mean;
+	{	size_t prior_id = var2prior_[i].value_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[prior_id].mean;
+		else
+			pack_vec[i] = var2prior_[i].const_value;
+	}
 	unpack_fixed(pack_object_, pack_vec, fixed_mean);
 	scale_fixed_effect(fixed_mean, fixed_mean);
 
@@ -866,19 +881,25 @@ $end
 	// fixed_lower
 	CppAD::vector<double> pack_vec( n_var );
 	CppAD::vector<double> fixed_lower(n_fixed_);
-	pack_vec = const_value_;
 	for(size_t i = 0; i < n_var; i++)
-		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[ value_prior_id_[i] ].lower;
+	{	size_t prior_id = var2prior_[i].value_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[prior_id].lower;
+		else
+			pack_vec[i] = var2prior_[i].const_value;
+	}
 	unpack_fixed(pack_object_, pack_vec, fixed_lower);
 	scale_fixed_effect(fixed_lower, fixed_lower);
 
 	// fixed_upper
 	CppAD::vector<double> fixed_upper(n_fixed_);
-	pack_vec = const_value_;
 	for(size_t i = 0; i < n_var; i++)
-		if( value_prior_id_[i] != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[ value_prior_id_[i] ].upper;
+	{	size_t prior_id = var2prior_[i].value_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = prior_table_[prior_id].upper;
+		else
+			pack_vec[i] = var2prior_[i].const_value;
+	}
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);
 	//

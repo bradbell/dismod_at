@@ -193,6 +193,11 @@ $codei%
 	%s_info%.dtime_prior_id(%i%, %j%) = %dtime_prior_id%[%i%*%n_time% + %j%]
 %$$
 where $icode%n_time% = %time_id%.size()%$$.
+There is an exception here,
+$codei%dage_prior_id(%i%, %j%)%$$
+returns null when %i% is the last age index and
+$codei%dtime_prior_id(%i%, %j%)%$$
+returns null when %j% is the last time index.
 
 
 $subhead mulstd_type$$
@@ -441,12 +446,19 @@ smooth_info::smooth_info(
 	mulstd_value_    = mulstd_value;
 	mulstd_dage_     = mulstd_dage;
 	mulstd_dtime_    = mulstd_dtime;
+	//
+	size_t n_age  = age_id.size();
+	size_t n_time = time_id.size();
 # ifndef NDEBUG
-	for(size_t i = 1; i < age_id.size(); i++)
+	for(size_t i = 1; i < n_age; i++)
 		assert( age_table[age_id[i-1]] < age_table[age_id[i]] );
-	for(size_t j = 1; j < time_id.size(); j++)
+	for(size_t j = 1; j < n_time; j++)
 		assert( time_table[time_id[j-1]] < time_table[time_id[j]] );
 # endif
+	for(size_t i = 0; i < n_age; ++i)
+		dtime_prior_id_[ i * n_time + (n_time - 1)] = DISMOD_AT_NULL_SIZE_T;
+	for(size_t j = 0; j < n_time; ++j)
+		dage_prior_id_[ (n_age - 1) * n_time + j]   = DISMOD_AT_NULL_SIZE_T;
 }
 
 // Normal Constructor
