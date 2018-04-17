@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,6 +14,13 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/smooth_info.hpp>
 
 namespace dismod_at {
+	struct var_prior_struct {
+		size_t  n_time;
+		double  const_value;
+		size_t  value_prior_id;
+		size_t  dage_prior_id;
+		size_t  dtime_prior_id;
+	};
 	struct diff_prior_struct {
 		enum { dage_enum, dtime_enum } direction;
 		size_t plus_var_id;
