@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Directly Setting Table Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Directly Setting Table Values">
-<meta name="keywords" id="keywords" content=" directly setting table values syntax database option warning table_out start_var scale_var truth_var source prior_mean fit_var sample example ">
+<meta name="keywords" id="keywords" content=" directly setting table values syntax database option name value warning table_out start_var scale_var truth_var source prior_mean fit_var sample example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -56,6 +56,8 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>database</option>
 <option>option</option>
+<option>---..name</option>
+<option>---..value</option>
 <option>---..Warning</option>
 <option>table_out</option>
 <option>---..start_var</option>
@@ -132,22 +134,25 @@ Is an
 <br>
 <br>
 <b><big><a name="option" id="option">option</a></big></b>
+
+
 <br>
-The <code><font color="blue">option</font></code> syntax sets
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-in the row of the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
- specified by
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-see <a href="option_table.htm#Conventions.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
- and
-<a href="option_table.htm#Conventions.option_value" target="_top"><span style='white-space: nowrap'>option_value</span></a>
+<br>
+<big><a name="option.name" id="option.name">name</a></big>
+<br>
+Is the name of the option we are setting.
+It must be a valid
+<a href="option_table.htm#Conventions.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
 .
+
+<br>
+<br>
+<big><a name="option.value" id="option.value">value</a></big>
+<br>
+Is the new
+<a href="option_table.htm#Conventions.option_value" target="_top"><span style='white-space: nowrap'>option_value</span></a>
+
+for the specified option name.
 
 <br>
 <br>

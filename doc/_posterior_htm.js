@@ -16,7 +16,8 @@ var list_current0 = [
 'posterior.htm#Lemma 1.Proof',
 'posterior.htm#Remark 1',
 'posterior.htm#Lemma 2',
-'posterior.htm#Lemma 2.Proof'
+'posterior.htm#Lemma 2.Proof',
+'posterior.htm#Remark 2'
 ];
 var list_down2 = [
 'install_unix.htm',

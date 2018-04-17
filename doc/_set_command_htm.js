@@ -14,6 +14,8 @@ var list_current0 = [
 'set_command.htm#Syntax',
 'set_command.htm#database',
 'set_command.htm#option',
+'set_command.htm#option.name',
+'set_command.htm#option.value',
 'set_command.htm#option.Warning',
 'set_command.htm#table_out',
 'set_command.htm#table_out.start_var',

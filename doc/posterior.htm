@@ -59,6 +59,7 @@ A:active { color : purple }
 <option>Remark 1</option>
 <option>Lemma 2</option>
 <option>---..Proof</option>
+<option>Remark 2</option>
 </select>
 </td>
 <td><a href="command.htm" target="_top">Next</a>
@@ -118,34 +119,28 @@ in order to sample from the posterior distribution for the parameters.
 because prior information is used with maximum likelihood estimation,
 this yields less variation than it should for the posterior distribution.
 
+
 <br>
 <br>
 <b><big><a name="Lemma 1" id="Lemma 1">Lemma 1</a></big></b>
 <br>
-Suppose we have random noise
-<small>@(@
-e \in \B{R}^{m \times 1}
-@)@</small> where <small>@(@
-e \sim N( 0 , V )
-@)@</small>,
-where that variance matrix
-<small>@(@
-V \in \B{R}^{m \times m}
-@)@</small> is positive definite.
-Further suppose for some known <small>@(@
+Suppose we are given
+a matrix <small>@(@
 A \in \B{R}^{m \times n}
-@)@</small>
-and an unknown <small>@(@
-\bar{\theta} \in \B{R}^{n \times 1}
 @)@</small>,
-and <small>@(@
+a positive definite matrix, <small>@(@
+V \in \B{R}^{m \times m}
+@)@</small> and
+a <small>@(@
 y \in \B{R}^{m \times 1}
-@)@</small> is given by
-<small>@[@
-
-	y = A \bar{\theta} + e
-
-@]@</small>
+@)@</small>.
+Further suppose that there is an
+unknown vector <small>@(@
+\bar{\theta} \in \B{R}^{n \times 1}
+@)@</small> such that
+<small>@(@
+y \sim \B{N} ( A \bar{\theta} , V )
+@)@</small>.
 The maximum likelihood estimator <small>@(@
 \hat{\theta}
 @)@</small>
@@ -243,7 +238,18 @@ f^{(1)} ( \hat{\theta} ) = 0
 A^\R{T} V^{-1} y  & = & A^\R{T} V^{-1} A \hat{\theta}
 \\
 \hat{\theta} & =  & ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} y
-\\
+\end{array}
+
+@]@</small>
+Defining <small>@(@
+e = y - A \bar{\theta}
+@)@</small>, we have
+<small>@(@
+\B{E} [ e ] = 0
+@)@</small> and
+<small>@[@
+
+\begin{array}{rcl}
 \hat{\theta} & =  &
 ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} ( A \bar{\theta} + e )
 \\
@@ -322,18 +328,30 @@ information matrix.
 <br>
 Suppose that in addition to all the information in
 <a href="posterior.htm#Lemma 1" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;1</span></a>
- we have the prior information
+ we have
+a matrix <small>@(@
+B \in \B{R}^{p \times n}
+@)@</small>,
+a positive definite matrix, <small>@(@
+P \in \B{R}^{p \times p}
+@)@</small>,
+and <small>@(@
+z \in \B{R}^{p \times 1}
+@)@</small> where we have
+independent prior information
 <small>@(@
-\theta \sim \B{N}( \check{\theta} , P )
+B \theta \sim \B{N}( z , P )
 @)@</small>.
-where <small>@(@
-P \in \B{R}^{n \times n}
-@)@</small> is a positive definite matrix.
+Further suppose <small>@(@
+B
+@)@</small> has rank <small>@(@
+n
+@)@</small>.
 For this case we define <small>@(@
 \hat{\theta}
 @)@</small> as the maximizer of
 <small>@(@
-\B{p}( y | \theta ) \B{p}( \theta | \check{\theta} )
+\B{p}( y | \theta ) \B{p}( \theta )
 @)@</small>.
 It follows that
 <small>@[@
@@ -342,11 +360,11 @@ It follows that
 	( \hat{\theta} - \B{E}[ \hat{\theta} ] )
 	( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
 \prec
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 =
 - \; \left(
 	\frac{ \partial^2 } { \partial \theta^2 }
-	\log [ \B{p} ( y | \theta ) \B{p} ( \theta | \check{\theta} ) ]
+	\log [ \B{p} ( y | \theta ) \B{p} ( \theta ) ]
 \right)^{-1}
 
 @]@</small>
@@ -361,19 +379,19 @@ where <small>@(@
 <br>
 <small>@[@
 
-\B{p} ( y , \theta | \theta )
+\B{p} ( y | \theta ) \B{p} ( \theta )
 =
 \det ( 2 \pi V )^{-1/2} \det ( 2 \pi P )^{-1/2} \exp \left[
 - \frac{1}{2}
 	( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
 - \frac{1}{2}
-	( \theta - \check{\theta} )^\R{T} P^{-1} ( \theta - \check{\theta} )
+	( B \theta - z )^\R{T} P^{-1} ( B \theta - z )
 \right]
 
 @]@</small>The derivative of the corresponding negative log likelihood is
 <small>@[@
 
-- ( y - A \theta )^\R{T} V^{-1} A  + ( \theta - \check{\theta} )^\R{T} P^{-1}
+- ( y - A \theta )^\R{T} V^{-1} A  + ( B \theta - z )^\R{T} P^{-1} B
 
 @]@</small>
 From this point,
@@ -390,23 +408,23 @@ estimate <small>@(@
 \begin{array}{rcl}
 ( y - A \hat{\theta} )^\R{T} V^{-1} A
 & = &
-( \hat{\theta} - \check{\theta} )^\R{T} P^{-1}
+( B \hat{\theta} - z )^\R{T} P^{-1} B
 \\
-A^\R{T} V^{-1} y + P^{-1} \check{\theta}
+y^\R{T} V^{-1} A + z^\R{T} P^{-1} B
 & = &
-A^\R{T} V^{-1} A \hat{\theta} + P^{-1} \hat{\theta}
-\\
-\hat{\theta}
-& = &
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
-( A^\R{T} V^{-1} y + P^{-1} \check{\theta} )
+\hat{\theta}^\R{T} A^\R{T} V^{-1} A + \hat{\theta}^\R{T} B^\R{T} P^{-1} B
 \\
 \hat{\theta}
 & = &
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
-( A^\R{T} V^{-1} A \bar{\theta} + P^{-1} \check{\theta} )
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+( A^\R{T} V^{-1} y + B^\R{T} P^{-1} z )
+\\
+\hat{\theta}
+& = &
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
 +
-( A^\R{T} V^{-1} A + P^{-1} )^{-1} A^\R{T} V^{-1} e
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1} A^\R{T} V^{-1} e
 \end{array}
 
 @]@</small>
@@ -417,26 +435,26 @@ It follows that
 \begin{array}{rcl}
 \B{E} [ \hat{\theta} ]
 & = &
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
-( A^\R{T} V^{-1} A \bar{\theta} + P^{-1} \check{\theta} )
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
 \\
 \B{E} [
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
 ]
 & = &
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 A^\R{T} V^{-1} A
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 \end{array}
 
 @]@</small>
 Since the matrix <small>@(@
-P
+B^\R{T} P^{-1} B
 @)@</small> is positive definite, we have
 <small>@[@
 
-A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + P^{-1}
+A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + B^\R{T} P^{-1} B
 
 @]@</small>
 Replacing
@@ -444,8 +462,9 @@ Replacing
 A^\R{T} V^{-1} A
 @)@</small> by
 <small>@(@
-A^\R{T} V^{-1} A + P^{-1}
-@)@</small> in the center of the previous expression
+A^\R{T} V^{-1} A + B^\R{T} P^{-1} B
+@)@</small>
+in the center of the previous expression
 for the variance of <small>@(@
 \hat{\theta}
 @)@</small> we obtain
@@ -456,10 +475,46 @@ for the variance of <small>@(@
 	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
 ]
 \prec
-( A^\R{T} V^{-1} A + P^{-1} )^{-1}
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 
 @]@</small>
 This completes the proof of this lemma.
+
+<br>
+<br>
+<b><big><a name="Remark 2" id="Remark 2">Remark 2</a></big></b>
+<br>
+Suppose we simulate data <small>@(@
+y
+@)@</small> as in <a href="posterior.htm#Lemma 1" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;1</span></a>
+
+and independent data <small>@(@
+z \sim \B{N}( B \bar{\theta}, P)
+@)@</small> were
+<small>@(@
+B
+@)@</small>, <small>@(@
+P
+@)@</small> are as in <a href="posterior.htm#Lemma 2" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;2</span></a>
+.
+Furthermore, we define <small>@(@
+\hat{\theta}
+@)@</small> as the maximizer of
+<small>@[@
+
+	\B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
+
+@]@</small>
+It follows from Lemma 1 that <small>@(@
+\B{E} [ \hat{\theta} ] = \bar{\theta}
+@)@</small> and
+<small>@[@
+
+\B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+=
+( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+
+@]@</small>
 
 
 <hr>Input File: omh/model/posterior.omh
