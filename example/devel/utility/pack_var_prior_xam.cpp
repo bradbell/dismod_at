@@ -212,8 +212,7 @@ bool pack_var_prior_xam(void)
 		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
 	);
 	// ----------------------- value_prior -------------------------------
-	vector<dismod_at::var_prior_struct> var2prior =
-		dismod_at::pack_var_prior(pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
 	dismod_at::pack_info::subvec_info info;
 	//
 	// check mulstd
@@ -221,7 +220,7 @@ bool pack_var_prior_xam(void)
 	{	for(size_t k = 0; k < 3; k++)
 		{	size_t offset  = pack_object.mulstd_offset(smooth_id, k);
 			assert( offset != DISMOD_AT_NULL_SIZE_T );
-			ok &= var2prior[offset].value_prior_id == k;
+			ok &= var2prior.value_prior_id(offset) == k;
 		}
 	}
 	//
@@ -235,7 +234,7 @@ bool pack_var_prior_xam(void)
 			for(size_t i = 0; i < n_age; i++)
 			{	for(size_t j = 0; j < n_time; j++)
 				{	size_t index    = info.offset + i * n_time + j;
-					size_t prior_id = var2prior[index].value_prior_id;
+					size_t prior_id = var2prior.value_prior_id(index);
 					ok &= s_info.value_prior_id(i, j) == prior_id;
 				}
 			}

@@ -11,44 +11,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/null_int.hpp>
 
-// ----------------------------------------------------------------------------
-namespace {
-	void set_prior(
-		CppAD::vector<dismod_at::var_prior_struct>&   result  ,
-		size_t                                        offset  ,
-		const dismod_at::smooth_info&                 s_info  )
-	{	//
-		size_t n_age     = s_info.age_size();
-		size_t n_time    = s_info.time_size();
-		//
-		// loop over grid points for this smoothing in age, time order
-		for(size_t i = 0; i < n_age; i++)
-		{	for(size_t j = 0; j < n_time; j++)
-			{	// var_id
-				size_t var_id   = offset + i * n_time + j;
-				//
-				// n_time
-				result[var_id].n_time = n_time;
-				//
-				// value prior
-				result[var_id].value_prior_id = s_info.value_prior_id(i, j);
-				result[var_id].const_value    = s_info.const_value(i, j);
-				//
-				// dage prior
-				result[var_id].dage_prior_id = s_info.dage_prior_id(i, j);
-				CPPAD_ASSERT_UNKNOWN( i + 1 < n_age ||
-					result[var_id].dage_prior_id == DISMOD_AT_NULL_SIZE_T
-				);
-				//
-				// dtime_prior
-				result[var_id].dtime_prior_id = s_info.dtime_prior_id(i, j);
-				CPPAD_ASSERT_UNKNOWN( j + 1 < n_time ||
-					result[var_id].dtime_prior_id == DISMOD_AT_NULL_SIZE_T
-				);
-			}
-		}
-	}
-}
 /*
 -------------------------------------------------------------------------------
 $begin pack_var_prior$$
@@ -64,12 +26,26 @@ $$
 $section Priors in Variable ID Order$$
 
 $head Syntax$$
-$icode%var2prior% = pack_var_prior(%pack_object%, %s_info_vec%)
+$codei%pack_prior% %var2prior%(%pack_object%, %s_info_vec%)
+%$$
+$icode%size%           = %var2prior%.size()
+%$$
+$icode%const_value%    = %var2prior%.const_value(%var_id%)
+%$$
+$icode%value_prior_id% = %var2prior%.%value_prior_id(%var_id%)
+%$$
+$icode%dage_prior_id%  = %var2prior%.%dage_prior_id(%var_id%)
+%$$
+$icode%dtime_prior_id% = %var2prior%.%dtime_prior_id(%var_id%)
+%$$
+$icode%dage_var_id%    = %var2prior%.%dage_next(%var_id%)
+%$$
+$icode%dtime_var_id%   = %var2prior%.%dtime_next(%var_id%)
 %$$
 
 $head Prototype$$
 $srcfile%devel/utility/pack_prior.cpp
-	%0%// BEGIN PACK_VAR_PRIOR_PROTOTYPE%// END PACK_VAR_PRIOR_PROTOTYPE%1%
+	%0%// BEGIN CTOR_PROTOTYPE%// END CTOR_PROTOTYPE%1%
 %$$
 
 $head pack_object$$
@@ -84,44 +60,57 @@ $codei%
 is the corresponding $cref smooth_info$$ information.
 
 $head var2prior$$
-For each $cref/var_id/var_table/var_id/$$,
-$icode%var2prior%[%var_id%]%$$ contains the corresponding prior information
-for the value.
+an object that reports that prior information as a function of
+$cref/var_id/var_table/var_id/$$.
 
-$head var_prior_struct$$
-For each $icode var_id$$, the corresponding $code var_prior_struct$$
-contains the following information:
+$head size$$
+This is the number of variables in the model; i.e.,
+it is equal to $icode%pack_object%.size()%$$.
 
-$subhead n_time$$
-This is the distance between age grid points at the same time.
-The distance between time points at the same age is one.
+$head var_id$$
+The variable names that end in
+$cref/var_id/var_table/var_id/$$
+have type $code size_t$$ and are an index in the variable table.
 
-$subhead const_value$$
-Either this is nan, $icode value_prior_id$$ is null,
-but not both.
-If  $icode value_prior_id$$ is null,
+$head prior_id$$
+The variable names that end in
+$cref/prior_id/prior_table/prior_id/$$
+have type $code size_t$$ and are an index in the prior table.
+
+$head const_value$$
+For each $icode var_id$$,
+either $icode const_value$$ this is nan or
+$icode value_prior_id$$ is null but not both.
+If $icode value_prior_id$$ is null,
 $icode const_value$$ is the value at this variable is constrained to.
 
-$subhead value_prior_id$$
-Either this is $code null$$, $icode const_value$$ is nan,
-but not both.
-If  $icode const_value$$ is nan,
+$head value_prior_id$$
+Either this is $code null$$ or $icode const_value$$ is nan but not both.
+If $icode const_value$$ is nan,
 $icode value_prior_id$$ identifies the prior for
 the value of this variable.
 
-$subhead dage_prior_id$$
+$head dage_prior_id$$
 If $icode dage_prior_id$$ is null,
 this variable corresponding to the maximum age in a smoothing grid.
 Otherwise $icode dage_prior_id$$ identifies the  prior for
 the difference between the variable with index
-$icode var_id$$ and the variable with index $icode%var_id% + %n_time%$$.
+$icode var_id$$ and the variable with index $icode dage_var_id$$.
 
-$subhead dtime_prior_id$$
+$head dtime_prior_id$$
 If $icode dtime_prior_id$$ is null,
 this variable corresponding to the maximum time in a smoothing grid.
-Otherwise $icode dtime_prior_id$$ identifies the  prior for
+Otherwise $icode dtime_prior_id$$ identifies the prior for
 the difference between the variable with index
-$icode var_id$$ and the variable with index $icode%var_id% + 1%$$.
+$icode var_id$$ and the variable with index $icode dtime_var_id$$.
+
+$head dage_var_id$$
+If $icode dage_prior_id$$ is not null, this is the
+next variable in the age difference.
+
+$head dtime_var_id$$
+If $icode dtime_prior_id$$ is not null, this is the
+next variable in the time difference.
 
 $children%
 	example/devel/utility/pack_var_prior_xam.cpp
@@ -135,11 +124,77 @@ $end
 */
 namespace dismod_at {
 
-// BEGIN PACK_VAR_PRIOR_PROTOTYPE
-CppAD::vector<var_prior_struct>  pack_var_prior(
+// size
+size_t pack_prior::size(void) const
+{	return prior_vec_.size(); }
+
+// const_value
+double pack_prior::const_value(size_t var_id) const
+{	return prior_vec_[var_id].const_value; }
+
+// value_prior_id
+size_t pack_prior::value_prior_id(size_t var_id) const
+{	return prior_vec_[var_id].value_prior_id; }
+
+// dage_prior_id
+size_t pack_prior::dage_prior_id(size_t var_id) const
+{	return prior_vec_[var_id].dage_prior_id; }
+
+// dtime_prior_id
+size_t pack_prior::dtime_prior_id(size_t var_id) const
+{	return prior_vec_[var_id].dtime_prior_id; }
+
+// dage_var_id
+size_t pack_prior::dage_var_id(size_t var_id) const
+{	return var_id + prior_vec_[var_id].n_time; }
+
+// dtime_var_id
+size_t pack_prior::dtime_var_id(size_t var_id) const
+{	return var_id + 1; }
+
+// set_prior
+void pack_prior::set_prior(
+	CppAD::vector<dismod_at::pack_prior::one_prior_struct>&   prior_vec  ,
+	size_t                                                    offset     ,
+	const dismod_at::smooth_info&                             s_info     )
+{	//
+	size_t n_age     = s_info.age_size();
+	size_t n_time    = s_info.time_size();
+	//
+	// loop over grid points for this smoothing in age, time order
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; j++)
+		{	// var_id
+			size_t var_id   = offset + i * n_time + j;
+			//
+			// n_time
+			prior_vec[var_id].n_time = n_time;
+			//
+			// value prior
+			prior_vec[var_id].value_prior_id = s_info.value_prior_id(i, j);
+			prior_vec[var_id].const_value    = s_info.const_value(i, j);
+			//
+			// dage prior
+			prior_vec[var_id].dage_prior_id = s_info.dage_prior_id(i, j);
+			CPPAD_ASSERT_UNKNOWN( i + 1 < n_age ||
+				prior_vec[var_id].dage_prior_id == DISMOD_AT_NULL_SIZE_T
+			);
+			//
+			// dtime_prior
+			prior_vec[var_id].dtime_prior_id = s_info.dtime_prior_id(i, j);
+			CPPAD_ASSERT_UNKNOWN( j + 1 < n_time ||
+				prior_vec[var_id].dtime_prior_id == DISMOD_AT_NULL_SIZE_T
+			);
+		}
+	}
+	return;
+}
+
+// BEGIN CTOR_PROTOTYPE
+pack_prior::pack_prior(
 	const pack_info&                   pack_object ,
 	const CppAD::vector<smooth_info>&  s_info_vec  )
-// END PACK_VAR_PRIOR_PROTOTYPE
+// END CTOR_PROTOTYPE
 {
 	//
 	pack_info::subvec_info info;
@@ -151,16 +206,16 @@ CppAD::vector<var_prior_struct>  pack_var_prior(
 	size_t n_smooth    = s_info_vec.size();
 	//
 	// -----------------------------------------------------------------------
-	// initialize all values as not defined
-	CppAD::vector<var_prior_struct> var2prior(n_var);
+	// initialize everyting as nan or null
+	prior_vec_.resize(n_var);
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
-	{	var2prior[var_id].n_time         = DISMOD_AT_NULL_SIZE_T;
-		var2prior[var_id].const_value    = nan;
-		var2prior[var_id].value_prior_id = DISMOD_AT_NULL_SIZE_T;
-		var2prior[var_id].dage_prior_id  = DISMOD_AT_NULL_SIZE_T;
-		var2prior[var_id].dtime_prior_id = DISMOD_AT_NULL_SIZE_T;
+	{	prior_vec_[var_id].n_time         = DISMOD_AT_NULL_SIZE_T;
+		prior_vec_[var_id].const_value    = nan;
+		prior_vec_[var_id].value_prior_id = DISMOD_AT_NULL_SIZE_T;
+		prior_vec_[var_id].dage_prior_id  = DISMOD_AT_NULL_SIZE_T;
+		prior_vec_[var_id].dtime_prior_id = DISMOD_AT_NULL_SIZE_T;
 	}
-	// -----------------------------------------------------------------------
+	//
 	// get priors for standard devaition multipliers
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	// multipliers for this smoothing
@@ -186,8 +241,8 @@ CppAD::vector<var_prior_struct>  pack_var_prior(
 					assert(false);
 				}
 				// this prior is for a constant; i.e., n_age = n_time = 1
-				var2prior[offset].n_time         = 1;
-				var2prior[offset].value_prior_id = prior_id;
+				prior_vec_[offset].n_time         = 1;
+				prior_vec_[offset].value_prior_id = prior_id;
 			}
 		}
 	}
@@ -201,7 +256,7 @@ CppAD::vector<var_prior_struct>  pack_var_prior(
 			size_t smooth_id = info.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset    = info.offset;
-				set_prior(var2prior, offset, s_info_vec[smooth_id]);
+				set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
 			}
 		}
 	}
@@ -213,7 +268,7 @@ CppAD::vector<var_prior_struct>  pack_var_prior(
 		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(var2prior, offset, s_info_vec[smooth_id]);
+			set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
 		}
 	}
 	// ------------------------------------------------------------------------
@@ -225,7 +280,7 @@ CppAD::vector<var_prior_struct>  pack_var_prior(
 		{	info   = pack_object.mulcov_meas_value_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(var2prior, offset, s_info_vec[smooth_id]);
+			set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
 		}
 		// measurement std covariates for this integrand
 		n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
@@ -233,10 +288,10 @@ CppAD::vector<var_prior_struct>  pack_var_prior(
 		{	info   = pack_object.mulcov_meas_std_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(var2prior, offset, s_info_vec[smooth_id]);
+			set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
 		}
 	}
-	return var2prior;
+	return;
 }
 
 } // END_DISMOD_AT_NAMESPACE

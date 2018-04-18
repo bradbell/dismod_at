@@ -327,12 +327,11 @@ bool fit_model_xam(void)
 	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
 	// start_var
-	vector<dismod_at::var_prior_struct> var2prior =
-		dismod_at::pack_var_prior(pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
 	vector<double> start_var( pack_object.size() );
 	vector<double> scale_var( pack_object.size() );
 	for(size_t var_id = 0; var_id < start_var.size(); var_id++)
-	{	size_t prior_id = var2prior[var_id].value_prior_id;
+	{	size_t prior_id = var2prior.value_prior_id(var_id);
 		start_var[var_id] = prior_table[prior_id].mean;
 		scale_var[var_id] = prior_table[prior_id].mean;
 	}

@@ -67,16 +67,15 @@ namespace dismod_at {
 		}
 		//
 		// priors for all the variables
-		CppAD::vector<var_prior_struct> var2prior =
-			pack_var_prior(pack_object, s_info_vec);
+		pack_prior var2prior(pack_object, s_info_vec);
 		//
 		// count how many random effects are constant
 		size_t n_random_const = 0;
 		for(size_t j = 0; j < pack_index.size(); j++)
 		{	size_t var_id   = pack_index[j];
-			size_t prior_id = var2prior[var_id].value_prior_id;
+			size_t prior_id = var2prior.value_prior_id(var_id);
 			if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			{	assert( ! std::isnan( var2prior[var_id].const_value ) );
+			{	assert( ! std::isnan( var2prior.const_value(var_id) ) );
 				++n_random_const;
 			}
 			else

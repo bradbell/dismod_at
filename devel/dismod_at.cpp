@@ -68,15 +68,14 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 		const vector<dismod_at::smooth_info>&  s_info_vec  )
 	{
 		// mapping from var_id to prior information
-		vector<dismod_at::var_prior_struct> var2prior =
-			dismod_at::pack_var_prior(pack_object, s_info_vec);
+		dismod_at::pack_prior var2prior(pack_object, s_info_vec);
 		//
 		// put means in return value
 		size_t n_var = pack_object.size();
 		vector<double> result(n_var);
 		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	double var_value = var2prior[var_id].const_value;
-			size_t prior_id  = var2prior[var_id].value_prior_id;
+		{	double var_value = var2prior.const_value(var_id);
+			size_t prior_id  = var2prior.value_prior_id(var_id);
 			if( prior_id != DISMOD_AT_NULL_SIZE_T )
 				var_value = prior_table[prior_id].mean;
 			result[var_id] = var_value;

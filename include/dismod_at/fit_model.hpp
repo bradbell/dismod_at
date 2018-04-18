@@ -54,7 +54,7 @@ namespace dismod_at {
 		// set during constructor and otherwise const
 		//
 		// prior information in var_id order
-		CppAD::vector<var_prior_struct>   var2prior_;
+		pack_prior var2prior_;
 		//
 		// Prior for variable differences. Only difference for which
 		// the upper limit is less than + infinity or the lower limit
