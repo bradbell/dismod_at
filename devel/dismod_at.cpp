@@ -65,11 +65,8 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 	vector<double> get_prior_mean(
 		const vector<dismod_at::prior_struct>& prior_table ,
 		const dismod_at::pack_info&            pack_object ,
-		const vector<dismod_at::smooth_info>&  s_info_vec  )
+		const dismod_at::pack_prior&           var2prior   )
 	{
-		// mapping from var_id to prior information
-		dismod_at::pack_prior var2prior(pack_object, s_info_vec);
-		//
 		// put means in return value
 		size_t n_var = pack_object.size();
 		vector<double> result(n_var);
@@ -2214,11 +2211,15 @@ int main(int n_arg, const char** argv)
 		db_input.rate_table         ,
 		db_input.nslist_pair_table
 	);
+	//
+	// var2prior
+	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
+	//
 	// prior_mean
 	vector<double> prior_mean = get_prior_mean(
 		db_input.prior_table,
 		pack_object,
-		s_info_vec
+		var2prior
 	);
 	// minimum_meas_cv
 	double minimum_meas_cv = std::atof(
