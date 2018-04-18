@@ -35,12 +35,6 @@ namespace dismod_at {
 		size_t minus_var_id;
 		size_t prior_id;
 	};
-	void pack_value_prior(
-		CppAD::vector<size_t>&               value_prior_id_out ,
-		CppAD::vector<double>&               const_value_out    ,
-		const pack_info&                     pack_object        ,
-		const CppAD::vector<smooth_info>&    s_info_vec
-	);
 	CppAD::vector<diff_prior_struct> pack_diff_prior(
 		const pack_info&                     pack_object  ,
 		const CppAD::vector<smooth_info>&    s_info_vec
