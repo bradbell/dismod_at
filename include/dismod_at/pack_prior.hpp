@@ -14,8 +14,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/smooth_info.hpp>
 
 namespace dismod_at {
-	// -----------------------------------------------------------------------
-	// new pack prior info
 	struct var_prior_struct {
 		size_t  n_time;
 		double  const_value;
@@ -27,18 +25,13 @@ namespace dismod_at {
 		const pack_info&                     pack_object  ,
 		const CppAD::vector<smooth_info>&    s_info_vec
 	);
-	// -----------------------------------------------------------------------
-	// old pack prior info (will be replaced and removed)
+	//
 	struct diff_prior_struct {
 		enum { dage_enum, dtime_enum } direction;
 		size_t plus_var_id;
 		size_t minus_var_id;
 		size_t prior_id;
 	};
-	CppAD::vector<diff_prior_struct> pack_diff_prior(
-		const pack_info&                     pack_object  ,
-		const CppAD::vector<smooth_info>&    s_info_vec
-	);
 }
 
 # endif

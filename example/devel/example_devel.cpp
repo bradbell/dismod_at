@@ -49,7 +49,6 @@ extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
 extern bool manage_gsl_rng_xam(void);
 extern bool pack_info_xam(void);
-extern bool pack_diff_prior_xam(void);
 extern bool pack_var_prior_xam(void);
 extern bool random_effect_xam(void);
 extern bool n_random_const_xam(void);
@@ -140,7 +139,6 @@ int main(void)
 	RUN(interp_weight_xam);
 	RUN(manage_gsl_rng_xam);
 	RUN(pack_info_xam);
-	RUN(pack_diff_prior_xam);
 	RUN(pack_var_prior_xam);
 	RUN(residual_density_xam);
 	RUN(random_effect_xam);

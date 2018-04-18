@@ -338,15 +338,34 @@ prior_object_  ( prior_object )
 	) );
 	// ----------------------------------------------------------------------
 	// diff_prior_
-	CppAD::vector<diff_prior_struct> diff_prior_tmp =
-			pack_diff_prior(pack_object, s_info_vec);
 	assert( diff_prior_.size() == 0 );
-	for(size_t k = 0; k < diff_prior_tmp.size(); k++)
-	{	size_t prior_id = diff_prior_tmp[k].prior_id;
-		double lower    = prior_table[prior_id].lower;
-		double upper    = prior_table[prior_id].upper;
-		if( - inf < lower || upper < + inf )
-			diff_prior_.push_back( diff_prior_tmp[k] );
+	for(size_t i_var = 0; i_var < n_var; ++i_var)
+	{	size_t prior_id = var2prior_[i_var].dage_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+		{	double lower    = prior_table[prior_id].lower;
+			double upper    = prior_table[prior_id].upper;
+			if( - inf < lower || upper < + inf )
+			{	diff_prior_struct entry;
+				entry.direction    = diff_prior_struct::dage_enum;
+				entry.plus_var_id  = i_var + var2prior_[i_var].n_time;
+				entry.minus_var_id = i_var;
+				entry.prior_id     = prior_id;
+				diff_prior_.push_back( entry );
+			}
+		}
+		prior_id = var2prior_[i_var].dtime_prior_id;
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+		{	double lower    = prior_table[prior_id].lower;
+			double upper    = prior_table[prior_id].upper;
+			if( - inf < lower || upper < + inf )
+			{	diff_prior_struct entry;
+				entry.direction    = diff_prior_struct::dtime_enum;
+				entry.plus_var_id  = i_var + 1;
+				entry.minus_var_id = i_var;
+				entry.prior_id     = prior_id;
+				diff_prior_.push_back( entry );
+			}
+		}
 	}
 	// ----------------------------------------------------------------------
 	// var_id2fixed_
