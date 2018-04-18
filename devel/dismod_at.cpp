@@ -2340,6 +2340,7 @@ int main(int n_arg, const char** argv)
 			// prior_object
 			dismod_at::prior_model prior_object(
 				pack_object           ,
+				var2prior             ,
 				db_input.age_table    ,
 				db_input.time_table   ,
 				db_input.prior_table  ,

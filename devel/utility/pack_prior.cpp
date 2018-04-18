@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 /*
 -------------------------------------------------------------------------------
-$begin pack_var_prior$$
+$begin pack_prior$$
 $spell
 	var
 	vec

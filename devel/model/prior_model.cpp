@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -25,7 +25,7 @@ $section Construct Fixed Negative Log-Likelihood Object$$
 
 $head Syntax$$
 $codei%prior_model %prior_object%(
-	%pack_object%, %age_table%, %time_table%, %prior_table%, %s_info_vec%
+	%pack_object%, %var2prior%, %age_table%, %time_table%, %prior_table%, %s_info_vec%
 )%$$
 
 $head prior_object$$
@@ -40,6 +40,14 @@ $codei%
 	const pack_info& %pack_object%
 %$$
 and is the $cref pack_info$$ information corresponding to the
+$cref model_variables$$.
+
+$head var2prior$$
+This argument has prototype
+$codei%
+	const pack_prior& %var2prior%
+%$$
+and is the $cref pack_prior$$ information corresponding to the
 $cref model_variables$$.
 
 $head age_table$$
@@ -95,12 +103,14 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 prior_model::prior_model(
 	const pack_info&                       pack_object     ,
+	const pack_prior&                      var2prior       ,
 	const CppAD::vector<double>&           age_table       ,
 	const CppAD::vector<double>&           time_table      ,
 	const CppAD::vector<prior_struct>&     prior_table     ,
 	const CppAD::vector<smooth_info>&      s_info_vec      )
 :
 pack_object_(pack_object)  ,
+var2prior_(var2prior)      ,
 age_table_(age_table)      ,
 time_table_(time_table)    ,
 prior_table_(prior_table)  ,

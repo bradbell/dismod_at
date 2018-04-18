@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,12 +17,14 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_smooth_table.hpp"
 # include "smooth_info.hpp"
 # include "residual_density.hpp"
+# include "pack_prior.hpp"
 
 namespace dismod_at {
 	class prior_model {
 	private:
 		// data
 		const pack_info                    pack_object_;
+		const pack_prior                   var2prior_;
 		const CppAD::vector<double>        age_table_;
 		const CppAD::vector<double>        time_table_;
 		const CppAD::vector<prior_struct>  prior_table_;
@@ -49,6 +51,7 @@ namespace dismod_at {
 	public:
 		prior_model(
 			const pack_info&                       pack_object     ,
+			const pack_prior&                      var2prior       ,
 			const CppAD::vector<double>&           age_table       ,
 			const CppAD::vector<double>&           time_table      ,
 			const CppAD::vector<prior_struct>&     prior_table     ,
