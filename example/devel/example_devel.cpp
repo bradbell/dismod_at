@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -50,7 +50,7 @@ extern bool interp_weight_xam(void);
 extern bool manage_gsl_rng_xam(void);
 extern bool pack_info_xam(void);
 extern bool pack_diff_prior_xam(void);
-extern bool pack_value_prior_xam(void);
+extern bool pack_var_prior_xam(void);
 extern bool random_effect_xam(void);
 extern bool n_random_const_xam(void);
 extern bool residual_density_xam(void);
@@ -141,7 +141,7 @@ int main(void)
 	RUN(manage_gsl_rng_xam);
 	RUN(pack_info_xam);
 	RUN(pack_diff_prior_xam);
-	RUN(pack_value_prior_xam);
+	RUN(pack_var_prior_xam);
 	RUN(residual_density_xam);
 	RUN(random_effect_xam);
 	RUN(n_random_const_xam);

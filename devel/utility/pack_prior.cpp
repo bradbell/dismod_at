@@ -138,13 +138,6 @@ $codei%
 $icode%value_prior_id%[%i%]%$$ is not $code DISMOD_AT_NULL_SIZE_T$$
 and it specifies the prior for the value of $th i$$ model variable.
 
-$children%
-	example/devel/utility/pack_value_prior_xam.cpp
-%$$
-$head Example$$
-The file $cref pack_value_prior_xam.cpp$$
-contains an example and test that uses this routine.
-
 $end
 */
 
@@ -509,6 +502,13 @@ this variable corresponding to the maximum time in a smoothing grid.
 Otherwise $icode dtime_prior_id$$ identifies the  prior for
 the difference between the variable with index
 $icode var_id$$ and the variable with index $icode%var_id% + 1%$$.
+
+$children%
+	example/devel/utility/pack_var_prior_xam.cpp
+%$$
+$head Example$$
+The file $cref pack_var_prior_xam.cpp$$
+contains an example and test that uses this routine.
 
 $end
 -------------------------------------------------------------------------------
