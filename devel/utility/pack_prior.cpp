@@ -21,6 +21,7 @@ $spell
 	const
 	dage
 	dtime
+	bool
 $$
 
 $section Priors in Variable ID Order$$
@@ -41,6 +42,8 @@ $icode%dtime_prior_id% = %var2prior%.%dtime_prior_id(%var_id%)
 $icode%dage_var_id%    = %var2prior%.%dage_next(%var_id%)
 %$$
 $icode%dtime_var_id%   = %var2prior%.%dtime_next(%var_id%)
+%$$
+$icode%fixed_effect%   = %var2prior%.%fixed_effect(%var_id%)
 %$$
 
 $head Prototype$$
@@ -112,6 +115,12 @@ $head dtime_var_id$$
 If $icode dtime_prior_id$$ is not null, this is the
 next variable in the time difference.
 
+$head fixed_effect$$
+This $code bool$$ is true (false) if the variable with index
+$icode var_id$$ is a
+$cref/fixed effect/model_variables/Fixed Effects, theta/$$
+(random effect).
+
 $children%
 	example/devel/utility/pack_var_prior_xam.cpp
 %$$
@@ -151,6 +160,10 @@ size_t pack_prior::dage_var_id(size_t var_id) const
 // dtime_var_id
 size_t pack_prior::dtime_var_id(size_t var_id) const
 {	return var_id + 1; }
+
+// fixed_effect
+bool pack_prior::fixed_effect(size_t  var_id) const
+{	return prior_vec_[var_id].fixed_effect; }
 
 // set_prior
 void pack_prior::set_prior(
@@ -207,6 +220,7 @@ pack_prior::pack_prior(
 	//
 	// -----------------------------------------------------------------------
 	// initialize everyting as nan or null
+	// except fixed effect which is initialized as true.
 	prior_vec_.resize(n_var);
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
 	{	prior_vec_[var_id].n_time         = DISMOD_AT_NULL_SIZE_T;
@@ -214,6 +228,9 @@ pack_prior::pack_prior(
 		prior_vec_[var_id].value_prior_id = DISMOD_AT_NULL_SIZE_T;
 		prior_vec_[var_id].dage_prior_id  = DISMOD_AT_NULL_SIZE_T;
 		prior_vec_[var_id].dtime_prior_id = DISMOD_AT_NULL_SIZE_T;
+		//
+		// default value for fixed_effect is true
+		prior_vec_[var_id].fixed_effect   = true;
 	}
 	//
 	// get priors for standard devaition multipliers
@@ -257,6 +274,12 @@ pack_prior::pack_prior(
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset    = info.offset;
 				set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
+				//
+				// check for random effects variables
+				if( j < n_child )
+				{	for(size_t i = 0; i < info.n_var; i++)
+						prior_vec_[offset + i].fixed_effect = false;
+				}
 			}
 		}
 	}

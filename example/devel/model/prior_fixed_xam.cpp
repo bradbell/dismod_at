@@ -250,11 +250,14 @@ bool prior_fixed_xam(void)
 		}
 	}
 	//
+	// var2prior
+	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
+	//
 	// mulcov_meas_value: none
 	// mulcov_meas_std: none
 	// mulcov_rate_value: none
 	dismod_at::prior_model prior_object(
-		pack_object, age_table, time_table, prior_table, s_info_vec
+		pack_object, var2prior, age_table, time_table, prior_table, s_info_vec
 	);
 	// -------------- compute fixed negative log-likelihood -------------------
 	CppAD::vector< dismod_at::residual_struct<double> > residual_vec;

@@ -535,9 +535,9 @@ $codei%
 then this rate is identically zero and there are no corresponding variables.
 
 $subhead n_var$$
-is the number of packed variables for this $icode rate_id$$
-and is the same for each $icode j$$.
-(Not specified when $icode smooth_id$$ corresponds to $code null$$).
+is the number of packed variables for this $icode rate_id$$; i.e.
+the product of the number of age and number of time points in the smoothing
+for this rate.
 
 $subhead offset$$
 is the offset (index) in the packed variable vector for the

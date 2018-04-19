@@ -284,9 +284,12 @@ bool fit_model_xam(void)
 		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
 	);
 	//
+	// var2prior
+	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
+	//
 	// prior_object
 	dismod_at::prior_model prior_object(
-		pack_object, age_table, time_table, prior_table, s_info_vec
+		pack_object, var2prior, age_table, time_table, prior_table, s_info_vec
 	);
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj;
@@ -326,8 +329,7 @@ bool fit_model_xam(void)
 	);
 	data_object.replace_like(minimum_meas_cv, data_subset_obj);
 	//
-	// start_var
-	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
+	// start_var, scale_var
 	vector<double> start_var( pack_object.size() );
 	vector<double> scale_var( pack_object.size() );
 	for(size_t var_id = 0; var_id < start_var.size(); var_id++)

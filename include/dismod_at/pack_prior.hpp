@@ -32,6 +32,7 @@ namespace dismod_at {
 			size_t  value_prior_id;
 			size_t  dage_prior_id;
 			size_t  dtime_prior_id;
+			bool    fixed_effect;
 		};
 		// prior_vec_
 		CppAD::vector<one_prior_struct> prior_vec_;
@@ -53,6 +54,7 @@ namespace dismod_at {
 		size_t dtime_prior_id (size_t var_id) const;
 		size_t dage_var_id    (size_t var_id) const;
 		size_t dtime_var_id   (size_t var_id) const;
+		bool   fixed_effect   (size_t var_id) const;
 	};
 
 }
