@@ -268,7 +268,7 @@ $codei%
 %$$
 The size of $icode residual$$ is not equal to the number of fixed effects
 because there are priors on smoothing differences as well as values.
-The order of the residuals is unspecified (at this time).
+The order of the residuals is unspecified.
 
 $subhead index$$
 The $cref/index/residual_density/index/$$ for each residual is
@@ -297,160 +297,105 @@ $end
 template <class Float>
 CppAD::vector< residual_struct<Float> >
 prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
-{
+{	Float nan = Float( std::numeric_limits<double>::quiet_NaN() );
+	//
 	// initialize the log of the fixed negative log-likelihood as zero
 	CppAD::vector< residual_struct<Float> > residual_vec;
 	assert( residual_vec.size() == 0 );
-
-	// used to get results from log_prior
+	//
+	// for computing one residual
 	residual_struct<Float> residual;
 
-	// number of smoothings
-	size_t n_smooth = s_info_vec_.size();
+	// n_var
+	assert( pack_vec.size()   == pack_object_.size() );
+	assert( var2prior_.size() == pack_object_.size() );
+	size_t n_var = pack_vec.size();
 
-	// standard deviation multipliers
-	Float not_used;
-	bool difference = false;
-	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	for(size_t k = 0; k < 3; k++)
-		{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-			if( offset != DISMOD_AT_NULL_SIZE_T )
-			{
-				// value of the multiplier
-				Float mulstd = Float(pack_vec[offset]);
-
-				// prior_id for this multiplier
-				size_t prior_id;
-				switch(k)
-				{	case 0:
-					prior_id = s_info_vec_[smooth_id].mulstd_value();
-					break;
-
-					case 1:
-					prior_id = s_info_vec_[smooth_id].mulstd_dage();
-					break;
-
-					case 2:
-					prior_id = s_info_vec_[smooth_id].mulstd_dtime();
-					break;
-
-					default:
-					assert(false);
-				}
-
-				// prior for this multilier
-				const prior_struct& prior = prior_table_[prior_id];
-
-				// use 3 * var_id + 0 for value priors
-				size_t index = 3 * offset + 0;
-
-				// add fixed negative log-likelihood for this multiplier
-				residual  = log_prior(
-					prior, Float(1.0), not_used, mulstd, index, difference
-				);
+	for(size_t var_id = 0; var_id < n_var; ++var_id)
+	{	// This variable value
+		Float y = pack_vec[var_id];
+		//
+		// prior information
+		double const_value    = var2prior_.const_value(var_id);
+		size_t smooth_id      = var2prior_.smooth_id(var_id);
+		size_t value_prior_id = var2prior_.value_prior_id(var_id);
+		size_t dage_prior_id  = var2prior_.dage_prior_id(var_id);
+		size_t dtime_prior_id = var2prior_.dtime_prior_id(var_id);
+		bool   fixed_effect   = var2prior_.fixed_effect(var_id);
+		//
+		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
+		{	// standard deviation multipliers are fixed effects and do not
+			// have a smoothing, hence the following
+			CPPAD_ASSERT_UNKNOWN( fixed_effect );
+			CPPAD_ASSERT_UNKNOWN( std::isnan(const_value) );
+			CPPAD_ASSERT_UNKNOWN( dage_prior_id  == DISMOD_AT_NULL_SIZE_T );
+			CPPAD_ASSERT_UNKNOWN( dtime_prior_id == DISMOD_AT_NULL_SIZE_T );
+			//
+			// value prior
+			const prior_struct& prior = prior_table_[value_prior_id];
+			//
+			// no standard deviation multiplier for this prior
+			Float mulstd = Float(1.0);
+			//
+			// this is not a difference prior
+			bool  difference  = false;
+			Float z           = nan;
+			//
+			// index used for value priors
+			size_t index              = 3 * var_id + 0;
+			//
+			// negative log-likelihood of value prior for this multiplier
+			residual  = log_prior(prior, mulstd, z, y, index, difference);
+			if( residual.density != uniform_enum )
+				residual_vec.push_back(residual);
+		}
+		else if( fixed_effect )
+		{	if( value_prior_id != DISMOD_AT_NULL_SIZE_T )
+			{	const prior_struct& prior = prior_table_[value_prior_id];
+				bool   difference = false;
+				Float  z          = nan;
+				size_t k          = 0;
+				size_t index      = 3 * var_id + k;
+				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
+				Float mulstd      = Float(1.0);
+				if( offset != DISMOD_AT_NULL_SIZE_T )
+					mulstd        = pack_vec[offset];
+				//
+				residual = log_prior(prior, mulstd, z, y, index, difference);
 				if( residual.density != uniform_enum )
 					residual_vec.push_back(residual);
 			}
-		}
-	}
-	// hold mulstd_vec values for one smooting
-	CppAD::vector<Float> mulstd_vec(3);
+			if( dage_prior_id != DISMOD_AT_NULL_SIZE_T )
+			{	const prior_struct& prior = prior_table_[dage_prior_id];
+				bool   difference = true;
+				Float  z          = pack_vec[var2prior_.dage_var_id(var_id)];
 
-	// rates
-	pack_info::subvec_info info;
-	size_t n_child = pack_object_.child_size();
-	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	// child value that corresponds to the parent
-		size_t child = n_child;
-
-		info = pack_object_.rate_info(rate_id, child);
-		size_t smooth_id          = info.smooth_id;
-		if( smooth_id != DISMOD_AT_NULL_SIZE_T )
-		{
-			const smooth_info& s_info = s_info_vec_[smooth_id];
-			for(size_t k = 0; k < 3; k++)
-			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == DISMOD_AT_NULL_SIZE_T )
-					mulstd_vec[k] = 1.0;
-				else
-					mulstd_vec[k] = pack_vec[offset];
+				size_t k          = 1;
+				size_t index      = 3 * var_id + k;
+				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
+				Float mulstd      = Float(1.0);
+				if( offset != DISMOD_AT_NULL_SIZE_T )
+					mulstd        = pack_vec[offset];
+				//
+				residual = log_prior(prior, mulstd, z, y, index, difference);
+				if( residual.density != uniform_enum )
+					residual_vec.push_back(residual);
 			}
-			log_prior_on_grid(
-				residual_vec,
-				info.offset ,
-				pack_vec    ,
-				mulstd_vec  ,
-				s_info
-			);
-		}
-	}
-
-	// rate covariate multipliers
-	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object_.mulcov_rate_value_n_cov( rate_id );
-		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = pack_object_.mulcov_rate_value_info(rate_id, cov);
-			size_t smooth_id          = info.smooth_id;
-			const smooth_info& s_info = s_info_vec_[smooth_id];
-			for(size_t k = 0; k < 3; k++)
-			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == DISMOD_AT_NULL_SIZE_T )
-					mulstd_vec[k] = 1.0;
-				else
-					mulstd_vec[k] = pack_vec[offset];
+			if( dtime_prior_id != DISMOD_AT_NULL_SIZE_T )
+			{	const prior_struct& prior = prior_table_[dtime_prior_id];
+				bool   difference = true;
+				Float  z          = pack_vec[var2prior_.dtime_var_id(var_id)];
+				size_t k          = 2;
+				size_t index      = 3 * var_id + k;
+				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
+				Float mulstd      = Float(1.0);
+				if( offset != DISMOD_AT_NULL_SIZE_T )
+					mulstd        = pack_vec[offset];
+				//
+				residual = log_prior(prior, mulstd, z, y, index, difference);
+				if( residual.density != uniform_enum )
+					residual_vec.push_back(residual);
 			}
-			log_prior_on_grid(
-				residual_vec,
-				info.offset ,
-				pack_vec    ,
-				mulstd_vec  ,
-				s_info
-			);
-		}
-	}
-
-	// measurement covariate multipliers
-	size_t n_integrand = pack_object_.integrand_size();
-	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object_.mulcov_meas_value_n_cov( integrand_id );
-		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = pack_object_.mulcov_meas_value_info(integrand_id, cov);
-			size_t smooth_id          = info.smooth_id;
-			const smooth_info& s_info = s_info_vec_[smooth_id];
-			for(size_t k = 0; k < 3; k++)
-			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == DISMOD_AT_NULL_SIZE_T )
-					mulstd_vec[k] = 1.0;
-				else
-					mulstd_vec[k] = pack_vec[offset];
-			}
-			log_prior_on_grid(
-				residual_vec,
-				info.offset ,
-				pack_vec    ,
-				mulstd_vec  ,
-				s_info
-			);
-		}
-		n_cov = pack_object_.mulcov_meas_std_n_cov( integrand_id );
-		for(size_t cov = 0; cov < n_cov; cov++)
-		{	info = pack_object_.mulcov_meas_std_info(integrand_id, cov);
-			size_t smooth_id          = info.smooth_id;
-			const smooth_info& s_info = s_info_vec_[smooth_id];
-			for(size_t k = 0; k < 3; k++)
-			{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-				if( offset == DISMOD_AT_NULL_SIZE_T )
-					mulstd_vec[k] = 1.0;
-				else
-					mulstd_vec[k] = pack_vec[offset];
-			}
-			log_prior_on_grid(
-				residual_vec,
-				info.offset ,
-				pack_vec    ,
-				mulstd_vec  ,
-				s_info
-			);
 		}
 	}
 	return residual_vec;
@@ -525,8 +470,8 @@ of using this routine.
 $end
 */
 template <class Float>
-CppAD::vector< residual_struct<Float> >
-prior_model::random(const CppAD::vector<Float>& pack_vec ) const
+CppAD::vector< residual_struct<Float> > prior_model::random(
+	const CppAD::vector<Float>&            pack_vec        ) const
 {
 	// initialize the log of the fixed negative log-likelihood as zero
 	CppAD::vector< residual_struct<Float> > residual_vec;
@@ -583,5 +528,3 @@ DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( a2_double )
 DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( a3_double )
 
 } // BEGIN_DISMOD_AT_NAMESPACE
-
-
