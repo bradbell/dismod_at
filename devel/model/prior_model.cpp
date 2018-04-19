@@ -234,6 +234,7 @@ $spell
 	Cpp
 	struct
 	const
+	var
 $$
 
 $section Evaluate Fixed Negative Log-Likelihood for the Fixed Effects$$
@@ -269,6 +270,14 @@ The size of $icode residual$$ is not equal to the number of fixed effects
 because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified (at this time).
 
+$subhead index$$
+The $cref/index/residual_density/index/$$ for each residual is
+$codei%3 * %var_id% + %k%$$ where
+$cref/var_id/var_table/var_id/$$ is the variable index,
+$icode%k% = 0%$$ for value priors,
+$icode%k% = 1%$$ for age difference priors, and
+$icode%k% = 2%$$ for time difference priors.
+
 $head p(theta)$$
 The log of the fixed negative log-likelihood for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$,
@@ -286,8 +295,8 @@ of using this routine.
 $end
 */
 template <class Float>
-CppAD::vector< residual_struct<Float> > prior_model::fixed(
-	const CppAD::vector<Float>&            pack_vec        ) const
+CppAD::vector< residual_struct<Float> >
+prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 {
 	// initialize the log of the fixed negative log-likelihood as zero
 	CppAD::vector< residual_struct<Float> > residual_vec;
@@ -454,6 +463,7 @@ $spell
 	Cpp
 	struct
 	const
+	var
 $$
 
 $section Evaluate Fixed Negative Log-Likelihood for the Random Effects$$
@@ -489,6 +499,14 @@ The size of $icode residual$$ is not equal to the number of random effects
 because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified (at this time).
 
+$subhead index$$
+The $cref/index/residual_density/index/$$ for each residual is
+$codei%3 * %var_id% + %k%$$ where
+$cref/var_id/var_table/var_id/$$ is the variable index,
+$icode%k% = 0%$$ for value priors,
+$icode%k% = 1%$$ for age difference priors, and
+$icode%k% = 2%$$ for time difference priors.
+
 $head p(u|theta)$$
 The log of the fixed negative log-likelihood for the
 and $cref/random effects/model_variables/Random Effects, u/$$
@@ -507,8 +525,8 @@ of using this routine.
 $end
 */
 template <class Float>
-CppAD::vector< residual_struct<Float> > prior_model::random(
-	const CppAD::vector<Float>&            pack_vec        ) const
+CppAD::vector< residual_struct<Float> >
+prior_model::random(const CppAD::vector<Float>& pack_vec ) const
 {
 	// initialize the log of the fixed negative log-likelihood as zero
 	CppAD::vector< residual_struct<Float> > residual_vec;
