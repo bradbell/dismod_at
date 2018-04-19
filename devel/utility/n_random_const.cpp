@@ -13,13 +13,14 @@ $begin number_random_const$$
 $spell
 	const
 	vec
+	var
 $$
 
 $section Determine Number of Random Effects that are Constant$$
 
 $head Syntax$$
 $icode%n_random_const% = number_random_const(
-	%bound_random%, %pack_object%, %s_info_vec%, %prior_table%
+	%bound_random%, %pack_object%, %var2prior%, %prior_table%
 )%$$
 
 $head bound_random$$
@@ -31,15 +32,17 @@ $head pack_object$$
 This argument is the $cref pack_info$$ information corresponding to the
 $cref model_variables$$.
 
-$head s_info_vec$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-	%s_info_vec%[ %smooth_id% ]
-%$$
-is the corresponding $cref smooth_info$$ information.
+$head var2prior$$
+This argument is the $cref pack_prior$$ information corresponding to the
+$cref model_variables$$.
 
 $head prior_table$$
 This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
+
+$head Prototype$$
+$srcfile%devel/utility/n_random_const.cpp
+	%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%
+%$$
 
 $end
 */
@@ -49,12 +52,13 @@ $end
 # include <dismod_at/pack_prior.hpp>
 
 namespace dismod_at {
-	// number_random_const
+	// BEGIN PROTOTYPE
 	size_t number_random_const(
 		double                               bound_random ,
 		const pack_info&                     pack_object  ,
-	    const CppAD::vector<smooth_info>&    s_info_vec   ,
+	    const pack_prior&                    var2prior    ,
 		const CppAD::vector<prior_struct>&   prior_table  )
+	// END PROTOTYPE
 	{	assert( bound_random >= 0.0 );
 		//
 		// mapping from random effects to all variables
@@ -65,9 +69,6 @@ namespace dismod_at {
 		{	// all random effects are the constant zero
 			return pack_index.size();
 		}
-		//
-		// priors for all the variables
-		pack_prior var2prior(pack_object, s_info_vec);
 		//
 		// count how many random effects are constant
 		size_t n_random_const = 0;

@@ -216,16 +216,17 @@ bool n_random_const_xam(void)
 		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
 	);
 	// ----------------------- number_random_const ----------------------------
+	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
 	double bound_random = inf;
 	size_t n_random_const = number_random_const(
-		bound_random, pack_object, s_info_vec, prior_table
+		bound_random, pack_object, var2prior, prior_table
 	);
 	// one constraint per child for iota, rho, chi, omega
 	ok &= n_random_const == n_child * 4;
 	//
 	bound_random = 0.0;
 	n_random_const = number_random_const(
-		bound_random, pack_object, s_info_vec, prior_table
+		bound_random, pack_object, var2prior, prior_table
 	);
 	ok &= n_random_const == pack_object.random_size();
 	//
