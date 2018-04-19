@@ -51,6 +51,18 @@ $srcfile%devel/utility/pack_prior.cpp
 	%0%// BEGIN CTOR_PROTOTYPE%// END CTOR_PROTOTYPE%1%
 %$$
 
+$head Notation$$
+
+$subhead var_id$$
+The variable names that end in
+$cref/var_id/var_table/var_id/$$
+have type $code size_t$$ and are an index in the variable table.
+
+$subhead prior_id$$
+The variable names that end in
+$cref/prior_id/prior_table/prior_id/$$
+have type $code size_t$$ and are an index in the prior table.
+
 $head pack_object$$
 is the $cref pack_info$$ information corresponding to
 the $cref model_variables$$.
@@ -70,22 +82,26 @@ $head size$$
 This is the number of variables in the model; i.e.,
 it is equal to $icode%pack_object%.size()%$$.
 
-$head var_id$$
-The variable names that end in
-$cref/var_id/var_table/var_id/$$
-have type $code size_t$$ and are an index in the variable table.
-
-$head prior_id$$
-The variable names that end in
-$cref/prior_id/prior_table/prior_id/$$
-have type $code size_t$$ and are an index in the prior table.
-
 $head const_value$$
 For each $icode var_id$$,
 either $icode const_value$$ this is nan or
 $icode value_prior_id$$ is null but not both.
 If $icode value_prior_id$$ is null,
 $icode const_value$$ is the value at this variable is constrained to.
+
+$head smooth_id$$
+This return value has type $code size_t$$.
+If $icode smooth_id$$ is null, this variables is a
+$cref/smoothing standard deviation multiplier
+	/model_variables
+	/Fixed Effects, theta
+	/Smoothing Standard Deviation Multipliers, lambda
+/$$.
+In this case there is no standard deviation prior multiplier for the
+value prior for this variables and the difference priors are null.
+Otherwise, this is the smoothing used for this variable and the
+offset for the corresponding standard deviation multipliers can be computed
+using $cref pack_info_mulstd$$.
 
 $head value_prior_id$$
 Either this is $code null$$ or $icode const_value$$ is nan but not both.
@@ -141,6 +157,10 @@ size_t pack_prior::size(void) const
 double pack_prior::const_value(size_t var_id) const
 {	return prior_vec_[var_id].const_value; }
 
+// smooth_id
+size_t pack_prior::smooth_id(size_t var_id) const
+{	return prior_vec_[var_id].smooth_id; }
+
 // value_prior_id
 size_t pack_prior::value_prior_id(size_t var_id) const
 {	return prior_vec_[var_id].value_prior_id; }
@@ -167,12 +187,14 @@ bool pack_prior::fixed_effect(size_t  var_id) const
 
 // set_prior
 void pack_prior::set_prior(
-	CppAD::vector<dismod_at::pack_prior::one_prior_struct>&   prior_vec  ,
-	size_t                                                    offset     ,
-	const dismod_at::smooth_info&                             s_info     )
+	CppAD::vector<dismod_at::pack_prior::one_prior_struct>&   prior_vec   ,
+	size_t                                                    offset      ,
+	size_t                                                    smooth_id   ,
+	const CppAD::vector<smooth_info>&                         s_info_vec  )
 {	//
-	size_t n_age     = s_info.age_size();
-	size_t n_time    = s_info.time_size();
+	smooth_info s_info  = s_info_vec[smooth_id];
+	size_t n_age        = s_info.age_size();
+	size_t n_time       = s_info.time_size();
 	//
 	// loop over grid points for this smoothing in age, time order
 	for(size_t i = 0; i < n_age; i++)
@@ -180,12 +202,17 @@ void pack_prior::set_prior(
 		{	// var_id
 			size_t var_id   = offset + i * n_time + j;
 			//
+			// const_value
+			prior_vec[var_id].const_value    = s_info.const_value(i, j);
+			//
+			// smooth_id
+			prior_vec[var_id].smooth_id = smooth_id;
+			//
 			// n_time
 			prior_vec[var_id].n_time = n_time;
 			//
 			// value prior
 			prior_vec[var_id].value_prior_id = s_info.value_prior_id(i, j);
-			prior_vec[var_id].const_value    = s_info.const_value(i, j);
 			//
 			// dage prior
 			prior_vec[var_id].dage_prior_id = s_info.dage_prior_id(i, j);
@@ -273,7 +300,7 @@ pack_prior::pack_prior(
 			size_t smooth_id = info.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset    = info.offset;
-				set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
+				set_prior(prior_vec_, offset, smooth_id, s_info_vec);
 				//
 				// check for random effects variables
 				if( j < n_child )
@@ -291,7 +318,7 @@ pack_prior::pack_prior(
 		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
+			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
 		}
 	}
 	// ------------------------------------------------------------------------
@@ -303,7 +330,7 @@ pack_prior::pack_prior(
 		{	info   = pack_object.mulcov_meas_value_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
+			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
 		}
 		// measurement std covariates for this integrand
 		n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
@@ -311,7 +338,7 @@ pack_prior::pack_prior(
 		{	info   = pack_object.mulcov_meas_std_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(prior_vec_, offset, s_info_vec[smooth_id]);
+			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
 		}
 	}
 	return;

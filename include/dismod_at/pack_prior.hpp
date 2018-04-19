@@ -27,8 +27,9 @@ namespace dismod_at {
 	private:
 		// one_prior_struct
 		struct one_prior_struct {
-			size_t  n_time;
 			double  const_value;
+			size_t  n_time;
+			size_t  smooth_id;
 			size_t  value_prior_id;
 			size_t  dage_prior_id;
 			size_t  dtime_prior_id;
@@ -38,9 +39,10 @@ namespace dismod_at {
 		CppAD::vector<one_prior_struct> prior_vec_;
 		// set_prior corresponding to one use of a smoothing
 		static void set_prior(
-			CppAD::vector<one_prior_struct>& prior_vec  ,
-			size_t                           offset     ,
-			const smooth_info&               s_info
+			CppAD::vector<one_prior_struct>&     prior_vec  ,
+			size_t                               offset     ,
+			size_t                               smooth_id  ,
+			const CppAD::vector<smooth_info>&    s_info_vec
 		);
 	public:
 		pack_prior(
@@ -49,6 +51,7 @@ namespace dismod_at {
 		);
 		size_t size           (void)          const;
 		double const_value    (size_t var_id) const;
+		size_t smooth_id      (size_t var_id) const;
 		size_t value_prior_id (size_t var_id) const;
 		size_t dage_prior_id  (size_t var_id) const;
 		size_t dtime_prior_id (size_t var_id) const;
