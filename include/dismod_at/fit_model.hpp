@@ -44,6 +44,7 @@ namespace dismod_at {
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
 		const pack_info&                   pack_object_;
+		const pack_prior&                  var2prior_;
 		const CppAD::vector<double>&       start_var_;
 		const CppAD::vector<double>&       scale_var_;
 		const CppAD::vector<prior_struct>& prior_table_;
@@ -52,9 +53,6 @@ namespace dismod_at {
 		const prior_model&                 prior_object_;
 		// -------------------------------------------------------------------
 		// set during constructor and otherwise const
-		//
-		// prior information in var_id order
-		pack_prior var2prior_;
 		//
 		// Prior for variable differences. Only difference for which
 		// the upper limit is less than + infinity or the lower limit
@@ -175,6 +173,7 @@ namespace dismod_at {
 			double                               bound_random    ,
 			const std::string&                   fit_or_sample   ,
 			const pack_info&                     pack_object     ,
+			const pack_prior&                    var2prior       ,
 			const CppAD::vector<double>&         start_var       ,
 			const CppAD::vector<double>&         scale_var       ,
 			const CppAD::vector<prior_struct>&   prior_table     ,

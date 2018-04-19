@@ -372,6 +372,7 @@ bool fit_model_xam(void)
 		bound_random,
 		fit_or_sample,
 		pack_object,
+		var2prior,
 		start_var,
 		scale_var,
 		prior_table,

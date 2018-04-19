@@ -192,6 +192,10 @@ $head pack_object$$
 This argument is the $cref pack_info$$ information corresponding to the
 $cref model_variables$$.
 
+$head pack_prior$$
+This argument is the $cref pack_prior$$ information corresponding to the
+$cref model_variables$$.
+
 $head start_var$$
 This vector is the starting $cref model_variables$$ in the order
 specified by $cref pack_info$$.
@@ -239,6 +243,7 @@ fit_model::fit_model(
 	double                                bound_random     ,
 	const std::string&                    fit_or_sample    ,
 	const pack_info&                      pack_object      ,
+	const pack_prior&                     var2prior        ,
 	const CppAD::vector<double>&          start_var        ,
 	const CppAD::vector<double>&          scale_var        ,
 	const CppAD::vector<prior_struct>&    prior_table      ,
@@ -272,13 +277,13 @@ fit_or_sample_ ( fit_or_sample )                    ,
 n_fixed_       ( number_fixed(pack_object) )        ,
 n_random_      ( pack_object.random_size() )        ,
 pack_object_   ( pack_object )                      ,
+var2prior_     ( var2prior   )                      ,
 start_var_     ( start_var   )                      ,
 scale_var_     ( scale_var   )                      ,
 prior_table_   ( prior_table )                      ,
 s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
-prior_object_  ( prior_object )                     ,
-var2prior_     ( pack_object, s_info_vec )
+prior_object_  ( prior_object )
 {	assert( bound_random >= 0.0 );
 	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	double inf = std::numeric_limits<double>::infinity();
