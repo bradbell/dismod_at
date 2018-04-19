@@ -912,7 +912,6 @@ void fit_command(
 	const dismod_at::pack_info&                  pack_object      ,
 	const dismod_at::pack_prior&                 var2prior        ,
 	const dismod_at::db_input_struct&            db_input         ,
-	const vector<dismod_at::smooth_info>&        s_info_vec       ,
 	const dismod_at::prior_model&                prior_object     ,
 	// effectively const
 	std::map<std::string, std::string>&          option_map
@@ -1011,7 +1010,6 @@ void fit_command(
 		start_var            ,
 		scale_var            ,
 		db_input.prior_table ,
-		s_info_vec           ,
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
@@ -1526,7 +1524,6 @@ void sample_command(
 	const dismod_at::pack_info&                 pack_object      ,
 	const dismod_at::pack_prior&                var2prior        ,
 	const dismod_at::db_input_struct&           db_input         ,
-	const vector<dismod_at::smooth_info>&       s_info_vec       ,
 	const dismod_at::prior_model&               prior_object     ,
 	// effectively const
 	std::map<std::string, std::string>&         option_map
@@ -1665,7 +1662,6 @@ void sample_command(
 				truth_var_value      ,
 				scale_var_value      ,
 				db_input.prior_table ,
-				s_info_vec           ,
 				data_object          ,
 				prior_object         ,
 				quasi_fixed          ,
@@ -1741,7 +1737,6 @@ void sample_command(
 		fit_var_value        ,
 		fit_var_value        ,
 		db_input.prior_table ,
-		s_info_vec           ,
 		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
@@ -2392,7 +2387,6 @@ int main(int n_arg, const char** argv)
 					pack_object      ,
 					var2prior        ,
 					db_input         ,
-					s_info_vec       ,
 					prior_object     ,
 					option_map
 				);
@@ -2411,7 +2405,6 @@ int main(int n_arg, const char** argv)
 					pack_object      ,
 					var2prior        ,
 					db_input         ,
-					s_info_vec       ,
 					prior_object     ,
 					option_map
 				);

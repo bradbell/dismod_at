@@ -161,7 +161,6 @@ $codei%fit_model %fit_object%(
 	%pack_object%,
 	%start_var%,
 	%prior_table%,
-	%s_info_vec%,
 	%data_object%,
 	%prior_object%,
 	%quasi_fixed%,
@@ -207,13 +206,6 @@ $cref model_variables$$.
 $head prior_table$$
 This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
 
-$head s_info_vec$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-	%s_info_vec%[ %smooth_id% ]
-%$$
-is the corresponding $cref smooth_info$$ information.
-
 $head data_object$$
 This object contains the model for the data density;
 see $cref/data_model/devel_data_model/$$.
@@ -247,7 +239,6 @@ fit_model::fit_model(
 	const CppAD::vector<double>&          start_var        ,
 	const CppAD::vector<double>&          scale_var        ,
 	const CppAD::vector<prior_struct>&    prior_table      ,
-	const CppAD::vector<smooth_info>&     s_info_vec       ,
 	const data_model&                     data_object      ,
 	const prior_model&                    prior_object     ,
 	bool                                  quasi_fixed      ,
@@ -281,7 +272,6 @@ var2prior_     ( var2prior   )                      ,
 start_var_     ( start_var   )                      ,
 scale_var_     ( scale_var   )                      ,
 prior_table_   ( prior_table )                      ,
-s_info_vec_    ( s_info_vec  )                      ,
 data_object_   ( data_object )                      ,
 prior_object_  ( prior_object )
 {	assert( bound_random >= 0.0 );

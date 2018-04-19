@@ -376,7 +376,6 @@ bool fit_model_xam(void)
 		start_var,
 		scale_var,
 		prior_table,
-		s_info_vec,
 		data_object,
 		prior_object,
 		quasi_fixed,
