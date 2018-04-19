@@ -40,14 +40,6 @@ namespace dismod_at {
 			size_t              index        ,
 			bool                difference
 		) const;
-		template <class Float>
-		void log_prior_on_grid(
-			CppAD::vector< residual_struct<Float> >& residual_vec ,
-			size_t                                   offset       ,
-			const CppAD::vector<Float>&              pack_vec     ,
-			const CppAD::vector<Float>&              mulstd       ,
-			const smooth_info&                       s_info
-		) const;
 	public:
 		prior_model(
 			const pack_info&                       pack_object     ,

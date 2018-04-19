@@ -139,93 +139,6 @@ residual_struct<Float> prior_model::log_prior(
 	);
 }
 
-// private
-template <class Float>
-void prior_model::log_prior_on_grid(
-	CppAD::vector< residual_struct<Float> >& residual_vec    ,
-	size_t                                   offset          ,
-	const CppAD::vector<Float>&              pack_vec        ,
-	const CppAD::vector<Float>&              mulstd_vec      ,
-	const smooth_info&                       s_info          ) const
-{	size_t n_age  = s_info.age_size();
-	size_t n_time = s_info.time_size();
-
-	// used to get results from log_prior
-	residual_struct<Float> residual;
-
-	// value smoothing
-	bool difference = false;
-	Float not_used  = CppAD::numeric_limits<Float>::quiet_NaN();
-	for(size_t i = 0; i < n_age; i++)
-	{	for(size_t j = 0; j < n_time; j++)
-		{	size_t var_id              = offset + i * n_time + j;
-			Float  var                 = Float(pack_vec[var_id]);
-			size_t prior_id            = s_info.value_prior_id(i, j);
-			//
-			// const_value priors correspond to uniform and have no residual
-			if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			{	const prior_struct&  prior = prior_table_[prior_id];
-				// use 3 * var_id + 0 for value priors
-				size_t index               = 3 * var_id + 0;
-				residual  = log_prior(
-					prior, mulstd_vec[0], not_used, var, index, difference
-				);
-				// residuals for uniform densities are always zero
-				if( residual.density != uniform_enum )
-					residual_vec.push_back(residual);
-			}
-		}
-	}
-	// age difference smoothing
-	difference = true;
-	for(size_t i = 0; i < (n_age-1); i++)
-	{
-# ifndef NDEBUG
-		double a0 = age_table_[ s_info.age_id(i) ];
-		double a1 = age_table_[ s_info.age_id(i+1) ];
-		assert( a1 > a0 );
-# endif
-		for(size_t j = 0; j < n_time; j++)
-		{	size_t var_id   = offset + i * n_time + j;
-			Float  v0       = pack_vec[var_id];
-			Float  v1       = pack_vec[var_id + n_time];
-			size_t prior_id           = s_info.dage_prior_id(i, j);
-			const prior_struct& prior = prior_table_[prior_id];
-			// use 3 * var_id + 1 for dage priors
-			size_t index               = 3 * var_id + 1;
-			residual  = log_prior(
-				prior, mulstd_vec[1], v1,  v0, index, difference
-			);
-			if( residual.density != uniform_enum )
-				residual_vec.push_back(residual);
-		}
-	}
-	// time difference smoothing
-	difference = true;
-	for(size_t j = 0; j < (n_time-1); j++)
-	{
-# ifndef NDEBUG
-		double t0 = time_table_[ s_info.time_id(j) ];
-		double t1 = time_table_[ s_info.time_id(j+1) ];
-		assert( t1 > t0 );
-# endif
-		for(size_t i = 0; i < n_age; i++)
-		{	size_t var_id   = offset + i * n_time + j;
-			Float  v0       = pack_vec[var_id];
-			Float  v1       = pack_vec[var_id + 1];
-			size_t prior_id           = s_info.dtime_prior_id(i, j);
-			const prior_struct& prior = prior_table_[prior_id];
-			// use 3 * var_id + 2 for dtime priors
-			size_t index               = 3 * var_id + 2;
-			residual  = log_prior(
-				prior, mulstd_vec[2], v1, v0, index, difference
-			);
-			if( residual.density != uniform_enum )
-				residual_vec.push_back(residual);
-		}
-	}
-	return;
-}
 /*
 ------------------------------------------------------------------------------
 $begin prior_fixed_effect$$
@@ -316,7 +229,9 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 		Float y = pack_vec[var_id];
 		//
 		// prior information
+# ifndef NDEBUG
 		double const_value    = var2prior_.const_value(var_id);
+# endif
 		size_t smooth_id      = var2prior_.smooth_id(var_id);
 		size_t value_prior_id = var2prior_.value_prior_id(var_id);
 		size_t dage_prior_id  = var2prior_.dage_prior_id(var_id);
@@ -326,10 +241,10 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 		{	// standard deviation multipliers are fixed effects and do not
 			// have a smoothing, hence the following
-			CPPAD_ASSERT_UNKNOWN( fixed_effect );
-			CPPAD_ASSERT_UNKNOWN( std::isnan(const_value) );
-			CPPAD_ASSERT_UNKNOWN( dage_prior_id  == DISMOD_AT_NULL_SIZE_T );
-			CPPAD_ASSERT_UNKNOWN( dtime_prior_id == DISMOD_AT_NULL_SIZE_T );
+			assert( fixed_effect );
+			assert( std::isnan(const_value) );
+			assert( dage_prior_id  == DISMOD_AT_NULL_SIZE_T );
+			assert( dtime_prior_id == DISMOD_AT_NULL_SIZE_T );
 			//
 			// value prior
 			const prior_struct& prior = prior_table_[value_prior_id];
@@ -470,41 +385,86 @@ of using this routine.
 $end
 */
 template <class Float>
-CppAD::vector< residual_struct<Float> > prior_model::random(
-	const CppAD::vector<Float>&            pack_vec        ) const
-{
+CppAD::vector< residual_struct<Float> >
+prior_model::random(const CppAD::vector<Float>& pack_vec ) const
+{	Float nan = Float( std::numeric_limits<double>::quiet_NaN() );
+	//
 	// initialize the log of the fixed negative log-likelihood as zero
 	CppAD::vector< residual_struct<Float> > residual_vec;
 	assert( residual_vec.size() == 0 );
+	//
+	// for computing one residual
+	residual_struct<Float> residual;
 
-	// standard deviations multipliers for one smoothing
-	CppAD::vector<Float> mulstd_vec(3);
+	// n_var
+	assert( pack_vec.size()   == pack_object_.size() );
+	assert( var2prior_.size() == pack_object_.size() );
+	size_t n_var = pack_vec.size();
 
-	// rates
-	pack_info::subvec_info info;
-	size_t n_child = pack_object_.child_size();
-	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	// for all children and parent
-		for(size_t child = 0; child < n_child; child++)
-		{	info = pack_object_.rate_info(rate_id, child);
-			size_t smooth_id          = info.smooth_id;
-			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
+	for(size_t var_id = 0; var_id < n_var; ++var_id)
+	{	// This variable value
+		Float y = pack_vec[var_id];
+		//
+		// prior information
+		size_t smooth_id      = var2prior_.smooth_id(var_id);
+		size_t value_prior_id = var2prior_.value_prior_id(var_id);
+		size_t dage_prior_id  = var2prior_.dage_prior_id(var_id);
+		size_t dtime_prior_id = var2prior_.dtime_prior_id(var_id);
+		bool   fixed_effect   = var2prior_.fixed_effect(var_id);
+		//
+		if( ! fixed_effect )
+		{	assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+			//
+			if( value_prior_id != DISMOD_AT_NULL_SIZE_T )
 			{
-				const smooth_info& s_info = s_info_vec_[smooth_id];
-				for(size_t k = 0; k < 3; k++)
-				{	size_t offset = pack_object_.mulstd_offset(smooth_id, k);
-					if( offset == DISMOD_AT_NULL_SIZE_T )
-						mulstd_vec[k] = 1.0;
-					else
-						mulstd_vec[k] = pack_vec[offset];
-				}
-				log_prior_on_grid(
-					residual_vec,
-					info.offset ,
-					pack_vec    ,
-					mulstd_vec  ,
-					s_info
-				);
+# ifndef NDEBUG
+				double const_value    = var2prior_.const_value(var_id);
+				assert( std::isnan(const_value)  );
+# endif
+				const prior_struct& prior = prior_table_[value_prior_id];
+				bool   difference = false;
+				Float  z          = nan;
+				size_t k          = 0;
+				size_t index      = 3 * var_id + k;
+				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
+				Float mulstd      = Float(1.0);
+				if( offset != DISMOD_AT_NULL_SIZE_T )
+					mulstd        = pack_vec[offset];
+				//
+				residual = log_prior(prior, mulstd, z, y, index, difference);
+				if( residual.density != uniform_enum )
+					residual_vec.push_back(residual);
+			}
+			if( dage_prior_id != DISMOD_AT_NULL_SIZE_T )
+			{	const prior_struct& prior = prior_table_[dage_prior_id];
+				bool   difference = true;
+				Float  z          = pack_vec[var2prior_.dage_var_id(var_id)];
+
+				size_t k          = 1;
+				size_t index      = 3 * var_id + k;
+				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
+				Float mulstd      = Float(1.0);
+				if( offset != DISMOD_AT_NULL_SIZE_T )
+					mulstd        = pack_vec[offset];
+				//
+				residual = log_prior(prior, mulstd, z, y, index, difference);
+				if( residual.density != uniform_enum )
+					residual_vec.push_back(residual);
+			}
+			if( dtime_prior_id != DISMOD_AT_NULL_SIZE_T )
+			{	const prior_struct& prior = prior_table_[dtime_prior_id];
+				bool   difference = true;
+				Float  z          = pack_vec[var2prior_.dtime_var_id(var_id)];
+				size_t k          = 2;
+				size_t index      = 3 * var_id + k;
+				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
+				Float mulstd      = Float(1.0);
+				if( offset != DISMOD_AT_NULL_SIZE_T )
+					mulstd        = pack_vec[offset];
+				//
+				residual = log_prior(prior, mulstd, z, y, index, difference);
+				if( residual.density != uniform_enum )
+					residual_vec.push_back(residual);
 			}
 		}
 	}
