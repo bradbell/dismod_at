@@ -289,7 +289,7 @@ bool fit_model_xam(void)
 	//
 	// prior_object
 	dismod_at::prior_model prior_object(
-		pack_object, var2prior, age_table, time_table, prior_table, s_info_vec
+		pack_object, var2prior, age_table, time_table, prior_table
 	);
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj;

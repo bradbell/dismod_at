@@ -28,7 +28,6 @@ namespace dismod_at {
 		const CppAD::vector<double>        age_table_;
 		const CppAD::vector<double>        time_table_;
 		const CppAD::vector<prior_struct>  prior_table_;
-		const CppAD::vector<smooth_info>   s_info_vec_;
 
 		// functions
 		template <class Float>
@@ -46,8 +45,7 @@ namespace dismod_at {
 			const pack_prior&                      var2prior       ,
 			const CppAD::vector<double>&           age_table       ,
 			const CppAD::vector<double>&           time_table      ,
-			const CppAD::vector<prior_struct>&     prior_table     ,
-			const CppAD::vector<smooth_info>&      s_info_vec
+			const CppAD::vector<prior_struct>&     prior_table
 		);
 		template <class Float>
 		CppAD::vector< residual_struct<Float> > fixed(

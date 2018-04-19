@@ -2343,8 +2343,7 @@ int main(int n_arg, const char** argv)
 				var2prior             ,
 				db_input.age_table    ,
 				db_input.time_table   ,
-				db_input.prior_table  ,
-				s_info_vec
+				db_input.prior_table
 			);
 			// data_object
 			dismod_at::data_model data_object(

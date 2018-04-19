@@ -25,7 +25,7 @@ $section Construct Fixed Negative Log-Likelihood Object$$
 
 $head Syntax$$
 $codei%prior_model %prior_object%(
-	%pack_object%, %var2prior%, %age_table%, %time_table%, %prior_table%, %s_info_vec%
+	%pack_object%, %var2prior%, %age_table%, %time_table%, %prior_table%
 )%$$
 
 $head prior_object$$
@@ -77,17 +77,6 @@ $cref/std/prior_table/std/$$,
 $cref/eta/prior_table/eta/$$,
 $cref/nu/prior_table/nu/$$.
 
-$head s_info_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<smooth_info>& %s_info_vec%
-%$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-	%s_info_vec%[ %smooth_id% ]
-%$$
-is the corresponding $cref smooth_info$$ information.
-
 $end
 */
 
@@ -106,15 +95,13 @@ prior_model::prior_model(
 	const pack_prior&                      var2prior       ,
 	const CppAD::vector<double>&           age_table       ,
 	const CppAD::vector<double>&           time_table      ,
-	const CppAD::vector<prior_struct>&     prior_table     ,
-	const CppAD::vector<smooth_info>&      s_info_vec      )
+	const CppAD::vector<prior_struct>&     prior_table     )
 :
 pack_object_(pack_object)  ,
 var2prior_(var2prior)      ,
 age_table_(age_table)      ,
 time_table_(time_table)    ,
-prior_table_(prior_table)  ,
-s_info_vec_(s_info_vec)
+prior_table_(prior_table)
 { }
 
 // private
