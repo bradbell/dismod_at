@@ -138,10 +138,10 @@ $cref/fixed effect/model_variables/Fixed Effects, theta/$$
 (random effect).
 
 $children%
-	example/devel/utility/pack_var_prior_xam.cpp
+	example/devel/utility/pack_prior_xam.cpp
 %$$
 $head Example$$
-The file $cref pack_var_prior_xam.cpp$$
+The file $cref pack_prior_xam.cpp$$
 contains an example and test that uses this routine.
 
 $end

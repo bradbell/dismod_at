@@ -12,19 +12,18 @@
 new_directories='
 '
 rename_files='
+	example/devel/utility/pack_var_prior_xam.cpp
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|integrand_ode|sci_ode|'
+rename_cmd='s|pack_var_prior|pack_prior|'
 spell_cmd='s|^$spell|&\n\tnslist|'
 #
 cat << EOF > junk.sed
-s|/option_table/Optimizer/\\([a-z_]*_fixed\\)/|/option_table/Fixed Only/\\1/|
-s|/option_table/Optimizer/\\([a-z_]*_random\\)/|/option_table/Random Only/\\1/|
-s|/option_table/Optimizer/|/option_table/Fixed and Random/|
+s|pack_var_prior|pack_prior|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

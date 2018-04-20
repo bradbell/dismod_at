@@ -9,17 +9,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin pack_var_prior_xam.cpp$$
+$begin pack_prior_xam.cpp$$
 $spell
 	interp
 	xam
 	var
 $$
 
-$section C++ pack_var_prior: Example and Test$$
+$section C++ pack_prior: Example and Test$$
 
 $code
-$srcfile%example/devel/utility/pack_var_prior_xam.cpp%0
+$srcfile%example/devel/utility/pack_prior_xam.cpp%0
 	%// BEGIN C++%// END C++%1%$$
 $$
 
@@ -35,7 +35,7 @@ $end
 
 # define DISMOD_AT_PRIOR_DENSITY_XAM_TRACE 0
 
-bool pack_var_prior_xam(void)
+bool pack_prior_xam(void)
 {	bool   ok = true;
 	using CppAD::vector;
 	using std::cout;
