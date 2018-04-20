@@ -107,8 +107,7 @@ A:active { color : purple }
 <option>integrate_2d</option>
 <option>interp_weight</option>
 <option>pack_info</option>
-<option>pack_value_prior</option>
-<option>pack_diff_prior</option>
+<option>pack_prior</option>
 <option>residual_density</option>
 <option>random_number</option>
 <option>random_effect</option>
@@ -227,13 +226,9 @@ then this rate is identically zero and there are no corresponding variables.
 <br>
 is the number of packed variables for this 
 <code><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i></code>
-
-and is the same for each 
-<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
-.
-(Not specified when 
-<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
- corresponds to <code><font color="blue">null</font></code>).
+; i.e.
+the product of the number of age and number of time points in the smoothing
+for this rate.
 
 <br>
 <br>

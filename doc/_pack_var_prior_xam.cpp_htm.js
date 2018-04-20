@@ -2,8 +2,8 @@ var list_up0 = [
 'dismod_at.htm',
 'devel.htm',
 'devel_utility.htm',
-'pack_value_prior.htm',
-'pack_value_prior_xam.cpp.htm'
+'pack_prior.htm',
+'pack_var_prior_xam.cpp.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -42,8 +42,7 @@ var list_down2 = [
 'integrate_2d.htm',
 'interp_weight.htm',
 'pack_info.htm',
-'pack_value_prior.htm',
-'pack_diff_prior.htm',
+'pack_prior.htm',
 'residual_density.htm',
 'random_number.htm',
 'random_effect.htm',
@@ -53,7 +52,7 @@ var list_down2 = [
 'split_space.htm'
 ];
 var list_down1 = [
-'pack_value_prior_xam.cpp.htm'
+'pack_var_prior_xam.cpp.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fit Model Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fit Model Constructor">
-<meta name="keywords" id="keywords" content=" fit model constructor syntax fit_object db bound_random fit_or_sample pack_object start_var scalar_var prior_table s_info_vec data_object prior_object quasi_fixed zero_sum_random prototype ">
+<meta name="keywords" id="keywords" content=" fit model constructor syntax fit_object db bound_random fit_or_sample pack_object pack_prior start_var scalar_var prior_table data_object prior_object quasi_fixed zero_sum_random prototype ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,10 +61,10 @@ A:active { color : purple }
 <option>bound_random</option>
 <option>fit_or_sample</option>
 <option>pack_object</option>
+<option>pack_prior</option>
 <option>start_var</option>
 <option>scalar_var</option>
 <option>prior_table</option>
-<option>s_info_vec</option>
 <option>data_object</option>
 <option>prior_object</option>
 <option>quasi_fixed</option>
@@ -130,7 +130,6 @@ A:active { color : purple }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_var</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -182,6 +181,15 @@ This argument is the <a href="pack_info.htm" target="_top"><span style='white-sp
 
 <br>
 <br>
+<b><big><a name="pack_prior" id="pack_prior">pack_prior</a></big></b>
+<br>
+This argument is the <a href="pack_prior.htm" target="_top"><span style='white-space: nowrap'>pack_prior</span></a>
+ information corresponding to the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+
+<br>
+<br>
 <b><big><a name="start_var" id="start_var">start_var</a></big></b>
 <br>
 This vector is the starting <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
@@ -203,19 +211,6 @@ The object and constraints are scaled using this value for the
 <br>
 This argument is the <a href="get_prior_table.htm#prior_table" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
 .
-
-<br>
-<br>
-<b><big><a name="s_info_vec" id="s_info_vec">s_info_vec</a></big></b>
-<br>
-For each <a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
-,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
-</span></font></code>
-is the corresponding <a href="smooth_info.htm" target="_top"><span style='white-space: nowrap'>smooth_info</span></a>
- information.
 
 <br>
 <br>
@@ -265,10 +260,10 @@ is constrained to be zero.
      <font color="#009900">double</font>                                bound_random     <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>                    fit_or_sample    <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> pack_info<font color="#990000">&amp;</font>                      pack_object      <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> pack_prior<font color="#990000">&amp;</font>                     var2prior        <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          start_var        <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          scale_var        <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>prior_struct<font color="#990000">&gt;&amp;</font>    prior_table      <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>smooth_info<font color="#990000">&gt;&amp;</font>     s_info_vec       <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> data_model<font color="#990000">&amp;</font>                     data_object      <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> prior_model<font color="#990000">&amp;</font>                    prior_object     <font color="#990000">,</font>
      <font color="#009900">bool</font>                                  quasi_fixed      <font color="#990000">,</font>

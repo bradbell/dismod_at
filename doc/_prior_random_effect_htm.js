@@ -18,6 +18,7 @@ var list_current0 = [
 'prior_random_effect.htm#prior_object',
 'prior_random_effect.htm#pack_vec',
 'prior_random_effect.htm#residual_vec',
+'prior_random_effect.htm#residual_vec.index',
 'prior_random_effect.htm#p(u|theta)',
 'prior_random_effect.htm#Example'
 ];

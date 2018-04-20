@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Evaluate Fixed Negative Log-Likelihood for the Random Effects</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Evaluate Fixed Negative Log-Likelihood for the Random Effects">
-<meta name="keywords" id="keywords" content=" evaluate fixed negative log-likelihood the random effects syntax float prior_object pack_vec residual_vec p(u|theta) example ">
+<meta name="keywords" id="keywords" content=" evaluate fixed negative log-likelihood the random effects syntax float prior_object pack_vec residual_vec index p(u|theta) example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,6 +60,7 @@ A:active { color : purple }
 <option>prior_object</option>
 <option>pack_vec</option>
 <option>residual_vec</option>
+<option>---..index</option>
 <option>p(u|theta)</option>
 <option>Example</option>
 </select>
@@ -176,6 +177,27 @@ The size of
  is not equal to the number of random effects
 because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified (at this time).
+
+<br>
+<br>
+<big><a name="residual_vec.index" id="residual_vec.index">index</a></big>
+<br>
+The <a href="residual_density.htm#index" target="_top"><span style='white-space: nowrap'>index</span></a>
+ for each residual is
+
+<code><font color="blue"><span style='white-space: nowrap'>3&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+ where
+<a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+ is the variable index,
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0</span></font></code>
+ for value priors,
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;1</span></font></code>
+ for age difference priors, and
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;2</span></font></code>
+ for time difference priors.
 
 <br>
 <br>

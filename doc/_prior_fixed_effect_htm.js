@@ -18,6 +18,7 @@ var list_current0 = [
 'prior_fixed_effect.htm#prior_object',
 'prior_fixed_effect.htm#pack_vec',
 'prior_fixed_effect.htm#residual_vec',
+'prior_fixed_effect.htm#residual_vec.index',
 'prior_fixed_effect.htm#p(theta)',
 'prior_fixed_effect.htm#Example'
 ];

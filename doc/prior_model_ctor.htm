@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Construct Fixed Negative Log-Likelihood Object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Construct Fixed Negative Log-Likelihood Object">
-<meta name="keywords" id="keywords" content=" construct fixed negative log-likelihood object syntax prior_object pack_object age_table time_table prior_table s_info_vec ">
+<meta name="keywords" id="keywords" content=" construct fixed negative log-likelihood object syntax prior_object pack_object var2prior age_table time_table prior_table ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,10 +58,10 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>prior_object</option>
 <option>pack_object</option>
+<option>var2prior</option>
 <option>age_table</option>
 <option>time_table</option>
 <option>prior_table</option>
-<option>s_info_vec</option>
 </select>
 </td>
 <td><a href="prior_fixed_effect.htm" target="_top">Next</a>
@@ -116,7 +116,7 @@ A:active { color : purple }
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>prior_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_object</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var2prior</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -138,6 +138,20 @@ This argument has prototype
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;pack_info&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is the <a href="pack_info.htm" target="_top"><span style='white-space: nowrap'>pack_info</span></a>
+ information corresponding to the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="var2prior" id="var2prior">var2prior</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;pack_prior&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var2prior</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the <a href="pack_prior.htm" target="_top"><span style='white-space: nowrap'>pack_prior</span></a>
  information corresponding to the
 <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 .
@@ -188,24 +202,6 @@ Only to following fields are used
 ,
 <a href="prior_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
 .
-
-<br>
-<br>
-<b><big><a name="s_info_vec" id="s_info_vec">s_info_vec</a></big></b>
-<br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;smooth_info&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-For each <a href="smooth_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
-,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
-</span></font></code>
-is the corresponding <a href="smooth_info.htm" target="_top"><span style='white-space: nowrap'>smooth_info</span></a>
- information.
 
 
 <hr>Input File: devel/model/prior_model.cpp

@@ -15,8 +15,9 @@ var list_current0 = [
 'number_random_const.htm#Syntax',
 'number_random_const.htm#bound_random',
 'number_random_const.htm#pack_object',
-'number_random_const.htm#s_info_vec',
-'number_random_const.htm#prior_table'
+'number_random_const.htm#var2prior',
+'number_random_const.htm#prior_table',
+'number_random_const.htm#Prototype'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -48,8 +49,7 @@ var list_down1 = [
 'integrate_2d.htm',
 'interp_weight.htm',
 'pack_info.htm',
-'pack_value_prior.htm',
-'pack_diff_prior.htm',
+'pack_prior.htm',
 'residual_density.htm',
 'random_number.htm',
 'random_effect.htm',

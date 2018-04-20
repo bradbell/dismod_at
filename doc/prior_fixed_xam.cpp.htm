@@ -320,11 +320,14 @@ A:active { color : purple }
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// var2prior</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">pack_prior</font> <b><font color="#000000">var2prior</font></b><font color="#990000">(</font>pack_object<font color="#990000">,</font> s_info_vec<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// mulcov_meas_value: none</font></i>
      <i><font color="#9A1900">// mulcov_meas_std: none</font></i>
      <i><font color="#9A1900">// mulcov_rate_value: none</font></i>
      dismod_at<font color="#990000">::</font><font color="#008080">prior_model</font> <b><font color="#000000">prior_object</font></b><font color="#990000">(</font>
-          pack_object<font color="#990000">,</font> age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> prior_table<font color="#990000">,</font> s_info_vec
+          pack_object<font color="#990000">,</font> var2prior<font color="#990000">,</font> age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> prior_table
      <font color="#990000">);</font>
      <i><font color="#9A1900">// -------------- compute fixed negative log-likelihood -------------------</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">vector&lt; dismod_at::residual_struct&lt;double&gt; &gt;</font> residual_vec<font color="#990000">;</font>

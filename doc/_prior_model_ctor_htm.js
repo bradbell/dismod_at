@@ -16,10 +16,10 @@ var list_current0 = [
 'prior_model_ctor.htm#Syntax',
 'prior_model_ctor.htm#prior_object',
 'prior_model_ctor.htm#pack_object',
+'prior_model_ctor.htm#var2prior',
 'prior_model_ctor.htm#age_table',
 'prior_model_ctor.htm#time_table',
-'prior_model_ctor.htm#prior_table',
-'prior_model_ctor.htm#s_info_vec'
+'prior_model_ctor.htm#prior_table'
 ];
 var list_down4 = [
 'install_unix.htm',

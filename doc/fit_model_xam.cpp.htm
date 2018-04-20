@@ -351,9 +351,12 @@ A:active { color : purple }
           child_id2node_id<font color="#990000">,</font> smooth_table<font color="#990000">,</font> mulcov_table<font color="#990000">,</font> rate_table<font color="#990000">,</font> nslist_pair
      <font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// var2prior</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">pack_prior</font> <b><font color="#000000">var2prior</font></b><font color="#990000">(</font>pack_object<font color="#990000">,</font> s_info_vec<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// prior_object</font></i>
      dismod_at<font color="#990000">::</font><font color="#008080">prior_model</font> <b><font color="#000000">prior_object</font></b><font color="#990000">(</font>
-          pack_object<font color="#990000">,</font> age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> prior_table<font color="#990000">,</font> s_info_vec
+          pack_object<font color="#990000">,</font> var2prior<font color="#990000">,</font> age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> prior_table
      <font color="#990000">);</font>
      <i><font color="#9A1900">// data_subset</font></i>
      <font color="#008080">vector&lt;dismod_at::data_subset_struct&gt;</font> data_subset_obj<font color="#990000">;</font>
@@ -393,16 +396,11 @@ A:active { color : purple }
      <font color="#990000">);</font>
      data_object<font color="#990000">.</font><b><font color="#000000">replace_like</font></b><font color="#990000">(</font>minimum_meas_cv<font color="#990000">,</font> data_subset_obj<font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// start_var</font></i>
-     <font color="#008080">vector&lt;size_t&gt;</font> pack_prior_id<font color="#990000">;</font>
-     <font color="#008080">vector&lt;double&gt;</font> pack_const<font color="#990000">;</font>
-     dismod_at<font color="#990000">::</font><b><font color="#000000">pack_value_prior</font></b><font color="#990000">(</font>
-          pack_prior_id<font color="#990000">,</font> pack_const<font color="#990000">,</font> pack_object<font color="#990000">,</font> s_info_vec
-     <font color="#990000">);</font>
+     <i><font color="#9A1900">// start_var, scale_var</font></i>
      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">start_var</font></b><font color="#990000">(</font> pack_object<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">scale_var</font></b><font color="#990000">(</font> pack_object<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> var_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> var_id <font color="#990000">&lt;</font> start_var<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> var_id<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> prior_id <font color="#990000">=</font> pack_prior_id<font color="#990000">[</font>var_id<font color="#990000">];</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> prior_id <font color="#990000">=</font> var2prior<font color="#990000">.</font><b><font color="#000000">value_prior_id</font></b><font color="#990000">(</font>var_id<font color="#990000">);</font>
           start_var<font color="#990000">[</font>var_id<font color="#990000">]</font> <font color="#990000">=</font> prior_table<font color="#990000">[</font>prior_id<font color="#990000">].</font>mean<font color="#990000">;</font>
           scale_var<font color="#990000">[</font>var_id<font color="#990000">]</font> <font color="#990000">=</font> prior_table<font color="#990000">[</font>prior_id<font color="#990000">].</font>mean<font color="#990000">;</font>
      <font color="#FF0000">}</font>
@@ -441,10 +439,10 @@ A:active { color : purple }
           bound_random<font color="#990000">,</font>
           fit_or_sample<font color="#990000">,</font>
           pack_object<font color="#990000">,</font>
+          var2prior<font color="#990000">,</font>
           start_var<font color="#990000">,</font>
           scale_var<font color="#990000">,</font>
           prior_table<font color="#990000">,</font>
-          s_info_vec<font color="#990000">,</font>
           data_object<font color="#990000">,</font>
           prior_object<font color="#990000">,</font>
           quasi_fixed<font color="#990000">,</font>
