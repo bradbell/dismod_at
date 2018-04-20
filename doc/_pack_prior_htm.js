@@ -71,7 +71,7 @@ var list_down1 = [
 'split_space.htm'
 ];
 var list_down0 = [
-'pack_var_prior_xam.cpp.htm'
+'pack_prior_xam.cpp.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

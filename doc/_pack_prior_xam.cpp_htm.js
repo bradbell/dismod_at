@@ -3,7 +3,7 @@ var list_up0 = [
 'devel.htm',
 'devel_utility.htm',
 'pack_prior.htm',
-'pack_var_prior_xam.cpp.htm'
+'pack_prior_xam.cpp.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -52,7 +52,7 @@ var list_down2 = [
 'split_space.htm'
 ];
 var list_down1 = [
-'pack_var_prior_xam.cpp.htm'
+'pack_prior_xam.cpp.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

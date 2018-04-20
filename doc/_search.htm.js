@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180419  ',' ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180420  ',' ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command test executable path example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix eigen_prefix other prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir checkpoint_newton_step system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
@@ -217,7 +217,7 @@ Keyword =
 'pack_info_mulcov_rate  Devel Pack Variables: Rate Covariate Multipliers  ',' syntax subvec_info pack_object rate_id n_cov covariate_id smooth_id n_var offset example ',
 'pack_info_xam.cpp  C++ pack_info: Example and Test  ',' ',
 'pack_prior  Priors in Variable ID Order  ',' syntax prototype notation var_id prior_id pack_object s_info_vec var2prior size const_value smooth_id value_prior_id dage_prior_id dtime_prior_id dage_var_id dtime_var_id fixed_effect example ',
-'pack_var_prior_xam.cpp  C++ pack_var_prior: Example and Test  ',' ',
+'pack_prior_xam.cpp  C++ pack_prior: Example and Test  ',' ',
 'residual_density  Compute Weighted Residual and Log-Density  ',' syntax float z mu delta d_id d_eta d_nu index difference residual_struct wres logden ',
 'random_number  Pseudo Random Number Generation  ',' ',
 'manage_gsl_rng  Set, Get, And Free A GSL Random Number Generator  ',' syntax purpose new_gsl_rng s_in s_out get_gsl_rng free_gsl_rng example ',
