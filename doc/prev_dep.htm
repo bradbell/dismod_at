@@ -1,0 +1,222 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Prevalence Does Not Depend On Other Cause Mortality</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Prevalence Does Not Depend On Other Cause Mortality">
+<meta name="keywords" id="keywords" content=" prevalence does not depend on other cause mortality lemma proof ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_prev_dep_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>prev_dep</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="posterior.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Lemma</option>
+<option>Proof</option>
+</select>
+</td>
+<td><a href="command.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+<option>posterior</option>
+<option>prev_dep</option>
+</select>
+</td>
+<td>prev_dep</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+
+<center><b><big><big>Prevalence Does Not Depend On Other Cause Mortality</big></big></b></center>
+<br>
+<b><big><a name="Lemma" id="Lemma">Lemma</a></big></b>
+<br>
+Suppose <small>@(@
+\iota (t) \geq 0
+@)@</small>, <small>@(@
+\omega (t) \geq 0
+@)@</small> and
+<small>@(@
+\chi(t) \geq 0
+@)@</small> are known functions.
+Define <small>@(@
+S(t)
+@)@</small> by
+<small>@(@
+S(0) = s_0 > 0
+@)@</small> and
+<small>@[@
+
+	S'(t) =  - [ \iota (t) + \omega (t) ] S(t)
+
+@]@</small>
+Define <small>@(@
+C(t)
+@)@</small> by
+<small>@(@
+C(0) = c_0 > 0
+@)@</small> and
+<small>@[@
+
+	C'(t) =  + \iota (t) S(t) - [ \chi (t) + \omega (t) ] C(t)
+
+@]@</small>
+Define <small>@(@
+P(t)
+@)@</small> by <small>@(@
+P(t) = C(t) / [ S(t) + C(t) ]
+@)@</small>
+It follows that <small>@(@
+P(t)
+@)@</small> does not depend on the value of
+<small>@(@
+\omega (t)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Proof" id="Proof">Proof</a></big></b>
+<br>
+It follows that <small>@(@
+S(t) > 0
+@)@</small>, <small>@(@
+C(t) > 0
+@)@</small> for all <small>@(@
+t
+@)@</small> and
+<small>@[@
+
+	P(t) = 1 / [ 1 + S(t) / C(t) ]
+
+@]@</small>
+Define <small>@(@
+Q(t) = C(t) / S(t)
+@)@</small>.
+It suffices to show that <small>@(@
+Q(t)
+@)@</small> does not depend on <small>@(@
+\omega(t)
+@)@</small>.
+Taking the derivative of <small>@(@
+Q(t)
+@)@</small> we have
+<small>@[@
+
+	Q'(t) = [ C'(t) S(t) - S'(t) C(t) ] / S(t)^2
+
+@]@</small>
+Dropping the dependence on <small>@(@
+t
+@)@</small> we have
+<small>@[@
+
+\begin{array}{rcl}
+Q'
+& = &
+[ + \iota S S - ( \chi + \omega ) C S + (  \iota  + \omega ) S C ] / S^2
+\\
+& = &
+[ + \iota S - ( \chi + \omega ) C + (  \iota  + \omega ) C ] / S
+\\
+& = &
+\iota  + ( \iota - \chi ) Q
+\end{array}
+
+@]@</small>
+So <small>@(@
+Q(t)
+@)@</small> satisfies the equation
+<small>@(@
+Q(0) = c_0 / s_0
+@)@</small> and
+<small>@[@
+
+	Q'(t) = \iota(t) + [ \iota(t) - \chi (t) ] Q(t)
+
+@]@</small>
+If follows that <small>@(@
+Q(t)
+@)@</small> does not depend on <small>@(@
+\omega (t)
+@)@</small>
+which completes the proof.
+
+
+
+<hr>Input File: omh/model/prev_depend.omh
+
+</body>
+</html>

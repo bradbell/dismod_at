@@ -45,7 +45,8 @@ var list_down1 = [
 'statistic.htm',
 'bilinear.htm',
 'ode_grid.htm',
-'posterior.htm'
+'posterior.htm',
+'prev_dep.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

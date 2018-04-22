@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
 'model.htm',
-'fixed_prior.htm'
+'prev_dep.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -11,23 +11,8 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'fixed_prior.htm#theta',
-'fixed_prior.htm#theta.lambda',
-'fixed_prior.htm#theta.beta',
-'fixed_prior.htm#theta.theta',
-'fixed_prior.htm#Value Constraints',
-'fixed_prior.htm#Value Constraints.theta_k',
-'fixed_prior.htm#Value Constraints.L_k^v',
-'fixed_prior.htm#Value Constraints.U_k^v',
-'fixed_prior.htm#Age Difference Limits',
-'fixed_prior.htm#Age Difference Limits.a_i(k)',
-'fixed_prior.htm#Age Difference Limits.Delta^a',
-'fixed_prior.htm#Age Difference Limits.L_k^a',
-'fixed_prior.htm#Age Difference Limits.U_k^a',
-'fixed_prior.htm#Time Difference Limits',
-'fixed_prior.htm#Theta',
-'fixed_prior.htm#Normalization Constant, C_theta',
-'fixed_prior.htm#p(theta)'
+'prev_dep.htm#Lemma',
+'prev_dep.htm#Proof'
 ];
 var list_down2 = [
 'install_unix.htm',
