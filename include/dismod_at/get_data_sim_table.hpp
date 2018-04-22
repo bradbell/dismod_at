@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_GET_SIMULATE_TABLE_HPP
-# define DISMOD_AT_GET_SIMULATE_TABLE_HPP
+# ifndef DISMOD_AT_GET_DATA_SIM_TABLE_HPP
+# define DISMOD_AT_GET_DATA_SIM_TABLE_HPP
 
 # include <string>
 # include <sqlite3.h>
@@ -22,7 +22,7 @@ namespace dismod_at {
 		double      simulate_value;
 		double      simulate_delta;
 	};
-	extern CppAD::vector<simulate_struct> get_simulate_table(sqlite3*  db);
+	extern CppAD::vector<simulate_struct> get_data_sim_table(sqlite3*  db);
 }
 
 # endif

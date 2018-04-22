@@ -50,7 +50,7 @@ $section Changes and Additions to Dismod_at During 2016$$
 $head 12-03$$
 $list number$$
 The $icode meas_std$$ filed was added to the
-simulate table.
+data_sim table.
 $lnext
 The option arguments were added to each
 $cref/command/log_table/message_type/command/$$ message in the log table.
@@ -60,7 +60,7 @@ $cref/meas_value/db2csv_command/data.csv/meas_value/$$ and $icode meas_std$$
 always correspond to the $cref data_table$$.
 The columns
 $cref/sim_value/db2csv_command/data.csv/sim_value/$$ and $icode sim_std$$
-correspond to the $cref simulate_table$$ when the previous fit
+correspond to the $cref data_sim_table$$ when the previous fit
 used simulated data.
 In addition, some bugs in this command, related to the
 $cref/simulate_index/fit_command/simulate_index/$$, were fixed.
@@ -75,7 +75,7 @@ The $cref/message_type/log_table/message_type/$$ $code warning$$
 was missing in the log file documentation. It has been added.
 $lnext
 Change the $cref simulate_command$$ so that it adjusts
-$icode meas_std$$ simulate table field
+$icode meas_std$$ data_sim table field
 to be relative to the simulated measurements instead of
 using the data table
 $cref/meas_std/data_table/meas_std/$$.
@@ -670,8 +670,8 @@ $lend
 
 $head 04-19$$
 $list number$$
-In the simulate table, change $code sample_index$$ to
-$cref/simulate_index/simulate_table/simulate_index/$$.
+In the data_sim table, change $code sample_index$$ to
+$cref/simulate_index/data_sim_table/simulate_index/$$.
 $lnext
 In the option table, change $code fit_sample_index$$ to
 $cref/fit_simulate_index/fit_command/simulate_index/$$.

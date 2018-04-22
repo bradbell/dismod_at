@@ -102,13 +102,13 @@ flag = subprocess.call( cmd )
 if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
 # -----------------------------------------------------------------------
-# check the simulate table
+# check the data_sim table
 data_table      = dismod_at.get_table_dict(connection, 'data')
-simulate_table  = dismod_at.get_table_dict(connection, 'simulate')
+data_sim_table  = dismod_at.get_table_dict(connection, 'data_sim')
 assert len(data_table) == 1
-assert len(simulate_table) == 1
+assert len(data_sim_table) == 1
 data_row = data_table[0]
-sim_row  = simulate_table[0]
+sim_row  = data_sim_table[0]
 #
 # There is only on simulation so
 assert sim_row['simulate_index'] == 0

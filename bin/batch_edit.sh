@@ -12,18 +12,46 @@
 new_directories='
 '
 rename_files='
-	example/devel/utility/pack_var_prior_xam.cpp
+	omh/table/simulate_table.omh
+	devel/table/get_simulate_table.cpp
+	include/dismod_at/get_simulate_table.hpp
+	example/devel/table/get_simulate_table_xam.cpp
 '
 spell_files='
+	omh/table/data_sim_table.omh
+	omh/table/sample_table.omh
+	devel/dismod_at.cpp
+	devel/table/get_data_sim_table.cpp
+	example/devel/table/get_data_sim_table_xam.cpp
+	omh/whats_new/2017.omh
+	omh/table/data_flow.omh
 '
 no_change_files='
 '
 #
-rename_cmd='s|pack_var_prior|pack_prior|'
-spell_cmd='s|^$spell|&\n\tnslist|'
+rename_cmd='s|simulate_table|data_sim_table|'
+spell_cmd='s|^$spell|&\n\tsim|'
 #
 cat << EOF > junk.sed
-s|pack_var_prior|pack_prior|
+s|SIMULATE_TABLE|DATA_SIM_TABLE|g
+s|simulate_id|data_sim_id|g
+s|simulate_table|data_sim_table|g
+s|simulate table|data_sim table|g
+s|table simulate|table data_sim|g
+s|/simulate/data_sim_table/|/data_sim/data_sim_table/|
+s|\$\\([a-z]*\\) simulate\\\$|\$\\1 data_sim\$|g
+s|"simulate"|"data_sim"|
+s|'simulate'|'data_sim'|
+s|insert into simulate|insert into data_sim|
+#
+s|\\(command *in .*\\)'data_sim'|\\1'simulate'|
+s|\\(command *== .*\\)'data_sim'|\\1'simulate'|
+s|\\(cmd *= .*\\)'data_sim'|\\1'simulate'|
+s|\\(command *= .*\\)'data_sim'|\\1'simulate'|
+s|\\(method *= .*\\)'data_sim'|\\1'simulate'|
+s|cmd.append('data_sim')|cmd.append('simulate')|
+s|\\(message.*== *\\)'data_sim'|\\1'simulate'|
+
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
@@ -97,6 +125,13 @@ done
 if [ "$git_new" == 'yes' ]
 then
 	git_new.sh from
+fi
+# ----------------------------------------------------------------------------
+if ! check_copyright.sh >> /dev/null
+then
+	echo 'check_copyright.sh: some changes'
+else
+	echo 'check_copyright.sh: no changes'
 fi
 # ----------------------------------------------------------------------------
 cp $HOME/trash/batch_edit.sh bin/batch_edit.sh

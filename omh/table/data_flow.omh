@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin data_flow$$
 $spell
+	sim
 	avgint
 	Dismod
 	init
@@ -37,7 +38,7 @@ $children%omh/table/log_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/fit_data_subset_table.omh
 	%omh/table/truth_var_table.omh
-	%omh/table/simulate_table.omh
+	%omh/table/data_sim_table.omh
 	%omh/table/sample_table.omh
 	%omh/table/predict_table.omh
 %$$
@@ -88,7 +89,7 @@ $cref/fit_data_subset/fit_data_subset_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
 $rnext
-$cref/simulate/simulate_table/$$ $cnext
+$cref/data_sim/data_sim_table/$$ $cnext
 $cref/simulate/simulate_command/$$ $cnext
 no
 $rnext
@@ -124,15 +125,15 @@ $cref fit_var_table$$, $cref sample_table$$  $cnext
 $cref start_var_table$$, $cref scale_var_table$$, $cref truth_var_table$$
 $rnext
 $cref/fit/fit_command/$$     $cnext
-	$cref simulate_table$$  $cnext
+	$cref data_sim_table$$  $cnext
 	$cref fit_var_table$$, $cref fit_data_subset_table$$.
 $rnext
 $cref/simulate/simulate_command/$$ $cnext
 	$cref truth_var_table$$        $cnext
-	$cref simulate_table$$
+	$cref data_sim_table$$
 $rnext
 $cref/sample/sample_command/$$ $cnext
-	$cref fit_var_table$$, $cref simulate_table$$ $cnext
+	$cref fit_var_table$$, $cref data_sim_table$$ $cnext
 	$cref sample_table$$
 $rnext
 $cref/predict/predict_command/$$ $cnext

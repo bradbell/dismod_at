@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -22,7 +22,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "smooth2ode.hpp"
 # include "pack_info.hpp"
 # include "residual_density.hpp"
-# include "get_simulate_table.hpp"
+# include "get_data_sim_table.hpp"
 
 // declare test functions that are friends
 extern bool sci_ode_xam(void);

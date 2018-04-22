@@ -50,9 +50,9 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
-$head 04-22$$
-Add a proof that prevalence does not depend on other cause mortality; see
-$cref prev_dep$$.
+$head 04-21$$
+Change to user API:
+Change the name of $code simulate_table$$ to $cref data_sim_table$$.
 
 $head 04-16$$
 $list number$$
@@ -515,7 +515,7 @@ Some other minor improvements and corrections were made
 to the documentation.
 $lnext
 The calculation of the
-$cref/simulate_value/simulate_command/simulate_table/simulate_value/$$
+$cref/simulate_value/simulate_command/data_sim_table/simulate_value/$$
 was corrected to allow for negative values in
 $cref/linear/simulate_command/y/Linear/$$ cases.
 (The mistake fixed here was made during the changes on
@@ -538,9 +538,9 @@ $cref/sigma
 /$$.
 $lnext
 The fields $icode meas_value$$ and $icode meas_std$$
-in the simulate table were changed to
-$cref/simulate_value/simulate_table/simulate_value/$$ and
-$cref/simulate_delta/simulate_table/simulate_delta/$$.
+in the data_sim table were changed to
+$cref/simulate_value/data_sim_table/simulate_value/$$ and
+$cref/simulate_delta/data_sim_table/simulate_delta/$$.
 $lend
 
 $head 01-18$$
@@ -571,7 +571,7 @@ $cref/sim_value/db2csv_command/data.csv/sim_value/$$ and
 $icode sim_std$$ columns when there was
 no $cref/simulate_index/fit_command/simulate_index/$$
 in the previous fit command.
-If there is a $cref simulate_table$$ the default value zero is used for
+If there is a $cref data_sim_table$$ the default value zero is used for
 $icode simulate_index$$ when it does not appear in the previous fit command.
 
 $head 01-12$$

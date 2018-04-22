@@ -75,7 +75,7 @@ extern bool get_mulcov_table_xam(void);
 extern bool get_node_table_xam(void);
 extern bool get_rate_table_xam(void);
 extern bool get_sample_table_xam(void);
-extern bool get_simulate_table_xam(void);
+extern bool get_data_sim_table_xam(void);
 extern bool get_nslist_pair_xam(void);
 extern bool get_smooth_grid_xam(void);
 extern bool get_table_column_xam(void);
@@ -165,7 +165,7 @@ int main(void)
 	RUN(get_node_table_xam);
 	RUN(get_rate_table_xam);
 	RUN(get_sample_table_xam);
-	RUN(get_simulate_table_xam);
+	RUN(get_data_sim_table_xam);
 	RUN(get_smooth_grid_xam);
 	RUN(get_nslist_pair_xam);
 	RUN(get_table_column_xam);
