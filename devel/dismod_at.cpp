@@ -854,7 +854,7 @@ $head simulate_index$$
 If $icode simulate_index$$ is present, it must be less than
 $cref/number_simulate/simulate_command/number_simulate/$$.
 In this case the corresponding data_sim table
-$cref/simulate_value/data_sim_table/simulate_value/$$ entries
+$cref/data_sim_value/data_sim_table/data_sim_value/$$ entries
 are used in place of the data table
 $cref/meas_value/data_table/meas_value/$$ entries.
 All the rest of the inputs are the same as when $icode simulated_index$$
@@ -969,7 +969,7 @@ void fit_command(
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t data_sim_id = n_subset * sim_index + subset_id;
 			data_subset_obj[subset_id].meas_value =
-				data_sim_table[data_sim_id].simulate_value;
+				data_sim_table[data_sim_id].data_sim_value;
 		}
 	}
 	data_object.replace_like(minimum_meas_cv, data_subset_obj);
@@ -1224,7 +1224,7 @@ for such $icode data_id$$.
 Hence the number of rows in $cref data_sim_table$$ is
 $icode number_simulate$$ times the number of rows in $cref data_subset_table$$.
 
-$subhead simulate_value$$
+$subhead data_sim_value$$
 This value is different for each $icode subset_data_id$$
 and each $icode simulate_index$$.
 In the $cref/linear/simulate_command/y/Linear/$$ case,
@@ -1232,7 +1232,7 @@ this column contains the value $icode y$$.
 In the $cref/log-transformed/simulate_command/y/Log-Transformed/$$ case,
 this column contains the value $codei%max(%y%, 0)%$$.
 
-$subhead simulate_delta$$
+$subhead data_sim_delta$$
 This column contains the value of
 $cref/delta/simulate_command/delta/$$
 and is different for each $icode subset_data_id$$.
@@ -1362,11 +1362,11 @@ void simulate_command(
 	col_type[1]   = "integer";
 	col_unique[1] = false;
 	//
-	col_name[2]   = "simulate_value";
+	col_name[2]   = "data_sim_value";
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
-	col_name[3]   = "simulate_delta";
+	col_name[3]   = "data_sim_delta";
 	col_type[3]   = "real";
 	col_unique[3] = false;
 	//
@@ -1649,7 +1649,7 @@ void sample_command(
 					dismod_at::error_exit(msg, table_name, data_sim_id);
 				}
 				data_subset_obj[subset_id].meas_value =
-					data_sim_table[data_sim_id].simulate_value;
+					data_sim_table[data_sim_id].data_sim_value;
 			}
 			// replace_like
 			data_object.replace_like(minimum_meas_cv, data_subset_obj);

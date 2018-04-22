@@ -44,8 +44,8 @@ bool get_data_sim_table_xam(void)
 		" data_sim_id    integer primary key,"
 		" simulate_index integer,"
 		" data_subset_id integer,"
-		" simulate_value real,"
-		" simulate_delta real"
+		" data_sim_value real,"
+		" data_sim_delta real"
 	")",
 	"insert into data_sim values(0, 0, 0, 0e-3, 6e-4)",
 	"insert into data_sim values(1, 0, 1, 1e-3, 5e-4)",
@@ -78,19 +78,19 @@ bool get_data_sim_table_xam(void)
 	ok  &= data_sim_table[4].data_subset_id == 1;
 	ok  &= data_sim_table[5].data_subset_id == 2;
 	//
-	ok  &= data_sim_table[0].simulate_value == 0e-3;
-	ok  &= data_sim_table[1].simulate_value == 1e-3;
-	ok  &= data_sim_table[2].simulate_value == 2e-3;
-	ok  &= data_sim_table[3].simulate_value == 0e-3;
-	ok  &= data_sim_table[4].simulate_value == 1e-3;
-	ok  &= data_sim_table[5].simulate_value == 2e-3;
+	ok  &= data_sim_table[0].data_sim_value == 0e-3;
+	ok  &= data_sim_table[1].data_sim_value == 1e-3;
+	ok  &= data_sim_table[2].data_sim_value == 2e-3;
+	ok  &= data_sim_table[3].data_sim_value == 0e-3;
+	ok  &= data_sim_table[4].data_sim_value == 1e-3;
+	ok  &= data_sim_table[5].data_sim_value == 2e-3;
 	//
-	ok  &= data_sim_table[0].simulate_delta == 6e-4;
-	ok  &= data_sim_table[1].simulate_delta == 5e-4;
-	ok  &= data_sim_table[2].simulate_delta == 4e-4;
-	ok  &= data_sim_table[3].simulate_delta == 3e-4;
-	ok  &= data_sim_table[4].simulate_delta == 2e-4;
-	ok  &= data_sim_table[5].simulate_delta == 1e-4;
+	ok  &= data_sim_table[0].data_sim_delta == 6e-4;
+	ok  &= data_sim_table[1].data_sim_delta == 5e-4;
+	ok  &= data_sim_table[2].data_sim_delta == 4e-4;
+	ok  &= data_sim_table[3].data_sim_delta == 3e-4;
+	ok  &= data_sim_table[4].data_sim_delta == 2e-4;
+	ok  &= data_sim_table[5].data_sim_delta == 1e-4;
 	//
 	// close database and return
 	sqlite3_close(db);

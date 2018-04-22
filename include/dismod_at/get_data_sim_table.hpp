@@ -19,8 +19,8 @@ namespace dismod_at {
 	struct simulate_struct {
 		int         simulate_index;
 		int         data_subset_id;
-		double      simulate_value;
-		double      simulate_delta;
+		double      data_sim_value;
+		double      data_sim_delta;
 	};
 	extern CppAD::vector<simulate_struct> get_data_sim_table(sqlite3*  db);
 }

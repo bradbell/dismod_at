@@ -58,11 +58,11 @@ $code int$$ $cnext $code data_subset_id$$ $cnext
 	The $cref/data_subset_id/data_subset_table/data_subset_id/$$
 	for this simulated measurement.
 $rnext
-$code double$$ $cnext $code simulate_value$$ $cnext
+$code double$$ $cnext $code data_sim_value$$ $cnext
 	The $cref/meas_value/data_table/meas_value/$$
 	for this simulated measurement.
 $rnext
-$code double$$ $cnext $code simulate_delta$$ $cnext
+$code double$$ $cnext $code data_sim_delta$$ $cnext
 	The $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i
@@ -102,22 +102,22 @@ CppAD::vector<simulate_struct> get_data_sim_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, data_subset_id);
 	assert( data_subset_id.size() == n_simulate );
 
-	column_name             =  "simulate_value";
-	CppAD::vector<double>       simulate_value;
-	get_table_column(db, table_name, column_name, simulate_value);
-	assert( simulate_value.size() == n_simulate );
+	column_name             =  "data_sim_value";
+	CppAD::vector<double>       data_sim_value;
+	get_table_column(db, table_name, column_name, data_sim_value);
+	assert( data_sim_value.size() == n_simulate );
 
-	column_name             =  "simulate_delta";
-	CppAD::vector<double>       simulate_delta;
-	get_table_column(db, table_name, column_name, simulate_delta);
-	assert( simulate_delta.size() == n_simulate );
+	column_name             =  "data_sim_delta";
+	CppAD::vector<double>       data_sim_delta;
+	get_table_column(db, table_name, column_name, data_sim_delta);
+	assert( data_sim_delta.size() == n_simulate );
 
 	CppAD::vector<simulate_struct> data_sim_table(n_simulate);
 	for(size_t i = 0; i < n_simulate; i++)
 	{	data_sim_table[i].simulate_index   = simulate_index[i];
 		data_sim_table[i].data_subset_id   = data_subset_id[i];
-		data_sim_table[i].simulate_value   = simulate_value[i];
-		data_sim_table[i].simulate_delta   = simulate_delta[i];
+		data_sim_table[i].data_sim_value   = data_sim_value[i];
+		data_sim_table[i].data_sim_delta   = data_sim_delta[i];
 	}
 	return data_sim_table;
 }

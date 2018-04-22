@@ -52,13 +52,13 @@ for $icode simulate_index$$ equal zero to $icode%number_simulate%-1%$$
 and $icode data_subset_id$$ equal zero to $codei%n_subset%-1%$$.
 
 
-$head simulate_value$$
+$head data_sim_value$$
 This column has type $code real$$ and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
 
-$head simulate_delta$$
+$head data_sim_delta$$
 The column has type $code real$$ and is
 the adjusted measurement standard deviation used in the simulation; i.e.,
 $cref/delta/simulate_command/delta/$$.

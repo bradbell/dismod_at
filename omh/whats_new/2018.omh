@@ -53,6 +53,10 @@ $childtable%
 $head 04-21$$
 Change to user API:
 Change the name of $code simulate_table$$ to $cref data_sim_table$$.
+In the data sim table change $code simulate_value$$ to
+$cref/data_sim_value/data_sim_table/data_sim_value/$$ and
+$code simulate_delta$$ to
+$cref/data_sim_delta/data_sim_table/data_sim_delta/$$.
 
 $head 04-16$$
 $list number$$
@@ -515,7 +519,7 @@ Some other minor improvements and corrections were made
 to the documentation.
 $lnext
 The calculation of the
-$cref/simulate_value/simulate_command/data_sim_table/simulate_value/$$
+$cref/data_sim_value/simulate_command/data_sim_table/data_sim_value/$$
 was corrected to allow for negative values in
 $cref/linear/simulate_command/y/Linear/$$ cases.
 (The mistake fixed here was made during the changes on
@@ -539,8 +543,8 @@ $cref/sigma
 $lnext
 The fields $icode meas_value$$ and $icode meas_std$$
 in the data_sim table were changed to
-$cref/simulate_value/data_sim_table/simulate_value/$$ and
-$cref/simulate_delta/data_sim_table/simulate_delta/$$.
+$cref/data_sim_value/data_sim_table/data_sim_value/$$ and
+$cref/data_sim_delta/data_sim_table/data_sim_delta/$$.
 $lend
 
 $head 01-18$$

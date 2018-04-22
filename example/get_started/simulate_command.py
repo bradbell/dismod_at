@@ -115,7 +115,7 @@ assert sim_row['simulate_index'] == 0
 # For this case, data_subset_id is same as data_id
 assert sim_row['data_subset_id'] == 0
 # There are no measurement standard deviation covariates, so
-assert abs( sim_row['simulate_delta'] / data_row['meas_std'] - 1.0 ) < 1e-7
+assert abs( sim_row['data_sim_delta'] / data_row['meas_std'] - 1.0 ) < 1e-7
 # Compute the model value for the measurement (with no noise)
 # Note that age_lower is equal age_upper
 age            = data_row['age_lower']
@@ -123,9 +123,9 @@ income         = data_row['x_0']
 adjusted_omega = omega_world * exp(income_multiplier * income)
 model_value    = exp( - adjusted_omega * age )
 # check if model value is within 3 standard deviations of the simulated value
-simulate_value = sim_row['simulate_value']
-simulate_delta   = sim_row['simulate_delta']
-assert abs( model_value - simulate_value ) < 3.0 * simulate_delta
+data_sim_value = sim_row['data_sim_value']
+data_sim_delta   = sim_row['data_sim_delta']
+assert abs( model_value - data_sim_value ) < 3.0 * data_sim_delta
 #
 # -----------------------------------------------------------------------
 print('simulate_command: OK')

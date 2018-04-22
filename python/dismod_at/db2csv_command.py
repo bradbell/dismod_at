@@ -302,7 +302,7 @@
 #
 # $subhead sim_value$$
 # If the $cref simulate_command$$ has been run, this is the
-# $cref/simulate_value/data_sim_table/simulate_value/$$ for this
+# $cref/data_sim_value/data_sim_table/data_sim_value/$$ for this
 # $cref/data_id/db2csv_command/data.csv/data_id/$$ and
 # $cref/simulate_index/fit_command/simulate_index/$$
 # in the previous fit command.
@@ -313,7 +313,7 @@
 #
 # $subhead sim_delta$$
 # This is the
-# $cref/simulate_delta/data_sim_table/simulate_delta/$$ for this
+# $cref/data_sim_delta/data_sim_table/data_sim_delta/$$ for this
 # $cref/data_id/db2csv_command/data.csv/data_id/$$ the
 # $icode simulate_index$$ (see $icode sim_value$$ above).
 #
@@ -1121,8 +1121,8 @@ def db2csv_command(database_file_arg) :
 			row_out['residual'] = convert2output( row['weighted_residual'] )
 		if simulate_index != None :
 			data_sim_id =  n_subset * simulate_index + subset_id
-			sim_value = table_data['data_sim'][data_sim_id]['simulate_value']
-			sim_delta = table_data['data_sim'][data_sim_id]['simulate_delta']
+			sim_value = table_data['data_sim'][data_sim_id]['data_sim_value']
+			sim_delta = table_data['data_sim'][data_sim_id]['data_sim_delta']
 			row_out['sim_value'] = convert2output( sim_value )
 			row_out['sim_delta'] = convert2output( sim_delta )
 		csv_writer.writerow(row_out)
