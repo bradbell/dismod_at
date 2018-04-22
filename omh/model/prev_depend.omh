@@ -33,9 +33,7 @@ It follows that $latex P(t)$$ does not depend on the value of
 $latex \omega (t)$$.
 
 $head Proof$$
-It follows that
-$latex C(t) > 0$$ for all $latex t$$ and
-The we have
+It follows that $latex S(t) > 0$$, $latex C(t) > 0$$ for all $latex t$$ and
 $latex \[
 	P(t) = 1 / [ 1 + S(t) / C(t) ]
 \] $$
