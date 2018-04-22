@@ -1344,7 +1344,7 @@ void simulate_command(
 	dismod_at::get_table_column(db, table_name, column_name, truth_var);
 	// ----------------- data_sim_table ----------------------------------
 	//
-	string sql_cmd = "drop table if exists simulate";
+	string sql_cmd = "drop table if exists data_sim";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	table_name      = "data_sim";
