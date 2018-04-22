@@ -28,7 +28,8 @@ $childtable%
 	omh/model/statistic.omh%
 	omh/model/bilinear.omh%
 	omh/model/ode_grid.omh%
-	omh/model/posterior.omh
+	omh/model/posterior.omh%
+	omh/model/prev_depend.omh
 %$$
 
 $end
