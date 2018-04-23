@@ -549,7 +549,7 @@ def db2csv_command(database_file_arg) :
 	have_table['depend_var']      = check4table(cursor, 'depend_var')
 	have_table['truth_var']       = check4table(cursor, 'truth_var')
 	have_table['sample']          = check4table(cursor, 'sample')
-	have_table['data_sim']        = check4table(cursor, 'simulate')
+	have_table['data_sim']        = check4table(cursor, 'data_sim')
 	have_table['fit_var']         = check4table(cursor, 'fit_var')
 	have_table['fit_data_subset'] = check4table(cursor, 'fit_data_subset')
 	have_table['predict']         = check4table(cursor, 'predict')
@@ -794,7 +794,7 @@ def db2csv_command(database_file_arg) :
 		simulate_index = ''
 	if simulate_index != '' and not have_table['data_sim'] :
 		msg  = 'Previous fit command used simulated data but\n'
-		msg += 'cannot find data_sim_table\n'
+		msg += 'cannot find data_sim table\n'
 		sys.exit(msg)
 	if not have_table['data_sim'] :
 		simulate_index = None

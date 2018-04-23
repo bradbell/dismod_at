@@ -1322,7 +1322,9 @@ void simulate_command(
 	sqlite3*                                            db              ,
 	const vector<dismod_at::integrand_enum>&            integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
-	const dismod_at::data_model&                        data_object
+	const dismod_at::data_model&                        data_object     ,
+	const dismod_at::pack_prior&                        var2prior       ,
+	const vector<dismod_at::prior_struct>&              prior_table
 )
 {
 	using std::string;
@@ -1343,7 +1345,6 @@ void simulate_command(
 	string column_name = "truth_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, truth_var);
 	// ----------------- data_sim_table ----------------------------------
-	//
 	string sql_cmd = "drop table if exists data_sim";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
@@ -1435,6 +1436,84 @@ void simulate_command(
 			row_value[data_sim_id * n_col + 1] = to_string( subset_id );
 			row_value[data_sim_id * n_col + 2] = to_string( sim_value );
 			row_value[data_sim_id * n_col + 3] = to_string( sim_delta );
+		}
+	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	// ----------------- prior_sim_table ----------------------------------
+	sql_cmd = "drop table if exists prior_sim";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	table_name    = "prior_sim";
+	n_col         = 5;
+	size_t n_var  = var2prior.size();
+	n_row         = n_simulate * n_var;
+	col_name.resize(n_col);
+	col_type.resize(n_col);
+	col_unique.resize(n_col);
+	row_value.resize(n_col * n_row);
+	//
+	col_name[0]   = "simulate_index";
+	col_type[0]   = "integer";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "var_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "prior_sim_value";
+	col_name[3]   = "prior_sim_dage";
+	col_name[4]   = "prior_sim_dtime";
+	for(size_t k = 0; k < 3; k++)
+	{	col_type[2+k]   = "real";
+		col_unique[2+k] = false;
+	}
+	// for each measurement in the data_subset table
+	for(size_t var_id = 0; var_id < n_var; ++var_id)
+	{	//
+		// prior id for mean of this this variable
+		size_t prior_id[3];
+		vector<string> sim_str(3);
+		prior_id[0] = var2prior.value_prior_id(var_id);
+		prior_id[1] = var2prior.dage_prior_id(var_id);
+		prior_id[2] = var2prior.dtime_prior_id(var_id);
+		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
+		{	for(size_t k = 0; k < 3; ++k)
+			if( prior_id[k] == DISMOD_AT_NULL_SIZE_T )
+				sim_str[k] = "null";
+			else
+			{	double lower = prior_table[ prior_id[k] ].lower;
+				double upper = prior_table[ prior_id[k] ].upper;
+				double mean  = prior_table[ prior_id[k] ].mean;
+				double std   = prior_table[ prior_id[k] ].std;
+				double eta   = prior_table[ prior_id[k] ].eta;
+				double nu    = prior_table[ prior_id[k] ].nu;
+				//
+				int    den   = prior_table[prior_id[k]].density_id;
+				dismod_at::density_enum density = dismod_at::density_enum(den);
+				//
+				if( density == dismod_at::uniform_enum )
+					sim_str[k] = "null";
+				else
+				{	double sim =
+						dismod_at::sim_random(density, mean, std, eta, nu);
+					sim = std::min(sim, upper);
+					sim = std::max(sim, lower);
+					if( density == dismod_at::log_gaussian_enum
+					||  density == dismod_at::log_laplace_enum
+					||  density == dismod_at::log_students_enum )
+						sim = std::max(sim, 0.0);
+					sim_str[k] = to_string( sim );
+				}
+			}
+			//
+			size_t prior_sim_id = sim_index * n_var + var_id;
+			row_value[prior_sim_id * n_col + 0] = to_string( sim_index );
+			row_value[prior_sim_id * n_col + 1] = to_string( var_id );
+			row_value[prior_sim_id * n_col + 2] = sim_str[0];
+			row_value[prior_sim_id * n_col + 3] = sim_str[1];
+			row_value[prior_sim_id * n_col + 4] = sim_str[2];
 		}
 	}
 	dismod_at::create_table(
@@ -2424,7 +2503,9 @@ int main(int n_arg, const char** argv)
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,
-					data_object
+					data_object              ,
+					var2prior                ,
+					db_input.prior_table
 				);
 			}
 			else
