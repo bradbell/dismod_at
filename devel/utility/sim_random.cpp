@@ -21,7 +21,7 @@ $$
 $section Simulate a Dismod_at Random Distribution$$
 
 $head Syntax$$
-$icode%z% = sim_random(%density%, %mu%, %delta%, %eta%)%$$
+$icode%z% = sim_random(%density%, %mu%, %delta%, %eta%, %nu%)%$$
 
 $head manage_gsl_rng$$
 The routine $cref manage_gsl_rng$$ sets up and controls the underlying
