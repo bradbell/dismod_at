@@ -50,6 +50,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-23$$
+Improve the statement of
+$cref/remark 2/posterior/Remark 2/$$ for simulating the posterior
+distribution of maximum likelihood estimators that use priors.
+
 $head 04-22$$
 Add a proof that prevalence does not depend on other cause mortality; see
 $cref prev_dep$$.
