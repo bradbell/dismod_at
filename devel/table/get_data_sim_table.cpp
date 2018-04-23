@@ -36,7 +36,7 @@ and is an open connection to the database.
 $head data_sim_table$$
 The return value $icode data_sim_table$$ has prototype
 $codei%
-	CppAD::vector<simulate_struct>  %data_sim_table%
+	CppAD::vector<data_sim_struct>  %data_sim_table%
 %$$
 For each $cref/data_sim_id/data_sim_table/data_sim_id/$$,
 $codei%
@@ -45,7 +45,7 @@ $codei%
 is the information for the corresponding
 $cref/data_sim_id/data_sim_table/data_sim_id/$$.
 
-$head simulate_struct$$
+$head data_sim_struct$$
 This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
@@ -86,7 +86,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<simulate_struct> get_data_sim_table(sqlite3* db)
+CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "data_sim";
@@ -112,7 +112,7 @@ CppAD::vector<simulate_struct> get_data_sim_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, data_sim_delta);
 	assert( data_sim_delta.size() == n_simulate );
 
-	CppAD::vector<simulate_struct> data_sim_table(n_simulate);
+	CppAD::vector<data_sim_struct> data_sim_table(n_simulate);
 	for(size_t i = 0; i < n_simulate; i++)
 	{	data_sim_table[i].simulate_index   = simulate_index[i];
 		data_sim_table[i].data_subset_id   = data_subset_id[i];

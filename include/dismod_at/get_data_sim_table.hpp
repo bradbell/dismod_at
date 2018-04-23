@@ -16,13 +16,13 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct simulate_struct {
+	struct data_sim_struct {
 		int         simulate_index;
 		int         data_subset_id;
 		double      data_sim_value;
 		double      data_sim_delta;
 	};
-	extern CppAD::vector<simulate_struct> get_data_sim_table(sqlite3*  db);
+	extern CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3*  db);
 }
 
 # endif

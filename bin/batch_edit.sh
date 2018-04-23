@@ -14,7 +14,6 @@ new_directories='
 rename_files='
 '
 spell_files='
-	example/user/diabetes.py
 '
 no_change_files='
 '
@@ -24,8 +23,7 @@ rename_cmd='s|simulate_table|data_sim_table|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|simulate_delta|data_sim_delta|g
-s|simulate_value|data_sim_value|g
+s|simulate_struct|data_sim_struct|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

@@ -60,7 +60,7 @@ bool get_data_sim_table_xam(void)
 
 
 	// get the data_sim table
-	vector<dismod_at::simulate_struct> data_sim_table =
+	vector<dismod_at::data_sim_struct> data_sim_table =
 		dismod_at::get_data_sim_table(db);
 	ok  &= data_sim_table.size() == 6;
 	//

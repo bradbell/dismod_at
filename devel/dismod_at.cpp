@@ -953,7 +953,7 @@ void fit_command(
 	{	size_t sim_index = std::atoi( simulate_index.c_str() );
 		//
 		// get simulation data
-		vector<dismod_at::simulate_struct> data_sim_table =
+		vector<dismod_at::data_sim_struct> data_sim_table =
 				dismod_at::get_data_sim_table(db);
 		size_t n_subset   = data_subset_obj.size();
 		size_t n_simulate = data_sim_table.size() / n_subset;
@@ -1701,7 +1701,7 @@ void sample_command(
 			db, table_name, column_name, scale_var_value
 		);
 		// get simulated data
-		vector<dismod_at::simulate_struct> data_sim_table =
+		vector<dismod_at::data_sim_struct> data_sim_table =
 				dismod_at::get_data_sim_table(db);
 		//
 		size_t n_subset = data_subset_obj.size();
