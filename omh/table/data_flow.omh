@@ -38,6 +38,7 @@ $children%omh/table/log_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/fit_data_subset_table.omh
 	%omh/table/truth_var_table.omh
+	%omh/table/prior_sim_table.omh
 	%omh/table/data_sim_table.omh
 	%omh/table/sample_table.omh
 	%omh/table/predict_table.omh
@@ -89,6 +90,7 @@ $cref/fit_data_subset/fit_data_subset_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
 $rnext
+$cref/prior_sim/prior_sim_table/$$,
 $cref/data_sim/data_sim_table/$$ $cnext
 $cref/simulate/simulate_command/$$ $cnext
 no

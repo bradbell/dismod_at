@@ -1213,6 +1213,11 @@ $cref/set_command/set_command/table_out/truth_var/$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
+$head prior_sim_table$$
+A new $cref prior_sim_table$$ is created by this command.
+It contains simulated values for the prior for each variable;
+see $cref prior_sim_table$$.
+
 $head data_sim_table$$
 A new $cref data_sim_table$$ is created by this command.
 It contains simulated measurements and

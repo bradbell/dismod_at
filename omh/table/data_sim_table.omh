@@ -16,7 +16,7 @@ $spell
 	covariates
 $$
 
-$section The Simulated Table: Samples Simulated Measurements$$
+$section Simulating Measurements$$
 The $code data_sim$$ table is created during a
 $cref simulate_command$$.
 It contains $cref/number_simulate/simulate_command/number_simulate/$$
@@ -43,14 +43,13 @@ $head data_subset_id$$
 This column has type $code integer$$ and is the primary key
 for the $cref data_subset_table$$.
 This identifies which $cref/data_id/data_subset_table/data_id/$$
-each row of the data_sim table corresponds to
+each row of the data_sim table corresponds to.
 If $icode n_subset$$ is the number of rows in the data_subset table,
 $codei%
 	%data_sim_id% = %simulate_index% * %n_subset% + %data_subset_id%
 %$$
 for $icode simulate_index$$ equal zero to $icode%number_simulate%-1%$$
 and $icode data_subset_id$$ equal zero to $codei%n_subset%-1%$$.
-
 
 $head data_sim_value$$
 This column has type $code real$$ and is
