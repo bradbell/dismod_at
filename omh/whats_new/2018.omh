@@ -51,7 +51,9 @@ $childtable%
 %$$
 
 $head 04-24$$
-Add variation to the prior means during when using the
+Change the simulate command to also output the
+$cref/prior_sim_table/simulate_command/prior_sim_table/$$.
+Use this table to include variation of the prior means when using the
 $code sample$$ command with the
 $cref/simulate/sample_command/method/simulate/$$ method;
 see $cref/simulation/posterior/Simulation/$$ in the discussion

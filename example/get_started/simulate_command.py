@@ -124,9 +124,9 @@ adjusted_omega = omega_world * exp(income_multiplier * income)
 model_value    = exp( - adjusted_omega * age )
 # check if model value is within 3 standard deviations of the simulated value
 data_sim_value = sim_row['data_sim_value']
-data_sim_delta   = sim_row['data_sim_delta']
+data_sim_delta = sim_row['data_sim_delta']
 assert abs( model_value - data_sim_value ) < 3.0 * data_sim_delta
-#
+assert abs( model_value - data_sim_value ) > data_sim_delta * 1e-3
 # -----------------------------------------------------------------------
 print('simulate_command: OK')
 # END PYTHON
