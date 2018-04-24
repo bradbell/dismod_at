@@ -53,6 +53,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/get_db_input.cpp
 	table/get_integrand_table.cpp
 	table/get_prior_table.cpp
+	table/get_prior_sim_table.cpp
 	table/get_mulcov_table.cpp
 	table/get_node_table.cpp
 	table/get_rate_table.cpp

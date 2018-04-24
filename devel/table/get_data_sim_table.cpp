@@ -18,7 +18,7 @@ $spell
 	std
 $$
 
-$section C++: Get the Simulate Table$$
+$section C++: Get the Data Simulation Table$$
 
 $head Syntax$$
 $icode%data_sim_table% = get_data_sim_table(%db%)%$$
@@ -90,30 +90,30 @@ CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "data_sim";
-	size_t n_simulate = check_table_id(db, table_name);
+	size_t n_data_sim  = check_table_id(db, table_name);
 
 	std::string column_name =  "simulate_index";
 	CppAD::vector<int>          simulate_index;
 	get_table_column(db, table_name, column_name, simulate_index);
-	assert( simulate_index.size() == n_simulate );
+	assert( simulate_index.size() == n_data_sim );
 
 	column_name             =  "data_subset_id";
 	CppAD::vector<int>          data_subset_id;
 	get_table_column(db, table_name, column_name, data_subset_id);
-	assert( data_subset_id.size() == n_simulate );
+	assert( data_subset_id.size() == n_data_sim );
 
 	column_name             =  "data_sim_value";
 	CppAD::vector<double>       data_sim_value;
 	get_table_column(db, table_name, column_name, data_sim_value);
-	assert( data_sim_value.size() == n_simulate );
+	assert( data_sim_value.size() == n_data_sim );
 
 	column_name             =  "data_sim_delta";
 	CppAD::vector<double>       data_sim_delta;
 	get_table_column(db, table_name, column_name, data_sim_delta);
-	assert( data_sim_delta.size() == n_simulate );
+	assert( data_sim_delta.size() == n_data_sim );
 
-	CppAD::vector<data_sim_struct> data_sim_table(n_simulate);
-	for(size_t i = 0; i < n_simulate; i++)
+	CppAD::vector<data_sim_struct> data_sim_table(n_data_sim);
+	for(size_t i = 0; i < n_data_sim; i++)
 	{	data_sim_table[i].simulate_index   = simulate_index[i];
 		data_sim_table[i].data_subset_id   = data_subset_id[i];
 		data_sim_table[i].data_sim_value   = data_sim_value[i];

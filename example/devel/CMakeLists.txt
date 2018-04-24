@@ -54,6 +54,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/get_density_table_xam.cpp
 	table/get_integrand_table_xam.cpp
 	table/get_prior_table_xam.cpp
+	table/get_prior_sim_table_xam.cpp
 	table/get_mulcov_table_xam.cpp
 	table/get_node_table_xam.cpp
 	table/get_rate_table_xam.cpp
