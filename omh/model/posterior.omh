@@ -249,9 +249,9 @@ $latex \[
 This completes the proof of this lemma.
 
 $head Simulation$$
-Suppose we simulate
-$latex y \sim \B{N}( A \bar{\theta}, V)$$
-and independent $latex z \sim \B{N}( B \bar{\theta}, P)$$ were
+Suppose we simulate date
+$latex y \sim \B{N}( A \bar{\theta}, V)$$ and independent prior values
+$latex z \sim \B{N}( B \bar{\theta}, P)$$ were
 $latex A$$, $latex V$$ are as in $cref/Lemma 1/posterior/Lemma 1/$$ and
 $latex B$$, $latex P$$ are as in $cref/Lemma 2/posterior/Lemma 2/$$.
 Furthermore, we define $latex \hat{\theta}$$ as the maximizer of

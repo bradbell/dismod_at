@@ -25,6 +25,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/get_sample_table.hpp>
 # include <dismod_at/get_data_sim_table.hpp>
+# include <dismod_at/get_prior_sim_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_info.hpp>
@@ -1213,104 +1214,20 @@ $cref/set_command/set_command/table_out/truth_var/$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
-$head prior_sim_table$$
-A new $cref prior_sim_table$$ is created by this command.
-It contains simulated values for the prior for each variable;
-see $cref prior_sim_table$$.
 
 $head data_sim_table$$
 A new $cref data_sim_table$$ is created by this command.
-It contains simulated measurements and
-adjusted standard deviations.
-Only the $cref/data_id/data_subset_table/data_id/$$ that are in the
-data_subset table are included in the simulated measurements.
-In addition, $icode number_simulate$$ values are simulated
-for such $icode data_id$$.
+It contains $icode number_simulate$$ values
+for each $cref/data_id/data_subset_table/data_id/$$ in the data_subset table.
 Hence the number of rows in $cref data_sim_table$$ is
 $icode number_simulate$$ times the number of rows in $cref data_subset_table$$.
 
-$subhead data_sim_value$$
-This value is different for each $icode subset_data_id$$
-and each $icode simulate_index$$.
-In the $cref/linear/simulate_command/y/Linear/$$ case,
-this column contains the value $icode y$$.
-In the $cref/log-transformed/simulate_command/y/Log-Transformed/$$ case,
-this column contains the value $codei%max(%y%, 0)%$$.
-
-$subhead data_sim_delta$$
-This column contains the value of
-$cref/delta/simulate_command/delta/$$
-and is different for each $icode subset_data_id$$.
-
-$head d$$
-We use $latex d$$ to denote the
-$cref/density_id/data_table/density_id/$$ and
-$cref/eta/data_table/eta/$$
-corresponding to this $icode data_id$$.
-
-$head delta$$
-We use $latex \delta$$ to denote the
-$cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i
-/$$
-corresponding to this $icode data_id$$.
-
-$head A$$
-We use $latex A$$ denote the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-corresponding to the value for the model variables and
-this $icode data_id$$.
-
-$head sigma$$
-We use $latex \sigma$$ to denote the
-$cref/log-transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
-/$$
-$latex \[
-	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
-\] $$
-
-$head y$$
-
-$subhead Linear$$
-If $latex d$$ is Gaussian, Laplace, or Student's-t,
-$latex \[
-	y = A + e
-\]$$
-where $latex e$$ is simulated from the corresponding distribution
-with mean zero and standard deviation $latex \delta$$.
-The corresponding
-$cref/weighted residual
-	/statistic
-	/Weighted Residual Function, R
-	/Gaussian, Laplace, Student's-t
-/$$ is
-$latex \[
-	R = e / \delta
-\]$$
-
-$subhead Log-Transformed$$
-If $latex d$$ is Log-Gaussian, Log-Laplace, or Log-Student's-t,
-$latex \[
-	e = \log( y + \eta ) - \log( A + \eta )
-\] $$
-$latex e$$ is simulated from the corresponding linear distribution
-with mean zero and standard deviation $latex \sigma$$.
-It follows that
-$latex \[
-	y = \exp(e) * ( A + \eta )
-\] $$
-The corresponding
-$cref/weighted residual
-	/statistic
-	/Weighted Residual Function, R
-	/Gaussian, Laplace, Student's-t
-/$$ is
-$latex \[
-	R = e / \sigma
-\]$$
+$head prior_sim_table$$
+A new $cref prior_sim_table$$ is created by this command.
+It contains $icode number_simulate$$ values
+for each $cref/var_id/var_table/var_id/$$ in the var table.
+Hence the number of rows in $cref data_sim_table$$ is
+$icode number_simulate$$ times the number of rows in $cref var_table$$.
 
 
 $children%example/get_started/simulate_command.py
@@ -1503,12 +1420,19 @@ void simulate_command(
 				else
 				{	double sim =
 						dismod_at::sim_random(density, mean, std, eta, nu);
+					//
 					sim = std::min(sim, upper);
 					sim = std::max(sim, lower);
+					//
 					if( density == dismod_at::log_gaussian_enum
 					||  density == dismod_at::log_laplace_enum
 					||  density == dismod_at::log_students_enum )
 						sim = std::max(sim, 0.0);
+					//
+					if( density == dismod_at::laplace_enum
+					&& k == 0 && mean == 0.0 )
+						sim = 0.0;
+					//
 					sim_str[k] = to_string( sim );
 				}
 			}
@@ -1547,6 +1471,11 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
+$head Purpose$$
+This command simulates samples of the $cref model_variables$$
+from the posterior distribution; see
+$cref/simulation/posterior/Simulation/$$ for the posterior distribution.
+
 $head number_sample$$
 Is the number of samples. Each sample contains a complete
 set of model variables. See the different methods below
@@ -1561,10 +1490,13 @@ $icode number_sample$$ must be equal to
 $cref/number_simulate/simulate_command/number_simulate/$$.
 The variable sample corresponding to each
 $cref/sample_index/sample_table/sample_index/$$ the sample table
-is the optimal estimate corresponding to data in the data_sim table with
+is the optimal estimate corresponding to the
+$cref data_sim_table$$ and the $cref prior_sim_table$$ with
 $cref/simulate_index/data_sim_table/simulate_index/$$ equal to
 the sample index.
 This requires running $icode number_sample$$ fits of the model variables.
+See $cref/simulation/posterior/Simulation/$$ in the discussion of the
+posterior distribution of maximum likelihood estimates.
 
 $subhead asymptotic$$
 If $icode method$$ is $code asymptotic$$,
@@ -1575,7 +1507,12 @@ The samples with different values of $icode sample_index$$ are independent.
 
 $head data_sim_table$$
 If $icode method$$ is $code simulate$$,
-this command has the extra input $cref  data_sim_table$$
+this command has the extra input $cref data_sim_table$$
+which was created by the previous $cref simulate_command$$.
+
+$head prior_sim_table$$
+If $icode method$$ is $code simulate$$,
+this command has the extra input $cref prior_sim_table$$
 which was created by the previous $cref simulate_command$$.
 
 $head fit_var_table$$
@@ -1610,10 +1547,10 @@ void sample_command(
 	sqlite3*                                    db               ,
 	vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
 	dismod_at::data_model&                      data_object      ,
+	dismod_at::prior_model&                     prior_object     ,
 	const dismod_at::pack_info&                 pack_object      ,
 	const dismod_at::pack_prior&                var2prior        ,
 	const dismod_at::db_input_struct&           db_input         ,
-	const dismod_at::prior_model&               prior_object     ,
 	// effectively const
 	std::map<std::string, std::string>&         option_map
 )
@@ -1703,6 +1640,9 @@ void sample_command(
 		// get simulated data
 		vector<dismod_at::data_sim_struct> data_sim_table =
 				dismod_at::get_data_sim_table(db);
+		// get simulated prior
+		vector<dismod_at::prior_sim_struct> prior_sim_table =
+				dismod_at::get_prior_sim_table(db);
 		//
 		size_t n_subset = data_subset_obj.size();
 		if( data_sim_table.size() % n_subset != 0  )
@@ -1716,8 +1656,22 @@ void sample_command(
 			msg += "data_subset table size.";
 			dismod_at::error_exit(msg);
 		}
+		// vector used for replacement of prior means
+		vector<double> prior_mean(n_var * 3);
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-		{	// replace meas_value in data_subset_obj
+		{	// replace prior means in prior_object
+			for(size_t var_id = 0; var_id < n_var; var_id ++)
+			{	size_t prior_sim_id = sample_index * n_var + var_id;
+				prior_mean[var_id * 3 + 0] =
+					prior_sim_table[prior_sim_id].prior_sim_value;
+				prior_mean[var_id * 3 + 1] =
+					prior_sim_table[prior_sim_id].prior_sim_dage;
+				prior_mean[var_id * 3 + 2] =
+					prior_sim_table[prior_sim_id].prior_sim_dtime;
+			}
+			prior_object.replace_mean(prior_mean);
+			//
+			// replace meas_value in data_subset_obj
 			size_t offset = n_subset * sample_index;
 			for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 			{	size_t data_sim_id = offset + subset_id;
@@ -2467,20 +2421,6 @@ int main(int n_arg, const char** argv)
 					option_map
 				);
 			}
-			else if( command_arg == "sample" )
-			{	sample_command(
-					argv[3]          , // method
-					argv[4]          , // number_sample
-					db               ,
-					data_subset_obj  ,
-					data_object      ,
-					pack_object      ,
-					var2prior        ,
-					db_input         ,
-					prior_object     ,
-					option_map
-				);
-			}
 			else if( command_arg == "fit" )
 			{	string variables      = argv[3];
 				string simulate_index = "";
@@ -2511,6 +2451,20 @@ int main(int n_arg, const char** argv)
 					data_object              ,
 					var2prior                ,
 					db_input.prior_table
+				);
+			}
+			else if( command_arg == "sample" )
+			{	sample_command(
+					argv[3]          , // method
+					argv[4]          , // number_sample
+					db               ,
+					data_subset_obj  , // not const
+					data_object      , // not const
+					prior_object     , // not const
+					pack_object      ,
+					var2prior        ,
+					db_input         ,
+					option_map
 				);
 			}
 			else

@@ -20,7 +20,7 @@ $spell
 	dtime
 $$
 
-$section Simulating Variation in Prior$$
+$section Simulated Variation in Prior$$
 The $code prior_sim$$ table is created during a
 $cref simulate_command$$.
 It contains $cref/number_simulate/simulate_command/number_simulate/$$
@@ -57,6 +57,9 @@ This column has type $code real$$ and is
 a simulated from the value prior for this variable.
 If there is no value prior, or if the density for the value prior
 is uniform, $icode prior_sim_value$$ is $code null$$.
+If the prior density is Laplace, and the prior mean is zero,
+$icode prior_sim_value$$ is set to zero instead of a simulated sample
+from the Laplace distribution. This simulates Lasso fitting.
 
 $head prior_sim_dage$$
 This column has type $code real$$ and is

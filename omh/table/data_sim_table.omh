@@ -16,7 +16,7 @@ $spell
 	covariates
 $$
 
-$section Simulating Measurements$$
+$section Simulated Measurements and Adjusted Standard Deviations$$
 The $code data_sim$$ table is created during a
 $cref simulate_command$$.
 It contains $cref/number_simulate/simulate_command/number_simulate/$$
@@ -56,11 +56,86 @@ This column has type $code real$$ and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
+In the $cref/linear/data_sim_table/Method/y, Linear/$$ case
+this is the value $icode y$$ below.
+In the $cref/log-transformed/data_sim_table/Method/y, Log-Transformed/$$ case
+this is the value $codei%max(%y%, 0)%$$.
 
 $head data_sim_delta$$
 The column has type $code real$$ and is
 the adjusted measurement standard deviation used in the simulation; i.e.,
-$cref/delta/simulate_command/delta/$$.
+$cref/delta/data_sim_table/Method/delta/$$.
+
+$head Method$$
+
+$subhead d$$
+We use $latex d$$ to denote the
+$cref/density_id/data_table/density_id/$$ and
+$cref/eta/data_table/eta/$$
+corresponding to the $icode data_id$$.
+
+$subhead delta$$
+We use $latex \delta$$ to denote the
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+/$$
+corresponding to this $icode data_id$$.
+
+$subhead A$$
+We use $latex A$$ denote the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+corresponding to the value for the model variables and
+this $icode data_id$$.
+
+$subhead sigma$$
+We use $latex \sigma$$ to denote the
+$cref/log-transformed standard deviation
+	/statistic
+	/Log-Transformed Standard Deviation, sigma
+/$$
+$latex \[
+	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
+\] $$
+
+$subhead y, Linear$$
+If $latex d$$ is Gaussian, Laplace, or Student's-t,
+$latex \[
+	y = A + e
+\]$$
+where $latex e$$ is simulated from the corresponding distribution
+with mean zero and standard deviation $latex \delta$$.
+The corresponding
+$cref/weighted residual
+	/statistic
+	/Weighted Residual Function, R
+	/Gaussian, Laplace, Student's-t
+/$$ is
+$latex \[
+	R = e / \delta
+\]$$
+
+$subhead y, Log-Transformed$$
+If $latex d$$ is Log-Gaussian, Log-Laplace, or Log-Student's-t,
+$latex \[
+	e = \log( y + \eta ) - \log( A + \eta )
+\] $$
+$latex e$$ is simulated from the corresponding linear distribution
+with mean zero and standard deviation $latex \sigma$$.
+It follows that
+$latex \[
+	y = \exp(e) * ( A + \eta )
+\] $$
+The corresponding
+$cref/weighted residual
+	/statistic
+	/Weighted Residual Function, R
+	/Gaussian, Laplace, Student's-t
+/$$ is
+$latex \[
+	R = e / \sigma
+\]$$
+
 
 $head Example$$
 See the $cref simulate_command.py$$ example and test.

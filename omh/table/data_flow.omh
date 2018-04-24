@@ -135,8 +135,8 @@ $cref/simulate/simulate_command/$$ $cnext
 	$cref data_sim_table$$
 $rnext
 $cref/sample/sample_command/$$ $cnext
-	$cref fit_var_table$$, $cref data_sim_table$$ $cnext
-	$cref sample_table$$
+$cref fit_var_table$$, $cref data_sim_table$$, $cref prior_sim_table$$ $cnext
+$cref sample_table$$
 $rnext
 $cref/predict/predict_command/$$ $cnext
 	$cref sample_table$$, $cref fit_var_table$$, $cref truth_var_table$$ $cnext

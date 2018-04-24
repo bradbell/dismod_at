@@ -51,6 +51,13 @@ $childtable%
 %$$
 
 $head 04-24$$
+Add variation to the prior means during when using the
+$code sample$$ command with the
+$cref/simulate/sample_command/method/simulate/$$ method;
+see $cref/simulation/posterior/Simulation/$$ in the discussion
+of the posterior distribution for maximum likelihood estimates.
+
+$head 04-23$$
 Improve the description for
 $cref/simulation/posterior/Simulation/$$ from the posterior
 distribution of maximum likelihood estimators that use priors.
@@ -528,9 +535,9 @@ Some other minor improvements and corrections were made
 to the documentation.
 $lnext
 The calculation of the
-$cref/data_sim_value/simulate_command/data_sim_table/data_sim_value/$$
+$cref/data_sim_value/data_sim_table/data_sim_value/$$
 was corrected to allow for negative values in
-$cref/linear/simulate_command/y/Linear/$$ cases.
+$cref/linear/data_sim_table/Method/y, Linear/$$ cases.
 (The mistake fixed here was made during the changes on
 $cref/01-20/whats_new_2018/01-20/$$; see below.)
 $lnext
