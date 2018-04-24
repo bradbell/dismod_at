@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulating Posterior Distribution for Model Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulating Posterior Distribution for Model Variables">
-<meta name="keywords" id="keywords" content=" simulating posterior distribution model variables purpose lemma 1 proof remark 2 ">
+<meta name="keywords" id="keywords" content=" simulating posterior distribution model variables purpose lemma 1 proof remark 2 simulation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -59,7 +59,7 @@ A:active { color : purple }
 <option>Remark 1</option>
 <option>Lemma 2</option>
 <option>---..Proof</option>
-<option>Remark 2</option>
+<option>Simulation</option>
 </select>
 </td>
 <td><a href="prev_dep.htm" target="_top">Next</a>
@@ -483,15 +483,21 @@ This completes the proof of this lemma.
 
 <br>
 <br>
-<b><big><a name="Remark 2" id="Remark 2">Remark 2</a></big></b>
+<b><big><a name="Simulation" id="Simulation">Simulation</a></big></b>
 <br>
-Suppose we simulate data <small>@(@
-y
-@)@</small> as in <a href="posterior.htm#Lemma 1" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;1</span></a>
-
-and independent data <small>@(@
+Suppose we simulate date
+<small>@(@
+y \sim \B{N}( A \bar{\theta}, V)
+@)@</small> and independent prior values
+<small>@(@
 z \sim \B{N}( B \bar{\theta}, P)
 @)@</small> were
+<small>@(@
+A
+@)@</small>, <small>@(@
+V
+@)@</small> are as in <a href="posterior.htm#Lemma 1" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;1</span></a>
+ and
 <small>@(@
 B
 @)@</small>, <small>@(@
@@ -506,6 +512,39 @@ Furthermore, we define <small>@(@
 	\B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
 
 @]@</small>
+We define <small>@(@
+w \in \B{R}^{(m + n) \times 1}
+@)@</small>,
+<small>@(@
+C \in \B{R}^{ (m + n) \times n}
+@)@</small>, and
+<small>@(@
+U \in \B{R}^{ (m + n) \times (m + n)}
+@)@</small> by
+<small>@[@
+
+w = \left( \begin{array}{c} y \\ z \end{array} \right)
+\W{,}
+C = \left( \begin{array}{cc} A & 0 \\ 0 & B \end{array} \right)
+\W{,}
+U = \left( \begin{array}{cc} V & 0 \\ 0 & P \end{array} \right)
+
+@]@</small>
+We can now apply Lemma 1 with <small>@(@
+y
+@)@</small> replaced by <small>@(@
+w
+@)@</small>,
+<small>@(@
+A
+@)@</small> replaced by <small>@(@
+C
+@)@</small> and
+<small>@(@
+V
+@)@</small> replaced by <small>@(@
+U
+@)@</small>.
 It follows from Lemma 1 that <small>@(@
 \B{E} [ \hat{\theta} ] = \bar{\theta}
 @)@</small> and
@@ -516,6 +555,7 @@ It follows from Lemma 1 that <small>@(@
 ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 
 @]@</small>
+which is the proper posterior variance for the case in Lemma 2.
 
 
 <hr>Input File: omh/model/posterior.omh

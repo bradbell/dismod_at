@@ -16,16 +16,8 @@ var list_current0 = [
 'simulate_command.htm#number_simulate',
 'simulate_command.htm#meas_value',
 'simulate_command.htm#truth_var_table',
-'simulate_command.htm#simulate_table',
-'simulate_command.htm#simulate_table.simulate_value',
-'simulate_command.htm#simulate_table.simulate_delta',
-'simulate_command.htm#d',
-'simulate_command.htm#delta',
-'simulate_command.htm#A',
-'simulate_command.htm#sigma',
-'simulate_command.htm#y',
-'simulate_command.htm#y.Linear',
-'simulate_command.htm#y.Log-Transformed',
+'simulate_command.htm#data_sim_table',
+'simulate_command.htm#prior_sim_table',
 'simulate_command.htm#Example'
 ];
 var list_down2 = [

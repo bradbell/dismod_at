@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>C++: Get the Simulate Table</title>
+<title>C++: Get the Data Simulation Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="C++: Get the Simulate Table">
-<meta name="keywords" id="keywords" content=" c++: get the simulate table syntax purpose db simulate_table simulate_struct example ">
+<meta name="description" id="description" content="C++: Get the Data Simulation Table">
+<meta name="keywords" id="keywords" content=" c++: get the data simulation table syntax purpose db data_sim_table data_sim_struct example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_get_simulate_table_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_get_data_sim_table_htm.js'>
 </script>
 </head>
 <body>
@@ -37,7 +37,7 @@ A:active { color : purple }
 <option>dismod_at</option>
 <option>devel</option>
 <option>devel_table</option>
-<option>get_simulate_table</option>
+<option>get_data_sim_table</option>
 </select>
 </td>
 <td>
@@ -57,12 +57,12 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Purpose</option>
 <option>db</option>
-<option>simulate_table</option>
-<option>simulate_struct</option>
+<option>data_sim_table</option>
+<option>data_sim_struct</option>
 <option>Example</option>
 </select>
 </td>
-<td><a href="get_simulate_table_xam.cpp.htm" target="_top">Next</a>
+<td><a href="get_data_sim_table_xam.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down3(this)'>
 <option>dismod_at-&gt;</option>
@@ -110,7 +110,7 @@ A:active { color : purple }
 <option>get_prior_table</option>
 <option>get_rate_table</option>
 <option>get_sample_table</option>
-<option>get_simulate_table</option>
+<option>get_data_sim_table</option>
 <option>get_smooth_grid</option>
 <option>get_nslist_table</option>
 <option>get_nslist_pair</option>
@@ -128,27 +128,27 @@ A:active { color : purple }
 </td>
 <td>
 <select onchange='choose_down0(this)'>
-<option>get_simulate_table-&gt;</option>
-<option>get_simulate_table_xam.cpp</option>
+<option>get_data_sim_table-&gt;</option>
+<option>get_data_sim_table_xam.cpp</option>
 </select>
 </td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++: Get the Simulate Table</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++: Get the Data Simulation Table</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>simulate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;get_simulate_table(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_table</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;get_data_sim_table(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-To read the <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+To read the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
  and return it as a C++ data structure.
 
 <br>
@@ -166,28 +166,28 @@ and is an open connection to the database.
 
 <br>
 <br>
-<b><big><a name="simulate_table" id="simulate_table">simulate_table</a></big></b>
+<b><big><a name="data_sim_table" id="data_sim_table">data_sim_table</a></big></b>
 <br>
 The return value 
-<code><i><font color="black"><span style='white-space: nowrap'>simulate_table</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_table</span></font></i></code>
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;simulate_struct&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;data_sim_struct&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_sim_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-For each <a href="simulate_table.htm#simulate_id" target="_top"><span style='white-space: nowrap'>simulate_id</span></a>
+For each <a href="data_sim_table.htm#data_sim_id" target="_top"><span style='white-space: nowrap'>data_sim_id</span></a>
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_sim_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>data_sim_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 is the information for the corresponding
-<a href="simulate_table.htm#simulate_id" target="_top"><span style='white-space: nowrap'>simulate_id</span></a>
+<a href="data_sim_table.htm#data_sim_id" target="_top"><span style='white-space: nowrap'>data_sim_id</span></a>
 .
 
 <br>
 <br>
-<b><big><a name="simulate_struct" id="simulate_struct">simulate_struct</a></big></b>
+<b><big><a name="data_sim_struct" id="data_sim_struct">data_sim_struct</a></big></b>
 <br>
 This is a structure with the following fields
 <table><tr><td align='left'  valign='top'>
@@ -200,7 +200,7 @@ Type </td><td align='left'  valign='top'>
 <code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
  <code><font color="blue">simulate_index</font></code> </td><td align='left'  valign='top'>
 
-	The <a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+	The <a href="data_sim_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
 
 	for this simulated measurement.
 </td></tr><tr><td align='left'  valign='top'>
@@ -214,7 +214,7 @@ Type </td><td align='left'  valign='top'>
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">double</font></code> </td><td align='left'  valign='top'>
- <code><font color="blue">simulate_value</font></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">data_sim_value</font></code> </td><td align='left'  valign='top'>
 
 	The <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
 
@@ -222,7 +222,7 @@ Type </td><td align='left'  valign='top'>
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">double</font></code> </td><td align='left'  valign='top'>
- <code><font color="blue">simulate_delta</font></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">data_sim_delta</font></code> </td><td align='left'  valign='top'>
 
 	The <a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
 
@@ -232,12 +232,12 @@ Type </td><td align='left'  valign='top'>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The file <a href="get_simulate_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_simulate_table_xam.cpp</span></a>
+The file <a href="get_data_sim_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_data_sim_table_xam.cpp</span></a>
  contains an example
 and test of this function.
 
 
-<hr>Input File: devel/table/get_simulate_table.cpp
+<hr>Input File: devel/table/get_data_sim_table.cpp
 
 </body>
 </html>

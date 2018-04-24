@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Sample Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Sample Command">
-<meta name="keywords" id="keywords" content=" the sample command syntax database number_sample method simulate asymptotic simulate_table fit_var_table sample_table bounds example ">
+<meta name="keywords" id="keywords" content=" the sample command syntax database purpose number_sample method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table bounds example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -55,11 +55,13 @@ A:active { color : purple }
 <option>Current-&gt;</option>
 <option>Syntax</option>
 <option>database</option>
+<option>Purpose</option>
 <option>number_sample</option>
 <option>method</option>
 <option>---..simulate</option>
 <option>---..asymptotic</option>
-<option>simulate_table</option>
+<option>data_sim_table</option>
+<option>prior_sim_table</option>
 <option>fit_var_table</option>
 <option>sample_table</option>
 <option>Bounds</option>
@@ -127,6 +129,16 @@ Is an
 
 <br>
 <br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This command simulates samples of the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+from the posterior distribution; see
+<a href="posterior.htm#Simulation" target="_top"><span style='white-space: nowrap'>simulation</span></a>
+ for the posterior distribution.
+
+<br>
+<br>
 <b><big><a name="number_sample" id="number_sample">number_sample</a></big></b>
 <br>
 Is the number of samples. Each sample contains a complete
@@ -158,13 +170,19 @@ If
 The variable sample corresponding to each
 <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
  the sample table
-is the optimal estimate corresponding to data in the simulate table with
-<a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+is the optimal estimate corresponding to the
+<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+ and the <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+ with
+<a href="data_sim_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
  equal to
 the sample index.
 This requires running 
 <code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
  fits of the model variables.
+See <a href="posterior.htm#Simulation" target="_top"><span style='white-space: nowrap'>simulation</span></a>
+ in the discussion of the
+posterior distribution of maximum likelihood estimates.
 
 <br>
 <br>
@@ -185,12 +203,24 @@ The samples with different values of
 
 <br>
 <br>
-<b><big><a name="simulate_table" id="simulate_table">simulate_table</a></big></b>
+<b><big><a name="data_sim_table" id="data_sim_table">data_sim_table</a></big></b>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
  is <code><font color="blue">simulate</font></code>,
-this command has the extra input <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+this command has the extra input <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+
+which was created by the previous <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="prior_sim_table" id="prior_sim_table">prior_sim_table</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ is <code><font color="blue">simulate</font></code>,
+this command has the extra input <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
 
 which was created by the previous <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
 .

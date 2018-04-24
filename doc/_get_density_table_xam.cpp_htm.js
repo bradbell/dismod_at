@@ -51,7 +51,7 @@ var list_down2 = [
 'get_prior_table.htm',
 'get_rate_table.htm',
 'get_sample_table.htm',
-'get_simulate_table.htm',
+'get_data_sim_table.htm',
 'get_smooth_grid.htm',
 'get_nslist_table.htm',
 'get_nslist_pair.htm',

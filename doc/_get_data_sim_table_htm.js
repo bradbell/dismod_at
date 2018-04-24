@@ -2,8 +2,7 @@ var list_up0 = [
 'dismod_at.htm',
 'devel.htm',
 'devel_table.htm',
-'get_data_table.htm',
-'get_data_table_xam.cpp.htm'
+'get_data_sim_table.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -12,7 +11,15 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_down4 = [
+var list_current0 = [
+'get_data_sim_table.htm#Syntax',
+'get_data_sim_table.htm#Purpose',
+'get_data_sim_table.htm#db',
+'get_data_sim_table.htm#data_sim_table',
+'get_data_sim_table.htm#data_sim_struct',
+'get_data_sim_table.htm#Example'
+];
+var list_down3 = [
 'install_unix.htm',
 'get_started.htm',
 'user.htm',
@@ -24,12 +31,12 @@ var list_down4 = [
 'whats_new_2018.htm',
 'wish_list.htm'
 ];
-var list_down3 = [
+var list_down2 = [
 'devel_table.htm',
 'devel_utility.htm',
 'devel_model.htm'
 ];
-var list_down2 = [
+var list_down1 = [
 'check_child_prior.htm',
 'check_pini_n_age.htm',
 'check_rate_limit.htm',
@@ -66,8 +73,8 @@ var list_down2 = [
 'smooth_info.htm',
 'weight_info.htm'
 ];
-var list_down1 = [
-'get_data_table_xam.cpp.htm'
+var list_down0 = [
+'get_data_sim_table_xam.cpp.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
@@ -86,12 +93,6 @@ function choose_current0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_current0[index-1];
-}
-function choose_down4(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_down4[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

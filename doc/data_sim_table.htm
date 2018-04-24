@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>The Simulated Table: Samples Simulated Measurements</title>
+<title>Simulated Measurements and Adjusted Standard Deviations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="The Simulated Table: Samples Simulated Measurements">
-<meta name="keywords" id="keywords" content=" the simulated table: samples measurements simulate_id simulate_index data_subset_id simulate_value simulate_delta example ">
+<meta name="description" id="description" content="Simulated Measurements and Adjusted Standard Deviations">
+<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_delta method d delta sigma y linear log-transformed example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_simulate_table_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_data_sim_table_htm.js'>
 </script>
 </head>
 <body>
@@ -37,7 +37,7 @@ A:active { color : purple }
 <option>dismod_at</option>
 <option>database</option>
 <option>data_flow</option>
-<option>simulate_table</option>
+<option>data_sim_table</option>
 </select>
 </td>
 <td>
@@ -50,15 +50,22 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="truth_var_table.htm" target="_top">Prev</a>
+<td><a href="prior_sim_table.htm" target="_top">Prev</a>
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
-<option>simulate_id</option>
+<option>data_sim_id</option>
 <option>simulate_index</option>
 <option>data_subset_id</option>
-<option>simulate_value</option>
-<option>simulate_delta</option>
+<option>data_sim_value</option>
+<option>data_sim_delta</option>
+<option>Method</option>
+<option>---..d</option>
+<option>---..delta</option>
+<option>---..A</option>
+<option>---..sigma</option>
+<option>---..y, Linear</option>
+<option>---..y, Log-Transformed</option>
 <option>Example</option>
 </select>
 </td>
@@ -97,20 +104,21 @@ A:active { color : purple }
 <option>fit_var_table</option>
 <option>fit_data_subset_table</option>
 <option>truth_var_table</option>
-<option>simulate_table</option>
+<option>prior_sim_table</option>
+<option>data_sim_table</option>
 <option>sample_table</option>
 <option>predict_table</option>
 </select>
 </td>
-<td>simulate_table</td>
+<td>data_sim_table</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
-<center><b><big><big>The Simulated Table: Samples Simulated Measurements</big></big></b></center>
-The <code><font color="blue">simulate</font></code> table is created during a
+<center><b><big><big>Simulated Measurements and Adjusted Standard Deviations</big></big></b></center>
+The <code><font color="blue">data_sim</font></code> table is created during a
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
 .
 It contains <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
@@ -121,7 +129,7 @@ has one value for each entry in the <a href="data_subset_table.htm" target="_top
 
 <br>
 <br>
-<b><big><a name="simulate_id" id="simulate_id">simulate_id</a></big></b>
+<b><big><a name="data_sim_id" id="data_sim_id">data_sim_id</a></big></b>
 <br>
 This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
@@ -158,13 +166,13 @@ for the <a href="data_subset_table.htm" target="_top"><span style='white-space: 
 .
 This identifies which <a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
 
-each row of the simulate table corresponds to
+each row of the data_sim table corresponds to.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>n_subset</span></font></i></code>
  is the number of rows in the data_subset table,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_subset</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_sim_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_subset</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 for 
 <code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
@@ -177,25 +185,157 @@ and
 <code><font color="blue"><span style='white-space: nowrap'>n_subset</span></font><i><font color="black"><span style='white-space: nowrap'>-1</span></font></i></code>
 .
 
-
 <br>
 <br>
-<b><big><a name="simulate_value" id="simulate_value">simulate_value</a></big></b>
+<b><big><a name="data_sim_value" id="data_sim_value">data_sim_value</a></big></b>
 <br>
 This column has type <code><font color="blue">real</font></code> and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
  in the data table.
+In the <a href="data_sim_table.htm#Method.y, Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+ case
+this is the value 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ below.
+In the <a href="data_sim_table.htm#Method.y, Log-Transformed" target="_top"><span style='white-space: nowrap'>log-transformed</span></a>
+ case
+this is the value 
+<code><font color="blue"><span style='white-space: nowrap'>max(</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;0)</span></font></code>
+.
 
 <br>
 <br>
-<b><big><a name="simulate_delta" id="simulate_delta">simulate_delta</a></big></b>
+<b><big><a name="data_sim_delta" id="data_sim_delta">data_sim_delta</a></big></b>
 <br>
 The column has type <code><font color="blue">real</font></code> and is
 the adjusted measurement standard deviation used in the simulation; i.e.,
-<a href="simulate_command.htm#delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
+<a href="data_sim_table.htm#Method.delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="Method" id="Method">Method</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Method.d" id="Method.d">d</a></big>
+<br>
+We use <small>@(@
+d
+@)@</small> to denote the
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ and
+<a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+
+corresponding to the 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Method.delta" id="Method.delta">delta</a></big>
+<br>
+We use <small>@(@
+\delta
+@)@</small> to denote the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+
+corresponding to this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Method.A" id="Method.A">A</a></big>
+<br>
+We use <small>@(@
+A
+@)@</small> denote the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+
+corresponding to the value for the model variables and
+this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Method.sigma" id="Method.sigma">sigma</a></big>
+<br>
+We use <small>@(@
+\sigma
+@)@</small> to denote the
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
+
+<small>@[@
+
+	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
+
+@]@</small>
+
+<br>
+<br>
+<big><a name="Method.y, Linear" id="Method.y, Linear">y, Linear</a></big>
+<br>
+If <small>@(@
+d
+@)@</small> is Gaussian, Laplace, or Student's-t,
+<small>@[@
+
+	y = A + e
+
+@]@</small>
+where <small>@(@
+e
+@)@</small> is simulated from the corresponding distribution
+with mean zero and standard deviation <small>@(@
+\delta
+@)@</small>.
+The corresponding
+<a href="statistic.htm#Weighted Residual Function, R.Gaussian, Laplace, Student's-t" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+ is
+<small>@[@
+
+	R = e / \delta
+
+@]@</small>
+
+<br>
+<br>
+<big><a name="Method.y, Log-Transformed" id="Method.y, Log-Transformed">y, Log-Transformed</a></big>
+<br>
+If <small>@(@
+d
+@)@</small> is Log-Gaussian, Log-Laplace, or Log-Student's-t,
+<small>@[@
+
+	e = \log( y + \eta ) - \log( A + \eta )
+
+@]@</small>
+<small>@(@
+e
+@)@</small> is simulated from the corresponding linear distribution
+with mean zero and standard deviation <small>@(@
+\sigma
+@)@</small>.
+It follows that
+<small>@[@
+
+	y = \exp(e) * ( A + \eta )
+
+@]@</small>
+The corresponding
+<a href="statistic.htm#Weighted Residual Function, R.Gaussian, Laplace, Student's-t" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+ is
+<small>@[@
+
+	R = e / \sigma
+
+@]@</small>
+
 
 <br>
 <br>
@@ -205,7 +345,7 @@ See the <a href="simulate_command.py.htm" target="_top"><span style='white-space
  example and test.
 
 
-<hr>Input File: omh/table/simulate_table.omh
+<hr>Input File: omh/table/data_sim_table.omh
 
 </body>
 </html>

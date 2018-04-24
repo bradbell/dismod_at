@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="simulate_table.htm" target="_top">Prev</a>
+<td><a href="data_sim_table.htm" target="_top">Prev</a>
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
@@ -98,7 +98,8 @@ A:active { color : purple }
 <option>fit_var_table</option>
 <option>fit_data_subset_table</option>
 <option>truth_var_table</option>
-<option>simulate_table</option>
+<option>prior_sim_table</option>
+<option>data_sim_table</option>
 <option>sample_table</option>
 <option>predict_table</option>
 </select>
@@ -118,9 +119,9 @@ The <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'
  creates this table with
 one optimal estimates of the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 .
-For each valid <a href="simulate_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+For each valid <a href="data_sim_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
 .
-in the <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+in the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
 , there is an equal
 
 <code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
@@ -152,7 +153,7 @@ Its initial value is zero, and it increments by one for each row.
 <b><big><a name="sample_index" id="sample_index">sample_index</a></big></b>
 <br>
 This column has type <code><font color="blue">integer</font></code> and specifies the index,
-in the <code><font color="blue">simulate</font></code> table, that a complete set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+in the <code><font color="blue">data_sim</font></code> table, that a complete set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 ,
 in the <code><font color="blue">sample</font></code> table, corresponds to.
 

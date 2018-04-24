@@ -40,7 +40,8 @@ var list_down0 = [
 'fit_var_table.htm',
 'fit_data_subset_table.htm',
 'truth_var_table.htm',
-'simulate_table.htm',
+'prior_sim_table.htm',
+'data_sim_table.htm',
 'sample_table.htm',
 'predict_table.htm'
 ];

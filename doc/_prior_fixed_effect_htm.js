@@ -47,6 +47,7 @@ var list_down2 = [
 ];
 var list_down1 = [
 'prior_model_ctor.htm',
+'replace_mean.htm',
 'prior_fixed_effect.htm',
 'prior_random_effect.htm'
 ];

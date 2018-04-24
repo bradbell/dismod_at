@@ -1,8 +1,9 @@
 var list_up0 = [
 'dismod_at.htm',
 'devel.htm',
-'devel_table.htm',
-'get_simulate_table.htm'
+'devel_model.htm',
+'prior_model.htm',
+'replace_mean.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -12,14 +13,12 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'get_simulate_table.htm#Syntax',
-'get_simulate_table.htm#Purpose',
-'get_simulate_table.htm#db',
-'get_simulate_table.htm#simulate_table',
-'get_simulate_table.htm#simulate_struct',
-'get_simulate_table.htm#Example'
+'replace_mean.htm#Syntax',
+'replace_mean.htm#Prototype',
+'replace_mean.htm#Purpose',
+'replace_mean.htm#prior_mean'
 ];
-var list_down3 = [
+var list_down4 = [
 'install_unix.htm',
 'get_started.htm',
 'user.htm',
@@ -31,50 +30,22 @@ var list_down3 = [
 'whats_new_2018.htm',
 'wish_list.htm'
 ];
-var list_down2 = [
+var list_down3 = [
 'devel_table.htm',
 'devel_utility.htm',
 'devel_model.htm'
 ];
-var list_down1 = [
-'check_child_prior.htm',
-'check_pini_n_age.htm',
-'check_rate_limit.htm',
-'check_table_id.htm',
-'check_zero_sum.htm',
-'cpp_create_table.htm',
-'exec_sql_cmd.htm',
-'get_age_table.htm',
-'get_avgint_table.htm',
-'get_column_max.htm',
-'get_covariate_table.htm',
-'get_data_table.htm',
-'get_db_input.htm',
-'get_density_table.htm',
-'get_integrand_table.htm',
-'get_mulcov_table.htm',
-'get_node_table.htm',
-'get_option_table.htm',
-'get_prior_table.htm',
-'get_rate_table.htm',
-'get_sample_table.htm',
-'get_simulate_table.htm',
-'get_smooth_grid.htm',
-'get_nslist_table.htm',
-'get_nslist_pair.htm',
-'get_smooth_table.htm',
-'get_table_column.htm',
-'get_time_table.htm',
-'get_weight_grid.htm',
-'get_weight_table.htm',
-'log_message.htm',
-'put_table_row.htm',
-'open_connection.htm',
-'smooth_info.htm',
-'weight_info.htm'
+var list_down2 = [
+'devel_data_model.htm',
+'prior_model.htm',
+'fit_model.htm',
+'depend.htm'
 ];
-var list_down0 = [
-'get_simulate_table_xam.cpp.htm'
+var list_down1 = [
+'prior_model_ctor.htm',
+'replace_mean.htm',
+'prior_fixed_effect.htm',
+'prior_random_effect.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
@@ -93,6 +64,12 @@ function choose_current0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_current0[index-1];
+}
+function choose_down4(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down4[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

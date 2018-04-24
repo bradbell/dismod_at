@@ -1,0 +1,226 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Simulated Variation in Prior</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Simulated Variation in Prior">
+<meta name="keywords" id="keywords" content=" simulated variation prior prior_sim_id simulate_index var_id prior_sim_value prior_sim_dage prior_sim_dtime example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_prior_sim_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>prior_sim_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="truth_var_table.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>prior_sim_id</option>
+<option>simulate_index</option>
+<option>var_id</option>
+<option>prior_sim_value</option>
+<option>prior_sim_dage</option>
+<option>prior_sim_dtime</option>
+<option>Example</option>
+</select>
+</td>
+<td><a href="data_sim_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>prior_sim_table</option>
+<option>data_sim_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>prior_sim_table</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Simulated Variation in Prior</big></big></b></center>
+The <code><font color="blue">prior_sim</font></code> table is created during a
+<a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+.
+It contains <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+
+sets of priors where each set
+has one row for each the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+.
+Each row has a value, age difference, and time difference prior.
+
+<br>
+<br>
+<b><big><a name="prior_sim_id" id="prior_sim_id">prior_sim_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="simulate_index" id="simulate_index">simulate_index</a></big></b>
+<br>
+The column has type <code><font color="blue">integer</font></code>. It specifies the index
+for this simulated prior value. This index starts at zero,
+repeats as the same for the entire set of 
+<code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
+ values,
+and then increments by one between prior sets.
+The final (maximum) value for 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ is
+<a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+ minus one.
+
+<br>
+<br>
+<b><big><a name="var_id" id="var_id">var_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key
+for the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+.
+This identifies which <a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+
+each row of the prior_sim table corresponds to.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n_var</span></font></i></code>
+ is the number of rows in the var table,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_sim_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_var</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+for 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ equal zero to 
+<code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
+ equal zero to 
+<code><font color="blue"><span style='white-space: nowrap'>n_var</span></font><i><font color="black"><span style='white-space: nowrap'>-1</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="prior_sim_value" id="prior_sim_value">prior_sim_value</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is
+a simulated from the value prior for this variable.
+If there is no value prior, or if the density for the value prior
+is uniform, 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_sim_value</span></font></i></code>
+ is <code><font color="blue">null</font></code>.
+If the prior density is Laplace, and the prior mean is zero,
+
+<code><i><font color="black"><span style='white-space: nowrap'>prior_sim_value</span></font></i></code>
+ is set to zero instead of a simulated sample
+from the Laplace distribution. This simulates Lasso fitting.
+
+<br>
+<br>
+<b><big><a name="prior_sim_dage" id="prior_sim_dage">prior_sim_dage</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is
+a simulated from the dage prior for this variable.
+If there is no dage prior, or if the density for the dage prior
+is uniform, 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_sim_dage</span></font></i></code>
+ is <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="prior_sim_dtime" id="prior_sim_dtime">prior_sim_dtime</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is
+a simulated from the dtime prior for this variable.
+If there is no dtime prior, or if the density for the dtime prior
+is uniform, 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_sim_dtime</span></font></i></code>
+ is <code><font color="blue">null</font></code>.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See the <a href="simulate_command.py.htm" target="_top"><span style='white-space: nowrap'>simulate_command.py</span></a>
+ example and test.
+
+
+<hr>Input File: omh/table/prior_sim_table.omh
+
+</body>
+</html>

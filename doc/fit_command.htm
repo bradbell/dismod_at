@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index simulate_table fit_var_table fit_data_subset_table effects convergence problems example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table fit_var_table fit_data_subset_table effects convergence problems example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,7 +60,7 @@ A:active { color : purple }
 <option>---..random</option>
 <option>---..both</option>
 <option>simulate_index</option>
-<option>simulate_table</option>
+<option>data_sim_table</option>
 <option>fit_var_table</option>
 <option>fit_data_subset_table</option>
 <option>Random Effects</option>
@@ -197,8 +197,8 @@ If
  is present, it must be less than
 <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
 .
-In this case the corresponding simulate table
-<a href="simulate_table.htm#simulate_value" target="_top"><span style='white-space: nowrap'>simulate_value</span></a>
+In this case the corresponding data_sim table
+<a href="data_sim_table.htm#data_sim_value" target="_top"><span style='white-space: nowrap'>data_sim_value</span></a>
  entries
 are used in place of the data table
 <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
@@ -212,14 +212,14 @@ is not present; e.g.,
 
 <br>
 <br>
-<b><big><a name="simulate_table" id="simulate_table">simulate_table</a></big></b>
+<b><big><a name="data_sim_table" id="data_sim_table">data_sim_table</a></big></b>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
  is present,
 the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i></code>
- entries the simulate table
+ entries the data_sim table
 are used as inputs.
 
 <br>

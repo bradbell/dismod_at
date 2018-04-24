@@ -11,7 +11,10 @@ var list_across0 = [
 ];
 var list_current0 = [
 'whats_new_2018.htm#Contents',
+'whats_new_2018.htm#04-24',
+'whats_new_2018.htm#04-23',
 'whats_new_2018.htm#04-22',
+'whats_new_2018.htm#04-21',
 'whats_new_2018.htm#04-16',
 'whats_new_2018.htm#04-13',
 'whats_new_2018.htm#04-12',

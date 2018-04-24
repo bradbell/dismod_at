@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Simulate Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Simulate Command">
-<meta name="keywords" id="keywords" content=" the simulate command syntax database number_simulate meas_value truth_var_table simulate_table simulate_value simulate_delta d delta sigma y linear log-transformed example ">
+<meta name="keywords" id="keywords" content=" the simulate command syntax database number_simulate meas_value truth_var_table data_sim_table prior_sim_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,16 +58,8 @@ A:active { color : purple }
 <option>number_simulate</option>
 <option>meas_value</option>
 <option>truth_var_table</option>
-<option>simulate_table</option>
-<option>---..simulate_value</option>
-<option>---..simulate_delta</option>
-<option>d</option>
-<option>delta</option>
-<option>A</option>
-<option>sigma</option>
-<option>y</option>
-<option>---..Linear</option>
-<option>---..Log-Transformed</option>
+<option>data_sim_table</option>
+<option>prior_sim_table</option>
 <option>Example</option>
 </select>
 </td>
@@ -161,24 +153,19 @@ or the user can create it directly with the aid of the
  (created by the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
 ).
 
+
 <br>
 <br>
-<b><big><a name="simulate_table" id="simulate_table">simulate_table</a></big></b>
+<b><big><a name="data_sim_table" id="data_sim_table">data_sim_table</a></big></b>
 <br>
-A new <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+A new <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
  is created by this command.
-It contains simulated measurements and
-adjusted standard deviations.
-Only the <a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
- that are in the
-data_subset table are included in the simulated measurements.
-In addition, 
+It contains 
 <code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i></code>
- values are simulated
-for such 
-<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-.
-Hence the number of rows in <a href="simulate_table.htm" target="_top"><span style='white-space: nowrap'>simulate_table</span></a>
+ values
+for each <a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+ in the data_subset table.
+Hence the number of rows in <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
  is
 
 <code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i></code>
@@ -187,157 +174,21 @@ Hence the number of rows in <a href="simulate_table.htm" target="_top"><span sty
 
 <br>
 <br>
-<big><a name="simulate_table.simulate_value" id="simulate_table.simulate_value">simulate_value</a></big>
+<b><big><a name="prior_sim_table" id="prior_sim_table">prior_sim_table</a></big></b>
 <br>
-This value is different for each 
-<code><i><font color="black"><span style='white-space: nowrap'>subset_data_id</span></font></i></code>
-
-and each 
-<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
-.
-In the <a href="simulate_command.htm#y.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
- case,
-this column contains the value 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
-.
-In the <a href="simulate_command.htm#y.Log-Transformed" target="_top"><span style='white-space: nowrap'>log-transformed</span></a>
- case,
-this column contains the value 
-<code><font color="blue"><span style='white-space: nowrap'>max(</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;0)</span></font></code>
-.
-
-<br>
-<br>
-<big><a name="simulate_table.simulate_delta" id="simulate_table.simulate_delta">simulate_delta</a></big>
-<br>
-This column contains the value of
-<a href="simulate_command.htm#delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
-
-and is different for each 
-<code><i><font color="black"><span style='white-space: nowrap'>subset_data_id</span></font></i></code>
-.
-
-<br>
-<br>
-<b><big><a name="d" id="d">d</a></big></b>
-<br>
-We use <small>@(@
-d
-@)@</small> to denote the
-<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
- and
-<a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
-
-corresponding to this 
-<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-.
-
-<br>
-<br>
-<b><big><a name="delta" id="delta">delta</a></big></b>
-<br>
-We use <small>@(@
-\delta
-@)@</small> to denote the
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
-
-corresponding to this 
-<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-.
-
-<br>
-<br>
-<b><big><a name="A" id="A">A</a></big></b>
-<br>
-We use <small>@(@
-A
-@)@</small> denote the
-<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
-
-corresponding to the value for the model variables and
-this 
-<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-.
-
-<br>
-<br>
-<b><big><a name="sigma" id="sigma">sigma</a></big></b>
-<br>
-We use <small>@(@
-\sigma
-@)@</small> to denote the
-<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
-
-<small>@[@
-
-	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
-
-@]@</small>
-
-<br>
-<br>
-<b><big><a name="y" id="y">y</a></big></b>
-
-
-<br>
-<br>
-<big><a name="y.Linear" id="y.Linear">Linear</a></big>
-<br>
-If <small>@(@
-d
-@)@</small> is Gaussian, Laplace, or Student's-t,
-<small>@[@
-
-	y = A + e
-
-@]@</small>
-where <small>@(@
-e
-@)@</small> is simulated from the corresponding distribution
-with mean zero and standard deviation <small>@(@
-\delta
-@)@</small>.
-The corresponding
-<a href="statistic.htm#Weighted Residual Function, R.Gaussian, Laplace, Student's-t" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+A new <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+ is created by this command.
+It contains 
+<code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i></code>
+ values
+for each <a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+ in the var table.
+Hence the number of rows in <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
  is
-<small>@[@
 
-	R = e / \delta
-
-@]@</small>
-
-<br>
-<br>
-<big><a name="y.Log-Transformed" id="y.Log-Transformed">Log-Transformed</a></big>
-<br>
-If <small>@(@
-d
-@)@</small> is Log-Gaussian, Log-Laplace, or Log-Student's-t,
-<small>@[@
-
-	e = \log( y + \eta ) - \log( A + \eta )
-
-@]@</small>
-<small>@(@
-e
-@)@</small> is simulated from the corresponding linear distribution
-with mean zero and standard deviation <small>@(@
-\sigma
-@)@</small>.
-It follows that
-<small>@[@
-
-	y = \exp(e) * ( A + \eta )
-
-@]@</small>
-The corresponding
-<a href="statistic.htm#Weighted Residual Function, R.Gaussian, Laplace, Student's-t" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
- is
-<small>@[@
-
-	R = e / \sigma
-
-@]@</small>
+<code><i><font color="black"><span style='white-space: nowrap'>number_simulate</span></font></i></code>
+ times the number of rows in <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+.
 
 
 

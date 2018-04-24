@@ -18,7 +18,7 @@ var list_current0 = [
 'fit_command.htm#variables.random',
 'fit_command.htm#variables.both',
 'fit_command.htm#simulate_index',
-'fit_command.htm#simulate_table',
+'fit_command.htm#data_sim_table',
 'fit_command.htm#fit_var_table',
 'fit_command.htm#fit_data_subset_table',
 'fit_command.htm#Random Effects',
