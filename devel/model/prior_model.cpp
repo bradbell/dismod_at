@@ -102,7 +102,27 @@ var2prior_(var2prior)      ,
 age_table_(age_table)      ,
 time_table_(time_table)    ,
 prior_table_(prior_table)
-{ }
+{	// Set prior_mean_ to values in prior table (default)
+	size_t n_var = var2prior_.size();
+	prior_mean_.resize( 3 * n_var );
+	for(size_t i = 0; i < prior_mean_.size(); ++i)
+		prior_mean_[i] = std::numeric_limits<double>::quiet_NaN();
+	for(size_t var_id = 0; var_id < n_var; ++var_id)
+	{	// value prior
+		size_t prior_id             = var2prior_.value_prior_id(var_id);
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			prior_mean_[var_id * 3 + 0] = prior_table[prior_id].mean;
+		// dage prior
+		prior_id                    = var2prior_.dage_prior_id(var_id);
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			prior_mean_[var_id * 3 + 1] = prior_table[prior_id].mean;
+		// dtime prior
+		prior_id                    = var2prior_.dtime_prior_id(var_id);
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+			prior_mean_[var_id * 3 + 2] = prior_table[prior_id].mean;
+	}
+	return;
+}
 
 // private
 template <class Float>
@@ -124,6 +144,58 @@ residual_struct<Float> prior_model::log_prior(
 	return residual_density(
 		z, y, mu, delta, density, eta, nu, index, difference
 	);
+}
+/*
+$begin replace_mean$$
+$spell
+	const
+	var
+	dage
+	dtime
+$$
+
+$section Replace Prior Means$$
+
+$head Syntax$$
+$icode%prior_object%.replace_mean(%prior_mean%)%$$.
+
+$head Prototype$$
+$srcfile%devel/model/prior_model.cpp%
+	0%// BEGIN_REPLACE_MEAN_PROTOTYPE%// END_REPLACE_MEAN_PROTOTYPE%1
+%$$
+
+$head Purpose$$
+By default, the $cref/mean/prior_table/mean/$$ values in the prior table
+are used when computing the prior for the
+$cref/fixed/prior_fixed_effect/$$ and $cref/random/prior_random_effect/$$.
+This routine can be used to replace these means
+(which is useful for posterior $cref/simulation/posterior/Simulation/$$).
+
+This object has prototype
+$codei%
+	const prior_model %prior_object%
+%$$
+
+$head prior_mean$$
+This vector has size $icode%n_var%*3%$$ where $icode n_var$$
+is the number of variables in the $cref var_table$$.
+For $icode var_id$$ equal zero to $icode%n_var%-1%$$,
+$codei%
+	%prior_mean%[ 3 * %var_id% + %k% ]
+%$$
+replace the mean in the
+$cref/value prior/pack_prior/value_prior_id/$$ ($icode%k%=0%$$),
+$cref/dage prior/pack_prior/dage_prior_id/$$ ($icode%k%=1%$$),
+$cref/dtime prior/pack_prior/dtime_prior_id/$$ ($icode%k%=2%$$).
+This value is not used when the corresponding
+$cref/prior_id/prior_table/prior_id/$$ is null.
+
+$end
+*/
+// BEGIN_REPLACE_MEAN_PROTOTYPE
+void prior_model::replace_mean(const CppAD::vector<double>& prior_mean)
+// END_REPLACE_MEAN_PROTOTYPE
+{	prior_mean_ = prior_mean;
 }
 
 /*
@@ -234,7 +306,10 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 			assert( dtime_prior_id == DISMOD_AT_NULL_SIZE_T );
 			//
 			// value prior
-			const prior_struct& prior = prior_table_[value_prior_id];
+			prior_struct prior = prior_table_[value_prior_id];
+			//
+			// replacement for prior mean
+			prior.mean = prior_mean_[var_id * 3 + 0];
 			//
 			// no standard deviation multiplier for this prior
 			Float mulstd = Float(1.0);
@@ -253,13 +328,14 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 		}
 		else if( fixed_effect )
 		{	if( value_prior_id != DISMOD_AT_NULL_SIZE_T )
-			{	const prior_struct& prior = prior_table_[value_prior_id];
+			{	prior_struct prior = prior_table_[value_prior_id];
 				bool   difference = false;
 				Float  z          = nan;
 				size_t k          = 0;
 				size_t index      = 3 * var_id + k;
 				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
 				Float mulstd      = Float(1.0);
+				prior.mean        = prior_mean_[var_id * 3 + k];
 				if( offset != DISMOD_AT_NULL_SIZE_T )
 					mulstd        = pack_vec[offset];
 				//
@@ -268,14 +344,14 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 					residual_vec.push_back(residual);
 			}
 			if( dage_prior_id != DISMOD_AT_NULL_SIZE_T )
-			{	const prior_struct& prior = prior_table_[dage_prior_id];
+			{	prior_struct prior = prior_table_[dage_prior_id];
 				bool   difference = true;
 				Float  z          = pack_vec[var2prior_.dage_var_id(var_id)];
-
 				size_t k          = 1;
 				size_t index      = 3 * var_id + k;
 				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
 				Float mulstd      = Float(1.0);
+				prior.mean        = prior_mean_[var_id * 3 + k];
 				if( offset != DISMOD_AT_NULL_SIZE_T )
 					mulstd        = pack_vec[offset];
 				//
@@ -284,13 +360,14 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 					residual_vec.push_back(residual);
 			}
 			if( dtime_prior_id != DISMOD_AT_NULL_SIZE_T )
-			{	const prior_struct& prior = prior_table_[dtime_prior_id];
+			{	prior_struct prior = prior_table_[dtime_prior_id];
 				bool   difference = true;
 				Float  z          = pack_vec[var2prior_.dtime_var_id(var_id)];
 				size_t k          = 2;
 				size_t index      = 3 * var_id + k;
 				size_t offset     = pack_object_.mulstd_offset(smooth_id, k);
 				Float mulstd      = Float(1.0);
+				prior.mean        = prior_mean_[var_id * 3 + k];
 				if( offset != DISMOD_AT_NULL_SIZE_T )
 					mulstd        = pack_vec[offset];
 				//

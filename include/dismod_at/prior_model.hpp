@@ -22,14 +22,17 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	class prior_model {
 	private:
-		// data
+		// const data
 		const pack_info                    pack_object_;
 		const pack_prior                   var2prior_;
 		const CppAD::vector<double>        age_table_;
 		const CppAD::vector<double>        time_table_;
 		const CppAD::vector<prior_struct>  prior_table_;
 
-		// functions
+		// means used for priors, see documentation in replace_mean
+		CppAD::vector<double>              prior_mean_;
+
+		// log_prior
 		template <class Float>
 		residual_struct<Float> log_prior(
 			const prior_struct& prior        ,
@@ -40,6 +43,7 @@ namespace dismod_at {
 			bool                difference
 		) const;
 	public:
+		// ctor
 		prior_model(
 			const pack_info&                       pack_object     ,
 			const pack_prior&                      var2prior       ,
@@ -47,15 +51,18 @@ namespace dismod_at {
 			const CppAD::vector<double>&           time_table      ,
 			const CppAD::vector<prior_struct>&     prior_table
 		);
+		// replace_mean
+		void replace_mean(const CppAD::vector<double>& prior_mean);
+		// fixed
 		template <class Float>
 		CppAD::vector< residual_struct<Float> > fixed(
 			const CppAD::vector<Float>& pack_vec
 		) const;
+		// random
 		template <class Float>
 		CppAD::vector< residual_struct<Float> > random(
 			const CppAD::vector<Float>& pack_vec
 		) const;
-
 	};
 }
 

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -248,9 +248,11 @@ $latex \[
 \] $$
 This completes the proof of this lemma.
 
-$head Remark 2$$
-Suppose we simulate data $latex y$$ as in $cref/Lemma 1/posterior/Lemma 1/$$
-and independent data $latex z \sim \B{N}( B \bar{\theta}, P)$$ were
+$head Simulation$$
+Suppose we simulate
+$latex y \sim \B{N}( A \bar{\theta}, V)$$
+and independent $latex z \sim \B{N}( B \bar{\theta}, P)$$ were
+$latex A$$, $latex V$$ are as in $cref/Lemma 1/posterior/Lemma 1/$$ and
 $latex B$$, $latex P$$ are as in $cref/Lemma 2/posterior/Lemma 2/$$.
 Furthermore, we define $latex \hat{\theta}$$ as the maximizer of
 $latex \[
