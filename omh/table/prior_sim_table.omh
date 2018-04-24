@@ -1,0 +1,80 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-18 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin prior_sim_table$$
+$spell
+	sim
+	std
+	covariate
+	covariates
+	var
+	sim
+	dage
+	dtime
+$$
+
+$section Simulated Variation in Prior$$
+The $code prior_sim$$ table is created during a
+$cref simulate_command$$.
+It contains $cref/number_simulate/simulate_command/number_simulate/$$
+sets of priors where each set
+has one row for each the $cref var_table$$.
+Each row has a value, age difference, and time difference prior.
+
+$head prior_sim_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head simulate_index$$
+The column has type $code integer$$. It specifies the index
+for this simulated prior value. This index starts at zero,
+repeats as the same for the entire set of $icode var_id$$ values,
+and then increments by one between prior sets.
+The final (maximum) value for $icode simulate_index$$ is
+$cref/number_simulate/simulate_command/number_simulate/$$ minus one.
+
+$head var_id$$
+This column has type $code integer$$ and is the primary key
+for the $cref var_table$$.
+This identifies which $cref/var_id/var_table/var_id/$$
+each row of the prior_sim table corresponds to.
+If $icode n_var$$ is the number of rows in the var table,
+$codei%
+	%prior_sim_id% = %simulate_index% * %n_var% + %var_id%
+%$$
+for $icode simulate_index$$ equal zero to $icode%number_simulate%-1%$$
+and $icode var_id$$ equal zero to $codei%n_var%-1%$$.
+
+$head prior_sim_value$$
+This column has type $code real$$ and is
+a simulated from the value prior for this variable.
+If there is no value prior, or if the density for the value prior
+is uniform, $icode prior_sim_value$$ is $code null$$.
+If the prior density is Laplace, and the prior mean is zero,
+$icode prior_sim_value$$ is set to zero instead of a simulated sample
+from the Laplace distribution. This simulates Lasso fitting.
+
+$head prior_sim_dage$$
+This column has type $code real$$ and is
+a simulated from the dage prior for this variable.
+If there is no dage prior, or if the density for the dage prior
+is uniform, $icode prior_sim_dage$$ is $code null$$.
+
+$head prior_sim_dtime$$
+This column has type $code real$$ and is
+a simulated from the dtime prior for this variable.
+If there is no dtime prior, or if the density for the dtime prior
+is uniform, $icode prior_sim_dtime$$ is $code null$$.
+
+
+$head Example$$
+See the $cref simulate_command.py$$ example and test.
+
+$end

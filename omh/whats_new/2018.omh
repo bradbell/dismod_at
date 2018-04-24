@@ -50,14 +50,31 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-24$$
+Change the simulate command to also output the
+$cref/prior_sim_table/simulate_command/prior_sim_table/$$.
+Use this table to include variation of the prior means when using the
+$code sample$$ command with the
+$cref/simulate/sample_command/method/simulate/$$ method;
+see $cref/simulation/posterior/Simulation/$$ in the discussion
+of the posterior distribution for maximum likelihood estimates.
+
 $head 04-23$$
-Improve the statement of
-$cref/remark 2/posterior/Remark 2/$$ for simulating the posterior
+Improve the description for
+$cref/simulation/posterior/Simulation/$$ from the posterior
 distribution of maximum likelihood estimators that use priors.
 
 $head 04-22$$
 Add a proof that prevalence does not depend on other cause mortality; see
 $cref prev_dep$$.
+
+$head 04-21$$
+Change to user API:
+Change the name of $code simulate_table$$ to $cref data_sim_table$$.
+In the data sim table change $code simulate_value$$ to
+$cref/data_sim_value/data_sim_table/data_sim_value/$$ and
+$code simulate_delta$$ to
+$cref/data_sim_delta/data_sim_table/data_sim_delta/$$.
 
 $head 04-16$$
 $list number$$
@@ -65,7 +82,7 @@ Add a linear matrix $latex B$$ to the prior in
 $cref/Lemma 2/posterior/Lemma 2/$$ so that it can apply to
 computing the posterior statistics when we have difference priors.
 $lnext
-Add $cref/Remark 2/posterior/Remark 2/$$
+Add $cref/simulation/posterior/Simulation/$$
 to the posterior simulation discussion.
 $lend
 
@@ -520,9 +537,9 @@ Some other minor improvements and corrections were made
 to the documentation.
 $lnext
 The calculation of the
-$cref/simulate_value/simulate_command/simulate_table/simulate_value/$$
+$cref/data_sim_value/data_sim_table/data_sim_value/$$
 was corrected to allow for negative values in
-$cref/linear/simulate_command/y/Linear/$$ cases.
+$cref/linear/data_sim_table/Method/y, Linear/$$ cases.
 (The mistake fixed here was made during the changes on
 $cref/01-20/whats_new_2018/01-20/$$; see below.)
 $lnext
@@ -543,9 +560,9 @@ $cref/sigma
 /$$.
 $lnext
 The fields $icode meas_value$$ and $icode meas_std$$
-in the simulate table were changed to
-$cref/simulate_value/simulate_table/simulate_value/$$ and
-$cref/simulate_delta/simulate_table/simulate_delta/$$.
+in the data_sim table were changed to
+$cref/data_sim_value/data_sim_table/data_sim_value/$$ and
+$cref/data_sim_delta/data_sim_table/data_sim_delta/$$.
 $lend
 
 $head 01-18$$
@@ -576,7 +593,7 @@ $cref/sim_value/db2csv_command/data.csv/sim_value/$$ and
 $icode sim_std$$ columns when there was
 no $cref/simulate_index/fit_command/simulate_index/$$
 in the previous fit command.
-If there is a $cref simulate_table$$ the default value zero is used for
+If there is a $cref data_sim_table$$ the default value zero is used for
 $icode simulate_index$$ when it does not appear in the previous fit command.
 
 $head 01-12$$

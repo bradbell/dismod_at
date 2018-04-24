@@ -302,18 +302,18 @@
 #
 # $subhead sim_value$$
 # If the $cref simulate_command$$ has been run, this is the
-# $cref/simulate_value/simulate_table/simulate_value/$$ for this
+# $cref/data_sim_value/data_sim_table/data_sim_value/$$ for this
 # $cref/data_id/db2csv_command/data.csv/data_id/$$ and
 # $cref/simulate_index/fit_command/simulate_index/$$
 # in the previous fit command.
 # If there is no
-# $cref/simulate_index/simulate_table/simulate_index/$$
+# $cref/simulate_index/data_sim_table/simulate_index/$$
 # in the previous fit command, the
 # value zero is used for the $icode simulate_index$$.
 #
 # $subhead sim_delta$$
 # This is the
-# $cref/simulate_delta/simulate_table/simulate_delta/$$ for this
+# $cref/data_sim_delta/data_sim_table/data_sim_delta/$$ for this
 # $cref/data_id/db2csv_command/data.csv/data_id/$$ the
 # $icode simulate_index$$ (see $icode sim_value$$ above).
 #
@@ -549,7 +549,7 @@ def db2csv_command(database_file_arg) :
 	have_table['depend_var']      = check4table(cursor, 'depend_var')
 	have_table['truth_var']       = check4table(cursor, 'truth_var')
 	have_table['sample']          = check4table(cursor, 'sample')
-	have_table['simulate']        = check4table(cursor, 'simulate')
+	have_table['data_sim']        = check4table(cursor, 'data_sim')
 	have_table['fit_var']         = check4table(cursor, 'fit_var')
 	have_table['fit_data_subset'] = check4table(cursor, 'fit_data_subset')
 	have_table['predict']         = check4table(cursor, 'predict')
@@ -792,11 +792,11 @@ def db2csv_command(database_file_arg) :
 			msg += 'fit command in the log table\n'
 			sys.exit(msg)
 		simulate_index = ''
-	if simulate_index != '' and not have_table['simulate'] :
+	if simulate_index != '' and not have_table['data_sim'] :
 		msg  = 'Previous fit command used simulated data but\n'
-		msg += 'cannot find simulate_table\n'
+		msg += 'cannot find data_sim table\n'
 		sys.exit(msg)
-	if not have_table['simulate'] :
+	if not have_table['data_sim'] :
 		simulate_index = None
 	else :
 		if simulate_index == '' :
@@ -1120,9 +1120,9 @@ def db2csv_command(database_file_arg) :
 			row_out['avgint']   = convert2output( row['avg_integrand'] )
 			row_out['residual'] = convert2output( row['weighted_residual'] )
 		if simulate_index != None :
-			simulate_id =  n_subset * simulate_index + subset_id
-			sim_value = table_data['simulate'][simulate_id]['simulate_value']
-			sim_delta = table_data['simulate'][simulate_id]['simulate_delta']
+			data_sim_id =  n_subset * simulate_index + subset_id
+			sim_value = table_data['data_sim'][data_sim_id]['data_sim_value']
+			sim_delta = table_data['data_sim'][data_sim_id]['data_sim_delta']
 			row_out['sim_value'] = convert2output( sim_value )
 			row_out['sim_delta'] = convert2output( sim_delta )
 		csv_writer.writerow(row_out)

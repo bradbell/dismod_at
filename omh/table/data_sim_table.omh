@@ -8,21 +8,22 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin simulate_table$$
+$begin data_sim_table$$
 $spell
+	sim
 	std
 	covariate
 	covariates
 $$
 
-$section The Simulated Table: Samples Simulated Measurements$$
-The $code simulate$$ table is created during a
+$section Simulated Measurements and Adjusted Standard Deviations$$
+The $code data_sim$$ table is created during a
 $cref simulate_command$$.
 It contains $cref/number_simulate/simulate_command/number_simulate/$$
 sets of measurements where each set
 has one value for each entry in the $cref data_subset_table$$.
 
-$head simulate_id$$
+$head data_sim_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 Given the $cref model_variables$$ as specified by
@@ -42,25 +43,99 @@ $head data_subset_id$$
 This column has type $code integer$$ and is the primary key
 for the $cref data_subset_table$$.
 This identifies which $cref/data_id/data_subset_table/data_id/$$
-each row of the simulate table corresponds to
+each row of the data_sim table corresponds to.
 If $icode n_subset$$ is the number of rows in the data_subset table,
 $codei%
-	%simulate_id% = %simulate_index% * %n_subset% + %data_subset_id%
+	%data_sim_id% = %simulate_index% * %n_subset% + %data_subset_id%
 %$$
 for $icode simulate_index$$ equal zero to $icode%number_simulate%-1%$$
 and $icode data_subset_id$$ equal zero to $codei%n_subset%-1%$$.
 
-
-$head simulate_value$$
+$head data_sim_value$$
 This column has type $code real$$ and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
+In the $cref/linear/data_sim_table/Method/y, Linear/$$ case
+this is the value $icode y$$ below.
+In the $cref/log-transformed/data_sim_table/Method/y, Log-Transformed/$$ case
+this is the value $codei%max(%y%, 0)%$$.
 
-$head simulate_delta$$
+$head data_sim_delta$$
 The column has type $code real$$ and is
 the adjusted measurement standard deviation used in the simulation; i.e.,
-$cref/delta/simulate_command/delta/$$.
+$cref/delta/data_sim_table/Method/delta/$$.
+
+$head Method$$
+
+$subhead d$$
+We use $latex d$$ to denote the
+$cref/density_id/data_table/density_id/$$ and
+$cref/eta/data_table/eta/$$
+corresponding to the $icode data_id$$.
+
+$subhead delta$$
+We use $latex \delta$$ to denote the
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+/$$
+corresponding to this $icode data_id$$.
+
+$subhead A$$
+We use $latex A$$ denote the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+corresponding to the value for the model variables and
+this $icode data_id$$.
+
+$subhead sigma$$
+We use $latex \sigma$$ to denote the
+$cref/log-transformed standard deviation
+	/statistic
+	/Log-Transformed Standard Deviation, sigma
+/$$
+$latex \[
+	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
+\] $$
+
+$subhead y, Linear$$
+If $latex d$$ is Gaussian, Laplace, or Student's-t,
+$latex \[
+	y = A + e
+\]$$
+where $latex e$$ is simulated from the corresponding distribution
+with mean zero and standard deviation $latex \delta$$.
+The corresponding
+$cref/weighted residual
+	/statistic
+	/Weighted Residual Function, R
+	/Gaussian, Laplace, Student's-t
+/$$ is
+$latex \[
+	R = e / \delta
+\]$$
+
+$subhead y, Log-Transformed$$
+If $latex d$$ is Log-Gaussian, Log-Laplace, or Log-Student's-t,
+$latex \[
+	e = \log( y + \eta ) - \log( A + \eta )
+\] $$
+$latex e$$ is simulated from the corresponding linear distribution
+with mean zero and standard deviation $latex \sigma$$.
+It follows that
+$latex \[
+	y = \exp(e) * ( A + \eta )
+\] $$
+The corresponding
+$cref/weighted residual
+	/statistic
+	/Weighted Residual Function, R
+	/Gaussian, Laplace, Student's-t
+/$$ is
+$latex \[
+	R = e / \sigma
+\]$$
+
 
 $head Example$$
 See the $cref simulate_command.py$$ example and test.

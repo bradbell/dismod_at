@@ -24,7 +24,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_db_input.hpp>
 # include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/get_sample_table.hpp>
-# include <dismod_at/get_simulate_table.hpp>
+# include <dismod_at/get_data_sim_table.hpp>
+# include <dismod_at/get_prior_sim_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_info.hpp>
@@ -83,6 +84,7 @@ namespace { // BEGIN_EMPTY_NAMESPACE
 -----------------------------------------------------------------------------
 $begin set_command$$
 $spell
+	sim
 	var
 	dismod
 $$
@@ -342,6 +344,7 @@ void set_command(
 -----------------------------------------------------------------------------
 $begin init_command$$
 $spell
+	sim
 	avgint
 	init
 	var
@@ -403,7 +406,7 @@ $cref/depend_var/depend_var_table/$$,
 $cref/fit_var/fit_var_table/$$,
 $cref/truth_var/truth_var_table/$$,
 $cref/fit_data_subset/fit_data_subset_table/$$,
-$cref/simulate/simulate_table/$$,
+$cref/data_sim/data_sim_table/$$,
 $cref/sample/sample_table/$$,
 $cref/predict/predict_table/$$.
 
@@ -441,7 +444,7 @@ void init_command(
 		"data_subset",
 		"fit_data_subset",
 		//
-		"simulate",
+		"data_sim",
 		"sample",
 		"predict"
 	};
@@ -693,6 +696,7 @@ void init_command(
 -----------------------------------------------------------------------------
 $begin depend_command$$
 $spell
+	sim
 	dismod
 	var
 $$
@@ -784,6 +788,7 @@ void depend_command(
 -----------------------------------------------------------------------------
 $begin fit_command$$
 $spell
+	sim
 	nslist
 	avgint
 	var
@@ -849,17 +854,17 @@ $cref/random/model_variables/Random Effects, u/$$ effects.
 $head simulate_index$$
 If $icode simulate_index$$ is present, it must be less than
 $cref/number_simulate/simulate_command/number_simulate/$$.
-In this case the corresponding simulate table
-$cref/simulate_value/simulate_table/simulate_value/$$ entries
+In this case the corresponding data_sim table
+$cref/data_sim_value/data_sim_table/data_sim_value/$$ entries
 are used in place of the data table
 $cref/meas_value/data_table/meas_value/$$ entries.
 All the rest of the inputs are the same as when $icode simulated_index$$
 is not present; e.g.,
 $cref/meas_std/data_table/meas_std/$$ comes from the data table.
 
-$head simulate_table$$
+$head data_sim_table$$
 If $icode simulate_index$$ is present,
-the corresponding $icode meas_value$$ entries the simulate table
+the corresponding $icode meas_value$$ entries the data_sim table
 are used as inputs.
 
 $head fit_var_table$$
@@ -925,7 +930,6 @@ void fit_command(
 	if( ! ok )
 	{	string msg = "dismod_at fit command variables = ";
 			msg += variables + "\nis not 'fixed', 'random' or 'both'";
-			string table_name = "simulate";
 			dismod_at::error_exit(msg);
 	}
 	//
@@ -950,23 +954,23 @@ void fit_command(
 	{	size_t sim_index = std::atoi( simulate_index.c_str() );
 		//
 		// get simulation data
-		vector<dismod_at::simulate_struct> simulate_table =
-				dismod_at::get_simulate_table(db);
+		vector<dismod_at::data_sim_struct> data_sim_table =
+				dismod_at::get_data_sim_table(db);
 		size_t n_subset   = data_subset_obj.size();
-		size_t n_simulate = simulate_table.size() / n_subset;
+		size_t n_simulate = data_sim_table.size() / n_subset;
 		//
 		if( sim_index >= n_simulate )
 		{	string msg = "dismod_at fit command simulate_index = ";
 			msg += simulate_index + "\nis greater than or equal ";
-			msg += "number of samples in the simulate table.";
-			string table_name = "simulate";
+			msg += "number of samples in the data_sim table.";
+			string table_name = "data_sim";
 			dismod_at::error_exit(msg, table_name);
 		}
 		// replace meas_value in data_subset_obj
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-		{	size_t simulate_id = n_subset * sim_index + subset_id;
+		{	size_t data_sim_id = n_subset * sim_index + subset_id;
 			data_subset_obj[subset_id].meas_value =
-				simulate_table[simulate_id].simulate_value;
+				data_sim_table[data_sim_id].data_sim_value;
 		}
 	}
 	data_object.replace_like(minimum_meas_cv, data_subset_obj);
@@ -1176,6 +1180,7 @@ $begin simulate_command$$
 
 $section The Simulate Command$$
 $spell
+	sim
 	avgint
 	var
 	dismod
@@ -1209,99 +1214,20 @@ $cref/set_command/set_command/table_out/truth_var/$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
 
-$head simulate_table$$
-A new $cref simulate_table$$ is created by this command.
-It contains simulated measurements and
-adjusted standard deviations.
-Only the $cref/data_id/data_subset_table/data_id/$$ that are in the
-data_subset table are included in the simulated measurements.
-In addition, $icode number_simulate$$ values are simulated
-for such $icode data_id$$.
-Hence the number of rows in $cref simulate_table$$ is
+
+$head data_sim_table$$
+A new $cref data_sim_table$$ is created by this command.
+It contains $icode number_simulate$$ values
+for each $cref/data_id/data_subset_table/data_id/$$ in the data_subset table.
+Hence the number of rows in $cref data_sim_table$$ is
 $icode number_simulate$$ times the number of rows in $cref data_subset_table$$.
 
-$subhead simulate_value$$
-This value is different for each $icode subset_data_id$$
-and each $icode simulate_index$$.
-In the $cref/linear/simulate_command/y/Linear/$$ case,
-this column contains the value $icode y$$.
-In the $cref/log-transformed/simulate_command/y/Log-Transformed/$$ case,
-this column contains the value $codei%max(%y%, 0)%$$.
-
-$subhead simulate_delta$$
-This column contains the value of
-$cref/delta/simulate_command/delta/$$
-and is different for each $icode subset_data_id$$.
-
-$head d$$
-We use $latex d$$ to denote the
-$cref/density_id/data_table/density_id/$$ and
-$cref/eta/data_table/eta/$$
-corresponding to this $icode data_id$$.
-
-$head delta$$
-We use $latex \delta$$ to denote the
-$cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i
-/$$
-corresponding to this $icode data_id$$.
-
-$head A$$
-We use $latex A$$ denote the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-corresponding to the value for the model variables and
-this $icode data_id$$.
-
-$head sigma$$
-We use $latex \sigma$$ to denote the
-$cref/log-transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
-/$$
-$latex \[
-	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
-\] $$
-
-$head y$$
-
-$subhead Linear$$
-If $latex d$$ is Gaussian, Laplace, or Student's-t,
-$latex \[
-	y = A + e
-\]$$
-where $latex e$$ is simulated from the corresponding distribution
-with mean zero and standard deviation $latex \delta$$.
-The corresponding
-$cref/weighted residual
-	/statistic
-	/Weighted Residual Function, R
-	/Gaussian, Laplace, Student's-t
-/$$ is
-$latex \[
-	R = e / \delta
-\]$$
-
-$subhead Log-Transformed$$
-If $latex d$$ is Log-Gaussian, Log-Laplace, or Log-Student's-t,
-$latex \[
-	e = \log( y + \eta ) - \log( A + \eta )
-\] $$
-$latex e$$ is simulated from the corresponding linear distribution
-with mean zero and standard deviation $latex \sigma$$.
-It follows that
-$latex \[
-	y = \exp(e) * ( A + \eta )
-\] $$
-The corresponding
-$cref/weighted residual
-	/statistic
-	/Weighted Residual Function, R
-	/Gaussian, Laplace, Student's-t
-/$$ is
-$latex \[
-	R = e / \sigma
-\]$$
+$head prior_sim_table$$
+A new $cref prior_sim_table$$ is created by this command.
+It contains $icode number_simulate$$ values
+for each $cref/var_id/var_table/var_id/$$ in the var table.
+Hence the number of rows in $cref data_sim_table$$ is
+$icode number_simulate$$ times the number of rows in $cref var_table$$.
 
 
 $children%example/get_started/simulate_command.py
@@ -1318,7 +1244,9 @@ void simulate_command(
 	sqlite3*                                            db              ,
 	const vector<dismod_at::integrand_enum>&            integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
-	const dismod_at::data_model&                        data_object
+	const dismod_at::data_model&                        data_object     ,
+	const dismod_at::pack_prior&                        var2prior       ,
+	const vector<dismod_at::prior_struct>&              prior_table
 )
 {
 	using std::string;
@@ -1338,12 +1266,11 @@ void simulate_command(
 	string table_name = "truth_var";
 	string column_name = "truth_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, truth_var);
-	// ----------------- simulate_table ----------------------------------
-	//
-	string sql_cmd = "drop table if exists simulate";
+	// ----------------- data_sim_table ----------------------------------
+	string sql_cmd = "drop table if exists data_sim";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	table_name      = "simulate";
+	table_name      = "data_sim";
 	size_t n_col    = 4;
 	size_t n_subset = data_subset_obj.size();
 	size_t n_row    = n_simulate * n_subset;
@@ -1358,11 +1285,11 @@ void simulate_command(
 	col_type[1]   = "integer";
 	col_unique[1] = false;
 	//
-	col_name[2]   = "simulate_value";
+	col_name[2]   = "data_sim_value";
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
-	col_name[3]   = "simulate_delta";
+	col_name[3]   = "data_sim_delta";
 	col_type[3]   = "real";
 	col_unique[3] = false;
 	//
@@ -1426,11 +1353,96 @@ void simulate_command(
 			||  density == dismod_at::log_students_enum )
 				sim_value = std::max(sim_value, 0.0);
 			//
-			size_t simulate_id = sim_index * n_subset + subset_id;
-			row_value[simulate_id * n_col + 0] = to_string( sim_index );
-			row_value[simulate_id * n_col + 1] = to_string( subset_id );
-			row_value[simulate_id * n_col + 2] = to_string( sim_value );
-			row_value[simulate_id * n_col + 3] = to_string( sim_delta );
+			size_t data_sim_id = sim_index * n_subset + subset_id;
+			row_value[data_sim_id * n_col + 0] = to_string( sim_index );
+			row_value[data_sim_id * n_col + 1] = to_string( subset_id );
+			row_value[data_sim_id * n_col + 2] = to_string( sim_value );
+			row_value[data_sim_id * n_col + 3] = to_string( sim_delta );
+		}
+	}
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	// ----------------- prior_sim_table ----------------------------------
+	sql_cmd = "drop table if exists prior_sim";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	table_name    = "prior_sim";
+	n_col         = 5;
+	size_t n_var  = var2prior.size();
+	n_row         = n_simulate * n_var;
+	col_name.resize(n_col);
+	col_type.resize(n_col);
+	col_unique.resize(n_col);
+	row_value.resize(n_col * n_row);
+	//
+	col_name[0]   = "simulate_index";
+	col_type[0]   = "integer";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "var_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "prior_sim_value";
+	col_name[3]   = "prior_sim_dage";
+	col_name[4]   = "prior_sim_dtime";
+	for(size_t k = 0; k < 3; k++)
+	{	col_type[2+k]   = "real";
+		col_unique[2+k] = false;
+	}
+	// for each measurement in the data_subset table
+	for(size_t var_id = 0; var_id < n_var; ++var_id)
+	{	//
+		// prior id for mean of this this variable
+		size_t prior_id[3];
+		vector<string> sim_str(3);
+		prior_id[0] = var2prior.value_prior_id(var_id);
+		prior_id[1] = var2prior.dage_prior_id(var_id);
+		prior_id[2] = var2prior.dtime_prior_id(var_id);
+		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
+		{	for(size_t k = 0; k < 3; ++k)
+			if( prior_id[k] == DISMOD_AT_NULL_SIZE_T )
+				sim_str[k] = "null";
+			else
+			{	double lower = prior_table[ prior_id[k] ].lower;
+				double upper = prior_table[ prior_id[k] ].upper;
+				double mean  = prior_table[ prior_id[k] ].mean;
+				double std   = prior_table[ prior_id[k] ].std;
+				double eta   = prior_table[ prior_id[k] ].eta;
+				double nu    = prior_table[ prior_id[k] ].nu;
+				//
+				int    den   = prior_table[prior_id[k]].density_id;
+				dismod_at::density_enum density = dismod_at::density_enum(den);
+				//
+				if( density == dismod_at::uniform_enum )
+					sim_str[k] = "null";
+				else
+				{	double sim =
+						dismod_at::sim_random(density, mean, std, eta, nu);
+					//
+					sim = std::min(sim, upper);
+					sim = std::max(sim, lower);
+					//
+					if( density == dismod_at::log_gaussian_enum
+					||  density == dismod_at::log_laplace_enum
+					||  density == dismod_at::log_students_enum )
+						sim = std::max(sim, 0.0);
+					//
+					if( density == dismod_at::laplace_enum
+					&& k == 0 && mean == 0.0 )
+						sim = 0.0;
+					//
+					sim_str[k] = to_string( sim );
+				}
+			}
+			//
+			size_t prior_sim_id = sim_index * n_var + var_id;
+			row_value[prior_sim_id * n_col + 0] = to_string( sim_index );
+			row_value[prior_sim_id * n_col + 1] = to_string( var_id );
+			row_value[prior_sim_id * n_col + 2] = sim_str[0];
+			row_value[prior_sim_id * n_col + 3] = sim_str[1];
+			row_value[prior_sim_id * n_col + 4] = sim_str[2];
 		}
 	}
 	dismod_at::create_table(
@@ -1442,6 +1454,7 @@ void simulate_command(
 -------------------------------------------------------------------------------
 $begin sample_command$$
 $spell
+	sim
 	avgint
 	dismod
 	var
@@ -1458,6 +1471,11 @@ Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
+$head Purpose$$
+This command simulates samples of the $cref model_variables$$
+from the posterior distribution; see
+$cref/simulation/posterior/Simulation/$$ for the posterior distribution.
+
 $head number_sample$$
 Is the number of samples. Each sample contains a complete
 set of model variables. See the different methods below
@@ -1472,10 +1490,13 @@ $icode number_sample$$ must be equal to
 $cref/number_simulate/simulate_command/number_simulate/$$.
 The variable sample corresponding to each
 $cref/sample_index/sample_table/sample_index/$$ the sample table
-is the optimal estimate corresponding to data in the simulate table with
-$cref/simulate_index/simulate_table/simulate_index/$$ equal to
+is the optimal estimate corresponding to the
+$cref data_sim_table$$ and the $cref prior_sim_table$$ with
+$cref/simulate_index/data_sim_table/simulate_index/$$ equal to
 the sample index.
 This requires running $icode number_sample$$ fits of the model variables.
+See $cref/simulation/posterior/Simulation/$$ in the discussion of the
+posterior distribution of maximum likelihood estimates.
 
 $subhead asymptotic$$
 If $icode method$$ is $code asymptotic$$,
@@ -1484,9 +1505,14 @@ $icode number_sample$$ samples of the model variables
 The samples with different values of $icode sample_index$$ are independent.
 (Note that the $cref fit_var_table$$ is an additional input in this case.)
 
-$head simulate_table$$
+$head data_sim_table$$
 If $icode method$$ is $code simulate$$,
-this command has the extra input $cref  simulate_table$$
+this command has the extra input $cref data_sim_table$$
+which was created by the previous $cref simulate_command$$.
+
+$head prior_sim_table$$
+If $icode method$$ is $code simulate$$,
+this command has the extra input $cref prior_sim_table$$
 which was created by the previous $cref simulate_command$$.
 
 $head fit_var_table$$
@@ -1521,10 +1547,10 @@ void sample_command(
 	sqlite3*                                    db               ,
 	vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
 	dismod_at::data_model&                      data_object      ,
+	dismod_at::prior_model&                     prior_object     ,
 	const dismod_at::pack_info&                 pack_object      ,
 	const dismod_at::pack_prior&                var2prior        ,
 	const dismod_at::db_input_struct&           db_input         ,
-	const dismod_at::prior_model&               prior_object     ,
 	// effectively const
 	std::map<std::string, std::string>&         option_map
 )
@@ -1612,39 +1638,56 @@ void sample_command(
 			db, table_name, column_name, scale_var_value
 		);
 		// get simulated data
-		vector<dismod_at::simulate_struct> simulate_table =
-				dismod_at::get_simulate_table(db);
+		vector<dismod_at::data_sim_struct> data_sim_table =
+				dismod_at::get_data_sim_table(db);
+		// get simulated prior
+		vector<dismod_at::prior_sim_struct> prior_sim_table =
+				dismod_at::get_prior_sim_table(db);
 		//
 		size_t n_subset = data_subset_obj.size();
-		if( simulate_table.size() % n_subset != 0  )
+		if( data_sim_table.size() % n_subset != 0  )
 		{	msg  = "dismod_at sample command method = simulate and ";
 			msg += "sample table size modulo data_subset table size not zero.";
 			dismod_at::error_exit(msg);
 		}
-		if( n_sample != simulate_table.size() / n_subset )
+		if( n_sample != data_sim_table.size() / n_subset )
 		{	msg  = "dismod_at sample command method = simulate and ";
 			msg += "sample table size not equal number_sample times ";
 			msg += "data_subset table size.";
 			dismod_at::error_exit(msg);
 		}
+		// vector used for replacement of prior means
+		vector<double> prior_mean(n_var * 3);
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-		{	// replace meas_value in data_subset_obj
+		{	// replace prior means in prior_object
+			for(size_t var_id = 0; var_id < n_var; var_id ++)
+			{	size_t prior_sim_id = sample_index * n_var + var_id;
+				prior_mean[var_id * 3 + 0] =
+					prior_sim_table[prior_sim_id].prior_sim_value;
+				prior_mean[var_id * 3 + 1] =
+					prior_sim_table[prior_sim_id].prior_sim_dage;
+				prior_mean[var_id * 3 + 2] =
+					prior_sim_table[prior_sim_id].prior_sim_dtime;
+			}
+			prior_object.replace_mean(prior_mean);
+			//
+			// replace meas_value in data_subset_obj
 			size_t offset = n_subset * sample_index;
 			for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-			{	size_t simulate_id = offset + subset_id;
+			{	size_t data_sim_id = offset + subset_id;
 				size_t sample_check =
-					size_t(simulate_table[simulate_id].simulate_index);
+					size_t(data_sim_table[data_sim_id].simulate_index);
 				size_t subset_check =
-					size_t(simulate_table[simulate_id].data_subset_id);
+					size_t(data_sim_table[data_sim_id].data_subset_id);
 				if( sample_check != sample_index || subset_check != subset_id )
 				{	msg  = "dismod_at database sample simulate\n";
-					msg += "size of simulate table does not make sense\n";
+					msg += "size of data_sim table does not make sense\n";
 					msg +=  "restart with init command";
-					table_name = "simulate";
-					dismod_at::error_exit(msg, table_name, simulate_id);
+					table_name = "data_sim";
+					dismod_at::error_exit(msg, table_name, data_sim_id);
 				}
 				data_subset_obj[subset_id].meas_value =
-					simulate_table[simulate_id].simulate_value;
+					data_sim_table[data_sim_id].data_sim_value;
 			}
 			// replace_like
 			data_object.replace_like(minimum_meas_cv, data_subset_obj);
@@ -1774,6 +1817,7 @@ void sample_command(
 -------------------------------------------------------------------------------
 $begin predict_command$$
 $spell
+	sim
 	avgint
 	dismod
 	var
@@ -2377,20 +2421,6 @@ int main(int n_arg, const char** argv)
 					option_map
 				);
 			}
-			else if( command_arg == "sample" )
-			{	sample_command(
-					argv[3]          , // method
-					argv[4]          , // number_sample
-					db               ,
-					data_subset_obj  ,
-					data_object      ,
-					pack_object      ,
-					var2prior        ,
-					db_input         ,
-					prior_object     ,
-					option_map
-				);
-			}
 			else if( command_arg == "fit" )
 			{	string variables      = argv[3];
 				string simulate_index = "";
@@ -2418,7 +2448,23 @@ int main(int n_arg, const char** argv)
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,
-					data_object
+					data_object              ,
+					var2prior                ,
+					db_input.prior_table
+				);
+			}
+			else if( command_arg == "sample" )
+			{	sample_command(
+					argv[3]          , // method
+					argv[4]          , // number_sample
+					db               ,
+					data_subset_obj  , // not const
+					data_object      , // not const
+					prior_object     , // not const
+					pack_object      ,
+					var2prior        ,
+					db_input         ,
+					option_map
 				);
 			}
 			else

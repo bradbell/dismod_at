@@ -9,21 +9,22 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin get_simulate_table$$
+$begin get_data_sim_table$$
 $spell
+	sim
 	sqlite
 	CppAD
 	struct
 	std
 $$
 
-$section C++: Get the Simulate Table$$
+$section C++: Get the Data Simulation Table$$
 
 $head Syntax$$
-$icode%simulate_table% = get_simulate_table(%db%)%$$
+$icode%data_sim_table% = get_data_sim_table(%db%)%$$
 
 $head Purpose$$
-To read the $cref simulate_table$$ and return it as a C++ data structure.
+To read the $cref data_sim_table$$ and return it as a C++ data structure.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -32,36 +33,36 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head simulate_table$$
-The return value $icode simulate_table$$ has prototype
+$head data_sim_table$$
+The return value $icode data_sim_table$$ has prototype
 $codei%
-	CppAD::vector<simulate_struct>  %simulate_table%
+	CppAD::vector<data_sim_struct>  %data_sim_table%
 %$$
-For each $cref/simulate_id/simulate_table/simulate_id/$$,
+For each $cref/data_sim_id/data_sim_table/data_sim_id/$$,
 $codei%
-	%simulate_table%[%simulate_id%]
+	%data_sim_table%[%data_sim_id%]
 %$$
 is the information for the corresponding
-$cref/simulate_id/simulate_table/simulate_id/$$.
+$cref/data_sim_id/data_sim_table/data_sim_id/$$.
 
-$head simulate_struct$$
+$head data_sim_struct$$
 This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
 $code int$$ $cnext $code simulate_index$$ $cnext
-	The $cref/simulate_index/simulate_table/simulate_index/$$
+	The $cref/simulate_index/data_sim_table/simulate_index/$$
 	for this simulated measurement.
 $rnext
 $code int$$ $cnext $code data_subset_id$$ $cnext
 	The $cref/data_subset_id/data_subset_table/data_subset_id/$$
 	for this simulated measurement.
 $rnext
-$code double$$ $cnext $code simulate_value$$ $cnext
+$code double$$ $cnext $code data_sim_value$$ $cnext
 	The $cref/meas_value/data_table/meas_value/$$
 	for this simulated measurement.
 $rnext
-$code double$$ $cnext $code simulate_delta$$ $cnext
+$code double$$ $cnext $code data_sim_delta$$ $cnext
 	The $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i
@@ -69,56 +70,56 @@ $code double$$ $cnext $code simulate_delta$$ $cnext
 	for this simulated measurement.
 $tend
 
-$children%example/devel/table/get_simulate_table_xam.cpp
+$children%example/devel/table/get_data_sim_table_xam.cpp
 %$$
 $head Example$$
-The file $cref get_simulate_table_xam.cpp$$ contains an example
+The file $cref get_data_sim_table_xam.cpp$$ contains an example
 and test of this function.
 
 $end
 -----------------------------------------------------------------------------
 */
 
-# include <dismod_at/get_simulate_table.hpp>
+# include <dismod_at/get_data_sim_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<simulate_struct> get_simulate_table(sqlite3* db)
+CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3* db)
 {	using std::string;
 
-	string table_name  = "simulate";
-	size_t n_simulate = check_table_id(db, table_name);
+	string table_name  = "data_sim";
+	size_t n_data_sim  = check_table_id(db, table_name);
 
 	std::string column_name =  "simulate_index";
 	CppAD::vector<int>          simulate_index;
 	get_table_column(db, table_name, column_name, simulate_index);
-	assert( simulate_index.size() == n_simulate );
+	assert( simulate_index.size() == n_data_sim );
 
 	column_name             =  "data_subset_id";
 	CppAD::vector<int>          data_subset_id;
 	get_table_column(db, table_name, column_name, data_subset_id);
-	assert( data_subset_id.size() == n_simulate );
+	assert( data_subset_id.size() == n_data_sim );
 
-	column_name             =  "simulate_value";
-	CppAD::vector<double>       simulate_value;
-	get_table_column(db, table_name, column_name, simulate_value);
-	assert( simulate_value.size() == n_simulate );
+	column_name             =  "data_sim_value";
+	CppAD::vector<double>       data_sim_value;
+	get_table_column(db, table_name, column_name, data_sim_value);
+	assert( data_sim_value.size() == n_data_sim );
 
-	column_name             =  "simulate_delta";
-	CppAD::vector<double>       simulate_delta;
-	get_table_column(db, table_name, column_name, simulate_delta);
-	assert( simulate_delta.size() == n_simulate );
+	column_name             =  "data_sim_delta";
+	CppAD::vector<double>       data_sim_delta;
+	get_table_column(db, table_name, column_name, data_sim_delta);
+	assert( data_sim_delta.size() == n_data_sim );
 
-	CppAD::vector<simulate_struct> simulate_table(n_simulate);
-	for(size_t i = 0; i < n_simulate; i++)
-	{	simulate_table[i].simulate_index   = simulate_index[i];
-		simulate_table[i].data_subset_id   = data_subset_id[i];
-		simulate_table[i].simulate_value   = simulate_value[i];
-		simulate_table[i].simulate_delta   = simulate_delta[i];
+	CppAD::vector<data_sim_struct> data_sim_table(n_data_sim);
+	for(size_t i = 0; i < n_data_sim; i++)
+	{	data_sim_table[i].simulate_index   = simulate_index[i];
+		data_sim_table[i].data_subset_id   = data_subset_id[i];
+		data_sim_table[i].data_sim_value   = data_sim_value[i];
+		data_sim_table[i].data_sim_delta   = data_sim_delta[i];
 	}
-	return simulate_table;
+	return data_sim_table;
 }
 
 } // END DISMOD_AT_NAMESPACE

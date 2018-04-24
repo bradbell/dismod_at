@@ -12,18 +12,18 @@
 new_directories='
 '
 rename_files='
-	example/devel/utility/pack_var_prior_xam.cpp
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|pack_var_prior|pack_prior|'
-spell_cmd='s|^$spell|&\n\tnslist|'
+rename_cmd='s|simulate_table|data_sim_table|'
+# spell_cmd='s|^$spell|&\n\tsim|'
+spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|pack_var_prior|pack_prior|
+s|simulate_struct|data_sim_struct|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
@@ -97,6 +97,13 @@ done
 if [ "$git_new" == 'yes' ]
 then
 	git_new.sh from
+fi
+# ----------------------------------------------------------------------------
+if ! check_copyright.sh >> /dev/null
+then
+	echo 'check_copyright.sh: some changes'
+else
+	echo 'check_copyright.sh: no changes'
 fi
 # ----------------------------------------------------------------------------
 cp $HOME/trash/batch_edit.sh bin/batch_edit.sh

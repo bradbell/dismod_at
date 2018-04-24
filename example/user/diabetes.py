@@ -9,6 +9,7 @@
 # ---------------------------------------------------------------------------
 # $begin user_diabetes.py$$ $newlinech #$$
 # $spell
+#	sim
 #	nslist
 #	ae
 #	ts
@@ -167,7 +168,7 @@ node_list = [ 'US', 'Alabama', 'California' ]
 # This is a $code list$$ with $code str$$ elements that are
 # $cref/integrand names/integrand_table/integrand_name/$$
 # that will have measurements in the $cref data_table$$
-# and $cref simulate_table$$.
+# and $cref data_sim_table$$.
 # As mentioned above, the rates
 # $cref/omega/user_diabetes.py/omega/$$  and
 # $cref/rho/user_diabetes.py/rho/$$
@@ -303,7 +304,7 @@ meas_repeat = 1
 # $subhead fit_with_noise_in_data$$
 # This is a $code bool$$ that specifies if measurement noise is included
 # when fitting the data; i.e., if the column
-# $cref/simulate_value/simulate_table/simulate_value/$$ is used to
+# $cref/data_sim_value/data_sim_table/data_sim_value/$$ is used to
 # fit the $cref model_variables$$.
 # Otherwise, the measurements without noise
 # are used to fit the model variables; i.e., the column

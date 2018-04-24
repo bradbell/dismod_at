@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2017$$
 $spell
+	sim
 	ran_obj_tst
 	const
 	Dismod
@@ -553,7 +554,7 @@ $lnext
 It would be nice to have a sample_data_subset table that is similar to the
 $cref fit_data_subset_table$$, but corresponds to
 $cref/sample command/sample_command/method/simulate/$$
-with $icode method$$ equal to $code simulate$$.
+with $icode method$$ equal to $code data_sim$$.
 $lend
 
 $head 05-23$$

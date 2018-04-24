@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin sample_table$$
 $spell
+	sim
 	var
 $$
 
@@ -18,8 +19,8 @@ $section The Sample Table: Samples of Variable Values$$
 $head Simulated Data$$
 The $cref sample_command$$ creates this table with
 one optimal estimates of the $cref model_variables$$.
-For each valid $cref/simulate_index/simulate_table/simulate_index/$$.
-in the $cref simulate_table$$, there is an equal
+For each valid $cref/simulate_index/data_sim_table/simulate_index/$$.
+in the $cref data_sim_table$$, there is an equal
 $icode sample_index$$ in the table with the optimal variables
 for the corresponding measurement.
 
@@ -36,7 +37,7 @@ Its initial value is zero, and it increments by one for each row.
 
 $head sample_index$$
 This column has type $code integer$$ and specifies the index,
-in the $code simulate$$ table, that a complete set of $cref model_variables$$,
+in the $code data_sim$$ table, that a complete set of $cref model_variables$$,
 in the $code sample$$ table, corresponds to.
 
 $head var_id$$
