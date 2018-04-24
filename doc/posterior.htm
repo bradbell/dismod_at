@@ -56,8 +56,9 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>Lemma 1</option>
 <option>---..Proof</option>
-<option>Remark 1</option>
+<option>---..Remark</option>
 <option>Lemma 2</option>
+<option>---..Remark</option>
 <option>---..Proof</option>
 <option>Simulation</option>
 </select>
@@ -109,16 +110,18 @@ A:active { color : purple }
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-The current version of dismod_at
-<code><font color="blue">sample</font></code> command with method equal to
+The <code><font color="blue">sample</font></code> command with method equal to
 <a href="sample_command.htm#method.simulate" target="_top"><span style='white-space: nowrap'>simulate</span></a>
 
-fits simulated random measurements
-in order to sample from the posterior distribution for the parameters.
-<a href="posterior.htm#Lemma 2" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;2</span></a>
- below shows that,
-because prior information is used with maximum likelihood estimation,
-this yields less variation than it should for the posterior distribution.
+fits simulated random measurements <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+
+and simulated random priors <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+.
+The Lemmas on this page prove that, in the linear Gaussian case,
+this gives the proper statistics for the posterior distribution
+of the maximum likelihood estimate.
+Note that the dismod_at case is not linear nor are all the
+statistics Gaussian.
 
 
 <br>
@@ -306,7 +309,7 @@ This completes the proof of the equation for the covariance of
 
 <br>
 <br>
-<b><big><a name="Remark 1" id="Remark 1">Remark 1</a></big></b>
+<big><a name="Lemma 1.Remark" id="Lemma 1.Remark">Remark</a></big>
 <br>
 For the case in
 <a href="posterior.htm#Lemma 1" target="_top"><span style='white-space: nowrap'>Lemma&nbsp;1</span></a>
@@ -372,6 +375,35 @@ It follows that
 where <small>@(@
 \prec
 @)@</small> means less than in a positive definite matrix sense.
+
+<br>
+<br>
+<big><a name="Lemma 2.Remark" id="Lemma 2.Remark">Remark</a></big>
+<br>
+The posterior distribution for the maximum likelihood estimate,
+when including a prior,
+cannot be sampled by fitting simulated data alone.
+To see this, consider the case where column one of the matrix <small>@(@
+A
+@)@</small>
+is zero.
+In this case, that data <small>@(@
+y
+@)@</small> does not depend on <small>@(@
+\theta_1
+@)@</small> and
+<small>@(@
+\hat{\theta}_1 = \bar{\theta}_1
+@)@</small>
+no matter what the value of <small>@(@
+y
+@)@</small>.
+On the other hand,
+the posterior distribution for <small>@(@
+\theta_1
+@)@</small>, for this case,
+is the same as its prior distribution and has uncertainty.
+
 
 <br>
 <br>

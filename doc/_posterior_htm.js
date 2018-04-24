@@ -14,8 +14,9 @@ var list_current0 = [
 'posterior.htm#Purpose',
 'posterior.htm#Lemma 1',
 'posterior.htm#Lemma 1.Proof',
-'posterior.htm#Remark 1',
+'posterior.htm#Lemma 1.Remark',
 'posterior.htm#Lemma 2',
+'posterior.htm#Lemma 2.Remark',
 'posterior.htm#Lemma 2.Proof',
 'posterior.htm#Simulation'
 ];
