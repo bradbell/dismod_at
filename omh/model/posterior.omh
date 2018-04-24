@@ -17,14 +17,15 @@ $$
 $section Simulating Posterior Distribution for Model Variables$$
 
 $head Purpose$$
-The current version of dismod_at
-$code sample$$ command with method equal to
+The $code sample$$ command with method equal to
 $cref/simulate/sample_command/method/simulate/$$
-fits simulated random measurements
-in order to sample from the posterior distribution for the parameters.
-$cref/Lemma 2/posterior/Lemma 2/$$ below shows that,
-because prior information is used with maximum likelihood estimation,
-this yields less variation than it should for the posterior distribution.
+fits simulated random measurements $cref data_sim_table$$
+and simulated random priors $cref prior_sim_table$$.
+The Lemmas on this page prove that, in the linear Gaussian case,
+this gives the proper statistics for the posterior distribution
+of the maximum likelihood estimate.
+Note that the dismod_at case is not linear nor are all the
+statistics Gaussian.
 
 
 $head Lemma 1$$
@@ -132,7 +133,7 @@ A ( A^\R{T} V^{-1} A )^{-1}
 This completes the proof of the equation for the covariance of
 $latex \hat{\theta} - \bar{\theta} $$ in the statement of the lemma.
 
-$head Remark 1$$
+$subhead Remark$$
 For the case in
 $cref/Lemma 1/posterior/Lemma 1/$$, the second partial of
 $latex \log \B{p} ( y | \theta )$$ with respect to $latex \theta$$
@@ -164,6 +165,20 @@ $latex \[
 \right)^{-1}
 \]$$
 where $latex \prec$$ means less than in a positive definite matrix sense.
+
+$subhead Remark$$
+The posterior distribution for the maximum likelihood estimate,
+when including a prior,
+cannot be sampled by fitting simulated data alone.
+To see this, consider the case where column one of the matrix $latex A$$
+is zero.
+In this case, that data $latex y$$ does not depend on $latex \theta_1$$ and
+$latex \hat{\theta}_1 = \bar{\theta}_1$$
+no matter what the value of $latex y$$.
+On the other hand,
+the posterior distribution for $latex \theta_1$$, for this case,
+is the same as its prior distribution and has uncertainty.
+
 
 $subhead Proof$$
 $latex \[
