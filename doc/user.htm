@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>User Examples and Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="User Examples and Tests">
-<meta name="keywords" id="keywords" content=" user examples tests see also example.db ">
+<meta name="keywords" id="keywords" content=" user examples tests see also run one example user_speed.py example.db ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -53,6 +53,8 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>See Also</option>
+<option>Run One Example</option>
+<option>---..user_speed.py</option>
 <option>example.db</option>
 <option>Contents</option>
 </select>
@@ -77,14 +79,15 @@ A:active { color : purple }
 <select onchange='choose_down0(this)'>
 <option>user-&gt;</option>
 <option>user_fit_random.py</option>
+<option>user_fit_fixed_both.py</option>
+<option>user_posterior.py</option>
+<option>user_diabetes.py</option>
 <option>user_asymptotic.py</option>
 <option>user_change_grid.py</option>
 <option>user_const_random.py</option>
 <option>user_const_value.py</option>
 <option>user_continue_fit.py</option>
-<option>user_diabetes.py</option>
 <option>user_diff_constraint.py</option>
-<option>user_fit_fixed.py</option>
 <option>user_fit_sim.py</option>
 <option>user_jump_at_age.py</option>
 <option>user_lasso_covariate.py</option>
@@ -110,9 +113,15 @@ A:active { color : purple }
 
 <br>
 <br>
-<b><big><a name="example.db" id="example.db">example.db</a></big></b>
+<b><big><a name="Run One Example" id="Run One Example">Run One Example</a></big></b>
 <br>
-Note the each of the examples below can by run with the command
+If you have
+<a href="install_unix.htm#dismod_at.Build" target="_top"><span style='white-space: nowrap'>built&nbsp;dismod_at</span></a>
+ and
+are in the directory
+<a href="install_unix.htm#Download dismod_at.git" target="_top"><span style='white-space: nowrap'>dismod_at.git</span></a>
+,
+you can run one of these examples with the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3_executable</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;example/user/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
@@ -121,16 +130,30 @@ where <a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='w
 
 is the python3 program and 
 <code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
- is the name of the example
-(including the <code><font color="blue">.py</font></code> extension at the end but not the <code><font color="blue">user_</font></code>
-at the front).
-Running the example will create the database
+ is the name of the example.
+The name of the example
+includes the <code><font color="blue">.py</font></code> extension at the end,
+but does not include <code><font color="blue">user_</font></code> at the front.
+
+<br>
+<br>
+<big><a name="Run One Example.user_speed.py" id="Run One Example.user_speed.py">user_speed.py</a></big>
+<br>
+The <code><font color="blue">user_speed.py</font></code> example is an exception; see its
+<a href="user_speed.py.htm#Syntax" target="_top"><span style='white-space: nowrap'>syntax</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="example.db" id="example.db">example.db</a></big></b>
+<br>
+Each of these examples will create a corresponding database called
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;build/example/user/example.db<br>
 </span></font></code>
 which can be inspected using any sqlite viewer; e.g.,
-<a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/" target="_top"><span style='white-space: nowrap'>firefox</span></a>
+<a href="http://sqlitebrowser.org/" target="_top"><span style='white-space: nowrap'>http://sqlitebrowser.org/</span></a>
 .
 
 
@@ -139,7 +162,7 @@ which can be inspected using any sqlite viewer; e.g.,
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
-<tr><td><a href="user_fit_random.py.htm" target="_top">user_fit_random.py</a></td><td>Fitting&nbsp;Just&nbsp;Random&nbsp;Effects</td></tr><tr><td><a href="user_asymptotic.py.htm" target="_top">user_asymptotic.py</a></td><td>Sample&nbsp;from&nbsp;Asymptotic&nbsp;Distribution&nbsp;for&nbsp;Model&nbsp;Variables</td></tr><tr><td><a href="user_change_grid.py.htm" target="_top">user_change_grid.py</a></td><td>Remove&nbsp;an&nbsp;Age&nbsp;or&nbsp;Time&nbsp;From&nbsp;a&nbsp;Smoothing</td></tr><tr><td><a href="user_const_random.py.htm" target="_top">user_const_random.py</a></td><td>Fitting&nbsp;With&nbsp;Non-Zero&nbsp;Constant&nbsp;Random&nbsp;Effects&nbsp;in&nbsp;Smoothing&nbsp;Grid</td></tr><tr><td><a href="user_const_value.py.htm" target="_top">user_const_value.py</a></td><td>Fitting&nbsp;Using&nbsp;const_value&nbsp;in&nbsp;Smoothing&nbsp;Grid</td></tr><tr><td><a href="user_continue_fit.py.htm" target="_top">user_continue_fit.py</a></td><td>Continuing&nbsp;a&nbsp;Fit&nbsp;From&nbsp;Where&nbsp;it&nbsp;Left&nbsp;Off</td></tr><tr><td><a href="user_diabetes.py.htm" target="_top">user_diabetes.py</a></td><td>An&nbsp;Example&nbsp;/&nbsp;Speed&nbsp;Test&nbsp;Fitting&nbsp;Simulated&nbsp;Diabetes&nbsp;Data</td></tr><tr><td><a href="user_diff_constraint.py.htm" target="_top">user_diff_constraint.py</a></td><td>Constraints&nbsp;on&nbsp;Differences&nbsp;in&nbsp;Age&nbsp;and&nbsp;Time</td></tr><tr><td><a href="user_fit_fixed.py.htm" target="_top">user_fit_fixed.py</a></td><td>Fitting&nbsp;Just&nbsp;Fixed&nbsp;Effects</td></tr><tr><td><a href="user_fit_sim.py.htm" target="_top">user_fit_sim.py</a></td><td>Fitting&nbsp;Simulated&nbsp;Data&nbsp;Example</td></tr><tr><td><a href="user_jump_at_age.py.htm" target="_top">user_jump_at_age.py</a></td><td>Case&nbsp;with&nbsp;a&nbsp;Jump&nbsp;in&nbsp;Rate&nbsp;at&nbsp;an&nbsp;Age</td></tr><tr><td><a href="user_lasso_covariate.py.htm" target="_top">user_lasso_covariate.py</a></td><td>Using&nbsp;Lasso&nbsp;on&nbsp;Covariate&nbsp;Multiplier</td></tr><tr><td><a href="user_meas_covariate.py.htm" target="_top">user_meas_covariate.py</a></td><td>Using&nbsp;Measurement&nbsp;Covariates&nbsp;on&nbsp;Multiple&nbsp;Integrands</td></tr><tr><td><a href="user_no_children.py.htm" target="_top">user_no_children.py</a></td><td>Case&nbsp;with&nbsp;no&nbsp;Children;&nbsp;i.e.,&nbsp;no&nbsp;Random&nbsp;Effects</td></tr><tr><td><a href="user_predict_fit.py.htm" target="_top">user_predict_fit.py</a></td><td>Predict&nbsp;Average&nbsp;Integrand&nbsp;Using&nbsp;Results&nbsp;of&nbsp;a&nbsp;Fit</td></tr><tr><td><a href="user_zero_sum_random.py.htm" target="_top">user_zero_sum_random.py</a></td><td>Fitting&nbsp;With&nbsp;Sum&nbsp;of&nbsp;Random&nbsp;Effect&nbsp;Constrained&nbsp;to&nbsp;Zero</td></tr><tr><td><a href="user_re_scale.py.htm" target="_top">user_re_scale.py</a></td><td>Case&nbsp;Where&nbsp;Re-Scaling&nbsp;is&nbsp;Useful</td></tr><tr><td><a href="user_speed.py.htm" target="_top">user_speed.py</a></td><td>A&nbsp;Simulate&nbsp;Data&nbsp;Speed&nbsp;Test</td></tr><tr><td><a href="user_students.py.htm" target="_top">user_students.py</a></td><td>Using&nbsp;Student's-t&nbsp;to&nbsp;Fitting&nbsp;Data&nbsp;with&nbsp;Outliers</td></tr></table>
+<tr><td><a href="user_fit_random.py.htm" target="_top">user_fit_random.py</a></td><td>Fitting&nbsp;Just&nbsp;Random&nbsp;Effects</td></tr><tr><td><a href="user_fit_fixed_both.py.htm" target="_top">user_fit_fixed_both.py</a></td><td>Fit&nbsp;Fixed&nbsp;First&nbsp;Then&nbsp;Both</td></tr><tr><td><a href="user_posterior.py.htm" target="_top">user_posterior.py</a></td><td>Sampling&nbsp;From&nbsp;Then&nbsp;Posterior&nbsp;Distribution</td></tr><tr><td><a href="user_diabetes.py.htm" target="_top">user_diabetes.py</a></td><td>An&nbsp;Example&nbsp;/&nbsp;Speed&nbsp;Test&nbsp;Fitting&nbsp;Simulated&nbsp;Diabetes&nbsp;Data</td></tr><tr><td><a href="user_asymptotic.py.htm" target="_top">user_asymptotic.py</a></td><td>Sample&nbsp;from&nbsp;Asymptotic&nbsp;Distribution&nbsp;for&nbsp;Model&nbsp;Variables</td></tr><tr><td><a href="user_change_grid.py.htm" target="_top">user_change_grid.py</a></td><td>Remove&nbsp;an&nbsp;Age&nbsp;or&nbsp;Time&nbsp;From&nbsp;a&nbsp;Smoothing</td></tr><tr><td><a href="user_const_random.py.htm" target="_top">user_const_random.py</a></td><td>Fitting&nbsp;With&nbsp;Non-Zero&nbsp;Constant&nbsp;Random&nbsp;Effects&nbsp;in&nbsp;Smoothing&nbsp;Grid</td></tr><tr><td><a href="user_const_value.py.htm" target="_top">user_const_value.py</a></td><td>Fitting&nbsp;Using&nbsp;const_value&nbsp;in&nbsp;Smoothing&nbsp;Grid</td></tr><tr><td><a href="user_continue_fit.py.htm" target="_top">user_continue_fit.py</a></td><td>Continuing&nbsp;a&nbsp;Fit&nbsp;From&nbsp;Where&nbsp;it&nbsp;Left&nbsp;Off</td></tr><tr><td><a href="user_diff_constraint.py.htm" target="_top">user_diff_constraint.py</a></td><td>Constraints&nbsp;on&nbsp;Differences&nbsp;in&nbsp;Age&nbsp;and&nbsp;Time</td></tr><tr><td><a href="user_fit_sim.py.htm" target="_top">user_fit_sim.py</a></td><td>Fitting&nbsp;Simulated&nbsp;Data&nbsp;Example</td></tr><tr><td><a href="user_jump_at_age.py.htm" target="_top">user_jump_at_age.py</a></td><td>Case&nbsp;with&nbsp;a&nbsp;Jump&nbsp;in&nbsp;Rate&nbsp;at&nbsp;an&nbsp;Age</td></tr><tr><td><a href="user_lasso_covariate.py.htm" target="_top">user_lasso_covariate.py</a></td><td>Using&nbsp;Lasso&nbsp;on&nbsp;Covariate&nbsp;Multiplier</td></tr><tr><td><a href="user_meas_covariate.py.htm" target="_top">user_meas_covariate.py</a></td><td>Using&nbsp;Measurement&nbsp;Covariates&nbsp;on&nbsp;Multiple&nbsp;Integrands</td></tr><tr><td><a href="user_no_children.py.htm" target="_top">user_no_children.py</a></td><td>Case&nbsp;with&nbsp;no&nbsp;Children;&nbsp;i.e.,&nbsp;no&nbsp;Random&nbsp;Effects</td></tr><tr><td><a href="user_predict_fit.py.htm" target="_top">user_predict_fit.py</a></td><td>Predict&nbsp;Average&nbsp;Integrand&nbsp;Using&nbsp;Results&nbsp;of&nbsp;a&nbsp;Fit</td></tr><tr><td><a href="user_zero_sum_random.py.htm" target="_top">user_zero_sum_random.py</a></td><td>Fitting&nbsp;With&nbsp;Sum&nbsp;of&nbsp;Random&nbsp;Effect&nbsp;Constrained&nbsp;to&nbsp;Zero</td></tr><tr><td><a href="user_re_scale.py.htm" target="_top">user_re_scale.py</a></td><td>Case&nbsp;Where&nbsp;Re-Scaling&nbsp;is&nbsp;Useful</td></tr><tr><td><a href="user_speed.py.htm" target="_top">user_speed.py</a></td><td>A&nbsp;Simulate&nbsp;Data&nbsp;Speed&nbsp;Test</td></tr><tr><td><a href="user_students.py.htm" target="_top">user_students.py</a></td><td>Using&nbsp;Student's-t&nbsp;to&nbsp;Fitting&nbsp;Data&nbsp;with&nbsp;Outliers</td></tr></table>
 <hr>Input File: example/user/user.omh
 
 </body>

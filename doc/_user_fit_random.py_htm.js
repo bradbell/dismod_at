@@ -11,7 +11,7 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'user_fit_random.py.htm#Syntax',
+'user_fit_random.py.htm#Purpose',
 'user_fit_random.py.htm#Discussion',
 'user_fit_random.py.htm#Source Code'
 ];
@@ -29,14 +29,15 @@ var list_down2 = [
 ];
 var list_down1 = [
 'user_fit_random.py.htm',
+'user_fit_fixed_both.py.htm',
+'user_posterior.py.htm',
+'user_diabetes.py.htm',
 'user_asymptotic.py.htm',
 'user_change_grid.py.htm',
 'user_const_random.py.htm',
 'user_const_value.py.htm',
 'user_continue_fit.py.htm',
-'user_diabetes.py.htm',
 'user_diff_constraint.py.htm',
-'user_fit_fixed.py.htm',
 'user_fit_sim.py.htm',
 'user_jump_at_age.py.htm',
 'user_lasso_covariate.py.htm',

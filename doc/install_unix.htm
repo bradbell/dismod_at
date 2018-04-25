@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Installing dismod_at in Unix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Installing dismod_at in Unix">
-<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command test install executable path python example ">
+<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download dismod_at.git special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command build test install executable path python example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,7 +61,7 @@ A:active { color : purple }
 <option>---..python3</option>
 <option>---..sqlite3</option>
 <option>---..gsl</option>
-<option>Download</option>
+<option>Download dismod_at.git</option>
 <option>Special Requirements</option>
 <option>---..run_cmake.sh</option>
 <option>---..eigen</option>
@@ -72,6 +72,7 @@ A:active { color : purple }
 <option>dismod_at</option>
 <option>---..Setup</option>
 <option>---..Cmake Command</option>
+<option>---..Build</option>
 <option>---..Test</option>
 <option>---..Install</option>
 <option>---..Executable Path</option>
@@ -197,7 +198,7 @@ on Fedora or Red-Hat one needs to install <code><font color="blue">gsl-devel</fo
 
 <br>
 <br>
-<b><big><a name="Download" id="Download">Download</a></big></b>
+<b><big><a name="Download dismod_at.git" id="Download dismod_at.git">Download dismod_at.git</a></big></b>
 <br>
 After installing the requirements above,
 use the following command to get the current version of dismod_at:
@@ -339,6 +340,16 @@ in the <code><font color="blue">dismod_at.git</font></code> directory
 execute the following command:
 <code><font color='blue'><pre style='display:inline'> 
      bin/run_cmake.sh
+</pre></font></code>
+<br>
+<big><a name="dismod_at.Build" id="dismod_at.Build">Build</a></big>
+<br>
+The following command is option and will just build the
+executable program <code><font color="blue">build/devel/dismod_at</font></code>:
+<code><font color='blue'><pre style='display:inline'> 
+     cd build
+     make
+     cd ..
 </pre></font></code>
 <br>
 <big><a name="dismod_at.Test" id="dismod_at.Test">Test</a></big>

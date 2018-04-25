@@ -12,6 +12,8 @@ var list_across0 = [
 var list_current0 = [
 'get_started.htm#See Also',
 'get_started.htm#Database',
+'get_started.htm#Run One Example',
+'get_started.htm#get_started.db',
 'get_started.htm#Commands'
 ];
 var list_down1 = [

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting Just Random Effects</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting Just Random Effects">
-<meta name="keywords" id="keywords" content=" fitting just random effects syntax discussion source code ">
+<meta name="keywords" id="keywords" content=" fitting just random effects purpose discussion source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -53,12 +53,12 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
-<option>Syntax</option>
+<option>Purpose</option>
 <option>Discussion</option>
 <option>Source Code</option>
 </select>
 </td>
-<td><a href="user_asymptotic.py.htm" target="_top">Next</a>
+<td><a href="user_fit_fixed_both.py.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
@@ -78,14 +78,15 @@ A:active { color : purple }
 <select onchange='choose_down1(this)'>
 <option>user-&gt;</option>
 <option>user_fit_random.py</option>
+<option>user_fit_fixed_both.py</option>
+<option>user_posterior.py</option>
+<option>user_diabetes.py</option>
 <option>user_asymptotic.py</option>
 <option>user_change_grid.py</option>
 <option>user_const_random.py</option>
 <option>user_const_value.py</option>
 <option>user_continue_fit.py</option>
-<option>user_diabetes.py</option>
 <option>user_diff_constraint.py</option>
-<option>user_fit_fixed.py</option>
 <option>user_fit_sim.py</option>
 <option>user_jump_at_age.py</option>
 <option>user_lasso_covariate.py</option>
@@ -103,15 +104,10 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting Just Random Effects</big></big></b></center>
-The model and data for this example are the same as for the
-<a href="user_fit_fixed.py.htm" target="_top"><span style='white-space: nowrap'>user_fit_fixed.py</span></a>
- example.
-
 <br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
-<br>
-This example demonstrates using the syntax
+This example demonstrates using the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;fit&nbsp;random<br>
@@ -136,14 +132,15 @@ The <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>tim
 </li><li>
 
 The parent node is North America, the child nodes are
-Canada and the US.
+Canada and the United States.
 </li><li>
 
 The only <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
  in this example are
 <a href="rate_table.htm#rate_name.iota" target="_top"><span style='white-space: nowrap'>iota</span></a>
- for the parent and the two children.
-These rates are constant with respect to age and
+ for the parent and the
+corresponding random effects for two children.
+These rates are modeled as constant with respect to age and
 linear between time 1995 and 2015.
 The true iota is
 <table><tr><td align='left'  valign='top'>
@@ -152,30 +149,30 @@ The true iota is
  North America </td></tr><tr><td align='left'  valign='top'>
 
 0.01 * exp(+0.5) <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
- US            </td></tr><tr><td align='left'  valign='top'>
+ United States </td></tr><tr><td align='left'  valign='top'>
 
 0.01 * exp(-0.5) <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  Canada
 </td></tr>
 </table>
-Note that the random effect for the US is +0.5
-and for Canada is -0.5.
+Note that the random effect for the United States is +0.5
+and for Canada it is -0.5.
 </li><li>
 
 There are three measurements, one for each node.
 All the measurements are at age 50 and time 2000
-(so there is no variation in the data with respect to age or time).
-The measurement value is exactly equal to 
+(there is no age or time interval for the data points).
+The measurement value is exactly equal to the true value of 
 <code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
- for the
-corresponding node.
+
+for the corresponding node.
 The measurement noise is modeled to have a 10 percent coefficient
 of variation (even though there is no noise in the actual measurements).
 </li><li>
 
 The prior for North America is a uniform with mean equal to the
-true value for the US.
-The prior for Canada and the US is a Gaussian with mean zero and
+true value for the United States.
+The prior for Canada and the United States is a Gaussian with mean zero and
 standard deviation 100.
 The large standard deviation is so that it does not have much effect.
 </li><li>
@@ -184,7 +181,7 @@ The prior for the difference in
 <code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
  between time 1995
 and time 2015 for the children (parent) is a Gaussian (log Gaussian)
- with mean zero and standard deviation 0.01.
+ with mean zero and standard deviation 0.1.
 </li><li>
 
 The init command is used to set the
@@ -204,8 +201,8 @@ compensate for this.
 
 <pre><tt>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
-iota_parent_true   <font color="#990000">=</font> <font color="#993399">1e-2</font><font color="#990000">;</font>
-iota_united_states <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">0.5</font><font color="#990000">;</font>
+iota_parent_true            <font color="#990000">=</font> <font color="#993399">1e-2</font>
+united_states_random_effect <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">0.5</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
@@ -265,7 +262,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># weight table: The constant function 1.0 (one age and one time point)</font></i>
      fun <font color="#990000">=</font> constant_weight_fun
      weight_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'constant'</font><font color="#990000">,</font>  <font color="#FF0000">'age_id'</font><font color="#990000">:[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#FF0000">'time_id'</font><font color="#990000">:[</font><font color="#993399">1</font><font color="#990000">],</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun <font color="#990000">}</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'constant'</font><font color="#990000">,</font>  <font color="#FF0000">'age_id'</font><font color="#990000">:[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#FF0000">'time_id'</font><font color="#990000">:[</font><font color="#993399">0</font><font color="#990000">],</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># covariate table: no covriates</font></i>
@@ -274,13 +271,13 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># mulcov table</font></i>
      mulcov_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># avgint table: same order as list of integrands</font></i>
+     <i><font color="#9A1900"># avgint table:</font></i>
      avgint_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># nslist_table:</font></i>
      nslist_table <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900"># data table: same order as list of integrands</font></i>
+     <i><font color="#9A1900"># data table:</font></i>
      data_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <i><font color="#9A1900"># write out data</font></i>
      row <font color="#990000">=</font> <font color="#990000">{</font>
@@ -299,12 +296,12 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>        <font color="#990000">=</font> <font color="#FF0000">'united_states'</font>
-     row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>  <font color="#990000">=</font> iota_parent_true <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> iota_united_states <font color="#990000">)</font>
+     row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>  <font color="#990000">=</font> iota_parent_true <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> united_states_random_effect <font color="#990000">)</font>
      row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>    <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">1e-1</font>
      data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>        <font color="#990000">=</font> <font color="#FF0000">'canada'</font>
-     row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>  <font color="#990000">=</font> iota_parent_true <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font> iota_united_states <font color="#990000">)</font>
+     row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>  <font color="#990000">=</font> iota_parent_true <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font> united_states_random_effect <font color="#990000">)</font>
      row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>    <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">*</font> <font color="#993399">1e-1</font>
      data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
@@ -315,7 +312,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">1e-4</font><font color="#990000">,</font>
                <i><font color="#9A1900"># set prior so north_amaerica is set to value for united_states</font></i>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     iota_parent_true <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> iota_united_states <font color="#990000">)</font>
+               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     iota_parent_true <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> united_states_random_effect <font color="#990000">)</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_rate_child</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_rate_child'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
@@ -362,20 +359,10 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># option_table</font></i>
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font>     <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'10.0'</font>              <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font> <font color="#990000">},</font>
-
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'true'</font>          <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'first-order'</font>   <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>           <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>             <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-10'</font>         <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font> <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_random'</font><font color="#990000">,</font> <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'second-order'</font>  <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_random'</font><font color="#990000">,</font>    <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>           <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_random'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>             <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_random'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-10'</font>         <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
@@ -398,7 +385,6 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           option_table
      <font color="#990000">)</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     n_smooth  <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font> smooth_table <font color="#990000">)</font>
      <b><font color="#0000FF">return</font></b>
 <i><font color="#9A1900"># ===========================================================================</font></i>
 <i><font color="#9A1900"># Create database and run init, start, fit with just fixed effects</font></i>
@@ -444,13 +430,13 @@ n_var <font color="#990000">=</font> <b><font color="#000000">len</font></b><fon
      node_id  <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">][</font><font color="#FF0000">'node_id'</font><font color="#990000">]</font>
      <b><font color="#0000FF">if</font></b> node_table<font color="#990000">[</font>node_id<font color="#990000">][</font><font color="#FF0000">'node_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'north_america'</font> <font color="#990000">:</font>
           <i><font color="#9A1900"># not fitting parent so check that north_america has value in prior</font></i>
-          check  <font color="#990000">=</font> iota_parent_true <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> iota_united_states <font color="#990000">)</font>
+          check  <font color="#990000">=</font> iota_parent_true <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> united_states_random_effect <font color="#990000">)</font>
           relerr <font color="#990000">=</font> value <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font>
           <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relerr<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-10</font>
      <b><font color="#0000FF">elif</font></b> node_table<font color="#990000">[</font>node_id<font color="#990000">][</font><font color="#FF0000">'node_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'canada'</font> <font color="#990000">:</font>
           <i><font color="#9A1900"># fitting canada so check its random effects</font></i>
           <i><font color="#9A1900"># compensate for error in paraent value.</font></i>
-          check  <font color="#990000">=</font> <font color="#990000">-</font> <font color="#993399">2</font> <font color="#990000">*</font> iota_united_states
+          check  <font color="#990000">=</font> <font color="#990000">-</font> <font color="#993399">2</font> <font color="#990000">*</font> united_states_random_effect
           relerr <font color="#990000">=</font> value <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font>
           <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relerr<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-5</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
@@ -458,7 +444,7 @@ n_var <font color="#990000">=</font> <b><font color="#000000">len</font></b><fon
           <i><font color="#9A1900"># fitting unites_states so check its random effects</font></i>
           <i><font color="#9A1900"># compensate for error in paraent value.</font></i>
           check  <font color="#990000">=</font> <font color="#993399">0</font>
-          relerr <font color="#990000">=</font> <font color="#990000">(</font> value <font color="#990000">-</font> check <font color="#990000">)</font> <font color="#990000">/</font> iota_united_states
+          relerr <font color="#990000">=</font> <font color="#990000">(</font> value <font color="#990000">-</font> check <font color="#990000">)</font> <font color="#990000">/</font> united_states_random_effect
           <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relerr<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-5</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'fit_random: OK'</font><font color="#990000">)</font></tt></pre>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Getting Started Examples / Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Getting Started Examples / Tests">
-<meta name="keywords" id="keywords" content=" dismod_at getting started examples / tests see also database commands ">
+<meta name="keywords" id="keywords" content=" dismod_at getting started examples / tests see also database run one example get_started.db commands ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -54,6 +54,8 @@ A:active { color : purple }
 <option>Current-&gt;</option>
 <option>See Also</option>
 <option>Database</option>
+<option>Run One Example</option>
+<option>get_started.db</option>
 <option>Commands</option>
 </select>
 </td>
@@ -99,6 +101,44 @@ A:active { color : purple }
 <br>
 <a href="get_started_db.py.htm" target="_top"><span style='white-space: nowrap'>get_started_db.py</span></a>
 
+
+<br>
+<br>
+<b><big><a name="Run One Example" id="Run One Example">Run One Example</a></big></b>
+<br>
+If you have
+<a href="install_unix.htm#dismod_at.Build" target="_top"><span style='white-space: nowrap'>built&nbsp;dismod_at</span></a>
+ and
+are in the directory
+<a href="install_unix.htm#Download dismod_at.git" target="_top"><span style='white-space: nowrap'>dismod_at.git</span></a>
+,
+you can run one of these examples with the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3_executable</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;example/get_started/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+where <a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='white-space: nowrap'>python3_executable</span></a>
+
+is the python3 program and 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ is the name of the example.
+The name of the example
+includes the <code><font color="blue">.py</font></code> extension at the end.
+
+<br>
+<br>
+<b><big><a name="get_started.db" id="get_started.db">get_started.db</a></big></b>
+<br>
+Each of these examples uses the database
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;build/example/get_started/get_started.db<br>
+</span></font></code>
+which is created by <a href="get_started_db.py.htm" target="_top"><span style='white-space: nowrap'>get_started_db.py</span></a>
+ and
+can be inspected using any sqlite viewer; e.g.,
+<a href="http://sqlitebrowser.org/" target="_top"><span style='white-space: nowrap'>http://sqlitebrowser.org/</span></a>
+.
 
 
 <br>

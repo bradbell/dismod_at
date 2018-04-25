@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
 'user.htm',
-'user_predict_fit.py.htm'
+'user_fit_fixed_both.py.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -9,6 +9,10 @@ var list_across0 = [
 '_index.htm',
 '_search.htm',
 '_external.htm'
+];
+var list_current0 = [
+'user_fit_fixed_both.py.htm#Purpose',
+'user_fit_fixed_both.py.htm#Discussion'
 ];
 var list_down2 = [
 'install_unix.htm',
