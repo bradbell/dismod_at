@@ -836,6 +836,8 @@ $cref set_command$$,
 $cref start_var_table$$, and
 $cref/fit_fixed_both.py/user_fit_fixed_both.py/$$.
 This enables one to see the different between the two
+             ^
+             ^
 fits in the $cref log_table$$
 (as apposed to changing
 $cref/bound_random/option_table/Random Only/bound_random/$$
@@ -854,18 +856,26 @@ $cref/random/model_variables/Random Effects, u/$$ effects.
 $head simulate_index$$
 If $icode simulate_index$$ is present, it must be less than
 $cref/number_simulate/simulate_command/number_simulate/$$.
-In this case the corresponding data_sim table
-$cref/data_sim_value/data_sim_table/data_sim_value/$$ entries
+
+$subhead data_sim_table$$
+If $icode simulate_index$$ is present, this is an extra input table.
+The $cref/data_sim_value/data_sim_table/data_sim_value/$$ entries,
+corresponding to $icode simulate_index$$,
 are used in place of the data table
 $cref/meas_value/data_table/meas_value/$$ entries.
-All the rest of the inputs are the same as when $icode simulated_index$$
-is not present; e.g.,
+All the rest of the data table values
+are the same as when $icode simulated_index$$ is not present; e.g.,
 $cref/meas_std/data_table/meas_std/$$ comes from the data table.
 
-$head data_sim_table$$
-If $icode simulate_index$$ is present,
-the corresponding $icode meas_value$$ entries the data_sim table
-are used as inputs.
+$subhead prior_sim_table$$
+If $icode simulate_index$$ is present, this is an extra input table.
+The $cref/prior_sim_value/prior_sim_table/prior_sim_value/$$ entries,
+corresponding to $icode simulate_index$$,
+are used in place of the prior table
+$cref/mean/prior_table/mean/$$ entries.
+All the rest of the prior table values
+are the same as when $icode simulated_index$$ is not present; e.g.,
+$cref/std/prior_table/std/$$ comes from the prior table.
 
 $head fit_var_table$$
 A new $cref fit_var_table$$ is created each time this command is run.
@@ -912,12 +922,12 @@ void fit_command(
 	const std::string&                           variables        ,
 	const std::string&                           simulate_index   ,
 	sqlite3*                                     db               ,
-	dismod_at::data_model&                       data_object      ,
 	vector<dismod_at::data_subset_struct>&       data_subset_obj  ,
+	dismod_at::data_model&                       data_object      ,
+	dismod_at::prior_model&                      prior_object     ,
 	const dismod_at::pack_info&                  pack_object      ,
 	const dismod_at::pack_prior&                 var2prior        ,
 	const dismod_at::db_input_struct&            db_input         ,
-	const dismod_at::prior_model&                prior_object     ,
 	// effectively const
 	std::map<std::string, std::string>&          option_map
 )
@@ -955,9 +965,12 @@ void fit_command(
 		//
 		// get simulation data
 		vector<dismod_at::data_sim_struct> data_sim_table =
-				dismod_at::get_data_sim_table(db);
+			dismod_at::get_data_sim_table(db);
+		vector<dismod_at::prior_sim_struct> prior_sim_table =
+			dismod_at::get_prior_sim_table(db);
 		size_t n_subset   = data_subset_obj.size();
 		size_t n_simulate = data_sim_table.size() / n_subset;
+		size_t n_var      = var2prior.size();
 		//
 		if( sim_index >= n_simulate )
 		{	string msg = "dismod_at fit command simulate_index = ";
@@ -966,6 +979,19 @@ void fit_command(
 			string table_name = "data_sim";
 			dismod_at::error_exit(msg, table_name);
 		}
+		// vector used for replacement of prior means
+		vector<double> prior_mean(n_var * 3);
+		for(size_t var_id = 0; var_id < n_var; ++var_id)
+		{	size_t prior_sim_id = sim_index * n_var + var_id;
+			prior_mean[var_id * 3 + 0] =
+				prior_sim_table[prior_sim_id].prior_sim_value;
+			prior_mean[var_id * 3 + 1] =
+				prior_sim_table[prior_sim_id].prior_sim_dage;
+			prior_mean[var_id * 3 + 2] =
+				prior_sim_table[prior_sim_id].prior_sim_dtime;
+		}
+		prior_object.replace_mean(prior_mean);
+
 		// replace meas_value in data_subset_obj
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t data_sim_id = n_subset * sim_index + subset_id;
@@ -1666,7 +1692,7 @@ void sample_command(
 		vector<double> prior_mean(n_var * 3);
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 		{	// replace prior means in prior_object
-			for(size_t var_id = 0; var_id < n_var; var_id ++)
+			for(size_t var_id = 0; var_id < n_var; ++var_id)
 			{	size_t prior_sim_id = sample_index * n_var + var_id;
 				prior_mean[var_id * 3 + 0] =
 					prior_sim_table[prior_sim_id].prior_sim_value;
@@ -2436,12 +2462,12 @@ int main(int n_arg, const char** argv)
 					variables        ,
 					simulate_index   ,
 					db               ,
-					data_object      ,
 					data_subset_obj  ,
+					data_object      , // not  const
+					prior_object     , // not  const
 					pack_object      ,
 					var2prior        ,
 					db_input         ,
-					prior_object     ,
 					option_map
 				);
 			}
@@ -2464,7 +2490,7 @@ int main(int n_arg, const char** argv)
 					argv[3]          , // method
 					argv[4]          , // number_sample
 					db               ,
-					data_subset_obj  , // not const
+					data_subset_obj  ,
 					data_object      , // not const
 					prior_object     , // not const
 					pack_object      ,

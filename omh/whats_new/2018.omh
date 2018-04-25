@@ -65,6 +65,11 @@ Add the $cref user_posterior.py$$ example.
 $lnext
 There was a bug in the $cref sample_command$$ when
 the data set was empty. This has been fixed.
+$lnext
+The $cref/prior_sim_table/fit_command/simulate_index/prior_sim_table/$$ was
+note being used to replace the prior means when fitting with a
+$icode simulate_index$$.
+This has been fixed.
 $lend
 
 $head 04-24$$
