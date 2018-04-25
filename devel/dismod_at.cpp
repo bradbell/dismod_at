@@ -918,6 +918,7 @@ $end
 */
 
 // ----------------------------------------------------------------------------
+// data_subset_obj and prior_object are const when simulate_index == ""
 void fit_command(
 	const std::string&                           variables        ,
 	const std::string&                           simulate_index   ,
