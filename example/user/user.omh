@@ -19,6 +19,7 @@ $spell
 	diff
 	sim
 	covariate
+	dismod
 $$
 
 $section User Examples and Tests$$
@@ -26,34 +27,45 @@ $section User Examples and Tests$$
 $head See Also$$
 $cref get_started$$
 
-$head example.db$$
-Note the each of the examples below can by run with the command
+$head Run One Example$$
+If you have
+$cref/built dismod_at/install_unix/dismod_at/Build/$$ and
+are in the directory
+$cref/dismod_at.git/install_unix/Download dismod_at.git/$$,
+you can run one of these examples with the command
 $codei%
 	%python3_executable% example/user/%name%
 %$$
 where $cref/python3_executable/run_cmake.sh/python3_executable/$$
-is the python3 program and $icode name$$ is the name of the example
-(including the $code .py$$ extension at the end but not the $code user_$$
-at the front).
-Running the example will create the database
+is the python3 program and $icode name$$ is the name of the example.
+The name of the example
+includes the $code .py$$ extension at the end,
+but does not include $code user_$$ at the front.
+
+$subhead user_speed.py$$
+The $code user_speed.py$$ example is an exception; see its
+$cref/syntax/user_speed.py/Syntax/$$.
+
+$head example.db$$
+Each of these examples will create a corresponding database called
 $codei%
 	build/example/user/example.db
 %$$
 which can be inspected using any sqlite viewer; e.g.,
-$href%https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/%firefox%$$.
+$href%http://sqlitebrowser.org/%$$.
 
 $comment
 Examples that have a discussion section are at the beginning of this list
 and in suggested read order
 $$
 $childtable%example/user/fit_random.py
+	%example/user/diabetes.py
 
 	%example/user/asymptotic.py
 	%example/user/change_grid.py
 	%example/user/const_random.py
 	%example/user/const_value.py
 	%example/user/continue_fit.py
-	%example/user/diabetes.py
 	%example/user/diff_constraint.py
 	%example/user/fit_fixed.py
 	%example/user/fit_sim.py

@@ -97,7 +97,7 @@ the gnu scientific library.
 Note that the development headers are required; e.g.,
 on Fedora or Red-Hat one needs to install $code gsl-devel$$.
 
-$head Download$$
+$head Download dismod_at.git$$
 After installing the requirements above,
 use the following command to get the current version of dismod_at:
 $codei%
@@ -190,6 +190,15 @@ in the $code dismod_at.git$$ directory
 execute the following command:
 $codep
 	bin/run_cmake.sh
+$$
+
+$subhead Build$$
+The following command is option and will just build the
+executable program $code build/devel/dismod_at$$:
+$codep
+	cd build
+	make
+	cd ..
 $$
 
 $subhead Test$$

@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -11,6 +11,8 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin get_started$$
 $spell
 	Dismod
+	py
+	sqlite
 $$
 
 $section Dismod_at Getting Started Examples / Tests $$
@@ -23,6 +25,29 @@ $children%example/get_started/get_started_db.py
 
 $head Database$$
 $cref get_started_db.py$$
+
+$head Run One Example$$
+If you have
+$cref/built dismod_at/install_unix/dismod_at/Build/$$ and
+are in the directory
+$cref/dismod_at.git/install_unix/Download dismod_at.git/$$,
+you can run one of these examples with the command
+$codei%
+	%python3_executable% example/get_started/%name%
+%$$
+where $cref/python3_executable/run_cmake.sh/python3_executable/$$
+is the python3 program and $icode name$$ is the name of the example.
+The name of the example
+includes the $code .py$$ extension at the end.
+
+$head get_started.db$$
+Each of these examples uses the database
+$codei%
+	build/example/get_started/get_started.db
+%$$
+which is created by $cref get_started_db.py$$ and
+can be inspected using any sqlite viewer; e.g.,
+$href%http://sqlitebrowser.org/%$$.
 
 
 $head Commands$$

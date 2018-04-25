@@ -23,7 +23,7 @@ rename_cmd='s|simulate_table|data_sim_table|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|simulate_struct|data_sim_struct|g
+s|/install_unix/Download/|/install_unix/Download dismod_at.git/|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

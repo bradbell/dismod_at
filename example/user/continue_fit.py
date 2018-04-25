@@ -26,13 +26,8 @@
 # The corresponding warning is suppressed by setting
 # $icode%warn_on_stderr% = false%$$.
 # The second fit will start where the first left off.
-# To see this, set $icode%print_level_fixed% = 5%$$ (in the option table)
-# and execute the command
-# $codei%
-#	%python% example/user/continue_fit.py
-# %$$
-# $icode python$$ is your
-# $cref/python3_executable/run_cmake.sh/python3_executable/$$.
+# To see this, set $icode%print_level_fixed% = 5%$$ (in the option table) and
+# $cref/run this example/user/Run One Example/$$.
 #
 # $code
 # $srcfile%

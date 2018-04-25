@@ -37,11 +37,7 @@
 # $section An Example / Speed Test Fitting Simulated Diabetes Data$$
 #
 # $head Running This example$$
-# If $icode python3$$ is the name of the python 3 program on your system,
-# $codei%
-#	%python3% example/user/diabetes.py
-# %$$
-# will run this program.
+# see $cref/run one example/user/Run One Example/$$.
 # The time required to run the program will be printed at then end.
 #
 # $head omega$$

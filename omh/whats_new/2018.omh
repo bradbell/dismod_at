@@ -50,6 +50,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-25$$
+Add Instructions for running one
+$cref/get_started/get_started/Run One Example/$$ or
+$cref/user/user/Run One Example/$$.
+
 $head 04-24$$
 Change the simulate command to also output the
 $cref/prior_sim_table/simulate_command/prior_sim_table/$$.
@@ -204,7 +209,7 @@ has also been improved.
 
 
 $head 03-10$$
-The install $cref/download/install_unix/Download/$$ procedure was changed
+The install $cref/download/install_unix/Download dismod_at.git/$$ procedure was changed
 to use the following command to determine the version number:
 $codep
 	grep '^SET(dismod_at_version' CMakeLists.txt

@@ -117,7 +117,7 @@ $lnext
 The $cref/git/install_unix/System Requirements/git/$$ program
 was added to the system requirements.
 $lnext
-The $cref/download/install_unix/Download/$$ instructions
+The $cref/download/install_unix/Download dismod_at.git/$$ instructions
 were changed to use $code git$$ for distributing the program.
 $lend
 
