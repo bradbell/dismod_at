@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_fit_fixed.py$$ $newlinech #$$
+# $begin user_fit_fixed_both.py$$ $newlinech #$$
 # $spell
 #	init
 #	dismod
@@ -87,7 +87,7 @@
 #
 # $code
 # $srcfile%
-#	example/user/fit_fixed.py
+#	example/user/fit_fixed_both.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $$
 # $end
@@ -103,7 +103,7 @@ import distutils.dir_util
 import subprocess
 import copy
 from math import exp
-test_program = 'example/user/fit_fixed.py'
+test_program = 'example/user/fit_fixed_both.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -381,5 +381,5 @@ for var_id in range( n_var ) :
 		err = value / child_optimal - 1.0
 		assert( abs(err) < 1e-4 )
 # -----------------------------------------------------------------------
-print('fit_fixed: OK')
+print('fit_fixed_both: OK')
 # END PYTHON

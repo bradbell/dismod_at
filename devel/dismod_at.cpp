@@ -834,7 +834,7 @@ This is useful when one uses fitting with no random effects as
 a starting point for fitting with random effects; see
 $cref set_command$$,
 $cref start_var_table$$, and
-$cref/fit_fixed.py/user_fit_fixed.py/$$.
+$cref/fit_fixed_both.py/user_fit_fixed_both.py/$$.
 This enables one to see the different between the two
 fits in the $cref log_table$$
 (as apposed to changing

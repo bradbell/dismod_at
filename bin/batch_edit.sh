@@ -12,18 +12,19 @@
 new_directories='
 '
 rename_files='
+	example/user/fit_fixed.py
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|simulate_table|data_sim_table|'
+rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 # spell_cmd='s|^$spell|&\n\tsim|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|/install_unix/Download/|/install_unix/Download dismod_at.git/|
+s|fit_fixed|fit_fixed_both|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

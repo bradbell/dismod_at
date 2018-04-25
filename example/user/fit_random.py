@@ -16,8 +16,6 @@
 # $$
 #
 # $section Fitting Just Random Effects$$
-# The model and data for this example are the same as for the
-# $cref user_fit_fixed.py$$ example.
 #
 # $head Purpose$$
 # This example demonstrates using the command

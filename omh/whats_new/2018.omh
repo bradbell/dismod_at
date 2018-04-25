@@ -56,8 +56,10 @@ Add Instructions for running one
 $cref/get_started/get_started/Run One Example/$$ or
 $cref/user/user/Run One Example/$$.
 $lnext
-Improve the $cref user_fit_random.py$$ and $cref user_fit_fixed.py$$
-examples.
+Improve the $cref user_fit_random.py$$ example.
+$lnext
+Improve $code user_fit_fixed.py$$ and move it to
+$cref user_fit_fixed_both.py$$.
 $lend
 
 $head 04-24$$

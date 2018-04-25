@@ -59,7 +59,7 @@ Examples that have a discussion section are at the beginning of this list
 and in suggested read order
 $$
 $childtable%example/user/fit_random.py
-	%example/user/fit_fixed.py
+	%example/user/fit_fixed_both.py
 	%example/user/diabetes.py
 
 	%example/user/asymptotic.py

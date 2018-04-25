@@ -17,7 +17,7 @@ FOREACH(user_case
 	const_value
 	continue_fit
 	diff_constraint
-	fit_fixed
+	fit_fixed_both
 	fit_random
 	fit_sim
 	jump_at_age
