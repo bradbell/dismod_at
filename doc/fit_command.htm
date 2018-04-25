@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table fit_var_table fit_data_subset_table effects convergence problems example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table fit_var_table fit_data_subset_table effects convergence problems example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,7 +60,8 @@ A:active { color : purple }
 <option>---..random</option>
 <option>---..both</option>
 <option>simulate_index</option>
-<option>data_sim_table</option>
+<option>---..data_sim_table</option>
+<option>---..prior_sim_table</option>
 <option>fit_var_table</option>
 <option>fit_data_subset_table</option>
 <option>Random Effects</option>
@@ -162,6 +163,8 @@ a starting point for fitting with random effects; see
 <a href="user_fit_fixed_both.py.htm" target="_top"><span style='white-space: nowrap'>fit_fixed_both.py</span></a>
 .
 This enables one to see the different between the two
+             ^
+             ^
 fits in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
 
 (as apposed to changing
@@ -197,30 +200,50 @@ If
  is present, it must be less than
 <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
 .
-In this case the corresponding data_sim table
-<a href="data_sim_table.htm#data_sim_value" target="_top"><span style='white-space: nowrap'>data_sim_value</span></a>
- entries
+
+<br>
+<br>
+<big><a name="simulate_index.data_sim_table" id="simulate_index.data_sim_table">data_sim_table</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ is present, this is an extra input table.
+The <a href="data_sim_table.htm#data_sim_value" target="_top"><span style='white-space: nowrap'>data_sim_value</span></a>
+ entries,
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+,
 are used in place of the data table
 <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
  entries.
-All the rest of the inputs are the same as when 
+All the rest of the data table values
+are the same as when 
 <code><i><font color="black"><span style='white-space: nowrap'>simulated_index</span></font></i></code>
-
-is not present; e.g.,
+ is not present; e.g.,
 <a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
  comes from the data table.
 
 <br>
 <br>
-<b><big><a name="data_sim_table" id="data_sim_table">data_sim_table</a></big></b>
+<big><a name="simulate_index.prior_sim_table" id="simulate_index.prior_sim_table">prior_sim_table</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
- is present,
-the corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i></code>
- entries the data_sim table
-are used as inputs.
+ is present, this is an extra input table.
+The <a href="prior_sim_table.htm#prior_sim_value" target="_top"><span style='white-space: nowrap'>prior_sim_value</span></a>
+ entries,
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+,
+are used in place of the prior table
+<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
+ entries.
+All the rest of the prior table values
+are the same as when 
+<code><i><font color="black"><span style='white-space: nowrap'>simulated_index</span></font></i></code>
+ is not present; e.g.,
+<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
+ comes from the prior table.
 
 <br>
 <br>

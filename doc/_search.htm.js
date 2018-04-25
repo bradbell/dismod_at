@@ -99,7 +99,7 @@ Keyword =
 'set_command  Directly Setting Table Values  ',' syntax database option name warning table_out start_var scale_var truth_var source prior_mean fit_var sample example ',
 'init_command  The Variable Command  ',' syntax purpose changing values database var_table data_subset_table start_var_table scale_var_table deleted tables example ',
 'depend_command  The Depend Command  ',' syntax database depend_var_table example ',
-'fit_command  The Fit Command  ',' syntax database variables fixed random both simulate_index data_sim_table fit_var_table fit_data_subset_table effects convergence problems example ',
+'fit_command  The Fit Command  ',' syntax database variables fixed random both simulate_index data_sim_table prior_sim_table fit_var_table fit_data_subset_table effects convergence problems example ',
 'simulate_command  The Simulate Command  ',' syntax database number_simulate meas_value truth_var_table data_sim_table prior_sim_table example ',
 'sample_command  The Sample Command  ',' syntax database purpose number_sample method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table bounds example ',
 'predict_command  The Predict Command  ',' syntax database source sample fit_var truth_var predict_table example ',
