@@ -19,8 +19,8 @@
 # The model and data for this example are the same as for the
 # $cref user_fit_fixed.py$$ example.
 #
-# $head Syntax$$
-# This example demonstrates using the syntax
+# $head Purpose$$
+# This example demonstrates using the command
 # $codei%
 #	dismod_at %database% fit random
 # %$$
@@ -37,38 +37,39 @@
 # $code 1995.0$$, $code 2005.0$$, $code 2015.0$$.
 # $lnext
 # The parent node is North America, the child nodes are
-# Canada and the US.
+# Canada and the United States.
 # $lnext
 # The only $cref model_variables$$ in this example are
-# $cref/iota/rate_table/rate_name/iota/$$ for the parent and the two children.
-# These rates are constant with respect to age and
+# $cref/iota/rate_table/rate_name/iota/$$ for the parent and the
+# corresponding random effects for two children.
+# These rates are modeled as constant with respect to age and
 # linear between time 1995 and 2015.
 # The true iota is
 # $table
 # 0.01             $pre  $$ $cnext North America $rnext
-# 0.01 * exp(+0.5) $pre  $$ $cnext US            $rnext
+# 0.01 * exp(+0.5) $pre  $$ $cnext United States $rnext
 # 0.01 * exp(-0.5) $pre  $$ $cnext Canada
 # $tend
-# Note that the random effect for the US is +0.5
-# and for Canada is -0.5.
+# Note that the random effect for the United States is +0.5
+# and for Canada it is -0.5.
 # $lnext
 # There are three measurements, one for each node.
 # All the measurements are at age 50 and time 2000
-# (so there is no variation in the data with respect to age or time).
-# The measurement value is exactly equal to $icode iota$$ for the
-# corresponding node.
+# (there is no age or time interval for the data points).
+# The measurement value is exactly equal to the true value of $icode iota$$
+# for the corresponding node.
 # The measurement noise is modeled to have a 10 percent coefficient
 # of variation (even though there is no noise in the actual measurements).
 # $lnext
 # The prior for North America is a uniform with mean equal to the
-# true value for the US.
-# The prior for Canada and the US is a Gaussian with mean zero and
+# true value for the United States.
+# The prior for Canada and the United States is a Gaussian with mean zero and
 # standard deviation 100.
 # The large standard deviation is so that it does not have much effect.
 # $lnext
 # The prior for the difference in $icode iota$$ between time 1995
 # and time 2015 for the children (parent) is a Gaussian (log Gaussian)
-#  with mean zero and standard deviation 0.01.
+#  with mean zero and standard deviation 0.1.
 # $lnext
 # The init command is used to set the
 # $cref/start_var_table/init_command/start_var_table/$$ equal to the
@@ -86,8 +87,8 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_parent_true   = 1e-2;
-iota_united_states = +0.5;
+iota_parent_true            = 1e-2;
+united_states_random_effect = +0.5;
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -181,12 +182,12 @@ def example_db (file_name) :
 	data_table.append( copy.copy(row) )
 	#
 	row['node']        = 'united_states'
-	row['meas_value']  = iota_parent_true * exp( iota_united_states )
+	row['meas_value']  = iota_parent_true * exp( united_states_random_effect )
 	row['meas_std']    = row['meas_value'] * 1e-1
 	data_table.append( copy.copy(row) )
 	#
 	row['node']        = 'canada'
-	row['meas_value']  = iota_parent_true * exp(- iota_united_states )
+	row['meas_value']  = iota_parent_true * exp(- united_states_random_effect )
 	row['meas_std']    = row['meas_value'] * 1e-1
 	data_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
@@ -197,7 +198,7 @@ def example_db (file_name) :
 			'density':  'uniform',
 			'lower':    1e-4,
 			# set prior so north_amaerica is set to value for united_states
-			'mean':     iota_parent_true * exp( iota_united_states )
+			'mean':     iota_parent_true * exp( united_states_random_effect )
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
@@ -249,12 +250,6 @@ def example_db (file_name) :
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
-		{ 'name':'quasi_fixed',            'value':'true'          },
-		{ 'name':'derivative_test_fixed',  'value':'first-order'   },
-		{ 'name':'max_num_iter_fixed',     'value':'100'           },
-		{ 'name':'print_level_fixed',      'value':'0'             },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'         },
-
 		{ 'name':'derivative_test_random', 'value':'second-order'  },
 		{ 'name':'max_num_iter_random',    'value':'100'           },
 		{ 'name':'print_level_random',     'value':'0'             },
@@ -280,7 +275,6 @@ def example_db (file_name) :
 		option_table
 	)
 	# ----------------------------------------------------------------------
-	n_smooth  = len( smooth_table )
 	return
 # ===========================================================================
 # Create database and run init, start, fit with just fixed effects
@@ -326,13 +320,13 @@ for var_id in range( n_var ) :
 	node_id  = var_table[var_id]['node_id']
 	if node_table[node_id]['node_name'] == 'north_america' :
 		# not fitting parent so check that north_america has value in prior
-		check  = iota_parent_true * exp( iota_united_states )
+		check  = iota_parent_true * exp( united_states_random_effect )
 		relerr = value / check - 1.0
 		assert abs(relerr) < 1e-10
 	elif node_table[node_id]['node_name'] == 'canada' :
 		# fitting canada so check its random effects
 		# compensate for error in paraent value.
-		check  = - 2 * iota_united_states
+		check  = - 2 * united_states_random_effect
 		relerr = value / check - 1.0
 		assert abs(relerr) < 1e-5
 	else :
@@ -340,7 +334,7 @@ for var_id in range( n_var ) :
 		# fitting unites_states so check its random effects
 		# compensate for error in paraent value.
 		check  = 0
-		relerr = ( value - check ) / iota_united_states
+		relerr = ( value - check ) / united_states_random_effect
 		assert abs(relerr) < 1e-5
 # -----------------------------------------------------------------------
 print('fit_random: OK')

@@ -10,16 +10,80 @@
 # $begin user_fit_fixed.py$$ $newlinech #$$
 # $spell
 #	init
+#	dismod
+#	var
+#	exp
 # $$
 #
-# $section Fitting Just Fixed Effects$$
+# $section Fit Fixed First Then Both$$
+#
+# $head Purpose$$
+# This example demonstrates using the commands
+# $codei%
+#	dismod_at %database% fit fixed
+#	dismod_at %database% set start_var fit_var
+#	dismod_at %database% fit both
+# %$$
+# This stabilizes the optimization when the $code init$$ command
+# $cref/start_var_table/init_command/start_var_table/$$ is
+# far from the optimal fixed effects; see
+# $cref fit_command$$.
+#
 #
 # $head Discussion$$
-# This example demonstrates using the
-# $cref/variables/fit_command/variables/$$ option
-# to stabilize the optimization when starting the fixed effects
-# far from the solution:
+# The following describes the model and data for this example:
 #
+# $list number$$
+# The $cref age_table$$ has values
+# $code 0.0$$, $code 50.0$$, $code 100.0$$.
+# The $cref time_table$$ has values
+# $code 1995.0$$, $code 2005.0$$, $code 2015.0$$.
+# $lnext
+# The parent node is North America, the child nodes are
+# Canada and the United States.
+# $lnext
+# The only $cref model_variables$$ in this example are
+# $cref/iota/rate_table/rate_name/iota/$$ for the parent and the
+# corresponding random effects for two children.
+# These rates are modeled as constant with respect to age and
+# linear between time 1995 and 2015.
+# The true iota is
+# $table
+# 0.01             $pre  $$ $cnext North America $rnext
+# 0.01 * exp(+0.5) $pre  $$ $cnext United States $rnext
+# 0.01 * exp(-0.5) $pre  $$ $cnext Canada
+# $tend
+# Note that the random effect for the United States is +0.5
+# and for Canada it is -0.5.
+# $lnext
+# There are three measurements, one for each node.
+# All the measurements are at age 50 and time 2000
+# (there is no age or time interval for the data points).
+# The measurement value is exactly equal to the true value of $icode iota$$
+# for the corresponding node.
+# The measurement noise is modeled to have a 10 percent coefficient
+# of variation (even though there is no noise in the actual measurements).
+# $lnext
+# The prior for North America is a uniform with mean equal to
+# the true value for North America divided by 100. This makes the fixed effect
+# in $cref/start_var_table/init_command/start_var_table/$$ a poor starting
+# value.
+# The prior for Canada and the United States is a Gaussian with mean zero and
+# standard deviation 100.
+# The large standard deviation is so that it does not have much effect.
+# $lnext
+# The prior for the difference in $icode iota$$ between time 1995
+# and time 2015 for the children (parent) is a Gaussian (log Gaussian)
+# with mean zero and standard deviation 0.1.
+# $lnext
+# The init command is sets
+# $cref/start_var_table/init_command/start_var_table/$$ equal to the
+# prior mean.
+# The prior mean for North America (the fixed effect) is far from its
+# true values and doing a fit fixed obtains a better starting point
+# for the fit both.
+# $lend
+
 #
 # $code
 # $srcfile%
@@ -30,15 +94,15 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_no_random    = 1e-2;
-iota_child_offset = +0.5;
+iota_parent_true            = 1e-2;
+united_states_random_effect = +0.5;
 # ------------------------------------------------------------------------
 import sys
 import os
 import distutils.dir_util
 import subprocess
 import copy
-import math
+from math import exp
 test_program = 'example/user/fit_fixed.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -61,9 +125,9 @@ os.chdir('build/example/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 def fun_rate_child(a, t) :
-	return ('prior_rate_child', None, 'prior_gauss_zero')
+	return ('prior_rate_child', None, 'prior_child_diff')
 def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', None, 'prior_gauss_zero')
+	return ('prior_rate_parent', None, 'prior_parent_diff')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import dismod_at
@@ -118,54 +182,56 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
-		'meas_std':     iota_no_random / 10.,
 	}
-	# make sure both child and parent data gets included in fit
-	# by balancing the offset between the two
+	row['node']        = 'north_america'
+	row['meas_value']  = iota_parent_true
+	row['meas_std']    = row['meas_value'] * 1e-1
+	data_table.append( copy.copy(row) )
 	row['node']        = 'united_states'
-	row['meas_value']  = iota_no_random * (1.0 + iota_child_offset)
+	row['meas_value']  = iota_parent_true * exp(+ united_states_random_effect)
+	row['meas_std']    = row['meas_value'] * 1e-1
 	data_table.append( copy.copy(row) )
 	row['node']        = 'canada'
-	row['meas_value']  = iota_no_random * (1.0 + iota_child_offset)
+	row['meas_value']  = iota_parent_true * exp(- united_states_random_effect)
 	data_table.append( copy.copy(row) )
-	row['node']        = 'north_america'
-	row['meas_value']  = iota_no_random * (1.0 - iota_child_offset)
-	data_table.append( copy.copy(row) )
-	data_table.append( copy.copy(row) )
-	#
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
 		{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
-			'lower':    1e-4,
-			'mean':     1e-1,
+			'lower':    iota_parent_true * 1e-2,
+			'mean':     iota_parent_true * 1e-2
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
 			'mean':     0.0,
 			'std':      100.0, # very large so like a uniform distribution
-		},{ # prior_gauss_zero
-			'name':     'prior_gauss_zero',
+		},{ # prior_parent_diff
+			'name':     'prior_parent_diff',
+			'density':  'log_gaussian',
+			'mean':     0.0,
+			'std':      0.1,
+			'eta':      1e-8
+		},{ # prior_child_diff
+			'name':     'prior_child_diff',
 			'density':  'gaussian',
 			'mean':     0.0,
-			'std':      1e-2,
+			'std':      0.1,
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	middle_age_id  = 1
 	last_time_id   = 2
 	smooth_table = [
 		{ # smooth_rate_child
 			'name':                     'smooth_rate_child',
-			'age_id':                   [ middle_age_id ],
+			'age_id':                   [ 0 ],
 			'time_id':                  [ 0, last_time_id ],
 			'fun':                      fun_rate_child
 		},{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
-			'age_id':                   [ middle_age_id ],
+			'age_id':                   [ 0 ],
 			'time_id':                  [ 0, last_time_id ],
 			'fun':                       fun_rate_parent
 		}
@@ -218,7 +284,6 @@ def example_db (file_name) :
 		option_table
 	)
 	# ----------------------------------------------------------------------
-	n_smooth  = len( smooth_table )
 	return
 # ===========================================================================
 # Create database and run init, start, fit with just fixed effects
@@ -251,7 +316,7 @@ node_table    = dismod_at.get_table_dict(connection, 'node')
 n_var = len(var_table)
 assert n_var == 6
 #
-# check of values uses the fact that the data density is Gaussian
+# check that all the random effects are zero after a fit fixed
 for var_id in range( n_var ) :
 	var_type = var_table[var_id]['var_type']
 	assert( var_type == 'rate' )
@@ -262,23 +327,23 @@ for var_id in range( n_var ) :
 	value   = fit_var_table[var_id]['fit_var_value']
 	#
 	node_id  = var_table[var_id]['node_id']
-	parent   = node_table[node_id]['node_name'] == 'north_america'
+	parent    = node_table[node_id]['node_name'] == 'north_america'
 	if parent :
-		err = value / iota_no_random - 1.0
-		assert abs(err) < 1e-5
+		# check that result of fit fixed in much better than prior mean
+		assert value / iota_parent_true < 2.0
+		assert 0.5 < value / iota_parent_true
 	else :
 		canada         = node_table[node_id]['node_name'] == 'canada'
 		united_states  = node_table[node_id]['node_name'] == 'united_states'
-		#
-		assert value == 0.0
 		assert canada or united_states
+		assert value == 0.0
 # -----------------------------------------------------------------------
-# Copy results of previous fit to start table
+# Copy results of fit fixed to start table
 cmd = '../../devel/dismod_at example.db set start_var fit_var'
 print(cmd)
 flag = subprocess.call( cmd.split() )
 if flag != 0 :
-	sys.exit('The dismod_at start command failed')
+	sys.exit('The dismod_at set command failed')
 # -----------------------------------------------------------------------
 # Fit both fixed and random effects
 cmd = '../../devel/dismod_at example.db fit both'
@@ -292,11 +357,6 @@ if flag != 0 :
 # get solution from fit_var table
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
-# optimal values when standard deviation of random effects is infinity
-parent_optimal = iota_no_random * (1.0 - iota_child_offset)
-child_optimal  = math.log(
-	iota_no_random * (1.0 + iota_child_offset) / parent_optimal
-)
 for var_id in range( n_var ) :
 	var_type = var_table[var_id]['var_type']
 	assert( var_type == 'rate' )
@@ -309,11 +369,17 @@ for var_id in range( n_var ) :
 	node_id  = var_table[var_id]['node_id']
 	parent   = node_table[node_id]['node_name'] == 'north_america'
 	if parent :
-		err = value / parent_optimal - 1.0
+		err = value / iota_parent_true - 1.0
 		assert( abs(err) < 1e-5 )
 	else :
+		canada         = node_table[node_id]['node_name'] == 'canada'
+		united_states  = node_table[node_id]['node_name'] == 'united_states'
+		if united_states :
+			child_optimal = united_states_random_effect
+		if canada :
+			child_optimal = - united_states_random_effect
 		err = value / child_optimal - 1.0
-		assert( abs(err) < 1e-5 )
+		assert( abs(err) < 1e-4 )
 # -----------------------------------------------------------------------
 print('fit_fixed: OK')
 # END PYTHON

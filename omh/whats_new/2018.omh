@@ -51,9 +51,14 @@ $childtable%
 %$$
 
 $head 04-25$$
+$list number$$
 Add Instructions for running one
 $cref/get_started/get_started/Run One Example/$$ or
 $cref/user/user/Run One Example/$$.
+$lnext
+Improve the $cref user_fit_random.py$$ and $cref user_fit_fixed.py$$
+examples.
+$lend
 
 $head 04-24$$
 Change the simulate command to also output the

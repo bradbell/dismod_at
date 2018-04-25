@@ -59,6 +59,7 @@ Examples that have a discussion section are at the beginning of this list
 and in suggested read order
 $$
 $childtable%example/user/fit_random.py
+	%example/user/fit_fixed.py
 	%example/user/diabetes.py
 
 	%example/user/asymptotic.py
@@ -67,7 +68,6 @@ $childtable%example/user/fit_random.py
 	%example/user/const_value.py
 	%example/user/continue_fit.py
 	%example/user/diff_constraint.py
-	%example/user/fit_fixed.py
 	%example/user/fit_sim.py
 	%example/user/jump_at_age.py
 	%example/user/lasso_covariate.py
