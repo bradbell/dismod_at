@@ -63,8 +63,9 @@ $cref user_fit_fixed_both.py$$.
 $lnext
 Add the $cref user_posterior.py$$ example.
 $lnext
-There was a bug in the $cref sample_command$$ when
-the data set was empty. This has been fixed.
+There was a bug in the $cref sample_command$$ and the
+fit $cref/simulate_index/fit_command/simulate_index/$$ when
+the data set was empty. These have been fixed.
 $lnext
 The $cref/prior_sim_table/fit_command/simulate_index/prior_sim_table/$$ was
 note being used to replace the prior means when fitting with a

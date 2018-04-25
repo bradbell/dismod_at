@@ -969,9 +969,9 @@ void fit_command(
 			dismod_at::get_data_sim_table(db);
 		vector<dismod_at::prior_sim_struct> prior_sim_table =
 			dismod_at::get_prior_sim_table(db);
-		size_t n_subset   = data_subset_obj.size();
-		size_t n_simulate = data_sim_table.size() / n_subset;
 		size_t n_var      = var2prior.size();
+		size_t n_subset   = data_subset_obj.size();
+		size_t n_simulate = prior_sim_table.size() / n_var;
 		//
 		if( sim_index >= n_simulate )
 		{	string msg = "dismod_at fit command simulate_index = ";
