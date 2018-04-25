@@ -85,8 +85,8 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_parent_true            = 1e-2;
-united_states_random_effect = +0.5;
+iota_parent_true            = 1e-2
+united_states_random_effect = +0.5
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -146,7 +146,7 @@ def example_db (file_name) :
 	# weight table: The constant function 1.0 (one age and one time point)
 	fun = constant_weight_fun
 	weight_table = [
-		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
+		{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
 	]
 	#
 	# covariate table: no covriates
@@ -155,13 +155,13 @@ def example_db (file_name) :
 	# mulcov table
 	mulcov_table = list()
 	#
-	# avgint table: same order as list of integrands
+	# avgint table:
 	avgint_table = list()
 	#
 	# nslist_table:
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
-	# data table: same order as list of integrands
+	# data table:
 	data_table = list()
 	# write out data
 	row = {
@@ -243,14 +243,10 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'random_seed',            'value':'0'                 },
-		{ 'name':'ode_step_size',          'value':'10.0'              },
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
+		{ 'name':'parent_node_name',       'value':'north_america' },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'  },
 		{ 'name':'max_num_iter_random',    'value':'100'           },
-		{ 'name':'print_level_random',     'value':'0'             },
 		{ 'name':'tolerance_random',       'value':'1e-10'         }
 	]
 	# ----------------------------------------------------------------------

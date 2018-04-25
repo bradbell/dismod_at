@@ -60,6 +60,7 @@ and in suggested read order
 $$
 $childtable%example/user/fit_random.py
 	%example/user/fit_fixed_both.py
+	%example/user/posterior.py
 	%example/user/diabetes.py
 
 	%example/user/asymptotic.py

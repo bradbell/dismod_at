@@ -60,6 +60,11 @@ Improve the $cref user_fit_random.py$$ example.
 $lnext
 Improve $code user_fit_fixed.py$$ and move it to
 $cref user_fit_fixed_both.py$$.
+$lnext
+Add the $cref user_posterior.py$$ example.
+$lnext
+There was a bug in the $cref sample_command$$ when
+the data set was empty. This has been fixed.
 $lend
 
 $head 04-24$$

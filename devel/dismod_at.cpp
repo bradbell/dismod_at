@@ -1645,14 +1645,20 @@ void sample_command(
 				dismod_at::get_prior_sim_table(db);
 		//
 		size_t n_subset = data_subset_obj.size();
-		if( data_sim_table.size() % n_subset != 0  )
+		if( n_subset == 0 && data_sim_table.size() != 0  )
 		{	msg  = "dismod_at sample command method = simulate and ";
-			msg += "sample table size modulo data_subset table size not zero.";
+			msg += "data_subset table size is zero and ";
+			msg += "data_sim table size is not zero.";
 			dismod_at::error_exit(msg);
 		}
-		if( n_sample != data_sim_table.size() / n_subset )
+		if( n_subset != 0 && data_sim_table.size() % n_subset != 0  )
 		{	msg  = "dismod_at sample command method = simulate and ";
-			msg += "sample table size not equal number_sample times ";
+			msg += "data_sim table size modulo data_subset table size not 0.";
+			dismod_at::error_exit(msg);
+		}
+		if( n_subset != 0 && n_sample != data_sim_table.size() / n_subset )
+		{	msg  = "dismod_at sample command method = simulate and ";
+			msg += "data_sim table size not equal number_sample times ";
 			msg += "data_subset table size.";
 			dismod_at::error_exit(msg);
 		}

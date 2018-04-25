@@ -25,6 +25,7 @@ FOREACH(user_case
 	meas_covariate
 	metropolis
 	no_children
+	posterior
 	predict_fit
 	zero_sum_random
 	re_scale
