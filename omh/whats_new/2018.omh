@@ -51,8 +51,15 @@ $childtable%
 %$$
 
 $head 04-26$$
+$list number$$
+The columns
+$cref/sim_v, sim_a, sim_t/db2csv_command/variable.csv/sim_v, sim_a, sim_t/$$
+were added to the
+$cref/variable.csv/db2csv_command/variable.csv/$$ file.
+$lnext
 The $code modify$$ command was marked as
 $cref/under construction/modify_command/Under Construction/$$.
+$lend
 
 $head 04-25$$
 $list number$$

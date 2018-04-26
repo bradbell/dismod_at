@@ -16,6 +16,7 @@ import os
 import distutils.dir_util
 import subprocess
 import copy
+import csv
 from math import exp
 test_program = 'test/user/posterior.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -190,7 +191,7 @@ connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # check the zero random effects solution
 #
-# read tables
+# read database tables
 var_table      = dismod_at.get_table_dict(connection, 'var')
 fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
 sample_table   = dismod_at.get_table_dict(connection, 'sample')
@@ -208,6 +209,52 @@ for var_id in range( number_var ) :
 	sample_var_value = sample_table[sample_id]['var_value']
 	fit_var_value    = fit_var_table[var_id]['fit_var_value']
 	assert abs( fit_var_value / sample_var_value - 1.0 ) < 1e-10
+# -----------------------------------------------------------------------
+# run sandbox version of dismodat.py example.db db2csv
+os.chdir('../../..')
+program        = 'bin/dismodat.py'
+file_name      = 'build/test/user/example.db'
+command        = 'db2csv'
+cmd            = [ program, file_name, command ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at db2csv command failed')
+os.chdir('build/test/user')
+#
+# variable_table
+variable_table = list()
+file_ptr       = open('variable.csv', 'r')
+reader         = csv.DictReader(file_ptr)
+for row in reader :
+	variable_table.append(row)
+file_ptr.close
+#
+def compare(in_db, in_csv) :
+	if in_db == None :
+		assert in_csv == ''
+	else :
+		check = float( in_csv )
+		assert abs( check / in_db - 1.0 ) < 1e-4
+#
+# prior_sim_table
+prior_sim_table = dismod_at.get_table_dict(connection, 'prior_sim')
+simulate_index  = 1
+assert len(variable_table) == number_var
+for var_id in range( number_var ) :
+	simulate_id      = simulate_index * number_var + var_id
+	#
+	prior_sim_value  = prior_sim_table[simulate_id]['prior_sim_value']
+	sim_v            = variable_table[var_id]['sim_v']
+	compare(prior_sim_value, sim_v)
+	#
+	prior_sim_dage   = prior_sim_table[simulate_id]['prior_sim_dage']
+	sim_a            = variable_table[var_id]['sim_a']
+	compare(prior_sim_value, sim_v)
+	#
+	prior_sim_dtime  = prior_sim_table[simulate_id]['prior_sim_dtime']
+	sim_t            = variable_table[var_id]['sim_t']
+	compare(prior_sim_value, sim_v)
 # -----------------------------------------------------------------------
 print('posterior: OK')
 # END PYTHON

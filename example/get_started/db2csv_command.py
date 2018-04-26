@@ -142,10 +142,12 @@ assert near_equal(row['meas_std'],   meas_std,   1e-5)
 # variable.csv
 variable_table = get_table('variable')
 #
-# note that res_value is empty because value prior is uniform
+# res_value is empty because value prior is uniform
+# sim_v, sim_a, sim_t are empty because have not run simulate command
 always_empty  = [ 'integrand', 'depend', 'truth', 'sam_avg', 'sam_std' ]
 always_empty += [ 'res_value', 'res_dage', 'res_dtime' ]
 always_empty += [ 'std_v', 'eta_v', 'nu_v' ]
+always_empty += [ 'sim_v', 'sim_a', 'sim_t' ]
 for prefix in [ 'lower', 'upper', 'mean', 'std', 'eta', 'nu', 'density' ] :
 	for suffix in ['_a', '_t'] :
 		always_empty.append( prefix + suffix )

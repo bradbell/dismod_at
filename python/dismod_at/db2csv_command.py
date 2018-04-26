@@ -182,6 +182,19 @@
 # If the $cref fit_command$$ has been run, this is the
 # $cref/lagrange_dtime/fit_var_table/lagrange_dtime/$$.
 #
+# $subhead sim_v, sim_a, sim_t$$
+# If the $cref simulate_command$$ has been run,
+# these are the values of
+# $cref/prior_sim_value/prior_sim_table/prior_sim_value/$$,
+# $cref/prior_sim_dage/prior_sim_table/prior_sim_dage/$$, and
+# $cref/prior_sim_dtime/prior_sim_table/prior_sim_dtime/$$,
+# for the
+# $cref/simulate_index/fit_command/simulate_index/$$
+# in the previous fit command.
+# If there is no $icode simulate_index$$
+# in the previous fit command, the
+# value zero is used for the $icode simulate_index$$.
+#
 # $subhead prior_info$$
 # There is a column named
 # $codei%
@@ -189,9 +202,9 @@
 # %$$
 # for $icode character$$ equal to $code v$$, $code a$$ and $code t$$
 # and for $icode field$$ equal to
+# $cref/mean/prior_table/mean/$$,
 # $cref/lower/prior_table/lower/$$,
 # $cref/upper/prior_table/upper/$$,
-# $cref/mean/prior_table/mean/$$,
 # $cref/std/prior_table/std/$$,
 # $cref/eta/prior_table/eta/$$,
 # $cref/nu/prior_table/nu/$$ and
@@ -209,7 +222,7 @@
 # the $cref/const_value/smooth_grid_table/const_value/$$ prior is displayed.
 # $lnext
 # If is $code null$$, or has no affect, it is displayed as empty.
-# Note that the fields $icode eta_v$$ always are always displayed for fixed
+# Note that the fields $icode eta_v$$ are always displayed for fixed
 # effects because they have a
 # $cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ affect.
 # $lend
@@ -306,8 +319,7 @@
 # $cref/data_id/db2csv_command/data.csv/data_id/$$ and
 # $cref/simulate_index/fit_command/simulate_index/$$
 # in the previous fit command.
-# If there is no
-# $cref/simulate_index/data_sim_table/simulate_index/$$
+# If there is no $icode simulate_index$$
 # in the previous fit command, the
 # value zero is used for the $icode simulate_index$$.
 #
@@ -550,6 +562,7 @@ def db2csv_command(database_file_arg) :
 	have_table['truth_var']       = check4table(cursor, 'truth_var')
 	have_table['sample']          = check4table(cursor, 'sample')
 	have_table['data_sim']        = check4table(cursor, 'data_sim')
+	have_table['prior_sim']       = check4table(cursor, 'prior_sim')
 	have_table['fit_var']         = check4table(cursor, 'fit_var')
 	have_table['fit_data_subset'] = check4table(cursor, 'fit_data_subset')
 	have_table['predict']         = check4table(cursor, 'predict')
@@ -928,8 +941,9 @@ def db2csv_command(database_file_arg) :
 		'lag_dage',
 		'lag_dtime',
 	]
+	root_list = 'sim,mean,lower,upper,std,eta,nu,density'.split(',')
 	for extension in ['_v', '_a', '_t' ] :
-		for root in ['lower', 'upper', 'mean', 'std', 'eta', 'nu', 'density'] :
+		for root in root_list :
 			header.append( root + extension )
 	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 	csv_writer.writeheader()
@@ -955,17 +969,15 @@ def db2csv_command(database_file_arg) :
 			'covariate', row_in['covariate_id'], 'covariate_name'
 		)
 		row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
+		row_out['start'] = table_lookup('start_var', var_id, 'start_var_value')
 		#
-		# The random effects are all rate variables for the child nodes.
+		# fixed
 		row_out['fixed'] = 'true'
 		if row_in['var_type'] == 'rate' :
 			if row_in['node_id'] != parent_node_id :
 				row_out['fixed'] = 'false'
 		#
-		# The start_var table value
-		row_out['start'] = \
-			 table_lookup('start_var', var_id, 'start_var_value')
-		#
+		# depend
 		if have_table['depend_var'] :
 			data_depend  = table_data['depend_var'][var_id]['data_depend']
 			prior_depend = table_data['depend_var'][var_id]['prior_depend']
@@ -980,9 +992,23 @@ def db2csv_command(database_file_arg) :
 				row_out['depend'] = 'prior'
 			else :
 				row_out['depend'] = 'none'
+		#
+		# truth
 		if have_table['truth_var'] :
 			row_out['truth'] = \
 				 table_lookup('truth_var', var_id, 'truth_var_value')
+		#
+		# prior_sim table results
+		if simulate_index != None :
+			prior_sim_id = simulate_index * n_var + var_id
+			row_out['sim_v'] = \
+				table_lookup('prior_sim', prior_sim_id, 'prior_sim_value')
+			row_out['sim_a'] = \
+				table_lookup('prior_sim', prior_sim_id, 'prior_sim_dage')
+			row_out['sim_t'] = \
+				table_lookup('prior_sim', prior_sim_id, 'prior_sim_dtime')
+		#
+		# fit_var table results
 		if have_table['fit_var'] :
 			row_out['fit_value'] = \
 				 table_lookup('fit_var', var_id, 'fit_var_value')
@@ -999,6 +1025,7 @@ def db2csv_command(database_file_arg) :
 			row_out['lag_dtime'] = \
 				 table_lookup('fit_var', var_id, 'lagrange_dtime')
 		#
+		# information in prior table
 		smooth_id = row_in['smooth_id']
 		if row_in['var_type'] in ['mulstd_value','mulstd_dage','mulstd_dtime'] :
 			prior_id_dict = {
