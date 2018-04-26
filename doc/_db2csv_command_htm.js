@@ -42,6 +42,7 @@ var list_current0 = [
 'db2csv_command.htm#variable.csv.lag_value',
 'db2csv_command.htm#variable.csv.lag_dage',
 'db2csv_command.htm#variable.csv.lag_dtime',
+'db2csv_command.htm#variable.csv.sim_v, sim_a, sim_t',
 'db2csv_command.htm#variable.csv.prior_info',
 'db2csv_command.htm#data.csv',
 'db2csv_command.htm#data.csv.data_id',

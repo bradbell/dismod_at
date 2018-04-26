@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed start depend truth sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed start depend truth sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -84,6 +84,7 @@ A:active { color : purple }
 <option>---..lag_value</option>
 <option>---..lag_dage</option>
 <option>---..lag_dtime</option>
+<option>---..sim_v, sim_a, sim_t</option>
 <option>---..prior_info</option>
 <option>data.csv</option>
 <option>---..data_id</option>
@@ -474,6 +475,31 @@ If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'
 
 <br>
 <br>
+<big><a name="variable.csv.sim_v, sim_a, sim_t" id="variable.csv.sim_v, sim_a, sim_t">sim_v, sim_a, sim_t</a></big>
+<br>
+If the <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+ has been run,
+these are the values of
+<a href="prior_sim_table.htm#prior_sim_value" target="_top"><span style='white-space: nowrap'>prior_sim_value</span></a>
+,
+<a href="prior_sim_table.htm#prior_sim_dage" target="_top"><span style='white-space: nowrap'>prior_sim_dage</span></a>
+, and
+<a href="prior_sim_table.htm#prior_sim_dtime" target="_top"><span style='white-space: nowrap'>prior_sim_dtime</span></a>
+,
+for the
+<a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+
+in the previous fit command.
+If there is no 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+
+in the previous fit command, the
+value zero is used for the 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+.
+
+<br>
+<br>
 <big><a name="variable.csv.prior_info" id="variable.csv.prior_info">prior_info</a></big>
 <br>
 There is a column named
@@ -487,11 +513,11 @@ for
 and for 
 <code><i><font color="black"><span style='white-space: nowrap'>field</span></font></i></code>
  equal to
+<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
+,
 <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
 ,
 <a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
-,
-<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
 ,
 <a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
 ,
@@ -522,7 +548,7 @@ the <a href="smooth_grid_table.htm#const_value" target="_top"><span style='white
 If is <code><font color="blue">null</font></code>, or has no affect, it is displayed as empty.
 Note that the fields 
 <code><i><font color="black"><span style='white-space: nowrap'>eta_v</span></font></i></code>
- always are always displayed for fixed
+ are always displayed for fixed
 effects because they have a
 <a href="prior_table.htm#eta.Scaling Fixed Effects" target="_top"><span style='white-space: nowrap'>scaling</span></a>
  affect.
@@ -713,8 +739,8 @@ If the <a href="simulate_command.htm" target="_top"><span style='white-space: no
 <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
 
 in the previous fit command.
-If there is no
-<a href="data_sim_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+If there is no 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
 
 in the previous fit command, the
 value zero is used for the 
