@@ -18,6 +18,9 @@
 # $$
 # $section Modify a Column of an Sqlite Database$$
 #
+# $head Under Construction$$
+# This routine is under construction and may change.
+#
 # $head Syntax$$
 #
 # $subhead As Program$$

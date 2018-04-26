@@ -50,6 +50,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 04-26$$
+The $code modify$$ command was marked as
+$cref/under construction/modify_command/Under Construction/$$.
+
 $head 04-25$$
 $list number$$
 Add Instructions for running one
