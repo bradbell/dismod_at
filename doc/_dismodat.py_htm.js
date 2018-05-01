@@ -2,7 +2,7 @@ var list_up0 = [
 'dismod_at.htm',
 'python.htm',
 'modify_command.htm',
-'modify_command.py.htm'
+'dismodat.py.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -10,6 +10,12 @@ var list_across0 = [
 '_index.htm',
 '_search.htm',
 '_external.htm'
+];
+var list_current0 = [
+'dismodat.py.htm#Syntax',
+'dismodat.py.htm#Log Table',
+'dismodat.py.htm#Log Table.At Start',
+'dismodat.py.htm#Log Table.At End'
 ];
 var list_down3 = [
 'install_unix.htm',

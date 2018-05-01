@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Modify a Column of an Sqlite Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Modify a Column of an Sqlite Database">
-<meta name="keywords" id="keywords" content=" modify column sqlite database under construction syntax program python function see also warning arg_list table_name column_name row_expression value_expression expressions statements example ">
+<meta name="keywords" id="keywords" content=" modify column sqlite database syntax program python function see also warning arg_list table_name column_name row_expression value_expression expressions statements log table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -53,7 +53,6 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
-<option>Under Construction</option>
 <option>Syntax</option>
 <option>---..As Program</option>
 <option>---..As Python Function</option>
@@ -67,10 +66,11 @@ A:active { color : purple }
 <option>value_expression</option>
 <option>Expressions</option>
 <option>statements</option>
+<option>Log Table</option>
 <option>Example</option>
 </select>
 </td>
-<td><a href="modify_command.py.htm" target="_top">Next</a>
+<td><a href="dismodat.py.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
@@ -105,6 +105,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down0(this)'>
 <option>modify_command-&gt;</option>
+<option>dismodat.py</option>
 <option>modify_command.py</option>
 </select>
 </td>
@@ -112,12 +113,6 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Modify a Column of an Sqlite Database</big></big></b></center>
-<br>
-<b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
-<br>
-This routine is under construction and may change.
-
-<br>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -128,10 +123,10 @@ This routine is under construction and may change.
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>dismodat.py&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;modify</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>table_name</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>column_name</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>row_expression</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>value_expression</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;\<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>statement_one</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>statement_two</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>...</span></font><i><font color="black"><span style='white-space: nowrap'><br>
-</span></font></i></code>
+<code><font color="blue"><span style='white-space: nowrap'>dismodat.py&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>modify</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>column_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_expression</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value_expression</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>statement_one</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>statement_two</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 <br>
 <big><a name="Syntax.As Python Function" id="Syntax.As Python Function">As Python Function</a></big>
 
@@ -214,7 +209,7 @@ specified column when the row expression is <code><font color="blue">True</font>
 <br>
 <b><big><a name="Expressions" id="Expressions">Expressions</a></big></b>
 <br>
-For each row, an expression can reference the value in a columns using
+For each row, an expression can reference the value in a column using
 the corresponding column name. In other words, for each column, a variable
 with the column name is set to the value in that column.
 
@@ -235,6 +230,13 @@ in
 <code><i><font color="black"><span style='white-space: nowrap'>row_expression</span></font></i></code>
  and 
 <code><i><font color="black"><span style='white-space: nowrap'>value_expression</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Log Table" id="Log Table">Log Table</a></big></b>
+<br>
+See <a href="dismodat.py.htm#Log Table" target="_top"><span style='white-space: nowrap'>dismodat.py</span></a>
 .
 
 

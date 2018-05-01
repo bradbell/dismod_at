@@ -13,7 +13,8 @@ var list_across0 = [
 var list_current0 = [
 'sql_command.htm#Syntax',
 'sql_command.htm#connection',
-'sql_command.htm#command'
+'sql_command.htm#command',
+'sql_command.htm#result'
 ];
 var list_down2 = [
 'install_unix.htm',

@@ -11,7 +11,6 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'modify_command.htm#Under Construction',
 'modify_command.htm#Syntax',
 'modify_command.htm#Syntax.As Program',
 'modify_command.htm#Syntax.As Python Function',
@@ -25,6 +24,7 @@ var list_current0 = [
 'modify_command.htm#value_expression',
 'modify_command.htm#Expressions',
 'modify_command.htm#statements',
+'modify_command.htm#Log Table',
 'modify_command.htm#Example'
 ];
 var list_down2 = [
@@ -53,6 +53,7 @@ var list_down1 = [
 'sql_command.htm'
 ];
 var list_down0 = [
+'dismodat.py.htm',
 'modify_command.py.htm'
 ];
 function choose_up0(item)

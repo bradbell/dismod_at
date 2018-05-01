@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Execute an SQL command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Execute an SQL command">
-<meta name="keywords" id="keywords" content=" execute sql command syntax connection ">
+<meta name="keywords" id="keywords" content=" execute sql command syntax connection result ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -56,6 +56,7 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>connection</option>
 <option>command</option>
+<option>result</option>
 </select>
 </td>
 <td><a href="devel.htm" target="_top">Next</a>
@@ -100,7 +101,7 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>dismod_at.sql_command(</span></font><i><font color="black"><span style='white-space: nowrap'>connection</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;dismod_at.sql_command(</span></font><i><font color="black"><span style='white-space: nowrap'>connection</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="connection" id="connection">connection</a></big></b>
@@ -114,6 +115,12 @@ sql_lite database.
 <b><big><a name="command" id="command">command</a></big></b>
 <br>
 is a <code><font color="blue">str</font></code> containing the command that is executed.
+
+<br>
+<br>
+<b><big><a name="result" id="result">result</a></big></b>
+<br>
+Is a list corresponding to the rows returned by the command.
 
 
 <hr>Input File: python/dismod_at/sql_command.py
