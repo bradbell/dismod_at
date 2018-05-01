@@ -63,6 +63,9 @@ $cref/end/log_table/message_type/command/$$.
 $lnext
 The $code sql_command$$ was modified to return its
 $cref/result/sql_command/result/$$.
+$lnext
+The under construction warning was removed from the
+$cref modify_command$$.
 $lend
 
 $head 04-26$$
@@ -72,8 +75,7 @@ $cref/sim_v, sim_a, sim_t/db2csv_command/variable.csv/sim_v, sim_a, sim_t/$$
 were added to the
 $cref/variable.csv/db2csv_command/variable.csv/$$ file.
 $lnext
-The $code modify$$ command was marked as
-$cref/under construction/modify_command/Under Construction/$$.
+The $cref modify_command$$ was marked as under construction.
 $lend
 
 $head 04-25$$
