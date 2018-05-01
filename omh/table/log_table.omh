@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -35,8 +35,8 @@ If optional arguments follow the command name,
 they are included after the command name and are separated by spaces.
 $lnext
 The end of every command is logged with the name of the command followed by
-$code done$$.
-If $code done$$ does not appear after the command starts,
+$code end$$.
+If $code end$$ does not appear after the command starts,
 the command failed to finish.
 $lend
 

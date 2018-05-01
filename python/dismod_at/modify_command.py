@@ -1,7 +1,7 @@
 
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -24,7 +24,7 @@
 # $head Syntax$$
 #
 # $subhead As Program$$
-# $codei%dismodat.py %database% modify% \
+# $codei%dismodat.py %database% %modify% \
 #	%table_name% %column_name% %row_expression% %value_expression% \
 #	%statement_one% %statement_two% %...%
 # %$$
@@ -68,7 +68,7 @@
 # specified column when the row expression is $code True$$.
 #
 # $head Expressions$$
-# For each row, an expression can reference the value in a columns using
+# For each row, an expression can reference the value in a column using
 # the corresponding column name. In other words, for each column, a variable
 # with the column name is set to the value in that column.
 #
@@ -82,7 +82,11 @@
 # This would make the function $codei%exp(%x%)%$$ available for use
 # in $icode row_expression$$ and $icode value_expression$$.
 #
-# $children%example/get_started/modify_command.py
+# $head Log Table$$
+# See $cref/dismodat.py/dismodat.py/Log Table/$$.
+#
+# $children%bin/dismodat.py
+#	%example/get_started/modify_command.py
 # %$$
 # $head Example$$
 # The file $cref modify_command.py$$ contains an example and test

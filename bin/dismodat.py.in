@@ -2,13 +2,44 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# $begin dismodat.py$$ $newlinech #$$
+# $spell
+#	dismodat.py
+# $$
+#
+# $section Python Program Syntax$$
+#
+# $head Syntax$$
+# dismodat.py database command ...
+#
+# $head Log Table$$
+#
+# $subhead At Start$$
+# At the start, a $code dismodat.py$$
+# command adds a
+# $cref/command/log_table/message_type/command/$$
+# log entry with
+# $cref/message/log_table/message/$$
+# equal to
+# $codei%
+#      begin %database% %command% ...
+# %$$
+#
+# $subhead At End$$
+# At the end,
+# a $code dismodat.py$$ command adds a command log entry with message equal to
+# $codei%
+#	end %command%
+# %$$
+# $end
+# -----------------------------------------------------------------------------
 import sys
 import os
 import time

@@ -38,6 +38,8 @@ $spell
 	py
 	dage
 	dtime
+	dismodat
+	sql
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -49,6 +51,19 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 04-30$$
+$list number$$
+A description of the log entries when
+using the $cref/dismodat.py/dismodat.py/Log Table/$$ syntax was added.
+$lnext
+The documentation for log entry at the end of a command
+was corrected from $code done$$ to
+$cref/end/log_table/message_type/command/$$.
+$lnext
+The $code sql_command$$ was modified to return its
+$cref/result/sql_command/result/$$.
+$lend
 
 $head 04-26$$
 $list number$$
