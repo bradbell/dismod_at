@@ -1650,12 +1650,12 @@ void sample_command(
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
-		// truth_var
-		vector<double> truth_var_value;
-		string table_name  = "truth_var";
-		string column_name = "truth_var_value";
+		// start_var
+		vector<double> start_var_value;
+		string table_name  = "start_var";
+		string column_name = "start_var_value";
 		dismod_at::get_table_column(
-			db, table_name, column_name, truth_var_value
+			db, table_name, column_name, start_var_value
 		);
 		// scale_var
 		vector<double> scale_var_value;
@@ -1735,7 +1735,7 @@ void sample_command(
 				fit_or_sample        ,
 				pack_object          ,
 				var2prior            ,
-				truth_var_value      ,
+				start_var_value      ,
 				scale_var_value      ,
 				db_input.prior_table ,
 				data_object          ,

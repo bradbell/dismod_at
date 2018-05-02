@@ -150,6 +150,7 @@ $spell
 	vec
 	const
 	enum
+	stderr
 $$
 
 $section Fit Model Constructor$$
@@ -157,9 +158,13 @@ $section Fit Model Constructor$$
 $head Syntax$$
 $codei%fit_model %fit_object%(
 	%db%,
+	%warn_on_stderr%,
 	%bound_random%,
+	%fit_or_sample%,
 	%pack_object%,
+	%var2prior%,
 	%start_var%,
+	%scale_var%,
 	%prior_table%,
 	%data_object%,
 	%prior_object%,
@@ -174,6 +179,10 @@ The $code fit_model$$ object being constructed.
 $head db$$
 This argument is the database connection for
 $cref/logging/log_message/$$ errors and warnings.
+
+$head warn_on_stderr$$
+If true, warnings will be printed on stderr.
+(Error messages are always printed on stderr.)
 
 $head bound_random$$
 This is the value of the
@@ -195,11 +204,14 @@ $head pack_prior$$
 This argument is the $cref pack_prior$$ information corresponding to the
 $cref model_variables$$.
 
+$head var2prior$$
+Mapping from $icode var_id$$ to prior information.
+
 $head start_var$$
 This vector is the starting $cref model_variables$$ in the order
 specified by $cref pack_info$$.
 
-$head scalar_var$$
+$head scale_var$$
 The object and constraints are scaled using this value for the
 $cref model_variables$$.
 
@@ -282,6 +294,30 @@ prior_object_  ( prior_object )
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object.size() == n_var );
 	assert( var2prior_.size() == n_var );
+	// ----------------------------------------------------------------------
+	for(size_t var_id = 0; var_id < n_var; var_id++)
+	{	size_t prior_id = var2prior_.value_prior_id(var_id);
+		double lower    = var2prior_.const_value(var_id);
+		double upper    = lower;
+# ifndef NDEBUG
+		double mean     = lower;
+# endif
+		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+		{	lower = prior_table_[prior_id].lower;
+			upper = prior_table_[prior_id].upper;
+# ifndef NDEBUG
+			mean  = prior_table_[prior_id].mean;
+# endif
+		}
+		assert(lower <= mean && mean <= upper);
+		if( (start_var_[var_id] < lower) | (upper < start_var_[var_id]) )
+		{	std::string msg;
+			msg  = "value = " + CppAD::to_string(start_var_[var_id]);
+			msg += "\nnot between lower = " + CppAD::to_string(lower);
+			msg += "\nand upper = " + CppAD::to_string(upper);
+			error_exit(msg, "start_var", var_id);
+		}
+	}
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
 	//

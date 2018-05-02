@@ -52,6 +52,19 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-02$$
+$list number$$
+It is possible for the $cref start_var_table$$ values to violate
+the lower and upper limits for a variable.
+An error message that specifies which variable's starting value
+violates the constraints is printed.
+(The fit used to terminate with no message when this occurred.)
+$lnext
+The $cref/sample simulate/sample_command/method/simulate/$$
+used to start its fits at the $cref truth_var_table$$ values.
+This has been changed to use the $cref start_var_table$$ values.
+$lend
+
 $head 04-30$$
 $list number$$
 A description of the log entries when
