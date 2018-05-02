@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fit Model Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fit Model Constructor">
-<meta name="keywords" id="keywords" content=" fit model constructor syntax fit_object db bound_random fit_or_sample pack_object pack_prior start_var scalar_var prior_table data_object prior_object quasi_fixed zero_sum_random prototype ">
+<meta name="keywords" id="keywords" content=" fit model constructor syntax fit_object db warn_on_stderr bound_random fit_or_sample pack_object pack_prior var2prior start_var scale_var prior_table data_object prior_object quasi_fixed zero_sum_random prototype ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,12 +58,14 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>fit_object</option>
 <option>db</option>
+<option>warn_on_stderr</option>
 <option>bound_random</option>
 <option>fit_or_sample</option>
 <option>pack_object</option>
 <option>pack_prior</option>
+<option>var2prior</option>
 <option>start_var</option>
-<option>scalar_var</option>
+<option>scale_var</option>
 <option>prior_table</option>
 <option>data_object</option>
 <option>prior_object</option>
@@ -126,9 +128,13 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>fit_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fit_object</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>warn_on_stderr</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fit_or_sample</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var2prior</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>start_var</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>scale_var</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -148,6 +154,13 @@ The <code><font color="blue">fit_model</font></code> object being constructed.
 This argument is the database connection for
 <a href="log_message.htm" target="_top"><span style='white-space: nowrap'>logging</span></a>
  errors and warnings.
+
+<br>
+<br>
+<b><big><a name="warn_on_stderr" id="warn_on_stderr">warn_on_stderr</a></big></b>
+<br>
+If true, warnings will be printed on stderr.
+(Error messages are always printed on stderr.)
 
 <br>
 <br>
@@ -190,6 +203,14 @@ This argument is the <a href="pack_prior.htm" target="_top"><span style='white-s
 
 <br>
 <br>
+<b><big><a name="var2prior" id="var2prior">var2prior</a></big></b>
+<br>
+Mapping from 
+<code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
+ to prior information.
+
+<br>
+<br>
 <b><big><a name="start_var" id="start_var">start_var</a></big></b>
 <br>
 This vector is the starting <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
@@ -199,7 +220,7 @@ specified by <a href="pack_info.htm" target="_top"><span style='white-space: now
 
 <br>
 <br>
-<b><big><a name="scalar_var" id="scalar_var">scalar_var</a></big></b>
+<b><big><a name="scale_var" id="scale_var">scale_var</a></big></b>
 <br>
 The object and constraints are scaled using this value for the
 <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
