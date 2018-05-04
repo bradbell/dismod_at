@@ -52,6 +52,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-04$$
+Advance to using
+$cref/cppad-20180503/install_unix/Special Requirements/CppAD/$$, and
+$cref/cppad_mixed-20180503/install_unix/Special Requirements/cppad_mixed/$$.
+This should reduce the amount of memory used
+without adversely affecting its speed.
+
+
 $head 05-02$$
 $list number$$
 It is possible for the $cref start_var_table$$ values to violate
