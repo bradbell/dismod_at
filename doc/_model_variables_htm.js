@@ -20,7 +20,7 @@ var list_current0 = [
 'model_variables.htm#Fixed Effects, theta.Parent Rates',
 'model_variables.htm#Fixed Effects, theta.Covariate Multipliers',
 'model_variables.htm#Random Effects, u',
-'model_variables.htm#Random Effects, u.Child Rates',
+'model_variables.htm#Random Effects, u.Child Rate Effects',
 'model_variables.htm#Age and Time Variation',
 'model_variables.htm#Age and Time Variation.Smoothing Standard Deviation Multiplier',
 'model_variables.htm#Age and Time Variation.Initial Prevalence',

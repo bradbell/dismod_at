@@ -21,7 +21,7 @@ var list_current0 = [
 'user_diabetes.py.htm#Covariates.Multipliers',
 'user_diabetes.py.htm#Truth Var Table',
 'user_diabetes.py.htm#Truth Var Table.Parent Rates',
-'user_diabetes.py.htm#Truth Var Table.Child Rates',
+'user_diabetes.py.htm#Truth Var Table.Child Rate Effects',
 'user_diabetes.py.htm#Predict Table',
 'user_diabetes.py.htm#Problem Parameters',
 'user_diabetes.py.htm#Problem Parameters.mulcov_dict',

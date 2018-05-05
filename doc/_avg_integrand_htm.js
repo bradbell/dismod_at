@@ -23,7 +23,7 @@ var list_current0 = [
 'avg_integrand.htm#Data or Avgint Table Notation.n_i',
 'avg_integrand.htm#Rate Functions',
 'avg_integrand.htm#Rate Functions.q_k',
-'avg_integrand.htm#Rate Functions.u_i,k',
+'avg_integrand.htm#Rate Functions.u_ik',
 'avg_integrand.htm#Rate Functions.J_k',
 'avg_integrand.htm#Rate Functions.alpha_jk',
 'avg_integrand.htm#Rate Functions.r_ik',

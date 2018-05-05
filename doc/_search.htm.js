@@ -13,7 +13,7 @@ Keyword =
 'user_fit_random.py  Fitting Just Random Effects  ',' purpose discussion source code ',
 'user_fit_fixed_both.py  Fit Fixed First Then Both  ',' purpose discussion ',
 'user_posterior.py  Sampling From Then Posterior Distribution  ',' purpose discussion variance source code ',
-'user_diabetes.py  An Example / Speed Test Fitting Simulated Diabetes Data  ',' running this omega rho weight table grid covariates multipliers truth parent rates child predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ',
+'user_diabetes.py  An Example / Speed Test Fitting Simulated Diabetes Data  ',' running this omega rho weight table grid covariates multipliers truth parent rates child effects predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ',
 'user_asymptotic.py  Sample from Asymptotic Distribution for Model Variables  ',' purpose notation likelihood ',
 'user_change_grid.py  Remove an Age or Time From a Smoothing  ',' ',
 'user_const_random.py  Fitting With Non-Zero Constant Random Effects in Smoothing Grid  ',' ',

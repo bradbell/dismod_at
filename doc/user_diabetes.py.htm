@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Example / Speed Test Fitting Simulated Diabetes Data</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Example / Speed Test Fitting Simulated Diabetes Data">
-<meta name="keywords" id="keywords" content=" example / speed test fitting simulated diabetes data running this omega rho weight table grid covariates covariate multipliers truth var parent rates child predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ">
+<meta name="keywords" id="keywords" content=" example / speed test fitting simulated diabetes data running this omega rho weight table grid covariates covariate multipliers truth var parent rates child rate effects predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,7 +63,7 @@ A:active { color : purple }
 <option>---..Multipliers</option>
 <option>Truth Var Table</option>
 <option>---..Parent Rates</option>
-<option>---..Child Rates</option>
+<option>---..Child Rate Effects</option>
 <option>Predict Table</option>
 <option>Problem Parameters</option>
 <option>---..mulcov_dict</option>
@@ -307,10 +307,10 @@ chi   </td><td align='left'  valign='top'>
 </td></tr>
 </table>
 <br>
-<big><a name="Truth Var Table.Child Rates" id="Truth Var Table.Child Rates">Child Rates</a></big>
+<big><a name="Truth Var Table.Child Rate Effects" id="Truth Var Table.Child Rate Effects">Child Rate Effects</a></big>
 <br>
-The child rates are in log space
-(see <a href="avg_integrand.htm#Rate Functions.u_i,k" target="_top"><span style='white-space: nowrap'>u_i,k</span></a>
+The child rate effects are in log space
+(see <a href="avg_integrand.htm#Rate Functions.u_ik" target="_top"><span style='white-space: nowrap'>u_ik</span></a>
 ),
 constant in age and time,
 positive for even index children, negative for odd indices, and have the
@@ -463,7 +463,7 @@ parent_age_grid  <font color="#990000">=</font> <font color="#990000">{</font> <
 <br>
 <big><a name="Problem Parameters.child_age_grid" id="Problem Parameters.child_age_grid">child_age_grid</a></big>
 <br>
-The is the age grid used for all the child rate
+The is the age grid used for all the child rate effect
 <a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
  except for
 omega (see 
@@ -482,7 +482,7 @@ Each of these indices must be less than
 The value 
 <code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
  (a <code><font color="blue">float</font></code>) is the standard deviation in the
-Gaussian used to smooth the child rate values.
+Gaussian used to smooth the child rate effect values.
 (This does not include <a href="rate_table.htm#rate_name.pini" target="_top"><span style='white-space: nowrap'>pini</span></a>
 
 because it only has one age point.)
@@ -523,7 +523,7 @@ parent_time_grid <font color="#990000">=</font> <font color="#990000">{</font> <
 <br>
 <big><a name="Problem Parameters.child_time_grid" id="Problem Parameters.child_time_grid">child_time_grid</a></big>
 <br>
-The is the time grid used for all the child rate
+The is the time grid used for all the child rate effect
 <a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>smoothings</span></a>
  except for
 omega (see 
@@ -542,7 +542,7 @@ Each of these indices must be less than
 The value 
 <code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
  (a <code><font color="blue">float</font></code>) is the standard deviation in the
-Gaussian used to smooth the child rate values.
+Gaussian used to smooth the child rate effect values.
 (This includes <a href="rate_table.htm#rate_name.pini" target="_top"><span style='white-space: nowrap'>pini</span></a>
 ).
 <pre style='display:inline'><tt>
