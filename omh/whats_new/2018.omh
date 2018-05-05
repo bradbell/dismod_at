@@ -64,7 +64,7 @@ $lnext
 Use
 $cref/child rate effect/model_variables/Random Effects, u/Child Rate Effects/$$
 when referring to the a random effect
-$cref/u_i,k/avg_integrand/Rate Functions/u_i,k/$$.
+$cref/u_ik/avg_integrand/Rate Functions/u_ik/$$.
 This distinguishes it from the corresponding rate for that child
 $cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
 $lend

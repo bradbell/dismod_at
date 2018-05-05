@@ -23,9 +23,7 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|Child Rates|Child Rate Effects|
-s|child rate|child rate effect|
-s|child rates|child rate effects|
+s|\\([a-z]\\)_i,k|\\1_ik|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

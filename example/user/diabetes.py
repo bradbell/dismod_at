@@ -32,6 +32,7 @@
 #	var
 #	rel
 #	bmi
+#	ik
 # $$
 #
 # $section An Example / Speed Test Fitting Simulated Diabetes Data$$
@@ -111,7 +112,7 @@
 #
 # $subhead Child Rate Effects$$
 # The child rate effects are in log space
-# (see $cref/u_i,k/avg_integrand/Rate Functions/u_i,k/$$),
+# (see $cref/u_ik/avg_integrand/Rate Functions/u_ik/$$),
 # constant in age and time,
 # positive for even index children, negative for odd indices, and have the
 # following values:

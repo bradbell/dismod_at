@@ -168,7 +168,7 @@ The smoothing can be the same for all the children
 (see $cref/child_smooth_id/rate_table/child_smooth_id/$$)
 or it can have a different value for each child
 (see $cref/child_nslist_id/rate_table/child_nslist_id/$$).
-If $cref/u_i,k/avg_integrand/Rate Functions/u_i,k/$$
+If $cref/u_ik/avg_integrand/Rate Functions/u_ik/$$
 is a random effect for a rate and child,
 the rate for the child is $latex \exp( u_{i,k} )$$
 times the rate for the parent;

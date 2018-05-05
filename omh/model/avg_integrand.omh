@@ -113,7 +113,7 @@ $cref/parent node/option_table/parent_node_id/$$.
 The adjusted rates are discussed below; see
 $cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
 
-$subhead u_i,k$$
+$subhead u_ik$$
 If $latex n_i$$ is equal to or a descendant of one of the children of the
 parent node,
 $latex u_{i,k} (a, t)$$ is the piecewise linear random effect
