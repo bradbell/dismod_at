@@ -21,7 +21,13 @@ $head Purpose$$
 Each row of the $code prior$$ table defines a statistical
 prior for a single $cref/model_variables/model_variables/$$; i.e.,
 one scalar value.
-It has the following columns:
+Multiple rows of the prior table may apply to the same model variable;
+e.g., there may be a
+$cref/value prior/smooth_grid_table/value_prior_id/$$,
+$cref/age difference prior/smooth_grid_table/dage_prior_id/$$, and
+$cref/time difference prior/smooth_grid_table/dtime_prior_id/$$
+for the same model variable.
+
 
 $head prior_id$$
 This column has type $code integer$$ and is the primary key for this table.
