@@ -41,6 +41,7 @@ $spell
 	dismodat
 	sql
 	ik
+	subvector
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -54,11 +55,18 @@ $childtable%
 %$$
 
 $head 05-05$$
+$list number$$
 The text describing the purpose of the
 $cref/prior table/prior_table/Purpose/$$,
 $cref/smooth table/smooth_table/Purpose/$$, and
 $cref/smooth_grid table/smooth_grid_table/Purpose/$$
 was improved.
+$lnext
+The $cref model_variables$$ section was improve.
+To be specific,
+the term subvector was changed to group of variables
+and more mention was made of the corresponding function.
+$lend
 
 $head 05-04$$
 $list number$$

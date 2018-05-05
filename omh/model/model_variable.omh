@@ -12,8 +12,6 @@ $begin model_variables$$
 $spell
 	const
 	std
-	subvectors
-	subvector
 	dismod
 	smoothings
 	var
@@ -30,56 +28,36 @@ $spell
 $$
 
 $section The Model Variables$$
+
+$head Introduction$$
 This section describes the model variables.
 These are the possibly unknown inputs to the model and
 are often referred to as model parameters in the statistical literature.
-Each model variable has a prior distribution and corresponds to one row in the
-$cref/variable.csv/db2csv_command/variable.csv/$$ file.
-If the lower and upper limits are equal, the model variable is known.
+Each model variable can have a statistical prior on its value.
+If the corresponding lower and upper limits are equal,
+the model variable is known.
+If the variable is part of a function, it can also have a prior
+on its forward difference in age and time.
+Each row of the
+$cref/variable.csv/db2csv_command/variable.csv/$$ file
+corresponds to a single model variable.
 
-$head Prior$$
-The prior distribution for a model variable is specified using either a
-$cref/const_value/smooth_grid_table/const_value/$$ (constant value) or a
-$cref/prior_id/prior_table/prior_id/$$.
-A $icode prior_id$$
-specifies a row in the prior table and has the following information:
-$table
-$cref/density_id/prior_table/density_id/$$ $cnext
-	density function corresponding for this prior
-$rnext
-$cref/lower/prior_table/lower/$$ $cnext
-	lower bound for this prior
-$rnext
-$cref/upper/prior_table/upper/$$ $cnext
-	upper bound for this prior
-$rnext
-$cref/mean/prior_table/mean/$$ $cnext
-	mean for this prior
-$rnext
-$cref/std/prior_table/std/$$ $cnext
-	standard deviation for this prior
-$rnext
-$cref/eta/prior_table/eta/$$ $cnext
-	offset in log transformation for this prior
-$tend
+$head Function of Age and Time$$
+The model variables are divided into groups.
+One group is the standard deviation multiplies.
+Each of the other groups represents a single function of age an time
+and has a corresponding smoothing.
 
-$head Smoothing$$
-The model variables are divided into subvectors and
-there is a smoothing for each subvector
-(except for the subvector of smoothing standard deviation multipliers
-which are discussed below).
-The smoothing determines the number of variables in the subvector,
-the age and time corresponding to each variable,
-and the prior for each variable:
+$subhead Smoothing$$
+A group of model variables defines a function of age and time
+using a $cref/smooth_id/smooth_table/smooth_id/$$.
+Each $icode smooth_id$$ specifies a prior for a function as follows:
 $table
 $cref/n_age/smooth_table/n_age/$$ $cnext
-	number of age points in the subvector
+	number of age points used to represent the function
 $rnext
 $cref/n_time/smooth_table/n_time/$$ $cnext
-	number of time points in the subvector
-$rnext
-$icode%n_age% * %n_time%$$ $cnext
-	number of variables in the subvector
+	number of time points used to represent the function
 $rnext
 $cref/age_id/smooth_grid_table/age_id/$$ $cnext
 	identifies age value for a variable
@@ -91,37 +69,43 @@ $cref/const_value/smooth_grid_table/const_value/$$ $cnext
 	null or a value that a variable is constrained to
 $rnext
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$ $cnext
-	prior for value of a variable
+	value prior for a variable
 $rnext
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$  $cnext
-	prior for difference between a variable and the next in age direction
+	difference prior for a variable (and next variable) in age direction
 $rnext
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$  $cnext
-	prior for difference between a variable and the next in time direction
+	difference prior for a variable (and next variable) in time direction
 $tend
+The number of model variable in one of these groups
+is $icode%n_age%*%n_time%$$.
+The age and time difference priors specify the smoothing in a mathematical
+sense.
 
 $subhead Interpolation$$
 Given values on a smoothing grid,
 $cref bilinear$$ interpolation
 is used to define a corresponding function of age and time.
-For example, given the subvector of model variables corresponding
+For example, given the group of model variables corresponding
 to $code omega$$, the function $latex \omega(a, t)$$ is the
 corresponding bilinear piecewise interpolant.
 
-$head Number of Children$$
+$head Children$$
 The parent node is specified by
 $cref/parent_node_id/option_table/parent_node_id/$$ in the
 option table.
-The number of children $icode n_child$$ is the size of the
+The children is the
 $cref/child group/node_table/parent/Child Group/$$
 corresponding to this parent node.
+(The child group this is a group of nodes not a group of variables.)
 
 $head Fixed Effects, theta$$
 we use $latex \theta$$ to denote the vector of fixed effects; i.e.,
 all of the model variables except for the random effects.
-Below is a list of the fixed effects subvectors.
+Below is a list of the fixed effects groups of model variables:
 
 $subhead Smoothing Standard Deviation Multipliers, lambda$$
+This is the only group that does not represent a function of age and time.
 For each $latex i = $$ $cref/smooth_id/smooth_table/smooth_id/$$,
 there are three smoothing standard deviation multiplier variables:
 $latex \lambda_i^v$$, $latex \lambda_i^a$$ and $latex \lambda_i^t$$.
@@ -133,17 +117,18 @@ $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$.
 $subhead Parent Rates$$
 For each $cref/rate/rate_table/rate_name/$$
 ($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
-there is a subvector corresponding to the parent value for the rate.
-The smoothing for each of these subvectors is specified by the corresponding
+there is a function (group of model variables)
+corresponding to the parent value for the rate.
+The smoothing for each of these functions is specified by the corresponding
 $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
 Recall that the smoothing determines the number of variables in the
-subvector as well as the corresponding age and time values;
+group as well as the corresponding age and time values;
 see the unadjusted rates
 $cref/q_k/avg_integrand/Rate Functions/q_k/$$ in the average integrand model.
 
 $subhead Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
-there is a corresponding subvector and its
+there is a corresponding function (group of model variables) and its
 smoothing is specified by the corresponding
 $cref/smooth_id/mulcov_table/smooth_id/$$.
 For more clarification, see the discussion for
@@ -156,14 +141,14 @@ covariate multipliers.
 $head Random Effects, u$$
 we use $latex u$$ to denote the vector of random effects; i.e.,
 all of the model variables except for the fixed effects.
-Currently, the only random effects are the rates
-for the children.
+Currently, the only random effects are the child rate effects.
 
 $subhead Child Rate Effects$$
 For each $cref/rate/rate_table/rate_name/$$
 ($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
 there is a
-subvector corresponding to the child random effects for the rate.
+function (group of model variables)
+corresponding to the child random effects for the rate.
 The smoothing can be the same for all the children
 (see $cref/child_smooth_id/rate_table/child_smooth_id/$$)
 or it can have a different value for each child
@@ -179,19 +164,19 @@ $head Age and Time Variation$$
 
 $subhead Smoothing Standard Deviation Multiplier$$
 Each smoothing standard deviation multiplier $latex \lambda$$
-is a fixed effect and has a prior
-(not a smoothing) and hence is constant w.r.t.  age and time.
+is scalar fixed effect (not a function)
+and has a prior (not a smoothing).
 
 $subhead Initial Prevalence$$
-Each initial prevalence has a smoothing with only one age point and
-hence is constant w.r.t. age and may vary w.r.t. time.
-This holds for the parent (fixed effect subvector)
-and each child (random effect subvector).
+Initial prevalence can be a function of time
+but must be constant with respect to age.
+Hence it has a smoothing with only one age point
+This holds for the parent initial prevalence function
+and each child initial prevalence effect function.
 
-$subhead Other Variables Types$$
-All the other model variable types have an arbitrary smoothing and
-hence may vary w.r.t age, may vary w.r.t time, or both.
-This holds for the parent and for each child.
+$subhead Other Groups$$
+All the other model variable are members of a group that represents
+a function of age and time and has an arbitrary smoothing.
 
 
 $end
