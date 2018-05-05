@@ -11,10 +11,11 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'model_variables.htm#Prior',
-'model_variables.htm#Smoothing',
-'model_variables.htm#Smoothing.Interpolation',
-'model_variables.htm#Number of Children',
+'model_variables.htm#Introduction',
+'model_variables.htm#Function of Age and Time',
+'model_variables.htm#Function of Age and Time.Smoothing',
+'model_variables.htm#Function of Age and Time.Interpolation',
+'model_variables.htm#Children',
 'model_variables.htm#Fixed Effects, theta',
 'model_variables.htm#Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda',
 'model_variables.htm#Fixed Effects, theta.Parent Rates',
@@ -24,7 +25,7 @@ var list_current0 = [
 'model_variables.htm#Age and Time Variation',
 'model_variables.htm#Age and Time Variation.Smoothing Standard Deviation Multiplier',
 'model_variables.htm#Age and Time Variation.Initial Prevalence',
-'model_variables.htm#Age and Time Variation.Other Variables Types'
+'model_variables.htm#Age and Time Variation.Other Groups'
 ];
 var list_down2 = [
 'install_unix.htm',

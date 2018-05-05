@@ -81,7 +81,7 @@ Keyword =
 'sample_table  The Sample Table: Samples of Variable Values  ',' simulated data user\'s choice sample_id sample_index var_id var_value example ',
 'predict_table  The Predict Table: Average Integrand Predictions  ',' see also purpose avgint subset node covariates predict_id sample_index avgint_id avg_integrand example ',
 'model  The Age-Time Dismod Model  ',' ',
-'model_variables  The Model Variables  ',' prior smoothing interpolation number children fixed effects theta standard deviation multipliers lambda parent rates covariate random age time variation initial prevalence other types ',
+'model_variables  The Model Variables  ',' introduction function age time smoothing interpolation children fixed effects theta standard deviation multipliers lambda parent rates covariate random variation initial prevalence other groups ',
 'avg_integrand  Model for the Average Integrand  ',' ordinary differential equation data avgint table notation a_i b_i s_i t_i x_ij w_i n_i rate functions q_k u_ik j_k alpha_jk r_ik p_i0(t) pini iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j effect weight integral wbar_i ',
 'data_like  Data Likelihood and Weighted Residuals  ',' table notation y_i delta_i b_i s_i t_i d_i i_i x_ij w_i measurement standard deviation covariates k_i gamma_j effects theta average integrand adjusted ',
 'fixed_value  The Fixed Effects Value Density Function  ',' theta_j prior_id lambda_j mu_j delta_j d_j v_j v^theta ',
