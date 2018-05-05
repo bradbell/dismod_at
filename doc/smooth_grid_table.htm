@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Smooth Grid Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Smooth Grid Table">
-<meta name="keywords" id="keywords" content=" the smooth grid table smooth_grid_id smooth_id null age_id time_id value_prior_id dage_prior_id dtime_prior_id const_value rectangular example ">
+<meta name="keywords" id="keywords" content=" the smooth grid table purpose smooth_grid_id smooth_id null age_id time_id value_prior_id dage_prior_id dtime_prior_id const_value rectangular example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -54,6 +54,7 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
+<option>Purpose</option>
 <option>smooth_grid_id</option>
 <option>smooth_id</option>
 <option>---..null</option>
@@ -127,9 +128,19 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Smooth Grid Table</big></big></b></center>
-This table specifies the age, time, and value priors, and smoothing priors
-for each <code><font color="blue">/smooth_id/smooth_table/smooth_id/</font></code>
-It has the following columns:
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Each row of the <code><font color="blue">smooth_grid</font></code> table specifies an
+age, time, value prior, age difference prior, and time difference prior
+for a single <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variable</span></a>
+.
+(The difference priors represent the smoothing in a mathematical sense.)
+A group of rows with the same 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+,
+defines a statistical prior for a function of age and time.
+
 
 <br>
 <br>
@@ -148,7 +159,8 @@ the <a href="smooth_table.htm" target="_top"><span style='white-space: nowrap'>s
 .
 Each 
 <code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
- value corresponds to a different smoothing.
+ value corresponds to a different
+statistical prior for a function of age and time.
 
 <br>
 <br>
@@ -170,7 +182,7 @@ This can be useful for deleting a row or column corresponding to a
 This column has type <code><font color="blue">integer</font></code> and is a
 <a href="age_table.htm#age_id" target="_top"><span style='white-space: nowrap'>age_id</span></a>
  in the age table.
-Each 
+The 
 <code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
  value corresponds to a specific age.
 

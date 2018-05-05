@@ -12,6 +12,7 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
+'prior_table.htm#Purpose',
 'prior_table.htm#prior_id',
 'prior_table.htm#prior_name',
 'prior_table.htm#density_id',

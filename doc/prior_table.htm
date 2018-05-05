@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Prior Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Prior Table">
-<meta name="keywords" id="keywords" content=" the prior table prior_id prior_name density_id lower upper mean uniform std eta null scaling fixed effects nu example ">
+<meta name="keywords" id="keywords" content=" the prior table purpose prior_id prior_name density_id lower upper mean uniform std eta null scaling fixed effects nu example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -54,6 +54,7 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
+<option>Purpose</option>
 <option>prior_id</option>
 <option>prior_name</option>
 <option>density_id</option>
@@ -126,9 +127,13 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Prior Table</big></big></b></center>
-The <code><font color="blue">prior</font></code> table is used to define the
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Each row of the <code><font color="blue">prior</font></code> table defines a statistical
 prior for a single <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
-.
+; i.e.,
+one scalar value.
 It has the following columns:
 
 <br>

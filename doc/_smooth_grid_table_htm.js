@@ -12,6 +12,7 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
+'smooth_grid_table.htm#Purpose',
 'smooth_grid_table.htm#smooth_grid_id',
 'smooth_grid_table.htm#smooth_id',
 'smooth_grid_table.htm#smooth_id.null',

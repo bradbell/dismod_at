@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Smoothing Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Smoothing Table">
-<meta name="keywords" id="keywords" content=" the smoothing table smooth_id smooth_name n_age n_time mulstd_value_prior_id null mulstd_dage_prior_id mulstd_dtime_prior_id removing age time example ">
+<meta name="keywords" id="keywords" content=" the smoothing table purpose smooth_id smooth_name n_age n_time mulstd_value_prior_id null mulstd_dage_prior_id mulstd_dtime_prior_id removing age time example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -54,6 +54,7 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
+<option>Purpose</option>
 <option>smooth_id</option>
 <option>smooth_name</option>
 <option>n_age</option>
@@ -120,11 +121,22 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Smoothing Table</big></big></b></center>
-This table creates a group of value and smoothing priors used for
-functions of age and time.
-The age, time values, and priors for each point in a group are
-defined in the <a href="smooth_grid_table.htm" target="_top"><span style='white-space: nowrap'>smooth_grid_table</span></a>
-.
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Each row of the <code><font color="blue">smooth</font></code> table defines a statistical
+prior for a function of age and time.
+To be more specific, each row corresponds to
+a group of model <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ that,
+using <a href="bilinear.htm" target="_top"><span style='white-space: nowrap'>bilinear</span></a>
+ interpolation,
+define a function of age and time.
+For each variable in the group its statistical prior is defined by a row of the
+<a href="smooth_grid_table.htm" target="_top"><span style='white-space: nowrap'>smooth_grid_table</span></a>
+ which specifies an
+age, time, value prior, age difference prior, and time difference prior.
+(The difference priors represent the smoothing in a mathematical sense.)
 
 <br>
 <br>
