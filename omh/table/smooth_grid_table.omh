@@ -20,9 +20,15 @@ $spell
 $$
 
 $section The Smooth Grid Table$$
-This table specifies the age, time, and value priors, and smoothing priors
-for each $code/smooth_id/smooth_table/smooth_id/$$
-It has the following columns:
+
+$head Purpose$$
+Each row of the $code smooth_grid$$ table specifies an
+age, time, value prior, age difference prior, and time difference prior
+for a single $cref/model_variable/model_variables/$$.
+(The difference priors represent the smoothing in a mathematical sense.)
+A group of rows with the same $icode smooth_id$$,
+defines a statistical prior for a function of age and time.
+
 
 $head smooth_grid_id$$
 This column has type $code integer$$ and is the primary key for
@@ -32,7 +38,8 @@ Its initial value is zero, and it increments by one for each row.
 $head smooth_id$$
 This column has type $code integer$$ and is the primary key for
 the $cref smooth_table$$.
-Each $icode smooth_id$$ value corresponds to a different smoothing.
+Each $icode smooth_id$$ value corresponds to a different
+statistical prior for a function of age and time.
 
 $subhead null$$
 If $icode smooth_id$$ is null, the corresponding row of the
@@ -43,7 +50,7 @@ $icode smooth_id$$.
 $head age_id$$
 This column has type $code integer$$ and is a
 $cref/age_id/age_table/age_id/$$ in the age table.
-Each $icode age_id$$ value corresponds to a specific age.
+The $icode age_id$$ value corresponds to a specific age.
 
 $head time_id$$
 This column has type $code integer$$ and is a

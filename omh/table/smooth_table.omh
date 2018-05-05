@@ -17,10 +17,18 @@ $spell
 $$
 
 $section The Smoothing Table$$
-This table creates a group of value and smoothing priors used for
-functions of age and time.
-The age, time values, and priors for each point in a group are
-defined in the $cref smooth_grid_table$$.
+
+$head Purpose$$
+Each row of the $code smooth$$ table defines a statistical
+prior for a function of age and time.
+To be more specific, each row corresponds to
+a group of model $cref/model_variables/model_variables/$$ that,
+using $cref bilinear$$ interpolation,
+define a function of age and time.
+For each variable in the group its statistical prior is defined by a row of the
+$cref smooth_grid_table$$ which specifies an
+age, time, value prior, age difference prior, and time difference prior.
+(The difference priors represent the smoothing in a mathematical sense.)
 
 $head smooth_id$$
 This column has type $code integer$$ and is the primary key for this table.

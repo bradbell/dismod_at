@@ -53,6 +53,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-05$$
+The text describing the purpose of the
+$cref/prior table/prior_table/Purpose/$$,
+$cref/smooth table/smooth_table/Purpose/$$, and
+$cref/smooth_grid table/smooth_grid_table/Purpose/$$
+was improved.
+
 $head 05-04$$
 $list number$$
 Advance to using

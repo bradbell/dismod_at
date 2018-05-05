@@ -16,8 +16,11 @@ $spell
 $$
 
 $section The Prior Table$$
-The $code prior$$ table is used to define the
-prior for a single $cref/model_variables/model_variables/$$.
+
+$head Purpose$$
+Each row of the $code prior$$ table defines a statistical
+prior for a single $cref/model_variables/model_variables/$$; i.e.,
+one scalar value.
 It has the following columns:
 
 $head prior_id$$
