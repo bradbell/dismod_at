@@ -118,10 +118,10 @@ If $latex n_i$$ is equal to or a descendant of one of the children of the
 parent node,
 $latex u_{i,k} (a, t)$$ is the piecewise linear random effect
 for the corresponding
-$cref/child rate
+$cref/child and rate
 	/model_variables
 	/Random Effects, u
-	/Child Rates
+	/Child Rate Effects
 /$$
 If $latex n_i$$ is the parent node,
 there is no random effect for this data and

@@ -109,8 +109,8 @@
 # chi   $cnext .004    $cnext .002    $cnext .1      $cnext .05     $rnext
 # $tend
 #
-# $subhead Child Rates$$
-# The child rates are in log space
+# $subhead Child Rate Effects$$
+# The child rate effects are in log space
 # (see $cref/u_i,k/avg_integrand/Rate Functions/u_i,k/$$),
 # constant in age and time,
 # positive for even index children, negative for odd indices, and have the
@@ -202,7 +202,7 @@ parent_age_grid  = { 'start':0.0, 'end':100.0, 'number':6, 'std':0.4 }
 # %$$
 #
 # $subhead child_age_grid$$
-# The is the age grid used for all the child rate
+# The is the age grid used for all the child rate effect
 # $cref/smoothings/rate_table/child_smooth_id/$$ except for
 # omega (see $icode parent_age_grid$$ above).
 # It is a $code dict$$ with the following values:
@@ -211,7 +211,7 @@ parent_age_grid  = { 'start':0.0, 'end':100.0, 'number':6, 'std':0.4 }
 # $cref/random effects/model_variables/Random Effects, u/$$.
 # Each of these indices must be less than $icode number$$ in the age grid.
 # The value $icode std$$ (a $code float$$) is the standard deviation in the
-# Gaussian used to smooth the child rate values.
+# Gaussian used to smooth the child rate effect values.
 # (This does not include $cref/pini/rate_table/rate_name/pini/$$
 # because it only has one age point.)
 # $srccode%py%
@@ -240,7 +240,7 @@ parent_time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
 # %$$
 #
 # $subhead child_time_grid$$
-# The is the time grid used for all the child rate
+# The is the time grid used for all the child rate effect
 # $cref/smoothings/rate_table/child_smooth_id/$$ except for
 # omega (see $icode parent_time_grid$$ above).
 # It is a $code dict$$ with the following values:
@@ -249,7 +249,7 @@ parent_time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
 # $cref/random effects/model_variables/Random Effects, u/$$.
 # Each of these indices must be less than $icode number$$ in the time grid.
 # The value $icode std$$ (a $code float$$) is the standard deviation in the
-# Gaussian used to smooth the child rate values.
+# Gaussian used to smooth the child rate effect values.
 # (This includes $cref/pini/rate_table/rate_name/pini/$$).
 # $srccode%py%
 child_time_grid  = { 'index':[0], 'std':0.2 }

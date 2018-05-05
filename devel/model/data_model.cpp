@@ -1261,7 +1261,7 @@ CppAD::vector<Float> data_model::sci_ode(
 				for(size_t k = 0; k < n_var; k++)
 					var_si[k] = pack_vec[info.offset + k];
 				//
-				// interpolate child rate onto the ode grid
+				// interpolate child rate effect onto the ode grid
 				CppAD::vector<Float> var_ode =
 					si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
 				//

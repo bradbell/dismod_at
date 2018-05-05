@@ -526,7 +526,7 @@ $subhead smooth_id$$
 is the $cref/smooth_id/smooth_table/smooth_id/$$ for the rate.
 If $icode%j% == %n_child%$$,
 this smoothing corresponds to the parent rates.
-Otherwise it corresponds to the child rates and is the same
+Otherwise it corresponds to the child rate effects and is the same
 for all children.
 If
 $codei%

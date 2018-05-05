@@ -12,7 +12,6 @@
 new_directories='
 '
 rename_files='
-	example/user/fit_fixed.py
 '
 spell_files='
 '
@@ -24,7 +23,9 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|fit_fixed|fit_fixed_both|g
+s|Child Rates|Child Rate Effects|
+s|child rate|child rate effect|
+s|child rates|child rate effects|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

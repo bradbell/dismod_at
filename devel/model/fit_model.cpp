@@ -59,7 +59,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 			size_t smooth_id = info_0.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	// number of grid points for child soothing for this rate
-				// all child rates have the same smoothing, in addition
+				// all child rate effects have the same smoothing, in addition
 				// the lower and upper limits for the smoothing are infinite
 				// (Hence not equal so they are random effects in cppad_mixed)
 				size_t n_grid = info_0.n_var;

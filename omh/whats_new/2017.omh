@@ -727,7 +727,7 @@ in the $cref avg_integrand$$.
 $lnext
 Correct the discussion of model variables to state that it is now
 possible to have a different smoothing for each
-$cref/child rate/model_variables/Random Effects, u/Child Rates/$$.
+$cref/child rate effect/model_variables/Random Effects, u/Child Rate Effects/$$.
 $lend
 
 

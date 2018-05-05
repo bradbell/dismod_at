@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -74,7 +74,7 @@ If the $icode node_id$$ is the
 $cref/parent_node_id/option_table/parent_node_id/$$, it is a
 $cref/fixed effect/model_variables/Fixed Effects, theta/Parent Rates/$$.
 Otherwise, it is a
-$cref/random effect/model_variables/Random Effects, u/Child Rates/$$.
+$cref/random effect/model_variables/Random Effects, u/Child Rate Effects/$$.
 
 $subhead mulcov_rate_value$$
 This variable is a

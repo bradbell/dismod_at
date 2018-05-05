@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -314,7 +314,7 @@ for var_id in range( len(var_table) ) :
 			assert abs( value / other_true - 1.0 ) < eps
 assert count == 5
 #
-# check child rates values
+# check child rate effects values
 count             = 0
 for var_id in range( len(var_table) ) :
 	row   = var_table[var_id]

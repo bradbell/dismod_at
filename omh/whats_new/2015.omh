@@ -267,7 +267,7 @@ $lend
 $head 11-07$$
 $list number$$
 One can now inform $code dismod_at$$ that a specific
-parent rate (child rate) is always zero by setting
+parent rate (child rate effect) is always zero by setting
 $cref/parent_smooth_id/rate_table/parent_smooth_id/null/$$
 ( $cref/child_smooth_id/rate_table/child_smooth_id/null/$$ )
 to $code null$$.
@@ -281,7 +281,7 @@ The time in Ipopt decreased from
 6.142 sec to 2.477 sec
 the time in NLP function evaluations decreased from
 16.760 to 10.321.
-The number of grid points for each of the child rates
+The number of grid points for each of the child rate effects
 (random  effects) was then increased from one to four.
 $lnext
 The random effects sub-package name was changed from

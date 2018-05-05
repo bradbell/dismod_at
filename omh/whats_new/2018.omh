@@ -40,6 +40,7 @@ $spell
 	dtime
 	dismodat
 	sql
+	ik
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -53,11 +54,21 @@ $childtable%
 %$$
 
 $head 05-04$$
+$list number$$
 Advance to using
 $cref/cppad-20180503/install_unix/Special Requirements/CppAD/$$, and
 $cref/cppad_mixed-20180503/install_unix/Special Requirements/cppad_mixed/$$.
 This should reduce the amount of memory used
 without adversely affecting its speed.
+$lnext
+Use
+$cref/child rate effect/model_variables/Random Effects, u/Child Rate Effects/$$
+when referring to the a random effect
+$cref/u_i,k/avg_integrand/Rate Functions/u_i,k/$$.
+This distinguishes it from the corresponding rate for that child
+$cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
+$lend
+
 
 
 $head 05-02$$
