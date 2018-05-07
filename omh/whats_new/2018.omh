@@ -58,7 +58,7 @@ $head 05-07$$
 Advance to using
 $cref/cppad-20180507/install_unix/Special Requirements/CppAD/$$, and
 $cref/cppad_mixed-20180507/install_unix/Special Requirements/cppad_mixed/$$.
-This should increase the speed without using more memory.
+This should both increase speed and reduce memory usage.
 
 
 $head 05-05$$
