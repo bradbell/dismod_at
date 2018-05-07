@@ -54,6 +54,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-07$$
+Advance to using
+$cref/cppad-20180507/install_unix/Special Requirements/CppAD/$$, and
+$cref/cppad_mixed-20180507/install_unix/Special Requirements/cppad_mixed/$$.
+This should increase the speed without using more memory.
+
+
 $head 05-05$$
 $list number$$
 The text describing the purpose of the
@@ -62,7 +69,7 @@ $cref/smooth table/smooth_table/Purpose/$$, and
 $cref/smooth_grid table/smooth_grid_table/Purpose/$$
 was improved.
 $lnext
-The $cref model_variables$$ section was improve.
+The $cref model_variables$$ section was improved.
 To be specific,
 the term subvector was changed to group of variables
 and more mention was made of the corresponding function.
