@@ -28,53 +28,62 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 # temporary change to bin/run_cmake.sh to build release version
-sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|"
-bin/run_cmake.sh
 #
+git reset --hard
+#
+src_dir='example/user'
+out_dir="build/$src_dir"
 for version in one two
 do
-	build_dir='build/devel'
-	src_dir='example/user'
-	program="dismod_at.$version"
-	if [ ! -e $build_dir/$program ] || [ ! -e $build_dir/dismod_at ]
-	then
-		echo_eval git checkout ${branch[$version]}
-		#
-		echo_eval bin/install_cppad.sh
-		echo_eval bin/install_cppad_mixed.sh
-		#
-		pushd $build_dir
-		echo_eval make dismod_at
-		echo_eval cp dismod_at $program
-		popd
-	fi
+	#
+	echo_eval git checkout --quiet ${branch[$version]}
+	#
+	sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|"
+	echo "bin/run_cmake.sh > $out_dir/$version.log"
+	bin/run_cmake.sh > log.$$
+	mv log.$$ $out_dir/$version.log
+	#
+	for package in cppad cppad_mixed
+	do
+		echo "bin/install_$package.sh >> $out_dir/$version.log"
+		bin/install_$package.sh >> $out_dir/$version.log
+	done
+	#
+	cd build
+	make clean
+	echo "make dismod_at >> $out_dir/$version.log"
+	make dismod_at >> $src_dir/$version.log
+	cd ..
 	#
 	# create database
-	if [ $version == 'one' ]
-	then
-		random_seed='123'
-		n_children='10'
-		n_data_per_child='20'
-		quasi_fixed='false'
-		arguments="$random_seed $n_children $n_data_per_child $quasi_fixed"
-		echo "python3 $src_dir/speed.py $arguments > build/$src_dir/speed.out"
-		python3 $src_dir/speed.py $arguments > build/$src_dir/speed.out
-	fi
+	random_seed='123'
+	n_children='10'
+	n_data_per_child='20'
+	quasi_fixed='false'
+	arguments="$random_seed $n_children $n_data_per_child $quasi_fixed"
+	echo "python3 $src_dir/speed.py $arguments >> $out_dir/$version.log"
+	python3 $src_dir/speed.py $arguments >> $out_dir/$version.log
 	#
-	dir="build/$src_dir"
-	pushd $dir
+	pushd $out_dir > /dev/null
 	#
 	# timeing test
-	echo "time ../../devel/$program example.db fit both 0 >& $dir/$version.out"
-	( time ../../devel/$program example.db fit both 0 ) >& $version.out
+	program="../../devel/dismod_at"
+	echo "time $program example.db fit both 0 >& $out_dir/$version.out"
+	( time $program example.db fit both 0 ) >& $version.out
 	#
 	# memory test
-	echo "massif.sh ../../devel/$program example.db fit both 0 >& /dev/null"
-	massif.sh ../../devel/$program example.db fit both 0 >& /dev/null
+	echo "massif.sh $program example.db fit both 0 >& /dev/null"
+	massif.sh $program example.db fit both 0 >& /dev/null
 	#
-	echo_eval mv massif.out $version.massif
+	echo "mv massif.out $out_dir/$version.massif"
+	mv massif.out $version.massif
 	#
-	popd
+	popd > /dev/null
+	#
+	# undo changes in bin/run_cmake.sh
+	git checkout bin/run_cmake.sh
 done
-# undo changes in bin/run_cmake.sh
-git checkout bin/run_cmake.sh
+for version in one two
+do
+	echo_eval tail $out_dir/$version.out
+done
