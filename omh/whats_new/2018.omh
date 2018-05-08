@@ -54,6 +54,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-0-8$$
+Round off error could make some values in $cref fit_var_table$$
+not satisfy the lower and upper limits for the corresponding variables.
+This has been fixed.
+
 $head 05-07$$
 Advance to using
 $cref/cppad-20180507/install_unix/Special Requirements/CppAD/$$, and

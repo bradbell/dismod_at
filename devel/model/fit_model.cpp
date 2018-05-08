@@ -527,7 +527,7 @@ $end
 	d_vector pack_vec( n_var );
 
 	// fixed_lower
-	d_vector fixed_lower(n_fixed_);
+	d_vector fixed_lower_noscale(n_fixed_), fixed_lower(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 	{	size_t prior_id = var2prior_.value_prior_id(i);
 		if( prior_id != DISMOD_AT_NULL_SIZE_T )
@@ -535,11 +535,11 @@ $end
 		else
 			pack_vec[i] = var2prior_.const_value(i);
 	}
-	unpack_fixed(pack_object_, pack_vec, fixed_lower);
-	scale_fixed_effect(fixed_lower, fixed_lower);
+	unpack_fixed(pack_object_, pack_vec, fixed_lower_noscale);
+	scale_fixed_effect(fixed_lower_noscale, fixed_lower);
 
 	// fixed_upper
-	d_vector fixed_upper(n_fixed_);
+	d_vector fixed_upper_noscale(n_fixed_), fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 	{	size_t prior_id = var2prior_.value_prior_id(i);
 		if( prior_id != DISMOD_AT_NULL_SIZE_T )
@@ -547,8 +547,8 @@ $end
 		else
 			pack_vec[i] = var2prior_.const_value(i);
 	}
-	unpack_fixed(pack_object_, pack_vec, fixed_upper);
-	scale_fixed_effect(fixed_upper, fixed_upper);
+	unpack_fixed(pack_object_, pack_vec, fixed_upper_noscale);
+	scale_fixed_effect(fixed_upper_noscale, fixed_upper);
 
 	// fixed_mean
 	d_vector fixed_mean(n_fixed_);
@@ -687,6 +687,11 @@ $end
 	}
 	// The optimal solution is scaled, but the Lagrange multilpiers are not
 	unscale_fixed_effect(fixed_opt, fixed_opt);
+	// make sure round off has not violated bounds
+	for(size_t j = 0; j < n_fixed_; ++j)
+	{	fixed_opt[j] = std::max(fixed_lower_noscale[j], fixed_opt[j]);
+		fixed_opt[j] = std::min(fixed_upper_noscale[j], fixed_opt[j]);
+	}
 	//
 	// size store solution_
 	solution_.fit_var_value.resize(n_var);
