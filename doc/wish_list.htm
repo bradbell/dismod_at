@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution step size large excess mortality conditionals checkpointing lagrange multipliers documentation real world example user examples model simulating data sampling random effects special hessian starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list minimum_meas_cv command diagrams ode solution step size large excess mortality conditionals checkpointing lagrange multipliers documentation real world example user examples model sampling random effects special hessian starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -52,6 +52,8 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
+<option>minimum_meas_cv</option>
+<option>Command Diagrams</option>
 <option>ODE Solution</option>
 <option>---..Step Size</option>
 <option>---..Large Excess Mortality</option>
@@ -62,7 +64,6 @@ A:active { color : purple }
 <option>---..Real World Example</option>
 <option>---..User Examples</option>
 <option>---..Model Documentation</option>
-<option>Simulating Data</option>
 <option>Sampling Random Effects</option>
 <option>Special Random Effects Hessian</option>
 <option>Random Starting Point</option>
@@ -94,6 +95,30 @@ A:active { color : purple }
 
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
+<br>
+<b><big><a name="minimum_meas_cv" id="minimum_meas_cv">minimum_meas_cv</a></big></b>
+<br>
+Currently the
+<a href="option_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+
+is the same for all integrands.
+It would be good to add 
+<code><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i></code>
+ to the
+<a href="integrand_table.htm" target="_top"><span style='white-space: nowrap'>integrand_table</span></a>
+ so that it could be different for each integrand.
+
+<br>
+<br>
+<b><big><a name="Command Diagrams" id="Command Diagrams">Command Diagrams</a></big></b>
+<br>
+It would be good to give a data flow diagram for each command
+that corresponds to its inputs and outputs; i.e., to diagram
+the information under the heading
+<a href="data_flow.htm#Input and Output by Command" target="_top"><span style='white-space: nowrap'>inputs&nbsp;and&nbsp;outputs&nbsp;by&nbsp;command</span></a>
+.
+
+<br>
 <br>
 <b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
 
@@ -214,17 +239,6 @@ Log-Gaussian and Log-Laplace weighted residual functions
 <a href="statistic.htm#Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t" target="_top"><span style='white-space: nowrap'>R</span></a>
 .
 
-
-<br>
-<br>
-<b><big><a name="Simulating Data" id="Simulating Data">Simulating Data</a></big></b>
-<br>
-The random effects currently use the value in the <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
-
-during the <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
-.
-Perhaps it would be good to have an option whereby the priors for the
-random effects are used to simulate different value for each sample.
 
 <br>
 <br>

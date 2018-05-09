@@ -10,6 +10,8 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
+'wish_list.htm#minimum_meas_cv',
+'wish_list.htm#Command Diagrams',
 'wish_list.htm#ODE Solution',
 'wish_list.htm#ODE Solution.Step Size',
 'wish_list.htm#ODE Solution.Large Excess Mortality',
@@ -20,7 +22,6 @@ var list_current0 = [
 'wish_list.htm#Documentation.Real World Example',
 'wish_list.htm#Documentation.User Examples',
 'wish_list.htm#Documentation.Model Documentation',
-'wish_list.htm#Simulating Data',
 'wish_list.htm#Sampling Random Effects',
 'wish_list.htm#Special Random Effects Hessian',
 'wish_list.htm#Random Starting Point',
