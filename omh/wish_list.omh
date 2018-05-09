@@ -13,8 +13,6 @@ $spell
 	Dismod
 	eigen
 	optimizer
-	covariate
-	covariates
 	cppad
 	CppAD
 	checkpointing
@@ -25,12 +23,24 @@ $spell
 	dage
 	dtime
 	var
-	csv
-	mtall
-	mtspecific
+	cv
+	integrands
 $$
 
 $section Dismod_at Wish List$$
+
+$head minimum_meas_cv$$
+Currently the
+$cref/minimum_meas_cv/option_table/minimum_meas_cv/$$
+is the same for all integrands.
+It would be good to add $icode minimum_meas_cv$$ to the
+$cref integrand_table$$ so that it could be different for each integrand.
+
+$head Command Diagrams$$
+It would be good to give a data flow diagram for each command
+that corresponds to its inputs and outputs; i.e., to diagram
+the information under the heading
+$cref/inputs and outputs by command/data_flow/Input and Output by Command/$$.
 
 $head ODE Solution$$
 
@@ -112,12 +122,6 @@ $cref/R
 	/Log-Gaussian, Log-Laplace, Log-Student's-t
 /$$.
 
-
-$head Simulating Data$$
-The random effects currently use the value in the $cref truth_var_table$$
-during the $cref simulate_command$$.
-Perhaps it would be good to have an option whereby the priors for the
-random effects are used to simulate different value for each sample.
 
 $head Sampling Random Effects$$
 It is not expected that the

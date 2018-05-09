@@ -42,6 +42,7 @@ $spell
 	sql
 	ik
 	subvector
+	cv
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -54,7 +55,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
-$head 05-0-8$$
+$head 05-09$$
+A $cref/minimum_meas_cv/wish_list/minimum_meas_cv/$$ entry and
+a $cref/command diagram/wish_list/Command Diagrams/$$ entry
+have been added to the wish list.
+
+$head 05-08$$
 Round off error could make some values in $cref fit_var_table$$
 not satisfy the lower and upper limits for the corresponding variables.
 This has been fixed.
