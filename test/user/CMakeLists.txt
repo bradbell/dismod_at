@@ -21,6 +21,7 @@ FOREACH(user_case
 	not_ordered
 	posterior
 	relrisk
+	scale_zero
 	zero_random_1
 	zero_random_2
 )
