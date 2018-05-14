@@ -44,24 +44,6 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
 	// -----------------------------------------------------------------------
-	// trace
-# if DISMOD_AT_TRACE
-	std::time_t trace(const char* message, std::time_t previous_time = 0)
-	{	std::time_t current_time = std::time( DISMOD_AT_NULL_PTR );
-		if( previous_time == 0 )
-			std::cout << message << std::endl;
-		else
-			std::cout << message << current_time - previous_time << " sec"
-			<< std::endl;
-		return current_time;
-	}
-# else
-	std::time_t trace(const char* message, std::time_t previous_time = 0)
-	{	std::time_t current_time = std::time( DISMOD_AT_NULL_PTR );
-		return current_time;
-	}
-# endif
-	// -----------------------------------------------------------------------
 	// get_prior_mean
 	vector<double> get_prior_mean(
 		const vector<dismod_at::prior_struct>& prior_table ,
@@ -2150,10 +2132,8 @@ int main(int n_arg, const char** argv)
 	std::time_t unix_time =
 		dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
 	// --------------- get the input tables ---------------------------------
-	std::time_t current_time = trace("Reading database");
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);
-	trace("elapsed time = ", current_time);
 	// ----------------------------------------------------------------------
 	// option_map
 	std::map<string, string> option_map;
