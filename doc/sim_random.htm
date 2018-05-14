@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulate a Dismod_at Random Distribution</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulate a Dismod_at Random Distribution">
-<meta name="keywords" id="keywords" content=" simulate dismod_at random distribution syntax manage_gsl_rng density mu delta eta nu z example ">
+<meta name="keywords" id="keywords" content=" simulate dismod_at random distribution syntax manage_gsl_rng difference density mu delta linear value eta nu z example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -57,9 +57,13 @@ A:active { color : purple }
 <option>Current-&gt;</option>
 <option>Syntax</option>
 <option>manage_gsl_rng</option>
+<option>difference</option>
 <option>density</option>
 <option>mu</option>
 <option>delta</option>
+<option>---..Linear</option>
+<option>---..difference</option>
+<option>---..value</option>
 <option>eta</option>
 <option>nu</option>
 <option>z</option>
@@ -137,7 +141,7 @@ A:active { color : purple }
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sim_random(</span></font><i><font color="black"><span style='white-space: nowrap'>density</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;sim_random(</span></font><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>density</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
@@ -147,6 +151,20 @@ A:active { color : purple }
 The routine <a href="manage_gsl_rng.htm" target="_top"><span style='white-space: nowrap'>manage_gsl_rng</span></a>
  sets up and controls the underlying
 simulated random number generator.
+
+<br>
+<br>
+<b><big><a name="difference" id="difference">difference</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If it is true, this simulation is for a difference,
+otherwise it is for a value; see
+<a href="sim_random.htm#delta.difference" target="_top"><span style='white-space: nowrap'>delta</span></a>
+ below.
 
 <br>
 <br>
@@ -225,26 +243,51 @@ This argument has prototype
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-In the case were 
-<code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
- is
-<code><font color="blue">gaussian_enum</font></code> or <code><font color="blue">laplace_enum</font></code>,
-it is the standard deviation for the distribution that we are simulating.
-Otherwise,
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;-&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
-</span></font></code>
-it is the standard deviation of
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;-&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
-</span></font></code>
 It is assumed 
 <code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
  is greater than zero and not infinity.
 
 <br>
+<br>
+<big><a name="delta.Linear" id="delta.Linear">Linear</a></big>
+<br>
+In the case were 
+<code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
+ is
+<code><font color="blue">gaussian_enum</font></code>, <code><font color="blue">laplace_enum</font></code>, <code><font color="blue">students_enum</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
+
+it is the standard deviation for
+
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="delta.difference" id="delta.difference">difference</a></big>
+<br>
+If the density is a log density, and difference is true,
+
+<code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
+ is the standard deviation for
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;-&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
+<br>
+<big><a name="delta.value" id="delta.value">value</a></big>
+<br>
+If the density is a log density, and difference is false,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;-&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
+is the standard deviation for
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;-&nbsp;log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
 <br>
 <b><big><a name="eta" id="eta">eta</a></big></b>
 <br>

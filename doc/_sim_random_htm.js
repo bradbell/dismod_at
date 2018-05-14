@@ -15,9 +15,13 @@ var list_across0 = [
 var list_current0 = [
 'sim_random.htm#Syntax',
 'sim_random.htm#manage_gsl_rng',
+'sim_random.htm#difference',
 'sim_random.htm#density',
 'sim_random.htm#mu',
 'sim_random.htm#delta',
+'sim_random.htm#delta.Linear',
+'sim_random.htm#delta.difference',
+'sim_random.htm#delta.value',
 'sim_random.htm#eta',
 'sim_random.htm#nu',
 'sim_random.htm#z',
