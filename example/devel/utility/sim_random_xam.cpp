@@ -42,7 +42,7 @@ bool sim_random_xam(void)
 	size_t sample_size = 100*100*100;
 	// -------------------------------------------------------------------
 	// check Gausian
-	bool difference                 = false;
+	bool difference                 = false; // does not matter
 	dismod_at::density_enum density = dismod_at::gaussian_enum;
 	double delta   = 0.5;
 	double mu      = 0.0;
@@ -80,7 +80,8 @@ bool sim_random_xam(void)
 	sum_z   = 0.0;
 	sum_zsq = 0.0;
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z = dismod_at::sim_random(
+	{	difference = bool( i % 2 ); // does not matter
+		double z = dismod_at::sim_random(
 			difference, density, mu, delta, eta, nu
 		);
 		if( 0.5 <= z / delta )
@@ -110,7 +111,8 @@ bool sim_random_xam(void)
 	sum_zsq = 0.0;
 	nu      = 7.0;
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z = dismod_at::sim_random(
+	{	difference = bool( i % 2 ); // does not matter
+		double z = dismod_at::sim_random(
 			difference, density, mu, delta, eta, nu
 		);
 		if( 0.5 <= z / delta )
@@ -141,10 +143,14 @@ bool sim_random_xam(void)
 	double sum_wsq = 0.0;
 	double sigma   = log(mu + eta + delta) - log(mu + eta);
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z     = dismod_at::sim_random(
+	{	difference   = bool( i % 2 ); // does matter
+		double z     = dismod_at::sim_random(
 			difference, density, mu, delta, eta, nu
 		);
-		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
+		double w = ( log(z + eta) - log(mu + eta) ) / sigma;
+		if( difference )
+			w    = ( log(z + eta) - log(mu + eta) ) / delta;
+
 		if( 0.5 <= w )
 			count ++;
 		sum_w   += w;
@@ -171,10 +177,13 @@ bool sim_random_xam(void)
 	sum_wsq = 0.0;
 	sigma   = log(mu + eta + delta) - log(mu + eta);
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z     = dismod_at::sim_random(
+	{	difference   = bool( i % 2 ); // does matter
+		double z     = dismod_at::sim_random(
 			difference, density, mu, delta, eta, nu
 		);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
+		if( difference )
+			w    = ( log(z + eta) - log(mu + eta) ) / delta;
 		if( 0.5 <= w )
 			count ++;
 		sum_w   += w;
@@ -203,10 +212,13 @@ bool sim_random_xam(void)
 	sum_wsq = 0.0;
 	sigma   = log(mu + eta + delta) - log(mu + eta);
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z     = dismod_at::sim_random(
+	{	difference   = bool( i % 2 ); // does matter
+		double z     = dismod_at::sim_random(
 			difference, density, mu, delta, eta, nu
 		);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
+		if( difference )
+			w    = ( log(z + eta) - log(mu + eta) ) / delta;
 		if( 0.5 <= w )
 			count ++;
 		sum_w   += w;

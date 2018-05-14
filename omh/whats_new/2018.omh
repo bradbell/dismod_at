@@ -55,6 +55,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-14$$
+There was a bug in the simulation of age difference and time
+difference prior means introduced on
+$cref/04-24/whats_new_2018/$$.
+To be specific
+$latex/sigma/statistic/Log-Transformed Standard Deviation/$$
+was being used where delta should have been.
+
+
 $head 05-09$$
 A $cref/minimum_meas_cv/wish_list/minimum_meas_cv/$$ entry and
 a $cref/command diagram/wish_list/Command Diagrams/$$ entry
