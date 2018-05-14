@@ -22,6 +22,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/eigen_ode2.cpp
 	utility/error_exit.cpp
 	utility/fixed_effect.cpp
+	utility/get_prior_mean.cpp
 	utility/integrate_1d.cpp
 	utility/integrate_2d.cpp
 	utility/interp_weight.cpp

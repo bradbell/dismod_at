@@ -38,6 +38,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/configure.hpp>
 # include <dismod_at/depend.hpp>
+# include <dismod_at/get_prior_mean.hpp>
 
 # define DISMOD_AT_TRACE 0
 
