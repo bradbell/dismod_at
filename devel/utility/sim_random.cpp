@@ -16,16 +16,26 @@ $spell
 	mu
 	enum
 	gsl_rng
+	bool
 $$
 
 $section Simulate a Dismod_at Random Distribution$$
 
 $head Syntax$$
-$icode%z% = sim_random(%density%, %mu%, %delta%, %eta%, %nu%)%$$
+$icode%z% = sim_random(%difference%, %density%, %mu%, %delta%, %eta%, %nu%)%$$
 
 $head manage_gsl_rng$$
 The routine $cref manage_gsl_rng$$ sets up and controls the underlying
 simulated random number generator.
+
+$head difference$$
+This argument has prototype
+$codei%
+	bool %difference%
+%$$
+If it is true, this simulation is for a difference,
+otherwise it is for a value; see
+$cref/delta/sim_random/delta/difference/$$ below.
 
 $head density$$
 This argument has prototype
@@ -68,18 +78,31 @@ This argument has prototype
 $codei%
 	double %delta%
 %$$
+It is assumed $icode delta$$ is greater than zero and not infinity.
+
+$subhead Linear$$
 In the case were $icode density$$ is
-$code gaussian_enum$$ or $code laplace_enum$$,
-it is the standard deviation for the distribution that we are simulating.
-Otherwise,
-$codei%
-	log( %mu% + %eta% + %delta% ) - log( %mu% + %eta% )
-%$$
-it is the standard deviation of
+$code gaussian_enum$$, $code laplace_enum$$, $code students_enum$$,
+$icode delta$$
+it is the standard deviation for
+$icode%z% - %mu%$$.
+
+$subhead difference$$
+If the density is a log density, and difference is true,
+$icode delta$$ is the standard deviation for
 $codei%
 	log( %z% + %eta% ) - log( %mu% + %eta% )
 %$$
-It is assumed $icode delta$$ is greater than zero and not infinity.
+
+$subhead value$$
+If the density is a log density, and difference is false,
+$codei%
+	log( %mu% + %eta% + %delta% ) - log( %mu% + %eta% )
+%$$
+is the standard deviation for
+$codei%
+	log( %z% + %eta% ) - log( %mu% + %eta% )
+%$$
 
 $head eta$$
 This argument has prototype
@@ -127,7 +150,12 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 double sim_random(
-	density_enum density, double mu, double delta, double eta, double nu )
+	bool         difference,
+	density_enum density,
+	double       mu     ,
+	double       delta  ,
+	double       eta    ,
+	double nu           )
 {	gsl_rng* rng = CppAD::mixed::get_gsl_rng();
 	//
 	assert( density != uniform_enum );
@@ -150,6 +178,8 @@ double sim_random(
 	//
 	// standard deviation in transformed space
 	double sigma = std::log(mu + eta + delta) - std::log(mu + eta);
+	if( difference )
+		sigma = delta;
 	//
 	// difference from mean in transformed space
 	double d_log;

@@ -1365,6 +1365,7 @@ void simulate_command(
 		dismod_at::density_enum density =
 			dismod_at::density_enum( data_subset_obj[subset_id].density_id );
 		//
+		double difference   = false;
 		double eta          = data_subset_obj[subset_id].eta;
 		double nu           = data_subset_obj[subset_id].nu;
 		//
@@ -1373,7 +1374,7 @@ void simulate_command(
 			//
 			// compute the simulated measurement value
 			double sim_value   = dismod_at::sim_random(
-				density, avg, sim_delta, eta, nu
+				difference, density, avg, sim_delta, eta, nu
 			);
 			if( density == dismod_at::log_gaussian_enum
 			||  density == dismod_at::log_laplace_enum
@@ -1439,14 +1440,18 @@ void simulate_command(
 				double eta   = prior_table[ prior_id[k] ].eta;
 				double nu    = prior_table[ prior_id[k] ].nu;
 				//
+				// k = 0 is a value prior, others are difference priors
+				bool difference = k > 0;
+				//
 				int    den   = prior_table[prior_id[k]].density_id;
 				dismod_at::density_enum density = dismod_at::density_enum(den);
 				//
 				if( density == dismod_at::uniform_enum )
 					sim_str[k] = "null";
 				else
-				{	double sim =
-						dismod_at::sim_random(density, mean, std, eta, nu);
+				{	double sim = dismod_at::sim_random(
+						difference, density, mean, std, eta, nu
+					);
 					//
 					sim = std::min(sim, upper);
 					sim = std::max(sim, lower);

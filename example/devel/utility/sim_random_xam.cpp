@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -42,6 +42,7 @@ bool sim_random_xam(void)
 	size_t sample_size = 100*100*100;
 	// -------------------------------------------------------------------
 	// check Gausian
+	bool difference                 = false;
 	dismod_at::density_enum density = dismod_at::gaussian_enum;
 	double delta   = 0.5;
 	double mu      = 0.0;
@@ -51,7 +52,9 @@ bool sim_random_xam(void)
 	double eta     = 0.0; // not used (avoid warning)
 	double nu      = 0.0; // not used (avoid warning)
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z = dismod_at::sim_random(density, mu, delta, eta, nu);
+	{	double z = dismod_at::sim_random(
+			difference, density, mu, delta, eta, nu
+		);
 		if( 0.5 <= z / delta )
 			count ++;
 		sum_z   += z;
@@ -77,7 +80,9 @@ bool sim_random_xam(void)
 	sum_z   = 0.0;
 	sum_zsq = 0.0;
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z = dismod_at::sim_random(density, mu, delta, eta, nu);
+	{	double z = dismod_at::sim_random(
+			difference, density, mu, delta, eta, nu
+		);
 		if( 0.5 <= z / delta )
 			count ++;
 		sum_z   += z;
@@ -105,7 +110,9 @@ bool sim_random_xam(void)
 	sum_zsq = 0.0;
 	nu      = 7.0;
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z = dismod_at::sim_random(density, mu, delta, eta, nu);
+	{	double z = dismod_at::sim_random(
+			difference, density, mu, delta, eta, nu
+		);
 		if( 0.5 <= z / delta )
 			count ++;
 		sum_z   += z;
@@ -134,7 +141,9 @@ bool sim_random_xam(void)
 	double sum_wsq = 0.0;
 	double sigma   = log(mu + eta + delta) - log(mu + eta);
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z     = dismod_at::sim_random(density, mu, delta, eta, nu);
+	{	double z     = dismod_at::sim_random(
+			difference, density, mu, delta, eta, nu
+		);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
 		if( 0.5 <= w )
 			count ++;
@@ -162,7 +171,9 @@ bool sim_random_xam(void)
 	sum_wsq = 0.0;
 	sigma   = log(mu + eta + delta) - log(mu + eta);
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z     = dismod_at::sim_random(density, mu, delta, eta, nu);
+	{	double z     = dismod_at::sim_random(
+			difference, density, mu, delta, eta, nu
+		);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
 		if( 0.5 <= w )
 			count ++;
@@ -192,7 +203,9 @@ bool sim_random_xam(void)
 	sum_wsq = 0.0;
 	sigma   = log(mu + eta + delta) - log(mu + eta);
 	for(size_t i = 0; i < sample_size; i++)
-	{	double z     = dismod_at::sim_random(density, mu, delta, eta, nu);
+	{	double z     = dismod_at::sim_random(
+			difference, density, mu, delta, eta, nu
+		);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
 		if( 0.5 <= w )
 			count ++;
