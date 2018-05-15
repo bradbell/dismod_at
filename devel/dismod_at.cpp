@@ -44,25 +44,6 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 	using CppAD::vector;
-	// -----------------------------------------------------------------------
-	// get_prior_mean
-	vector<double> get_prior_mean(
-		const vector<dismod_at::prior_struct>& prior_table ,
-		const dismod_at::pack_info&            pack_object ,
-		const dismod_at::pack_prior&           var2prior   )
-	{
-		// put means in return value
-		size_t n_var = pack_object.size();
-		vector<double> result(n_var);
-		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	double var_value = var2prior.const_value(var_id);
-			size_t prior_id  = var2prior.value_prior_id(var_id);
-			if( prior_id != DISMOD_AT_NULL_SIZE_T )
-				var_value = prior_table[prior_id].mean;
-			result[var_id] = var_value;
-		}
-		return result;
-	}
 /*
 -----------------------------------------------------------------------------
 $begin set_command$$
@@ -2280,9 +2261,7 @@ int main(int n_arg, const char** argv)
 	//
 	// prior_mean
 	vector<double> prior_mean = get_prior_mean(
-		db_input.prior_table,
-		pack_object,
-		var2prior
+		db_input.prior_table, var2prior
 	);
 	// minimum_meas_cv
 	double minimum_meas_cv = std::atof(
