@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -44,13 +44,22 @@ and is an open connection to the database.
 $head integrand_table$$
 The return value $icode integrand_table$$ has prototype
 $codei%
-	CppAD::vector<integrand_enum>  %integrand_table%
+	CppAD::vector<integrand_struct>  %integrand_table%
 %$$
 For each $cref/integrand_id/integrand_table/integrand_id/$$,
 $codei%
 	%integrand_table%[%integrand_id%]
 %$$
-is the corresponding integrand described below:
+is the information for the corresponding integrand.
+
+$head integrand_struct$$
+This is a structure with the following fields
+$table
+Type $cnext Field $cnext Description
+$rnext
+$code integrand_enum$$ $cnext $code integrand$$ $cnext
+	An enum type for this integrand; see below
+$tend
 
 $head integrand_enum$$
 This is an enum type with the following values:
@@ -112,7 +121,7 @@ const char* integrand_enum2name[] = {
 	"mtstandard",
 	"relrisk"
 };
-CppAD::vector<integrand_enum> get_integrand_table(sqlite3* db)
+CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 {	using std::string;
 
 	string table_name  = "integrand";
@@ -123,7 +132,7 @@ CppAD::vector<integrand_enum> get_integrand_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, integrand_name);
 	assert( n_integrand == integrand_name.size() );
 
-	CppAD::vector<integrand_enum> integrand_table(n_integrand);
+	CppAD::vector<integrand_struct> integrand_table(n_integrand);
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	integrand_enum integrand = number_integrand_enum;
 		for(size_t j = 0; j < number_integrand_enum; j++)
@@ -135,7 +144,7 @@ CppAD::vector<integrand_enum> get_integrand_table(sqlite3* db)
 			msg       += " is not a valid choice for integrand_name.";
 			error_exit(msg, table_name, integrand_id);
 		}
-		integrand_table[integrand_id] = integrand;
+		integrand_table[integrand_id].integrand = integrand;
 	}
 	return integrand_table;
 }

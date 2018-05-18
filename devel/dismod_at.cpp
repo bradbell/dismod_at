@@ -1126,7 +1126,7 @@ void fit_command(
 		double avg;
 		size_t integrand_id = data_subset_obj[subset_id].integrand_id;
 		dismod_at::integrand_enum integrand =
-			db_input.integrand_table[integrand_id];
+			db_input.integrand_table[integrand_id].integrand;
 		switch( integrand )
 		{	case dismod_at::Sincidence_enum:
 			case dismod_at::remission_enum:
@@ -1233,7 +1233,7 @@ void simulate_command(
 	const std::string&                                  number_simulate ,
 	double                                              minimum_meas_cv ,
 	sqlite3*                                            db              ,
-	const vector<dismod_at::integrand_enum>&            integrand_table ,
+	const vector<dismod_at::integrand_struct>&          integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
 	const dismod_at::data_model&                        data_object     ,
 	const dismod_at::pack_prior&                        var2prior       ,
@@ -1293,7 +1293,8 @@ void simulate_command(
 	{	//
 		// compute the average integrand, avg
 		size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
-		dismod_at::integrand_enum integrand = integrand_table[integrand_id];
+		dismod_at::integrand_enum integrand =
+			integrand_table[integrand_id].integrand;
 		double avg;
 		switch( integrand )
 		{	case dismod_at::Sincidence_enum:
@@ -1984,7 +1985,7 @@ void predict_command(
 			int avgint_id    = avgint_subset_obj[subset_id].original_id;
 			double avg = 0.0;
 			dismod_at::integrand_enum integrand =
-				db_input.integrand_table[integrand_id];
+				db_input.integrand_table[integrand_id].integrand;
 			switch( integrand )
 			{
 				case dismod_at::Sincidence_enum:

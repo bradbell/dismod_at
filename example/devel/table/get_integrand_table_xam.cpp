@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -56,16 +56,16 @@ bool get_integrand_table_xam(void)
 
 
 	// get the integrand table
-	vector<dismod_at::integrand_enum> integrand_table =
+	vector<dismod_at::integrand_struct> integrand_table =
 		dismod_at::get_integrand_table(db);
 	ok  &= integrand_table.size() == 6;
 	//
-	ok  &= integrand_table[0] == dismod_at::mtall_enum;
-	ok  &= integrand_table[1] == dismod_at::prevalence_enum;
-	ok  &= integrand_table[2] == dismod_at::remission_enum;
-	ok  &= integrand_table[3] == dismod_at::Sincidence_enum;
-	ok  &= integrand_table[4] == dismod_at::susceptible_enum;
-	ok  &= integrand_table[5] == dismod_at::withC_enum;
+	ok  &= integrand_table[0].integrand == dismod_at::mtall_enum;
+	ok  &= integrand_table[1].integrand == dismod_at::prevalence_enum;
+	ok  &= integrand_table[2].integrand == dismod_at::remission_enum;
+	ok  &= integrand_table[3].integrand == dismod_at::Sincidence_enum;
+	ok  &= integrand_table[4].integrand == dismod_at::susceptible_enum;
+	ok  &= integrand_table[5].integrand == dismod_at::withC_enum;
 	//
 	// close database and return
 	sqlite3_close(db);

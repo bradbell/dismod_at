@@ -127,9 +127,9 @@ bool sci_ode_xam(void)
 	//
 	// integrand_id = number_integrand - integrand_enum - 1
 	size_t n_integrand = dismod_at::number_integrand_enum;
-	vector<dismod_at::integrand_enum> integrand_table(n_integrand);
+	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	integrand_table[integrand_id] =
+	{	integrand_table[integrand_id].integrand =
 			dismod_at::integrand_enum(n_integrand - integrand_id - 1);
 	}
 	//

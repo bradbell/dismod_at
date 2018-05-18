@@ -298,7 +298,7 @@ for var_id in range( len(var_table) ) :
 	if rate_name == 'iota' :
 		ok = abs( fit_value / iota_true - 1.0 ) < .05
 		if not ok :
-			print( "iota relative error = ", fit_value / iota_true )
+			print( "iota relative error = ", fit_value / iota_true - 1.0)
 			assert abs( fit_value / iota_true - 1.0 ) < .05
 	else :
 		assert fit_value == chi_true

@@ -136,9 +136,9 @@ bool meas_mulcov(void)
 	//
 	// integrand_table
 	size_t n_integrand = dismod_at::number_integrand_enum;
-	vector<dismod_at::integrand_enum> integrand_table(n_integrand);
+	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(size_t i = 0; i < n_integrand; i++)
-	{	integrand_table[i] = dismod_at::integrand_enum(i);
+	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
 	}
 	//
 	// n_age_ode
