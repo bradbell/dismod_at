@@ -1,0 +1,165 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Get Prior Mean For Each Variable</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Get Prior Mean For Each Variable">
+<meta name="keywords" id="keywords" content=" get prior mean each variable syntax prototype prior_table var2prior prior_mean ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_get_prior_mean_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>get_prior_mean</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="fixed_effect_xam.cpp.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>prior_table</option>
+<option>var2prior</option>
+<option>prior_mean</option>
+</select>
+</td>
+<td><a href="integrate_1d.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>ad_types</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>get_prior_mean</option>
+<option>integrate_1d</option>
+<option>integrate_2d</option>
+<option>interp_weight</option>
+<option>pack_info</option>
+<option>pack_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>number_random_const</option>
+<option>smooth2ode</option>
+<option>solve_ode</option>
+<option>split_space</option>
+</select>
+</td>
+<td>get_prior_mean</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Get Prior Mean For Each Variable</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>prior_mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;get_prior_mean(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_prior</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var2prior</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">get_prior_mean</font></b><font color="#990000">(</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>dismod_at<font color="#990000">::</font>prior_struct<font color="#990000">&gt;&amp;</font> prior_table <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> dismod_at<font color="#990000">::</font>pack_prior<font color="#990000">&amp;</font>                  var2prior   <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="prior_table" id="prior_table">prior_table</a></big></b>
+<br>
+Is the <a href="get_prior_table.htm#prior_table" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="var2prior" id="var2prior">var2prior</a></big></b>
+<br>
+Is the prior information as a mapping from variable index to
+prior table index.
+
+<br>
+<br>
+<b><big><a name="prior_mean" id="prior_mean">prior_mean</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_main</span></font></i></code>
+
+is the prior mean for each variable by
+<a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
+.
+
+
+<hr>Input File: devel/utility/get_prior_mean.cpp
+
+</body>
+</html>

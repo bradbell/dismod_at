@@ -16,6 +16,7 @@ var list_current0 = [
 'get_integrand_table.htm#Purpose',
 'get_integrand_table.htm#db',
 'get_integrand_table.htm#integrand_table',
+'get_integrand_table.htm#integrand_struct',
 'get_integrand_table.htm#integrand_enum',
 'get_integrand_table.htm#integrand_enum2name',
 'get_integrand_table.htm#Example'

@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180514  ',' ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180518  ',' ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl download dismod_at.git special run_cmake.sh eigen ipopt suitesparse cppad cppad_mixed setup command build test executable path example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix eigen_prefix other prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir checkpoint_newton_step system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
@@ -155,7 +155,7 @@ Keyword =
 'get_db_input  C++: Get the Data Base Input Tables  ',' syntax see also purpose primary key initial prevalence grid check rate limits child priors zero sum constraint ',
 'get_density_table  C++: Get the Density Table Information  ',' syntax purpose db density_enum log_density example ',
 'get_density_table_xam.cpp  C++ get_density_table: Example and Test  ',' ',
-'get_integrand_table  C++: Get the Integrand Table Information  ',' syntax purpose db integrand_enum integrand_enum2name example ',
+'get_integrand_table  C++: Get the Integrand Table Information  ',' syntax purpose db integrand_struct integrand_enum integrand_enum2name example ',
 'get_integrand_table_xam.cpp  C++ get_integrand_table: Example and Test  ',' ',
 'get_mulcov_table  C++: Get the Covariate Multiplier Table Information  ',' syntax purpose db mulcov_struct mulcov_type_enum example ',
 'get_mulcov_table_xam.cpp  C++ get_mulcov_table: Example and Test  ',' ',
@@ -207,6 +207,7 @@ Keyword =
 'error_exit  Printing and Logging Fatal Error Messages  ',' syntax db null table_name row_id assert ',
 'fixed_effect  Setting and Getting the Fixed Effect Vector  ',' syntax float order effects pack_object n_fixed pack_index unpack_fixed pack_vec fixed_vec example ',
 'fixed_effect_xam.cpp  C++ fixed_effect: Example and Test  ',' ',
+'get_prior_mean  Get Prior Mean For Each Variable  ',' syntax prototype prior_table var2prior ',
 'integrate_1d  Compute One Dimensional Integration Coefficients  ',' syntax see also purpose w example method ',
 'integrate_1d_xam.cpp  C++ integrate_1d: Example and Test  ',' ',
 'integrate_2d  Compute Two Dimensional Integration Coefficients  ',' syntax see also purpose b example method ',

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++: Get the Integrand Table Information</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++: Get the Integrand Table Information">
-<meta name="keywords" id="keywords" content=" c++: get the integrand table information syntax purpose db integrand_table integrand_enum integrand_enum2name example ">
+<meta name="keywords" id="keywords" content=" c++: get the integrand table information syntax purpose db integrand_table integrand_struct integrand_enum integrand_enum2name example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,6 +58,7 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>db</option>
 <option>integrand_table</option>
+<option>integrand_struct</option>
 <option>integrand_enum</option>
 <option>integrand_enum2name</option>
 <option>Example</option>
@@ -174,7 +175,7 @@ The return value
  has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;integrand_enum&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppAD::vector&lt;integrand_struct&gt;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 For each <a href="integrand_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
 ,
@@ -182,9 +183,26 @@ For each <a href="integrand_table.htm#integrand_id" target="_top"><span style='w
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
-is the corresponding integrand described below:
+is the information for the corresponding integrand.
 
 <br>
+<br>
+<b><big><a name="integrand_struct" id="integrand_struct">integrand_struct</a></big></b>
+<br>
+This is a structure with the following fields
+<table><tr><td align='left'  valign='top'>
+
+Type </td><td align='left'  valign='top'>
+ Field </td><td align='left'  valign='top'>
+ Description
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">integrand_enum</font></code> </td><td align='left'  valign='top'>
+ <code><font color="blue">integrand</font></code> </td><td align='left'  valign='top'>
+
+	An enum type for this integrand; see below
+</td></tr>
+</table>
 <br>
 <b><big><a name="integrand_enum" id="integrand_enum">integrand_enum</a></big></b>
 <br>

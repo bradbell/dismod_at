@@ -2,7 +2,7 @@ var list_up0 = [
 'dismod_at.htm',
 'devel.htm',
 'devel_utility.htm',
-'random_effect.htm'
+'get_prior_mean.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -12,18 +12,11 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'random_effect.htm#Syntax',
-'random_effect.htm#Float',
-'random_effect.htm#Order of Random Effects',
-'random_effect.htm#pack_object',
-'random_effect.htm#pack_index',
-'random_effect.htm#unpack_random',
-'random_effect.htm#unpack_random.pack_vec',
-'random_effect.htm#unpack_random.random_vec',
-'random_effect.htm#pack_random',
-'random_effect.htm#pack_random.pack_vec',
-'random_effect.htm#pack_random.random_vec',
-'random_effect.htm#Example'
+'get_prior_mean.htm#Syntax',
+'get_prior_mean.htm#Prototype',
+'get_prior_mean.htm#prior_table',
+'get_prior_mean.htm#var2prior',
+'get_prior_mean.htm#prior_mean'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -64,9 +57,6 @@ var list_down1 = [
 'smooth2ode.htm',
 'solve_ode.htm',
 'split_space.htm'
-];
-var list_down0 = [
-'random_effect_xam.cpp.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

@@ -27,6 +27,7 @@ var list_down3 = [
 'eigen_ode2.htm',
 'error_exit.htm',
 'fixed_effect.htm',
+'get_prior_mean.htm',
 'integrate_1d.htm',
 'integrate_2d.htm',
 'interp_weight.htm',

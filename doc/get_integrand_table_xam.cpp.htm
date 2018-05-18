@@ -162,16 +162,16 @@ A:active { color : purple }
 
 
      <i><font color="#9A1900">// get the integrand table</font></i>
-     <font color="#008080">vector&lt;dismod_at::integrand_enum&gt;</font> integrand_table <font color="#990000">=</font>
+     <font color="#008080">vector&lt;dismod_at::integrand_struct&gt;</font> integrand_table <font color="#990000">=</font>
           dismod_at<font color="#990000">::</font><b><font color="#000000">get_integrand_table</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
      ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">6</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
-     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> dismod_at<font color="#990000">::</font>mtall_enum<font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> dismod_at<font color="#990000">::</font>prevalence_enum<font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> dismod_at<font color="#990000">::</font>remission_enum<font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">==</font> dismod_at<font color="#990000">::</font>Sincidence_enum<font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">==</font> dismod_at<font color="#990000">::</font>susceptible_enum<font color="#990000">;</font>
-     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">==</font> dismod_at<font color="#990000">::</font>withC_enum<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>mtall_enum<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>prevalence_enum<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>remission_enum<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>Sincidence_enum<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>susceptible_enum<font color="#990000">;</font>
+     ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>withC_enum<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// close database and return</font></i>
      <b><font color="#000000">sqlite3_close</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
