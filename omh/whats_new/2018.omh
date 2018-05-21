@@ -55,6 +55,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-21$$
+Advance to using
+$cref/cppad-20180521/install_unix/Special Requirements/CppAD/$$, and
+$cref/cppad_mixed-20180521/install_unix/Special Requirements/cppad_mixed/$$.
+This should both reduce memory usage.
+
 $head 05-14$$
 There was a bug in the simulation of age difference and time
 difference prior means introduced on
