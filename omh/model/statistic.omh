@@ -49,7 +49,9 @@ $latex \[
 \] $$
 
 $head Weighted Residual Function, R$$
-The weighted residual function
+
+$subhead Value$$
+The weighted residual function for values
 $latex \[
 	R(y, \mu, \delta, d)
 \] $$
