@@ -42,13 +42,15 @@ bool get_integrand_table_xam(void)
 	// sql commands
 	const char* sql_cmd[] = {
 	"create table integrand"
-	"(integrand_id integer primary key, integrand_name text unique)",
-	"insert into integrand values(0, 'mtall'       )",
-	"insert into integrand values(1, 'prevalence'  )",
-	"insert into integrand values(2, 'remission'   )",
-	"insert into integrand values(3, 'Sincidence'  )",
-	"insert into integrand values(4, 'susceptible' )",
-	"insert into integrand values(5, 'withC'       )",
+	"(integrand_id     integer primary key,"
+	" integrand_name   text unique,"
+	" minimum_meas_cv  real                        )",
+	"insert into integrand values(0, 'mtall',       0.1 )",
+	"insert into integrand values(1, 'prevalence',  0.2 )",
+	"insert into integrand values(2, 'remission',   0.3 )",
+	"insert into integrand values(3, 'Sincidence',  0.4 )",
+	"insert into integrand values(4, 'susceptible', 0.5 )",
+	"insert into integrand values(5, 'withC',       0.6 )",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -66,6 +68,9 @@ bool get_integrand_table_xam(void)
 	ok  &= integrand_table[3].integrand == dismod_at::Sincidence_enum;
 	ok  &= integrand_table[4].integrand == dismod_at::susceptible_enum;
 	ok  &= integrand_table[5].integrand == dismod_at::withC_enum;
+	//
+	for(size_t i = 0; i < 6; i++)
+		ok &= integrand_table[i].minimum_meas_cv == double(i + 1) / 10.0;
 	//
 	// close database and return
 	sqlite3_close(db);

@@ -33,6 +33,7 @@ namespace dismod_at {
 	};
 	struct integrand_struct {
 		integrand_enum  integrand;
+		double          minimum_meas_cv;
 	};
 	extern CppAD::vector<integrand_struct> get_integrand_table(sqlite3*  db);
 }

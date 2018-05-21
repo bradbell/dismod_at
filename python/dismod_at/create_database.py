@@ -379,11 +379,12 @@ def create_database(
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ----------------------------------------------------------------------
 	# create integrand table
-	col_name = [ 'integrand_name' ]
-	col_type = [ 'text' ]
+	col_name = [ 'integrand_name', 'minimum_meas_cv' ]
+	col_type = [ 'text',           'real' ]
 	row_list = []
+	minimum_meas_cv = 0.0 # 2DO: get from user input
 	for integrand in integrand_list :
-		row_list.append( [ integrand ] )
+		row_list.append( [ integrand , minimum_meas_cv ] )
 	tbl_name = 'integrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#

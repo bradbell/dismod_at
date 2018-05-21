@@ -24,6 +24,7 @@ $spell
 	mtstandard
 	relrisk
 	mtspecific
+	cv
 $$
 
 $section C++: Get the Integrand Table Information$$
@@ -59,6 +60,10 @@ Type $cnext Field $cnext Description
 $rnext
 $code integrand_enum$$ $cnext $code integrand$$ $cnext
 	An enum type for this integrand; see below
+$rnext
+$code double$$ $cnext $cnext
+	$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ $cnext
+	minimum measurement coefficient of variation for this integrand
 $tend
 
 $head integrand_enum$$
@@ -79,6 +84,7 @@ $code mtall_enum$$       $pre  $$ $cnext $code mtall$$           $rnext
 $code mtstandard_enum$$  $pre  $$ $cnext $code mtstandard$$      $rnext
 $code relrisk_enum$$     $pre  $$ $cnext $code relrisk$$
 $tend
+
 
 $head integrand_enum2name$$
 This is a global variable.
@@ -132,9 +138,15 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, integrand_name);
 	assert( n_integrand == integrand_name.size() );
 
+	column_name = "minimum_meas_cv";
+	CppAD::vector<double> minimum_meas_cv;
+	get_table_column(db, table_name, column_name, minimum_meas_cv);
+	assert( n_integrand == minimum_meas_cv.size() );
+
 	CppAD::vector<integrand_struct> integrand_table(n_integrand);
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	integrand_enum integrand = number_integrand_enum;
+	{	// integrand
+		integrand_enum integrand = number_integrand_enum;
 		for(size_t j = 0; j < number_integrand_enum; j++)
 		{	if( integrand_name[integrand_id] == integrand_enum2name[j] )
 				integrand = integrand_enum(j);
@@ -145,6 +157,21 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 			error_exit(msg, table_name, integrand_id);
 		}
 		integrand_table[integrand_id].integrand = integrand;
+		//
+		// minumum_meas_cv
+		if( integrand_table[integrand_id].minimum_meas_cv < 0.0 )
+		{	string msg = integrand_name[integrand_id];
+			msg       += " minimum_meas_cv < 0.0";
+			error_exit(msg, table_name, integrand_id);
+		}
+		if( integrand_table[integrand_id].minimum_meas_cv > 1.0 )
+		{	string msg = integrand_name[integrand_id];
+			msg       += " minimum_meas_cv > 1.0";
+			error_exit(msg, table_name, integrand_id);
+		}
+		integrand_table[integrand_id].minimum_meas_cv =
+			minimum_meas_cv[integrand_id];
+
 	}
 	return integrand_table;
 }
