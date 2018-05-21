@@ -14,6 +14,7 @@ var list_current0 = [
 'statistic.htm#Notation',
 'statistic.htm#Log-Transformed Standard Deviation, sigma',
 'statistic.htm#Weighted Residual Function, R',
+'statistic.htm#Weighted Residual Function, R.Value',
 'statistic.htm#Weighted Residual Function, R.Difference',
 'statistic.htm#Weighted Residual Function, R.Uniform',
 'statistic.htm#Weighted Residual Function, R.Gaussian, Laplace, Student\'s-t',
