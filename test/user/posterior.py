@@ -49,7 +49,7 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_list = list()
+	integrand_table = list()
 	#
 	# node table:
 	node_table = [ { 'name':'world',  'parent':'' } ]
@@ -129,7 +129,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,

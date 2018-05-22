@@ -64,12 +64,12 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_list = [
-		'prevalence',
-		'Sincidence',
-		'remission',
-		'mtexcess',
-		'mtother'
+	integrand_table = [
+		{ 'name':'prevalence', 'minimum_meas_cv':0.0 },
+		{ 'name':'Sincidence', 'minimum_meas_cv':0.0 },
+		{ 'name':'remission', 'minimum_meas_cv':0.0 },
+		{ 'name':'mtexcess', 'minimum_meas_cv':0.0 },
+		{ 'name':'mtother', 'minimum_meas_cv':0.0 }
 	]
 	#
 	# node table: world -> north_america
@@ -107,8 +107,8 @@ def example_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for avgint_id in range( len(integrand_list) ) :
-		integrand         = integrand_list[avgint_id]
+	for avgint_id in range( len(integrand_table) ) :
+		integrand         = integrand_table[avgint_id]['name']
 		row['integrand']  = integrand
 		if integrand == 'prevalence' :
 			# prevalence is measured at age zero
@@ -131,11 +131,11 @@ def example_db (file_name) :
 		'age_lower':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for integrand_id in range( len(integrand_list) ) :
+	for integrand_id in range( len(integrand_table) ) :
 		rate_id           = integrand_id
 		meas_value        = 1e-2 * (rate_id + 1)
 		meas_std          = 0.2 * meas_value
-		integrand         = integrand_list[integrand_id]
+		integrand         = integrand_table[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -229,7 +229,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,

@@ -31,6 +31,7 @@
 #	bool
 #	nslist
 #	tuples
+#	cv
 # $$
 #
 # $section Create a Dismod_at Database$$
@@ -40,7 +41,7 @@
 #	%file_name%,
 #	%age_list%
 #	%time_list%
-#	%integrand_list%,
+#	%integrand_table%,
 #	%node_table%,
 #	%weight_table%,
 #	%covariate_table%,
@@ -85,9 +86,15 @@
 # is a $code list$$ of $code float$$ that
 # specify the time grid values.
 #
-# $head integrand_list$$
-# This is a list of $code str$$
-# that specify the $cref/integrand names/integrand_table/integrand_name/$$.
+# $head integrand_table$$
+# This is a list of $code dict$$
+# that define the rows of the $cref integrand_table$$.
+# The dictionary $icode%integrand_table%[%i%]%$$ has the following:
+# $table
+# Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
+# name             $cnext str  $cnext name for the $th i$$ integrand  $rnext
+# minimum_meas_cv  $cnext str  $cnext minimum measurement cv for this integrand
+# $tend
 #
 # $head node_table$$
 # This is a list of $code dict$$
@@ -131,7 +138,6 @@
 # is null and this corresponds to an infinite maximum difference.
 # If $icode max_difference$$ does not appear, null is written for the
 # corresponding covariate entry.
-#
 #
 # $head avgint_table$$
 # This is a list of $code dict$$
@@ -331,7 +337,7 @@ def create_database(
 	file_name,
 	age_list,
 	time_list,
-	integrand_list,
+	integrand_table,
 	node_table,
 	weight_table,
 	covariate_table,
@@ -382,9 +388,12 @@ def create_database(
 	col_name = [ 'integrand_name', 'minimum_meas_cv' ]
 	col_type = [ 'text',           'real' ]
 	row_list = []
-	minimum_meas_cv = 0.0 # 2DO: get from user input
-	for integrand in integrand_list :
-		row_list.append( [ integrand , minimum_meas_cv ] )
+	for i in range( len(integrand_table) ) :
+		row = [
+			integrand_table[i]['name'],
+			integrand_table[i]['minimum_meas_cv']
+		]
+		row_list.append( row )
 	tbl_name = 'integrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	#

@@ -179,7 +179,10 @@ node_list = [ 'US', 'Alabama', 'California' ]
 # prevalence at other ages corresponds to integrals of iota, and
 # given prevalence, mtspecific should determine chi.
 # $srccode%py%
-integrand_list = [ 'mtspecific', 'prevalence' ]
+integrand_table = [
+	 { 'name':'mtspecific', 'minimum_meas_cv':0.0 },
+	 { 'name':'prevalence', 'minimum_meas_cv':0.0 }
+]
 # %$$
 #
 # $subhead parent_age_grid$$
@@ -843,7 +846,7 @@ def example_db (file_name) :
 	avgint_table = list()
 	#
 	# for each integrand, age, time, node
-	n_integrand = len(integrand_list)
+	n_integrand = len(integrand_table)
 	n_age       = len(age_list)
 	n_time      = len(time_list)
 	n_node      = len(node_table)
@@ -865,7 +868,7 @@ def example_db (file_name) :
 		#
 		age         = age_list[i_age]
 		time        = time_list[i_time]
-		integrand   = integrand_list[i_integrand]
+		integrand   = integrand_table[i_integrand]['name']
 		node        = node_table[i_node]['name']
 		#
 		# sex
@@ -942,7 +945,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,

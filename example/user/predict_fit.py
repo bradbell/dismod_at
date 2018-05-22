@@ -66,9 +66,9 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_list = [
-		'Sincidence',
-		'susceptible'
+	integrand_table = [
+		{ 'name':'Sincidence', 'minimum_meas_cv':0.0 },
+		{ 'name':'susceptible', 'minimum_meas_cv':0.0 }
 	]
 	#
 	# node table: world -> north_america
@@ -215,7 +215,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,

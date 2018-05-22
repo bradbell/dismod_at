@@ -23,7 +23,31 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|\\([a-z]\\)_i,k|\\1_ik|g
+/integrand_list *= *\\[/! b three
+: one
+/\\]/ b two
+N
+b one
+: two
+s|integrand_list|integrand_table|
+s|\\n||g
+s|\\t||g
+s|^|\\t|
+s|\\[|\\[\\n\\t\\t|
+s|,|,\\n\\t\\t|g
+s|\\]|\\n\\t\\]|
+s|\\('[a-zA-Z]*'\\)|{ 'name':\\1, 'minimum_meas_cv':0.0 }|g
+b end
+# ---------------------------------------------------------------------------
+: three
+s|integrand_list *= *list()|integrand_table = list()|
+s|integrand_list,|integrand_table,|
+s|integrand_list,|integrand_table,|
+s|integrand_list\\[\\(.*\\)\\]|integrand_table[\\1]['name']|
+s|len( *integrand_list *)|len(integrand_table)|
+s|subhead integrand_list|subhead integrand_list|
+#
+: end
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

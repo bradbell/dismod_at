@@ -114,9 +114,9 @@ def example_db (file_name) :
 	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 	#
 	# integrand table:
-	integrand_list = [
-		'Sincidence',
-		'prevalence'
+	integrand_table = [
+		{ 'name':'Sincidence', 'minimum_meas_cv':0.0 },
+		{ 'name':'prevalence', 'minimum_meas_cv':0.0 }
 	]
 	#
 	# node table:
@@ -175,7 +175,7 @@ def example_db (file_name) :
 		row['node']      = 'child_' + str( (data_id % n_children) + 1 )
 		row['income']    = data_id / float(n_data-1)
 		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
-		row['integrand'] = integrand_list[ data_id % 2 ]
+		row['integrand'] = integrand_table[ data_id % 2 ]['name']
 		if row['integrand'] == 'Sincidence' :
 			row['meas_std']  = 0.05 * iota_parent
 		elif row['integrand'] == 'prevalence' :
@@ -291,7 +291,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,

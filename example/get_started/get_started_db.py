@@ -105,7 +105,9 @@ def get_started_db ():
 	time_list   = [ 1995.0, 2015.0 ]
 	#
 	# only one integrand in this example
-	integrand_list = [ 'susceptible' ]
+	integrand_table = [
+		 { 'name':'susceptible', 'minimum_meas_cv':0.0 }
+	]
 	#
 	# just the world (which has no parent)
 	node_table = [ { 'name':'world', 'parent':'' } ]
@@ -233,7 +235,7 @@ def get_started_db ():
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,

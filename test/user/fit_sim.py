@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -59,7 +59,9 @@ def example_db (file_name) :
 	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 	#
 	# integrand table:
-	integrand_list = [ 'prevalence' ]
+	integrand_table = [
+		 { 'name':'prevalence', 'minimum_meas_cv':0.0 }
+	]
 	#
 	# node table:
 	node_table = [ { 'name':'world', 'parent':'' } ]
@@ -123,7 +125,7 @@ def example_db (file_name) :
 		row['age_upper'] = age
 		row['node']      = 'child_' + str( (data_id % n_children) + 1 )
 		row['income']    = fraction
-		row['integrand'] = integrand_list[0]
+		row['integrand'] = integrand_table[0]['name']
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
@@ -260,7 +262,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,

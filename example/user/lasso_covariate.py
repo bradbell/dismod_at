@@ -75,8 +75,8 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_list = [
-		'Sincidence'
+	integrand_table = [
+		{ 'name':'Sincidence', 'minimum_meas_cv':0.0 }
 	]
 	#
 	# node table: world -> north_america
@@ -144,7 +144,7 @@ def example_db (file_name) :
 		meas_value  = iota_true
 		meas_value *= math.exp( (income - income_reference) * mulcov_income )
 		meas_std    = 0.1 * meas_value
-		integrand   = integrand_list[0]
+		integrand   = integrand_table[0]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -230,7 +230,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,

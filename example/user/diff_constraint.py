@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -67,12 +67,12 @@ def example_db (file_name) :
 	time_list   = [ 1995.0, 2005.0, 2015.0 ]
 	#
 	# integrand table
-	integrand_list = [
-		'prevalence',
-		'Sincidence',
-		'remission',
-		'mtexcess',
-		'mtother'
+	integrand_table = [
+		{ 'name':'prevalence', 'minimum_meas_cv':0.0 },
+		{ 'name':'Sincidence', 'minimum_meas_cv':0.0 },
+		{ 'name':'remission', 'minimum_meas_cv':0.0 },
+		{ 'name':'mtexcess', 'minimum_meas_cv':0.0 },
+		{ 'name':'mtother', 'minimum_meas_cv':0.0 }
 	]
 	#
 	# node table: world -> north_america
@@ -116,11 +116,11 @@ def example_db (file_name) :
 		'age_upper':    0.0
 	}
 	# values that change between rows: (one data point for each integrand)
-	for integrand_id in range( len(integrand_list) ) :
+	for integrand_id in range( len(integrand_table) ) :
 		rate_id           = integrand_id
 		meas_value        = 0.05
 		meas_std          = 0.2 * meas_value
-		integrand         = integrand_list[integrand_id]
+		integrand         = integrand_table[integrand_id]['name']
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -214,7 +214,7 @@ def example_db (file_name) :
 		file_name,
 		age_list,
 		time_list,
-		integrand_list,
+		integrand_table,
 		node_table,
 		weight_table,
 		covariate_table,
