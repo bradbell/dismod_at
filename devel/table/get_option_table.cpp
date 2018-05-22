@@ -109,7 +109,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "limited_memory_max_history_fixed", "30"                 },
 		{ "max_num_iter_fixed",               "100"                },
 		{ "max_num_iter_random",              "100"                },
-		{ "minimum_meas_cv",                  "0.0"                },
 		{ "ode_step_size",                    "10.0"               },
 		{ "parent_node_id",                   ""                   },
 		{ "parent_node_name",                 ""                   },
@@ -148,12 +147,19 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	size_t  derivative_test_fixed_level = 0;
 	bool    quasi_fixed                 = true;
 	for(size_t option_id = 0; option_id < n_in_table; option_id++)
-	{	size_t match = n_option;
+	{	// minimum_meas_cv
+		if( option_name[option_id] == "minimum_meas_cv" )
+		{	msg  = "minimum_meas_cv is no longer a valid option name";
+			msg += "\nThis value is not set in the integrand table";
+			error_exit(msg, table_name, option_id);
+		}
+		//
+		size_t match = n_option;
 		for(size_t i = 0; i < n_option; i++)
 			if( name_vec[i] == option_name[option_id] )
 				match = i;
 		if( match == n_option )
-		{	msg +=  option_name[option_id];
+		{	msg  =  option_name[option_id];
 			msg += " is not a valid option_name";
 			error_exit(msg, table_name, option_id);
 		}
@@ -168,13 +174,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			if( ! ok )
 			{	msg = "option table: rate_case = '";
 				msg += option_value[option_id] + "'";
-				error_exit(msg, table_name, option_id);
-			}
-		}
-		if( name_vec[match] == "minimuim_meas_cv" )
-		{	bool ok = std::atof( option_value[option_id].c_str() ) >= 0.0;
-			if( ! ok )
-			{	msg = "option_value is < 0.0 for minimum_meas_cv";
 				error_exit(msg, table_name, option_id);
 			}
 		}

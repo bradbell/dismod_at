@@ -764,10 +764,9 @@ def db2csv_command(database_file_arg) :
 		sys.exit(msg)
 	# ----------------------------------------------------------------------
 	# minimum_meas_cv
-	minimum_meas_cv    = 0.0  # default
-	for row in table_data['option'] :
-		if row['option_name'] == 'minimum_meas_cv' :
-			minimum_meas_cv = float( row['option_value'] )
+	minimum_meas_cv    = list()
+	for row in table_data['integrand'] :
+		minimum_meas_cv.append( row['minimum_meas_cv'] )
 	# ----------------------------------------------------------------------
 	# avgint_extra_columns
 	avgint_extra_columns = []  # default
@@ -840,7 +839,6 @@ def db2csv_command(database_file_arg) :
 		[ "limited_memory_max_history_fixed",  "30"],
 		[ "max_num_iter_fixed",                "100"],
 		[ "max_num_iter_random",               "100"],
-		[ "minimum_meas_cv",                   "0.0"],
 		[ "ode_step_size",                     "10.0"],
 		[ "parent_node_id",                    ""],
 		[ "parent_node_name",                  ""],
@@ -1114,9 +1112,10 @@ def db2csv_command(database_file_arg) :
 		row_out['nu']          = convert2output( row_in['nu'] )
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 		#
-		Delta                  =  minimum_meas_cv * abs( row_in['meas_value'] )
-		Delta                  = max(row_in['meas_std'], Delta)
-		row_out['Delta']       = convert2output( Delta )
+		meas_cv          = minimum_meas_cv[ row_in['integrand_id' ] ]
+		Delta            =  meas_cv * abs( row_in['meas_value'] )
+		Delta            = max( row_in['meas_std'], Delta)
+		row_out['Delta'] = convert2output( Delta )
 		#
 		row_out['integrand'] = table_lookup(
 			'integrand', row_in['integrand_id'], 'integrand_name'
