@@ -519,7 +519,6 @@ void fit_model::run_fit(
 $end
 */
 {	assert( fit_or_sample_ == "fit" );
-	typedef CppAD::vector<double> d_vector;
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
