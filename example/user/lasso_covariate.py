@@ -76,7 +76,7 @@ def example_db (file_name) :
 	#
 	# integrand table
 	integrand_table = [
-		{ 'name':'Sincidence', 'minimum_meas_cv':0.0 }
+		{ 'name':'Sincidence' }
 	]
 	#
 	# node table: world -> north_america

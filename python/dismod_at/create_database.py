@@ -95,6 +95,8 @@
 # name             $cnext str  $cnext name for the $th i$$ integrand  $rnext
 # minimum_meas_cv  $cnext str  $cnext minimum measurement cv for this integrand
 # $tend
+# The key $code minimum_meas_cv$$ is optional.
+# If it is not present, $code 0.0$$ is used for the corresponding value.
 #
 # $head node_table$$
 # This is a list of $code dict$$
@@ -389,10 +391,10 @@ def create_database(
 	col_type = [ 'text',           'real' ]
 	row_list = []
 	for i in range( len(integrand_table) ) :
-		row = [
-			integrand_table[i]['name'],
-			integrand_table[i]['minimum_meas_cv']
-		]
+		minimum_meas_cv = 0.0
+		if 'minimum_meas_cv' in integrand_table :
+			minimum_meas_cv = integrand_table[i]['minimum_meas_cv']
+		row = [ integrand_table[i]['name'], minimum_meas_cv ]
 		row_list.append( row )
 	tbl_name = 'integrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

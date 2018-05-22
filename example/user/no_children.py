@@ -65,11 +65,11 @@ def example_db (file_name) :
 	#
 	# integrand table
 	integrand_table = [
-		{ 'name':'prevalence', 'minimum_meas_cv':0.0 },
-		{ 'name':'Sincidence', 'minimum_meas_cv':0.0 },
-		{ 'name':'remission', 'minimum_meas_cv':0.0 },
-		{ 'name':'mtexcess', 'minimum_meas_cv':0.0 },
-		{ 'name':'mtother', 'minimum_meas_cv':0.0 }
+		{ 'name':'prevalence' },
+		{ 'name':'Sincidence' },
+		{ 'name':'remission' },
+		{ 'name':'mtexcess' },
+		{ 'name':'mtother' }
 	]
 	#
 	# node table: world -> north_america

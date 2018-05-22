@@ -106,7 +106,7 @@ def get_started_db ():
 	#
 	# only one integrand in this example
 	integrand_table = [
-		 { 'name':'susceptible', 'minimum_meas_cv':0.0 }
+		 { 'name':'susceptible' }
 	]
 	#
 	# just the world (which has no parent)

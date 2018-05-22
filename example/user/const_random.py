@@ -78,7 +78,7 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name':'prevalence', 'minimum_meas_cv':0.0 }
+		 { 'name':'prevalence' }
 	]
 	#
 	# node table:
