@@ -133,6 +133,7 @@ bool avg_yes_ode_xam(void)
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	integrand_table[integrand_id].integrand =
 			dismod_at::integrand_enum(n_integrand - integrand_id - 1);
+		integrand_table[integrand_id].minimum_meas_cv = 0.0;
 	}
 	//
 	// n_age_ode

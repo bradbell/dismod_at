@@ -138,7 +138,8 @@ bool meas_mulcov(void)
 	size_t n_integrand = dismod_at::number_integrand_enum;
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(size_t i = 0; i < n_integrand; i++)
-	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
+	{	integrand_table[i].integrand       = dismod_at::integrand_enum(i);
+		integrand_table[i].minimum_meas_cv = 0.0;
 	}
 	//
 	// n_age_ode
@@ -163,9 +164,6 @@ bool meas_mulcov(void)
 	//
 	// parent_node_id
 	size_t parent_node_id = 0;
-	//
-	// minimum_meas_cv
-	double minimum_meas_cv = 0.0;
 	//
 	// covariate table
 	size_t n_covariate = 1;
@@ -272,7 +270,7 @@ bool meas_mulcov(void)
 		pack_object,
 		child_object
 	);
-	data_object.replace_like(minimum_meas_cv, data_subset_obj);
+	data_object.replace_like(data_subset_obj);
 	//
 	// pack_vec
 	vector<Float> pack_vec( pack_object.size() );

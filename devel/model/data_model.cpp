@@ -208,7 +208,11 @@ $head pack_object_$$
 set to $icode pack_object$$.
 
 $head minimum_meas_cv_$$
-set to $code nan$$ (will be set by replace_like).j
+Set to a vector with the same size as $icode integrand_table$$ and
+$codei%
+	%minimum_meas_cv_[%integrand_id%] =
+		%integrand_table%[%integrand_id%].minimum_meas_cv
+%$$
 
 $head eigen_ode2_case_number_$$
 set to the default value.
@@ -298,8 +302,10 @@ pack_object_     (pack_object)
 	//
 	using std::string;
 	//
-	// minimum_meas_cv_: set to nan (until replace_like is called)
-	minimum_meas_cv_ = std::numeric_limits<double>::quiet_NaN();
+	// minimum_meas_cv_
+	minimum_meas_cv_.resize( integrand_table.size() );
+	for(size_t i = 0; i < integrand_table.size(); ++i)
+		minimum_meas_cv_[i] = integrand_table[i].minimum_meas_cv;
 	//
 	// eigen_ode2_case_number_: set default value
 	eigen_ode2_case_number_ = 4;
@@ -729,7 +735,7 @@ $$
 $section Set Value Necessary for Likelihood (not for Average Integrand)$$
 
 $head Syntax$$
-$icode%data_object%.replace_like(%minimum_meas_cv%, %data_subset_obj%)%$$
+$icode%data_object%.replace_like(%data_subset_obj%)%$$
 
 $head Purpose$$
 The values
@@ -749,16 +755,6 @@ $codei%
 	data_model %data_object%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
-
-$subhead minimum_meas_cv$$
-This argument has prototype
-$codei%
-	double %minimum_meas_cv%
-%$$
-and is the
-$cref/minimum_meas_cv/option_table/minimum_meas_cv/$$.
-The $code minimum_meas_cv_$$ value in $icode data_object$$ is
-replaced by $icode minimum_meas_cv$$.
 
 $subhead subset_object$$
 We use $icode subset_object$$
@@ -797,11 +793,8 @@ program exits.
 $end
 */
 void data_model::replace_like(
-		double                                    minimum_meas_cv ,
 		const CppAD::vector<data_subset_struct>&  data_subset_obj )
-{	// replace minimum_meas_cv
-	minimum_meas_cv_ = minimum_meas_cv;
-	//
+{
 	// n_subset
 	size_t n_subset = data_subset_obj_.size();
 	assert( data_subset_obj.size() == n_subset );
@@ -2087,8 +2080,10 @@ residual_struct<Float> data_model::like_one(
 	double nu            = data_subset_obj_[subset_id].nu;
 	size_t integrand_id  = data_subset_obj_[subset_id].integrand_id;
 	double meas_value    = data_subset_obj_[subset_id].meas_value;
+	double meas_cv       = minimum_meas_cv_[integrand_id];
+	//
 	assert( Delta > 0.0 );
-	Delta = std::max(Delta, minimum_meas_cv_ * std::fabs(meas_value) );
+	Delta = std::max(Delta, meas_cv * std::fabs(meas_value) );
 
 	// data_info information for this data point
 	density_enum   density             = data_info_[subset_id].density;

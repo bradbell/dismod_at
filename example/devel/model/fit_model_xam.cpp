@@ -194,7 +194,8 @@ bool fit_model_xam(void)
 	size_t n_integrand = dismod_at::number_integrand_enum;
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(size_t i = 0; i < n_integrand; i++)
-	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
+	{	integrand_table[i].integrand       = dismod_at::integrand_enum(i);
+		integrand_table[i].minimum_meas_cv = 0.0;
 	}
 	//
 	// node_table:    0
@@ -208,9 +209,6 @@ bool fit_model_xam(void)
 	//
 	// parent_node_id
 	size_t parent_node_id = 0;
-	//
-	// minimum_meas_cv
-	double minimum_meas_cv= 0.0;
 	//
 	//  open database
 	bool new_file = true;
@@ -327,7 +325,7 @@ bool fit_model_xam(void)
 		pack_object,
 		child_object
 	);
-	data_object.replace_like(minimum_meas_cv, data_subset_obj);
+	data_object.replace_like(data_subset_obj);
 	//
 	// start_var, scale_var
 	vector<double> start_var( pack_object.size() );

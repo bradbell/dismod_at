@@ -145,7 +145,8 @@ bool avg_no_ode_xam(void)
 	size_t n_integrand = dismod_at::number_integrand_enum;
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
 	for(size_t i = 0; i < n_integrand; i++)
-	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
+	{	integrand_table[i].integrand       = dismod_at::integrand_enum(i);
+		integrand_table[i].minimum_meas_cv = 0.0;
 	}
 	//
 	// n_age_ode

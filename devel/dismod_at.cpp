@@ -694,17 +694,11 @@ void depend_command(
 	const vector<double>&                         prior_mean       ,
 	dismod_at::data_model&                        data_object      ,
 	const vector<dismod_at::data_subset_struct>&  data_subset_obj  ,
-	const dismod_at::prior_model&                 prior_object     ,
-	// effectively const
-	std::map<std::string, std::string>&           option_map       )
+	const dismod_at::prior_model&                 prior_object     )
 {	using std::string;
 	string table_name = "depend_var";
 	//
-	// minimum_meas_cv
-	double minimum_meas_cv = std::atof(
-		option_map["minimum_meas_cv"].c_str()
-	);
-	data_object.replace_like(minimum_meas_cv, data_subset_obj);
+	data_object.replace_like(data_subset_obj);
 	//
 	// compute the dependencies
 	vector<bool> data_depend  =
@@ -920,10 +914,6 @@ void fit_command(
 	}
 	// random_only
 	bool random_only = variables == "random";
-	// minimum_meas_cv
-	double minimum_meas_cv = std::atof(
-		option_map["minimum_meas_cv"].c_str()
-	);
 	// -----------------------------------------------------------------------
 	if( simulate_index != "" )
 	{	size_t sim_index = std::atoi( simulate_index.c_str() );
@@ -964,7 +954,7 @@ void fit_command(
 				data_sim_table[data_sim_id].data_sim_value;
 		}
 	}
-	data_object.replace_like(minimum_meas_cv, data_subset_obj);
+	data_object.replace_like(data_subset_obj);
 	// -----------------------------------------------------------------------
 	// read start_var table into start_var
 	vector<double> start_var;
@@ -1231,7 +1221,6 @@ $end
 */
 void simulate_command(
 	const std::string&                                  number_simulate ,
-	double                                              minimum_meas_cv ,
 	sqlite3*                                            db              ,
 	const vector<dismod_at::integrand_struct>&          integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
@@ -1613,10 +1602,6 @@ void sample_command(
 	double bound_random = std::numeric_limits<double>::infinity();
 	if( tmp_str != "" )
 		bound_random = std::atof( tmp_str.c_str() );
-	// minimum_meas_cv
-	double minimum_meas_cv = std::atof(
-		option_map["minimum_meas_cv"].c_str()
-	);
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
@@ -1693,7 +1678,7 @@ void sample_command(
 					data_sim_table[data_sim_id].data_sim_value;
 			}
 			// replace_like
-			data_object.replace_like(minimum_meas_cv, data_subset_obj);
+			data_object.replace_like(data_subset_obj);
 			//
 			// fit_model
 			string fit_or_sample = "fit";
@@ -1740,7 +1725,7 @@ void sample_command(
 	assert( method == "asymptotic" );
 	//
 	// replace_like
-	data_object.replace_like(minimum_meas_cv, data_subset_obj);
+	data_object.replace_like(data_subset_obj);
 	//
 	// fit_var.fit_var_value
 	vector<double> fit_var_value;
@@ -2264,10 +2249,6 @@ int main(int n_arg, const char** argv)
 	vector<double> prior_mean = get_prior_mean(
 		db_input.prior_table, var2prior
 	);
-	// minimum_meas_cv
-	double minimum_meas_cv = std::atof(
-		option_map["minimum_meas_cv"].c_str()
-	);
 	// rate_case
 	string rate_case = option_map["rate_case"];
 	//
@@ -2416,8 +2397,7 @@ int main(int n_arg, const char** argv)
 					prior_mean       ,
 					data_object      ,
 					data_subset_obj  ,
-					prior_object     ,
-					option_map
+					prior_object
 				);
 			}
 			else if( command_arg == "fit" )
@@ -2440,10 +2420,9 @@ int main(int n_arg, const char** argv)
 			}
 			else if( command_arg == "simulate" )
 			{	// replace_like
-				data_object.replace_like(minimum_meas_cv, data_subset_obj );
+				data_object.replace_like(data_subset_obj );
 				simulate_command(
 					argv[3]                  , // number_simulate
-					minimum_meas_cv          ,
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,
