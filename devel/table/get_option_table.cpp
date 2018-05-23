@@ -150,7 +150,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	{	// minimum_meas_cv
 		if( option_name[option_id] == "minimum_meas_cv" )
 		{	msg  = "minimum_meas_cv is no longer a valid option name";
-			msg += "\nThis value is not set in the integrand table";
+			msg += "\nThis was moved to integrand table on 2018-05-23.";
 			error_exit(msg, table_name, option_id);
 		}
 		//

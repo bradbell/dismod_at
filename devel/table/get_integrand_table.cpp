@@ -108,6 +108,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/exec_sql_cmd.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -129,6 +130,15 @@ const char* integrand_enum2name[] = {
 };
 CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 {	using std::string;
+
+	// check for minimum_cv column
+	string sql_cmd = "pragma table_info(integrand)";
+	string result  = exec_sql_cmd(db, sql_cmd, ',');
+	if( result.find(",minimum_meas_cv,") == string::npos )
+	{	string msg = "column minimum_meas_cv not in integrand table\n";
+		msg       += "it was added to this table on 2018-05-23.";
+		error_exit(msg);
+	}
 
 	string table_name  = "integrand";
 	size_t n_integrand = check_table_id(db, table_name);

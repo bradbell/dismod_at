@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,20 +17,19 @@ $spell
 	std
 	hpp
 	sqlite
+	sep
 $$
 
 $section C++: Execution of an SQL Command$$
 
-$index sql, C++ execute$$
-$index execute, sql command$$
-$index C++, execute sql$$
-
 $head Syntax$$
-$codei%exec_sql_cmd(%db%, %sql_cmd%)%$$
+$codei%exec_sql_cmd(%db%, %sql_cmd%)
+%$$
+$icode%result% = exec_sql_cmd(%db%, %sql_cmd%, %sep%)%$$
 
 $head Purpose$$
-Executes an SQL command that does not return any information
-(and check for an error).
+Executes an SQL command, check for an error,
+and optionally return result if no error occurs.
 
 $head db$$
 The argument $icode db$$ has prototype
@@ -45,14 +44,30 @@ $codei%
 %$$
 It contains the command that is executed.
 
+$head sep$$
+If this argument is present,
+this character is used to separate columns on the same line of the result
+($code '\n'$$ is used to separate lines of the result).
+It is assumed that $icode sep$$ and $code '\n'$$ do not occur
+in any of the result values.
+
+$head result$$
+If the $icode sep$$ argument is present,
+the return value has prototype
+$codei%
+	std::string& result
+%$$
+It contains the output corresponding to the command.
+
 $head Error$$
-If an error occurs, and error message is printing and this routine
+If an error occurs, an error message is printed and this routine
 aborts; i.e., it does not return if an error occurs.
 
 $end
 -----------------------------------------------------------------------------
 */
 # include <cstdlib>
+# include <cstring>
 # include <iostream>
 # include <cassert>
 
@@ -60,7 +75,63 @@ $end
 # include <dismod_at/configure.hpp>
 # include <dismod_at/error_exit.hpp>
 
+
+namespace {
+	// see https://stackoverflow.com/questions/1805982/use-of-sqlite3-exec
+	int exec_sql_cmd_callback(
+		void*  callback_arg ,
+		int    argc         ,
+		char** argv         ,
+		char** column       )
+	{	std::string* result = reinterpret_cast<std::string*>(callback_arg);
+		char sep = (*result)[0];
+		//
+		for(int i = 0; i < argc; ++i)
+		{
+			if( i > 0 )
+				*result += sep;
+			if( argv[i] != DISMOD_AT_NULL_PTR )
+			{	assert( std::strchr( argv[i], sep  ) == DISMOD_AT_NULL_PTR );
+				assert( std::strchr( argv[i], '\n' ) == DISMOD_AT_NULL_PTR );
+				*result += argv[i];
+			}
+		}
+		*result += "\n";
+		//
+		return 0;
+	}
+}
+
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
+
+std::string exec_sql_cmd(sqlite3* db, const std::string& sql_cmd, char sep)
+{	// initialize result as just the separator character
+	std::string result;
+	result += sep;
+	void* callback_arg = reinterpret_cast<void *>(& result);
+	//
+	char* zErrMsg                              = DISMOD_AT_NULL_PTR;
+	int (*callback)(void*, int, char**,char**) = exec_sql_cmd_callback;
+	int rc = sqlite3_exec(
+		db,
+		sql_cmd.c_str(),
+		callback,
+		callback_arg,
+		&zErrMsg
+	);
+	if( rc )
+	{	assert(zErrMsg != DISMOD_AT_NULL_PTR );
+		std::string message = "SQL error: ";
+		message += sqlite3_errmsg(db);
+		message += ". SQL command: " + sql_cmd;
+		sqlite3_free(zErrMsg);
+		error_exit(message);
+	}
+	//
+	// remove the separator character from the beginning of the result
+	assert( result[0] == sep );
+	return result.substr(1);
+}
 
 void exec_sql_cmd(sqlite3* db, const std::string& sql_cmd)
 {

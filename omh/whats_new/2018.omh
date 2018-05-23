@@ -55,6 +55,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-23$$
+The
+$code minimum_meas_cv$$ option was removed from the $cref option_table$$
+and the column
+$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$
+was added to the integrand table.
+
 $head 05-21$$
 Advance to using
 $cref/cppad-20180521/install_unix/Special Requirements/CppAD/$$, and
