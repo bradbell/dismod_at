@@ -16,6 +16,7 @@ FOREACH(user_case
 	bound_random
 	fit_sim
 	laplace
+	minimum_cv
 	neg_iteration
 	no_data
 	not_ordered

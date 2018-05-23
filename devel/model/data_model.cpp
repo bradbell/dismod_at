@@ -2075,15 +2075,15 @@ residual_struct<Float> data_model::like_one(
 	CppAD::vector<double> x(n_covariate_);
 	for(size_t j = 0; j < n_covariate_; j++)
 		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
-	double Delta         = data_subset_obj_[subset_id].meas_std;
 	double eta           = data_subset_obj_[subset_id].eta;
 	double nu            = data_subset_obj_[subset_id].nu;
 	size_t integrand_id  = data_subset_obj_[subset_id].integrand_id;
 	double meas_value    = data_subset_obj_[subset_id].meas_value;
+	double meas_std      = data_subset_obj_[subset_id].meas_std;
 	double meas_cv       = minimum_meas_cv_[integrand_id];
 	//
-	assert( Delta > 0.0 );
-	Delta = std::max(Delta, meas_cv * std::fabs(meas_value) );
+	assert( meas_std  > 0.0 );
+	double Delta = std::max(meas_std, meas_cv * std::fabs(meas_value) );
 
 	// data_info information for this data point
 	density_enum   density             = data_info_[subset_id].density;

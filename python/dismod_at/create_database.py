@@ -392,7 +392,7 @@ def create_database(
 	row_list = []
 	for i in range( len(integrand_table) ) :
 		minimum_meas_cv = 0.0
-		if 'minimum_meas_cv' in integrand_table :
+		if 'minimum_meas_cv' in integrand_table[i] :
 			minimum_meas_cv = integrand_table[i]['minimum_meas_cv']
 		row = [ integrand_table[i]['name'], minimum_meas_cv ]
 		row_list.append( row )
