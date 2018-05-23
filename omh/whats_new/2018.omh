@@ -56,6 +56,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-24$$
+A wish list $cref/meas_std/wish_list/meas_std/$$ entry was added
+and the minimum_meas_cv entry was removed (because it was completed).
+
 $head 05-23$$
 $bold Warning$$: this is not a backward compatible change to the user API.
 The
@@ -82,9 +86,11 @@ was being used where delta should have been.
 
 
 $head 05-09$$
-A $cref/minimum_meas_cv/wish_list/minimum_meas_cv/$$ entry and
+A minimum_meas_cv and
 a $cref/command diagram/wish_list/Command Diagrams/$$ entry
-have been added to the wish list.
+were added to the wish list.
+The minimum_meas_cv entry has been completed; see
+$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$.
 
 $head 05-08$$
 Round off error could make some values in $cref fit_var_table$$

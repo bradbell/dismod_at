@@ -29,12 +29,14 @@ $$
 
 $section Dismod_at Wish List$$
 
-$head minimum_meas_cv$$
-Currently the
-$cref/minimum_meas_cv/option_table/minimum_meas_cv/$$
-is the same for all integrands.
-It would be good to add $icode minimum_meas_cv$$ to the
-$cref integrand_table$$ so that it could be different for each integrand.
+$head meas_std$$
+Currently the data table
+$cref/meas_std/data_table/meas_std/$$
+must be specified (except for uniform density).
+Perhaps we should allow for this standard deviation to be
+$code null$$ in the case when the corresponding
+$cref/meas_value/data_table/meas_value/$$ is not zero.
+
 
 $head Command Diagrams$$
 It would be good to give a data flow diagram for each command
