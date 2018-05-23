@@ -43,6 +43,7 @@ $spell
 	ik
 	subvector
 	cv
+	integrands
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -61,6 +62,8 @@ $code minimum_meas_cv$$ option was removed from the $cref option_table$$
 and the column
 $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$
 was added to the integrand table.
+This enable one to used different
+minimum measurement coefficients of variation for different integrands.
 
 $head 05-21$$
 Advance to using
