@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++: Execution of an SQL Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++: Execution of an SQL Command">
-<meta name="keywords" id="keywords" content=" c++: execution sql command C++ execute syntax purpose db sql_cmd error ">
+<meta name="keywords" id="keywords" content=" c++: execution sql command syntax purpose db sql_cmd sep result error ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,6 +58,8 @@ A:active { color : purple }
 <option>Purpose</option>
 <option>db</option>
 <option>sql_cmd</option>
+<option>sep</option>
+<option>result</option>
 <option>Error</option>
 </select>
 </td>
@@ -135,15 +137,18 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>exec_sql_cmd(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sql_cmd</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>exec_sql_cmd(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sql_cmd</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+
+<code><i><font color="black"><span style='white-space: nowrap'>result</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;exec_sql_cmd(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sql_cmd</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sep</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-Executes an SQL command that does not return any information
-(and check for an error).
+Executes an SQL command, check for an error,
+and optionally return result if no error occurs.
 
 <br>
 <br>
@@ -168,9 +173,35 @@ It contains the command that is executed.
 
 <br>
 <br>
+<b><big><a name="sep" id="sep">sep</a></big></b>
+<br>
+If this argument is present,
+this character is used to separate columns on the same line of the result
+(<code><font color="blue">'\n'</font></code> is used to separate lines of the result).
+It is assumed that 
+<code><i><font color="black"><span style='white-space: nowrap'>sep</span></font></i></code>
+ and <code><font color="blue">'\n'</font></code> do not occur
+in any of the result values.
+
+<br>
+<br>
+<b><big><a name="result" id="result">result</a></big></b>
+<br>
+If the 
+<code><i><font color="black"><span style='white-space: nowrap'>sep</span></font></i></code>
+ argument is present,
+the return value has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::string&amp;&nbsp;result<br>
+</span></font></code>
+It contains the output corresponding to the command.
+
+<br>
+<br>
 <b><big><a name="Error" id="Error">Error</a></big></b>
 <br>
-If an error occurs, and error message is printing and this routine
+If an error occurs, an error message is printed and this routine
 aborts; i.e., it does not return if an error occurs.
 
 

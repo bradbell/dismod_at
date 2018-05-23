@@ -429,9 +429,10 @@ the model rates for
 Note that measuring prevalence at age zero should determine pini,
 prevalence at other ages corresponds to integrals of iota, and
 given prevalence, mtspecific should determine chi.
-<pre style='display:inline'><tt>
-integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'mtspecific'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
-</tt></pre>
+<pre><tt>integrand_table <font color="#990000">=</font> <font color="#990000">[</font>
+      <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'mtspecific'</font> <font color="#990000">},</font>
+      <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'prevalence'</font> <font color="#990000">}</font>
+<font color="#990000">]</font></tt></pre>
 <br>
 <big><a name="Problem Parameters.parent_age_grid" id="Problem Parameters.parent_age_grid">parent_age_grid</a></big>
 <br>
@@ -1170,7 +1171,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      avgint_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># for each integrand, age, time, node</font></i>
-     n_integrand <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>integrand_list<font color="#990000">)</font>
+     n_integrand <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>integrand_table<font color="#990000">)</font>
      n_age       <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_list<font color="#990000">)</font>
      n_time      <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>time_list<font color="#990000">)</font>
      n_node      <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>node_table<font color="#990000">)</font>
@@ -1192,7 +1193,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <i><font color="#9A1900">#</font></i>
           age         <font color="#990000">=</font> age_list<font color="#990000">[</font>i_age<font color="#990000">]</font>
           time        <font color="#990000">=</font> time_list<font color="#990000">[</font>i_time<font color="#990000">]</font>
-          integrand   <font color="#990000">=</font> integrand_list<font color="#990000">[</font>i_integrand<font color="#990000">]</font>
+          integrand   <font color="#990000">=</font> integrand_table<font color="#990000">[</font>i_integrand<font color="#990000">][</font><font color="#FF0000">'name'</font><font color="#990000">]</font>
           node        <font color="#990000">=</font> node_table<font color="#990000">[</font>i_node<font color="#990000">][</font><font color="#FF0000">'name'</font><font color="#990000">]</font>
           <i><font color="#9A1900">#</font></i>
           <i><font color="#9A1900"># sex</font></i>
@@ -1269,7 +1270,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           file_name<font color="#990000">,</font>
           age_list<font color="#990000">,</font>
           time_list<font color="#990000">,</font>
-          integrand_list<font color="#990000">,</font>
+          integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>

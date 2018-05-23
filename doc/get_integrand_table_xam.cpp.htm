@@ -148,13 +148,15 @@ A:active { color : purple }
      <i><font color="#9A1900">// sql commands</font></i>
      <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> sql_cmd<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
      <font color="#FF0000">"create table integrand"</font>
-     <font color="#FF0000">"(integrand_id integer primary key, integrand_name text unique)"</font><font color="#990000">,</font>
-     <font color="#FF0000">"insert into integrand values(0, 'mtall'       )"</font><font color="#990000">,</font>
-     <font color="#FF0000">"insert into integrand values(1, 'prevalence'  )"</font><font color="#990000">,</font>
-     <font color="#FF0000">"insert into integrand values(2, 'remission'   )"</font><font color="#990000">,</font>
-     <font color="#FF0000">"insert into integrand values(3, 'Sincidence'  )"</font><font color="#990000">,</font>
-     <font color="#FF0000">"insert into integrand values(4, 'susceptible' )"</font><font color="#990000">,</font>
-     <font color="#FF0000">"insert into integrand values(5, 'withC'       )"</font><font color="#990000">,</font>
+     <font color="#FF0000">"(integrand_id     integer primary key,"</font>
+     <font color="#FF0000">" integrand_name   text unique,"</font>
+     <font color="#FF0000">" minimum_meas_cv  real                        )"</font><font color="#990000">,</font>
+     <font color="#FF0000">"insert into integrand values(0, 'mtall',       0.1 )"</font><font color="#990000">,</font>
+     <font color="#FF0000">"insert into integrand values(1, 'prevalence',  0.2 )"</font><font color="#990000">,</font>
+     <font color="#FF0000">"insert into integrand values(2, 'remission',   0.3 )"</font><font color="#990000">,</font>
+     <font color="#FF0000">"insert into integrand values(3, 'Sincidence',  0.4 )"</font><font color="#990000">,</font>
+     <font color="#FF0000">"insert into integrand values(4, 'susceptible', 0.5 )"</font><font color="#990000">,</font>
+     <font color="#FF0000">"insert into integrand values(5, 'withC',       0.6 )"</font><font color="#990000">,</font>
      <font color="#FF0000">}</font><font color="#990000">;</font>
      <font color="#008080">size_t</font> n_command <font color="#990000">=</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>sql_cmd<font color="#990000">)</font> <font color="#990000">/</font> <b><font color="#0000FF">sizeof</font></b><font color="#990000">(</font>sql_cmd<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_command<font color="#990000">;</font> i<font color="#990000">++)</font>
@@ -172,6 +174,9 @@ A:active { color : purple }
      ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>Sincidence_enum<font color="#990000">;</font>
      ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>susceptible_enum<font color="#990000">;</font>
      ok  <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">].</font>integrand <font color="#990000">==</font> dismod_at<font color="#990000">::</font>withC_enum<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> <font color="#993399">6</font><font color="#990000">;</font> i<font color="#990000">++)</font>
+          ok <font color="#990000">&amp;=</font> integrand_table<font color="#990000">[</font>i<font color="#990000">].</font>minimum_meas_cv <font color="#990000">==</font> <font color="#009900">double</font><font color="#990000">(</font>i <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">10.0</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// close database and return</font></i>
      <b><font color="#000000">sqlite3_close</font></b><font color="#990000">(</font>db<font color="#990000">);</font>

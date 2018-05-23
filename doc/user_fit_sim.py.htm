@@ -146,7 +146,9 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      time_list   <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#993399">2000.0</font><font color="#990000">,</font> <font color="#993399">2010.0</font><font color="#990000">,</font> <font color="#993399">2200.0</font> <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># integrand table:</font></i>
-     integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
+     integrand_table <font color="#990000">=</font> <font color="#990000">[</font>
+           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'prevalence'</font> <font color="#990000">}</font>
+     <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># node table:</font></i>
      node_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">''</font> <font color="#990000">}</font> <font color="#990000">]</font>
@@ -204,7 +206,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> age
           row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>      <font color="#990000">=</font> <font color="#FF0000">'child_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> <font color="#990000">(</font>data_id <font color="#990000">%</font> n_children<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">)</font>
           row<font color="#990000">[</font><font color="#FF0000">'income'</font><font color="#990000">]</font>    <font color="#990000">=</font> fraction
-          row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font> <font color="#990000">=</font> integrand_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+          row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font> <font color="#990000">=</font> integrand_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'name'</font><font color="#990000">]</font>
           row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1e-3</font>
           data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
@@ -294,7 +296,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           file_name<font color="#990000">,</font>
           age_list<font color="#990000">,</font>
           time_list<font color="#990000">,</font>
-          integrand_list<font color="#990000">,</font>
+          integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>

@@ -16,7 +16,6 @@ var list_current0 = [
 'data_model_replace_like.htm#Syntax',
 'data_model_replace_like.htm#Purpose',
 'data_model_replace_like.htm#data_object',
-'data_model_replace_like.htm#data_object.minimum_meas_cv',
 'data_model_replace_like.htm#data_object.subset_object',
 'data_model_replace_like.htm#data_object.n_subset',
 'data_model_replace_like.htm#data_object.subset_id',

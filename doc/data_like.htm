@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Likelihood and Weighted Residuals</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Likelihood and Weighted Residuals">
-<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i delta_i a_i b_i s_i t_i d_i i_i x_ij w_i measurement standard deviation covariates k_i gamma_j effects u theta average integrand adjusted residual ">
+<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects u theta average integrand adjusted residual ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -56,7 +56,6 @@ A:active { color : purple }
 <option>Data Table Notation</option>
 <option>---..i</option>
 <option>---..y_i</option>
-<option>---..Delta_i</option>
 <option>---..a_i</option>
 <option>---..b_i</option>
 <option>---..s_i</option>
@@ -65,6 +64,7 @@ A:active { color : purple }
 <option>---..I_i</option>
 <option>---..x_ij</option>
 <option>---..w_i</option>
+<option>---..Delta_i</option>
 <option>Measurement Standard Deviation Covariates</option>
 <option>---..K_i</option>
 <option>---..gamma_j</option>
@@ -141,29 +141,6 @@ y_i
 @)@</small> to denote the corresponding
 <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
  value.
-
-<br>
-<br>
-<big><a name="Data Table Notation.Delta_i" id="Data Table Notation.Delta_i">Delta_i</a></big>
-<br>
-We use the notation <small>@(@
-\Delta_i
-@)@</small>
-for the actual standard deviation used in the model
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta_i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std_i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value_i</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
-</span></font></code>
-where
-<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value_i</span></a>
-
-is the corresponding measurement value,
-<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std_i</span></a>
-
-is the corresponding measurement standard deviation, and
-<a href="option_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
-
-is the minimum coefficient of variation for the measurement values.
 
 <br>
 <br>
@@ -261,6 +238,32 @@ that corresponds to the
 .
 
 <br>
+<br>
+<big><a name="Data Table Notation.Delta_i" id="Data Table Notation.Delta_i">Delta_i</a></big>
+<br>
+Let 
+<code><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i></code>
+ be the integrand table
+<a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+ corresponding to
+this integrand <small>@(@
+I_i
+@)@</small>.
+Let <a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+and <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+
+correspond to this data table
+<a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+.
+We use the notation <small>@(@
+\Delta_i
+@)@</small>
+for the modified standard deviation used for this data
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta_i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
+</span></font></code>
 <br>
 <b><big><a name="Measurement Standard Deviation Covariates" id="Measurement Standard Deviation Covariates">Measurement Standard Deviation Covariates</a></big></b>
 

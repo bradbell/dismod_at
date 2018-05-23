@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Set Value Necessary for Likelihood (not for Average Integrand)</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Set Value Necessary for Likelihood (not for Average Integrand)">
-<meta name="keywords" id="keywords" content=" set value necessary likelihood (not average integrand) syntax purpose data_object minimum_meas_cv subset_object n_subset subset_id data_subset_obj laplace density ">
+<meta name="keywords" id="keywords" content=" set value necessary likelihood (not average integrand) syntax purpose data_object subset_object n_subset subset_id data_subset_obj laplace density ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,7 +58,6 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Purpose</option>
 <option>data_object</option>
-<option>---..minimum_meas_cv</option>
 <option>---..subset_object</option>
 <option>---..n_subset</option>
 <option>---..subset_id</option>
@@ -126,7 +125,7 @@ A:active { color : purple }
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.replace_like(</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_subset_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.replace_like(</span></font><i><font color="black"><span style='white-space: nowrap'>data_subset_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
@@ -162,25 +161,6 @@ This object has prototype
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 see <a href="data_model_ctor.htm#data_object" target="_top"><span style='white-space: nowrap'>data_object&nbsp;constructor</span></a>
-.
-
-<br>
-<br>
-<big><a name="data_object.minimum_meas_cv" id="data_object.minimum_meas_cv">minimum_meas_cv</a></big>
-<br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and is the
-<a href="option_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
-.
-The <code><font color="blue">minimum_meas_cv_</font></code> value in 
-<code><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i></code>
- is
-replaced by 
-<code><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i></code>
 .
 
 <br>

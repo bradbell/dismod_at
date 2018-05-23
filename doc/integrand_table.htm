@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Integrand Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Integrand Table">
-<meta name="keywords" id="keywords" content=" the integrand table integrand_id integrand_name ode names example ">
+<meta name="keywords" id="keywords" content=" the integrand table integrand_id minimum_meas_cv integrand_name ode names example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -55,6 +55,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>integrand_id</option>
+<option>minimum_meas_cv</option>
 <option>integrand_name</option>
 <option>---..ODE</option>
 <option>---..Names</option>
@@ -127,6 +128,30 @@ It has the following columns:
 This column has type <code><font color="blue">integer</font></code>
 and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="minimum_meas_cv" id="minimum_meas_cv">minimum_meas_cv</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is non-negative
+and less than or equal one.
+It specifies the minimum coefficient of variation for measurement values
+with this integrand.
+To be specific; for the data table
+<a href="data_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ is the same,
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ is the measurement value, and
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ is the measurement standard,
+the measurement standard deviation used in the model is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
+</span></font></code>
+see <a href="data_like.htm#Data Table Notation.Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
+
+in the data likelihood section.
 
 <br>
 <br>

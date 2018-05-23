@@ -203,7 +203,8 @@ A:active { color : purple }
      <font color="#008080">size_t</font> n_integrand <font color="#990000">=</font> dismod_at<font color="#990000">::</font>number_integrand_enum<font color="#990000">;</font>
      <font color="#008080">vector&lt;dismod_at::integrand_struct&gt;</font> <b><font color="#000000">integrand_table</font></b><font color="#990000">(</font>n_integrand<font color="#990000">);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_integrand<font color="#990000">;</font> i<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    integrand_table<font color="#990000">[</font>i<font color="#990000">].</font>integrand <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">integrand_enum</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
+     <font color="#FF0000">{</font>    integrand_table<font color="#990000">[</font>i<font color="#990000">].</font>integrand       <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">integrand_enum</font></b><font color="#990000">(</font>i<font color="#990000">);</font>
+          integrand_table<font color="#990000">[</font>i<font color="#990000">].</font>minimum_meas_cv <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// n_age_ode</font></i>
@@ -222,9 +223,6 @@ A:active { color : purple }
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// parent_node_id</font></i>
      <font color="#008080">size_t</font> parent_node_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// minimum_meas_cv</font></i>
-     <font color="#009900">double</font> minimum_meas_cv<font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// covariate table</font></i>
      <font color="#008080">size_t</font> n_covariate <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
@@ -321,7 +319,7 @@ A:active { color : purple }
           pack_object<font color="#990000">,</font>
           child_object
      <font color="#990000">);</font>
-     data_object<font color="#990000">.</font><b><font color="#000000">replace_like</font></b><font color="#990000">(</font>minimum_meas_cv<font color="#990000">,</font> data_subset_obj<font color="#990000">);</font>
+     data_object<font color="#990000">.</font><b><font color="#000000">replace_like</font></b><font color="#990000">(</font>data_subset_obj<font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// pack_vec</font></i>
      <font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">pack_vec</font></b><font color="#990000">(</font> pack_object<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>

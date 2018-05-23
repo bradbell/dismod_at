@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create a Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create a Dismod_at Database">
-<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_list node_table weight_table covariate_table avgint_table avgint_extra_columns data_table data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table option_table example ">
+<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_table node_table weight_table covariate_table avgint_table avgint_extra_columns data_table data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table option_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,7 +60,7 @@ A:active { color : purple }
 <option>file_name</option>
 <option>age_list</option>
 <option>time_list</option>
-<option>integrand_list</option>
+<option>integrand_table</option>
 <option>node_table</option>
 <option>weight_table</option>
 <option>covariate_table</option>
@@ -137,7 +137,7 @@ A:active { color : purple }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -214,11 +214,31 @@ specify the time grid values.
 
 <br>
 <br>
-<b><big><a name="integrand_list" id="integrand_list">integrand_list</a></big></b>
+<b><big><a name="integrand_table" id="integrand_table">integrand_table</a></big></b>
 <br>
-This is a list of <code><font color="blue">str</font></code>
-that specify the <a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand&nbsp;names</span></a>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="integrand_table.htm" target="_top"><span style='white-space: nowrap'>integrand_table</span></a>
 .
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key     </td><td align='left'  valign='top'>
+ Value Type    <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description       </td></tr><tr><td align='left'  valign='top'>
+
+name             </td><td align='left'  valign='top'>
+ str  </td><td align='left'  valign='top'>
+ name for the <code><i>i</i></code>-th integrand  </td></tr><tr><td align='left'  valign='top'>
+
+minimum_meas_cv  </td><td align='left'  valign='top'>
+ str  </td><td align='left'  valign='top'>
+ minimum measurement cv for this integrand
+</td></tr>
+</table>
+The key <code><font color="blue">minimum_meas_cv</font></code> is optional.
+If it is not present, <code><font color="blue">0.0</font></code> is used for the corresponding value.
 
 <br>
 <br>
@@ -332,7 +352,6 @@ If
 <code><i><font color="black"><span style='white-space: nowrap'>max_difference</span></font></i></code>
  does not appear, null is written for the
 corresponding covariate entry.
-
 
 <br>
 <br>

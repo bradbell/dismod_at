@@ -157,8 +157,8 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      time_list   <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">1995.0</font><font color="#990000">,</font> <font color="#993399">2005.0</font><font color="#990000">,</font> <font color="#993399">2015.0</font> <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># integrand table</font></i>
-     integrand_list <font color="#990000">=</font> <font color="#990000">[</font>
-<i><font color="#9A1900">          'Sincidence'</font></i>
+     integrand_table <font color="#990000">=</font> <font color="#990000">[</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Sincidence'</font> <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># node table: world -&gt; north_america</font></i>
@@ -226,7 +226,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           meas_value  <font color="#990000">=</font> iota_true
           meas_value <font color="#990000">*=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">(</font>income <font color="#990000">-</font> income_reference<font color="#990000">)</font> <font color="#990000">*</font> mulcov_income <font color="#990000">)</font>
           meas_std    <font color="#990000">=</font> <font color="#993399">0.1</font> <font color="#990000">*</font> meas_value
-          integrand   <font color="#990000">=</font> integrand_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+          integrand   <font color="#990000">=</font> integrand_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'name'</font><font color="#990000">]</font>
           row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> meas_value
           row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> meas_std
           row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> integrand
@@ -312,7 +312,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           file_name<font color="#990000">,</font>
           age_list<font color="#990000">,</font>
           time_list<font color="#990000">,</font>
-          integrand_list<font color="#990000">,</font>
+          integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>

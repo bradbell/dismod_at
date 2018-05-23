@@ -18,7 +18,7 @@ var list_current0 = [
 'create_database.htm#file_name',
 'create_database.htm#age_list',
 'create_database.htm#time_list',
-'create_database.htm#integrand_list',
+'create_database.htm#integrand_table',
 'create_database.htm#node_table',
 'create_database.htm#weight_table',
 'create_database.htm#covariate_table',

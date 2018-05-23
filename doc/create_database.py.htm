@@ -120,7 +120,9 @@ A:active { color : purple }
      file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
      age_list       <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">50.0</font> <font color="#990000">]</font>
      time_list      <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">2000.0</font> <font color="#990000">]</font>
-     integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'mtother'</font> <font color="#990000">]</font>
+     integrand_table <font color="#990000">=</font> <font color="#990000">[</font>
+           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'mtother'</font><font color="#990000">,</font> <font color="#FF0000">'minimum_meas_cv'</font><font color="#990000">:</font><font color="#993399">0.0</font> <font color="#990000">}</font>
+     <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># node_table</font></i>
      node_table <font color="#990000">=</font> <font color="#990000">[</font>
@@ -287,7 +289,7 @@ A:active { color : purple }
           file_name<font color="#990000">,</font>
           age_list<font color="#990000">,</font>
           time_list<font color="#990000">,</font>
-          integrand_list<font color="#990000">,</font>
+          integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>
