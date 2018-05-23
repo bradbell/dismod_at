@@ -57,6 +57,7 @@ $childtable%
 %$$
 
 $head 05-23$$
+$bold Warning$$: this is not a backward compatible change to the user API.
 The
 $code minimum_meas_cv$$ option was removed from the $cref option_table$$
 and the column
