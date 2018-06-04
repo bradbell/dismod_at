@@ -10,6 +10,8 @@
 # ---------------------------------------------------------------------------
 # devel
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
+	cmd/set_command.cpp
+
 	model/data_model.cpp
 	model/fit_model.cpp
 	model/prior_model.cpp

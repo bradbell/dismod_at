@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -30,7 +30,8 @@ The first one is a $code begin$$ message and includes the command arguments.
 The second is an $code end$$ message and signifies that the command completed.
 
 
-$children%devel/dismod_at.cpp
+$children%devel/cmd/set_command.cpp
+	%devel/dismod_at.cpp
 %$$
 $head Commands$$
 $table
