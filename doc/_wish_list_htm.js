@@ -10,7 +10,7 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'wish_list.htm#minimum_meas_cv',
+'wish_list.htm#meas_std',
 'wish_list.htm#Command Diagrams',
 'wish_list.htm#ODE Solution',
 'wish_list.htm#ODE Solution.Step Size',

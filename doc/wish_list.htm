@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list minimum_meas_cv command diagrams ode solution step size large excess mortality conditionals checkpointing lagrange multipliers documentation real world example user examples model sampling random effects special hessian starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list meas_std command diagrams ode solution step size large excess mortality conditionals checkpointing lagrange multipliers documentation real world example user examples model sampling random effects special hessian starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -52,7 +52,7 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
-<option>minimum_meas_cv</option>
+<option>meas_std</option>
 <option>Command Diagrams</option>
 <option>ODE Solution</option>
 <option>---..Step Size</option>
@@ -96,17 +96,20 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 <br>
-<b><big><a name="minimum_meas_cv" id="minimum_meas_cv">minimum_meas_cv</a></big></b>
+<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
 <br>
-Currently the
-<a href="option_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+Currently the data table
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
 
-is the same for all integrands.
-It would be good to add 
-<code><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i></code>
- to the
-<a href="integrand_table.htm" target="_top"><span style='white-space: nowrap'>integrand_table</span></a>
- so that it could be different for each integrand.
+must be specified (except for uniform density).
+Perhaps we should allow for this standard deviation to be
+<code><font color="blue">null</font></code> in the case when the corresponding
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ must not be zero
+and the <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+
+would be used to determine the measurement accuracy.
+
 
 <br>
 <br>
