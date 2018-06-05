@@ -35,7 +35,9 @@ $cref/meas_std/data_table/meas_std/$$
 must be specified (except for uniform density).
 Perhaps we should allow for this standard deviation to be
 $code null$$ in the case when the corresponding
-$cref/meas_value/data_table/meas_value/$$ is not zero.
+$cref/meas_value/data_table/meas_value/$$ must not be zero
+and the $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$
+would be used to determine the measurement accuracy.
 
 
 $head Command Diagrams$$
