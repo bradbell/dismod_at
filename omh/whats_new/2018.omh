@@ -56,6 +56,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-04$$
+Advance to using version 20180604 of
+$cref/cppad/install_unix/Special Requirements/CppAD/$$ and
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+This will probably have no effect but might reduce the amount of memory
+$code dismod_at$$ uses.
+
 $head 05-24$$
 A wish list $cref/meas_std/wish_list/meas_std/$$ entry was added
 and the minimum_meas_cv entry was removed (because it was completed).
