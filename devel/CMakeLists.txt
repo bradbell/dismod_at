@@ -11,6 +11,15 @@
 # devel
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	cmd/set_command.cpp
+	cmd/init_command.cpp
+	cmd/init_command.cpp
+	cmd/init_command.cpp
+	cmd/init_command.cpp
+	cmd/init_command.cpp
+	cmd/init_command.cpp
+	cmd/init_command.cpp
+	cmd/init_command.cpp
+	cmd/init_command.cpp
 
 	model/data_model.cpp
 	model/fit_model.cpp
