@@ -27,7 +27,6 @@
 #	ipopt
 #	cppad
 #	bools
-#	suitesparse
 #	devel
 #	hpp
 #	pthread
@@ -82,12 +81,11 @@ eigen_prefix="$HOME/prefix/dismod_at/eigen"
 # &codep
 ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
-suitesparse_prefix="$HOME/prefix/dismod_at"
 # &&
 # If these prefixes end in &code /dismod_at&&,
 # &code bin/install_ipopt.sh&&,
 # &code bin/install_cppad.sh&&, and
-# &code bin/install_suitesparse.sh&&,
+# &code bin/install_cppad_mixed.sh&&
 # will use a soft link from the corresponding &icode prefix&& to
 # &icode%prefix%.debug%&& or
 # &icode%prefix%.release%&&
@@ -238,7 +236,6 @@ cmake \
 	-D ipopt_prefix="$ipopt_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
 	-D cppad_prefix="$cppad_prefix" \
-	-D suitesparse_prefix="$suitesparse_prefix" \
 	-D system_specific_library_list="$system_specific_library_list" \
 	..
 # --------------------------------------------------------------------------

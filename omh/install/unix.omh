@@ -97,6 +97,12 @@ the gnu scientific library.
 Note that the development headers are required; e.g.,
 on Fedora or Red-Hat one needs to install $code gsl-devel$$.
 
+$subhead suitesparse$$
+The $href%http://faculty.cse.tamu.edu/davis/suitesparse.html%suitesparse%$$
+sparse matrix package.
+Note that the development headers are required; e.g.,
+on Fedora or Red-Hat one needs to install $code suitesparse-devel$$.
+
 $head Download dismod_at.git$$
 After installing the requirements above,
 use the following command to get the current version of dismod_at:
@@ -143,15 +149,6 @@ optimization package.
 Starting in the $code dismod_at.git$$ directory, the command
 $codei%
 	bin/install_ipopt.sh
-%$$
-can be used to install this package.
-
-$subhead suitesparse$$
-The $href%http://faculty.cse.tamu.edu/davis/suitesparse.html%SuiteSparse%$$
-sparse matrix package.
-Starting in the $code dismod_at.git$$ directory, the command
-$codei%
-	bin/install_suitesparse.sh
 %$$
 can be used to install this package.
 

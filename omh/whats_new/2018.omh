@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2018$$
 $spell
+	suitesparse
 	Dismod
 	covariate
 	covariates
@@ -55,6 +56,12 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 06-09$$
+Advance to using version 20180609 of
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+This changes $code suitesparse$$ from a special requirement to a
+$cref/system requirement/install_unix/System Requirements/suitesparse/$$.
 
 $head 06-04$$
 Advance to using version 20180604 of

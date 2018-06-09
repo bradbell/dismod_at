@@ -23,8 +23,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='7749a260216160b80053e1b3acceac4b22cbbf2e'
-version='20180604'
+hash_key='568db9fc0af35cd937f18a78ac2a958d098c1264'
+version='20180609'
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
 #
@@ -58,10 +58,6 @@ eval $cmd
 #
 # cppad_prefix
 cmd=`grep '^cppad_prefix=' bin/run_cmake.sh`
-eval $cmd
-#
-# suitesparse_prefix
-cmd=`grep '^suitesparse_prefix=' bin/run_cmake.sh`
 eval $cmd
 #
 # cmake_cxx_compiler
@@ -129,7 +125,6 @@ cmake_args="$cmake_args -D CMAKE_BUILD_TYPE=$build_type"
 cmake_args="$cmake_args -D cppad_prefix=$cppad_prefix"
 cmake_args="$cmake_args -D ipopt_prefix=$ipopt_prefix"
 cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix"
-cmake_args="$cmake_args -D suitesparse_prefix=$suitesparse_prefix"
 #
 cmake_args="$cmake_args -D cmake_libdir=$cmake_libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"

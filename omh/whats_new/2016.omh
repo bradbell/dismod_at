@@ -209,7 +209,7 @@ $lend
 
 $head 10-13$$
 $list number$$
-Improve the $cref/suitesparse/install_unix/Special Requirements/suitesparse/$$
+Improve $code bin/install_suitesparse.sh$$
 so that it automatically includes the $code metis$$ package.
 Note that the proper value for $icode metis_version$$,
 in the suitesparse install,
@@ -324,7 +324,7 @@ Change $code DEBUG$$ and $code RELEASE$$ to $code debug$$ and $code release$$
 in
 $cref run_cmake.sh$$ and the install for
 $cref/eigen/install_unix/Special Requirements/eigen/$$,
-$cref/suitesparse/install_unix/Special Requirements/suitesparse/$$,
+$cref/suitesparse/install_unix/System Requirements/suitesparse/$$,
 $cref/ipopt/install_unix/Special Requirements/ipopt/$$,
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
 $lend
@@ -335,7 +335,7 @@ change $code cmake_build_type$$ to $code build_type$$; see
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
 In addition, add this parameter to the install for
 $cref/eigen/install_unix/Special Requirements/eigen/$$,
-$cref/suitesparse/install_unix/Special Requirements/suitesparse/$$, and
+$cref/suitesparse/install_unix/System Requirements/suitesparse/$$, and
 $cref/ipopt/install_unix/Special Requirements/ipopt/$$.
 CppAD does not need this choice as it adapter to the choice of
 the systems that use it.
@@ -726,7 +726,7 @@ $list number$$
 Advance to a newer version of cppad_mixed
 (rerun $code bin/install_cppad_mixed.sh$$).
 $lnext
-The $cref/SuiteSparse/install_unix/Special Requirements/suitesparse/$$
+The $cref/SuiteSparse/install_unix/System Requirements/suitesparse/$$
 package is now required.
 This is because one now has the option to use it for Cholesky factorization;
 see the $code cholmod_cholesky$$ setting for installing
@@ -759,5 +759,3 @@ Advance to a newer version of cppad_mixed
 (rerun $code bin/install_cppad_mixed.sh$$).
 
 $end
-
-

@@ -18,7 +18,6 @@
 #                        -D cppad_prefix=value \
 #                        -D eigen_prefix=value \
 #                        -D ipopt_prefix=value \
-#                         ..
 # optional
 # standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
 #                        -D CMAKE_BUILD_TYPE=value \
@@ -172,7 +171,6 @@ ENDIF( "${system_specific_library_list}" STREQUAL "NOTFOUND"  )
 get_prefix(cppad)
 get_prefix(eigen)
 get_prefix(ipopt)
-get_prefix(suitesparse)
 # ----------------------------------------------------------------------------
 FOREACH( var cppad_mixed_set_sparsity )
 IF( ${var} )
@@ -214,10 +212,8 @@ INCLUDE_DIRECTORIES( ${sqlite3_INCLUDE_DIRS} )
 # suitesparse_path_list
 #
 # no pkg-config for SuiteSparse so explicitly set corresponding values
-SET(suitesparse_LIBRARY_DIRS ${suitesparse_prefix}/${cmake_libdir} )
-SET(suitesparse_LIBRARIES "cholmod;amd;camd;colamd;ccolamd;suitesparseconfig" )
-set_library_path_list( suitesparse_library_path_list
-	"${suitesparse_LIBRARY_DIRS}" "${suitesparse_LIBRARIES}"
+SET(suitesparse_library_path_list
+	"cholmod;amd;camd;colamd;ccolamd;suitesparseconfig"
 )
 # ----------------------------------------------------------------------------
 # cppad_mixed_library_path_list
