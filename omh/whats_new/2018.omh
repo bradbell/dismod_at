@@ -45,6 +45,7 @@ $spell
 	subvector
 	cv
 	integrands
+	cholmod
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -56,6 +57,15 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 06-14$$
+Advance to $code cppad-20180613$$ and $code cppad_mixed-20180614$$.
+This should use less memory during the optimization of cppad functions,
+which is only done when
+$cref/build_type/run_cmake.sh/build_type/$$ is $code release$$.
+In addition, it should fix a problem with
+$code cppad_mixed$$ finding the file $code cholmod.h$$
+on some systems.
 
 $head 06-09$$
 Advance to using version 20180609 of
