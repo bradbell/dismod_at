@@ -237,7 +237,7 @@ void set_command(
 		}
 		size_t n_sample = var_value.size() / n_var;
 		if( n_sample <= index )
-		{	msg  = "dismod_at set command: sample_index >= number of samples";:w
+		{	msg  = "dismod_at set command: sample_index >= number of samples";
 			error_exit(msg);
 		}
 		//
