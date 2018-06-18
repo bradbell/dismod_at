@@ -19,7 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	void set_option_command(
 		sqlite3*                                        db           ,
-		const CppAD::vector<option_struct>&  option_table ,
+		const CppAD::vector<option_struct>&             option_table ,
 		const std::string&                              name         ,
 		const std::string&                              value
 	);

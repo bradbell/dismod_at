@@ -11,6 +11,7 @@
 # devel
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	cmd/set_command.cpp
+	cmd/depend_command.cpp
 	cmd/init_command.cpp
 	cmd/init_command.cpp
 	cmd/init_command.cpp
