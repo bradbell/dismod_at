@@ -140,14 +140,11 @@ get_started_db<font color="#990000">.</font><b><font color="#000000">get_started
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 program        <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
 file_name      <font color="#990000">=</font> <font color="#FF0000">'get_started.db'</font>
-<b><font color="#0000FF">for</font></b> command <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'init'</font><font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'set'</font> <font color="#990000">]</font> <font color="#990000">:</font>
+<b><font color="#0000FF">for</font></b> command <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'init'</font><font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">]</font> <font color="#990000">:</font>
      cmd <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> command <font color="#990000">]</font>
      <b><font color="#0000FF">if</font></b> command <font color="#990000">==</font> <font color="#FF0000">'fit'</font> <font color="#990000">:</font>
           variables <font color="#990000">=</font> <font color="#FF0000">'both'</font>
           cmd<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>variables<font color="#990000">)</font>
-     <b><font color="#0000FF">if</font></b> command <font color="#990000">==</font> <font color="#FF0000">'set'</font> <font color="#990000">:</font>
-          cmd<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font><font color="#FF0000">'truth_var'</font><font color="#990000">)</font>
-          cmd<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font><font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
      <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
      flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
      <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
@@ -156,29 +153,58 @@ file_name      <font color="#990000">=</font> <font color="#FF0000">'get_started
 <i><font color="#9A1900"># connect to database</font></i>
 new        <font color="#990000">=</font> False
 connection <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># get start_var and truth_var tables</font></i>
-var_table       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
-start_var_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">)</font>
-truth_var_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'truth_var'</font><font color="#990000">)</font>
+var_table     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
+fit_var_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
+connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check the fit</font></i>
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
      var_row     <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
-     start_row   <font color="#990000">=</font> start_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
-     truth_row   <font color="#990000">=</font> truth_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     fit_row     <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
      var_type    <font color="#990000">=</font> var_row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font>
      <b><font color="#0000FF">if</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'mulcov_rate_value'</font> <font color="#990000">:</font>
-          income_multiplier <font color="#990000">=</font> start_row<font color="#990000">[</font><font color="#FF0000">'start_var_value'</font><font color="#990000">]</font>
-          <b><font color="#0000FF">assert</font></b> income_multiplier <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">1e-3</font>
-          income_multiplier <font color="#990000">=</font> truth_row<font color="#990000">[</font><font color="#FF0000">'truth_var_value'</font><font color="#990000">]</font>
+          income_multiplier <font color="#990000">=</font> fit_row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
           <b><font color="#0000FF">assert</font></b> income_multiplier <font color="#990000">==</font> <font color="#990000">-</font><font color="#993399">1e-3</font>
      <b><font color="#0000FF">elif</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'rate'</font> <font color="#990000">:</font>
-          omega_world <font color="#990000">=</font> start_row<font color="#990000">[</font><font color="#FF0000">'start_var_value'</font><font color="#990000">]</font>
-          <b><font color="#0000FF">assert</font></b> omega_world <font color="#990000">==</font> <font color="#993399">1e-1</font>
-          omega_world <font color="#990000">=</font> truth_row<font color="#990000">[</font><font color="#FF0000">'truth_var_value'</font><font color="#990000">]</font>
+          omega_world <font color="#990000">=</font> fit_row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
           <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> omega_world <font color="#990000">/</font> <font color="#993399">1e-2</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> False
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># set truth_var = fit_var, start_var = truth_var, scale_var = start_var</font></i>
+cmd_list <font color="#990000">=</font> <font color="#990000">[</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font><font color="#990000">,</font> <font color="#FF0000">'fit_var'</font> <font color="#990000">],</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">],</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font> <font color="#990000">]</font>
+<font color="#990000">]</font>
+<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font> cmd_list <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd_list<font color="#990000">[</font>i<font color="#990000">])</font> <font color="#990000">)</font>
+     flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+     <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
+          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at set command failed'</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+new             <font color="#990000">=</font> False
+connection      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+truth_var_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'truth_var'</font><font color="#990000">)</font>
+start_var_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">)</font>
+scale_var_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">)</font>
+<b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     <i><font color="#9A1900">#</font></i>
+     fit_row     <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     check       <font color="#990000">=</font> fit_row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
+     <i><font color="#9A1900">#</font></i>
+     truth_row   <font color="#990000">=</font> truth_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     value       <font color="#990000">=</font> truth_row<font color="#990000">[</font><font color="#FF0000">'truth_var_value'</font><font color="#990000">]</font>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> value <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+     <i><font color="#9A1900">#</font></i>
+     start_row   <font color="#990000">=</font> start_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     value       <font color="#990000">=</font> start_row<font color="#990000">[</font><font color="#FF0000">'start_var_value'</font><font color="#990000">]</font>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> value <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+     <i><font color="#9A1900">#</font></i>
+     scale_row   <font color="#990000">=</font> scale_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     value       <font color="#990000">=</font> scale_row<font color="#990000">[</font><font color="#FF0000">'scale_var_value'</font><font color="#990000">]</font>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> value <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'set_command: OK'</font><font color="#990000">)</font></tt></pre>
 </font></code>

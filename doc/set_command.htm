@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Directly Setting Table Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Directly Setting Table Values">
-<meta name="keywords" id="keywords" content=" directly setting table values syntax database option name value warning table_out start_var scale_var truth_var source prior_mean fit_var sample example ">
+<meta name="keywords" id="keywords" content=" directly setting table values syntax database option name value warning table_out start_var scale_var truth_var source sample prior_mean fit_var start scale truth example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,10 +64,10 @@ A:active { color : purple }
 <option>---..scale_var</option>
 <option>---..truth_var</option>
 <option>source</option>
+<option>---..sample</option>
 <option>---..prior_mean</option>
 <option>---..fit_var</option>
-<option>---..start_var</option>
-<option>---..sample</option>
+<option>---..start, scale, truth</option>
 <option>Example</option>
 </select>
 </td>
@@ -226,54 +226,20 @@ Note that this table may also be created directly by the user
 <br>
 The set command 
 <code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
- must be one of the following
+ must be one of the
+possibilities listed below
 (and not be the same as 
 <code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
-):
-
-<br>
-<br>
-<big><a name="source.prior_mean" id="source.prior_mean">prior_mean</a></big>
-<br>
-If 
+).
+Only the case where 
 <code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
- is <code><font color="blue">prior_mean</font></code>,
-the mean of the priors is used for the values in 
-<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
-.
-In this case 
+ is 
+<code><i><font color="black"><span style='white-space: nowrap'>sample</span></font></i></code>
+
+has the extra argument 
 <code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
- is not present.
-
-<br>
-<br>
-<big><a name="source.fit_var" id="source.fit_var">fit_var</a></big>
-<br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
- is <code><font color="blue">fit_var</font></code>,
-the results of the previous fit is used for the values in 
-<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
 .
-In this case 
-<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
- is not present.
 
-<br>
-<br>
-<big><a name="source.start_var" id="source.start_var">start_var</a></big>
-<br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
- is <code><font color="blue">start_var</font></code>,
-the contents of this table are copied to 
-<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
-.
-This is useful when the user creates the <code><font color="blue">start_var</font></code> table
-and wants the <code><font color="blue">scale_var</font></code> table to have the same values.
-In this case, 
-<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
- would be <code><font color="blue">scale_var</font></code>.
 
 <br>
 <br>
@@ -289,6 +255,45 @@ In this case the <a href="model_variables.htm" target="_top"><span style='white-
  in the sample table,
 and corresponding to the specified sample index,
 are used for the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="source.prior_mean" id="source.prior_mean">prior_mean</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ is <code><font color="blue">prior_mean</font></code>,
+the mean of the priors is used for the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="source.fit_var" id="source.fit_var">fit_var</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ is <code><font color="blue">fit_var</font></code>,
+the results of the previous fit is used for the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="source.start, scale, truth" id="source.start, scale, truth">start, scale, truth</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>source</span></font></i></code>
+ is
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+,
+<a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
+, or
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
+,
+the contents of this table are copied to 
 <code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
 .
 
