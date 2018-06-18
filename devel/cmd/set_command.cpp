@@ -83,25 +83,12 @@ Note that this table may also be created directly by the user
 (with the aid of the $cref var_table$$).
 
 $head source$$
-The set command $icode source$$ must be one of the following
-(and not be the same as $icode table_out$$):
+The set command $icode source$$ must be one of the
+possibilities listed below
+(and not be the same as $icode table_out$$).
+Only the case where $icode source$$ is $icode sample$$
+has the extra argument $icode sample_index$$.
 
-$subhead prior_mean$$
-If $icode source$$ is $code prior_mean$$,
-the mean of the priors is used for the values in $icode table_out$$.
-In this case $icode sample_index$$ is not present.
-
-$subhead fit_var$$
-If $icode source$$ is $code fit_var$$,
-the results of the previous fit is used for the values in $icode table_out$$.
-In this case $icode sample_index$$ is not present.
-
-$subhead start_var$$
-If $icode source$$ is $code start_var$$,
-the contents of this table are copied to $icode table_out$$.
-This is useful when the user creates the $code start_var$$ table
-and wants the $code scale_var$$ table to have the same values.
-In this case, $icode table_out$$ would be $code scale_var$$.
 
 $subhead sample$$
 If $icode source$$ is $code sample$$,
@@ -109,6 +96,21 @@ $icode sample_index$$ must be present.
 In this case the $cref model_variables$$ in the sample table,
 and corresponding to the specified sample index,
 are used for the values in $icode table_out$$.
+
+$subhead prior_mean$$
+If $icode source$$ is $code prior_mean$$,
+the mean of the priors is used for the values in $icode table_out$$.
+
+$subhead fit_var$$
+If $icode source$$ is $code fit_var$$,
+the results of the previous fit is used for the values in $icode table_out$$.
+
+$subhead start, scale, truth$$
+If $icode source$$ is
+$cref/start_var/start_var_table/$$,
+$cref/scale_var/scale_var_table/$$, or
+$cref/truth_var/truth_var_table/$$,
+the contents of this table are copied to $icode table_out$$.
 
 $children%example/get_started/set_command.py
 %$$
@@ -183,13 +185,15 @@ void set_command(
 		msg += "start_var, scale_var, truth_var";
 		error_exit(msg);
 	}
-	if( source != "prior_mean"
+	if( source != "sample"
+	&&	source != "prior_mean"
 	&&  source != "fit_var"
 	&&  source != "start_var"
-	&&  source != "sample" )
+	&&  source != "scale_var"
+	&&  source != "truth_var" )
 	{	msg  = "dismod_at set command source = ";
 		msg += source + " is not one of the following: ";
-		msg += "prior_mean, fit_var, start_var, sample";
+		msg += "sample, prior_mean, fit_var, start_var, scale_var, truth_var";
 		error_exit(msg);
 	}
 	if( source == "sample" && sample_index == "" )
@@ -215,40 +219,8 @@ void set_command(
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	//
-	if( source == "prior_mean" )
-	{	for(size_t var_id = 0; var_id < n_var; var_id++)
-			row_value[var_id] = CppAD::to_string( prior_mean[var_id] );
-	}
-	else if( source == "fit_var" )
-	{	// fit_var_value
-		vector<double> fit_var_value;
-		string table_name_in  = "fit_var";
-		string column_name    = "fit_var_value";
-		get_table_column(
-			db, table_name_in, column_name, fit_var_value
-		);
-		//
-		// put it in row_value
-		for(size_t var_id = 0; var_id < n_var; var_id++)
-			row_value[var_id] = to_string(fit_var_value[var_id]);
-	}
-	else if( source == "start_var" )
-	{	// start_var_value
-		vector<double> start_var_value;
-		string table_name_in  = "start_var";
-		string column_name    = "start_var_value";
-		get_table_column(
-			db, table_name_in, column_name, start_var_value
-		);
-		//
-		// put it in row_value
-		for(size_t var_id = 0; var_id < n_var; var_id++)
-			row_value[var_id] = to_string(start_var_value[var_id]);
-	}
-	else
-	{	assert( source == "sample" );
-		//
-		// index
+	if( source == "sample" )
+	{	// index
 		size_t index = size_t ( std::atoi( sample_index.c_str() ) );
 		//
 		// var_value
@@ -265,7 +237,7 @@ void set_command(
 		}
 		size_t n_sample = var_value.size() / n_var;
 		if( n_sample <= index )
-		{	msg  = "dismod_at set command: sample_index >= number of samples";
+		{	msg  = "dismod_at set command: sample_index >= number of samples";:w
 			error_exit(msg);
 		}
 		//
@@ -274,6 +246,22 @@ void set_command(
 		{	size_t sample_id = index * n_var + var_id;
 				row_value[var_id] = to_string(var_value[sample_id]);
 		}
+	}
+	else if( source == "prior_mean" )
+	{	for(size_t var_id = 0; var_id < n_var; var_id++)
+			row_value[var_id] = CppAD::to_string( prior_mean[var_id] );
+	}
+	else
+	{	vector<double> var_value;
+		string table_name_in  = source;
+		string column_name    = source + "_value";
+		get_table_column(
+			db, table_name_in, column_name, var_value
+		);
+		//
+		// put it in row_value
+		for(size_t var_id = 0; var_id < n_var; var_id++)
+			row_value[var_id] = to_string( var_value[var_id] );
 	}
 	create_table(
 		db, table_name_out, col_name, col_type, col_unique, row_value

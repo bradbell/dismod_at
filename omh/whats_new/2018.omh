@@ -58,6 +58,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-18$$
+Change the set command  so that the possible sources include the
+$cref/scale, truth/set_command/source/start, scale, truth/$$ tables.
+
 $head 06-14$$
 Advance to $code cppad-20180613$$ and $code cppad_mixed-20180614$$.
 This should use less memory during the optimization of cppad functions,
@@ -524,7 +528,7 @@ $lend
 
 $head 02-08$$
 $list number$$
-Add $cref/start_var/set_command/source/start_var/$$ to the possible
+Add $cref/start_var/set_command/source/start, scale, truth/$$ to the possible
 sources for the $code set$$ command.
 $lnext
 Advance to $code cppad_mixed-20180208$$.
