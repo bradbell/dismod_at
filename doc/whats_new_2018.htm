@@ -156,10 +156,26 @@ A:active { color : purple }
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
 <b><big><a name="06-21" id="06-21">06-21</a></big></b>
-<br>
+
+<ol type="1"><li>
 Add text about failures during the dismod_at install correctness
 <a href="install_unix.htm#dismod_at.Test" target="_top"><span style='white-space: nowrap'>tests</span></a>
 .
+</li><li>
+
+The <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+ and <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ would hang
+if <a href="node_table.htm#parent" target="_top"><span style='white-space: nowrap'>parent</span></a>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+
+were equal in the node table.
+An error message is now generated
+for any case where a node was a descendant of itself.
+</li></ol>
+
+
 
 <br>
 <br>
