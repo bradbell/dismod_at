@@ -59,8 +59,17 @@ $childtable%
 %$$
 
 $head 06-21$$
+$list number$$
 Add text about failures during the dismod_at install correctness
 $cref/tests/install_unix/dismod_at/Test/$$.
+$lnext
+The $cref init_command$$ and $cref db2csv_command$$ would hang
+if $cref/parent/node_table/parent/$$ and $icode node_id$$
+were equal in the node table.
+An error message is now generated
+for any case where a node was a descendant of itself.
+$lend
+
 
 $head 06-20$$
 Advance to $code cppad-20180620$$ and $code cppad_mixed-20180620$$.

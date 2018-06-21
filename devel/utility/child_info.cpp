@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -57,7 +57,7 @@ Only the following fields of this table are used: $code parent$$.
 $subhead table$$
 This argument has one of the following prototypes
 $codei%
-	const CppAD::vector<%data_struct%>&     %table%
+	const CppAD::vector<%data_struct%>&   %table%
 	const CppAD::vector<%avgint_struct%>& %table%
 %$$
 
@@ -138,6 +138,7 @@ is not the parent node and not a descendent of the parent node.
 $end
 */
 # include <dismod_at/child_info.hpp>
+# include <dismod_at/error_exit.hpp>
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/get_avgint_table.hpp>
 # include <dismod_at/null_int.hpp>
@@ -164,8 +165,11 @@ child_info::child_info(
 	table_id2child_.resize(n_table);
 	for(size_t table_id = 0; table_id < n_table; table_id++)
 	{	size_t node_id = size_t( table[table_id].node_id );
+		// check if this is the parent node
 		bool   found   = parent_node_id == node_id;
+		// special child index for the parent node
 		size_t child   = child_id2node_id_.size();
+		// loop to check child nodes
 		bool   more    = ! found;
 		while(more)
 		{	for(size_t i = 0; i < child_id2node_id_.size(); i++)
@@ -175,8 +179,15 @@ child_info::child_info(
 				}
 			}
 			more = (! found) && (node_id != DISMOD_AT_NULL_SIZE_T);
-			if(more)
-				node_id = size_t( node_table[node_id].parent );
+			if( more )
+			{	size_t parent = size_t ( node_table[node_id].parent );
+				if( parent == node_id )
+				{	// infinite loop checking if parent_node_id is an ancestor
+					std::string msg = "This node is a descendant of itself";
+					error_exit(msg, "node", node_id);
+				}
+				node_id = parent;
+			}
 		}
 		if( ! found )
 			child = child_id2node_id_.size() + 1;
@@ -207,4 +218,3 @@ template child_info::child_info(
 );
 
 } // END DISMOD_AT_NAMESPACE
-

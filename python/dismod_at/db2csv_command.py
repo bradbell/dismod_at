@@ -519,6 +519,10 @@ def db2csv_command(database_file_arg) :
 		descendant_id = node_id
 		while descendant_id != None :
 			parent_id  = table_data['node'][descendant_id]['parent']
+			if parent_id == node_id :
+				msg  = 'db2csv_command: node_id ' + str(node_id)
+				msg += ' is a descendant of itself, see the node table '
+				sys.exit(msg)
 			if parent_id == parent_node_id :
 				name = table_data['node'][descendant_id]['node_name']
 				return name
