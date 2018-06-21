@@ -58,6 +58,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-21$$
+Add text about failures during the dismod_at install correctness
+$cref/tests/install_unix/dismod_at/Test/$$.
+
 $head 06-20$$
 Advance to $code cppad-20180620$$ and $code cppad_mixed-20180620$$.
 This should use less memory, and increase speed,

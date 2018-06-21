@@ -209,6 +209,13 @@ $codep
 	make speed
 	cd ..
 $$
+Some of the tests use different random number simulations each time
+they are run.
+If you get a correctness check failure during a $code make check$$
+or $code make speed$$, try running the make command again.
+If you get the same correctness check fails twice in a row,
+there probably is a problem and
+you should get help from the $code dismod_at$$ development team.
 
 $subhead Install$$
 The following command will,
