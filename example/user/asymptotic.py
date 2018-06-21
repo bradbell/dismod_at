@@ -102,6 +102,9 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
+random_seed = int( time.time() )
+# ---------------------------------------------------------------------------
+#
 # no need to include sqrt{2 \pi} term (it does not depend on model variables)
 def h(y, mu, sigma ) :
 	if sigma <= 0.0 :
@@ -249,7 +252,7 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'      },
 		{ 'name':'ode_step_size',          'value':'10.0'               },
-		{ 'name':'random_seed',            'value':'0'                  },
+		{ 'name':'random_seed',            'value':str(random_seed)     },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'  },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
@@ -331,8 +334,7 @@ var_avg = numpy.average(sample_array, axis=0);
 var_std = numpy.std(sample_array, axis=0);
 # -----------------------------------------------------------------------
 # now use MCMC to calculate the same values
-python_seed = int( time.time() )
-numpy.random.seed( seed = python_seed )
+numpy.random.seed( seed = random_seed )
 m          = 10 * number_sample
 x0         = numpy.array( [ 1e-2, 0.0, 0.0 ] )
 s          = numpy.array( [ 1e-3, 1e-1, 1e-1] )
@@ -350,7 +352,7 @@ for i in range(3) :
 	check     = x_avg_mcmc[i]
 	avg_diff  = check / value - 1.0
 	if abs( avg_diff ) > 0.05 :
-		print('avg_diff = ', avg_diff, ', python_seed = ', python_seed )
+		print('avg_diff = ', avg_diff, ', random_seed = ', random_seed )
 		assert(False)
 	value     = var_std[ node_name2var_id[node_name] ]
 	check     = x_std_mcmc[i]
@@ -359,7 +361,7 @@ for i in range(3) :
 	# so we do not expect the asymptotic statistics to be correct.
 	# Note that in this case, the asymptotics are an over estimate.
 	if std_diff >= 0.0 or abs(std_diff) > 0.5 :
-		print('std_diff = ', std_diff, ', python_seed = ', python_seed )
+		print('std_diff = ', std_diff, ', random_seed = ', random_seed )
 		assert(False)
 print('asymptotic.py: OK')
 # END PYTHON
