@@ -234,6 +234,9 @@ local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><fon
 distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># no need to include sqrt{2 \pi} term (it does not depend on model variables)</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">h</font></b><font color="#990000">(</font>y<font color="#990000">,</font> mu<font color="#990000">,</font> sigma <font color="#990000">)</font> <font color="#990000">:</font>
      <b><font color="#0000FF">if</font></b> sigma <font color="#990000">&lt;=</font> <font color="#993399">0.0</font> <font color="#990000">:</font>
@@ -381,7 +384,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font>      <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'10.0'</font>               <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                  <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><b><font color="#000000">str</font></b><font color="#990000">(</font>random_seed<font color="#990000">)</font>     <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font>  <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'true'</font>         <font color="#990000">},</font>
@@ -463,8 +466,7 @@ var_avg <font color="#990000">=</font> numpy<font color="#990000">.</font><b><fo
 var_std <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">);</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># now use MCMC to calculate the same values</font></i>
-python_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-numpy<font color="#990000">.</font>random<font color="#990000">.</font><b><font color="#000000">seed</font></b><font color="#990000">(</font> seed <font color="#990000">=</font> python_seed <font color="#990000">)</font>
+numpy<font color="#990000">.</font>random<font color="#990000">.</font><b><font color="#000000">seed</font></b><font color="#990000">(</font> seed <font color="#990000">=</font> random_seed <font color="#990000">)</font>
 m          <font color="#990000">=</font> <font color="#993399">10</font> <font color="#990000">*</font> number_sample
 x0         <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> <font color="#990000">[</font> <font color="#993399">1e-2</font><font color="#990000">,</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">0.0</font> <font color="#990000">]</font> <font color="#990000">)</font>
 s          <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> <font color="#990000">[</font> <font color="#993399">1e-3</font><font color="#990000">,</font> <font color="#993399">1e-1</font><font color="#990000">,</font> <font color="#993399">1e-1</font><font color="#990000">]</font> <font color="#990000">)</font>
@@ -482,7 +484,7 @@ mcmc_order <font color="#990000">=</font> <font color="#990000">[</font> <font c
      check     <font color="#990000">=</font> x_avg_mcmc<font color="#990000">[</font>i<font color="#990000">]</font>
      avg_diff  <font color="#990000">=</font> check <font color="#990000">/</font> value <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> avg_diff <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.05</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'avg_diff = '</font><font color="#990000">,</font> avg_diff<font color="#990000">,</font> <font color="#FF0000">', python_seed = '</font><font color="#990000">,</font> python_seed <font color="#990000">)</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'avg_diff = '</font><font color="#990000">,</font> avg_diff<font color="#990000">,</font> <font color="#FF0000">', random_seed = '</font><font color="#990000">,</font> random_seed <font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
      value     <font color="#990000">=</font> var_std<font color="#990000">[</font> node_name2var_id<font color="#990000">[</font>node_name<font color="#990000">]</font> <font color="#990000">]</font>
      check     <font color="#990000">=</font> x_std_mcmc<font color="#990000">[</font>i<font color="#990000">]</font>
@@ -491,7 +493,7 @@ mcmc_order <font color="#990000">=</font> <font color="#990000">[</font> <font c
      <i><font color="#9A1900"># so we do not expect the asymptotic statistics to be correct.</font></i>
      <i><font color="#9A1900"># Note that in this case, the asymptotics are an over estimate.</font></i>
      <b><font color="#0000FF">if</font></b> std_diff <font color="#990000">&gt;=</font> <font color="#993399">0.0</font> <b><font color="#0000FF">or</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>std_diff<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.5</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'std_diff = '</font><font color="#990000">,</font> std_diff<font color="#990000">,</font> <font color="#FF0000">', python_seed = '</font><font color="#990000">,</font> python_seed <font color="#990000">)</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'std_diff = '</font><font color="#990000">,</font> std_diff<font color="#990000">,</font> <font color="#FF0000">', random_seed = '</font><font color="#990000">,</font> random_seed <font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'asymptotic.py: OK'</font><font color="#990000">)</font></tt></pre>
 </font></code>
