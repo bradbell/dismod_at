@@ -58,6 +58,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-29$$
+Advance to $code cppad-20180627$$ and $code cppad_mixed-20180629$$.
+Again this is expected to be an improvement to the optimization
+of cppad functions when
+$cref/build_type/run_cmake.sh/build_type/$$ is $code release$$.
+
 $head 06-21$$
 $list number$$
 Add text about failures during the dismod_at install correctness
