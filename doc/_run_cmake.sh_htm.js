@@ -21,7 +21,6 @@ var list_current0 = [
 'run_cmake.sh.htm#Choosing C++ Compiler',
 'run_cmake.sh.htm#extra_cxx_flags',
 'run_cmake.sh.htm#cmake_libdir',
-'run_cmake.sh.htm#checkpoint_newton_step',
 'run_cmake.sh.htm#system_specific_library_list'
 ];
 var list_down2 = [

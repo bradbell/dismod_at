@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>bin/run_cmake.sh: User Configuration Options</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="bin/run_cmake.sh: User Configuration Options">
-<meta name="keywords" id="keywords" content=" bin/run_cmake.sh: user configuration options verbose_makefile build_type dismod_at_prefix eigen_prefix other prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir checkpoint_newton_step system_specific_library_list ">
+<meta name="keywords" id="keywords" content=" bin/run_cmake.sh: user configuration options verbose_makefile build_type dismod_at_prefix eigen_prefix other prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir system_specific_library_list ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,7 +63,6 @@ A:active { color : purple }
 <option>Choosing C++ Compiler</option>
 <option>extra_cxx_flags</option>
 <option>cmake_libdir</option>
-<option>checkpoint_newton_step</option>
 <option>system_specific_library_list</option>
 </select>
 </td>
@@ -110,7 +109,7 @@ verbose_makefile='no'
 <br>
 Use either <code><font color="blue">debug</font></code> or <code><font color="blue">release</font></code> for the type of this build:
 <code><font color='blue'><pre style='display:inline'> 
-build_type='debug'
+build_type=release
 </pre></font></code>
 <br>
 <b><big><a name="dismod_at_prefix" id="dismod_at_prefix">dismod_at_prefix</a></big></b>
@@ -232,20 +231,6 @@ An alternative might be <code><font color="blue">-Wall</font></code>.
 Sub-directory of each prefix where libraries are installed.
 <code><font color='blue'><pre style='display:inline'> 
 cmake_libdir='lib64'
-</pre></font></code>
-<br>
-<b><big><a name="checkpoint_newton_step" id="checkpoint_newton_step">checkpoint_newton_step</a></big></b>
-<br>
-If <code><font color="blue">yes</font></code>, <code><font color="blue">cppad_mixed</font></code> will use checkpointing during
-calculation of second derivatives. This affects optimization when
-<a href="option_table.htm#Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
- is false, and the
-<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
- sampling method.
-For these computations, checkpointing should use less memory, but
-take more time.
-<code><font color='blue'><pre style='display:inline'> 
-checkpoint_newton_step='yes'
 </pre></font></code>
 <br>
 <b><big><a name="system_specific_library_list" id="system_specific_library_list">system_specific_library_list</a></big></b>
