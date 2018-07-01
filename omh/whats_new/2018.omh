@@ -58,6 +58,18 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-30$$
+Advance to $code cppad-20180630$$ and remove
+$code checkpoint_newton_step$$ from $cref run_cmake.sh$$.
+This should make be faster and use less memory when
+$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ is false.
+For the $cref user_speed.py$$ example with
+$icode%n_children%=30%$$,
+$icode%n_data_per_child%=20%$$, and
+$icode%quasi_fixed%=false%$$
+the elapsed time improved from
+$code 14.1$$ to $code 8.3$$ seconds.
+
 $head 06-29$$
 Advance to $code cppad-20180627$$ and $code cppad_mixed-20180629$$.
 Again this is expected to be an improvement to the optimization

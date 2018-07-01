@@ -47,7 +47,7 @@ verbose_makefile='no'
 # &head build_type&&
 # Use either &code debug&& or &code release&& for the type of this build:
 # &codep
-build_type='debug'
+build_type=release
 # &&
 #
 # &head dismod_at_prefix&&
@@ -124,17 +124,6 @@ extra_cxx_flags='-std=c++11 -Wpedantic -Wall -Wshadow -Wconversion'
 # Sub-directory of each prefix where libraries are installed.
 # &codep
 cmake_libdir='lib64'
-# &&
-#
-# &head checkpoint_newton_step&&
-# If &code yes&&, &code cppad_mixed&& will use checkpointing during
-# calculation of second derivatives. This affects optimization when
-# &cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/&& is false, and the
-# &cref/asymptotic/sample_command/method/asymptotic/&& sampling method.
-# For these computations, checkpointing should use less memory, but
-# take more time.
-# &codep
-checkpoint_newton_step='yes'
 # &&
 #
 # &head system_specific_library_list&&

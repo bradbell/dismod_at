@@ -23,8 +23,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='4527516c15c06ee7e510716105da1084cd16a901'
-version='20180629'
+hash_key='8e5f53992964c3954ca69ac746f3d63b8bc7e4b2'
+version='20180630'
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
 #
@@ -62,10 +62,6 @@ eval $cmd
 #
 # cmake_cxx_compiler
 cmd=`grep '^cmake_cxx_compiler=' bin/run_cmake.sh`
-eval $cmd
-#
-# checkpoint_newton_step
-cmd=`grep '^checkpoint_newton_step=' bin/run_cmake.sh`
 eval $cmd
 #
 # cmake_libdir
@@ -129,7 +125,6 @@ cmake_args="$cmake_args -D eigen_prefix=$eigen_prefix"
 cmake_args="$cmake_args -D cmake_libdir=$cmake_libdir"
 cmake_args="$cmake_args -D bool_sparsity=$bool_sparsity"
 cmake_args="$cmake_args -D ldlt_cholmod=$ldlt_cholmod"
-cmake_args="$cmake_args -D checkpoint_newton_step=$checkpoint_newton_step"
 cmake_args="$cmake_args -D optimize_cppad_function=$optimize_cppad_function"
 cmake_args="$cmake_args -D for_hes_sparsity=$for_hes_sparsity"
 #
