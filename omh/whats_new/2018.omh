@@ -59,7 +59,10 @@ $childtable%
 %$$
 
 $head 06-30$$
-Advance to $code cppad-20180630$$ and remove
+Advance to
+$code cppad-20180630$$,
+$code cppad_mixed-20180630$$,
+and remove
 $code checkpoint_newton_step$$ from $cref run_cmake.sh$$.
 This should make be faster and use less memory when
 $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ is false.
