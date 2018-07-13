@@ -47,7 +47,7 @@ verbose_makefile='no'
 # &head build_type&&
 # Use either &code debug&& or &code release&& for the type of this build:
 # &codep
-build_type=release
+build_type='release'
 # &&
 #
 # &head dismod_at_prefix&&
