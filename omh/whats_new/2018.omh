@@ -58,6 +58,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-21$$
+Add restrictions on $codei%(%a%, %t%)%$$ arguments to
+$cref/weight_table/create_database/weight_table/$$
+$icode%fun%(%a%, %t%)%$$ and smooth_table
+$cref/fun(a, t)/create_database/smooth_table/fun/$$
+in $code create_database$$.
+
 $head 07-13$$
 Advance to $code cppad_mixed-20180713$$.
 

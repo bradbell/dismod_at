@@ -80,11 +80,11 @@
 #
 # $head age_list$$
 # is a $code list$$ of $code float$$ that
-# specify the age grid values.
+# specify age values by indices.
 #
 # $head time_list$$
 # is a $code list$$ of $code float$$ that
-# specify the time grid values.
+# specify time values by indices.
 #
 # $head integrand_table$$
 # This is a list of $code dict$$
@@ -124,6 +124,9 @@
 # $tend
 # The float $icode w$$ is the value of this weighting a the corresponding
 # float age $icode a$$ and float time $icode t$$.
+# Note that there is an $icode i$$, $icode j$$ such that
+# $icode%a% = %age_list%[ %age_id%[%i%]%$$ and
+# $icode%t% = %time_list%[ %time_id%[%j%]%$$.
 #
 # $head covariate_table$$
 # This is a list of $code dict$$
@@ -180,7 +183,8 @@
 # $table
 # Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
 # hold_out     $cnext bool        $cnext hold out flag               $rnext
-# density      $cnext str         $cnext density                     $rnext
+# density      $cnext str         $cnext
+# $cref/density_name/density_table/density_name/$$                   $rnext
 # meas_value   $cnext float       $cnext measured value              $rnext
 # meas_std     $cnext float       $cnext standard deviation          $rnext
 # eta          $cnext float       $cnext offset in log-transform     $rnext
@@ -206,7 +210,8 @@
 # lower   $cnext float         $cnext lower limit                $rnext
 # upper   $cnext float         $cnext upper limit                $rnext
 # std     $cnext float         $cnext standard deviation         $rnext
-# density $cnext float         $cnext density function           $rnext
+# density      $cnext str         $cnext
+# $cref/density_name/density_table/density_name/$$               $rnext
 # eta     $cnext float         $cnext offset in log densities    $rnext
 # nu      $cnext float         $cnext degrees of freed in Student densities
 # $tend
@@ -264,6 +269,9 @@
 # when age $icode%a% = %age_id%[-1]%$$.
 # The value $icode dt$$ is not used, and can be None,
 # when time $icode%t% = %time_id%[-1]%$$.
+# Note that there is an $icode i$$, $icode j$$ such that
+# $icode%a% = %age_list%[ %age_id%[%i%]%$$ and
+# $icode%t% = %time_list%[ %time_id%[%j%]%$$.
 #
 # $subhead const_value$$
 # The $icode fun$$ return value $icode v$$ may be a $code float$$.
@@ -523,7 +531,7 @@ def create_database(
 		weight  = weight_table[i]
 		age_id  = weight['age_id']
 		time_id = weight['time_id']
-		fun    = weight['fun']
+		fun     = weight['fun']
 		for j in age_id :
 			for k in time_id :
 				w = fun(age_list[j], time_list[k])
