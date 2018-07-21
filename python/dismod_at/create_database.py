@@ -125,8 +125,8 @@
 # The float $icode w$$ is the value of this weighting a the corresponding
 # float age $icode a$$ and float time $icode t$$.
 # Note that there is an $icode i$$, $icode j$$ such that
-# $icode%a% = %age_list%[ %age_id%[%i%]%$$ and
-# $icode%t% = %time_list%[ %time_id%[%j%]%$$.
+# $icode%a% = %age_list%[%age_id%[%i%]]%$$ and
+# $icode%t% = %time_list%[%time_id%[%j%]]%$$.
 #
 # $head covariate_table$$
 # This is a list of $code dict$$
@@ -270,8 +270,8 @@
 # The value $icode dt$$ is not used, and can be None,
 # when time $icode%t% = %time_id%[-1]%$$.
 # Note that there is an $icode i$$, $icode j$$ such that
-# $icode%a% = %age_list%[ %age_id%[%i%]%$$ and
-# $icode%t% = %time_list%[ %time_id%[%j%]%$$.
+# $icode%a% = %age_list%[%age_id%[%i%]]%$$ and
+# $icode%t% = %time_list%[%time_id%[%j%]]%$$.
 #
 # $subhead const_value$$
 # The $icode fun$$ return value $icode v$$ may be a $code float$$.

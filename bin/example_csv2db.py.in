@@ -1,4 +1,4 @@
-#! python3
+#! @python3_executable@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-18 University of Washington
@@ -163,10 +163,19 @@
 def constant_weight_fun(a, t) :
 	return 1.0
 #
+def uniform10_fun(a, t) :
+	v  = 'uniform01'
+	da = None
+	dt = None
+	return (v, da, dy)
+#
 def omega_constraint_fun(a, t, age_grid, time_grid, omega_grid) :
 	i  = age_grid.index(a)
 	j  = time_grid.index(t)
-	return omega[i, j]
+	v  = omega[i, j]
+	da = None
+	dv = None
+	return (v, da, dv)
 # -----------------------------------------------------------------------------
 # import dismod_at in a way that will use its top source directory when testing
 import sys
@@ -179,19 +188,22 @@ import csv
 import copy
 import numpy
 # -----------------------------------------------------------------------------
+# program
+program = 'example_csv2db.py'
+# -----------------------------------------------------------------------------
 # option_csv, data_csv
 if len(sys.argv) != 2 :
-	msg = 'usage: example_csv2db.py option_csv data_csv'
+	msg = 'usage: ' + program + ' option_csv data_csv'
 	sys.exit(msg)
 option_csv = sys.arg[1]
 data_csv   = sys.arg[2]
 for file_name in option_csv data_csv :
 	if not file_name.endswith('.csv') :
-		msg  = 'example_csv2db.py: file name ' + file_name
+		msg  = program + ': file name ' + file_name
 		msg += ' does not end with .csv'
 		sys.exit(msg)
 	if not os.path.isfile(file_name) :
-		msg = 'example_csv2db.py: cannot find file ' + file_name
+		msg = program + ': cannot find file ' + file_name
 		sys.exit(msg)
 # -----------------------------------------------------------------------------
 # file_option
@@ -206,10 +218,10 @@ file_ptr.close()
 required = [ 'database_name', 'non_zero_rates' ] :
 for name in required :
 	if not name in file_option :
-		msg = 'example_csv2db: ' + name + ' not in option_csv ' + option_csv
+		msg = program + ': ' + name + ' not in option_csv ' + option_csv
 		sys.exit(msg)
 if 'omega' not in file_option['non_zero_rates'] :
-	msg = 'example_csv2db: omega not in non_zero_rates in ' + option_csv
+	msg = program + ': omega not in non_zero_rates in ' + option_csv
 	sys.exit(msg)
 # -----------------------------------------------------------------------------
 # file_data
@@ -235,24 +247,24 @@ for row in file_data :
 	if row['integrand'] == 'mtother' :
 		found = True
 		if row['age_lower'] != row['age_upper'] :
-			msg  = 'example_csv2db.py: line ' + str(line)
+			msg  = program + ': line ' + str(line)
 			msg += ' of data_csv ' + data_csv + '\n'
 			msg += 'age_lower not equal age_upper for mtother data.'
 			sys.exit(msg)
 		if row['time_lower'] != row['time_upper'] :
-			msg  = 'example_csv2db.py: line ' + str(line)
+			msg  = program + ': line ' + str(line)
 			msg += ' of file ' + data_csv + '\n'
 			msg += 'time_lower not equal time_upper for mtother data.'
 			sys.exit(msg)
 	if row['integrand'] == 'mtall' :
 		if not row['hold_out'] :
-			msg  = 'example_csv2db.py: line ' + str(line)
+			msg  = program + ': line ' + str(line)
 			msg += ' of file ' + data_csv + '\n'
 			msg += 'hold_out is not 1 for mtall data.'
 			sys.exit(msg)
 
 if not mtother_found
-	msg = 'example_csv2db.py: no mtother data in ' + data_csv
+	msg = program + ': no mtother data in ' + data_csv
 	sys.exit(msg)
 # -----------------------------------------------------------------------------
 # age_grid, time_grid, omega_grid
@@ -349,9 +361,9 @@ rate2integrand = {
 	'chi'   : 'mtexcess',
 	'omega' : 'mtother'
 ]
-rate_list    = file_option['non_zero_rates'].split() :
-avgint_table = [ 'prevalence' ]
-for rate in rate_list :
+non_zero_rates = file_option['non_zero_rates'].split() :
+avgint_table   = [ 'prevalence' ]
+for rate in non_zero_rates :
 	if rate != 'pini' :
 		integrand = rate2integrand[rate]
 		for age in age_grid :
@@ -398,7 +410,6 @@ prior = {
 prior_table = [ prior ]
 # -----------------------------------------------------------------------------
 # smooth_table
-#
 start = 0
 if age_list[0] != age_grid[0] :
 	start = 1
@@ -409,8 +420,67 @@ if time_list[0] != time_grid[0] :
 	start = 1
 time_id = range(start, len(time_grid) + 1)
 #
-smooth_omega = {
-	'name':     'uniform01',
-	'age_id':   age_id,
-	'time_id':  time_id,
-	'
+# omega
+def omega_fun(a, t) :
+	return omega_constrant_fun(a, t, age_grid, time_grid, omega_grid)
+smooth_table  = list()
+non_zero_rates = file_option['non_zero_rates'].split()
+for rate in non_zero_rates :
+	if rate == 'omega' :
+		smooth_table.append( {
+			'name':     rate,
+			'age_id':   age_id,
+			'time_id':  time_id,
+			'fun':      omega_fun,
+	} ]
+	elif rate == 'pini' :
+		smooth_table.append( {
+			'name':     rate,
+			'age_id':	[ age_id[0] ],
+			'time_id':  time_id,
+			'fun':      uniform01_fun
+		} )
+	else :
+		smooth_table.append( {
+			'name':     rate,
+			'age_id':   age_id,
+			'time_id':  time_id,
+			'fun':      uniform01_fun,
+	} ]
+# -----------------------------------------------------------------------------
+# rate_table
+non_zero_rates = file_option['non_zero_rates'].split()
+rate_table     = list()
+for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
+	smooth = None
+	for i in len(smooth_table) :
+		if smooth_table[i].name == rate :
+			smooth = smooth_table[i]
+	rate_table.append( {
+		'name':          rate,
+		'parent_smooth': smooth
+	} )
+# -----------------------------------------------------------------------------
+# empty tables
+nslist_table = list()
+mulcov_table = list()
+option_table = list()
+# -----------------------------------------------------------------------------
+create_database(
+     file_name,
+     age_list
+     time_list
+     integrand_table,
+     node_table,
+     weight_table,
+     covariate_table,
+     avgint_table,
+     data_table,
+     prior_table,
+     smooth_table,
+     nslist_table,
+     rate_table,
+     mulcov_table,
+     option_table
+)
+print(program + ': OK')
