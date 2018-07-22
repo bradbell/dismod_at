@@ -184,12 +184,18 @@
 # BEGIN IMPORT
 import sys
 import os
-import dismod_at
 import csv
 import copy
 import numpy
+import subprocess
 import scipy.integrate
 import distutils.dir_util
+#
+# dismod_at
+local_dir = os.getcwd() + '/python'
+if( os.path.isdir( local_dir + '/dismod_at' ) ) :
+	sys.path.insert(0, local_dir)
+import dismod_at
 # END IMPORT
 # BEGIN CSV2DB_SOURCE
 # -----------------------------------------------------------------------------
@@ -377,7 +383,7 @@ def csv2db(option_csv, data_csv) :
 		'omega': 'mtother'
 	}
 	non_zero_rates = file_option['non_zero_rates'].split()
-	avgint_table   = [ 'prevalence' ]
+	avgint_table   = list()
 	for rate in non_zero_rates + [ 'prevalence' ]:
 		if rate != 'pini' :
 			if rate == 'prevalence' :
@@ -393,7 +399,7 @@ def csv2db(option_csv, data_csv) :
 							'age_lower':  age,
 							'age_upper':  age,
 							'time_lower': time,
-							'time_lower': time
+							'time_upper': time
 					}
 					avgint_table.append(row)
 	# -------------------------------------------------------------------------
@@ -475,17 +481,9 @@ def csv2db(option_csv, data_csv) :
 		} )
 	# -------------------------------------------------------------------------
 	# rate_table
-	non_zero_rates = file_option['non_zero_rates'].split()
 	rate_table     = list()
-	for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
-		smooth = None
-		for i in range( len(smooth_table) ) :
-			if smooth_table[i]['name'] == rate :
-				smooth = smooth_table[i]
-		rate_table.append( {
-			'name':          rate,
-			'parent_smooth': smooth
-		} )
+	for rate in non_zero_rates :
+		rate_table.append( { 'name': rate, 'parent_smooth': rate } )
 	# -------------------------------------------------------------------------
 	# option_table
 	option_table = [
@@ -612,15 +610,6 @@ if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage += 'and working directory is the dismod_at distribution directory\n'
 	sys.exit(usage)
 #
-# import dismod_at
-local_dir = os.getcwd() + '/python'
-if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-	sys.path.insert(0, local_dir)
-import dismod_at
-#
-# import get_started_db example
-sys.path.append( os.getcwd() + '/example/get_started' )
-import get_started_db
 #
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
@@ -763,19 +752,19 @@ csv2db( 'option.csv', 'data.csv' )
 program    = '../../devel/dismod_at'
 database   = 'example.db'
 command    = [ program, database, 'init' ]
-print( ' '.join(cmd) )
-flag       = subprocess.call( cmd )
+print( ' '.join(command) )
+flag       = subprocess.call( command )
 if flag != 0 :
 	sys.exit('The dismod_at init command failed')
-command    = [ program, database, 'fit' ]
-print( ' '.join(cmd) )
-flag       = subprocess.call( cmd )
+command    = [ program, database, 'fit', 'fixed' ]
+print( ' '.join(command) )
+flag       = subprocess.call( command )
 if flag != 0 :
 	sys.exit('The dismod_at fit command failed')
 # ---------------------------------------------------------------------------
 # connect to database
 new        = False
-connection = dismod_at.create_connection(file_name, new)
+connection = dismod_at.create_connection(database, new)
 # ---------------------------------------------------------------------------
 # get variable and fit_var tables
 var_table         = dismod_at.get_table_dict(connection, 'var')
