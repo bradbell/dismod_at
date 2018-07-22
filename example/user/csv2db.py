@@ -32,9 +32,7 @@
 # This example is under construction.
 #
 # $head Syntax$$
-# $codei% import csv2db
-# %$$
-# $codei%csv2db.csv2db(%option_csv%, %data_csv%)%$$
+# $codei%csv2db(%option_csv%, %data_csv%)%$$
 #
 # $head option_csv$$
 # is an $code str$$ containing the option file name and must end with the
@@ -178,12 +176,16 @@
 #
 # $end
 # -----------------------------------------------------------------------------
+# BEGIN IMPORT
 import sys
 import os
 import dismod_at
 import csv
 import copy
 import numpy
+import distutils.dir_util
+# END IMPORT
+# BEGIN CSV2DB_SOURCE
 # -----------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -492,130 +494,218 @@ def csv2db(option_csv, data_csv) :
 	     mulcov_table,
 	     option_table
 	)
+# END CSV2DB_SOURCE
 # ---------------------------------------------------------------------------
-# $begin csv2db$$ $newlinech #$$
+# $begin csv2db_source$$ $newlinech #$$
 # $spell
 # $$
-# $section csv2db Geting Started$$
+# $section csv2db: Source Code$$
 #
 # $head Source$$
 # $srcfile%
 #   example/csv2db.py
-#   %0%# BEGIN GET_STARTED%# END GET_STARTED%1%$$
+#   %0%# BEGIN IMPORT%# END IMPORT%0
+# %$$
+# $srcfile%
+#   example/csv2db.py
+#   %0%# BEGIN CSV2DB_SOURCE%# END CSV2DB_SOURCE%0
+# %$$
 #
 # $end
 # ---------------------------------------------------------------------------
-def get_started() :
-	import scipy
-	from numpy import array
+# $begin csv2db_example$$ $newlinech #$$
+# $spell
+# $$
+# $section csv2db: Source Code$$
+#
+# $head Source$$
+# $srcfile%
+#   example/csv2db.py
+#   %0%# BEGIN IMPORT%# END IMPORT%0
+# %$$
+# $srcfile%
+#   example/csv2db.py
+#   %0%# BEGIN CSV2DB_EXAMPLE%# END CSV2DB_EXAMPLE%1
+# %$$
+#
+# $end
+# ---------------------------------------------------------------------------
+# BEGIN CSV2DB_EXAMPLE
+# check execution is from distribution directory
+example = 'example/user/csv2db.py'
+if sys.argv[0] != example  or len(sys.argv) != 1 :
+	usage  = 'python3 ' + example + '\n'
+	usage += 'where python3 is the python 3 program on your system\n'
+	usage += 'and working directory is the dismod_at distribution directory\n'
+	sys.exit(usage)
+#
+# import dismod_at
+local_dir = os.getcwd() + '/python'
+if( os.path.isdir( local_dir + '/dismod_at' ) ) :
+	sys.path.insert(0, local_dir)
+import dismod_at
+#
+# import get_started_db example
+sys.path.append( os.getcwd() + '/example/get_started' )
+import get_started_db
+#
+# change into the build/example/user directory
+distutils.dir_util.mkpath('build/example/get_started')
+os.chdir('build/example/get_started')
+# ------------------------------------------------------------------------
+# rate_true
+rate_true = {
+	'iota'  : 0.001
+	'rho'   : 0.1
+	'chi'   : 0.1
+	'omega' : 0.01
+}
+# ------------------------------------------------------------------------
+# compute P (prevalence) at integer ages 0, 1, ..., 100
+def dSC_da(SC, a) :
+	S     = SC[0]
+	C     = SC[1]
+	iota  = rate_true['iota']
+	rho   = rate_true['rho']
+	chi   = rate_true['chi']
+	omega = rate_true['omega']
 	#
-	# ------------------------------------------------------------------------
-	# rates used in simulation
-	iota_true  = 0.001
-	rho_true   = 0.1
-	chi_true   = 0.1
-	omega_true = 0.01
-	# ------------------------------------------------------------------------
-	# derivative of S and C w.r.t age
-	def dSC_da(SC, a) :
-		S  = SC[0]
-		C  = SC[1]
-		dS_da = - iota_true * S + rho_true * C - omega_true * S
-		dC_da = + iota_true * S - rho_true * C - omega_true * C - chi_true * C
-		return array( [dS_da, dC_da] )
-	# ------------------------------------------------------------------------
-	# option_csv
-	file_name  = 'option.csv'
-	file_ptr   = open(file_name, 'w')
-	fieldnames = [ 'name', 'value' ]
-	writer     = csv.DictWriter(file_name, fieldnames=fieldnames)
-	#
-	writer.writeheader()
-	row        = { 'name': 'database_name',  'value': 'get_started.db' }
-	writer.writerow( row )
-	row        = { 'name': 'non_zero_rates',  'value': 'iota row chi omega' }
-	writer.writerow( row )
-	file_ptr.close()
-	# ------------------------------------------------------------------------
-	# data_csv
-	# ------------------------------------------------------------------------
-	# writer
-	file_name  = 'option.csv'
-	file_ptr   = open(file_name, 'w')
-	fieldnames = [
-		'integrand',
-		'age_lower',
-		'age_upper',
-		'time_lower',
-		'time_upper',
-		'meas_value',
-		'meas_std',
-		'hold_out'
-	]
-	writer     = csv.DictWriter(file_name, fieldnames=fieldnames)
-	# ------------------------------------------------------------------------
-	# header
-	writer.writeheader()
-	# ------------------------------------------------------------------------
-	# age_grid, time_grid
-	age_grid  = [ 0.0,    50.0,   100.0 ]
-	time_grid = [ 1990.0, 2000.0, 2010.0]
-	#-------------------------------------------------------------------------
-	# mtother data
-	row = dict()
-	for age in age_grid :
-		for time in time_grid :
-			row['integrand']  = 'mtother'
-			row['age_lower']  = age
-			row['age_upper']  = age
-			row['time_lower'] = time
-			row['time_upper'] = time
-			row['meas_value'] = omega_true
-			row['meas_std']   = row['meas_value'] / 10.0
-			row['hold_out']   = 0
-			writer.writerow(row)
-	#-------------------------------------------------------------------------
-	# remission and mtexcess data
-	for integrand in [ 'remission', 'mtexcess' ] :
-		for age_index in range( len(age_grid) - 1 ) :
-			for time_index in range( len(time_grid) - 1 ) :
-				row['integrand']  = integrand
-				row['age_lower']  = arg_grid[age_index]
-				row['age_upper']  = age_grid[age_index + 1]
-				row['time_lower'] = time_grid[time_index]
-				row['time_upper'] = time_grid[time_index + 1]
-				if integrand == 'remission' :
-					row['meas_value'] = rho_true
-				else :
-					row['meas_value'] = chi_true
-				row['meas_std']   = row['meas_value'] / 10.0
-				row['hold_out']   = 0
-				writer.writerow(row)
-	#-------------------------------------------------------------------------
-	# prevalence data
-	#
-	# compute S, C, and P as a function of age
-	SC0     = array( [ 1.0, 0.0 ] ) # initial prevalence is zero
-	age_ode = list( range(100) ).append(100)
-	age_ode = array( age_ode, dtype = float )
-	SC      = scipy.integrate.odeint(dSC_da, SC0)
-	S       = SC[:,0]
-	C       = SC[:,1]
-	P       = C / (S + C)
+	dS_da = - iota * S + rho * C - omega * S
+	dC_da = + iota * S - rho * C - omega * C - chi * C
+	return numpy.array( [dS_da, dC_da] )
+SC0     = numpy.array( [ 1.0, 0.0 ] ) # initial prevalence is zero
+age_ode = list( range(100) ).append(100)
+age_ode = numpy.array( age_ode, dtype = float )
+SC      = scipy.integrate.odeint(dSC_da, SC0)
+S       = SC[:,0]
+C       = SC[:,1]
+P       = C / (S + C)
+# ------------------------------------------------------------------------
+# option_csv
+file_name  = 'option.csv'
+file_ptr   = open(file_name, 'w')
+fieldnames = [ 'name', 'value' ]
+writer     = csv.DictWriter(file_name, fieldnames=fieldnames)
+#
+writer.writeheader()
+row        = { 'name': 'database_name',  'value': 'example.db' }
+writer.writerow( row )
+row        = { 'name': 'non_zero_rates',  'value': 'iota row chi omega' }
+writer.writerow( row )
+file_ptr.close()
+# ------------------------------------------------------------------------
+# begin data_csv
+# ------------------------------------------------------------------------
+# writer
+file_name  = 'data.csv'
+file_ptr   = open(file_name, 'w')
+fieldnames = [
+	'integrand',
+	'age_lower',
+	'age_upper',
+	'time_lower',
+	'time_upper',
+	'meas_value',
+	'meas_std',
+	'hold_out'
+]
+writer     = csv.DictWriter(file_name, fieldnames=fieldnames)
+# ------------------------------------------------------------------------
+# header
+writer.writeheader()
+# ------------------------------------------------------------------------
+# age_grid, time_grid
+age_grid  = [ 0.0,    50.0,   100.0 ]
+time_grid = [ 1990.0, 2000.0, 2010.0]
+#-------------------------------------------------------------------------
+# mtother data
+row = dict()
+for age in age_grid :
+	for time in time_grid :
+		row['integrand']  = 'mtother'
+		row['age_lower']  = age
+		row['age_upper']  = age
+		row['time_lower'] = time
+		row['time_upper'] = time
+		row['meas_value'] = omega_true
+		row['meas_std']   = row['meas_value'] / 10.0
+		row['hold_out']   = 0
+		writer.writerow(row)
+#-------------------------------------------------------------------------
+# remission and mtexcess data
+for integrand in [ 'remission', 'mtexcess' ] :
 	for age_index in range( len(age_grid) - 1 ) :
 		for time_index in range( len(time_grid) - 1 ) :
-			row['integrand']  = 'prevalence'
+			row['integrand']  = integrand
 			row['age_lower']  = arg_grid[age_index]
 			row['age_upper']  = age_grid[age_index + 1]
 			row['time_lower'] = time_grid[time_index]
 			row['time_upper'] = time_grid[time_index + 1]
-			lower_index = int(age_lower + 0.5)
-			upper_index = int(age_upper + 0.5)
-			P_sum       = P[lower_index] + P[upper_index]
-			for index in range(upper_index - lower_index - 2) :
-				P_sum  += P[index]
-			P_avg       = P_sum / (upper_index - lower_index)
-			row['meas_value'] = P_avg
+			if integrand == 'remission' :
+				row['meas_value'] = rho_true
+			else :
+				row['meas_value'] = chi_true
 			row['meas_std']   = row['meas_value'] / 10.0
 			row['hold_out']   = 0
 			writer.writerow(row)
+#-------------------------------------------------------------------------
+# prevalence data
+age_interval  = [ (0, 30), (30, 70), (70, 100) ]
+time_interval = [ (1990, 1997), (1997, 2003), (2003, 2010) ]
+for (age_lower, age_upper) in age_interval :
+	# trapoziodal approximation to integral of prevalence w.r.t. age
+	P_sum  = (P[age_lower] + P[age_upper]) / 2.0
+	P_sum += sum( P[age_lower + 1 : age_upper ] )
+	P_avg  = P_sum / (age_upper - age_lower)
+	#
+	for (time_lower, time_upper) in time_interval :
+		row['integrand']  = 'prevalence'
+		row['age_lower']  = age_lower
+		row['age_upper']  = age_upper
+		row['time_lower'] = time_lower
+		row['time_upper'] = time_upper
+		row['meas_value'] = P_avg
+		row['meas_std']   = row['meas_value'] / 10.0
+		row['hold_out']   = 0
+		writer.writerow(row)
+file_ptr.close()
+# ------------------------------------------------------------------------
+# end data_csv
+# ------------------------------------------------------------------------
+# example.db
+csv2db( 'option.csv', 'data.csv' )
+# ------------------------------------------------------------------------
+program    = '../../devel/dismod_at'
+database   = 'example.db'
+command    = [ program, database, 'init' ]
+print( ' '.join(cmd) )
+flag       = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at init command failed')
+command    = [ program, database, 'fit' ]
+print( ' '.join(cmd) )
+flag       = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at fit command failed')
+# -----------------------------------------------------------------------
+# connect to database
+new        = False
+connection = dismod_at.create_connection(file_name, new)
+# -----------------------------------------------------------------------
+# get variable and fit_var tables
+var_table       = dismod_at.get_table_dict(connection, 'var')
+rate_table      = dismod_at.get_table_dict(connection, 'rate')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+#
+for var_id in range( len(var_table) ) :
+	var_row        = var_table[var_id]
+	fit_row        = fit_var_table[var_id]
+	var_type       = var_row['var_type']
+	rate_id        = var_row['rate_id']
+	rate_name      = rate_table[rate_id]['rate_name']
+	fit_var_value  = fit_row['fit_var_value']
+	print ( fit_var_value / rate_true[rate_name] - 1.0)
+	assert abs( fit_var_value / rate_true[rate_name] - 1.0) < 1e-6
+# -----------------------------------------------------------------------
+print('csv2db.py: OK')
+# END CSV2DB_EXAMPLE
