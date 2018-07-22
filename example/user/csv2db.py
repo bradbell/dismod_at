@@ -46,7 +46,7 @@
 # $subhead database_name$$
 # The $icode value$$ in this row is the name of the
 # dismod_at database that is written by $code csv2db$$
-# There is no default value for this name; i.e., it must appear.
+# There is no default value for this value; i.e., it must appear.
 #
 # $subhead non_zero_rates$$
 # The $icode value$$ in this row is a list rates that are non-zero
@@ -55,7 +55,12 @@
 # $code pini$$, $code iota$$, $code rho$$, $code chi$$, $code omega$$.
 # The rates in the list are separated by a single space
 # and $code omega$$ must appear in the list.
-# There is no default value for this name; i.e., it must appear.
+# There is no default value for this value; i.e., it must appear.
+#
+# $subhead ode_step_size$$
+# The $icode value$$ is the step size (in age and time) used for
+# solving the ODE.
+# There is no default value for this value; i.e., it must appear.
 #
 # $head data_csv$$
 # is an $code str$$ containing the data file name
@@ -191,18 +196,18 @@ import distutils.dir_util
 def constant_weight_fun(a, t) :
 	return 1.0
 #
-def uniform10_fun(a, t) :
+def uniform01_fun(a, t) :
 	v  = 'uniform01'
-	da = None
-	dt = None
-	return (v, da, dy)
+	da = 'uniform'
+	dt = 'uniform'
+	return (v, da, dt)
 #
 def omega_constraint_fun(a, t, age_grid, time_grid, omega_grid) :
 	i  = age_grid.index(a)
 	j  = time_grid.index(t)
-	v  = omega[i, j]
-	da = None
-	dv = None
+	v  = omega_grid[i, j]
+	da = 'uniform'
+	dv = 'uniform'
 	return (v, da, dv)
 # -----------------------------------------------------------------------------
 def csv2db(option_csv, data_csv) :
@@ -225,7 +230,7 @@ def csv2db(option_csv, data_csv) :
 		value             = row['value']
 		file_option[name] = value
 	file_ptr.close()
-	required = [ 'database_name', 'non_zero_rates' ]
+	required = [ 'database_name', 'non_zero_rates', 'ode_step_size' ]
 	for name in required :
 		if not name in file_option :
 			msg = 'csv2db: ' + name + ' not in option_csv file ' + option_csv
@@ -255,7 +260,7 @@ def csv2db(option_csv, data_csv) :
 		row['hold_out']   = bool(  row['hold_out']   )
 		#
 		if row['integrand'] == 'mtother' :
-			found = True
+			mtother_found = True
 			if row['age_lower'] != row['age_upper'] :
 				msg  = 'csv2db: line ' + str(line)
 				msg += ' of data_csv ' + data_csv + '\n'
@@ -366,16 +371,19 @@ def csv2db(option_csv, data_csv) :
 	# -------------------------------------------------------------------------
 	# avgint_table
 	rate2integrand = {
-		'iota ' : 'Sincidence',
-		'rho'   : 'remission',
-		'chi'   : 'mtexcess',
-		'omega' : 'mtother'
+		'iota':  'Sincidence',
+		'rho':   'remission',
+		'chi':   'mtexcess',
+		'omega': 'mtother'
 	}
 	non_zero_rates = file_option['non_zero_rates'].split()
 	avgint_table   = [ 'prevalence' ]
-	for rate in non_zero_rates :
+	for rate in non_zero_rates + [ 'prevalence' ]:
 		if rate != 'pini' :
-			integrand = rate2integrand[rate]
+			if rate == 'prevalence' :
+				integrand = 'prevalence'
+			else :
+				integrand = rate2integrand[rate]
 			for age in age_grid :
 				for time in time_grid :
 					row = {
@@ -411,13 +419,21 @@ def csv2db(option_csv, data_csv) :
 		data_row['density'] = 'gaussian'
 	# -------------------------------------------------------------------------
 	# prior_table
-	prior = {
-		'name': 'uniform01',
-		'lower': 0.0,
-		'upper': 1.0,
-		'density': 'uniform'
-	}
-	prior_table = [ prior ]
+	prior_table = [
+		{
+			'name':      'uniform01',
+			'lower':      0.0,
+			'upper':      1.0,
+			'mean':       0.01,
+			'density':    'uniform'
+		}, {
+			'name':      'uniform',
+			'lower':      None,
+			'upper':      None,
+			'mean':       0.0,
+			'density':    'uniform'
+		}
+	]
 	# -------------------------------------------------------------------------
 	# smooth_table
 	start = 0
@@ -432,7 +448,7 @@ def csv2db(option_csv, data_csv) :
 	#
 	# omega
 	def omega_fun(a, t) :
-		return omega_constrant_fun(a, t, age_grid, time_grid, omega_grid)
+		return omega_constraint_fun(a, t, age_grid, time_grid, omega_grid)
 	smooth_table  = list()
 	non_zero_rates = file_option['non_zero_rates'].split()
 	for rate in non_zero_rates :
@@ -463,20 +479,25 @@ def csv2db(option_csv, data_csv) :
 	rate_table     = list()
 	for rate in [ 'pini', 'iota', 'rho', 'chi', 'omega' ] :
 		smooth = None
-		for i in len(smooth_table) :
-			if smooth_table[i].name == rate :
+		for i in range( len(smooth_table) ) :
+			if smooth_table[i]['name'] == rate :
 				smooth = smooth_table[i]
 		rate_table.append( {
 			'name':          rate,
 			'parent_smooth': smooth
 		} )
 	# -------------------------------------------------------------------------
+	# option_table
+	option_table = [
+		{ 'name': 'parent_node_name',  'value': 'no_name' },
+		{ 'name': 'ode_step_size',     'value': file_option['ode_step_size'] }
+	]
+	# -------------------------------------------------------------------------
 	# empty tables
 	nslist_table = list()
 	mulcov_table = list()
-	option_table = list()
 	# -------------------------------------------------------------------------
-	create_database(
+	dismod_at.create_database(
 	     file_name,
 	     age_list,
 	     time_list,
@@ -602,8 +623,8 @@ sys.path.append( os.getcwd() + '/example/get_started' )
 import get_started_db
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/get_started')
-os.chdir('build/example/get_started')
+distutils.dir_util.mkpath('build/example/user')
+os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
 # BEGIN RATE_TRUE
 rate_true = { 'iota':0.001, 'rho':0.1, 'chi':0.1, 'omega':0.01 }
@@ -634,12 +655,17 @@ file_name  = 'option.csv'
 file_ptr   = open(file_name, 'w')
 fieldnames = [ 'name', 'value' ]
 writer     = csv.DictWriter(file_ptr, fieldnames=fieldnames)
-#
 writer.writeheader()
+#
 row        = { 'name': 'database_name',  'value': 'example.db' }
 writer.writerow( row )
-row        = { 'name': 'non_zero_rates',  'value': 'iota row chi omega' }
+#
+row        = { 'name': 'non_zero_rates',  'value': 'iota rho chi omega' }
 writer.writerow( row )
+#
+row        = { 'name': 'ode_step_size',   'value': '5.0' }
+writer.writerow( row )
+#
 file_ptr.close()
 # ----------------------------------------------------------------------------
 # begin data_csv
@@ -664,7 +690,7 @@ writer.writeheader()
 # ----------------------------------------------------------------------------
 # BEGIN INTERVALS
 age_intervals  = [ (0, 10),      (40, 60),     (90, 100)    ]
-time_intervals = [ (1985, 1995), (1995, 2005), (2005, 2010) ]
+time_intervals = [ (1990, 1994), (1994, 2006), (2006, 2010) ]
 # END INTERVALS
 #-----------------------------------------------------------------------------
 # write remission, mtexcess, prevalence, mtall data
@@ -696,6 +722,8 @@ for integrand in [ 'remission', 'mtexcess', 'prevalence', 'mtall' ] :
 				# a separate integration for mtall.
 				row['meas_value'] = \
 					rate_true['omega'] + P_avg * rate_true['chi']
+			#
+			row['meas_value'] = round(row['meas_value'], 6)
 			row['meas_std']   = row['meas_value'] / 10.0
 			row['hold_out']   = 0
 			if integrand == 'mtall' :
@@ -703,6 +731,7 @@ for integrand in [ 'remission', 'mtexcess', 'prevalence', 'mtall' ] :
 				row['meas_std']   = row['meas_value']
 				# hold out because used for omega constaint
 				row['hold_out']   = 1
+			#
 			writer.writerow(row)
 			#
 			mtall_data.append( row['meas_value'] )
