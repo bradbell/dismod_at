@@ -178,6 +178,13 @@
 #
 # $end
 # -----------------------------------------------------------------------------
+import sys
+import os
+import dismod_at
+import csv
+import copy
+import numpy
+# -----------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
 #
@@ -196,12 +203,6 @@ def omega_constraint_fun(a, t, age_grid, time_grid, omega_grid) :
 	return (v, da, dv)
 # -----------------------------------------------------------------------------
 def csv2db(option_csv, data_csv) :
-	import sys
-	import os
-	import dismod_at
-	import csv
-	import copy
-	import numpy
 	# -------------------------------------------------------------------------
 	# option_csv, data_csv
 	#
@@ -270,7 +271,6 @@ def csv2db(option_csv, data_csv) :
 				msg += ' of file ' + data_csv + '\n'
 				msg += 'hold_out is not 1 for mtall data.'
 				sys.exit(msg)
-
 	if not mtother_found
 		msg = 'csv2db: no mtother data in ' + data_csv
 		sys.exit(msg)
@@ -492,3 +492,130 @@ def csv2db(option_csv, data_csv) :
 	     mulcov_table,
 	     option_table
 	)
+# ---------------------------------------------------------------------------
+# $begin csv2db$$ $newlinech #$$
+# $spell
+# $$
+# $section csv2db Geting Started$$
+#
+# $head Source$$
+# $srcfile%
+#   example/csv2db.py
+#   %0%# BEGIN GET_STARTED%# END GET_STARTED%1%$$
+#
+# $end
+# ---------------------------------------------------------------------------
+def get_started() :
+	import scipy
+	from numpy import array
+	#
+	# ------------------------------------------------------------------------
+	# rates used in simulation
+	iota_true  = 0.001
+	rho_true   = 0.1
+	chi_true   = 0.1
+	omega_true = 0.01
+	# ------------------------------------------------------------------------
+	# derivative of S and C w.r.t age
+	def dSC_da(SC, a) :
+		S  = SC[0]
+		C  = SC[1]
+		dS_da = - iota_true * S + rho_true * C - omega_true * S
+		dC_da = + iota_true * S - rho_true * C - omega_true * C - chi_true * C
+		return array( [dS_da, dC_da] )
+	# ------------------------------------------------------------------------
+	# option_csv
+	file_name  = 'option.csv'
+	file_ptr   = open(file_name, 'w')
+	fieldnames = [ 'name', 'value' ]
+	writer     = csv.DictWriter(file_name, fieldnames=fieldnames)
+	#
+	writer.writeheader()
+	row        = { 'name': 'database_name',  'value': 'get_started.db' }
+	writer.writerow( row )
+	row        = { 'name': 'non_zero_rates',  'value': 'iota row chi omega' }
+	writer.writerow( row )
+	file_ptr.close()
+	# ------------------------------------------------------------------------
+	# data_csv
+	# ------------------------------------------------------------------------
+	# writer
+	file_name  = 'option.csv'
+	file_ptr   = open(file_name, 'w')
+	fieldnames = [
+		'integrand',
+		'age_lower',
+		'age_upper',
+		'time_lower',
+		'time_upper',
+		'meas_value',
+		'meas_std',
+		'hold_out'
+	]
+	writer     = csv.DictWriter(file_name, fieldnames=fieldnames)
+	# ------------------------------------------------------------------------
+	# header
+	writer.writeheader()
+	# ------------------------------------------------------------------------
+	# age_grid, time_grid
+	age_grid  = [ 0.0,    50.0,   100.0 ]
+	time_grid = [ 1990.0, 2000.0, 2010.0]
+	#-------------------------------------------------------------------------
+	# mtother data
+	row = dict()
+	for age in age_grid :
+		for time in time_grid :
+			row['integrand']  = 'mtother'
+			row['age_lower']  = age
+			row['age_upper']  = age
+			row['time_lower'] = time
+			row['time_upper'] = time
+			row['meas_value'] = omega_true
+			row['meas_std']   = row['meas_value'] / 10.0
+			row['hold_out']   = 0
+			writer.writerow(row)
+	#-------------------------------------------------------------------------
+	# remission and mtexcess data
+	for integrand in [ 'remission', 'mtexcess' ] :
+		for age_index in range( len(age_grid) - 1 ) :
+			for time_index in range( len(time_grid) - 1 ) :
+				row['integrand']  = integrand
+				row['age_lower']  = arg_grid[age_index]
+				row['age_upper']  = age_grid[age_index + 1]
+				row['time_lower'] = time_grid[time_index]
+				row['time_upper'] = time_grid[time_index + 1]
+				if integrand == 'remission' :
+					row['meas_value'] = rho_true
+				else :
+					row['meas_value'] = chi_true
+				row['meas_std']   = row['meas_value'] / 10.0
+				row['hold_out']   = 0
+				writer.writerow(row)
+	#-------------------------------------------------------------------------
+	# prevalence data
+	#
+	# compute S, C, and P as a function of age
+	SC0     = array( [ 1.0, 0.0 ] ) # initial prevalence is zero
+	age_ode = list( range(100) ).append(100)
+	age_ode = array( age_ode, dtype = float )
+	SC      = scipy.integrate.odeint(dSC_da, SC0)
+	S       = SC[:,0]
+	C       = SC[:,1]
+	P       = C / (S + C)
+	for age_index in range( len(age_grid) - 1 ) :
+		for time_index in range( len(time_grid) - 1 ) :
+			row['integrand']  = 'prevalence'
+			row['age_lower']  = arg_grid[age_index]
+			row['age_upper']  = age_grid[age_index + 1]
+			row['time_lower'] = time_grid[time_index]
+			row['time_upper'] = time_grid[time_index + 1]
+			lower_index = int(age_lower + 0.5)
+			upper_index = int(age_upper + 0.5)
+			P_sum       = P[lower_index] + P[upper_index]
+			for index in range(upper_index - lower_index - 2) :
+				P_sum  += P[index]
+			P_avg       = P_sum / (upper_index - lower_index)
+			row['meas_value'] = P_avg
+			row['meas_std']   = row['meas_value'] / 10.0
+			row['hold_out']   = 0
+			writer.writerow(row)
