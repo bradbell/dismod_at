@@ -183,6 +183,7 @@ import dismod_at
 import csv
 import copy
 import numpy
+import scipy.integrate
 import distutils.dir_util
 # END IMPORT
 # BEGIN CSV2DB_SOURCE
@@ -205,10 +206,8 @@ def omega_constraint_fun(a, t, age_grid, time_grid, omega_grid) :
 	return (v, da, dv)
 # -----------------------------------------------------------------------------
 def csv2db(option_csv, data_csv) :
-	# -------------------------------------------------------------------------
-	# option_csv, data_csv
 	#
-	for file_name in option_csv data_csv :
+	for file_name in [ option_csv, data_csv ] :
 		if not file_name.endswith('.csv') :
 			msg  = 'csv2db: option_csv file ' + file_name
 			msg += ' does not end with .csv'
@@ -219,14 +218,14 @@ def csv2db(option_csv, data_csv) :
 	# -------------------------------------------------------------------------
 	# file_option
 	file_ptr    = open(option_csv, 'r')
-	reader      = data_csv.DictReader(file_ptr)
+	reader      = csv.DictReader(file_ptr)
 	file_option = dict()
 	for row in reader :
 		name              = row['name']
-		value             = row['value'
+		value             = row['value']
 		file_option[name] = value
 	file_ptr.close()
-	required = [ 'database_name', 'non_zero_rates' ] :
+	required = [ 'database_name', 'non_zero_rates' ]
 	for name in required :
 		if not name in file_option :
 			msg = 'csv2db: ' + name + ' not in option_csv file ' + option_csv
@@ -237,7 +236,7 @@ def csv2db(option_csv, data_csv) :
 	# -------------------------------------------------------------------------
 	# file_data
 	file_ptr   = open(data_csv, 'r')
-	reader     = data_csv.DictReader(file_ptr)
+	reader     = csv.DictReader(file_ptr)
 	file_data  = list()
 	for row in reader :
 		file_data.append( copy.copy(row) )
@@ -273,7 +272,7 @@ def csv2db(option_csv, data_csv) :
 				msg += ' of file ' + data_csv + '\n'
 				msg += 'hold_out is not 1 for mtall data.'
 				sys.exit(msg)
-	if not mtother_found
+	if not mtother_found :
 		msg = 'csv2db: no mtother data in ' + data_csv
 		sys.exit(msg)
 	# -------------------------------------------------------------------------
@@ -338,19 +337,19 @@ def csv2db(option_csv, data_csv) :
 	# -------------------------------------------------------------------------
 	# integrand_table
 	integrand_table = [
-		'name': 'Sincidence',
-		'name': 'remission',
-		'name': 'mtexcess',
-		'name': 'mtother',
-		'name': 'mtwith',
-		'name': 'susceptible',
-		'name': 'withC',
-		'name': 'prevalence',
-		'name': 'Tincidence',
-		'name': 'mtspecific',
-		'name': 'mtall',
-		'name': 'mtstandard',
-		'name': 'relrisk'
+		{ 'name': 'Sincidence',     'minimum_meas_cv': 0.0 },
+		{ 'name': 'remission',      'minimum_meas_cv': 0.0 },
+		{ 'name': 'mtexcess',       'minimum_meas_cv': 0.0 },
+		{ 'name': 'mtother',        'minimum_meas_cv': 0.0 },
+		{ 'name': 'mtwith',         'minimum_meas_cv': 0.0 },
+		{ 'name': 'susceptible',    'minimum_meas_cv': 0.0 },
+		{ 'name': 'withC',          'minimum_meas_cv': 0.0 },
+		{ 'name': 'prevalence',     'minimum_meas_cv': 0.0 },
+		{ 'name': 'Tincidence',     'minimum_meas_cv': 0.0 },
+		{ 'name': 'mtspecific',     'minimum_meas_cv': 0.0 },
+		{ 'name': 'mtall',          'minimum_meas_cv': 0.0 },
+		{ 'name': 'mtstandard',     'minimum_meas_cv': 0.0 },
+		{ 'name': 'relrisk',        'minimum_meas_cv': 0.0 }
 	]
 	# -------------------------------------------------------------------------
 	# node_table
@@ -371,8 +370,8 @@ def csv2db(option_csv, data_csv) :
 		'rho'   : 'remission',
 		'chi'   : 'mtexcess',
 		'omega' : 'mtother'
-	]
-	non_zero_rates = file_option['non_zero_rates'].split() :
+	}
+	non_zero_rates = file_option['non_zero_rates'].split()
 	avgint_table   = [ 'prevalence' ]
 	for rate in non_zero_rates :
 		if rate != 'pini' :
@@ -405,7 +404,7 @@ def csv2db(option_csv, data_csv) :
 	for row in file_data :
 		if row['integrand'] != 'mtother' :
 			data_row = dict()
-			for field in copy_column
+			for field in copy_column :
 				data_row[field] = row[field]
 		data_row['node']    = 'no_name'
 		data_row['weight']  = 'constant'
@@ -443,7 +442,7 @@ def csv2db(option_csv, data_csv) :
 				'age_id':   age_id,
 				'time_id':  time_id,
 				'fun':      omega_fun,
-		} ]
+		} )
 		elif rate == 'pini' :
 			smooth_table.append( {
 				'name':     rate,
@@ -457,7 +456,7 @@ def csv2db(option_csv, data_csv) :
 				'age_id':   age_id,
 				'time_id':  time_id,
 				'fun':      uniform01_fun,
-		} ]
+		} )
 	# -------------------------------------------------------------------------
 	# rate_table
 	non_zero_rates = file_option['non_zero_rates'].split()
@@ -479,8 +478,8 @@ def csv2db(option_csv, data_csv) :
 	# -------------------------------------------------------------------------
 	create_database(
 	     file_name,
-	     age_list
-	     time_list
+	     age_list,
+	     time_list,
 	     integrand_table,
 	     node_table,
 	     weight_table,
@@ -623,9 +622,9 @@ def dSC_da(SC, a) :
 	dC_da = + iota * S - rho * C - omega * C - chi * C
 	return numpy.array( [dS_da, dC_da] )
 SC0     = numpy.array( [ 1.0, 0.0 ] ) # initial prevalence is zero
-age_ode = list( range(100) ).append(100)
-age_ode = numpy.array( age_ode, dtype = float )
-SC      = scipy.integrate.odeint(dSC_da, SC0)
+age_ode = list( range(101) )
+age_ode = numpy.array(age_ode, dtype = float )
+SC      = scipy.integrate.odeint(dSC_da, SC0, age_ode)
 S       = SC[:,0]
 C       = SC[:,1]
 P       = C / (S + C)
@@ -634,7 +633,7 @@ P       = C / (S + C)
 file_name  = 'option.csv'
 file_ptr   = open(file_name, 'w')
 fieldnames = [ 'name', 'value' ]
-writer     = csv.DictWriter(file_name, fieldnames=fieldnames)
+writer     = csv.DictWriter(file_ptr, fieldnames=fieldnames)
 #
 writer.writeheader()
 row        = { 'name': 'database_name',  'value': 'example.db' }
@@ -658,7 +657,7 @@ fieldnames = [
 	'meas_std',
 	'hold_out'
 ]
-writer     = csv.DictWriter(file_name, fieldnames=fieldnames)
+writer     = csv.DictWriter(file_ptr, fieldnames=fieldnames)
 # ----------------------------------------------------------------------------
 # header
 writer.writeheader()
@@ -680,6 +679,7 @@ for integrand in [ 'remission', 'mtexcess', 'prevalence', 'mtall' ] :
 		P_avg  = P_sum / (age_upper - age_lower)
 		#
 		for (time_lower, time_upper) in time_intervals :
+			row               = dict()
 			row['integrand']  = integrand
 			row['age_lower']  = age_lower
 			row['age_upper']  = age_upper
@@ -711,6 +711,7 @@ for integrand in [ 'remission', 'mtexcess', 'prevalence', 'mtall' ] :
 i_count = 0
 for (age_lower, age_upper) in age_intervals :
 	for (time_lower, time_upper) in time_intervals :
+		row               = dict()
 		age               = (age_lower + age_upper) / 2.0
 		time              = (time_lower + time_upper) / 2.0
 		row['integrand']  = 'mtother'
@@ -765,7 +766,7 @@ for var_id in range( len(var_table) ) :
 	print ( fit_var_value / rate_true[rate_name] - 1.0)
 #
 # check error in mtall approximation
-for data_id in range( len(data_table) :
+for data_id in range( len(data_table) ) :
 	assert data_id == data_subset_table[data_id]['data_id']
 	integrand = data_table[data_id]['integrand']
 	if integrand == 'mtall' :
