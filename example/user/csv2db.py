@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin csv2db$$ $newlinech #$$
+# $begin csv2db_function$$ $newlinech #$$
 # $spell
 #	Csv
 #	Dismod
@@ -122,12 +122,12 @@
 # $subhead mtall$$
 # The all cause mortality rate:
 # $latex \omega + \chi P $$.
-# We assume the $cref/mtother/csv2db/integrand/mtother/$$
+# We assume the $cref/mtother/csv2db_function/integrand/mtother/$$
 # data is a surrogate
 # for the $code mtall$$ data.
 # The $code mtall$$ data is included as a check that the desired values
 # are satisfied (by checking residuals in a data fit).
-# For this reason, $cref/hold_out/csv2db/hold_out/$$ must be
+# For this reason, $cref/hold_out/csv2db_function/hold_out/$$ must be
 # one for all the $code mtall$$ data.
 #
 # $subhead mtstandard$$
@@ -498,16 +498,17 @@ def csv2db(option_csv, data_csv) :
 # ---------------------------------------------------------------------------
 # $begin csv2db_source$$ $newlinech #$$
 # $spell
+#	csv
 # $$
 # $section csv2db: Source Code$$
 #
 # $head Source$$
 # $srcfile%
-#   example/csv2db.py
+#   example/user/csv2db.py
 #   %0%# BEGIN IMPORT%# END IMPORT%0
 # %$$
 # $srcfile%
-#   example/csv2db.py
+#   example/user/csv2db.py
 #   %0%# BEGIN CSV2DB_SOURCE%# END CSV2DB_SOURCE%0
 # %$$
 #
@@ -515,16 +516,17 @@ def csv2db(option_csv, data_csv) :
 # ---------------------------------------------------------------------------
 # $begin csv2db_example$$ $newlinech #$$
 # $spell
+#	csv
 # $$
-# $section csv2db: Source Code$$
+# $section csv2db: Example and Test$$
 #
 # $head Source$$
 # $srcfile%
-#   example/csv2db.py
+#   example/user/csv2db.py
 #   %0%# BEGIN IMPORT%# END IMPORT%0
 # %$$
 # $srcfile%
-#   example/csv2db.py
+#   example/user/csv2db.py
 #   %0%# BEGIN CSV2DB_EXAMPLE%# END CSV2DB_EXAMPLE%1
 # %$$
 #
