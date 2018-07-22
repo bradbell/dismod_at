@@ -423,7 +423,7 @@ def csv2db(option_csv, data_csv) :
 	prior_table = [
 		{
 			'name':      'uniform01',
-			'lower':      0.0,
+			'lower':      1e-10,
 			'upper':      1.0,
 			'mean':       0.01,
 			'density':    'uniform'
@@ -485,6 +485,18 @@ def csv2db(option_csv, data_csv) :
 		{ 'name': 'parent_node_name',  'value': 'no_name' },
 		{ 'name': 'ode_step_size',     'value': file_option['ode_step_size'] }
 	]
+	non_zero_rates = file_option['non_zero_rates'].split()
+	if 'iota' in non_zero_rates :
+		if 'rho' in non_zero_rates :
+			value = 'iota_pos_rho_pos'
+		else :
+			value = 'iota_pos_rho_zero'
+	else :
+		if 'rho' in non_zero_rates :
+			value = 'iota_zero_rho_pos'
+		else :
+			value = 'iota_zero_rho_zero'
+	option_table.append( { 'name': 'rate_case',  'value': value } )
 	# -------------------------------------------------------------------------
 	# empty tables
 	nslist_table = list()
