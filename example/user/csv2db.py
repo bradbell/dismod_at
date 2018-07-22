@@ -313,11 +313,6 @@ def csv2db(option_csv, data_csv) :
 		msg += ' is not on a rectangular grid'
 		sys.exit(msg)
 	# -------------------------------------------------------------------------
-	# db_file
-	file_name = os.path.basename(data_csv)[0:-4] + '.db'
-	dir_name  = os.path.dirname(data_csv)
-	db_file   = os.path.join(dir_name, file_name)
-	# -------------------------------------------------------------------------
 	# age_min, age_max
 	age_min = + float('inf')
 	age_max = - float('inf')
@@ -496,7 +491,7 @@ def csv2db(option_csv, data_csv) :
 	mulcov_table = list()
 	# -------------------------------------------------------------------------
 	dismod_at.create_database(
-	     file_name,
+	     file_option['database_name'],
 	     age_list,
 	     time_list,
 	     integrand_table,
@@ -640,13 +635,13 @@ C       = SC[:,1]
 P       = C / (S + C)
 # ----------------------------------------------------------------------------
 # option_csv
-file_name  = 'option.csv'
+file_name  = 'csv2db_option.csv'
 file_ptr   = open(file_name, 'w')
 fieldnames = [ 'name', 'value' ]
 writer     = csv.DictWriter(file_ptr, fieldnames=fieldnames)
 writer.writeheader()
 #
-row        = { 'name': 'database_name',  'value': 'example.db' }
+row        = { 'name': 'database_name',  'value': 'csv2db_example.db' }
 writer.writerow( row )
 #
 row        = { 'name': 'non_zero_rates',  'value': 'iota rho chi omega' }
@@ -660,7 +655,7 @@ file_ptr.close()
 # begin data_csv
 # ----------------------------------------------------------------------------
 # writer
-file_name  = 'data.csv'
+file_name  = 'csv2db_data.csv'
 file_ptr   = open(file_name, 'w')
 fieldnames = [
 	'integrand',
@@ -747,10 +742,10 @@ file_ptr.close()
 # end data_csv
 # ----------------------------------------------------------------------------
 # example.db
-csv2db( 'option.csv', 'data.csv' )
+csv2db( 'csv2db_option.csv', 'csv2db_data.csv' )
 # ----------------------------------------------------------------------------
 program    = '../../devel/dismod_at'
-database   = 'example.db'
+database   = 'csv2db_example.db'
 command    = [ program, database, 'init' ]
 print( ' '.join(command) )
 flag       = subprocess.call( command )
