@@ -57,11 +57,6 @@
 # and $code omega$$ must appear in the list.
 # There is no default value for this value; i.e., it must appear.
 #
-# $subhead ode_step_size$$
-# The $icode value$$ is the step size (in age and time) used for
-# solving the ODE.
-# There is no default value for this value; i.e., it must appear.
-#
 # $head data_csv$$
 # is an $code str$$ containing the data file name
 # and must end with the $code .csv$$ extension.
@@ -236,11 +231,13 @@ def csv2db(option_csv, data_csv) :
 		value             = row['value']
 		file_option[name] = value
 	file_ptr.close()
-	required = [ 'database_name', 'non_zero_rates', 'ode_step_size' ]
+	# required fields
+	required = [ 'database_name', 'non_zero_rates' ]
 	for name in required :
 		if not name in file_option :
 			msg = 'csv2db: ' + name + ' not in option_csv file ' + option_csv
 			sys.exit(msg)
+	#
 	if 'omega' not in file_option['non_zero_rates'] :
 		msg = 'csv2db: omega not in non_zero_rates in ' + option_csv
 		sys.exit(msg)
@@ -263,7 +260,7 @@ def csv2db(option_csv, data_csv) :
 		row['time_upper'] = float( row['time_upper'] )
 		row['meas_value'] = float( row['meas_value'] )
 		row['meas_std']   = float( row['meas_std']   )
-		row['hold_out']   = bool(  row['hold_out']   )
+		row['hold_out']   = int(  row['hold_out']   )
 		#
 		if row['integrand'] == 'mtother' :
 			mtother_found = True
@@ -277,11 +274,22 @@ def csv2db(option_csv, data_csv) :
 				msg += ' of file ' + data_csv + '\n'
 				msg += 'time_lower not equal time_upper for mtother data.'
 				sys.exit(msg)
-		if row['integrand'] == 'mtall' :
-			if not row['hold_out'] :
+		if row['hold_out'] == 0 :
+			if row['integrand'] == 'mtall' :
 				msg  = 'csv2db: line ' + str(line)
 				msg += ' of file ' + data_csv + '\n'
-				msg += 'hold_out is not 1 for mtall data.'
+				msg += 'hold_out is 0 and integrand is mtall.'
+				sys.exit(msg)
+		elif row['hold_out'] == 1 :
+			if row['integrand'] != 'mtall' :
+				msg  = 'csv2db: line ' + str(line)
+				msg += ' of file ' + data_csv + '\n'
+				msg += 'hold_out is 1 and integrand is not mtall.'
+				sys.exit(msg)
+		else :
+				msg  = 'csv2db: line ' + str(line)
+				msg += ' of file ' + data_csv + '\n'
+				msg += 'hold_out is not 0 or 1'
 				sys.exit(msg)
 	if not mtother_found :
 		msg = 'csv2db: no mtother data in ' + data_csv
@@ -318,14 +326,14 @@ def csv2db(option_csv, data_csv) :
 	age_max = - float('inf')
 	for row in file_data :
 		age_min = min(age_min, row['age_lower'], row['age_upper'])
-		age_max = max(age_min, row['age_lower'], row['age_upper'])
+		age_max = max(age_max, row['age_lower'], row['age_upper'])
 	# -------------------------------------------------------------------------
 	# time_min, time_max
 	time_min = + float('inf')
 	time_max = - float('inf')
 	for row in file_data :
 		time_min = min(time_min, row['time_lower'], row['time_upper'])
-		time_max = max(time_min, row['time_lower'], row['time_upper'])
+		time_max = max(time_max, row['time_lower'], row['time_upper'])
 	# -------------------------------------------------------------------------
 	# age_list, time_list
 	age_list  = copy.copy( age_grid )
@@ -418,6 +426,7 @@ def csv2db(option_csv, data_csv) :
 		data_row['node']    = 'no_name'
 		data_row['weight']  = 'constant'
 		data_row['density'] = 'gaussian'
+		data_table.append( data_row )
 	# -------------------------------------------------------------------------
 	# prior_table
 	prior_table = [
@@ -481,10 +490,8 @@ def csv2db(option_csv, data_csv) :
 		rate_table.append( { 'name': rate, 'parent_smooth': rate } )
 	# -------------------------------------------------------------------------
 	# option_table
-	option_table = [
-		{ 'name': 'parent_node_name',  'value': 'no_name' },
-		{ 'name': 'ode_step_size',     'value': file_option['ode_step_size'] }
-	]
+	option_table = [ { 'name': 'parent_node_name',  'value': 'no_name' } ]
+	#
 	non_zero_rates = file_option['non_zero_rates'].split()
 	if 'iota' in non_zero_rates :
 		if 'rho' in non_zero_rates :
@@ -659,9 +666,6 @@ writer.writerow( row )
 row        = { 'name': 'non_zero_rates',  'value': 'iota rho chi omega' }
 writer.writerow( row )
 #
-row        = { 'name': 'ode_step_size',   'value': '5.0' }
-writer.writerow( row )
-#
 file_ptr.close()
 # ----------------------------------------------------------------------------
 # begin data_csv
@@ -727,13 +731,14 @@ for integrand in [ 'remission', 'mtexcess', 'prevalence', 'mtall' ] :
 				row['meas_std']   = row['meas_value']
 				# hold out because used for omega constaint
 				row['hold_out']   = 1
+				# save a copy for use by omega constraint
+				mtall_data.append( row['meas_value'] )
 			#
 			writer.writerow(row)
 			#
-			mtall_data.append( row['meas_value'] )
 #-----------------------------------------------------------------------------
 # mtother data
-i_count = 0
+mtall_index = 0
 for (age_lower, age_upper) in age_intervals :
 	for (time_lower, time_upper) in time_intervals :
 		row               = dict()
@@ -744,11 +749,12 @@ for (age_lower, age_upper) in age_intervals :
 		row['age_upper']  = age
 		row['time_lower'] = time
 		row['time_upper'] = time
-		row['meas_value'] = mtall_data[i_count]
+		row['meas_value'] = mtall_data[mtall_index]
 		row['meas_std']   = row['meas_value'] / 10.0
 		row['hold_out']   = 0
 		writer.writerow(row)
-		i_count           = i_count + 1
+		mtall_index      += 1
+assert mtall_index == len(mtall_data)
 file_ptr.close()
 # ----------------------------------------------------------------------------
 # end data_csv
@@ -758,16 +764,17 @@ csv2db( 'csv2db_option.csv', 'csv2db_data.csv' )
 # ----------------------------------------------------------------------------
 program    = '../../devel/dismod_at'
 database   = 'csv2db_example.db'
-command    = [ program, database, 'init' ]
-print( ' '.join(command) )
-flag       = subprocess.call( command )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
-command    = [ program, database, 'fit', 'fixed' ]
-print( ' '.join(command) )
-flag       = subprocess.call( command )
-if flag != 0 :
-	sys.exit('The dismod_at fit command failed')
+def exec_shell_cmd(cmd) :
+	command    = [ program, database ] + cmd.split()
+	print( ' '.join(command) )
+	flag       = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('The dismod_at init command failed')
+#
+exec_shell_cmd( 'set option quasi_fixed       false' )
+exec_shell_cmd( 'set option ode_step_size     1'     )
+exec_shell_cmd( 'init' )
+exec_shell_cmd( 'fit fixed' )
 # ---------------------------------------------------------------------------
 # connect to database
 new        = False
@@ -776,11 +783,13 @@ connection = dismod_at.create_connection(database, new)
 # get variable and fit_var tables
 var_table         = dismod_at.get_table_dict(connection, 'var')
 rate_table        = dismod_at.get_table_dict(connection, 'rate')
+integrand_table   = dismod_at.get_table_dict(connection, 'integrand')
 fit_var_table     = dismod_at.get_table_dict(connection, 'fit_var')
 data_table        = dismod_at.get_table_dict(connection, 'data')
 data_subset_table = dismod_at.get_table_dict(connection, 'data_subset')
 fit_data_subset   = dismod_at.get_table_dict(connection, 'fit_data_subset')
 #
+max_abs_err = 0.0
 for var_id in range( len(var_table) ) :
 	var_row        = var_table[var_id]
 	fit_row        = fit_var_table[var_id]
@@ -788,15 +797,22 @@ for var_id in range( len(var_table) ) :
 	rate_id        = var_row['rate_id']
 	rate_name      = rate_table[rate_id]['rate_name']
 	fit_var_value  = fit_row['fit_var_value']
-	print ( fit_var_value / rate_true[rate_name] - 1.0)
+	relative_err   = fit_var_value / rate_true[rate_name]  - 1.0
+	max_abs_err    = max(max_abs_err, abs(relative_err) )
+if max_abs_err > 0.1 :
+	sys.msg('csv2db.py: max_abs_err = ' + str(max_abs_err) )
 #
 # check error in mtall approximation
+max_abs_res = 0.0
 for data_id in range( len(data_table) ) :
 	assert data_id == data_subset_table[data_id]['data_id']
-	integrand = data_table[data_id]['integrand']
-	if integrand == 'mtall' :
+	integrand_id    = data_table[data_id]['integrand_id']
+	integrand_name  = integrand_table[integrand_id]['integrand_name']
+	if integrand_name == 'mtall' :
 		weighted_residual = fit_data_subset[data_id]['weighted_residual']
-		print ( weighted_residual )
+		max_abs_res       = max(max_abs_res, abs(weighted_residual) )
+if max_abs_res > 0.1 :
+	sys.msg('csv2db.py: max_abs_res = ' + str(max_abs_res) )
 # ---------------------------------------------------------------------------
 print('csv2db.py: OK')
 # END CSV2DB_EXAMPLE
