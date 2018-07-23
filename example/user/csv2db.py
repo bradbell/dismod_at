@@ -13,8 +13,20 @@
 #	integrands
 #	mtexcess
 #	mtall
+#	dismodat.py
 # $$
 # $section csv2db_command: Example and Test$$
+#
+# $head Using This Example$$
+# See $cref/run one example/user/Run One Example/$$ for instructions
+# on running just this example.
+# After doing that, one can run the command
+# $codep
+#	bin/dismodat.py build/example/user/example.db
+# $$
+# To generate the csv files corresponding to the example database.
+# One can then inspect the csv files in the $code build/example/user$$
+# to see all the relevant information.
 #
 # $head Discussion$$
 # The following describes the mode and data for this example:

@@ -59,10 +59,13 @@ $childtable%
 %$$
 
 $head 07-23$$
+$list number$$
+Added the $cref csv2db_command$$ to help one get started using dismod_at.
+$lnext
 More discussion has been added for when an
 $cref/init/set_command/option/init/$$
 is required after a set option command.
-
+$lend
 $head 07-21$$
 Add restrictions on $codei%(%a%, %t%)%$$ arguments to
 $cref/weight_table/create_database/weight_table/$$
