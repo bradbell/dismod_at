@@ -32,9 +32,9 @@
 # This example is under construction.
 #
 # $head Syntax$$
-# $codei%csv2db(%option_csv%, %data_csv%)%$$
+# $codei%csv2db(%configure_csv%, %measure_csv%)%$$
 #
-# $head option_csv$$
+# $head configure_csv$$
 # is an $code str$$ containing the option file name and must end with the
 # $code .csv$$ extension.
 # The first row contains the following column names
@@ -57,7 +57,7 @@
 # and $code omega$$ must appear in the list.
 # There is no default value for this value; i.e., it must appear.
 #
-# $head data_csv$$
+# $head measure_csv$$
 # is an $code str$$ containing the data file name
 # and must end with the $code .csv$$ extension.
 # Each row of the data file corresponds to one data point.
@@ -69,7 +69,7 @@
 # and will not be used by future versions of $code csv2db$$.
 #
 # $head integrand$$
-# This column of $icode data_csv$$ contains
+# This column of $icode measure_csv$$ contains
 # one of the following integrands:
 #
 # $subhead Sincidence$$
@@ -139,23 +139,23 @@
 # $latex [ \omega + \chi ] / \omega $$.
 #
 # $head age_lower$$
-# This column of $icode data_csv$$ contains
+# This column of $icode measure_csv$$ contains
 # The initial age for averaging the integrand for this row; $latex b$$.
 #
 # $head age_upper$$
-# This column of $icode data_csv$$ contains
+# This column of $icode measure_csv$$ contains
 # the final age for averaging the integrand for this row; $latex c$$.
 #
 # $head time_lower$$
-# This column of $icode data_csv$$ contains
+# This column of $icode measure_csv$$ contains
 # the initial time for averaging the integrand for this row; $latex r$$.
 #
 # $head time_upper$$
-# This column of $icode data_csv$$ contains
+# This column of $icode measure_csv$$ contains
 # the final time for averaging the integrand for this row; $latex s$$.
 #
 # $head meas_value$$
-# This column of $icode data_csv$$ contains
+# This column of $icode measure_csv$$ contains
 # the value of the average integrand plus measurement noise
 # $latex \[
 #	e + \frac{1}{c-b} \frac{1}{s-r} \int_b^c \int_r^s I(a , t) \; da \; dt
@@ -165,11 +165,11 @@
 # and $latex I(a, t)$$ is the value of the integrand for this row.
 #
 # $head meas_std$$
-# This column of $icode data_csv$$ contains
+# This column of $icode measure_csv$$ contains
 # the standard deviation of the measurement noise $latex e$$.
 #
 # $head hold_out$$
-# This column of $icode data_csv$$ contains
+# This column of $icode measure_csv$$ contains
 # either zero or one. If it is one, this row is included
 # dismod_at fits. Otherwise it is excluded.
 # In either case, the residuals are computed for this row.
@@ -211,19 +211,19 @@ def omega_constraint_fun(a, t, age_grid, time_grid, omega_grid) :
 	dv = 'uniform'
 	return (v, da, dv)
 # -----------------------------------------------------------------------------
-def csv2db(option_csv, data_csv) :
+def csv2db(configure_csv, measure_csv) :
 	#
-	for file_name in [ option_csv, data_csv ] :
+	for file_name in [ configure_csv, measure_csv ] :
 		if not file_name.endswith('.csv') :
-			msg  = 'csv2db: option_csv file ' + file_name
+			msg  = 'csv2db: configure_csv file ' + file_name
 			msg += ' does not end with .csv'
 			sys.exit(msg)
 		if not os.path.isfile(file_name) :
-			msg = 'csv2db: cannot find option_csv file ' + file_name
+			msg = 'csv2db: cannot find configure_csv file ' + file_name
 			sys.exit(msg)
 	# -------------------------------------------------------------------------
 	# file_option
-	file_ptr    = open(option_csv, 'r')
+	file_ptr    = open(configure_csv, 'r')
 	reader      = csv.DictReader(file_ptr)
 	file_option = dict()
 	for row in reader :
@@ -235,15 +235,16 @@ def csv2db(option_csv, data_csv) :
 	required = [ 'database_name', 'non_zero_rates' ]
 	for name in required :
 		if not name in file_option :
-			msg = 'csv2db: ' + name + ' not in option_csv file ' + option_csv
+			msg  = 'csv2db: ' + name
+			msg += ' not in configure_csv file ' + configure_csv
 			sys.exit(msg)
 	#
 	if 'omega' not in file_option['non_zero_rates'] :
-		msg = 'csv2db: omega not in non_zero_rates in ' + option_csv
+		msg = 'csv2db: omega not in non_zero_rates in ' + configure_csv
 		sys.exit(msg)
 	# -------------------------------------------------------------------------
 	# file_data
-	file_ptr   = open(data_csv, 'r')
+	file_ptr   = open(measure_csv, 'r')
 	reader     = csv.DictReader(file_ptr)
 	file_data  = list()
 	for row in reader :
@@ -266,33 +267,33 @@ def csv2db(option_csv, data_csv) :
 			mtother_found = True
 			if row['age_lower'] != row['age_upper'] :
 				msg  = 'csv2db: line ' + str(line)
-				msg += ' of data_csv ' + data_csv + '\n'
+				msg += ' of measure_csv ' + measure_csv + '\n'
 				msg += 'age_lower not equal age_upper for mtother data.'
 				sys.exit(msg)
 			if row['time_lower'] != row['time_upper'] :
 				msg  = 'csv2db: line ' + str(line)
-				msg += ' of file ' + data_csv + '\n'
+				msg += ' of file ' + measure_csv + '\n'
 				msg += 'time_lower not equal time_upper for mtother data.'
 				sys.exit(msg)
 		if row['hold_out'] == 0 :
 			if row['integrand'] == 'mtall' :
 				msg  = 'csv2db: line ' + str(line)
-				msg += ' of file ' + data_csv + '\n'
+				msg += ' of file ' + measure_csv + '\n'
 				msg += 'hold_out is 0 and integrand is mtall.'
 				sys.exit(msg)
 		elif row['hold_out'] == 1 :
 			if row['integrand'] != 'mtall' :
 				msg  = 'csv2db: line ' + str(line)
-				msg += ' of file ' + data_csv + '\n'
+				msg += ' of file ' + measure_csv + '\n'
 				msg += 'hold_out is 1 and integrand is not mtall.'
 				sys.exit(msg)
 		else :
 				msg  = 'csv2db: line ' + str(line)
-				msg += ' of file ' + data_csv + '\n'
+				msg += ' of file ' + measure_csv + '\n'
 				msg += 'hold_out is not 0 or 1'
 				sys.exit(msg)
 	if not mtother_found :
-		msg = 'csv2db: no mtother data in ' + data_csv
+		msg = 'csv2db: no mtother data in ' + measure_csv
 		sys.exit(msg)
 	# -------------------------------------------------------------------------
 	# age_grid, time_grid, omega_grid
@@ -317,7 +318,7 @@ def csv2db(option_csv, data_csv) :
 			omega_grid[age_index, time_index] = row['meas_value']
 			count[age_index, time_index] += 1
 	if not (count == 1).all() :
-		msg = 'csv2db: the mtother data in ' + data_csv
+		msg = 'csv2db: the mtother data in ' + measure_csv
 		msg += ' is not on a rectangular grid'
 		sys.exit(msg)
 	# -------------------------------------------------------------------------
@@ -653,14 +654,14 @@ S       = SC[:,0]
 C       = SC[:,1]
 P       = C / (S + C)
 # ----------------------------------------------------------------------------
-# option_csv
-file_name  = 'csv2db_option.csv'
+# configure_csv
+file_name  = 'configure.csv'
 file_ptr   = open(file_name, 'w')
 fieldnames = [ 'name', 'value' ]
 writer     = csv.DictWriter(file_ptr, fieldnames=fieldnames)
 writer.writeheader()
 #
-row        = { 'name': 'database_name',  'value': 'csv2db_example.db' }
+row        = { 'name': 'database_name',  'value': 'example.db' }
 writer.writerow( row )
 #
 row        = { 'name': 'non_zero_rates',  'value': 'iota rho chi omega' }
@@ -668,10 +669,10 @@ writer.writerow( row )
 #
 file_ptr.close()
 # ----------------------------------------------------------------------------
-# begin data_csv
+# begin measure_csv
 # ----------------------------------------------------------------------------
 # writer
-file_name  = 'csv2db_data.csv'
+file_name  = 'measure.csv'
 file_ptr   = open(file_name, 'w')
 fieldnames = [
 	'integrand',
@@ -757,13 +758,13 @@ for (age_lower, age_upper) in age_intervals :
 assert mtall_index == len(mtall_data)
 file_ptr.close()
 # ----------------------------------------------------------------------------
-# end data_csv
+# end measure_csv
 # ----------------------------------------------------------------------------
 # example.db
-csv2db( 'csv2db_option.csv', 'csv2db_data.csv' )
+csv2db( 'configure.csv', 'measure.csv' )
 # ----------------------------------------------------------------------------
 program    = '../../devel/dismod_at'
-database   = 'csv2db_example.db'
+database   = 'example.db'
 def exec_shell_cmd(cmd) :
 	command    = [ program, database ] + cmd.split()
 	print( ' '.join(command) )
