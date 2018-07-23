@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
-'python.htm',
-'sql_command.htm'
+'user.htm',
+'user_csv2db.py.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -11,10 +11,14 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'sql_command.htm#Syntax',
-'sql_command.htm#connection',
-'sql_command.htm#command',
-'sql_command.htm#result'
+'user_csv2db.py.htm#Using This Example',
+'user_csv2db.py.htm#Discussion',
+'user_csv2db.py.htm#rate_true',
+'user_csv2db.py.htm#P',
+'user_csv2db.py.htm#Rate Grids',
+'user_csv2db.py.htm#Data',
+'user_csv2db.py.htm#mtall',
+'user_csv2db.py.htm#Source'
 ];
 var list_down2 = [
 'install_unix.htm',
@@ -29,18 +33,27 @@ var list_down2 = [
 'wish_list.htm'
 ];
 var list_down1 = [
-'create_connection.htm',
-'create_table.htm',
-'create_database.htm',
-'csv2db_command.htm',
-'db2csv_command.htm',
-'get_name_type.htm',
-'get_row_list.htm',
-'get_table_dict.htm',
-'metropolis.htm',
-'modify_command.htm',
-'sql_command.htm',
-'unicode_tuple.htm'
+'user_csv2db.py.htm',
+'user_fit_random.py.htm',
+'user_fit_fixed_both.py.htm',
+'user_posterior.py.htm',
+'user_diabetes.py.htm',
+'user_asymptotic.py.htm',
+'user_change_grid.py.htm',
+'user_const_random.py.htm',
+'user_const_value.py.htm',
+'user_continue_fit.py.htm',
+'user_diff_constraint.py.htm',
+'user_fit_sim.py.htm',
+'user_jump_at_age.py.htm',
+'user_lasso_covariate.py.htm',
+'user_meas_covariate.py.htm',
+'user_no_children.py.htm',
+'user_predict_fit.py.htm',
+'user_zero_sum_random.py.htm',
+'user_re_scale.py.htm',
+'user_speed.py.htm',
+'user_students.py.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

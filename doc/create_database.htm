@@ -108,14 +108,15 @@ A:active { color : purple }
 <option>create_connection</option>
 <option>create_table</option>
 <option>create_database</option>
+<option>csv2db_command</option>
 <option>db2csv_command</option>
 <option>get_name_type</option>
 <option>get_row_list</option>
 <option>get_table_dict</option>
 <option>metropolis</option>
 <option>modify_command</option>
-<option>unicode_tuple</option>
 <option>sql_command</option>
+<option>unicode_tuple</option>
 </select>
 </td>
 <td>
@@ -203,14 +204,14 @@ If this file already exists, it is deleted and a database is created.
 <b><big><a name="age_list" id="age_list">age_list</a></big></b>
 <br>
 is a <code><font color="blue">list</font></code> of <code><font color="blue">float</font></code> that
-specify the age grid values.
+specify age values by indices.
 
 <br>
 <br>
 <b><big><a name="time_list" id="time_list">time_list</a></big></b>
 <br>
 is a <code><font color="blue">list</font></code> of <code><font color="blue">float</font></code> that
-specify the time grid values.
+specify time values by indices.
 
 <br>
 <br>
@@ -312,6 +313,17 @@ float age
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i></code>
  and float time 
 <code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i></code>
+.
+Note that there is an 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
+ such that
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]]</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]]</span></font></code>
 .
 
 <br>
@@ -471,7 +483,9 @@ hold_out     </td><td align='left'  valign='top'>
 
 density      </td><td align='left'  valign='top'>
  str         </td><td align='left'  valign='top'>
- density                     </td></tr><tr><td align='left'  valign='top'>
+
+<a href="density_table.htm#density_name" target="_top"><span style='white-space: nowrap'>density_name</span></a>
+                   </td></tr><tr><td align='left'  valign='top'>
 
 meas_value   </td><td align='left'  valign='top'>
  float       </td><td align='left'  valign='top'>
@@ -543,9 +557,11 @@ std     </td><td align='left'  valign='top'>
  float         </td><td align='left'  valign='top'>
  standard deviation         </td></tr><tr><td align='left'  valign='top'>
 
-density </td><td align='left'  valign='top'>
- float         </td><td align='left'  valign='top'>
- density function           </td></tr><tr><td align='left'  valign='top'>
+density      </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+
+<a href="density_table.htm#density_name" target="_top"><span style='white-space: nowrap'>density_name</span></a>
+               </td></tr><tr><td align='left'  valign='top'>
 
 eta     </td><td align='left'  valign='top'>
  float         </td><td align='left'  valign='top'>
@@ -657,6 +673,17 @@ The value
  is not used, and can be None,
 when time 
 <code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[-1]</span></font></code>
+.
+Note that there is an 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
+ such that
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]]</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]]</span></font></code>
 .
 
 <br>

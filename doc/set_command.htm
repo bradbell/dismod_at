@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Directly Setting Table Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Directly Setting Table Values">
-<meta name="keywords" id="keywords" content=" directly setting table values syntax database option name value warning table_out start_var scale_var truth_var source sample prior_mean fit_var start scale truth example ">
+<meta name="keywords" id="keywords" content=" directly setting table values syntax database option name value init table_out start_var scale_var truth_var source sample prior_mean fit_var start scale truth example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,7 +58,7 @@ A:active { color : purple }
 <option>option</option>
 <option>---..name</option>
 <option>---..value</option>
-<option>---..Warning</option>
+<option>---..init</option>
 <option>table_out</option>
 <option>---..start_var</option>
 <option>---..scale_var</option>
@@ -156,13 +156,14 @@ for the specified option name.
 
 <br>
 <br>
-<big><a name="option.Warning" id="option.Warning">Warning</a></big>
+<big><a name="option.init" id="option.init">init</a></big>
 <br>
-If 
+The set option commands does not require the <code><font color="blue">init</font></code> to be run first.
+In addition, if 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
- is <code><font color="blue">parent_node_id</font></code>,
-the set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
- will change and you must
+ is not <code><font color="blue">parent_node_id</font></code>,
+the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ do not change and you do not have to
 re-run the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
 .
 

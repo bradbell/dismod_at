@@ -27,14 +27,15 @@ var list_down2 = [
 'create_connection.htm',
 'create_table.htm',
 'create_database.htm',
+'csv2db_command.htm',
 'db2csv_command.htm',
 'get_name_type.htm',
 'get_row_list.htm',
 'get_table_dict.htm',
 'metropolis.htm',
 'modify_command.htm',
-'unicode_tuple.htm',
-'sql_command.htm'
+'sql_command.htm',
+'unicode_tuple.htm'
 ];
 var list_down1 = [
 'get_name_type.py.htm'

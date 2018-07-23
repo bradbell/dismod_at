@@ -1,0 +1,456 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Conversion of a Csv File to a Dismod_at Database</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Conversion of a Csv File to a Dismod_at Database">
+<meta name="keywords" id="keywords" content=" conversion csv file to dismod_at database syntax program python function see also example configure_csv non_zero_rates measure_csv integrand sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk age_lower age_upper time_lower time_upper meas_value meas_std hold_out ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_csv2db_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>csv2db_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="create_database.py.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Syntax</option>
+<option>---..As Program</option>
+<option>---..As Python Function</option>
+<option>See Also</option>
+<option>Example</option>
+<option>database</option>
+<option>configure_csv</option>
+<option>---..non_zero_rates</option>
+<option>measure_csv</option>
+<option>integrand</option>
+<option>---..Sincidence</option>
+<option>---..remission</option>
+<option>---..mtexcess</option>
+<option>---..mtother</option>
+<option>---..mtwith</option>
+<option>---..susceptible</option>
+<option>---..withC</option>
+<option>---..prevalence</option>
+<option>---..Tincidence</option>
+<option>---..mtspecific</option>
+<option>---..mtall</option>
+<option>---..mtstandard</option>
+<option>---..relrisk</option>
+<option>age_lower</option>
+<option>age_upper</option>
+<option>time_lower</option>
+<option>time_upper</option>
+<option>meas_value</option>
+<option>meas_std</option>
+<option>hold_out</option>
+</select>
+</td>
+<td><a href="db2csv_command.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>python-&gt;</option>
+<option>create_connection</option>
+<option>create_table</option>
+<option>create_database</option>
+<option>csv2db_command</option>
+<option>db2csv_command</option>
+<option>get_name_type</option>
+<option>get_row_list</option>
+<option>get_table_dict</option>
+<option>metropolis</option>
+<option>modify_command</option>
+<option>sql_command</option>
+<option>unicode_tuple</option>
+</select>
+</td>
+<td>csv2db_command</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Conversion of a Csv File to a Dismod_at Database</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Syntax.As Program" id="Syntax.As Program">As Program</a></big>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismodat.py&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>csv2db</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>configure_csv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.As Python Function" id="Syntax.As Python Function">As Python Function</a></big>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at.csv2db_command(</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>configure_csv</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="get_started.htm" target="_top"><span style='white-space: nowrap'>get_started</span></a>
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+This command has limited capability and is only meant as an example
+to help one get started using dismod_at.
+See <a href="user_csv2db.py.htm" target="_top"><span style='white-space: nowrap'>user_csv2db.py</span></a>
+ for an example that uses this command.
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+is an <code><font color="blue">str</font></code> containing the name of the dismod_at database
+file that is written by this command.
+
+<br>
+<br>
+<b><big><a name="configure_csv" id="configure_csv">configure_csv</a></big></b>
+<br>
+is an <code><font color="blue">str</font></code> containing the configuration file name and must
+end with the <code><font color="blue">.csv</font></code> extension.
+The first row contains the following column names
+<code><font color="blue">name</font></code>, <code><font color="blue">value</font></code>.
+Column names that begin with <code><font color="blue">c_</font></code> are comments
+and will not be used by future versions of <code><font color="blue">csv2db</font></code>.
+The configuration options are documented by the corresponding
+name below.
+
+<br>
+<br>
+<big><a name="configure_csv.non_zero_rates" id="configure_csv.non_zero_rates">non_zero_rates</a></big>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>value</span></font></i></code>
+ in this row is a list rates that are non-zero
+in the model.
+The possible rates are
+<code><font color="blue">pini</font></code>, <code><font color="blue">iota</font></code>, <code><font color="blue">rho</font></code>, <code><font color="blue">chi</font></code>, <code><font color="blue">omega</font></code>.
+The rates in the list are separated by a single space
+and <code><font color="blue">omega</font></code> must appear in the list.
+There is no default value for this value; i.e., it must appear.
+
+<br>
+<br>
+<b><big><a name="measure_csv" id="measure_csv">measure_csv</a></big></b>
+<br>
+is an <code><font color="blue">str</font></code> containing the data file name
+and must end with the <code><font color="blue">.csv</font></code> extension.
+Each row of the data file corresponds to one data point.
+The first row of the file contains the column names.
+The other rows correspond to data points.
+Each column of the necessary columns in the data file is documented
+under its column name below.
+Column names that begin with <code><font color="blue">c_</font></code> are comments
+and will not be used by future versions of <code><font color="blue">csv2db</font></code>.
+
+<br>
+<br>
+<b><big><a name="integrand" id="integrand">integrand</a></big></b>
+<br>
+This column of 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ contains
+one of the valid integrands:
+
+<br>
+<br>
+<big><a name="integrand.Sincidence" id="integrand.Sincidence">Sincidence</a></big>
+<br>
+The incidence rate relative to susceptible population:
+<small>@(@
+\iota
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.remission" id="integrand.remission">remission</a></big>
+<br>
+The remission rate:
+<small>@(@
+\rho
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.mtexcess" id="integrand.mtexcess">mtexcess</a></big>
+<br>
+The excess mortality rate:
+<small>@(@
+\chi
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.mtother" id="integrand.mtother">mtother</a></big>
+<br>
+The other cause mortality rate:
+<small>@(@
+\omega
+@)@</small>.
+Other cause mortality data is special in that it must satisfy
+
+<code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i></code>
+.
+In addition, it must be specified on a rectangular grid; i.e.,
+each age that appears must appear once and only once for every time, and
+each time that appears must appear once and only once for every age.
+The <code><font color="blue">mtother</font></code> data is converted to a constraint on <small>@(@
+\omega
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.mtwith" id="integrand.mtwith">mtwith</a></big>
+<br>
+The with condition mortality rate:
+<small>@(@
+\omega + \chi
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.susceptible" id="integrand.susceptible">susceptible</a></big>
+<br>
+The susceptible fraction of the population:
+<small>@(@
+S
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.withC" id="integrand.withC">withC</a></big>
+<br>
+The with condition fraction of the population:
+<small>@(@
+C
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.prevalence" id="integrand.prevalence">prevalence</a></big>
+<br>
+The prevalence of the condition:
+<small>@(@
+P = C / [ S + C ]
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.Tincidence" id="integrand.Tincidence">Tincidence</a></big>
+<br>
+The incidence rate relative to the total population:
+<small>@(@
+\iota [ 1 - P ]
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.mtspecific" id="integrand.mtspecific">mtspecific</a></big>
+<br>
+The cause specific mortality rate:
+<small>@(@
+\chi P
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.mtall" id="integrand.mtall">mtall</a></big>
+<br>
+The all cause mortality rate:
+<small>@(@
+\omega + \chi P
+@)@</small>.
+We assume the <a href="csv2db_command.htm#integrand.mtother" target="_top"><span style='white-space: nowrap'>mtother</span></a>
+
+data (which is converted to constraints_) is a surrogate
+for the <code><font color="blue">mtall</font></code> data.
+The <code><font color="blue">mtall</font></code> data is included to check that the desired values
+are satisfied (by checking residuals in a data fit).
+For this reason, <a href="csv2db_command.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ must be
+one for all the <code><font color="blue">mtall</font></code> data.
+
+<br>
+<br>
+<big><a name="integrand.mtstandard" id="integrand.mtstandard">mtstandard</a></big>
+<br>
+The standardized mortality ratio:
+<small>@(@
+[ \omega + \chi ] / [ \omega + \chi P ]
+@)@</small>.
+
+<br>
+<br>
+<big><a name="integrand.relrisk" id="integrand.relrisk">relrisk</a></big>
+<br>
+The relative risk:
+<small>@(@
+[ \omega + \chi ] / \omega
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="age_lower" id="age_lower">age_lower</a></big></b>
+<br>
+This column of 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ contains
+The initial age for averaging the integrand for this row; <small>@(@
+b
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="age_upper" id="age_upper">age_upper</a></big></b>
+<br>
+This column of 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ contains
+the final age for averaging the integrand for this row; <small>@(@
+c
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="time_lower" id="time_lower">time_lower</a></big></b>
+<br>
+This column of 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ contains
+the initial time for averaging the integrand for this row; <small>@(@
+r
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="time_upper" id="time_upper">time_upper</a></big></b>
+<br>
+This column of 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ contains
+the final time for averaging the integrand for this row; <small>@(@
+s
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="meas_value" id="meas_value">meas_value</a></big></b>
+<br>
+This column of 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ contains
+the value of the average integrand plus measurement noise
+<small>@[@
+
+	e + \frac{1}{c-b} \frac{1}{s-r} \int_b^c \int_r^s I(a , t) \; da \; dt
+
+@]@</small>
+where <small>@(@
+e
+@)@</small> is the measurement noise,
+<small>@(@
+a
+@)@</small> and <small>@(@
+t
+@)@</small> are the age and time integration variables,
+and <small>@(@
+I(a, t)
+@)@</small> is the value of the integrand for this row.
+
+<br>
+<br>
+<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
+<br>
+This column of 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ contains
+the standard deviation of the measurement noise <small>@(@
+e
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="hold_out" id="hold_out">hold_out</a></big></b>
+<br>
+This column of 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ contains
+either zero or one. If it is one, this row is included
+dismod_at fits. Otherwise it is excluded.
+In either case, the residuals are computed for this row.
+
+
+<hr>Input File: python/dismod_at/csv2db_command.py
+
+</body>
+</html>

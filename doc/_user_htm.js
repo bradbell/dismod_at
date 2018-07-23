@@ -29,6 +29,7 @@ var list_down1 = [
 'wish_list.htm'
 ];
 var list_down0 = [
+'user_csv2db.py.htm',
 'user_fit_random.py.htm',
 'user_fit_fixed_both.py.htm',
 'user_posterior.py.htm',

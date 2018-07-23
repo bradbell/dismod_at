@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
 'python.htm',
-'sql_command.htm'
+'csv2db_command.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -11,10 +11,36 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'sql_command.htm#Syntax',
-'sql_command.htm#connection',
-'sql_command.htm#command',
-'sql_command.htm#result'
+'csv2db_command.htm#Syntax',
+'csv2db_command.htm#Syntax.As Program',
+'csv2db_command.htm#Syntax.As Python Function',
+'csv2db_command.htm#See Also',
+'csv2db_command.htm#Example',
+'csv2db_command.htm#database',
+'csv2db_command.htm#configure_csv',
+'csv2db_command.htm#configure_csv.non_zero_rates',
+'csv2db_command.htm#measure_csv',
+'csv2db_command.htm#integrand',
+'csv2db_command.htm#integrand.Sincidence',
+'csv2db_command.htm#integrand.remission',
+'csv2db_command.htm#integrand.mtexcess',
+'csv2db_command.htm#integrand.mtother',
+'csv2db_command.htm#integrand.mtwith',
+'csv2db_command.htm#integrand.susceptible',
+'csv2db_command.htm#integrand.withC',
+'csv2db_command.htm#integrand.prevalence',
+'csv2db_command.htm#integrand.Tincidence',
+'csv2db_command.htm#integrand.mtspecific',
+'csv2db_command.htm#integrand.mtall',
+'csv2db_command.htm#integrand.mtstandard',
+'csv2db_command.htm#integrand.relrisk',
+'csv2db_command.htm#age_lower',
+'csv2db_command.htm#age_upper',
+'csv2db_command.htm#time_lower',
+'csv2db_command.htm#time_upper',
+'csv2db_command.htm#meas_value',
+'csv2db_command.htm#meas_std',
+'csv2db_command.htm#hold_out'
 ];
 var list_down2 = [
 'install_unix.htm',
