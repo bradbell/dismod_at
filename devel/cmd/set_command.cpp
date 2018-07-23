@@ -24,6 +24,7 @@ $spell
 	sim
 	var
 	dismod
+	init
 $$
 
 $section Directly Setting Table Values$$
@@ -53,9 +54,10 @@ Is the new
 $cref/option_value/option_table/Conventions/option_value/$$
 for the specified option name.
 
-$subhead Warning$$
-If $icode option_name$$ is $code parent_node_id$$,
-the set of $cref model_variables$$ will change and you must
+$subhead init$$
+The set option commands does not require the $code init$$ to be run first.
+In addition, if $icode option_name$$ is not $code parent_node_id$$,
+the $cref model_variables$$ do not change and you do not have to
 re-run the $cref init_command$$.
 
 $head table_out$$
