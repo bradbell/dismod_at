@@ -53,6 +53,7 @@ import dismod_at
 # ---------------------------------------------------------------------------
 # check usage
 usage  = 'dismodat.py database db2csv\n'
+usage += 'dismodat.py database csv2db configure_csv measure_csv\\\n'
 usage += 'dismodat.py database modify\\\n'
 usage += '\ttable_name column_name row_expression value_expression\\\n'
 usage += '\t[statement_one [statement_two ...] ]'
@@ -104,6 +105,12 @@ if command_arg == 'db2csv' :
 	if len(sys.argv) != 3 :
 		sys.exit(usage)
 	dismod_at.db2csv_command(database_file_arg)
+elif command_arg == 'csv2db' :
+	if len(sys.argv) != 5 :
+		sys.exit(usage)
+	configure_csv = sys.argv[3]
+	measure_csv   = sys.argv[4]
+	dismod_at.db2csv_command(database_file_arg, configure_csv, measure_csv)
 elif command_arg == 'modify' :
 	if len(sys.argv) < 7 :
 		sys.exit(usage)

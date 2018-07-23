@@ -16,6 +16,7 @@ FOREACH(user_case
 	const_random
 	const_value
 	continue_fit
+	csv2db
 	diff_constraint
 	fit_fixed_both
 	fit_random

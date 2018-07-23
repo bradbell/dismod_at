@@ -18,7 +18,7 @@ $$
 $section Dismod_at Getting Started Examples / Tests $$
 
 $head See Also$$
-$cref user$$
+$cref csv2db_command$$
 
 $children%example/get_started/get_started_db.py
 %$$
