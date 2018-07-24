@@ -60,6 +60,11 @@ $childtable%
 
 $head 07-23$$
 $list number$$
+Fix $cref/unix_time/log_table/unix_time/$$ for the end of the commands
+that use $code dismodat.py$$ was mistakenly reported as the same
+as the begin time.
+This has been fixed.
+$lnext
 Added the $cref csv2db_command$$ to help one get started using dismod_at.
 $lnext
 More discussion has been added for when an
