@@ -60,6 +60,8 @@ $childtable%
 
 $head 07-23$$
 $list number$$
+Advance to $code cppad-20180723$$.
+$lnext
 Fix $cref/unix_time/log_table/unix_time/$$ for the end of the commands
 that use $code dismodat.py$$ was mistakenly reported as the same
 as the begin time.
