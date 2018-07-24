@@ -303,8 +303,8 @@ CppAD::vector<Float> smooth2ode::interpolate(
 		double c_10  = coefficient_[index].c_10;
 		double c_01  = coefficient_[index].c_01;
 		double c_11  = coefficient_[index].c_11;
-		Float  sum   = Float(0.0);
-		sum      += c_00 * var_si[i_si*n_time_si_ + j_si];
+		Float  sum;
+		sum      = c_00 * var_si[i_si*n_time_si_ + j_si];
 		if( c_10 != 0.0 )
 			sum += c_10 * var_si[(i_si+1)*n_time_si_ + j_si];
 		if( c_01 != 0.0 )
@@ -329,4 +329,3 @@ DISMOD_AT_INSTANTIATE_SMOOTH2ODE( a2_double )
 DISMOD_AT_INSTANTIATE_SMOOTH2ODE( a3_double )
 
 } // END DISMOD_AT_NAMESPACE
-
