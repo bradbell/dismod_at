@@ -23,7 +23,7 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='110cd920f93410b831fcc792eaa69bfdf59576c2'
+hash_key='e2b5b2398c996f90e82cba40e1d3a312f122fdb5'
 version='20180725'
 # ---------------------------------------------------------------------------
 # special cppad_mixed settings (it is not suggested that you change these)
@@ -132,8 +132,8 @@ if [ "$cmake_cxx_compiler" != '' ]
 then
 	cmake_args="$cmake_args -D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"
 fi
-echo "cmake $cmake_args -D cppad_cxx_flags=\"$extra_cxx_flags\" .."
-cmake $cmake_args -D cppad_cxx_flags="$extra_cxx_flags" ..
+echo "cmake $cmake_args -D extra_cxx_flags=\"$extra_cxx_flags\" .."
+cmake $cmake_args -D extra_cxx_flags="$extra_cxx_flags" ..
 # -----------------------------------------------------------------------------
 echo_eval make install
 # -----------------------------------------------------------------------------
