@@ -34,6 +34,8 @@ $spell
 	devel
 	numpy
 	txt
+	dev
+	libipopt
 $$
 
 $section Installing dismod_at in Unix$$
@@ -68,15 +70,6 @@ is required by $code dismod_at$$.
 $subhead pkg-config$$
 The $href%http://www.freedesktop.org/wiki/Software/pkg-config/%pkg-config%$$
 program must be installed.
-After $code sqlite3$$, $code gsl$$, and $code ipopt$$ are installed
-(see below), the following commands should work:
-$codep%
-	pkg-config sqlite3 --libs
-	pkg-config gsl     --libs
-	pkg-config ipopt   --libs
-%$$
-If one of them fails, a corresponding directory is missing
-from the $code PKG_CONFIG_PATH$$ environment variable.
 
 $subhead python3$$
 The $href%http://www.python.org/%python3%$$,
@@ -121,6 +114,100 @@ and check its version number, using the commands:
 $codei%
 	git checkout -q %git_hash%
 	grep '^SET(dismod_at_version' CMakeLists.txt
+%$$
+
+$head Paths$$
+This discussion is intended to help with the install of the
+special requirements and dismod_at (see below).
+
+$subhead Adding to a Path$$
+The instructions below may require you to add to a $icode path_name$$.
+Use the command
+$codei%
+	echo @%path_name%
+%$$
+to see if your initial path is empty. If it is empty,
+use the command
+$codei%
+	export %path_name%=%directory%
+%$$
+to add $icode directory$$ to the path.
+If it is non-empty, use
+$codei%
+	export %path_name%="@%path_name%:%directory%"
+%$$
+to add $icode directory$$ to the path.
+
+$subhead PKG_CONFIG_PATH$$
+After $code sqlite3$$ and $code gsl$$ are installed
+the following commands should work:
+$codep%
+	pkg-config sqlite3 --libs
+	pkg-config gsl     --libs
+%$$
+If one of them fails, a corresponding directory is missing
+from the $code PKG_CONFIG_PATH$$ environment variable.
+If $icode prefix$$ is the prefix where $code gsl$$ was installed,
+the command
+$codei%
+	find -L %prefix% -name gsl.pc 2> /dev/null
+%$$
+should find the directory where $code gsl.pc$$ is located.
+After $code ipopt$$ is installed (see below),
+the following command should work:
+$codep%
+	pkg-config ipopt --libs
+%$$
+If it fails,
+the command
+$codei%
+	find -L %ipopt_prefix% -name ipopt.pc 2> /dev/null
+%$$
+should find the directory where $code ipopt.pc$$ is located;
+see $cref/ipopt_prefix/run_cmake.sh/ipopt_prefix/$$.
+
+$subhead LD_LIBRARY_PATH$$
+After $code ipopt$$ is installed,
+the directory where it's libraries are installed should be in your
+$code LD_LIBRARY_PATH$$.
+If you get an error finding loading the shared library corresponding
+to ipopt, use the following command to find it:
+$codei%
+	find -L %ipopt_prefix% -name 'libipopt.*' 2> /dev/null
+%$$
+see $cref/ipopt_prefix/run_cmake.sh/ipopt_prefix/$$.
+
+$subhead PATH$$
+After you install dismod_at (see below)
+you should be able to execute the command
+$codei%
+	dismod_at
+%$$
+from any directory.
+If you get the error $code dismod_at: command not found$$,
+you will need to add the binary install directory to you path.
+Use the following command to find it:
+$codei%
+	find -L %dismod_at_prefix% -name dismod_at 2> /dev/null
+%$$
+see $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$.
+
+$subhead PYTHONPATH$$
+After you install dismod_at
+you should be able to execute the following commands:
+$codei%
+	%python3%
+	import dismod_at
+	quit()
+%$$
+where $icode python3$$ is your
+$cref/python3 executable/run_cmake.sh/python3_executable/$$.
+If you get the error $code No module named 'dismod_at'$$,
+you will need to add the directory where the module is installed
+to your python path.
+Use the following command to find it:
+$codei%
+	find -L %dismod_at_prefix% -name site-packages 2> /dev/null
 %$$
 
 $head Special Requirements$$
@@ -227,61 +314,6 @@ $codep
 	cd ..
 $$
 
-
-$subhead Executable Path$$
-After the install you will be able to execute the command
-$codei%
-	dismod_at
-%$$
-If you get the error $code dismod_at: command not found$$,
-you will need to add the binary install directory to you path.
-Use the command
-$codei%
-	ls %dismod_at_prefix%/bin
-%$$
-to check that $code dismod_at$$ is in that directory.
-Use the command
-$codei%
-	export PATH="@PATH:%dismod_at_prefix%/bin"
-%$$
-to add that directory to your executable path.
-
-$head Python Path$$
-After the install you will be able to import the $code dismod_at$$
-python library as follows:
-$codei%
-	%python3%
-	import dismod_at
-	quit()
-%$$
-where $icode python3$$ is your
-$cref/python3 executable/run_cmake.sh/python3_executable/$$.
-If you get the error $code No module named 'dismod_at'$$,
-you will need to add to your python path.
-The python module $code dismod_at$$ is installed below
-$cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$
-in the standard place for your python3 executable.
-Use the command
-$codei%
-	ls %dismod_at_prefix%/lib/python/%py_version%/site-packages
-%$$
-to be sure it is there, where
-$icode py_version$$ is the version of python3 you are using.
-We use $icode site_packages$$ to denote the path above.
-Use the command
-$codei%
-	echo @PYTHONPATH
-%$$
-to see if your initial python path is empty. If it is empty,
-use the command
-$codei%
-	export PYTHONPATH="%site_packages%"
-%$$
-to set your python path. If it is non-empty, use
-$codei%
-	export PYTHONPATH="@PYTHONPATH:%site_packages%"
-%$$
-to set your python path.
 
 $head Example$$
 The file $cref example_install.sh$$ contains an example

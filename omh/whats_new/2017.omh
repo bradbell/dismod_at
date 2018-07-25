@@ -696,7 +696,6 @@ The $cref init_command$$ now deletes any existing
 $cref/output tables/data_flow/Output Tables/$$.
 $lnext
 The version number in the dismod_at python package
-(see $cref/python path/install_unix/Python Path/$$)
 was stuck at $code 20160516$$; i.e., not being updated.
 This has been fixed.
 $lend
@@ -839,7 +838,7 @@ $cref install_unix$$ procedure
 in $code bin/run_cmake.sh$$ is used to determine this setting automatically).
 $lnext
 Improve the discussion on setting the
-$cref/python path/install_unix/Python Path/$$.
+$cref/python path/install_unix/Paths/PYTHONPATH/$$.
 $lend
 
 $head 03-30$$
