@@ -234,7 +234,7 @@ for (age_lower, age_upper) in age_intervals :
 		row['time_upper'] = time
 		row['meas_value'] = mtall_data[mtall_index]
 		row['meas_std']   = row['meas_value'] / 10.0
-		row['hold_out']   = 0
+		row['hold_out']   = 1 # used for constraint, not data
 		writer.writerow(row)
 		mtall_index      += 1
 assert mtall_index == len(mtall_data)

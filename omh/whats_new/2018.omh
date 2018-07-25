@@ -47,6 +47,7 @@ $spell
 	integrands
 	cholmod
 	eigen
+	mtother
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -61,7 +62,11 @@ $childtable%
 
 $head 07-25$$
 $list number$$
-Add discussion of whey the default
+Add mention that, during a $code db2csv$$ command,
+the age-time grid for rates is the same as the user's choice of
+grid for $cref/mtother/csv2db_command/integrand/mtother/$$.
+$lnext
+Add discussion of why the default
 $cref/eigen_prefix/run_cmake.sh/eigen_prefix/$$ is different
 from the other prefixes.
 $lnext

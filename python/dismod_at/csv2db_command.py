@@ -98,13 +98,23 @@
 # $subhead mtother$$
 # The other cause mortality rate:
 # $latex \omega $$.
+# $list number$$
 # Other cause mortality data is special in that it must satisfy
 # $icode%age_lower% == %age_upper%$$,
 # $icode%time_lower% == %time_upper%$$.
 # In addition, it must be specified on a rectangular grid; i.e.,
 # each age that appears must appear once and only once for every time, and
 # each time that appears must appear once and only once for every age.
+# $lnext
 # The $code mtother$$ data is converted to a constraint on $latex \omega$$.
+# For this reason, $cref/hold_out/csv2db_command/hold_out/$$ must be
+# one for all the $code mtother$$ data;
+# i.e., it is a constraint, not data, during a fit.
+# $lnext
+# All of the
+# $cref/non zero rates/csv2db_command/configure_csv/non_zero_rates/$$
+# use the age-time grid corresponding the mtother data.
+# $lend
 #
 # $subhead mtwith$$
 # The with condition mortality rate:
@@ -139,7 +149,7 @@
 # The $code mtall$$ data is included to check that the desired values
 # are satisfied (by checking residuals in a data fit).
 # For this reason, $cref/hold_out/csv2db_command/hold_out/$$ must be
-# one for all the $code mtall$$ data.
+# one for all the $code mtall$$ data; i.e., it is not included during a fit.
 #
 # $subhead mtstandard$$
 # The standardized mortality ratio:
@@ -276,18 +286,13 @@ def csv2db_command(database, configure_csv, measure_csv) :
 				msg += 'time_lower not equal time_upper for mtother data.'
 				sys.exit(msg)
 		if row['hold_out'] == 0 :
-			if row['integrand'] == 'mtall' :
+			if row['integrand'] == 'mtall' or row['integrand'] == 'mtother' :
 				msg  = 'csv2db: line ' + str(line)
 				msg += ' of file ' + measure_csv + '\n'
-				msg += 'hold_out is 0 and integrand is mtall.'
-				sys.exit(msg)
-		elif row['hold_out'] == 1 :
-			if row['integrand'] != 'mtall' :
-				msg  = 'csv2db: line ' + str(line)
-				msg += ' of file ' + measure_csv + '\n'
-				msg += 'hold_out is 1 and integrand is not mtall.'
+				msg += 'hold_out is 0 and integrand is ' + row['integrand']
 				sys.exit(msg)
 		else :
+			if row['hold_out'] != 1 :
 				msg  = 'csv2db: line ' + str(line)
 				msg += ' of file ' + measure_csv + '\n'
 				msg += 'hold_out is not 0 or 1'
