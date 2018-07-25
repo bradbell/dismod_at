@@ -46,6 +46,7 @@ $spell
 	cv
 	integrands
 	cholmod
+	eigen
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -60,6 +61,10 @@ $childtable%
 
 $head 07-25$$
 $list number$$
+Add discussion of whey the default
+$cref/eigen_prefix/run_cmake.sh/eigen_prefix/$$ is different
+from the other prefixes.
+$lnext
 Change the default value of
 $cref/build_type/run_cmake.sh/build_type/$$ to $code debug$$.
 You have to change this to get the faster ($code release$$)
