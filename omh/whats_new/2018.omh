@@ -59,8 +59,21 @@ $childtable%
 %$$
 
 $head 07-25$$
+$list number$$
+Change the default value of
+$cref/build_type/run_cmake.sh/build_type/$$ to $code debug$$.
+You have to change this to get the faster ($code release$$)
+version of dismod_at.
+$lnext
 Improve discussion of the
 $cref/paths/install_unix/Paths/$$ needed during and after the install process.
+$lnext
+Advance to $code cppad_mixed-20180725$$.
+This should improve detection
+(during the $cref/install/install_unix/$$)
+of when the default settings for
+$cref/extra_cxx_flags/run_cmake.sh/extra_cxx_flags/$$ do not work.
+$lend
 
 $head 07-23$$
 $list number$$
