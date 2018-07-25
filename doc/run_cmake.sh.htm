@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>bin/run_cmake.sh: User Configuration Options</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="bin/run_cmake.sh: User Configuration Options">
-<meta name="keywords" id="keywords" content=" bin/run_cmake.sh: user configuration options verbose_makefile build_type dismod_at_prefix eigen_prefix other prefixes debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir system_specific_library_list ">
+<meta name="keywords" id="keywords" content=" bin/run_cmake.sh: user configuration options verbose_makefile build_type dismod_at_prefix eigen_prefix ipopt_prefix cppad_prefix debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir system_specific_library_list ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -57,7 +57,8 @@ A:active { color : purple }
 <option>build_type</option>
 <option>dismod_at_prefix</option>
 <option>eigen_prefix</option>
-<option>Other Prefixes</option>
+<option>ipopt_prefix</option>
+<option>cppad_prefix</option>
 <option>Debug and Release</option>
 <option>python3_executable</option>
 <option>Choosing C++ Compiler</option>
@@ -109,7 +110,7 @@ verbose_makefile='no'
 <br>
 Use either <code><font color="blue">debug</font></code> or <code><font color="blue">release</font></code> for the type of this build:
 <code><font color='blue'><pre style='display:inline'> 
-build_type='release'
+build_type='debug'
 </pre></font></code>
 <br>
 <b><big><a name="dismod_at_prefix" id="dismod_at_prefix">dismod_at_prefix</a></big></b>
@@ -144,12 +145,46 @@ is installed:
 eigen_prefix=&quot;$HOME/prefix/dismod_at/eigen&quot;
 </pre></font></code>
 If this prefix ends in <code><font color="blue">/dismod_at/eigen</font></code>,
-<code><font color="blue">bin/install_eigen.sh</font></code> will use a soft link from this prefix to
+<code><font color="blue">bin/install_eigen.sh</font></code> will use a soft link from
 
-<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.debug</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>../</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
+ to
+
+<code><font color="blue"><span style='white-space: nowrap'>../</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.debug</span></font></code>
  or
 
-<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.release</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>../</span></font><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.release</span></font></code>
+
+depending on the choice for 
+<code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
+.
+The default 
+<code><i><font color="black"><span style='white-space: nowrap'>eigen_prefix</span></font></i></code>
+ is different from the other prefixes
+because compiler warning for this directory are suppress and we want
+compiler warnings for the rest of the source code.
+
+<br>
+<br>
+<b><big><a name="ipopt_prefix" id="ipopt_prefix">ipopt_prefix</a></big></b>
+<br>
+The prefix where
+<a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+
+is installed:
+<code><font color='blue'><pre style='display:inline'> 
+ipopt_prefix=&quot;$HOME/prefix/dismod_at&quot;
+</pre></font></code>
+If this prefix end in <code><font color="blue">/dismod_at</font></code>,
+<code><font color="blue">bin/install_ipopt.sh</font></code>,
+will use a soft link from 
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i></code>
+ to
+
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.debug</span></font></code>
+ or
+
+<code><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.release</span></font></code>
 
 depending on the choice for 
 <code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
@@ -157,28 +192,26 @@ depending on the choice for
 
 <br>
 <br>
-<b><big><a name="Other Prefixes" id="Other Prefixes">Other Prefixes</a></big></b>
+<b><big><a name="cppad_prefix" id="cppad_prefix">cppad_prefix</a></big></b>
 <br>
-Prefixes where the other
-<a href="install_unix.htm#Special Requirements" target="_top"><span style='white-space: nowrap'>special&nbsp;requirements</span></a>
+The prefix where
+<a href="install_unix.htm#Special Requirements.CppAD" target="_top"><span style='white-space: nowrap'>cppad</span></a>
 
-are installed:
+is installed:
 <code><font color='blue'><pre style='display:inline'> 
-ipopt_prefix=&quot;$HOME/prefix/dismod_at&quot;
 cppad_prefix=&quot;$HOME/prefix/dismod_at&quot;
 </pre></font></code>
-If these prefixes end in <code><font color="blue">/dismod_at</font></code>,
-<code><font color="blue">bin/install_ipopt.sh</font></code>,
+If this prefix end in <code><font color="blue">/dismod_at</font></code>,
 <code><font color="blue">bin/install_cppad.sh</font></code>, and
 <code><font color="blue">bin/install_cppad_mixed.sh</font></code>
-will use a soft link from the corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i></code>
+will use a soft link from 
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_prefix</span></font></i></code>
  to
 
-<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.debug</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.debug</span></font></code>
  or
 
-<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.release</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>cppad_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>.release</span></font></code>
 
 depending on the choice for 
 <code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>

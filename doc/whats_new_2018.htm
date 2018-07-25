@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -53,6 +53,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>Contents</option>
+<option>07-25</option>
 <option>07-23</option>
 <option>07-21</option>
 <option>07-13</option>
@@ -160,6 +161,39 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="07-25" id="07-25">07-25</a></big></b>
+
+<ol type="1"><li>
+Add discussion of whey the default
+<a href="run_cmake.sh.htm#eigen_prefix" target="_top"><span style='white-space: nowrap'>eigen_prefix</span></a>
+ is different
+from the other prefixes.
+</li><li>
+
+Change the default value of
+<a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+ to <code><font color="blue">debug</font></code>.
+You have to change this to get the faster (<code><font color="blue">release</font></code>)
+version of dismod_at.
+</li><li>
+
+Improve discussion of the
+<a href="install_unix.htm#Paths" target="_top"><span style='white-space: nowrap'>paths</span></a>
+ needed during and after the install process.
+</li><li>
+
+Advance to <code><font color="blue">cppad_mixed-20180725</font></code>.
+This should improve detection
+(during the <a href="install_unix.htm" target="_top"><span style='white-space: nowrap'>install</span></a>
+)
+of when the default settings for
+<a href="run_cmake.sh.htm#extra_cxx_flags" target="_top"><span style='white-space: nowrap'>extra_cxx_flags</span></a>
+ do not work.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="07-23" id="07-23">07-23</a></big></b>
 
 <ol type="1"><li>

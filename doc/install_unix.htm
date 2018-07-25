@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Installing dismod_at in Unix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Installing dismod_at in Unix">
-<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test install executable path python example ">
+<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to path pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test install example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,6 +63,12 @@ A:active { color : purple }
 <option>---..gsl</option>
 <option>---..suitesparse</option>
 <option>Download dismod_at.git</option>
+<option>Paths</option>
+<option>---..Adding to a Path</option>
+<option>---..PKG_CONFIG_PATH</option>
+<option>---..LD_LIBRARY_PATH</option>
+<option>---..PATH</option>
+<option>---..PYTHONPATH</option>
 <option>Special Requirements</option>
 <option>---..run_cmake.sh</option>
 <option>---..eigen</option>
@@ -75,8 +81,6 @@ A:active { color : purple }
 <option>---..Build</option>
 <option>---..Test</option>
 <option>---..Install</option>
-<option>---..Executable Path</option>
-<option>Python Path</option>
 <option>Example</option>
 </select>
 </td>
@@ -153,15 +157,6 @@ is required by <code><font color="blue">dismod_at</font></code>.
 The <a href="http://www.freedesktop.org/wiki/Software/pkg-config/" target="_top"><span style='white-space: nowrap'>pkg-config</span></a>
 
 program must be installed.
-After <code><font color="blue">sqlite3</font></code>, <code><font color="blue">gsl</font></code>, and <code><font color="blue">ipopt</font></code> are installed
-(see below), the following commands should work:
-<code><font color='blue'><pre style='display:inline'> 
-     pkg-config sqlite3 --libs
-     pkg-config gsl     --libs
-     pkg-config ipopt   --libs
-</pre></font></code>
-If one of them fails, a corresponding directory is missing
-from the <code><font color="blue">PKG_CONFIG_PATH</font></code> environment variable.
 
 <br>
 <br>
@@ -234,6 +229,140 @@ and check its version number, using the commands:
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grep&nbsp;'^SET(dismod_at_version'&nbsp;CMakeLists.txt<br>
+</span></font></code>
+<br>
+<b><big><a name="Paths" id="Paths">Paths</a></big></b>
+<br>
+This discussion is intended to help with the install of the
+special requirements and dismod_at (see below).
+
+<br>
+<br>
+<big><a name="Paths.Adding to a Path" id="Paths.Adding to a Path">Adding to a Path</a></big>
+<br>
+The instructions below may require you to add to a 
+<code><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i></code>
+.
+Use the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;$</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+to see if your initial path is empty. If it is empty,
+use the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+to add 
+<code><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i></code>
+ to the path.
+If it is non-empty, use
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>=&quot;$</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>:</span></font><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
+</span></font></code>
+to add 
+<code><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i></code>
+ to the path.
+
+<br>
+<br>
+<big><a name="Paths.PKG_CONFIG_PATH" id="Paths.PKG_CONFIG_PATH">PKG_CONFIG_PATH</a></big>
+<br>
+After <code><font color="blue">sqlite3</font></code> and <code><font color="blue">gsl</font></code> are installed
+the following commands should work:
+<code><font color='blue'><pre style='display:inline'> 
+     pkg-config sqlite3 --libs
+     pkg-config gsl     --libs
+</pre></font></code>
+If one of them fails, a corresponding directory is missing
+from the <code><font color="blue">PKG_CONFIG_PATH</font></code> environment variable.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i></code>
+ is the prefix where <code><font color="blue">gsl</font></code> was installed,
+the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;gsl.pc&nbsp;2&gt;&nbsp;/dev/null<br>
+</span></font></code>
+should find the directory where <code><font color="blue">gsl.pc</font></code> is located.
+After <code><font color="blue">ipopt</font></code> is installed (see below),
+the following command should work:
+<code><font color='blue'><pre style='display:inline'> 
+     pkg-config ipopt --libs
+</pre></font></code>
+If it fails,
+the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;ipopt.pc&nbsp;2&gt;&nbsp;/dev/null<br>
+</span></font></code>
+should find the directory where <code><font color="blue">ipopt.pc</font></code> is located;
+see <a href="run_cmake.sh.htm#ipopt_prefix" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+.
+
+<br>
+<br>
+<big><a name="Paths.LD_LIBRARY_PATH" id="Paths.LD_LIBRARY_PATH">LD_LIBRARY_PATH</a></big>
+<br>
+After <code><font color="blue">ipopt</font></code> is installed,
+the directory where it's libraries are installed should be in your
+<code><font color="blue">LD_LIBRARY_PATH</font></code>.
+If you get an error finding loading the shared library corresponding
+to ipopt, use the following command to find it:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;'libipopt.*'&nbsp;2&gt;&nbsp;/dev/null<br>
+</span></font></code>
+see <a href="run_cmake.sh.htm#ipopt_prefix" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+.
+
+<br>
+<br>
+<big><a name="Paths.PATH" id="Paths.PATH">PATH</a></big>
+<br>
+After you install dismod_at (see below)
+you should be able to execute the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at<br>
+</span></font></code>
+from any directory.
+If you get the error <code><font color="blue">dismod_at: command not found</font></code>,
+you will need to add the binary install directory to you path.
+Use the following command to find it:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;dismod_at&nbsp;2&gt;&nbsp;/dev/null<br>
+</span></font></code>
+see <a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white-space: nowrap'>dismod_at_prefix</span></a>
+.
+
+<br>
+<br>
+<big><a name="Paths.PYTHONPATH" id="Paths.PYTHONPATH">PYTHONPATH</a></big>
+<br>
+After you install dismod_at
+you should be able to execute the following commands:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;dismod_at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quit()<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i></code>
+ is your
+<a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='white-space: nowrap'>python3&nbsp;executable</span></a>
+.
+If you get the error <code><font color="blue">No module named 'dismod_at'</font></code>,
+you will need to add the directory where the module is installed
+to your python path.
+Use the following command to find it:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;site-packages&nbsp;2&gt;&nbsp;/dev/null<br>
 </span></font></code>
 <br>
 <b><big><a name="Special Requirements" id="Special Requirements">Special Requirements</a></big></b>
@@ -380,83 +509,6 @@ and install dismod_at:
      make install
      cd ..
 </pre></font></code>
-<br>
-<big><a name="dismod_at.Executable Path" id="dismod_at.Executable Path">Executable Path</a></big>
-<br>
-After the install you will be able to execute the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at<br>
-</span></font></code>
-If you get the error <code><font color="blue">dismod_at: command not found</font></code>,
-you will need to add the binary install directory to you path.
-Use the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/bin<br>
-</span></font></code>
-to check that <code><font color="blue">dismod_at</font></code> is in that directory.
-Use the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PATH=&quot;$PATH:</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/bin&quot;<br>
-</span></font></code>
-to add that directory to your executable path.
-
-<br>
-<br>
-<b><big><a name="Python Path" id="Python Path">Python Path</a></big></b>
-<br>
-After the install you will be able to import the <code><font color="blue">dismod_at</font></code>
-python library as follows:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;dismod_at<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quit()<br>
-</span></font></code>
-where 
-<code><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i></code>
- is your
-<a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='white-space: nowrap'>python3&nbsp;executable</span></a>
-.
-If you get the error <code><font color="blue">No module named 'dismod_at'</font></code>,
-you will need to add to your python path.
-The python module <code><font color="blue">dismod_at</font></code> is installed below
-<a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white-space: nowrap'>dismod_at_prefix</span></a>
-
-in the standard place for your python3 executable.
-Use the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>/lib/python/</span></font><i><font color="black"><span style='white-space: nowrap'>py_version</span></font></i><font color="blue"><span style='white-space: nowrap'>/site-packages<br>
-</span></font></code>
-to be sure it is there, where
-
-<code><i><font color="black"><span style='white-space: nowrap'>py_version</span></font></i></code>
- is the version of python3 you are using.
-We use 
-<code><i><font color="black"><span style='white-space: nowrap'>site_packages</span></font></i></code>
- to denote the path above.
-Use the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;$PYTHONPATH<br>
-</span></font></code>
-to see if your initial python path is empty. If it is empty,
-use the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PYTHONPATH=&quot;</span></font><i><font color="black"><span style='white-space: nowrap'>site_packages</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
-</span></font></code>
-to set your python path. If it is non-empty, use
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;PYTHONPATH=&quot;$PYTHONPATH:</span></font><i><font color="black"><span style='white-space: nowrap'>site_packages</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
-</span></font></code>
-to set your python path.
-
-<br>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>

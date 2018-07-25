@@ -21,6 +21,12 @@ var list_current0 = [
 'install_unix.htm#System Requirements.gsl',
 'install_unix.htm#System Requirements.suitesparse',
 'install_unix.htm#Download dismod_at.git',
+'install_unix.htm#Paths',
+'install_unix.htm#Paths.Adding to a Path',
+'install_unix.htm#Paths.PKG_CONFIG_PATH',
+'install_unix.htm#Paths.LD_LIBRARY_PATH',
+'install_unix.htm#Paths.PATH',
+'install_unix.htm#Paths.PYTHONPATH',
 'install_unix.htm#Special Requirements',
 'install_unix.htm#Special Requirements.run_cmake.sh',
 'install_unix.htm#Special Requirements.eigen',
@@ -33,8 +39,6 @@ var list_current0 = [
 'install_unix.htm#dismod_at.Build',
 'install_unix.htm#dismod_at.Test',
 'install_unix.htm#dismod_at.Install',
-'install_unix.htm#dismod_at.Executable Path',
-'install_unix.htm#Python Path',
 'install_unix.htm#Example'
 ];
 var list_down1 = [
