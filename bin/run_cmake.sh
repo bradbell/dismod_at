@@ -74,21 +74,33 @@ eigen_prefix="$HOME/prefix/dismod_at/eigen"
 # &icode%eigen_prefix%.release%&&
 # depending on the choice for &icode build_type&&.
 #
-# &head Other Prefixes&&
-# Prefixes where the other
-# &cref/special requirements/install_unix/Special Requirements/&&
-# are installed:
+# &head ipopt_prefix&&
+# The prefix where
+# &cref/ipopt/install_unix/Special Requirements/ipopt/&&
+# is installed:
 # &codep
 ipopt_prefix="$HOME/prefix/dismod_at"
+# &&
+# If this prefix end in &code /dismod_at&&,
+# &code bin/install_ipopt.sh&&,
+# will use a soft link from &icode ipopt_prefix&& to
+# &icode%ipopt_prefix%.debug%&& or
+# &icode%ipopt_prefix%.release%&&
+# depending on the choice for &icode build_type&&.
+#
+# &head cppad_prefix&&
+# The prefix where
+# &cref/cppad/install_unix/Special Requirements/CppAD/&&
+# is installed:
+# &codep
 cppad_prefix="$HOME/prefix/dismod_at"
 # &&
-# If these prefixes end in &code /dismod_at&&,
-# &code bin/install_ipopt.sh&&,
+# If this prefix end in &code /dismod_at&&,
 # &code bin/install_cppad.sh&&, and
 # &code bin/install_cppad_mixed.sh&&
-# will use a soft link from the corresponding &icode prefix&& to
-# &icode%prefix%.debug%&& or
-# &icode%prefix%.release%&&
+# will use a soft link from &icode cppad_prefix&& to
+# &icode%cppad_prefix%.debug%&& or
+# &icode%cppad_prefix%.release%&&
 # depending on the choice for &icode build_type&&.
 #
 # &head Debug and Release&&
