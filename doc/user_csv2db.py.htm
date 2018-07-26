@@ -362,7 +362,7 @@ mtall_index <font color="#990000">=</font> <font color="#993399">0</font>
           row<font color="#990000">[</font><font color="#FF0000">'time_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> time
           row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> mtall_data<font color="#990000">[</font>mtall_index<font color="#990000">]</font>
           row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">10.0</font>
-          row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0</font>
+          row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1</font> <i><font color="#9A1900"># used for constraint, not data</font></i>
           writer<font color="#990000">.</font><b><font color="#000000">writerow</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
           mtall_index      <font color="#990000">+=</font> <font color="#993399">1</font>
 <b><font color="#0000FF">assert</font></b> mtall_index <font color="#990000">==</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>mtall_data<font color="#990000">)</font>

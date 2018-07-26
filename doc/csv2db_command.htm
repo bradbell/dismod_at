@@ -254,6 +254,7 @@ The other cause mortality rate:
 <small>@(@
 \omega
 @)@</small>.
+<ol type="1"><li>
 Other cause mortality data is special in that it must satisfy
 
 <code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i></code>
@@ -264,9 +265,23 @@ Other cause mortality data is special in that it must satisfy
 In addition, it must be specified on a rectangular grid; i.e.,
 each age that appears must appear once and only once for every time, and
 each time that appears must appear once and only once for every age.
+</li><li>
+
 The <code><font color="blue">mtother</font></code> data is converted to a constraint on <small>@(@
 \omega
 @)@</small>.
+For this reason, <a href="csv2db_command.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ must be
+one for all the <code><font color="blue">mtother</font></code> data;
+i.e., it is a constraint, not data, during a fit.
+</li><li>
+
+All of the
+<a href="csv2db_command.htm#configure_csv.non_zero_rates" target="_top"><span style='white-space: nowrap'>non&nbsp;zero&nbsp;rates</span></a>
+
+use the age-time grid corresponding the mtother data.
+</li></ol>
+
 
 <br>
 <br>
@@ -338,7 +353,7 @@ The <code><font color="blue">mtall</font></code> data is included to check that 
 are satisfied (by checking residuals in a data fit).
 For this reason, <a href="csv2db_command.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
  must be
-one for all the <code><font color="blue">mtall</font></code> data.
+one for all the <code><font color="blue">mtall</font></code> data; i.e., it is not included during a fit.
 
 <br>
 <br>
