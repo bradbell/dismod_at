@@ -52,8 +52,8 @@ $head sample_index$$
 This column has type $code integer$$ and specifies the set of
 $cref model_variables$$ that the $icode avg_integrand$$ corresponds to.
 If $cref/source/predict_command/source/$$ is
-$code fit_var$$ or $code truth_var$$, $icode sample_index$$ is
-always zero.
+$code fit_var$$ or $code truth_var$$, $icode sample_index$$ is null
+(and the corresponding model variables are used).
 Otherwise $icode source$$ is $code sample$$ and $icode sample_index$$
 is the corresponding value in the
 $cref/sample_table/sample_table/sample_index/$$.

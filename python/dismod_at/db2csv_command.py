@@ -354,10 +354,18 @@
 # option is included in the $code predict.csv$$ file.
 #
 # $subhead s_index$$
-# This identifies the set model variables in the sample table.
-# To be specific, the model variables correspond to the rows on the
+# This identifies the set model variables corresponding to the
+# last $cref predict_command$$ executed.
+# If the source for the predict command was
+# $cref/sample/predict_command/source/sample/$$,
+# the model variables correspond to the rows on the
 # sample table with the same $cref/sample_index/sample_table/sample_index/$$
 # equal to $icode s_index$$.
+# Otherwise, $icode s_index$$ is empty and
+# the model variables correspond to the
+# $cref/fit_var/predict_command/source/fit_var/$$ or
+# $cref/truth_var/predict_command/source/truth_var/$$ table
+# depending on the source for the last predict command executed.
 #
 # $subhead avgint$$
 # is the $cref/average integrand/avg_integrand/Average Integrand, A_i/$$

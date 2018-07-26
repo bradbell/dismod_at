@@ -1303,7 +1303,10 @@ void predict_command(
 				assert(false);
 			}
 			size_t predict_id = sample_index * n_subset + subset_id;
-			row_value[n_col * predict_id + 0] = to_string( sample_index );
+			if( source == "sample" )
+				row_value[n_col * predict_id + 0] = to_string( sample_index );
+			else
+				row_value[n_col * predict_id + 0] = "";
 			row_value[n_col * predict_id + 1] = to_string( avgint_id );
 			row_value[n_col * predict_id + 2] = to_string( avg );
 		}

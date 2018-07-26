@@ -1049,7 +1049,7 @@ for predict_id in range( len(predict_table) ) :
 	#
 	# get prediction for average integrand
 	row = predict_table[predict_id]
-	assert row['sample_index'] == 0
+	assert row['sample_index'] == None
 	assert row['avgint_id']    == predict_id
 	avg_integrand = row['avg_integrand']
 	#
