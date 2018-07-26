@@ -46,10 +46,12 @@
 # See $cref user_csv2db.py$$ for an example that uses this command.
 #
 # $head database$$
+# This argument
 # is an $code str$$ containing the name of the dismod_at database
 # file that is written by this command.
 #
 # $head configure_csv$$
+# This argument
 # is an $code str$$ containing the configuration file name and must
 # end with the $code .csv$$ extension.
 # The first row contains the following column names
@@ -79,6 +81,52 @@
 # Column names that begin with $code c_$$ are comments
 # and will not be used by future versions of $code csv2db$$.
 #
+# $head mtall$$
+# The all cause mortality data $code mtall$$
+# in the $icode measure_csv$$ file has special meaning.
+# We assume it has been converted to constraints on other cause
+# mortality; see $cref/mtother/csv2db_command/mtother/$$ below.
+# For this reason, it should not be included when fitting,
+# and is only in $icode measure_csv$$ as a check that the desired values
+# are satisfied (by checking residuals in a data fit).
+# For this reason, $cref/hold_out/csv2db_command/hold_out/$$ must be
+# one for all the $code mtall$$ data; i.e., it is not included during a fit.
+#
+# $head mtother$$
+#
+# $subhead Constraint$$
+# The other cause mortality data $code mtother$$
+# in the $icode measure_csv$$ file has special meaning.
+# It is intended to represent the all cause mortality data
+# as constraints on other cause mortality in the model.
+# To be specific, the $cref/meas_value/csv2db_command/meas_value/$$
+# is a constraint on $latex \omega$$ at the corresponding age-time pairs.
+#
+# $subhead Age-Time Pairs$$
+# Each row with $icode%integrand% = mtother%$$ must have
+# $icode%age_lower% == %age_upper%$$ and
+# $icode%time_lower% == %time_upper%$$.
+#
+# $subhead Rectangular grid$$
+# The $code mtother$$ data must be specified on a rectangular grid; i.e.,
+# each age that appears, appears in one and only one row for every time
+# that appears.
+# This property can also be stated as
+# each time that appears, appears in one and only one row for every age
+# that appears.
+#
+# $subhead hold_out$$
+# The $cref/hold_out/csv2db_command/hold_out/$$ must be
+# one for all the $code mtother$$ data because
+# it is a constraint, not data, during a fit.
+#
+# $subhead Rate Grid$$
+# All of the
+# $cref/non zero rates/csv2db_command/configure_csv/non_zero_rates/$$
+# use the age-time grid corresponding the $code mtother$$ data.
+# In other words, they are modeled as piecewise bilinear between the
+# age-time points at which $code mtother$$ is specified.
+#
 # $head integrand$$
 # This column of $icode measure_csv$$ contains
 # one of the valid integrands:
@@ -98,23 +146,6 @@
 # $subhead mtother$$
 # The other cause mortality rate:
 # $latex \omega $$.
-# $list number$$
-# Other cause mortality data is special in that it must satisfy
-# $icode%age_lower% == %age_upper%$$,
-# $icode%time_lower% == %time_upper%$$.
-# In addition, it must be specified on a rectangular grid; i.e.,
-# each age that appears must appear once and only once for every time, and
-# each time that appears must appear once and only once for every age.
-# $lnext
-# The $code mtother$$ data is converted to a constraint on $latex \omega$$.
-# For this reason, $cref/hold_out/csv2db_command/hold_out/$$ must be
-# one for all the $code mtother$$ data;
-# i.e., it is a constraint, not data, during a fit.
-# $lnext
-# All of the
-# $cref/non zero rates/csv2db_command/configure_csv/non_zero_rates/$$
-# use the age-time grid corresponding the mtother data.
-# $lend
 #
 # $subhead mtwith$$
 # The with condition mortality rate:
@@ -143,13 +174,6 @@
 # $subhead mtall$$
 # The all cause mortality rate:
 # $latex \omega + \chi P $$.
-# We assume the $cref/mtother/csv2db_command/integrand/mtother/$$
-# data (which is converted to constraints_) is a surrogate
-# for the $code mtall$$ data.
-# The $code mtall$$ data is included to check that the desired values
-# are satisfied (by checking residuals in a data fit).
-# For this reason, $cref/hold_out/csv2db_command/hold_out/$$ must be
-# one for all the $code mtall$$ data; i.e., it is not included during a fit.
 #
 # $subhead mtstandard$$
 # The standardized mortality ratio:

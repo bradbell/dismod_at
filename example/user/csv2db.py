@@ -300,5 +300,8 @@ for data_id in range( len(data_table) ) :
 if max_abs_res > 0.1 :
 	sys.msg('csv2db.py: max_abs_res = ' + str(max_abs_res) )
 # ---------------------------------------------------------------------------
+# csv representation of database
+dismod_at.db2csv_command(database)
+# ---------------------------------------------------------------------------
 print('csv2db.py: OK')
 # END PYTHON

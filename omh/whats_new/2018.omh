@@ -60,6 +60,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-26$$
+$list number$$
+Improve the discussion of the
+$cref/mtother/csv2dv_command/mtother/$$ data
+in the db2csv command.
+$lnext
+Execute $cref db2csv_command$$ at end of $cref csv2db.py$$ example.
+$lend
+
 $head 07-25$$
 $list number$$
 Add mention that, during a $code db2csv$$ command,
