@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>csv2db_command: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="csv2db_command: Example and Test">
-<meta name="keywords" id="keywords" content=" csv2db_command: example test using this discussion rate_true p rate grids data mtall source ">
+<meta name="keywords" id="keywords" content=" csv2db_command: example test using this discussion rate_true p rate grids data predictions mtall source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -59,6 +59,7 @@ A:active { color : purple }
 <option>P</option>
 <option>Rate Grids</option>
 <option>Data</option>
+<option>Predictions</option>
 <option>mtall</option>
 <option>Source</option>
 </select>
@@ -189,15 +190,32 @@ bilinear with the same grid points.
 <br>
 <b><big><a name="Data" id="Data">Data</a></big></b>
 <br>
-Data is simulated, without any noise, for the following integrands:
+The Data is simulated,
+without any noise, for the following integrands:
 <a href="csv2db_command.htm#integrand.remission" target="_top"><span style='white-space: nowrap'>remission</span></a>
 ,
 <a href="csv2db_command.htm#integrand.mtexcess" target="_top"><span style='white-space: nowrap'>mtexcess</span></a>
 ,
 <a href="csv2db_command.htm#integrand.prevalence" target="_top"><span style='white-space: nowrap'>prevalence</span></a>
 .
-Note that the model for the noise in the measurement is a 10 percent
-coefficient of variation.
+Note that the model for the noise in the measurement
+<a href="csv2db_command.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+is a 10 percent coefficient of variation.
+See the file
+<a href="db2csv_command.htm#data.csv" target="_top"><span style='white-space: nowrap'>data.csv</span></a>
+ output by the
+db2csv command.
+
+<br>
+<br>
+<b><big><a name="Predictions" id="Predictions">Predictions</a></big></b>
+<br>
+The <a href="csv2db_command.htm#Predictions" target="_top"><span style='white-space: nowrap'>predictions</span></a>
+ are in the file
+<a href="db2csv_command.htm#predict.csv" target="_top"><span style='white-space: nowrap'>predict.csv</span></a>
+ output by the
+db2csv command.
 
 <br>
 <br>
@@ -389,6 +407,7 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">csv2db_command</
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'set option ode_step_size     1'</font>     <font color="#990000">)</font>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'init'</font> <font color="#990000">)</font>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'fit fixed'</font> <font color="#990000">)</font>
+<b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'predict fit_var'</font> <font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># connect to database</font></i>
 new        <font color="#990000">=</font> False
@@ -427,6 +446,9 @@ max_abs_res <font color="#990000">=</font> <font color="#993399">0.0</font>
           max_abs_res       <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">,</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>weighted_residual<font color="#990000">)</font> <font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> max_abs_res <font color="#990000">&gt;</font> <font color="#993399">0.1</font> <font color="#990000">:</font>
      sys<font color="#990000">.</font><b><font color="#000000">msg</font></b><font color="#990000">(</font><font color="#FF0000">'csv2db.py: max_abs_res = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">)</font> <font color="#990000">)</font>
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># csv representation of database</font></i>
+dismod_at<font color="#990000">.</font><b><font color="#000000">db2csv_command</font></b><font color="#990000">(</font>database<font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'csv2db.py: OK'</font><font color="#990000">)</font></tt></pre>
 

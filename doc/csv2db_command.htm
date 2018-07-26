@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Conversion of a Csv File to a Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Conversion of a Csv File to a Dismod_at Database">
-<meta name="keywords" id="keywords" content=" conversion csv file to dismod_at database syntax program python function see also example configure_csv non_zero_rates measure_csv integrand sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk age_lower age_upper time_lower time_upper meas_value meas_std hold_out ">
+<meta name="keywords" id="keywords" content=" conversion csv file to dismod_at database syntax program python function see also example mtall mtother constraint age-time pairs rectangular grid hold_out rate predictions configure_csv non_zero_rates measure_csv integrand sincidence remission mtexcess mtwith susceptible withc prevalence tincidence mtspecific mtstandard relrisk age_lower age_upper time_lower time_upper meas_value meas_std ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,6 +58,14 @@ A:active { color : purple }
 <option>---..As Python Function</option>
 <option>See Also</option>
 <option>Example</option>
+<option>mtall</option>
+<option>mtother</option>
+<option>---..Constraint</option>
+<option>---..Age-Time Pairs</option>
+<option>---..Rectangular Grid</option>
+<option>---..hold_out</option>
+<option>---..Rate Grid</option>
+<option>Predictions</option>
 <option>database</option>
 <option>configure_csv</option>
 <option>---..non_zero_rates</option>
@@ -164,8 +172,118 @@ See <a href="user_csv2db.py.htm" target="_top"><span style='white-space: nowrap'
 
 <br>
 <br>
+<b><big><a name="mtall" id="mtall">mtall</a></big></b>
+<br>
+The all cause mortality data <code><font color="blue">mtall</font></code>
+in the 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ file has special meaning.
+We assume it has been converted to constraints on other cause
+mortality; see <a href="csv2db_command.htm#mtother" target="_top"><span style='white-space: nowrap'>mtother</span></a>
+ below.
+For this reason, it should not be included when fitting,
+and is only in 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ as a check that the desired values
+are satisfied (by checking residuals in a data fit).
+For this reason, <a href="csv2db_command.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ must be
+one for all the <code><font color="blue">mtall</font></code> data; i.e., it is not included during a fit.
+
+<br>
+<br>
+<b><big><a name="mtother" id="mtother">mtother</a></big></b>
+
+
+<br>
+<br>
+<big><a name="mtother.Constraint" id="mtother.Constraint">Constraint</a></big>
+<br>
+The other cause mortality data <code><font color="blue">mtother</font></code>
+in the 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_csv</span></font></i></code>
+ file has special meaning.
+It is intended to represent the all cause mortality data
+as constraints on other cause mortality in the model.
+To be specific, the <a href="csv2db_command.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+
+is a constraint on <small>@(@
+\omega
+@)@</small> at the corresponding age-time pairs.
+
+<br>
+<br>
+<big><a name="mtother.Age-Time Pairs" id="mtother.Age-Time Pairs">Age-Time Pairs</a></big>
+<br>
+Each row with 
+<code><i><font color="black"><span style='white-space: nowrap'>integrand</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;mtother</span></font></code>
+ must have
+
+<code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="mtother.Rectangular Grid" id="mtother.Rectangular Grid">Rectangular Grid</a></big>
+<br>
+The <code><font color="blue">mtother</font></code> data must be specified on a rectangular grid; i.e.,
+each age that appears, appears in one and only one row for every time
+that appears.
+This property can also be stated as
+each time that appears, appears in one and only one row for every age
+that appears.
+
+<br>
+<br>
+<big><a name="mtother.hold_out" id="mtother.hold_out">hold_out</a></big>
+<br>
+The <a href="csv2db_command.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ must be
+one for all the <code><font color="blue">mtother</font></code> data because
+it is a constraint, not data, during a fit.
+
+<br>
+<br>
+<big><a name="mtother.Rate Grid" id="mtother.Rate Grid">Rate Grid</a></big>
+<br>
+All of the
+<a href="csv2db_command.htm#configure_csv.non_zero_rates" target="_top"><span style='white-space: nowrap'>non&nbsp;zero&nbsp;rates</span></a>
+
+use the age-time grid corresponding the <code><font color="blue">mtother</font></code> data.
+In other words, they are modeled as piecewise bilinear between the
+age-time points at which <code><font color="blue">mtother</font></code> is specified.
+
+<br>
+<br>
+<b><big><a name="Predictions" id="Predictions">Predictions</a></big></b>
+<br>
+The <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+ is set up so that
+<a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predictions</span></a>
+ for the integrands
+<a href="csv2db_command.htm#integrand.Sincidence" target="_top"><span style='white-space: nowrap'>Sincidence</span></a>
+,
+<a href="csv2db_command.htm#integrand.remission" target="_top"><span style='white-space: nowrap'>remission</span></a>
+,
+<a href="csv2db_command.htm#integrand.mtexcess" target="_top"><span style='white-space: nowrap'>mtexcess</span></a>
+,
+corresponding to the value of the rates iota, rho, chi on the
+<a href="csv2db_command.htm#mtother.Rectangular Grid" target="_top"><span style='white-space: nowrap'>rectangular&nbsp;grid</span></a>
+.
+Only the non-zero rates are included.
+Predictions for
+<a href="csv2db_command.htm#integrand.prevalence" target="_top"><span style='white-space: nowrap'>prevalence</span></a>
+ in the
+rectangular grid are also included.
+
+<br>
+<br>
 <b><big><a name="database" id="database">database</a></big></b>
 <br>
+This argument
 is an <code><font color="blue">str</font></code> containing the name of the dismod_at database
 file that is written by this command.
 
@@ -173,6 +291,7 @@ file that is written by this command.
 <br>
 <b><big><a name="configure_csv" id="configure_csv">configure_csv</a></big></b>
 <br>
+This argument
 is an <code><font color="blue">str</font></code> containing the configuration file name and must
 end with the <code><font color="blue">.csv</font></code> extension.
 The first row contains the following column names
@@ -254,34 +373,6 @@ The other cause mortality rate:
 <small>@(@
 \omega
 @)@</small>.
-<ol type="1"><li>
-Other cause mortality data is special in that it must satisfy
-
-<code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i></code>
-,
-
-<code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i></code>
-.
-In addition, it must be specified on a rectangular grid; i.e.,
-each age that appears must appear once and only once for every time, and
-each time that appears must appear once and only once for every age.
-</li><li>
-
-The <code><font color="blue">mtother</font></code> data is converted to a constraint on <small>@(@
-\omega
-@)@</small>.
-For this reason, <a href="csv2db_command.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
- must be
-one for all the <code><font color="blue">mtother</font></code> data;
-i.e., it is a constraint, not data, during a fit.
-</li><li>
-
-All of the
-<a href="csv2db_command.htm#configure_csv.non_zero_rates" target="_top"><span style='white-space: nowrap'>non&nbsp;zero&nbsp;rates</span></a>
-
-use the age-time grid corresponding the mtother data.
-</li></ol>
-
 
 <br>
 <br>
@@ -345,15 +436,6 @@ The all cause mortality rate:
 <small>@(@
 \omega + \chi P
 @)@</small>.
-We assume the <a href="csv2db_command.htm#integrand.mtother" target="_top"><span style='white-space: nowrap'>mtother</span></a>
-
-data (which is converted to constraints_) is a surrogate
-for the <code><font color="blue">mtall</font></code> data.
-The <code><font color="blue">mtall</font></code> data is included to check that the desired values
-are satisfied (by checking residuals in a data fit).
-For this reason, <a href="csv2db_command.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
- must be
-one for all the <code><font color="blue">mtall</font></code> data; i.e., it is not included during a fit.
 
 <br>
 <br>

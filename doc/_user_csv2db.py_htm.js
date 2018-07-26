@@ -17,6 +17,7 @@ var list_current0 = [
 'user_csv2db.py.htm#P',
 'user_csv2db.py.htm#Rate Grids',
 'user_csv2db.py.htm#Data',
+'user_csv2db.py.htm#Predictions',
 'user_csv2db.py.htm#mtall',
 'user_csv2db.py.htm#Source'
 ];
