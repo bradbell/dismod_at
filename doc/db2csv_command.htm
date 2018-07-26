@@ -814,13 +814,27 @@ option is included in the <code><font color="blue">predict.csv</font></code> fil
 <br>
 <big><a name="predict.csv.s_index" id="predict.csv.s_index">s_index</a></big>
 <br>
-This identifies the set model variables in the sample table.
-To be specific, the model variables correspond to the rows on the
+This identifies the set model variables corresponding to the
+last <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+ executed.
+If the source for the predict command was
+<a href="predict_command.htm#source.sample" target="_top"><span style='white-space: nowrap'>sample</span></a>
+,
+the model variables correspond to the rows on the
 sample table with the same <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
 
 equal to 
 <code><i><font color="black"><span style='white-space: nowrap'>s_index</span></font></i></code>
 .
+Otherwise, 
+<code><i><font color="black"><span style='white-space: nowrap'>s_index</span></font></i></code>
+ is empty and
+the model variables correspond to the
+<a href="predict_command.htm#source.fit_var" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+ or
+<a href="predict_command.htm#source.truth_var" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
+ table
+depending on the source for the last predict command executed.
 
 <br>
 <br>

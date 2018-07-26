@@ -12,6 +12,8 @@ var list_across0 = [
 var list_current0 = [
 'whats_new_2018.htm#Contents',
 'whats_new_2018.htm#07-26',
+'whats_new_2018.htm#07-26.API Change',
+'whats_new_2018.htm#07-26.Other Changes',
 'whats_new_2018.htm#07-25',
 'whats_new_2018.htm#07-23',
 'whats_new_2018.htm#07-21',
