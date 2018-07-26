@@ -14,6 +14,7 @@
 #	mtexcess
 #	mtall
 #	dismodat.py
+#	std
 # $$
 # $section csv2db_command: Example and Test$$
 #
@@ -64,12 +65,22 @@
 # bilinear with the same grid points.
 #
 # $head Data$$
-# Data is simulated, without any noise, for the following integrands:
+# The Data is simulated,
+# without any noise, for the following integrands:
 # $cref/remission/csv2db_command/integrand/remission/$$,
 # $cref/mtexcess/csv2db_command/integrand/mtexcess/$$,
 # $cref/prevalence/csv2db_command/integrand/prevalence/$$.
-# Note that the model for the noise in the measurement is a 10 percent
-# coefficient of variation.
+# Note that the model for the noise in the measurement
+# $cref/meas_std/csv2db_command/meas_std/$$
+# is a 10 percent coefficient of variation.
+# See the file
+# $cref/data.csv/db2csv_command/data.csv/$$ output by the
+# db2csv command.
+#
+# $head Predictions$$
+# The $cref/predictions/csv2db_command/Predictions/$$ are in the file
+# $cref/predict.csv/db2csv_command/predict.csv/$$ output by the
+# db2csv command.
 #
 # $head mtall$$
 # The omega constraints correspond to
@@ -261,6 +272,7 @@ exec_shell_cmd( 'set option quasi_fixed       false' )
 exec_shell_cmd( 'set option ode_step_size     1'     )
 exec_shell_cmd( 'init' )
 exec_shell_cmd( 'fit fixed' )
+exec_shell_cmd( 'predict fit_var' )
 #
 # connect to database
 new        = False

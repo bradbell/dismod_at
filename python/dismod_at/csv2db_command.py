@@ -25,6 +25,7 @@
 #	std
 #	mtwith
 #	dismodat.py
+#	std
 # $$
 #
 # $section Conversion of a Csv File to a Dismod_at Database$$
@@ -44,6 +45,65 @@
 # This command has limited capability and is only meant as an example
 # to help one get started using dismod_at.
 # See $cref user_csv2db.py$$ for an example that uses this command.
+#
+# $head mtall$$
+# The all cause mortality data $code mtall$$
+# in the $icode measure_csv$$ file has special meaning.
+# We assume it has been converted to constraints on other cause
+# mortality; see $cref/mtother/csv2db_command/mtother/$$ below.
+# For this reason, it should not be included when fitting,
+# and is only in $icode measure_csv$$ as a check that the desired values
+# are satisfied (by checking residuals in a data fit).
+# For this reason, $cref/hold_out/csv2db_command/hold_out/$$ must be
+# one for all the $code mtall$$ data; i.e., it is not included during a fit.
+#
+# $head mtother$$
+#
+# $subhead Constraint$$
+# The other cause mortality data $code mtother$$
+# in the $icode measure_csv$$ file has special meaning.
+# It is intended to represent the all cause mortality data
+# as constraints on other cause mortality in the model.
+# To be specific, the $cref/meas_value/csv2db_command/meas_value/$$
+# is a constraint on $latex \omega$$ at the corresponding age-time pairs.
+#
+# $subhead Age-Time Pairs$$
+# Each row with $icode%integrand% = mtother%$$ must have
+# $icode%age_lower% == %age_upper%$$ and
+# $icode%time_lower% == %time_upper%$$.
+#
+# $subhead Rectangular Grid$$
+# The $code mtother$$ data must be specified on a rectangular grid; i.e.,
+# each age that appears, appears in one and only one row for every time
+# that appears.
+# This property can also be stated as
+# each time that appears, appears in one and only one row for every age
+# that appears.
+#
+# $subhead hold_out$$
+# The $cref/hold_out/csv2db_command/hold_out/$$ must be
+# one for all the $code mtother$$ data because
+# it is a constraint, not data, during a fit.
+#
+# $subhead Rate Grid$$
+# All of the
+# $cref/non zero rates/csv2db_command/configure_csv/non_zero_rates/$$
+# use the age-time grid corresponding the $code mtother$$ data.
+# In other words, they are modeled as piecewise bilinear between the
+# age-time points at which $code mtother$$ is specified.
+#
+# $head Predictions$$
+# The $cref avgint_table$$ is set up so that
+# $cref/predictions/predict_command/$$ for the integrands
+# $cref/Sincidence/csv2db_command/integrand/Sincidence/$$,
+# $cref/remission/csv2db_command/integrand/remission/$$,
+# $cref/mtexcess/csv2db_command/integrand/mtexcess/$$,
+# corresponding to the value of the rates iota, rho, chi on the
+# $cref/rectangular grid/csv2db_command/mtother/Rectangular Grid/$$.
+# Only the non-zero rates are included.
+# Predictions for
+# $cref/prevalence/csv2db_command/integrand/prevalence/$$ in the
+# rectangular grid are also included.
 #
 # $head database$$
 # This argument
@@ -80,52 +140,6 @@
 # under its column name below.
 # Column names that begin with $code c_$$ are comments
 # and will not be used by future versions of $code csv2db$$.
-#
-# $head mtall$$
-# The all cause mortality data $code mtall$$
-# in the $icode measure_csv$$ file has special meaning.
-# We assume it has been converted to constraints on other cause
-# mortality; see $cref/mtother/csv2db_command/mtother/$$ below.
-# For this reason, it should not be included when fitting,
-# and is only in $icode measure_csv$$ as a check that the desired values
-# are satisfied (by checking residuals in a data fit).
-# For this reason, $cref/hold_out/csv2db_command/hold_out/$$ must be
-# one for all the $code mtall$$ data; i.e., it is not included during a fit.
-#
-# $head mtother$$
-#
-# $subhead Constraint$$
-# The other cause mortality data $code mtother$$
-# in the $icode measure_csv$$ file has special meaning.
-# It is intended to represent the all cause mortality data
-# as constraints on other cause mortality in the model.
-# To be specific, the $cref/meas_value/csv2db_command/meas_value/$$
-# is a constraint on $latex \omega$$ at the corresponding age-time pairs.
-#
-# $subhead Age-Time Pairs$$
-# Each row with $icode%integrand% = mtother%$$ must have
-# $icode%age_lower% == %age_upper%$$ and
-# $icode%time_lower% == %time_upper%$$.
-#
-# $subhead Rectangular grid$$
-# The $code mtother$$ data must be specified on a rectangular grid; i.e.,
-# each age that appears, appears in one and only one row for every time
-# that appears.
-# This property can also be stated as
-# each time that appears, appears in one and only one row for every age
-# that appears.
-#
-# $subhead hold_out$$
-# The $cref/hold_out/csv2db_command/hold_out/$$ must be
-# one for all the $code mtother$$ data because
-# it is a constraint, not data, during a fit.
-#
-# $subhead Rate Grid$$
-# All of the
-# $cref/non zero rates/csv2db_command/configure_csv/non_zero_rates/$$
-# use the age-time grid corresponding the $code mtother$$ data.
-# In other words, they are modeled as piecewise bilinear between the
-# age-time points at which $code mtother$$ is specified.
 #
 # $head integrand$$
 # This column of $icode measure_csv$$ contains

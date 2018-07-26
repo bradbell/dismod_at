@@ -63,11 +63,16 @@ $childtable%
 $head 07-26$$
 $list number$$
 Improve the discussion of the
-$cref/mtother/csv2dv_command/mtother/$$ data
+$cref/mtother/csv2db_command/mtother/$$ data
 in the db2csv command.
 $lnext
-Execute $cref db2csv_command$$ at end of $cref csv2db.py$$ example.
+Execute $cref db2csv_command$$ at end of $cref user_csv2db.py$$ example.
+$lnext
+A $cref predict_command$$ was added to the end of the user
+$code csv2db.py$$ example and a discussion of these
+$cref/predictions/csv2db_command/Predictions/$$ was added.
 $lend
+
 
 $head 07-25$$
 $list number$$
