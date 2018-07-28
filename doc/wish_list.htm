@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list meas_std command diagrams ode solution step size large excess mortality conditionals checkpointing lagrange multipliers documentation real world example user examples model sampling random effects special hessian starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list meas_std command diagrams ode solution prevalence step size large excess mortality conditionals checkpointing lagrange multipliers documentation real world example user examples model sampling random effects special hessian starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -55,6 +55,7 @@ A:active { color : purple }
 <option>meas_std</option>
 <option>Command Diagrams</option>
 <option>ODE Solution</option>
+<option>---..Prevalence ODE</option>
 <option>---..Step Size</option>
 <option>---..Large Excess Mortality</option>
 <option>---..Conditionals</option>
@@ -125,6 +126,59 @@ the information under the heading
 <br>
 <b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
 
+
+<br>
+<br>
+<big><a name="ODE Solution.Prevalence ODE" id="ODE Solution.Prevalence ODE">Prevalence ODE</a></big>
+<br>
+If <small>@(@
+S
+@)@</small> and <small>@(@
+C
+@)@</small> satisfy the dismod_at
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+ then prevalence <small>@(@
+P = C / (S + C)
+@)@</small> satisfies
+<small>@[@
+
+	P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
+
+@]@</small>
+We can therefore solve for prevalence without other cause mortality
+<small>@(@
+\omega
+@)@</small> or all cause mortality <small>@(@
+\omega + \chi P
+@)@</small>.
+One thing to note is that the ODE for <small>@(@
+P
+@)@</small> is non-linear,
+while the ODE is <small>@(@
+(S, C)
+@)@</small> is linear.
+If we also know all cause mortality <small>@(@
+\alpha = \omega + \chi P
+@)@</small>,
+we can compute <small>@(@
+\omega = \alpha - \chi P
+@)@</small>.
+Furthermore
+<small>@[@
+
+	(S + C)' = - \alpha (S + C)
+
+@]@</small>
+So we can also compute <small>@(@
+S + C
+@)@</small>,
+<small>@(@
+C = P (S + C)
+@)@</small>,
+and <small>@(@
+S = 1 - C
+@)@</small>.
+Perhaps we should provide this alternative method for solving the ODE.
 
 <br>
 <br>
