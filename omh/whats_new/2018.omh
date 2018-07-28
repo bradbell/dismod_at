@@ -60,6 +60,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-27$$
+Add the
+$cref/prevalence ODE/wish_list/ODE Solution/Prevalence ODE/$$
+wish list item.
+
 $head 07-26$$
 
 $subhead API Change$$
