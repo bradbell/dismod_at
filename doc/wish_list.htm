@@ -178,6 +178,11 @@ C = P (S + C)
 and <small>@(@
 S = 1 - C
 @)@</small>.
+This formulation of the ODE also have the advantage that it is stable
+even as <small>@(@
+S + C \rightarrow 0
+@)@</small>; i.e, it will not get the
+associated nans cause by division of zero by zero.
 Perhaps we should provide this alternative method for solving the ODE.
 
 <br>

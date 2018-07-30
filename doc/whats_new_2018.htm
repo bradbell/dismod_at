@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 07-27 07-26 api change other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 07-30 07-27 07-26 api change other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -53,6 +53,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>Contents</option>
+<option>07-30</option>
 <option>07-27</option>
 <option>07-26</option>
 <option>07-26.API Change</option>
@@ -165,6 +166,37 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="07-30" id="07-30">07-30</a></big></b>
+
+<ol type="1"><li>
+Add the
+<a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+ to the
+usage message that is printed when no command
+line arguments are give to <code><font color="blue">dismod_at</font></code>.
+</li><li>
+
+Some dismod_at <a href="command.htm" target="_top"><span style='white-space: nowrap'>commands</span></a>
+
+(e.g., <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+)
+were not trapping and reporting exceptions.
+This has been fixed.
+</li><li>
+
+The following sentence was added to the
+<a href="wish_list.htm#ODE Solution.Prevalence ODE" target="_top"><span style='white-space: nowrap'>prevalence&nbsp;ODE</span></a>
+ item:
+This formulation of the ODE also have the advantage that it is stable
+even as <small>@(@
+S + C \rightarrow 0
+@)@</small>; i.e, it will not get the
+associated nans cause by division of zero by zero.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="07-27" id="07-27">07-27</a></big></b>
 <br>
 Add the
