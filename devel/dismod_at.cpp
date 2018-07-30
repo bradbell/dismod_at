@@ -9,6 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
+# include <cppad/mixed/exception.hpp>
 # include <dismod_at/set_command.hpp>
 # include <dismod_at/depend_command.hpp>
 # include <dismod_at/init_command.hpp>
@@ -1340,6 +1341,11 @@ int main(int n_arg, const char** argv)
 	//
 	string program = "dismod_at-";
 	program       += DISMOD_AT_VERSION;
+# ifndef NDEBUG
+	program       += " debug build";
+# else
+	program       += " release build";
+# endif
 	if( n_arg < 3 )
 	{	cerr << program << endl
 		<< "usage:    dismod_at database command [arguments]\n"
@@ -1571,6 +1577,8 @@ int main(int n_arg, const char** argv)
 			bound_random = std::atof( tmp_str.c_str() );
 	}
 	// =======================================================================
+	try { // BEGIN_TRY_BLOCK
+	// =======================================================================
 	if( command_arg == "set" )
 	{	if( std::strcmp(argv[3], "option") == 0 )
 		{	if( n_arg != 6 )
@@ -1758,6 +1766,15 @@ int main(int n_arg, const char** argv)
 				assert(false);
 		}
 	}
+	// =======================================================================
+	} // END_TRY_BLOCK
+	catch(const CppAD::mixed::exception& e)
+	{	string catcher("dismod_at");
+		catcher += " " + database_arg + " " + command_arg;
+		message  = e.message(catcher);
+		dismod_at::error_exit(message);
+	}
+	// =======================================================================
 	// ---------------------------------------------------------------------
 	message = "end " + command_arg;
 	dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);

@@ -25,6 +25,7 @@ $spell
 	var
 	cv
 	integrands
+	nans
 $$
 
 $section Dismod_at Wish List$$
@@ -69,6 +70,9 @@ $latex \[
 So we can also compute $latex S + C$$,
 $latex C = P (S + C)$$,
 and $latex S = 1 - C$$.
+This formulation of the ODE also have the advantage that it is stable
+even as $latex S + C \rightarrow 0$$; i.e, it will not get the
+associated nans cause by division of zero by zero.
 Perhaps we should provide this alternative method for solving the ODE.
 
 $subhead Step Size$$

@@ -60,6 +60,25 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-30$$
+$list number$$
+Add the
+$cref/build_type/run_cmake.sh/build_type/$$ to the
+usage message that is printed when no command
+line arguments are give to $code dismod_at$$.
+$lnext
+Some dismod_at $cref/commands/command/$$
+(e.g., $cref predict_command$$)
+were not trapping and reporting exceptions.
+This has been fixed.
+$lnext
+The following sentence was added to the
+$cref/prevalence ODE/wish_list/ODE Solution/Prevalence ODE/$$ item:
+This formulation of the ODE also have the advantage that it is stable
+even as $latex S + C \rightarrow 0$$; i.e, it will not get the
+associated nans cause by division of zero by zero.
+$lend
+
 $head 07-27$$
 Add the
 $cref/prevalence ODE/wish_list/ODE Solution/Prevalence ODE/$$
