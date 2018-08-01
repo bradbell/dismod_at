@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180731  ',' ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20180801  ',' ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix eigen_prefix ipopt_prefix cppad_prefix debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
@@ -83,7 +83,7 @@ Keyword =
 'predict_table  The Predict Table: Average Integrand Predictions  ',' see also purpose avgint subset node covariates predict_id sample_index avgint_id avg_integrand example ',
 'model  The Age-Time Dismod Model  ',' ',
 'model_variables  The Model Variables  ',' introduction function age time smoothing interpolation children fixed effects theta standard deviation multipliers lambda parent rates covariate random variation initial prevalence other groups ',
-'avg_integrand  Model for the Average Integrand  ',' ordinary differential equation data avgint table notation a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k alpha_jk adjusted r_ik p_i0(t) pini iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ',
+'avg_integrand  Model for the Average Integrand  ',' ordinary differential equation data avgint table notation a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ',
 'data_like  Data Likelihood and Weighted Residuals  ',' table notation y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects theta average integrand adjusted ',
 'fixed_value  The Fixed Effects Value Density Function  ',' theta_j prior_id lambda_j mu_j delta_j d_j v_j v^theta ',
 'fixed_diff  Fixed Effects Differences Density Function  ',' k i(k) j(k) lambda_k theta_ijk mu_ijk delta_ijk d_ijk age a^theta time t^theta ',

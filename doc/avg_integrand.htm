@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Model for the Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Model for the Average Integrand">
-<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k alpha_jk adjusted r_ik p_i0(t) pini iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ">
+<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,7 +69,7 @@ A:active { color : purple }
 <option>---..J_k</option>
 <option>---..alpha_jk</option>
 <option>---..Adjusted Rate, r_ik</option>
-<option>---..p_i,0(t), pini</option>
+<option>---..pini, p_i0(t)</option>
 <option>---..iota_i(a,t)</option>
 <option>---..rho_i(a,t)</option>
 <option>---..chi_i(a,t)</option>
@@ -77,7 +77,7 @@ A:active { color : purple }
 <option>S_i(a,t)</option>
 <option>C_i(a,t)</option>
 <option>Differential Equation</option>
-<option>I_i(a,t)</option>
+<option>Integrand, I_i(a,t)</option>
 <option>---..Sincidence</option>
 <option>---..remission</option>
 <option>---..mtexcess</option>
@@ -396,7 +396,7 @@ u_{i,k} (a, t)
 
 <br>
 <br>
-<big><a name="Rate Functions.p_i,0(t), pini" id="Rate Functions.p_i,0(t), pini">p_i,0(t), pini</a></big>
+<big><a name="Rate Functions.pini, p_i0(t)" id="Rate Functions.pini, p_i0(t)">pini, p_i0(t)</a></big>
 <br>
 We use <small>@(@
 p_{i,0} (t)
@@ -503,7 +503,10 @@ model value for with condition fraction of the population.
 <br>
 We drop the subscript <small>@(@
 i
-@)@</small> to simplify notation in the equations below.
+@)@</small> in the
+<a href="avg_integrand.htm#Rate Functions.Adjusted Rate, r_ik" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;rates</span></a>
+
+to simplify notation in the equations below.
 The with condition and susceptible fractions at age zero are
 <small>@[@
 
@@ -544,7 +547,7 @@ C(a, a+c)
 
 <br>
 <br>
-<b><big><a name="I_i(a,t)" id="I_i(a,t)">I_i(a,t)</a></big></b>
+<b><big><a name="Integrand, I_i(a,t)" id="Integrand, I_i(a,t)">Integrand, I_i(a,t)</a></big></b>
 <br>
 We use <small>@(@
 I_i (a, t)
@@ -557,10 +560,11 @@ i
 @)@</small>,
 the function <small>@(@
 I_i (a, t)
-@)@</small> is defined below
-(with the subscript <small>@(@
+@)@</small> is defined below.
+The subscript <small>@(@
 i
-@)@</small> once again dropped to simplify notation.
+@)@</small> once again dropped to simplify notation
+and the rates are the adjusted rates.
 Integrands that do not use <small>@(@
 S(a, t)
 @)@</small>, <small>@(@
@@ -572,7 +576,7 @@ P(a, t)
 
 <br>
 <br>
-<big><a name="I_i(a,t).Sincidence" id="I_i(a,t).Sincidence">Sincidence</a></big>
+<big><a name="Integrand, I_i(a,t).Sincidence" id="Integrand, I_i(a,t).Sincidence">Sincidence</a></big>
 <br>
 The incidence rate relative to susceptible population is
 <small>@[@
@@ -583,7 +587,7 @@ The incidence rate relative to susceptible population is
 
 <br>
 <br>
-<big><a name="I_i(a,t).remission" id="I_i(a,t).remission">remission</a></big>
+<big><a name="Integrand, I_i(a,t).remission" id="Integrand, I_i(a,t).remission">remission</a></big>
 <br>
 The remission rate is
 <small>@[@
@@ -594,7 +598,7 @@ The remission rate is
 
 <br>
 <br>
-<big><a name="I_i(a,t).mtexcess" id="I_i(a,t).mtexcess">mtexcess</a></big>
+<big><a name="Integrand, I_i(a,t).mtexcess" id="Integrand, I_i(a,t).mtexcess">mtexcess</a></big>
 <br>
 The excess mortality rate is
 <small>@[@
@@ -605,7 +609,7 @@ The excess mortality rate is
 
 <br>
 <br>
-<big><a name="I_i(a,t).mtother" id="I_i(a,t).mtother">mtother</a></big>
+<big><a name="Integrand, I_i(a,t).mtother" id="Integrand, I_i(a,t).mtother">mtother</a></big>
 <br>
 The other cause mortality rate is
 <small>@[@
@@ -616,7 +620,7 @@ The other cause mortality rate is
 
 <br>
 <br>
-<big><a name="I_i(a,t).mtwith" id="I_i(a,t).mtwith">mtwith</a></big>
+<big><a name="Integrand, I_i(a,t).mtwith" id="Integrand, I_i(a,t).mtwith">mtwith</a></big>
 <br>
 The with condition mortality rate is
 <small>@[@
@@ -627,7 +631,7 @@ The with condition mortality rate is
 
 <br>
 <br>
-<big><a name="I_i(a,t).susceptible" id="I_i(a,t).susceptible">susceptible</a></big>
+<big><a name="Integrand, I_i(a,t).susceptible" id="Integrand, I_i(a,t).susceptible">susceptible</a></big>
 <br>
 The susceptible fraction of the population is
 <small>@[@
@@ -638,7 +642,7 @@ The susceptible fraction of the population is
 
 <br>
 <br>
-<big><a name="I_i(a,t).withC" id="I_i(a,t).withC">withC</a></big>
+<big><a name="Integrand, I_i(a,t).withC" id="Integrand, I_i(a,t).withC">withC</a></big>
 <br>
 The with condition fraction of the population is
 <small>@[@
@@ -649,7 +653,7 @@ The with condition fraction of the population is
 
 <br>
 <br>
-<big><a name="I_i(a,t).prevalence" id="I_i(a,t).prevalence">prevalence</a></big>
+<big><a name="Integrand, I_i(a,t).prevalence" id="Integrand, I_i(a,t).prevalence">prevalence</a></big>
 <br>
 The prevalence of the condition is
 <small>@[@
@@ -660,7 +664,7 @@ The prevalence of the condition is
 
 <br>
 <br>
-<big><a name="I_i(a,t).Tincidence" id="I_i(a,t).Tincidence">Tincidence</a></big>
+<big><a name="Integrand, I_i(a,t).Tincidence" id="Integrand, I_i(a,t).Tincidence">Tincidence</a></big>
 <br>
 The  incidence rate relative to the total population is
 <small>@[@
@@ -671,7 +675,7 @@ The  incidence rate relative to the total population is
 
 <br>
 <br>
-<big><a name="I_i(a,t).mtspecific" id="I_i(a,t).mtspecific">mtspecific</a></big>
+<big><a name="Integrand, I_i(a,t).mtspecific" id="Integrand, I_i(a,t).mtspecific">mtspecific</a></big>
 <br>
 The cause specific mortality rate is
 <small>@[@
@@ -682,7 +686,7 @@ The cause specific mortality rate is
 
 <br>
 <br>
-<big><a name="I_i(a,t).mtall" id="I_i(a,t).mtall">mtall</a></big>
+<big><a name="Integrand, I_i(a,t).mtall" id="Integrand, I_i(a,t).mtall">mtall</a></big>
 <br>
 The all cause mortality rate is
 <small>@[@
@@ -693,7 +697,7 @@ The all cause mortality rate is
 
 <br>
 <br>
-<big><a name="I_i(a,t).mtstandard" id="I_i(a,t).mtstandard">mtstandard</a></big>
+<big><a name="Integrand, I_i(a,t).mtstandard" id="Integrand, I_i(a,t).mtstandard">mtstandard</a></big>
 <br>
 The standardized mortality ratio is
 <small>@[@
@@ -706,7 +710,7 @@ The standardized mortality ratio is
 
 <br>
 <br>
-<big><a name="I_i(a,t).relrisk" id="I_i(a,t).relrisk">relrisk</a></big>
+<big><a name="Integrand, I_i(a,t).relrisk" id="Integrand, I_i(a,t).relrisk">relrisk</a></big>
 <br>
 The relative risk is
 <small>@[@
