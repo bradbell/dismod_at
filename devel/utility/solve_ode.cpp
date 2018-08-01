@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -83,7 +83,7 @@ $codei%
 	const %Float%& %pini%
 %$$
 and is the initial prevalence for this cohort; see
-$cref/pini/avg_integrand/Rate Functions/p_i,0(t), pini/$$.
+$cref/pini/avg_integrand/Rate Functions/pini, p_i0(t)/$$.
 
 $head rate$$
 For $icode rate$$ equal to

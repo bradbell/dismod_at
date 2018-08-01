@@ -169,7 +169,7 @@ which may, or may not, be the parent node.
 In the $cref/parent_node/option_table/parent_node_id/$$ case,
 the random effects in the equation above $latex u_{i,k} (a, t)$$ are zero.
 
-$subhead p_i,0(t), pini$$
+$subhead pini, p_i0(t)$$
 We use $latex p_{i,0} (t)$$ to denote the model value
 (as apposed to a measurement value)
 for prevalence at the initial age as a function of time.

@@ -52,7 +52,7 @@ $cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
 $icode pini$$ is the model for prevalence at the initial age; i.e.,
 the value $cref/age/age_table/age/$$ corresponding to
 $icode%age_id% == 0%$$;
-see $cref/p_i,0(t)/avg_integrand/Rate Functions/p_i,0(t), pini/$$.
+see $cref/p_i,0(t)/avg_integrand/Rate Functions/pini, p_i0(t)/$$.
 If $icode rate_name$$ is $code pini$$, the
 $icode parent_smooth_id$$ and $icode child_smooth_id$$ smoothings must have
 $cref/n_age/smooth_table/n_age/$$ equal to one.
