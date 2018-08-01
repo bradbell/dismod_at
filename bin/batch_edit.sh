@@ -23,31 +23,12 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-/integrand_list *= *\\[/! b three
-: one
-/\\]/ b two
-N
-b one
-: two
-s|integrand_list|integrand_table|
-s|\\n||g
-s|\\t||g
-s|^|\\t|
-s|\\[|\\[\\n\\t\\t|
-s|,|,\\n\\t\\t|g
-s|\\]|\\n\\t\\]|
-s|\\('[a-zA-Z]*'\\)|{ 'name':\\1, 'minimum_meas_cv':0.0 }|g
-b end
-# ---------------------------------------------------------------------------
-: three
-s|integrand_list *= *list()|integrand_table = list()|
-s|integrand_list,|integrand_table,|
-s|integrand_list,|integrand_table,|
-s|integrand_list\\[\\(.*\\)\\]|integrand_table[\\1]['name']|
-s|len( *integrand_list *)|len(integrand_table)|
-s|subhead integrand_list|subhead integrand_list|
+s|\$subhead q_k\$\\$|\$subhead Parent Rate, q_k\$\$|
+s|\$subhead u_ik\$\\$|\$subhead Child Rate Effect, u_ik\$\$|
 #
-: end
+s|/avg_integrand/Rate Functions/q_k/|/avg_integrand/Rate Functions/Parent Rate, q_k/|
+s|/avg_integrand/Rate Functions/u_ik/|/avg_integrand/Rate Functions/Child Rate Effect, u_ik/|
+s|child random effect for this rate|child effect for this rate|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

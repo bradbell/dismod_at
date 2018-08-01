@@ -97,7 +97,7 @@ $cref/node_id/data_table/node_id/$$ value.
 
 $head Rate Functions$$
 
-$subhead q_k$$
+$subhead Parent Rate, q_k$$
 We use $latex k$$ to denote a
 $cref/rate_id/rate_table/rate_id/$$ and
 $latex q_k (a, t)$$ the piecewise linear rate function
@@ -113,7 +113,7 @@ $cref/parent node/option_table/parent_node_id/$$.
 The adjusted rates are discussed below; see
 $cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
 
-$subhead u_ik$$
+$subhead Child Rate Effect, u_ik$$
 If $latex n_i$$ is equal to or a descendant of one of the children of the
 parent node,
 $latex u_{i,k} (a, t)$$ is the piecewise linear random effect

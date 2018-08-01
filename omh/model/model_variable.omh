@@ -124,7 +124,7 @@ $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
 Recall that the smoothing determines the number of variables in the
 group as well as the corresponding age and time values;
 see the unadjusted rates
-$cref/q_k/avg_integrand/Rate Functions/q_k/$$ in the average integrand model.
+$cref/q_k/avg_integrand/Rate Functions/Parent Rate, q_k/$$ in the average integrand model.
 
 $subhead Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
@@ -153,7 +153,7 @@ The smoothing can be the same for all the children
 (see $cref/child_smooth_id/rate_table/child_smooth_id/$$)
 or it can have a different value for each child
 (see $cref/child_nslist_id/rate_table/child_nslist_id/$$).
-If $cref/u_ik/avg_integrand/Rate Functions/u_ik/$$
+If $cref/u_ik/avg_integrand/Rate Functions/Child Rate Effect, u_ik/$$
 is a random effect for a rate and child,
 the rate for the child is $latex \exp( u_{i,k} )$$
 times the rate for the parent;
