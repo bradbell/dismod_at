@@ -561,163 +561,138 @@ i
 the function <small>@(@
 I_i (a, t)
 @)@</small> is defined below.
-The subscript <small>@(@
+The age and time arguments <small>@(@
+(a, t)
+@)@</small>
+and the subscript <small>@(@
 i
-@)@</small> once again dropped to simplify notation
-and the rates are the adjusted rates.
-Integrands that do not use <small>@(@
-S(a, t)
+@)@</small> are dropped to simplify notation.
+The rates are adjusted rates.
+(Integrands that do not use <small>@(@
+S
 @)@</small>, <small>@(@
-C(a, t)
+C
 @)@</small>
 or <small>@(@
-P(a, t)
-@)@</small>, do not require solving the differential equation.
+P
+@)@</small>, do not require solving the differential equation.)
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).Sincidence" id="Integrand, I_i(a,t).Sincidence">Sincidence</a></big>
 <br>
 The incidence rate relative to susceptible population is
-<small>@[@
-
- I (a, t) = \iota (a,t)
-
-@]@</small>
+<small>@(@
+I  = \iota
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).remission" id="Integrand, I_i(a,t).remission">remission</a></big>
 <br>
 The remission rate is
-<small>@[@
-
- I (a, t) = \rho (a,t)
-
-@]@</small>
+<small>@(@
+I  = \rho
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).mtexcess" id="Integrand, I_i(a,t).mtexcess">mtexcess</a></big>
 <br>
 The excess mortality rate is
-<small>@[@
-
- I (a, t) = \chi (a,t)
-
-@]@</small>
+<small>@(@
+I  = \chi
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).mtother" id="Integrand, I_i(a,t).mtother">mtother</a></big>
 <br>
 The other cause mortality rate is
-<small>@[@
-
- I (a, t) = \omega (a,t)
-
-@]@</small>
+<small>@(@
+I  = \omega
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).mtwith" id="Integrand, I_i(a,t).mtwith">mtwith</a></big>
 <br>
 The with condition mortality rate is
-<small>@[@
-
- I (a, t) = \omega (a,t) + \chi (a,t)
-
-@]@</small>
+<small>@(@
+I  = \omega  + \chi
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).susceptible" id="Integrand, I_i(a,t).susceptible">susceptible</a></big>
 <br>
 The susceptible fraction of the population is
-<small>@[@
-
- I (a, t) = S(a,t)
-
-@]@</small>
+<small>@(@
+I  = S
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).withC" id="Integrand, I_i(a,t).withC">withC</a></big>
 <br>
 The with condition fraction of the population is
-<small>@[@
-
- I (a, t) = C(a,t)
-
-@]@</small>
+<small>@(@
+I  = C
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).prevalence" id="Integrand, I_i(a,t).prevalence">prevalence</a></big>
 <br>
 The prevalence of the condition is
-<small>@[@
-
- I (a, t) = P(a,t) = C(a,t) / [ S(a,t) + C(a,t) ]
-
-@]@</small>
+<small>@(@
+I  = P = C / ( S + C )
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).Tincidence" id="Integrand, I_i(a,t).Tincidence">Tincidence</a></big>
 <br>
 The  incidence rate relative to the total population is
-<small>@[@
-
- I (a, t) = \iota(a,t) [ 1 - P(a,t) ]
-
-@]@</small>
+<small>@(@
+I  = \iota ( 1 - P )
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).mtspecific" id="Integrand, I_i(a,t).mtspecific">mtspecific</a></big>
 <br>
 The cause specific mortality rate is
-<small>@[@
-
- I (a, t) = \chi (a,t) P(a,t)
-
-@]@</small>
+<small>@(@
+I  = \chi  P
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).mtall" id="Integrand, I_i(a,t).mtall">mtall</a></big>
 <br>
 The all cause mortality rate is
-<small>@[@
-
- I (a, t) = \omega (a,t) + \chi (a,t) P(a,t)
-
-@]@</small>
+<small>@(@
+I  = \omega  + \chi  P
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).mtstandard" id="Integrand, I_i(a,t).mtstandard">mtstandard</a></big>
 <br>
 The standardized mortality ratio is
-<small>@[@
-
- I (a, t) =
-	[ \omega (a,t) + \chi (a,t) ] / [ \omega (a,t) + \chi (a,t) P(a,t) ]
-
-
-@]@</small>
+<small>@(@
+I  = ( \omega  + \chi  ) / ( \omega  + \chi  P )
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Integrand, I_i(a,t).relrisk" id="Integrand, I_i(a,t).relrisk">relrisk</a></big>
 <br>
 The relative risk is
-<small>@[@
-
- I (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t)
-
-@]@</small>
+<small>@(@
+I  = ( \omega  + \chi  ) / \omega
+@)@</small>.
 
 <br>
 <br>
