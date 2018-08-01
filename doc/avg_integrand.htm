@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Model for the Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Model for the Average Integrand">
-<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i x_ij w_i n_i rate functions q_k u_ik j_k alpha_jk r_ik p_i0(t) pini iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j effect weight integral wbar_i ">
+<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k alpha_jk adjusted r_ik p_i0(t) pini iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,11 +64,11 @@ A:active { color : purple }
 <option>---..w_i</option>
 <option>---..n_i</option>
 <option>Rate Functions</option>
-<option>---..q_k</option>
-<option>---..u_ik</option>
+<option>---..Parent Rate, q_k</option>
+<option>---..Child Rate Effect, u_ik</option>
 <option>---..J_k</option>
 <option>---..alpha_jk</option>
-<option>---..r_ik</option>
+<option>---..Adjusted Rate, r_ik</option>
 <option>---..p_i,0(t), pini</option>
 <option>---..iota_i(a,t)</option>
 <option>---..rho_i(a,t)</option>
@@ -277,7 +277,7 @@ n_i
 
 <br>
 <br>
-<big><a name="Rate Functions.q_k" id="Rate Functions.q_k">q_k</a></big>
+<big><a name="Rate Functions.Parent Rate, q_k" id="Rate Functions.Parent Rate, q_k">Parent Rate, q_k</a></big>
 <br>
 We use <small>@(@
 k
@@ -295,12 +295,12 @@ This is an unadjusted rate corresponding to the
 <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
 .
 The adjusted rates are discussed below; see
-<a href="avg_integrand.htm#Rate Functions.r_ik" target="_top"><span style='white-space: nowrap'>r_ik</span></a>
+<a href="avg_integrand.htm#Rate Functions.Adjusted Rate, r_ik" target="_top"><span style='white-space: nowrap'>r_ik</span></a>
 .
 
 <br>
 <br>
-<big><a name="Rate Functions.u_ik" id="Rate Functions.u_ik">u_ik</a></big>
+<big><a name="Rate Functions.Child Rate Effect, u_ik" id="Rate Functions.Child Rate Effect, u_ik">Child Rate Effect, u_ik</a></big>
 <br>
 If <small>@(@
 n_i
@@ -371,7 +371,7 @@ Note that these are only
 
 <br>
 <br>
-<big><a name="Rate Functions.r_ik" id="Rate Functions.r_ik">r_ik</a></big>
+<big><a name="Rate Functions.Adjusted Rate, r_ik" id="Rate Functions.Adjusted Rate, r_ik">Adjusted Rate, r_ik</a></big>
 <br>
 We use the following notation for the adjusted rates:
 <small>@[@
