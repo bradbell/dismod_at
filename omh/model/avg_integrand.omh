@@ -247,90 +247,63 @@ age and time.
 Depending on the value of
 see $cref/integrand_id/data_table/integrand_id/$$ for data index $latex i$$,
 the function $latex I_i (a, t)$$ is defined below.
-The subscript $latex i$$ once again dropped to simplify notation
-and the rates are the adjusted rates.
-Integrands that do not use $latex S(a, t)$$, $latex C(a, t)$$
-or $latex P(a, t)$$, do not require solving the differential equation.
+The age and time arguments $latex (a, t)$$
+and the subscript $latex i$$ are dropped to simplify notation.
+The rates are adjusted rates.
+(Integrands that do not use $latex S$$, $latex C$$
+or $latex P$$, do not require solving the differential equation.)
 
 $subhead Sincidence$$
 The incidence rate relative to susceptible population is
-$latex \[
- I (a, t) = \iota (a,t)
-\] $$
+$latex I  = \iota $$.
 
 $subhead remission$$
 The remission rate is
-$latex \[
- I (a, t) = \rho (a,t)
-\] $$
+$latex I  = \rho $$.
 
 $subhead mtexcess$$
 The excess mortality rate is
-$latex \[
- I (a, t) = \chi (a,t)
-\] $$
+$latex I  = \chi $$.
 
 $subhead mtother$$
 The other cause mortality rate is
-$latex \[
- I (a, t) = \omega (a,t)
-\] $$
+$latex I  = \omega $$.
 
 $subhead mtwith$$
 The with condition mortality rate is
-$latex \[
- I (a, t) = \omega (a,t) + \chi (a,t)
-\] $$
+$latex I  = \omega  + \chi $$.
 
 $subhead susceptible$$
 The susceptible fraction of the population is
-$latex \[
- I (a, t) = S(a,t)
-\] $$
+$latex I  = S $$.
 
 $subhead withC$$
 The with condition fraction of the population is
-$latex \[
- I (a, t) = C(a,t)
-\] $$
+$latex I  = C $$.
 
 $subhead prevalence$$
 The prevalence of the condition is
-$latex \[
- I (a, t) = P(a,t) = C(a,t) / [ S(a,t) + C(a,t) ]
-\] $$
+$latex I  = P = C / ( S + C ) $$.
 
 $subhead Tincidence$$
 The  incidence rate relative to the total population is
-$latex \[
- I (a, t) = \iota(a,t) [ 1 - P(a,t) ]
-\] $$
+$latex I  = \iota ( 1 - P ) $$.
 
 $subhead mtspecific$$
 The cause specific mortality rate is
-$latex \[
- I (a, t) = \chi (a,t) P(a,t)
-\] $$
+$latex I  = \chi  P $$.
 
 $subhead mtall$$
 The all cause mortality rate is
-$latex \[
- I (a, t) = \omega (a,t) + \chi (a,t) P(a,t)
-\] $$
+$latex I  = \omega  + \chi  P $$.
 
 $subhead mtstandard$$
 The standardized mortality ratio is
-$latex \[
- I (a, t) =
-	[ \omega (a,t) + \chi (a,t) ] / [ \omega (a,t) + \chi (a,t) P(a,t) ]
-
-\] $$
+$latex I  = ( \omega  + \chi  ) / ( \omega  + \chi  P )$$.
 
 $subhead relrisk$$
 The relative risk is
-$latex \[
- I (a, t) = [ \omega (a,t) + \chi (a,t) ] / \omega (a,t)
-\] $$
+$latex I  = ( \omega  + \chi  ) / \omega $$.
 
 $head Measurement Value Covariates$$
 
