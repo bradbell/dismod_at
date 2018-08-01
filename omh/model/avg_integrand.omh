@@ -214,7 +214,9 @@ model value for with condition fraction of the population.
 
 
 $head Differential Equation$$
-We drop the subscript $latex i$$ to simplify notation in the equations below.
+We drop the subscript $latex i$$ in the
+$cref/adjusted rates/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$
+to simplify notation in the equations below.
 The with condition and susceptible fractions at age zero are
 $latex \[
 	C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
@@ -244,8 +246,9 @@ We use $latex I_i (a, t)$$ to denote the integrand as a function of
 age and time.
 Depending on the value of
 see $cref/integrand_id/data_table/integrand_id/$$ for data index $latex i$$,
-the function $latex I_i (a, t)$$ is defined below
-(with the subscript $latex i$$ once again dropped to simplify notation.
+the function $latex I_i (a, t)$$ is defined below.
+The subscript $latex i$$ once again dropped to simplify notation
+and the rates are the adjusted rates.
 Integrands that do not use $latex S(a, t)$$, $latex C(a, t)$$
 or $latex P(a, t)$$, do not require solving the differential equation.
 
