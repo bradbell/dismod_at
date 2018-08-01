@@ -155,7 +155,7 @@ $cref/random effects, u/model_variables/Random Effects, u/$$.
 The rate in the differential equation, used for a child,
 is $codei%exp(%u%)*%q%$$
 where $icode q$$ is the corresponding rate for the parent; see
-$cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
+$cref/r_ik/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$.
 
 $subhead Constant$$
 If the

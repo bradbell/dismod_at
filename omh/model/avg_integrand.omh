@@ -111,7 +111,7 @@ model variables.
 This is an unadjusted rate corresponding to the
 $cref/parent node/option_table/parent_node_id/$$.
 The adjusted rates are discussed below; see
-$cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
+$cref/r_ik/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$.
 
 $subhead Child Rate Effect, u_ik$$
 If $latex n_i$$ is equal to or a descendant of one of the children of the
@@ -154,7 +154,7 @@ $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 Note that these are only
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariate multipliers.
 
-$subhead r_ik$$
+$subhead Adjusted Rate, r_ik$$
 We use the following notation for the adjusted rates:
 $latex \[
 r_{i,k} (a , t)

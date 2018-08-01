@@ -60,6 +60,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-31$$
+Put more emphasis on the difference between the
+$cref/parent rates/avg_integrand/Rate Functions/Parent Rate, q_k
+/$$,
+$cref/child rate effects/avg_integrand/Rate Functions/Child Rate Effect, u_ik
+/$$, and
+$cref/adjusted rates/avg_integrand/Rate Functions/Adjusted Rate, r_ik
+/$$.
+
 $head 07-30$$
 $list number$$
 Add the
@@ -302,7 +311,7 @@ $cref/child rate effect/model_variables/Random Effects, u/Child Rate Effects/$$
 when referring to the a random effect
 $cref/u_ik/avg_integrand/Rate Functions/Child Rate Effect, u_ik/$$.
 This distinguishes it from the corresponding rate for that child
-$cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
+$cref/r_ik/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$.
 $lend
 
 

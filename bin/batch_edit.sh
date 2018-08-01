@@ -23,12 +23,8 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|\$subhead q_k\$\\$|\$subhead Parent Rate, q_k\$\$|
-s|\$subhead u_ik\$\\$|\$subhead Child Rate Effect, u_ik\$\$|
-#
-s|/avg_integrand/Rate Functions/q_k/|/avg_integrand/Rate Functions/Parent Rate, q_k/|
-s|/avg_integrand/Rate Functions/u_ik/|/avg_integrand/Rate Functions/Child Rate Effect, u_ik/|
-s|child random effect for this rate|child effect for this rate|
+s|\$subhead r_ik\$\\$|\$subhead Adjusted Rate, r_ik\$\$|
+s|/avg_integrand/Rate Functions/r_ik/|/avg_integrand/Rate Functions/Adjusted Rate, r_ik/|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

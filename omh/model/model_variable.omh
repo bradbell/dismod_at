@@ -158,7 +158,7 @@ is a random effect for a rate and child,
 the rate for the child is $latex \exp( u_{i,k} )$$
 times the rate for the parent;
 see the adjusted rates
-$cref/r_ik/avg_integrand/Rate Functions/r_ik/$$ in the average integrand model.
+$cref/r_ik/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$ in the average integrand model.
 
 $head Age and Time Variation$$
 

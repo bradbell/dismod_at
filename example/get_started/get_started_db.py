@@ -64,7 +64,7 @@
 # $latex \alpha$$ is the covariate multiplier, and
 # $latex \exp ( \alpha x ) \omega$$
 # is the other cause mortality after the covariate effect;
-# see $cref/r_ik/avg_integrand/Rate Functions/r_ik/$$.
+# see $cref/r_ik/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$.
 # The solution is
 # $latex \[
 #	S(a) = \exp \left[ - \exp( \alpha x ) \omega \; a \right]
