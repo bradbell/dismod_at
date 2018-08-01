@@ -23,8 +23,8 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|\$subhead p_i,0(t), pini$\\$|\$subhead pini, p_i0(t)\$\$|
-s|/avg_integrand/Rate Functions/p_i,0(t), pini/|/avg_integrand/Rate Functions/pini, p_i0(t)/|
+s|\$head I_i(a,t)$\\$|\$head Integrand, I_i(a,t)\$\$|
+s|/avg_integrand/I_i(a,t)/|/avg_integrand/Integrand, I_i(a,t)/|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

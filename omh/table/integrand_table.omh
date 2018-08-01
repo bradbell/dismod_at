@@ -75,55 +75,55 @@ $table
 	$cnext Description
 	$cnext ODE
 $rnext
-	$cref/Sincidence/avg_integrand/I_i(a,t)/Sincidence/$$
+	$cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$
 	$cnext incidence rate relative to susceptible population
 	$cnext no
 $rnext
-	$cref/remission/avg_integrand/I_i(a,t)/remission/$$
+	$cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$
 	$cnext remission rate
 	$cnext no
 $rnext
-	$cref/mtexcess/avg_integrand/I_i(a,t)/mtexcess/$$
+	$cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$
 	$cnext excess mortality rate
 	$cnext no
 $rnext
-	$cref/mtother/avg_integrand/I_i(a,t)/mtother/$$
+	$cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$
 	$cnext other cause mortality rate
 	$cnext no
 $rnext
-	$cref/mtwith/avg_integrand/I_i(a,t)/mtwith/$$
+	$cref/mtwith/avg_integrand/Integrand, I_i(a,t)/mtwith/$$
 	$cnext with condition mortality rate
 	$cnext no
 $rnext
-	$cref/susceptible/avg_integrand/I_i(a,t)/susceptible/$$
+	$cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
 	$cnext susceptible fraction of the population
 	$cnext yes
 $rnext
-	$cref/withC/avg_integrand/I_i(a,t)/withC/$$
+	$cref/withC/avg_integrand/Integrand, I_i(a,t)/withC/$$
 	$cnext with condition fraction of the population
 	$cnext yes
 $rnext
-	$cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
+	$cref/prevalence/avg_integrand/Integrand, I_i(a,t)/prevalence/$$
 	$cnext prevalence of the condition
 	$cnext yes
 $rnext
-	$cref/Tincidence/avg_integrand/I_i(a,t)/Tincidence/$$
+	$cref/Tincidence/avg_integrand/Integrand, I_i(a,t)/Tincidence/$$
 	$cnext incidence rate relative to total population
 	$cnext yes
 $rnext
-	$cref/mtspecific/avg_integrand/I_i(a,t)/mtspecific/$$
+	$cref/mtspecific/avg_integrand/Integrand, I_i(a,t)/mtspecific/$$
 	$cnext cause specific mortality rate
 	$cnext yes
 $rnext
-	$cref/mtall/avg_integrand/I_i(a,t)/mtall/$$
+	$cref/mtall/avg_integrand/Integrand, I_i(a,t)/mtall/$$
 	$cnext all cause mortality rate
 	$cnext yes
 $rnext
-	$cref/mtstandard/avg_integrand/I_i(a,t)/mtstandard/$$
+	$cref/mtstandard/avg_integrand/Integrand, I_i(a,t)/mtstandard/$$
 	$cnext standardized mortality ratio
 	$cnext yes
 $rnext
-	$cref/relrisk/avg_integrand/I_i(a,t)/relrisk/$$
+	$cref/relrisk/avg_integrand/Integrand, I_i(a,t)/relrisk/$$
 	$cnext relative risk
 	$cnext no
 $tend

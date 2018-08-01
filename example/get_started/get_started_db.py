@@ -36,7 +36,7 @@
 # $lnext
 # There is only one measurement and it is for the
 # $cref/integrand_name/integrand_table/integrand_name/$$
-# $cref/mtother/avg_integrand/I_i(a,t)/mtother/$$
+# $cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$
 # and at age 50 and year 2000.
 # $lnext
 # There is one

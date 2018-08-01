@@ -48,7 +48,7 @@ In addition, these values must appear in the order above.
 
 $subhead pini$$
 The initial
-$cref/prevalence/avg_integrand/I_i(a,t)/prevalence/$$
+$cref/prevalence/avg_integrand/Integrand, I_i(a,t)/prevalence/$$
 $icode pini$$ is the model for prevalence at the initial age; i.e.,
 the value $cref/age/age_table/age/$$ corresponding to
 $icode%age_id% == 0%$$;
