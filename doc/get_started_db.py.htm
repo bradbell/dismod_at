@@ -117,9 +117,17 @@ There is only one node corresponding to the world, and hence there are no
 There is only one measurement and it is for the
 <a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
 
-<a href="avg_integrand.htm#Integrand, I_i(a,t).mtother" target="_top"><span style='white-space: nowrap'>mtother</span></a>
+<a href="avg_integrand.htm#Integrand, I_i(a,t).susceptible" target="_top"><span style='white-space: nowrap'>susceptible</span></a>
 
 and at age 50 and year 2000.
+</li><li>
+
+The data table has a
+<a href="database.htm#Comment Columns and Tables" target="_top"><span style='white-space: nowrap'>comment&nbsp;column</span></a>
+
+named <code><font color="blue">c_data_info</font></code> that is used as a
+<a href="option_table.htm#data_extra_columns" target="_top"><span style='white-space: nowrap'>data_extra_column</span></a>
+.
 </li><li>
 
 There is one
@@ -242,13 +250,14 @@ known_income_multiplier <font color="#990000">=</font> <font color="#990000">-</
           <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ---------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900"># data table: note the income for this measurement is 1,000.</font></i>
+     <i><font color="#9A1900"># data table: measure the susceptible fraction for income 1000 at age 50</font></i>
+     <i><font color="#9A1900"># (no noise in this simulated data, but modeled as having noise)</font></i>
      adjusted_omega <font color="#990000">=</font> unknown_omega_world <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font>known_income_multiplier <font color="#990000">*</font> <font color="#993399">1000.0</font><font color="#990000">)</font>
      meas_value     <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> adjusted_omega <font color="#990000">*</font> <font color="#993399">50.0</font> <font color="#990000">)</font>
      meas_std       <font color="#990000">=</font> meas_value <font color="#990000">/</font> <font color="#993399">20</font><font color="#990000">.</font>
      data_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font>
-               <font color="#FF0000">'data_info'</font><font color="#990000">:</font>   <font color="#FF0000">'d1'</font><font color="#990000">,</font>
+               <font color="#FF0000">'c_data_info'</font><font color="#990000">:</font>  <font color="#FF0000">'d1'</font><font color="#990000">,</font>
                <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   <font color="#FF0000">'susceptible'</font><font color="#990000">,</font>
                <font color="#FF0000">'node'</font><font color="#990000">:</font>        <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">'constant_one'</font><font color="#990000">,</font>
@@ -329,7 +338,7 @@ known_income_multiplier <font color="#990000">=</font> <font color="#990000">-</
           <font color="#990000">{</font><font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'10.0'</font>              <font color="#990000">},</font>
           <font color="#990000">{</font><font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_zero_rho_zero'</font><font color="#990000">},</font>
           <font color="#990000">{</font><font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'avgint_extra_columns'</font><font color="#990000">,</font> <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'avgint_info'</font>       <font color="#990000">},</font>
-          <font color="#990000">{</font><font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'data_extra_columns'</font><font color="#990000">,</font>   <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'data_info'</font>         <font color="#990000">}</font>
+          <font color="#990000">{</font><font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'data_extra_columns'</font><font color="#990000">,</font>   <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'c_data_info'</font>       <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ---------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># nslist_table:</font></i>
