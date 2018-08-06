@@ -60,6 +60,18 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 08-06$$
+$list number$$
+The measurement integrand name,
+in the $cref/discussion/get_started_db.py/Discussion/$$
+of the get started database,
+has been corrected from $code mtother$$ to $code susceptible$$.
+$lnext
+The data column $code data_info$$ was changed to $code c_data_info$$
+and a $cref/discussion/get_started_db.py/Discussion/$$
+of this column was added to the get started example.
+$lend
+
 $head 07-31$$
 Put more emphasis on the difference between the
 $cref/parent rates/avg_integrand/Rate Functions/Parent Rate, q_k

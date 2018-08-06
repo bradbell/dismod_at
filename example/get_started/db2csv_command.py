@@ -119,7 +119,7 @@ data_table = get_table('data')
 # check data.csv correspond to the single row of data
 assert len(data_table) == 1
 row = data_table[0]
-assert row['data_info']          == 'd1'
+assert row['c_data_info']        == 'd1'
 assert row['integrand']          == 'susceptible'
 assert row['weight']             == 'constant_one'
 assert row['density']            == 'gaussian'

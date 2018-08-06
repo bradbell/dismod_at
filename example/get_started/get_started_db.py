@@ -36,8 +36,13 @@
 # $lnext
 # There is only one measurement and it is for the
 # $cref/integrand_name/integrand_table/integrand_name/$$
-# $cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$
+# $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
 # and at age 50 and year 2000.
+# $lnext
+# The data table has a
+# $cref/comment column/database/Comment Columns and Tables/$$
+# named $code c_data_info$$ that is used as a
+# $cref/data_extra_column/option_table/data_extra_columns/$$.
 # $lnext
 # There is one
 # $cref/covariate/covariate_table/$$ income and a corresponding
@@ -136,13 +141,14 @@ def get_started_db ():
 		}
 	]
 	# ---------------------------------------------------------------------
-	# data table: note the income for this measurement is 1,000.
+	# data table: measure the susceptible fraction for income 1000 at age 50
+	# (no noise in this simulated data, but modeled as having noise)
 	adjusted_omega = unknown_omega_world * exp(known_income_multiplier * 1000.0)
 	meas_value     = exp( - adjusted_omega * 50.0 )
 	meas_std       = meas_value / 20.
 	data_table = [
 		{
-			'data_info':   'd1',
+			'c_data_info':  'd1',
 			'integrand':   'susceptible',
 			'node':        'world',
 			'weight':      'constant_one',
@@ -223,7 +229,7 @@ def get_started_db ():
 		{'name':'ode_step_size',        'value':'10.0'              },
 		{'name':'rate_case',            'value':'iota_zero_rho_zero'},
 		{'name':'avgint_extra_columns', 'value':'avgint_info'       },
-		{'name':'data_extra_columns',   'value':'data_info'         }
+		{'name':'data_extra_columns',   'value':'c_data_info'       }
 	]
 	# ---------------------------------------------------------------------
 	# nslist_table:
