@@ -60,7 +60,7 @@ $cref/child rate effects
 /$$.
 
 $subhead Grids$$
-Extend $cref csv2db_command$$ to allow the user to specify
+Extend $cref csv2db_command$$ to enable the user to specify
 different grids for different model variables.
 Currently all the variables use that same
 $cref/grid/csv2db_command/mtother/Rectangular Grid/$$ as the

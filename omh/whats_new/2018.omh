@@ -60,6 +60,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 08-07$$
+Add the
+$cref/csv2db command/wish_list/csv2db Command/$$
+wish list items.
+
 $head 08-06$$
 $list number$$
 The measurement integrand name,
