@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Model for the Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Model for the Average Integrand">
-<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ">
+<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k covariate multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,7 +67,7 @@ A:active { color : purple }
 <option>---..Parent Rate, q_k</option>
 <option>---..Child Rate Effect, u_ik</option>
 <option>---..J_k</option>
-<option>---..alpha_jk</option>
+<option>---..Rate Covariate Multiplier, alpha_jk</option>
 <option>---..Adjusted Rate, r_ik</option>
 <option>---..pini, p_i0(t)</option>
 <option>---..iota_i(a,t)</option>
@@ -93,7 +93,7 @@ A:active { color : purple }
 <option>---..relrisk</option>
 <option>Measurement Value Covariates</option>
 <option>---..K_i</option>
-<option>---..beta_j</option>
+<option>---..Multiplier, beta_j</option>
 <option>---..Measurement Effect</option>
 <option>Weight Integral, wbar_i</option>
 <option>Average Integrand, A_i</option>
@@ -348,7 +348,7 @@ which this is the case.
 
 <br>
 <br>
-<big><a name="Rate Functions.alpha_jk" id="Rate Functions.alpha_jk">alpha_jk</a></big>
+<big><a name="Rate Functions.Rate Covariate Multiplier, alpha_jk" id="Rate Functions.Rate Covariate Multiplier, alpha_jk">Rate Covariate Multiplier, alpha_jk</a></big>
 <br>
 For each rate index <small>@(@
 k
@@ -365,9 +365,10 @@ piecewise linear function corresponding to the
 variables for the corresponding
 <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
 .
-Note that these are only
+Note that these are
 <a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
- covariate multipliers.
+ covariate multipliers
+in the mulcov table.
 
 <br>
 <br>
@@ -720,7 +721,7 @@ which this is the case.
 
 <br>
 <br>
-<big><a name="Measurement Value Covariates.beta_j" id="Measurement Value Covariates.beta_j">beta_j</a></big>
+<big><a name="Measurement Value Covariates.Multiplier, beta_j" id="Measurement Value Covariates.Multiplier, beta_j">Multiplier, beta_j</a></big>
 <br>
 For each covariate index <small>@(@
 j \in K_i

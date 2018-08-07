@@ -25,7 +25,7 @@ var list_current0 = [
 'avg_integrand.htm#Rate Functions.Parent Rate, q_k',
 'avg_integrand.htm#Rate Functions.Child Rate Effect, u_ik',
 'avg_integrand.htm#Rate Functions.J_k',
-'avg_integrand.htm#Rate Functions.alpha_jk',
+'avg_integrand.htm#Rate Functions.Rate Covariate Multiplier, alpha_jk',
 'avg_integrand.htm#Rate Functions.Adjusted Rate, r_ik',
 'avg_integrand.htm#Rate Functions.pini, p_i0(t)',
 'avg_integrand.htm#Rate Functions.iota_i(a,t)',
@@ -51,7 +51,7 @@ var list_current0 = [
 'avg_integrand.htm#Integrand, I_i(a,t).relrisk',
 'avg_integrand.htm#Measurement Value Covariates',
 'avg_integrand.htm#Measurement Value Covariates.K_i',
-'avg_integrand.htm#Measurement Value Covariates.beta_j',
+'avg_integrand.htm#Measurement Value Covariates.Multiplier, beta_j',
 'avg_integrand.htm#Measurement Value Covariates.Measurement Effect',
 'avg_integrand.htm#Weight Integral, wbar_i',
 'avg_integrand.htm#Average Integrand, A_i'

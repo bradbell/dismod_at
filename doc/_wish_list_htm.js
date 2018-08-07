@@ -10,14 +10,21 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'wish_list.htm#meas_std',
-'wish_list.htm#Command Diagrams',
+'wish_list.htm#csv2db Command',
+'wish_list.htm#csv2db Command.Covariate Multipliers',
+'wish_list.htm#csv2db Command.Random Effects',
+'wish_list.htm#csv2db Command.Grids',
+'wish_list.htm#csv2db Command.Value Priors',
+'wish_list.htm#csv2db Command.Difference Priors',
+'wish_list.htm#csv2db Command.Sample',
 'wish_list.htm#ODE Solution',
 'wish_list.htm#ODE Solution.Prevalence ODE',
 'wish_list.htm#ODE Solution.Step Size',
 'wish_list.htm#ODE Solution.Large Excess Mortality',
 'wish_list.htm#ODE Solution.Conditionals',
 'wish_list.htm#ODE Solution.Checkpointing',
+'wish_list.htm#meas_std',
+'wish_list.htm#Command Diagrams',
 'wish_list.htm#Lagrange Multipliers',
 'wish_list.htm#Documentation',
 'wish_list.htm#Documentation.Real World Example',

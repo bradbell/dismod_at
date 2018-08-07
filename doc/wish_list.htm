@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list meas_std command diagrams ode solution prevalence step size large excess mortality conditionals checkpointing lagrange multipliers documentation real world example user examples model sampling random effects special hessian starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list csv2db command covariate multipliers random effects grids value priors difference sample ode solution prevalence step size large excess mortality conditionals checkpointing meas_std diagrams lagrange documentation real world example user examples model sampling special hessian starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -52,14 +52,21 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
-<option>meas_std</option>
-<option>Command Diagrams</option>
+<option>csv2db Command</option>
+<option>---..Covariate Multipliers</option>
+<option>---..Random Effects</option>
+<option>---..Grids</option>
+<option>---..Value Priors</option>
+<option>---..Difference Priors</option>
+<option>---..Sample</option>
 <option>ODE Solution</option>
 <option>---..Prevalence ODE</option>
 <option>---..Step Size</option>
 <option>---..Large Excess Mortality</option>
 <option>---..Conditionals</option>
 <option>---..Checkpointing</option>
+<option>meas_std</option>
+<option>Command Diagrams</option>
 <option>Lagrange Multipliers</option>
 <option>Documentation</option>
 <option>---..Real World Example</option>
@@ -97,30 +104,84 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 <br>
-<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
+<b><big><a name="csv2db Command" id="csv2db Command">csv2db Command</a></big></b>
 <br>
-Currently the data table
-<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+The following is a wish list for extending the csv2db command.
+This command is only an <a href="csv2db_command.htm#Example" target="_top"><span style='white-space: nowrap'>example</span></a>
 
-must be specified (except for uniform density).
-Perhaps we should allow for this standard deviation to be
-<code><font color="blue">null</font></code> in the case when the corresponding
-<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- must not be zero
-and the <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
-
-would be used to determine the measurement accuracy.
-
+intended to help user's get started using dismod_at.
 
 <br>
 <br>
-<b><big><a name="Command Diagrams" id="Command Diagrams">Command Diagrams</a></big></b>
+<big><a name="csv2db Command.Covariate Multipliers" id="csv2db Command.Covariate Multipliers">Covariate Multipliers</a></big>
 <br>
-It would be good to give a data flow diagram for each command
-that corresponds to its inputs and outputs; i.e., to diagram
-the information under the heading
-<a href="data_flow.htm#Input and Output by Command" target="_top"><span style='white-space: nowrap'>inputs&nbsp;and&nbsp;outputs&nbsp;by&nbsp;command</span></a>
+Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
+ to include
+<a href="avg_integrand.htm#Rate Functions.Rate Covariate Multiplier, alpha_jk" target="_top"><span style='white-space: nowrap'>rate&nbsp;covariate&nbsp;multipliers</span></a>
+ and
+<a href="avg_integrand.htm#Measurement Value Covariates.Multiplier, beta_j" target="_top"><span style='white-space: nowrap'>measurement&nbsp;value&nbsp;covariate&nbsp;multipliers</span></a>
 .
+
+<br>
+<br>
+<big><a name="csv2db Command.Random Effects" id="csv2db Command.Random Effects">Random Effects</a></big>
+<br>
+Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
+ to include
+<a href="avg_integrand.htm#Rate Functions.Child Rate Effect, u_ik" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effects</span></a>
+.
+
+<br>
+<br>
+<big><a name="csv2db Command.Grids" id="csv2db Command.Grids">Grids</a></big>
+<br>
+Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
+ to allow the user to specify
+different grids for different model variables.
+Currently all the variables use that same
+<a href="csv2db_command.htm#mtother.Rectangular Grid" target="_top"><span style='white-space: nowrap'>grid</span></a>
+ as the
+mtother data.
+
+<br>
+<br>
+<big><a name="csv2db Command.Value Priors" id="csv2db Command.Value Priors">Value Priors</a></big>
+<br>
+Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
+ to define a specific
+<a href="prior_table.htm" target="_top"><span style='white-space: nowrap'>prior</span></a>
+ for the value of each
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model&nbsp;variables</span></a>
+.
+For example, this would enable one to specify limits, or a specific value,
+for a model variable.
+
+<br>
+<br>
+<big><a name="csv2db Command.Difference Priors" id="csv2db Command.Difference Priors">Difference Priors</a></big>
+<br>
+Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
+ to define a specific
+<a href="prior_table.htm" target="_top"><span style='white-space: nowrap'>prior</span></a>
+ for the differences of the
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model&nbsp;variables</span></a>
+; i.e.,
+the amount of smoothing.
+
+<br>
+<br>
+<big><a name="csv2db Command.Sample" id="csv2db Command.Sample">Sample</a></big>
+<br>
+Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
+ to define the
+<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+.
+This would enable csv2db to set up
+<a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predictions</span></a>
+
+using model variables computed by another program.
+
+
 
 <br>
 <br>
@@ -235,6 +296,33 @@ It should greatly reduce memory if we use
 CppAD checkpointing of an ODE that has been
 extended to include derivatives with respect to parameters; see
 <a href="http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_extended_ode</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
+<br>
+Currently the data table
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+must be specified (except for uniform density).
+Perhaps we should allow for this standard deviation to be
+<code><font color="blue">null</font></code> in the case when the corresponding
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ must not be zero
+and the <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+
+would be used to determine the measurement accuracy.
+
+
+<br>
+<br>
+<b><big><a name="Command Diagrams" id="Command Diagrams">Command Diagrams</a></big></b>
+<br>
+It would be good to give a data flow diagram for each command
+that corresponds to its inputs and outputs; i.e., to diagram
+the information under the heading
+<a href="data_flow.htm#Input and Output by Command" target="_top"><span style='white-space: nowrap'>inputs&nbsp;and&nbsp;outputs&nbsp;by&nbsp;command</span></a>
 .
 
 <br>
