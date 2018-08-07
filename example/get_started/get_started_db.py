@@ -53,7 +53,11 @@
 # The model for other cause mortality
 # $cref/omega/rate_table/rate_name/omega/$$,
 # and the model for the rate covariate multiplier
-# $cref/alpha/avg_integrand/Rate Functions/alpha_jk/$$,
+# $cref/alpha
+#	/avg_integrand
+#	/Rate Functions
+#	/Rate Covariate Multiplier, alpha_jk
+# /$$,
 # are constant in age and time.
 # $lend
 # Because other cause mortality and the covariate multiplier are

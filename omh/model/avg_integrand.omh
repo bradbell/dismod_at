@@ -139,7 +139,7 @@ We use $latex J_k$$ to denote the set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.
 
-$subhead alpha_jk$$
+$subhead Rate Covariate Multiplier, alpha_jk$$
 For each rate index $latex k$$,
 and each covariate index $latex j \in J_k$$,
 we use $latex \alpha_{j,k} (a, t)$$ to denote the
@@ -151,8 +151,9 @@ $cref/covariate multiplier
 /$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
-Note that these are only
-$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariate multipliers.
+Note that these are
+$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariate multipliers
+in the mulcov table.
 
 $subhead Adjusted Rate, r_ik$$
 We use the following notation for the adjusted rates:
@@ -316,7 +317,7 @@ We use $latex K_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.
 
-$subhead beta_j$$
+$subhead Multiplier, beta_j$$
 For each covariate index $latex j \in K_i$$,
 we use $latex \beta_j (a, t) $$ to denote the
 piecewise linear function corresponding to the

@@ -38,7 +38,11 @@ The possible values are:
 $subhead rate_value$$
 This covariate multiplier
 adjusts a rate in the average integrand calculation;
-see $cref/alpha_jk/avg_integrand/Rate Functions/alpha_jk/$$.
+see $cref/alpha
+	/avg_integrand
+	/Rate Functions
+	/Rate Covariate Multiplier, alpha_jk
+/$$.
 A separate solution of the
 $cref/ordinary differential equation
 	/avg_integrand
@@ -54,7 +58,11 @@ rate covariates do not add as much to the computational load.
 $subhead meas_value$$
 This covariate multiplier adjusts the average integrand to match the
 $cref/measurement value/data_table/meas_value/$$; see
-$cref/beta_j/avg_integrand/Measurement Value Covariates/beta_j/$$.
+$cref/beta
+	/avg_integrand
+	/Measurement Value Covariates
+	/Multiplier, beta_j
+/$$.
 
 $subhead meas_std$$
 This covariate multiplier adjusts the

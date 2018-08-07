@@ -136,7 +136,7 @@ $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers
 $cref/beta_j
 	/avg_integrand
 	/Measurement Value Covariates
-	/beta_j
+	/Multiplier, beta_j
 /$$
 and the
 $cref/meas_std/mulcov_table/mulcov_type/meas_std/$$ covariate multipliers
