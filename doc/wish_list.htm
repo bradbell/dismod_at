@@ -182,7 +182,6 @@ This would enable csv2db to set up
 using model variables computed by another program.
 
 
-
 <br>
 <br>
 <b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
@@ -212,14 +211,20 @@ We can therefore solve for prevalence without other cause mortality
 @)@</small> or all cause mortality <small>@(@
 \omega + \chi P
 @)@</small>.
-One thing to note is that the ODE for <small>@(@
+<ol type="1"><li>
+The ODE for <small>@(@
 P
 @)@</small> is non-linear,
 while the ODE is <small>@(@
 (S, C)
 @)@</small> is linear.
-If we also know all cause mortality <small>@(@
+</li><li>
+
+If we know all cause mortality <small>@(@
 \alpha = \omega + \chi P
+@)@</small>,
+once we have solved for <small>@(@
+P
 @)@</small>,
 we can compute <small>@(@
 \omega = \alpha - \chi P
@@ -232,19 +237,37 @@ Furthermore
 @]@</small>
 So we can also compute <small>@(@
 S + C
-@)@</small>,
+@)@</small>, and
 <small>@(@
 C = P (S + C)
 @)@</small>,
-and <small>@(@
-S = 1 - C
-@)@</small>.
-This formulation of the ODE also have the advantage that it is stable
-even as <small>@(@
+</li><li>
+
+Given the original ODE, we know that the true solution for
+<small>@(@
+S
+@)@</small>, must be positive, and <small>@(@
+C
+@)@</small>, <small>@(@
+P
+@)@</small> must be
+non-negative.
+Negative values for these quantities will correspond to
+numerical precision errors in the solution of the ODE.
+</li><li>
+
+One advantage of this approach,
+over the current approach of solving the ODE in <small>@(@
+(S, C)
+@)@</small>,
+is that the solution is stable as <small>@(@
 S + C \rightarrow 0
-@)@</small>; i.e, it will not get the
-associated nans cause by division of zero by zero.
-Perhaps we should provide this alternative method for solving the ODE.
+@)@</small>.
+(The current approach computes <small>@(@
+P = C / (S + C)
+@)@</small>.
+</li></ol>
+
 
 <br>
 <br>
