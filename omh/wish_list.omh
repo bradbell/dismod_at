@@ -87,7 +87,6 @@ $cref/predictions/predict_command/$$
 using model variables computed by another program.
 
 
-
 $head ODE Solution$$
 
 $subhead Prevalence ODE$$
@@ -100,21 +99,31 @@ $latex \[
 \] $$
 We can therefore solve for prevalence without other cause mortality
 $latex \omega$$ or all cause mortality $latex \omega + \chi P$$.
-One thing to note is that the ODE for $latex P$$ is non-linear,
+$list number$$
+The ODE for $latex P$$ is non-linear,
 while the ODE is $latex (S, C)$$ is linear.
-If we also know all cause mortality $latex \alpha = \omega + \chi P$$,
+$lnext
+If we know all cause mortality $latex \alpha = \omega + \chi P$$,
+once we have solved for $latex P$$,
 we can compute $latex \omega = \alpha - \chi P$$.
 Furthermore
 $latex \[
 	(S + C)' = - \alpha (S + C)
 \] $$
-So we can also compute $latex S + C$$,
+So we can also compute $latex S + C$$, and
 $latex C = P (S + C)$$,
-and $latex S = 1 - C$$.
-This formulation of the ODE also have the advantage that it is stable
-even as $latex S + C \rightarrow 0$$; i.e, it will not get the
-associated nans cause by division of zero by zero.
-Perhaps we should provide this alternative method for solving the ODE.
+$lnext
+Given the original ODE, we know that the true solution for
+$latex S$$, must be positive, and $latex C$$, $latex P$$ must be
+non-negative.
+Negative values for these quantities will correspond to
+numerical precision errors in the solution of the ODE.
+$lnext
+One advantage of this approach,
+over the current approach of solving the ODE in $latex (S, C)$$,
+is that the solution is stable as $latex S + C \rightarrow 0$$.
+(The current approach computes $latex P = C / (S + C)$$.
+$lend
 
 $subhead Step Size$$
 Currently there is a single

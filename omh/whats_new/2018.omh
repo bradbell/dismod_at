@@ -60,6 +60,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 08-08$$
+Edit the $cref/prevalence ODE/wish_list/ODE Solution/Prevalence ODE/$$
+wish list item.
+
 $head 08-07$$
 Add the
 $cref/csv2db command/wish_list/csv2db Command/$$
