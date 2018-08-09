@@ -1577,7 +1577,9 @@ int main(int n_arg, const char** argv)
 			bound_random = std::atof( tmp_str.c_str() );
 	}
 	// =======================================================================
-	try { // BEGIN_TRY_BLOCK
+# ifdef NDEBUG
+	try { // BEGIN_TRY_BLOCK (when not debugging)
+# endif
 	// =======================================================================
 	if( command_arg == "set" )
 	{	if( std::strcmp(argv[3], "option") == 0 )
@@ -1767,13 +1769,15 @@ int main(int n_arg, const char** argv)
 		}
 	}
 	// =======================================================================
-	} // END_TRY_BLOCK
+# ifdef NDEBUG
+	} // END_TRY_BLOCK (when not debugging)
 	catch(const CppAD::mixed::exception& e)
 	{	string catcher("dismod_at");
 		catcher += " " + database_arg + " " + command_arg;
 		message  = e.message(catcher);
 		dismod_at::error_exit(message);
 	}
+# endif
 	// =======================================================================
 	// ---------------------------------------------------------------------
 	message = "end " + command_arg;

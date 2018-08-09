@@ -61,7 +61,12 @@ $childtable%
 %$$
 
 $head 08-09$$
+$list number$$
 Fix some bugs in $cref csv2db_command$$.
+$lnext
+Advance to $code cppad-20180809$$ and $code cppad_mixed-20180809$$.
+This fixes a bug in cppad (that originally showed up in dismod_at testing).
+$lend
 
 $head 08-08$$
 Edit the $cref/prevalence ODE/wish_list/ODE Solution/Prevalence ODE/$$
