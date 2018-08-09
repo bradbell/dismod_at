@@ -60,6 +60,9 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 08-09$$
+Fix some bugs in $cref csv2db_command$$.
+
 $head 08-08$$
 Edit the $cref/prevalence ODE/wish_list/ODE Solution/Prevalence ODE/$$
 wish list item.

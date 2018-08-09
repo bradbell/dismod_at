@@ -467,10 +467,10 @@ def csv2db_command(database, configure_csv, measure_csv) :
 			data_row = dict()
 			for field in copy_column :
 				data_row[field] = row[field]
-		data_row['node']    = 'no_name'
-		data_row['weight']  = 'constant'
-		data_row['density'] = 'gaussian'
-		data_table.append( data_row )
+			data_row['node']    = 'no_name'
+			data_row['weight']  = 'constant'
+			data_row['density'] = 'gaussian'
+			data_table.append( data_row )
 	# -------------------------------------------------------------------------
 	# prior_table
 	prior_table = [
@@ -490,15 +490,18 @@ def csv2db_command(database, configure_csv, measure_csv) :
 	]
 	# -------------------------------------------------------------------------
 	# smooth_table
+	#
+	# age_grid = age_list[start], ... age_list[start + len(age_grid) - 1]
 	start = 0
 	if age_list[0] != age_grid[0] :
 		start = 1
-	age_id = range(start, len(age_grid) + 1)
+	age_id = range(start, len(age_grid) + start)
 	#
+	# time_grid = time_list[start], ... time_list[start + len(time_grid) - 1]
 	start = 0
 	if time_list[0] != time_grid[0] :
 		start = 1
-	time_id = range(start, len(time_grid) + 1)
+	time_id = range(start, len(time_grid) + start)
 	#
 	# omega
 	def omega_fun(a, t) :

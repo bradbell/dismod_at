@@ -154,9 +154,6 @@ fieldnames = [ 'name', 'value' ]
 writer     = csv.DictWriter(file_ptr, fieldnames=fieldnames)
 writer.writeheader()
 #
-row        = { 'name': 'database_name',  'value': 'example.db' }
-writer.writerow( row )
-#
 row        = { 'name': 'non_zero_rates',  'value': 'iota rho chi omega' }
 writer.writerow( row )
 #
@@ -266,7 +263,7 @@ def exec_shell_cmd(cmd) :
 	print( ' '.join(command) )
 	flag       = subprocess.call( command )
 	if flag != 0 :
-		sys.exit('The dismod_at init command failed')
+		sys.exit('The dismod_at command failed')
 #
 exec_shell_cmd( 'set option quasi_fixed       false' )
 exec_shell_cmd( 'set option ode_step_size     1'     )

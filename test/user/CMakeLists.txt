@@ -14,6 +14,7 @@ FOREACH(user_case
 	avgint
 	bound_frac
 	bound_random
+	csv2db
 	fit_sim
 	laplace
 	minimum_cv
