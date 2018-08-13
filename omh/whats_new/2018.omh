@@ -67,8 +67,9 @@ This extra column was identically equal to the
 $cref/fit_data_subset_id/fit_data_subset_table/fit_data_subset_id/$$ column.
 Note that $icode fit_data_subset_id$$ is a foreign key for
 $cref/data_subset_id/data_subset_table/data_subset_id/$$ in the
-data_subset_id table.
-This follows the $cref/foreign key/database/Foreign Key/$$ convention.
+data_subset table.
+This follows the $cref/foreign key/database/Foreign Key/$$ convention
+for the dismod_at database.
 
 $head 08-09$$
 $list number$$
