@@ -394,24 +394,20 @@ void fit_command(
 	size_t n_subset = data_subset_obj.size();
 	table_name      = "fit_data_subset";
 	//
-	n_col           = 3;
+	n_col           = 2;
 	col_name.resize(n_col);
 	col_type.resize(n_col);
 	col_unique.resize(n_col);
 	row_value.clear();
 	row_value.resize(n_col * n_subset);
 	//
-	col_name[0]   = "data_subset_id";
-	col_type[0]   = "integer";
-	col_unique[0] = true;
+	col_name[0]   = "avg_integrand";
+	col_type[0]   = "real";
+	col_unique[0] = false;
 	//
-	col_name[1]   = "avg_integrand";
+	col_name[1]   = "weighted_residual";
 	col_type[1]   = "real";
 	col_unique[1] = false;
-	//
-	col_name[2]   = "weighted_residual";
-	col_type[2]   = "real";
-	col_unique[2] = false;
 	//
 	bool parent_only = false;
 	CppAD::vector<double> reference_sc =
@@ -451,9 +447,8 @@ void fit_command(
 		dismod_at::residual_struct<double> residual =
 			data_object.like_one(subset_id, opt_value, avg, not_used);
 		//
-		row_value[ subset_id * n_col + 0] = to_string( subset_id );
-		row_value[ subset_id * n_col + 1] = to_string( avg );
-		row_value[ subset_id * n_col + 2] = to_string( residual.wres );
+		row_value[ subset_id * n_col + 0] = to_string( avg );
+		row_value[ subset_id * n_col + 1] = to_string( residual.wres );
 	}
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
