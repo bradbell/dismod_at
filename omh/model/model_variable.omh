@@ -30,14 +30,15 @@ $$
 $section The Model Variables$$
 
 $head Introduction$$
-This section describes the model variables.
-These are the possibly unknown inputs to the model and
-are often referred to as model parameters in the statistical literature.
-Each model variable can have a statistical prior on its value.
+Model variables are scalar values, not functions,
+that are inputs to the model,
+and are the possibly unknown.
+They are often referred to as model parameters in the statistical literature.
+Each variable can have a statistical prior on its value.
 If the corresponding lower and upper limits are equal,
 the model variable is known.
-If the variable is part of a function, it can also have a prior
-on its forward difference in age and time.
+Model variables that are used to define a function of age and time
+may have priors on their forward difference in age and time.
 Each row of the
 $cref/variable.csv/db2csv_command/variable.csv/$$ file
 corresponds to a single model variable.
@@ -45,13 +46,13 @@ corresponds to a single model variable.
 $head Function of Age and Time$$
 The model variables are divided into groups.
 One group is the standard deviation multiplies.
-Each of the other groups represents a single function of age an time
-and has a corresponding smoothing.
+Each of the other groups represents a single function of age and time.
 
 $subhead Smoothing$$
 A group of model variables defines a function of age and time
 using a $cref/smooth_id/smooth_table/smooth_id/$$.
-Each $icode smooth_id$$ specifies a prior for a function as follows:
+Each $icode smooth_id$$ specifies a prior for the corresponding model
+variables as follows:
 $table
 $cref/n_age/smooth_table/n_age/$$ $cnext
 	number of age points used to represent the function
