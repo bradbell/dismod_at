@@ -34,6 +34,7 @@ $children%devel/cmd/set_command.cpp
 	%devel/cmd/init_command.cpp
 	%devel/cmd/depend_command.cpp
 	%devel/dismod_at.cpp
+	%bin/dismodat.py.in
 %$$
 $head Commands$$
 $table
