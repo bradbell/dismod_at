@@ -1,7 +1,6 @@
 var list_up0 = [
 'dismod_at.htm',
-'python.htm',
-'modify_command.htm',
+'command.htm',
 'dismodat.py.htm'
 ];
 var list_across0 = [
@@ -17,7 +16,7 @@ var list_current0 = [
 'dismodat.py.htm#Log Table.At Start',
 'dismodat.py.htm#Log Table.At End'
 ];
-var list_down3 = [
+var list_down2 = [
 'install_unix.htm',
 'get_started.htm',
 'user.htm',
@@ -29,23 +28,15 @@ var list_down3 = [
 'whats_new_2018.htm',
 'wish_list.htm'
 ];
-var list_down2 = [
-'create_connection.htm',
-'create_table.htm',
-'create_database.htm',
-'csv2db_command.htm',
-'db2csv_command.htm',
-'get_name_type.htm',
-'get_row_list.htm',
-'get_table_dict.htm',
-'metropolis.htm',
-'modify_command.htm',
-'sql_command.htm',
-'unicode_tuple.htm'
-];
 var list_down1 = [
-'dismodat.py.htm',
-'modify_command.py.htm'
+'set_command.htm',
+'init_command.htm',
+'depend_command.htm',
+'fit_command.htm',
+'simulate_command.htm',
+'sample_command.htm',
+'predict_command.htm',
+'dismodat.py.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
@@ -64,12 +55,6 @@ function choose_current0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_current0[index-1];
-}
-function choose_down3(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

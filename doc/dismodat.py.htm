@@ -35,8 +35,7 @@ A:active { color : purple }
 <select onchange='choose_up0(this)'>
 <option>Location-&gt;</option>
 <option>dismod_at</option>
-<option>python</option>
-<option>modify_command</option>
+<option>command</option>
 <option>dismodat.py</option>
 </select>
 </td>
@@ -50,7 +49,7 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="modify_command.htm" target="_top">Prev</a>
+<td><a href="predict_command.py.htm" target="_top">Prev</a>
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
@@ -60,9 +59,9 @@ A:active { color : purple }
 <option>---..At End</option>
 </select>
 </td>
-<td><a href="modify_command.py.htm" target="_top">Next</a>
+<td><a href="python.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down3(this)'>
+<select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
 <option>install_unix</option>
 <option>get_started</option>
@@ -77,37 +76,23 @@ A:active { color : purple }
 </select>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>python-&gt;</option>
-<option>create_connection</option>
-<option>create_table</option>
-<option>create_database</option>
-<option>csv2db_command</option>
-<option>db2csv_command</option>
-<option>get_name_type</option>
-<option>get_row_list</option>
-<option>get_table_dict</option>
-<option>metropolis</option>
-<option>modify_command</option>
-<option>sql_command</option>
-<option>unicode_tuple</option>
-</select>
-</td>
-<td>
 <select onchange='choose_down1(this)'>
-<option>modify_command-&gt;</option>
+<option>command-&gt;</option>
+<option>set_command</option>
+<option>init_command</option>
+<option>depend_command</option>
+<option>fit_command</option>
+<option>simulate_command</option>
+<option>sample_command</option>
+<option>predict_command</option>
 <option>dismodat.py</option>
-<option>modify_command.py</option>
 </select>
 </td>
 <td>dismodat.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@ 
-
-
-<center><b><big><big>Python Program Syntax</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Python Program Syntax</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 <br>
@@ -144,7 +129,7 @@ a <code><font color="blue">dismodat.py</font></code> command adds a command log 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 
-<hr>Input File: bin/dismodat.py
+<hr>Input File: bin/dismodat.py.in
 
 </body>
 </html>

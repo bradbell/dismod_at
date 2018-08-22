@@ -33,7 +33,8 @@ var list_down2 = [
 'fit_command.htm',
 'simulate_command.htm',
 'sample_command.htm',
-'predict_command.htm'
+'predict_command.htm',
+'dismodat.py.htm'
 ];
 var list_down1 = [
 'set_command.py.htm'

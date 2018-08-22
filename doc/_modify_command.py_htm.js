@@ -38,7 +38,6 @@ var list_down2 = [
 'unicode_tuple.htm'
 ];
 var list_down1 = [
-'dismodat.py.htm',
 'modify_command.py.htm'
 ];
 function choose_up0(item)

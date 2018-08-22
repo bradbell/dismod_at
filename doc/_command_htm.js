@@ -33,7 +33,8 @@ var list_down0 = [
 'fit_command.htm',
 'simulate_command.htm',
 'sample_command.htm',
-'predict_command.htm'
+'predict_command.htm',
+'dismodat.py.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
