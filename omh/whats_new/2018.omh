@@ -48,6 +48,7 @@ $spell
 	cholmod
 	eigen
 	mtother
+	CppAD
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -61,7 +62,14 @@ $childtable%
 %$$
 
 $head 08-22$$
+$list number$$
 Add $cref dismodat.py$$ to the documentation under the command section.
+$lnext
+Advance to cppad-20180820 and cppad_mixed-20180821.
+This uses a new CppAD feature and resulted in the following
+change for $cref user_speed.py$$:
+old_time=9.33 seconds, new_time=7.39 seconds.
+$lend
 
 $head 08-13$$
 The fit_data_subset table had a an extra column
