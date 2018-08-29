@@ -23,9 +23,7 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|Covariates/beta_j/|Covariates/Multiplier, beta_j/|
-s|^\\t/beta_j\$|\\t/Multiplier, beta_j|
-s|Functions/alpha_jk/|Functions/Rate Covariate Multiplier, alpha_jk/|
+s|CppAD::mixed::sparse_rcv|CppAD::mixed::d_sparse_rcv|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

@@ -16,7 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
-CppAD::mixed::sparse_rcv ran_con_rcv(
+CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	double                        bound_random    ,
 	const CppAD::vector<bool>&    zero_sum_random ,
 	const dismod_at::pack_info&   pack_object     )
@@ -42,7 +42,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	size_t n_child = pack_object.child_size();
 	//
 	// check for first case where random constraint matrix is empty
-	CppAD::mixed::sparse_rcv A_rcv;
+	CppAD::mixed::d_sparse_rcv A_rcv;
 	if( n_child == 0 || bound_random == 0 )
 		return A_rcv;
 	//
@@ -134,7 +134,7 @@ CppAD::mixed::sparse_rcv ran_con_rcv(
 	assert( nnz_index == A_nnz );
 	//
 	// non-empty value of A_rcv
-	A_rcv = CppAD::mixed::sparse_rcv( A_rc );
+	A_rcv = CppAD::mixed::d_sparse_rcv( A_rc );
 	for(size_t k = 0; k < A_nnz; k++)
 		A_rcv.set(k, 1.0);
 	//
@@ -926,7 +926,7 @@ $end
 	);
 	//
 	// information_rcv
-	CppAD::mixed::sparse_rcv information_rcv = information_mat(
+	CppAD::mixed::d_sparse_rcv information_rcv = information_mat(
 		solution, cppad_mixed_random_opt
 	);
 	//

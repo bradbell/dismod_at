@@ -14,7 +14,7 @@ export PYTHONPATH=''
 # ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_all.sh" ]
 then
-	echo 'bin/check_all.sh (+speed | -speed)'
+	echo 'bin/check_all.sh '
 	echo 'must be executed from its parent directory'
 	exit 1
 fi

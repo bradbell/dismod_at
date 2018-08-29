@@ -60,6 +60,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 08-29$$
+Advance to $code cppad-20180827$$ and $code cppad_mixed-20180829$$
+(working on speed).
+
 $head 08-13$$
 The fit_data_subset table had a an extra column
 (that was not in the API) named $icode data_subset_id$$ which has been removed.
