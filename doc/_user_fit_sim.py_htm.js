@@ -10,6 +10,13 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
+var list_current0 = [
+'user_fit_sim.py.htm#Parent Iota',
+'user_fit_sim.py.htm#Child Iota',
+'user_fit_sim.py.htm#Other Rates',
+'user_fit_sim.py.htm#Covariate Multiplier',
+'user_fit_sim.py.htm#Data'
+];
 var list_down2 = [
 'install_unix.htm',
 'get_started.htm',
@@ -28,13 +35,13 @@ var list_down1 = [
 'user_fit_fixed_both.py.htm',
 'user_posterior.py.htm',
 'user_diabetes.py.htm',
+'user_fit_sim.py.htm',
 'user_asymptotic.py.htm',
 'user_change_grid.py.htm',
 'user_const_random.py.htm',
 'user_const_value.py.htm',
 'user_continue_fit.py.htm',
 'user_diff_constraint.py.htm',
-'user_fit_sim.py.htm',
 'user_jump_at_age.py.htm',
 'user_lasso_covariate.py.htm',
 'user_meas_covariate.py.htm',

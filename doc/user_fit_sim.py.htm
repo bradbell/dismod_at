@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting Simulated Data Example</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting Simulated Data Example">
-<meta name="keywords" id="keywords" content=" fitting simulated data example ">
+<meta name="keywords" id="keywords" content=" fitting simulated data example parent iota child other rates covariate multiplier ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,9 +49,18 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_diff_constraint.py.htm" target="_top">Prev</a>
-</td><td>Current</td>
-<td><a href="user_jump_at_age.py.htm" target="_top">Next</a>
+<td><a href="user_diabetes.py.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Parent Iota</option>
+<option>Child Iota</option>
+<option>Other Rates</option>
+<option>Covariate Multiplier</option>
+<option>Data</option>
+</select>
+</td>
+<td><a href="user_asymptotic.py.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
@@ -75,13 +84,13 @@ A:active { color : purple }
 <option>user_fit_fixed_both.py</option>
 <option>user_posterior.py</option>
 <option>user_diabetes.py</option>
+<option>user_fit_sim.py</option>
 <option>user_asymptotic.py</option>
 <option>user_change_grid.py</option>
 <option>user_const_random.py</option>
 <option>user_const_value.py</option>
 <option>user_continue_fit.py</option>
 <option>user_diff_constraint.py</option>
-<option>user_fit_sim.py</option>
 <option>user_jump_at_age.py</option>
 <option>user_lasso_covariate.py</option>
 <option>user_meas_covariate.py</option>
@@ -98,8 +107,77 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting Simulated Data Example</big></big></b></center>
-<code><font color="blue"><pre><tt><i><font color="#9A1900"># values used to simulate data</font></i>
-iota_parent               <font color="#990000">=</font> <font color="#993399">0.01</font>
+<br>
+<b><big><a name="Parent Iota" id="Parent Iota">Parent Iota</a></big></b>
+<br>
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>iota_parent_true</span></font></i></code>
+
+is the simulated true rate for 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+
+for the parent.
+A uniform prior is used for the parent rate with
+
+<code><i><font color="black"><span style='white-space: nowrap'>iota_parent_true</span></font></i><font color="blue"><span style='white-space: nowrap'>/100</span></font></code>
+ as a lower limit,
+and <code><font color="blue">1</font></code> as the upper limit.
+
+<br>
+<br>
+<b><big><a name="Child Iota" id="Child Iota">Child Iota</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ <a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effects</span></a>
+
+have a Gaussian prior with a mean zero and standard deviation 0.1.
+Note that there is only one grid point in the parent and child smoothing
+for iota, hence it is constant in age and time.
+In addition, the sum of the child rate random effects is constrained to
+be zero.
+
+<br>
+<br>
+<b><big><a name="Other Rates" id="Other Rates">Other Rates</a></big></b>
+<br>
+For this example the other rates are all zero.
+This is specified by setting the
+<a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-space: nowrap'>parent_smooth_id</span></a>
+ and
+<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
+ to null
+for the other rates.
+
+<br>
+<br>
+<b><big><a name="Covariate Multiplier" id="Covariate Multiplier">Covariate Multiplier</a></big></b>
+<br>
+There is one covariate multiplier on income and it affects the
+value of the rate 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ for a particular data point.
+The income covariate has been normalized so it ranges between
+zero and one.
+The prior for this multiplier is an uniform on the interval
+[-2, +2].
+The true value for this multiplier, used to simulate data, is
+called 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_income_iota_true</span></font></i></code>
+.
+Note that there is only one grid point in the covariate multiplier,
+hence it is constant in age and time.
+
+<br>
+<br>
+<b><big><a name="Data" id="Data">Data</a></big></b>
+<br>
+All of the data is for the prevalence integrand and has a standard
+deviation of 1e-3.
+
+<code><font color="blue">
+<pre><tt><i><font color="#9A1900"># values used to simulate data</font></i>
+iota_parent_true          <font color="#990000">=</font> <font color="#993399">0.01</font>
 mulcov_income_iota_true   <font color="#990000">=</font> <font color="#993399">1.0</font>
 n_children                <font color="#990000">=</font> <font color="#993399">2</font>
 n_data                    <font color="#990000">=</font> <font color="#993399">20</font>
@@ -132,7 +210,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <b><font color="#0000FF">return</font></b> <font color="#993399">1.0</font>
 <i><font color="#9A1900"># note that the a, t values are not used for this case</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_rate_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_child'</font><font color="#990000">,</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
      <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_parent'</font><font color="#990000">,</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_mulcov</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
@@ -214,21 +292,15 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># prior_table</font></i>
      prior_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font>    <i><font color="#9A1900"># prior_gauss_zero</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font>
+          <font color="#990000">{</font>    <i><font color="#9A1900"># prior_iota_child</font></i>
+               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_iota_child'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.01</font><font color="#990000">,</font>
-          <font color="#990000">},{</font> <i><font color="#9A1900"># prior_loggauss_zero</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_loggauss_zero'</font><font color="#990000">,</font>
-               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
                <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.1</font><font color="#990000">,</font>
-               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-6</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_iota_parent</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_iota_parent'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
-               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    iota_parent <font color="#990000">/</font> <font color="#993399">100</font><font color="#990000">.,</font>
+               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    iota_parent_true <font color="#990000">/</font> <font color="#993399">100</font><font color="#990000">.,</font>
                <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.1</font><font color="#990000">,</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_mulcov</font></i>
@@ -279,6 +351,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>        <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'10.0'</font>         <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>            <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_random'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota'</font>         <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'true'</font>         <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'first-order'</font>  <font color="#990000">},</font>
@@ -357,7 +430,7 @@ var_id2true  <font color="#990000">=</font> <b><font color="#000000">list</font>
           node_id   <font color="#990000">=</font> var_info<font color="#990000">[</font><font color="#FF0000">'node_id'</font><font color="#990000">]</font>
           <i><font color="#9A1900"># node zero is the world</font></i>
           <b><font color="#0000FF">if</font></b> node_id <font color="#990000">==</font> <font color="#993399">0</font> <b><font color="#0000FF">and</font></b> rate_name <font color="#990000">==</font> <font color="#FF0000">'iota'</font> <font color="#990000">:</font>
-               truth_var_value <font color="#990000">=</font> iota_parent
+               truth_var_value <font color="#990000">=</font> iota_parent_true
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
                truth_var_value <font color="#990000">=</font> <font color="#993399">0.0</font>
      var_id2true<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> truth_var_value <font color="#990000">)</font>
@@ -390,7 +463,7 @@ connection<font color="#990000">.</font><b><font color="#000000">close</font></b
 <i><font color="#9A1900">#</font></i>
 max_error    <font color="#990000">=</font> <font color="#993399">0.0</font>
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     row      <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     row        <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
      fit_value  <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
      true_value <font color="#990000">=</font> var_id2true<font color="#990000">[</font>var_id<font color="#990000">]</font>
      <b><font color="#0000FF">if</font></b> true_value <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">:</font>
