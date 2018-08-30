@@ -1,4 +1,3 @@
-
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-18 University of Washington
@@ -82,8 +81,7 @@
 # $head Log Table$$
 # See $cref/dismodat.py/dismodat.py/Log Table/$$.
 #
-# $children%bin/dismodat.py
-#	%example/get_started/modify_command.py
+# $children%example/get_started/modify_command.py
 # %$$
 # $head Example$$
 # The file $cref modify_command.py$$ contains an example and test
