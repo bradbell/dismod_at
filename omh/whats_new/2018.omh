@@ -61,6 +61,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 08-30$$
+The documentation for the
+$cref/child_smooth_id/rate_table/child_smooth_id/$$ and
+$cref/child_nslist_id/rate_table/child_nslist_id/$$ was improved.
+To be specific, these specify priors for the child
+$cref/rate effects/model_variables/Random Effects, u/Child Rate Effects/$$
+and not for the child rates.
+
 $head 08-29$$
 Advance to $code cppad-20180827$$ and $code cppad_mixed-20180829$$
 (working on speed).

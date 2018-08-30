@@ -42,8 +42,18 @@ version.sh check
 # check latex in omhelp
 run_omhelp.sh -xml doc
 # ----------------------------------------------------------------------------
-echo 'bin/run_cmake.sh >& cmake.log'
-bin/run_cmake.sh >& cmake.log
+set +e
+eval random_01="`expr $RANDOM % 2`"
+set -e
+if [ "$random_01" == '0' ]
+then
+	echo 'bin/run_cmake.sh >& cmake.log'
+	bin/run_cmake.sh >& cmake.log
+else
+	echo 'bin/run_cmake.sh -switch_build_type >& cmake.log'
+	bin/run_cmake.sh --switch_build_type >& cmake.log
+fi
+# ----------------------------------------------------------------------------
 #
 cd build
 #

@@ -10,9 +10,51 @@
 # $begin user_fit_sim.py$$ $newlinech #$$
 # $spell
 #	init
+#	covariate
+#	mulcov
 # $$
 #
 # $section Fitting Simulated Data Example$$
+#
+# $head Parent Iota$$
+# The value $icode iota_parent_true$$
+# is the simulated true rate for $icode iota$$
+# for the parent.
+# A uniform prior is used for the parent rate with
+# $icode%iota_parent_true%/100%$$ as a lower limit,
+# and $code 1$$ as the upper limit.
+#
+# $head Child Iota$$
+# The $icode iota$$ $cref/child rate effects
+#	/model_variables/Random Effects, u/Child Rate Effects/$$
+# have a Gaussian prior with a mean zero and standard deviation 0.1.
+# Note that there is only one grid point in the parent and child smoothing
+# for iota, hence it is constant in age and time.
+# In addition, the sum of the child rate random effects is constrained to
+# be zero.
+#
+# $head Other Rates$$
+# For this example the other rates are all zero.
+# This is specified by setting the
+# $cref/parent_smooth_id/rate_table/parent_smooth_id/$$ and
+# $cref/child_smooth_id/rate_table/child_smooth_id/$$ to null
+# for the other rates.
+#
+# $head Covariate Multiplier$$
+# There is one covariate multiplier on income and it affects the
+# value of the rate $icode iota$$ for a particular data point.
+# The income covariate has been normalized so it ranges between
+# zero and one.
+# The prior for this multiplier is an uniform on the interval
+# [-2, +2].
+# The true value for this multiplier, used to simulate data, is
+# called $icode mulcov_income_iota_true$$.
+# Note that there is only one grid point in the covariate multiplier,
+# hence it is constant in age and time.
+#
+# $head Data$$
+# All of the data is for the prevalence integrand and has a standard
+# deviation of 1e-3.
 #
 # $code
 # $srcfile%
@@ -23,7 +65,7 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # values used to simulate data
-iota_parent               = 0.01
+iota_parent_true          = 0.01
 mulcov_income_iota_true   = 1.0
 n_children                = 2
 n_data                    = 20
@@ -56,7 +98,7 @@ def constant_weight_fun(a, t) :
 	return 1.0
 # note that the a, t values are not used for this case
 def fun_rate_child(a, t) :
-	return ('prior_gauss_zero', None, None)
+	return ('prior_iota_child', None, None)
 def fun_iota_parent(a, t) :
 	return ('prior_iota_parent', None, None)
 def fun_mulcov(a, t) :
@@ -138,21 +180,15 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{	# prior_gauss_zero
-			'name':     'prior_gauss_zero',
+		{	# prior_iota_child
+			'name':     'prior_iota_child',
 			'density':  'gaussian',
 			'mean':     0.0,
-			'std':      0.01,
-		},{ # prior_loggauss_zero
-			'name':     'prior_loggauss_zero',
-			'density':  'log_gaussian',
-			'mean':     0.0,
 			'std':      0.1,
-			'eta':      1e-6
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'lower':    iota_parent / 100.,
+			'lower':    iota_parent_true / 100.,
 			'upper':    1.0,
 			'mean':     0.1,
 		},{ # prior_mulcov
@@ -203,6 +239,7 @@ def example_db (file_name) :
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'zero_sum_random',        'value':'iota'         },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
@@ -281,7 +318,7 @@ for var_id in range( len(var_table) ) :
 		node_id   = var_info['node_id']
 		# node zero is the world
 		if node_id == 0 and rate_name == 'iota' :
-			truth_var_value = iota_parent
+			truth_var_value = iota_parent_true
 		else :
 			truth_var_value = 0.0
 	var_id2true.append( truth_var_value )
@@ -314,7 +351,7 @@ connection.close()
 #
 max_error    = 0.0
 for var_id in range( len(var_table) ) :
-	row      = fit_var_table[var_id]
+	row        = fit_var_table[var_id]
 	fit_value  = row['fit_var_value']
 	true_value = var_id2true[var_id]
 	if true_value == 0.0 :

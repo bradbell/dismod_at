@@ -110,10 +110,10 @@ $head child_smooth_id$$
 This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
-It specifies a single smoothing used as a prior for this rate
-when fitting all the
-$cref/children/option_table/parent_node_id/Children/$$; i.e.,
-all the random effects for this rate.
+It specifies a single smoothing used as a prior for the
+$cref/child rate effects
+	/model_variables/Random Effects, u/Child Rate Effects/$$
+for this rate.
 
 $subhead Random Effects Hessian$$
 The Hessian of the joint likelihood with respect to the random
@@ -136,8 +136,8 @@ If it is not $code null$$, it identifies a list of
 The $icode node_id$$ for each of the
 $cref/children/option_table/parent_node_id/Children/$$
 must appear in the list.
-The corresponding smoothing is used for that child
-and the rate corresponding to this row of the rate table.
+The corresponding smoothing is used for the child rate effects
+for the rate corresponding to this row of the rate table.
 
 $subhead null$$
 If $icode child_nslist_list$$ is not $code null$$,
