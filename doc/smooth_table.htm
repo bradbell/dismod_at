@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Smoothing Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Smoothing Table">
-<meta name="keywords" id="keywords" content=" the smoothing table purpose smooth_id smooth_name n_age n_time mulstd_value_prior_id null mulstd_dage_prior_id mulstd_dtime_prior_id removing age time example ">
+<meta name="keywords" id="keywords" content=" the smoothing table purpose empty smooth_id smooth_name n_age n_time mulstd_value_prior_id null mulstd_dage_prior_id mulstd_dtime_prior_id removing age time example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -55,6 +55,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>Purpose</option>
+<option>Empty</option>
 <option>smooth_id</option>
 <option>smooth_name</option>
 <option>n_age</option>
@@ -137,6 +138,14 @@ For each variable in the group its statistical prior is defined by a row of the
  which specifies an
 age, time, value prior, age difference prior, and time difference prior.
 (The difference priors represent the smoothing in a mathematical sense.)
+
+<br>
+<br>
+<b><big><a name="Empty" id="Empty">Empty</a></big></b>
+<br>
+The smooth table must not be empty because there
+could be no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ in this case.
 
 <br>
 <br>
