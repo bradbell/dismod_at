@@ -62,7 +62,7 @@ $childtable%
 %$$
 
 $head 09-14$$
-And $cref/empty/smooth_table/Empty/$$ smooth table would cause the
+An $cref/empty/smooth_table/Empty/$$ smooth table would cause the
 program to crash.
 An error message is now printed for this case.
 
