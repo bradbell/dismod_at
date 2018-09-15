@@ -45,7 +45,7 @@ run_omhelp.sh -xml doc
 set +e
 eval random_01="`expr $RANDOM % 2`"
 set -e
-if [ "$random_01" == '0' ]
+if [ "$random_01" == '5' ]
 then
 	echo 'bin/run_cmake.sh >& cmake.log'
 	bin/run_cmake.sh >& cmake.log

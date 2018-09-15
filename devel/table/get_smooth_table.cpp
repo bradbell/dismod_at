@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -91,6 +91,7 @@ $end
 # include <dismod_at/get_smooth_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -99,6 +100,10 @@ CppAD::vector<smooth_struct> get_smooth_table(sqlite3* db)
 
 	string table_name  = "smooth";
 	size_t n_smooth = check_table_id(db, table_name);
+	if( n_smooth == 0 )
+	{	string msg  = "smooth table is empty";
+		error_exit(msg, table_name);
+	}
 
 	std::string column_name =  "smooth_name";
 	CppAD::vector<string>       smooth_name;

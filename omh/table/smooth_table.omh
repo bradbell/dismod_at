@@ -30,6 +30,10 @@ $cref smooth_grid_table$$ which specifies an
 age, time, value prior, age difference prior, and time difference prior.
 (The difference priors represent the smoothing in a mathematical sense.)
 
+$head Empty$$
+The smooth table must not be empty because there
+could be no $cref model_variables$$ in this case.
+
 $head smooth_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.

@@ -61,6 +61,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-14$$
+And $cref/empty/smooth_table/Empty/$$ smooth table would cause the
+program to crash.
+An error message is now printed for this case.
+
 $head 08-30$$
 The documentation for the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$ and
