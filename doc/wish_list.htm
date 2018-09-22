@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution step size prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing meas_std diagrams lagrange documentation real world example user examples model sampling special hessian starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution step size age-time intervals prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing meas_std diagrams lagrange documentation real world example user examples model sampling special hessian starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -54,6 +54,7 @@ A:active { color : purple }
 <option>Current-&gt;</option>
 <option>ODE Solution</option>
 <option>---..Step Size</option>
+<option>---..Age-Time Intervals</option>
 <option>---..Prevalence ODE</option>
 <option>---..Large Excess Mortality</option>
 <option>csv2db Command</option>
@@ -141,6 +142,23 @@ Also note that, since no ODE needs to be solved for the values
 at the initial age, we can make the first age step small without having
 to do any extra ODE work.
 (There is still software work to deal with the non-uniform grid).
+
+<br>
+<br>
+<big><a name="ODE Solution.Age-Time Intervals" id="ODE Solution.Age-Time Intervals">Age-Time Intervals</a></big>
+<br>
+In the special case were a row in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+ has
+
+<code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i></code>
+ we should just integrate
+the ODE for that specific age, time and not solve for the surrounding
+ODE grid points.
+For these cases, it would be easier to implement an ODE age step size
+that varied with age.
 
 
 <br>
