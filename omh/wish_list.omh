@@ -33,6 +33,90 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head ODE Solution$$
+
+$subhead Step Size$$
+Currently there is a single
+$cref/ode_step_size/option_table/ode_step_size/$$ that is used
+for all ages and times.
+In many models, the older ages have much larger mortality rates.
+Perhaps it would be good to have a step size that varied with age.
+The difficulty with this is that it becomes more difficult to solve
+on the $cref ode_grid$$ and uses these values to integrate over the
+different limits for each data point.
+Here is an example of solving on the ODE grid with two step sizes
+(the ODE is solved along the diagonals):
+$codep
+7       x    x    x
+       /    /    /
+      /    /    /
+     /    /    /
+    /    /    /
+2  /    x    x    x
+  /    /    /    /
+0/    / x  / x  / x
+      1990 1995 2000
+$$
+Note that when the step size in age matches the step size in time,
+the results of the ODE solution at the previous age, time can be used
+as initial values for the next integration step.
+Also note that, since no ODE needs to be solved for the values
+at the initial age, we can make the first age step small without having
+to do any extra ODE work.
+(There is still software work to deal with the non-uniform grid).
+
+
+$subhead Prevalence ODE$$
+If $latex S$$ and $latex C$$ satisfy the dismod_at
+$cref/ordinary differential equation
+	/avg_integrand/Ordinary Differential Equation
+/$$ then prevalence $latex P = C / (S + C)$$ satisfies
+$latex \[
+	P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
+\] $$
+We can therefore solve for prevalence without other cause mortality
+$latex \omega$$ or all cause mortality $latex \omega + \chi P$$.
+$list number$$
+The ODE for $latex P$$ is non-linear,
+while the ODE is $latex (S, C)$$ is linear.
+$lnext
+All of the current integrands, except for
+$cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$ and
+$cref/withC/avg_integrand/Integrand, I_i(a,t)/withC/$$
+can be computed from $latex P$$ (given that the rates are inputs to the ODE).
+$lnext
+If we know all cause mortality $latex \alpha = \omega + \chi P$$,
+once we have solved for $latex P$$,
+we can compute $latex \omega = \alpha - \chi P$$.
+Furthermore
+$latex \[
+	(S + C)' = - \alpha (S + C)
+\] $$
+So we can also compute $latex S + C$$, and
+$latex C = P (S + C)$$,
+$lnext
+Given the original ODE, we know that the true solution for
+$latex S$$, must be positive, and $latex C$$, $latex P$$ must be
+non-negative.
+Negative values for these quantities will correspond to
+numerical precision errors in the solution of the ODE.
+$lnext
+One advantage of this approach,
+over the current approach of solving the ODE in $latex (S, C)$$,
+is that the solution is stable as $latex S + C \rightarrow 0$$.
+(The current approach computes $latex P = C / (S + C)$$.
+$lend
+
+$subhead Large Excess Mortality$$
+If case where $icode rate_case$$ is
+$cref/iota_pos_rho_zero/option_table/rate_case/iota_pos_rho_zero/$$
+corresponds to
+$cref/case three/eigen_ode2/Method/Case Three/$$ in the ODE solver.
+If excess mortality $latex \chi$$ is unreasonably large,
+this can result in exponential overflow and infinity or nan.
+It is possible to redo the calculations in case three to properly
+handle this condition.
+
 $head csv2db Command$$
 The following is a wish list for extending the csv2db command.
 This command is only an $cref/example/csv2db_command/Example/$$
@@ -86,61 +170,6 @@ This would enable csv2db to set up
 $cref/predictions/predict_command/$$
 using model variables computed by another program.
 
-
-$head ODE Solution$$
-
-$subhead Prevalence ODE$$
-If $latex S$$ and $latex C$$ satisfy the dismod_at
-$cref/ordinary differential equation
-	/avg_integrand/Ordinary Differential Equation
-/$$ then prevalence $latex P = C / (S + C)$$ satisfies
-$latex \[
-	P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
-\] $$
-We can therefore solve for prevalence without other cause mortality
-$latex \omega$$ or all cause mortality $latex \omega + \chi P$$.
-$list number$$
-The ODE for $latex P$$ is non-linear,
-while the ODE is $latex (S, C)$$ is linear.
-$lnext
-If we know all cause mortality $latex \alpha = \omega + \chi P$$,
-once we have solved for $latex P$$,
-we can compute $latex \omega = \alpha - \chi P$$.
-Furthermore
-$latex \[
-	(S + C)' = - \alpha (S + C)
-\] $$
-So we can also compute $latex S + C$$, and
-$latex C = P (S + C)$$,
-$lnext
-Given the original ODE, we know that the true solution for
-$latex S$$, must be positive, and $latex C$$, $latex P$$ must be
-non-negative.
-Negative values for these quantities will correspond to
-numerical precision errors in the solution of the ODE.
-$lnext
-One advantage of this approach,
-over the current approach of solving the ODE in $latex (S, C)$$,
-is that the solution is stable as $latex S + C \rightarrow 0$$.
-(The current approach computes $latex P = C / (S + C)$$.
-$lend
-
-$subhead Step Size$$
-Currently there is a single
-$cref/ode_step_size/option_table/ode_step_size/$$ that is used
-for all ages and times.
-In many models, the older ages have much larger mortality rates.
-Perhaps it would be good to have a step size that varied with age.
-
-$subhead Large Excess Mortality$$
-If case where $icode rate_case$$ is
-$cref/iota_pos_rho_zero/option_table/rate_case/iota_pos_rho_zero/$$
-corresponds to
-$cref/case three/eigen_ode2/Method/Case Three/$$ in the ODE solver.
-If excess mortality $latex \chi$$ is unreasonably large,
-this can result in exponential overflow and infinity or nan.
-It is possible to redo the calculations in case three to properly
-handle this condition.
 
 $subhead Conditionals$$
 It is now possible to use conditional expressions in the ODE solution
