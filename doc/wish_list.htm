@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list csv2db command covariate multipliers random effects grids value priors difference sample ode solution prevalence step size large excess mortality conditionals checkpointing meas_std diagrams lagrange documentation real world example user examples model sampling special hessian starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution step size prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing meas_std diagrams lagrange documentation real world example user examples model sampling special hessian starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -52,6 +52,10 @@ A:active { color : purple }
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
+<option>ODE Solution</option>
+<option>---..Step Size</option>
+<option>---..Prevalence ODE</option>
+<option>---..Large Excess Mortality</option>
 <option>csv2db Command</option>
 <option>---..Covariate Multipliers</option>
 <option>---..Random Effects</option>
@@ -59,10 +63,6 @@ A:active { color : purple }
 <option>---..Value Priors</option>
 <option>---..Difference Priors</option>
 <option>---..Sample</option>
-<option>ODE Solution</option>
-<option>---..Prevalence ODE</option>
-<option>---..Step Size</option>
-<option>---..Large Excess Mortality</option>
 <option>---..Conditionals</option>
 <option>---..Checkpointing</option>
 <option>meas_std</option>
@@ -103,6 +103,158 @@ A:active { color : purple }
 
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
+<br>
+<b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
+
+
+<br>
+<br>
+<big><a name="ODE Solution.Step Size" id="ODE Solution.Step Size">Step Size</a></big>
+<br>
+Currently there is a single
+<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+ that is used
+for all ages and times.
+In many models, the older ages have much larger mortality rates.
+Perhaps it would be good to have a step size that varied with age.
+The difficulty with this is that it becomes more difficult to solve
+on the <a href="ode_grid.htm" target="_top"><span style='white-space: nowrap'>ode_grid</span></a>
+ and uses these values to integrate over the
+different limits for each data point.
+Here is an example of solving on the ODE grid with two step sizes
+(the ODE is solved along the diagonals):
+<code><font color='blue'><pre style='display:inline'> 
+7       x    x    x
+       /    /    /
+      /    /    /
+     /    /    /
+    /    /    /
+2  /    x    x    x
+  /    /    /    /
+0/    / x  / x  / x
+      1990 1995 2000
+</pre></font></code>
+Note that when the step size in age matches the step size in time,
+the results of the ODE solution at the previous age, time can be used
+as initial values for the next integration step.
+Also note that, since no ODE needs to be solved for the values
+at the initial age, we can make the first age step small without having
+to do any extra ODE work.
+(There is still software work to deal with the non-uniform grid).
+
+
+<br>
+<br>
+<big><a name="ODE Solution.Prevalence ODE" id="ODE Solution.Prevalence ODE">Prevalence ODE</a></big>
+<br>
+If <small>@(@
+S
+@)@</small> and <small>@(@
+C
+@)@</small> satisfy the dismod_at
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+ then prevalence <small>@(@
+P = C / (S + C)
+@)@</small> satisfies
+<small>@[@
+
+	P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
+
+@]@</small>
+We can therefore solve for prevalence without other cause mortality
+<small>@(@
+\omega
+@)@</small> or all cause mortality <small>@(@
+\omega + \chi P
+@)@</small>.
+<ol type="1"><li>
+The ODE for <small>@(@
+P
+@)@</small> is non-linear,
+while the ODE is <small>@(@
+(S, C)
+@)@</small> is linear.
+</li><li>
+
+All of the current integrands, except for
+<a href="avg_integrand.htm#Integrand, I_i(a,t).susceptible" target="_top"><span style='white-space: nowrap'>susceptible</span></a>
+ and
+<a href="avg_integrand.htm#Integrand, I_i(a,t).withC" target="_top"><span style='white-space: nowrap'>withC</span></a>
+
+can be computed from <small>@(@
+P
+@)@</small> (given that the rates are inputs to the ODE).
+</li><li>
+
+If we know all cause mortality <small>@(@
+\alpha = \omega + \chi P
+@)@</small>,
+once we have solved for <small>@(@
+P
+@)@</small>,
+we can compute <small>@(@
+\omega = \alpha - \chi P
+@)@</small>.
+Furthermore
+<small>@[@
+
+	(S + C)' = - \alpha (S + C)
+
+@]@</small>
+So we can also compute <small>@(@
+S + C
+@)@</small>, and
+<small>@(@
+C = P (S + C)
+@)@</small>,
+</li><li>
+
+Given the original ODE, we know that the true solution for
+<small>@(@
+S
+@)@</small>, must be positive, and <small>@(@
+C
+@)@</small>, <small>@(@
+P
+@)@</small> must be
+non-negative.
+Negative values for these quantities will correspond to
+numerical precision errors in the solution of the ODE.
+</li><li>
+
+One advantage of this approach,
+over the current approach of solving the ODE in <small>@(@
+(S, C)
+@)@</small>,
+is that the solution is stable as <small>@(@
+S + C \rightarrow 0
+@)@</small>.
+(The current approach computes <small>@(@
+P = C / (S + C)
+@)@</small>.
+</li></ol>
+
+
+<br>
+<br>
+<big><a name="ODE Solution.Large Excess Mortality" id="ODE Solution.Large Excess Mortality">Large Excess Mortality</a></big>
+<br>
+If case where 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i></code>
+ is
+<a href="option_table.htm#rate_case.iota_pos_rho_zero" target="_top"><span style='white-space: nowrap'>iota_pos_rho_zero</span></a>
+
+corresponds to
+<a href="eigen_ode2.htm#Method.Case Three" target="_top"><span style='white-space: nowrap'>case&nbsp;three</span></a>
+ in the ODE solver.
+If excess mortality <small>@(@
+\chi
+@)@</small> is unreasonably large,
+this can result in exponential overflow and infinity or nan.
+It is possible to redo the calculations in case three to properly
+handle this condition.
+
+<br>
 <br>
 <b><big><a name="csv2db Command" id="csv2db Command">csv2db Command</a></big></b>
 <br>
@@ -184,124 +336,7 @@ using model variables computed by another program.
 
 <br>
 <br>
-<b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
-
-
-<br>
-<br>
-<big><a name="ODE Solution.Prevalence ODE" id="ODE Solution.Prevalence ODE">Prevalence ODE</a></big>
-<br>
-If <small>@(@
-S
-@)@</small> and <small>@(@
-C
-@)@</small> satisfy the dismod_at
-<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
- then prevalence <small>@(@
-P = C / (S + C)
-@)@</small> satisfies
-<small>@[@
-
-	P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
-
-@]@</small>
-We can therefore solve for prevalence without other cause mortality
-<small>@(@
-\omega
-@)@</small> or all cause mortality <small>@(@
-\omega + \chi P
-@)@</small>.
-<ol type="1"><li>
-The ODE for <small>@(@
-P
-@)@</small> is non-linear,
-while the ODE is <small>@(@
-(S, C)
-@)@</small> is linear.
-</li><li>
-
-If we know all cause mortality <small>@(@
-\alpha = \omega + \chi P
-@)@</small>,
-once we have solved for <small>@(@
-P
-@)@</small>,
-we can compute <small>@(@
-\omega = \alpha - \chi P
-@)@</small>.
-Furthermore
-<small>@[@
-
-	(S + C)' = - \alpha (S + C)
-
-@]@</small>
-So we can also compute <small>@(@
-S + C
-@)@</small>, and
-<small>@(@
-C = P (S + C)
-@)@</small>,
-</li><li>
-
-Given the original ODE, we know that the true solution for
-<small>@(@
-S
-@)@</small>, must be positive, and <small>@(@
-C
-@)@</small>, <small>@(@
-P
-@)@</small> must be
-non-negative.
-Negative values for these quantities will correspond to
-numerical precision errors in the solution of the ODE.
-</li><li>
-
-One advantage of this approach,
-over the current approach of solving the ODE in <small>@(@
-(S, C)
-@)@</small>,
-is that the solution is stable as <small>@(@
-S + C \rightarrow 0
-@)@</small>.
-(The current approach computes <small>@(@
-P = C / (S + C)
-@)@</small>.
-</li></ol>
-
-
-<br>
-<br>
-<big><a name="ODE Solution.Step Size" id="ODE Solution.Step Size">Step Size</a></big>
-<br>
-Currently there is a single
-<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
- that is used
-for all ages and times.
-In many models, the older ages have much larger mortality rates.
-Perhaps it would be good to have a step size that varied with age.
-
-<br>
-<br>
-<big><a name="ODE Solution.Large Excess Mortality" id="ODE Solution.Large Excess Mortality">Large Excess Mortality</a></big>
-<br>
-If case where 
-<code><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i></code>
- is
-<a href="option_table.htm#rate_case.iota_pos_rho_zero" target="_top"><span style='white-space: nowrap'>iota_pos_rho_zero</span></a>
-
-corresponds to
-<a href="eigen_ode2.htm#Method.Case Three" target="_top"><span style='white-space: nowrap'>case&nbsp;three</span></a>
- in the ODE solver.
-If excess mortality <small>@(@
-\chi
-@)@</small> is unreasonably large,
-this can result in exponential overflow and infinity or nan.
-It is possible to redo the calculations in case three to properly
-handle this condition.
-
-<br>
-<br>
-<big><a name="ODE Solution.Conditionals" id="ODE Solution.Conditionals">Conditionals</a></big>
+<big><a name="csv2db Command.Conditionals" id="csv2db Command.Conditionals">Conditionals</a></big>
 <br>
 It is now possible to use conditional expressions in the ODE solution
 (CppAD this will now work properly these conditionals
@@ -313,7 +348,7 @@ Note that this will also work with checkpointing.
 
 <br>
 <br>
-<big><a name="ODE Solution.Checkpointing" id="ODE Solution.Checkpointing">Checkpointing</a></big>
+<big><a name="csv2db Command.Checkpointing" id="csv2db Command.Checkpointing">Checkpointing</a></big>
 <br>
 It should greatly reduce memory if we use
 CppAD checkpointing of an ODE that has been
