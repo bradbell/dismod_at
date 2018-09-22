@@ -65,6 +65,15 @@ at the initial age, we can make the first age step small without having
 to do any extra ODE work.
 (There is still software work to deal with the non-uniform grid).
 
+$subhead  Age-Time Intervals$$
+In the special case were a row in the $cref data_table$$ has
+$icode%age_lower% == %age_upper%$$ and
+$icode%time_lower% == %time_upper%$$ we should just integrate
+the ODE for that specific age, time and not solve for the surrounding
+ODE grid points.
+For these cases, it would be easier to implement an ODE age step size
+that varied with age.
+
 
 $subhead Prevalence ODE$$
 If $latex S$$ and $latex C$$ satisfy the dismod_at
