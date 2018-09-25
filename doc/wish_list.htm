@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution step size age-time intervals prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing meas_std diagrams lagrange documentation real world example user examples model sampling special hessian starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution step size example minimum time age-time intervals prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing meas_std diagrams lagrange documentation real world user examples model sampling special hessian starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -54,6 +54,8 @@ A:active { color : purple }
 <option>Current-&gt;</option>
 <option>ODE Solution</option>
 <option>---..Step Size</option>
+<option>---..Example</option>
+<option>---..Minimum Time</option>
 <option>---..Age-Time Intervals</option>
 <option>---..Prevalence ODE</option>
 <option>---..Large Excess Mortality</option>
@@ -122,26 +124,62 @@ The difficulty with this is that it becomes more difficult to solve
 on the <a href="ode_grid.htm" target="_top"><span style='white-space: nowrap'>ode_grid</span></a>
  and uses these values to integrate over the
 different limits for each data point.
-Here is an example of solving on the ODE grid with two step sizes
-(the ODE is solved along the diagonals):
+
+<br>
+<br>
+<big><a name="ODE Solution.Example" id="ODE Solution.Example">Example</a></big>
+<br>
+Below is an example diagram for solving the ODE on a grid with two age
+step sizes, 2 and 5, and one time step size, 5.
+The grid points are denoted by the character <code><font color="blue">x</font></code>.
+The ODE is solved along the diagonals
+<code><font color="blue">d1</font></code>, <code><font color="blue">d2</font></code>, ..., starting at the
+minimum age in the age table
+<a href="ode_grid.htm#a_min, a_max" target="_top"><span style='white-space: nowrap'>a_min</span></a>
+ which is 0 for this example.
+The minimum time in the time table
+<a href="ode_grid.htm#t_min, t_max" target="_top"><span style='white-space: nowrap'>t_min</span></a>
+ is 1990 for this example.
 <code><font color='blue'><pre style='display:inline'> 
-7       x    x    x
-       /    /    /
-      /    /    /
-     /    /    /
-    /    /    /
-2  /    x    x    x
-  /    /    /    /
-0/    / x  / x  / x
-      1990 1995 2000
+     7       x    x    x
+            /|   /    /
+a          / |  /    /
+g         /  | /    /
+e        /   |/    /
+     2  /    x    x    x
+       /    /|   /    /
+     0/----/-x--/-x--/-x
+     d1   d2   d2   d4
+           1990 1995 2000
+                time
 </pre></font></code>
 Note that when the step size in age matches the step size in time,
-the results of the ODE solution at the previous age, time can be used
+the results of the ODE solution at the previous (age, time) can be used
 as initial values for the next integration step.
-Also note that, since no ODE needs to be solved for the values
-at the initial age, we can make the first age step small without having
-to do any extra ODE work.
-(There is still software work to deal with the non-uniform grid).
+Also note that, the initial prevalence specifies the value of
+<small>@(@
+S
+@)@</small> and <small>@(@
+C
+@)@</small> at the initial age
+
+<code><i><font color="black"><span style='white-space: nowrap'>a_min</span></font></i></code>
+, so no ODE needs to be solved to obtain these values.
+We can make the first age step different (e.g., smaller) without having
+to do any extra ODE work (2 in the age-time diagram above).
+There is still extra software work necessary to deal with the non-uniform grid.
+
+<br>
+<br>
+<big><a name="ODE Solution.Minimum Time" id="ODE Solution.Minimum Time">Minimum Time</a></big>
+<br>
+For times less than 
+<code><i><font color="black"><span style='white-space: nowrap'>t_min</span></font></i></code>
+, the rates are only a function of age
+and does not depend on time.
+For example, the integral along diagonal d1 and diagonal d1 is the
+same up to age 2.
+We could use an age grid that had non-uniform steps sizes for this integration.
 
 <br>
 <br>
@@ -157,9 +195,8 @@ In the special case were a row in the <a href="data_table.htm" target="_top"><sp
  we should just integrate
 the ODE for that specific age, time and not solve for the surrounding
 ODE grid points.
-For these cases, it would be easier to implement an ODE age step size
-that varied with age.
-
+We could use a an age grid that had non-uniform step sizes
+for this case.
 
 <br>
 <br>

@@ -12,6 +12,8 @@ var list_across0 = [
 var list_current0 = [
 'wish_list.htm#ODE Solution',
 'wish_list.htm#ODE Solution.Step Size',
+'wish_list.htm#ODE Solution.Example',
+'wish_list.htm#ODE Solution.Minimum Time',
 'wish_list.htm#ODE Solution.Age-Time Intervals',
 'wish_list.htm#ODE Solution.Prevalence ODE',
 'wish_list.htm#ODE Solution.Large Excess Mortality',
