@@ -61,6 +61,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-24$$
+The $cref/ode/wish_list/ODE Solution/$$ wish list entry
+has been extended and moved to the front of the list.
+
 $head 09-14$$
 An $cref/empty/smooth_table/Empty/$$ smooth table would cause the
 program to crash.

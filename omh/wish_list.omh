@@ -44,26 +44,46 @@ Perhaps it would be good to have a step size that varied with age.
 The difficulty with this is that it becomes more difficult to solve
 on the $cref ode_grid$$ and uses these values to integrate over the
 different limits for each data point.
-Here is an example of solving on the ODE grid with two step sizes
-(the ODE is solved along the diagonals):
+
+$subhead Example$$
+Below is an example diagram for solving the ODE on a grid with two age
+step sizes, 2 and 5, and one time step size, 5.
+The grid points are denoted by the character $code x$$.
+The ODE is solved along the diagonals
+$code d1$$, $code d2$$, ..., starting at the
+minimum age in the age table
+$cref/a_min/ode_grid/a_min, a_max/$$ which is 0 for this example.
+The minimum time in the time table
+$cref/t_min/ode_grid/t_min, t_max/$$ is 1990 for this example.
 $codep
-7       x    x    x
-       /    /    /
-      /    /    /
-     /    /    /
-    /    /    /
-2  /    x    x    x
-  /    /    /    /
-0/    / x  / x  / x
-      1990 1995 2000
+     7       x    x    x
+            /|   /    /
+a          / |  /    /
+g         /  | /    /
+e        /   |/    /
+     2  /    x    x    x
+       /    /|   /    /
+     0/----/-x--/-x--/-x
+     d1   d2   d2   d4
+           1990 1995 2000
+                time
 $$
 Note that when the step size in age matches the step size in time,
-the results of the ODE solution at the previous age, time can be used
+the results of the ODE solution at the previous (age, time) can be used
 as initial values for the next integration step.
-Also note that, since no ODE needs to be solved for the values
-at the initial age, we can make the first age step small without having
-to do any extra ODE work.
-(There is still software work to deal with the non-uniform grid).
+Also note that, the initial prevalence specifies the value of
+$latex S$$ and $latex C$$ at the initial age
+$icode a_min$$, so no ODE needs to be solved to obtain these values.
+We can make the first age step different (e.g., smaller) without having
+to do any extra ODE work (2 in the age-time diagram above).
+There is still extra software work necessary to deal with the non-uniform grid.
+
+$subhead Minimum Time$$
+For times less than $icode t_min$$, the rates are only a function of age
+and does not depend on time.
+For example, the integral along diagonal d1 and diagonal d1 is the
+same up to age 2.
+We could use an age grid that had non-uniform steps sizes for this integration.
 
 $subhead  Age-Time Intervals$$
 In the special case were a row in the $cref data_table$$ has
@@ -71,9 +91,8 @@ $icode%age_lower% == %age_upper%$$ and
 $icode%time_lower% == %time_upper%$$ we should just integrate
 the ODE for that specific age, time and not solve for the surrounding
 ODE grid points.
-For these cases, it would be easier to implement an ODE age step size
-that varied with age.
-
+We could use a an age grid that had non-uniform step sizes
+for this case.
 
 $subhead Prevalence ODE$$
 If $latex S$$ and $latex C$$ satisfy the dismod_at
