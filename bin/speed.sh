@@ -12,9 +12,10 @@
 # parameters that can be changed
 # If branch 2 is empty, use new directory to replace source code
 random_seed='123'
-n_children='20'
+n_children='10'
 n_data_per_child='20'
 quasi_fixed='false'
+ode_step_size='1.0'
 branch1='master'
 branch2=''
 install_cppad='yes'

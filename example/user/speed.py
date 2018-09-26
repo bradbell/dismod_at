@@ -16,7 +16,7 @@
 #
 # $head Syntax$$
 # $icode%python3% example/user/speed.py \
-#	%random_seed% %n_children% %n_data_per_child% %quasi_fixed%$$
+# %random_seed% %n_children% %n_data_per_child% %quasi_fixed% %ode_step_size%$$
 #
 # $head python3$$
 # This is the $cref/python3_executable/run_cmake.sh/python3_executable/$$
@@ -36,6 +36,11 @@
 # $head quasi_fixed$$
 # This argument is $code true$$ or $code false$$ and specifies
 # $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$
+# in the option table.
+#
+# $head ode_step_size$$
+# This argument is a floating point value and specifies the
+# $cref/ode_step_size/option_table/ode_step_size/$$
 # in the option table.
 #
 # $code
@@ -58,15 +63,17 @@ import time
 import distutils.dir_util
 import subprocess
 test_program = 'example/user/speed.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 5 :
-	usage  = 'python3 ' + test_program
-	usage += ' random_seed n_children n_data_per_child quasi_fixed\n'
+if sys.argv[0] != test_program  or len(sys.argv) != 6 :
+	usage  = 'python3 ' + test_program + '\\\n'
+	usage += '\trandom_seed n_children n_data_per_child quasi_fixed'
+	usage += ' ode_step_size\n'
 	usage += 'where working directory is dismod_at distribution directory\n'
 	usage += 'python3:          the python 3 program on your system\n'
 	usage += 'random_seed:      non-negative random seed; if zero, use clock\n'
 	usage += 'n_children:       positive number of child nodes\n'
 	usage += 'n_data_per_child: number of data points for each child node\n'
 	usage += 'quasi_fixed:      true or false\n'
+	usage += 'ode_step_size:    floating point step in age and time\n'
 	sys.exit(usage)
 #
 start_time       = time.time();
@@ -74,6 +81,7 @@ random_seed_arg  = sys.argv[1]
 n_children       = int( sys.argv[2] )
 n_data_per_child = int( sys.argv[3] )
 quasi_fixed      = sys.argv[4]
+ode_step_size    = sys.argv[5]
 n_data           = n_data_per_child * n_children
 #
 if quasi_fixed != 'true' and quasi_fixed != 'false' :
@@ -264,7 +272,7 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos' },
 		{ 'name':'parent_node_name',       'value':'world'            },
-		{ 'name':'ode_step_size',          'value':'10.0'             },
+		{ 'name':'ode_step_size',          'value':ode_step_size      },
 		{ 'name':'random_seed',            'value':random_seed_arg    },
 
 		{ 'name':'quasi_fixed',            'value':quasi_fixed        },
