@@ -73,11 +73,11 @@ start_time       = time.time();
 random_seed_arg  = sys.argv[1]
 n_children       = int( sys.argv[2] )
 n_data_per_child = int( sys.argv[3] )
-quasi_fixed_arg  = sys.argv[4]
+quasi_fixed      = sys.argv[4]
 n_data           = n_data_per_child * n_children
 #
-if quasi_fixed_arg != 'true' and quasi_fixed_arg != 'false' :
-	msg = 'quasi_fixed = "' + quasi_fixed_arg + '" is not true or false'
+if quasi_fixed != 'true' and quasi_fixed != 'false' :
+	msg = 'quasi_fixed = "' + quasi_fixed + '" is not true or false'
 	sys.exit(msg)
 #
 # import dismod_at
@@ -267,7 +267,7 @@ def example_db (file_name) :
 		{ 'name':'ode_step_size',          'value':'10.0'             },
 		{ 'name':'random_seed',            'value':random_seed_arg    },
 
-		{ 'name':'quasi_fixed',            'value':quasi_fixed_arg    },
+		{ 'name':'quasi_fixed',            'value':quasi_fixed        },
 		{ 'name':'derivative_test_fixed',  'value':'none'             },
 		{ 'name':'max_num_iter_fixed',     'value':'100'              },
 		{ 'name':'print_level_fixed',      'value':'5'                },
