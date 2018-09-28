@@ -185,9 +185,9 @@ def example_db (file_name) :
 		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
 		row['integrand'] = integrand_table[ data_id % 2 ]['name']
 		if row['integrand'] == 'Sincidence' :
-			row['meas_std']  = 0.05 * iota_parent
+			row['meas_std']  = 0.01 * iota_parent
 		elif row['integrand'] == 'prevalence' :
-			row['meas_std']  = 0.05 * (iota_parent / rho_parent)
+			row['meas_std']  = 0.01 * (iota_parent / rho_parent)
 		else :
 			assert(False)
 		data_table.append( copy.copy(row) )

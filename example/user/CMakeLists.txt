@@ -46,9 +46,9 @@ ADD_CUSTOM_TARGET( check_example_user DEPENDS ${depends} )
 # Build check_example_user_speed (not included above)
 SET(random_seed      0)
 SET(n_children       10)
-SET(n_data_per_child 20)
+SET(n_data_per_child 1)
 SET(quasi_fixed     "false")
-SET(ode_step_size    10)
+SET(ode_step_size    5)
 #
 ADD_CUSTOM_TARGET(
 	check_example_user_speed
