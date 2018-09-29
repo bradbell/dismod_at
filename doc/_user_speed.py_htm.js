@@ -16,7 +16,8 @@ var list_current0 = [
 'user_speed.py.htm#random_seed',
 'user_speed.py.htm#n_children',
 'user_speed.py.htm#n_data_per_child',
-'user_speed.py.htm#quasi_fixed'
+'user_speed.py.htm#quasi_fixed',
+'user_speed.py.htm#ode_step_size'
 ];
 var list_down2 = [
 'install_unix.htm',
