@@ -24,6 +24,19 @@ echo_eval() {
 	echo $*
 	eval $*
 }
+# ----------------------------------------------------------------------------
+# run cmake first so know right away if debug or release build
+set +e
+eval random_01="`expr $RANDOM % 2`"
+set -e
+if [ "$random_01" == '0' ]
+then
+	echo 'bin/run_cmake.sh >& cmake.log'
+	bin/run_cmake.sh >& cmake.log
+else
+	echo 'bin/run_cmake.sh -switch_build_type >& cmake.log'
+	bin/run_cmake.sh --switch_build_type >& cmake.log
+fi
 # -----------------------------------------------------------------------------
 # run bin/check_*.sh and ~/bradbell/bin/check_copyright.sh
 list=`ls bin/check_*.sh`
@@ -41,18 +54,6 @@ version.sh check
 #
 # check latex in omhelp
 run_omhelp.sh -xml doc
-# ----------------------------------------------------------------------------
-set +e
-eval random_01="`expr $RANDOM % 2`"
-set -e
-if [ "$random_01" == '0' ]
-then
-	echo 'bin/run_cmake.sh >& cmake.log'
-	bin/run_cmake.sh >& cmake.log
-else
-	echo 'bin/run_cmake.sh -switch_build_type >& cmake.log'
-	bin/run_cmake.sh --switch_build_type >& cmake.log
-fi
 # ----------------------------------------------------------------------------
 #
 cd build
