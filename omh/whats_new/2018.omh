@@ -61,6 +61,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-28$$
+The program did not report an error when a
+$cref/weight_id/data_table/weight_id/$$ in the data table was null.
+This has been fixed.
+
 $head 09-24$$
 The $cref/ode/wish_list/ODE Solution/$$ wish list entry
 has been extended and moved to the front of the list.

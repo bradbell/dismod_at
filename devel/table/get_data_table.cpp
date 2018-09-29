@@ -180,6 +180,7 @@ $end
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/get_density_table.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -301,9 +302,16 @@ void get_data_table(
 	}
 
 	// check for erorr conditions
+	// (primary key conditions checked by calling routine)
 	string msg;
 	for(size_t data_id = 0; data_id < n_data; data_id++)
-	{	int hold_out = data_table[data_id].hold_out;
+	{	int weight_id = data_table[data_id].weight_id;
+		if( weight_id == DISMOD_AT_NULL_INT )
+		{	msg = "weight_id is null";
+			error_exit(msg, table_name, data_id);
+		}
+		// -------------------------------------------------------------
+		int hold_out = data_table[data_id].hold_out;
 		if( hold_out != 0 && hold_out != 1 )
 		{	msg = "hold_out is not equal to zero or one";
 			error_exit(msg, table_name, data_id);
