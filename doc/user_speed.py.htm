@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>A Simulate Data Speed Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="A Simulate Data Speed Test">
-<meta name="keywords" id="keywords" content=" simulate data speed test syntax python3 random_seed n_children n_data_per_child quasi_fixed ode_step_size ">
+<meta name="keywords" id="keywords" content=" simulate data speed test syntax python3 random_seed n_children quasi_fixed ode_step_size ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -57,7 +57,6 @@ A:active { color : purple }
 <option>python3</option>
 <option>random_seed</option>
 <option>n_children</option>
-<option>n_data_per_child</option>
 <option>quasi_fixed</option>
 <option>ode_step_size</option>
 </select>
@@ -115,7 +114,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;example/user/speed.py&nbsp;\<br>
-</span></font><i><font color="black"><span style='white-space: nowrap'>random_seed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_children</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_data_per_child</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i></code>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>random_seed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_children</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i></code>
 
 
 <br>
@@ -141,12 +140,8 @@ the <a href="option_table.htm#random_seed" target="_top"><span style='white-spac
 is a positive integer specifying the number of
 <a href="option_table.htm#parent_node_id.Children" target="_top"><span style='white-space: nowrap'>children</span></a>
 .
-
-<br>
-<br>
-<b><big><a name="n_data_per_child" id="n_data_per_child">n_data_per_child</a></big></b>
-<br>
-is the number of measurement values (data points) for each child node.
+The number of data points (and number random effects) is twice
+the number of children.
 
 <br>
 <br>
@@ -165,6 +160,8 @@ This argument is a floating point value and specifies the
 <a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
 
 in the option table.
+The total work for the test increases with proportional to the
+square of this step size
 
 <code><font color="blue">
 <pre><tt><i><font color="#9A1900"># values used to simulate data</font></i>
@@ -179,15 +176,13 @@ mulcov_sex_rho_true       <font color="#990000">=</font> <font color="#990000">-
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> subprocess
 test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/speed.py'</font>
-<b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">6</font> <font color="#990000">:</font>
+<b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">5</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\\\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'\trandom_seed n_children n_data_per_child quasi_fixed'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">' ode_step_size\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'\trandom_seed n_children quasi_fixed ode_step_size\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where working directory is dismod_at distribution directory\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'python3:          the python 3 program on your system\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'random_seed:      non-negative random seed; if zero, use clock\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'n_children:       positive number of child nodes\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'n_data_per_child: number of data points for each child node\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'quasi_fixed:      true or false\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'ode_step_size:    floating point step in age and time\n'</font>
      sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
@@ -195,10 +190,9 @@ test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/
 start_time       <font color="#990000">=</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">();</font>
 random_seed_arg  <font color="#990000">=</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
 n_children       <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">)</font>
-n_data_per_child <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">)</font>
-quasi_fixed      <font color="#990000">=</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font>
-ode_step_size    <font color="#990000">=</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font>
-n_data           <font color="#990000">=</font> n_data_per_child <font color="#990000">*</font> n_children
+quasi_fixed      <font color="#990000">=</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font>
+ode_step_size    <font color="#990000">=</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font>
+n_data           <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> n_children
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">if</font></b> quasi_fixed <font color="#990000">!=</font> <font color="#FF0000">'true'</font> <b><font color="#0000FF">and</font></b> quasi_fixed <font color="#990000">!=</font> <font color="#FF0000">'false'</font> <font color="#990000">:</font>
      msg <font color="#990000">=</font> <font color="#FF0000">'quasi_fixed = "'</font> <font color="#990000">+</font> quasi_fixed <font color="#990000">+</font> <font color="#FF0000">'" is not true or false'</font>
@@ -536,7 +530,6 @@ max_error       <font color="#990000">=</font> <font color="#993399">0.0</font>
           max_error <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>fit_value <font color="#990000">/</font> true_value <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">),</font> max_error<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed      = '</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'n_children       = '</font><font color="#990000">,</font> n_children<font color="#990000">)</font>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'n_data_per_child = '</font><font color="#990000">,</font> n_data_per_child<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'elapsed seconds  ='</font><font color="#990000">,</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">-</font> start_time<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'max_error        = '</font><font color="#990000">,</font> max_error<font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> max_error <font color="#990000">&gt;</font> <font color="#993399">5e-2</font> <font color="#990000">:</font>
