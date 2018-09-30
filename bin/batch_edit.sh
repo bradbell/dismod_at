@@ -16,6 +16,7 @@ rename_files='
 spell_files='
 '
 no_change_files='
+	omh/whats_new/2015.omh
 '
 #
 rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
@@ -23,7 +24,14 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|CppAD::mixed::sparse_rcv|CppAD::mixed::d_sparse_rcv|
+/DISMOD_AT_INSTANTIATE_.*( a[23]_double )/d
+/typedef CppAD::AD<a[12]_double>/d
+/typedef CppAD::vector<a[23]_double>/d
+/using CppAD::mixed::a[23]_double/d
+/using CppAD::mixed::a[23]_vector/d
+#
+s|a3_vector|a1_vector|g
+s|a3_double|a1_double|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

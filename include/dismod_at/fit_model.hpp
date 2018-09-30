@@ -29,7 +29,6 @@ namespace dismod_at {
 	public:
 		// type declarations
 		typedef CppAD::vector<a1_double>   a1_vector;
-		typedef CppAD::vector<a3_double>   a3_vector;
 		//
 	// =======================================================================
 	private:
@@ -147,9 +146,9 @@ namespace dismod_at {
 		}
 		// -------------------------------------------------------------------
 		// virtual functions used by cppad_mixed base class
-		virtual a3_vector ran_likelihood(
-			const a3_vector& fixed_vec   ,
-			const a3_vector& random_vec
+		virtual a1_vector ran_likelihood(
+			const a1_vector& fixed_vec   ,
+			const a1_vector& random_vec
 		);
 		// pass fixed negative log-likelihood to base class
 		virtual a1_vector fix_likelihood(

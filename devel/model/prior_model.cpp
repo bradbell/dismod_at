@@ -548,7 +548,5 @@ prior_model::random(const CppAD::vector<Float>& pack_vec ) const
 // instantiations
 DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( double )
 DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( a1_double )
-DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( a2_double )
-DISMOD_AT_INSTANTIATE_PRIOR_DENSITY( a3_double )
 
 } // BEGIN_DISMOD_AT_NAMESPACE

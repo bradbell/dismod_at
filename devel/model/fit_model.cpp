@@ -1063,31 +1063,31 @@ $end
 // private virtual functions
 // ===========================================================================
 // ran_likelihood
-fit_model::a3_vector fit_model::ran_likelihood(
-	const a3_vector& fixed_vec                ,
-	const a3_vector& cppad_mixed_random_vec   )
+fit_model::a1_vector fit_model::ran_likelihood(
+	const a1_vector& fixed_vec                ,
+	const a1_vector& cppad_mixed_random_vec   )
 {	//
 	// check for case where all random effects are constrained
 	assert( n_random_ >= n_random_equal_ );
 	if( n_random_ == n_random_equal_ )
-		return a3_vector(0);
+		return a1_vector(0);
 	//
 	// convert from cppad_mixed random effects to dismod_at random effects
-	a3_vector random_vec = random_cppad_mixed2dismod_at(
+	a1_vector random_vec = random_cppad_mixed2dismod_at(
 		cppad_mixed_random_vec
 	);
 	//
 	// packed vector
-	a3_vector pack_vec( pack_object_.size() );
+	a1_vector pack_vec( pack_object_.size() );
 	//
 	// put the fixed and random effects into pack_vec
-	a3_vector fixed_tmp(n_fixed_);
+	a1_vector fixed_tmp(n_fixed_);
 	unscale_fixed_effect(fixed_vec, fixed_tmp);
 	pack_fixed(pack_object_, pack_vec, fixed_tmp);
 	pack_random(pack_object_, pack_vec, random_vec);
 	//
 	// evaluate the data and prior residuals that depend on the random effects
-	CppAD::vector< residual_struct<a3_double> > data_ran, prior_ran;
+	CppAD::vector< residual_struct<a1_double> > data_ran, prior_ran;
 	bool hold_out       = true;
 	bool random_depend  = true;
 	data_ran   = data_object_.like_all(hold_out, random_depend, pack_vec);
@@ -1099,7 +1099,7 @@ fit_model::a3_vector fit_model::ran_likelihood(
 	//
 	// check for the case where we return the empty vector
 	if( n_data_ran == 0 && n_prior_ran == 0 )
-		return a3_vector(0);
+		return a1_vector(0);
 	//
 	// count the number of absolute value terms
 	size_t n_abs = 0;
@@ -1114,7 +1114,7 @@ fit_model::a3_vector fit_model::ran_likelihood(
 			n_abs++;
 	}
 	// size ran_den
-	a3_vector ran_den(1 + n_abs);
+	a1_vector ran_den(1 + n_abs);
 	//
 	// initialize summation of smooth part
 	ran_den[0] = 0.0;

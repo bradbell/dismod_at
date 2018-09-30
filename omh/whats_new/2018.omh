@@ -62,9 +62,20 @@ $childtable%
 %$$
 
 $head 09-30$$
+$list number$$
 The $icode n_data_per_child$$ argument to the speed test
 has been replaced by
 $cref/ode_step_size/user_speed.py/ode_step_size/$$.
+
+$lnext
+Advance to cppad-0180925 and cppad_mixed-0180925.
+This had the following effect timing result for $code bin/speed.sh$$:
+$table
+        $cnext user time    $cnext memory         $rnext
+before  $cnext 10.395 sec   $cnext 1.265 GB       $rnext
+after   $cnext 9.376  sec   $cnext 1.247 GB
+$tend
+$lend
 
 $head 09-28$$
 The program did not report an error when a
