@@ -16,7 +16,7 @@
 #
 # $head Syntax$$
 # $icode%python3% example/user/speed.py \
-# %random_seed% %n_children% %n_data_per_child% %quasi_fixed% %ode_step_size%$$
+#	%random_seed% %n_children% %quasi_fixed% %ode_step_size%$$
 #
 # $head python3$$
 # This is the $cref/python3_executable/run_cmake.sh/python3_executable/$$
@@ -29,9 +29,8 @@
 # $head n_children$$
 # is a positive integer specifying the number of
 # $cref/children/option_table/parent_node_id/Children/$$.
-#
-# $head n_data_per_child$$
-# is the number of measurement values (data points) for each child node.
+# The number of data points (and number random effects) is twice
+# the number of children.
 #
 # $head quasi_fixed$$
 # This argument is $code true$$ or $code false$$ and specifies
@@ -42,6 +41,8 @@
 # This argument is a floating point value and specifies the
 # $cref/ode_step_size/option_table/ode_step_size/$$
 # in the option table.
+# The total work for the test increases with proportional to the
+# square of this step size
 #
 # $code
 # $srcfile%
@@ -63,15 +64,13 @@ import time
 import distutils.dir_util
 import subprocess
 test_program = 'example/user/speed.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 6 :
+if sys.argv[0] != test_program  or len(sys.argv) != 5 :
 	usage  = 'python3 ' + test_program + '\\\n'
-	usage += '\trandom_seed n_children n_data_per_child quasi_fixed'
-	usage += ' ode_step_size\n'
+	usage += '\trandom_seed n_children quasi_fixed ode_step_size\n'
 	usage += 'where working directory is dismod_at distribution directory\n'
 	usage += 'python3:          the python 3 program on your system\n'
 	usage += 'random_seed:      non-negative random seed; if zero, use clock\n'
 	usage += 'n_children:       positive number of child nodes\n'
-	usage += 'n_data_per_child: number of data points for each child node\n'
 	usage += 'quasi_fixed:      true or false\n'
 	usage += 'ode_step_size:    floating point step in age and time\n'
 	sys.exit(usage)
@@ -79,10 +78,9 @@ if sys.argv[0] != test_program  or len(sys.argv) != 6 :
 start_time       = time.time();
 random_seed_arg  = sys.argv[1]
 n_children       = int( sys.argv[2] )
-n_data_per_child = int( sys.argv[3] )
-quasi_fixed      = sys.argv[4]
-ode_step_size    = sys.argv[5]
-n_data           = n_data_per_child * n_children
+quasi_fixed      = sys.argv[3]
+ode_step_size    = sys.argv[4]
+n_data           = 2 * n_children
 #
 if quasi_fixed != 'true' and quasi_fixed != 'false' :
 	msg = 'quasi_fixed = "' + quasi_fixed + '" is not true or false'
@@ -420,7 +418,6 @@ for var_id in range( number_variable ) :
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
 print('random_seed      = ', random_seed)
 print('n_children       = ', n_children)
-print('n_data_per_child = ', n_data_per_child)
 print('elapsed seconds  =', time.time() - start_time)
 print('max_error        = ', max_error)
 if max_error > 5e-2 :

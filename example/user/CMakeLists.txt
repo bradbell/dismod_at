@@ -46,16 +46,14 @@ ADD_CUSTOM_TARGET( check_example_user DEPENDS ${depends} )
 # Build check_example_user_speed (not included above)
 SET(random_seed      0)
 SET(n_children       10)
-SET(n_data_per_child 1)
 SET(quasi_fixed     "false")
-SET(ode_step_size    5)
+SET(ode_step_size    10)
 #
 ADD_CUSTOM_TARGET(
 	check_example_user_speed
 	${python3_executable} example/user/speed.py
 		${random_seed}
 		${n_children}
-		${n_data_per_child}
 		${quasi_fixed}
 		${ode_step_size}
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}

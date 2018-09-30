@@ -10,16 +10,32 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # parameters that can be changed
-# If branch 2 is empty, use new directory to replace source code
+#
+# non-zero so same random see each time.
 random_seed='123'
+#
+# number of random effects is 2 * n_children
 n_children='10'
-n_data_per_child='20'
+#
+# use quasi-Newton (otherwise Newton)
 quasi_fixed='false'
-ode_step_size='1.0'
+#
+# smaller increase work per function evaluation
+ode_step_size='5.0'
+#
+# this branch name must not be empty
 branch1='master'
+#
+# If non-empty, compare branches.
+# If empty, and there is a new sub-directory, use new subdirectory for changes.
+# If empty, and no new sub-directory, only run branch1 case.
 branch2=''
-install_cppad='yes'
-install_cppad_mixed='yes'
+#
+# Assume that at beginning, installs correspond to master branch.
+# If true, re-install release version corresponding to each version and
+# at the end ensure installs correspond to master version.
+install_cppad='true'
+install_cppad_mixed='true'
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/speed.sh' ]
 then
@@ -37,6 +53,11 @@ then
 	echo 'bin/speed.sh: branch1 cannot be empty'
 	exit 1
 fi
+if [ "$branch2" == 'master' ]
+then
+	echo 'bin/speed.sh: branch2 cannot be master'
+	exit 1
+fi
 if [ "$branch1" == "$branch2" ]
 then
 	echo 'bin/speed.sh: branch1 and branch2 must be different'
@@ -44,8 +65,13 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-output_file_list=''
-for version in one two
+if [ "$branch2" != '' ] || [ -d new ]
+then
+	list='one two'
+else
+	list='one'
+fi
+for version in $list
 do
 	if [ "$version" == 'one' ]
 	then
@@ -71,18 +97,22 @@ do
 	echo "bin/run_cmake.sh > build/$name.log"
 	bin/run_cmake.sh > build/$name.log
 	#
-	# install cppad
-	if [ "$install_cppad" == 'yes' ]
+	if [ "$name" != 'master' ]
 	then
-		echo "bin/install_cppad.sh >> build/$name.log"
-		bin/install_cppad.sh >> build/$name.log
-	fi
-	#
-	# install cppad_mixed
-	if [ "$install_cppad_mixed" == 'yes' ]
-	then
-		echo "bin/install_cppad_mixed.sh >> build/$name.log"
-		bin/install_cppad_mixed.sh >> build/$name.log
+		#
+		# install cppad
+		if [ "$install_cppad" == 'true' ]
+		then
+			echo "bin/install_cppad.sh >> build/$name.log"
+			bin/install_cppad.sh >> build/$name.log
+		fi
+		#
+		# install cppad_mixed
+		if [ "$install_cppad_mixed" == 'true' ]
+		then
+			echo "bin/install_cppad_mixed.sh >> build/$name.log"
+			bin/install_cppad_mixed.sh >> build/$name.log
+		fi
 	fi
 	#
 	# build dismod_at
@@ -93,7 +123,7 @@ do
 	cd ..
 	#
 	# create database
-	arguments="$random_seed $n_children $n_data_per_child $quasi_fixed"
+	arguments="$random_seed $n_children $quasi_fixed"
 	echo "python3 example/user/speed.py $arguments >> build/$name.log"
 	python3 example/user/speed.py $arguments >> build/$name.log
 	#
@@ -117,3 +147,24 @@ do
 	# undo changes in bin/run_cmake.sh
 	git checkout bin/run_cmake.sh
 done
+# ---------------------------------------------------------------------------
+# restore master
+# ---------------------------------------------------------------------------
+git checkout master
+if [ "$name" != 'master' ]
+then
+	#
+	# install cppad
+	if [ "$install_cppad" == 'true' ]
+	then
+		echo "bin/install_cppad.sh >> build/$name.log"
+		bin/install_cppad.sh >> build/$name.log
+	fi
+	#
+	# install cppad_mixed
+	if [ "$install_cppad_mixed" == 'true' ]
+	then
+		echo "bin/install_cppad_mixed.sh >> build/$name.log"
+		bin/install_cppad_mixed.sh >> build/$name.log
+	fi
+fi
