@@ -73,6 +73,9 @@ else
 fi
 for version in $list
 do
+	# ------------------------------------------------------------------------
+	# checkout branch and determine test name
+	# ------------------------------------------------------------------------
 	if [ "$version" == 'one' ]
 	then
 		git reset --hard
@@ -89,8 +92,9 @@ do
 			name="$branch2"
 		fi
 	fi
-	#
-	# build release version
+	# ----------------------------------------------------------------------
+	# run camke for release version
+	# ----------------------------------------------------------------------
 	sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|"
 	#
 	# run cmake
@@ -99,6 +103,9 @@ do
 	#
 	if [ "$name" != 'master' ]
 	then
+		# ------------------------------------------------------------------
+		# run installs for this version
+		# ------------------------------------------------------------------
 		#
 		# install cppad
 		if [ "$install_cppad" == 'true' ]
@@ -114,23 +121,28 @@ do
 			bin/install_cppad_mixed.sh >> build/$name.log
 		fi
 	fi
-	#
+	# ------------------------------------------------------------------------
+	# build dismod_at
+	# ------------------------------------------------------------------------
 	# build dismod_at
 	cd build
 	make clean
 	echo "make dismod_at >> build/$name.log"
 	make dismod_at >> $name.log
 	cd ..
+	# ------------------------------------------------------------------------
+	# run speed test using this version
+	# ------------------------------------------------------------------------
 	#
 	# create database
-	arguments="$random_seed $n_children $quasi_fixed"
+	arguments="$random_seed $n_children $quasi_fixed $ode_step_size"
 	echo "python3 example/user/speed.py $arguments >> build/$name.log"
 	python3 example/user/speed.py $arguments >> build/$name.log
 	#
 	# change into database directory
 	pushd build/example/user > /dev/null
 	#
-	# run timeing test
+	# run timing test
 	program="../../devel/dismod_at"
 	echo "time $program example.db fit both 0 >& build/$name.out"
 	( time $program example.db fit both 0 ) >& ../../$name.out
@@ -143,8 +155,9 @@ do
 	mv massif.out ../../$name.massif
 	#
 	popd > /dev/null
-	#
+	# ------------------------------------------------------------------------
 	# undo changes in bin/run_cmake.sh
+	# ------------------------------------------------------------------------
 	git checkout bin/run_cmake.sh
 done
 # ---------------------------------------------------------------------------
@@ -168,3 +181,5 @@ then
 		bin/install_cppad_mixed.sh >> build/$name.log
 	fi
 fi
+# ---------------------------------------------------------------------------
+echo 'bin/speed.py: OK'
