@@ -85,7 +85,7 @@ $end
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/prior_model.hpp>
 # include <dismod_at/smooth_info.hpp>
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 # include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -215,8 +215,8 @@ $head Syntax$$
 $icode%residual_vec% = %prior_object%.fixed(%pack_vec%)%$$
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head prior_object$$
 This object has prototype
@@ -396,8 +396,8 @@ $head Syntax$$
 $icode%residual_vec% = %prior_object%.random(%pack_vec%)%$$
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head prior_object$$
 This object has prototype

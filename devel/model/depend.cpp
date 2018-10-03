@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/depend.hpp>
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -232,5 +232,3 @@ CppAD::vector<bool> prior_depend(
 }
 
 } // END_DISMOD_AT_NAMESPACE
-
-

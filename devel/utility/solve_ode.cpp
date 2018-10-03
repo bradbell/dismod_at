@@ -50,8 +50,8 @@ We use $icode a_min$$ for the minimum age in $cref age_table$$
 and $icode t_min$$ for the minimum time in $cref time_table$$.
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head i_max$$
 This argument has prototype
@@ -142,7 +142,7 @@ $end
 
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/eigen_ode2.hpp>
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

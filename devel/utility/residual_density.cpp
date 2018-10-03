@@ -30,8 +30,8 @@ $icode%residual% = residual_density(
 )%$$
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head z$$
 This argument has prototype
@@ -189,7 +189,7 @@ $end
 */
 # include <cppad/cppad.hpp>
 # include <dismod_at/residual_density.hpp>
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 
 namespace {
 	template <class Float>

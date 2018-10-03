@@ -255,7 +255,7 @@ $end
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/solve_ode.hpp>
 # include <dismod_at/residual_density.hpp>
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/error_exit.hpp>
@@ -857,8 +857,8 @@ $head data_object$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head pack_vec$$
 is all the $cref model_variables$$ in the order
@@ -998,8 +998,8 @@ $srcfile%devel/model/data_model.cpp%0
 1%$$
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head data_object$$
 This object has prototype
@@ -1451,8 +1451,8 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head subset_id$$
 This argument has prototype
@@ -1743,8 +1743,8 @@ $codei%
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head subset_id$$
 This argument has prototype
@@ -1992,8 +1992,8 @@ $codei%
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head subset_id$$
 This argument has prototype
@@ -2190,8 +2190,8 @@ $codei%
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head hold_out$$
 This argument has prototype

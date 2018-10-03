@@ -31,8 +31,8 @@ $codei%
 %var_ode% = %si2ode%.interpolate( %var_si%, %ode_index% )%$$
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head smooth2ode$$
 This constructs an object that interpolates from
@@ -157,7 +157,7 @@ $end
 # include <limits>
 # include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/smooth2ode.hpp>
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

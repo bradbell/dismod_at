@@ -7,7 +7,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>

@@ -16,22 +16,25 @@ rename_files='
 spell_files='
 '
 no_change_files='
-	omh/whats_new/2015.omh
 '
 #
 rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
+#
 # spell_cmd='s|^$spell|&\n\tsim|'
-spell_cmd='s|^# $spell|&\n#\tsim|'
+# spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-/DISMOD_AT_INSTANTIATE_.*( a[23]_double )/d
-/typedef CppAD::AD<a[12]_double>/d
-/typedef CppAD::vector<a[23]_double>/d
-/using CppAD::mixed::a[23]_double/d
-/using CppAD::mixed::a[23]_vector/d
+s|ad_types.hpp|a1_double.hpp|
+/\$head Float\$\\\$/! b end
+: loop
+N
+/\\n\$/! b loop
+s|.*|\$head Float\$\$\\
+The type \$icode Float\$\$ must be \$code double\$\$ or \\
+\$cref a1_double\$\$. \\
+|
 #
-s|a3_vector|a1_vector|g
-s|a3_double|a1_double|g
+: end
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

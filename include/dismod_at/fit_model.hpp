@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <map>
 # include <sqlite3.h>
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 # include <cppad/mixed/cppad_mixed.hpp>
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/data_model.hpp>

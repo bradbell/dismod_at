@@ -31,8 +31,8 @@ $codei%unpack_fixed(%pack_object%, %pack_vec%, %fixed_vec%)
 %$$
 
 $head Float$$
-The type $icode Float$$ must be one of the following:
-$code double$$ or one of the $cref ad_types$$.
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
 
 $head Order of Fixed Effects$$
 The order of the fixed effects is unspecified, except for the
@@ -128,7 +128,7 @@ $end
 
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/random_effect.hpp>
-# include <dismod_at/ad_types.hpp>
+# include <dismod_at/a1_double.hpp>
 # include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
