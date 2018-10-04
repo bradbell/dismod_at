@@ -34,6 +34,7 @@ $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/random_number.omh
 	%devel/utility/random_effect.cpp
 	%devel/utility/n_random_const.cpp
+	%devel/utility/smooth2line.cpp
 	%devel/utility/smooth2ode.cpp
 	%devel/utility/solve_ode.cpp
 	%devel/utility/split_space.cpp

@@ -54,6 +54,7 @@ extern bool random_effect_xam(void);
 extern bool n_random_const_xam(void);
 extern bool residual_density_xam(void);
 extern bool sim_random_xam(void);
+extern bool smooth2line_xam(void);
 extern bool smooth2ode_xam(void);
 extern bool solve_ode_xam(void);
 extern bool split_space_xam(void);
@@ -145,6 +146,7 @@ int main(void)
 	RUN(random_effect_xam);
 	RUN(n_random_const_xam);
 	RUN(sim_random_xam);
+	RUN(smooth2line_xam);
 	RUN(smooth2ode_xam);
 	RUN(solve_ode_xam);
 	RUN(split_space_xam);
