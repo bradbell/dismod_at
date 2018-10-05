@@ -49,6 +49,7 @@ $spell
 	eigen
 	mtother
 	CppAD
+	Avgint
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -60,6 +61,15 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 10-05$$
+Fix typos in the
+$cref/Data or Avgint Table Notation
+	/avg_integrand
+	/Data or Avgint Table Notation
+/$$.
+To be specific, change $latex a_i$$ to $latex b_i$$, $latex s_i$$
+or $latex t_i$$ where appropriate.
 
 $head 09-30$$
 $list number$$
