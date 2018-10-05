@@ -30,7 +30,7 @@ $childtable%
 	omh/model/ode_grid.omh%
 	omh/model/posterior.omh%
 	omh/model/prev_depend.omh%
-	omh/model/ode_solve.omh
+	omh/model/numeric_average.omh
 %$$
 
 $end
