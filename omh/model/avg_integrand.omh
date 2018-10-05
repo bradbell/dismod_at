@@ -65,15 +65,15 @@ We use $latex a_i$$ to denote the corresponding
 $cref/age_lower/data_table/age_lower/$$ value.
 
 $subhead b_i$$
-We use $latex a_i$$ to denote the corresponding
+We use $latex b_i$$ to denote the corresponding
 $cref/age_upper/data_table/age_upper/$$ value.
 
 $subhead s_i$$
-We use $latex a_i$$ to denote the corresponding
+We use $latex s_i$$ to denote the corresponding
 $cref/time_lower/data_table/time_lower/$$ value.
 
 $subhead t_i$$
-We use $latex a_i$$ to denote the corresponding
+We use $latex t_i$$ to denote the corresponding
 $cref/time_upper/data_table/time_upper/$$ value.
 
 $subhead x_ij$$
