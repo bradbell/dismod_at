@@ -18,12 +18,21 @@ $section Numerical Approximation of the Average Integrand$$
 $head Under Construction$$
 This is a plan for a new way of approximating average integrands.
 
-$head Purpose$$
-The $cref/ordinary differential equation
+$head A$$
+Given a data point index $latex i$$,
+this section describes how the average integrand
+$cref/A_i/avg_integrand/Average Integrand, A_i/$$ is calculated.
+This data index $latex i$$ is fixed and not included in the notation below.
+
+
+$head ODE$$
+Some integrands require solution of the
+$cref/ordinary differential equation
 	/avg_integrand
 	/Ordinary Differential Equation
-/$$
-is along cohort lines, i.e., lines where
+/$$;
+see $cref/ODE/integrand_table/integrand_name/ODE/$$.
+The ODE is solved along cohort lines, i.e., lines where
 time minus age is constant.
 On the other hand,
 for each $cref/meas_value/data_table/meas_value/$$
@@ -76,7 +85,7 @@ and final age, corresponding to the last point in the solution.
 The cohort is solved by approximating to rates in the ODE as constant
 between grid points in the extended age grid.
 
-$head G$$
+$head Time Line, G$$
 We use $latex G = \{ a_0 , \ldots , a_{J-1} \}$$
 be the set of ages in the extended age grid that satisfy
 $latex a_L < a_j < a_U$$.
@@ -87,52 +96,76 @@ $latex [ t_L , t_U ]$$ which we refer to as the $th j$$ time line.
 
 $head S_j$$
 The $th j$$ time line has a set of times, $latex S_j$$,
-in the interval $latex [ t_L , t_U ]$$,
-at which we have a solution for the ODE.
+in the interval $latex [ t_L , t_U ]$$.
 We initialize this set as empty.
-The steps below specify which times get added to $latex S_j$$
-and how the ODE is solved for age $latex a_j$$ and the times
+The steps below specify which times get added to $latex S_j$$.
+If the ODE is required for this integrand, the steps also specify
+how the ODE is solved for age $latex a_j$$ and all the times
 in $latex S_j$$.
 
-$subhead Lower Time Cohorts$$
+$head Lower Time Cohorts$$
 For each time line index $latex j$$,
-the ODE is solved for the cohort corresponding to
+the time point $latex t_L$$ is added to $latex S_j$$.
+
+$subhead ODE$$
+If the ODE is required for this integrand,
+it is solved for the cohort corresponding to
 initial time $latex t_L - a_j$$.
-If $latex t_L + a_U - a_j <= t_U$$,
+If $latex t_L + a_U - a_j \le t_U$$,
 the final age for this cohort is $latex b_j = a_U$$
 Otherwise, the final age is $latex b_j = a_j + t_U - t_L$$.
 For each extended age grid point $latex a_k$$ in the cohort,
-such that $latex a_j <= a_k <= b_j$$,
-the time $latex t_L + a_k - a_j$$ is added to $latex S_j$$
+such that $latex a_j \le a_k \le b_j$$,
+the time $latex t_L + a_k - a_j$$ is added to $latex S_k$$
 (because we have the corresponding ODE solution).
 
-$subhead Upper Time Cohorts$$
+$head Upper Time Cohorts$$
 These operations are only done when $latex t_L < t_U$$.
 For each time line index $latex j$$,
-the ODE is solved for the cohort corresponding to
+the time point $latex t_U$$ is added to $latex S_j$$.
+
+$subhead ODE$$
+If the ODE is required for this integrand,
+it is solved for the cohort corresponding to
 initial time $latex t_U - a_j$$ and final age $latex a_j$$.
 For each extended age grid point $latex a_k$$ in the cohort,
-such that $latex a_L  <= a_k <= a_j$$,
-and $latex t_L <= t_U + a_j - a_k$$,
-the time $latex t_U + a_j - a_k$$ is added to $latex S_j$$
-(because we have the corresponding ODE solution).
+such that $latex a_L  \le a_k \le a_j$$,
+and $latex t_L \le t_U + a_j - a_k$$,
+the time $latex t_U + a_j - a_k$$ is added to $latex S_k$$.
 
-$subhead Refine Time Lines$$
+$head Refine Time Lines$$
 $list number$$
-For $latex j = J-1 , \ldots , 0$$ we do the following refinement
+For $latex j = J-1 , \ldots , 0$$, use the steps below to refine
 of the $th j$$ time line.
 $lnext
-Let $latex t_0 < t_1 < \ldots t_{N-1}$$ denote the set $latex S_j$$.
+Let $latex t_0 < t_1 < \ldots t_{N-1}$$ denote the set
+of times currently in $latex S_j$$.
 $lnext
 Let $latex n$$ be such that $latex t_{n+1} - t_n > \Delta t$$.
 If there is no such $latex n$$ go to Step 1 for the next $latex j$$.
 $lnext
+Add the time point $latex t_M = (t_{n+1} - t_n ) / 2$$ to the set $latex S_j$$.
+If the ODE is not required for this integrand, go to Step 2.
+$lnext
 Solve the ODE for the cohort with initial time index
-$latex (t_{n+1} - t_n ) / 2$$ and final age $latex a_j$$
-and add this time to $latex S_j$$.
+$latex t_M - a_j$$ and final age $latex a_j$$.
+For each extended age grid point $latex a_k$$ in the cohort,
+such that $latex a_L  \le a_k \le a_j$$,
+and $latex t_L \le t_U + a_j - a_k$$,
+the time $latex t_U + a_j - a_k$$ is added to $latex S_k$$.
 $lnext
 Go to Step 2.
 $lend
+
+$head g(a, t)$$
+We use $latex g(a, t)$$ to denote the function that is averaged,
+with respect to age and time, in the definition of $latex A$$; i.e.,
+$latex \[
+A =
+\frac{1}{ a_U - a_L } \frac{1}{ t_U - t_L }
+	\int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
+		g( a , t) \; \B{d} t \; \B{d} a
+\] $$
 
 $head Time Integration$$
 Let $latex t_0 < t_1 < \ldots t_{N-1}$$ denote the set $latex S_j$$
@@ -144,28 +177,23 @@ $latex \[
 T( a_j )
 =
 \frac{1}{ t_U - t_L }
-\frac{1}{2} \sum_{i=1}^{i=N-1}
-	\left[ g( a_j , t_{i-1}  ) + g( a_j , t_i ) \right]
-		\left( t_{i+1} - t_i \right)
+\sum_{i=1}^{i=N-1}
+	\frac{g( a_j , t_{i-1}  ) + g( a_j , t_i )}{2} ( t_i - t_{i-1} )
 \approx
 \frac{1}{ t_U - t_L }
-\int_{t(L)}^{t(U)} g( a_j , t) \B{d} t
+\int_{t(L)}^{t(U)} g( a_j , t) \; \B{d} t
 \] $$
 
 $head Age Integration$$
 We are given the values $latex T( a_j )$$.
-If $latex a_U = a_L$$, $latex Q = T( a_0 )$$.
+If $latex a_U = a_L$$, $latex A = T( a_0 )$$.
 Otherwise we define the approximation
 $latex \[
-Q
-=
-\frac{1}{ t_U - t_L }
-\frac{1}{2} \sum_{j=1}^{j=J-1}
-	\left[ T( a_{j-1}  ) + T( a_j ) \right]
-		\left( a_{j+1} - a_j \right)
+A
 \approx
-\frac{1}{ t_U - t_L }
-\int_{a(L)}^{a(U)} T( a ) \B{d} a
+\frac{1}{ a_U - a_L }
+\sum_{j=1}^{j=J-1}
+	\frac{ T( a_{j-1}  ) + T( a_j ) }{2} ( a_j - a_{j-1} )
 \] $$
 
 
