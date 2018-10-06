@@ -77,11 +77,11 @@ The cohort is solved by approximating to rates in the ODE as constant
 between grid points in the extended age grid.
 
 $head G$$
-We use $latex G = \{ \alpha_0 , \ldots , \alpha_{J-1} \}$$
+We use $latex G = \{ a_0 , \ldots , a_{J-1} \}$$
 be the set of ages in the extended age grid that satisfy
-$latex a_L < \alpha_j < a_U$$.
+$latex a_L < a_j < a_U$$.
 Furthermore, these ages are in order; i.e.,
-$latex \alpha_j < \alpha_{j+1}$$.
+$latex a_j < a_{j+1}$$.
 For each such age, there is a time line corresponding to
 $latex [ t_L , t_U ]$$ which we refer to as the $th j$$ time line.
 
@@ -91,30 +91,30 @@ in the interval $latex [ t_L , t_U ]$$,
 at which we have a solution for the ODE.
 We initialize this set as empty.
 The steps below specify which times get added to $latex S_j$$
-and how the ODE is solved for age $latex \alpha_j$$ and the times
+and how the ODE is solved for age $latex a_j$$ and the times
 in $latex S_j$$.
 
 $subhead Lower Time Cohorts$$
 For each time line index $latex j$$,
 the ODE is solved for the cohort corresponding to
-initial time $latex t_L - \alpha_j$$.
-If $latex t_L + a_U - \alpha_j <= t_U$$,
+initial time $latex t_L - a_j$$.
+If $latex t_L + a_U - a_j <= t_U$$,
 the final age for this cohort is $latex b_j = a_U$$
-Otherwise, the final age is $latex b_j = \alpha_j + t_U - t_L$$.
-For each extended age grid point $latex \alpha_k$$ in the cohort,
-such that $latex \alpha_j <= \alpha_k <= b_j$$,
-the time $latex t_L + \alpha_k - \alpha_j$$ is added to $latex S_j$$
+Otherwise, the final age is $latex b_j = a_j + t_U - t_L$$.
+For each extended age grid point $latex a_k$$ in the cohort,
+such that $latex a_j <= a_k <= b_j$$,
+the time $latex t_L + a_k - a_j$$ is added to $latex S_j$$
 (because we have the corresponding ODE solution).
 
 $subhead Upper Time Cohorts$$
 These operations are only done when $latex t_L < t_U$$.
 For each time line index $latex j$$,
 the ODE is solved for the cohort corresponding to
-initial time $latex t_U - \alpha_j$$ and final age $latex \alpha_j$$.
-For each extended age grid point $latex \alpha_k$$ in the cohort,
-such that $latex a_L  <= \alpha_k <= \alpha_j$$,
-and $latex t_L <= t_U + \alpha_j - \alpha_k$$,
-the time $latex t_U + \alpha_j - \alpha_k$$ is added to $latex S_j$$
+initial time $latex t_U - a_j$$ and final age $latex a_j$$.
+For each extended age grid point $latex a_k$$ in the cohort,
+such that $latex a_L  <= a_k <= a_j$$,
+and $latex t_L <= t_U + a_j - a_k$$,
+the time $latex t_U + a_j - a_k$$ is added to $latex S_j$$
 (because we have the corresponding ODE solution).
 
 $subhead Refine Time Lines$$
@@ -128,7 +128,7 @@ Let $latex n$$ be such that $latex t_{n+1} - t_n > \Delta t$$.
 If there is no such $latex n$$ go to Step 1 for the next $latex j$$.
 $lnext
 Solve the ODE for the cohort with initial time index
-$latex (t_{n+1} - t_n ) / 2$$ and final age $latex \alpha_j$$
+$latex (t_{n+1} - t_n ) / 2$$ and final age $latex a_j$$
 and add this time to $latex S_j$$.
 $lnext
 Go to Step 2.
@@ -136,35 +136,35 @@ $lend
 
 $head Time Integration$$
 Let $latex t_0 < t_1 < \ldots t_{N-1}$$ denote the set $latex S_j$$
-at which we are given the function values $latex g( \alpha_j , t_i )$$.
+at which we are given the function values $latex g( a_j , t_i )$$.
 Note that $latex t_0 = t_L$$ and $latex t_{N-1} = t_U$$.
-If $latex t_U = t_L$$, $latex T( \alpha_j ) = g( \alpha_j , t_0 )$$.
+If $latex t_U = t_L$$, $latex T( a_j ) = g( a_j , t_0 )$$.
 Otherwise we define the approximation
 $latex \[
-T( \alpha_j )
+T( a_j )
 =
-\frac{1}{ t(U) - t(L)}
+\frac{1}{ t_U - t_L }
 \frac{1}{2} \sum_{i=1}^{i=N-1}
-	\left[ g( \alpha_j , t_{i-1}  ) + g( \alpha_j , t_i ) \right]
+	\left[ g( a_j , t_{i-1}  ) + g( a_j , t_i ) \right]
 		\left( t_{i+1} - t_i \right)
 \approx
-\frac{1}{ t(U) - t(L)}
-\int_{t(L)}^{t(U)} g( \alpha_j , t) \B{d} t
+\frac{1}{ t_U - t_L }
+\int_{t(L)}^{t(U)} g( a_j , t) \B{d} t
 \] $$
 
 $head Age Integration$$
-We are given the values $latex T( \alpha_j )$$.
-If $latex a_U = a_L$$, $latex Q = T( \alpha_0 )$$.
+We are given the values $latex T( a_j )$$.
+If $latex a_U = a_L$$, $latex Q = T( a_0 )$$.
 Otherwise we define the approximation
 $latex \[
 Q
 =
-\frac{1}{ a(U) - a(L)}
+\frac{1}{ t_U - t_L }
 \frac{1}{2} \sum_{j=1}^{j=J-1}
-	\left[ T( \alpha_{j-1}  ) + T( \alpha_j ) \right]
-		\left( \alpha_{j+1} - \alpha_j \right)
+	\left[ T( a_{j-1}  ) + T( a_j ) \right]
+		\left( a_{j+1} - a_j \right)
 \approx
-\frac{1}{ a(U) - a(L)}
+\frac{1}{ t_U - t_L }
 \int_{a(L)}^{a(U)} T( a ) \B{d} a
 \] $$
 
