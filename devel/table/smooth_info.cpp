@@ -331,20 +331,29 @@ namespace {
 	void unique_insert_sort(
 		CppAD::vector<key_id>&  vec     ,
 		key_id&                 element )
-	{	size_t n = vec.size();
+	{	// initial number of elements in vec
+		size_t n = vec.size();
+		//
+		// find where the new element belongs
 		size_t i = 0;
 		while( i < n && vec[i].key < element.key )
-		{	assert( vec[i].id != element.id );
+		{	// make sure note skipping past this element
+			assert( vec[i].id != element.id );
 			i++;
 		}
 		if( i == n )
-		{	vec.push_back(element);
+		{	// put this element at the end of vec
+			vec.push_back(element);
 			return;
 		}
-		if( vec[i].key == element.key )
-		{	assert( vec[i].id == element.id );
+		// check for case where this element is already in vec
+		if( vec[i].id == element.id )
+		{	assert( vec[i].key == element.key );
 			return;
 		}
+		//
+		// case where this element needs to be inserted at slot i
+		assert( element.key < vec[i].key );
 		vec.push_back( vec[n-1] );
 		size_t j = n - 1;
 		while( j > i )
