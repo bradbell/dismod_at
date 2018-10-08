@@ -48,6 +48,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/split_space.cpp
 	utility/pack_info.cpp
 	utility/pack_prior.cpp
+	utility/time_line_vec.cpp
 
 	table/check_child_prior.cpp
 	table/check_child_nslist.cpp
