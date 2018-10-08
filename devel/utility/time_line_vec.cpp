@@ -20,8 +20,6 @@ $$
 
 $section Creating a Vector of Time Lines For Sampling a Function$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $codei%time_line_vec %vec%(%age_grid%)
 %$$
@@ -70,6 +68,11 @@ This constructs the object $icode vec$$ for managing vectors of time lines.
 
 $subhead age_grid$$
 This vector specifies the grid for averaging w.r.t. age.
+This vector is monotone increasing; i.e.,
+$codei%
+	%age_grid%[%j%] <= age_grid[%j%+1]
+%$$
+
 
 $head specialize$$
 This creates a specialized age grid for averaging between
@@ -106,6 +109,10 @@ $head time_line$$
 This vector contains the points in the current time line
 that corresponds to the specified $icode index$$ in the
 specialized age grid.
+The vector monotone non-decreasing in time; i.e.,
+$codei%
+	%time_line%[%i%].time <= time_line[%i%+1].time
+%$$
 
 $children%example/devel/utility/time_line_vec_xam.cpp
 %$$
@@ -224,9 +231,9 @@ void time_line_vec<Float>::add_point(
 	}
 	//
 	// case where this point is inserted at time_index
-	time_line.push_back( time_line[n_time - 1] );
-	for(size_t i = n_time - 1; i >= time_index; --i)
-		time_line[i+1] = time_line[i];
+	time_line.push_back( time_line[n_time-1] );
+	for(size_t i = n_time - 1; i > time_index; --i)
+		time_line[i] = time_line[i-1];
 	time_line[time_index] = point;
 	//
 	return;

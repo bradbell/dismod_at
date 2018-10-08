@@ -29,11 +29,11 @@ $end
 
 bool time_line_vec_xam(void)
 {	bool   ok = true;
-	using CppAD::vector;
+	typedef dismod_at::time_line_vec<double>::time_point time_point;
 	//
 	// age_grid
 	size_t n_age_grid = 4;
-	vector<double> age_grid(n_age_grid);
+	CppAD::vector<double> age_grid(n_age_grid);
 	age_grid[0] = 0.0;
 	age_grid[1] = 0.1;
 	age_grid[2] = 1.0;
@@ -48,8 +48,45 @@ bool time_line_vec_xam(void)
 	double age_upper = age_grid[2];
 	vec.specialize(age_lower, age_upper);
 	ok &= vec_age.size() == 1;
-	ok &= vec_age[0] == age_grid[2];
+	ok &= vec_age[0] == age_lower;
 	// --------------------------------------------------------------------
+	// case where age_grid[1] < age_lower < age_upper < age_grid[2]
+	age_lower = age_grid[1] + (age_grid[2] - age_grid[1]) / 3.0;
+	age_upper = age_lower   + (age_grid[2] - age_grid[1]) / 3.0;
+	vec.specialize(age_lower, age_upper);
+	ok &= vec_age.size() == 2;
+	ok &= vec_age[0] == age_lower;
+	ok &= vec_age[1] == age_upper;
+	// --------------------------------------------------------------------
+	// add one time point to first time line
+	time_point point_00;
+	point_00.time  = 2.0;
+	point_00.value = 3.0;
+	vec.add_point(0, point_00);
+	//
+	// add two time points to the second time line
+	time_point point_10, point_11;
+	point_10.time  = 0.0;
+	point_10.value = 4.0;
+	point_11.time  = 2.0;
+	point_11.value = 5.0;
+	vec.add_point(1, point_11); // add second point first
+	vec.add_point(1, point_10); // add first point second
+	//
+	// check first time line
+	CppAD::vector<time_point> time_line_0 = vec.time_line(0);
+	ok &= time_line_0.size() == 1;
+	ok &= time_line_0[0].time  == point_00.time;
+	ok &= time_line_0[0].value == point_00.value;
+	//
+	// check second time line
+	CppAD::vector<time_point> time_line_1 = vec.time_line(1);
+	ok &= time_line_1.size() == 2;
+	ok &= time_line_1[0].time  == point_10.time;
+	ok &= time_line_1[0].value == point_10.value;
+	ok &= time_line_1[1].time  == point_11.time;
+	ok &= time_line_1[1].value == point_11.value;
+	//
 	return ok;
 }
 // END C++
