@@ -111,11 +111,11 @@ $subhead ODE$$
 If the ODE is required for this integrand,
 it is solved for the cohort corresponding to
 initial time $latex t_L - a_j$$.
-If $latex t_L + a_U - a_j \le t_U$$,
+If $latex t_L + a_U - a_j \leq t_U$$,
 the final age for this cohort is $latex b_j = a_U$$
 Otherwise, the final age is $latex b_j = a_j + t_U - t_L$$.
 For each extended age grid point $latex a_k$$ in the cohort,
-such that $latex a_j \le a_k \le b_j$$,
+such that $latex a_j \leq a_k \leq b_j$$,
 the time $latex t_L + a_k - a_j$$ is added to $latex S_k$$
 (because we have the corresponding ODE solution).
 
@@ -129,8 +129,8 @@ If the ODE is required for this integrand,
 it is solved for the cohort corresponding to
 initial time $latex t_U - a_j$$ and final age $latex a_j$$.
 For each extended age grid point $latex a_k$$ in the cohort,
-such that $latex a_L  \le a_k \le a_j$$,
-and $latex t_L \le t_U + a_j - a_k$$,
+such that $latex a_L  \leq a_k \leq a_j$$,
+and $latex t_L \leq t_U + a_j - a_k$$,
 the time $latex t_U + a_j - a_k$$ is added to $latex S_k$$.
 
 $head Refine Time Lines$$
@@ -150,8 +150,8 @@ $lnext
 Solve the ODE for the cohort with initial time index
 $latex t_M - a_j$$ and final age $latex a_j$$.
 For each extended age grid point $latex a_k$$ in the cohort,
-such that $latex a_L  \le a_k \le a_j$$,
-and $latex t_L \le t_U + a_j - a_k$$,
+such that $latex a_L  \leq a_k \leq a_j$$,
+and $latex t_L \leq t_U + a_j - a_k$$,
 the time $latex t_U + a_j - a_k$$ is added to $latex S_k$$.
 $lnext
 Go to Step 2.

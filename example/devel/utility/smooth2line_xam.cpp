@@ -19,7 +19,7 @@ $section C++ smooth2line: Example and Test$$
 $index example, C++ smooth2line$$
 $index smooth2line, C++ example$$
 
-$srcfile%example/devel/utility/smooth2ode_xam.cpp%
+$srcfile%example/devel/utility/smooth2line_xam.cpp%
 	0%// BEGIN C++%// END C++%1
 %$$
 
