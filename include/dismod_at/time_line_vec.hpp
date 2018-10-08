@@ -43,7 +43,7 @@ public:
 		const double& age_upper
 	);
 	// vec_age
-	const CppAD::vector<double> vec_age(void) const;
+	const CppAD::vector<double>& vec_age(void) const;
 	//
 	// add_point
 	void add_point(

@@ -9,6 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <dismod_at/time_line_vec.hpp>
+# include <dismod_at/a1_double.hpp>
 
 /*
 $begin time_line_vec$$
@@ -106,6 +107,12 @@ This vector contains the points in the current time line
 that corresponds to the specified $icode index$$ in the
 specialized age grid.
 
+$children%example/devel/utility/time_line_vec_xam.cpp
+%$$
+$head Example$$
+The file $cref time_line_vec_xam.cpp$$ contains an example and test
+of using this routine.
+
 $end
 */
 
@@ -132,8 +139,7 @@ time_line_vec<Float>::time_line_vec(
 	const CppAD::vector<double>& age_grid
 )
 // END_CONSTRUCTOR_PROTOTYPE
-:
-age_grid_(age_grid_)
+: age_grid_(age_grid)
 {
 # ifndef NDEBUG
 	assert( 2 <= age_grid_.size() );
@@ -153,7 +159,10 @@ void time_line_vec<Float>::specialize(
 	assert( age_upper <= age_grid_[age_grid_.size() - 1] );
 	// -----------------------------------------------------------------
 	// vec_age_
-	vec_age_.resize(0);
+	//
+	// start with just age_lower
+	vec_age_.resize(1);
+	vec_age_[0] = age_lower;
 	//
 	// skip age grid values that are less than age_lower
 	size_t age_index = 0;
@@ -161,11 +170,9 @@ void time_line_vec<Float>::specialize(
 		++age_index;
 	//
 	// check if age_lower is in age_grid
-	bool found = near_equal( age_lower, age_grid_[age_index] );
-	if( not found )
-	{	assert( age_lower < age_grid_[age_index] );
-		vec_age_.push_back( age_lower );
-	}
+	bool in_age_grid = near_equal( age_lower, age_grid_[age_index] );
+	if( in_age_grid )
+		++age_index;
 	//
 	// include age_grid values in [ age_lower, age_upper ]
 	while( age_grid_[age_index] < age_upper )
@@ -173,9 +180,10 @@ void time_line_vec<Float>::specialize(
 		++age_index;
 	}
 	//
-	// check if age_upper is in age_grid
-	found = near_equal( age_upper, age_grid_[age_index] );
-	if( not found )
+	// check if age_upper is already in  vec_age_
+	double last = vec_age_[ vec_age_.size() - 1 ];
+	bool in_vec_age = near_equal( age_upper, last );
+	if( not in_vec_age )
 	{	assert( age_upper < age_grid_[age_index] );
 		vec_age_.push_back( age_upper );
 	}
@@ -189,7 +197,7 @@ void time_line_vec<Float>::specialize(
 
 // BEGIN_VEC_AGE_PROTOTYPE
 template <class Float>
-const CppAD::vector<double> time_line_vec<Float>::vec_age(void) const
+const CppAD::vector<double>& time_line_vec<Float>::vec_age(void) const
 // END_VEC_AGE_PROTOTYPE
 {	return vec_age_; }
 
@@ -230,5 +238,10 @@ const CppAD::vector<typename time_line_vec<Float>::time_point>&
 time_line_vec<Float>::time_line(const size_t& age_index) const
 // END_TIME_LINE_PROTOTYPE
 {	return vec_[age_index]; }
+
+// instantiation
+template class time_line_vec<double>;
+template class time_line_vec<a1_double>;
+
 
 } // END_DISMOD_AT_NAMESPACE

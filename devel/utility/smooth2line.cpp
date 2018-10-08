@@ -81,6 +81,12 @@ $icode%line_value%[%i%]%$$ is the
 $cref bilinear$$ interpolated value corresponding to
 age $icode%line_age%[%i%]%$$ and time $icode%line_time%[%i%]%$$.
 
+$children%example/devel/utility/smooth2line_xam.cpp
+%$$
+$head Example$$
+The file $cref smooth2line_xam.cpp$$ contains an example and test
+of using this routine.
+
 $end
 */
 # include <dismod_at/smooth2line.hpp>
