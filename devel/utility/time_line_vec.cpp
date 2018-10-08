@@ -14,20 +14,21 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin time_line_vec$$
 $spell
 	vec
+	struct
 $$
 
-$section Creating a Vector of Time Lines$$
+$section Creating a Vector of Time Lines For Sampling a Function$$
 
 $head Under Construction$$
 
 $head Syntax$$
 $codei%time_line_vec %vec%(%age_grid%)
 %$$
-$icode%vec%.initialize(%age_lower%, %age_upper%)
-%$$
-$icode%vec%.add_point(%index%, %point%)
+$icode%vec%.specialize(%age_lower%, %age_upper%)
 %$$
 $icode%vec_age% = %vec%.vec_age()
+%$$
+$icode%vec%.add_point(%index%, %point%)
 %$$
 $icode%time_line% = %vec%.time_line(%index%)
 %$$
@@ -51,8 +52,59 @@ $srcfile%devel/utility/time_line_vec.cpp%
 
 $head Purpose$$
 The $code time_line_vec$$ class is used to create a vector of
-$cref/time lines/numeric_average/Time Line, G/$$
-for numeric approximation of averages with respect to age and time.
+time lines for sampling a function of age and time.
+
+$head Float$$
+The type $icode Float$$ is $code double$$ or $cref a1_double$$.
+
+$head time_point$$
+This structure is defined in the $codei%time_line_vec<%Float%>%$$ class
+as follows:
+$codei%
+	struct time_point {double time; Float value; };
+%$$
+
+$head time_line_vec$$
+This constructs the object $icode vec$$ for managing vectors of time lines.
+
+$subhead age_grid$$
+This vector specifies the grid for averaging w.r.t. age.
+
+$head specialize$$
+This creates a specialized age grid for averaging between
+the specified lower and upper ages where
+$codei%
+	%age_lower% <= %age_upper%
+%$$
+Only the $icode age_grid$$ points between the lower and upper limits
+are included.
+In addition, $icode age_lower$$ and $icode age_upper$$ are included
+in the specialized grid.
+(If $icode%age_lower% == %age_upper%$$,
+there is only one point in the specialized age grid.)
+There is a time line for each specialized age grid point
+and it is initialized as empty.
+
+$head vec_age$$
+This return value is the specialized age grid.
+
+$head add_point$$
+This adds a time point to the specified time line.
+
+$subhead index$$
+This is the index for the time line
+in the specialize age grid $icode vec_age$$.
+
+$subhead point$$
+This is the time point that is added to the time line.
+The value $icode%point%.value%$$ is the value of the function
+that we are sampling at age $icode%vec_age[%index%]%$$
+and time $icode%point.time%$$.
+
+$head time_line$$
+This vector contains the points in the current time line
+that corresponds to the specified $icode index$$ in the
+specialized age grid.
 
 $end
 */
@@ -92,7 +144,7 @@ age_grid_(age_grid_)
 
 // BEGIN_INITIALIZE_PROTOTYPE
 template <class Float>
-void time_line_vec<Float>::initialize(
+void time_line_vec<Float>::specialize(
 	const double& age_lower  ,
 	const double& age_upper  )
 // END_INITIALIZE_PROTOTYPE

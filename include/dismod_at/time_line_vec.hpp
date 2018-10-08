@@ -36,19 +36,20 @@ private:
 public:
 	// constructor
 	time_line_vec(const CppAD::vector<double>& age_grid);
-	// initialize
-	void initialize(
+	//
+	// specialize
+	void specialize(
 		const double& age_lower  ,
 		const double& age_upper
 	);
+	// vec_age
+	const CppAD::vector<double> vec_age(void) const;
+	//
 	// add_point
 	void add_point(
 		const size_t&     age_index ,
 		const time_point& point
 	);
-	// vec_age
-	const CppAD::vector<double> vec_age(void) const;
-	//
 	// time_line
 	const CppAD::vector<time_point>& time_line(
 		const size_t& age_index
