@@ -174,17 +174,17 @@ void cohort_ode(
 }
 
 // instantiation macro
-# define DISMOT_AT_INSTANTIATE_COHORT_ODE(Float)            \
-	template void cohort_ode<Float>(                        \
-	size_t                       eigen_ode2_case_number ,   \
-	const CppAD::vector<double>& age                    ,   \
-	const Float&                 pini                   ,   \
-	const CppAD::vector<Float>&  iota                   ,   \
-	const CppAD::vector<Float>&  rho                    ,   \
-	const CppAD::vector<Float>&  chi                    ,   \
-	const CppAD::vector<Float>&  omega                  ,   \
-	CppAD::vector<Float>&        s_out                  ,   \
-	CppAD::vector<Float>&        c_out                      \
+# define DISMOT_AT_INSTANTIATE_COHORT_ODE(Float)     \
+	template void cohort_ode<Float>(                 \
+	const std::string&           rate_case       ,   \
+	const CppAD::vector<double>& age             ,   \
+	const Float&                 pini            ,   \
+	const CppAD::vector<Float>&  iota            ,   \
+	const CppAD::vector<Float>&  rho             ,   \
+	const CppAD::vector<Float>&  chi             ,   \
+	const CppAD::vector<Float>&  omega           ,   \
+	CppAD::vector<Float>&        s_out           ,   \
+	CppAD::vector<Float>&        c_out               \
 	);
 
 // instantiations

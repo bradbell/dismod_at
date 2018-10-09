@@ -30,6 +30,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/avgint_subset.cpp
 	utility/bilinear_interp.cpp
 	utility/child_info.cpp
+	utility/cohort_ode.cpp
 	utility/data_subset.cpp
 	utility/eigen_ode2.cpp
 	utility/error_exit.cpp

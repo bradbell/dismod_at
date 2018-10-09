@@ -19,8 +19,8 @@ $section Dismod_at Developer Utility Documentation$$
 $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/avgint_subset.cpp
 	%devel/utility/bilinear_interp.cpp
-	%devel/utility/cohort_ode.cpp
 	%devel/utility/child_info.cpp
+	%devel/utility/cohort_ode.cpp
 	%devel/utility/data_subset.cpp
 	%devel/utility/eigen_ode2.cpp
 	%devel/utility/error_exit.cpp
