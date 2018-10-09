@@ -88,6 +88,19 @@ bool time_line_vec_xam(void)
 	ok &= time_line_1[0].value == point_10.value;
 	ok &= time_line_1[1].time  == point_11.time;
 	ok &= time_line_1[1].value == point_11.value;
+	// --------------------------------------------------------------------
+	// add another point too the first line
+	time_point point_01;
+	point_01.time  = time_upper;
+	point_01.value = 6.0;
+	vec.add_point(0, point_01);
+	//
+	// check age_time_avg
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+	double avg   = vec.age_time_avg();
+	double sum   = point_00.value+point_01.value+point_10.value+point_11.value;
+	double check = sum / 4.0;
+	ok &= std::fabs( 1.0 - avg / check ) <= eps99;
 	//
 	return ok;
 }

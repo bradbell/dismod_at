@@ -64,7 +64,7 @@ public:
 	) const;
 	//
 	// age_time_avg
-	const Float& age_time_avg(void) const;
+	Float age_time_avg(void) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE

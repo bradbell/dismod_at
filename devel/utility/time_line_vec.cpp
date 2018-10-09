@@ -284,7 +284,7 @@ time_line_vec<Float>::time_line(const size_t& age_index) const
 
 // BEGIN_AGE_TIME_AVG_PROTOTYPE
 template <class Float>
-const Float& time_line_vec<Float>::age_time_avg(void) const
+Float time_line_vec<Float>::age_time_avg(void) const
 // END_AGE_TIME_AVG_PROTOTYPE
 {	size_t n_age = vec_age_.size();
 	//
