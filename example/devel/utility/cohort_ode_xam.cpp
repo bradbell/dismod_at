@@ -29,7 +29,7 @@ $end
 
 namespace {
 	using CppAD::vector;
-	typedef double Float;
+	typedef CppAD::AD<double> Float;
 
 	class Fun {
 	public:

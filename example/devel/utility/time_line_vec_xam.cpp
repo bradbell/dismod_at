@@ -46,29 +46,31 @@ bool time_line_vec_xam(void)
 	// case where age_lower = age_upper = age_grid[2]
 	double age_lower = age_grid[2];
 	double age_upper = age_grid[2];
-	vec.specialize(age_lower, age_upper);
+	double time_lower = 1990.0;
+	double time_upper = 2010.0;
+	vec.specialize(age_lower, age_upper, time_lower, time_upper);
 	ok &= vec_age.size() == 1;
 	ok &= vec_age[0] == age_lower;
 	// --------------------------------------------------------------------
 	// case where age_grid[1] < age_lower < age_upper < age_grid[2]
 	age_lower = age_grid[1] + (age_grid[2] - age_grid[1]) / 3.0;
 	age_upper = age_lower   + (age_grid[2] - age_grid[1]) / 3.0;
-	vec.specialize(age_lower, age_upper);
+	vec.specialize(age_lower, age_upper, time_lower, time_upper);
 	ok &= vec_age.size() == 2;
 	ok &= vec_age[0] == age_lower;
 	ok &= vec_age[1] == age_upper;
 	// --------------------------------------------------------------------
 	// add one time point to first time line
 	time_point point_00;
-	point_00.time  = 2.0;
+	point_00.time  = time_lower;
 	point_00.value = 3.0;
 	vec.add_point(0, point_00);
 	//
 	// add two time points to the second time line
 	time_point point_10, point_11;
-	point_10.time  = 0.0;
+	point_10.time  = time_lower;
 	point_10.value = 4.0;
-	point_11.time  = 2.0;
+	point_11.time  = time_upper;
 	point_11.value = 5.0;
 	vec.add_point(1, point_11); // add second point first
 	vec.add_point(1, point_10); // add first point second

@@ -23,13 +23,17 @@ $section Creating a Vector of Time Lines For Sampling a Function$$
 $head Syntax$$
 $codei%time_line_vec %vec%(%age_grid%)
 %$$
-$icode%vec%.specialize(%age_lower%, %age_upper%)
+$icode%vec%.specialize(
+	%age_lower%, %age_upper%, %time_lower%, %time_upper%
+)
 %$$
 $icode%vec_age% = %vec%.vec_age()
 %$$
-$icode%vec%.add_point(%index%, %point%)
+$icode%vec%.add_point(%age_index%, %point%)
 %$$
-$icode%time_line% = %vec%.time_line(%index%)
+$icode%time_line% = %vec%.time_line(%age_index%)
+%$$
+$icode%avg% = %vec%.age_time_avg()
 %$$
 
 $head Prototype$$
@@ -37,7 +41,7 @@ $srcfile%devel/utility/time_line_vec.cpp%
 	0%// BEGIN_CONSTRUCTOR_PROTOTYPE%// END_CONSTRUCTOR_PROTOTYPE%1
 %$$
 $srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_INITIALIZE_PROTOTYPE%// END_INITIALIZE_PROTOTYPE%1
+	0%// BEGIN_SPECIALIZE_PROTOTYPE%// END_SPECIALIZE_PROTOTYPE%1
 %$$
 $srcfile%devel/utility/time_line_vec.cpp%
 	0%// BEGIN_ADD_POINT_PROTOTYPE%// END_ADD_POINT_PROTOTYPE%1
@@ -47,6 +51,9 @@ $srcfile%devel/utility/time_line_vec.cpp%
 %$$
 $srcfile%devel/utility/time_line_vec.cpp%
 	0%// BEGIN_TIME_LINE_PROTOTYPE%// END_TIME_LINE_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_AGE_TIME_PROTOTYPE%// END_AGE_TIME_PROTOTYPE%1
 %$$
 
 $head Purpose$$
@@ -76,9 +83,10 @@ $codei%
 
 $head specialize$$
 This creates a specialized age grid for averaging between
-the specified lower and upper ages where
+the specified lower and upper ages and times
 $codei%
-	%age_lower% <= %age_upper%
+	%age_lower%  <= %age_upper%
+	%time_lower% <= %time_upper%
 %$$
 Only the $icode age_grid$$ points between the lower and upper limits
 are included.
@@ -95,24 +103,40 @@ This return value is the specialized age grid.
 $head add_point$$
 This adds a time point to the specified time line.
 
-$subhead index$$
+$subhead age_index$$
 This is the index for the time line
 in the specialize age grid $icode vec_age$$.
 
 $subhead point$$
 This is the time point that is added to the time line.
 The value $icode%point%.value%$$ is the value of the function
-that we are sampling at age $icode%vec_age[%index%]%$$
+that we are sampling at age $icode%vec_age[%age_index%]%$$
 and time $icode%point.time%$$.
+The time must satisfy
+$codei%
+	%time_lower% <= %point%.time <= %time_upper%
+%$$
+In addition, two calls to $code add_point$$ cannot have the
+same $icode age_index$$ and $icode%point%.time%$$.
 
 $head time_line$$
 This vector contains the points in the current time line
-that corresponds to the specified $icode index$$ in the
+that corresponds to the specified $icode age_index$$ in the
 specialized age grid.
 The vector monotone non-decreasing in time; i.e.,
 $codei%
 	%time_line%[%i%].time <= time_line[%i%+1].time
 %$$
+
+$head age_time_avg$$
+This uses the
+$cref numeric_average$$ method to approximate the average
+of the sampled function with respect to age and time.
+Each time line must have a point with time equal to
+$icode time_lower$$ and a point with time equal to $icode time_upper$$.
+If the upper and lower time limits are equal,
+only one call to $code add_point$$ for each time line is necessary.
+
 
 $children%example/devel/utility/time_line_vec_xam.cpp
 %$$
@@ -155,15 +179,22 @@ time_line_vec<Float>::time_line_vec(
 # endif
 }
 
-// BEGIN_INITIALIZE_PROTOTYPE
+// BEGIN_SPECIALIZE_PROTOTYPE
 template <class Float>
 void time_line_vec<Float>::specialize(
 	const double& age_lower  ,
-	const double& age_upper  )
-// END_INITIALIZE_PROTOTYPE
-{	assert( age_lower <= age_upper );
+	const double& age_upper  ,
+	const double& time_lower ,
+	const double& time_upper )
+// END_SPECIALIZE_PROTOTYPE
+{	assert( time_lower <= time_upper );
+	//
+	assert( age_lower <= age_upper );
 	assert( age_grid_[0] <= age_lower );
 	assert( age_upper <= age_grid_[age_grid_.size() - 1] );
+	// -----------------------------------------------------------------
+	time_lower_ = time_lower;
+	time_upper_ = time_upper;
 	// -----------------------------------------------------------------
 	// vec_age_
 	//
@@ -208,14 +239,16 @@ const CppAD::vector<double>& time_line_vec<Float>::vec_age(void) const
 // END_VEC_AGE_PROTOTYPE
 {	return vec_age_; }
 
-
 // BEGIN_ADD_POINT_PROTOTYPE
 template <class Float>
 void time_line_vec<Float>::add_point(
 	const size_t&     age_index ,
 	const time_point& point     )
 // END_ADD_POINT_PROTOTYPE
-{	// this time line
+{	assert( time_lower_ <= point.time );
+	assert( point.time <= time_upper_ );
+	//
+	// this time line
 	CppAD::vector<time_point>& time_line = vec_[age_index];
 	size_t n_time = time_line.size();
 	//
@@ -229,6 +262,9 @@ void time_line_vec<Float>::add_point(
 	{	time_line.push_back(point);
 		return;
 	}
+	//
+	// make sure two calls do not have the same time
+	assert( ! near_equal( point.time, time_line[time_index].time ) );
 	//
 	// case where this point is inserted at time_index
 	time_line.push_back( time_line[n_time-1] );
@@ -245,6 +281,48 @@ const CppAD::vector<typename time_line_vec<Float>::time_point>&
 time_line_vec<Float>::time_line(const size_t& age_index) const
 // END_TIME_LINE_PROTOTYPE
 {	return vec_[age_index]; }
+
+// BEGIN_AGE_TIME_AVG_PROTOTYPE
+template <class Float>
+const Float& time_line_vec<Float>::age_time_avg(void) const
+// END_AGE_TIME_AVG_PROTOTYPE
+{	size_t n_age = vec_age_.size();
+	//
+	// compute average w.r.t time for each age
+	CppAD::vector<Float> time_avg(n_age);
+	for(size_t i = 0; i < n_age; ++i)
+	{	const CppAD::vector<time_point>& line( vec_[i] );
+		size_t n_time = line.size();
+		//
+		assert( n_time >= 1 );
+		assert( near_equal( line[0].time, time_lower_ ) );
+		assert( near_equal( line[n_time - 1].time, time_upper ) );
+		//
+		if( n_time == 1 )
+			time_avg[i] = line[0].value;
+		else
+		{	Float sum(0);
+			for(size_t j = 1; j < n_time; ++j )
+			{	Float value = (line[j].value + line[j-1].value) / Float(2);
+				sum        += value * (line[j].time - line[j-1].time);
+			}
+			time_avg[i] = sum / (time_upper_ - time_lower_);
+		}
+	}
+	// compute average w.r.t age
+	Float result(0);
+	if( n_age == 1 )
+		result = time_avg[0];
+	else
+	{	for(size_t i = 1; i < n_age; ++i)
+		{	Float value = (time_avg[i] + time_avg[i-1]) / Float(2);
+			result     += value * (vec_age_[i] - vec_age_[i-1]);
+		}
+		result = result / (vec_age_[n_age - 1] - vec_age_[0] );
+	}
+	return result;
+}
+
 
 // instantiation
 template class time_line_vec<double>;
