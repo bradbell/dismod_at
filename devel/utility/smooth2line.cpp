@@ -24,10 +24,6 @@ $srcfile%devel/utility/smooth2line.cpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%1
 %$$
 
-
-$head Under Construction$$
-This routine is tests, but not yet used.
-
 $head n_line$$
 We use $icode n_line$$ to denote the number of
 points in the line.
