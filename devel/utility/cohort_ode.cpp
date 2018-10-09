@@ -15,8 +15,6 @@ $$
 
 $section Solve The ODE on a Cohort Line$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $codei%cohort_ode(
 %rate_case%, %age%, %pini%, %iota%, %rho%, %chi%, %omega%, %s_out%, %c_out%
@@ -82,6 +80,15 @@ This vector has size $icode n_cohort$$.
 The input value of its elements does not matter.
 Upon return, $icode%c_out%[%k%]%$$ is the approximation solution
 for $latex C(a, t)$$ at the corresponding age and time.
+
+$children%
+	example/devel/utility/cohort_ode_xam.cpp
+%$$
+$head Example$$
+The file $cref cohort_ode_xam.cpp$$ contains
+and example and test of $code cohort_ode$$.
+It returns true for success and false for failure.
+
 
 $end
 */
