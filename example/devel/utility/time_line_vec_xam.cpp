@@ -31,6 +31,11 @@ bool time_line_vec_xam(void)
 {	bool   ok = true;
 	typedef dismod_at::time_line_vec<double>::time_point time_point;
 	//
+	// near_equal
+	double x = 1.0;
+	double y = x + 2.0 * std::numeric_limits<double>::epsilon();
+	ok &= dismod_at::time_line_vec<double>::near_equal(x, y);
+	//
 	// age_grid
 	size_t n_age_grid = 4;
 	CppAD::vector<double> age_grid(n_age_grid);

@@ -21,6 +21,8 @@ $$
 $section Creating a Vector of Time Lines For Sampling a Function$$
 
 $head Syntax$$
+$code%time_line_vec<%Float%>::near_equal(double %x%, double %y%)
+%$$
 $codei%time_line_vec %vec%(%age_grid%)
 %$$
 $icode%vec%.specialize(
@@ -74,6 +76,9 @@ as follows:
 $codei%
 	struct time_point {double time; Float value; };
 %$$
+
+$head near_equal$$
+Checks if $icode x$$ and $icode y$$ are nearly equal (to numerical precision).
 
 $head time_line_vec$$
 This constructs the object $icode vec$$ for managing vectors of time lines.

@@ -40,10 +40,10 @@ private:
 	// vec_ has the same size as sub_grid_ and
 	// vec_[j] contains the line for sub_grid_[j]
 	CppAD::vector< CppAD::vector<time_point> >  vec_;
-	//
+public:
 	// near_equal
 	static bool near_equal(double x, double y);
-public:
+	//
 	// constructor
 	time_line_vec(const CppAD::vector<double>& age_grid);
 	//
