@@ -18,10 +18,10 @@ $spell
 	struct
 $$
 
-$section Creating a Vector of Time Lines For Sampling a Function$$
+$section Vector of Time Lines For Averaging a Function of Age and Time$$
 
 $head Syntax$$
-$codei%time_line_vec<%Float%>::near_equal(double %x%, double %y%)
+$icode%near% = time_line_vec<%Float%>::near_equal(double %x%, double %y%)
 %$$
 $codei%time_line_vec %vec%(%age_grid%)
 %$$
@@ -42,38 +42,6 @@ $icode%time_line% = %vec%.time_line(%age_index%)
 $icode%avg% = %vec%.age_time_avg()
 %$$
 
-$head Prototype$$
-$srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_CONSTRUCTOR_PROTOTYPE%// END_CONSTRUCTOR_PROTOTYPE%1
-%$$
-$srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_SPECIALIZE_PROTOTYPE%// END_SPECIALIZE_PROTOTYPE%1
-%$$
-$srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_ADD_POINT_PROTOTYPE%// END_ADD_POINT_PROTOTYPE%1
-%$$
-$srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_EXTEND_GRID_PROTOTYPE%// END_EXTEND_GRID_PROTOTYPE%1
-%$$
-$srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_SUB_LOWER_PROTOTYPE%// END_SUB_LOWER_PROTOTYPE%1
-%$$
-$srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_SUB_UPPER_PROTOTYPE%// END_SUB_UPPER_PROTOTYPE%1
-%$$
-$srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_TIME_LINE_PROTOTYPE%// END_TIME_LINE_PROTOTYPE%1
-%$$
-$srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_AGE_TIME_AVG_PROTOTYPE%// END_AGE_TIME_AVG_PROTOTYPE%1
-%$$
-$pre
-$$
-
-$head Purpose$$
-The $code time_line_vec$$ class is used to create a vector of
-time lines for sampling a function of age and time.
-
 $head Float$$
 The type $icode Float$$ is $code double$$ or $cref a1_double$$.
 
@@ -88,6 +56,8 @@ $head near_equal$$
 Checks if $icode x$$ and $icode y$$ are nearly equal
 to multiple of numerical precision that is greater than 10
 and less than 100.
+The return value $icode near$$ is true, if the values are nearly equal
+and false otherwise.
 
 $head time_line_vec$$
 This constructs the object $icode vec$$ for managing vectors of time lines.
@@ -177,13 +147,44 @@ $head Example$$
 The file $cref time_line_vec_xam.cpp$$ contains an example and test
 of using this routine.
 
+$head Prototype$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_NEAR_EQUAL_PROTOTYPE%// END_NEAR_EQUAL_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_TIME_LINE_VEC_PROTOTYPE%// END_TIME_LINE_VEC_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_SPECIALIZE_PROTOTYPE%// END_SPECIALIZE_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_ADD_POINT_PROTOTYPE%// END_ADD_POINT_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_EXTEND_GRID_PROTOTYPE%// END_EXTEND_GRID_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_SUB_LOWER_PROTOTYPE%// END_SUB_LOWER_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_SUB_UPPER_PROTOTYPE%// END_SUB_UPPER_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_TIME_LINE_PROTOTYPE%// END_TIME_LINE_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_AGE_TIME_AVG_PROTOTYPE%// END_AGE_TIME_AVG_PROTOTYPE%1
+%$$
+
 $end
 */
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
+// BEGIN_NEAR_EQUAL_PROTOTYPE
 template <class Float>
 bool time_line_vec<Float>::near_equal(double x, double y)
+// END_NEAR_EQUAL_PROTOTYPE
 {	// some constants for near equal calculations
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 	double min99 = 99.0 * std::numeric_limits<double>::min();
@@ -197,12 +198,12 @@ bool time_line_vec<Float>::near_equal(double x, double y)
 	return std::abs(1.0 - x / y) <= eps99;
 }
 
-// BEGIN_CONSTRUCTOR_PROTOTYPE
+// BEGIN_TIME_LINE_VEC_PROTOTYPE
 template <class Float>
 time_line_vec<Float>::time_line_vec(
 	const CppAD::vector<double>& age_grid
 )
-// END_CONSTRUCTOR_PROTOTYPE
+// END_TIME_LINE_VEC_PROTOTYPE
 : age_grid_(age_grid)
 {
 # ifndef NDEBUG
