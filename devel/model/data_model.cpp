@@ -39,7 +39,6 @@ $codei%data_model %data_object%(
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
-	%node_table%,
 	%subset_object%,
 	%subset_cov_value%,
 	%w_info_vec%,
@@ -114,14 +113,6 @@ $codei%
 	const CppAD::vector<integrand_struct>&  %integrand_table%
 %$$
 and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
-
-$head node_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<node_struct>& %node_table%
-%$$
-and is the $cref/node_table/get_node_table/node_table/$$.
-Only the $code parent$$ field of this table is used.
 
 $head subset_object$$
 This argument has prototype
@@ -271,7 +262,6 @@ data_model::data_model(
 	const CppAD::vector<double>&             age_table       ,
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
-	const CppAD::vector<node_struct>&        node_table      ,
 	const CppAD::vector<prior_struct>&       prior_table     ,
 	const CppAD::vector<SubsetStruct>&       subset_object   ,
 	const CppAD::vector<double>&             subset_cov_value,
@@ -2313,7 +2303,6 @@ template data_model::data_model(                                \
 	const CppAD::vector<double>&             age_table       ,  \
 	const CppAD::vector<double>&             time_table      ,  \
 	const CppAD::vector<integrand_struct>&   integrand_table ,  \
-	const CppAD::vector<node_struct>&        node_table      ,  \
 	const CppAD::vector<prior_struct>&       prior_table     ,  \
 	const CppAD::vector<SubsetStruct>&       subset_object   ,  \
 	const CppAD::vector<double>&             subset_cov_value,  \

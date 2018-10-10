@@ -25,10 +25,10 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 #
 cat << EOF > junk.sed
 /data_object(/! b end
+: loop
 N
-N
-N
-s|\\n\\t*parent_node_id,||
+/node_table,/! b loop
+s|\\n\\t*node_table,||
 #
 : end
 EOF
