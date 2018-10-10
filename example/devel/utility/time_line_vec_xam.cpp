@@ -41,7 +41,7 @@ bool time_line_vec_xam(void)
 	//
 	// vec
 	dismod_at::time_line_vec<double> vec(age_grid);
-	const CppAD::vector<double>& vec_age ( vec.vec_age() );
+	const CppAD::vector<double>& sub_grid ( vec.sub_grid() );
 	// --------------------------------------------------------------------
 	// case where age_lower = age_upper = age_grid[2]
 	double age_lower = age_grid[2];
@@ -49,16 +49,16 @@ bool time_line_vec_xam(void)
 	double time_lower = 1990.0;
 	double time_upper = 2010.0;
 	vec.specialize(age_lower, age_upper, time_lower, time_upper);
-	ok &= vec_age.size() == 1;
-	ok &= vec_age[0] == age_lower;
+	ok &= sub_grid.size() == 1;
+	ok &= sub_grid[0] == age_lower;
 	// --------------------------------------------------------------------
 	// case where age_grid[1] < age_lower < age_upper < age_grid[2]
 	age_lower = age_grid[1] + (age_grid[2] - age_grid[1]) / 3.0;
 	age_upper = age_lower   + (age_grid[2] - age_grid[1]) / 3.0;
 	vec.specialize(age_lower, age_upper, time_lower, time_upper);
-	ok &= vec_age.size() == 2;
-	ok &= vec_age[0] == age_lower;
-	ok &= vec_age[1] == age_upper;
+	ok &= sub_grid.size() == 2;
+	ok &= sub_grid[0] == age_lower;
+	ok &= sub_grid[1] == age_upper;
 	// --------------------------------------------------------------------
 	// add one time point to first time line
 	time_point point_00;

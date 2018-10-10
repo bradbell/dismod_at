@@ -25,16 +25,16 @@ private:
 	const CppAD::vector<double> age_grid_;
 	//
 	// ages corresponding to vector of time lines
-	// vec_age_[0]                    = age_lower in previous specialize
-	// vec_age_[ vec_age_.size() - 1] = age_upper in previous speicalize
-	CppAD::vector<double> vec_age_;
+	// sub_grid_[0]                    = age_lower in previous specialize
+	// sub_grid_[ sub_grid_.size() - 1] = age_upper in previous speicalize
+	CppAD::vector<double> sub_grid_;
 	//
 	// lower and upper times corresponding to previous specialize
 	double time_lower_;
 	double time_upper_;
 	//
-	// vec_ has the same size as vec_age_ and
-	// vec_[j] contains the line for vec_age_[j]
+	// vec_ has the same size as sub_grid_ and
+	// vec_[j] contains the line for sub_grid_[j]
 	CppAD::vector< CppAD::vector<time_point> >  vec_;
 	//
 	// near_equal
@@ -50,8 +50,8 @@ public:
 		const double& time_lower ,
 		const double& time_upper
 	);
-	// vec_age
-	const CppAD::vector<double>& vec_age(void) const;
+	// sub_grid
+	const CppAD::vector<double>& sub_grid(void) const;
 	//
 	// add_point
 	void add_point(
