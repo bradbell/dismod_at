@@ -24,15 +24,11 @@ rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
 # spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|ad_types.hpp|a1_double.hpp|
-/\$head Float\$\\\$/! b end
-: loop
+/data_object(/! b end
 N
-/\\n\$/! b loop
-s|.*|\$head Float\$\$\\
-The type \$icode Float\$\$ must be \$code double\$\$ or \\
-\$cref a1_double\$\$. \\
-|
+N
+N
+s|\\n\\t*parent_node_id,||
 #
 : end
 EOF

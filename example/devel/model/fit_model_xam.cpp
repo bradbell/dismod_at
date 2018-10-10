@@ -308,7 +308,6 @@ bool fit_model_xam(void)
 	double bound_random = std::numeric_limits<double>::infinity();
 	dismod_at::data_model data_object(
 		bound_random,
-		parent_node_id,
 		n_covariate,
 		n_age_ode,
 		n_time_ode,
