@@ -53,7 +53,7 @@ $srcfile%devel/utility/time_line_vec.cpp%
 	0%// BEGIN_TIME_LINE_PROTOTYPE%// END_TIME_LINE_PROTOTYPE%1
 %$$
 $srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_AGE_TIME_PROTOTYPE%// END_AGE_TIME_PROTOTYPE%1
+	0%// BEGIN_AGE_TIME_AVG_PROTOTYPE%// END_AGE_TIME_AVG_PROTOTYPE%1
 %$$
 
 $head Purpose$$
