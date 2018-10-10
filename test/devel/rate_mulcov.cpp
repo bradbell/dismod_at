@@ -256,7 +256,6 @@ bool rate_mulcov(void)
 		age_table,
 		time_table,
 		integrand_table,
-		node_table,
 		prior_table,
 		data_subset_obj,
 		data_subset_cov_value,
