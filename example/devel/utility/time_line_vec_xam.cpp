@@ -33,8 +33,10 @@ bool time_line_vec_xam(void)
 	//
 	// near_equal
 	double x = 1.0;
-	double y = x + 2.0 * std::numeric_limits<double>::epsilon();
+	double y = x + 10.0  * std::numeric_limits<double>::epsilon();
+	double z = x + 100.0 * std::numeric_limits<double>::epsilon();
 	ok &= dismod_at::time_line_vec<double>::near_equal(x, y);
+	ok &= ! dismod_at::time_line_vec<double>::near_equal(x, z);
 	//
 	// age_grid
 	size_t n_age_grid = 4;

@@ -21,7 +21,7 @@ $$
 $section Creating a Vector of Time Lines For Sampling a Function$$
 
 $head Syntax$$
-$code%time_line_vec<%Float%>::near_equal(double %x%, double %y%)
+$codei%time_line_vec<%Float%>::near_equal(double %x%, double %y%)
 %$$
 $codei%time_line_vec %vec%(%age_grid%)
 %$$
@@ -78,7 +78,9 @@ $codei%
 %$$
 
 $head near_equal$$
-Checks if $icode x$$ and $icode y$$ are nearly equal (to numerical precision).
+Checks if $icode x$$ and $icode y$$ are nearly equal
+to multiple of numerical precision that is greater than 10
+and less than 100.
 
 $head time_line_vec$$
 This constructs the object $icode vec$$ for managing vectors of time lines.
@@ -87,7 +89,7 @@ $subhead age_grid$$
 This vector specifies the grid for averaging w.r.t. age.
 This vector is monotone increasing; i.e.,
 $codei%
-	%age_grid%[%j%] < age_grid[%j%+1]
+	%age_grid%[%j%] < %age_grid%[%j%+1]
 %$$
 
 $head specialize$$
@@ -136,7 +138,7 @@ that corresponds to the specified $icode age_index$$ in the
 specialized age grid.
 The vector monotone non-decreasing in time; i.e.,
 $codei%
-	%time_line%[%i%].time <= time_line[%i%+1].time
+	%time_line%[%i%].time <= %time_line%[%i%+1].time
 %$$
 
 $head age_time_avg$$
