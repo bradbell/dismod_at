@@ -77,7 +77,6 @@ public:
 	template <class SubsetStruct>
 	data_model(
 		double                                   bound_random    ,
-		size_t                                   parent_node_id  ,
 		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,
 		size_t                                   n_time_ode      ,

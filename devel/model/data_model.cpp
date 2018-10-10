@@ -32,7 +32,6 @@ $section Data Model: Constructor$$
 $head Syntax$$
 $codei%data_model %data_object%(
 	%bound_random%,
-	%parent_node_id%,
 	%n_covariate%,
 	%n_age_ode%,
 	%n_time_ode%,
@@ -62,15 +61,6 @@ $codei%
 %$$
 and is the
 $cref/bound_random/option_table/Random Only/bound_random/$$.
-
-
-$head parent_node_id$$
-This argument has prototype
-$codei%
-	size_t %parent_node_id%
-%$$
-and is the
-$cref/parent_node_id/option_table/parent_node_id/$$.
 
 $head n_covariate$$
 This argument has prototype
@@ -274,7 +264,6 @@ data_model::~data_model(void)
 template <class SubsetStruct>
 data_model::data_model(
 	double                                   bound_random    ,
-	size_t                                   parent_node_id  ,
 	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
 	size_t                                   n_time_ode      ,
@@ -2317,7 +2306,6 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
 	double                                   bound_random    ,  \
-	size_t                                   parent_node_id  ,  \
 	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \
 	size_t                                   n_time_ode      ,  \
