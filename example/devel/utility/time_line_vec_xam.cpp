@@ -41,6 +41,7 @@ bool time_line_vec_xam(void)
 	//
 	// vec
 	dismod_at::time_line_vec<double> vec(age_grid);
+	const CppAD::vector<double>& extend_grid ( vec.extend_grid() );
 	const CppAD::vector<double>& sub_grid ( vec.sub_grid() );
 	// --------------------------------------------------------------------
 	// case where age_lower = age_upper = age_grid[2]
@@ -49,6 +50,9 @@ bool time_line_vec_xam(void)
 	double time_lower = 1990.0;
 	double time_upper = 2010.0;
 	vec.specialize(age_lower, age_upper, time_lower, time_upper);
+	ok &= extend_grid.size() == n_age_grid;
+	for(size_t i = 0; i < n_age_grid; ++i)
+		ok &= extend_grid[i] == age_grid[i];
 	ok &= sub_grid.size() == 1;
 	ok &= sub_grid[0] == age_lower;
 	// --------------------------------------------------------------------
@@ -56,6 +60,17 @@ bool time_line_vec_xam(void)
 	age_lower = age_grid[1] + (age_grid[2] - age_grid[1]) / 3.0;
 	age_upper = age_lower   + (age_grid[2] - age_grid[1]) / 3.0;
 	vec.specialize(age_lower, age_upper, time_lower, time_upper);
+	ok &= extend_grid.size() == n_age_grid + 2;
+	for(size_t i = 0; i < extend_grid.size(); ++i)
+	{	if( i < 2 )
+			ok &= extend_grid[i] == age_grid[i];
+		else if( i == 2 )
+			ok &= extend_grid[i] == age_lower;
+		else if( i == 3 )
+			ok &= extend_grid[i] == age_upper;
+		else
+			ok &= extend_grid[i] == age_grid[i-2];
+	}
 	ok &= sub_grid.size() == 2;
 	ok &= sub_grid[0] == age_lower;
 	ok &= sub_grid[1] == age_upper;

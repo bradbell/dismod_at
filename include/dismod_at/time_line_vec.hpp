@@ -24,12 +24,16 @@ private:
 	// fixed age grid for numerical averages w.r.t. age and time
 	const CppAD::vector<double> age_grid_;
 	//
-	// ages corresponding to vector of time lines
-	// sub_grid_[0]                    = age_lower in previous specialize
-	// sub_grid_[ sub_grid_.size() - 1] = age_upper in previous speicalize
+	// Set by specialize to include all the points in age_grid_ as well as
+	// age_lower and  age_upper
+	CppAD::vector<double> extend_grid_;
+	//
+	// Set by specialize to subset of extend_grid_ that is between
+	// age_lower and age_upper inclusive.
+	// sub_grid_[0] is age_lower, age_grid_[ sub_grid_.size()-1 ] is age_upper.
 	CppAD::vector<double> sub_grid_;
 	//
-	// lower and upper times corresponding to previous specialize
+	// Set by specialize
 	double time_lower_;
 	double time_upper_;
 	//
@@ -50,6 +54,9 @@ public:
 		const double& time_lower ,
 		const double& time_upper
 	);
+	// extend_grid
+	const CppAD::vector<double>& extend_grid(void) const;
+	//
 	// sub_grid
 	const CppAD::vector<double>& sub_grid(void) const;
 	//

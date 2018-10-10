@@ -27,6 +27,8 @@ $icode%vec%.specialize(
 	%age_lower%, %age_upper%, %time_lower%, %time_upper%
 )
 %$$
+$icode%extend_grid% = %vec%.extend_grid()
+%$$
 $icode%sub_grid% = %vec%.sub_grid()
 %$$
 $icode%vec%.add_point(%age_index%, %point%)
@@ -47,7 +49,10 @@ $srcfile%devel/utility/time_line_vec.cpp%
 	0%// BEGIN_ADD_POINT_PROTOTYPE%// END_ADD_POINT_PROTOTYPE%1
 %$$
 $srcfile%devel/utility/time_line_vec.cpp%
-	0%// BEGIN_VEC_AGE_PROTOTYPE%// END_VEC_AGE_PROTOTYPE%1
+	0%// BEGIN_EXTEND_GRID_PROTOTYPE%// END_EXTEND_GRID_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_SUB_GRID_PROTOTYPE%// END_SUB_GRID_PROTOTYPE%1
 %$$
 $srcfile%devel/utility/time_line_vec.cpp%
 	0%// BEGIN_TIME_LINE_PROTOTYPE%// END_TIME_LINE_PROTOTYPE%1
@@ -77,28 +82,29 @@ $subhead age_grid$$
 This vector specifies the grid for averaging w.r.t. age.
 This vector is monotone increasing; i.e.,
 $codei%
-	%age_grid%[%j%] <= age_grid[%j%+1]
+	%age_grid%[%j%] < age_grid[%j%+1]
 %$$
 
-
 $head specialize$$
-This creates a specialized age grid for averaging between
-the specified lower and upper ages and times
+This creates an extended age grid for averaging between
+the specified lower and upper ages and times where
 $codei%
 	%age_lower%  <= %age_upper%
 	%time_lower% <= %time_upper%
 %$$
-Only the $icode age_grid$$ points between the lower and upper limits
-are included.
-In addition, $icode age_lower$$ and $icode age_upper$$ are included
-in the specialized grid.
-(If $icode%age_lower% == %age_upper%$$,
-there is only one point in the specialized age grid.)
-There is a time line for each specialized age grid point
+There is a time line for each sub grid point
 and it is initialized as empty.
 
+$head extend_grid$$
+This return value is an extended age grid and is monotone increasing.
+It include all the points in the original $icode age_grid$$
+and the values $icode age_lower$$ and $icode age_upper$$.
+
 $head sub_grid$$
-This return value is the specialized age grid.
+This return value is the sub grid of the extended age grid
+and is monotone increasing.
+It includes the all the extended age grid points that
+are between $icode age_lower$$ and $icode age_upper$$ inclusive.
 
 $head add_point$$
 This adds a time point to the specified time line.
@@ -196,48 +202,73 @@ void time_line_vec<Float>::specialize(
 	time_lower_ = time_lower;
 	time_upper_ = time_upper;
 	// -----------------------------------------------------------------
+	// extend_grid_
+	//
+	size_t n_age     = age_grid_.size();
+	size_t age_index = 0;
+	extend_grid_.resize(0);
+	//
+	// ages < age_lower
+	while( age_grid_[age_index] < age_lower )
+	{	if( ! near_equal( age_grid_[age_index], age_lower ) )
+			extend_grid_.push_back( age_grid_[age_index] );
+		++age_index;
+	}
+	//
+	// age_lower
+	size_t age_lower_index = extend_grid_.size();
+	size_t age_upper_index = age_lower_index;
+	extend_grid_.push_back( age_lower );
+	if( near_equal( age_grid_[age_index], age_lower ) )
+		++age_index;
+	//
+	if( ! near_equal( age_lower, age_upper ) )
+	{	//
+		// ages < age_upper
+		assert( age_index < n_age );
+		while( age_grid_[age_index] < age_upper )
+		{	if( ! near_equal( age_grid_[age_index], age_upper ) )
+				extend_grid_.push_back( age_grid_[age_index] );
+			++age_index;
+		}
+		//
+		// age_upper
+		age_upper_index = extend_grid_.size();
+		extend_grid_.push_back( age_upper );
+	}
+	if( near_equal( age_grid_[age_index], age_upper ) )
+		++age_index;
+	while( age_index < n_age )
+	{	extend_grid_.push_back( age_grid_[age_index] );
+		++age_index;
+	}
+	// -----------------------------------------------------------------
 	// sub_grid_
 	//
 	// start with just age_lower
-	sub_grid_.resize(1);
-	sub_grid_[0] = age_lower;
+	sub_grid_.resize( (1 + age_upper_index) - age_lower_index);
+	for(size_t i = 0; i < sub_grid_.size(); ++i)
+		sub_grid_[i] = extend_grid_[age_lower_index + i];
 	//
-	// skip age grid values that are less than age_lower
-	size_t age_index = 0;
-	while( age_grid_[age_index] < age_lower )
-		++age_index;
-	//
-	// check if age_lower is in age_grid
-	bool in_age_grid = near_equal( age_lower, age_grid_[age_index] );
-	if( in_age_grid )
-		++age_index;
-	//
-	// include age_grid values in [ age_lower, age_upper ]
-	while( age_grid_[age_index] < age_upper )
-	{	sub_grid_.push_back( age_grid_[age_index] );
-		++age_index;
-	}
-	//
-	// check if age_upper is already in  sub_grid_
-	double last = sub_grid_[ sub_grid_.size() - 1 ];
-	bool in_sub_grid = near_equal( age_upper, last );
-	if( not in_sub_grid )
-	{	assert( age_upper < age_grid_[age_index] );
-		sub_grid_.push_back( age_upper );
-	}
 	// -----------------------------------------------------------------
 	// vec_
-	size_t n_age = sub_grid_.size();
-	vec_.resize(n_age);
-	for(size_t j = 0; j < n_age; ++j)
+	size_t n_sub = sub_grid_.size();
+	vec_.resize(n_sub);
+	for(size_t j = 0; j < n_sub; ++j)
 		vec_[j].resize(0);
 }
+// BEGIN_EXTEND_GRID_PROTOTYPE
+template <class Float>
+const CppAD::vector<double>& time_line_vec<Float>::extend_grid(void) const
+// END_EXTEND_GRID_PROTOTYPE
+{	return extend_grid_; }
 
-// BEGIN_VEC_AGE_PROTOTYPE
+// BEGIN_SUB_GRID_PROTOTYPE
 template <class Float>
 const CppAD::vector<double>& time_line_vec<Float>::sub_grid(void) const
-// END_VEC_AGE_PROTOTYPE
+// END_SUB_GRID_PROTOTYPE
 {	return sub_grid_; }
+
 
 // BEGIN_ADD_POINT_PROTOTYPE
 template <class Float>
@@ -286,17 +317,17 @@ time_line_vec<Float>::time_line(const size_t& age_index) const
 template <class Float>
 Float time_line_vec<Float>::age_time_avg(void) const
 // END_AGE_TIME_AVG_PROTOTYPE
-{	size_t n_age = sub_grid_.size();
+{	size_t n_sub = sub_grid_.size();
 	//
 	// compute average w.r.t time for each age
-	CppAD::vector<Float> time_avg(n_age);
-	for(size_t i = 0; i < n_age; ++i)
+	CppAD::vector<Float> time_avg(n_sub);
+	for(size_t i = 0; i < n_sub; ++i)
 	{	const CppAD::vector<time_point>& line( vec_[i] );
 		size_t n_time = line.size();
 		//
 		assert( n_time >= 1 );
 		assert( near_equal( line[0].time, time_lower_ ) );
-		assert( near_equal( line[n_time - 1].time, time_upper ) );
+		assert( near_equal( line[n_time - 1].time, time_upper_ ) );
 		//
 		if( n_time == 1 )
 			time_avg[i] = line[0].value;
@@ -311,14 +342,14 @@ Float time_line_vec<Float>::age_time_avg(void) const
 	}
 	// compute average w.r.t age
 	Float result(0);
-	if( n_age == 1 )
+	if( n_sub == 1 )
 		result = time_avg[0];
 	else
-	{	for(size_t i = 1; i < n_age; ++i)
+	{	for(size_t i = 1; i < n_sub; ++i)
 		{	Float value = (time_avg[i] + time_avg[i-1]) / Float(2);
 			result     += value * (sub_grid_[i] - sub_grid_[i-1]);
 		}
-		result = result / (sub_grid_[n_age - 1] - sub_grid_[0] );
+		result = result / (sub_grid_[n_sub - 1] - sub_grid_[0] );
 	}
 	return result;
 }
