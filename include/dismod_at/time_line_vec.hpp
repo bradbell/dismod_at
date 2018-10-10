@@ -28,10 +28,11 @@ private:
 	// age_lower and  age_upper
 	CppAD::vector<double> extend_grid_;
 	//
-	// Set by specialize to subset of extend_grid_ that is between
-	// age_lower and age_upper inclusive.
-	// sub_grid_[0] is age_lower, age_grid_[ sub_grid_.size()-1 ] is age_upper.
-	CppAD::vector<double> sub_grid_;
+	// Set by specialize: exend_grid_[ sub_lower_ ] is age_lower
+	size_t sub_lower_;
+	//
+	// Set by specialize: exend_grid_[ sub_upper_ ] is age_upper
+	size_t sub_upper_;
 	//
 	// Set by specialize
 	double time_lower_;
@@ -57,8 +58,11 @@ public:
 	// extend_grid
 	const CppAD::vector<double>& extend_grid(void) const;
 	//
-	// sub_grid
-	const CppAD::vector<double>& sub_grid(void) const;
+	// sub_lower
+	size_t sub_lower(void) const;
+	//
+	// sub_upper
+	size_t sub_upper(void) const;
 	//
 	// add_point
 	void add_point(

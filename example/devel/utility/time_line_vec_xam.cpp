@@ -49,7 +49,6 @@ bool time_line_vec_xam(void)
 	// vec
 	dismod_at::time_line_vec<double> vec(age_grid);
 	const CppAD::vector<double>& extend_grid ( vec.extend_grid() );
-	const CppAD::vector<double>& sub_grid ( vec.sub_grid() );
 	// --------------------------------------------------------------------
 	// case where age_lower = age_upper = age_grid[2]
 	double age_lower = age_grid[2];
@@ -57,36 +56,39 @@ bool time_line_vec_xam(void)
 	double time_lower = 1990.0;
 	double time_upper = 2010.0;
 	vec.specialize(age_lower, age_upper, time_lower, time_upper);
+	size_t sub_lower = vec.sub_lower();
+	size_t sub_upper = vec.sub_upper();
+	ok &= sub_lower == 2;
+	ok &= sub_upper == 2;
 	ok &= extend_grid.size() == n_age_grid;
 	for(size_t i = 0; i < n_age_grid; ++i)
 		ok &= extend_grid[i] == age_grid[i];
-	ok &= sub_grid.size() == 1;
-	ok &= sub_grid[0] == age_lower;
 	// --------------------------------------------------------------------
 	// case where age_grid[1] < age_lower < age_upper < age_grid[2]
 	age_lower = age_grid[1] + (age_grid[2] - age_grid[1]) / 3.0;
 	age_upper = age_lower   + (age_grid[2] - age_grid[1]) / 3.0;
 	vec.specialize(age_lower, age_upper, time_lower, time_upper);
+	sub_lower = vec.sub_lower();
+	sub_upper = vec.sub_upper();
+	ok &= sub_lower == 2;
+	ok &= sub_upper == 3;
 	ok &= extend_grid.size() == n_age_grid + 2;
 	for(size_t i = 0; i < extend_grid.size(); ++i)
-	{	if( i < 2 )
+	{	if( i < sub_lower )
 			ok &= extend_grid[i] == age_grid[i];
-		else if( i == 2 )
+		else if( i == sub_lower )
 			ok &= extend_grid[i] == age_lower;
-		else if( i == 3 )
+		else if( i == sub_upper )
 			ok &= extend_grid[i] == age_upper;
 		else
 			ok &= extend_grid[i] == age_grid[i-2];
 	}
-	ok &= sub_grid.size() == 2;
-	ok &= sub_grid[0] == age_lower;
-	ok &= sub_grid[1] == age_upper;
 	// --------------------------------------------------------------------
 	// add one time point to first time line
 	time_point point_00;
 	point_00.time  = time_lower;
 	point_00.value = 3.0;
-	vec.add_point(0, point_00);
+	vec.add_point(sub_lower, point_00);
 	//
 	// add two time points to the second time line
 	time_point point_10, point_11;
@@ -94,28 +96,28 @@ bool time_line_vec_xam(void)
 	point_10.value = 4.0;
 	point_11.time  = time_upper;
 	point_11.value = 5.0;
-	vec.add_point(1, point_11); // add second point first
-	vec.add_point(1, point_10); // add first point second
+	vec.add_point(sub_lower+1, point_11); // add second point first time
+	vec.add_point(sub_lower+1, point_10); // add second point second time
 	//
 	// check first time line
-	CppAD::vector<time_point> time_line_0 = vec.time_line(0);
+	CppAD::vector<time_point> time_line_0 = vec.time_line(sub_lower);
 	ok &= time_line_0.size() == 1;
 	ok &= time_line_0[0].time  == point_00.time;
 	ok &= time_line_0[0].value == point_00.value;
 	//
 	// check second time line
-	CppAD::vector<time_point> time_line_1 = vec.time_line(1);
+	CppAD::vector<time_point> time_line_1 = vec.time_line(sub_lower+1);
 	ok &= time_line_1.size() == 2;
 	ok &= time_line_1[0].time  == point_10.time;
 	ok &= time_line_1[0].value == point_10.value;
 	ok &= time_line_1[1].time  == point_11.time;
 	ok &= time_line_1[1].value == point_11.value;
 	// --------------------------------------------------------------------
-	// add another point too the first line
+	// add another point to the first line
 	time_point point_01;
 	point_01.time  = time_upper;
 	point_01.value = 6.0;
-	vec.add_point(0, point_01);
+	vec.add_point(sub_lower, point_01);
 	//
 	// check age_time_avg
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
