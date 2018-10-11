@@ -16,7 +16,7 @@ $section Interpolation from Smoothing Grid to a Line$$
 
 $head Syntax$$
 $icode%line_value% = grid2line(
-%line_age%, %line_time%, %age_table%, %time_table%, %s_info%, %smooth_value%
+%line_age%, %line_time%, %age_table%, %time_table%, %g_info%, %grid_value%
 )%$$
 
 $head Prototype$$
@@ -54,18 +54,18 @@ This argument is the $cref age_table$$.
 $head time_table$$
 This argument is the $cref time_table$$.
 
-$head s_info$$
+$head g_info$$
 This is the $cref/smoothing information/smooth_info/$$ for the value
 being interpolated.
 
-$head smooth_value$$
+$head grid_value$$
 Is the values corresponding to the smoothing grid points.
 Let $icode n_age$$ and $icode n_time$$ be the number of age and
 time points in the smoothing grid.
 For $icode%i% = 0 , %...%. %n_age%-1%$$,
 For $icode%j% = 0 , %...%. %n_time%-1%$$,
 $codei%
-	%smooth_value%[ %i% * %n_time% + %j% ]
+	%grid_value%[ %i% * %n_time% + %j% ]
 %$$
 is the value corresponding to the $th i$$ age and $th j$$ time
 in the smoothing grid.
@@ -98,8 +98,8 @@ CppAD::vector<Float> grid2line(
 	const CppAD::vector<double>& line_time    ,
 	const CppAD::vector<double>& age_table    ,
 	const CppAD::vector<double>& time_table   ,
-	const smooth_info&           s_info       ,
-	const CppAD::vector<Float>&  smooth_value )
+	const smooth_info&           g_info       ,
+	const CppAD::vector<Float>&  grid_value )
 // END PROTOTYPE
 {	//
 	assert( line_age.size() == line_time.size() );
@@ -108,14 +108,14 @@ CppAD::vector<Float> grid2line(
 	CppAD::vector<Float> line_value(n_line);
 	//
 	// number of age and time points in the grid
-	size_t n_age  = s_info.age_size();
-	size_t n_time = s_info.time_size();
+	size_t n_age  = g_info.age_size();
+	size_t n_time = g_info.time_size();
 	//
-	double age_min  = age_table[  s_info.age_id(0) ];
-	double time_min = time_table[ s_info.time_id(0) ];
+	double age_min  = age_table[  g_info.age_id(0) ];
+	double time_min = time_table[ g_info.time_id(0) ];
 	//
-	double age_max  = age_table[  s_info.age_id(n_age - 1) ];
-	double time_max = time_table[ s_info.time_id(n_time - 1) ];
+	double age_max  = age_table[  g_info.age_id(n_age - 1) ];
+	double time_max = time_table[ g_info.time_id(n_time - 1) ];
 	//
 	size_t i = 1;
 	size_t j = 1;
@@ -135,7 +135,7 @@ CppAD::vector<Float> grid2line(
 		}
 		else
 		{	one_age = false;
-			while( i < n_age - 1 && age_table[ s_info.age_id(i) ] < age )
+			while( i < n_age - 1 && age_table[ g_info.age_id(i) ] < age )
 				++i;
 		}
 		//
@@ -151,10 +151,10 @@ CppAD::vector<Float> grid2line(
 		}
 		else
 		{	one_time = false;
-			while( j < n_time - 1 && time_table[ s_info.time_id(j) ] < time )
+			while( j < n_time - 1 && time_table[ g_info.time_id(j) ] < time )
 				++j;
 		}
-		// index in smooth_value corresponding to grid point (i, j)
+		// index in grid_value corresponding to grid point (i, j)
 		size_t ij_smooth = i * n_time + j;
 		//
 		// result of the interpolation for this point on the line
@@ -162,15 +162,15 @@ CppAD::vector<Float> grid2line(
 		//
 		// case with no interpolation
 		if( one_age & one_time )
-			res =  smooth_value[ij_smooth];
+			res =  grid_value[ij_smooth];
 		//
 		if( one_time )
 		{	// case with only age interpolation
 			assert( i > 0 );
-			Float  vp = smooth_value[ij_smooth];
-			double ap = age_table[ s_info.age_id(i) ];
-			Float  vm = smooth_value[ij_smooth - n_time];
-			double am = age_table[ s_info.age_id(i - 1) ];
+			Float  vp = grid_value[ij_smooth];
+			double ap = age_table[ g_info.age_id(i) ];
+			Float  vm = grid_value[ij_smooth - n_time];
+			double am = age_table[ g_info.age_id(i - 1) ];
 			assert( am <= age && age <= ap );
 			res       = vm * (ap - age);
 			res      += vp * (age - am);
@@ -179,10 +179,10 @@ CppAD::vector<Float> grid2line(
 		else if( one_age )
 		{	// case with only time interpolation
 			assert( j > 0 );
-			Float  vp = smooth_value[ij_smooth];
-			double tp = time_table[ s_info.time_id(j) ];
-			Float  vm = smooth_value[ij_smooth - 1];
-			double tm = time_table[ s_info.time_id(j - 1) ];
+			Float  vp = grid_value[ij_smooth];
+			double tp = time_table[ g_info.time_id(j) ];
+			Float  vm = grid_value[ij_smooth - 1];
+			double tm = time_table[ g_info.time_id(j - 1) ];
 			assert( tm <= time && time <= tp );
 			res       = vm * (tp - time);
 			res      += vp * (time - tm);
@@ -192,14 +192,14 @@ CppAD::vector<Float> grid2line(
 		{	// interpolate in both age and time
 			assert( i > 0 );
 			assert( j > 0 );
-			double ap  = age_table[ s_info.age_id(i) ];
-			double am  = age_table[ s_info.age_id(i - 1) ];
-			double tp  = time_table[ s_info.time_id(j) ];
-			double tm  = time_table[ s_info.time_id(j - 1) ];
-			Float  vpp = smooth_value[ij_smooth];
-			Float  vmp = smooth_value[ij_smooth - n_time];
-			Float  vpm = smooth_value[ij_smooth - 1];
-			Float  vmm = smooth_value[ij_smooth - n_time - 1];
+			double ap  = age_table[ g_info.age_id(i) ];
+			double am  = age_table[ g_info.age_id(i - 1) ];
+			double tp  = time_table[ g_info.time_id(j) ];
+			double tm  = time_table[ g_info.time_id(j - 1) ];
+			Float  vpp = grid_value[ij_smooth];
+			Float  vmp = grid_value[ij_smooth - n_time];
+			Float  vpm = grid_value[ij_smooth - 1];
+			Float  vmm = grid_value[ij_smooth - n_time - 1];
 			assert( am <= age && age <= ap );
 			assert( tm <= time && time <= tp );
 			res        = vpp * (age - am) * (time - tm);
@@ -221,8 +221,8 @@ template CppAD::vector<Float> grid2line(         \
 	const CppAD::vector<double>& line_time    ,    \
 	const CppAD::vector<double>& age_table    ,    \
 	const CppAD::vector<double>& time_table   ,    \
-	const smooth_info&           s_info       ,    \
-	const CppAD::vector<Float>&  smooth_value      \
+	const smooth_info&           g_info       ,    \
+	const CppAD::vector<Float>&  grid_value      \
 );
 
 DISMOD_AT_INSTANTIATE_GRID2LINE( double )

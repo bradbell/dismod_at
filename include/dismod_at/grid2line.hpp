@@ -22,8 +22,8 @@ CppAD::vector<Float> grid2line(
 	const CppAD::vector<double>& line_time    ,
 	const CppAD::vector<double>& age_table    ,
 	const CppAD::vector<double>& time_table   ,
-	const smooth_info&           s_info       ,
-	const CppAD::vector<Float>&  smooth_value
+	const smooth_info&           g_info       ,
+	const CppAD::vector<Float>&  grid_value
 );
 
 

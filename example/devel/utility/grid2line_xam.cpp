@@ -65,7 +65,7 @@ bool grid2line_xam(void)
 	size_t mulstd_dtime   = 1;
 
 	// testing constructor
-	dismod_at::smooth_info s_info(
+	dismod_at::smooth_info g_info(
 		age_table,
 		time_table,
 		age_id,
@@ -80,14 +80,14 @@ bool grid2line_xam(void)
 	);
 
 	// variable values on smoothing grid
-	CppAD::vector<Float>  smooth_value(n_age * n_time);
-	CppAD::vector<double> smooth_check(n_age * n_time);
+	CppAD::vector<Float>  grid_value(n_age * n_time);
+	CppAD::vector<double> grid_check(n_age * n_time);
 	for(size_t i = 0; i < n_age; i++)
 	{	for(size_t j = 0; j < n_time; j++)
 		{	double age  = age_table[i];
 			double time = time_table[j];
-			smooth_check[i * n_time + j] = age * age + time * time;
-			smooth_value[i * n_time + j] = smooth_check[i * n_time + j];
+			grid_check[i * n_time + j] = age * age + time * time;
+			grid_value[i * n_time + j] = grid_check[i * n_time + j];
 		}
 	}
 
@@ -120,7 +120,7 @@ bool grid2line_xam(void)
 
 	// grid2line calculation
 	line_value = grid2line(
-		line_age, line_time, age_table, time_table, s_info, smooth_value
+		line_age, line_time, age_table, time_table, g_info, grid_value
 	);
 
 
@@ -139,7 +139,7 @@ bool grid2line_xam(void)
 			++j;
 		//
 		double  check = dismod_at::bilinear_interp(
-			age, time, age_table, time_table, smooth_check, i, j
+			age, time, age_table, time_table, grid_check, i, j
 		);
 		//
 		if( check == 0.0 )
