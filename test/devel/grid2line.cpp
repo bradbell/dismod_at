@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/grid2line.hpp>
 # include <dismod_at/bilinear_interp.hpp>
 # include <dismod_at/a1_double.hpp>
+# include <dismod_at/weight_info.hpp>
 
 bool grid2line(void)
 {

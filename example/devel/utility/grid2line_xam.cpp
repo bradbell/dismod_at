@@ -28,6 +28,7 @@ $end
 # include <dismod_at/grid2line.hpp>
 # include <dismod_at/bilinear_interp.hpp>
 # include <dismod_at/a1_double.hpp>
+# include <dismod_at/smooth_info.hpp>
 
 bool grid2line_xam(void)
 {

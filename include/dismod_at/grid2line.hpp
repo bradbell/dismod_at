@@ -12,8 +12,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_GRID2LINE_HPP
 
 # include <cppad/cppad.hpp>
-# include "smooth_info.hpp"
-# include "weight_info.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
