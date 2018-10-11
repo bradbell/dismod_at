@@ -7,8 +7,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_ADJUST_INTEGRAND_HPP
-# define DISMOD_AT_ADJUST_INTEGRAND_HPP
+# ifndef DISMOD_AT_ADJ_INTEGRAND_HPP
+# define DISMOD_AT_ADJ_INTEGRAND_HPP
 
 # include <cppad/utility/vector.hpp>
 # include "get_integrand_table.hpp"
@@ -18,7 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 template <class Float>
-CppAD::vector<Float> adjust_integrand(
+CppAD::vector<Float> adj_integrand(
 	const std::string&                        rate_case        ,
 	const CppAD::vector<double>&              age_table        ,
 	const CppAD::vector<double>&              time_table       ,

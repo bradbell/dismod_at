@@ -8,11 +8,11 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <cppad/mixed/exception.hpp>
-# include <dismod_at/adjust_integrand.hpp>
+# include <dismod_at/adj_integrand.hpp>
 # include <dismod_at/null_int.hpp>
 
 /*
-$begin adjust_integrand$$
+$begin adj_integrand$$
 $spell
 	vec
 	const
@@ -24,7 +24,7 @@ $section Compute Adjusted Integrand On a Cohort$$
 $head Under Construction$$
 
 $head Syntax$$
-$icode%adj_integrand% = adjust_integrand(
+$icode%adjust_integrand% = adj_integrand(
 	%rate_case%,
 	%age_table%,
 	%time_table%,
@@ -108,7 +108,7 @@ is all the $cref model_variables$$ in the order
 specified by $icode pack_object$$.
 
 $head Prototype$$
-$srcfile%devel/model/adjust_integrand.cpp%
+$srcfile%devel/model/adj_integrand.cpp%
 	0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 $end
@@ -118,7 +118,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
 template <class Float>
-CppAD::vector<Float> adjust_integrand(
+CppAD::vector<Float> adj_integrand(
 	const std::string&                        rate_case        ,
 	const CppAD::vector<double>&              age_table        ,
 	const CppAD::vector<double>&              time_table       ,

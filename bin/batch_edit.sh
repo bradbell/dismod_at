@@ -12,23 +12,23 @@
 new_directories='
 '
 rename_files='
-	devel/utility/smooth2line.cpp
-	include/dismod_at/smooth2line.hpp
-	example/devel/utility/smooth2line_xam.cpp
+	devel/model/adjust_integrand.cpp
+	include/dismod_at/adjust_integrand.hpp
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|smooth2line|grid2line|'
+rename_cmd='s|adjust_integrand|adj_integrand|'
 #
 # spell_cmd='s|^$spell|&\n\tsim|'
 # spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|smooth2line|grid2line|g
-s|SMOOTH2LINE|GRID2LINE|
+s|adjust_integrand|adj_integrand|g
+s|ADJUST_INTEGRAND|ADJ_INTEGRAND|
+s|%adj_integrand%|%adjust_integrand%|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
