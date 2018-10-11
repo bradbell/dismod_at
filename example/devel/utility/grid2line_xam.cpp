@@ -9,17 +9,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin smooth2line_xam.cpp$$
+$begin grid2line_xam.cpp$$
 $spell
 	interp
 	xam
 $$
 
-$section C++ smooth2line: Example and Test$$
-$index example, C++ smooth2line$$
-$index smooth2line, C++ example$$
+$section C++ grid2line: Example and Test$$
+$index example, C++ grid2line$$
+$index grid2line, C++ example$$
 
-$srcfile%example/devel/utility/smooth2line_xam.cpp%
+$srcfile%example/devel/utility/grid2line_xam.cpp%
 	0%// BEGIN C++%// END C++%1
 %$$
 
@@ -27,11 +27,11 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/smooth2line.hpp>
+# include <dismod_at/grid2line.hpp>
 # include <dismod_at/bilinear_interp.hpp>
 # include <dismod_at/a1_double.hpp>
 
-bool smooth2line_xam(void)
+bool grid2line_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -118,8 +118,8 @@ bool smooth2line_xam(void)
 		line_time[k] -=  time_diff / double(n_line - 1);
 	}
 
-	// smooth2line calculation
-	line_value = smooth2line(
+	// grid2line calculation
+	line_value = grid2line(
 		line_age, line_time, age_table, time_table, s_info, smooth_value
 	);
 

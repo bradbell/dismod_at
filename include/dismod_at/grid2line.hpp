@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_SMOOTH2LINE_HPP
-# define DISMOD_AT_SMOOTH2LINE_HPP
+# ifndef DISMOD_AT_GRID2LINE_HPP
+# define DISMOD_AT_GRID2LINE_HPP
 
 # include <cppad/cppad.hpp>
 # include "smooth_info.hpp"
@@ -17,7 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 template <class Float>
-CppAD::vector<Float> smooth2line(
+CppAD::vector<Float> grid2line(
 	const CppAD::vector<double>& line_age     ,
 	const CppAD::vector<double>& line_time    ,
 	const CppAD::vector<double>& age_table    ,

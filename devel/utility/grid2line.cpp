@@ -8,19 +8,19 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin smooth2line$$
+$begin grid2line$$
 $spell
 $$
 
 $section Interpolation from Smoothing Grid to a Line$$
 
 $head Syntax$$
-$icode%line_value% = smooth2line(
+$icode%line_value% = grid2line(
 %line_age%, %line_time%, %age_table%, %time_table%, %s_info%, %smooth_value%
 )%$$
 
 $head Prototype$$
-$srcfile%devel/utility/smooth2line.cpp%
+$srcfile%devel/utility/grid2line.cpp%
 	0%// BEGIN PROTOTYPE%// END PROTOTYPE%1
 %$$
 
@@ -77,15 +77,15 @@ $icode%line_value%[%i%]%$$ is the
 $cref bilinear$$ interpolated value corresponding to
 age $icode%line_age%[%i%]%$$ and time $icode%line_time%[%i%]%$$.
 
-$children%example/devel/utility/smooth2line_xam.cpp
+$children%example/devel/utility/grid2line_xam.cpp
 %$$
 $head Example$$
-The file $cref smooth2line_xam.cpp$$ contains an example and test
+The file $cref grid2line_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
 */
-# include <dismod_at/smooth2line.hpp>
+# include <dismod_at/grid2line.hpp>
 # include <dismod_at/a1_double.hpp>
 
 
@@ -93,7 +93,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN PROTOTYPE
 template <class Float>
-CppAD::vector<Float> smooth2line(
+CppAD::vector<Float> grid2line(
 	const CppAD::vector<double>& line_age     ,
 	const CppAD::vector<double>& line_time    ,
 	const CppAD::vector<double>& age_table    ,
@@ -215,8 +215,8 @@ CppAD::vector<Float> smooth2line(
 
 
 // instantiation
-# define DISMOD_AT_INSTANTIATE_SMOOTH2LINE(Float)  \
-template CppAD::vector<Float> smooth2line(         \
+# define DISMOD_AT_INSTANTIATE_GRID2LINE(Float)  \
+template CppAD::vector<Float> grid2line(         \
 	const CppAD::vector<double>& line_age     ,    \
 	const CppAD::vector<double>& line_time    ,    \
 	const CppAD::vector<double>& age_table    ,    \
@@ -225,7 +225,7 @@ template CppAD::vector<Float> smooth2line(         \
 	const CppAD::vector<Float>&  smooth_value      \
 );
 
-DISMOD_AT_INSTANTIATE_SMOOTH2LINE( double )
-DISMOD_AT_INSTANTIATE_SMOOTH2LINE( a1_double )
+DISMOD_AT_INSTANTIATE_GRID2LINE( double )
+DISMOD_AT_INSTANTIATE_GRID2LINE( a1_double )
 
 } // END DISMOD_AT_NAMESPACE

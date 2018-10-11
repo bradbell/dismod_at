@@ -43,7 +43,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/n_random_const.cpp
 	utility/residual_density.cpp
 	utility/sim_random.cpp
-	utility/smooth2line.cpp
+	utility/grid2line.cpp
 	utility/smooth2ode.cpp
 	utility/solve_ode.cpp
 	utility/split_space.cpp

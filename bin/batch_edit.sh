@@ -12,25 +12,23 @@
 new_directories='
 '
 rename_files='
+	devel/utility/smooth2line.cpp
+	include/dismod_at/smooth2line.hpp
+	example/devel/utility/smooth2line_xam.cpp
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
+rename_cmd='s|smooth2line|grid2line|'
 #
 # spell_cmd='s|^$spell|&\n\tsim|'
 # spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-/data_object(/! b end
-: loop
-N
-/node_table,/! b loop
-s|\\n\\t*node_table,||
-#
-: end
+s|smooth2line|grid2line|g
+s|SMOOTH2LINE|GRID2LINE|
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
