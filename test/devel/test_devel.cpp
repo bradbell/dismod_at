@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 // this directory
 extern bool age_time_order(void);
 extern bool data_model_subset(void);
+extern bool grid2line(void);
 extern bool meas_mulcov(void);
 extern bool rate_mulcov(void);
 extern bool cppad_mixed_xam(void);
@@ -55,6 +56,7 @@ int main(void)
 	// this directory
 	RUN(age_time_order);
 	RUN(data_model_subset);
+	RUN(grid2line);
 	RUN(meas_mulcov);
 	RUN(rate_mulcov);
 	RUN(cppad_mixed_xam);
