@@ -28,6 +28,10 @@ $head n_line$$
 We use $icode n_line$$ to denote the number of
 points in the line.
 
+$head Grid_info$$
+The type $icode Grid$$ must be $cref smooth_info$$
+or $cref weight_info$$.
+
 $head Float$$
 The type $icode Float$$ must be $code double$$ or
 $cref a1_double$$.
@@ -55,20 +59,20 @@ $head time_table$$
 This argument is the $cref time_table$$.
 
 $head g_info$$
-This is the $cref/smoothing information/smooth_info/$$ for the value
-being interpolated.
+This is the information for the grid that is being interpolated.
 
 $head grid_value$$
-Is the values corresponding to the smoothing grid points.
+Is the values corresponding to each of the grid points
+in $icode g_info$$.
 Let $icode n_age$$ and $icode n_time$$ be the number of age and
-time points in the smoothing grid.
+time points in the grid.
 For $icode%i% = 0 , %...%. %n_age%-1%$$,
 For $icode%j% = 0 , %...%. %n_time%-1%$$,
 $codei%
 	%grid_value%[ %i% * %n_time% + %j% ]
 %$$
 is the value corresponding to the $th i$$ age and $th j$$ time
-in the smoothing grid.
+in the grid.
 
 $head line_value$$
 The return value $icode line_value$$ has size $icode n_line$$.
@@ -92,13 +96,13 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN PROTOTYPE
-template <class Float>
+template <class Grid_info, class Float>
 CppAD::vector<Float> grid2line(
 	const CppAD::vector<double>& line_age     ,
 	const CppAD::vector<double>& line_time    ,
 	const CppAD::vector<double>& age_table    ,
 	const CppAD::vector<double>& time_table   ,
-	const smooth_info&           g_info       ,
+	const Grid_info&             g_info       ,
 	const CppAD::vector<Float>&  grid_value )
 // END PROTOTYPE
 {	//
@@ -215,17 +219,20 @@ CppAD::vector<Float> grid2line(
 
 
 // instantiation
-# define DISMOD_AT_INSTANTIATE_GRID2LINE(Float)  \
-template CppAD::vector<Float> grid2line(         \
-	const CppAD::vector<double>& line_age     ,    \
-	const CppAD::vector<double>& line_time    ,    \
-	const CppAD::vector<double>& age_table    ,    \
-	const CppAD::vector<double>& time_table   ,    \
-	const smooth_info&           g_info       ,    \
-	const CppAD::vector<Float>&  grid_value      \
+# define DISMOD_AT_INSTANTIATE_GRID2LINE(Grid_info, Float)  \
+template CppAD::vector<Float> grid2line(                    \
+	const CppAD::vector<double>& line_age     ,             \
+	const CppAD::vector<double>& line_time    ,             \
+	const CppAD::vector<double>& age_table    ,             \
+	const CppAD::vector<double>& time_table   ,             \
+	const Grid_info&             g_info       ,             \
+	const CppAD::vector<Float>&  grid_value                 \
 );
 
-DISMOD_AT_INSTANTIATE_GRID2LINE( double )
-DISMOD_AT_INSTANTIATE_GRID2LINE( a1_double )
+DISMOD_AT_INSTANTIATE_GRID2LINE( weight_info, double )
+DISMOD_AT_INSTANTIATE_GRID2LINE( smooth_info, double )
+//
+DISMOD_AT_INSTANTIATE_GRID2LINE( weight_info, a1_double )
+DISMOD_AT_INSTANTIATE_GRID2LINE( smooth_info, a1_double )
 
 } // END DISMOD_AT_NAMESPACE

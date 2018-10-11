@@ -16,8 +16,6 @@ $spell
 $$
 
 $section C++ grid2line: Example and Test$$
-$index example, C++ grid2line$$
-$index grid2line, C++ example$$
 
 $srcfile%example/devel/utility/grid2line_xam.cpp%
 	0%// BEGIN C++%// END C++%1
