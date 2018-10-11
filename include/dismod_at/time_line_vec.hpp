@@ -19,7 +19,7 @@ template <class Float>
 class time_line_vec {
 public:
 	// structure corresponding to one point in a time line
-	struct time_point {double time; Float value; };
+	struct time_point {double time; double weight; Float value; };
 private:
 	// fixed age grid for numerical averages w.r.t. age and time
 	const CppAD::vector<double> age_grid_;

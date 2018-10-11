@@ -86,44 +86,56 @@ bool time_line_vec_xam(void)
 	// --------------------------------------------------------------------
 	// add one time point to first time line
 	time_point point_00;
-	point_00.time  = time_lower;
-	point_00.value = 3.0;
+	point_00.time   = time_lower;
+	point_00.weight = 1.0;
+	point_00.value  = 3.0;
 	vec.add_point(sub_lower, point_00);
 	//
 	// add two time points to the second time line
 	time_point point_10, point_11;
-	point_10.time  = time_lower;
-	point_10.value = 4.0;
-	point_11.time  = time_upper;
-	point_11.value = 5.0;
+	point_10.time   = time_lower;
+	point_10.weight = 2.0;
+	point_10.value  = 4.0;
+	point_11.time   = time_upper;
+	point_10.weight = 3.0;
+	point_11.value  = 5.0;
 	vec.add_point(sub_lower+1, point_11); // add second point first time
 	vec.add_point(sub_lower+1, point_10); // add second point second time
 	//
 	// check first time line
 	CppAD::vector<time_point> time_line_0 = vec.time_line(sub_lower);
-	ok &= time_line_0.size() == 1;
-	ok &= time_line_0[0].time  == point_00.time;
-	ok &= time_line_0[0].value == point_00.value;
+	ok &= time_line_0.size()    == 1;
+	ok &= time_line_0[0].time   == point_00.time;
+	ok &= time_line_0[0].weight == point_00.weight;
+	ok &= time_line_0[0].value  == point_00.value;
 	//
 	// check second time line
 	CppAD::vector<time_point> time_line_1 = vec.time_line(sub_lower+1);
-	ok &= time_line_1.size() == 2;
-	ok &= time_line_1[0].time  == point_10.time;
-	ok &= time_line_1[0].value == point_10.value;
-	ok &= time_line_1[1].time  == point_11.time;
-	ok &= time_line_1[1].value == point_11.value;
+	ok &= time_line_1.size()    == 2;
+	ok &= time_line_1[0].time   == point_10.time;
+	ok &= time_line_1[0].weight == point_10.weight;
+	ok &= time_line_1[0].value  == point_10.value;
+	ok &= time_line_1[1].time   == point_11.time;
+	ok &= time_line_1[1].weight == point_11.weight;
+	ok &= time_line_1[1].value  == point_11.value;
 	// --------------------------------------------------------------------
 	// add another point to the first line
 	time_point point_01;
-	point_01.time  = time_upper;
-	point_01.value = 6.0;
+	point_01.time   = time_upper;
+	point_01.weight = 4.0;
+	point_01.value  = 6.0;
 	vec.add_point(sub_lower, point_01);
 	//
 	// check age_time_avg
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-	double avg   = vec.age_time_avg();
-	double sum   = point_00.value+point_01.value+point_10.value+point_11.value;
-	double check = sum / 4.0;
+	double avg      = vec.age_time_avg();
+	double sum_w    = point_00.weight + point_01.weight;
+	sum_w          += point_10.weight + point_11.weight;
+	double sum_wv   = point_00.weight * point_00.value;
+	sum_wv         += point_01.weight * point_01.value;
+	sum_wv         += point_10.weight * point_10.value;
+	sum_wv         += point_11.weight * point_11.value;
+	double check = sum_wv / sum_w;
 	ok &= std::fabs( 1.0 - avg / check ) <= eps99;
 	//
 	return ok;

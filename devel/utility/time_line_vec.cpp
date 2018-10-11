@@ -49,7 +49,7 @@ $head time_point$$
 This structure is defined in the $codei%time_line_vec<%Float%>%$$ class
 as follows:
 $codei%
-	struct time_point {double time; Float value; };
+	struct time_point {double time; double weight; Float value; };
 %$$
 
 $head near_equal$$
@@ -109,7 +109,8 @@ This adds a time point to the specified time line.
 
 $subhead point$$
 This is the time point that is added to the time line.
-The value $icode%point%.value%$$ is the value of the function
+The value $icode%point%.value%$$ ($icode%point%.weight%$$)
+is the value of the function (weighting)
 that we are sampling at age $icode%extend_grid[%age_index%]%$$
 and time $icode%point.time%$$.
 The time must satisfy
@@ -130,7 +131,8 @@ $codei%
 $head age_time_avg$$
 This uses the
 $cref numeric_average$$ method to approximate the average
-of the sampled function with respect to the specified age and time limits.
+of the weighted sampled function
+with respect to the specified age and time limits.
 Each time line corresponding to
 $codei%
 	%sub_lower% <= %age_index% <= %sub_upper%
@@ -352,7 +354,8 @@ Float time_line_vec<Float>::age_time_avg(void) const
 {	size_t n_sub = sub_upper_ - sub_lower_ + 1;
 	//
 	// compute average w.r.t time for each age
-	CppAD::vector<Float> time_avg(n_sub);
+	CppAD::vector<double> sum_w(n_sub);
+	CppAD::vector<Float>  sum_wv(n_sub);
 	for(size_t i = 0; i < n_sub; ++i)
 	{	const CppAD::vector<time_point>& line( vec_[i] );
 		size_t n_time = line.size();
@@ -362,27 +365,42 @@ Float time_line_vec<Float>::age_time_avg(void) const
 		assert( near_equal( line[n_time - 1].time, time_upper_ ) );
 		//
 		if( n_time == 1 )
-			time_avg[i] = line[0].value;
+		{	sum_w[i]  = line[0].weight;
+			sum_wv[i] = line[0].weight * line[0].value;
+		}
 		else
-		{	Float sum(0);
+		{
+			sum_w[i] = 0.0;
+			sum_wv[i]  = 0.0;
 			for(size_t j = 1; j < n_time; ++j )
-			{	Float value = (line[j].value + line[j-1].value) / Float(2);
-				sum        += value * (line[j].time - line[j-1].time);
+			{	double t_m = line[j-1].time;
+				double w_m = line[j-1].weight;
+				Float  v_m = line[j-1].value;
+				//
+				double t_j = line[j].time;
+				double w_j = line[j].weight;
+				Float  v_j = line[j].value;
+				//
+				sum_w[i]  += (t_j - t_m) * (w_j + w_m) / 2.0;
+				sum_wv[i] += (t_j - t_m) * (w_j*v_j + w_m*v_m) / Float(2);
 			}
-			time_avg[i] = sum / (time_upper_ - time_lower_);
 		}
 	}
 	// compute average w.r.t age
-	Float result(0);
+	double weight(0);
+	Float  result(0);
 	if( n_sub == 1 )
-		result = time_avg[0];
+		result = sum_wv[0] / sum_w[0];
 	else
 	{	for(size_t i = 1; i < n_sub; ++i)
-		{	Float  value = (time_avg[i] + time_avg[i-1]) / Float(2);
-			size_t k     = i + sub_lower_;
-			result      += value * (extend_grid_[k] - extend_grid_[k-1]);
+		{	double w   = (sum_w[i] + sum_w[i-1]) / 2.0;
+			Float  wv  = (sum_wv[i] + sum_wv[i-1]) / Float(2);
+			size_t k   = i + sub_lower_;
+			double da  = extend_grid_[k] - extend_grid_[k-1];
+			weight    += w * da;
+			result    += wv * da;
 		}
-		result = result/(extend_grid_[sub_upper_] - extend_grid_[sub_lower_]);
+		result /= weight;
 	}
 	return result;
 }
