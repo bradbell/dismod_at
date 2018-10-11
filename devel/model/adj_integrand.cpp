@@ -107,6 +107,13 @@ $head pack_vec$$
 is all the $cref model_variables$$ in the order
 specified by $icode pack_object$$.
 
+$head adjust_integrand$$
+The return value is a vector with size $icode n_cohort$$
+and $icode%adjust_integrand%[%i%]%$$ is the
+$cref/adjusted integrand/avg_integrand/Adjusted Integrand/$$
+at age $icode%cohort_age%[%i%]%$$
+and time $icode%cohort_time%[%i%]%$$.
+
 $head Prototype$$
 $srcfile%devel/model/adj_integrand.cpp%
 	0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1

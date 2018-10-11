@@ -338,6 +338,12 @@ $latex \[
 	E_i ( a, t ) = \sum_{j \in K_i} x_{i,j} \beta_j (a, t)
 \] $$
 
+$head Adjusted Integrand$$
+The adjusted integrand is the following function of age and time:
+$latex \[
+	I_i (a, t) \; \exp \left[ E_i (a, t) \right]
+\] $$
+
 $head Weight Integral, wbar_i$$
 We use $latex \bar{w}_i$$ to denote the weight integral defined by
 $latex \[
