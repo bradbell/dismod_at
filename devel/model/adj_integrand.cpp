@@ -10,6 +10,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/adj_integrand.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/a1_double.hpp>
+# include <dismod_at/grid2line.hpp>
+# include <dismod_at/cohort_ode.hpp>
 
 /*
 $begin adj_integrand$$
@@ -145,7 +148,7 @@ CppAD::vector<Float> adj_integrand(
 	// some temporaries
 	pack_info::subvec_info info;
 	vector<Float> smooth_value;
-	vector< vector<Float> >& rate;
+	vector< vector<Float> > rate;
 	//
 	// integrand for this data point
 	integrand_enum integrand = integrand_table[integrand_id].integrand;
@@ -174,7 +177,7 @@ CppAD::vector<Float> adj_integrand(
 			for(size_t k = 0; k < info.n_var; ++k)
 				smooth_value[k] = pack_vec[info.offset + k];
 			const smooth_info& s_info = s_info_vec[smooth_id];
-			rate[rate_id] = smooth2line(
+			rate[rate_id] = grid2line(
 				cohort_age,
 				cohort_time,
 				age_table,
@@ -199,7 +202,7 @@ CppAD::vector<Float> adj_integrand(
 				for(size_t k = 0; k < info.n_var; ++k)
 					smooth_value[k] = pack_vec[info.offset + k];
 				const smooth_info& s_info = s_info_vec[smooth_id];
-				temp = smooth2line(
+				temp = grid2line(
 					cohort_age,
 					cohort_time,
 					age_table,
@@ -223,7 +226,7 @@ CppAD::vector<Float> adj_integrand(
 			for(size_t k = 0; k < info.n_var; ++k)
 				smooth_value[k] = pack_vec[info.offset + k];
 			const smooth_info& s_info = s_info_vec[smooth_id];
-			temp = smooth2line(
+			temp = grid2line(
 				cohort_age,
 				cohort_time,
 				age_table,
@@ -321,7 +324,7 @@ CppAD::vector<Float> adj_integrand(
 		for(size_t k = 0; k < info.n_var; ++k)
 			smooth_value[k] = pack_vec[info.offset + k];
 		const smooth_info& s_info = s_info_vec[smooth_id];
-		temp = smooth2line(
+		temp = grid2line(
 			cohort_age,
 			cohort_time,
 			age_table,
@@ -338,5 +341,27 @@ CppAD::vector<Float> adj_integrand(
 	//
 	return result;
 }
+
+# define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND(Float)                     \
+    template                                                            \
+	CppAD::vector<Float> adj_integrand(                                 \
+		const std::string&                        rate_case        ,    \
+		const CppAD::vector<double>&              age_table        ,    \
+		const CppAD::vector<double>&              time_table       ,    \
+		const CppAD::vector<smooth_info>&         s_info_vec       ,    \
+		const CppAD::vector<integrand_struct>&    integrand_table  ,    \
+		size_t                                    integrand_id     ,    \
+		size_t                                    n_child          ,    \
+		size_t                                    child            ,    \
+		const CppAD::vector<double>&              x                ,    \
+		const CppAD::vector<double>&              cohort_age       ,    \
+		const CppAD::vector<double>&              cohort_time      ,    \
+		const pack_info&                          pack_object      ,    \
+		const CppAD::vector<Float>&               pack_vec              \
+	);
+
+// instantiations
+DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND( double )
+DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND( a1_double )
 
 } // END_DISMOD_AT_NAMESPACE
