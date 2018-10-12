@@ -51,8 +51,8 @@ The type $icode Float$$ must be $code double$$ or
 $cref a1_double$$.
 
 $head n_line$$
-We use the notation $icode n_line$$ for the number of grid
-points along this cohort at which the approximate solution is returned.
+We use the notation $icode n_line$$ for the number
+points at which the approximate solution is returned.
 
 $head rate_case$$
 This is the value of
@@ -92,18 +92,32 @@ to this adjustment of the integrand.
 
 $head line_age$$
 This vector has size $icode n_line$$ and is
-the age grid on which the ODE is solved.
-The $cref/rates/rate_table/$$
-are approximated as constant for each interval in this grid.
+the age points at which the adjusted integrand is computed.
+It must be monotone non-decreasing; i.e.,
+$codei%
+	%line_age%[%k%] <= %line_age%[%k%+1]
+%$$
 
 $head line_time$$
 This vector has size $icode n_line$$ and is
-the time corresponding to each cohort age.
-The initial time $icode%line_time%[0]%$$ is arbitrary.
-For $icode%i% = 1 , %...%, %n_line%-1%$$
+the time points at which the adjusted integrand is computed.
+It must be monotone non-decreasing; i.e.,
 $codei%
-	%line_time%[%i%] = %line_age%[%i%] + %line_time%[0] - %line_age%[0]
+	%line_time%[%k%] <= %line_time%[%k%+1]
 %$$
+
+$subhead ODE$$
+In the case where the integrand (specified by $icode integrand_id$$)
+requires solving the
+$cref/ODE/integrand_table/integrand_name/ODE/$$,
+the line must be a cohort; i.e.,
+for $icode%k% = 1 , %...%, %n_line%-1%$$
+$codei%
+	%line_time%[%k%] - %line_age%[%k%] == %line_time%[0] - %line_age%[0]
+%$$
+In this case
+$icode cohort_age$$ and $icode cohort_time$$ are better names for the
+arguments $icode line_age$$ and $icode line_time$$.
 
 $head pack_object$$
 This is the $cref pack_info$$ information corresponding to
@@ -154,21 +168,38 @@ CppAD::vector<Float> adj_integrand(
 	pack_info::subvec_info info;
 	vector<Float> smooth_value;
 	vector< vector<Float> > rate(number_rate_enum);
-	//
+	// ---------------------------------------------------------------------
 	// integrand for this data point
 	integrand_enum integrand = integrand_table[integrand_id].integrand;
-	//
-	// number of points in this cohort
+	bool need_ode;
+	switch( integrand )
+	{
+		// need_ode = true;
+		case susceptible_enum:
+		case withC_enum:
+		case prevalence_enum:
+		case Tincidence_enum:
+		case mtspecific_enum:
+		case mtall_enum:
+		case mtstandard_enum:
+		need_ode = true;
+		break;
+
+		// need_ode = false
+		default:
+		need_ode = false;
+	}
+	// number of points in line
 	size_t n_line = line_age.size();
 	//
 	// vector of effects
 	vector<Float> effect(n_line), temp(n_line);
 	// -----------------------------------------------------------------------
-	// get value for each rate on that cohort line
+	// get value for each rate on the line
 	for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
 	{	rate[rate_id].resize(n_line);
 		//
-		// parent rate for each point in the cohort
+		// parent rate for each point in the line
 		info             = pack_object.rate_info(rate_id, n_child);
 		size_t smooth_id = info.smooth_id;
 		//
@@ -177,7 +208,7 @@ CppAD::vector<Float> adj_integrand(
 				rate[rate_id][k] = 0.0;
 		}
 		else
-		{	// interpolate this rate from smoothing grid to cohort
+		{	// interpolate this rate from smoothing grid to line
 			smooth_value.resize(info.n_var);
 			for(size_t k = 0; k < info.n_var; ++k)
 				smooth_value[k] = pack_vec[info.offset + k];
@@ -198,11 +229,11 @@ CppAD::vector<Float> adj_integrand(
 		//
 		// include the child effect
 		if( child < n_child )
-		{	// child effect rate for each point in the cohort
+		{	// child effect rate for each point in the line
 			info      = pack_object.rate_info(rate_id, child);
 			smooth_id = info.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
-			{	// interpolate from smoothing grid to cohort
+			{	// interpolate from smoothing grid to line
 				smooth_value.resize(info.n_var);
 				for(size_t k = 0; k < info.n_var; ++k)
 					smooth_value[k] = pack_vec[info.offset + k];
@@ -226,7 +257,7 @@ CppAD::vector<Float> adj_integrand(
 		{	info        = pack_object.mulcov_rate_value_info(rate_id, j);
 			smooth_id   = info.smooth_id;
 			double x_j  = x[ info.covariate_id ];
-			// interpolate from smoothing grid to cohort
+			// interpolate from smoothing grid to line
 			smooth_value.resize(info.n_var);
 			for(size_t k = 0; k < info.n_var; ++k)
 				smooth_value[k] = pack_vec[info.offset + k];
@@ -248,22 +279,41 @@ CppAD::vector<Float> adj_integrand(
 			rate[rate_id][k] *= exp( effect[k] );
 	}
 	// -----------------------------------------------------------------------
-	// solve the ode on the cohort line
+	// solve the ode on the cohort specified by line_age and line_time[0]
 	Float pini = rate[pini_enum][0];
 	vector<Float> s_out(n_line), c_out(n_line);
-	cohort_ode(
-		rate_case,
-		line_age,
-		pini,
-		rate[iota_enum],
-		rate[rho_enum],
-		rate[chi_enum],
-		rate[omega_enum],
-		s_out,
-		c_out
-	);
+	if( need_ode )
+	{
+# ifndef NDEBUG
+		Float eps99  = 99.0 * CppAD::numeric_limits<Float>::epsilon();
+		Float check  = line_time[0] - line_age[0];
+		for(size_t k = 1; k < n_line; ++k)
+		{	Float diff = line_time[k] - line_age[k];
+			CppAD::NearEqual(diff, check, eps99, eps99);
+		}
+# endif
+		cohort_ode(
+			rate_case,
+			line_age,
+			pini,
+			rate[iota_enum],
+			rate[rho_enum],
+			rate[chi_enum],
+			rate[omega_enum],
+			s_out,
+			c_out
+		);
+	}
+# ifndef NDEBUG
+	else
+	{	for(size_t k = 0; k < n_line; ++k)
+		{	s_out[k] = CppAD::numeric_limits<Float>::quiet_NaN();
+			c_out[k] = CppAD::numeric_limits<Float>::quiet_NaN();
+		}
+	}
+# endif
 	// -----------------------------------------------------------------------
-	// value of the integrand on the cohort line
+	// value of the integrand on the line
 	vector<Float> result(n_line);
 	Float infinity = std::numeric_limits<double>::infinity();
 	Float zero     =  0.0;
@@ -272,13 +322,45 @@ CppAD::vector<Float> adj_integrand(
 		bool ok = zero <= P && P < infinity;
 		ok     |= integrand == susceptible_enum;
 		ok     |= integrand == withC_enum;
+		ok     |= ! need_ode;
 		if( ! ok )
 		{	std::string message = "Numerical integration error.\n"
-			"Prevalence is negative or infinite or Nan.";
-			throw CppAD::mixed::exception( "avg_integrand_cohort", message);
+			"Need Prevalence and it is negative or infinite or Nan.";
+			throw CppAD::mixed::exception( "avg_integrand", message);
 		}
 		switch(integrand)
-		{
+		{	// ----------------------------------------------------------------
+			// no ode cases
+			// ----------------------------------------------------------------
+
+			case Sincidence_enum:
+			result[k] = rate[iota_enum][k];
+			break;
+
+			case remission_enum:
+			result[k] = rate[rho_enum][k];
+			break;
+
+			case mtexcess_enum:
+			result[k] = rate[chi_enum][k];
+			break;
+
+			case mtother_enum:
+			result[k] = rate[omega_enum][k];
+			break;
+
+			case mtwith_enum:
+			result[k] = rate[omega_enum][k] + rate[chi_enum][k];
+			break;
+
+			case relrisk_enum:
+			result[k] = 1.0 + rate[chi_enum][k] / rate[omega_enum][k];
+			break;
+
+			// ----------------------------------------------------------------
+			// need_ode cases
+			// ----------------------------------------------------------------
+
 			case susceptible_enum:
 			result[k] = s_out[k];
 			break;
@@ -304,13 +386,14 @@ CppAD::vector<Float> adj_integrand(
 			break;
 
 			case mtstandard_enum:
-			result[k] = rate[omega_enum][k] + rate[chi_enum][k];
+			result[k]  = rate[omega_enum][k] + rate[chi_enum][k];
 			result[k] /= rate[omega_enum][k] + rate[chi_enum][k] * P;
 			break;
 
-			// This integrand does not requre the ode; i.e., S or C
+			// ---------------------------------------------------------------
 			default:
 			assert(false);
+			// ---------------------------------------------------------------
 		}
 	}
 	// -----------------------------------------------------------------------
