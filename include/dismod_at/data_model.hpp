@@ -47,9 +47,9 @@ private:
 	const size_t                              n_time_ode_;
 	const double                              ode_step_size_;
 	const pack_info                           pack_object_;
+	const size_t                              n_child_;
 
 	// set by constructor and not changed
-	size_t                       n_child_;
 	CppAD::vector<smooth2ode*>   si2ode_vec_;
 	CppAD::vector<bool>          child_ran_zero_;
 	CppAD::vector<data_ode_info> data_info_;

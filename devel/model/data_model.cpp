@@ -270,14 +270,16 @@ data_model::data_model(
 	const pack_info&                         pack_object     ,
 	const child_info&                        child_object    )
 :
-n_covariate_     (n_covariate)      ,
-n_age_ode_       (n_age_ode)        ,
-n_time_ode_      (n_time_ode)       ,
-ode_step_size_   (ode_step_size)    ,
-pack_object_     (pack_object)
+n_covariate_     (n_covariate)                   ,
+n_age_ode_       (n_age_ode)                     ,
+n_time_ode_      (n_time_ode)                    ,
+ode_step_size_   (ode_step_size)                 ,
+pack_object_     (pack_object)                   ,
+n_child_         ( child_object.child_size() )
 {	assert( bound_random >= 0.0 );
 	assert( n_age_ode  > 1 );
 	assert( n_time_ode > 1 );
+	assert( n_child_ == pack_object.child_size() );
 	//
 	using std::string;
 	//
@@ -292,9 +294,6 @@ pack_object_     (pack_object)
 	// replace_like_called_: initialize
 	replace_like_called_ = false;
 	//
-	// n_child_: set to number of children.
-	n_child_ = child_object.child_size();
-	assert( n_child_ == pack_object.child_size() );
 	// -----------------------------------------------------------------------
 	// data_subset_obj_
 	//
