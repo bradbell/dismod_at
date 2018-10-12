@@ -24,8 +24,6 @@ $$
 
 $section Compute Adjusted Integrand On a Cohort$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%adjust_integrand% = adj_integrand(
 	%rate_case%,
@@ -42,6 +40,11 @@ $icode%adjust_integrand% = adj_integrand(
 	%pack_object%,
 	%pack_vec%
 )%$$
+
+$head Prototype$$
+$srcfile%devel/model/adj_integrand.cpp%
+	0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+%$$
 
 $head Float$$
 The type $icode Float$$ must be $code double$$ or
@@ -117,10 +120,12 @@ $cref/adjusted integrand/avg_integrand/Adjusted Integrand/$$
 at age $icode%cohort_age%[%i%]%$$
 and time $icode%cohort_time%[%i%]%$$.
 
-$head Prototype$$
-$srcfile%devel/model/adj_integrand.cpp%
-	0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+$children%example/devel/model/adj_integrand_xam.cpp
 %$$
+$head Example$$
+The file $cref adj_integrand_xam.cpp$$ contains an example and test
+of using this routine.
+
 $end
 */
 
@@ -132,8 +137,8 @@ CppAD::vector<Float> adj_integrand(
 	const std::string&                        rate_case        ,
 	const CppAD::vector<double>&              age_table        ,
 	const CppAD::vector<double>&              time_table       ,
-	const CppAD::vector<smooth_info>&         s_info_vec       ,
 	const CppAD::vector<integrand_struct>&    integrand_table  ,
+	const CppAD::vector<smooth_info>&         s_info_vec       ,
 	size_t                                    integrand_id     ,
 	size_t                                    n_child          ,
 	size_t                                    child            ,
@@ -148,7 +153,7 @@ CppAD::vector<Float> adj_integrand(
 	// some temporaries
 	pack_info::subvec_info info;
 	vector<Float> smooth_value;
-	vector< vector<Float> > rate;
+	vector< vector<Float> > rate(number_rate_enum);
 	//
 	// integrand for this data point
 	integrand_enum integrand = integrand_table[integrand_id].integrand;
@@ -348,8 +353,8 @@ CppAD::vector<Float> adj_integrand(
 		const std::string&                        rate_case        ,    \
 		const CppAD::vector<double>&              age_table        ,    \
 		const CppAD::vector<double>&              time_table       ,    \
-		const CppAD::vector<smooth_info>&         s_info_vec       ,    \
 		const CppAD::vector<integrand_struct>&    integrand_table  ,    \
+		const CppAD::vector<smooth_info>&         s_info_vec       ,    \
 		size_t                                    integrand_id     ,    \
 		size_t                                    n_child          ,    \
 		size_t                                    child            ,    \

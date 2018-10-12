@@ -169,8 +169,7 @@ CppAD::vector<Float> grid2line(
 		// case with no interpolation
 		if( one_age & one_time )
 			res =  grid_value[ij_smooth];
-		//
-		if( one_time )
+		else if( one_time )
 		{	// case with only age interpolation
 			assert( i > 0 );
 			Float  vp = grid_value[ij_smooth];
