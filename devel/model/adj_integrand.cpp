@@ -35,8 +35,8 @@ $icode%adjust_integrand% = adj_integrand(
 	%n_child%,
 	%child%,
 	%x%,
-	%cohort_age%,
-	%cohort_time%,
+	%line_age%,
+	%line_time%,
 	%pack_object%,
 	%pack_vec%
 )%$$
@@ -50,8 +50,8 @@ $head Float$$
 The type $icode Float$$ must be $code double$$ or
 $cref a1_double$$.
 
-$head n_cohort$$
-We use the notation $icode n_cohort$$ for the number of grid
+$head n_line$$
+We use the notation $icode n_line$$ for the number of grid
 points along this cohort at which the approximate solution is returned.
 
 $head rate_case$$
@@ -90,19 +90,19 @@ $head child$$
 Is the $cref/child/child_info/table_id2child/child/$$ corresponding
 to this adjustment of the integrand.
 
-$head cohort_age$$
-This vector has size $icode n_cohort$$ and is
+$head line_age$$
+This vector has size $icode n_line$$ and is
 the age grid on which the ODE is solved.
 The $cref/rates/rate_table/$$
 are approximated as constant for each interval in this grid.
 
-$head cohort_time$$
-This vector has size $icode n_cohort$$ and is
+$head line_time$$
+This vector has size $icode n_line$$ and is
 the time corresponding to each cohort age.
-The initial time $icode%cohort_time%[0]%$$ is arbitrary.
-For $icode%i% = 1 , %...%, %n_cohort%-1%$$
+The initial time $icode%line_time%[0]%$$ is arbitrary.
+For $icode%i% = 1 , %...%, %n_line%-1%$$
 $codei%
-	%cohort_time%[%i%] = %cohort_age%[%i%] + %cohort_time%[0] - %cohort_age%[0]
+	%line_time%[%i%] = %line_age%[%i%] + %line_time%[0] - %line_age%[0]
 %$$
 
 $head pack_object$$
@@ -114,11 +114,11 @@ is all the $cref model_variables$$ in the order
 specified by $icode pack_object$$.
 
 $head adjust_integrand$$
-The return value is a vector with size $icode n_cohort$$
+The return value is a vector with size $icode n_line$$
 and $icode%adjust_integrand%[%i%]%$$ is the
 $cref/adjusted integrand/avg_integrand/Adjusted Integrand/$$
-at age $icode%cohort_age%[%i%]%$$
-and time $icode%cohort_time%[%i%]%$$.
+at age $icode%line_age%[%i%]%$$
+and time $icode%line_time%[%i%]%$$.
 
 $children%example/devel/model/adj_integrand_xam.cpp
 %$$
@@ -143,8 +143,8 @@ CppAD::vector<Float> adj_integrand(
 	size_t                                    n_child          ,
 	size_t                                    child            ,
 	const CppAD::vector<double>&              x                ,
-	const CppAD::vector<double>&              cohort_age       ,
-	const CppAD::vector<double>&              cohort_time      ,
+	const CppAD::vector<double>&              line_age         ,
+	const CppAD::vector<double>&              line_time        ,
 	const pack_info&                          pack_object      ,
 	const CppAD::vector<Float>&               pack_vec         )
 // END_PROTOTYPE
@@ -159,21 +159,21 @@ CppAD::vector<Float> adj_integrand(
 	integrand_enum integrand = integrand_table[integrand_id].integrand;
 	//
 	// number of points in this cohort
-	size_t n_cohort = cohort_age.size();
+	size_t n_line = line_age.size();
 	//
 	// vector of effects
-	vector<Float> effect(n_cohort), temp(n_cohort);
+	vector<Float> effect(n_line), temp(n_line);
 	// -----------------------------------------------------------------------
 	// get value for each rate on that cohort line
 	for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
-	{	rate[rate_id].resize(n_cohort);
+	{	rate[rate_id].resize(n_line);
 		//
 		// parent rate for each point in the cohort
 		info             = pack_object.rate_info(rate_id, n_child);
 		size_t smooth_id = info.smooth_id;
 		//
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-		{	for(size_t k = 0; k < n_cohort; ++k)
+		{	for(size_t k = 0; k < n_line; ++k)
 				rate[rate_id][k] = 0.0;
 		}
 		else
@@ -183,8 +183,8 @@ CppAD::vector<Float> adj_integrand(
 				smooth_value[k] = pack_vec[info.offset + k];
 			const smooth_info& s_info = s_info_vec[smooth_id];
 			rate[rate_id] = grid2line(
-				cohort_age,
-				cohort_time,
+				line_age,
+				line_time,
 				age_table,
 				time_table,
 				s_info,
@@ -193,7 +193,7 @@ CppAD::vector<Float> adj_integrand(
 		}
 		//
 		// initialize effect as zero
-		for(size_t k = 0; k < n_cohort; ++k)
+		for(size_t k = 0; k < n_line; ++k)
 			effect[k] = 0.0;
 		//
 		// include the child effect
@@ -208,14 +208,14 @@ CppAD::vector<Float> adj_integrand(
 					smooth_value[k] = pack_vec[info.offset + k];
 				const smooth_info& s_info = s_info_vec[smooth_id];
 				temp = grid2line(
-					cohort_age,
-					cohort_time,
+					line_age,
+					line_time,
 					age_table,
 					time_table,
 					s_info,
 					smooth_value
 				);
-				for(size_t k = 0; k < n_cohort; ++k)
+				for(size_t k = 0; k < n_line; ++k)
 					effect[k] += temp[k];
 			}
 		}
@@ -232,28 +232,28 @@ CppAD::vector<Float> adj_integrand(
 				smooth_value[k] = pack_vec[info.offset + k];
 			const smooth_info& s_info = s_info_vec[smooth_id];
 			temp = grid2line(
-				cohort_age,
-				cohort_time,
+				line_age,
+				line_time,
 				age_table,
 				time_table,
 				s_info,
 				smooth_value
 			);
-			for(size_t k = 0; k < n_cohort; ++k)
+			for(size_t k = 0; k < n_line; ++k)
 				effect[k] += temp[k] * x_j;
 		}
 		//
 		// multiply parent rate by exponential of the total effect
-		for(size_t k = 0; k < n_cohort; ++k)
+		for(size_t k = 0; k < n_line; ++k)
 			rate[rate_id][k] *= exp( effect[k] );
 	}
 	// -----------------------------------------------------------------------
 	// solve the ode on the cohort line
 	Float pini = rate[pini_enum][0];
-	vector<Float> s_out(n_cohort), c_out(n_cohort);
+	vector<Float> s_out(n_line), c_out(n_line);
 	cohort_ode(
 		rate_case,
-		cohort_age,
+		line_age,
 		pini,
 		rate[iota_enum],
 		rate[rho_enum],
@@ -264,10 +264,10 @@ CppAD::vector<Float> adj_integrand(
 	);
 	// -----------------------------------------------------------------------
 	// value of the integrand on the cohort line
-	vector<Float> result(n_cohort);
+	vector<Float> result(n_line);
 	Float infinity = std::numeric_limits<double>::infinity();
 	Float zero     =  0.0;
-	for(size_t k = 0; k < n_cohort; ++k)
+	for(size_t k = 0; k < n_line; ++k)
 	{	Float P = c_out[k] / ( s_out[k] + c_out[k] );
 		bool ok = zero <= P && P < infinity;
 		ok     |= integrand == susceptible_enum;
@@ -317,7 +317,7 @@ CppAD::vector<Float> adj_integrand(
 	// include measurement effects
 	//
 	// initialize effect as zero
-	for(size_t k = 0; k < n_cohort; ++k)
+	for(size_t k = 0; k < n_line; ++k)
 		effect[k] = 0.0;
 	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; ++j)
@@ -330,18 +330,18 @@ CppAD::vector<Float> adj_integrand(
 			smooth_value[k] = pack_vec[info.offset + k];
 		const smooth_info& s_info = s_info_vec[smooth_id];
 		temp = grid2line(
-			cohort_age,
-			cohort_time,
+			line_age,
+			line_time,
 			age_table,
 			time_table,
 			s_info,
 			smooth_value
 		);
-		for(size_t k = 0; k < n_cohort; ++k)
+		for(size_t k = 0; k < n_line; ++k)
 			effect[k] += temp[k] * x_j;
 	}
 	// multiply by exponential of total effect
-	for(size_t k = 0; k < n_cohort; ++k)
+	for(size_t k = 0; k < n_line; ++k)
 		 result[k] *= exp( effect[k] );
 	//
 	return result;
@@ -359,8 +359,8 @@ CppAD::vector<Float> adj_integrand(
 		size_t                                    n_child          ,    \
 		size_t                                    child            ,    \
 		const CppAD::vector<double>&              x                ,    \
-		const CppAD::vector<double>&              cohort_age       ,    \
-		const CppAD::vector<double>&              cohort_time      ,    \
+		const CppAD::vector<double>&              line_age         ,    \
+		const CppAD::vector<double>&              line_time        ,    \
 		const pack_info&                          pack_object      ,    \
 		const CppAD::vector<Float>&               pack_vec              \
 	);

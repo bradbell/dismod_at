@@ -28,8 +28,8 @@ CppAD::vector<Float> adj_integrand(
 	size_t                                    n_child          ,
 	size_t                                    child            ,
 	const CppAD::vector<double>&              x                ,
-	const CppAD::vector<double>&              cohort_age       ,
-	const CppAD::vector<double>&              cohort_time      ,
+	const CppAD::vector<double>&              line_age         ,
+	const CppAD::vector<double>&              line_time        ,
 	const pack_info&                          pack_object      ,
 	const CppAD::vector<Float>&               pack_vec
 );
