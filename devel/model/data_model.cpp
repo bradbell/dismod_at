@@ -99,6 +99,9 @@ $codei%
 	const CppAD::vector<double>&  %age_table%
 %$$
 and is the $cref/age_table/get_age_table/age_table/$$.
+A reference to $icode age_table$$ is used by $icode data_object$$
+(so $icode age_table$$ cannot be deleted for as long as
+$icode data_object$$ is used).
 
 $head time_table$$
 This argument has prototype
@@ -106,6 +109,7 @@ $codei%
 	const CppAD::vector<double>&  %time_table%
 %$$
 and is the $cref/time_table/get_time_table/time_table/$$.
+A reference to $icode time_table$$ is used by $icode data_object$$.
 
 $head integrand_table$$
 This argument has prototype
@@ -113,6 +117,7 @@ $codei%
 	const CppAD::vector<integrand_struct>&  %integrand_table%
 %$$
 and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
+A reference to $icode integrand_table$$ is used by $icode data_object$$.
 
 $head subset_object$$
 This argument has prototype
@@ -156,6 +161,7 @@ is the corresponding $cref smooth_info$$ information.
 For each $icode%s_info_vec%[%smooth_id%]%$$ object,
 only the following functions are used:
 $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
+A reference to $icode s_info_vec$$ is used by $icode data_object$$.
 
 $head pack_object$$
 This argument has prototype
@@ -164,6 +170,7 @@ $codei%
 %$$
 and is the $cref pack_info$$ information corresponding to
 the $cref model_variables$$.
+A reference to $icode pack_object$$ is used by $icode data_object$$.
 
 $head child_object$$
 This argument has prototype
@@ -276,8 +283,12 @@ n_covariate_     (n_covariate)                   ,
 n_age_ode_       (n_age_ode)                     ,
 n_time_ode_      (n_time_ode)                    ,
 ode_step_size_   (ode_step_size)                 ,
-pack_object_     (pack_object)                   ,
-n_child_         ( child_object.child_size() )
+n_child_         ( child_object.child_size() )   ,
+age_table_       (age_table)                     ,
+time_table_      (time_table)                    ,
+integrand_table_ (integrand_table)               ,
+s_info_vec_      (s_info_vec)                    ,
+pack_object_     (pack_object)
 {	assert( bound_random >= 0.0 );
 	assert( n_age_ode  > 1 );
 	assert( n_time_ode > 1 );
