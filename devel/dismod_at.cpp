@@ -1618,6 +1618,7 @@ int main(int n_arg, const char** argv)
 		//
 		// avgint_object
 		dismod_at::data_model avgint_object(
+			rate_case                ,
 			bound_random             ,
 			n_covariate              ,
 			n_age_ode                ,
@@ -1634,7 +1635,6 @@ int main(int n_arg, const char** argv)
 			pack_object              ,
 			child_avgint
 		);
-		avgint_object.set_eigen_ode2_case_number(rate_case);
 		size_t n_var = pack_object.size();
 		std::string source = argv[3];
 		predict_command(
@@ -1683,6 +1683,7 @@ int main(int n_arg, const char** argv)
 			);
 			// data_object
 			dismod_at::data_model data_object(
+				rate_case                ,
 				bound_random             ,
 				n_covariate              ,
 				n_age_ode                ,
@@ -1699,7 +1700,6 @@ int main(int n_arg, const char** argv)
 				pack_object              ,
 				child_data
 			);
-			data_object.set_eigen_ode2_case_number(rate_case);
 			//
 			if( command_arg == "depend" )
 			{	depend_command(

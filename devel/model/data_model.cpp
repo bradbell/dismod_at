@@ -254,6 +254,7 @@ data_model::~data_model(void)
 // consctructor
 template <class SubsetStruct>
 data_model::data_model(
+	const std::string&                       rate_case       ,
 	double                                   bound_random    ,
 	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
@@ -270,6 +271,7 @@ data_model::data_model(
 	const pack_info&                         pack_object     ,
 	const child_info&                        child_object    )
 :
+rate_case_       (rate_case)                     ,
 n_covariate_     (n_covariate)                   ,
 n_age_ode_       (n_age_ode)                     ,
 n_time_ode_      (n_time_ode)                    ,
@@ -280,6 +282,24 @@ n_child_         ( child_object.child_size() )
 	assert( n_age_ode  > 1 );
 	assert( n_time_ode > 1 );
 	assert( n_child_ == pack_object.child_size() );
+	/*
+	//
+	eigen_ode2_case_number_
+	b[0] = - ( iota + omega )
+	b[1] = + rho
+	b[2] = + iota
+	b[3] = - ( rho + chi + omega );
+	*/
+	if( rate_case == "iota_zero_rho_zero" )
+		eigen_ode2_case_number_ = 1;
+	else if( rate_case == "iota_zero_rho_pos" )
+		eigen_ode2_case_number_ = 2;
+	else if( rate_case == "iota_pos_rho_zero" )
+		eigen_ode2_case_number_ = 3;
+	else if( rate_case == "iota_pos_rho_pos" )
+		eigen_ode2_case_number_ = 4;
+	else
+		assert(false);
 	//
 	using std::string;
 	//
@@ -287,9 +307,6 @@ n_child_         ( child_object.child_size() )
 	minimum_meas_cv_.resize( integrand_table.size() );
 	for(size_t i = 0; i < integrand_table.size(); ++i)
 		minimum_meas_cv_[i] = integrand_table[i].minimum_meas_cv;
-	//
-	// eigen_ode2_case_number_: set default value
-	eigen_ode2_case_number_ = 4;
 	//
 	// replace_like_called_: initialize
 	replace_like_called_ = false;
@@ -645,58 +662,6 @@ n_child_         ( child_object.child_size() )
 		}
 		data_info_[subset_id].bound_ran_neq = bound_ran_neq;
 	}
-}
-/*
-$begin set_eigne_ode2_case_number$$
-$spell
-	avgint
-	Dismod
-	eigen
-	arg
-	const
-$$
-
-$section Sets the Method Used to Solve the Dismod_at ODE$$
-
-$head Syntax$$
-$icode%data_object%.set_eigen_ode2_case_number(%rate_case%)%$$
-
-$head data_object$$
-This object has prototype
-$codei%
-	data_model %data_object%
-%$$
-see $cref/data_object constructor/data_model_ctor/data_object/$$.
-
-$head rate_case$$
-Is the $cref/option_value/option_table/Conventions/option_value/$$
-corresponding to $icode%option_name% = rate_case%$$ in the option table.
-$end
-*/
-void data_model::set_eigen_ode2_case_number(const std::string& rate_case)
-{	/*
-	b[0] = - ( iota + omega )
-	b[1] = + rho
-	b[2] = + iota
-	b[3] = - ( rho + chi + omega );
-	*/
-	if( rate_case == "iota_zero_rho_zero" )
-	{	eigen_ode2_case_number_ = 1;
-		return;
-	}
-	if( rate_case == "iota_zero_rho_pos" )
-	{	eigen_ode2_case_number_ = 2;
-		return;
-	}
-	if( rate_case == "iota_pos_rho_zero" )
-	{	eigen_ode2_case_number_ = 3;
-		return;
-	}
-	if( rate_case == "iota_pos_rho_pos" )
-	{	eigen_ode2_case_number_ = 4;
-		return;
-	}
-	assert(false);
 }
 /*
 $begin data_model_replace_like$$
@@ -2294,6 +2259,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
+	const std::string&                       rate_case       ,  \
 	double                                   bound_random    ,  \
 	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \

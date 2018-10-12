@@ -42,6 +42,7 @@ class data_model {
 		bool                  bound_ran_neq;
 	} data_ode_info;
 private:
+	const std::string                         rate_case_;
 	const size_t                              n_covariate_;
 	const size_t                              n_age_ode_;
 	const size_t                              n_time_ode_;
@@ -55,8 +56,7 @@ private:
 	CppAD::vector<data_ode_info> data_info_;
 	CppAD::vector<double>        minimum_meas_cv_;
 
-	// set to a default value by consturctor
-	// modified by set_eigen_ode2_case_number
+	// set by consturctor
 	size_t                       eigen_ode2_case_number_;
 
 	// Has replace_like been called.
@@ -75,6 +75,7 @@ private:
 public:
 	template <class SubsetStruct>
 	data_model(
+		const std::string&                       rate_case       ,
 		double                                   bound_random    ,
 		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,
@@ -93,8 +94,6 @@ public:
 	);
 	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
-	//
-	void set_eigen_ode2_case_number(const std::string& rate_case_arg);
 	//
 	void replace_like(
 		const CppAD::vector<data_subset_struct>& data_subset_obj
