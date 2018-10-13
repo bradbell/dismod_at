@@ -171,9 +171,13 @@ CppAD::vector<Float> adj_integrand(
 	// ---------------------------------------------------------------------
 	// integrand for this data point
 	integrand_enum integrand = integrand_table[integrand_id].integrand;
-	bool need_ode;
+	bool need_ode = false;
+	vector<bool> need_rate(number_rate_enum);
+	for(size_t k = 0; k < number_rate_enum; ++k)
+		need_rate[k] = false;
 	switch( integrand )
 	{
+		// -----------------------------------------------------------------
 		// need_ode = true;
 		case susceptible_enum:
 		case withC_enum:
@@ -183,9 +187,40 @@ CppAD::vector<Float> adj_integrand(
 		case mtall_enum:
 		case mtstandard_enum:
 		need_ode = true;
+		//
+		// need_rate = true
+		for(size_t k = 0; k < number_rate_enum; ++k)
+			need_rate[k] = true;
 		break;
 
-		// need_ode = false
+		// -----------------------------------------------------------------
+		case Sincidence_enum:
+		need_rate[iota_enum] = true;
+		break;
+
+		case remission_enum:
+		need_rate[rho_enum] = true;
+		break;
+
+		case mtexcess_enum:
+		need_rate[chi_enum] = true;
+		break;
+
+		case mtother_enum:
+		need_rate[omega_enum] = true;
+		break;
+
+		case mtwith_enum:
+		need_rate[omega_enum] = true;
+		need_rate[chi_enum]   = true;
+		break;
+
+		case relrisk_enum:
+		need_rate[chi_enum]   = true;
+		need_rate[omega_enum] = true;
+		break;
+
+		// -----------------------------------------------------------------
 		default:
 		need_ode = false;
 	}
@@ -195,8 +230,9 @@ CppAD::vector<Float> adj_integrand(
 	// vector of effects
 	vector<Float> effect(n_line), temp(n_line);
 	// -----------------------------------------------------------------------
-	// get value for each rate on the line
+	// get value for each rate that is needed
 	for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
+	if( need_rate[rate_id] )
 	{	rate[rate_id].resize(n_line);
 		//
 		// parent rate for each point in the line
@@ -280,7 +316,6 @@ CppAD::vector<Float> adj_integrand(
 	}
 	// -----------------------------------------------------------------------
 	// solve the ode on the cohort specified by line_age and line_time[0]
-	Float pini = rate[pini_enum][0];
 	vector<Float> s_out(n_line), c_out(n_line);
 	if( need_ode )
 	{
@@ -292,6 +327,7 @@ CppAD::vector<Float> adj_integrand(
 			CppAD::NearEqual(diff, check, eps99, eps99);
 		}
 # endif
+		Float pini = rate[pini_enum][0];
 		cohort_ode(
 			rate_case,
 			line_age,
