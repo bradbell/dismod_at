@@ -197,17 +197,14 @@ is a positive floating point number (greater than zero)
 that specifies numerical ode step size.
 The step size is the same in age and time because it is along cohort lines.
 The smaller $icode ode_step_size$$, the more accurate the solution of the
-$cref/
-ordinary differential equation /avg_integrand/Ordinary Differential Equation
+$cref/ordinary differential equation
+	/avg_integrand
+	/Ordinary Differential Equation
 /$$
 and the more time required to compute this solution.
-The $icode ode_step_size$$ value does not matter for the following integrands:
-$code Sincidence$$,
-$code remission$$,
-$code mtexcess$$,
-$code mtother$$,
-$code mtwith$$, and
-$code relrisk$$.
+This step size is also used to approximate the integrals in
+the definition of the
+$cref/average integrands/avg_integrand/Average Integrand, A_i/$$.
 
 $subhead Default$$
 The default value for this option is $code 10.0$$,
