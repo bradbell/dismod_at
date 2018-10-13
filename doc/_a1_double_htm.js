@@ -2,7 +2,7 @@ var list_up0 = [
 'dismod_at.htm',
 'devel.htm',
 'devel_utility.htm',
-'ad_types.htm'
+'a1_double.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -12,9 +12,8 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'ad_types.htm#Syntax',
-'ad_types.htm#Purpose',
-'ad_types.htm#Source Code'
+'a1_double.htm#Syntax',
+'a1_double.htm#Source Code'
 ];
 var list_down3 = [
 'install_unix.htm',
@@ -34,7 +33,7 @@ var list_down2 = [
 'devel_model.htm'
 ];
 var list_down1 = [
-'ad_types.htm',
+'a1_double.htm',
 'avgint_subset.htm',
 'bilinear_interp.htm',
 'child_info.htm',

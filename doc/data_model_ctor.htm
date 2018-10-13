@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Model: Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Model: Constructor">
-<meta name="keywords" id="keywords" content=" data model: constructor syntax data_object bound_random parent_node_id n_covariate n_age_ode n_time_ode ode_step_size age_table time_table integrand_table node_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object n_covariate_ n_age_ode_ n_time_ode_ ode_step_size_ pack_object_ minimum_meas_cv_ eigen_ode2_case_number_ replace_like_called_ n_child_ data_subset_obj_ si2ode_vec_ child_ran_zero_ data_info_ ">
+<meta name="keywords" id="keywords" content=" data model: constructor syntax data_object bound_random n_covariate n_age_ode n_time_ode ode_step_size age_table time_table integrand_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object n_covariate_ n_age_ode_ n_time_ode_ ode_step_size_ pack_object_ minimum_meas_cv_ eigen_ode2_case_number_ replace_like_called_ n_child_ data_subset_obj_ si2ode_vec_ child_ran_zero_ data_info_ ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,7 +58,6 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>data_object</option>
 <option>bound_random</option>
-<option>parent_node_id</option>
 <option>n_covariate</option>
 <option>n_age_ode</option>
 <option>n_time_ode</option>
@@ -66,7 +65,6 @@ A:active { color : purple }
 <option>age_table</option>
 <option>time_table</option>
 <option>integrand_table</option>
-<option>node_table</option>
 <option>subset_object</option>
 <option>subset_cov_value</option>
 <option>w_info_vec</option>
@@ -147,7 +145,6 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_covariate</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_age_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time_ode</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -155,7 +152,6 @@ A:active { color : purple }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset_object</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subset_cov_value</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info_vec</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -184,20 +180,6 @@ This argument has prototype
 </span></font></code>
 and is the
 <a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
-.
-
-
-<br>
-<br>
-<b><big><a name="parent_node_id" id="parent_node_id">parent_node_id</a></big></b>
-<br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and is the
-<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
 .
 
 <br>
@@ -287,19 +269,6 @@ This argument has prototype
 </span></font></code>
 and is the <a href="get_integrand_table.htm#integrand_table" target="_top"><span style='white-space: nowrap'>integrand_table</span></a>
 .
-
-<br>
-<br>
-<b><big><a name="node_table" id="node_table">node_table</a></big></b>
-<br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;node_struct&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and is the <a href="get_node_table.htm#node_table" target="_top"><span style='white-space: nowrap'>node_table</span></a>
-.
-Only the <code><font color="blue">parent</font></code> field of this table is used.
 
 <br>
 <br>

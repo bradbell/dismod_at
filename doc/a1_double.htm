@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>AD Types</title>
+<title>Declare a1_double Type</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="AD Types">
-<meta name="keywords" id="keywords" content=" ad types syntax purpose source code ">
+<meta name="description" id="description" content="Declare a1_double Type">
+<meta name="keywords" id="keywords" content=" declare a1_double type syntax source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_ad_types_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_a1_double_htm.js'>
 </script>
 </head>
 <body>
@@ -37,7 +37,7 @@ A:active { color : purple }
 <option>dismod_at</option>
 <option>devel</option>
 <option>devel_utility</option>
-<option>ad_types</option>
+<option>a1_double</option>
 </select>
 </td>
 <td>
@@ -55,7 +55,6 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>Syntax</option>
-<option>Purpose</option>
 <option>Source Code</option>
 </select>
 </td>
@@ -86,7 +85,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_down1(this)'>
 <option>devel_utility-&gt;</option>
-<option>ad_types</option>
+<option>a1_double</option>
 <option>avgint_subset</option>
 <option>bilinear_interp</option>
 <option>child_info</option>
@@ -109,25 +108,18 @@ A:active { color : purple }
 <option>split_space</option>
 </select>
 </td>
-<td>ad_types</td>
+<td>a1_double</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>AD Types</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Declare a1_double Type</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;dismod_at/ad_types.hpp&gt;</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>#&nbsp;include&nbsp;&lt;dismod_at/a1_double.hpp&gt;</span></font></code>
 
-
-<br>
-<br>
-<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
-<br>
-Defines, in the <code><font color="blue">dismod_at</font></code> namespace,
-the CppAD types corresponding to one, two and three levels of AD.
 
 <br>
 <br>
@@ -135,11 +127,11 @@ the CppAD types corresponding to one, two and three levels of AD.
 
 <pre style='display:inline'><tt>
 <b><font color="#0000FF">namespace</font></b> dismod_at <font color="#FF0000">{</font>
-     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>    a1_double<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font>  a1_double<font color="#990000">;</font>
 <font color="#FF0000">}</font>
 </tt></pre>
 
-<hr>Input File: include/dismod_at/ad_types.hpp
+<hr>Input File: include/dismod_at/a1_double.hpp
 
 </body>
 </html>
