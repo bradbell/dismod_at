@@ -9,6 +9,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin numeric_average$$
 $spell
+	avgint
 	pini
 	integrands
 $$
@@ -19,11 +20,18 @@ $head Under Construction$$
 This is a plan for a new way of approximating average integrands.
 
 $head A$$
-Given a data point index $latex i$$,
-this section describes how the average integrand
+We compute an
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+over a rectangular region defined as
+$codei%
+	[ %age_lower%, %age_upper% ] x [ %time_lower%, %time_upper% ]
+%$$
+by the $cref data_table$$ or the $cref avgint_table$$.
+Given a data table index or avgint table index $latex i$$,
+this section describes the numerical method used to
+approximate the average integrand
 $cref/A_i/avg_integrand/Average Integrand, A_i/$$ is calculated.
-This data index $latex i$$ is fixed and not included in the notation below.
-
+The index $latex i$$ is fixed and not included in the discussion below.
 
 $head ODE$$
 Some integrands require solution of the
@@ -34,15 +42,6 @@ $cref/ordinary differential equation
 see $cref/ODE/integrand_table/integrand_name/ODE/$$.
 The ODE is solved along cohort lines, i.e., lines where
 time minus age is constant.
-On the other hand,
-for each $cref/meas_value/data_table/meas_value/$$
-we must compute an
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-over a rectangular interval in age and time that is defined by
-$cref/age_lower/data_table/age_lower/$$ and
-$cref/age_upper/data_table/age_upper/$$.
-This section describes the numerical approximation
-for this average.
 
 $head Initial Age$$
 To simplify this presentation, the age corresponding to initial prevalence
@@ -52,7 +51,8 @@ i.e., the first age in the $cref age_table$$ is zero.
 
 $head Rectangle$$
 We use the following notation
-for the lower and upper limits corresponding to one data point:
+for the lower and upper limits corresponding to one point
+in the $cref data_table$$ or $cref avgint_table$$:
 
 $subhead a_L$$
 We use $latex a_L$$ to denote the corresponding
@@ -70,13 +70,16 @@ $subhead t_U$$
 We use $latex t_U$$ to denote the corresponding
 $cref/time_upper/data_table/time_upper/$$ value.
 
-$head ODE Time Step, Delta t$$
-The ode time step $latex \Delta t$$
-is specified in the option table.
+$head Average Integrand Time Step, Delta t$$
+The average integrand time step $latex \Delta t$$
+is specified by the option table.
+
+$head Average Integrand Age Grid$$
+The average integrand age grid is specified by the option table.
 
 $head Extended Age Grid$$
 The extended age grid is the union (as sets) of $latex \{ a_L , a_U \}$$
-and the age grid specified by the user in the option table.
+and the average integrand age grid.
 
 $head Cohort Solution of ODE$$
 A cohort solution is identified by its
@@ -148,7 +151,23 @@ and $latex t_L \leq t_U + a_j - a_k$$,
 the time $latex t_U + a_j - a_k$$ is added to $latex S_k$$.
 $lend
 
-$head Refinement Cohorts$$
+$head Refinement$$
+
+$subhead ODE Not Required$$
+If the ODE is not required for this integrand,
+the smallest integer $latex N \geq 1$$ is chosen
+so that $latex (t_U - t_L) / N \leq \Delta t$$.
+If $latex N > 1$$,
+For $latex j = J-1 , \ldots , 0$$,
+for $latex n = 1 , \ldots , n-1$$,
+the point $latex t_n = ( t_U - t_L ) / N$$
+is added to $latex S_j$$.
+If $latex N > 1$$, each $latex S_j$$ ends up with
+$latex N+2$$ time points.
+
+$subhead ODE Required$$
+If the ODE is required for this integrand,
+the following method is used for refinement of the time lines:
 $list number$$
 For $latex j = J-1 , \ldots , 0$$, use the steps below to refine
 of the $th j$$ time line.
