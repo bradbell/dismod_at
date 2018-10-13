@@ -50,6 +50,7 @@ $spell
 	mtother
 	CppAD
 	Avgint
+	pini
 $$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -63,9 +64,18 @@ $childtable%
 %$$
 
 $head 10-13$$
+$list number$$
 The $cref/ode_step_size/option_table/ode_step_size/$$ documentation
 was changed to reflect the fact that it is also used for approximating
 the integrals in the average integrand.
+$lnext
+The documentation for the
+age corresponding to $cref/pini/rate_table/rate_name/pini/$$
+was fixed.
+To be specific, the corresponding age
+is the minimum age in the $cref age_table$$,
+not the age corresponding to $cref/age_id/age_table/age_id/$$ zero.
+$lend
 
 $head 10-05$$
 Fix typos in the
