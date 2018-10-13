@@ -62,6 +62,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-13$$
+The $cref/ode_step_size/option_table/ode_step_size/$$ documentation
+was changed to reflect the fact that it is also used for approximating
+the integrals in the average integrand.
+
 $head 10-05$$
 Fix typos in the
 $cref/Data or Avgint Table Notation
