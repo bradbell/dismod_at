@@ -1561,6 +1561,9 @@ int main(int n_arg, const char** argv)
 	// rate_case
 	string rate_case = option_map["rate_case"];
 	//
+	// ode_age_split
+	string ode_age_split = option_map["ode_age_split"];
+	//
 	// bound_random
 	double bound_random = 0.0;
 	if( command_arg != "fit" || std::strcmp(argv[3], "fixed") != 0 )
@@ -1619,6 +1622,7 @@ int main(int n_arg, const char** argv)
 		// avgint_object
 		dismod_at::data_model avgint_object(
 			rate_case                ,
+			ode_age_split            ,
 			bound_random             ,
 			n_covariate              ,
 			n_age_ode                ,
@@ -1684,6 +1688,7 @@ int main(int n_arg, const char** argv)
 			// data_object
 			dismod_at::data_model data_object(
 				rate_case                ,
+				ode_age_split            ,
 				bound_random             ,
 				n_covariate              ,
 				n_age_ode                ,

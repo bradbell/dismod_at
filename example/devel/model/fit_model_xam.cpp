@@ -307,8 +307,10 @@ bool fit_model_xam(void)
 	double ode_step_size = 20.;
 	double bound_random = std::numeric_limits<double>::infinity();
 	std::string rate_case = "iota_pos_rho_pos";
+	std::string ode_age_split = "";
 	dismod_at::data_model data_object(
 		rate_case,
+		ode_age_split,
 		bound_random,
 		n_covariate,
 		n_age_ode,

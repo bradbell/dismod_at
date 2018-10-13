@@ -194,15 +194,12 @@ $head ode_step_size$$
 If $icode%option_name% = ode_step_size%$$,
 the corresponding $icode option_value$$
 is a positive floating point number (greater than zero)
-that specifies numerical ode step size.
-The step size is the same in age and time because it is along cohort lines.
-The smaller $icode ode_step_size$$, the more accurate the solution of the
+that specifies step size used to approximate the solution of the
 $cref/ordinary differential equation
 	/avg_integrand
 	/Ordinary Differential Equation
-/$$
-and the more time required to compute this solution.
-This step size is also used to approximate the integrals in
+/$$.
+It is also the step size is also used to approximate the integrals in
 the definition of the
 $cref/average integrands/avg_integrand/Average Integrand, A_i/$$.
 
@@ -211,6 +208,32 @@ The default value for this option is $code 10.0$$,
 which is reasonable if all the rates
 $icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
 are all less than $code 0.1$$.
+
+$head ode_age_split$$
+If $icode%option_name% = ode_age_split%$$,
+the corresponding $icode option_value$$ is a space separated list of
+age values at which to split the age integration.
+This split is both for the computation of the average integrands
+and for the solution of the ODE.
+
+$subhead Ode Age Grid$$
+Let $icode age_min$$ and $icode age_max$$ be the minimum and maximum
+ages in the $cref age_table$$.
+Let $icode%N% >= 1%$$ be the minimum integer such that
+$icode%
+	( %age_max% - %age_min% ) / %N% <= %ode_step_size%
+%$$
+and define the age points
+$icode%a%[%i%]%$$ for $icode%i% = 0 , %...%, %N%$$ by
+$icode%
+	%a%[%i%] = %i% * ( %age_max% - %age_min% ) / %N%
+%$$
+The ode age grid is the union of the set of $icode%a%[%i%]%$$
+and the age points in $icode ode_age_split$$.
+
+$subhead Default$$
+The default value for $icode ode_age_split$$ is the empty set
+in which case the ode age grid is the set of $icode%a%[%i%]%$$.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number

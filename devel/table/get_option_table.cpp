@@ -109,6 +109,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "limited_memory_max_history_fixed", "30"                 },
 		{ "max_num_iter_fixed",               "100"                },
 		{ "max_num_iter_random",              "100"                },
+		{ "ode_age_split",                    ""                   },
 		{ "ode_step_size",                    "10.0"               },
 		{ "parent_node_id",                   ""                   },
 		{ "parent_node_name",                 ""                   },

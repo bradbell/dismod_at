@@ -56,14 +56,11 @@ private:
 	const CppAD::vector<smooth_info>&         s_info_vec_;
 	const pack_info&                          pack_object_;
 	//
-
 	// set by constructor and not changed
 	CppAD::vector<smooth2ode*>   si2ode_vec_;
 	CppAD::vector<bool>          child_ran_zero_;
 	CppAD::vector<data_ode_info> data_info_;
 	CppAD::vector<double>        minimum_meas_cv_;
-
-	// set by consturctor
 	size_t                       eigen_ode2_case_number_;
 
 	// Has replace_like been called.
@@ -83,6 +80,7 @@ public:
 	template <class SubsetStruct>
 	data_model(
 		const std::string&                       rate_case       ,
+		const std::string&                       ode_age_split   ,
 		double                                   bound_random    ,
 		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,

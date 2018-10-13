@@ -262,6 +262,7 @@ data_model::~data_model(void)
 template <class SubsetStruct>
 data_model::data_model(
 	const std::string&                       rate_case       ,
+	const std::string&                       ode_age_split   ,
 	double                                   bound_random    ,
 	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
@@ -294,8 +295,9 @@ pack_object_     (pack_object)
 	assert( n_time_ode > 1 );
 	assert( n_child_ == pack_object.child_size() );
 	/*
-	//
+	---------------------------------------------------------------------------
 	eigen_ode2_case_number_
+
 	b[0] = - ( iota + omega )
 	b[1] = + rho
 	b[2] = + iota
@@ -311,6 +313,7 @@ pack_object_     (pack_object)
 		eigen_ode2_case_number_ = 4;
 	else
 		assert(false);
+	// ------------------------------------------------------------------------
 	//
 	using std::string;
 	//
@@ -2271,6 +2274,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
 	const std::string&                       rate_case       ,  \
+	const std::string&                       ode_age_split   ,  \
 	double                                   bound_random    ,  \
 	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \
