@@ -22,6 +22,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "pack_info.hpp"
 # include "residual_density.hpp"
 # include "get_data_sim_table.hpp"
+# include "adj_integrand.hpp"
 
 // declare test functions that are friends
 extern bool sci_ode_xam(void);
@@ -43,12 +44,12 @@ class data_model {
 	} data_ode_info;
 private:
 	// constant values
-	const size_t                              n_covariate_;
-	const size_t                              n_age_ode_;
-	const size_t                              n_time_ode_;
-	const double                              ode_step_size_;
-	const size_t                              n_child_;
-	const pack_info&                          pack_object_;
+	const size_t                 n_covariate_;
+	const size_t                 n_age_ode_;
+	const size_t                 n_time_ode_;
+	const double                 ode_step_size_;
+	const size_t                 n_child_;
+	const pack_info&             pack_object_;
 	//
 	// set by constructor and not changed
 	CppAD::vector<smooth2ode*>   si2ode_vec_;
@@ -56,7 +57,11 @@ private:
 	CppAD::vector<data_ode_info> data_info_;
 	CppAD::vector<double>        minimum_meas_cv_;
 	size_t                       eigen_ode2_case_number_;
-
+	//
+	// set by constructor and effectively const
+	// (holds onto temporary memory that is used to avoid repeated allocation)
+	adj_integrand                adj_object_;
+	//
 	// Has replace_like been called.
 	// Set false by constructor and true by replace_like.
 	bool                         replace_like_called_;
