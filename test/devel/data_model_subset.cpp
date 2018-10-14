@@ -15,6 +15,7 @@ Test computing data model values on a subset of data table.
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/ode_age_grid.hpp>
 
 namespace {
 	double check_avg(const dismod_at::data_struct& data_row)
@@ -230,9 +231,12 @@ bool data_model_subset(void)
 	double bound_random = std::numeric_limits<double>::infinity();
 	std::string rate_case = "iota_pos_rho_pos";
 	std::string ode_age_split = "";
+	vector<double> ode_age_grid = dismod_at::ode_age_grid(
+		ode_step_size, ode_age_split, age_table
+	);
 	dismod_at::data_model data_object(
 		rate_case,
-		ode_age_split,
+		ode_age_grid,
 		bound_random,
 		n_covariate,
 		n_age_ode,

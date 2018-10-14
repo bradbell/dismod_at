@@ -23,6 +23,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "residual_density.hpp"
 # include "get_data_sim_table.hpp"
 # include "adj_integrand.hpp"
+# include "ode_age_grid.hpp"
 
 // declare test functions that are friends
 extern bool sci_ode_xam(void);
@@ -79,7 +80,7 @@ public:
 	template <class SubsetStruct>
 	data_model(
 		const std::string&                       rate_case       ,
-		const std::string&                       ode_age_split   ,
+		const CppAD::vector<double>&             ode_age_grid    ,
 		double                                   bound_random    ,
 		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,

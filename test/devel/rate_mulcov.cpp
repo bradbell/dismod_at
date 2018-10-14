@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/ode_age_grid.hpp>
 
 // Testing rate covaraite multipliers
 
@@ -249,9 +250,12 @@ bool rate_mulcov(void)
 	double bound_random = std::numeric_limits<double>::infinity();
 	std::string rate_case = "iota_pos_rho_pos";
 	std::string ode_age_split = "";
+	vector<double> ode_age_grid = dismod_at::ode_age_grid(
+		ode_step_size, ode_age_split, age_table
+	);
 	dismod_at::data_model data_object(
 		rate_case,
-		ode_age_split,
+		ode_age_grid,
 		bound_random,
 		n_covariate,
 		n_age_ode,

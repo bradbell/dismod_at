@@ -31,6 +31,8 @@ $section Data Model: Constructor$$
 
 $head Syntax$$
 $codei%data_model %data_object%(
+	%rate_case%,
+	%ode_age_grid%,
 	%bound_random%,
 	%n_covariate%,
 	%n_age_ode%,
@@ -39,6 +41,7 @@ $codei%data_model %data_object%(
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
+	%prior_table%,
 	%subset_object%,
 	%subset_cov_value%,
 	%w_info_vec%,
@@ -47,101 +50,66 @@ $codei%data_model %data_object%(
 	%child_object%
 )%$$
 
-$head data_object$$
-This object has prototype
-$codei%
-	data_model %data_object%
+$head Prototype$$
+$srcfile%devel/model/data_model.cpp%
+	0%// BEGIN_DATA_MODEL_PROTOTYPE%// END_DATA_MODEL_PROTOTYPE%1
 %$$
 
+$head data_object$$
+This is the $code data_model$$ object being constructed.
+
+$head rate_case$$
+This is the value of
+$cref/rate_case/option_table/rate_case/$$ in the option table.
+
+$head ode_age_grid$$
+is the $cref/ode age grid/option_table/ode_age_split/Ode Age Grid/$$.
+
 $head bound_random$$
-This argument has prototype
-$codei%
-	double %bound_random%
-%$$
-and is the
+This is the
 $cref/bound_random/option_table/Random Only/bound_random/$$.
 
 $head n_covariate$$
-This argument has prototype
-$codei%
-	size_t %n_covariate%
-%$$
-It is the number of covariates; i.e., number or rows in
+This is the number of covariates; i.e., number or rows in
 $cref covariate_table$$.
 
 $head n_age_ode$$
-This argument has prototype
-$codei%
-	size_t %n_age_ode%
-%$$
-It is the number of points in the
+This is the number of points in the
 $cref/ode age grid/ode_grid/Age, a_i/$$.
 
 $head n_time_ode$$
-This argument has prototype
-$codei%
-	size_t %n_time_ode%
-%$$
-It is the number of points in the
+This is the number of points in the
 $cref/ode time grid/ode_grid/Time, t_j/$$.
 
 $head ode_step_size$$
-This argument has prototype
-$codei%
-	double %ode_step_size%
-%$$
-and is the value of $cref/ode_step_size/option_table/ode_step_size/$$
+This is the value of $cref/ode_step_size/option_table/ode_step_size/$$
 in the fit command.
 
 $head age_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>&  %age_table%
-%$$
-and is the $cref/age_table/get_age_table/age_table/$$.
+This is the $cref/age_table/get_age_table/age_table/$$.
 A reference to $icode age_table$$ is used by $icode data_object$$
 (so $icode age_table$$ cannot be deleted for as long as
 $icode data_object$$ is used).
 
 $head time_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>&  %time_table%
-%$$
-and is the $cref/time_table/get_time_table/time_table/$$.
+This is the $cref/time_table/get_time_table/time_table/$$.
 A reference to $icode time_table$$ is used by $icode data_object$$.
 
 $head integrand_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<integrand_struct>&  %integrand_table%
-%$$
-and is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
+This is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
 A reference to $icode integrand_table$$ is used by $icode data_object$$.
 
 $head subset_object$$
-This argument has prototype
-$codei%
-	const CppAD::vector<data_subset_struct>&  %subset_object%
-%$$
-and is the sub-sampled version of the data or avgint table; see
+This is the sub-sampled version of the data or avgint table; see
 $cref/data_subset_obj/data_subset/data_subset_obj/$$,
 $cref/avgint_subset_obj/avgint_subset/avgint_subset_obj/$$.
 
 $head subset_cov_value$$
-This argument has prototype
-$codei%
-	const CppAD::vector<data_subset_struct>&  %subset_cov_value%
-%$$
-and is the sub-sampled version of the covariates; see
+This is the sub-sampled version of the covariates; see
 $cref/data_subset_cov_value/data_subset/data_subset_cov_value/$$,
 $cref/avgint_subset_cov_value/avgint_subset/avgint_subset_cov_value/$$.
 
 $head w_info_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<weight_info>& %w_info_vec%
-%$$
 For each $cref/weight_id/weight_table/weight_id/$$,
 $codei%
 	%w_info_vec%[ %weight_id% ]
@@ -149,10 +117,6 @@ $codei%
 is the corresponding $cref weight_info$$ information.
 
 $head s_info_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<smooth_info>& %s_info_vec%
-%$$
 For each $cref/smooth_id/smooth_table/smooth_id/$$,
 $codei%
 	%s_info_vec%[ %smooth_id% ]
@@ -164,20 +128,12 @@ $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
 A reference to $icode s_info_vec$$ is used by $icode data_object$$.
 
 $head pack_object$$
-This argument has prototype
-$codei%
-	const pack_info& %pack_object%
-%$$
-and is the $cref pack_info$$ information corresponding to
+This is the $cref pack_info$$ information corresponding to
 the $cref model_variables$$.
 A reference to $icode pack_object$$ is used by $icode data_object$$.
 
 $head child_object$$
-This argument has prototype
-$codei%
-	const child_info& %child_object%
-%$$
-and is the $cref child_info$$ information corresponding to
+This is the $cref child_info$$ information corresponding to
 parent node, node table, and data table.
 
 $head n_covariate_$$
@@ -247,6 +203,7 @@ $end
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/ode_age_grid.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -258,11 +215,11 @@ data_model::~data_model(void)
 			delete si2ode_vec_[smooth_id];
 }
 
-// consctructor
+// BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
 data_model::data_model(
 	const std::string&                       rate_case       ,
-	const std::string&                       ode_age_split   ,
+	const CppAD::vector<double>&             ode_age_grid    ,
 	double                                   bound_random    ,
 	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
@@ -278,6 +235,7 @@ data_model::data_model(
 	const CppAD::vector<smooth_info>&        s_info_vec      ,
 	const pack_info&                         pack_object     ,
 	const child_info&                        child_object    )
+// END_DATA_MODEL_PROTOTYPE
 :
 // const
 n_covariate_     (n_covariate)                   ,
@@ -2275,7 +2233,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
 	const std::string&                       rate_case       ,  \
-	const std::string&                       ode_age_split   ,  \
+	const CppAD::vector<double>&             ode_age_grid    ,  \
 	double                                   bound_random    ,  \
 	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \

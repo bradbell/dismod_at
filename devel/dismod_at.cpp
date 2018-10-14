@@ -1620,9 +1620,12 @@ int main(int n_arg, const char** argv)
 		);
 		//
 		// avgint_object
+		vector<double> ode_age_grid = dismod_at::ode_age_grid(
+			ode_step_size, ode_age_split, db_input.age_table
+		);
 		dismod_at::data_model avgint_object(
 			rate_case                ,
-			ode_age_split            ,
+			ode_age_grid             ,
 			bound_random             ,
 			n_covariate              ,
 			n_age_ode                ,
@@ -1686,9 +1689,12 @@ int main(int n_arg, const char** argv)
 				db_input.prior_table
 			);
 			// data_object
+			vector<double> ode_age_grid = dismod_at::ode_age_grid(
+				ode_step_size, ode_age_split, db_input.age_table
+			);
 			dismod_at::data_model data_object(
 				rate_case                ,
-				ode_age_split            ,
+				ode_age_grid             ,
 				bound_random             ,
 				n_covariate              ,
 				n_age_ode                ,
