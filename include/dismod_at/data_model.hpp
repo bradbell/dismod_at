@@ -23,7 +23,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "residual_density.hpp"
 # include "get_data_sim_table.hpp"
 # include "adj_integrand.hpp"
-# include "ode_age_grid.hpp"
 
 // declare test functions that are friends
 extern bool sci_ode_xam(void);
@@ -50,6 +49,7 @@ private:
 	const size_t                 n_time_ode_;
 	const double                 ode_step_size_;
 	const size_t                 n_child_;
+	const CppAD::vector<double>& subset_cov_value_;
 	const pack_info&             pack_object_;
 	//
 	// set by constructor and not changed
@@ -74,8 +74,6 @@ private:
 	// data_subset_obj_[subset_id].meas_std
 	CppAD::vector<data_subset_struct>         data_subset_obj_;
 
-	// set by constructor and not changes
-	CppAD::vector<double>                     data_cov_value_;
 public:
 	template <class SubsetStruct>
 	data_model(

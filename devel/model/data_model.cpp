@@ -108,6 +108,7 @@ $head subset_cov_value$$
 This is the sub-sampled version of the covariates; see
 $cref/data_subset_cov_value/data_subset/data_subset_cov_value/$$,
 $cref/avgint_subset_cov_value/avgint_subset/avgint_subset_cov_value/$$.
+A reference to $icode subset_cov_value$$ is used by $icode data_object$$.
 
 $head w_info_vec$$
 For each $cref/weight_id/weight_table/weight_id/$$,
@@ -238,12 +239,13 @@ data_model::data_model(
 // END_DATA_MODEL_PROTOTYPE
 :
 // const
-n_covariate_     (n_covariate)                   ,
-n_age_ode_       (n_age_ode)                     ,
-n_time_ode_      (n_time_ode)                    ,
-ode_step_size_   (ode_step_size)                 ,
-n_child_         ( child_object.child_size() )   ,
-pack_object_     (pack_object)                   ,
+n_covariate_       (n_covariate)                   ,
+n_age_ode_         (n_age_ode)                     ,
+n_time_ode_        (n_time_ode)                    ,
+ode_step_size_     (ode_step_size)                 ,
+n_child_           ( child_object.child_size() )   ,
+subset_cov_value_ (subset_cov_value)               ,
+pack_object_       (pack_object)                   ,
 //
 // effectively const
 adj_object_(
@@ -291,7 +293,6 @@ adj_object_(
 	size_t n_subset = subset_object.size();
 	data_subset_obj_.resize(n_subset);
 	assert( subset_cov_value.size() == n_covariate * n_subset );
-	data_cov_value_.resize(n_subset * n_covariate);
 	for(size_t i = 0; i < n_subset; i++)
 	{	data_subset_obj_[i].original_id  = subset_object[i].original_id;
 		data_subset_obj_[i].integrand_id = subset_object[i].integrand_id;
@@ -301,9 +302,6 @@ adj_object_(
 		data_subset_obj_[i].age_upper    = subset_object[i].age_upper;
 		data_subset_obj_[i].time_lower   = subset_object[i].time_lower;
 		data_subset_obj_[i].time_upper   = subset_object[i].time_upper;
-		for(size_t j = 0; j < n_covariate_; j++)
-			data_cov_value_[i * n_covariate_ + j] =
-				subset_cov_value[i * n_covariate + j];
 	}
 	// -----------------------------------------------------------------------
 	// si2ode_vec_
@@ -1433,7 +1431,7 @@ Float data_model::avg_no_ode(
 	// covariate information for this data point
 	CppAD::vector<double> x(n_covariate_);
 	for(size_t j = 0; j < n_covariate_; j++)
-			x[j] = data_cov_value_[subset_id * n_covariate_ + j];
+			x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
 
 	// data_info information for this data point
 	integrand_enum integrand           = data_info_[subset_id].integrand;
@@ -1767,7 +1765,7 @@ Float data_model::avg_yes_ode(
 	// covariate information for this data pont
 	CppAD::vector<double> x(n_covariate_);
 	for(size_t j = 0; j < n_covariate_; j++)
-		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
+		x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
 
 	// data_info information for this data point
 	integrand_enum integrand           = data_info_[subset_id].integrand;
@@ -1990,7 +1988,7 @@ residual_struct<Float> data_model::like_one(
 	// covariate information for this data point
 	CppAD::vector<double> x(n_covariate_);
 	for(size_t j = 0; j < n_covariate_; j++)
-		x[j] = data_cov_value_[subset_id * n_covariate_ + j];
+		x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
 	double eta           = data_subset_obj_[subset_id].eta;
 	double nu            = data_subset_obj_[subset_id].nu;
 	size_t integrand_id  = data_subset_obj_[subset_id].integrand_id;
