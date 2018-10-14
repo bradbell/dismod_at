@@ -107,21 +107,20 @@ bool grid2line_xam(void)
 
 	// case we are testing
 	for(size_t k = 0; k < n_line; k++)
-	{	line_age[k]  = age_min  + age_diff  * double(k) / double(n_line - 1);
+	{	line_age[k]  = age_max  - age_diff  * double(k) / double(n_line - 1);
 		line_time[k] = time_min + time_diff * double(k) / double(n_line - 1);
-		//
-		// last age is above the maximum age
-		line_age[k]  += age_diff / double(n_line - 1);
-		//
-		// first time is below the minimum time
-		line_time[k] -=  time_diff / double(n_line - 1);
 	}
+	//
+	// last age is above the maximum age
+	line_age[n_line-1]  += age_diff / double(n_line - 1);
+	//
+	// first time is below the minimum time
+	line_time[0] -=  time_diff / double(n_line - 1);
 
 	// grid2line calculation
 	line_value = grid2line(
 		line_age, line_time, age_table, time_table, g_info, grid_value
 	);
-
 
 	// check the result
 	for(size_t k = 0; k < n_line; k++)

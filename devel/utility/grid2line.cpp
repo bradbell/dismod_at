@@ -39,7 +39,7 @@ $cref a1_double$$.
 $head line_age$$
 This vector has size $icode n_line$$ and contains the age value
 corresponding to each of the points in the line.
-It must be monotone non-decreasing; i.e.,
+It is faster if successive points have close values in age; e.g.,
 $codei%
 	%line_age%[%k%] <= %line_age%[%k%+1]
 %$$
@@ -47,7 +47,7 @@ $codei%
 $head line_time$$
 This vector has size $icode n_line$$ and contains the time value
 corresponding to each of the points in the line.
-It must be monotone non-decreasing; i.e.,
+It is faster if successive points have close values in time; e.g.,
 $codei%
 	%line_time%[%k%] <= %line_time%[%k%+1]
 %$$
@@ -143,6 +143,8 @@ CppAD::vector<Float> grid2line(
 		{	one_age = false;
 			while( i < n_age - 1 && age_table[ g_info.age_id(i) ] < age )
 				++i;
+			while( 1 < i && age < age_table[ g_info.age_id(i-1) ] )
+				--i;
 		}
 		//
 		// determine interval for this time
@@ -159,6 +161,8 @@ CppAD::vector<Float> grid2line(
 		{	one_time = false;
 			while( j < n_time - 1 && time_table[ g_info.time_id(j) ] < time )
 				++j;
+			while( 1 < j && time < time_table[ g_info.time_id(j-1) ] )
+				--j;
 		}
 		// index in grid_value corresponding to grid point (i, j)
 		size_t ij_smooth = i * n_time + j;
