@@ -22,7 +22,7 @@ $spell
 	CppAD
 $$
 
-$section Compute Adjusted Integrand On a Cohort$$
+$section Compute Adjusted Integrand On a Line$$
 
 $head Syntax$$
 $codei%adj_integrand %adj_object%(
@@ -96,7 +96,7 @@ to this adjustment of the integrand.
 
 $head line_age$$
 This vector is the age points at which the adjusted integrand is computed.
-It must be monotone non-decreasing; i.e.,
+It is faster if successive points have close values in age; e.g.,
 $codei%
 	%line_age%[%k%] <= %line_age%[%k%+1]
 %$$
@@ -108,20 +108,34 @@ points at which the approximate solution is returned.
 $head line_time$$
 This vector has size $icode n_line$$ and is
 the time points at which the adjusted integrand is computed.
-It must be monotone non-decreasing; i.e.,
+It is faster if successive points have close values in time; e.g.,
 $codei%
-	%line_time%[%k%] <= %line_time%[%k%+1]
+	%line_time%[%k%] >= %line_time%[%k%+1]
 %$$
 
 $subhead ODE$$
 In the case where the integrand (specified by $icode integrand_id$$)
 requires solving the
 $cref/ODE/integrand_table/integrand_name/ODE/$$,
-the line must be a cohort; i.e.,
+the line must be a cohort; i.e., it must satisfy the following properties:
+$list number$$
+The first line age must be the minimum value in the age table; i.e.,
+$codei%
+	%line_age%[0]% = min_%i% %table_age%[%i%]
+%$$
+$lnext
+The line ages must be monotone increasing; i.e.,
+for $icode%k% = 1 , %...%, %n_line%-1%$$
+$codei%
+	%line_age%[%k%-1] < %line_age%[%k%]
+%$$
+$lnext
+The difference between the line ages and times is constant; i.e.,
 for $icode%k% = 1 , %...%, %n_line%-1%$$
 $codei%
 	%line_time%[%k%] - %line_age%[%k%] == %line_time%[0] - %line_age%[0]
 %$$
+$lend
 In this case
 $icode cohort_age$$ and $icode cohort_time$$ are better names for the
 arguments $icode line_age$$ and $icode line_time$$.
