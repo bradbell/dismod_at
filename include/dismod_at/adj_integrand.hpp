@@ -17,22 +17,34 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-template <class Float>
-CppAD::vector<Float> adj_integrand(
-	const std::string&                        rate_case        ,
-	const CppAD::vector<double>&              age_table        ,
-	const CppAD::vector<double>&              time_table       ,
-	const CppAD::vector<integrand_struct>&    integrand_table  ,
-	const CppAD::vector<smooth_info>&         s_info_vec       ,
-	size_t                                    integrand_id     ,
-	size_t                                    n_child          ,
-	size_t                                    child            ,
-	const CppAD::vector<double>&              x                ,
-	const CppAD::vector<double>&              line_age         ,
-	const CppAD::vector<double>&              line_time        ,
-	const pack_info&                          pack_object      ,
-	const CppAD::vector<Float>&               pack_vec
-);
+class adj_integrand {
+private:
+		const std::string&                        rate_case_;
+		const CppAD::vector<double>&              age_table_;
+		const CppAD::vector<double>&              time_table_;
+		const CppAD::vector<integrand_struct>&    integrand_table_;
+		const CppAD::vector<smooth_info>&         s_info_vec_;
+		const pack_info&                          pack_object_;
+public:
+	adj_integrand(
+		const std::string&                        rate_case        ,
+		const CppAD::vector<double>&              age_table        ,
+		const CppAD::vector<double>&              time_table       ,
+		const CppAD::vector<integrand_struct>&    integrand_table  ,
+		const CppAD::vector<smooth_info>&         s_info_vec       ,
+		const pack_info&                          pack_object
+	);
+	template <class Float>
+	CppAD::vector<Float> line(
+		size_t                                    integrand_id     ,
+		size_t                                    n_child          ,
+		size_t                                    child            ,
+		const CppAD::vector<double>&              x                ,
+		const CppAD::vector<double>&              line_age         ,
+		const CppAD::vector<double>&              line_time        ,
+		const CppAD::vector<Float>&               pack_vec
+	);
+};
 
 } // END_DISMOD_AT_NAMESPACE
 

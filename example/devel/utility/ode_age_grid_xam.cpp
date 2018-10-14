@@ -44,7 +44,7 @@ bool ode_age_grid_xam(void)
 	double check[] = {
 		0.0, 20.0, 40.0, 50.0, 60.0, 70.0, 80.0, 100.0
 	};
-	std::cout << "ode_age_grid = " << ode_age_grid << "\n";
+	// std::cout << "ode_age_grid = " << ode_age_grid << "\n";
 	for(size_t i = 0; i < ode_age_grid.size(); ++i)
 		ok &= ode_age_grid[i] == check[i];
 

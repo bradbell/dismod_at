@@ -177,32 +177,34 @@ bool adj_integrand_xam(void)
 		}
 	}
 	//
-	// adjust_integrand
-	vector<Float> adjust_integrand = adj_integrand(
+	// adjust_object
+	dismod_at::adj_integrand adj_object(
 		rate_case,
 		age_table,
 		time_table,
 		integrand_table,
 		s_info_vec,
+		pack_object
+	);
+	vector<Float> adj_line = adj_object.line(
 		integrand_id,
 		n_child,
 		child,
 		x,
 		cohort_age,
 		cohort_time,
-		pack_object,
 		pack_vec
 	);
 	//
 	// check result
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-	ok &= adjust_integrand.size() == n_cohort;
+	ok &= adj_line.size() == n_cohort;
 	for(size_t i = 0; i < n_cohort; ++i)
 	{	double a = cohort_age[i];
 		double C = 1.0 - std::exp( - beta * (a - age_min) );
-		// std::cout << "adjust_integrand = " << adjust_integrand[i];
+		// std::cout << "adj_line = " << adj_line[i];
 		// std::cout << ", C = " << C << "\n";
-		ok      &= CppAD::NearEqual(adjust_integrand[i], C, eps99, eps99);
+		ok      &= CppAD::NearEqual(adj_line[i], C, eps99, eps99);
 	}
 	return ok;
 }

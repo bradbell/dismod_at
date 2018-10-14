@@ -25,34 +25,32 @@ $$
 $section Compute Adjusted Integrand On a Cohort$$
 
 $head Syntax$$
-$icode%adjust_integrand% = adj_integrand(
+$codei%adj_integrand %adj_object%(
 	%rate_case%,
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
 	%s_info_vec%,
+	%pack_object%
+);
+%$$
+$icode%adj_line% = adj_object%.line(
 	%integrand_id%,
 	%n_child%,
 	%child%,
 	%x%,
 	%line_age%,
 	%line_time%,
-	%pack_object%,
 	%pack_vec%
 )%$$
 
 $head Prototype$$
 $srcfile%devel/model/adj_integrand.cpp%
-	0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
+	0%// BEGIN_ADJ_INTEGRAND_PROTOTYPE%// END_ADJ_INTEGRAND_PROTOTYPE%1
 %$$
-
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
-
-$head n_line$$
-We use the notation $icode n_line$$ for the number
-points at which the approximate solution is returned.
+$srcfile%devel/model/adj_integrand.cpp%
+	0%// BEGIN_LINE_PROTOTYPE%// END_LINE_PROTOTYPE%1
+%$$
 
 $head rate_case$$
 This is the value of
@@ -60,9 +58,13 @@ $cref/rate_case/option_table/rate_case/$$ in the option table.
 
 $head age_table$$
 This argument is the $cref age_table$$.
+A reference to $icode age_table$$ is used by $icode adj_object$$
+($icode age_table$$ must no be deleted for as long as
+$icode adj_object$$ is used).
 
 $head time_table$$
 This argument is the $cref time_table$$.
+A reference to $icode age_table$$ is used by $icode adj_object$$.
 
 $head s_info_vec$$
 This argument has prototype
@@ -75,9 +77,11 @@ $codei%
 %$$
 is the corresponding $cref smooth_info$$ information.
 None of the prior information in $icode s_info_vec$$ is used.
+A reference to $icode age_table$$ is used by $icode adj_object$$.
 
 $head integrand_table$$
 This argument is the $cref integrand_table$$.
+A reference to $icode age_table$$ is used by $icode adj_object$$.
 
 $head integrand_id$$
 This is the $cref/integrand_id/integrand_table/integrand_id/$$
@@ -91,12 +95,15 @@ Is the $cref/child/child_info/table_id2child/child/$$ corresponding
 to this adjustment of the integrand.
 
 $head line_age$$
-This vector has size $icode n_line$$ and is
-the age points at which the adjusted integrand is computed.
+This vector is the age points at which the adjusted integrand is computed.
 It must be monotone non-decreasing; i.e.,
 $codei%
 	%line_age%[%k%] <= %line_age%[%k%+1]
 %$$
+
+$subhead n_line$$
+We use the notation $icode%n_line% = %line_age%.size()%$$ for the number
+points at which the approximate solution is returned.
 
 $head line_time$$
 This vector has size $icode n_line$$ and is
@@ -127,9 +134,13 @@ $head pack_vec$$
 is all the $cref model_variables$$ in the order
 specified by $icode pack_object$$.
 
-$head adjust_integrand$$
+$subhead Float$$
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
+
+$head adj_line$$
 The return value is a vector with size $icode n_line$$
-and $icode%adjust_integrand%[%i%]%$$ is the
+and $icode%adj_line%[%i%]%$$ is the
 $cref/adjusted integrand/avg_integrand/Adjusted Integrand/$$
 at age $icode%line_age%[%i%]%$$
 and time $icode%line_time%[%i%]%$$.
@@ -145,23 +156,35 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-// BEGIN_PROTOTYPE
-template <class Float>
-CppAD::vector<Float> adj_integrand(
+// BEGIN_ADJ_INTEGRAND_PROTOTYPE
+adj_integrand::adj_integrand(
 	const std::string&                        rate_case        ,
 	const CppAD::vector<double>&              age_table        ,
 	const CppAD::vector<double>&              time_table       ,
 	const CppAD::vector<integrand_struct>&    integrand_table  ,
 	const CppAD::vector<smooth_info>&         s_info_vec       ,
+	const pack_info&                          pack_object      )
+// END_ADJ_INTEGRAND_PROTOTYPE
+:
+rate_case_         (rate_case)        ,
+age_table_         (age_table)        ,
+time_table_        (time_table)       ,
+integrand_table_   (integrand_table)  ,
+s_info_vec_        (s_info_vec)       ,
+pack_object_       (pack_object)
+{ }
+
+// BEGIN_LINE_PROTOTYPE
+template <class Float>
+CppAD::vector<Float> adj_integrand::line(
 	size_t                                    integrand_id     ,
 	size_t                                    n_child          ,
 	size_t                                    child            ,
 	const CppAD::vector<double>&              x                ,
 	const CppAD::vector<double>&              line_age         ,
 	const CppAD::vector<double>&              line_time        ,
-	const pack_info&                          pack_object      ,
 	const CppAD::vector<Float>&               pack_vec         )
-// END_PROTOTYPE
+// END_LINE_PROTOTYPE
 {	using CppAD::vector;
 	//
 	// some temporaries
@@ -170,7 +193,7 @@ CppAD::vector<Float> adj_integrand(
 	vector< vector<Float> > rate(number_rate_enum);
 	// ---------------------------------------------------------------------
 	// integrand for this data point
-	integrand_enum integrand = integrand_table[integrand_id].integrand;
+	integrand_enum integrand = integrand_table_[integrand_id].integrand;
 	bool need_ode = false;
 	vector<bool> need_rate(number_rate_enum);
 	for(size_t k = 0; k < number_rate_enum; ++k)
@@ -236,7 +259,7 @@ CppAD::vector<Float> adj_integrand(
 	{	rate[rate_id].resize(n_line);
 		//
 		// parent rate for each point in the line
-		info             = pack_object.rate_info(rate_id, n_child);
+		info             = pack_object_.rate_info(rate_id, n_child);
 		size_t smooth_id = info.smooth_id;
 		//
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
@@ -248,12 +271,12 @@ CppAD::vector<Float> adj_integrand(
 			smooth_value.resize(info.n_var);
 			for(size_t k = 0; k < info.n_var; ++k)
 				smooth_value[k] = pack_vec[info.offset + k];
-			const smooth_info& s_info = s_info_vec[smooth_id];
+			const smooth_info& s_info = s_info_vec_[smooth_id];
 			rate[rate_id] = grid2line(
 				line_age,
 				line_time,
-				age_table,
-				time_table,
+				age_table_,
+				time_table_,
 				s_info,
 				smooth_value
 			);
@@ -266,19 +289,19 @@ CppAD::vector<Float> adj_integrand(
 		// include the child effect
 		if( child < n_child )
 		{	// child effect rate for each point in the line
-			info      = pack_object.rate_info(rate_id, child);
+			info      = pack_object_.rate_info(rate_id, child);
 			smooth_id = info.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	// interpolate from smoothing grid to line
 				smooth_value.resize(info.n_var);
 				for(size_t k = 0; k < info.n_var; ++k)
 					smooth_value[k] = pack_vec[info.offset + k];
-				const smooth_info& s_info = s_info_vec[smooth_id];
+				const smooth_info& s_info = s_info_vec_[smooth_id];
 				temp = grid2line(
 					line_age,
 					line_time,
-					age_table,
-					time_table,
+					age_table_,
+					time_table_,
 					s_info,
 					smooth_value
 				);
@@ -288,21 +311,21 @@ CppAD::vector<Float> adj_integrand(
 		}
 		//
 		// include the covariate effects on this rate
-		size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
+		size_t n_cov = pack_object_.mulcov_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; ++j)
-		{	info        = pack_object.mulcov_rate_value_info(rate_id, j);
+		{	info        = pack_object_.mulcov_rate_value_info(rate_id, j);
 			smooth_id   = info.smooth_id;
 			double x_j  = x[ info.covariate_id ];
 			// interpolate from smoothing grid to line
 			smooth_value.resize(info.n_var);
 			for(size_t k = 0; k < info.n_var; ++k)
 				smooth_value[k] = pack_vec[info.offset + k];
-			const smooth_info& s_info = s_info_vec[smooth_id];
+			const smooth_info& s_info = s_info_vec_[smooth_id];
 			temp = grid2line(
 				line_age,
 				line_time,
-				age_table,
-				time_table,
+				age_table_,
+				time_table_,
 				s_info,
 				smooth_value
 			);
@@ -329,7 +352,7 @@ CppAD::vector<Float> adj_integrand(
 # endif
 		Float pini = rate[pini_enum][0];
 		cohort_ode(
-			rate_case,
+			rate_case_,
 			line_age,
 			pini,
 			rate[iota_enum],
@@ -438,21 +461,21 @@ CppAD::vector<Float> adj_integrand(
 	// initialize effect as zero
 	for(size_t k = 0; k < n_line; ++k)
 		effect[k] = 0.0;
-	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
+	size_t n_cov = pack_object_.mulcov_meas_value_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; ++j)
-	{	info             = pack_object.mulcov_meas_value_info(integrand_id, j);
+	{	info  = pack_object_.mulcov_meas_value_info(integrand_id, j);
 		size_t smooth_id = info.smooth_id;
 		double x_j       = x[ info.covariate_id ];
 		// interpolate from smoothing grid to cohort
 		smooth_value.resize(info.n_var);
 		for(size_t k = 0; k < info.n_var; ++k)
 			smooth_value[k] = pack_vec[info.offset + k];
-		const smooth_info& s_info = s_info_vec[smooth_id];
+		const smooth_info& s_info = s_info_vec_[smooth_id];
 		temp = grid2line(
 			line_age,
 			line_time,
-			age_table,
-			time_table,
+			age_table_,
+			time_table_,
 			s_info,
 			smooth_value
 		);
@@ -466,26 +489,20 @@ CppAD::vector<Float> adj_integrand(
 	return result;
 }
 
-# define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND(Float)                     \
+# define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE(Float)                \
     template                                                            \
-	CppAD::vector<Float> adj_integrand(                                 \
-		const std::string&                        rate_case        ,    \
-		const CppAD::vector<double>&              age_table        ,    \
-		const CppAD::vector<double>&              time_table       ,    \
-		const CppAD::vector<integrand_struct>&    integrand_table  ,    \
-		const CppAD::vector<smooth_info>&         s_info_vec       ,    \
+	CppAD::vector<Float> adj_integrand::line(                           \
 		size_t                                    integrand_id     ,    \
 		size_t                                    n_child          ,    \
 		size_t                                    child            ,    \
 		const CppAD::vector<double>&              x                ,    \
 		const CppAD::vector<double>&              line_age         ,    \
 		const CppAD::vector<double>&              line_time        ,    \
-		const pack_info&                          pack_object      ,    \
 		const CppAD::vector<Float>&               pack_vec              \
 	);
 
 // instantiations
-DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND( double )
-DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND( a1_double )
+DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE( double )
+DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE( a1_double )
 
 } // END_DISMOD_AT_NAMESPACE
