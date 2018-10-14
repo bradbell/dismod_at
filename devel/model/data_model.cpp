@@ -279,16 +279,11 @@ data_model::data_model(
 	const pack_info&                         pack_object     ,
 	const child_info&                        child_object    )
 :
-rate_case_       (rate_case)                     ,
 n_covariate_     (n_covariate)                   ,
 n_age_ode_       (n_age_ode)                     ,
 n_time_ode_      (n_time_ode)                    ,
 ode_step_size_   (ode_step_size)                 ,
 n_child_         ( child_object.child_size() )   ,
-age_table_       (age_table)                     ,
-time_table_      (time_table)                    ,
-integrand_table_ (integrand_table)               ,
-s_info_vec_      (s_info_vec)                    ,
 pack_object_     (pack_object)
 {	assert( bound_random >= 0.0 );
 	assert( n_age_ode  > 1 );

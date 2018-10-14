@@ -43,17 +43,11 @@ class data_model {
 	} data_ode_info;
 private:
 	// constant values
-	const std::string                         rate_case_;
 	const size_t                              n_covariate_;
 	const size_t                              n_age_ode_;
 	const size_t                              n_time_ode_;
 	const double                              ode_step_size_;
 	const size_t                              n_child_;
-	// constant references
-	const CppAD::vector<double>&              age_table_;
-	const CppAD::vector<double>&              time_table_;
-	const CppAD::vector<integrand_struct>&    integrand_table_;
-	const CppAD::vector<smooth_info>&         s_info_vec_;
 	const pack_info&                          pack_object_;
 	//
 	// set by constructor and not changed
