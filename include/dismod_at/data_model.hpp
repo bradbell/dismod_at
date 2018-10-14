@@ -59,10 +59,6 @@ private:
 	CppAD::vector<double>        minimum_meas_cv_;
 	size_t                       eigen_ode2_case_number_;
 	//
-	// set by constructor and effectively const
-	// (holds onto temporary memory that is used to avoid repeated allocation)
-	adj_integrand                adj_object_;
-	//
 	// Has replace_like been called.
 	// Set false by constructor and true by replace_like.
 	bool                         replace_like_called_;

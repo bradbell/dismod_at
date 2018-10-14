@@ -87,17 +87,12 @@ in the fit command.
 
 $head age_table$$
 This is the $cref/age_table/get_age_table/age_table/$$.
-A reference to $icode age_table$$ is used by $icode data_object$$
-(so $icode age_table$$ cannot be deleted for as long as
-$icode data_object$$ is used).
 
 $head time_table$$
 This is the $cref/time_table/get_time_table/time_table/$$.
-A reference to $icode time_table$$ is used by $icode data_object$$.
 
 $head integrand_table$$
 This is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
-A reference to $icode integrand_table$$ is used by $icode data_object$$.
 
 $head subset_object$$
 This is the sub-sampled version of the data or avgint table; see
@@ -108,7 +103,9 @@ $head subset_cov_value$$
 This is the sub-sampled version of the covariates; see
 $cref/data_subset_cov_value/data_subset/data_subset_cov_value/$$,
 $cref/avgint_subset_cov_value/avgint_subset/avgint_subset_cov_value/$$.
-A reference to $icode subset_cov_value$$ is used by $icode data_object$$.
+A reference to $icode subset_cov_value$$ is used by $icode data_object$$
+(so $icode age_table$$ cannot be deleted for as long as
+$icode data_object$$ is used).
 
 $head w_info_vec$$
 For each $cref/weight_id/weight_table/weight_id/$$,
@@ -126,7 +123,6 @@ is the corresponding $cref smooth_info$$ information.
 For each $icode%s_info_vec%[%smooth_id%]%$$ object,
 only the following functions are used:
 $code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
-A reference to $icode s_info_vec$$ is used by $icode data_object$$.
 
 $head pack_object$$
 This is the $cref pack_info$$ information corresponding to
@@ -244,13 +240,8 @@ n_age_ode_         (n_age_ode)                     ,
 n_time_ode_        (n_time_ode)                    ,
 ode_step_size_     (ode_step_size)                 ,
 n_child_           ( child_object.child_size() )   ,
-subset_cov_value_ (subset_cov_value)               ,
-pack_object_       (pack_object)                   ,
-//
-// effectively const
-adj_object_(
-	rate_case, age_table, time_table, integrand_table, s_info_vec, pack_object
-)
+subset_cov_value_  (subset_cov_value)              ,
+pack_object_       (pack_object)
 {	assert( bound_random >= 0.0 );
 	assert( n_age_ode  > 1 );
 	assert( n_time_ode > 1 );
