@@ -37,7 +37,6 @@ If $icode str$$ only contains spaces,
 the return vector is empty; i.e.
 $icode%vec%.size() == 0%$$.
 
-
 $children%example/devel/utility/split_space_xam.cpp
 %$$
 $head Example$$

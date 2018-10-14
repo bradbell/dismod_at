@@ -30,6 +30,7 @@ $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/integrate_2d.cpp
 	%devel/utility/interp_weight.cpp
 	%devel/utility/n_random_const.cpp
+	%devel/utility/ode_age_grid.cpp
 	%devel/utility/pack_info.omh
 	%devel/utility/pack_prior.cpp
 	%devel/utility/residual_density.cpp

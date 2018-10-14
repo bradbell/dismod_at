@@ -50,6 +50,7 @@ extern bool integrate_1d_xam(void);
 extern bool integrate_2d_xam(void);
 extern bool interp_weight_xam(void);
 extern bool manage_gsl_rng_xam(void);
+extern bool ode_age_grid_xam(void);
 extern bool pack_info_xam(void);
 extern bool pack_prior_xam(void);
 extern bool random_effect_xam(void);
@@ -145,6 +146,7 @@ int main(void)
 	RUN(integrate_2d_xam);
 	RUN(interp_weight_xam);
 	RUN(manage_gsl_rng_xam);
+	RUN(ode_age_grid_xam);
 	RUN(pack_info_xam);
 	RUN(pack_prior_xam);
 	RUN(residual_density_xam);
