@@ -32,7 +32,6 @@ $section Data Model: Constructor$$
 $head Syntax$$
 $codei%data_model %data_object%(
 	%rate_case%,
-	%ode_age_grid%,
 	%bound_random%,
 	%n_covariate%,
 	%n_age_ode%,
@@ -61,9 +60,6 @@ This is the $code data_model$$ object being constructed.
 $head rate_case$$
 This is the value of
 $cref/rate_case/option_table/rate_case/$$ in the option table.
-
-$head ode_age_grid$$
-is the $cref/ode age grid/option_table/ode_age_split/Ode Age Grid/$$.
 
 $head bound_random$$
 This is the
@@ -200,7 +196,6 @@ $end
 # include <dismod_at/avgint_subset.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/error_exit.hpp>
-# include <dismod_at/ode_age_grid.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -216,7 +211,6 @@ data_model::~data_model(void)
 template <class SubsetStruct>
 data_model::data_model(
 	const std::string&                       rate_case       ,
-	const CppAD::vector<double>&             ode_age_grid    ,
 	double                                   bound_random    ,
 	size_t                                   n_covariate     ,
 	size_t                                   n_age_ode       ,
@@ -2222,7 +2216,6 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
 	const std::string&                       rate_case       ,  \
-	const CppAD::vector<double>&             ode_age_grid    ,  \
 	double                                   bound_random    ,  \
 	size_t                                   n_covariate     ,  \
 	size_t                                   n_age_ode       ,  \

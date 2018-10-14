@@ -74,7 +74,6 @@ public:
 	template <class SubsetStruct>
 	data_model(
 		const std::string&                       rate_case       ,
-		const CppAD::vector<double>&             ode_age_grid    ,
 		double                                   bound_random    ,
 		size_t                                   n_covariate     ,
 		size_t                                   n_age_ode       ,
