@@ -171,26 +171,28 @@ age_table_         (age_table)        ,
 time_table_        (time_table)       ,
 integrand_table_   (integrand_table)  ,
 s_info_vec_        (s_info_vec)       ,
-pack_object_       (pack_object)
+pack_object_       (pack_object)      ,
+double_rate_       (number_rate_enum) ,
+a1_double_rate_    (number_rate_enum)
 { }
 
 // BEGIN_LINE_PROTOTYPE
 template <class Float>
 CppAD::vector<Float> adj_integrand::line(
-	size_t                                    integrand_id     ,
-	size_t                                    n_child          ,
-	size_t                                    child            ,
-	const CppAD::vector<double>&              x                ,
-	const CppAD::vector<double>&              line_age         ,
-	const CppAD::vector<double>&              line_time        ,
-	const CppAD::vector<Float>&               pack_vec         )
+	size_t                                             integrand_id     ,
+	size_t                                             n_child          ,
+	size_t                                             child            ,
+	const CppAD::vector<double>&                       x                ,
+	const CppAD::vector<double>&                       line_age         ,
+	const CppAD::vector<double>&                       line_time        ,
+	const CppAD::vector<Float>&                        pack_vec         ,
 // END_LINE_PROTOTYPE
+	CppAD::vector< CppAD::vector<Float> >&             rate             )
 {	using CppAD::vector;
 	//
 	// some temporaries
 	pack_info::subvec_info info;
 	vector<Float> smooth_value;
-	vector< vector<Float> > rate(number_rate_enum);
 	// ---------------------------------------------------------------------
 	// integrand for this data point
 	integrand_enum integrand = integrand_table_[integrand_id].integrand;
@@ -489,17 +491,38 @@ CppAD::vector<Float> adj_integrand::line(
 	return result;
 }
 
-# define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE(Float)                \
-    template                                                            \
-	CppAD::vector<Float> adj_integrand::line(                           \
-		size_t                                    integrand_id     ,    \
-		size_t                                    n_child          ,    \
-		size_t                                    child            ,    \
-		const CppAD::vector<double>&              x                ,    \
-		const CppAD::vector<double>&              line_age         ,    \
-		const CppAD::vector<double>&              line_time        ,    \
-		const CppAD::vector<Float>&               pack_vec              \
-	);
+# define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE(Float)                    \
+    template                                                                \
+	CppAD::vector<Float> adj_integrand::line(                               \
+		size_t                                        integrand_id     ,    \
+		size_t                                        n_child          ,    \
+		size_t                                        child            ,    \
+		const CppAD::vector<double>&                  x                ,    \
+		const CppAD::vector<double>&                  line_age         ,    \
+		const CppAD::vector<double>&                  line_time        ,    \
+		const CppAD::vector<Float>&                   pack_vec         ,    \
+		CppAD::vector< CppAD::vector<Float> >&        rate                  \
+	);                                                                      \
+\
+	CppAD::vector<Float> adj_integrand::line(                               \
+		size_t                                        integrand_id     ,    \
+		size_t                                        n_child          ,    \
+		size_t                                        child            ,    \
+		const CppAD::vector<double>&                  x                ,    \
+		const CppAD::vector<double>&                  line_age         ,    \
+		const CppAD::vector<double>&                  line_time        ,    \
+		const CppAD::vector<Float>&                   pack_vec         )    \
+	{	return line(                                                        \
+			integrand_id,                                                   \
+			n_child,                                                        \
+			child,                                                          \
+			x,                                                              \
+			line_age,                                                       \
+			line_time,                                                      \
+			pack_vec,                                                       \
+			Float ## _rate_                                                 \
+		);                                                                  \
+	}
 
 // instantiations
 DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE( double )

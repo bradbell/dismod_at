@@ -13,27 +13,26 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/utility/vector.hpp>
 # include "get_integrand_table.hpp"
 # include "pack_info.hpp"
+# include "a1_double.hpp"
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class adj_integrand {
 private:
-		const std::string&                        rate_case_;
-		const CppAD::vector<double>&              age_table_;
-		const CppAD::vector<double>&              time_table_;
-		const CppAD::vector<integrand_struct>&    integrand_table_;
-		const CppAD::vector<smooth_info>&         s_info_vec_;
-		const pack_info&                          pack_object_;
-public:
-	adj_integrand(
-		const std::string&                        rate_case        ,
-		const CppAD::vector<double>&              age_table        ,
-		const CppAD::vector<double>&              time_table       ,
-		const CppAD::vector<integrand_struct>&    integrand_table  ,
-		const CppAD::vector<smooth_info>&         s_info_vec       ,
-		const pack_info&                          pack_object
-	);
+	// constants
+	const std::string&                         rate_case_;
+	const CppAD::vector<double>&               age_table_;
+	const CppAD::vector<double>&               time_table_;
+	const CppAD::vector<integrand_struct>&     integrand_table_;
+	const CppAD::vector<smooth_info>&          s_info_vec_;
+	const pack_info&                           pack_object_;
+
+	// temporaries
+	CppAD::vector< CppAD::vector<double> >     double_rate_;
+	CppAD::vector< CppAD::vector<a1_double> >  a1_double_rate_;
+
+	// template version of line
 	template <class Float>
 	CppAD::vector<Float> line(
 		size_t                                    integrand_id     ,
@@ -42,7 +41,38 @@ public:
 		const CppAD::vector<double>&              x                ,
 		const CppAD::vector<double>&              line_age         ,
 		const CppAD::vector<double>&              line_time        ,
-		const CppAD::vector<Float>&               pack_vec
+		const CppAD::vector<Float>&               pack_vec         ,
+		CppAD::vector< CppAD::vector<Float> >&    rate
+	);
+public:
+	// adj_integrand
+	adj_integrand(
+		const std::string&                        rate_case        ,
+		const CppAD::vector<double>&              age_table        ,
+		const CppAD::vector<double>&              time_table       ,
+		const CppAD::vector<integrand_struct>&    integrand_table  ,
+		const CppAD::vector<smooth_info>&         s_info_vec       ,
+		const pack_info&                          pack_object
+	);
+	// double version of line
+	CppAD::vector<double> line(
+		size_t                                    integrand_id     ,
+		size_t                                    n_child          ,
+		size_t                                    child            ,
+		const CppAD::vector<double>&              x                ,
+		const CppAD::vector<double>&              line_age         ,
+		const CppAD::vector<double>&              line_time        ,
+		const CppAD::vector<double>&              pack_vec
+	);
+	// a1_double version of line
+	CppAD::vector<a1_double> line(
+		size_t                                    integrand_id     ,
+		size_t                                    n_child          ,
+		size_t                                    child            ,
+		const CppAD::vector<double>&              x                ,
+		const CppAD::vector<double>&              line_age         ,
+		const CppAD::vector<double>&              line_time        ,
+		const CppAD::vector<a1_double>&           pack_vec
 	);
 };
 
