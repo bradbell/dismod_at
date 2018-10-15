@@ -14,12 +14,12 @@ $$
 
 $section Dismod_at Developer Model Documentation$$
 
-$childtable%
-	devel/model/data_model.omh%
-	devel/model/prior_model.omh%
-	devel/model/fit_model.omh%
-	devel/model/depend.omh%
-	devel/model/adj_integrand.cpp
+$childtable%devel/model/data_model.omh
+	%devel/model/prior_model.omh
+	%devel/model/fit_model.omh
+	%devel/model/depend.omh
+	%devel/model/adj_integrand.cpp
+	%devel/model/avg_integrand.cpp
 %$$
 
 $end

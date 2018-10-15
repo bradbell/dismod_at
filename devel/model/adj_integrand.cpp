@@ -34,7 +34,7 @@ $codei%adj_integrand %adj_object%(
 	%pack_object%
 );
 %$$
-$icode%adj_line% = adj_object%.line(
+$icode%adj_line% = %adj_object%.line(
 	%integrand_id%,
 	%n_child%,
 	%child%,
@@ -64,24 +64,24 @@ $icode adj_object$$ is used).
 
 $head time_table$$
 This argument is the $cref time_table$$.
-A reference to $icode age_table$$ is used by $icode adj_object$$.
+A reference to $icode time_table$$ is used by $icode adj_object$$.
+
+$head integrand_table$$
+This argument is the $cref integrand_table$$.
+A reference to $icode integrand_table$$ is used by $icode adj_object$$.
 
 $head s_info_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<smooth_info>& %s_info_vec%
-%$$
 For each $cref/smooth_id/smooth_table/smooth_id/$$,
 $codei%
 	%s_info_vec%[ %smooth_id% ]
 %$$
 is the corresponding $cref smooth_info$$ information.
 None of the prior information in $icode s_info_vec$$ is used.
-A reference to $icode age_table$$ is used by $icode adj_object$$.
+A reference to $icode s_info_vec$$ is used by $icode adj_object$$.
 
-$head integrand_table$$
-This argument is the $cref integrand_table$$.
-A reference to $icode age_table$$ is used by $icode adj_object$$.
+$head pack_object$$
+This is the $cref pack_info$$ information corresponding to
+the $cref model_variables$$.
 
 $head integrand_id$$
 This is the $cref/integrand_id/integrand_table/integrand_id/$$
@@ -139,10 +139,6 @@ $lend
 In this case
 $icode cohort_age$$ and $icode cohort_time$$ are better names for the
 arguments $icode line_age$$ and $icode line_time$$.
-
-$head pack_object$$
-This is the $cref pack_info$$ information corresponding to
-the $cref model_variables$$.
 
 $head pack_vec$$
 is all the $cref model_variables$$ in the order

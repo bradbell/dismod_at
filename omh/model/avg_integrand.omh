@@ -61,20 +61,24 @@ $cref/data_id/data_table/data_id/$$ for a row in the data table or,
 $cref/avgint_id/avgint_table/avgint_id/$$ for a row in the avgint table.
 
 $subhead a_i$$
-We use $latex a_i$$ to denote the corresponding
-$cref/age_lower/data_table/age_lower/$$ value.
+We use $latex a_i$$ to denote the corresponding $icode age_lower$$ in the
+$cref/data table/data_table/age_lower/$$ or
+$cref/avgint table/avgint_table/age_lower/$$.
 
 $subhead b_i$$
-We use $latex b_i$$ to denote the corresponding
-$cref/age_upper/data_table/age_upper/$$ value.
+We use $latex a_i$$ to denote the corresponding $icode age_upper$$ in the
+$cref/data table/data_table/age_upper/$$ or
+$cref/avgint table/avgint_table/age_upper/$$.
 
 $subhead s_i$$
-We use $latex s_i$$ to denote the corresponding
-$cref/time_lower/data_table/time_lower/$$ value.
+We use $latex a_i$$ to denote the corresponding $icode time_lower$$ in the
+$cref/data table/data_table/time_lower/$$ or
+$cref/avgint table/avgint_table/time_lower/$$.
 
 $subhead t_i$$
-We use $latex t_i$$ to denote the corresponding
-$cref/time_upper/data_table/time_upper/$$ value.
+We use $latex a_i$$ to denote the corresponding $icode time_upper$$ in the
+$cref/data table/data_table/time_upper/$$ or
+$cref/avgint table/avgint_table/time_upper/$$.
 
 $subhead x_ij$$
 We use $latex x_{i,j}$$ to denote the corresponding
