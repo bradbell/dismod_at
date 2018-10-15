@@ -35,12 +35,12 @@ $codei%adj_integrand %adj_object%(
 );
 %$$
 $icode%adj_line% = %adj_object%.line(
+	%line_age%,
+	%line_time%,
 	%integrand_id%,
 	%n_child%,
 	%child%,
 	%x%,
-	%line_age%,
-	%line_time%,
 	%pack_vec%
 )%$$
 
@@ -82,17 +82,6 @@ A reference to $icode s_info_vec$$ is used by $icode adj_object$$.
 $head pack_object$$
 This is the $cref pack_info$$ information corresponding to
 the $cref model_variables$$.
-
-$head integrand_id$$
-This is the $cref/integrand_id/integrand_table/integrand_id/$$
-in the integrand table.
-
-$head n_child_$$
-set to number of $cref/children/option_table/parent_node_id/Children/$$.
-
-$head child$$
-Is the $cref/child/child_info/table_id2child/child/$$ corresponding
-to this adjustment of the integrand.
 
 $head line_age$$
 This vector is the age points at which the adjusted integrand is computed.
@@ -139,6 +128,17 @@ $lend
 In this case
 $icode cohort_age$$ and $icode cohort_time$$ are better names for the
 arguments $icode line_age$$ and $icode line_time$$.
+
+$head integrand_id$$
+This is the $cref/integrand_id/integrand_table/integrand_id/$$
+in the integrand table.
+
+$head n_child_$$
+set to number of $cref/children/option_table/parent_node_id/Children/$$.
+
+$head child$$
+Is the $cref/child/child_info/table_id2child/child/$$ corresponding
+to this adjustment of the integrand.
 
 $head pack_vec$$
 is all the $cref model_variables$$ in the order
@@ -189,12 +189,12 @@ a1_double_rate_    (number_rate_enum)
 // BEGIN_LINE_PROTOTYPE
 template <class Float>
 CppAD::vector<Float> adj_integrand::line(
+	const CppAD::vector<double>&                       line_age         ,
+	const CppAD::vector<double>&                       line_time        ,
 	size_t                                             integrand_id     ,
 	size_t                                             n_child          ,
 	size_t                                             child            ,
 	const CppAD::vector<double>&                       x                ,
-	const CppAD::vector<double>&                       line_age         ,
-	const CppAD::vector<double>&                       line_time        ,
 	const CppAD::vector<Float>&                        pack_vec         ,
 // END_LINE_PROTOTYPE
 	CppAD::vector< CppAD::vector<Float> >&             rate             )
@@ -504,31 +504,31 @@ CppAD::vector<Float> adj_integrand::line(
 # define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE(Float)                    \
     template                                                                \
 	CppAD::vector<Float> adj_integrand::line(                               \
+		const CppAD::vector<double>&                  line_age         ,    \
+		const CppAD::vector<double>&                  line_time        ,    \
 		size_t                                        integrand_id     ,    \
 		size_t                                        n_child          ,    \
 		size_t                                        child            ,    \
 		const CppAD::vector<double>&                  x                ,    \
-		const CppAD::vector<double>&                  line_age         ,    \
-		const CppAD::vector<double>&                  line_time        ,    \
 		const CppAD::vector<Float>&                   pack_vec         ,    \
 		CppAD::vector< CppAD::vector<Float> >&        rate                  \
 	);                                                                      \
 \
 	CppAD::vector<Float> adj_integrand::line(                               \
+		const CppAD::vector<double>&                  line_age         ,    \
+		const CppAD::vector<double>&                  line_time        ,    \
 		size_t                                        integrand_id     ,    \
 		size_t                                        n_child          ,    \
 		size_t                                        child            ,    \
 		const CppAD::vector<double>&                  x                ,    \
-		const CppAD::vector<double>&                  line_age         ,    \
-		const CppAD::vector<double>&                  line_time        ,    \
 		const CppAD::vector<Float>&                   pack_vec         )    \
 	{	return line(                                                        \
+			line_age,                                                       \
+			line_time,                                                      \
 			integrand_id,                                                   \
 			n_child,                                                        \
 			child,                                                          \
 			x,                                                              \
-			line_age,                                                       \
-			line_time,                                                      \
 			pack_vec,                                                       \
 			Float ## _rate_                                                 \
 		);                                                                  \

@@ -187,12 +187,12 @@ bool adj_integrand_xam(void)
 		pack_object
 	);
 	vector<Float> adj_line = adj_object.line(
+		cohort_age,
+		cohort_time,
 		integrand_id,
 		n_child,
 		child,
 		x,
-		cohort_age,
-		cohort_time,
 		pack_vec
 	);
 	//

@@ -35,12 +35,12 @@ private:
 	// template version of line
 	template <class Float>
 	CppAD::vector<Float> line(
+		const CppAD::vector<double>&              line_age         ,
+		const CppAD::vector<double>&              line_time        ,
 		size_t                                    integrand_id     ,
 		size_t                                    n_child          ,
 		size_t                                    child            ,
 		const CppAD::vector<double>&              x                ,
-		const CppAD::vector<double>&              line_age         ,
-		const CppAD::vector<double>&              line_time        ,
 		const CppAD::vector<Float>&               pack_vec         ,
 		CppAD::vector< CppAD::vector<Float> >&    rate
 	);
@@ -56,22 +56,22 @@ public:
 	);
 	// double version of line
 	CppAD::vector<double> line(
+		const CppAD::vector<double>&              line_age         ,
+		const CppAD::vector<double>&              line_time        ,
 		size_t                                    integrand_id     ,
 		size_t                                    n_child          ,
 		size_t                                    child            ,
 		const CppAD::vector<double>&              x                ,
-		const CppAD::vector<double>&              line_age         ,
-		const CppAD::vector<double>&              line_time        ,
 		const CppAD::vector<double>&              pack_vec
 	);
 	// a1_double version of line
 	CppAD::vector<a1_double> line(
+		const CppAD::vector<double>&              line_age         ,
+		const CppAD::vector<double>&              line_time        ,
 		size_t                                    integrand_id     ,
 		size_t                                    n_child          ,
 		size_t                                    child            ,
 		const CppAD::vector<double>&              x                ,
-		const CppAD::vector<double>&              line_age         ,
-		const CppAD::vector<double>&              line_time        ,
 		const CppAD::vector<a1_double>&           pack_vec
 	);
 };
