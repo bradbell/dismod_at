@@ -24,6 +24,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 class avg_integrand {
 private:
 	// constants
+	const double                              ode_step_size_;
 	const CppAD::vector<integrand_struct>&    integrand_table_;
 
 	// temporaries used to avoid memory re-allocation (need constructor)
@@ -58,6 +59,7 @@ private:
 public:
 	// avg_integrand
 	avg_integrand(
+		double                                    ode_step_size    ,
 		const std::string&                        rate_case        ,
 		const CppAD::vector<double>&              ode_age_grid     ,
 		const CppAD::vector<double>&              age_table        ,

@@ -25,6 +25,7 @@ $head Under Construction$$
 
 $head Syntax$$
 $codei%avg_integrand %avg_object%(
+	%ode_step_size%,
 	%rate_case%,
 	%age_ode_grid%,
 	%age_table%,
@@ -54,6 +55,10 @@ $srcfile%devel/model/avg_integrand.cpp%
 $srcfile%devel/model/avg_integrand.cpp%
 	0%// BEGIN_RECTANGLE_PROTOTYPE%// END_RECTANGLE_PROTOTYPE%1
 %$$
+
+$head ode_step_size$$
+This is the value of
+$cref/ode_step_size/option_table/ode_step_size/$$ in the option table.
 
 $head rate_case$$
 This is the value of
@@ -136,6 +141,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // BEGIN_AVG_INTEGRAND_PROTOTYPE
 avg_integrand::avg_integrand(
+		double                                    ode_step_size    ,
 		const std::string&                        rate_case        ,
 		const CppAD::vector<double>&              ode_age_grid     ,
 		const CppAD::vector<double>&              age_table        ,
@@ -146,6 +152,7 @@ avg_integrand::avg_integrand(
 		const pack_info&                          pack_object      )
 // END_AVG_INTEGRAND_PROTOTYPE
 :
+ode_step_size_             ( ode_step_size )   ,
 integrand_table_           ( integrand_table ) ,
 double_time_line_object_   ( ode_age_grid )    ,
 a1_double_time_line_object_( ode_age_grid )    ,
@@ -175,11 +182,7 @@ Float avg_integrand::rectangle(
 	time_line_vec<Float>&            time_line_object ,
 	CppAD::vector<Float>&            float_vec        )
 {	using CppAD::vector;
-
-	// specialize the time_line object for this rectangle
-	time_line_object.specialize(
-		age_lower, age_upper, time_lower, time_upper
-	);
+	double eps99 = std::numeric_limits<double>::epsilon();
 
 	// integrand for this average
 	integrand_enum integrand = integrand_table_[integrand_id].integrand;
@@ -213,13 +216,34 @@ Float avg_integrand::rectangle(
 		assert( false );
 	}
 
+	// specialize the time_line object for this rectangle
+	time_line_object.specialize(
+		age_lower, age_upper, time_lower, time_upper
+	);
+
 	// The extended age grid
 	const vector<double>& extend_grid = time_line_object.extend_grid();
 	size_t                sub_lower   = time_line_object.sub_lower();
 	size_t                sub_upper   = time_line_object.sub_upper();
 
+	// n_age
+	size_t n_age = sub_upper - sub_lower + 1;
+
 	// one_time
 	bool one_time = time_line_vec<double>::near_equal(time_lower, time_upper);
+
+	// -----------------------------------------------------------------------
+	// No ODE
+	if( ! need_ode )
+	{	// n_time
+		size_t n_time = 1;
+		if( ! one_time )
+		{	n_time = 2.0 - eps99 + (time_upper - time_lower) / ode_step_size_;
+
+		}
+	}
+	// -----------------------------------------------------------------------
+
 
 
 	return Float(0);
