@@ -146,6 +146,9 @@ avg_integrand::avg_integrand(
 		const pack_info&                          pack_object      )
 // END_AVG_INTEGRAND_PROTOTYPE
 :
+integrand_table_           ( integrand_table ) ,
+double_time_line_object_   ( ode_age_grid )    ,
+a1_double_time_line_object_( ode_age_grid )    ,
 adj_object_(
 	rate_case,
 	age_table,
@@ -153,9 +156,7 @@ adj_object_(
 	integrand_table,
 	s_info_vec,
 	pack_object
-),
-double_time_line_object_   ( ode_age_grid ),
-a1_double_time_line_object_( ode_age_grid )
+)
 { }
 
 // BEGIN_RECTANGLE_PROTOTYPE
@@ -171,8 +172,56 @@ Float avg_integrand::rectangle(
 	const CppAD::vector<double>&     x                ,
 	const CppAD::vector<Float>&      pack_vec         ,
 // END_RECTANGLE_PROTOTYPE
-	time_line_vec<Float>&            time_line_object )
+	time_line_vec<Float>&            time_line_object ,
+	CppAD::vector<Float>&            float_vec        )
 {	using CppAD::vector;
+
+	// specialize the time_line object for this rectangle
+	time_line_object.specialize(
+		age_lower, age_upper, time_lower, time_upper
+	);
+
+	// integrand for this average
+	integrand_enum integrand = integrand_table_[integrand_id].integrand;
+
+	// need_ode
+	bool need_ode = false;
+	switch( integrand )
+	{	// -----------------------------------------------------------------
+		// need_ode = true;
+		case susceptible_enum:
+		case withC_enum:
+		case prevalence_enum:
+		case Tincidence_enum:
+		case mtspecific_enum:
+		case mtall_enum:
+		case mtstandard_enum:
+		need_ode = true;
+		break;
+
+		// -----------------------------------------------------------------
+		case Sincidence_enum:
+		case remission_enum:
+		case mtexcess_enum:
+		case mtother_enum:
+		case mtwith_enum:
+		case relrisk_enum:
+		break;
+
+		// -----------------------------------------------------------------
+		default:
+		assert( false );
+	}
+
+	// The extended age grid
+	const vector<double>& extend_grid = time_line_object.extend_grid();
+	size_t                sub_lower   = time_line_object.sub_lower();
+	size_t                sub_upper   = time_line_object.sub_upper();
+
+	// one_time
+	bool one_time = time_line_vec<double>::near_equal(time_lower, time_upper);
+
+
 	return Float(0);
 }
 
@@ -188,7 +237,8 @@ Float avg_integrand::rectangle(
 		size_t                           child            ,    \
 		const CppAD::vector<double>&     x                ,    \
 		const CppAD::vector<Float>&      pack_vec         ,    \
-		time_line_vec<Float>&            time_line_object      \
+		time_line_vec<Float>&            time_line_object ,    \
+		CppAD::vector<Float>&            float_vec             \
 	);                                                         \
 \
 	Float avg_integrand::rectangle(                            \
@@ -211,7 +261,8 @@ Float avg_integrand::rectangle(
 			child,                                             \
 			x,                                                 \
 			pack_vec,                                          \
-			Float ## _time_line_object_                        \
+			Float ## _time_line_object_,                       \
+			Float ## _vec_                                     \
 		);                                                     \
 	}
 

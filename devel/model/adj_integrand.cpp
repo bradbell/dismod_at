@@ -204,7 +204,7 @@ CppAD::vector<Float> adj_integrand::line(
 	pack_info::subvec_info info;
 	vector<Float> smooth_value;
 	// ---------------------------------------------------------------------
-	// integrand for this data point
+	// integrand for this average
 	integrand_enum integrand = integrand_table_[integrand_id].integrand;
 	bool need_ode = false;
 	vector<bool> need_rate(number_rate_enum);
@@ -257,7 +257,7 @@ CppAD::vector<Float> adj_integrand::line(
 
 		// -----------------------------------------------------------------
 		default:
-		need_ode = false;
+		assert( false);
 	}
 	// number of points in line
 	size_t n_line = line_age.size();
@@ -397,7 +397,7 @@ CppAD::vector<Float> adj_integrand::line(
 		if( ! ok )
 		{	std::string message = "Numerical integration error.\n"
 			"Need Prevalence and it is negative or infinite or Nan.";
-			throw CppAD::mixed::exception( "avg_integrand", message);
+			throw CppAD::mixed::exception( "adj_integrand", message);
 		}
 		switch(integrand)
 		{	// ----------------------------------------------------------------

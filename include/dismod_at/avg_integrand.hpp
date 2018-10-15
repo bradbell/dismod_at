@@ -23,9 +23,21 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class avg_integrand {
 private:
-	adj_integrand            adj_object_;
+	// constants
+	const CppAD::vector<integrand_struct>&    integrand_table_;
+
+	// temporaries used to avoid memory re-allocation (need constructor)
 	time_line_vec<double>    double_time_line_object_;
 	time_line_vec<a1_double> a1_double_time_line_object_;
+	//
+	adj_integrand            adj_object_;
+
+	// other temporaries used to avoid memory re-allocation
+	CppAD::vector<double>       line_age_;
+	CppAD::vector<double>       line_time_;
+	//
+	CppAD::vector<double>       double_vec_;
+	CppAD::vector<a1_double>    a1_double_vec_;
 
 	// template version of rectangle
 	template <class Float>
@@ -39,7 +51,9 @@ private:
 		size_t                           child            ,
 		const CppAD::vector<double>&     x                ,
 		const CppAD::vector<Float>&      pack_vec         ,
-		time_line_vec<Float>&            time_line_object
+		//
+		time_line_vec<Float>&            time_line_object ,
+		CppAD::vector<Float>&            float_vec
 	);
 public:
 	// avg_integrand
