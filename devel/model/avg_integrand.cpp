@@ -109,9 +109,13 @@ $head age_lower, age_upper, time_lower, time_upper$$
 are the lower age, upper age, lower time, and upper time
 that define the rectangle over which the integrand is averaged.
 
+$head weight_id$$
+This is the $cref/weight_id/weight_table/weight_id/$$
+in the weight table corresponding to this average integrand.
+
 $head integrand_id$$
 This is the $cref/integrand_id/integrand_table/integrand_id/$$
-in the integrand table.
+in the integrand table corresponding to this average integrand.
 
 $head n_child_$$
 set to number of $cref/children/option_table/parent_node_id/Children/$$.
@@ -173,6 +177,7 @@ Float avg_integrand::rectangle(
 	double                           age_upper        ,
 	double                           time_lower       ,
 	double                           time_upper       ,
+	size_t                           weight_id        ,
 	size_t                           integrand_id     ,
 	size_t                           n_child          ,
 	size_t                           child            ,
@@ -180,7 +185,7 @@ Float avg_integrand::rectangle(
 	const CppAD::vector<Float>&      pack_vec         ,
 // END_RECTANGLE_PROTOTYPE
 	time_line_vec<Float>&            time_line_object ,
-	CppAD::vector<Float>&            float_vec        )
+	CppAD::vector<Float>&            adj_line         )
 {	using CppAD::vector;
 	double eps99 = std::numeric_limits<double>::epsilon();
 
@@ -241,6 +246,28 @@ Float avg_integrand::rectangle(
 		{	n_time = 2.0 - eps99 + (time_upper - time_lower) / ode_step_size_;
 
 		}
+		double d_time = (time_upper - time_lower) / double(n_time - 1);
+		size_t n_line = n_time * n_age;
+		line_age_.resize(n_line);
+		line_time_.resize(n_line);
+		adj_line.resize(n_line);
+		for(size_t i = 0; i < n_time; ++i)
+		{	double time = time_lower + double(i);
+			for(size_t j = 0; j < n_age; ++j)
+			{	size_t k =  i * n_age + j;
+				line_age_[k] = extend_grid[j];
+				line_time_[k] = time;
+			}
+		}
+		adj_line = adj_object_.line(
+			line_age_,
+			line_time_,
+			integrand_id,
+			n_child,
+			child,
+			x,
+			pack_vec
+		);
 	}
 	// -----------------------------------------------------------------------
 
@@ -256,13 +283,14 @@ Float avg_integrand::rectangle(
 		double                           age_upper        ,    \
 		double                           time_lower       ,    \
 		double                           time_upper       ,    \
+		size_t                           weight_id        ,    \
 		size_t                           integrand_id     ,    \
 		size_t                           n_child          ,    \
 		size_t                           child            ,    \
 		const CppAD::vector<double>&     x                ,    \
 		const CppAD::vector<Float>&      pack_vec         ,    \
 		time_line_vec<Float>&            time_line_object ,    \
-		CppAD::vector<Float>&            float_vec             \
+		CppAD::vector<Float>&            adj_line              \
 	);                                                         \
 \
 	Float avg_integrand::rectangle(                            \
@@ -270,6 +298,7 @@ Float avg_integrand::rectangle(
 		double                           age_upper        ,    \
 		double                           time_lower       ,    \
 		double                           time_upper       ,    \
+		size_t                           weight_id        ,    \
 		size_t                           integrand_id     ,    \
 		size_t                           n_child          ,    \
 		size_t                           child            ,    \
@@ -280,13 +309,14 @@ Float avg_integrand::rectangle(
 			age_upper,                                         \
 			time_lower,                                        \
 			time_upper,                                        \
+			weight_id,                                         \
 			integrand_id,                                      \
 			n_child,                                           \
 			child,                                             \
 			x,                                                 \
 			pack_vec,                                          \
 			Float ## _time_line_object_,                       \
-			Float ## _vec_                                     \
+			Float ## _adj_line_                                \
 		);                                                     \
 	}
 

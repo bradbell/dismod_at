@@ -37,8 +37,8 @@ private:
 	CppAD::vector<double>       line_age_;
 	CppAD::vector<double>       line_time_;
 	//
-	CppAD::vector<double>       double_vec_;
-	CppAD::vector<a1_double>    a1_double_vec_;
+	CppAD::vector<double>       double_adj_line_;
+	CppAD::vector<a1_double>    a1_double_adj_line_;
 
 	// template version of rectangle
 	template <class Float>
@@ -47,6 +47,7 @@ private:
 		double                           age_upper        ,
 		double                           time_lower       ,
 		double                           time_upper       ,
+		size_t                           weight_id        ,
 		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
@@ -54,7 +55,7 @@ private:
 		const CppAD::vector<Float>&      pack_vec         ,
 		//
 		time_line_vec<Float>&            time_line_object ,
-		CppAD::vector<Float>&            float_vec
+		CppAD::vector<Float>&            adj_line
 	);
 public:
 	// avg_integrand
@@ -75,6 +76,7 @@ public:
 		double                           age_upper        ,
 		double                           time_lower       ,
 		double                           time_upper       ,
+		size_t                           weight_id        ,
 		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
@@ -87,6 +89,7 @@ public:
 		double                           age_upper        ,
 		double                           time_lower       ,
 		double                           time_upper       ,
+		size_t                           weight_id        ,
 		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
