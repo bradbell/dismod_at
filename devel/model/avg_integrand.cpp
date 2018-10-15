@@ -36,11 +36,11 @@ $codei%avg_integrand %avg_object%(
 );
 %$$
 $icode%avg% = %avg_object%.rectangle(
-	%integrand_id%,
 	%age_lower%,
 	%age_upper%,
 	%time_lower%,
 	%time_upper%,
+	%integrand_id%,
 	%n_child%,
 	%child%,
 	%x%,
@@ -100,13 +100,13 @@ $head pack_object$$
 This is the $cref pack_info$$ information corresponding to
 the $cref model_variables$$.
 
-$head integrand_id$$
-This is the $cref/integrand_id/integrand_table/integrand_id/$$
-in the integrand table.
-
 $head age_lower, age_upper, time_lower, time_upper$$
 are the lower age, upper age, lower time, and upper time
 that define the rectangle over which the integrand is averaged.
+
+$head integrand_id$$
+This is the $cref/integrand_id/integrand_table/integrand_id/$$
+in the integrand table.
 
 $head n_child_$$
 set to number of $cref/children/option_table/parent_node_id/Children/$$.
@@ -161,11 +161,11 @@ a1_double_time_line_object_( ode_age_grid )
 // BEGIN_RECTANGLE_PROTOTYPE
 template <class Float>
 Float avg_integrand::rectangle(
-	size_t                           integrand_id     ,
 	double                           age_lower        ,
 	double                           age_upper        ,
 	double                           time_lower       ,
 	double                           time_upper       ,
+	size_t                           integrand_id     ,
 	size_t                           n_child          ,
 	size_t                           child            ,
 	const CppAD::vector<double>&     x                ,
@@ -179,11 +179,11 @@ Float avg_integrand::rectangle(
 # define DISMOD_AT_INSTANTIATE_AVG_INTEGTAND_RECTANGLE(Float)  \
     template                                                   \
 	Float avg_integrand::rectangle(                            \
-		size_t                           integrand_id     ,    \
 		double                           age_lower        ,    \
 		double                           age_upper        ,    \
 		double                           time_lower       ,    \
 		double                           time_upper       ,    \
+		size_t                           integrand_id     ,    \
 		size_t                           n_child          ,    \
 		size_t                           child            ,    \
 		const CppAD::vector<double>&     x                ,    \
@@ -192,21 +192,21 @@ Float avg_integrand::rectangle(
 	);                                                         \
 \
 	Float avg_integrand::rectangle(                            \
-		size_t                           integrand_id     ,    \
 		double                           age_lower        ,    \
 		double                           age_upper        ,    \
 		double                           time_lower       ,    \
 		double                           time_upper       ,    \
+		size_t                           integrand_id     ,    \
 		size_t                           n_child          ,    \
 		size_t                           child            ,    \
 		const CppAD::vector<double>&     x                ,    \
 		const CppAD::vector<Float>&      pack_vec         )    \
 	{	return rectangle(                                      \
-			integrand_id,                                      \
 			age_lower,                                         \
 			age_upper,                                         \
 			time_lower,                                        \
 			time_upper,                                        \
+			integrand_id,                                      \
 			n_child,                                           \
 			child,                                             \
 			x,                                                 \

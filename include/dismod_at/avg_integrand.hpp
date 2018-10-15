@@ -30,11 +30,11 @@ private:
 	// template version of rectangle
 	template <class Float>
 	Float rectangle(
-		size_t                           integrand_id     ,
 		double                           age_lower        ,
 		double                           age_upper        ,
 		double                           time_lower       ,
 		double                           time_upper       ,
+		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
 		const CppAD::vector<double>&     x                ,
@@ -55,11 +55,11 @@ public:
 	);
 	// double version of rectangle
 	double rectangle(
-		size_t                           integrand_id     ,
 		double                           age_lower        ,
 		double                           age_upper        ,
 		double                           time_lower       ,
 		double                           time_upper       ,
+		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
 		const CppAD::vector<double>&     x                ,
@@ -67,11 +67,11 @@ public:
 	);
 	// a1_double version of rectangle
 	a1_double rectangle(
-		size_t                           integrand_id     ,
 		double                           age_lower        ,
 		double                           age_upper        ,
 		double                           time_lower       ,
 		double                           time_upper       ,
+		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
 		const CppAD::vector<double>&     x                ,
