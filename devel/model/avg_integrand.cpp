@@ -9,6 +9,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/avg_integrand.hpp>
+# include <dismod_at/grid2line.hpp>
 
 /*
 $begin devel_avg_integrand$$
@@ -157,7 +158,10 @@ avg_integrand::avg_integrand(
 // END_AVG_INTEGRAND_PROTOTYPE
 :
 ode_step_size_             ( ode_step_size )   ,
+age_table_                 ( age_table )       ,
+time_table_                ( time_table )      ,
 integrand_table_           ( integrand_table ) ,
+w_info_vec_                ( w_info_vec )      ,
 double_time_line_object_   ( ode_age_grid )    ,
 a1_double_time_line_object_( ode_age_grid )    ,
 adj_object_(
@@ -187,7 +191,22 @@ Float avg_integrand::rectangle(
 	time_line_vec<Float>&            time_line_object ,
 	CppAD::vector<Float>&            adj_line         )
 {	using CppAD::vector;
+	typedef typename time_line_vec<Float>::time_point  time_point;
 	double eps99 = std::numeric_limits<double>::epsilon();
+
+	// weight information for this average
+	const weight_info& w_info( w_info_vec_[weight_id] );
+
+	// number of ages and time in the weight grid
+	size_t n_age  = w_info.age_size();
+	size_t n_time = w_info.time_size();
+
+	// weight_grid_
+	for(size_t i = 0; i < n_age; i++)
+	{	for(size_t j = 0; j < n_time; ++j)
+			weight_grid_[i * n_time + j];
+	}
+
 
 	// integrand for this average
 	integrand_enum integrand = integrand_table_[integrand_id].integrand;
@@ -231,8 +250,8 @@ Float avg_integrand::rectangle(
 	size_t                sub_lower   = time_line_object.sub_lower();
 	size_t                sub_upper   = time_line_object.sub_upper();
 
-	// n_age
-	size_t n_age = sub_upper - sub_lower + 1;
+	// n_age: number of ages (time line for each time line)
+	n_age = sub_upper - sub_lower + 1;
 
 	// one_time
 	bool one_time = time_line_vec<double>::near_equal(time_lower, time_upper);
@@ -240,25 +259,33 @@ Float avg_integrand::rectangle(
 	// -----------------------------------------------------------------------
 	// No ODE
 	if( ! need_ode )
-	{	// n_time
-		size_t n_time = 1;
+	{	// n_time: number times in each time line
+		n_time = 1;
 		if( ! one_time )
-		{	n_time = 2.0 - eps99 + (time_upper - time_lower) / ode_step_size_;
-
+		{	n_time = size_t(
+				2.0 - eps99 + (time_upper - time_lower) / ode_step_size_
+			);
 		}
+		// d_time: spacing between time points
 		double d_time = (time_upper - time_lower) / double(n_time - 1);
+		// n_line: total number of age, time points
 		size_t n_line = n_time * n_age;
+		// resize temporaris
 		line_age_.resize(n_line);
 		line_time_.resize(n_line);
-		adj_line.resize(n_line);
+		//
+		// line_age_
+		// line_time_
 		for(size_t i = 0; i < n_time; ++i)
-		{	double time = time_lower + double(i);
+		{	double time = time_lower + double(i) * d_time;
 			for(size_t j = 0; j < n_age; ++j)
 			{	size_t k =  i * n_age + j;
 				line_age_[k] = extend_grid[j];
 				line_time_[k] = time;
 			}
 		}
+		// adj_line_
+		adj_line.resize(n_line);
 		adj_line = adj_object_.line(
 			line_age_,
 			line_time_,
@@ -268,12 +295,31 @@ Float avg_integrand::rectangle(
 			x,
 			pack_vec
 		);
+		// weight_line_
+		weight_line_.resize(n_line);
+		weight_line_ = grid2line(
+			line_age_,
+			line_time_,
+			age_table_,
+			time_table_,
+			w_info,
+			weight_grid_
+		);
+		for(size_t i = 0; i < n_time; ++i)
+		{	for(size_t j = 0; j < n_age; ++j)
+			{	time_point point;
+				size_t k       = i * n_age + j;
+				size_t age_index = sub_lower + j;
+				point.time       = line_age_[k];
+				point.weight     = weight_line_[k];
+				point.value      = adj_line[k];
+				time_line_object.add_point(age_index, point);
+			}
+		}
 	}
 	// -----------------------------------------------------------------------
-
-
-
-	return Float(0);
+	Float avg = time_line_object.age_time_avg();
+	return avg;
 }
 
 # define DISMOD_AT_INSTANTIATE_AVG_INTEGTAND_RECTANGLE(Float)  \

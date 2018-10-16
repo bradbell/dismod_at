@@ -25,20 +25,25 @@ class avg_integrand {
 private:
 	// constants
 	const double                              ode_step_size_;
+	const CppAD::vector<double>&              age_table_;
+	const CppAD::vector<double>&              time_table_;
 	const CppAD::vector<integrand_struct>&    integrand_table_;
+	const CppAD::vector<weight_info>&         w_info_vec_;
 
 	// temporaries used to avoid memory re-allocation (need constructor)
-	time_line_vec<double>    double_time_line_object_;
-	time_line_vec<a1_double> a1_double_time_line_object_;
+	time_line_vec<double>                     double_time_line_object_;
+	time_line_vec<a1_double>                  a1_double_time_line_object_;
 	//
-	adj_integrand            adj_object_;
+	adj_integrand                             adj_object_;
 
 	// other temporaries used to avoid memory re-allocation
-	CppAD::vector<double>       line_age_;
-	CppAD::vector<double>       line_time_;
+	CppAD::vector<double>                     line_age_;
+	CppAD::vector<double>                     line_time_;
+	CppAD::vector<double>                     weight_grid_;
+	CppAD::vector<double>                     weight_line_;
 	//
-	CppAD::vector<double>       double_adj_line_;
-	CppAD::vector<a1_double>    a1_double_adj_line_;
+	CppAD::vector<double>                     double_adj_line_;
+	CppAD::vector<a1_double>                  a1_double_adj_line_;
 
 	// template version of rectangle
 	template <class Float>
