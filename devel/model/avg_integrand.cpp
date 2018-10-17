@@ -375,15 +375,12 @@ Float avg_integrand::rectangle(
 			w_info,
 			weight_grid_
 		);
-		for(size_t i = 0; i < n_age; ++i)
-		{	for(size_t j = 0; j < n_time; ++j)
-			{	time_point point;
-				size_t k         = i * n_time + j;
-				point.time       = line_time_[k];
-				point.weight     = line_weight_[k];
-				point.value      = line_adj[k];
-				time_line_object.add_point(j + sub_lower, point);
-			}
+		for(size_t k = sub_lower; k <= final_index; ++k)
+		{	time_point point;
+			point.time       = line_time_[k];
+			point.weight     = line_weight_[k];
+			point.value      = line_adj[k];
+			time_line_object.add_point(k, point);
 		}
 	}
 	// -----------------------------------------------------------------------
