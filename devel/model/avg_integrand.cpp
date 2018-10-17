@@ -250,6 +250,10 @@ Float avg_integrand::rectangle(
 	const vector<double>& extend_grid = time_line_object.extend_grid();
 	size_t                sub_lower   = time_line_object.sub_lower();
 	size_t                sub_upper   = time_line_object.sub_upper();
+	// age_lower == extend_grid[sub_lower]
+	assert(time_line_vec<Float>::near_equal(extend_grid[sub_lower],age_lower));
+	// age_upper == extend_grid[sub_upper]
+	assert(time_line_vec<Float>::near_equal(extend_grid[sub_upper],age_upper));
 
 	// n_age: number of ages (time line for each time line)
 	n_age = sub_upper - sub_lower + 1;
@@ -324,6 +328,69 @@ Float avg_integrand::rectangle(
 	assert( need_ode );
 	// -----------------------------------------------------------------------
 	// cohorts that go through extended age grid and rectangle at time_lower
+	// -----------------------------------------------------------------------
+	for(size_t age_index = sub_lower; age_index <= sub_upper; ++age_index)
+	{	// time_initial: initial time for this cohort
+		double initial_time = time_lower - extend_grid[age_index];
+		//
+		// final_age: final age index for this cohort
+		size_t final_index = sub_upper;
+		double final_time  = time_lower + extend_grid[final_index] - age_lower;
+		bool ok = time_line_vec<Float>::near_equal(final_time, time_upper);
+		ok     |= final_time <= time_upper;
+		while( ! ok )
+		{	--final_index;
+			assert( final_index >= age_index );
+			final_time = time_lower + extend_grid[final_index] - age_lower;
+			ok         = final_time <= time_upper;
+		}
+		// number of age points in this cohort
+		size_t n_line = final_index + 1;
+		//
+		// line_age_, line_time_
+		line_age_.resize(n_line);
+		line_time_.resize(n_line);
+		for(size_t k = 0; k < n_line; ++k)
+		{	line_age_[k]  = extend_grid[k];
+			line_time_[k] = initial_time + line_age_[k] - extend_grid[0];
+		}
+		// adj_line_
+		adj_line.resize(n_line);
+		adj_line = adj_object_.line(
+			line_age_,
+			line_time_,
+			integrand_id,
+			n_child,
+			child,
+			x,
+			pack_vec
+		);
+		// weight_line_
+		weight_line_.resize(n_line);
+		weight_line_ = grid2line(
+			line_age_,
+			line_time_,
+			age_table_,
+			time_table_,
+			w_info,
+			weight_grid_
+		);
+		for(size_t i = 0; i < n_age; ++i)
+		{	for(size_t j = 0; j < n_time; ++j)
+			{	time_point point;
+				size_t k         = i * n_time + j;
+				point.time       = line_time_[k];
+				point.weight     = weight_line_[k];
+				point.value      = adj_line[k];
+				time_line_object.add_point(j + sub_lower, point);
+			}
+		}
+	}
+	// -----------------------------------------------------------------------
+	if( one_time )
+	{	Float avg = time_line_object.age_time_avg();
+		return avg;
+	}
 	// -----------------------------------------------------------------------
 	return Float(0);
 }

@@ -115,18 +115,21 @@ If the ODE is required for this integrand,
 it is solved for the cohort corresponding to
 initial time $latex t_L - a_j$$.
 $list number$$
-If $latex t_L + a_U - a_j < t_U$$,
+If $latex t_L + a_U - a_j \leq t_U$$,
 the final age for this cohort is $latex b_j = a_U$$.
 In this case the lower time cohort has not reached the upper time.
 $lnext
-If $latex t_L + a_U - a_j >= t_U$$,
-the final age is $latex b_j = a_j + t_U - t_L$$.
-In this case, the lower time cohort has reached the upper time.
+If $latex t_L + a_U - a_j > t_U$$,
+the final age is $latex b_j$$ is the largest age in the extended age grid
+such that $latex t_L + b_j - a_j \leq t_U$$.
 $lend
 For each extended age grid point $latex a_k$$ in the cohort,
 such that $latex a_j \leq a_k \leq b_j$$,
 the time $latex t_L + a_k - a_j$$ is added to $latex S_k$$
 (because we have the corresponding ODE solution).
+It may happen by chance that
+$latex t_L + b_j - a_j = t_U$$ in which case
+$latex t_U$$ is in $latex S_j$$.
 
 $head Upper Time Cohorts$$
 These operations are only done when $latex t_L < t_U$$.
@@ -138,12 +141,10 @@ If the ODE is required for this integrand,
 it is solved for the cohort corresponding to
 initial time $latex t_U - a_j$$ and final age $latex a_j$$.
 $list number$$
-If the age $latex a_j$$ for this cohort satisfies
-$latex a_j \geq a_L + t_U - t_L$$,
-this cohort was included in the lower time cohorts and
-$latex t_U$$ is already in $latex S_j$$.
+If $latex t_U$$ is in $latex S_j$$, for this cohort satisfies
+this cohort was included in the lower time cohorts.
 $lnext
-If $latex a_j < a_L + t_U - t_L$$,
+If $latex t_U$$ is not in $latex S_j$$,
 the ODE is solved for this cohort.
 For each extended age grid point $latex a_k$$ in the cohort,
 such that $latex a_L  \leq a_k \leq a_j$$,
