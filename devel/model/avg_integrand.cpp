@@ -189,7 +189,7 @@ Float avg_integrand::rectangle(
 	const CppAD::vector<Float>&      pack_vec         ,
 // END_RECTANGLE_PROTOTYPE
 	time_line_vec<Float>&            time_line_object ,
-	CppAD::vector<Float>&            adj_line         )
+	CppAD::vector<Float>&            line_adj         )
 {	using CppAD::vector;
 	typedef typename time_line_vec<Float>::time_point  time_point;
 	double eps99 = std::numeric_limits<double>::epsilon();
@@ -289,9 +289,9 @@ Float avg_integrand::rectangle(
 				line_time_[k]    = time_lower + double(i) * d_time;
 			}
 		}
-		// adj_line_
-		adj_line.resize(n_line);
-		adj_line = adj_object_.line(
+		// line_adj_
+		line_adj.resize(n_line);
+		line_adj = adj_object_.line(
 			line_age_,
 			line_time_,
 			integrand_id,
@@ -300,9 +300,9 @@ Float avg_integrand::rectangle(
 			x,
 			pack_vec
 		);
-		// weight_line_
-		weight_line_.resize(n_line);
-		weight_line_ = grid2line(
+		// line_weight_
+		line_weight_.resize(n_line);
+		line_weight_ = grid2line(
 			line_age_,
 			line_time_,
 			age_table_,
@@ -316,8 +316,8 @@ Float avg_integrand::rectangle(
 				size_t k         = i * n_time + j;
 				size_t age_index = sub_lower + j;
 				point.time       = line_time_[k];
-				point.weight     = weight_line_[k];
-				point.value      = adj_line[k];
+				point.weight     = line_weight_[k];
+				point.value      = line_adj[k];
 				time_line_object.add_point(age_index, point);
 			}
 		}
@@ -354,9 +354,9 @@ Float avg_integrand::rectangle(
 		{	line_age_[k]  = extend_grid[k];
 			line_time_[k] = initial_time + line_age_[k] - extend_grid[0];
 		}
-		// adj_line_
-		adj_line.resize(n_line);
-		adj_line = adj_object_.line(
+		// line_adj_
+		line_adj.resize(n_line);
+		line_adj = adj_object_.line(
 			line_age_,
 			line_time_,
 			integrand_id,
@@ -365,9 +365,9 @@ Float avg_integrand::rectangle(
 			x,
 			pack_vec
 		);
-		// weight_line_
-		weight_line_.resize(n_line);
-		weight_line_ = grid2line(
+		// line_weight_
+		line_weight_.resize(n_line);
+		line_weight_ = grid2line(
 			line_age_,
 			line_time_,
 			age_table_,
@@ -380,8 +380,8 @@ Float avg_integrand::rectangle(
 			{	time_point point;
 				size_t k         = i * n_time + j;
 				point.time       = line_time_[k];
-				point.weight     = weight_line_[k];
-				point.value      = adj_line[k];
+				point.weight     = line_weight_[k];
+				point.value      = line_adj[k];
 				time_line_object.add_point(j + sub_lower, point);
 			}
 		}
@@ -409,7 +409,7 @@ Float avg_integrand::rectangle(
 		const CppAD::vector<double>&     x                ,    \
 		const CppAD::vector<Float>&      pack_vec         ,    \
 		time_line_vec<Float>&            time_line_object ,    \
-		CppAD::vector<Float>&            adj_line              \
+		CppAD::vector<Float>&            line_adj              \
 	);                                                         \
 \
 	Float avg_integrand::rectangle(                            \
@@ -435,7 +435,7 @@ Float avg_integrand::rectangle(
 			x,                                                 \
 			pack_vec,                                          \
 			Float ## _time_line_object_,                       \
-			Float ## _adj_line_                                \
+			Float ## _line_adj_                                \
 		);                                                     \
 	}
 

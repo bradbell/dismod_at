@@ -37,13 +37,14 @@ private:
 	adj_integrand                             adj_object_;
 
 	// other temporaries used to avoid memory re-allocation
+	CppAD::vector<size_t>                     line_index_;
 	CppAD::vector<double>                     line_age_;
 	CppAD::vector<double>                     line_time_;
+	CppAD::vector<double>                     line_weight_;
 	CppAD::vector<double>                     weight_grid_;
-	CppAD::vector<double>                     weight_line_;
 	//
-	CppAD::vector<double>                     double_adj_line_;
-	CppAD::vector<a1_double>                  a1_double_adj_line_;
+	CppAD::vector<double>                     double_line_adj_;
+	CppAD::vector<a1_double>                  a1_double_line_adj_;
 
 	// template version of rectangle
 	template <class Float>
@@ -60,7 +61,7 @@ private:
 		const CppAD::vector<Float>&      pack_vec         ,
 		//
 		time_line_vec<Float>&            time_line_object ,
-		CppAD::vector<Float>&            adj_line
+		CppAD::vector<Float>&            line_adj
 	);
 public:
 	// avg_integrand
