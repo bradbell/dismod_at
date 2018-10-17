@@ -389,7 +389,66 @@ Float avg_integrand::rectangle(
 		return avg;
 	}
 	// -----------------------------------------------------------------------
-	return Float(0);
+	// cohorts that go through extended age grid and rectangle at time_upper
+	// -----------------------------------------------------------------------
+	for(size_t age_index = sub_lower; age_index <= sub_upper; ++age_index)
+	{	// time line corresponding to this age
+		const vector<time_point>& time_line =
+			time_line_object.time_line(age_index);
+
+		// last time in this time line
+		n_time            = time_line.size();
+		double final_time = time_line[n_time - 1].time;
+
+		// if time_upper is in time line, it is the last time
+		bool found = time_line_vec<Float>::near_equal(final_time, time_upper);
+		if( ! found )
+		{	// initial time for this cohort
+			double initial_time = time_upper - extend_grid[age_index];
+
+			// number of points in this cohort
+			size_t n_line = age_index + 1;
+			//
+			// line_age_, line_time_
+			line_age_.resize(n_line);
+			line_time_.resize(n_line);
+			for(size_t k = 0; k < n_line; ++k)
+			{	line_age_[k]  = extend_grid[k];
+				line_time_[k] = initial_time + line_age_[k] - extend_grid[0];
+			}
+			// line_adj_
+			line_adj.resize(n_line);
+			line_adj = adj_object_.line(
+				line_age_,
+				line_time_,
+				integrand_id,
+				n_child,
+				child,
+				x,
+				pack_vec
+			);
+			// line_weight_
+			line_weight_.resize(n_line);
+			line_weight_ = grid2line(
+				line_age_,
+				line_time_,
+				age_table_,
+				time_table_,
+				w_info,
+				weight_grid_
+			);
+			for(size_t k = 0; k <= age_index; ++k)
+			{	time_point point;
+				point.time       = line_time_[k];
+				point.weight     = line_weight_[k];
+				point.value      = line_adj[k];
+				time_line_object.add_point(k, point);
+			}
+		}
+	}
+	// -----------------------------------------------------------------------
+	Float avg = time_line_object.age_time_avg();
+	return avg;
 }
 
 # define DISMOD_AT_INSTANTIATE_AVG_INTEGTAND_RECTANGLE(Float)  \
