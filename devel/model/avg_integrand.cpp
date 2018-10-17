@@ -258,8 +258,8 @@ Float avg_integrand::rectangle(
 	bool one_time = time_line_vec<double>::near_equal(time_lower, time_upper);
 
 	// -----------------------------------------------------------------------
-	// No ODE
 	if( ! need_ode )
+	// -----------------------------------------------------------------------
 	{	// n_time: number times in each time line
 		n_time = 1;
 		if( ! one_time )
@@ -270,19 +270,19 @@ Float avg_integrand::rectangle(
 		// d_time: spacing between time points
 		double d_time = (time_upper - time_lower) / double(n_time - 1);
 		// n_line: total number of age, time points
-		size_t n_line = n_time * n_age;
+		size_t n_line = n_age * n_time;
 		// resize temporaris
 		line_age_.resize(n_line);
 		line_time_.resize(n_line);
 		//
 		// line_age_
 		// line_time_
-		for(size_t i = 0; i < n_time; ++i)
-		{	double time = time_lower + double(i) * d_time;
-			for(size_t j = 0; j < n_age; ++j)
-			{	size_t k =  i * n_age + j;
-				line_age_[k] = extend_grid[j];
-				line_time_[k] = time;
+		for(size_t i = 0; i < n_age; ++i)
+		{	for(size_t j = 0; j < n_time; ++j)
+			{	size_t k =  i * n_time + j;
+				size_t age_index = sub_lower + j;
+				line_age_[k]     = extend_grid[age_index];
+				line_time_[k]    = time_lower + double(i) * d_time;
 			}
 		}
 		// adj_line_
@@ -306,10 +306,10 @@ Float avg_integrand::rectangle(
 			w_info,
 			weight_grid_
 		);
-		for(size_t i = 0; i < n_time; ++i)
-		{	for(size_t j = 0; j < n_age; ++j)
+		for(size_t i = 0; i < n_age; ++i)
+		{	for(size_t j = 0; j < n_time; ++j)
 			{	time_point point;
-				size_t k       = i * n_age + j;
+				size_t k         = i * n_time + j;
 				size_t age_index = sub_lower + j;
 				point.time       = line_time_[k];
 				point.weight     = weight_line_[k];
@@ -317,10 +317,15 @@ Float avg_integrand::rectangle(
 				time_line_object.add_point(age_index, point);
 			}
 		}
+		Float avg = time_line_object.age_time_avg();
+		return avg;
 	}
 	// -----------------------------------------------------------------------
-	Float avg = time_line_object.age_time_avg();
-	return avg;
+	assert( need_ode );
+	// -----------------------------------------------------------------------
+	// cohorts that go through extended age grid and rectangle at time_lower
+	// -----------------------------------------------------------------------
+	return Float(0);
 }
 
 # define DISMOD_AT_INSTANTIATE_AVG_INTEGTAND_RECTANGLE(Float)  \
