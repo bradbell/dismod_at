@@ -28,7 +28,7 @@ $head Syntax$$
 $codei%avg_integrand %avg_object%(
 	%ode_step_size%,
 	%rate_case%,
-	%age_ode_grid%,
+	%ode_age_grid%,
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
@@ -133,10 +133,10 @@ $subhead Float$$
 The type $icode Float$$ must be $code double$$ or
 $cref a1_double$$.
 
-$comment%example/devel/model/avg_integrand_xam.cpp
+$children%example/devel/model/avg_integrand_xam.cpp
 %$$
 $head Example$$
-The file $comment avg_integrand_xam.cpp$$ contains an example and test
+The file $cref avg_integrand_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
@@ -202,9 +202,10 @@ Float avg_integrand::rectangle(
 	size_t n_time = w_info.time_size();
 
 	// weight_grid_
+	weight_grid_.resize(n_age * n_time);
 	for(size_t i = 0; i < n_age; i++)
 	{	for(size_t j = 0; j < n_time; ++j)
-			weight_grid_[i * n_time + j];
+			weight_grid_[i * n_time + j] = w_info.weight(i, j);
 	}
 
 
@@ -310,7 +311,7 @@ Float avg_integrand::rectangle(
 			{	time_point point;
 				size_t k       = i * n_age + j;
 				size_t age_index = sub_lower + j;
-				point.time       = line_age_[k];
+				point.time       = line_time_[k];
 				point.weight     = weight_line_[k];
 				point.value      = adj_line[k];
 				time_line_object.add_point(age_index, point);

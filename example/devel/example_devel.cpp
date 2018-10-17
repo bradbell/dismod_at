@@ -29,6 +29,7 @@ $end
 
 // model subdirectory
 extern bool adj_integrand_xam(void);
+extern bool avg_integrand_xam(void);
 extern bool avg_no_ode_xam(void);
 extern bool avg_yes_ode_xam(void);
 extern bool fit_model_xam(void);
@@ -125,6 +126,7 @@ int main(void)
 {
 	// model subdirectory
 	RUN(adj_integrand_xam);
+	RUN(avg_integrand_xam);
 	RUN(avg_no_ode_xam);
 	RUN(avg_yes_ode_xam);
 	RUN(fit_model_xam);

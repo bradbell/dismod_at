@@ -220,12 +220,12 @@ $subhead Ode Age Grid$$
 Let $icode age_min$$ and $icode age_max$$ be the minimum and maximum
 ages in the $cref age_table$$.
 Let $icode%N% >= 1%$$ be the minimum integer such that
-$icode%
+$codei%
 	( %age_max% - %age_min% ) / %N% <= %ode_step_size%
 %$$
 and define the age points
 $icode%a%[%i%]%$$ for $icode%i% = 0 , %...%, %N%$$ by
-$icode%
+$codei%
 	%a%[%i%] = %i% * ( %age_max% - %age_min% ) / %N%
 %$$
 The ode age grid is the union of the set of $icode%a%[%i%]%$$
