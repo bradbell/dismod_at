@@ -63,6 +63,22 @@ private:
 		time_line_vec<Float>&            time_line_object ,
 		CppAD::vector<Float>&            line_adj
 	);
+
+	// add_cohort
+	template <class Float>
+	void add_cohort(
+		double                       initial_time         ,
+		size_t                       n_line               ,
+		size_t                       weight_id            ,
+		size_t                       integrand_id         ,
+		size_t                       n_child              ,
+		size_t                       child                ,
+		const CppAD::vector<double>& x                    ,
+		const CppAD::vector<Float>&  pack_vec             ,
+		time_line_vec<Float>&        time_line_object     ,
+		CppAD::vector<Float>&        line_adj
+	);
+
 public:
 	// avg_integrand
 	avg_integrand(
