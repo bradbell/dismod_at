@@ -265,14 +265,15 @@ Float avg_integrand::rectangle(
 	if( ! need_ode )
 	// -----------------------------------------------------------------------
 	{	// n_time: number times in each time line
-		n_time = 1;
+		// d_time: spacing between time points
+		n_time        = 1;
+		double d_time = 0.0;
 		if( ! one_time )
 		{	n_time = size_t(
 				2.0 - eps99 + (time_upper - time_lower) / ode_step_size_
 			);
+			d_time = (time_upper - time_lower) / double(n_time - 1);
 		}
-		// d_time: spacing between time points
-		double d_time = (time_upper - time_lower) / double(n_time - 1);
 		// n_line: total number of age, time points
 		size_t n_line = n_age * n_time;
 		// resize temporaris
