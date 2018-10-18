@@ -9,6 +9,19 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # ifndef DISMOD_AT_AVG_INTEGRAND_HPP
 # define DISMOD_AT_AVG_INTEGRAND_HPP
+/*
+$begin devel_avg_integrand$$
+$spell
+	Integrands
+$$
+
+$section Computing Average Integrands$$
+
+$childtable%devel/model/avg_integrand.cpp
+%$$
+
+$end
+*/
 
 # include <cppad/utility/vector.hpp>
 # include "get_integrand_table.hpp"

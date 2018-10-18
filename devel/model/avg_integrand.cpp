@@ -297,6 +297,11 @@ Float avg_integrand::rectangle(
 	// one_time
 	bool one_time = time_line_vec<double>::near_equal(time_lower, time_upper);
 
+	// two_time
+	double time_temp = time_lower + ode_step_size_;
+	bool   two_time  = time_upper <= time_temp;
+	two_time |= time_line_vec<double>::near_equal(time_temp, time_upper);
+
 	// -----------------------------------------------------------------------
 	if( ! need_ode )
 	// -----------------------------------------------------------------------
@@ -438,6 +443,11 @@ Float avg_integrand::rectangle(
 				line_adj
 			);
 		}
+	}
+	// -----------------------------------------------------------------------
+	if( two_time )
+	{	Float avg = time_line_object.age_time_avg();
+		return avg;
 	}
 	// -----------------------------------------------------------------------
 	Float avg = time_line_object.age_time_avg();

@@ -19,7 +19,7 @@ $childtable%devel/model/data_model.omh
 	%devel/model/fit_model.omh
 	%devel/model/depend.omh
 	%devel/model/adj_integrand.cpp
-	%devel/model/avg_integrand.cpp
+	%include/dismod_at/avg_integrand.hpp
 %$$
 
 $end
