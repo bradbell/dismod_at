@@ -288,6 +288,7 @@ Float avg_integrand::rectangle(
 
 	// age_lower == extend_grid[sub_lower]
 	assert(time_line_vec<Float>::near_equal(extend_grid[sub_lower],age_lower));
+
 	// age_upper == extend_grid[sub_upper]
 	assert(time_line_vec<Float>::near_equal(extend_grid[sub_upper],age_upper));
 
@@ -296,11 +297,6 @@ Float avg_integrand::rectangle(
 
 	// one_time
 	bool one_time = time_line_vec<double>::near_equal(time_lower, time_upper);
-
-	// two_time
-	double time_temp = time_lower + ode_step_size_;
-	bool   two_time  = time_upper <= time_temp;
-	two_time |= time_line_vec<double>::near_equal(time_temp, time_upper);
 
 	// -----------------------------------------------------------------------
 	if( ! need_ode )
@@ -378,8 +374,7 @@ Float avg_integrand::rectangle(
 		// final_age: final age index for this cohort
 		size_t final_index = sub_upper;
 		double final_time  = time_lower + extend_grid[final_index] - age_lower;
-		bool ok = time_line_vec<Float>::near_equal(final_time, time_upper);
-		ok     |= final_time <= time_upper;
+		bool ok = final_time <= (1.0 + eps99) * time_upper;
 		while( ! ok )
 		{	--final_index;
 			assert( final_index >= age_index );
@@ -445,9 +440,48 @@ Float avg_integrand::rectangle(
 		}
 	}
 	// -----------------------------------------------------------------------
-	if( two_time )
-	{	Float avg = time_line_object.age_time_avg();
-		return avg;
+	size_t age_index, time_index;
+	double max_diff = time_line_object.max_time_diff(age_index, time_index);
+	while( max_diff > ode_step_size_ )
+	{	const vector<time_point>& time_line =
+			time_line_object.time_line(age_index);
+		assert( time_index > 0 );
+
+		// initial time for this cohort
+		n_time               = time_line.size();
+		double time_left     = time_line[time_index - 1].time;
+		double time_right    = time_line[time_index].time;
+		double time          = (time_left + time_right) / 2.0;
+		double age           = extend_grid[age_index];
+		double initial_time  = time - age;
+
+		// final age for this cohort
+		bool next_age = age_index < sub_upper;
+		next_age     &= time < ( 1.0 - eps99) *  time_upper;
+		while( next_age )
+		{	++age_index;
+			age       = extend_grid[age_index];
+			time      = initial_time + age;
+			next_age  = age_index < sub_upper;
+			next_age &= time < ( 1.0 - eps99) *  time_upper;
+		}
+
+		// number of points in this cohort
+		size_t n_line = age_index + 1;
+
+		// add_cohort
+		add_cohort(
+			initial_time,
+			n_line,
+			weight_id,
+			integrand_id,
+			n_child,
+			child,
+			x,
+			pack_vec,
+			time_line_object,
+			line_adj
+		);
 	}
 	// -----------------------------------------------------------------------
 	Float avg = time_line_object.age_time_avg();
