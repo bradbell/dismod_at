@@ -16,6 +16,7 @@ $begin time_line_vec$$
 $spell
 	vec
 	struct
+	diff
 $$
 
 $section Vector of Time Lines For Averaging a Function of Age and Time$$
@@ -38,6 +39,8 @@ $icode%sub_upper% = %vec%.sub_upper()
 $icode%vec%.add_point(%age_index%, %point%)
 %$$
 $icode%time_line% = %vec%.time_line(%age_index%)
+%$$
+$icode%time_diff% = %vec%.max_time_diff(%age_index%, %time_index%)
 %$$
 $icode%avg% = %vec%.age_time_avg()
 %$$
@@ -128,6 +131,28 @@ $codei%
 	%time_line%[%i%].time <= %time_line%[%i%+1].time
 %$$
 
+$head max_time_diff$$
+This function find the maximum value for
+$code%
+	%max_time_diff% = %time_line%[%time_index% + 1] - %time_line[%time_index%]
+%$$
+
+$subhead age_index$$
+The input value of this argument does not matter.
+Upon return, it is the age index for the maximum time difference.
+
+$subhead time_index$$
+The input value of this argument does not matter.
+Upon return, it is the time index for the maximum time difference.
+
+$subhead max_diff$$
+It the return value $icode%time_diff% > 0%$$,
+it is the maximum time difference for the time lines in $icode vec$$ and
+$codei%
+	%max_time_diff% = %time_line%[%time_index% + 1] - %time_line[%time_index%]
+%$$
+where $icode time_line$$ corresponds to $icode age_index$$.
+
 $head age_time_avg$$
 This uses the
 $cref numeric_average$$ method to approximate the average
@@ -175,6 +200,9 @@ $srcfile%devel/utility/time_line_vec.cpp%
 	0%// BEGIN_TIME_LINE_PROTOTYPE%// END_TIME_LINE_PROTOTYPE%1
 %$$
 $srcfile%devel/utility/time_line_vec.cpp%
+	0%// BEGIN_MAX_TIME_DIFF_PROTOTYPE%// END_MAX_TIME_DIFF_PROTOTYPE%1
+%$$
+$srcfile%devel/utility/time_line_vec.cpp%
 	0%// BEGIN_AGE_TIME_AVG_PROTOTYPE%// END_AGE_TIME_AVG_PROTOTYPE%1
 %$$
 
@@ -183,6 +211,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
+// ---------------------------------------------------------------------------
 // BEGIN_NEAR_EQUAL_PROTOTYPE
 template <class Float>
 bool time_line_vec<Float>::near_equal(double x, double y)
@@ -200,6 +229,7 @@ bool time_line_vec<Float>::near_equal(double x, double y)
 	return std::abs(1.0 - x / y) <= eps99;
 }
 
+// ---------------------------------------------------------------------------
 // BEGIN_TIME_LINE_VEC_PROTOTYPE
 template <class Float>
 time_line_vec<Float>::time_line_vec(
@@ -215,6 +245,7 @@ time_line_vec<Float>::time_line_vec(
 # endif
 }
 
+// ---------------------------------------------------------------------------
 // BEGIN_SPECIALIZE_PROTOTYPE
 template <class Float>
 void time_line_vec<Float>::specialize(
@@ -279,18 +310,21 @@ void time_line_vec<Float>::specialize(
 	for(size_t j = 0; j < n_sub; ++j)
 		vec_[j].resize(0);
 }
+// ---------------------------------------------------------------------------
 // BEGIN_EXTEND_GRID_PROTOTYPE
 template <class Float>
 const CppAD::vector<double>& time_line_vec<Float>::extend_grid(void) const
 // END_EXTEND_GRID_PROTOTYPE
 {	return extend_grid_; }
 
+// ---------------------------------------------------------------------------
 // BEGIN_SUB_LOWER_PROTOTYPE
 template <class Float>
 size_t time_line_vec<Float>::sub_lower(void) const
 // END_SUB_LOWER_PROTOTYPE
 {	return sub_lower_; }
 
+// ---------------------------------------------------------------------------
 // BEGIN_SUB_UPPER_PROTOTYPE
 template <class Float>
 size_t time_line_vec<Float>::sub_upper(void) const
@@ -298,6 +332,7 @@ size_t time_line_vec<Float>::sub_upper(void) const
 {	return sub_upper_; }
 
 
+// ---------------------------------------------------------------------------
 // BEGIN_ADD_POINT_PROTOTYPE
 template <class Float>
 void time_line_vec<Float>::add_point(
@@ -336,6 +371,7 @@ void time_line_vec<Float>::add_point(
 	return;
 }
 
+// ---------------------------------------------------------------------------
 // BEGIN_TIME_LINE_PROTOTYPE
 template <class Float>
 const CppAD::vector<typename time_line_vec<Float>::time_point>&
@@ -346,7 +382,33 @@ time_line_vec<Float>::time_line(const size_t& age_index) const
 	assert( age_index <= sub_upper_ );
 	return vec_[age_index - sub_lower_];
 }
+// ---------------------------------------------------------------------------
+// BEGIN_MAX_TIME_DIFF_PROTOTYPE
+template <class Float>
+double time_line_vec<Float>::max_time_diff(
+	size_t& age_index, size_t& time_index
+) const
+// END_MAX_TIME_DIFF_PROTOTYPE
+{	double max_diff   = 0.0;
+	size_t n_sub = sub_upper_ - sub_lower_ + 1;
+	for(size_t i = 0; i < n_sub; ++i)
+	{	const CppAD::vector<time_point>& time_line = vec_[i];
+		size_t n_time = time_line.size();
+		if( n_time > 1 )
+		{	for(size_t j = 1; j < n_time; ++j)
+			{	double diff = time_line[j].time - time_line[j-1].time;
+				if( diff > max_diff )
+				{	age_index  = sub_lower_ + i;
+					time_index = j;
+					max_diff   = diff;
+				}
+			}
+		}
+	}
+	return max_diff;
+}
 
+// ---------------------------------------------------------------------------
 // BEGIN_AGE_TIME_AVG_PROTOTYPE
 template <class Float>
 Float time_line_vec<Float>::age_time_avg(void) const

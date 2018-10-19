@@ -74,6 +74,9 @@ public:
 		const size_t& age_index
 	) const;
 	//
+	// max_time_diff
+	double max_time_diff(size_t& age_index, size_t& time_index) const;
+	//
 	// age_time_avg
 	Float age_time_avg(void) const;
 };

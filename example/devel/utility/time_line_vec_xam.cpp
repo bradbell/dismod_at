@@ -137,6 +137,13 @@ bool time_line_vec_xam(void)
 	sum_wv         += point_11.weight * point_11.value;
 	double check = sum_wv / sum_w;
 	ok &= std::fabs( 1.0 - avg / check ) <= eps99;
+	// ---------------------------------------------------------------------
+	// max_time_diff
+	size_t age_index;
+	size_t time_index;
+	double max_diff = vec.max_time_diff(age_index, time_index);
+	check = time_upper - time_lower;
+	ok   &= std::fabs( 1.0 - max_diff / check ) <= eps99;
 	//
 	return ok;
 }
