@@ -147,9 +147,10 @@ Upon return, it is the time index for the maximum time difference.
 
 $subhead max_diff$$
 It the return value $icode%time_diff% > 0%$$,
-it is the maximum time difference for the time lines in $icode vec$$ and
+it is the maximum time difference for the time lines in $icode vec$$.
+In addition, $icode%time_index% > 0%$$ and
 $codei%
-	%max_time_diff% = %time_line%[%time_index% + 1] - %time_line[%time_index%]
+	%max_time_diff% = %time_line%[%time_index%] - %time_line[%time_index% - 1]
 %$$
 where $icode time_line$$ corresponds to $icode age_index$$.
 
@@ -339,8 +340,8 @@ void time_line_vec<Float>::add_point(
 	const size_t&     age_index ,
 	const time_point& point     )
 // END_ADD_POINT_PROTOTYPE
-{	assert( time_lower_ <= point.time );
-	assert( point.time <= time_upper_ );
+{	assert( time_lower_ <= point.time || near_equal(time_lower_, point.time) );
+	assert( point.time <= time_upper_ || near_equal(time_upper_, point.time) );
 	assert( sub_lower_ <= age_index );
 	assert( age_index <= sub_upper_ );
 	//

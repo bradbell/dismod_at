@@ -181,7 +181,7 @@ bool avg_integrand_xam(void)
 	}
 	//
 	// ode_step_size
-	size_t n_ode_age     = 4;
+	size_t n_ode_age     = 10;
 	double ode_step_size = (age_end - age_ini) / double(n_ode_age - 1);
 	//
 	// ode_age_grid
@@ -226,7 +226,6 @@ bool avg_integrand_xam(void)
 	ok          &= CppAD::NearEqual(avg, beta, eps99, eps99);
 	// -----------------------------------------------------------------------
 	// susceptible
-	/* not yet working
 	integrand_id = 1;
 	avg = avg_object.rectangle(
 		age_lower,
@@ -247,9 +246,8 @@ bool avg_integrand_xam(void)
 	double low_int = - exp( - beta * ( age_lower - age_ini ) ) / beta;
 	double up_int  = - exp( - beta * ( age_upper - age_ini ) ) / beta;
 	double check   = (up_int - low_int) / (age_upper - age_lower );
-	std::cout << "avg = " << avg << ", check = " << check << "\n";
-	ok          &= CppAD::NearEqual(avg, check, eps99, eps99);
-	*/
+	ok            &= CppAD::NearEqual(avg, check, 1e-2, 1e-2);
+	//
 	return ok;
 }
 // END C++
