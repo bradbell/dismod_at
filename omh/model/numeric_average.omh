@@ -44,10 +44,9 @@ The ODE is solved along cohort lines, i.e., lines where
 time minus age is constant.
 
 $head Initial Age$$
-To simplify this presentation, the age corresponding to initial prevalence
-$cref/pini/rate_table/rate_name/pini/$$
-is specified is assumed to be age zero;
-i.e., the first age in the $cref age_table$$ is zero.
+We use the notation $latex a_I$$ for
+the age corresponding to initial prevalence
+$cref/pini/rate_table/rate_name/pini/$$.
 
 $head Rectangle$$
 We use the following notation
@@ -83,7 +82,7 @@ and the average integrand age grid.
 
 $head Cohort Solution of ODE$$
 A cohort solution is identified by its
-initial time, corresponding to age zero,
+initial time, corresponding to age $latex a_I$$,
 and final age, corresponding to the last point in the solution.
 The cohort is solved by approximating to rates in the ODE as constant
 between grid points in the extended age grid.
@@ -94,7 +93,7 @@ be the set of ages in the extended age grid that satisfy
 $latex a_L < a_j < a_U$$.
 Furthermore, these ages are in order; i.e.,
 $latex a_j < a_{j+1}$$.
-For each such age, there is a time line corresponding to
+For each such age, there is a time line interval
 $latex [ t_L , t_U ]$$ which we refer to as the $th j$$ time line.
 
 $head S_j$$
@@ -113,18 +112,18 @@ the time point $latex t_L$$ is added to $latex S_j$$.
 $subhead ODE$$
 If the ODE is required for this integrand,
 it is solved for the cohort corresponding to
-initial time $latex t_L - a_j$$.
+initial time $latex t_L - ( a_j - a_I)$$.
 $list number$$
-If $latex t_L + a_U - a_j \leq t_U$$,
+If $latex t_L + a_U - a_j < t_U$$,
 the final age for this cohort is $latex b_j = a_U$$.
 In this case the lower time cohort has not reached the upper time.
 $lnext
-If $latex t_L + a_U - a_j > t_U$$,
+If $latex t_L + a_U - a_j \geq t_U$$,
 the final age is $latex b_j$$ is the largest age in the extended age grid
 such that $latex t_L + b_j - a_j \leq t_U$$.
 $lend
-For each extended age grid point $latex a_k$$ in the cohort,
-such that $latex a_j \leq a_k \leq b_j$$,
+For each extended age grid $latex a_k$$ in the cohort,
+such that $latex a_L \leq a_k \leq b_j$$,
 the time $latex t_L + a_k - a_j$$ is added to $latex S_k$$
 (because we have the corresponding ODE solution).
 It may happen by chance that
@@ -138,18 +137,14 @@ the time point $latex t_U$$ is added to $latex S_j$$.
 
 $subhead ODE$$
 If the ODE is required for this integrand,
-it is solved for the cohort corresponding to
-initial time $latex t_U - a_j$$ and final age $latex a_j$$.
+and $latex t_U$$ is not in $latex S_j$$,
+the ODE is solved for the cohort corresponding to
+initial time $latex t_U - ( a_j - a_I)$$ and final age $latex a_j$$.
 $list number$$
-If $latex t_U$$ is in $latex S_j$$, for this cohort satisfies
-this cohort was included in the lower time cohorts.
-$lnext
-If $latex t_U$$ is not in $latex S_j$$,
-the ODE is solved for this cohort.
 For each extended age grid point $latex a_k$$ in the cohort,
 such that $latex a_L  \leq a_k \leq a_j$$,
-and $latex t_L \leq t_U + a_j - a_k$$,
-the time $latex t_U + a_j - a_k$$ is added to $latex S_k$$.
+and $latex t_L \leq t_U - ( a_j - a_k )$$,
+the time $latex t_U - ( a_j - a_k )$$ is added to $latex S_k$$.
 $lend
 
 $head Refinement$$
@@ -170,26 +165,26 @@ $subhead ODE Required$$
 If the ODE is required for this integrand,
 the following method is used for refinement of the time lines:
 $list number$$
-For $latex j = J-1 , \ldots , 0$$, use the steps below to refine
-of the $th j$$ time line.
-$lnext
-Let $latex t_0 < t_1 < \ldots t_{N-1}$$ denote the set
+Find the value of $latex j$$ such that
+$latex t_n - t_{n-1}$$ is maximal where
+$latex t_0 < t_1 < \ldots t_{N-1}$$ denote the set
 of times currently in $latex S_j$$.
 $lnext
-Let $latex n$$ be such that $latex t_{n+1} - t_n > \Delta t$$.
-If there is no such $latex n$$ go to Step 1 for the next $latex j$$.
+If $latex t_n - t_{n-1} \leq \Delta t$$
+we are done with the refinement; i.e., exit this procedure.
 $lnext
-Add the time point $latex t_M = (t_{n+1} - t_n ) / 2$$ to the set $latex S_j$$.
-If the ODE is not required for this integrand, go to Step 2.
-$lnext
+Let $latex t_M = (t_{n+1} - t_n ) / 2$$ and choose $latex k$$ so that
+$latex a_k$$ is in the extended grid
+and $latex a_k $$ is as large as possible with
+$latex t_M + a_k - a_j \leq t_U$$.
 Solve the ODE for the cohort with initial time index
-$latex t_M - a_j$$ and final age $latex a_j$$.
-For each extended age grid point $latex a_k$$ in the cohort,
-such that $latex a_L  \leq a_k \leq a_j$$,
-and $latex t_L \leq t_U + a_j - a_k$$,
-the time $latex t_U + a_j - a_k$$ is added to $latex S_k$$.
+$latex t_M - ( a_j - a_I )$$ and final age $latex a_k$$.
 $lnext
-Go to Step 2.
+For each index $latex \ell \leq k$$ such that
+$latex a_L  \leq a_\ell$$ and $latex t_L \leq t_M + a_\ell - a_j$$,
+the time $latex t_M + a_\ell - a_j$$ is added to $latex S_\ell$$.
+$lnext
+Go to Step 1.
 $lend
 
 $head w(a, t)$$

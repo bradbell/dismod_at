@@ -428,6 +428,13 @@ Float avg_integrand::rectangle(
 			);
 		}
 	}
+# ifndef NDEBUG
+	for(size_t age_index = sub_lower; age_index <= sub_upper; ++age_index)
+	{	const vector<time_point>& time_line =
+			time_line_object.time_line(age_index);
+		assert( time_line.size() > 0 );
+	}
+# endif
 	// -----------------------------------------------------------------------
 	// ensure that time_line_object.max_time_diff <= ode_step_size_
 	// -----------------------------------------------------------------------
