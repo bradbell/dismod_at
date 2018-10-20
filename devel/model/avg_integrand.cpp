@@ -484,13 +484,16 @@ $spell
 	vec
 	pini
 	covariates
+	ini
 $$
 
 $section Add ODE Solution for One Cohort To time_line_object$$
 
 $head Syntax$$
 $icode%avg% = %avg_object%.add_cohort(
-	%n_line%,
+	%time_ini%,
+	%time_lower%,
+	%time_upper%,
 	%weight_id%,
 	%integrand_id%,
 	%n_child%,
@@ -515,7 +518,7 @@ $head time_lower$$
 lower time for the rectangle restricting which points are added
 to $icode time_line_object$$.
 
-$head time_lower$$
+$head time_upper$$
 upper time for the rectangle restricting which points are added
 to $icode time_line_object$$.
 
