@@ -398,23 +398,35 @@ Float avg_integrand::rectangle(
 	// cohorts that go through extended age grid and rectangle at time_upper
 	// -----------------------------------------------------------------------
 	for(size_t age_index = sub_lower; age_index <= sub_upper; ++age_index)
-	{	// initial time for this cohort
-		double time_ini = time_upper - extend_grid[age_index] + age_ini;
-		//
-		// add_cohort
-		add_cohort(
-			time_ini,
-			time_lower,
-			time_upper,
-			weight_id,
-			integrand_id,
-			n_child,
-			child,
-			x,
-			pack_vec,
-			time_line_object,
-			line_adj
-		);
+	{	// current time_line for this age index
+		const vector<time_point>& time_line =
+			time_line_object.time_line(age_index);
+
+		// maximum time currently in this time line
+		assert( time_line.size() > 0 );
+		double time_max = time_line[ time_line.size() - 1 ].time;
+
+		// check if this cohort has alread been added
+		if( ! time_line_vec<Float>::near_equal(time_max, time_upper) )
+		{
+			// initial time for this cohort
+			double time_ini = time_upper - extend_grid[age_index] + age_ini;
+			//
+			// add_cohort
+			add_cohort(
+				time_ini,
+				time_lower,
+				time_upper,
+				weight_id,
+				integrand_id,
+				n_child,
+				child,
+				x,
+				pack_vec,
+				time_line_object,
+				line_adj
+			);
+		}
 	}
 	// -----------------------------------------------------------------------
 	// ensure that time_line_object.max_time_diff <= ode_step_size_
