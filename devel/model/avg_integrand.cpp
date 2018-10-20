@@ -433,6 +433,12 @@ Float avg_integrand::rectangle(
 	{	const vector<time_point>& time_line =
 			time_line_object.time_line(age_index);
 		assert( time_line.size() > 0 );
+		//
+		double time = time_line[0].time;
+		assert( time_line_vec<Float>::near_equal(time_lower, time) );
+		//
+		time = time_line[ time_line.size() - 1 ].time;
+		assert( time_line_vec<Float>::near_equal(time_upper, time) );
 	}
 # endif
 	// -----------------------------------------------------------------------
