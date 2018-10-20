@@ -285,6 +285,7 @@ Float avg_integrand::rectangle(
 	const vector<double>& extend_grid = time_line_object.extend_grid();
 	size_t                sub_lower   = time_line_object.sub_lower();
 	size_t                sub_upper   = time_line_object.sub_upper();
+	double                age_ini     = extend_grid[0];
 
 	// age_lower == extend_grid[sub_lower]
 	assert(time_line_vec<Float>::near_equal(extend_grid[sub_lower],age_lower));
@@ -369,24 +370,24 @@ Float avg_integrand::rectangle(
 	// -----------------------------------------------------------------------
 	for(size_t age_index = sub_lower; age_index <= sub_upper; ++age_index)
 	{	// time_initial: initial time for this cohort
-		double initial_time = time_lower - extend_grid[age_index];
+		double time_ini = time_lower - extend_grid[age_index] - age_ini;
 		//
 		// final_age: final age index for this cohort
 		size_t final_index = sub_upper;
-		double final_time  = time_lower + extend_grid[final_index] - age_lower;
-		bool ok = final_time <= (1.0 + eps99) * time_upper;
+		double time_end = time_lower + extend_grid[final_index] - age_lower;
+		bool ok = time_end <= (1.0 + eps99) * time_upper;
 		while( ! ok )
 		{	--final_index;
 			assert( final_index >= age_index );
-			final_time = time_lower + extend_grid[final_index] - age_lower;
-			ok         = final_time <= time_upper;
+			time_end = time_lower + extend_grid[final_index] - age_lower;
+			ok       = time_end <= time_upper;
 		}
 		// number of age points in this cohort
 		size_t n_line = final_index + 1;
 
 		// add_cohort
 		add_cohort(
-			initial_time,
+			time_ini,
 			n_line,
 			weight_id,
 			integrand_id,
@@ -412,21 +413,22 @@ Float avg_integrand::rectangle(
 			time_line_object.time_line(age_index);
 
 		// last time in this time line
-		n_time            = time_line.size();
-		double final_time = time_line[n_time - 1].time;
+		n_time          = time_line.size();
+		double time_end = time_line[n_time - 1].time;
 
 		// if time_upper is in time line, it is the last time
-		bool found = time_line_vec<Float>::near_equal(final_time, time_upper);
+		bool found = time_line_vec<Float>::near_equal(time_end, time_upper);
 		if( ! found )
 		{	// initial time for this cohort
-			double initial_time = time_upper - extend_grid[age_index];
+			double time_ini =
+				time_upper - extend_grid[age_index] - age_ini;
 
 			// number of points in this cohort
 			size_t n_line = age_index + 1;
 
 			// add_cohort
 			add_cohort(
-				initial_time,
+				time_ini,
 				n_line,
 				weight_id,
 				integrand_id,
@@ -453,7 +455,7 @@ Float avg_integrand::rectangle(
 		double time_right    = time_line[time_index].time;
 		double time          = (time_left + time_right) / 2.0;
 		double age           = extend_grid[age_index];
-		double initial_time  = time - age;
+		double time_ini      = time - age - age_ini;
 
 		// final age for this cohort
 		bool next_age = age_index < sub_upper;
@@ -461,7 +463,7 @@ Float avg_integrand::rectangle(
 		while( next_age )
 		{	++age_index;
 			age       = extend_grid[age_index];
-			time      = initial_time + age;
+			time      = time_ini + age - age_ini;
 			next_age  = age_index < sub_upper;
 			next_age &= time < ( 1.0 - eps99) *  time_upper;
 		}
@@ -471,7 +473,7 @@ Float avg_integrand::rectangle(
 
 		// add_cohort
 		add_cohort(
-			initial_time,
+			time_ini,
 			n_line,
 			weight_id,
 			integrand_id,
@@ -517,7 +519,7 @@ $srcfile%devel/model/avg_integrand.cpp%
 	0%// BEGIN_ADD_COHORT_PROTOTYPE%// END_ADD_COHORT_PROTOTYPE%1
 %$$
 
-$head initial_time$$
+$head time_ini$$
 is the initial time for this cohort; i.e., the time
 corresponding to $cref/pini/rate_table/rate_name/pini/$$.
 
@@ -562,7 +564,7 @@ $end
 // BEGIN_ADD_COHORT_PROTOTYPE
 template <class Float>
 void avg_integrand::add_cohort(
-	double                       initial_time                     ,
+	double                       time_ini                         ,
 	size_t                       n_line                           ,
 	size_t                       weight_id                        ,
 	size_t                       integrand_id                     ,
@@ -587,7 +589,7 @@ void avg_integrand::add_cohort(
 	line_time_.resize(n_line);
 	for(size_t k = 0; k < n_line; ++k)
 	{	line_age_[k]  = extend_grid[k];
-		line_time_[k] = initial_time + line_age_[k] - extend_grid[0];
+		line_time_[k] = time_ini + line_age_[k] - extend_grid[0];
 	}
 	// line_adj_
 	line_adj.resize(n_line);
@@ -668,7 +670,7 @@ void avg_integrand::add_cohort(
 \
     template                                                   \
 	void avg_integrand::add_cohort(                            \
-		double                       initial_time         ,    \
+		double                       time_ini             ,    \
 		size_t                       n_line               ,    \
 		size_t                       weight_id            ,    \
 		size_t                       integrand_id         ,    \

@@ -40,12 +40,12 @@ bool avg_integrand_xam(void)
 	//
 	// age_table
 	size_t n_age_table = 6;
-	double age_min     = 20.0;
-	double age_max     = 100.0;
-	double d_age       = (age_max - age_min) / double(n_age_table - 1);
+	double age_ini     = 20.0;
+	double age_end     = 100.0;
+	double d_age       = (age_end - age_ini) / double(n_age_table - 1);
 	vector<double> age_table(n_age_table);
 	for(size_t i = 0; i < n_age_table; ++i)
-		age_table[i] = age_min + double(i) * d_age;
+		age_table[i] = age_ini + double(i) * d_age;
 	//
 	// time_table
 	size_t n_time_table = 4;
@@ -105,10 +105,10 @@ bool avg_integrand_xam(void)
 	s_info_vec[0] = s_info;
 	//
 	// integrand_table
-	size_t n_integrand = 1;
+	size_t n_integrand = 2;
 	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
-	size_t integrand_id = 0;
-	integrand_table[integrand_id].integrand = dismod_at::Sincidence_enum;
+	integrand_table[0].integrand = dismod_at::Sincidence_enum;
+	integrand_table[1].integrand = dismod_at::susceptible_enum;
 	//
 	// number of children
 	size_t n_child = 0;
@@ -156,8 +156,9 @@ bool avg_integrand_xam(void)
 		nslist_pair
 	);
 	/*
-	iota = beta
-	*/
+	pack_vec: pini=0, rho=0, chi=0, omega=0, iota=beta:
+	S(a) = exp( -beta * (a - age_ini) )
+    */
 	double beta          = 0.01;
 	double random_effect = log(2.0);
 	vector<Float> pack_vec( pack_object.size() );
@@ -181,12 +182,12 @@ bool avg_integrand_xam(void)
 	//
 	// ode_step_size
 	size_t n_ode_age     = 4;
-	double ode_step_size = (age_max - age_min) / double(n_ode_age - 1);
+	double ode_step_size = (age_end - age_ini) / double(n_ode_age - 1);
 	//
 	// ode_age_grid
 	vector<double> ode_age_grid(n_ode_age);
 	for(size_t i = 0; i < n_ode_age; ++i)
-		ode_age_grid[i] = age_min + double(i) * ode_step_size;
+		ode_age_grid[i] = age_ini + double(i) * ode_step_size;
 	//
 	// avg_object
 	dismod_at::avg_integrand avg_object(
@@ -200,12 +201,34 @@ bool avg_integrand_xam(void)
 		s_info_vec,
 		pack_object
 	);
-	double age_lower  = age_min + 10.0;
-	double age_upper  = age_max - 10.0;
-	double time_lower = 2000.0;
-	double time_upper = 2010.0;
-	size_t weight_id  = 0;
+	double age_lower    = age_ini + 10.0;
+	double age_upper    = age_end - 10.0;
+	double time_lower   = 2000.0;
+	double time_upper   = 2010.0;
+	size_t weight_id    = 0;
+	// -----------------------------------------------------------------------
+	// Sincidence
+	size_t integrand_id = 0;
 	Float avg = avg_object.rectangle(
+		age_lower,
+		age_upper,
+		time_lower,
+		time_upper,
+		weight_id,
+		integrand_id,
+		n_child,
+		child,
+		x,
+		pack_vec
+	);
+	// check result
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+	ok          &= CppAD::NearEqual(avg, beta, eps99, eps99);
+	// -----------------------------------------------------------------------
+	// susceptible
+	/* not yet working
+	integrand_id = 1;
+	avg = avg_object.rectangle(
 		age_lower,
 		age_upper,
 		time_lower,
@@ -219,8 +242,14 @@ bool avg_integrand_xam(void)
 	);
 	//
 	// check result
-	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
-	ok          &= CppAD::NearEqual(avg, beta, eps99, eps99);
+	// S(a)        = exp( -beta * (a - age_ini) )
+	// int S(a) da = - exp( -beta * (a - age_ini) ) / beta
+	double low_int = - exp( - beta * ( age_lower - age_ini ) ) / beta;
+	double up_int  = - exp( - beta * ( age_upper - age_ini ) ) / beta;
+	double check   = (up_int - low_int) / (age_upper - age_lower );
+	std::cout << "avg = " << avg << ", check = " << check << "\n";
+	ok          &= CppAD::NearEqual(avg, check, eps99, eps99);
+	*/
 	return ok;
 }
 // END C++
