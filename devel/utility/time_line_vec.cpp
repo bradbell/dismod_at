@@ -261,6 +261,8 @@ void time_line_vec<Float>::specialize(
 	assert( age_grid_[0] <= age_lower );
 	assert( age_upper <= age_grid_[age_grid_.size() - 1] );
 	// -----------------------------------------------------------------
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
+	// -----------------------------------------------------------------
 	time_lower_ = time_lower;
 	time_upper_ = time_upper;
 	// -----------------------------------------------------------------
@@ -271,9 +273,8 @@ void time_line_vec<Float>::specialize(
 	extend_grid_.resize(0);
 	//
 	// ages < age_lower
-	while( age_grid_[age_index] < age_lower )
-	{	if( ! near_equal( age_grid_[age_index], age_lower ) )
-			extend_grid_.push_back( age_grid_[age_index] );
+	while( age_grid_[age_index] < (1.0 - eps99) * age_lower )
+	{	extend_grid_.push_back( age_grid_[age_index] );
 		++age_index;
 	}
 	//
@@ -288,9 +289,8 @@ void time_line_vec<Float>::specialize(
 	{	//
 		// ages < age_upper
 		assert( age_index < n_age );
-		while( age_grid_[age_index] < age_upper )
-		{	if( ! near_equal( age_grid_[age_index], age_upper ) )
-				extend_grid_.push_back( age_grid_[age_index] );
+		while( age_grid_[age_index] < (1.0 - eps99) * age_upper )
+		{	extend_grid_.push_back( age_grid_[age_index] );
 			++age_index;
 		}
 		//
@@ -298,7 +298,7 @@ void time_line_vec<Float>::specialize(
 		sub_upper_ = extend_grid_.size();
 		extend_grid_.push_back( age_upper );
 	}
-	if( near_equal( age_grid_[age_index], age_upper ) )
+	if( age_index < n_age && near_equal( age_grid_[age_index], age_upper ) )
 		++age_index;
 	while( age_index < n_age )
 	{	extend_grid_.push_back( age_grid_[age_index] );

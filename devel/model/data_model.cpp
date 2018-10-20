@@ -2200,32 +2200,35 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 			keep &= data_info_[subset_id].bound_ran_neq == false;
 		assert( data_info_[subset_id].child <= n_child_ );
 		if( keep )
-		{	// compute avgerage of integrand for this data
-			Float avg;
-			integrand_enum integrand  = data_info_[subset_id].integrand;
-			switch( integrand )
-			{	case Sincidence_enum:
-				case remission_enum:
-				case mtexcess_enum:
-				case mtother_enum:
-				case mtwith_enum:
-				case relrisk_enum:
-				avg = avg_no_ode(subset_id, pack_vec);
-				break;
+		{	// arguments to avg_integrand::rectangle
+			double age_lower    = data_subset_obj_[subset_id].age_lower;
+			double age_upper    = data_subset_obj_[subset_id].age_upper;
+			double time_lower   = data_subset_obj_[subset_id].time_lower;
+			double time_upper   = data_subset_obj_[subset_id].time_upper;
+			size_t weight_id    =
+				size_t( data_subset_obj_[subset_id].weight_id );
+			size_t integrand_id =
+				size_t( data_subset_obj_[subset_id].integrand_id );
+			size_t child        =
+				size_t( data_info_[subset_id].child );
+			CppAD::vector<double> x(n_covariate_);
+			for(size_t j = 0; j < n_covariate_; j++)
+					x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
 
-				case susceptible_enum:
-				case withC_enum:
-				case prevalence_enum:
-				case Tincidence_enum:
-				case mtspecific_enum:
-				case mtall_enum:
-				case mtstandard_enum:
-				avg = avg_yes_ode(subset_id, pack_vec, reference_sc);
-				break;
+			// compute average integrand
+			Float avg = avg_object_.rectangle(
+				age_lower,
+				age_upper,
+				time_lower,
+				time_upper,
+				weight_id,
+				integrand_id,
+				n_child_,
+				child,
+				x,
+				pack_vec
+			);
 
-				default:
-				assert(false);
-			}
 			// compute its residual and log likelihood
 			Float not_used;
 			residual_struct<Float> residual =
