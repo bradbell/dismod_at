@@ -22,7 +22,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "pack_info.hpp"
 # include "residual_density.hpp"
 # include "get_data_sim_table.hpp"
-# include "adj_integrand.hpp"
+# include "avg_integrand.hpp"
 
 // declare test functions that are friends
 extern bool sci_ode_xam(void);
@@ -70,6 +70,9 @@ private:
 	// data_subset_obj_[subset_id].meas_std
 	CppAD::vector<data_subset_struct>         data_subset_obj_;
 
+	// Used to compute average average integrands
+	avg_integrand                avg_object_;
+
 public:
 	template <class SubsetStruct>
 	data_model(
@@ -79,6 +82,7 @@ public:
 		size_t                                   n_age_ode       ,
 		size_t                                   n_time_ode      ,
 		double                                   ode_step_size   ,
+		const CppAD::vector<double>&             ode_age_grid    ,
 		const CppAD::vector<double>&             age_table       ,
 		const CppAD::vector<double>&             time_table      ,
 		const CppAD::vector<integrand_struct>&   integrand_table ,

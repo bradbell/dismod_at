@@ -37,6 +37,7 @@ $codei%data_model %data_object%(
 	%n_age_ode%,
 	%n_time_ode%,
 	%ode_step_size%,
+	%ode_age_grid%,
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
@@ -78,8 +79,10 @@ This is the number of points in the
 $cref/ode time grid/ode_grid/Time, t_j/$$.
 
 $head ode_step_size$$
-This is the value of $cref/ode_step_size/option_table/ode_step_size/$$
-in the fit command.
+This is the $cref/ode_step_size/option_table/ode_step_size/$$.
+
+$head ode_age_grid$$
+This is the $cref/ode age grid/option_table/ode_age_split/Ode Age Grid/$$.
 
 $head age_table$$
 This is the $cref/age_table/get_age_table/age_table/$$.
@@ -178,6 +181,12 @@ for each $icode subset_id$$, set $codei%data_info_[%subset_id%]%$$
 is extra information used to speed up computation of average integrand
 for the corresponding data point.
 
+$head avg_object_$$
+The $code avg_integrand$$ $cref/constructor/avg_integrand_ctor/$$
+is used to create this argument.
+The arguments to this constructor are a subset of the
+arguments to the $code data_model$$ constructor and are passed through
+(with the same name) to the $code avg_integrand$$ constructor.
 
 $end
 -----------------------------------------------------------------------------
@@ -216,6 +225,7 @@ data_model::data_model(
 	size_t                                   n_age_ode       ,
 	size_t                                   n_time_ode      ,
 	double                                   ode_step_size   ,
+	const CppAD::vector<double>&             ode_age_grid    ,
 	const CppAD::vector<double>&             age_table       ,
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
@@ -235,7 +245,18 @@ n_time_ode_        (n_time_ode)                    ,
 ode_step_size_     (ode_step_size)                 ,
 n_child_           ( child_object.child_size() )   ,
 subset_cov_value_  (subset_cov_value)              ,
-pack_object_       (pack_object)
+pack_object_       (pack_object)                   ,
+avg_object_(
+	ode_step_size,
+	rate_case,
+	ode_age_grid,
+	age_table,
+	time_table,
+	integrand_table,
+	w_info_vec,
+	s_info_vec,
+	pack_object
+)
 {	assert( bound_random >= 0.0 );
 	assert( n_age_ode  > 1 );
 	assert( n_time_ode > 1 );
@@ -2221,6 +2242,7 @@ template data_model::data_model(                                \
 	size_t                                   n_age_ode       ,  \
 	size_t                                   n_time_ode      ,  \
 	double                                   ode_step_size   ,  \
+	const CppAD::vector<double>&             ode_age_grid    ,  \
 	const CppAD::vector<double>&             age_table       ,  \
 	const CppAD::vector<double>&             time_table      ,  \
 	const CppAD::vector<integrand_struct>&   integrand_table ,  \

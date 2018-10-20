@@ -32,6 +32,7 @@ $end
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/ode_age_grid.hpp>
 
 bool fit_model_xam(void)
 {	bool   ok = true;
@@ -308,6 +309,9 @@ bool fit_model_xam(void)
 	double bound_random = std::numeric_limits<double>::infinity();
 	std::string rate_case = "iota_pos_rho_pos";
 	std::string ode_age_split = "";
+	vector<double> ode_age_grid = dismod_at::ode_age_grid(
+		ode_step_size, ode_age_split, age_table
+	);
 	dismod_at::data_model data_object(
 		rate_case,
 		bound_random,
@@ -315,6 +319,7 @@ bool fit_model_xam(void)
 		n_age_ode,
 		n_time_ode,
 		ode_step_size,
+		ode_age_grid,
 		age_table,
 		time_table,
 		integrand_table,
