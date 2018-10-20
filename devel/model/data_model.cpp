@@ -2105,9 +2105,12 @@ before calling this function.
 $head data_object$$
 This object has prototype
 $codei%
-	const data_model %data_object%
+	data_model %data_object%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
+It is effectively const
+(some internal arrays are used for temporary work space and kept between
+calls to avoid re-allocating memory).
 
 $head Float$$
 The type $icode Float$$ must be $code double$$ or
@@ -2180,7 +2183,7 @@ template <class Float>
 CppAD::vector< residual_struct<Float> > data_model::like_all(
 	bool                        hold_out      ,
 	bool                        random_depend ,
-	const CppAD::vector<Float>& pack_vec      ) const
+	const CppAD::vector<Float>& pack_vec      )
 {	assert( replace_like_called_ );
 	//
 	bool parent_only = ! random_depend;
@@ -2291,7 +2294,7 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 		bool                          hold_out ,            \
 		bool                          parent   ,            \
 		const CppAD::vector<Float>&   pack_vec              \
-	) const;                                                \
+	);                                                      \
 
 // instantiations
 DISMOD_AT_INSTANTIATE_DATA_MODEL( double )

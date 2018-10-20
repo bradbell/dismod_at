@@ -380,10 +380,10 @@ bool fit_model_xam(void)
 		start_var,
 		scale_var,
 		prior_table,
-		data_object,
 		prior_object,
 		quasi_fixed,
-		zero_sum_random
+		zero_sum_random,
+		data_object
 	);
 	bool random_only = false;
 	fit_object.run_fit( random_only, option_map );

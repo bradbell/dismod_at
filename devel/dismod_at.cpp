@@ -302,10 +302,10 @@ void fit_command(
 		start_var            ,
 		scale_var            ,
 		db_input.prior_table ,
-		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		zero_sum_random
+		zero_sum_random      ,
+		data_object
 	);
 	fit_object.run_fit(random_only, option_map);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -995,10 +995,10 @@ void sample_command(
 				start_var_value      ,
 				scale_var_value      ,
 				db_input.prior_table ,
-				data_object          ,
 				prior_object         ,
 				quasi_fixed          ,
-				zero_sum_random
+				zero_sum_random      ,
+				data_object
 			);
 			fit_object.run_fit(random_only, option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1070,10 +1070,10 @@ void sample_command(
 		fit_var_value        ,
 		fit_var_value        ,
 		db_input.prior_table ,
-		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		zero_sum_random
+		zero_sum_random      ,
+		data_object
 	);
 	//
 	// sample

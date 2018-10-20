@@ -17,6 +17,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 $begin data_depend$$
 $spell
 	vec
+	const
 $$
 
 $section Which Variables The Data Model Depends On$$
@@ -35,6 +36,7 @@ at which one can evaluate the likelihood for the data.
 
 $head data_object$$
 This object contains and evaluates the likelihood for the data.
+It is effectively const.
 
 $head depend$$
 The return value $icode depend$$ has the same size as $icode pack_vec$$
@@ -46,7 +48,7 @@ $end
 // BEGIN DATA_DEPEND PROTOTYPE
 CppAD::vector<bool> data_depend(
 	const CppAD::vector<double>& pack_vec     ,
-	const data_model&            data_object  )
+	data_model&                  data_object  )
 // END DATA_DEPEND PROTOTYPE
 {
 	typedef CppAD::vector<a1_double> a1_vector;

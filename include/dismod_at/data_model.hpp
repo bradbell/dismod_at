@@ -150,7 +150,7 @@ public:
 		bool                          hold_out ,
 		bool                          parent   ,
 		const  CppAD::vector<Float>&  pack_vec
-	) const;
+	);
 };
 
 } // END_DISMOD_AT_NAMESPACE
