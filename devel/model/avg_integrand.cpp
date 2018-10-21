@@ -193,13 +193,17 @@ to this average.
 $head x$$
 This is the vector of covariates for this average.
 
+$head Float$$
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
+
 $head pack_vec$$
 is all the $cref model_variables$$ in the order
 specified by $icode pack_object$$.
 
-$subhead Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+$head avg$$
+The return value $icode avg$$ is the average of the integrand
+using the specified weighting over the specified rectangle
 
 $children%example/devel/model/avg_integrand_xam.cpp
 %$$

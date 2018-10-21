@@ -28,6 +28,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/depend.cpp
 	model/adj_integrand.cpp
 	model/avg_integrand.cpp
+	model/avg_std_effect.cpp
 
 	utility/avgint_subset.cpp
 	utility/bilinear_interp.cpp
