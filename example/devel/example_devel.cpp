@@ -31,6 +31,7 @@ $end
 extern bool adj_integrand_xam(void);
 extern bool avg_integrand_xam(void);
 extern bool avg_no_ode_xam(void);
+extern bool avg_std_effect_xam(void);
 extern bool avg_yes_ode_xam(void);
 extern bool fit_model_xam(void);
 extern bool like_all_xam(void);
@@ -127,6 +128,7 @@ int main(void)
 	RUN(adj_integrand_xam);
 	RUN(avg_integrand_xam);
 	RUN(avg_no_ode_xam);
+	RUN(avg_std_effect_xam);
 	RUN(avg_yes_ode_xam);
 	RUN(fit_model_xam);
 	RUN(like_all_xam);

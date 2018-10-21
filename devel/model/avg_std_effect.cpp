@@ -90,7 +90,7 @@ This is the $cref pack_info$$ information corresponding to
 the $cref model_variables$$.
 
 $head Example$$
-The file $comment avg_std_effect_xam.cpp$$ contains an example and test
+The file $cref avg_std_effect_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
@@ -183,11 +183,11 @@ $head avg$$
 The return value $icode avg$$ is the average of the integrand
 using the specified weighting over the specified rectangle
 
-$comment%example/devel/model/avg_std_effect_xam.cpp
+$children%example/devel/model/avg_std_effect_xam.cpp
 %$$
 
 $head Example$$
-The file $comment avg_std_effect_xam.cpp$$ contains an example and test
+The file $cref avg_std_effect_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end

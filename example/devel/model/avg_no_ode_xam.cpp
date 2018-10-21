@@ -162,7 +162,7 @@ bool avg_no_ode_xam(void)
 	//
 	// node_table:    0
 	//              1    2
-	//                  3  4
+	//                  3 4
 	CppAD::vector<dismod_at::node_struct> node_table(5);
 	node_table[0].parent = DISMOD_AT_NULL_INT;
 	node_table[1].parent =  0;
