@@ -256,6 +256,16 @@ avgint_obj_(
 	w_info_vec,
 	s_info_vec,
 	pack_object
+),
+avgstd_obj_(
+	ode_step_size,
+	avg_age_grid,
+	age_table,
+	time_table,
+	integrand_table,
+	w_info_vec,
+	s_info_vec,
+	pack_object
 )
 {	assert( bound_random >= 0.0 );
 	assert( n_age_ode  > 1 );
@@ -902,9 +912,12 @@ not depend on $latex ( u , \theta )$$.
 $head data_object$$
 This object has prototype
 $codei%
-	const data_model %data_object%
+	data_model %data_object%
 %$$
 see $cref/data_object constructor/data_model_ctor/data_object/$$.
+It is effectively const
+(some internal arrays are used for temporary work space and kept between
+calls to avoid re-allocating memory).
 
 $head Float$$
 The type $icode Float$$ must be $code double$$ or
@@ -971,7 +984,7 @@ residual_struct<Float> data_model::like_one(
 	size_t                        subset_id ,
 	const CppAD::vector<Float>&   pack_vec  ,
 	const Float&                  avg       ,
-	Float&                        delta_out ) const
+	Float&                        delta_out )
 {
 	assert( pack_object_.size() == pack_vec.size() );
 	assert( replace_like_called_ );
@@ -982,59 +995,34 @@ residual_struct<Float> data_model::like_one(
 		x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
 	double eta           = data_subset_obj_[subset_id].eta;
 	double nu            = data_subset_obj_[subset_id].nu;
-	size_t integrand_id  = data_subset_obj_[subset_id].integrand_id;
 	double meas_value    = data_subset_obj_[subset_id].meas_value;
 	double meas_std      = data_subset_obj_[subset_id].meas_std;
-	double meas_cv       = minimum_meas_cv_[integrand_id];
+	double age_lower    = data_subset_obj_[subset_id].age_lower;
+	double age_upper    = data_subset_obj_[subset_id].age_upper;
+	double time_lower   = data_subset_obj_[subset_id].time_lower;
+	double time_upper   = data_subset_obj_[subset_id].time_upper;
+	size_t weight_id    = size_t( data_subset_obj_[subset_id].weight_id );
+	size_t integrand_id = size_t( data_subset_obj_[subset_id].integrand_id );
 	//
 	assert( meas_std  > 0.0 );
+	double meas_cv       = minimum_meas_cv_[integrand_id];
 	double Delta = std::max(meas_std, meas_cv * std::fabs(meas_value) );
+	//
 
-	// data_info information for this data point
-	density_enum   density             = data_info_[subset_id].density;
-	size_t i_min                       = data_info_[subset_id].i_min;
-	size_t j_min                       = data_info_[subset_id].j_min;
-	size_t n_age                       = data_info_[subset_id].n_age;
-	size_t n_time                      = data_info_[subset_id].n_time;
-	const CppAD::vector<double>& c_ode = data_info_[subset_id].c_ode;
-
-	// ode subgrid that we covariates at
-	size_t n_ode = n_age * n_time;
-	CppAD::vector<size_t> ode_index(n_ode);
-	for(size_t i = 0; i < n_age; i++)
-	{	for(size_t j = 0; j < n_time; j++)
-		{	size_t k = i * n_time + j;
-			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
-		}
-	}
-
-	// measurement std covariates effect on the ode subgrid
-	CppAD::vector<Float> meas_cov_ode(n_ode);
-	for(size_t k = 0; k < n_ode; k++)
-		meas_cov_ode[k] = 0.0;
-	size_t n_cov = pack_object_.mulcov_meas_std_n_cov(integrand_id);
-	pack_info::subvec_info  info;
-	for(size_t j = 0; j < n_cov; j++)
-	{	info              = pack_object_.mulcov_meas_std_info(integrand_id, j);
-		size_t n_var      = info.n_var;
-		size_t smooth_id  = info.smooth_id;
-		double x_j = x[ info.covariate_id ];
-		//
-		CppAD::vector<Float> var_si(n_var);
-		for(size_t k = 0; k < n_var; k++)
-			var_si[k] = pack_vec[info.offset + k];
-		//
-		CppAD::vector<Float> var_ode =
-			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
-		//
-		for(size_t k = 0; k < n_ode; k++)
-			meas_cov_ode[k] += var_ode[k] * x_j;
-	}
-	Float std_effect = Float(0.0);
-	for(size_t k = 0; k < n_ode; k++)
-		std_effect += c_ode[k] * meas_cov_ode[k];
+	// average standard deviation effect
+	Float std_effect = avgstd_obj_.rectangle(
+		age_lower,
+		age_upper,
+		time_lower,
+		time_upper,
+		weight_id,
+		integrand_id,
+		x,
+		pack_vec
+	);
 	//
 	// Compute the adusted standard deviation
+	density_enum density = data_info_[subset_id].density;
 	if( density == log_gaussian_enum
 	||  density == log_laplace_enum
 	||  density == log_students_enum
@@ -1229,7 +1217,7 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 		const CppAD::vector<Float>&   pack_vec ,            \
 		const Float&                  avg      ,            \
 		Float&                        delta_out             \
-	) const;                                                \
+	);                                                      \
 	template CppAD::vector< residual_struct<Float> >        \
 	data_model::like_all(                                   \
 		bool                          hold_out ,            \

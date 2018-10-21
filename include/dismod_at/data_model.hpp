@@ -23,6 +23,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "residual_density.hpp"
 # include "get_data_sim_table.hpp"
 # include "avg_integrand.hpp"
+# include "avg_std_effect.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -67,8 +68,13 @@ private:
 	// data_subset_obj_[subset_id].meas_std
 	CppAD::vector<data_subset_struct>         data_subset_obj_;
 
-	// Used to compute average average integrands
+	// Used to compute average of integrands
+	// (effectively const)
 	avg_integrand                avgint_obj_;
+
+	// Used to compute average of standard deviation effects
+	// (effectively const)
+	avg_std_effect               avgstd_obj_;
 
 public:
 	template <class SubsetStruct>
@@ -105,14 +111,16 @@ public:
 		const  CppAD::vector<Float>&  pack_vec
 	);
 	// compute weighted residual and log-likelihood for one data points
+	// (effectively const)
 	template <class Float>
 	residual_struct<Float> like_one(
 		size_t                        data_id  ,
 		const  CppAD::vector<Float>&  pack_vec ,
 		const  Float&                 avg      ,
 		Float&                        delta
-	) const;
+	);
 	// compute weighted residual and log-likelihood for all data points
+	// (effectively const)
 	template <class Float>
 	CppAD::vector< residual_struct<Float> > like_all(
 		bool                          hold_out ,
