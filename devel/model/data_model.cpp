@@ -663,7 +663,6 @@ $cref/density_id/data_table/density_id/$$,
 $cref/hold_out/data_table/hold_out/$$,
 $cref/meas_value/data_table/meas_value/$$,
 $cref/meas_std/data_table/meas_std/$$ are not necessary to calculate
-$cref/data_object.avg_yes_ode/data_model_avg_yes_ode/$$.
 However, the are necessary to use the functions
 $cref/data_object.like_one/data_model_like_one/$$ and
 $cref/data_object.like_all/data_model_like_all/$$.
@@ -1387,6 +1386,7 @@ $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 for the specified data point.
 
 $children%example/devel/model/avg_no_ode_xam.cpp
+	%example/devel/model/avg_yes_ode_xam.cpp
 %$$
 $head Example$$
 The files
@@ -1429,230 +1429,6 @@ Float data_model::average(
 	return result;
 }
 
-/*
------------------------------------------------------------------------------
-$begin data_model_avg_yes_ode$$
-
-$spell
-	avgint
-	Tincidence
-	mtspecific
-	mtall
-	mtstandard
-	subvectors
-	enum
-	integrands
-	var
-	vec
-	CppAD
-	const
-	odegrid
-	covariates
-$$
-$section One Average Integrand That Requires the ODE$$
-
-$head Syntax$$
-$icode%avg% = %data_object%.avg_yes_ode(
-	%subset_id%, %pack_vec%, %reference_sc%
-)%$$
-
-
-$head data_object$$
-This object has prototype
-$codei%
-	const data_model %data_object%
-%$$
-see $cref/data_object constructor/data_model_ctor/data_object/$$.
-
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
-
-$head subset_id$$
-This argument has prototype
-$codei%
-	size_t %subset_id%
-%$$
-and is the $cref/subset_id/data_subset/data_subset_obj/subset_id/$$
-we are computing the average integrand for.
-
-$subhead Integrand$$
-The $cref/integrand_id/data_table/integrand_id/$$ corresponding to this
-$cref/subset_id/data_subset/data_subset_obj/subset_id/$$
-must be one of the following:
-$code susceptible_enum$$,
-$code withC_enum$$,
-$code prevalence_enum$$,
-$code Tincidence_enum$$,
-$code mtspecific_enum$$,
-$code mtall_enum$$,
-$code mtstandard_enum$$.
-
-$head pack_vec$$
-This argument has prototype
-$codei%
-	const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and is all the $cref model_variables$$ in the order
-specified by $cref pack_info$$.
-Only the following subvectors of $icode pack_vec$$ are used:
-$cref pack_info_rate_info$$,
-$cref pack_info_mulcov_rate$$.
-
-$head reference_sc$$
-This argument has prototype
-$codei%
-	const CppAD::vector<%Float%>& %reference_sc%
-%$$
-If the size of this vector is zero, it is not used.
-It's intended use is to avoid repeated solving of the ODE's corresponding
-to the reference value for all of the covariates.
-Let $icode%n_ode% = n_age_ode_ * n_time_ode_%$$.
-If it's size is not zero,be
-$codei%2 * (n_child_ + 1) * %n_ode%$$.
-In this case,
-for $icode%c% = 0, %...%, n_child_%$$,
-for $icode%i% = 0, %...%, n_age_ode_-1%$$,
-for $icode%j% = 0, %...%, n_time_ode_-1%$$,
-$codei%
-	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 0]
-%$$
-is the susceptible fraction and
-$codei%
-	%reference_sc%[ 2*(%child% * %n_ode% + %i% * n_time_ode_ + %j%) + 1]
-%$$
-is the with condition fraction corresponding to the specified child
-$icode c$$ and reference value for the rate covariates.
-The child $icode%c% = n_child_%$$ corresponds to the parent.
-
-$head avg$$
-The return value has prototype
-$codei%
-	%Float% avg
-%$$
-This is the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-for the specified data point.
-
-$children%example/devel/model/avg_yes_ode_xam.cpp
-%$$
-$head Example$$
-The file $cref avg_yes_ode_xam.cpp$$ contains an example and test
-of using this routine.
-
-$end
-*/
-
-template <class Float>
-Float data_model::avg_yes_ode(
-	size_t                        subset_id    ,
-	const CppAD::vector<Float>&   pack_vec     ,
-	const CppAD::vector<Float>&   reference_sc ) const
-{
-# ifndef NDEBUG
-	switch( data_info_[subset_id].integrand )
-	{
-		case Sincidence_enum:
-		case remission_enum:
-		case mtexcess_enum:
-		case mtother_enum:
-		case mtwith_enum:
-		case relrisk_enum:
-		assert(false);
-		break;
-
-		default:
-		break;
-	}
-	size_t n_ode = n_age_ode_ * n_time_ode_;
-	if( reference_sc.size() != 0 )
-		assert( reference_sc.size() == 2 * (n_child_ + 1) * n_ode );
-# endif
-	assert( pack_object_.size() == pack_vec.size() );
-
-	// covariate information for this data pont
-	CppAD::vector<double> x(n_covariate_);
-	for(size_t j = 0; j < n_covariate_; j++)
-		x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
-
-	// data_info information for this data point
-	integrand_enum integrand           = data_info_[subset_id].integrand;
-	size_t i_min                       = data_info_[subset_id].i_min;
-	size_t j_min                       = data_info_[subset_id].j_min;
-	size_t n_age_sub                   = data_info_[subset_id].n_age;
-	size_t n_time_sub                  = data_info_[subset_id].n_time;
-	size_t child                       = data_info_[subset_id].child;
-	const CppAD::vector<double>& c_ode = data_info_[subset_id].c_ode;
-
-	// sci_sub
-	CppAD::vector<Float> sci_sub = sci_ode(
-		integrand,
-		i_min,
-		j_min,
-		n_age_sub,
-		n_time_sub,
-		child,
-		x,
-		pack_vec,
-		reference_sc
-	);
-
-	/* -----------------------------------------------------------------------
-	ode_index:
-	We call (i_min+i, j_min+j) for i=0,...,n_age_sub-1, j=0,...,n_time_sub
-	the ODE subgrid for this measurement. For k = 0, ..., n_ode_sub-1
-		ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j
-	where each point in the ODE subgrid has been represented.
-	------------------------------------------------------------------------ */
-	size_t n_ode_sub = n_age_sub * n_time_sub;
-	CppAD::vector<size_t> ode_index(n_ode_sub);
-	for(size_t i = 0; i < n_age_sub; i++)
-	{	for(size_t j = 0; j < n_time_sub; j++)
-		{	size_t k = i * n_time_sub + j;
-			ode_index[k] = (i_min + i) * n_time_ode_ + j_min + j;
-		}
-	}
-	/* ------------------------------------------------------------------------
-	meas_cov_ode:
-	for k = 0,...,n_ode_sub-1, meas_cov_ode[k] is the measurement covariate
-	effect at the gird point correspoinding to ode_index[k].
-	------------------------------------------------------------------------ */
-	size_t integrand_id = data_subset_obj_[subset_id].integrand_id;
-	CppAD::vector<Float> meas_cov_ode(n_ode_sub);
-	for(size_t k = 0; k < n_ode_sub; k++)
-		meas_cov_ode[k] = 0.0;
-	size_t n_cov = pack_object_.mulcov_meas_value_n_cov(integrand_id);
-	pack_info::subvec_info                info;
-	for(size_t j = 0; j < n_cov; j++)
-	{	info  = pack_object_.mulcov_meas_value_info(integrand_id, j);
-		size_t n_var      = info.n_var;
-		size_t smooth_id  = info.smooth_id;
-		double x_j        = x[ info.covariate_id ];
-		//
-		CppAD::vector<Float> var_si(n_var);
-		for(size_t k = 0; k < n_var; k++)
-			var_si[k] = pack_vec[info.offset + k];
-		//
-		CppAD::vector<Float> var_ode =
-			si2ode_vec_[smooth_id]->interpolate(var_si, ode_index);
-		//
-		for(size_t k = 0; k < n_ode_sub; k++)
-			meas_cov_ode[k] += var_ode[k] * x_j;
-	}
-	/* ------------------------------------------------------------------------
-	avg:
-	c_ode Weighted average of the integrand times exponential of measurement
-	covariate effect
-	------------------------------------------------------------------------ */
-	// compute the average integrand
-	Float avg = Float(0.0);
-	for(size_t k = 0; k < n_ode_sub; k++)
-	{	assert( ! CppAD::isnan( sci_sub[k * 3 + 2] ) );
-		avg += c_ode[k] * sci_sub[k * 3 + 2] * exp( meas_cov_ode[k] );
-	}
-	//
-	return avg;
-}
 /*
 -----------------------------------------------------------------------------
 $begin data_model_like_one$$
@@ -1745,17 +1521,7 @@ $codei%
 and is the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$,
 $latex A_i ( u , \theta )$$, for the specified data point.
-This can be calculated using:
-$table
-routine                   $cnext integrand for this $icode subset_id$$
-$rnext
-$cref data_model_average$$ $cnext
-	Sincidence, remission, mtexcess, mtother, mtwith, relrisk
-$rnext
-$cref data_model_avg_yes_ode$$ $cnext
-	susceptible, with, Tincidence, prevalence, mtspecific, mtall, mtstandard
-
-$tend
+This can be calculated using $cref data_model_average$$.
 
 $head delta_out$$
 The input value of $icode delta_out$$ does not matter.
@@ -2055,11 +1821,6 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 		size_t                        subset_id,            \
 		const CppAD::vector<Float>&   pack_vec              \
 	);                                                      \
-	template Float data_model::avg_yes_ode(                 \
-		size_t                        subset_id        ,    \
-		const CppAD::vector<Float>&   pack_vec         ,    \
-		const CppAD::vector<Float>&   reference_sc          \
-	) const;                                                \
 	template residual_struct<Float>                         \
 	data_model::like_one(                                   \
 		size_t                        subset_id,            \

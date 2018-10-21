@@ -416,33 +416,8 @@ void fit_command(
 	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// compute average integrand for this data item
-		double avg;
-		size_t integrand_id = data_subset_obj[subset_id].integrand_id;
-		dismod_at::integrand_enum integrand =
-			db_input.integrand_table[integrand_id].integrand;
-		switch( integrand )
-		{	case dismod_at::Sincidence_enum:
-			case dismod_at::remission_enum:
-			case dismod_at::mtexcess_enum:
-			case dismod_at::mtother_enum:
-			case dismod_at::mtwith_enum:
-			case dismod_at::relrisk_enum:
-			avg = data_object.average(subset_id, opt_value);
-			break;
+		double avg = data_object.average(subset_id, opt_value);
 
-			case dismod_at::susceptible_enum:
-			case dismod_at::withC_enum:
-			case dismod_at::prevalence_enum:
-			case dismod_at::Tincidence_enum:
-			case dismod_at::mtspecific_enum:
-			case dismod_at::mtall_enum:
-			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, opt_value, reference_sc);
-			break;
-
-			default:
-			assert(false);
-		}
 		// compute its residual and log likelihood
 		double not_used;
 		dismod_at::residual_struct<double> residual =
@@ -583,34 +558,7 @@ void simulate_command(
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	//
 		// compute the average integrand, avg
-		size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
-		dismod_at::integrand_enum integrand =
-			integrand_table[integrand_id].integrand;
-		double avg;
-		switch( integrand )
-		{	case dismod_at::Sincidence_enum:
-			case dismod_at::remission_enum:
-			case dismod_at::mtexcess_enum:
-			case dismod_at::mtother_enum:
-			case dismod_at::mtwith_enum:
-			case dismod_at::relrisk_enum:
-			avg = data_object.average(subset_id, truth_var);
-			break;
-
-			case dismod_at::susceptible_enum:
-			case dismod_at::withC_enum:
-			case dismod_at::prevalence_enum:
-			case dismod_at::Tincidence_enum:
-			case dismod_at::mtspecific_enum:
-			case dismod_at::mtall_enum:
-			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, truth_var, reference_sc);
-			break;
-
-			default:
-			avg = std::numeric_limits<double>::quiet_NaN();
-			assert(false);
-		}
+		double avg = data_object.average(subset_id, truth_var);
 		//
 		// compute the adjusted standard deviation corresponding
 		// to the values in the data table, delta.
@@ -1268,37 +1216,10 @@ void predict_command(
 			avgint_object.reference_ode(pack_vec, parent_only);
 		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;
+		{
 			int avgint_id    = avgint_subset_obj[subset_id].original_id;
-			double avg = 0.0;
-			dismod_at::integrand_enum integrand =
-				db_input.integrand_table[integrand_id].integrand;
-			switch( integrand )
-			{
-				case dismod_at::Sincidence_enum:
-				case dismod_at::remission_enum:
-				case dismod_at::mtexcess_enum:
-				case dismod_at::mtother_enum:
-				case dismod_at::mtwith_enum:
-				case dismod_at::relrisk_enum:
-				avg = avgint_object.average(subset_id, pack_vec);
-				break;
-				//
-				case dismod_at::susceptible_enum:
-				case dismod_at::withC_enum:
-				case dismod_at::prevalence_enum:
-				case dismod_at::Tincidence_enum:
-				case dismod_at::mtspecific_enum:
-				case dismod_at::mtall_enum:
-				case dismod_at::mtstandard_enum:
-				avg = avgint_object.avg_yes_ode(
-					subset_id, pack_vec, reference_sc
-				);
-				break;
-				//
-				default:
-				assert(false);
-			}
+			double avg = avgint_object.average(subset_id, pack_vec);
+			//
 			size_t predict_id = sample_index * n_subset + subset_id;
 			if( source == "sample" )
 				row_value[n_col * predict_id + 0] = to_string( sample_index );
