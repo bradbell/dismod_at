@@ -2343,6 +2343,10 @@ DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 		const CppAD::vector<Float>&   pack_vec     ,        \
 		const CppAD::vector<Float>&   reference_sc          \
 	) const;                                                \
+	template Float data_model::average(                     \
+		size_t                        subset_id,            \
+		const CppAD::vector<Float>&   pack_vec              \
+	);                                                      \
 	template Float data_model::avg_no_ode(                  \
 		size_t                        subset_id,            \
 		const CppAD::vector<Float>&   pack_vec              \
