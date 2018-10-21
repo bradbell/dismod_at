@@ -303,8 +303,6 @@ bool fit_model_xam(void)
 	);
 	//
 	// data_model
-	size_t n_age_ode = 6;
-	size_t n_time_ode = 2;
 	double ode_step_size = 20.;
 	double bound_random = std::numeric_limits<double>::infinity();
 	std::string rate_case = "iota_pos_rho_pos";
@@ -316,8 +314,6 @@ bool fit_model_xam(void)
 		rate_case,
 		bound_random,
 		n_covariate,
-		n_age_ode,
-		n_time_ode,
 		ode_step_size,
 		avg_age_grid,
 		age_table,

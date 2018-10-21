@@ -64,7 +64,6 @@ bool avg_no_ode_xam(void)
 		age_table.push_back(age);
 	}
 	size_t n_age_table = age_table.size();
-	double age_min     = age_table[0];
 	double age_max     = age_table[n_age_table - 1];
 	//
 	// time_table
@@ -77,7 +76,6 @@ bool avg_no_ode_xam(void)
 		time_table.push_back(time);
 	}
 	size_t n_time_table = time_table.size();
-	double time_min     = time_table[0];
 	double time_max     = time_table[n_time_table - 1];
 
 	// age and time smoothing grid indices
@@ -149,16 +147,6 @@ bool avg_no_ode_xam(void)
 	{	integrand_table[i].integrand       = dismod_at::integrand_enum(i);
 		integrand_table[i].minimum_meas_cv = 0.0;
 	}
-	//
-	// n_age_ode
-	size_t n_age_ode     =  1;
-	while( age_min + double(n_age_ode-1) * ode_step_size < age_max )
-			n_age_ode++;
-	//
-	// n_time_ode
-	size_t n_time_ode     =  1;
-	while( time_min + double(n_time_ode-1) * ode_step_size < time_max )
-			n_time_ode++;
 	//
 	// node_table:    0
 	//              1    2
@@ -278,8 +266,6 @@ bool avg_no_ode_xam(void)
 		rate_case,
 		bound_random,
 		n_covariate,
-		n_age_ode,
-		n_time_ode,
 		ode_step_size,
 		avg_age_grid,
 		age_table,

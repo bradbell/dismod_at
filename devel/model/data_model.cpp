@@ -34,8 +34,6 @@ $codei%data_model %data_object%(
 	%rate_case%,
 	%bound_random%,
 	%n_covariate%,
-	%n_age_ode%,
-	%n_time_ode%,
 	%ode_step_size%,
 	%avg_age_grid%,
 	%age_table%,
@@ -69,14 +67,6 @@ $cref/bound_random/option_table/Random Only/bound_random/$$.
 $head n_covariate$$
 This is the number of covariates; i.e., number or rows in
 $cref covariate_table$$.
-
-$head n_age_ode$$
-This is the number of points in the
-$cref/average age grid/ode_grid/Age, a_i/$$.
-
-$head n_time_ode$$
-This is the number of points in the
-$cref/ode time grid/ode_grid/Time, t_j/$$.
 
 $head ode_step_size$$
 This is the $cref/ode_step_size/option_table/ode_step_size/$$.
@@ -134,12 +124,6 @@ parent node, node table, and data table.
 
 $head n_covariate_$$
 set to $icode n_covariate$$.
-
-$head n_age_ode_$$
-set to $icode n_age_ode$$.
-
-$head n_time_ode_$$
-set to $icode n_time_ode$$.
 
 $head ode_step_size_$$
 set to $icode ode_step_size$$.
@@ -213,8 +197,6 @@ data_model::data_model(
 	const std::string&                       rate_case       ,
 	double                                   bound_random    ,
 	size_t                                   n_covariate     ,
-	size_t                                   n_age_ode       ,
-	size_t                                   n_time_ode      ,
 	double                                   ode_step_size   ,
 	const CppAD::vector<double>&             avg_age_grid    ,
 	const CppAD::vector<double>&             age_table       ,
@@ -231,8 +213,6 @@ data_model::data_model(
 :
 // const
 n_covariate_       (n_covariate)                   ,
-n_age_ode_         (n_age_ode)                     ,
-n_time_ode_        (n_time_ode)                    ,
 ode_step_size_     (ode_step_size)                 ,
 n_child_           ( child_object.child_size() )   ,
 subset_cov_value_  (subset_cov_value)              ,
@@ -259,8 +239,6 @@ avgstd_obj_(
 	pack_object
 )
 {	assert( bound_random >= 0.0 );
-	assert( n_age_ode  > 1 );
-	assert( n_time_ode > 1 );
 	assert( n_child_ == pack_object.child_size() );
 	/*
 	---------------------------------------------------------------------------
@@ -963,8 +941,6 @@ template data_model::data_model(                                \
 	const std::string&                       rate_case       ,  \
 	double                                   bound_random    ,  \
 	size_t                                   n_covariate     ,  \
-	size_t                                   n_age_ode       ,  \
-	size_t                                   n_time_ode      ,  \
 	double                                   ode_step_size   ,  \
 	const CppAD::vector<double>&             avg_age_grid    ,  \
 	const CppAD::vector<double>&             age_table       ,  \

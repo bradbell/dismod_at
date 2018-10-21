@@ -50,7 +50,6 @@ bool data_model_subset(void)
 		age_table.push_back(age);
 	}
 	size_t n_age_table = age_table.size();
-	double age_min     = age_table[0];
 	double age_max     = age_table[n_age_table - 1];
 	//
 	// time_table
@@ -63,7 +62,6 @@ bool data_model_subset(void)
 		time_table.push_back(time);
 	}
 	size_t n_time_table = time_table.size();
-	double time_min     = time_table[0];
 	double time_max     = time_table[n_time_table - 1];
 
 	// age and time smoothing grid indices
@@ -134,16 +132,6 @@ bool data_model_subset(void)
 	for(size_t i = 0; i < n_integrand; i++)
 	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
 	}
-	//
-	// n_age_ode
-	size_t n_age_ode     =  1;
-	while( age_min + double(n_age_ode-1) * ode_step_size < age_max )
-			n_age_ode++;
-	//
-	// n_time_ode
-	size_t n_time_ode     =  1;
-	while( time_min + double(n_time_ode-1) * ode_step_size < time_max )
-			n_time_ode++;
 	//
 	// node_table:    0
 	//              1    2
@@ -238,8 +226,6 @@ bool data_model_subset(void)
 		rate_case,
 		bound_random,
 		n_covariate,
-		n_age_ode,
-		n_time_ode,
 		ode_step_size,
 		avg_age_grid,
 		age_table,

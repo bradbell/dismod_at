@@ -143,16 +143,6 @@ bool meas_mulcov(void)
 		integrand_table[i].minimum_meas_cv = 0.0;
 	}
 	//
-	// n_age_ode
-	size_t n_age_ode     =  1;
-	while( age_min + double(n_age_ode-1) * ode_step_size < age_max_ )
-			n_age_ode++;
-	//
-	// n_time_ode
-	size_t n_time_ode     =  1;
-	while( time_min + double(n_time_ode-1) * ode_step_size < time_max_ )
-			n_time_ode++;
-	//
 	// node_table:    0
 	//              1    2
 	//                  3  4
@@ -261,8 +251,6 @@ bool meas_mulcov(void)
 		rate_case,
 		bound_random,
 		n_covariate,
-		n_age_ode,
-		n_time_ode,
 		ode_step_size,
 		avg_age_grid,
 		age_table,

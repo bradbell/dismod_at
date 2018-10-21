@@ -1359,18 +1359,6 @@ int main(int n_arg, const char** argv)
 	// n_covariate
 	size_t n_covariate = db_input.covariate_table.size();
 	// ---------------------------------------------------------------------
-	// n_age_ode
-	double age_min    = dismod_at::min_vector( db_input.age_table );
-	double age_max    = dismod_at::max_vector( db_input.age_table );
-	size_t n_age_ode  = size_t( (age_max - age_min) / ode_step_size + 2.0 );
-	assert( age_max  <= age_min  + double(n_age_ode - 1) * ode_step_size );
-	// ---------------------------------------------------------------------
-	// n_time_ode
-	double time_min   = dismod_at::min_vector( db_input.time_table );
-	double time_max   = dismod_at::max_vector( db_input.time_table );
-	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 2.0 );
-	assert( time_max <= time_min  + double(n_time_ode - 1) * ode_step_size );
-	// ---------------------------------------------------------------------
 	// parent_node_id
 	size_t parent_node_id   = db_input.node_table.size();
 	string parent_node_name = option_map["parent_node_name"];
@@ -1539,8 +1527,6 @@ int main(int n_arg, const char** argv)
 			rate_case                ,
 			bound_random             ,
 			n_covariate              ,
-			n_age_ode                ,
-			n_time_ode               ,
 			ode_step_size            ,
 			avg_age_grid             ,
 			db_input.age_table       ,
@@ -1604,8 +1590,6 @@ int main(int n_arg, const char** argv)
 				rate_case                ,
 				bound_random             ,
 				n_covariate              ,
-				n_age_ode                ,
-				n_time_ode               ,
 				ode_step_size            ,
 				avg_age_grid             ,
 				db_input.age_table       ,

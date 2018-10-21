@@ -38,8 +38,6 @@ class data_model {
 private:
 	// constant values
 	const size_t                 n_covariate_;
-	const size_t                 n_age_ode_;
-	const size_t                 n_time_ode_;
 	const double                 ode_step_size_;
 	const size_t                 n_child_;
 	const CppAD::vector<double>& subset_cov_value_;
@@ -77,8 +75,6 @@ public:
 		const std::string&                       rate_case       ,
 		double                                   bound_random    ,
 		size_t                                   n_covariate     ,
-		size_t                                   n_age_ode       ,
-		size_t                                   n_time_ode      ,
 		double                                   ode_step_size   ,
 		const CppAD::vector<double>&             avg_age_grid    ,
 		const CppAD::vector<double>&             age_table       ,
