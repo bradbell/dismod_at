@@ -72,12 +72,12 @@ Here is one case of a speed comparison for this change using a uniformly
 spaced grid:
 before 4.9 seconds, after 3.6 second.
 Here is the memory comparison for the same case:
-before 288.7 MB, after 121.8 MG.
-Note that this test takes advantage of the fact that only one cohort is
-integrated for averages where
+before 288.7 MB, after 121.8 MB.
+This test takes advantage of the fact that the new method only
+integrates one cohort when
 $icode%age_lower% = %age_upper%$$ and
 $icode%time_lower% = %time_upper%$$.
-It does not take advantage of ability to vary the spacing of the age grid.
+It does not use $icode avg_age_split$$ to vary the spacing of the age grid.
 
 
 $head 10-13$$
