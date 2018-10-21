@@ -123,6 +123,13 @@ public:
 	) const;
 	friend bool ::sci_ode_xam(void);
 	//
+	// compute an average integrand: data_model is effectively const
+	template <class Float>
+	Float average(
+		size_t                        data_id  ,
+		const  CppAD::vector<Float>&  pack_vec
+	);
+	//
 	// compute average for integrands that do not require S or C
 	template <class Float>
 	Float avg_no_ode(

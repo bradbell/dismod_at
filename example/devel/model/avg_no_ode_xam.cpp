@@ -315,7 +315,7 @@ bool avg_no_ode_xam(void)
 	// check results
 	ok &= data_table.size() == data_subset_obj.size();
 	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float avg     = data_object.avg_no_ode(data_id, pack_vec);
+	{	Float avg     = data_object.average(data_id, pack_vec);
 		double check  = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok           &= fabs( 1.0 - avg / check ) <= eps;
 		/*

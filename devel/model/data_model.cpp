@@ -1336,6 +1336,100 @@ CppAD::vector<Float> data_model::sci_ode(
 	return sci_sub;
 }
 
+/*
+-----------------------------------------------------------------------------
+$begin data_model_average$$
+
+$spell
+	vec
+	const
+	CppAD
+$$
+$section Data Model: Compute One Average Integrand$$
+
+$head Syntax$$
+$icode%avg% = %data_object%.average(%subset_id%, %pack_vec%)%$$
+
+$head data_object$$
+This object has prototype
+$codei%
+	data_model %data_object%
+%$$
+see $cref/data_object constructor/data_model_ctor/data_object/$$.
+The object $icode data_object$$ is effectively const.
+
+$head Float$$
+The type $icode Float$$ must be $code double$$ or
+$cref a1_double$$.
+
+$head subset_id$$
+This argument has prototype
+$codei%
+	size_t %subset_id%
+%$$
+and is the $cref/subset_id/data_subset/data_subset_obj/subset_id/$$
+we are computing the average integrand for.
+
+$head pack_vec$$
+This argument has prototype
+$codei%
+	const CppAD::vector<%Float%>& %pack_vec%
+%$$
+and is all the $cref model_variables$$ in the order
+specified by $cref pack_info$$.
+
+$head avg$$
+The return value has prototype
+$codei%
+	%Float% avg
+%$$
+This is the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+for the specified data point.
+
+$comment%example/devel/model/avg_no_ode_xam.cpp
+	%example/devel/model/avg_yes_ode_xam.cpp
+%$$
+$head Example$$
+The files
+$cref avg_no_ode_xam.cpp$$ and $cref avg_yes_ode_xam.cpp$$
+contain examples using this routine.
+
+$end
+*/
+template <class Float>
+Float data_model::average(
+	size_t                        subset_id ,
+	const CppAD::vector<Float>&   pack_vec  )
+{
+	// arguments to avg_integrand::rectangle
+	double age_lower    = data_subset_obj_[subset_id].age_lower;
+	double age_upper    = data_subset_obj_[subset_id].age_upper;
+	double time_lower   = data_subset_obj_[subset_id].time_lower;
+	double time_upper   = data_subset_obj_[subset_id].time_upper;
+	size_t weight_id    = size_t( data_subset_obj_[subset_id].weight_id );
+	size_t integrand_id = size_t( data_subset_obj_[subset_id].integrand_id );
+	size_t child        = size_t( data_info_[subset_id].child );
+	CppAD::vector<double> x(n_covariate_);
+	for(size_t j = 0; j < n_covariate_; j++)
+		x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
+	//
+	// compute average integrand
+	Float result = avg_object_.rectangle(
+		age_lower,
+		age_upper,
+		time_lower,
+		time_upper,
+		weight_id,
+		integrand_id,
+		n_child_,
+		child,
+		x,
+		pack_vec
+	);
+	//
+	return result;
+}
 
 /*
 -----------------------------------------------------------------------------
@@ -2200,34 +2294,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 			keep &= data_info_[subset_id].bound_ran_neq == false;
 		assert( data_info_[subset_id].child <= n_child_ );
 		if( keep )
-		{	// arguments to avg_integrand::rectangle
-			double age_lower    = data_subset_obj_[subset_id].age_lower;
-			double age_upper    = data_subset_obj_[subset_id].age_upper;
-			double time_lower   = data_subset_obj_[subset_id].time_lower;
-			double time_upper   = data_subset_obj_[subset_id].time_upper;
-			size_t weight_id    =
-				size_t( data_subset_obj_[subset_id].weight_id );
-			size_t integrand_id =
-				size_t( data_subset_obj_[subset_id].integrand_id );
-			size_t child        =
-				size_t( data_info_[subset_id].child );
-			CppAD::vector<double> x(n_covariate_);
-			for(size_t j = 0; j < n_covariate_; j++)
-					x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
-
-			// compute average integrand
-			Float avg = avg_object_.rectangle(
-				age_lower,
-				age_upper,
-				time_lower,
-				time_upper,
-				weight_id,
-				integrand_id,
-				n_child_,
-				child,
-				x,
-				pack_vec
-			);
+		{	Float avg = average(subset_id, pack_vec);
 
 			// compute its residual and log likelihood
 			Float not_used;
