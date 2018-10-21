@@ -11,6 +11,7 @@
 # Build check_example_user
 SET(depends "")
 FOREACH(user_case
+	avg_age_split
 	asymptotic
 	change_grid
 	const_random
