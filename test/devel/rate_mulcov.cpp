@@ -198,8 +198,10 @@ bool rate_mulcov(void)
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	smooth_table[smooth_id].n_age  =  int( s_info_vec[smooth_id].age_size() );
-		smooth_table[smooth_id].n_time =  int( s_info_vec[smooth_id].time_size() );
+	{	smooth_table[smooth_id].n_age  =
+			int( s_info_vec[smooth_id].age_size() );
+		smooth_table[smooth_id].n_time =
+			int( s_info_vec[smooth_id].time_size() );
 	}
 	// mul_cov
 	size_t omega_rate_id = dismod_at::omega_enum;
@@ -300,7 +302,7 @@ bool rate_mulcov(void)
 
 	// evaluate residual
 	data_id = 0;
-	Float avg_integrand = data_object.avg_no_ode(data_id, pack_vec);
+	Float avg_integrand = data_object.average(data_id, pack_vec);
 	//
 	// average mean mulcov
 	double avg_mulcov_1 = exp_avg_mulcov(

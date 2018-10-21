@@ -427,7 +427,7 @@ void fit_command(
 			case dismod_at::mtother_enum:
 			case dismod_at::mtwith_enum:
 			case dismod_at::relrisk_enum:
-			avg = data_object.avg_no_ode(subset_id, opt_value);
+			avg = data_object.average(subset_id, opt_value);
 			break;
 
 			case dismod_at::susceptible_enum:
@@ -526,7 +526,7 @@ void simulate_command(
 	sqlite3*                                            db              ,
 	const vector<dismod_at::integrand_struct>&          integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
-	const dismod_at::data_model&                        data_object     ,
+	dismod_at::data_model&                              data_object     ,
 	const dismod_at::pack_prior&                        var2prior       ,
 	const vector<dismod_at::prior_struct>&              prior_table
 )
@@ -594,7 +594,7 @@ void simulate_command(
 			case dismod_at::mtother_enum:
 			case dismod_at::mtwith_enum:
 			case dismod_at::relrisk_enum:
-			avg = data_object.avg_no_ode(subset_id, truth_var);
+			avg = data_object.average(subset_id, truth_var);
 			break;
 
 			case dismod_at::susceptible_enum:
@@ -1281,7 +1281,7 @@ void predict_command(
 				case dismod_at::mtother_enum:
 				case dismod_at::mtwith_enum:
 				case dismod_at::relrisk_enum:
-				avg = avgint_object.avg_no_ode(subset_id, pack_vec);
+				avg = avgint_object.average(subset_id, pack_vec);
 				break;
 				//
 				case dismod_at::susceptible_enum:

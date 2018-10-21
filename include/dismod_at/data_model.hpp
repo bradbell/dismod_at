@@ -129,13 +129,6 @@ public:
 		size_t                        data_id  ,
 		const  CppAD::vector<Float>&  pack_vec
 	);
-	//
-	// compute average for integrands that do not require S or C
-	template <class Float>
-	Float avg_no_ode(
-		size_t                        data_id  ,
-		const  CppAD::vector<Float>&  pack_vec
-	) const;
 	// compute average for integrands that require S or C
 	template <class Float>
 	Float avg_yes_ode(

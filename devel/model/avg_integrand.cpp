@@ -229,7 +229,7 @@ Float avg_integrand::rectangle(
 	typedef typename time_line_vec<Float>::time_point  time_point;
 
 	// numerical precision
-	double eps99 = std::numeric_limits<double>::epsilon();
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// weight information for this average
 	const weight_info& w_info( w_info_vec_[weight_id] );
@@ -603,7 +603,7 @@ void avg_integrand::add_cohort(
 	CppAD::vector<Float>&        line_adj                         )
 // END_ADD_COHORT_PROTOTYPE
 {	// numerical percision
-	double eps99 = std::numeric_limits<double>::epsilon();
+	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// weight information for this average
 	const weight_info& w_info( w_info_vec_[weight_id] );

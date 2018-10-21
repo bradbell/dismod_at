@@ -310,7 +310,7 @@ bool meas_mulcov(void)
 
 	// evaluate residual
 	data_id = 0;
-	Float avg_integrand = data_object.avg_no_ode(data_id, pack_vec);
+	Float avg_integrand = data_object.average(data_id, pack_vec);
 	Float delta_out;
 	dismod_at::residual_struct<Float> residual    =
 		data_object.like_one(data_id, pack_vec, avg_integrand, delta_out);
