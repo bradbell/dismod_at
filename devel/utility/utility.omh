@@ -26,7 +26,6 @@ $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/error_exit.cpp
 	%devel/utility/fixed_effect.cpp
 	%devel/utility/get_prior_mean.cpp
-	%devel/utility/interp_weight.cpp
 	%devel/utility/n_random_const.cpp
 	%devel/utility/avg_age_grid.cpp
 	%devel/utility/pack_info.omh

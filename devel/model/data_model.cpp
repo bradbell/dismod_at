@@ -170,7 +170,6 @@ $end
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/data_model.hpp>
-# include <dismod_at/interp_weight.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/solve_ode.hpp>
