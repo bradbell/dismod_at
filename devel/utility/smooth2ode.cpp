@@ -44,7 +44,7 @@ $codei%
 	size_t %n_age_ode%
 %$$
 It is the number of points in the
-$cref/ode age grid/ode_grid/Age, a_i/$$.
+$cref/average age grid/ode_grid/Age, a_i/$$.
 
 $subhead n_time_ode$$
 This argument has prototype

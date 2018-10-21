@@ -59,7 +59,7 @@ $codei%
 	size_t %i_max%
 %$$
 It is the maximum
-$cref/ode age grid/ode_grid/Age, a_i/$$ index for this cohort.
+$cref/average age grid/ode_grid/Age, a_i/$$ index for this cohort.
 
 $head j_max$$
 This argument has prototype

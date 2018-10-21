@@ -27,7 +27,7 @@ $end
 # include <limits>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/null_int.hpp>
-# include <dismod_at/ode_age_grid.hpp>
+# include <dismod_at/avg_age_grid.hpp>
 
 bool like_all_xam(void)
 {	bool   ok = true;
@@ -227,9 +227,9 @@ bool like_all_xam(void)
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
 	std::string rate_case = "iota_pos_rho_pos";
-	std::string ode_age_split = "";
-	vector<double> ode_age_grid = dismod_at::ode_age_grid(
-		ode_step_size, ode_age_split, age_table
+	std::string avg_age_split = "";
+	vector<double> avg_age_grid = dismod_at::avg_age_grid(
+		ode_step_size, avg_age_split, age_table
 	);
 	dismod_at::data_model data_object(
 		rate_case,
@@ -238,7 +238,7 @@ bool like_all_xam(void)
 		n_age_ode,
 		n_time_ode,
 		ode_step_size,
-		ode_age_grid,
+		avg_age_grid,
 		age_table,
 		time_table,
 		integrand_table,

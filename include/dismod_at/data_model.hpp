@@ -79,7 +79,7 @@ public:
 		size_t                                   n_age_ode       ,
 		size_t                                   n_time_ode      ,
 		double                                   ode_step_size   ,
-		const CppAD::vector<double>&             ode_age_grid    ,
+		const CppAD::vector<double>&             avg_age_grid    ,
 		const CppAD::vector<double>&             age_table       ,
 		const CppAD::vector<double>&             time_table      ,
 		const CppAD::vector<integrand_struct>&   integrand_table ,

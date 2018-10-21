@@ -184,10 +184,10 @@ bool avg_integrand_xam(void)
 	size_t n_ode_age     = 10;
 	double ode_step_size = (age_end - age_ini) / double(n_ode_age - 1);
 	//
-	// ode_age_grid
-	vector<double> ode_age_grid(n_ode_age);
+	// avg_age_grid
+	vector<double> avg_age_grid(n_ode_age);
 	for(size_t i = 0; i < n_ode_age; ++i)
-		ode_age_grid[i] = age_ini + double(i) * ode_step_size;
+		avg_age_grid[i] = age_ini + double(i) * ode_step_size;
 	//
 	// avgint_obj
 	dismod_at::avg_integrand avgint_obj(
@@ -195,7 +195,7 @@ bool avg_integrand_xam(void)
 		rate_case,
 		age_table,
 		time_table,
-		ode_age_grid,
+		avg_age_grid,
 		integrand_table,
 		w_info_vec,
 		s_info_vec,

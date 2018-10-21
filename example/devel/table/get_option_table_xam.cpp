@@ -55,7 +55,7 @@ bool get_option_table_xam(void)
 		"derivative_test_random",           "first-order",
 		"limited_memory_max_history_fixed", "15",
 		"max_num_iter_random",              "50",
-		"ode_age_split",                    "1.0 2.0",
+		"avg_age_split",                    "1.0 2.0",
 		"ode_step_size",                    "20.0",
 		"parent_node_id",                   "1",
 		"parent_node_name",                 "north_america",

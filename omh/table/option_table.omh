@@ -209,8 +209,8 @@ which is reasonable if all the rates
 $icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
 are all less than $code 0.1$$.
 
-$head ode_age_split$$
-If $icode%option_name% = ode_age_split%$$,
+$head avg_age_split$$
+If $icode%option_name% = avg_age_split%$$,
 the corresponding $icode option_value$$ is a space separated list of
 age values at which to split the age integration.
 This split is both for the computation of the average integrands
@@ -228,12 +228,12 @@ $icode%a%[%i%]%$$ for $icode%i% = 0 , %...%, %N%$$ by
 $codei%
 	%a%[%i%] = %i% * ( %age_max% - %age_min% ) / %N%
 %$$
-The ode age grid is the union of the set of $icode%a%[%i%]%$$
-and the age points in $icode ode_age_split$$.
+The average age grid is the union of the set of $icode%a%[%i%]%$$
+and the age points in $icode avg_age_split$$.
 
 $subhead Default$$
-The default value for $icode ode_age_split$$ is the empty set
-in which case the ode age grid is the set of $icode%a%[%i%]%$$.
+The default value for $icode avg_age_split$$ is the empty set
+in which case the average age grid is the set of $icode%a%[%i%]%$$.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number

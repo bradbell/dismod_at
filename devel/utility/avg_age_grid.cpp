@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# include <dismod_at/ode_age_grid.hpp>
+# include <dismod_at/avg_age_grid.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/split_space.hpp>
@@ -16,44 +16,44 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
-$begin ode_age_grid$$
+$begin avg_age_grid$$
 
-$section Split the ODE Age Grid$$
+$section Split the Average Age Grid$$
 
 $head Syntax$$
-$icode%age_grid% = ode_age_grid(
-	%ode_step_size%, %ode_age_split%, %age_table%
+$icode%age_grid% = avg_age_grid(
+	%ode_step_size%, %avg_age_split%, %age_table%
 )%$$
 
 $head Prototype$$
-$srcfile%devel/utility/ode_age_grid.cpp%
+$srcfile%devel/utility/avg_age_grid.cpp%
 	0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
 %$$
 
 $head ode_step_size$$
 is the $cref/ode_step_size/option_table/ode_step_size/$$.
 
-$head ode_age_split$$
-is the $cref/ode_age_split/option_table/ode_age_split/$$.
+$head avg_age_split$$
+is the $cref/avg_age_split/option_table/avg_age_split/$$.
 
 $head age_table$$
 is the $cref age_table$$.
 
 $head age_grid$$
-is the $cref/ode age grid/option_table/ode_age_split/Ode Age Grid/$$.
+is the $cref/average age grid/option_table/avg_age_split/Ode Age Grid/$$.
 
-$children%example/devel/utility/ode_age_grid_xam.cpp
+$children%example/devel/utility/avg_age_grid_xam.cpp
 %$$
 $head Example$$
-The file $cref ode_age_grid_xam.cpp$$ contains an example and test
+The file $cref avg_age_grid_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
 */
 // BEGIN_PROTOTYPE
-CppAD::vector<double> ode_age_grid(
+CppAD::vector<double> avg_age_grid(
 	double                         ode_step_size  ,
-	const std::string              ode_age_split  ,
+	const std::string              avg_age_split  ,
 	const CppAD::vector<double>&   age_table      )
 // END_PROTOTYPE
 {	using std::string;
@@ -72,7 +72,7 @@ CppAD::vector<double> ode_age_grid(
 	double s_uniform  = (age_max - age_min) / double(n_uniform - 1);
 	//
 	// split_vec_str
-	vector<string> split_vec_str = dismod_at::split_space( ode_age_split );
+	vector<string> split_vec_str = dismod_at::split_space( avg_age_split );
 	//
 	// n_split
 	size_t n_split = split_vec_str.size();
@@ -95,7 +95,7 @@ CppAD::vector<double> ode_age_grid(
 		error |= dismod_at::time_line_vec<double>::near_equal(split, age_min);
 		if( error )
 		{	string table_name = "option";
-			string msg  = "ode_age_split entry ";
+			string msg  = "avg_age_split entry ";
 			msg += split_vec_str[split_index];
 			msg += " is less than or equal minimum age in age table";
 			error_exit(msg, table_name);
@@ -123,14 +123,14 @@ CppAD::vector<double> ode_age_grid(
 					split = split_vec[split_index];
 					if( split <= age )
 					{	string table_name = "option";
-						string msg  = "ode_age_split entry ";
+						string msg  = "avg_age_split entry ";
 						msg += split_vec_str[split_index];
 						msg += " is less than or equal previous entry";
 						error_exit(msg, table_name);
 					}
 					if( age_max <= split )
 					{	string table_name = "option";
-						string msg  = "ode_age_split entry ";
+						string msg  = "avg_age_split entry ";
 						msg += split_vec_str[split_index];
 						msg += " >= the maximum age in age table";
 						error_exit(msg, table_name);

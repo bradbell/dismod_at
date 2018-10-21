@@ -44,7 +44,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 # include <dismod_at/depend.hpp>
 # include <dismod_at/get_prior_mean.hpp>
-# include <dismod_at/ode_age_grid.hpp>
+# include <dismod_at/avg_age_grid.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -1471,12 +1471,12 @@ int main(int n_arg, const char** argv)
 	// rate_case
 	string rate_case = option_map["rate_case"];
 	//
-	// ode_age_split
-	string ode_age_split = option_map["ode_age_split"];
+	// avg_age_split
+	string avg_age_split = option_map["avg_age_split"];
 	//
-	// ode_age_grid
-	vector<double> ode_age_grid = dismod_at::ode_age_grid(
-		ode_step_size, ode_age_split, db_input.age_table
+	// avg_age_grid
+	vector<double> avg_age_grid = dismod_at::avg_age_grid(
+		ode_step_size, avg_age_split, db_input.age_table
 	);
 	//
 	// bound_random
@@ -1542,7 +1542,7 @@ int main(int n_arg, const char** argv)
 			n_age_ode                ,
 			n_time_ode               ,
 			ode_step_size            ,
-			ode_age_grid             ,
+			avg_age_grid             ,
 			db_input.age_table       ,
 			db_input.time_table      ,
 			db_input.integrand_table ,
@@ -1607,7 +1607,7 @@ int main(int n_arg, const char** argv)
 				n_age_ode                ,
 				n_time_ode               ,
 				ode_step_size            ,
-				ode_age_grid             ,
+				avg_age_grid             ,
 				db_input.age_table       ,
 				db_input.time_table      ,
 				db_input.integrand_table ,

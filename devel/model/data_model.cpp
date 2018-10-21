@@ -37,7 +37,7 @@ $codei%data_model %data_object%(
 	%n_age_ode%,
 	%n_time_ode%,
 	%ode_step_size%,
-	%ode_age_grid%,
+	%avg_age_grid%,
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
@@ -72,7 +72,7 @@ $cref covariate_table$$.
 
 $head n_age_ode$$
 This is the number of points in the
-$cref/ode age grid/ode_grid/Age, a_i/$$.
+$cref/average age grid/ode_grid/Age, a_i/$$.
 
 $head n_time_ode$$
 This is the number of points in the
@@ -81,8 +81,8 @@ $cref/ode time grid/ode_grid/Time, t_j/$$.
 $head ode_step_size$$
 This is the $cref/ode_step_size/option_table/ode_step_size/$$.
 
-$head ode_age_grid$$
-This is the $cref/ode age grid/option_table/ode_age_split/Ode Age Grid/$$.
+$head avg_age_grid$$
+This is the $cref/average age grid/option_table/avg_age_split/Ode Age Grid/$$.
 
 $head age_table$$
 This is the $cref/age_table/get_age_table/age_table/$$.
@@ -225,7 +225,7 @@ data_model::data_model(
 	size_t                                   n_age_ode       ,
 	size_t                                   n_time_ode      ,
 	double                                   ode_step_size   ,
-	const CppAD::vector<double>&             ode_age_grid    ,
+	const CppAD::vector<double>&             avg_age_grid    ,
 	const CppAD::vector<double>&             age_table       ,
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
@@ -249,7 +249,7 @@ pack_object_       (pack_object)                   ,
 avgint_obj_(
 	ode_step_size,
 	rate_case,
-	ode_age_grid,
+	avg_age_grid,
 	age_table,
 	time_table,
 	integrand_table,
@@ -397,7 +397,7 @@ avgint_obj_(
 			i_min++;
 		i_min = std::min(i_min, n_age_ode - 2);
 
-		// determine number of ode age grid points
+		// determine number of average age grid points
 		size_t n_age = 2;
 		while( age_min + double(i_min + n_age - 1) * ode_step_size < age_upper )
 			n_age++;
@@ -1203,7 +1203,7 @@ template data_model::data_model(                                \
 	size_t                                   n_age_ode       ,  \
 	size_t                                   n_time_ode      ,  \
 	double                                   ode_step_size   ,  \
-	const CppAD::vector<double>&             ode_age_grid    ,  \
+	const CppAD::vector<double>&             avg_age_grid    ,  \
 	const CppAD::vector<double>&             age_table       ,  \
 	const CppAD::vector<double>&             time_table      ,  \
 	const CppAD::vector<integrand_struct>&   integrand_table ,  \

@@ -12,20 +12,26 @@
 new_directories='
 '
 rename_files='
+devel/utility/ode_age_grid.cpp
+example/devel/utility/ode_age_grid_xam.cpp
+include/dismod_at/ode_age_grid.hpp
 '
 spell_files='
 '
 no_change_files='
 '
 #
-rename_cmd='s|adjust_integrand|adj_integrand|'
+rename_cmd='s|ode_age_grid|avg_age_grid|'
 #
 # spell_cmd='s|^$spell|&\n\tsim|'
 # spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|adj_object|adjint_obj|g
-s|avg_object|avgint_obj|g
+s|ODE_AGE_GRID|AVG_AGE_GRID|g
+s|ode_age_grid|avg_age_grid|g
+s|ODE Age Grid|Average Age Grid|g
+s|ode age grid|average age grid|g
+s|ode_age_split|avg_age_split|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]
