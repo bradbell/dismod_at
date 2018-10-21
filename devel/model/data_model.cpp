@@ -82,7 +82,7 @@ $head ode_step_size$$
 This is the $cref/ode_step_size/option_table/ode_step_size/$$.
 
 $head avg_age_grid$$
-This is the $cref/average age grid/option_table/avg_age_split/Ode Age Grid/$$.
+This is the $cref/average age grid/option_table/avg_age_split/Average Age Grid/$$.
 
 $head age_table$$
 This is the $cref/age_table/get_age_table/age_table/$$.

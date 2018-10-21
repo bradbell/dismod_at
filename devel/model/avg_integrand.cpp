@@ -332,7 +332,7 @@ Float avg_integrand::rectangle(
 				line_time_[k]    = time_lower + double(j) * d_time;
 			}
 		}
-		// line_adj_
+		// line_adj
 		line_adj.resize(n_line);
 		line_adj = adjint_obj_.line(
 			line_age_,
@@ -650,7 +650,7 @@ void avg_integrand::add_cohort(
 		line_time_[k] = time_ini + line_age_[k] - age_ini;
 	}
 
-	// line_adj_
+	// line_adj
 	line_adj.resize(n_line);
 	line_adj = adjint_obj_.line(
 		line_age_,
@@ -697,7 +697,7 @@ void avg_integrand::add_cohort(
 	return;
 }
 
-# define DISMOD_AT_INSTANTIATE_AVG_INTEGTAND_RECTANGLE(Float)  \
+# define DISMOD_AT_INSTANTIATE_AVG_INTEGRAND_RECTANGLE(Float)  \
     template                                                   \
 	Float avg_integrand::rectangle(                            \
 		double                           age_lower        ,    \
@@ -757,7 +757,7 @@ void avg_integrand::add_cohort(
 		);
 
 // instantiations
-DISMOD_AT_INSTANTIATE_AVG_INTEGTAND_RECTANGLE( double )
-DISMOD_AT_INSTANTIATE_AVG_INTEGTAND_RECTANGLE( a1_double )
+DISMOD_AT_INSTANTIATE_AVG_INTEGRAND_RECTANGLE( double )
+DISMOD_AT_INSTANTIATE_AVG_INTEGRAND_RECTANGLE( a1_double )
 
 } // END_DISMOD_AT_NAMESPACE

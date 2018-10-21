@@ -40,7 +40,7 @@ $head age_table$$
 is the $cref age_table$$.
 
 $head age_grid$$
-is the $cref/average age grid/option_table/avg_age_split/Ode Age Grid/$$.
+is the $cref/average age grid/option_table/avg_age_split/Average Age Grid/$$.
 
 $children%example/devel/utility/avg_age_grid_xam.cpp
 %$$

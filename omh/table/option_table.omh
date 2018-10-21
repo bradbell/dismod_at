@@ -216,7 +216,7 @@ age values at which to split the age integration.
 This split is both for the computation of the average integrands
 and for the solution of the ODE.
 
-$subhead Ode Age Grid$$
+$subhead Average Age Grid$$
 Let $icode age_min$$ and $icode age_max$$ be the minimum and maximum
 ages in the $cref age_table$$.
 Let $icode%N% >= 1%$$ be the minimum integer such that
