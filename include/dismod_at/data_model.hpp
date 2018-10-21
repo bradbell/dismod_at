@@ -18,7 +18,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_density_table.hpp"
 # include "get_prior_table.hpp"
 # include "weight_info.hpp"
-# include "smooth2ode.hpp"
 # include "pack_info.hpp"
 # include "residual_density.hpp"
 # include "get_data_sim_table.hpp"
@@ -86,7 +85,6 @@ public:
 		const pack_info&                         pack_object     ,
 		const child_info&                        child_object
 	);
-	// destructor must delete the smooth2ode objects pointed to by si2ode_vec_
 	~data_model(void);
 	//
 	void replace_like(

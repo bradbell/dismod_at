@@ -43,7 +43,6 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/residual_density_xam.cpp
 	utility/sim_random_xam.cpp
 	utility/grid2line_xam.cpp
-	utility/smooth2ode_xam.cpp
 	utility/solve_ode_xam.cpp
 	utility/split_space_xam.cpp
 	utility/time_line_vec_xam.cpp
