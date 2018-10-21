@@ -41,7 +41,10 @@ var list_down2 = [
 'devel_data_model.htm',
 'prior_model.htm',
 'fit_model.htm',
-'depend.htm'
+'depend.htm',
+'adj_integrand.htm',
+'devel_avg_integrand.htm',
+'devel_avg_std_effect.htm'
 ];
 var list_down1 = [
 'fit_model_ctor.htm',

@@ -100,18 +100,17 @@ A:active { color : purple }
 <option>prior_model</option>
 <option>fit_model</option>
 <option>depend</option>
+<option>adj_integrand</option>
+<option>devel_avg_integrand</option>
+<option>devel_avg_std_effect</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down1(this)'>
 <option>devel_data_model-&gt;</option>
 <option>data_model_ctor</option>
-<option>set_eigne_ode2_case_number</option>
 <option>data_model_replace_like</option>
-<option>data_model_reference_ode</option>
-<option>data_model_sci_ode</option>
-<option>data_model_avg_no_ode</option>
-<option>data_model_avg_yes_ode</option>
+<option>data_model_average</option>
 <option>data_model_like_one</option>
 <option>data_model_like_all</option>
 </select>
@@ -183,10 +182,13 @@ not depend on <small>@(@
 This object has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 see <a href="data_model_ctor.htm#data_object" target="_top"><span style='white-space: nowrap'>data_object&nbsp;constructor</span></a>
 .
+It is effectively const
+(some internal arrays are used for temporary work space and kept between
+calls to avoid re-allocating memory).
 
 <br>
 <br>
@@ -253,28 +255,10 @@ and is the
 <small>@(@
 A_i ( u , \theta )
 @)@</small>, for the specified data point.
-This can be calculated using:
-<table><tr><td align='left'  valign='top'>
+This can be calculated using <a href="data_model_average.htm" target="_top"><span style='white-space: nowrap'>data_model_average</span></a>
+.
 
-routine                   </td><td align='left'  valign='top'>
- integrand for this 
-<code><i><font color="black"><span style='white-space: nowrap'>subset_id</span></font></i></code>
-
-</td></tr><tr><td align='left'  valign='top'>
-
-<a href="data_model_avg_no_ode.htm" target="_top"><span style='white-space: nowrap'>data_model_avg_no_ode</span></a>
- </td><td align='left'  valign='top'>
-
-	Sincidence, remission, mtexcess, mtother, mtwith, relrisk
-</td></tr><tr><td align='left'  valign='top'>
-
-<a href="data_model_avg_yes_ode.htm" target="_top"><span style='white-space: nowrap'>data_model_avg_yes_ode</span></a>
- </td><td align='left'  valign='top'>
-
-	susceptible, with, Tincidence, prevalence, mtspecific, mtall, mtstandard
-
-</td></tr>
-</table>
+<br>
 <br>
 <b><big><a name="delta_out" id="delta_out">delta_out</a></big></b>
 <br>

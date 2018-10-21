@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Extract and Organize Information for One Weighting Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Extract and Organize Information for One Weighting Function">
-<meta name="keywords" id="keywords" content=" extract organize information one weighting function syntax purpose w_info age_table time_table weight_id weight_table weight_grid_table w_test age_id time_id weight w_default n_age n_time i j a_id t_id w example ">
+<meta name="keywords" id="keywords" content=" extract organize information one weighting function syntax purpose w_default w_info w_test age_table time_table weight_table weight_grid_table age_id time_id weight n_age n_time i j a_id t_id w example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -56,20 +56,16 @@ A:active { color : purple }
 <option>Current-&gt;</option>
 <option>Syntax</option>
 <option>Purpose</option>
-<option>w_info</option>
-<option>---..age_table</option>
-<option>---..time_table</option>
-<option>---..weight_id</option>
-<option>---..weight_table</option>
-<option>---..weight_grid_table</option>
-<option>---..w_info</option>
-<option>w_test</option>
-<option>---..age_table</option>
-<option>---..time_table</option>
-<option>---..age_id</option>
-<option>---..time_id</option>
-<option>---..weight</option>
 <option>w_default</option>
+<option>w_info</option>
+<option>w_test</option>
+<option>age_table</option>
+<option>time_table</option>
+<option>weight_table</option>
+<option>weight_grid_table</option>
+<option>age_id</option>
+<option>time_id</option>
+<option>weight</option>
 <option>n_age</option>
 <option>n_time</option>
 <option>i</option>
@@ -159,13 +155,17 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>weight_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_grid_table</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-
-<code><font color="blue"><span style='white-space: nowrap'>weight_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_test</span></font></i><font color="blue"><span style='white-space: nowrap'>(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
-
 <code><font color="blue"><span style='white-space: nowrap'>weight_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_default</span></font></i><font color="blue"><span style='white-space: nowrap'>()<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>weight_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_grid_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>weight_info&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_test</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)<br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>w_default</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
@@ -197,6 +197,15 @@ In addition, this routine checks the <code><font color="blue">weight_info</font>
 
 <br>
 <br>
+<b><big><a name="w_default" id="w_default">w_default</a></big></b>
+<br>
+This is the default constructor. It can be used to create
+an empty <code><font color="blue">weight_info</font></code> object that is later set equal
+to another <code><font color="blue">weight_info</font></code> object.
+This is useful when creating vectors of such objects.
+
+<br>
+<br>
 <b><big><a name="w_info" id="w_info">w_info</a></big></b>
 <br>
 In all its uses, except during construction,
@@ -209,7 +218,17 @@ The mean of the corresponding constructor arguments are specified below:
 
 <br>
 <br>
-<big><a name="w_info.age_table" id="w_info.age_table">age_table</a></big>
+<b><big><a name="w_test" id="w_test">w_test</a></big></b>
+<br>
+This object is the result of the testing constructor and can be used
+the same as 
+<code><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="age_table" id="age_table">age_table</a></big></b>
 <br>
 This argument has prototype
 
@@ -221,7 +240,7 @@ and is the <a href="get_age_table.htm" target="_top"><span style='white-space: n
 
 <br>
 <br>
-<big><a name="w_info.time_table" id="w_info.time_table">time_table</a></big>
+<b><big><a name="time_table" id="time_table">time_table</a></big></b>
 <br>
 This argument has prototype
 
@@ -233,22 +252,7 @@ and is the <a href="get_time_table.htm" target="_top"><span style='white-space: 
 
 <br>
 <br>
-<big><a name="w_info.weight_id" id="w_info.weight_id">weight_id</a></big>
-<br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;size_t&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and is the <a href="weight_grid_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
- for the
-weighting that 
-<code><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i></code>
- corresponds to.
-
-<br>
-<br>
-<big><a name="w_info.weight_table" id="w_info.weight_table">weight_table</a></big>
+<b><big><a name="weight_table" id="weight_table">weight_table</a></big></b>
 <br>
 This argument has prototype
 
@@ -260,7 +264,7 @@ and is the <a href="get_weight_table.htm" target="_top"><span style='white-space
 
 <br>
 <br>
-<big><a name="w_info.weight_grid_table" id="w_info.weight_grid_table">weight_grid_table</a></big>
+<b><big><a name="weight_grid_table" id="weight_grid_table">weight_grid_table</a></big></b>
 <br>
 This argument has prototype
 
@@ -272,48 +276,7 @@ an is the <a href="weight_grid_table.htm" target="_top"><span style='white-space
 
 <br>
 <br>
-<big><a name="w_info.w_info" id="w_info.w_info">w_info</a></big>
-<br>
-This result has type <code><font color="blue">weight_info</font></code>.
-All of the functions calls in the syntax above are <code><font color="blue">const</font></code>; i.e.,
-they do not modify 
-<code><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i></code>
-.
-
-<br>
-<br>
-<b><big><a name="w_test" id="w_test">w_test</a></big></b>
-<br>
-This constructor is used for testing purposes only.
-The meaning of its arguments are specified below:
-
-<br>
-<br>
-<big><a name="w_test.age_table" id="w_test.age_table">age_table</a></big>
-<br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and is the <a href="get_age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
-.
-
-<br>
-<br>
-<big><a name="w_test.time_table" id="w_test.time_table">time_table</a></big>
-<br>
-This argument has prototype
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;double&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and is the <a href="get_time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
-.
-
-<br>
-<br>
-<big><a name="w_test.age_id" id="w_test.age_id">age_id</a></big>
+<b><big><a name="age_id" id="age_id">age_id</a></big></b>
 <br>
 This argument has prototype
 
@@ -326,7 +289,7 @@ It specifies the age grid indices; i.e.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.age_id(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 <br>
-<big><a name="w_test.time_id" id="w_test.time_id">time_id</a></big>
+<b><big><a name="time_id" id="time_id">time_id</a></big></b>
 <br>
 This argument has prototype
 
@@ -339,7 +302,7 @@ It specifies the time grid indices; i.e.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.time_id(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
 <br>
-<big><a name="w_test.weight" id="w_test.weight">weight</a></big>
+<b><big><a name="weight" id="weight">weight</a></big></b>
 <br>
 This argument has prototype
 
@@ -351,15 +314,6 @@ It specifies the weight grid values in row major order; i.e.
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>w_info</span></font></i><font color="blue"><span style='white-space: nowrap'>.weight(</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_id</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>*</span></font><i><font color="black"><span style='white-space: nowrap'>n_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
 </span></font></code>
-<br>
-<b><big><a name="w_default" id="w_default">w_default</a></big></b>
-<br>
-This is the default constructor. It can be used to create
-an empty <code><font color="blue">weight_info</font></code> object that is later set equal
-to another <code><font color="blue">weight_info</font></code> object.
-This is useful when creating vectors of such objects.
-
-<br>
 <br>
 <b><big><a name="n_age" id="n_age">n_age</a></big></b>
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fit Model Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fit Model Constructor">
-<meta name="keywords" id="keywords" content=" fit model constructor syntax fit_object db warn_on_stderr bound_random fit_or_sample pack_object pack_prior var2prior start_var scale_var prior_table data_object prior_object quasi_fixed zero_sum_random prototype ">
+<meta name="keywords" id="keywords" content=" fit model constructor syntax fit_object db warn_on_stderr bound_random fit_or_sample pack_object pack_prior var2prior start_var scale_var prior_table prior_object quasi_fixed zero_sum_random data_object prototype ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,10 +67,10 @@ A:active { color : purple }
 <option>start_var</option>
 <option>scale_var</option>
 <option>prior_table</option>
-<option>data_object</option>
 <option>prior_object</option>
 <option>quasi_fixed</option>
 <option>zero_sum_random</option>
+<option>data_object</option>
 <option>Prototype</option>
 </select>
 </td>
@@ -105,6 +105,9 @@ A:active { color : purple }
 <option>prior_model</option>
 <option>fit_model</option>
 <option>depend</option>
+<option>adj_integrand</option>
+<option>devel_avg_integrand</option>
+<option>devel_avg_std_effect</option>
 </select>
 </td>
 <td>
@@ -235,14 +238,6 @@ This argument is the <a href="get_prior_table.htm#prior_table" target="_top"><sp
 
 <br>
 <br>
-<b><big><a name="data_object" id="data_object">data_object</a></big></b>
-<br>
-This object contains the model for the data density;
-see <a href="devel_data_model.htm" target="_top"><span style='white-space: nowrap'>data_model</span></a>
-.
-
-<br>
-<br>
 <b><big><a name="prior_object" id="prior_object">prior_object</a></big></b>
 <br>
 This object contains the model for the fixed negative log-likelihood;
@@ -273,6 +268,15 @@ is constrained to be zero.
 
 <br>
 <br>
+<b><big><a name="data_object" id="data_object">data_object</a></big></b>
+<br>
+This object contains the model for the data density;
+see <a href="devel_data_model.htm" target="_top"><span style='white-space: nowrap'>data_model</span></a>
+.
+It is effectively const.
+
+<br>
+<br>
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
 
 <pre><tt>fit_model<font color="#990000">::</font><b><font color="#000000">fit_model</font></b><font color="#990000">(</font>
@@ -285,10 +289,10 @@ is constrained to be zero.
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          start_var        <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>          scale_var        <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>prior_struct<font color="#990000">&gt;&amp;</font>    prior_table      <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> data_model<font color="#990000">&amp;</font>                     data_object      <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> prior_model<font color="#990000">&amp;</font>                    prior_object     <font color="#990000">,</font>
      <font color="#009900">bool</font>                                  quasi_fixed      <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>            zero_sum_random  <font color="#990000">)</font></tt></pre>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">bool</font><font color="#990000">&gt;&amp;</font>            zero_sum_random  <font color="#990000">,</font>
+     data_model<font color="#990000">&amp;</font>                           data_object      <font color="#990000">)</font></tt></pre>
 
 <hr>Input File: devel/model/fit_model.cpp
 

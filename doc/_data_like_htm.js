@@ -28,6 +28,7 @@ var list_current0 = [
 'data_like.htm#Measurement Standard Deviation Covariates.gamma_j',
 'data_like.htm#Effects, u, theta',
 'data_like.htm#Average Integrand',
+'data_like.htm#Average Standard Deviation Effect',
 'data_like.htm#Adjusted Standard Deviation, delta_i',
 'data_like.htm#Weighted Residual and Likelihood'
 ];
@@ -57,7 +58,8 @@ var list_down1 = [
 'bilinear.htm',
 'ode_grid.htm',
 'posterior.htm',
-'prev_dep.htm'
+'prev_dep.htm',
+'numeric_average.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

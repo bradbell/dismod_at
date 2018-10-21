@@ -1,0 +1,189 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>C++ cohort_ode: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ cohort_ode: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ cohort_ode: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_cohort_ode_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>cohort_ode</option>
+<option>cohort_ode_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="cohort_ode.htm" target="_top">Prev</a>
+</td><td>Current</td>
+<td><a href="data_subset.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_utility-&gt;</option>
+<option>a1_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>cohort_ode</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>get_prior_mean</option>
+<option>number_random_const</option>
+<option>avg_age_grid</option>
+<option>pack_info</option>
+<option>pack_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>grid2line</option>
+<option>solve_ode</option>
+<option>split_space</option>
+<option>time_line_vec</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>cohort_ode-&gt;</option>
+<option>cohort_ode_xam.cpp</option>
+</select>
+</td>
+<td>cohort_ode_xam.cpp</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++ cohort_ode: Example and Test</big></big></b></center>
+<code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/cohort_ode.hpp&gt;</font>
+
+<b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> CppAD<font color="#990000">::</font><font color="#008080">AD&lt;double&gt;</font> Float<font color="#990000">;</font>
+
+     <b><font color="#0000FF">class</font></b> <font color="#008080">Fun</font> <font color="#FF0000">{</font>
+     <b><font color="#0000FF">public</font></b><font color="#990000">:</font>
+          <font color="#009900">void</font> <b><font color="#000000">Ode</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> Float<font color="#990000">&amp;</font> a<font color="#990000">,</font> <b><font color="#0000FF">const</font></b> vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font> y<font color="#990000">,</font> vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font> yp<font color="#990000">)</font>
+          <font color="#FF0000">{</font>
+               <font color="#008080">Float</font> iota  <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">*</font> a<font color="#990000">;</font>
+               <font color="#008080">Float</font> rho   <font color="#990000">=</font> <font color="#993399">0.9</font> <font color="#990000">*</font> a<font color="#990000">;</font>
+               <font color="#008080">Float</font> chi   <font color="#990000">=</font> <font color="#993399">0.8</font> <font color="#990000">*</font> a<font color="#990000">;</font>
+               <font color="#008080">Float</font> omega <font color="#990000">=</font> <font color="#993399">0.7</font> <font color="#990000">*</font> a<font color="#990000">;</font>
+               <font color="#008080">Float</font> S       <font color="#990000">=</font> y<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+               <font color="#008080">Float</font> C       <font color="#990000">=</font> y<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">];</font>
+               yp<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>         <font color="#990000">=</font> <font color="#990000">-</font> <font color="#990000">(</font>iota <font color="#990000">+</font> omega<font color="#990000">)</font> <font color="#990000">*</font> S <font color="#990000">+</font> rho <font color="#990000">*</font> C<font color="#990000">;</font>
+               yp<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>         <font color="#990000">=</font> <font color="#990000">+</font> iota <font color="#990000">*</font> S <font color="#990000">-</font> <font color="#990000">(</font>rho <font color="#990000">+</font> chi <font color="#990000">+</font> omega<font color="#990000">)</font> <font color="#990000">*</font> C<font color="#990000">;</font>
+               <b><font color="#0000FF">return</font></b><font color="#990000">;</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font><font color="#990000">;</font>
+<font color="#FF0000">}</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">cohort_ode_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <font color="#008080">size_t</font> n  <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">age</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">iota</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">rho</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">chi</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">omega</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n<font color="#990000">;</font> <font color="#990000">++</font>k<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    age<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#009900">double</font><font color="#990000">(</font>k<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">);</font>
+          <i><font color="#9A1900">//</font></i>
+          <i><font color="#9A1900">// same function of age as in Ode above</font></i>
+          iota<font color="#990000">[</font>k<font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">*</font> age<font color="#990000">[</font>k<font color="#990000">];</font>
+          rho<font color="#990000">[</font>k<font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0.9</font> <font color="#990000">*</font> age<font color="#990000">[</font>k<font color="#990000">];</font>
+          chi<font color="#990000">[</font>k<font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0.8</font> <font color="#990000">*</font> age<font color="#990000">[</font>k<font color="#990000">];</font>
+          omega<font color="#990000">[</font>k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.7</font> <font color="#990000">*</font> age<font color="#990000">[</font>k<font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+
+     <i><font color="#9A1900">// call cohort_ode</font></i>
+     <font color="#008080">Float</font>  pini   <font color="#990000">=</font> <font color="#993399">0.2</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">s_out</font></b><font color="#990000">(</font>n<font color="#990000">),</font> <b><font color="#000000">c_out</font></b><font color="#990000">(</font>n<font color="#990000">);</font>
+     std<font color="#990000">::</font><font color="#008080">string</font> rate_case <font color="#990000">=</font> <font color="#FF0000">"iota_pos_rho_pos"</font><font color="#990000">;</font>
+     dismod_at<font color="#990000">::</font><b><font color="#000000">cohort_ode</font></b><font color="#990000">(</font>
+          rate_case<font color="#990000">,</font> age<font color="#990000">,</font> pini<font color="#990000">,</font> iota<font color="#990000">,</font> rho<font color="#990000">,</font> chi<font color="#990000">,</font> omega<font color="#990000">,</font> s_out<font color="#990000">,</font> c_out
+     <font color="#990000">);</font>
+     <font color="#008080">Fun</font> F<font color="#990000">;</font>
+     <font color="#008080">size_t</font> M <font color="#990000">=</font> <font color="#993399">100</font><font color="#990000">;</font>
+     <font color="#008080">Float</font> ai <font color="#990000">=</font> age<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
+     <font color="#008080">Float</font> af <font color="#990000">=</font> age<font color="#990000">[</font>n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">];</font>
+     <font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">yi</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">);</font>
+     yi<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> pini<font color="#990000">;</font>
+     yi<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> pini<font color="#990000">;</font>
+     <font color="#008080">vector&lt;Float&gt;</font> yf <font color="#990000">=</font> CppAD<font color="#990000">::</font><b><font color="#000000">Runge45</font></b><font color="#990000">(</font>F<font color="#990000">,</font> M<font color="#990000">,</font> ai<font color="#990000">,</font> af<font color="#990000">,</font> yi<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// std::cout &lt;&lt; 1.0 - s_out[n-1] / yf[0] &lt;&lt; "\n";</font></i>
+     <i><font color="#9A1900">// std::cout &lt;&lt; 1.0 - c_out[n-1] / yf[1] &lt;&lt; "\n";</font></i>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// very accurate because rates are linear w.r.t age</font></i>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> s_out<font color="#990000">[</font>n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> yf<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-10</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> c_out<font color="#990000">[</font>n<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">/</font> yf<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-10</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+</font></code>
+<hr>Input File: example/devel/utility/cohort_ode_xam.cpp
+
+</body>
+</html>

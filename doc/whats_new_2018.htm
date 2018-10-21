@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api change other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 10-21 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api change other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -48,11 +48,12 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="prior_depend.htm" target="_top">Prev</a>
+<td><a href="avg_std_effect_xam.cpp.htm" target="_top">Prev</a>
 </td><td>
 <select onchange='choose_current0(this)'>
 <option>Current-&gt;</option>
 <option>Contents</option>
+<option>10-21</option>
 <option>10-13</option>
 <option>10-05</option>
 <option>09-30</option>
@@ -172,15 +173,40 @@ A:active { color : purple }
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@
-
-
-<center><b><big><big>Changes and Additions to Dismod_at During 2018</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Changes and Additions to Dismod_at During 2018</big></big></b></center>
 <br>
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>
 <br>
 <table>
 <tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="10-21" id="10-21">10-21</a></big></b>
+<br>
+Change the way that average integrands are computed; see
+<a href="numeric_average.htm" target="_top"><span style='white-space: nowrap'>numeric_average</span></a>
+.
+This enables using a step size that varies with age; see
+<a href="option_table.htm#avg_age_split.Average Age Grid" target="_top"><span style='white-space: nowrap'>average&nbsp;age&nbsp;grid</span></a>
+.
+Here is one case of a speed comparison for this change using a uniformly
+spaced grid:
+before 4.9 seconds, after 3.6 second.
+Here is the memory comparison for the same case:
+before 288.7 MB, after 121.8 MB.
+This test takes advantage of the fact that the new method only
+integrates one cohort when
+
+<code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i></code>
+.
+It does not use 
+<code><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i></code>
+ to vary the spacing of the age grid.
+
+
+<br>
+<br>
 <b><big><a name="10-13" id="10-13">10-13</a></big></b>
 
 <ol type="1"><li>

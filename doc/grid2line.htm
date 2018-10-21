@@ -1,0 +1,291 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Interpolation from Smoothing Grid to a Line</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Interpolation from Smoothing Grid to a Line">
+<meta name="keywords" id="keywords" content=" interpolation from smoothing grid to line syntax prototype n_line grid_info float line_age line_time age_table time_table g_info grid_value line_value example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_grid2line_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>grid2line</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="random_effect_xam.cpp.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Syntax</option>
+<option>Prototype</option>
+<option>n_line</option>
+<option>Grid_info</option>
+<option>Float</option>
+<option>line_age</option>
+<option>line_time</option>
+<option>age_table</option>
+<option>time_table</option>
+<option>g_info</option>
+<option>grid_value</option>
+<option>line_value</option>
+<option>Example</option>
+</select>
+</td>
+<td><a href="grid2line_xam.cpp.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>devel_utility-&gt;</option>
+<option>a1_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>cohort_ode</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>get_prior_mean</option>
+<option>number_random_const</option>
+<option>avg_age_grid</option>
+<option>pack_info</option>
+<option>pack_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>grid2line</option>
+<option>solve_ode</option>
+<option>split_space</option>
+<option>time_line_vec</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down0(this)'>
+<option>grid2line-&gt;</option>
+<option>grid2line_xam.cpp</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Interpolation from Smoothing Grid to a Line</big></big></b></center>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>line_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;grid2line(<br>
+</span></font><i><font color="black"><span style='white-space: nowrap'>line_age</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line_time</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>g_info</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>grid_value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
+
+<pre><tt>
+<b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">Grid_info</font><font color="#990000">,</font> <b><font color="#0000FF">class</font></b> <font color="#008080">Float</font><font color="#990000">&gt;</font>
+CppAD<font color="#990000">::</font><font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">grid2line</font></b><font color="#990000">(</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> line_age     <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> line_time    <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> age_table    <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> time_table   <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> Grid_info<font color="#990000">&amp;</font>             g_info       <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>Float<font color="#990000">&gt;&amp;</font>  grid_value <font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="n_line" id="n_line">n_line</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>n_line</span></font></i></code>
+ to denote the number of
+points in the line.
+
+<br>
+<br>
+<b><big><a name="Grid_info" id="Grid_info">Grid_info</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Grid</span></font></i></code>
+ must be <a href="smooth_info.htm" target="_top"><span style='white-space: nowrap'>smooth_info</span></a>
+
+or <a href="weight_info.htm" target="_top"><span style='white-space: nowrap'>weight_info</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Float" id="Float">Float</a></big></b>
+<br>
+The type 
+<code><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i></code>
+ must be <code><font color="blue">double</font></code> or
+<a href="a1_double.htm" target="_top"><span style='white-space: nowrap'>a1_double</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="line_age" id="line_age">line_age</a></big></b>
+<br>
+This vector has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n_line</span></font></i></code>
+ and contains the age value
+corresponding to each of the points in the line.
+It is faster if successive points have close values in age; e.g.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line_age</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line_age</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]<br>
+</span></font></code>
+<br>
+<b><big><a name="line_time" id="line_time">line_time</a></big></b>
+<br>
+This vector has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n_line</span></font></i></code>
+ and contains the time value
+corresponding to each of the points in the line.
+It is faster if successive points have close values in time; e.g.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line_time</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>line_time</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i><font color="blue"><span style='white-space: nowrap'>+1]<br>
+</span></font></code>
+<br>
+<b><big><a name="age_table" id="age_table">age_table</a></big></b>
+<br>
+This argument is the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="time_table" id="time_table">time_table</a></big></b>
+<br>
+This argument is the <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="g_info" id="g_info">g_info</a></big></b>
+<br>
+This is the information for the grid that is being interpolated.
+
+<br>
+<br>
+<b><big><a name="grid_value" id="grid_value">grid_value</a></big></b>
+<br>
+Is the values corresponding to each of the grid points
+in 
+<code><i><font color="black"><span style='white-space: nowrap'>g_info</span></font></i></code>
+.
+Let 
+<code><i><font color="black"><span style='white-space: nowrap'>n_age</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>n_time</span></font></i></code>
+ be the number of age and
+time points in the grid.
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>.&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_age</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+For 
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>.&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time</span></font></i><font color="blue"><span style='white-space: nowrap'>-1</span></font></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>grid_value</span></font></i><font color="blue"><span style='white-space: nowrap'>[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_time</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+is the value corresponding to the <code><i>i</i></code>-th age and <code><i>j</i></code>-th time
+in the grid.
+
+<br>
+<br>
+<b><big><a name="line_value" id="line_value">line_value</a></big></b>
+<br>
+The return value 
+<code><i><font color="black"><span style='white-space: nowrap'>line_value</span></font></i></code>
+ has size 
+<code><i><font color="black"><span style='white-space: nowrap'>n_line</span></font></i></code>
+.
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>line_value</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is the
+<a href="bilinear.htm" target="_top"><span style='white-space: nowrap'>bilinear</span></a>
+ interpolated value corresponding to
+age 
+<code><i><font color="black"><span style='white-space: nowrap'>line_age</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ and time 
+<code><i><font color="black"><span style='white-space: nowrap'>line_time</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="grid2line_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>grid2line_xam.cpp</span></a>
+ contains an example and test
+of using this routine.
+
+
+<hr>Input File: devel/utility/grid2line.cpp
+
+</body>
+</html>

@@ -14,12 +14,13 @@ var list_across0 = [
 ];
 var list_current0 = [
 'data_model_ctor.htm#Syntax',
+'data_model_ctor.htm#Prototype',
 'data_model_ctor.htm#data_object',
+'data_model_ctor.htm#rate_case',
 'data_model_ctor.htm#bound_random',
 'data_model_ctor.htm#n_covariate',
-'data_model_ctor.htm#n_age_ode',
-'data_model_ctor.htm#n_time_ode',
 'data_model_ctor.htm#ode_step_size',
+'data_model_ctor.htm#avg_age_grid',
 'data_model_ctor.htm#age_table',
 'data_model_ctor.htm#time_table',
 'data_model_ctor.htm#integrand_table',
@@ -30,18 +31,15 @@ var list_current0 = [
 'data_model_ctor.htm#pack_object',
 'data_model_ctor.htm#child_object',
 'data_model_ctor.htm#n_covariate_',
-'data_model_ctor.htm#n_age_ode_',
-'data_model_ctor.htm#n_time_ode_',
 'data_model_ctor.htm#ode_step_size_',
 'data_model_ctor.htm#pack_object_',
 'data_model_ctor.htm#minimum_meas_cv_',
-'data_model_ctor.htm#eigen_ode2_case_number_',
 'data_model_ctor.htm#replace_like_called_',
 'data_model_ctor.htm#n_child_',
 'data_model_ctor.htm#data_subset_obj_',
-'data_model_ctor.htm#si2ode_vec_',
 'data_model_ctor.htm#child_ran_zero_',
-'data_model_ctor.htm#data_info_'
+'data_model_ctor.htm#data_info_',
+'data_model_ctor.htm#avgint_obj_'
 ];
 var list_down4 = [
 'install_unix.htm',
@@ -64,16 +62,15 @@ var list_down2 = [
 'devel_data_model.htm',
 'prior_model.htm',
 'fit_model.htm',
-'depend.htm'
+'depend.htm',
+'adj_integrand.htm',
+'devel_avg_integrand.htm',
+'devel_avg_std_effect.htm'
 ];
 var list_down1 = [
 'data_model_ctor.htm',
-'set_eigne_ode2_case_number.htm',
 'data_model_replace_like.htm',
-'data_model_reference_ode.htm',
-'data_model_sci_ode.htm',
-'data_model_avg_no_ode.htm',
-'data_model_avg_yes_ode.htm',
+'data_model_average.htm',
 'data_model_like_one.htm',
 'data_model_like_all.htm'
 ];

@@ -38,7 +38,7 @@ A:active { color : purple }
 <option>devel</option>
 <option>devel_model</option>
 <option>devel_data_model</option>
-<option>data_model_avg_no_ode</option>
+<option>data_model_average</option>
 <option>avg_no_ode_xam.cpp</option>
 </select>
 </td>
@@ -52,9 +52,9 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="data_model_avg_no_ode.htm" target="_top">Prev</a>
+<td><a href="data_model_average.htm" target="_top">Prev</a>
 </td><td>Current</td>
-<td><a href="data_model_avg_yes_ode.htm" target="_top">Next</a>
+<td><a href="avg_yes_ode_xam.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down4(this)'>
 <option>devel-&gt;</option>
@@ -70,36 +70,40 @@ A:active { color : purple }
 <option>prior_model</option>
 <option>fit_model</option>
 <option>depend</option>
+<option>adj_integrand</option>
+<option>devel_avg_integrand</option>
+<option>devel_avg_std_effect</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down2(this)'>
 <option>devel_data_model-&gt;</option>
 <option>data_model_ctor</option>
-<option>set_eigne_ode2_case_number</option>
 <option>data_model_replace_like</option>
-<option>data_model_reference_ode</option>
-<option>data_model_sci_ode</option>
-<option>data_model_avg_no_ode</option>
-<option>data_model_avg_yes_ode</option>
+<option>data_model_average</option>
 <option>data_model_like_one</option>
 <option>data_model_like_all</option>
 </select>
 </td>
 <td>
 <select onchange='choose_down1(this)'>
-<option>data_model_avg_no_ode-&gt;</option>
+<option>data_model_average-&gt;</option>
 <option>avg_no_ode_xam.cpp</option>
+<option>avg_yes_ode_xam.cpp</option>
 </select>
 </td>
 <td>avg_no_ode_xam.cpp</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++ avg_no_ode: Example and Test</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++ avg_no_ode: Example and Test</big></big></b></center>
 <code><font color="blue"><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/data_model.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/null_int.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/avg_age_grid.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
      <font color="#009900">double</font> <b><font color="#000000">check_avg</font></b><font color="#990000">(</font><b><font color="#0000FF">const</font></b> dismod_at<font color="#990000">::</font>data_struct<font color="#990000">&amp;</font> data_row<font color="#990000">)</font>
@@ -134,7 +138,6 @@ A:active { color : purple }
           age_table<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>age<font color="#990000">);</font>
      <font color="#FF0000">}</font>
      <font color="#008080">size_t</font> n_age_table <font color="#990000">=</font> age_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     <font color="#009900">double</font> age_min     <font color="#990000">=</font> age_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
      <font color="#009900">double</font> age_max     <font color="#990000">=</font> age_table<font color="#990000">[</font>n_age_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">];</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// time_table</font></i>
@@ -147,7 +150,6 @@ A:active { color : purple }
           time_table<font color="#990000">.</font><b><font color="#000000">push_back</font></b><font color="#990000">(</font>time<font color="#990000">);</font>
      <font color="#FF0000">}</font>
      <font color="#008080">size_t</font> n_time_table <font color="#990000">=</font> time_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
-     <font color="#009900">double</font> time_min     <font color="#990000">=</font> time_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">];</font>
      <font color="#009900">double</font> time_max     <font color="#990000">=</font> time_table<font color="#990000">[</font>n_time_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">];</font>
 
      <i><font color="#9A1900">// age and time smoothing grid indices</font></i>
@@ -220,19 +222,9 @@ A:active { color : purple }
           integrand_table<font color="#990000">[</font>i<font color="#990000">].</font>minimum_meas_cv <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// n_age_ode</font></i>
-     <font color="#008080">size_t</font> n_age_ode     <font color="#990000">=</font>  <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> age_min <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>n_age_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">&lt;</font> age_max <font color="#990000">)</font>
-               n_age_ode<font color="#990000">++;</font>
-     <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// n_time_ode</font></i>
-     <font color="#008080">size_t</font> n_time_ode     <font color="#990000">=</font>  <font color="#993399">1</font><font color="#990000">;</font>
-     <b><font color="#0000FF">while</font></b><font color="#990000">(</font> time_min <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>n_time_ode<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> ode_step_size <font color="#990000">&lt;</font> time_max <font color="#990000">)</font>
-               n_time_ode<font color="#990000">++;</font>
-     <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// node_table:    0</font></i>
      <i><font color="#9A1900">//              1    2</font></i>
-     <i><font color="#9A1900">//                  3  4</font></i>
+     <i><font color="#9A1900">//                  3 4</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">vector&lt;dismod_at::node_struct&gt;</font> <b><font color="#000000">node_table</font></b><font color="#990000">(</font><font color="#993399">5</font><font color="#990000">);</font>
      node_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>parent <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
      node_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>parent <font color="#990000">=</font>  <font color="#993399">0</font><font color="#990000">;</font>
@@ -339,12 +331,17 @@ A:active { color : purple }
      <font color="#990000">);</font>
      <i><font color="#9A1900">// data_model</font></i>
      <font color="#009900">double</font> bound_random <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
+     std<font color="#990000">::</font><font color="#008080">string</font> rate_case <font color="#990000">=</font> <font color="#FF0000">"iota_pos_rho_pos"</font><font color="#990000">;</font>
+     std<font color="#990000">::</font><font color="#008080">string</font> avg_age_split <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> avg_age_grid <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">avg_age_grid</font></b><font color="#990000">(</font>
+          ode_step_size<font color="#990000">,</font> avg_age_split<font color="#990000">,</font> age_table
+     <font color="#990000">);</font>
      dismod_at<font color="#990000">::</font><font color="#008080">data_model</font> <b><font color="#000000">data_object</font></b><font color="#990000">(</font>
+          rate_case<font color="#990000">,</font>
           bound_random<font color="#990000">,</font>
           n_covariate<font color="#990000">,</font>
-          n_age_ode<font color="#990000">,</font>
-          n_time_ode<font color="#990000">,</font>
           ode_step_size<font color="#990000">,</font>
+          avg_age_grid<font color="#990000">,</font>
           age_table<font color="#990000">,</font>
           time_table<font color="#990000">,</font>
           integrand_table<font color="#990000">,</font>
@@ -378,7 +375,7 @@ A:active { color : purple }
      <i><font color="#9A1900">// check results</font></i>
      ok <font color="#990000">&amp;=</font> data_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> data_subset_obj<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font>data_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> data_id <font color="#990000">&lt;</font> data_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> data_id<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">Float</font> avg     <font color="#990000">=</font> data_object<font color="#990000">.</font><b><font color="#000000">avg_no_ode</font></b><font color="#990000">(</font>data_id<font color="#990000">,</font> pack_vec<font color="#990000">);</font>
+     <font color="#FF0000">{</font>    <font color="#008080">Float</font> avg     <font color="#990000">=</font> data_object<font color="#990000">.</font><b><font color="#000000">average</font></b><font color="#990000">(</font>data_id<font color="#990000">,</font> pack_vec<font color="#990000">);</font>
           <font color="#009900">double</font> check  <font color="#990000">=</font> <b><font color="#000000">check_avg</font></b><font color="#990000">(</font>data_table<font color="#990000">[</font>data_id<font color="#990000">])</font> <font color="#990000">/</font> <font color="#990000">(</font>age_max<font color="#990000">*</font>time_max<font color="#990000">);</font>
           ok           <font color="#990000">&amp;=</font> <b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> avg <font color="#990000">/</font> check <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps<font color="#990000">;</font>
           <i><font color="#9A1900">/*</font></i>

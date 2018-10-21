@@ -3,7 +3,7 @@ var list_up0 = [
 'devel.htm',
 'devel_model.htm',
 'devel_data_model.htm',
-'data_model_avg_no_ode.htm',
+'data_model_average.htm',
 'avg_no_ode_xam.cpp.htm'
 ];
 var list_across0 = [
@@ -22,21 +22,21 @@ var list_down3 = [
 'devel_data_model.htm',
 'prior_model.htm',
 'fit_model.htm',
-'depend.htm'
+'depend.htm',
+'adj_integrand.htm',
+'devel_avg_integrand.htm',
+'devel_avg_std_effect.htm'
 ];
 var list_down2 = [
 'data_model_ctor.htm',
-'set_eigne_ode2_case_number.htm',
 'data_model_replace_like.htm',
-'data_model_reference_ode.htm',
-'data_model_sci_ode.htm',
-'data_model_avg_no_ode.htm',
-'data_model_avg_yes_ode.htm',
+'data_model_average.htm',
 'data_model_like_one.htm',
 'data_model_like_all.htm'
 ];
 var list_down1 = [
-'avg_no_ode_xam.cpp.htm'
+'avg_no_ode_xam.cpp.htm',
+'avg_yes_ode_xam.cpp.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

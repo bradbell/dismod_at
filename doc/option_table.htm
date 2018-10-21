@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size avg_age_split average age grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,9 @@ A:active { color : purple }
 <option>minimum_meas_cv</option>
 <option>---..Default</option>
 <option>ode_step_size</option>
+<option>---..Default</option>
+<option>avg_age_split</option>
+<option>---..Average Age Grid</option>
 <option>---..Default</option>
 <option>random_seed</option>
 <option>---..Default</option>
@@ -458,15 +461,10 @@ the corresponding
 <code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
 
 is a positive floating point number (greater than zero)
-that specifies numerical ode step size.
-The step size is the same in age and time because it is along cohort lines.
-The smaller 
-<code><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i></code>
-, the more accurate the solution of the
+that specifies step size used to approximate the solution of the
 <a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
-
-and the more time required to compute this solution.
-This step size is also used to approximate the integrals in
+.
+It is also the step size is also used to approximate the integrals in
 the definition of the
 <a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrands</span></a>
 .
@@ -487,6 +485,72 @@ which is reasonable if all the rates
 <code><i><font color="black"><span style='white-space: nowrap'>omega</span></font></i></code>
 
 are all less than <code><font color="blue">0.1</font></code>.
+
+<br>
+<br>
+<b><big><a name="avg_age_split" id="avg_age_split">avg_age_split</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;avg_age_split</span></font></code>
+,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is a space separated list of
+age values at which to split the age integration.
+This split is both for the computation of the average integrands
+and for the solution of the ODE.
+
+<br>
+<br>
+<big><a name="avg_age_split.Average Age Grid" id="avg_age_split.Average Age Grid">Average Age Grid</a></big>
+<br>
+Let 
+<code><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i></code>
+ be the minimum and maximum
+ages in the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+.
+Let 
+<code><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;1</span></font></code>
+ be the minimum integer such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and define the age points
+
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ for 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>N</span></font></i></code>
+ by
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+The average age grid is the union of the set of 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+
+and the age points in 
+<code><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i></code>
+.
+This grid is used both for
+<a href="numeric_average.htm" target="_top"><span style='white-space: nowrap'>approximating&nbsp;averages</span></a>
+
+and for approximating the solution of the dismod_at
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+.
+
+<br>
+<br>
+<big><a name="avg_age_split.Default" id="avg_age_split.Default">Default</a></big>
+<br>
+The default value for 
+<code><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i></code>
+ is the empty set
+in which case the average age grid is the set of 
+<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+.
 
 <br>
 <br>

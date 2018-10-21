@@ -1,0 +1,672 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Numerical Approximation of Average Integrands</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Numerical Approximation of Average Integrands">
+<meta name="keywords" id="keywords" content=" numerical approximation average integrands standard deviation effect ode initial age rectangle a_l a_u t_l t_u integrand time step delta t grid extended cohort solution line s_j lower cohorts upper refinement not required w(a t) g(a integration ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_numeric_average_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>numeric_average</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="prev_dep.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Average Standard Deviation Effect</option>
+<option>A</option>
+<option>ODE</option>
+<option>Initial Age</option>
+<option>Rectangle</option>
+<option>---..a_L</option>
+<option>---..a_U</option>
+<option>---..t_L</option>
+<option>---..t_U</option>
+<option>Average Integrand Time Step, Delta t</option>
+<option>Average Integrand Age Grid</option>
+<option>Extended Age Grid</option>
+<option>Cohort Solution of ODE</option>
+<option>Time Line</option>
+<option>S_j</option>
+<option>Lower Time Cohorts</option>
+<option>---..ODE</option>
+<option>Upper Time Cohorts</option>
+<option>---..ODE</option>
+<option>Refinement</option>
+<option>---..ODE Not Required</option>
+<option>---..ODE Required</option>
+<option>w(a, t)</option>
+<option>g(a, t)</option>
+<option>Time Integration</option>
+<option>Age Integration</option>
+</select>
+</td>
+<td><a href="command.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>model-&gt;</option>
+<option>model_variables</option>
+<option>avg_integrand</option>
+<option>data_like</option>
+<option>fixed_value</option>
+<option>fixed_diff</option>
+<option>fixed_prior</option>
+<option>random_value</option>
+<option>random_diff</option>
+<option>random_prior</option>
+<option>statistic</option>
+<option>bilinear</option>
+<option>ode_grid</option>
+<option>posterior</option>
+<option>prev_dep</option>
+<option>numeric_average</option>
+</select>
+</td>
+<td>numeric_average</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Numerical Approximation of Average Integrands</big></big></b></center>
+<br>
+<b><big><a name="Average Standard Deviation Effect" id="Average Standard Deviation Effect">Average Standard Deviation Effect</a></big></b>
+<br>
+This technique is also used to compute the
+<a href="data_like.htm#Average Standard Deviation Effect" target="_top"><span style='white-space: nowrap'>average&nbsp;standard&nbsp;deviation&nbsp;effect</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="A" id="A">A</a></big></b>
+<br>
+We compute an
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+
+over a rectangular region defined as
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;x&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+</span></font></code>
+by the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+ or the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+.
+Given a data table index or avgint table index <small>@(@
+i
+@)@</small>,
+this section describes the numerical method used to
+approximate the average integrand
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>A_i</span></a>
+ is calculated.
+The index <small>@(@
+i
+@)@</small> is fixed and not included in the discussion below.
+
+<br>
+<br>
+<b><big><a name="ODE" id="ODE">ODE</a></big></b>
+<br>
+Some integrands require solution of the
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+;
+see <a href="integrand_table.htm#integrand_name.ODE" target="_top"><span style='white-space: nowrap'>ODE</span></a>
+.
+The ODE is solved along cohort lines, i.e., lines where
+time minus age is constant.
+
+<br>
+<br>
+<b><big><a name="Initial Age" id="Initial Age">Initial Age</a></big></b>
+<br>
+We use the notation <small>@(@
+a_I
+@)@</small> for
+the age corresponding to initial prevalence
+<a href="rate_table.htm#rate_name.pini" target="_top"><span style='white-space: nowrap'>pini</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Rectangle" id="Rectangle">Rectangle</a></big></b>
+<br>
+We use the following notation
+for the lower and upper limits corresponding to one point
+in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+ or <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+:
+
+<br>
+<br>
+<big><a name="Rectangle.a_L" id="Rectangle.a_L">a_L</a></big>
+<br>
+We use <small>@(@
+a_L
+@)@</small> to denote the corresponding
+<a href="data_table.htm#age_lower" target="_top"><span style='white-space: nowrap'>age_lower</span></a>
+ value.
+
+<br>
+<br>
+<big><a name="Rectangle.a_U" id="Rectangle.a_U">a_U</a></big>
+<br>
+We use <small>@(@
+a_U
+@)@</small> to denote the corresponding
+<a href="data_table.htm#age_upper" target="_top"><span style='white-space: nowrap'>age_upper</span></a>
+ value.
+
+<br>
+<br>
+<big><a name="Rectangle.t_L" id="Rectangle.t_L">t_L</a></big>
+<br>
+We use <small>@(@
+t_L
+@)@</small> to denote the corresponding
+<a href="data_table.htm#time_lower" target="_top"><span style='white-space: nowrap'>time_lower</span></a>
+ value.
+
+<br>
+<br>
+<big><a name="Rectangle.t_U" id="Rectangle.t_U">t_U</a></big>
+<br>
+We use <small>@(@
+t_U
+@)@</small> to denote the corresponding
+<a href="data_table.htm#time_upper" target="_top"><span style='white-space: nowrap'>time_upper</span></a>
+ value.
+
+<br>
+<br>
+<b><big><a name="Average Integrand Time Step, Delta t" id="Average Integrand Time Step, Delta t">Average Integrand Time Step, Delta t</a></big></b>
+<br>
+The average integrand time step <small>@(@
+\Delta t
+@)@</small>
+is specified by <a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+
+in the option table.
+
+<br>
+<br>
+<b><big><a name="Average Integrand Age Grid" id="Average Integrand Age Grid">Average Integrand Age Grid</a></big></b>
+<br>
+The
+<a href="option_table.htm#avg_age_split.Average Age Grid" target="_top"><span style='white-space: nowrap'>average&nbsp;age&nbsp;grid</span></a>
+
+is specified in the option table.
+
+<br>
+<br>
+<b><big><a name="Extended Age Grid" id="Extended Age Grid">Extended Age Grid</a></big></b>
+<br>
+The extended age grid is the union (as sets) of <small>@(@
+\{ a_L , a_U \}
+@)@</small>
+and the average integrand age grid.
+
+<br>
+<br>
+<b><big><a name="Cohort Solution of ODE" id="Cohort Solution of ODE">Cohort Solution of ODE</a></big></b>
+<br>
+A cohort solution is identified by its
+initial time, corresponding to age <small>@(@
+a_I
+@)@</small>,
+and final age, corresponding to the last point in the solution.
+The cohort is solved by approximating to rates in the ODE as constant
+between grid points in the extended age grid.
+
+<br>
+<br>
+<b><big><a name="Time Line" id="Time Line">Time Line</a></big></b>
+<br>
+We use <small>@(@
+\{ a_0 , \ldots , a_{J-1} \}
+@)@</small>
+be the set of ages in the extended age grid that satisfy
+<small>@(@
+a_L < a_j < a_U
+@)@</small>.
+Furthermore, these ages are in order; i.e.,
+<small>@(@
+a_j < a_{j+1}
+@)@</small>.
+For each such age, there is a time line interval
+<small>@(@
+[ t_L , t_U ]
+@)@</small> which we refer to as the <code><i>j</i></code>-th time line.
+
+<br>
+<br>
+<b><big><a name="S_j" id="S_j">S_j</a></big></b>
+<br>
+The <code><i>j</i></code>-th time line has a set of times, <small>@(@
+S_j
+@)@</small>,
+in the interval <small>@(@
+[ t_L , t_U ]
+@)@</small>.
+We initialize this set as empty.
+The steps below specify which times get added to <small>@(@
+S_j
+@)@</small>.
+If the ODE is required for this integrand, the steps also specify
+how the ODE is solved for age <small>@(@
+a_j
+@)@</small> and all the times
+in <small>@(@
+S_j
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Lower Time Cohorts" id="Lower Time Cohorts">Lower Time Cohorts</a></big></b>
+<br>
+For each time line index <small>@(@
+j
+@)@</small>,
+the time point <small>@(@
+t_L
+@)@</small> is added to <small>@(@
+S_j
+@)@</small>.
+
+<br>
+<br>
+<big><a name="Lower Time Cohorts.ODE" id="Lower Time Cohorts.ODE">ODE</a></big>
+<br>
+If the ODE is required for this integrand,
+it is solved for the cohort corresponding to
+initial time <small>@(@
+t_L - ( a_j - a_I)
+@)@</small>.
+<ol type="1"><li>
+If <small>@(@
+t_L + a_U - a_j < t_U
+@)@</small>,
+the final age for this cohort is <small>@(@
+b_j = a_U
+@)@</small>.
+In this case the lower time cohort has not reached the upper time.
+</li><li>
+
+If <small>@(@
+t_L + a_U - a_j \geq t_U
+@)@</small>,
+the final age is <small>@(@
+b_j
+@)@</small> is the largest age in the extended age grid
+such that <small>@(@
+t_L + b_j - a_j \leq t_U
+@)@</small>.
+</li></ol>
+
+For each extended age grid <small>@(@
+a_k
+@)@</small> in the cohort,
+such that <small>@(@
+a_L \leq a_k \leq b_j
+@)@</small>,
+the time <small>@(@
+t_L + a_k - a_j
+@)@</small> is added to <small>@(@
+S_k
+@)@</small>
+(because we have the corresponding ODE solution).
+It may happen by chance that
+<small>@(@
+t_L + b_j - a_j = t_U
+@)@</small> in which case
+<small>@(@
+t_U
+@)@</small> is in <small>@(@
+S_j
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Upper Time Cohorts" id="Upper Time Cohorts">Upper Time Cohorts</a></big></b>
+<br>
+These operations are only done when <small>@(@
+t_L < t_U
+@)@</small>.
+For each time line index <small>@(@
+j
+@)@</small>,
+the time point <small>@(@
+t_U
+@)@</small> is added to <small>@(@
+S_j
+@)@</small>.
+
+<br>
+<br>
+<big><a name="Upper Time Cohorts.ODE" id="Upper Time Cohorts.ODE">ODE</a></big>
+<br>
+If the ODE is required for this integrand,
+and <small>@(@
+t_U
+@)@</small> is not in <small>@(@
+S_j
+@)@</small>,
+the ODE is solved for the cohort corresponding to
+initial time <small>@(@
+t_U - ( a_j - a_I)
+@)@</small> and final age <small>@(@
+a_j
+@)@</small>.
+<ol type="1"><li>
+For each extended age grid point <small>@(@
+a_k
+@)@</small> in the cohort,
+such that <small>@(@
+a_L  \leq a_k \leq a_j
+@)@</small>,
+and <small>@(@
+t_L \leq t_U - ( a_j - a_k )
+@)@</small>,
+the time <small>@(@
+t_U - ( a_j - a_k )
+@)@</small> is added to <small>@(@
+S_k
+@)@</small>.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="Refinement" id="Refinement">Refinement</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Refinement.ODE Not Required" id="Refinement.ODE Not Required">ODE Not Required</a></big>
+<br>
+If the ODE is not required for this integrand,
+the smallest integer <small>@(@
+N \geq 1
+@)@</small> is chosen
+so that <small>@(@
+(t_U - t_L) / N \leq \Delta t
+@)@</small>.
+If <small>@(@
+N > 1
+@)@</small>,
+For <small>@(@
+j = J-1 , \ldots , 0
+@)@</small>,
+for <small>@(@
+n = 1 , \ldots , n-1
+@)@</small>,
+the point <small>@(@
+t_n = ( t_U - t_L ) / N
+@)@</small>
+is added to <small>@(@
+S_j
+@)@</small>.
+If <small>@(@
+N > 1
+@)@</small>, each <small>@(@
+S_j
+@)@</small> ends up with
+<small>@(@
+N+2
+@)@</small> time points.
+
+<br>
+<br>
+<big><a name="Refinement.ODE Required" id="Refinement.ODE Required">ODE Required</a></big>
+<br>
+If the ODE is required for this integrand,
+the following method is used for refinement of the time lines:
+<ol type="1"><li>
+Find the value of <small>@(@
+j
+@)@</small> such that
+<small>@(@
+t_n - t_{n-1}
+@)@</small> is maximal where
+<small>@(@
+t_0 < t_1 < \ldots t_{N-1}
+@)@</small> denote the set
+of times currently in <small>@(@
+S_j
+@)@</small>.
+</li><li>
+
+If <small>@(@
+t_n - t_{n-1} \leq \Delta t
+@)@</small>
+we are done with the refinement; i.e., exit this procedure.
+</li><li>
+
+Let <small>@(@
+t_M = (t_{n+1} - t_n ) / 2
+@)@</small> and choose <small>@(@
+k
+@)@</small> so that
+<small>@(@
+a_k
+@)@</small> is in the extended grid
+and <small>@(@
+a_k
+@)@</small> is as large as possible with
+<small>@(@
+t_M + a_k - a_j \leq t_U
+@)@</small>.
+Solve the ODE for the cohort with initial time index
+<small>@(@
+t_M - ( a_j - a_I )
+@)@</small> and final age <small>@(@
+a_k
+@)@</small>.
+</li><li>
+
+For each index <small>@(@
+\ell \leq k
+@)@</small> such that
+<small>@(@
+a_L  \leq a_\ell
+@)@</small> and <small>@(@
+t_L \leq t_M + a_\ell - a_j
+@)@</small>,
+the time <small>@(@
+t_M + a_\ell - a_j
+@)@</small> is added to <small>@(@
+S_\ell
+@)@</small>.
+</li><li>
+
+Go to Step 1.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="w(a, t)" id="w(a, t)">w(a, t)</a></big></b>
+<br>
+We use <small>@(@
+w(a, t)
+@)@</small> to denote a weighting function
+for this average and define
+<small>@[@
+
+	\bar{w} = \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
+		w( a , t) \; \B{d} t \; \B{d} a
+
+@]@</small>
+Note that if <small>@(@
+w(a, t)
+@)@</small> is one,
+<small>@(@
+\bar{w} = ( a_U - a_L ) ( t_U - t_L )
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="g(a, t)" id="g(a, t)">g(a, t)</a></big></b>
+<br>
+We use <small>@(@
+g(a, t)
+@)@</small> to denote the function that is averaged,
+with respect to age and time, in the definition of <small>@(@
+A
+@)@</small>; i.e.,
+<small>@[@
+
+A =
+\frac{1}{ \bar{w} } \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
+	w(a, t) g( a , t) \; \B{d} t \; \B{d} a
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Time Integration" id="Time Integration">Time Integration</a></big></b>
+<br>
+Define the notation <small>@(@
+w \cdot g(a, t) = w(a, t) g(a, t)
+@)@</small>.
+Let <small>@(@
+t_0 < t_1 < \ldots t_{N-1}
+@)@</small> denote the set <small>@(@
+S_j
+@)@</small>
+at which we are given the function values <small>@(@
+g( a_j , t_i )
+@)@</small>.
+Note that <small>@(@
+t_0 = t_L
+@)@</small> and <small>@(@
+t_{N-1} = t_U
+@)@</small>.
+If <small>@(@
+t_U = t_L
+@)@</small>, define
+<small>@(@
+W( a_j ) = w( a_j , t_0 )
+@)@</small> and
+<small>@(@
+G( a_j ) = w \cdot g( a_j , t_0 )
+@)@</small>.
+Otherwise we define the approximations
+<small>@[@
+
+W( a_j )
+=
+\sum_{i=1}^{i=N-1}
+	\frac{w( a_j , t_{i-1} ) + w( a_j , t_i )}{2} ( t_i - t_{i-1} )
+\approx
+\int_{t(L)}^{t(U)} w( a_j , t) \; \B{d} t
+
+@]@</small>
+<small>@[@
+
+G( a_j )
+=
+\sum_{i=1}^{i=N-1}
+\frac{w \cdot g( a_j , t_{i-1} ) + w \cdot g( a_j , t_i )}{2} ( t_i - t_{i-1} )
+\approx
+\int_{t(L)}^{t(U)} w \cdot g ( a_j , t) \; \B{d} t
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Age Integration" id="Age Integration">Age Integration</a></big></b>
+<br>
+We are given the values <small>@(@
+W( a_j )
+@)@</small> and <small>@(@
+G( a_j )
+@)@</small>.
+If <small>@(@
+a_U = a_L
+@)@</small>,
+we approximate <small>@(@
+A \approx G( a_0 ) / W( a_0 )
+@)@</small>.
+Otherwise we define the following approximation for <small>@(@
+A
+@)@</small>
+<small>@[@
+
+\bar{W}
+=
+\sum_{j=1}^{j=J-1}
+	\frac{ W( a_{j-1}  ) + W( a_j ) }{2} ( a_j - a_{j-1} )
+
+@]@</small>
+<small>@[@
+
+A
+\approx
+\frac{1}{ \bar{W} }
+\sum_{j=1}^{j=J-1}
+	\frac{ G( a_{j-1}  ) + G( a_j ) }{2} ( a_j - a_{j-1} )
+
+@]@</small>
+
+
+
+<hr>Input File: omh/model/numeric_average.omh
+
+</body>
+</html>

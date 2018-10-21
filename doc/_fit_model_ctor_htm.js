@@ -25,10 +25,10 @@ var list_current0 = [
 'fit_model_ctor.htm#start_var',
 'fit_model_ctor.htm#scale_var',
 'fit_model_ctor.htm#prior_table',
-'fit_model_ctor.htm#data_object',
 'fit_model_ctor.htm#prior_object',
 'fit_model_ctor.htm#quasi_fixed',
 'fit_model_ctor.htm#zero_sum_random',
+'fit_model_ctor.htm#data_object',
 'fit_model_ctor.htm#Prototype'
 ];
 var list_down4 = [
@@ -52,7 +52,10 @@ var list_down2 = [
 'devel_data_model.htm',
 'prior_model.htm',
 'fit_model.htm',
-'depend.htm'
+'depend.htm',
+'adj_integrand.htm',
+'devel_avg_integrand.htm',
+'devel_avg_std_effect.htm'
 ];
 var list_down1 = [
 'fit_model_ctor.htm',

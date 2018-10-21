@@ -1,0 +1,244 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>C++ time_line_vec: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ time_line_vec: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ time_line_vec: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_time_line_vec_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_utility</option>
+<option>time_line_vec</option>
+<option>time_line_vec_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="time_line_vec.htm" target="_top">Prev</a>
+</td><td>Current</td>
+<td><a href="devel_model.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down4(this)'>
+<option>dismod_at-&gt;</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_utility-&gt;</option>
+<option>a1_double</option>
+<option>avgint_subset</option>
+<option>bilinear_interp</option>
+<option>child_info</option>
+<option>cohort_ode</option>
+<option>data_subset</option>
+<option>eigen_ode2</option>
+<option>error_exit</option>
+<option>fixed_effect</option>
+<option>get_prior_mean</option>
+<option>number_random_const</option>
+<option>avg_age_grid</option>
+<option>pack_info</option>
+<option>pack_prior</option>
+<option>residual_density</option>
+<option>random_number</option>
+<option>random_effect</option>
+<option>grid2line</option>
+<option>solve_ode</option>
+<option>split_space</option>
+<option>time_line_vec</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>time_line_vec-&gt;</option>
+<option>time_line_vec_xam.cpp</option>
+</select>
+</td>
+<td>time_line_vec_xam.cpp</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>C++ time_line_vec: Example and Test</big></big></b></center>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/time_line_vec.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">time_line_vec_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> dismod_at<font color="#990000">::</font>time_line_vec<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><font color="#008080">time_point</font> time_point<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// near_equal</font></i>
+     <font color="#009900">double</font> x <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> y <font color="#990000">=</font> x <font color="#990000">+</font> <font color="#993399">10.0</font>  <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <font color="#009900">double</font> z <font color="#990000">=</font> x <font color="#990000">+</font> <font color="#993399">100.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> dismod_at<font color="#990000">::</font>time_line_vec<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">near_equal</font></b><font color="#990000">(</font>x<font color="#990000">,</font> y<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> <font color="#990000">!</font> dismod_at<font color="#990000">::</font>time_line_vec<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">near_equal</font></b><font color="#990000">(</font>x<font color="#990000">,</font> z<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// age_grid</font></i>
+     <font color="#008080">size_t</font> n_age_grid <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">age_grid</font></b><font color="#990000">(</font>n_age_grid<font color="#990000">);</font>
+     age_grid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font><font color="#990000">;</font>
+     age_grid<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.1</font><font color="#990000">;</font>
+     age_grid<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     age_grid<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">10.0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// vec</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">time_line_vec&lt;double&gt;</font> <b><font color="#000000">vec</font></b><font color="#990000">(</font>age_grid<font color="#990000">);</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font> <b><font color="#000000">extend_grid</font></b> <font color="#990000">(</font> vec<font color="#990000">.</font><b><font color="#000000">extend_grid</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// case where age_lower = age_upper = age_grid[2]</font></i>
+     <font color="#009900">double</font> age_lower <font color="#990000">=</font> age_grid<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+     <font color="#009900">double</font> age_upper <font color="#990000">=</font> age_grid<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">];</font>
+     <font color="#009900">double</font> time_lower <font color="#990000">=</font> <font color="#993399">1990.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> time_upper <font color="#990000">=</font> <font color="#993399">2010.0</font><font color="#990000">;</font>
+     vec<font color="#990000">.</font><b><font color="#000000">specialize</font></b><font color="#990000">(</font>age_lower<font color="#990000">,</font> age_upper<font color="#990000">,</font> time_lower<font color="#990000">,</font> time_upper<font color="#990000">);</font>
+     <font color="#008080">size_t</font> sub_lower <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">sub_lower</font></b><font color="#990000">();</font>
+     <font color="#008080">size_t</font> sub_upper <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">sub_upper</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> sub_lower <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> sub_upper <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> extend_grid<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n_age_grid<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age_grid<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+          ok <font color="#990000">&amp;=</font> extend_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> age_grid<font color="#990000">[</font>i<font color="#990000">];</font>
+     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// case where age_grid[1] &lt; age_lower &lt; age_upper &lt; age_grid[2]</font></i>
+     age_lower <font color="#990000">=</font> age_grid<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#990000">(</font>age_grid<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">-</font> age_grid<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+     age_upper <font color="#990000">=</font> age_lower   <font color="#990000">+</font> <font color="#990000">(</font>age_grid<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">-</font> age_grid<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+     vec<font color="#990000">.</font><b><font color="#000000">specialize</font></b><font color="#990000">(</font>age_lower<font color="#990000">,</font> age_upper<font color="#990000">,</font> time_lower<font color="#990000">,</font> time_upper<font color="#990000">);</font>
+     sub_lower <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">sub_lower</font></b><font color="#990000">();</font>
+     sub_upper <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">sub_upper</font></b><font color="#990000">();</font>
+     ok <font color="#990000">&amp;=</font> sub_lower <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> sub_upper <font color="#990000">==</font> <font color="#993399">3</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> extend_grid<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> n_age_grid <font color="#990000">+</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> extend_grid<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">&lt;</font> sub_lower <font color="#990000">)</font>
+               ok <font color="#990000">&amp;=</font> extend_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> age_grid<font color="#990000">[</font>i<font color="#990000">];</font>
+          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">==</font> sub_lower <font color="#990000">)</font>
+               ok <font color="#990000">&amp;=</font> extend_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> age_lower<font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b> <b><font color="#0000FF">if</font></b><font color="#990000">(</font> i <font color="#990000">==</font> sub_upper <font color="#990000">)</font>
+               ok <font color="#990000">&amp;=</font> extend_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> age_upper<font color="#990000">;</font>
+          <b><font color="#0000FF">else</font></b>
+               ok <font color="#990000">&amp;=</font> extend_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">==</font> age_grid<font color="#990000">[</font>i<font color="#990000">-</font><font color="#993399">2</font><font color="#990000">];</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// add one time point to first time line</font></i>
+     <font color="#008080">time_point</font> point_00<font color="#990000">;</font>
+     point_00<font color="#990000">.</font>time   <font color="#990000">=</font> time_lower<font color="#990000">;</font>
+     point_00<font color="#990000">.</font>weight <font color="#990000">=</font> <font color="#993399">1.0</font><font color="#990000">;</font>
+     point_00<font color="#990000">.</font>value  <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+     vec<font color="#990000">.</font><b><font color="#000000">add_point</font></b><font color="#990000">(</font>sub_lower<font color="#990000">,</font> point_00<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// add two time points to the second time line</font></i>
+     <font color="#008080">time_point</font> point_10<font color="#990000">,</font> point_11<font color="#990000">;</font>
+     point_10<font color="#990000">.</font>time   <font color="#990000">=</font> time_lower<font color="#990000">;</font>
+     point_10<font color="#990000">.</font>weight <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+     point_10<font color="#990000">.</font>value  <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+     point_11<font color="#990000">.</font>time   <font color="#990000">=</font> time_upper<font color="#990000">;</font>
+     point_10<font color="#990000">.</font>weight <font color="#990000">=</font> <font color="#993399">3.0</font><font color="#990000">;</font>
+     point_11<font color="#990000">.</font>value  <font color="#990000">=</font> <font color="#993399">5.0</font><font color="#990000">;</font>
+     vec<font color="#990000">.</font><b><font color="#000000">add_point</font></b><font color="#990000">(</font>sub_lower<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">,</font> point_11<font color="#990000">);</font> <i><font color="#9A1900">// add second point first time</font></i>
+     vec<font color="#990000">.</font><b><font color="#000000">add_point</font></b><font color="#990000">(</font>sub_lower<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">,</font> point_10<font color="#990000">);</font> <i><font color="#9A1900">// add second point second time</font></i>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// check first time line</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;time_point&gt;</font> time_line_0 <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">time_line</font></b><font color="#990000">(</font>sub_lower<font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> time_line_0<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>    <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>time   <font color="#990000">==</font> point_00<font color="#990000">.</font>time<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>weight <font color="#990000">==</font> point_00<font color="#990000">.</font>weight<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_0<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>value  <font color="#990000">==</font> point_00<font color="#990000">.</font>value<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// check second time line</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;time_point&gt;</font> time_line_1 <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">time_line</font></b><font color="#990000">(</font>sub_lower<font color="#990000">+</font><font color="#993399">1</font><font color="#990000">);</font>
+     ok <font color="#990000">&amp;=</font> time_line_1<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>    <font color="#990000">==</font> <font color="#993399">2</font><font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>time   <font color="#990000">==</font> point_10<font color="#990000">.</font>time<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>weight <font color="#990000">==</font> point_10<font color="#990000">.</font>weight<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_1<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>value  <font color="#990000">==</font> point_10<font color="#990000">.</font>value<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>time   <font color="#990000">==</font> point_11<font color="#990000">.</font>time<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>weight <font color="#990000">==</font> point_11<font color="#990000">.</font>weight<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> time_line_1<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>value  <font color="#990000">==</font> point_11<font color="#990000">.</font>value<font color="#990000">;</font>
+     <i><font color="#9A1900">// --------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// add another point to the first line</font></i>
+     <font color="#008080">time_point</font> point_01<font color="#990000">;</font>
+     point_01<font color="#990000">.</font>time   <font color="#990000">=</font> time_upper<font color="#990000">;</font>
+     point_01<font color="#990000">.</font>weight <font color="#990000">=</font> <font color="#993399">4.0</font><font color="#990000">;</font>
+     point_01<font color="#990000">.</font>value  <font color="#990000">=</font> <font color="#993399">6.0</font><font color="#990000">;</font>
+     vec<font color="#990000">.</font><b><font color="#000000">add_point</font></b><font color="#990000">(</font>sub_lower<font color="#990000">,</font> point_01<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// check age_time_avg</font></i>
+     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     <font color="#009900">double</font> avg      <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">age_time_avg</font></b><font color="#990000">();</font>
+     <font color="#009900">double</font> sum_w    <font color="#990000">=</font> point_00<font color="#990000">.</font>weight <font color="#990000">+</font> point_01<font color="#990000">.</font>weight<font color="#990000">;</font>
+     sum_w          <font color="#990000">+=</font> point_10<font color="#990000">.</font>weight <font color="#990000">+</font> point_11<font color="#990000">.</font>weight<font color="#990000">;</font>
+     <font color="#009900">double</font> sum_wv   <font color="#990000">=</font> point_00<font color="#990000">.</font>weight <font color="#990000">*</font> point_00<font color="#990000">.</font>value<font color="#990000">;</font>
+     sum_wv         <font color="#990000">+=</font> point_01<font color="#990000">.</font>weight <font color="#990000">*</font> point_01<font color="#990000">.</font>value<font color="#990000">;</font>
+     sum_wv         <font color="#990000">+=</font> point_10<font color="#990000">.</font>weight <font color="#990000">*</font> point_10<font color="#990000">.</font>value<font color="#990000">;</font>
+     sum_wv         <font color="#990000">+=</font> point_11<font color="#990000">.</font>weight <font color="#990000">*</font> point_11<font color="#990000">.</font>value<font color="#990000">;</font>
+     <font color="#009900">double</font> check <font color="#990000">=</font> sum_wv <font color="#990000">/</font> sum_w<font color="#990000">;</font>
+     ok <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> avg <font color="#990000">/</font> check <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps99<font color="#990000">;</font>
+     <i><font color="#9A1900">// ---------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// max_time_diff</font></i>
+     <font color="#008080">size_t</font> age_index<font color="#990000">;</font>
+     <font color="#008080">size_t</font> time_index<font color="#990000">;</font>
+     <font color="#009900">double</font> max_diff <font color="#990000">=</font> vec<font color="#990000">.</font><b><font color="#000000">max_time_diff</font></b><font color="#990000">(</font>age_index<font color="#990000">,</font> time_index<font color="#990000">);</font>
+     check <font color="#990000">=</font> time_upper <font color="#990000">-</font> time_lower<font color="#990000">;</font>
+     ok   <font color="#990000">&amp;=</font> std<font color="#990000">::</font><b><font color="#000000">fabs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> max_diff <font color="#990000">/</font> check <font color="#990000">)</font> <font color="#990000">&lt;=</font> eps99<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/devel/utility/time_line_vec_xam.cpp
+
+</body>
+</html>

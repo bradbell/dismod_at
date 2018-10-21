@@ -38,7 +38,8 @@ var list_down0 = [
 'bilinear.htm',
 'ode_grid.htm',
 'posterior.htm',
-'prev_dep.htm'
+'prev_dep.htm',
+'numeric_average.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

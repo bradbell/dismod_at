@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Split String Into Substrings With Spaces as Delimiter</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Split String Into Substrings With Spaces as Delimiter">
-<meta name="keywords" id="keywords" content=" split string into substrings with spaces delimiter syntax str vec example prototype ">
+<meta name="keywords" id="keywords" content=" split string into substrings with spaces delimiter syntax str vec empty example prototype ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -57,6 +57,7 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>str</option>
 <option>vec</option>
+<option>empty</option>
 <option>Example</option>
 <option>Prototype</option>
 </select>
@@ -92,23 +93,23 @@ A:active { color : purple }
 <option>avgint_subset</option>
 <option>bilinear_interp</option>
 <option>child_info</option>
+<option>cohort_ode</option>
 <option>data_subset</option>
 <option>eigen_ode2</option>
 <option>error_exit</option>
 <option>fixed_effect</option>
 <option>get_prior_mean</option>
-<option>integrate_1d</option>
-<option>integrate_2d</option>
-<option>interp_weight</option>
+<option>number_random_const</option>
+<option>avg_age_grid</option>
 <option>pack_info</option>
 <option>pack_prior</option>
 <option>residual_density</option>
 <option>random_number</option>
 <option>random_effect</option>
-<option>number_random_const</option>
-<option>smooth2ode</option>
+<option>grid2line</option>
 <option>solve_ode</option>
 <option>split_space</option>
+<option>time_line_vec</option>
 </select>
 </td>
 <td>
@@ -146,6 +147,17 @@ If all the characters in
  are spaces,
 the resulting vector with have size zero.
 
+<br>
+<br>
+<b><big><a name="empty" id="empty">empty</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>str</span></font></i></code>
+ only contains spaces,
+the return vector is empty; i.e.
+
+<code><i><font color="black"><span style='white-space: nowrap'>vec</span></font></i><font color="blue"><span style='white-space: nowrap'>.size()&nbsp;==&nbsp;0</span></font></code>
+.
 
 
 <br>

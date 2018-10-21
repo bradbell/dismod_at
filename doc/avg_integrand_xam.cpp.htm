@@ -1,0 +1,330 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>C++ avg_integrand: Example and Test</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="C++ avg_integrand: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ avg_integrand: example test ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_avg_integrand_xam.cpp_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>devel</option>
+<option>devel_model</option>
+<option>devel_avg_integrand</option>
+<option>avg_integrand_rectangle</option>
+<option>avg_integrand_xam.cpp</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="avg_integrand_rectangle.htm" target="_top">Prev</a>
+</td><td>Current</td>
+<td><a href="avg_integrand_add_cohort.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down4(this)'>
+<option>devel-&gt;</option>
+<option>devel_table</option>
+<option>devel_utility</option>
+<option>devel_model</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down3(this)'>
+<option>devel_model-&gt;</option>
+<option>devel_data_model</option>
+<option>prior_model</option>
+<option>fit_model</option>
+<option>depend</option>
+<option>adj_integrand</option>
+<option>devel_avg_integrand</option>
+<option>devel_avg_std_effect</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>devel_avg_integrand-&gt;</option>
+<option>avg_integrand_ctor</option>
+<option>avg_integrand_rectangle</option>
+<option>avg_integrand_add_cohort</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>avg_integrand_rectangle-&gt;</option>
+<option>avg_integrand_xam.cpp</option>
+</select>
+</td>
+<td>avg_integrand_xam.cpp</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>C++ avg_integrand: Example and Test</big></big></b></center>
+<pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/avg_integrand.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/null_int.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/get_weight_table.hpp&gt;</font>
+
+<font color="#009900">bool</font> <b><font color="#000000">avg_integrand_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>abs<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
+     <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
+     <b><font color="#0000FF">typedef</font></b> <font color="#009900">double</font> Float<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// rate_case</font></i>
+     std<font color="#990000">::</font><font color="#008080">string</font> rate_case <font color="#990000">=</font> <font color="#FF0000">"iota_pos_rho_zero"</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// age_table</font></i>
+     <font color="#008080">size_t</font> n_age_table <font color="#990000">=</font> <font color="#993399">6</font><font color="#990000">;</font>
+     <font color="#009900">double</font> age_ini     <font color="#990000">=</font> <font color="#993399">20.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> age_end     <font color="#990000">=</font> <font color="#993399">100.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> d_age       <font color="#990000">=</font> <font color="#990000">(</font>age_end <font color="#990000">-</font> age_ini<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>n_age_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">age_table</font></b><font color="#990000">(</font>n_age_table<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_age_table<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+          age_table<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> age_ini <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">*</font> d_age<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// time_table</font></i>
+     <font color="#008080">size_t</font> n_time_table <font color="#990000">=</font> <font color="#993399">4</font><font color="#990000">;</font>
+     <font color="#009900">double</font> time_min     <font color="#990000">=</font> <font color="#993399">1990.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> time_max     <font color="#990000">=</font> <font color="#993399">2010.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> d_time       <font color="#990000">=</font> <font color="#990000">(</font>time_max <font color="#990000">-</font> time_min<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>n_time_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">time_table</font></b><font color="#990000">(</font>n_time_table<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_time_table<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+          time_table<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> time_min <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">*</font> d_time<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// age_grid_id</font></i>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">age_grid_id</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     age_grid_id<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// time_grid_id</font></i>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">time_grid_id</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     time_grid_id<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> n_time_table <font color="#990000">-</font> <font color="#993399">2</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// w_info</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">weight</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     weight<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2.0</font><font color="#990000">;</font>
+     dismod_at<font color="#990000">::</font><font color="#008080">weight_info</font> <b><font color="#000000">w_info</font></b><font color="#990000">(</font>
+          age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> age_grid_id<font color="#990000">,</font> time_grid_id<font color="#990000">,</font> weight
+     <font color="#990000">);</font>
+
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// w_info_vec</font></i>
+     <font color="#008080">vector&lt;dismod_at::weight_info&gt;</font> <b><font color="#000000">w_info_vec</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     w_info_vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> w_info<font color="#990000">;</font>
+
+     <i><font color="#9A1900">// priors are not used</font></i>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">value_prior_id</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">dage_prior_id</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">dtime_prior_id</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     <font color="#008080">vector&lt;double&gt;</font> const_value<font color="#990000">;</font>
+     <font color="#008080">size_t</font> mulstd_value   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> mulstd_dage    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> mulstd_dtime   <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+
+     <i><font color="#9A1900">// s_info: testing constructor</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">smooth_info</font> <b><font color="#000000">s_info</font></b><font color="#990000">(</font>
+          age_table<font color="#990000">,</font>
+          time_table<font color="#990000">,</font>
+          age_grid_id<font color="#990000">,</font>
+          time_grid_id<font color="#990000">,</font>
+          value_prior_id<font color="#990000">,</font>
+          dage_prior_id<font color="#990000">,</font>
+          dtime_prior_id<font color="#990000">,</font>
+          const_value<font color="#990000">,</font>
+          mulstd_value<font color="#990000">,</font>
+          mulstd_dage<font color="#990000">,</font>
+          mulstd_dtime
+     <font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// s_info_vec</font></i>
+     <font color="#008080">vector&lt;dismod_at::smooth_info&gt;</font> <b><font color="#000000">s_info_vec</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
+     s_info_vec<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> s_info<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// integrand_table</font></i>
+     <font color="#008080">size_t</font> n_integrand <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;dismod_at::integrand_struct&gt;</font> <b><font color="#000000">integrand_table</font></b><font color="#990000">(</font>n_integrand<font color="#990000">);</font>
+     integrand_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>integrand <font color="#990000">=</font> dismod_at<font color="#990000">::</font>Sincidence_enum<font color="#990000">;</font>
+     integrand_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>integrand <font color="#990000">=</font> dismod_at<font color="#990000">::</font>susceptible_enum<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// number of children</font></i>
+     <font color="#008080">size_t</font> n_child <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// index for parent</font></i>
+     <font color="#008080">size_t</font> child   <font color="#990000">=</font> n_child<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// x</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">x</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// child_id2node_id</font></i>
+     <font color="#008080">vector&lt;size_t&gt;</font> <b><font color="#000000">child_id2node_id</font></b><font color="#990000">(</font>n_child<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// smooth_table</font></i>
+     <font color="#008080">vector&lt;dismod_at::smooth_struct&gt;</font> <b><font color="#000000">smooth_table</font></b><font color="#990000">(</font>s_info_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">());</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> smooth_id <font color="#990000">&lt;</font> s_info_vec<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> smooth_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_age
+               <font color="#990000">=</font> <font color="#009900">int</font><font color="#990000">(</font> s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">].</font><b><font color="#000000">age_size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+          smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">].</font>n_time
+               <font color="#990000">=</font> <font color="#009900">int</font><font color="#990000">(</font> s_info_vec<font color="#990000">[</font>smooth_id<font color="#990000">].</font><b><font color="#000000">time_size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// mulcov_table</font></i>
+     <font color="#008080">vector&lt;dismod_at::mulcov_struct&gt;</font> <b><font color="#000000">mulcov_table</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// rate_table</font></i>
+     <font color="#008080">vector&lt;dismod_at::rate_struct&gt;</font>   <b><font color="#000000">rate_table</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>number_rate_enum<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> rate_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> rate_id <font color="#990000">&lt;</font> rate_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">();</font> rate_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>parent_smooth_id <font color="#990000">=</font> <font color="#009900">int</font><font color="#990000">(</font> smooth_id <font color="#990000">);</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_smooth_id  <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
+          rate_table<font color="#990000">[</font>rate_id<font color="#990000">].</font>child_nslist_id  <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// nslist_pair</font></i>
+     <font color="#008080">vector&lt;dismod_at::nslist_pair_struct&gt;</font> <b><font color="#000000">nslist_pair</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// pack_object</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">pack_info</font> <b><font color="#000000">pack_object</font></b><font color="#990000">(</font>
+          n_integrand<font color="#990000">,</font>
+          child_id2node_id<font color="#990000">,</font>
+          smooth_table<font color="#990000">,</font>
+          mulcov_table<font color="#990000">,</font>
+          rate_table<font color="#990000">,</font>
+          nslist_pair
+     <font color="#990000">);</font>
+     <i><font color="#9A1900">/*</font></i>
+<i><font color="#9A1900">     pack_vec: pini=0, rho=0, chi=0, omega=0, iota=beta:</font></i>
+<i><font color="#9A1900">     S(a) = exp( -beta * (a - age_ini) )</font></i>
+<i><font color="#9A1900">    */</font></i>
+     <font color="#009900">double</font> beta          <font color="#990000">=</font> <font color="#993399">0.01</font><font color="#990000">;</font>
+     <font color="#009900">double</font> random_effect <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font><font color="#993399">2.0</font><font color="#990000">);</font>
+     <font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">pack_vec</font></b><font color="#990000">(</font> pack_object<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
+     dismod_at<font color="#990000">::</font>pack_info<font color="#990000">::</font><font color="#008080">subvec_info</font> info<font color="#990000">;</font>
+     <font color="#008080">size_t</font> n_rate <font color="#990000">=</font> dismod_at<font color="#990000">::</font>number_rate_enum<font color="#990000">;</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> child_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> child_id <font color="#990000">&lt;=</font> n_child<font color="#990000">;</font> child_id<font color="#990000">++)</font>
+     <font color="#FF0000">{</font>    <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> rate_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> rate_id <font color="#990000">&lt;</font> n_rate<font color="#990000">;</font> rate_id<font color="#990000">++)</font>
+          <font color="#FF0000">{</font>    info <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">rate_info</font></b><font color="#990000">(</font>rate_id<font color="#990000">,</font> child_id<font color="#990000">);</font>
+               <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
+               <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> rate_id <font color="#990000">==</font> <b><font color="#000000">size_t</font></b><font color="#990000">(</font>dismod_at<font color="#990000">::</font>iota_enum<font color="#990000">)</font> <font color="#990000">)</font>
+                    <font color="#FF0000">{</font>    <b><font color="#0000FF">if</font></b><font color="#990000">(</font> child_id <font color="#990000">==</font> n_child <font color="#990000">)</font>
+                              pack_vec<font color="#990000">[</font>info<font color="#990000">.</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> beta<font color="#990000">;</font>
+                         <b><font color="#0000FF">else</font></b>
+                              pack_vec<font color="#990000">[</font>info<font color="#990000">.</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> random_effect<font color="#990000">;</font>
+                    <font color="#FF0000">}</font>
+                    <b><font color="#0000FF">else</font></b>
+                         pack_vec<font color="#990000">[</font>info<font color="#990000">.</font>offset <font color="#990000">+</font> k<font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.00</font><font color="#990000">;</font>
+               <font color="#FF0000">}</font>
+          <font color="#FF0000">}</font>
+     <font color="#FF0000">}</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// ode_step_size</font></i>
+     <font color="#008080">size_t</font> n_ode_age     <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
+     <font color="#009900">double</font> ode_step_size <font color="#990000">=</font> <font color="#990000">(</font>age_end <font color="#990000">-</font> age_ini<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>n_ode_age <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// avg_age_grid</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">avg_age_grid</font></b><font color="#990000">(</font>n_ode_age<font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_ode_age<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
+          avg_age_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> age_ini <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">*</font> ode_step_size<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// avgint_obj</font></i>
+     dismod_at<font color="#990000">::</font><font color="#008080">avg_integrand</font> <b><font color="#000000">avgint_obj</font></b><font color="#990000">(</font>
+          ode_step_size<font color="#990000">,</font>
+          rate_case<font color="#990000">,</font>
+          age_table<font color="#990000">,</font>
+          time_table<font color="#990000">,</font>
+          avg_age_grid<font color="#990000">,</font>
+          integrand_table<font color="#990000">,</font>
+          w_info_vec<font color="#990000">,</font>
+          s_info_vec<font color="#990000">,</font>
+          pack_object
+     <font color="#990000">);</font>
+     <font color="#009900">double</font> age_lower    <font color="#990000">=</font> age_ini <font color="#990000">+</font> <font color="#993399">10.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> age_upper    <font color="#990000">=</font> age_end <font color="#990000">-</font> <font color="#993399">10.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> time_lower   <font color="#990000">=</font> <font color="#993399">2000.0</font><font color="#990000">;</font>
+     <font color="#009900">double</font> time_upper   <font color="#990000">=</font> <font color="#993399">2010.0</font><font color="#990000">;</font>
+     <font color="#008080">size_t</font> weight_id    <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// Sincidence</font></i>
+     <font color="#008080">size_t</font> integrand_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+     <font color="#008080">Float</font> avg <font color="#990000">=</font> avgint_obj<font color="#990000">.</font><b><font color="#000000">rectangle</font></b><font color="#990000">(</font>
+          age_lower<font color="#990000">,</font>
+          age_upper<font color="#990000">,</font>
+          time_lower<font color="#990000">,</font>
+          time_upper<font color="#990000">,</font>
+          weight_id<font color="#990000">,</font>
+          integrand_id<font color="#990000">,</font>
+          n_child<font color="#990000">,</font>
+          child<font color="#990000">,</font>
+          x<font color="#990000">,</font>
+          pack_vec
+     <font color="#990000">);</font>
+     <i><font color="#9A1900">// check result</font></i>
+     <font color="#009900">double</font> eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">epsilon</font></b><font color="#990000">();</font>
+     ok          <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>avg<font color="#990000">,</font> beta<font color="#990000">,</font> eps99<font color="#990000">,</font> eps99<font color="#990000">);</font>
+     <i><font color="#9A1900">// -----------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900">// susceptible</font></i>
+     integrand_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
+     avg <font color="#990000">=</font> avgint_obj<font color="#990000">.</font><b><font color="#000000">rectangle</font></b><font color="#990000">(</font>
+          age_lower<font color="#990000">,</font>
+          age_upper<font color="#990000">,</font>
+          time_lower<font color="#990000">,</font>
+          time_upper<font color="#990000">,</font>
+          weight_id<font color="#990000">,</font>
+          integrand_id<font color="#990000">,</font>
+          n_child<font color="#990000">,</font>
+          child<font color="#990000">,</font>
+          x<font color="#990000">,</font>
+          pack_vec
+     <font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// check result</font></i>
+     <i><font color="#9A1900">// S(a)        = exp( -beta * (a - age_ini) )</font></i>
+     <i><font color="#9A1900">// int S(a) da = - exp( -beta * (a - age_ini) ) / beta</font></i>
+     <font color="#009900">double</font> low_int <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> beta <font color="#990000">*</font> <font color="#990000">(</font> age_lower <font color="#990000">-</font> age_ini <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">/</font> beta<font color="#990000">;</font>
+     <font color="#009900">double</font> up_int  <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> beta <font color="#990000">*</font> <font color="#990000">(</font> age_upper <font color="#990000">-</font> age_ini <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">/</font> beta<font color="#990000">;</font>
+     <font color="#009900">double</font> check   <font color="#990000">=</font> <font color="#990000">(</font>up_int <font color="#990000">-</font> low_int<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>age_upper <font color="#990000">-</font> age_lower <font color="#990000">);</font>
+     ok            <font color="#990000">&amp;=</font> CppAD<font color="#990000">::</font><b><font color="#000000">NearEqual</font></b><font color="#990000">(</font>avg<font color="#990000">,</font> check<font color="#990000">,</font> <font color="#993399">1e-2</font><font color="#990000">,</font> <font color="#993399">1e-2</font><font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
+<font color="#FF0000">}</font></tt></pre>
+
+<hr>Input File: example/devel/model/avg_integrand_xam.cpp
+
+</body>
+</html>

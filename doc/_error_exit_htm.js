@@ -42,23 +42,23 @@ var list_down1 = [
 'avgint_subset.htm',
 'bilinear_interp.htm',
 'child_info.htm',
+'cohort_ode.htm',
 'data_subset.htm',
 'eigen_ode2.htm',
 'error_exit.htm',
 'fixed_effect.htm',
 'get_prior_mean.htm',
-'integrate_1d.htm',
-'integrate_2d.htm',
-'interp_weight.htm',
+'number_random_const.htm',
+'avg_age_grid.htm',
 'pack_info.htm',
 'pack_prior.htm',
 'residual_density.htm',
 'random_number.htm',
 'random_effect.htm',
-'number_random_const.htm',
-'smooth2ode.htm',
+'grid2line.htm',
 'solve_ode.htm',
-'split_space.htm'
+'split_space.htm',
+'time_line_vec.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

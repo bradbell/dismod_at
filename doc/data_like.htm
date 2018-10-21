@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Likelihood and Weighted Residuals</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Likelihood and Weighted Residuals">
-<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects u theta average integrand adjusted residual ">
+<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects u theta average integrand effect adjusted residual ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,6 +70,7 @@ A:active { color : purple }
 <option>---..gamma_j</option>
 <option>Effects, u, theta</option>
 <option>Average Integrand</option>
+<option>Average Standard Deviation Effect</option>
 <option>Adjusted Standard Deviation, delta_i</option>
 <option>Weighted Residual and Likelihood</option>
 </select>
@@ -107,6 +108,7 @@ A:active { color : purple }
 <option>ode_grid</option>
 <option>posterior</option>
 <option>prev_dep</option>
+<option>numeric_average</option>
 </select>
 </td>
 <td>data_like</td>
@@ -350,9 +352,9 @@ A_i ( u , \theta )
 
 <br>
 <br>
-<b><big><a name="Adjusted Standard Deviation, delta_i" id="Adjusted Standard Deviation, delta_i">Adjusted Standard Deviation, delta_i</a></big></b>
+<b><big><a name="Average Standard Deviation Effect" id="Average Standard Deviation Effect">Average Standard Deviation Effect</a></big></b>
 <br>
-We define the standard deviation effect by
+We define the average standard deviation effect by
 <small>@[@
 
 E_i ( \theta )
@@ -365,6 +367,11 @@ E_i ( \theta )
 	w_i (a,t) \; \B{d} t \; \B{d} a
 
 @]@</small>
+
+<br>
+<br>
+<b><big><a name="Adjusted Standard Deviation, delta_i" id="Adjusted Standard Deviation, delta_i">Adjusted Standard Deviation, delta_i</a></big></b>
+<br>
 For the log-transformed densities, the adjusted standard deviation is
 <small>@[@
 
