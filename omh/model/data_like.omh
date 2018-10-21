@@ -125,8 +125,8 @@ Let $latex A_i ( u , \theta )$$ denote the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$ for this
 $icode data_id$$.
 
-$head Adjusted Standard Deviation, delta_i$$
-We define the standard deviation effect by
+$head Average Standard Deviation Effect$$
+We define the average standard deviation effect by
 $latex \[
 E_i ( \theta )
 =
@@ -137,6 +137,8 @@ E_i ( \theta )
 	\right)
 	w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
+
+$head Adjusted Standard Deviation, delta_i$$
 For the log-transformed densities, the adjusted standard deviation is
 $latex \[
 \delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]

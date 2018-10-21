@@ -63,6 +63,23 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-21$$
+Change the way that average integrands are computed; see
+$cref numeric_average$$.
+This enables using a step size that varies with age; see
+$cref/average age grid/option_table/avg_age_split/Average Age Grid/$$.
+Here is one case of a speed comparison for this change using a uniformly
+spaced grid:
+before 4.9 seconds, after 3.6 second.
+Here is the memory comparison for the same case:
+before 288.7 MB, after 121.8 MG.
+Note that this test takes advantage of the fact that only one cohort is
+integrated for averages where
+$icode%age_lower% = %age_upper%$$ and
+$icode%time_lower% = %time_upper%$$.
+It does not take advantage of ability to vary the spacing of the age grid.
+
+
 $head 10-13$$
 $list number$$
 The $cref/ode_step_size/option_table/ode_step_size/$$ documentation

@@ -14,10 +14,15 @@ $spell
 	integrands
 $$
 
-$section Numerical Approximation of the Average Integrand$$
+$section Numerical Approximation of Average Integrands$$
 
-$head Under Construction$$
-This is a plan for a new way of approximating average integrands.
+$head Average Standard Deviation Effect$$
+This technique is also used to compute the
+$cref/average standard deviation effect
+	/data_like
+	/Average Standard Deviation Effect
+/$$.
+
 
 $head A$$
 We compute an
@@ -71,10 +76,13 @@ $cref/time_upper/data_table/time_upper/$$ value.
 
 $head Average Integrand Time Step, Delta t$$
 The average integrand time step $latex \Delta t$$
-is specified by the option table.
+is specified by $cref/ode_step_size/option_table/ode_step_size/$$
+in the option table.
 
 $head Average Integrand Age Grid$$
-The average integrand age grid is specified by the option table.
+The
+$cref/average age grid/option_table/avg_age_split/Average Age Grid/$$
+is specified in the option table.
 
 $head Extended Age Grid$$
 The extended age grid is the union (as sets) of $latex \{ a_L , a_U \}$$

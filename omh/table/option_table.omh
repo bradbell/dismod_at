@@ -230,6 +230,13 @@ $codei%
 %$$
 The average age grid is the union of the set of $icode%a%[%i%]%$$
 and the age points in $icode avg_age_split$$.
+This grid is used both for
+$cref/approximating averages/numeric_average/$$
+and for approximating the solution of the dismod_at
+$cref/ordinary differential equation
+	/avg_integrand
+	/Ordinary Differential Equation
+/$$.
 
 $subhead Default$$
 The default value for $icode avg_age_split$$ is the empty set
