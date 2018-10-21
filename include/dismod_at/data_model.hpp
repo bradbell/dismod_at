@@ -24,9 +24,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_data_sim_table.hpp"
 # include "avg_integrand.hpp"
 
-// declare test functions that are friends
-extern bool sci_ode_xam(void);
-
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class data_model {
@@ -100,13 +97,6 @@ public:
 	void replace_like(
 		const CppAD::vector<data_subset_struct>& data_subset_obj
 	);
-	//
-	// to compute S, C, corresponding to reference value for covariates
-	template <class Float>
-	CppAD::vector<Float> reference_ode(
-		const  CppAD::vector<Float>&  pack_vec     ,
-		bool                          parent_only
-	) const;
 	//
 	// compute an average integrand: data_model is effectively const
 	template <class Float>

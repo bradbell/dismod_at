@@ -410,10 +410,6 @@ void fit_command(
 	col_type[1]   = "real";
 	col_unique[1] = false;
 	//
-	bool parent_only = false;
-	CppAD::vector<double> reference_sc =
-		data_object.reference_ode(opt_value, parent_only);
-	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// compute average integrand for this data item
 		double avg = data_object.average(subset_id, opt_value);
@@ -549,10 +545,6 @@ void simulate_command(
 	col_name[3]   = "data_sim_delta";
 	col_type[3]   = "real";
 	col_unique[3] = false;
-	//
-	bool parent_only = false;
-	CppAD::vector<double> reference_sc =
-		data_object.reference_ode(truth_var, parent_only);
 	//
 	// for each measurement in the data_subset table
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
@@ -1210,10 +1202,6 @@ void predict_command(
 	{	// copy the variable values for this sample index into pack_vec
 		for(size_t var_id = 0; var_id < n_var; var_id++)
 			pack_vec[var_id] = variable_value[sample_id++];
-		//
-		bool parent_only = false;
-		CppAD::vector<double> reference_sc =
-			avgint_object.reference_ode(pack_vec, parent_only);
 		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{
