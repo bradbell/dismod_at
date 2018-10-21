@@ -12,8 +12,6 @@
 new_directories='
 '
 rename_files='
-	devel/model/adjust_integrand.cpp
-	include/dismod_at/adjust_integrand.hpp
 '
 spell_files='
 '
@@ -26,9 +24,8 @@ rename_cmd='s|adjust_integrand|adj_integrand|'
 # spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-s|adjust_integrand|adj_integrand|g
-s|ADJUST_INTEGRAND|ADJ_INTEGRAND|
-s|%adj_integrand%|%adjust_integrand%|
+s|adj_object|adjint_obj|g
+s|avg_object|avgint_obj|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

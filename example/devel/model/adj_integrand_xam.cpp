@@ -178,7 +178,7 @@ bool adj_integrand_xam(void)
 	}
 	//
 	// adjust_object
-	dismod_at::adj_integrand adj_object(
+	dismod_at::adj_integrand adjint_obj(
 		rate_case,
 		age_table,
 		time_table,
@@ -186,7 +186,7 @@ bool adj_integrand_xam(void)
 		s_info_vec,
 		pack_object
 	);
-	vector<Float> adj_line = adj_object.line(
+	vector<Float> adj_line = adjint_obj.line(
 		cohort_age,
 		cohort_time,
 		integrand_id,

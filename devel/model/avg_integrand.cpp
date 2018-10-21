@@ -17,6 +17,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 ------------------------------------------------------------------------------
 $begin avg_integrand_ctor$$
 $spell
+	avgint_obj
 	vec
 	const
 	CppAD
@@ -26,7 +27,7 @@ $$
 $section Constructing An  Average Integrand Object$$
 
 $head Syntax$$
-$codei%avg_integrand %avg_object%(
+$codei%avg_integrand %avgint_obj%(
 	%ode_step_size%,
 	%rate_case%,
 	%ode_age_grid%,
@@ -54,23 +55,23 @@ $cref/rate_case/option_table/rate_case/$$ in the option table.
 
 $head ode_age_grid$$
 This is the $cref ode_age_grid$$.
-A reference to $icode ode_age_grid$$ is used by $icode avg_object$$
+A reference to $icode ode_age_grid$$ is used by $icode avgint_obj$$
 ($icode ode_age_grid$$ must no be deleted for as long as
-$icode avg_object$$ is used).
+$icode avgint_obj$$ is used).
 
 $head age_table$$
 This argument is the $cref age_table$$.
-A reference to $icode age_table$$ is used by $icode avg_object$$
+A reference to $icode age_table$$ is used by $icode avgint_obj$$
 ($icode age_table$$ must no be deleted for as long as
-$icode avg_object$$ is used).
+$icode avgint_obj$$ is used).
 
 $head time_table$$
 This argument is the $cref time_table$$.
-A reference to $icode time_table$$ is used by $icode avg_object$$.
+A reference to $icode time_table$$ is used by $icode avgint_obj$$.
 
 $head integrand_table$$
 This argument is the $cref integrand_table$$.
-A reference to $icode integrand_table$$ is used by $icode avg_object$$.
+A reference to $icode integrand_table$$ is used by $icode avgint_obj$$.
 
 $head w_info_vec$$
 For each $cref/weight_id/weight_table/weight_id/$$,
@@ -86,7 +87,7 @@ $codei%
 %$$
 is the corresponding $cref smooth_info$$ information.
 None of the prior information in $icode s_info_vec$$ is used.
-A reference to $icode s_info_vec$$ is used by $icode avg_object$$.
+A reference to $icode s_info_vec$$ is used by $icode avgint_obj$$.
 
 $head pack_object$$
 This is the $cref pack_info$$ information corresponding to
@@ -120,7 +121,7 @@ integrand_table_           ( integrand_table ) ,
 w_info_vec_                ( w_info_vec )      ,
 double_time_line_object_   ( ode_age_grid )    ,
 a1_double_time_line_object_( ode_age_grid )    ,
-adj_object_(
+adjint_obj_(
 	rate_case,
 	age_table,
 	time_table,
@@ -133,6 +134,7 @@ adj_object_(
 ------------------------------------------------------------------------------
 $begin avg_integrand_rectangle$$
 $spell
+	avgint_obj
 	vec
 	const
 	CppAD
@@ -143,7 +145,7 @@ $$
 $section Computing One Average Integrand$$
 
 $head Syntax$$
-$icode%avg% = %avg_object%.rectangle(
+$icode%avg% = %avgint_obj%.rectangle(
 	%age_lower%,
 	%age_upper%,
 	%time_lower%,
@@ -332,7 +334,7 @@ Float avg_integrand::rectangle(
 		}
 		// line_adj_
 		line_adj.resize(n_line);
-		line_adj = adj_object_.line(
+		line_adj = adjint_obj_.line(
 			line_age_,
 			line_time_,
 			integrand_id,
@@ -494,6 +496,7 @@ Float avg_integrand::rectangle(
 -----------------------------------------------------------------------------
 $begin avg_integrand_add_cohort$$
 $spell
+	avgint_obj
 	vec
 	pini
 	covariates
@@ -503,7 +506,7 @@ $$
 $section Add ODE Solution for One Cohort To time_line_object$$
 
 $head Syntax$$
-$icode%avg% = %avg_object%.add_cohort(
+$icode%avg% = %avgint_obj%.add_cohort(
 	%time_ini%,
 	%time_lower%,
 	%time_upper%,
@@ -649,7 +652,7 @@ void avg_integrand::add_cohort(
 
 	// line_adj_
 	line_adj.resize(n_line);
-	line_adj = adj_object_.line(
+	line_adj = adjint_obj_.line(
 		line_age_,
 		line_time_,
 		integrand_id,

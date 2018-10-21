@@ -181,7 +181,7 @@ for each $icode subset_id$$, set $codei%data_info_[%subset_id%]%$$
 is extra information used to speed up computation of average integrand
 for the corresponding data point.
 
-$head avg_object_$$
+$head avgint_obj_$$
 The $code avg_integrand$$ $cref/constructor/avg_integrand_ctor/$$
 is used to create this argument.
 The arguments to this constructor are a subset of the
@@ -246,7 +246,7 @@ ode_step_size_     (ode_step_size)                 ,
 n_child_           ( child_object.child_size() )   ,
 subset_cov_value_  (subset_cov_value)              ,
 pack_object_       (pack_object)                   ,
-avg_object_(
+avgint_obj_(
 	ode_step_size,
 	rate_case,
 	ode_age_grid,
@@ -830,7 +830,7 @@ Float data_model::average(
 		x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
 	//
 	// compute average integrand
-	Float result = avg_object_.rectangle(
+	Float result = avgint_obj_.rectangle(
 		age_lower,
 		age_upper,
 		time_lower,

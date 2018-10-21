@@ -17,6 +17,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin adj_integrand$$
 $spell
+	adjint_obj
 	vec
 	const
 	CppAD
@@ -25,7 +26,7 @@ $$
 $section Compute Adjusted Integrand On a Line$$
 
 $head Syntax$$
-$codei%adj_integrand %adj_object%(
+$codei%adj_integrand %adjint_obj%(
 	%rate_case%,
 	%age_table%,
 	%time_table%,
@@ -34,7 +35,7 @@ $codei%adj_integrand %adj_object%(
 	%pack_object%
 );
 %$$
-$icode%adj_line% = %adj_object%.line(
+$icode%adj_line% = %adjint_obj%.line(
 	%line_age%,
 	%line_time%,
 	%integrand_id%,
@@ -58,17 +59,17 @@ $cref/rate_case/option_table/rate_case/$$ in the option table.
 
 $head age_table$$
 This argument is the $cref age_table$$.
-A reference to $icode age_table$$ is used by $icode adj_object$$
+A reference to $icode age_table$$ is used by $icode adjint_obj$$
 ($icode age_table$$ must no be deleted for as long as
-$icode adj_object$$ is used).
+$icode adjint_obj$$ is used).
 
 $head time_table$$
 This argument is the $cref time_table$$.
-A reference to $icode time_table$$ is used by $icode adj_object$$.
+A reference to $icode time_table$$ is used by $icode adjint_obj$$.
 
 $head integrand_table$$
 This argument is the $cref integrand_table$$.
-A reference to $icode integrand_table$$ is used by $icode adj_object$$.
+A reference to $icode integrand_table$$ is used by $icode adjint_obj$$.
 
 $head s_info_vec$$
 For each $cref/smooth_id/smooth_table/smooth_id/$$,
@@ -77,7 +78,7 @@ $codei%
 %$$
 is the corresponding $cref smooth_info$$ information.
 None of the prior information in $icode s_info_vec$$ is used.
-A reference to $icode s_info_vec$$ is used by $icode adj_object$$.
+A reference to $icode s_info_vec$$ is used by $icode adjint_obj$$.
 
 $head pack_object$$
 This is the $cref pack_info$$ information corresponding to

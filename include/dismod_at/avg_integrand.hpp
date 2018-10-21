@@ -47,7 +47,7 @@ private:
 	time_line_vec<double>                     double_time_line_object_;
 	time_line_vec<a1_double>                  a1_double_time_line_object_;
 	//
-	adj_integrand                             adj_object_;
+	adj_integrand                             adjint_obj_;
 
 	// other temporaries used to avoid memory re-allocation
 	CppAD::vector<size_t>                     line_index_;

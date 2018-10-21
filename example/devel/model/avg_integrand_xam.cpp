@@ -189,8 +189,8 @@ bool avg_integrand_xam(void)
 	for(size_t i = 0; i < n_ode_age; ++i)
 		ode_age_grid[i] = age_ini + double(i) * ode_step_size;
 	//
-	// avg_object
-	dismod_at::avg_integrand avg_object(
+	// avgint_obj
+	dismod_at::avg_integrand avgint_obj(
 		ode_step_size,
 		rate_case,
 		age_table,
@@ -209,7 +209,7 @@ bool avg_integrand_xam(void)
 	// -----------------------------------------------------------------------
 	// Sincidence
 	size_t integrand_id = 0;
-	Float avg = avg_object.rectangle(
+	Float avg = avgint_obj.rectangle(
 		age_lower,
 		age_upper,
 		time_lower,
@@ -227,7 +227,7 @@ bool avg_integrand_xam(void)
 	// -----------------------------------------------------------------------
 	// susceptible
 	integrand_id = 1;
-	avg = avg_object.rectangle(
+	avg = avgint_obj.rectangle(
 		age_lower,
 		age_upper,
 		time_lower,

@@ -68,7 +68,7 @@ private:
 	CppAD::vector<data_subset_struct>         data_subset_obj_;
 
 	// Used to compute average average integrands
-	avg_integrand                avg_object_;
+	avg_integrand                avgint_obj_;
 
 public:
 	template <class SubsetStruct>
