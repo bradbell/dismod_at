@@ -167,10 +167,6 @@ $head data_subset_obj_$$
 for each $icode subset_id$$, set $codei%data_subset_obj_[%subset_id%]%$$
 fields that are command both data_subset and avgint_subset.
 
-$head si2ode_vec_$$
-for each $icode smooth_id$$, set $codei%si2ode_vec_[%subset_id%]%$$
-to interpolation structure for specified smoothing on the ode grid.
-
 $head child_ran_zero_$$
 for each $icode%child% < n_child_%$$,
 $codei%child_ran_zero_%[%child%]%$$ is true if all the random effects
@@ -178,8 +174,7 @@ for this child are constrained to be zero.
 
 $head data_info_$$
 for each $icode subset_id$$, set $codei%data_info_[%subset_id%]%$$
-is extra information used to speed up computation of average integrand
-for the corresponding data point.
+is extra information for each data point.
 
 $head avgint_obj_$$
 The $code avg_integrand$$ $cref/constructor/avg_integrand_ctor/$$
@@ -210,11 +205,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // destructor
 data_model::~data_model(void)
-{	// must delete the smooth2ode objects pointed to by si2ode_vec_
-	size_t n_smooth = si2ode_vec_.size();
-	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-			delete si2ode_vec_[smooth_id];
-}
+{ }
 
 // BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
@@ -320,18 +311,6 @@ avgstd_obj_(
 		data_subset_obj_[i].time_upper   = subset_object[i].time_upper;
 	}
 	// -----------------------------------------------------------------------
-	// si2ode_vec_
-	//
-	// has same size as s_info_vec.
-	size_t n_smooth = s_info_vec.size();
-	si2ode_vec_.resize( n_smooth );
-	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
-	{	si2ode_vec_[smooth_id] = new smooth2ode(
-			n_age_ode, n_time_ode, ode_step_size, age_table, time_table,
-			s_info_vec[smooth_id]
-		);
-	}
-	// -----------------------------------------------------------------------
 	// child_ran_zero_
 	double inf = std::numeric_limits<double>::infinity();
 	child_ran_zero_.resize(n_child_);
@@ -372,205 +351,9 @@ avgstd_obj_(
 	// has same size as data_subset_obj
 	data_info_.resize( n_subset );
 	//
-	// limits of the ode grid
-	double age_min    = min_vector( age_table );
-	double time_min   = min_vector( time_table );
-# ifndef NDEBUG
-	double age_max    = max_vector( age_table );
-	double time_max   = max_vector( time_table );
-# endif
-	//
-	assert( age_max  <= age_min  + double(n_age_ode) * ode_step_size );
-	assert( time_max <= time_min + double(n_time_ode) * ode_step_size );
-	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// information for this data point
 		size_t original_id = subset_object[subset_id].original_id;
-
-		// age limits
-		double age_lower  = subset_object[subset_id].age_lower;
-		double age_upper  = subset_object[subset_id].age_upper;
-		assert( age_min <= age_lower );
-		assert( age_upper <= age_max );
-		assert( age_lower <= age_upper);
-
-		// time limits
-		double time_lower = subset_object[subset_id].time_lower;
-		double time_upper = subset_object[subset_id].time_upper;
-		assert( time_min <= time_lower );
-		assert( time_upper <= time_max );
-		assert( time_lower <= time_upper);
-
-		// determine minimum ode grid age index
-		size_t i_min = 0;
-		while(age_min + double(i_min+1) * ode_step_size <= age_lower )
-			i_min++;
-		i_min = std::min(i_min, n_age_ode - 2);
-
-		// determine number of average age grid points
-		size_t n_age = 2;
-		while( age_min + double(i_min + n_age - 1) * ode_step_size < age_upper )
-			n_age++;
-		assert( i_min + n_age <= n_age_ode );
-
-		// determine minimum ode grid time index
-		size_t j_min = 0;
-		while(time_min + double(j_min+1) * ode_step_size <= time_lower )
-			j_min++;
-		j_min  = std::min(j_min, n_age_ode - 2);
-
-		// determine number of ode time grid point
-		size_t n_time = 2;
-		while( time_min + double(j_min + n_time - 1) * ode_step_size < time_upper )
-			n_time++;
-		assert( j_min + n_time <= n_time_ode );
-
-		// initialize coefficient sum for each ode grid point within limits
-		CppAD::vector<double> c_sum(n_age * n_time);
-		for(size_t k = 0; k < n_age * n_time; k++)
-			c_sum[k] = 0.0;
-
-		// weighting for this data point
-		size_t weight_id = subset_object[subset_id].weight_id;
-		const weight_info& w_info( w_info_vec[weight_id] );
-
-		// indices used to interpolate weighting
-		size_t i_wi = 0;
-		size_t j_wi = 0;
-
-		// loop over all the ode rectangles that are within limits
-		double eps = std::numeric_limits<double>::epsilon() * 100.0;
-		CppAD::vector<double> w(4), c(4);
-		std::pair<double, double> w_pair, c_pair;
-		for(size_t i = 0; i < n_age-1; i++)
-		{	// age ode grid points
-			double a1 = age_min + double(i_min + i) * ode_step_size;
-			double a2 = a1 + ode_step_size;
-			//
-			// clip to be within limits for this data point
-			double b1 = std::max(a1, age_lower);
-			double b2 = std::min(a2, age_upper);
-			bool   b1_equal_b2 =
-				std::fabs(b1 - b2) <= eps * ode_step_size;
-			//
-			std::pair<double, double> a_pair(a1, a2);
-			std::pair<double, double> b_pair(b1, b2);
-			//
-			for(size_t j = 0; j < n_time-1; j++)
-			{	// time ode grid points
-				double t1 = time_min + double(j_min + j) * ode_step_size;
-				double t2 = t1 + ode_step_size;
-				//
-				// clip to be within limits for this data point
-				double s1 = std::max(t1, time_lower);
-				double s2 = std::min(t2, time_upper);
-				bool   s1_equal_s2 =
-					std::fabs(s1 - s2) <= eps * ode_step_size;
-				//
-				// initialize contribution for this rectangle as zero
-				c[0] = c[1] = c[2] = c[3] = 0.0;
-				//
-				std::pair<double, double> t_pair(t1, t2);
-				std::pair<double, double> s_pair(s1, s2);
-				//
-				if( age_lower == age_upper && time_lower == time_upper )
-				{	// case with no integration
-					double a = b1;
-					double t = s1;
-					double d = (a2 - a1) * (t2 - t1);
-
-					// coefficients of bilinear interpolator
-					c[0]     = (a2 - a)*(t2 - t) / d;   // (a1, t1)
-					c[1]     = (a2 - a)*(t - t1) / d;   // (a1, t2)
-					c[2]     = (a - a1)*(t2 - t) / d;   // (a2, t1)
-					c[3]     = (a - a1)*(t - t1) / d;   // (a2, t2)
-				}
-				else if( age_lower == age_upper )
-				{	// case where only integrate w.r.t time
-					if( ! s1_equal_s2 )
-					{	double a = age_lower;
-						double d = (a2 - a1);
-
-						// weight at time t1
-						w_pair.first = interp_weight(
-							a, t1, w_info, age_table, time_table, i_wi, j_wi
-						);
-
-						// weight at time t2
-						w_pair.second = interp_weight(
-							a, t2, w_info, age_table, time_table, i_wi, j_wi
-						);
-
-						// coefficients for integrating w.r.t time
-						c_pair = integrate_1d(t_pair, s_pair, w_pair);
-
-						// coefficients for sourrounding age points
-						c[0]   = c_pair.first  * (a2 - a) / d; // (a1, t1)
-						c[1]   = c_pair.second * (a2 - a) / d; // (a1, t2)
-						c[2]   = c_pair.first  * (a - a1) / d; // (a2, t1)
-						c[3]   = c_pair.second * (a - a1) / d; // (a2, t2)
-					}
-				}
-				else if( time_lower == time_upper )
-				{	// case where only integrate w.r.t. age
-					if( ! b1_equal_b2 )
-					{	double t = time_lower;
-						double d = (t2 - t1);
-
-						// weight at age a1
-						w_pair.first = interp_weight(
-							a1, t, w_info, age_table, time_table, i_wi, j_wi
-						);
-
-						// weight at age a2
-						w_pair.second = interp_weight(
-							a2, t, w_info, age_table, time_table, i_wi, j_wi
-						);
-
-						// coefficients for integrating w.r.t. age
-						c_pair = integrate_1d(a_pair, b_pair, w_pair);
-
-						// coefficients for sourrounding time poins
-						c[0]   = c_pair.first  * (t2 - t) / d; // (a1, t1)
-						c[1]   = c_pair.first  * (t - t1) / d; // (a1, t2)
-						c[2]   = c_pair.second * (t2 - t) / d; // (a2, t1)
-						c[3]   = c_pair.second * (t - t1) / d; // (a2, t2)
-					}
-				}
-				else
-				{	// case where integrate w.r.t to age and time
-					if( ! ( b1_equal_b2 || s1_equal_s2) )
-					{	// weight at (a1, t1)
-						w[0] = interp_weight(
-							a1, t1, w_info, age_table, time_table, i_wi, j_wi);
-
-						// weight at (a1, t2)
-						w[1] = interp_weight(
-							a1, t2, w_info, age_table, time_table, i_wi, j_wi);
-
-						// weight at (a2, t1)
-						w[2] = interp_weight(
-							a2, t1, w_info, age_table, time_table, i_wi, j_wi);
-
-						// weight at (a2, t2)
-						w[3] = interp_weight(
-							a2, t2, w_info, age_table, time_table, i_wi, j_wi);
-						//
-						c = integrate_2d(a_pair, t_pair, b_pair, s_pair, w);
-					}
-				}
-				// add this rectangle contribution
-				c_sum[     i * n_time + j   ]  += c[0];
-				c_sum[     i * n_time + j+1 ]  += c[1];
-				c_sum[ (i+1) * n_time + j   ]  += c[2];
-				c_sum[ (i+1) * n_time + j+1 ]  += c[3];
-			}
-		}
-		// compute normalization factor
-		double sum = 0.0;
-		for(size_t k = 0; k < n_age * n_time; k++)
-			sum += c_sum[k];
-		assert( sum > 0.0 );
 
 		// integrand as an enum instead of integrand_id
 		size_t  integrand_id     = subset_object[subset_id].integrand_id;
@@ -582,14 +365,6 @@ avgstd_obj_(
 		// set the information for this data point
 		data_info_[subset_id].integrand = integrand;
 		data_info_[subset_id].child     = child;
-		data_info_[subset_id].i_min     = i_min;
-		data_info_[subset_id].j_min     = j_min;
-		data_info_[subset_id].n_age     = n_age;
-		data_info_[subset_id].n_time    = n_time;
-		//
-		data_info_[subset_id].c_ode.resize(n_age * n_time);
-		for(size_t k = 0; k < n_age * n_time; k++)
-			data_info_[subset_id].c_ode[k] = c_sum[k] / sum;
 
 		// Does this data point depend on the random effects
 		// that do not have equal bounds

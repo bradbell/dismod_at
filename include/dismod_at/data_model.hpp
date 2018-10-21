@@ -33,11 +33,6 @@ class data_model {
 		integrand_enum        integrand;
 		density_enum          density;
 		size_t                child;
-		size_t                i_min;
-		size_t                j_min;
-		size_t                n_age;
-		size_t                n_time;
-		CppAD::vector<double> c_ode;
 		bool                  bound_ran_neq;
 	} data_ode_info;
 private:
