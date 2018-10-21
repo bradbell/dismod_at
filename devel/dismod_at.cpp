@@ -44,6 +44,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 # include <dismod_at/depend.hpp>
 # include <dismod_at/get_prior_mean.hpp>
+# include <dismod_at/avg_age_grid.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -301,10 +302,10 @@ void fit_command(
 		start_var            ,
 		scale_var            ,
 		db_input.prior_table ,
-		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		zero_sum_random
+		zero_sum_random      ,
+		data_object
 	);
 	fit_object.run_fit(random_only, option_map);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -409,39 +410,10 @@ void fit_command(
 	col_type[1]   = "real";
 	col_unique[1] = false;
 	//
-	bool parent_only = false;
-	CppAD::vector<double> reference_sc =
-		data_object.reference_ode(opt_value, parent_only);
-	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	// compute average integrand for this data item
-		double avg;
-		size_t integrand_id = data_subset_obj[subset_id].integrand_id;
-		dismod_at::integrand_enum integrand =
-			db_input.integrand_table[integrand_id].integrand;
-		switch( integrand )
-		{	case dismod_at::Sincidence_enum:
-			case dismod_at::remission_enum:
-			case dismod_at::mtexcess_enum:
-			case dismod_at::mtother_enum:
-			case dismod_at::mtwith_enum:
-			case dismod_at::relrisk_enum:
-			avg = data_object.avg_no_ode(subset_id, opt_value);
-			break;
+		double avg = data_object.average(subset_id, opt_value);
 
-			case dismod_at::susceptible_enum:
-			case dismod_at::withC_enum:
-			case dismod_at::prevalence_enum:
-			case dismod_at::Tincidence_enum:
-			case dismod_at::mtspecific_enum:
-			case dismod_at::mtall_enum:
-			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, opt_value, reference_sc);
-			break;
-
-			default:
-			assert(false);
-		}
 		// compute its residual and log likelihood
 		double not_used;
 		dismod_at::residual_struct<double> residual =
@@ -525,7 +497,7 @@ void simulate_command(
 	sqlite3*                                            db              ,
 	const vector<dismod_at::integrand_struct>&          integrand_table ,
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
-	const dismod_at::data_model&                        data_object     ,
+	dismod_at::data_model&                              data_object     ,
 	const dismod_at::pack_prior&                        var2prior       ,
 	const vector<dismod_at::prior_struct>&              prior_table
 )
@@ -574,42 +546,11 @@ void simulate_command(
 	col_type[3]   = "real";
 	col_unique[3] = false;
 	//
-	bool parent_only = false;
-	CppAD::vector<double> reference_sc =
-		data_object.reference_ode(truth_var, parent_only);
-	//
 	// for each measurement in the data_subset table
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	//
 		// compute the average integrand, avg
-		size_t integrand_id =  data_subset_obj[subset_id].integrand_id;
-		dismod_at::integrand_enum integrand =
-			integrand_table[integrand_id].integrand;
-		double avg;
-		switch( integrand )
-		{	case dismod_at::Sincidence_enum:
-			case dismod_at::remission_enum:
-			case dismod_at::mtexcess_enum:
-			case dismod_at::mtother_enum:
-			case dismod_at::mtwith_enum:
-			case dismod_at::relrisk_enum:
-			avg = data_object.avg_no_ode(subset_id, truth_var);
-			break;
-
-			case dismod_at::susceptible_enum:
-			case dismod_at::withC_enum:
-			case dismod_at::prevalence_enum:
-			case dismod_at::Tincidence_enum:
-			case dismod_at::mtspecific_enum:
-			case dismod_at::mtall_enum:
-			case dismod_at::mtstandard_enum:
-			avg = data_object.avg_yes_ode(subset_id, truth_var, reference_sc);
-			break;
-
-			default:
-			avg = std::numeric_limits<double>::quiet_NaN();
-			assert(false);
-		}
+		double avg = data_object.average(subset_id, truth_var);
 		//
 		// compute the adjusted standard deviation corresponding
 		// to the values in the data table, delta.
@@ -994,10 +935,10 @@ void sample_command(
 				start_var_value      ,
 				scale_var_value      ,
 				db_input.prior_table ,
-				data_object          ,
 				prior_object         ,
 				quasi_fixed          ,
-				zero_sum_random
+				zero_sum_random      ,
+				data_object
 			);
 			fit_object.run_fit(random_only, option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
@@ -1069,10 +1010,10 @@ void sample_command(
 		fit_var_value        ,
 		fit_var_value        ,
 		db_input.prior_table ,
-		data_object          ,
 		prior_object         ,
 		quasi_fixed          ,
-		zero_sum_random
+		zero_sum_random      ,
+		data_object
 	);
 	//
 	// sample
@@ -1262,42 +1203,11 @@ void predict_command(
 		for(size_t var_id = 0; var_id < n_var; var_id++)
 			pack_vec[var_id] = variable_value[sample_id++];
 		//
-		bool parent_only = false;
-		CppAD::vector<double> reference_sc =
-			avgint_object.reference_ode(pack_vec, parent_only);
-		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-		{	int integrand_id = avgint_subset_obj[subset_id].integrand_id;
+		{
 			int avgint_id    = avgint_subset_obj[subset_id].original_id;
-			double avg = 0.0;
-			dismod_at::integrand_enum integrand =
-				db_input.integrand_table[integrand_id].integrand;
-			switch( integrand )
-			{
-				case dismod_at::Sincidence_enum:
-				case dismod_at::remission_enum:
-				case dismod_at::mtexcess_enum:
-				case dismod_at::mtother_enum:
-				case dismod_at::mtwith_enum:
-				case dismod_at::relrisk_enum:
-				avg = avgint_object.avg_no_ode(subset_id, pack_vec);
-				break;
-				//
-				case dismod_at::susceptible_enum:
-				case dismod_at::withC_enum:
-				case dismod_at::prevalence_enum:
-				case dismod_at::Tincidence_enum:
-				case dismod_at::mtspecific_enum:
-				case dismod_at::mtall_enum:
-				case dismod_at::mtstandard_enum:
-				avg = avgint_object.avg_yes_ode(
-					subset_id, pack_vec, reference_sc
-				);
-				break;
-				//
-				default:
-				assert(false);
-			}
+			double avg = avgint_object.average(subset_id, pack_vec);
+			//
 			size_t predict_id = sample_index * n_subset + subset_id;
 			if( source == "sample" )
 				row_value[n_col * predict_id + 0] = to_string( sample_index );
@@ -1449,18 +1359,6 @@ int main(int n_arg, const char** argv)
 	// n_covariate
 	size_t n_covariate = db_input.covariate_table.size();
 	// ---------------------------------------------------------------------
-	// n_age_ode
-	double age_min    = dismod_at::min_vector( db_input.age_table );
-	double age_max    = dismod_at::max_vector( db_input.age_table );
-	size_t n_age_ode  = size_t( (age_max - age_min) / ode_step_size + 2.0 );
-	assert( age_max  <= age_min  + double(n_age_ode - 1) * ode_step_size );
-	// ---------------------------------------------------------------------
-	// n_time_ode
-	double time_min   = dismod_at::min_vector( db_input.time_table );
-	double time_max   = dismod_at::max_vector( db_input.time_table );
-	size_t n_time_ode = size_t( (time_max - time_min) / ode_step_size + 2.0 );
-	assert( time_max <= time_min  + double(n_time_ode - 1) * ode_step_size );
-	// ---------------------------------------------------------------------
 	// parent_node_id
 	size_t parent_node_id   = db_input.node_table.size();
 	string parent_node_name = option_map["parent_node_name"];
@@ -1561,6 +1459,14 @@ int main(int n_arg, const char** argv)
 	// rate_case
 	string rate_case = option_map["rate_case"];
 	//
+	// avg_age_split
+	string avg_age_split = option_map["avg_age_split"];
+	//
+	// avg_age_grid
+	vector<double> avg_age_grid = dismod_at::avg_age_grid(
+		ode_step_size, avg_age_split, db_input.age_table
+	);
+	//
 	// bound_random
 	double bound_random = 0.0;
 	if( command_arg != "fit" || std::strcmp(argv[3], "fixed") != 0 )
@@ -1618,11 +1524,11 @@ int main(int n_arg, const char** argv)
 		//
 		// avgint_object
 		dismod_at::data_model avgint_object(
+			rate_case                ,
 			bound_random             ,
 			n_covariate              ,
-			n_age_ode                ,
-			n_time_ode               ,
 			ode_step_size            ,
+			avg_age_grid             ,
 			db_input.age_table       ,
 			db_input.time_table      ,
 			db_input.integrand_table ,
@@ -1634,7 +1540,6 @@ int main(int n_arg, const char** argv)
 			pack_object              ,
 			child_avgint
 		);
-		avgint_object.set_eigen_ode2_case_number(rate_case);
 		size_t n_var = pack_object.size();
 		std::string source = argv[3];
 		predict_command(
@@ -1681,13 +1586,12 @@ int main(int n_arg, const char** argv)
 				db_input.time_table   ,
 				db_input.prior_table
 			);
-			// data_object
 			dismod_at::data_model data_object(
+				rate_case                ,
 				bound_random             ,
 				n_covariate              ,
-				n_age_ode                ,
-				n_time_ode               ,
 				ode_step_size            ,
+				avg_age_grid             ,
 				db_input.age_table       ,
 				db_input.time_table      ,
 				db_input.integrand_table ,
@@ -1699,7 +1603,6 @@ int main(int n_arg, const char** argv)
 				pack_object              ,
 				child_data
 			);
-			data_object.set_eigen_ode2_case_number(rate_case);
 			//
 			if( command_arg == "depend" )
 			{	depend_command(

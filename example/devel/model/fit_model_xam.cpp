@@ -32,6 +32,7 @@ $end
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/avg_age_grid.hpp>
 
 bool fit_model_xam(void)
 {	bool   ok = true;
@@ -302,16 +303,19 @@ bool fit_model_xam(void)
 	);
 	//
 	// data_model
-	size_t n_age_ode = 6;
-	size_t n_time_ode = 2;
 	double ode_step_size = 20.;
 	double bound_random = std::numeric_limits<double>::infinity();
+	std::string rate_case = "iota_pos_rho_pos";
+	std::string avg_age_split = "";
+	vector<double> avg_age_grid = dismod_at::avg_age_grid(
+		ode_step_size, avg_age_split, age_table
+	);
 	dismod_at::data_model data_object(
+		rate_case,
 		bound_random,
 		n_covariate,
-		n_age_ode,
-		n_time_ode,
 		ode_step_size,
+		avg_age_grid,
 		age_table,
 		time_table,
 		integrand_table,
@@ -372,10 +376,10 @@ bool fit_model_xam(void)
 		start_var,
 		scale_var,
 		prior_table,
-		data_object,
 		prior_object,
 		quasi_fixed,
-		zero_sum_random
+		zero_sum_random,
+		data_object
 	);
 	bool random_only = false;
 	fit_object.run_fit( random_only, option_map );

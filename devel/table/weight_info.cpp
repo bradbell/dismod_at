@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -20,11 +20,15 @@ $$
 $section Extract and Organize Information for One Weighting Function$$
 
 $head Syntax$$
-$codei%weight_info %w_info%(%weight_id% , %weight_grid_table%)
-%$$
-$codei%weight_info %w_test%( %age_id%, %time_id%, %weight%)
-%$$
 $codei%weight_info %w_default%()
+%$$
+$codei%weight_info %w_info%(
+	%age_table%, %time_table%, %weight_id%, %weight_table%, %weight_grid_table%
+)
+%$$
+$codei%weight_info %w_test%(
+	%age_table%, %time_table%, %age_id%, %time_id%, %weight%
+)
 %$$
 $icode%w_default% = %w_info%
 %$$
@@ -45,6 +49,12 @@ the $cref weight_grid_table$$.
 In addition, this routine checks the $code weight_info$$ table
 $cref/rectangular grid/weight_grid_table/Rectangular Grid/$$ assumption.
 
+$head w_default$$
+This is the default constructor. It can be used to create
+an empty $code weight_info$$ object that is later set equal
+to another $code weight_info$$ object.
+This is useful when creating vectors of such objects.
+
 $head w_info$$
 In all its uses, except during construction,
 this object has prototype
@@ -53,66 +63,40 @@ $codei%
 %$$
 The mean of the corresponding constructor arguments are specified below:
 
-$subhead age_table$$
+$head w_test$$
+This object is the result of the testing constructor and can be used
+the same as $icode w_info$$.
+
+
+$head age_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %age_table%
 %$$
 and is the $cref/age_table/get_age_table/$$.
 
-$subhead time_table$$
+$head time_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %time_table%
 %$$
 and is the $cref/time_table/get_time_table/$$.
 
-$subhead weight_id$$
-This argument has prototype
-$codei%
-	size_t %weight_id%
-%$$
-and is the $cref/weight_id/weight_grid_table/weight_id/$$ for the
-weighting that $icode w_info$$ corresponds to.
-
-$subhead weight_table$$
+$head weight_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %weight_table%
 %$$
 and is the $cref/weight_table/get_weight_table/$$.
 
-$subhead weight_grid_table$$
+$head weight_grid_table$$
 This argument has prototype
 $codei%
 	const CppAD::vector<weight_grid_struct>& %weight_grid_table%
 %$$
 an is the $cref weight_grid_table$$.
 
-$subhead w_info$$
-This result has type $code weight_info$$.
-All of the functions calls in the syntax above are $code const$$; i.e.,
-they do not modify $icode w_info$$.
-
-$head w_test$$
-This constructor is used for testing purposes only.
-The meaning of its arguments are specified below:
-
-$subhead age_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %age_table%
-%$$
-and is the $cref/age_table/get_age_table/$$.
-
-$subhead time_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %time_table%
-%$$
-and is the $cref/time_table/get_time_table/$$.
-
-$subhead age_id$$
+$head age_id$$
 This argument has prototype
 $codei%
 	const CppAD::vector<size_t>& %age_id%
@@ -122,7 +106,7 @@ $codei%
 	%w_info%.age_id(%i%) = %age_id%[%i%]
 %$$
 
-$subhead time_id$$
+$head time_id$$
 This argument has prototype
 $codei%
 	const CppAD::vector<size_t>& %time_id%
@@ -132,7 +116,7 @@ $codei%
 	%w_info%.time_id(%i%) = %time_id%[%i%]
 %$$
 
-$subhead weight$$
+$head weight$$
 This argument has prototype
 $codei%
 	const CppAD::vector<double>& %weight%
@@ -141,12 +125,6 @@ It specifies the weight grid values in row major order; i.e.
 $codei%
 	%w_info%.weight(%i%, %j%) = %time_id%[%i%*%n_time% + %j%]
 %$$
-
-$head w_default$$
-This is the default constructor. It can be used to create
-an empty $code weight_info$$ object that is later set equal
-to another $code weight_info$$ object.
-This is useful when creating vectors of such objects.
 
 $head n_age$$
 This result has prototype

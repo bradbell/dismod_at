@@ -28,35 +28,37 @@ $end
 # include <cstring>
 
 // model subdirectory
+extern bool adj_integrand_xam(void);
+extern bool avg_integrand_xam(void);
 extern bool avg_no_ode_xam(void);
+extern bool avg_std_effect_xam(void);
 extern bool avg_yes_ode_xam(void);
 extern bool fit_model_xam(void);
 extern bool like_all_xam(void);
 extern bool like_one_xam(void);
 extern bool prior_fixed_xam(void);
 extern bool prior_random_xam(void);
-extern bool sci_ode_xam(void);
 
 // utility subdirectory
 extern bool avgint_subset_xam(void);
 extern bool bilinear_interp_xam(void);
 extern bool child_info_xam(void);
+extern bool cohort_ode_xam(void);
 extern bool data_subset_xam(void);
 extern bool eigen_ode2_xam(void);
 extern bool fixed_effect_xam(void);
-extern bool integrate_1d_xam(void);
-extern bool integrate_2d_xam(void);
-extern bool interp_weight_xam(void);
 extern bool manage_gsl_rng_xam(void);
+extern bool avg_age_grid_xam(void);
 extern bool pack_info_xam(void);
 extern bool pack_prior_xam(void);
 extern bool random_effect_xam(void);
 extern bool n_random_const_xam(void);
 extern bool residual_density_xam(void);
 extern bool sim_random_xam(void);
-extern bool smooth2ode_xam(void);
+extern bool grid2line_xam(void);
 extern bool solve_ode_xam(void);
 extern bool split_space_xam(void);
+extern bool time_line_vec_xam(void);
 
 // table subdirectory
 extern bool check_pini_n_age_xam(void);
@@ -119,35 +121,37 @@ namespace {
 int main(void)
 {
 	// model subdirectory
+	RUN(adj_integrand_xam);
+	RUN(avg_integrand_xam);
 	RUN(avg_no_ode_xam);
+	RUN(avg_std_effect_xam);
 	RUN(avg_yes_ode_xam);
 	RUN(fit_model_xam);
 	RUN(like_all_xam);
 	RUN(like_one_xam);
 	RUN(prior_fixed_xam);
 	RUN(prior_random_xam);
-	RUN(sci_ode_xam);
 
 	// utility subdirectory
 	RUN(avgint_subset_xam);
 	RUN(bilinear_interp_xam);
 	RUN(child_info_xam);
+	RUN(cohort_ode_xam);
 	RUN(data_subset_xam);
 	RUN(eigen_ode2_xam);
 	RUN(fixed_effect_xam);
-	RUN(integrate_1d_xam);
-	RUN(integrate_2d_xam);
-	RUN(interp_weight_xam);
 	RUN(manage_gsl_rng_xam);
+	RUN(avg_age_grid_xam);
 	RUN(pack_info_xam);
 	RUN(pack_prior_xam);
 	RUN(residual_density_xam);
 	RUN(random_effect_xam);
 	RUN(n_random_const_xam);
 	RUN(sim_random_xam);
-	RUN(smooth2ode_xam);
+	RUN(grid2line_xam);
 	RUN(solve_ode_xam);
 	RUN(split_space_xam);
+	RUN(time_line_vec_xam);
 
 	// table subdirectory
 	RUN(check_pini_n_age_xam);

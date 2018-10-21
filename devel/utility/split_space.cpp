@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -32,6 +32,10 @@ This is the resulting vector of non-empty substrings.
 If all the characters in $icode str$$ are spaces,
 the resulting vector with have size zero.
 
+$head empty$$
+If $icode str$$ only contains spaces,
+the return vector is empty; i.e.
+$icode%vec%.size() == 0%$$.
 
 $children%example/devel/utility/split_space_xam.cpp
 %$$

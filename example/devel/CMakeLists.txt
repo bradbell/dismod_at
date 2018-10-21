@@ -13,34 +13,36 @@
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
 
+	model/adj_integrand_xam.cpp
+	model/avg_integrand_xam.cpp
 	model/avg_no_ode_xam.cpp
+	model/avg_std_effect_xam.cpp
 	model/avg_yes_ode_xam.cpp
 	model/fit_model_xam.cpp
 	model/like_one_xam.cpp
 	model/like_all_xam.cpp
 	model/prior_fixed_xam.cpp
 	model/prior_random_xam.cpp
-	model/sci_ode_xam.cpp
 
 	utility/avgint_subset_xam.cpp
 	utility/bilinear_interp_xam.cpp
 	utility/child_info_xam.cpp
+	utility/cohort_ode_xam.cpp
 	utility/data_subset_xam.cpp
 	utility/eigen_ode2_xam.cpp
 	utility/fixed_effect_xam.cpp
-	utility/integrate_1d_xam.cpp
-	utility/integrate_2d_xam.cpp
-	utility/interp_weight_xam.cpp
 	utility/manage_gsl_rng_xam.cpp
+	utility/avg_age_grid_xam.cpp
 	utility/pack_info_xam.cpp
 	utility/pack_prior_xam.cpp
 	utility/random_effect_xam.cpp
 	utility/n_random_const_xam.cpp
 	utility/residual_density_xam.cpp
 	utility/sim_random_xam.cpp
-	utility/smooth2ode_xam.cpp
+	utility/grid2line_xam.cpp
 	utility/solve_ode_xam.cpp
 	utility/split_space_xam.cpp
+	utility/time_line_vec_xam.cpp
 
 	table/check_pini_n_age_xam.cpp
 	table/create_table_xam.cpp

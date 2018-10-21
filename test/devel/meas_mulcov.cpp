@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/avg_age_grid.hpp>
 
 // Testing measurement covariate multipliers
 
@@ -142,16 +143,6 @@ bool meas_mulcov(void)
 		integrand_table[i].minimum_meas_cv = 0.0;
 	}
 	//
-	// n_age_ode
-	size_t n_age_ode     =  1;
-	while( age_min + double(n_age_ode-1) * ode_step_size < age_max_ )
-			n_age_ode++;
-	//
-	// n_time_ode
-	size_t n_time_ode     =  1;
-	while( time_min + double(n_time_ode-1) * ode_step_size < time_max_ )
-			n_time_ode++;
-	//
 	// node_table:    0
 	//              1    2
 	//                  3  4
@@ -251,12 +242,17 @@ bool meas_mulcov(void)
 	//
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
+	std::string rate_case = "iota_pos_rho_pos";
+	std::string avg_age_split = "";
+	vector<double> avg_age_grid = dismod_at::avg_age_grid(
+		ode_step_size, avg_age_split, age_table
+	);
 	dismod_at::data_model data_object(
+		rate_case,
 		bound_random,
 		n_covariate,
-		n_age_ode,
-		n_time_ode,
 		ode_step_size,
+		avg_age_grid,
 		age_table,
 		time_table,
 		integrand_table,
@@ -302,7 +298,7 @@ bool meas_mulcov(void)
 
 	// evaluate residual
 	data_id = 0;
-	Float avg_integrand = data_object.avg_no_ode(data_id, pack_vec);
+	Float avg_integrand = data_object.average(data_id, pack_vec);
 	Float delta_out;
 	dismod_at::residual_struct<Float> residual    =
 		data_object.like_one(data_id, pack_vec, avg_integrand, delta_out);

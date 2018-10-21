@@ -218,10 +218,6 @@ $cref model_variables$$.
 $head prior_table$$
 This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
 
-$head data_object$$
-This object contains the model for the data density;
-see $cref/data_model/devel_data_model/$$.
-
 $head prior_object$$
 This object contains the model for the fixed negative log-likelihood;
 see $cref prior_model$$.
@@ -239,6 +235,11 @@ for each age, time,
 the sum of the random effects for the corresponding rate
 is constrained to be zero.
 
+$head data_object$$
+This object contains the model for the data density;
+see $cref/data_model/devel_data_model/$$.
+It is effectively const.
+
 $head Prototype$$
 $srccode%cpp% */
 fit_model::fit_model(
@@ -251,10 +252,10 @@ fit_model::fit_model(
 	const CppAD::vector<double>&          start_var        ,
 	const CppAD::vector<double>&          scale_var        ,
 	const CppAD::vector<prior_struct>&    prior_table      ,
-	const data_model&                     data_object      ,
 	const prior_model&                    prior_object     ,
 	bool                                  quasi_fixed      ,
-	const CppAD::vector<bool>&            zero_sum_random  )
+	const CppAD::vector<bool>&            zero_sum_random  ,
+	data_model&                           data_object      )
 /* %$$
 $end
 */
@@ -284,8 +285,8 @@ var2prior_     ( var2prior   )                      ,
 start_var_     ( start_var   )                      ,
 scale_var_     ( scale_var   )                      ,
 prior_table_   ( prior_table )                      ,
-data_object_   ( data_object )                      ,
-prior_object_  ( prior_object )
+prior_object_  ( prior_object )                     ,
+data_object_   ( data_object )
 {	assert( bound_random >= 0.0 );
 	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	double inf = std::numeric_limits<double>::infinity();

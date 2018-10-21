@@ -18,19 +18,13 @@ spell_files='
 no_change_files='
 '
 #
-rename_cmd='s|fit_fixed.py|fit_fixed_both.py|'
+rename_cmd='s|ode_age_grid|avg_age_grid|'
 #
 # spell_cmd='s|^$spell|&\n\tsim|'
 # spell_cmd='s|^# $spell|&\n#\tsim|'
 #
 cat << EOF > junk.sed
-/data_object(/! b end
-: loop
-N
-/node_table,/! b loop
-s|\\n\\t*node_table,||
-#
-: end
+s|Ode Age Grid|Average Age Grid|g
 EOF
 # -----------------------------------------------------------------------------
 if [ "$0" != "bin/batch_edit.sh" ]

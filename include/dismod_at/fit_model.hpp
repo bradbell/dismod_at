@@ -47,8 +47,10 @@ namespace dismod_at {
 		const CppAD::vector<double>&       start_var_;
 		const CppAD::vector<double>&       scale_var_;
 		const CppAD::vector<prior_struct>& prior_table_;
-		const data_model&                  data_object_;
 		const prior_model&                 prior_object_;
+		//
+		// effectively const
+		data_model&                        data_object_;
 		// -------------------------------------------------------------------
 		// set during constructor and otherwise const
 		//
@@ -175,10 +177,10 @@ namespace dismod_at {
 			const CppAD::vector<double>&         start_var       ,
 			const CppAD::vector<double>&         scale_var       ,
 			const CppAD::vector<prior_struct>&   prior_table     ,
-			const data_model&                    data_object     ,
 			const prior_model&                   prior_object    ,
 			bool                                 quasi_fixed     ,
-			const CppAD::vector<bool>&           zero_sum_random
+			const CppAD::vector<bool>&           zero_sum_random ,
+			data_model&                          data_object
 		);
 		//
 		// run fit

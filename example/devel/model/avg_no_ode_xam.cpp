@@ -29,6 +29,7 @@ $end
 # include <limits>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/avg_age_grid.hpp>
 
 namespace {
 	double check_avg(const dismod_at::data_struct& data_row)
@@ -63,7 +64,6 @@ bool avg_no_ode_xam(void)
 		age_table.push_back(age);
 	}
 	size_t n_age_table = age_table.size();
-	double age_min     = age_table[0];
 	double age_max     = age_table[n_age_table - 1];
 	//
 	// time_table
@@ -76,7 +76,6 @@ bool avg_no_ode_xam(void)
 		time_table.push_back(time);
 	}
 	size_t n_time_table = time_table.size();
-	double time_min     = time_table[0];
 	double time_max     = time_table[n_time_table - 1];
 
 	// age and time smoothing grid indices
@@ -149,19 +148,9 @@ bool avg_no_ode_xam(void)
 		integrand_table[i].minimum_meas_cv = 0.0;
 	}
 	//
-	// n_age_ode
-	size_t n_age_ode     =  1;
-	while( age_min + double(n_age_ode-1) * ode_step_size < age_max )
-			n_age_ode++;
-	//
-	// n_time_ode
-	size_t n_time_ode     =  1;
-	while( time_min + double(n_time_ode-1) * ode_step_size < time_max )
-			n_time_ode++;
-	//
 	// node_table:    0
 	//              1    2
-	//                  3  4
+	//                  3 4
 	CppAD::vector<dismod_at::node_struct> node_table(5);
 	node_table[0].parent = DISMOD_AT_NULL_INT;
 	node_table[1].parent =  0;
@@ -268,12 +257,17 @@ bool avg_no_ode_xam(void)
 	);
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
+	std::string rate_case = "iota_pos_rho_pos";
+	std::string avg_age_split = "";
+	vector<double> avg_age_grid = dismod_at::avg_age_grid(
+		ode_step_size, avg_age_split, age_table
+	);
 	dismod_at::data_model data_object(
+		rate_case,
 		bound_random,
 		n_covariate,
-		n_age_ode,
-		n_time_ode,
 		ode_step_size,
+		avg_age_grid,
 		age_table,
 		time_table,
 		integrand_table,
@@ -307,7 +301,7 @@ bool avg_no_ode_xam(void)
 	// check results
 	ok &= data_table.size() == data_subset_obj.size();
 	for(data_id = 0; data_id < data_table.size(); data_id++)
-	{	Float avg     = data_object.avg_no_ode(data_id, pack_vec);
+	{	Float avg     = data_object.average(data_id, pack_vec);
 		double check  = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok           &= fabs( 1.0 - avg / check ) <= eps;
 		/*

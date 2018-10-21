@@ -15,6 +15,7 @@ Test computing data model values on a subset of data table.
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/avg_age_grid.hpp>
 
 namespace {
 	double check_avg(const dismod_at::data_struct& data_row)
@@ -49,7 +50,6 @@ bool data_model_subset(void)
 		age_table.push_back(age);
 	}
 	size_t n_age_table = age_table.size();
-	double age_min     = age_table[0];
 	double age_max     = age_table[n_age_table - 1];
 	//
 	// time_table
@@ -62,7 +62,6 @@ bool data_model_subset(void)
 		time_table.push_back(time);
 	}
 	size_t n_time_table = time_table.size();
-	double time_min     = time_table[0];
 	double time_max     = time_table[n_time_table - 1];
 
 	// age and time smoothing grid indices
@@ -133,16 +132,6 @@ bool data_model_subset(void)
 	for(size_t i = 0; i < n_integrand; i++)
 	{	integrand_table[i].integrand = dismod_at::integrand_enum(i);
 	}
-	//
-	// n_age_ode
-	size_t n_age_ode     =  1;
-	while( age_min + double(n_age_ode-1) * ode_step_size < age_max )
-			n_age_ode++;
-	//
-	// n_time_ode
-	size_t n_time_ode     =  1;
-	while( time_min + double(n_time_ode-1) * ode_step_size < time_max )
-			n_time_ode++;
 	//
 	// node_table:    0
 	//              1    2
@@ -228,12 +217,17 @@ bool data_model_subset(void)
 	);
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
+	std::string rate_case = "iota_pos_rho_pos";
+	std::string avg_age_split = "";
+	vector<double> avg_age_grid = dismod_at::avg_age_grid(
+		ode_step_size, avg_age_split, age_table
+	);
 	dismod_at::data_model data_object(
+		rate_case,
 		bound_random,
 		n_covariate,
-		n_age_ode,
-		n_time_ode,
 		ode_step_size,
+		avg_age_grid,
 		age_table,
 		time_table,
 		integrand_table,
@@ -268,7 +262,7 @@ bool data_model_subset(void)
 	size_t n_sample = data_subset_obj.size();
 	ok &= n_sample == 3;
 	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
-	{	Float avg      = data_object.avg_no_ode(subset_id, pack_vec);
+	{	Float avg      = data_object.average(subset_id, pack_vec);
 		size_t data_id = data_subset_obj[subset_id].original_id;
 		double check   = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok            &= fabs( 1.0 - avg / check ) <= eps;

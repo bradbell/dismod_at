@@ -26,27 +26,30 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/fit_model.cpp
 	model/prior_model.cpp
 	model/depend.cpp
+	model/adj_integrand.cpp
+	model/avg_integrand.cpp
+	model/avg_std_effect.cpp
 
 	utility/avgint_subset.cpp
 	utility/bilinear_interp.cpp
 	utility/child_info.cpp
+	utility/cohort_ode.cpp
 	utility/data_subset.cpp
 	utility/eigen_ode2.cpp
 	utility/error_exit.cpp
 	utility/fixed_effect.cpp
 	utility/get_prior_mean.cpp
-	utility/integrate_1d.cpp
-	utility/integrate_2d.cpp
-	utility/interp_weight.cpp
 	utility/random_effect.cpp
 	utility/n_random_const.cpp
 	utility/residual_density.cpp
 	utility/sim_random.cpp
-	utility/smooth2ode.cpp
+	utility/grid2line.cpp
 	utility/solve_ode.cpp
 	utility/split_space.cpp
 	utility/pack_info.cpp
 	utility/pack_prior.cpp
+	utility/time_line_vec.cpp
+	utility/avg_age_grid.cpp
 
 	table/check_child_prior.cpp
 	table/check_child_nslist.cpp

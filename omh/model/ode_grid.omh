@@ -54,7 +54,7 @@ $latex \[
 \] $$
 
 $head Age, a_i$$
-We define $latex a_i = a_\R{min} + i \Delta s$$ and the ode age grid is
+We define $latex a_i = a_\R{min} + i \Delta s$$ and the average age grid is
 $latex \[
 	\{ a_i \; | \; i = 0, \ldots , M-1 \} \; .
 \] $$
