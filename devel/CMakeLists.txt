@@ -39,8 +39,6 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/error_exit.cpp
 	utility/fixed_effect.cpp
 	utility/get_prior_mean.cpp
-	utility/integrate_1d.cpp
-	utility/integrate_2d.cpp
 	utility/interp_weight.cpp
 	utility/random_effect.cpp
 	utility/n_random_const.cpp

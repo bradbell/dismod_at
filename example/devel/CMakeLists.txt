@@ -31,8 +31,6 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/data_subset_xam.cpp
 	utility/eigen_ode2_xam.cpp
 	utility/fixed_effect_xam.cpp
-	utility/integrate_1d_xam.cpp
-	utility/integrate_2d_xam.cpp
 	utility/interp_weight_xam.cpp
 	utility/manage_gsl_rng_xam.cpp
 	utility/avg_age_grid_xam.cpp
