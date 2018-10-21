@@ -108,21 +108,6 @@ public:
 		bool                          parent_only
 	) const;
 	//
-	// use ode to compute S, C, and integrand on a sub-grid
-	template <class Float>
-	CppAD::vector<Float> sci_ode(
-		integrand_enum                integrand    ,
-		size_t                        i_min        ,
-		size_t                        j_min        ,
-		size_t                        n_age_sub    ,
-		size_t                        n_time_sub   ,
-		size_t                        child        ,
-		const  CppAD::vector<double>& x            ,
-		const  CppAD::vector<Float>&  pack_vec     ,
-		const  CppAD::vector<Float>&  reference_sc
-	) const;
-	friend bool ::sci_ode_xam(void);
-	//
 	// compute an average integrand: data_model is effectively const
 	template <class Float>
 	Float average(

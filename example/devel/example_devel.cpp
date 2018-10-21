@@ -37,7 +37,6 @@ extern bool like_all_xam(void);
 extern bool like_one_xam(void);
 extern bool prior_fixed_xam(void);
 extern bool prior_random_xam(void);
-extern bool sci_ode_xam(void);
 
 // utility subdirectory
 extern bool avgint_subset_xam(void);
@@ -134,7 +133,6 @@ int main(void)
 	RUN(like_one_xam);
 	RUN(prior_fixed_xam);
 	RUN(prior_random_xam);
-	RUN(sci_ode_xam);
 
 	// utility subdirectory
 	RUN(avgint_subset_xam);
