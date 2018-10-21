@@ -50,7 +50,6 @@ private:
 	adj_integrand                             adjint_obj_;
 
 	// other temporaries used to avoid memory re-allocation
-	CppAD::vector<size_t>                     line_index_;
 	CppAD::vector<double>                     line_age_;
 	CppAD::vector<double>                     line_time_;
 	CppAD::vector<double>                     line_weight_;
