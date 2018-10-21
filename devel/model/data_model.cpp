@@ -138,9 +138,6 @@ $codei%
 		%integrand_table%[%integrand_id%].minimum_meas_cv
 %$$
 
-$head eigen_ode2_case_number_$$
-set to the default value.
-
 $head replace_like_called_$$
 initialize as false.
 
@@ -240,25 +237,6 @@ avgstd_obj_(
 )
 {	assert( bound_random >= 0.0 );
 	assert( n_child_ == pack_object.child_size() );
-	/*
-	---------------------------------------------------------------------------
-	eigen_ode2_case_number_
-
-	b[0] = - ( iota + omega )
-	b[1] = + rho
-	b[2] = + iota
-	b[3] = - ( rho + chi + omega );
-	*/
-	if( rate_case == "iota_zero_rho_zero" )
-		eigen_ode2_case_number_ = 1;
-	else if( rate_case == "iota_zero_rho_pos" )
-		eigen_ode2_case_number_ = 2;
-	else if( rate_case == "iota_pos_rho_zero" )
-		eigen_ode2_case_number_ = 3;
-	else if( rate_case == "iota_pos_rho_pos" )
-		eigen_ode2_case_number_ = 4;
-	else
-		assert(false);
 	// ------------------------------------------------------------------------
 	//
 	using std::string;

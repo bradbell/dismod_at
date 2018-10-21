@@ -44,11 +44,9 @@ private:
 	const pack_info&             pack_object_;
 	//
 	// set by constructor and not changed
-	CppAD::vector<smooth2ode*>   si2ode_vec_;
 	CppAD::vector<bool>          child_ran_zero_;
 	CppAD::vector<data_ode_info> data_info_;
 	CppAD::vector<double>        minimum_meas_cv_;
-	size_t                       eigen_ode2_case_number_;
 	//
 	// Has replace_like been called.
 	// Set false by constructor and true by replace_like.
