@@ -15,12 +15,8 @@ $spell
 $$
 
 $section C++ get_age_table: Example and Test$$
-$index example, C++ get_age_table$$
-$index get_age_table, C++ example$$
 
-$code
 $srcfile%example/devel/table/get_age_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

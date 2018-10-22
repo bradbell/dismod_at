@@ -17,9 +17,6 @@ $spell
 $$
 
 $section C++: Get the Density Table Information$$
-$index get, density table$$
-$index density, get table$$
-$index table, get density$$
 
 $head Syntax$$
 $icode%density_table% = get_density_table(%db%)

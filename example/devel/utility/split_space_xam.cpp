@@ -16,9 +16,7 @@ $$
 
 $section C++ split_space: Example and Test$$
 
-$code
 $srcfile%example/devel/utility/split_space_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

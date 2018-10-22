@@ -15,13 +15,9 @@ $spell
 $$
 
 $section C++ child_info: Example and Test$$
-$index example, C++ child_info$$
-$index child_info, C++ example$$
 
-$code
 $srcfile%example/devel/utility/child_info_xam.cpp
 %0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

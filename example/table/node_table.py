@@ -12,13 +12,7 @@
 #
 # $section node_table: Example and Test$$
 #
-# $index node, , example$$
-# $index example, node table$$
-# $index table, node example$$
-#
-# $code
 # $srcfile%example/table/node_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def node_table() :

@@ -17,9 +17,7 @@ $$
 
 $section C++ like_one: Example and Test$$
 
-$code
 $srcfile%example/devel/model/like_one_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

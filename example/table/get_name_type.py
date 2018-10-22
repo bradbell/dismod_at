@@ -15,9 +15,7 @@
 #
 # $section get_name_type: Example and Test$$
 #
-# $code
 # $srcfile%example/table/get_name_type.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 #

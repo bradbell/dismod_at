@@ -12,12 +12,7 @@
 #
 # $section smooth_grid_table: Example and Test$$
 #
-# $index smooth_grid_table, example$$
-# $index example, smooth_grid_table$$
-#
-# $code
 # $srcfile%example/table/smooth_grid_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def smooth_grid_table() :

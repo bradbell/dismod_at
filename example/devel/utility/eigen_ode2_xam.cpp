@@ -16,9 +16,7 @@ $$
 
 $section Example and Test of Eigenvector Method of Solving ODE$$
 
-$code
 $srcfile%example/devel/utility/eigen_ode2_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 $end
 */
 // BEGIN C++

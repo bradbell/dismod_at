@@ -15,13 +15,9 @@ $spell
 $$
 
 $section C++ pack_info: Example and Test$$
-$index example, C++ pack_info$$
-$index pack_info, C++ example$$
 
-$code
 $srcfile%example/devel/utility/pack_info_xam.cpp
 %0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

@@ -16,11 +16,9 @@
 #
 # $section init Command: Example and Test$$
 #
-# $code
 # $srcfile%
 #	example/get_started/init_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

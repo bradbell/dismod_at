@@ -16,10 +16,8 @@ $$
 
 $section C++ check_pini_n_age: Example and Test$$
 
-$code
 $srcfile%example/devel/table/check_pini_n_age_xam.cpp
 %0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

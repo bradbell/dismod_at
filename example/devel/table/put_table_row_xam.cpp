@@ -16,9 +16,7 @@ $$
 
 $section C++ put_table_row: Example and Test$$
 
-$code
 $srcfile%example/devel/table/put_table_row_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

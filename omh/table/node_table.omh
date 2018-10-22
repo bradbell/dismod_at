@@ -11,8 +11,6 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin node_table$$
 $spell
 $$
-$index node, table$$
-$index table, node$$
 
 $section The Node Table$$
 The node table defines a graph that is a tree by specifying

@@ -15,11 +15,9 @@
 #
 # $section Predict Average Integrand Using Results of a Fit$$
 #
-# $code
 # $srcfile%
 #	example/user/metropolis.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 iota_north_america = 1e-2

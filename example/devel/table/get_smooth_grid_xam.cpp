@@ -15,12 +15,8 @@ $spell
 $$
 
 $section C++ get_smooth_grid: Example and Test$$
-$index example, C++ get_smooth_grid$$
-$index get_smooth_grid, C++ example$$
 
-$code
 $srcfile%example/devel/table/get_smooth_grid_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

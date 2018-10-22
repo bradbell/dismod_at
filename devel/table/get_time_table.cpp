@@ -18,9 +18,6 @@ $spell
 $$
 
 $section C++: Get the Time Table Information$$
-$index get, time table$$
-$index time, get table$$
-$index table, get time$$
 
 $head Syntax$$
 $icode%time_table% = get_time_table(%db%)%$$

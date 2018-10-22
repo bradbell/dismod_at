@@ -15,9 +15,7 @@
 #
 # $section nslist_pair_table: Example and Test$$
 #
-# $code
 # $srcfile%example/table/nslist_pair_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def nslist_pair_table() :

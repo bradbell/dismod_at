@@ -16,9 +16,7 @@ $$
 
 $section C++ avg_age_grid: Example and Test$$
 
-$code
 $srcfile%example/devel/utility/avg_age_grid_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

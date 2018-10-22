@@ -13,16 +13,9 @@
 #	unicode
 # $$
 #
-# $index unicode, , example$$
-# $index example, unicode table$$
-# $index create_table, , example$$
-# $index example, create_table$$
-#
 # $section create_table and Unicode: Example and Test$$
 #
-# $code
 # $srcfile%example/table/create_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def create_table() :

@@ -392,11 +392,9 @@ accept_rel_err = 0.25
 # %$$
 #
 # $head Source Code$$
-# $code
 # $srcfile%
 #	example/user/diabetes.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

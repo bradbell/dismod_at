@@ -18,9 +18,6 @@ $spell
 $$
 
 $section C++: Get the Age Table Information$$
-$index get, age table$$
-$index age, get table$$
-$index table, get age$$
 
 $head Syntax$$
 $icode%age_table% = get_age_table(%db%)%$$

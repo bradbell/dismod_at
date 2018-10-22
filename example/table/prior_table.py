@@ -12,13 +12,7 @@
 #
 # $section prior_table: Example and Test$$
 #
-# $index prior, , example$$
-# $index example, prior table$$
-# $index table, prior example$$
-#
-# $code
 # $srcfile%example/table/prior_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def prior_table() :

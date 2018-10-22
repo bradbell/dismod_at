@@ -12,13 +12,7 @@
 #
 # $section age_table: Example and Test$$
 #
-# $index age, , example$$
-# $index example, age table$$
-# $index table, age example$$
-#
-# $code
 # $srcfile%example/table/age_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def age_table() :

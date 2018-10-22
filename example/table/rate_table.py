@@ -12,13 +12,7 @@
 #
 # $section rate_table: Example and Test$$
 #
-# $index rate, , example$$
-# $index example, rate table$$
-# $index table, rate example$$
-#
-# $code
 # $srcfile%example/table/rate_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def rate_table() :

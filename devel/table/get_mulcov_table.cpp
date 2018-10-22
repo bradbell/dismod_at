@@ -21,9 +21,6 @@ $spell
 $$
 
 $section C++: Get the Covariate Multiplier Table Information$$
-$index get, mulcov table$$
-$index mulcov, get table$$
-$index table, mulcov$$
 
 $head Syntax$$
 $icode%mulcov_table% = get_mulcov_table(%db%)%$$

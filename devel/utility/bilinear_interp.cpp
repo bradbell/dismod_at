@@ -19,9 +19,6 @@ $spell
 	dismod
 $$
 
-$index interpolate, bilinear$$
-$index bilinear_interp$$
-
 $section Bilinear Interpolation$$
 
 $head Syntax$$
@@ -234,4 +231,3 @@ double bilinear_interp(
 }
 
 } // END_DISMOD_AT_NAMESPACE
-

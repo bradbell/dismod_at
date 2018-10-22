@@ -15,12 +15,8 @@ $spell
 $$
 
 $section C++ weight_info: Example and Test$$
-$index example, C++ weight_info$$
-$index weight_grid, C++ example$$
 
-$code
 $srcfile%example/devel/table/weight_info_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

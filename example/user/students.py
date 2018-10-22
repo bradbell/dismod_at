@@ -14,11 +14,9 @@
 #
 # $section Using Student's-t to Fitting Data with Outliers$$
 #
-# $code
 # $srcfile%
 #	example/user/students.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

@@ -18,9 +18,6 @@ $spell
 $$
 
 $section C++: Get the Prior Table Information$$
-$index get, prior table$$
-$index prior, get table$$
-$index table, get prior$$
 
 $head Syntax$$
 $icode%prior_table% = get_prior_table(%db%)%$$

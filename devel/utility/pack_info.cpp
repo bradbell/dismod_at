@@ -409,7 +409,6 @@ $section Devel Pack Variables: Standard Deviations Multipliers$$
 $head Syntax$$
 $icode%offset% = %pack_object%.mulstd_offset(%smooth_id%, %k%)
 %$$
-$index mulstd_offset$$
 
 $head pack_object$$
 This object has prototype
@@ -487,10 +486,8 @@ $icode%info% = %pack_object%.rate_info(%rate_id%, %j%)
 
 $head subvec_info$$
 the type $code pack_info::subvec_info$$ is defined as follows:
-$code
 $srcfile%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
-$$
 
 $head pack_object$$
 This object has prototype
@@ -601,10 +598,8 @@ covariate multipliers.
 
 $head subvec_info$$
 The type $code pack_info::subvec_info$$ is defined as follows:
-$code
 $srcfile%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
-$$
 
 $head pack_object$$
 This object has prototype
@@ -712,10 +707,8 @@ $icode%info% = %pack_object%.mulcov_rate_value_info(%rate_id%, %j%)
 
 $head subvec_info$$
 The type $code pack_info::subvec_info$$ is defined as follows:
-$code
 $srcfile%include/dismod_at/pack_info.hpp
 %5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
-$$
 
 $head pack_object$$
 This object has prototype

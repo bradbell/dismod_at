@@ -17,10 +17,8 @@ $$
 
 $section Manage GSL Random Number Generator: Example and Test$$
 
-$code
 $srcfile%example/devel/utility/manage_gsl_rng_xam.cpp%
 	0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

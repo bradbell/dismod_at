@@ -22,11 +22,9 @@
 # $head See Also$$
 # $cref user_lasso_covariate.py$$
 #
-# $code
 # $srcfile%
 #	example/user/meas_covariate.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

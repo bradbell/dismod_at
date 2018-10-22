@@ -12,8 +12,6 @@ $begin density_table$$
 $spell
 	covariate
 $$
-$index density, table$$
-$index table, density$$
 
 $section The Density Table$$
 The $code density$$ table is used to identify densities.

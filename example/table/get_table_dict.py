@@ -15,9 +15,7 @@
 #
 # $section get_table_dict: Example and Test$$
 #
-# $code
 # $srcfile%example/table/get_table_dict.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def get_table_dict() :

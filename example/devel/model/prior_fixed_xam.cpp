@@ -17,9 +17,7 @@ $$
 
 $section C++ prior_fixed: Example and Test$$
 
-$code
 $srcfile%example/devel/model/prior_fixed_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

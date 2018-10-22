@@ -12,9 +12,7 @@
 #
 # $section option_table: Example and Test$$
 #
-# $code
 # $srcfile%example/table/option_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def option_table() :

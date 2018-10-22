@@ -83,11 +83,9 @@
 # See $cref create_database$$.
 #
 # $head Source Code$$
-# $code
 # $srcfile%
 #	example/get_started/get_started_db.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

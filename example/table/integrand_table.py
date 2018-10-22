@@ -12,13 +12,7 @@
 #
 # $section integrand_table: Example and Test$$
 #
-# $index integrand, , example$$
-# $index example, integrand table$$
-# $index table, integrand example$$
-#
-# $code
 # $srcfile%example/table/integrand_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def integrand_table() :

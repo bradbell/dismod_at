@@ -29,11 +29,9 @@
 # To see this, set $icode%print_level_fixed% = 5%$$ (in the option table) and
 # $cref/run this example/user/Run One Example/$$.
 #
-# $code
 # $srcfile%
 #	example/user/continue_fit.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

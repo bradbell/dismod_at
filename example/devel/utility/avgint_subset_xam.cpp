@@ -18,10 +18,8 @@ $$
 
 $section C++ avgint_subset: Example and Test$$
 
-$code
 $srcfile%example/devel/utility/avgint_subset_xam.cpp%
 	0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

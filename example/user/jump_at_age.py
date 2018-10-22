@@ -15,11 +15,9 @@
 #
 # $section Case with a Jump in Rate at an Age$$
 #
-# $code
 # $srcfile%
 #	example/user/jump_at_age.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

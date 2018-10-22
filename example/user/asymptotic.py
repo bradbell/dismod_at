@@ -55,11 +55,9 @@
 #	h( u_m, 0, s_r ) + h( u_c , 0 , s_r )
 # \] $$
 #
-# $code
 # $srcfile%
 #	example/user/asymptotic.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 measure = {

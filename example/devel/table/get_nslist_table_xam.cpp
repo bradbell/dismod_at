@@ -17,9 +17,7 @@ $$
 
 $section C++ get_nslist_table: Example and Test$$
 
-$code
 $srcfile%example/devel/table/get_nslist_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

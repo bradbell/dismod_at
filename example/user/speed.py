@@ -44,11 +44,9 @@
 # The total work for the test increases with proportional to the
 # square of this step size
 #
-# $code
 # $srcfile%
 #	example/user/speed.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

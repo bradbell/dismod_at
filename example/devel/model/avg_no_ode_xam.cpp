@@ -16,12 +16,8 @@ $spell
 $$
 
 $section C++ avg_no_ode: Example and Test$$
-$index example, C++ avg_no_ode$$
-$index avg_no_ode, C++ example$$
 
-$code
 $srcfile%example/devel/model/avg_no_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

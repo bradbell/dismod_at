@@ -85,11 +85,9 @@
 # $lend
 
 #
-# $code
 # $srcfile%
 #	example/user/fit_fixed_both.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

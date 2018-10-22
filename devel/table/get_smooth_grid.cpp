@@ -21,9 +21,6 @@ $spell
 $$
 
 $section C++: Get the Smoothing Grid Information$$
-$index get, smooth grid$$
-$index smooth, get grid$$
-$index grid, get smooth$$
 
 $head Syntax$$
 $icode%smooth_grid% = get_smooth_grid(%db%)%$$

@@ -22,9 +22,6 @@ $spell
 $$
 
 $section C++: Get the Smoothing Table Information$$
-$index get, smooth table$$
-$index smooth, get table$$
-$index table, get smooth$$
 
 $head Syntax$$
 $icode%smooth_table% = get_smooth_table(%db%)%$$

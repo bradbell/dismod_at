@@ -12,13 +12,7 @@
 #
 # $section density_table: Example and Test$$
 #
-# $index density, , example$$
-# $index example, density table$$
-# $index table, density example$$
-#
-# $code
 # $srcfile%example/table/density_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def density_table() :

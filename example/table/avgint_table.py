@@ -15,9 +15,7 @@
 #
 # $section avgint_table: Example and Test$$
 #
-# $code
 # $srcfile%example/table/avgint_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def avgint_table() :

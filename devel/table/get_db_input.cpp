@@ -65,9 +65,7 @@ $codei%
 	db_input_struct& %db_input%
 %$$
 where $code db_input_struct$$ is defined by
-$code
 $srcfile%include/dismod_at/get_db_input.hpp%0%// BEGIN STRUCT%// END STRUCT%$$
-$$
 $pre
 $$
 Each $icode%name%_table%$$ above is defined by the corresponding

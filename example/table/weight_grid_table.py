@@ -12,12 +12,7 @@
 #
 # $section weight_grid_table: Example and Test$$
 #
-# $index weight_grid_table, grid example$$
-# $index example, weight_grid_table$$
-#
-# $code
 # $srcfile%example/table/weight_grid_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def weight_grid_table() :

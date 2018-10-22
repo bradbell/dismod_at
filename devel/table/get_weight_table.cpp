@@ -19,9 +19,6 @@ $spell
 $$
 
 $section C++: Get the Weight Table Information$$
-$index get, weight table$$
-$index weight, get table$$
-$index table, get weight$$
 
 $head Syntax$$
 $icode%weight_table% = get_weight_table(%db%)%$$

@@ -17,9 +17,7 @@ $$
 
 $section C++ get_prior_sim_table: Example and Test$$
 
-$code
 $srcfile%example/devel/table/get_prior_sim_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

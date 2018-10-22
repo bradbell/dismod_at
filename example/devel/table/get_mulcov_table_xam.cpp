@@ -16,12 +16,8 @@ $spell
 $$
 
 $section C++ get_mulcov_table: Example and Test$$
-$index example, C++ get_mulcov_table$$
-$index get_mulcov_table, C++ example$$
 
-$code
 $srcfile%example/devel/table/get_mulcov_table_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

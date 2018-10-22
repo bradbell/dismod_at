@@ -18,9 +18,6 @@ $spell
 $$
 
 $section C++: Get the Weight Grid Information$$
-$index get, weight grid$$
-$index weight, get grid$$
-$index grid, get weight$$
 
 $head Syntax$$
 $icode%weight_grid% = get_weight_grid(%db%)%$$

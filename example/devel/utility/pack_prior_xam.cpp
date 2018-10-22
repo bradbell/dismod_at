@@ -18,10 +18,8 @@ $$
 
 $section C++ pack_prior: Example and Test$$
 
-$code
 $srcfile%example/devel/utility/pack_prior_xam.cpp%0
 	%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

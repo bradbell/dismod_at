@@ -16,12 +16,8 @@ $spell
 $$
 
 $section C++ solve_ode: Example and Test$$
-$index example, C++ solve_ode$$
-$index solve_ode, C++ example$$
 
-$code
 $srcfile%example/devel/utility/solve_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

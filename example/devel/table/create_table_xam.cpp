@@ -16,10 +16,8 @@ $$
 
 $section C++ create_table: Example and Test$$
 
-$code
 $srcfile%example/devel/table/create_table_xam.cpp
 	%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

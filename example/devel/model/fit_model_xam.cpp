@@ -17,10 +17,8 @@ $$
 
 $section C++ fit_model: Example and Test$$
 
-$code
 $srcfile%example/devel/model/fit_model_xam.cpp%0
 	%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

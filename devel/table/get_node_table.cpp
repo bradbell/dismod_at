@@ -18,9 +18,6 @@ $spell
 $$
 
 $section C++: Get the Node Table Information$$
-$index get, node table$$
-$index node, get table$$
-$index table, get node$$
 
 $head Syntax$$
 $icode%node_table% = get_node_table(%db%)%$$

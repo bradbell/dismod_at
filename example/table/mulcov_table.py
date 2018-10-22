@@ -15,13 +15,7 @@
 #
 # $section mulcov_table: Example and Test$$
 #
-# $index mulcov, example$$
-# $index example, mulcov table$$
-# $index table, mulcov example$$
-#
-# $code
 # $srcfile%example/table/mulcov_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def mulcov_table() :

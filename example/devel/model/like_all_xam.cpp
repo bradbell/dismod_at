@@ -17,9 +17,7 @@ $$
 
 $section C++ like_all: Example and Test$$
 
-$code
 $srcfile%example/devel/model/like_all_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

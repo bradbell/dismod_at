@@ -14,7 +14,6 @@
 #	sqlite
 #	dismod
 # $$
-# $index database, connection$$
 #
 # $section Create a Python sqlite3 Database Connection$$
 #

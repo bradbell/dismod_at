@@ -16,12 +16,8 @@ $spell
 $$
 
 $section C++ avg_yes_ode: Example and Test$$
-$index example, C++ avg_yes_ode$$
-$index avg_yes_ode, C++ example$$
 
-$code
 $srcfile%example/devel/model/avg_yes_ode_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

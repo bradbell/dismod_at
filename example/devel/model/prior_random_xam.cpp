@@ -17,9 +17,7 @@ $$
 
 $section C++ prior_random: Example and Test$$
 
-$code
 $srcfile%example/devel/model/prior_random_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

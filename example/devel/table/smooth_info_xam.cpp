@@ -15,12 +15,8 @@ $spell
 $$
 
 $section C++ smooth_info: Example and Test$$
-$index example, C++ smooth_info$$
-$index smooth_info, C++ example$$
 
-$code
 $srcfile%example/devel/table/smooth_info_xam.cpp%0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */

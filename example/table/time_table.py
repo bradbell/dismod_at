@@ -12,13 +12,7 @@
 #
 # $section time_table: Example and Test$$
 #
-# $index time, , example$$
-# $index example, time table$$
-# $index table, time example$$
-#
-# $code
 # $srcfile%example/table/time_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $$
 # $end
 # BEGIN PYTHON
 def time_table() :

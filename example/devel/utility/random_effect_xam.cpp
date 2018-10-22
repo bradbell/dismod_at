@@ -16,10 +16,8 @@ $$
 
 $section C++ random_effect: Example and Test$$
 
-$code
 $srcfile%example/devel/utility/random_effect_xam.cpp
 %0%// BEGIN C++%// END C++%1%$$
-$$
 
 $end
 */
