@@ -17,7 +17,7 @@ var list_current0 = [
 'sql_command.htm#result'
 ];
 var list_down2 = [
-'intro_math.htm',
+'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

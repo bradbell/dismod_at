@@ -15,7 +15,7 @@ var list_current0 = [
 'data_flow.htm#Input and Output by Command'
 ];
 var list_down2 = [
-'intro_math.htm',
+'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

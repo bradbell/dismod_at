@@ -32,7 +32,7 @@ var list_current0 = [
 'avg_integrand_add_cohort.htm#Member Variables.line_time_'
 ];
 var list_down4 = [
-'intro_math.htm',
+'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

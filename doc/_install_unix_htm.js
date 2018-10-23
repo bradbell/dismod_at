@@ -42,7 +42,7 @@ var list_current0 = [
 'install_unix.htm#Example'
 ];
 var list_down1 = [
-'intro_math.htm',
+'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

@@ -1,6 +1,6 @@
 var list_up0 = [
 'dismod_at.htm',
-'intro_math.htm'
+'math_abstract.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -10,10 +10,10 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'intro_math.htm#Abstract'
+'math_abstract.htm#Abstract'
 ];
 var list_down1 = [
-'intro_math.htm',
+'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

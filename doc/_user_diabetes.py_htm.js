@@ -44,7 +44,7 @@ var list_current0 = [
 'user_diabetes.py.htm#Source Code'
 ];
 var list_down2 = [
-'intro_math.htm',
+'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

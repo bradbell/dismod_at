@@ -105,7 +105,7 @@ var list_current0 = [
 'whats_new_2018.htm#01-09'
 ];
 var list_down1 = [
-'intro_math.htm',
+'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

@@ -20,7 +20,7 @@ var list_current0 = [
 'check_rate_limit.htm#smooth_grid'
 ];
 var list_down3 = [
-'intro_math.htm',
+'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

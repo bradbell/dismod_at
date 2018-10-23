@@ -3,8 +3,8 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20181022  ',' ',
-'intro_math  An Introduction To The Mathematics of Dismod_at  ',' abstract ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20181023  ',' ',
+'math_abstract  An Introduction To The Mathematics of Dismod_at  ',' ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix eigen_prefix ipopt_prefix cppad_prefix debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
