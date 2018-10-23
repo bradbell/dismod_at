@@ -65,7 +65,7 @@ $childtable%
 
 $head 10-22$$
 Start work on an
-$cref intro_math$$ to the mathematics of dismod_at.
+$cref math_abstract$$ to the mathematics of dismod_at.
 
 $head 10-21$$
 Change the way that average integrands are computed; see

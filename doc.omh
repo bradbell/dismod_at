@@ -43,7 +43,7 @@ $spell
 $$
 $section Disease Rates as Functions of Age and Time: dismod_at-20181023$$
 
-$childtable%omh/intro/intro_math.omh
+$childtable%omh/intro/math_abstract.omh
 	%omh/install/unix.omh
 	%example/get_started/get_started.omh
 	%example/user/user.omh
