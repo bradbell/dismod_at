@@ -23,6 +23,7 @@ var list_current0 = [
 'data_model_replace_like.htm#Laplace Density'
 ];
 var list_down4 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

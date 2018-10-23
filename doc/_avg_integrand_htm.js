@@ -58,6 +58,7 @@ var list_current0 = [
 'avg_integrand.htm#Average Integrand, A_i'
 ];
 var list_down2 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

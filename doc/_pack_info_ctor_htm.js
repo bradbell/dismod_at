@@ -30,6 +30,7 @@ var list_current0 = [
 'pack_info_ctor.htm#Example'
 ];
 var list_down4 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

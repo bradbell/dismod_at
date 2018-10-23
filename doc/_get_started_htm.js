@@ -17,6 +17,7 @@ var list_current0 = [
 'get_started.htm#Commands'
 ];
 var list_down1 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

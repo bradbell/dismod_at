@@ -23,6 +23,7 @@ var list_current0 = [
 'log_message.htm#Example'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

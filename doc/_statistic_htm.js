@@ -30,6 +30,7 @@ var list_current0 = [
 'statistic.htm#Log-Density Function, D.Log-Student\'s-t'
 ];
 var list_down2 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

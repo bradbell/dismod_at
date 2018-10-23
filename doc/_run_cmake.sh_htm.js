@@ -25,6 +25,7 @@ var list_current0 = [
 'run_cmake.sh.htm#system_specific_library_list'
 ];
 var list_down2 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

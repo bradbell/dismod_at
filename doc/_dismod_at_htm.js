@@ -12,6 +12,7 @@ var list_current0 = [
 'dismod_at.htm#Contents'
 ];
 var list_down0 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

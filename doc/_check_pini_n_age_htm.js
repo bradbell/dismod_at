@@ -18,6 +18,7 @@ var list_current0 = [
 'check_pini_n_age.htm#smooth_table'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

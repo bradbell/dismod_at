@@ -1,0 +1,131 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>An Introduction To The Mathematics of Dismod_at</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="An Introduction To The Mathematics of Dismod_at">
+<meta name="keywords" id="keywords" content=" introduction to the mathematics dismod_at abstract ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_intro_math_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>intro_math</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="_contents.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Abstract</option>
+</select>
+</td>
+<td><a href="install_unix.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down1(this)'>
+<option>dismod_at-&gt;</option>
+<option>intro_math</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>intro_math</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>An Introduction To The Mathematics of Dismod_at</big></big></b></center>
+<br>
+<b><big><a name="Abstract" id="Abstract">Abstract</a></big></b>
+<br>
+The dismod_at program enables a public health scientist to
+model the rate that we get a condition,
+recover from a condition,
+die from a condition,
+and die for other causes.
+
+It is called dismod_at because the condition
+is often a disease and the rates
+are stochastic functions of age and time.
+
+Public health data is often in terms of the susceptible population
+and the fraction of the population with the condition.
+
+Given a realization of the stochastic functions,
+these populations satisfy a simple partial
+differential equation that can be solved using the methods of characteristics.
+
+Models for the data often include covariates
+that affect the rates and measurement noise; e.g.,
+income, body mass index, and how the measurement was made.
+
+The model is further complicated by the fact that the variation
+of the rates between sub-regions is modeled as random effects
+that are also stochastic functions of age and time.
+
+Given the data for a particular condition,
+the statistics for measuring the data,
+the prior distributions for the stochastic rates,
+and the prior distribution for the random effects,
+we can express the joint likelihood of the data, the rates,
+and the random effects.
+
+Dismod_at uses the Laplace approximation for the integral with
+respect to the random effects to obtain an objective that
+concentrates the likelihood on the fixed effects.
+
+This approximation requires second derivatives of the joint likelihood.
+
+The optimization procedure uses second derivative of the objective; i.e,
+fourth derivatives of the joint likelihood are required.
+
+Algorithmic differentiation is used to make this task feasible.
+
+
+
+<hr>Input File: omh/intro/intro_math.omh
+
+</body>
+</html>

@@ -27,6 +27,7 @@ var list_current0 = [
 'fit_command.htm#Example'
 ];
 var list_down2 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

@@ -24,6 +24,7 @@ var list_current0 = [
 'get_db_input.htm#db_input'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

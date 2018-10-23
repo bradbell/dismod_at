@@ -21,6 +21,7 @@ var list_current0 = [
 'error_exit.htm#assert'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

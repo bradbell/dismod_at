@@ -14,6 +14,7 @@ var list_current0 = [
 'user_zero_sum_random.py.htm#Discussion'
 ];
 var list_down2 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

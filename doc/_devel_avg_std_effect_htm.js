@@ -15,6 +15,7 @@ var list_current0 = [
 'devel_avg_std_effect.htm#Contents'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

@@ -97,6 +97,7 @@ var list_current0 = [
 'whats_new_2015.htm#06-22'
 ];
 var list_down2 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

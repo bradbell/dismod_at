@@ -38,6 +38,7 @@ var list_current0 = [
 '_index.htm#Z'
 ];
 var list_down1 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

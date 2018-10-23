@@ -31,6 +31,7 @@ var list_current0 = [
 'eigen_ode2.htm#Example'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

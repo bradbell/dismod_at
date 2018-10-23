@@ -28,6 +28,7 @@ var list_current0 = [
 'child_info.htm#table_id2child.child'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

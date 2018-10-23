@@ -29,6 +29,7 @@ var list_current0 = [
 'residual_density.htm#residual.logden'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

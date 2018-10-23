@@ -19,6 +19,7 @@ var list_current0 = [
 'replace_mean.htm#prior_mean'
 ];
 var list_down4 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

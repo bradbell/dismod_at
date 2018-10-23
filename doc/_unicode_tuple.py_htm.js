@@ -12,6 +12,7 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

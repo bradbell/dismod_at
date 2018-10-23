@@ -11,6 +11,7 @@ var list_across0 = [
 ];
 var list_current0 = [
 'whats_new_2018.htm#Contents',
+'whats_new_2018.htm#10-22',
 'whats_new_2018.htm#10-21',
 'whats_new_2018.htm#10-13',
 'whats_new_2018.htm#10-05',
@@ -104,6 +105,7 @@ var list_current0 = [
 'whats_new_2018.htm#01-09'
 ];
 var list_down1 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',

@@ -19,6 +19,7 @@ var list_current0 = [
 'check_zero_sum.htm#option_table'
 ];
 var list_down3 = [
+'intro_math.htm',
 'install_unix.htm',
 'get_started.htm',
 'user.htm',
