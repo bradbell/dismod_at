@@ -18,15 +18,15 @@ $$
 $section An Introduction To The Mathematics of Dismod_at$$
 
 $head Abstract$$
-The dismod_at program enables a public health scientist to
+The $italic Dismod_at$$ program enables a public health scientist to
 model the rate that we get a condition,
 recover from a condition,
 die from a condition,
 and die for other causes.
 
 It is called dismod_at because the condition
-is often a disease and the rates
-are stochastic functions of age and time.
+is often a $italic disease$$ and it is used to $italic model$$ the rates
+as stochastic functions of $italic age$$ and $italic time$$.
 
 Public health data is often in terms of the susceptible population
 and the fraction of the population with the condition.
