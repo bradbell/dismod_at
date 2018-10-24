@@ -1,23 +1,34 @@
+# Starting here: all lines must begin with a # character:
 # ----------------------------------------------------------------------------
-# variables used by batch_edit.sh
 #
+# list of directories that are added to the repository by batch_edit.sh
 # new_directories='
 # '
+# list of files that are deleted by batch_edit.sh
 # delete_files='
-#	bin/batch_edit.sh
 # '
+# list of files that are not edited by the sed commands in this file
+# (with the possible exception of the extra_sed commands)
 # ignore_files='
 # '
-# move_files='
-#	omh/intro/intro_math.omh
+# list of files and or directories that are moved to new names
+# move_paths='
+#	omh/intro
+#	omh/math/math_abstract.omh
 # '
+# sed command that maps ode file and or directory names to new file names
 # move_sed='
-#	s|intro_math|math_abstract|
+#	s|omh/intro|omh/math|
+#	s|math_abstract.omh|abstract.omh|
 # '
+# list of files that re edited by the extra_sed command
 # extra_files='
 # '
+# sed command that is applied to the extra files
+# (after the other sed commands in this file)
 # extra_sed='
 # '
 # ----------------------------------------------------------------------------
-# script used to edit all files in this git repository
-s|intro_math|math_abstract|
+# Starting here: lines with sed commands do not begin with a # character.
+s|omh/intro|omh/math|
+s|math_abstract.omh|abstract.omh|

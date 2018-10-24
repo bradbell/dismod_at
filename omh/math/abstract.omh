@@ -61,7 +61,7 @@ fourth derivatives of the joint likelihood are required.
 
 Algorithmic differentiation is used to make this task feasible.
 
-$childtable%omh/intro/ode.omh
+$childtable%omh/math/ode.omh
 %$$
 
 $end
