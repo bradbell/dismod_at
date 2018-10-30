@@ -82,16 +82,12 @@ CppAD::vector<double> avg_age_grid(
 	for(size_t i = 0; i < n_split; ++i)
 		split_vec[i] = std::atof( split_vec_str[i].c_str() );
 	//
-	if( n_split == 0 )
-	{	result.resize(n_uniform);
-		for(size_t i = 0; i < n_uniform; ++i)
-			result[i] = age_min + double(i) * s_uniform;
-	}
-	else
-	{	// put age_min in the result
-		size_t split_index = 0;
-		double split = split_vec[split_index];
-		bool error   = split < age_min;
+	// next value split age grid at
+	size_t split_index = 0;
+	double split       = 2.0 * age_max;
+	if( split_index < n_split )
+	{	split      = split_vec[split_index];
+		bool error  = split < age_min;
 		error |= dismod_at::time_line_vec<double>::near_equal(split, age_min);
 		if( error )
 		{	string table_name = "option";
@@ -100,46 +96,45 @@ CppAD::vector<double> avg_age_grid(
 			msg += " is less than or equal minimum age in age table";
 			error_exit(msg, table_name);
 		}
-		result.push_back( age_min );
+	}
+	//
+	// put age in the result
+	for(size_t i = 0; i < n_uniform; ++i)
+	{	double age  = age_min + double(i) * s_uniform;
+		bool   near = time_line_vec<double>::near_equal(split, age);
 		//
-		// put age in the result
-		for(size_t i = 1; i < n_uniform; ++i)
-		{	double age  = age_min + double(i) * s_uniform;
-			bool   near = time_line_vec<double>::near_equal(split, age);
-			//
-			// check if adding split to result
-			if( ! near && split < age  )
+		// check if adding next split to result
+		while( near || split < age  )
+		{	if( ! near )
 				result.push_back( split );
 			//
-			// put age in result
-			result.push_back( age );
-			//
-			// check if advance to next split
-			if( near || split < age )
-			{	// advance to next split point
-				++split_index;
-				if( split_index < n_split )
-				{	age   = split;
-					split = split_vec[split_index];
-					if( split <= age )
-					{	string table_name = "option";
-						string msg  = "avg_age_split entry ";
-						msg += split_vec_str[split_index];
-						msg += " is less than or equal previous entry";
-						error_exit(msg, table_name);
-					}
-					if( age_max <= split )
-					{	string table_name = "option";
-						string msg  = "avg_age_split entry ";
-						msg += split_vec_str[split_index];
-						msg += " >= the maximum age in age table";
-						error_exit(msg, table_name);
-					}
+			// advance to next split point
+			++split_index;
+			if( split_index < n_split )
+			{	double previous = split;
+				split           = split_vec[split_index];
+				if( split <= previous )
+				{	string table_name = "option";
+					string msg  = "avg_age_split entry ";
+					msg += split_vec_str[split_index];
+					msg += " is less than or equal previous entry";
+					error_exit(msg, table_name);
 				}
-				else
-					split = age_max;
+				if( age_max <= split )
+				{	string table_name = "option";
+					string msg  = "avg_age_split entry ";
+					msg += split_vec_str[split_index];
+					msg += " >= the maximum age in age table";
+					error_exit(msg, table_name);
+				}
 			}
+			else
+				split = 2.0 * age_max;
+			//
+			near = time_line_vec<double>::near_equal(split, age);
 		}
+		// add this point in the uniformly spaced grid
+		result.push_back( age );
 	}
 	return result;
 }

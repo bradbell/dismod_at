@@ -29,7 +29,7 @@ bool avg_age_grid_xam(void)
 	bool   ok = true;
 
 	double         ode_step_size = 20.0;
-	std::string    avg_age_split = "50.0 70.0";
+	std::string    avg_age_split = "25.0 35.0 50";
 	vector<double> age_table(2);
 	age_table[0] = 0.0;
 	age_table[1] = 100.0;
@@ -38,9 +38,9 @@ bool avg_age_grid_xam(void)
 		ode_step_size, avg_age_split, age_table
 	);
 
-	ok &= avg_age_grid.size() == 8;
+	ok &= avg_age_grid.size() == 9;
 	double check[] = {
-		0.0, 20.0, 40.0, 50.0, 60.0, 70.0, 80.0, 100.0
+		0.0, 20.0, 25.0, 35.0, 40.0, 50.0, 60.0, 80.0, 100.0
 	};
 	// std::cout << "avg_age_grid = " << avg_age_grid << "\n";
 	for(size_t i = 0; i < avg_age_grid.size(); ++i)
