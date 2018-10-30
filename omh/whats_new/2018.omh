@@ -63,6 +63,20 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-30$$
+$list number$$
+If the $cref/set option/set_command/option/$$ command had an empty
+string for a value, the empty string was placed in the option table.
+This violated the
+$cref/text can be null, not empty/database/Text can be Null, not Empty/$$
+rule and has been fixed.
+$lnext
+If the $cref/avg_age_split/option_table/avg_age_split/$$ was not sorted,
+the program would error even if the $cref set_command$$ was
+trying to fix it. This has been changed so the set command
+can fix it.
+$lend
+
 $head 10-22$$
 Start work on an
 $cref math_abstract$$ to the mathematics of dismod_at.

@@ -127,7 +127,7 @@ $end
 // ----------------------------------------------------------------------------
 void set_option_command(
 	sqlite3*                                        db           ,
-	const CppAD::vector<option_struct>&  option_table ,
+	const CppAD::vector<option_struct>&             option_table ,
 	const std::string&                              name         ,
 	const std::string&                              value        )
 {	using std::string;
@@ -152,7 +152,11 @@ void set_option_command(
 		found |= option_name[i] == name;
 	string sql_cmd;
 	if( found )
-	{	sql_cmd  = "update option set option_value = '" + value + "' ";
+	{	sql_cmd  = "update option set option_value =";
+		if( value == "" )
+			sql_cmd += " null ";
+		else
+			sql_cmd += " '" + value + "' ";
 		sql_cmd += "where option_name = '" + name + "'";
 		exec_sql_cmd(db, sql_cmd);
 	}

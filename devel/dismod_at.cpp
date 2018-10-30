@@ -1463,9 +1463,14 @@ int main(int n_arg, const char** argv)
 	string avg_age_split = option_map["avg_age_split"];
 	//
 	// avg_age_grid
-	vector<double> avg_age_grid = dismod_at::avg_age_grid(
-		ode_step_size, avg_age_split, db_input.age_table
-	);
+	vector<double> avg_age_grid;
+	if( command_arg != "set" )
+	{	// do not execute this during a set command because it might
+		// exit with an error that the user is trying to fix
+		avg_age_grid = dismod_at::avg_age_grid(
+			ode_step_size, avg_age_split, db_input.age_table
+		);
+	}
 	//
 	// bound_random
 	double bound_random = 0.0;
