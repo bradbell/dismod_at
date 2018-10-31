@@ -49,7 +49,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/pack_info.cpp
 	utility/pack_prior.cpp
 	utility/time_line_vec.cpp
-	utility/avg_age_grid.cpp
+	utility/age_avg_grid.cpp
 
 	table/check_child_prior.cpp
 	table/check_child_nslist.cpp

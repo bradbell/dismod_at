@@ -27,7 +27,7 @@ $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/fixed_effect.cpp
 	%devel/utility/get_prior_mean.cpp
 	%devel/utility/n_random_const.cpp
-	%devel/utility/avg_age_grid.cpp
+	%devel/utility/age_avg_grid.cpp
 	%devel/utility/pack_info.omh
 	%devel/utility/pack_prior.cpp
 	%devel/utility/residual_density.cpp

@@ -44,7 +44,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/configure.hpp>
 # include <dismod_at/depend.hpp>
 # include <dismod_at/get_prior_mean.hpp>
-# include <dismod_at/avg_age_grid.hpp>
+# include <dismod_at/age_avg_grid.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -1459,18 +1459,18 @@ int main(int n_arg, const char** argv)
 	// rate_case
 	string rate_case = option_map["rate_case"];
 	//
-	// avg_age_split
-	string avg_age_split = option_map["avg_age_split"];
+	// age_avg_split
+	string age_avg_split = option_map["age_avg_split"];
 	//
-	// avg_age_grid and avg_age table
-	vector<double> avg_age_grid;
+	// age_avg_grid and avg_age table
+	vector<double> age_avg_grid;
 	if( command_arg != "set" )
 	{	// do not execute this during a set command because it might
 		// exit with an error that the user is trying to fix
-		avg_age_grid = dismod_at::avg_age_grid(
-			ode_step_size, avg_age_split, db_input.age_table
+		age_avg_grid = dismod_at::age_avg_grid(
+			ode_step_size, age_avg_split, db_input.age_table
 		);
-		size_t n_avg_age = avg_age_grid.size();
+		size_t n_avg_age = age_avg_grid.size();
 		//
 		// output avg_age table
 		string sql_cmd = "drop table if exists avg_age";
@@ -1483,7 +1483,7 @@ int main(int n_arg, const char** argv)
 		col_type[0]   = "real";
 		col_unique[0] = true;
 		for(size_t i = 0; i < n_avg_age; ++i)
-			row_value[i] = CppAD::to_string( avg_age_grid[i] );
+			row_value[i] = CppAD::to_string( age_avg_grid[i] );
 		dismod_at::create_table(
 			db, table_name, col_name, col_type, col_unique, row_value
 		);
@@ -1550,7 +1550,7 @@ int main(int n_arg, const char** argv)
 			bound_random             ,
 			n_covariate              ,
 			ode_step_size            ,
-			avg_age_grid             ,
+			age_avg_grid             ,
 			db_input.age_table       ,
 			db_input.time_table      ,
 			db_input.integrand_table ,
@@ -1613,7 +1613,7 @@ int main(int n_arg, const char** argv)
 				bound_random             ,
 				n_covariate              ,
 				ode_step_size            ,
-				avg_age_grid             ,
+				age_avg_grid             ,
 				db_input.age_table       ,
 				db_input.time_table      ,
 				db_input.integrand_table ,

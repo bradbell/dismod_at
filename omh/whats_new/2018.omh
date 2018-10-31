@@ -65,17 +65,22 @@ $childtable%
 
 $head 10-30$$
 $list number$$
-The
-$cref/average age grid/option_table/avg_age_split/Average Age Grid/$$
-is now output in the $cref avg_age_table$$ to make
-$cref/avg_age_split/option_table/avg_age_split/$$ easier to use.
+The $icode avg_age_split$$ option was changed to the
+$cref/age_avg_split/option_table/age_avg_split/$$ option.
+(This is so that the $cref age_avg_table$$ does not appear
+to have the same primary key as the $cref age_table$$.)
 $lnext
-There was a bug in the avg_age_split option
+The
+$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$
+is now output in the $cref age_avg_table$$ to make
+$cref/age_avg_split/option_table/age_avg_split/$$ easier to use.
+$lnext
+There was a bug in the age_avg_split option
 when two splits occurred in the same
 $cref/ode_step_size/option_table/ode_step_size/$$ interval.
 This has been fixed.
 $lnext
-There was a bug in the avg_age_split option
+There was a bug in the age_avg_split option
 when the minimum and maximum age in the $cref age_table$$ were equal.
 This case now results in an error message.
 $lnext
@@ -85,7 +90,7 @@ This violated the
 $cref/text can be null, not empty/database/Text can be Null, not Empty/$$
 rule and has been fixed.
 $lnext
-If the $cref/avg_age_split/option_table/avg_age_split/$$ was not sorted,
+If the $cref/age_avg_split/option_table/age_avg_split/$$ was not sorted,
 the program would error even if the $cref set_command$$ was
 trying to fix it. This has been changed so the set command
 can fix it.
@@ -103,7 +108,7 @@ $head 10-21$$
 Change the way that average integrands are computed; see
 $cref numeric_average$$.
 This enables using a step size that varies with age; see
-$cref/average age grid/option_table/avg_age_split/Average Age Grid/$$.
+$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$.
 Here is one case of a speed comparison for this change using a uniformly
 spaced grid:
 before 4.9 seconds, after 3.6 second.
@@ -113,7 +118,7 @@ This test takes advantage of the fact that the new method only
 integrates one cohort when
 $icode%age_lower% = %age_upper%$$ and
 $icode%time_lower% = %time_upper%$$.
-It does not use $icode avg_age_split$$ to vary the spacing of the age grid.
+It does not use $icode age_avg_split$$ to vary the spacing of the age grid.
 
 
 $head 10-13$$

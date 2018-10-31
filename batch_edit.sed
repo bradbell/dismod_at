@@ -13,13 +13,15 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	omh/intro
-#	omh/math/math_abstract.omh
+# devel/utility/avg_age_grid.cpp
+# example/devel/utility/avg_age_grid_xam.cpp
+# example/user/avg_age_split.py
+# include/dismod_at/avg_age_grid.hpp
+# omh/table/avg_age_table.omh
 # '
 # sed command that maps ode file and or directory names to new file names
 # move_sed='
-#	s|omh/intro|omh/math|
-#	s|math_abstract.omh|abstract.omh|
+#	s|avg_age_|age_avg_|
 # '
 # list of files that re edited by the extra_sed command
 # extra_files='
@@ -30,5 +32,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Starting here: lines with sed commands do not begin with a # character.
-s|omh/intro|omh/math|
-s|math_abstract.omh|abstract.omh|
+s|avg_age_|age_avg_|g
+s|AVG_AGE_|AGE_AVG_|g
+s|Average Age|Age Average|
+s|average age|age average|

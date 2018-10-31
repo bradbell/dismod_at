@@ -63,7 +63,7 @@ $childtable%example/user/csv2db.py
 	%example/user/fit_fixed_both.py
 	%example/user/posterior.py
 	%example/user/fit_sim.py
-	%example/user/avg_age_split.py
+	%example/user/age_avg_split.py
 	%example/user/diabetes.py
 
 	%example/user/asymptotic.py

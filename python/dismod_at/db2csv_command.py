@@ -71,10 +71,10 @@
 #
 # $head avg_age.csv$$
 # The file $icode%dir%/avg_age.csv%$$ is written by this command.
-# It is a CSV file with the contents of the $cref avg_age_table$$.
+# It is a CSV file with the contents of the $cref age_avg_table$$.
 # Note that a $cref set_command$$ may change the value of
 # $cref/ode_step_size/option_table/ode_step_size/$$ or
-# $cref/avg_age_split/option_table/avg_age_split/$$ but it will not
+# $cref/age_avg_split/option_table/age_avg_split/$$ but it will not
 # write out the new avg_age table.
 #
 # $head variable.csv$$
@@ -860,7 +860,7 @@ def db2csv_command(database_file_arg) :
 		[ "limited_memory_max_history_fixed",  "30"],
 		[ "max_num_iter_fixed",                "100"],
 		[ "max_num_iter_random",               "100"],
-		[ "avg_age_split",                     ""],
+		[ "age_avg_split",                     ""],
 		[ "ode_step_size",                     "10.0"],
 		[ "parent_node_id",                    ""],
 		[ "parent_node_name",                  ""],

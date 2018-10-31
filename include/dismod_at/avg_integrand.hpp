@@ -97,7 +97,7 @@ public:
 	avg_integrand(
 		double                                    ode_step_size    ,
 		const std::string&                        rate_case        ,
-		const CppAD::vector<double>&              avg_age_grid     ,
+		const CppAD::vector<double>&              age_avg_grid     ,
 		const CppAD::vector<double>&              age_table        ,
 		const CppAD::vector<double>&              time_table       ,
 		const CppAD::vector<integrand_struct>&    integrand_table  ,

@@ -8,17 +8,17 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin avg_age_split.py$$ $newlinech #$$
+# $begin age_avg_split.py$$ $newlinech #$$
 # $spell
 #	init
 # $$
 #
-# $section Non-uniform Average Age Grid$$
+# $section Non-uniform Age Average Grid$$
 #
 # $head Purpose$$
 # This example demonstrate one reason for using the
-# $icode avg_age_split$$ option to create an
-# $cref/average age grid/option_table/avg_age_split/Average Age Grid/$$
+# $icode age_avg_split$$ option to create an
+# $cref/age average grid/option_table/age_avg_split/Age Average Grid/$$
 # that is not uniformly spaced.
 #
 # $head Variables$$
@@ -47,18 +47,18 @@
 # $head ode_step_size$$
 # The $cref/ode_step_size/option_table/ode_step_size/$$ is
 # $code 50.0$$ for this example.
-# If there were no $icode avg_age_split$$, a linear approximation
+# If there were no $icode age_avg_split$$, a linear approximation
 # would be used from age 0.0 to age 50.
 #
-# $head avg_age_split$$
-# The average age grid is split at age $code 1.0$$; i.e.,
-# The average age grid points are $code 0.0$$, $code 1.0$$, $code 50.0$$, and
+# $head age_avg_split$$
+# The age average grid is split at age $code 1.0$$; i.e.,
+# The age average grid points are $code 0.0$$, $code 1.0$$, $code 50.0$$, and
 # $code 100.0$$.
 # A piecewise linear function of age is used between these grid points.
 # (Note everything is constant w.r.t time for this case.)
 #
 # $head Source$$
-# $srcfile%example/user/avg_age_split.py
+# $srcfile%example/user/age_avg_split.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1
 # %$$
 #
@@ -74,7 +74,7 @@ import os
 import distutils.dir_util
 import subprocess
 import copy
-test_program = 'example/user/avg_age_split.py'
+test_program = 'example/user/age_avg_split.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -203,7 +203,7 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'               },
 		{ 'name':'ode_step_size',          'value':'50.0'                },
-		{ 'name':'avg_age_split',          'value':'1.0'                 },
+		{ 'name':'age_avg_split',          'value':'1.0'                 },
 		{ 'name':'random_seed',            'value':'0'                   },
 		{ 'name':'rate_case',              'value':'iota_zero_rho_zero'  }
 	]
@@ -266,6 +266,6 @@ for row in predict_table :
 	value      = row['avg_integrand']
 	assert(abs(1.0 - value / value_true) < tolerance)
 # -----------------------------------------------------------------------------
-print('avg_age_split.py: OK')
+print('age_avg_split.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

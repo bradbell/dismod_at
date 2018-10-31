@@ -81,7 +81,7 @@ in the option table.
 
 $head Average Integrand Age Grid$$
 The
-$cref/average age grid/option_table/avg_age_split/Average Age Grid/$$
+$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$
 is specified in the option table.
 
 $head Extended Age Grid$$

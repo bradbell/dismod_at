@@ -35,7 +35,7 @@ $codei%data_model %data_object%(
 	%bound_random%,
 	%n_covariate%,
 	%ode_step_size%,
-	%avg_age_grid%,
+	%age_avg_grid%,
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
@@ -71,8 +71,8 @@ $cref covariate_table$$.
 $head ode_step_size$$
 This is the $cref/ode_step_size/option_table/ode_step_size/$$.
 
-$head avg_age_grid$$
-This is the $cref/average age grid/option_table/avg_age_split/Average Age Grid/$$.
+$head age_avg_grid$$
+This is the $cref/age average grid/option_table/age_avg_split/Age Average Grid/$$.
 
 $head age_table$$
 This is the $cref/age_table/get_age_table/age_table/$$.
@@ -192,7 +192,7 @@ data_model::data_model(
 	double                                   bound_random    ,
 	size_t                                   n_covariate     ,
 	double                                   ode_step_size   ,
-	const CppAD::vector<double>&             avg_age_grid    ,
+	const CppAD::vector<double>&             age_avg_grid    ,
 	const CppAD::vector<double>&             age_table       ,
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
@@ -214,7 +214,7 @@ pack_object_       (pack_object)                   ,
 avgint_obj_(
 	ode_step_size,
 	rate_case,
-	avg_age_grid,
+	age_avg_grid,
 	age_table,
 	time_table,
 	integrand_table,
@@ -224,7 +224,7 @@ avgint_obj_(
 ),
 avgstd_obj_(
 	ode_step_size,
-	avg_age_grid,
+	age_avg_grid,
 	age_table,
 	time_table,
 	integrand_table,
@@ -917,7 +917,7 @@ template data_model::data_model(                                \
 	double                                   bound_random    ,  \
 	size_t                                   n_covariate     ,  \
 	double                                   ode_step_size   ,  \
-	const CppAD::vector<double>&             avg_age_grid    ,  \
+	const CppAD::vector<double>&             age_avg_grid    ,  \
 	const CppAD::vector<double>&             age_table       ,  \
 	const CppAD::vector<double>&             time_table      ,  \
 	const CppAD::vector<integrand_struct>&   integrand_table ,  \

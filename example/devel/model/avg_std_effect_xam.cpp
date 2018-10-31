@@ -29,7 +29,7 @@ $end
 # include <dismod_at/avg_std_effect.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
-# include <dismod_at/avg_age_grid.hpp>
+# include <dismod_at/age_avg_grid.hpp>
 
 namespace {
 	double age_max_, time_max_, x_j = 0.5;
@@ -182,13 +182,13 @@ bool avg_std_effect_xam(void)
 	);
 
 	// avgstd_obj
-	std::string avg_age_split = "";
-	vector<double> avg_age_grid = dismod_at::avg_age_grid(
-		ode_step_size, avg_age_split, age_table
+	std::string age_avg_split = "";
+	vector<double> age_avg_grid = dismod_at::age_avg_grid(
+		ode_step_size, age_avg_split, age_table
 	);
 	dismod_at::avg_std_effect avgstd_obj(
 		ode_step_size,
-		avg_age_grid,
+		age_avg_grid,
 		age_table,
 		time_table,
 		integrand_table,

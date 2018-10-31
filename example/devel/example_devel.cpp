@@ -48,7 +48,7 @@ extern bool data_subset_xam(void);
 extern bool eigen_ode2_xam(void);
 extern bool fixed_effect_xam(void);
 extern bool manage_gsl_rng_xam(void);
-extern bool avg_age_grid_xam(void);
+extern bool age_avg_grid_xam(void);
 extern bool pack_info_xam(void);
 extern bool pack_prior_xam(void);
 extern bool random_effect_xam(void);
@@ -141,7 +141,7 @@ int main(void)
 	RUN(eigen_ode2_xam);
 	RUN(fixed_effect_xam);
 	RUN(manage_gsl_rng_xam);
-	RUN(avg_age_grid_xam);
+	RUN(age_avg_grid_xam);
 	RUN(pack_info_xam);
 	RUN(pack_prior_xam);
 	RUN(residual_density_xam);

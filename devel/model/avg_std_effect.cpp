@@ -30,7 +30,7 @@ $section Constructing An Average Standard Deviation Effect Object$$
 $head Syntax$$
 $codei%avg_std_effect %avgstd_obj%(
 	%ode_step_size%,
-	%avg_age_grid%,
+	%age_avg_grid%,
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
@@ -49,10 +49,10 @@ $head ode_step_size$$
 This is the value of
 $cref/ode_step_size/option_table/ode_step_size/$$ in the option table.
 
-$head avg_age_grid$$
-This is the $cref avg_age_grid$$.
-A reference to $icode avg_age_grid$$ is used by $icode avgstd_obj$$
-($icode avg_age_grid$$ must no be deleted for as long as
+$head age_avg_grid$$
+This is the $cref age_avg_grid$$.
+A reference to $icode age_avg_grid$$ is used by $icode avgstd_obj$$
+($icode age_avg_grid$$ must no be deleted for as long as
 $icode avgstd_obj$$ is used).
 
 $head age_table$$
@@ -98,7 +98,7 @@ $end
 // BEGIN_AVG_STD_EFFECT_PROTOTYPE
 avg_std_effect::avg_std_effect(
 		double                                    ode_step_size    ,
-		const CppAD::vector<double>&              avg_age_grid     ,
+		const CppAD::vector<double>&              age_avg_grid     ,
 		const CppAD::vector<double>&              age_table        ,
 		const CppAD::vector<double>&              time_table       ,
 		const CppAD::vector<integrand_struct>&    integrand_table  ,
@@ -114,8 +114,8 @@ integrand_table_           ( integrand_table ) ,
 w_info_vec_                ( w_info_vec )      ,
 s_info_vec_                ( s_info_vec )      ,
 pack_object_               ( pack_object )     ,
-double_time_line_object_   ( avg_age_grid )    ,
-a1_double_time_line_object_( avg_age_grid )
+double_time_line_object_   ( age_avg_grid )    ,
+a1_double_time_line_object_( age_avg_grid )
 { }
 /*
 ------------------------------------------------------------------------------

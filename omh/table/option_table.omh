@@ -209,14 +209,14 @@ which is reasonable if all the rates
 $icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
 are all less than $code 0.1$$.
 
-$head avg_age_split$$
-If $icode%option_name% = avg_age_split%$$,
+$head age_avg_split$$
+If $icode%option_name% = age_avg_split%$$,
 the corresponding $icode option_value$$ is a space separated list of
 age values at which to split the age integration.
 This split is both for the computation of the average integrands
 and for the solution of the ODE.
 
-$subhead Average Age Grid$$
+$subhead Age Average Grid$$
 Let $icode age_min$$ and $icode age_max$$ be the minimum and maximum
 ages in the $cref age_table$$.
 Let $icode%N% >= 1%$$ be the minimum integer such that
@@ -228,8 +228,8 @@ $icode%a%[%i%]%$$ for $icode%i% = 0 , %...%, %N%$$ by
 $codei%
 	%a%[%i%] = %i% * ( %age_max% - %age_min% ) / %N%
 %$$
-The average age grid is the union of the set of $icode%a%[%i%]%$$
-and the age points in $icode avg_age_split$$.
+The age average grid is the union of the set of $icode%a%[%i%]%$$
+and the age points in $icode age_avg_split$$.
 This grid is used both for
 $cref/approximating averages/numeric_average/$$
 and for approximating the solution of the dismod_at
@@ -239,8 +239,8 @@ $cref/ordinary differential equation
 /$$.
 
 $subhead Default$$
-The default value for $icode avg_age_split$$ is the empty set
-in which case the average age grid is the set of $icode%a%[%i%]%$$.
+The default value for $icode age_avg_split$$ is the empty set
+in which case the age average grid is the set of $icode%a%[%i%]%$$.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number

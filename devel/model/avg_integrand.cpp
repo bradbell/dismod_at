@@ -30,7 +30,7 @@ $head Syntax$$
 $codei%avg_integrand %avgint_obj%(
 	%ode_step_size%,
 	%rate_case%,
-	%avg_age_grid%,
+	%age_avg_grid%,
 	%age_table%,
 	%time_table%,
 	%integrand_table%,
@@ -53,10 +53,10 @@ $head rate_case$$
 This is the value of
 $cref/rate_case/option_table/rate_case/$$ in the option table.
 
-$head avg_age_grid$$
-This is the $cref avg_age_grid$$.
-A reference to $icode avg_age_grid$$ is used by $icode avgint_obj$$
-($icode avg_age_grid$$ must no be deleted for as long as
+$head age_avg_grid$$
+This is the $cref age_avg_grid$$.
+A reference to $icode age_avg_grid$$ is used by $icode avgint_obj$$
+($icode age_avg_grid$$ must no be deleted for as long as
 $icode avgint_obj$$ is used).
 
 $head age_table$$
@@ -105,7 +105,7 @@ $end
 avg_integrand::avg_integrand(
 		double                                    ode_step_size    ,
 		const std::string&                        rate_case        ,
-		const CppAD::vector<double>&              avg_age_grid     ,
+		const CppAD::vector<double>&              age_avg_grid     ,
 		const CppAD::vector<double>&              age_table        ,
 		const CppAD::vector<double>&              time_table       ,
 		const CppAD::vector<integrand_struct>&    integrand_table  ,
@@ -119,8 +119,8 @@ age_table_                 ( age_table )       ,
 time_table_                ( time_table )      ,
 integrand_table_           ( integrand_table ) ,
 w_info_vec_                ( w_info_vec )      ,
-double_time_line_object_   ( avg_age_grid )    ,
-a1_double_time_line_object_( avg_age_grid )    ,
+double_time_line_object_   ( age_avg_grid )    ,
+a1_double_time_line_object_( age_avg_grid )    ,
 adjint_obj_(
 	rate_case,
 	age_table,

@@ -8,18 +8,18 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin avg_age_table$$
+$begin age_avg_table$$
 $spell
 	grid
 	csv
 $$
 
-$section The Average Age Grid$$
+$section The Age Average Grid$$
 
 $head Creation$$
 This table changes each time the
 $cref/ode_step_size/option_table/ode_step_size/$$ or the
-$cref/avg_age_split/option_table/avg_age_split/$$ changes.
+$cref/age_avg_split/option_table/age_avg_split/$$ changes.
 These value can change without having to re-execute the
 $cref init_command$$.
 For this reason, this table is re-written for each command
@@ -30,7 +30,7 @@ $cref/csv2db/csv2db_command/$$,
 and
 $cref/modify/modify_command/$$.
 
-$head avg_age_id$$
+$head age_avg_id$$
 This column has type $code integer$$ and is the primary key for
 the this table.
 Its initial value is zero, and it increments by one for each row.
@@ -38,7 +38,7 @@ Its initial value is zero, and it increments by one for each row.
 $head age$$
 This column has type $code real$$ and is a monotone
 increasing values in the
-$cref/average age grid/option_table/avg_age_split/Average Age Grid/$$
+$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$
 The values are unique; i.e.,
 none of the values are repeated.
 
