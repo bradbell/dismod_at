@@ -1462,13 +1462,30 @@ int main(int n_arg, const char** argv)
 	// avg_age_split
 	string avg_age_split = option_map["avg_age_split"];
 	//
-	// avg_age_grid
+	// avg_age_grid and avg_age table
 	vector<double> avg_age_grid;
 	if( command_arg != "set" )
 	{	// do not execute this during a set command because it might
 		// exit with an error that the user is trying to fix
 		avg_age_grid = dismod_at::avg_age_grid(
 			ode_step_size, avg_age_split, db_input.age_table
+		);
+		size_t n_avg_age = avg_age_grid.size();
+		//
+		// output avg_age table
+		string sql_cmd = "drop table if exists avg_age";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+		//
+		table_name = "avg_age";
+		vector<string> col_name(1), col_type(1), row_value(n_avg_age);
+		vector<bool> col_unique(1);
+		col_name[0]   = "age";
+		col_type[0]   = "real";
+		col_unique[0] = true;
+		for(size_t i = 0; i < n_avg_age; ++i)
+			row_value[i] = CppAD::to_string( avg_age_grid[i] );
+		dismod_at::create_table(
+			db, table_name, col_name, col_type, col_unique, row_value
 		);
 	}
 	//

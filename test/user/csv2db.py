@@ -20,12 +20,13 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # check execution is from distribution directory
-test_file = 'test/user/csv2db.py'
-if sys.argv[0] != test_file  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + test_file + '\n'
+test_program = 'test/user/csv2db.py'
+if sys.argv[0] != test_program  or len(sys.argv) != 1 :
+	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
 	usage += 'and working directory is the dismod_at distribution directory\n'
 	sys.exit(usage)
+print(test_program)
 #
 #
 # change into the build/test/user directory
@@ -68,16 +69,18 @@ writer.writeheader()
 #
 # mtother data
 row               = dict()
-age               = 50.
-time              = 50.
+time              = 00.
 row['integrand']  = 'mtother'
-row['age_lower']  = age
-row['age_upper']  = age
+row['age_lower']  = 0.0
+row['age_upper']  = 0.0
 row['time_lower'] = time
 row['time_upper'] = time
 row['meas_value'] = 0.01
 row['meas_std']   = row['meas_value'] / 10.0
 row['hold_out']   = 1 # used for constraint, not data
+writer.writerow(row)
+row['age_lower']  = 100.0
+row['age_upper']  = 100.0
 writer.writerow(row)
 file_ptr.close()
 # ----------------------------------------------------------------------------
@@ -109,14 +112,15 @@ var_table         = dismod_at.get_table_dict(connection, 'var')
 rate_table        = dismod_at.get_table_dict(connection, 'rate')
 integrand_table   = dismod_at.get_table_dict(connection, 'integrand')
 #
-assert len(var_table) == 1
-row              = var_table[0]
-assert row['var_type']     == 'rate'
-assert row['age_id']       == 0
-assert row['time_id']      == 0
-assert row['node_id']      == 0
-assert row['integrand_id'] == None
-assert row['covariate_id'] == None
+assert len(var_table) == 2
+for i in range(2) :
+	row  = var_table[i]
+	assert row['var_type']     == 'rate'
+	assert row['age_id']       == i
+	assert row['time_id']      == 0
+	assert row['node_id']      == 0
+	assert row['integrand_id'] == None
+	assert row['covariate_id'] == None
 rate_row            = rate_table[ row['rate_id'] ]
 assert rate_row['rate_name'] == 'omega'
 # ============================================================================

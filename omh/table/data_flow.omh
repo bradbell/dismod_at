@@ -35,6 +35,7 @@ $children%omh/table/log_table.omh
 	%omh/table/depend_var_table.omh
 	%omh/table/start_var_table.omh
 	%omh/table/scale_var_table.omh
+	%omh/table/avg_age_table.omh
 	%omh/table/fit_var_table.omh
 	%omh/table/fit_data_subset_table.omh
 	%omh/table/truth_var_table.omh
@@ -111,7 +112,8 @@ The tables created by the init command are the
 $cref/var/init_command/var_table/$$,
 $cref/data_subset/init_command/data_subset_table/$$,
 $cref/start_var/init_command/start_var_table/$$, and
-$cref/scale_var/init_command/scale_var_table/$$ tables.
+$cref/scale_var/init_command/scale_var_table/$$,
+$cref/avg_age/avg_age_table/$$ tables.
 
 $table
 Command     $cnext
@@ -120,7 +122,7 @@ Output      $cnext
 $rnext
 $cref/depend/depend_command/$$   $cnext
 $cnext
-$cref depend_var_table$$
+$cref depend_var_table$$, $cref avg_age_table$$
 $rnext
 $cref/set/set_command/$$                     $cnext
 $cref fit_var_table$$, $cref sample_table$$  $cnext
@@ -128,19 +130,19 @@ $cref start_var_table$$, $cref scale_var_table$$, $cref truth_var_table$$
 $rnext
 $cref/fit/fit_command/$$     $cnext
 	$cref data_sim_table$$  $cnext
-	$cref fit_var_table$$, $cref fit_data_subset_table$$.
+	$cref fit_var_table$$, $cref fit_data_subset_table$$, $cref avg_age_table$$
 $rnext
 $cref/simulate/simulate_command/$$ $cnext
 	$cref truth_var_table$$        $cnext
-	$cref data_sim_table$$
+	$cref data_sim_table$$, $cref avg_age_table$$
 $rnext
 $cref/sample/sample_command/$$ $cnext
 $cref fit_var_table$$, $cref data_sim_table$$, $cref prior_sim_table$$ $cnext
-$cref sample_table$$
+$cref sample_table$$, $cref avg_age_table$$
 $rnext
 $cref/predict/predict_command/$$ $cnext
 	$cref sample_table$$, $cref fit_var_table$$, $cref truth_var_table$$ $cnext
-	$cref predict_table$$
+	$cref predict_table$$, $cref avg_age_table$$
 $tend
 
 $end

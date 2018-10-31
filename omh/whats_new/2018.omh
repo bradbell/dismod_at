@@ -65,11 +65,19 @@ $childtable%
 
 $head 10-30$$
 $list number$$
-There was a bug in the
-$cref/avg_age_split/option_table/avg_age_split/$$ option
+The
+$cref/average age grid/option_table/avg_age_split/Average Age Grid/$$
+is now output in the $cref avg_age_table$$ to make
+$cref/avg_age_split/option_table/avg_age_split/$$ easier to use.
+$lnext
+There was a bug in the avg_age_split option
 when two splits occurred in the same
 $cref/ode_step_size/option_table/ode_step_size/$$ interval.
 This has been fixed.
+$lnext
+There was a bug in the avg_age_split option
+when the minimum and maximum age in the $cref age_table$$ were equal.
+This case now results in an error message.
 $lnext
 If the $cref/set option/set_command/option/$$ command had an empty
 string for a value, the empty string was placed in the option table.

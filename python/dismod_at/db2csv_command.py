@@ -69,6 +69,14 @@
 # $cref/unix_time/log_table/unix_time/$$, and
 # $cref/message/log_table/message/$$.
 #
+# $head avg_age.csv$$
+# The file $icode%dir%/avg_age.csv%$$ is written by this command.
+# It is a CSV file with the contents of the $cref avg_age_table$$.
+# Note that a $cref set_command$$ may change the value of
+# $cref/ode_step_size/option_table/ode_step_size/$$ or
+# $cref/avg_age_split/option_table/avg_age_split/$$ but it will not
+# write out the new avg_age table.
+#
 # $head variable.csv$$
 # The file $icode%dir%/variable.csv%$$ is written by this command.
 # It is a CSV file with one row for each of the $cref model_variables$$
@@ -545,6 +553,7 @@ def db2csv_command(database_file_arg) :
 	required_table_list  = [
 		'age',
 		'avgint',
+		'avg_age',
 		'covariate',
 		'data',
 		'data_subset',
@@ -798,7 +807,7 @@ def db2csv_command(database_file_arg) :
 	simulate_index = None
 	log_data       = dismod_at.get_table_dict(connection, 'log')
 	#
-	# search for the last fit commmand in the log table
+	# search for the last fit command in the log table
 	for i in range( len(log_data) ) :
 		log_id        = len(log_data) - i - 1
 		row           = log_data[log_id]
@@ -891,6 +900,17 @@ def db2csv_command(database_file_arg) :
 	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 	csv_writer.writeheader()
 	for row in table_data['log'] :
+		csv_writer.writerow(row)
+	csv_file.close()
+	# =========================================================================
+	# avg_age.csv
+	# =========================================================================
+	file_name = os.path.join(database_dir, 'avg_age.csv')
+	csv_file  = open(file_name, 'w')
+	header = ['age']
+	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+	csv_writer.writeheader()
+	for row in table_data['avg_age'] :
 		csv_writer.writerow(row)
 	csv_file.close()
 	# =========================================================================

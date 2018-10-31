@@ -62,8 +62,14 @@ CppAD::vector<double> avg_age_grid(
 	vector<double> result;
 
 	// minimum and maximum age in age table
-	double age_min    = dismod_at::min_vector( age_table );
-	double age_max    = dismod_at::max_vector( age_table );
+	double age_min  = dismod_at::min_vector( age_table );
+	double age_max  = dismod_at::max_vector( age_table );
+	bool   near     = time_line_vec<double>::near_equal(age_min, age_max);
+	if( near )
+	{	string table_name = "age";
+		string msg  = "minimum and maximum age are near equal";
+		error_exit(msg, table_name);
+	}
 	//
 	// number of points in the uniform spaced grid
 	double eps        = std::numeric_limits<double>::epsilon();
@@ -101,7 +107,7 @@ CppAD::vector<double> avg_age_grid(
 	// put age in the result
 	for(size_t i = 0; i < n_uniform; ++i)
 	{	double age  = age_min + double(i) * s_uniform;
-		bool   near = time_line_vec<double>::near_equal(split, age);
+		near        = time_line_vec<double>::near_equal(split, age);
 		//
 		// check if adding next split to result
 		while( near || split < age  )

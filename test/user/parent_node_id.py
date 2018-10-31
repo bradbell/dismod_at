@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-18 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -14,12 +14,13 @@ import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
-program = 'test/user/parent_node_id.py'
-if sys.argv[0] != program  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + program + '\n'
+test_program = 'test/user/parent_node_id.py'
+if sys.argv[0] != test_program  or len(sys.argv) != 1 :
+	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
 	usage += 'and working directory is the dismod_at distribution directory\n'
 	sys.exit(usage)
+print(test_program)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
@@ -58,7 +59,7 @@ cmd += " VALUES('parent_node_id', '" + parent_node_id + "')"
 dismod_at.sql_command(connection, cmd)
 connection.close()
 # -----------------------------------------------------------------------
-program        = '../../devel/dismod_at'
+program  = '../../devel/dismod_at'
 for command in [ 'init', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'fit' :
