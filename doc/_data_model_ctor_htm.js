@@ -20,7 +20,7 @@ var list_current0 = [
 'data_model_ctor.htm#bound_random',
 'data_model_ctor.htm#n_covariate',
 'data_model_ctor.htm#ode_step_size',
-'data_model_ctor.htm#avg_age_grid',
+'data_model_ctor.htm#age_avg_grid',
 'data_model_ctor.htm#age_table',
 'data_model_ctor.htm#time_table',
 'data_model_ctor.htm#integrand_table',

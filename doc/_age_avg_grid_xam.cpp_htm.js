@@ -1,7 +1,9 @@
 var list_up0 = [
 'dismod_at.htm',
-'user.htm',
-'user_diff_constraint.py.htm'
+'devel.htm',
+'devel_utility.htm',
+'age_avg_grid.htm',
+'age_avg_grid_xam.cpp.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -10,7 +12,7 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_down2 = [
+var list_down4 = [
 'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
@@ -23,29 +25,36 @@ var list_down2 = [
 'whats_new_2018.htm',
 'wish_list.htm'
 ];
+var list_down3 = [
+'devel_table.htm',
+'devel_utility.htm',
+'devel_model.htm'
+];
+var list_down2 = [
+'a1_double.htm',
+'avgint_subset.htm',
+'bilinear_interp.htm',
+'child_info.htm',
+'cohort_ode.htm',
+'data_subset.htm',
+'eigen_ode2.htm',
+'error_exit.htm',
+'fixed_effect.htm',
+'get_prior_mean.htm',
+'number_random_const.htm',
+'age_avg_grid.htm',
+'pack_info.htm',
+'pack_prior.htm',
+'residual_density.htm',
+'random_number.htm',
+'random_effect.htm',
+'grid2line.htm',
+'solve_ode.htm',
+'split_space.htm',
+'time_line_vec.htm'
+];
 var list_down1 = [
-'user_csv2db.py.htm',
-'user_fit_random.py.htm',
-'user_fit_fixed_both.py.htm',
-'user_posterior.py.htm',
-'user_fit_sim.py.htm',
-'age_avg_split.py.htm',
-'user_diabetes.py.htm',
-'user_asymptotic.py.htm',
-'user_change_grid.py.htm',
-'user_const_random.py.htm',
-'user_const_value.py.htm',
-'user_continue_fit.py.htm',
-'user_diff_constraint.py.htm',
-'user_jump_at_age.py.htm',
-'user_lasso_covariate.py.htm',
-'user_meas_covariate.py.htm',
-'user_no_children.py.htm',
-'user_predict_fit.py.htm',
-'user_zero_sum_random.py.htm',
-'user_re_scale.py.htm',
-'user_speed.py.htm',
-'user_students.py.htm'
+'age_avg_grid_xam.cpp.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
@@ -64,6 +73,18 @@ function choose_current0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_current0[index-1];
+}
+function choose_down4(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down4[index-1];
+}
+function choose_down3(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down3[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

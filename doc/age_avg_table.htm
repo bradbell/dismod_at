@@ -1,0 +1,160 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>The Age Average Grid</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Age Average Grid">
+<meta name="keywords" id="keywords" content=" the age average grid creation age_avg_id ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_age_avg_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>age_avg_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="scale_var_table.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Creation</option>
+<option>age_avg_id</option>
+<option>age</option>
+</select>
+</td>
+<td><a href="fit_var_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down3(this)'>
+<option>dismod_at-&gt;</option>
+<option>math_abstract</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down2(this)'>
+<option>database-&gt;</option>
+<option>input</option>
+<option>data_flow</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>data_flow-&gt;</option>
+<option>log_table</option>
+<option>var_table</option>
+<option>data_subset_table</option>
+<option>depend_var_table</option>
+<option>start_var_table</option>
+<option>scale_var_table</option>
+<option>age_avg_table</option>
+<option>fit_var_table</option>
+<option>fit_data_subset_table</option>
+<option>truth_var_table</option>
+<option>prior_sim_table</option>
+<option>data_sim_table</option>
+<option>sample_table</option>
+<option>predict_table</option>
+</select>
+</td>
+<td>age_avg_table</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Age Average Grid</big></big></b></center>
+<br>
+<b><big><a name="Creation" id="Creation">Creation</a></big></b>
+<br>
+This table changes each time the
+<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+ or the
+<a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+ changes.
+These value can change without having to re-execute the
+<a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+.
+For this reason, this table is re-written for each command
+with the exception of the following commands:
+<a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set</span></a>
+,
+<a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv</span></a>
+,
+<a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db</span></a>
+,
+and
+<a href="modify_command.htm" target="_top"><span style='white-space: nowrap'>modify</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="age_avg_id" id="age_avg_id">age_avg_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="age" id="age">age</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code> and is a monotone
+increasing values in the
+<a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
+
+The values are unique; i.e.,
+none of the values are repeated.
+
+
+
+<hr>Input File: omh/table/age_avg_table.omh
+
+</body>
+</html>

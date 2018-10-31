@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
-'user.htm',
-'user_diff_constraint.py.htm'
+'math_abstract.htm',
+'math_ode.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -9,6 +9,17 @@ var list_across0 = [
 '_index.htm',
 '_search.htm',
 '_external.htm'
+];
+var list_current0 = [
+'math_ode.htm#Susceptible, S(a, t)',
+'math_ode.htm#With Condition, C(a, t)',
+'math_ode.htm#Prevalence, P(a, t)',
+'math_ode.htm#Incidence, iota(a, t)',
+'math_ode.htm#Remission, rho(a, t)',
+'math_ode.htm#Excess Mortality, chi(a, t)',
+'math_ode.htm#Other Cause Mortality, omega(a, t)',
+'math_ode.htm#Initial Prevalence, pini(t)',
+'math_ode.htm#The Dismod_at ODE'
 ];
 var list_down2 = [
 'math_abstract.htm',
@@ -24,28 +35,7 @@ var list_down2 = [
 'wish_list.htm'
 ];
 var list_down1 = [
-'user_csv2db.py.htm',
-'user_fit_random.py.htm',
-'user_fit_fixed_both.py.htm',
-'user_posterior.py.htm',
-'user_fit_sim.py.htm',
-'age_avg_split.py.htm',
-'user_diabetes.py.htm',
-'user_asymptotic.py.htm',
-'user_change_grid.py.htm',
-'user_const_random.py.htm',
-'user_const_value.py.htm',
-'user_continue_fit.py.htm',
-'user_diff_constraint.py.htm',
-'user_jump_at_age.py.htm',
-'user_lasso_covariate.py.htm',
-'user_meas_covariate.py.htm',
-'user_no_children.py.htm',
-'user_predict_fit.py.htm',
-'user_zero_sum_random.py.htm',
-'user_re_scale.py.htm',
-'user_speed.py.htm',
-'user_students.py.htm'
+'math_ode.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

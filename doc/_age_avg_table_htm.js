@@ -1,9 +1,8 @@
 var list_up0 = [
 'dismod_at.htm',
-'devel.htm',
-'devel_utility.htm',
-'avg_age_grid.htm',
-'avg_age_grid_xam.cpp.htm'
+'database.htm',
+'data_flow.htm',
+'age_avg_table.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -12,7 +11,12 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_down4 = [
+var list_current0 = [
+'age_avg_table.htm#Creation',
+'age_avg_table.htm#age_avg_id',
+'age_avg_table.htm#age'
+];
+var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
 'get_started.htm',
@@ -25,36 +29,25 @@ var list_down4 = [
 'whats_new_2018.htm',
 'wish_list.htm'
 ];
-var list_down3 = [
-'devel_table.htm',
-'devel_utility.htm',
-'devel_model.htm'
-];
 var list_down2 = [
-'a1_double.htm',
-'avgint_subset.htm',
-'bilinear_interp.htm',
-'child_info.htm',
-'cohort_ode.htm',
-'data_subset.htm',
-'eigen_ode2.htm',
-'error_exit.htm',
-'fixed_effect.htm',
-'get_prior_mean.htm',
-'number_random_const.htm',
-'avg_age_grid.htm',
-'pack_info.htm',
-'pack_prior.htm',
-'residual_density.htm',
-'random_number.htm',
-'random_effect.htm',
-'grid2line.htm',
-'solve_ode.htm',
-'split_space.htm',
-'time_line_vec.htm'
+'input.htm',
+'data_flow.htm'
 ];
 var list_down1 = [
-'avg_age_grid_xam.cpp.htm'
+'log_table.htm',
+'var_table.htm',
+'data_subset_table.htm',
+'depend_var_table.htm',
+'start_var_table.htm',
+'scale_var_table.htm',
+'age_avg_table.htm',
+'fit_var_table.htm',
+'fit_data_subset_table.htm',
+'truth_var_table.htm',
+'prior_sim_table.htm',
+'data_sim_table.htm',
+'sample_table.htm',
+'predict_table.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
@@ -73,12 +66,6 @@ function choose_current0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_current0[index-1];
-}
-function choose_down4(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_down4[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

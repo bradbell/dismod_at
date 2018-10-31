@@ -17,7 +17,7 @@ var list_current0 = [
 'avg_integrand_ctor.htm#Prototype',
 'avg_integrand_ctor.htm#ode_step_size',
 'avg_integrand_ctor.htm#rate_case',
-'avg_integrand_ctor.htm#avg_age_grid',
+'avg_integrand_ctor.htm#age_avg_grid',
 'avg_integrand_ctor.htm#age_table',
 'avg_integrand_ctor.htm#time_table',
 'avg_integrand_ctor.htm#integrand_table',

@@ -16,7 +16,7 @@ var list_current0 = [
 'avg_std_effect_ctor.htm#Syntax',
 'avg_std_effect_ctor.htm#Prototype',
 'avg_std_effect_ctor.htm#ode_step_size',
-'avg_std_effect_ctor.htm#avg_age_grid',
+'avg_std_effect_ctor.htm#age_avg_grid',
 'avg_std_effect_ctor.htm#age_table',
 'avg_std_effect_ctor.htm#time_table',
 'avg_std_effect_ctor.htm#integrand_table',

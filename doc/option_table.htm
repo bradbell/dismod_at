@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size avg_age_split average age grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,8 +78,8 @@ A:active { color : purple }
 <option>---..Default</option>
 <option>ode_step_size</option>
 <option>---..Default</option>
-<option>avg_age_split</option>
-<option>---..Average Age Grid</option>
+<option>age_avg_split</option>
+<option>---..Age Average Grid</option>
 <option>---..Default</option>
 <option>random_seed</option>
 <option>---..Default</option>
@@ -489,10 +489,10 @@ are all less than <code><font color="blue">0.1</font></code>.
 
 <br>
 <br>
-<b><big><a name="avg_age_split" id="avg_age_split">avg_age_split</a></big></b>
+<b><big><a name="age_avg_split" id="age_avg_split">age_avg_split</a></big></b>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;avg_age_split</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;age_avg_split</span></font></code>
 ,
 the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
@@ -503,7 +503,7 @@ and for the solution of the ODE.
 
 <br>
 <br>
-<big><a name="avg_age_split.Average Age Grid" id="avg_age_split.Average Age Grid">Average Age Grid</a></big>
+<big><a name="age_avg_split.Age Average Grid" id="age_avg_split.Age Average Grid">Age Average Grid</a></big>
 <br>
 Let 
 <code><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i></code>
@@ -529,11 +529,11 @@ and define the age points
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-The average age grid is the union of the set of 
+The age average grid is the union of the set of 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
 
 and the age points in 
-<code><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>age_avg_split</span></font></i></code>
 .
 This grid is used both for
 <a href="numeric_average.htm" target="_top"><span style='white-space: nowrap'>approximating&nbsp;averages</span></a>
@@ -544,12 +544,12 @@ and for approximating the solution of the dismod_at
 
 <br>
 <br>
-<big><a name="avg_age_split.Default" id="avg_age_split.Default">Default</a></big>
+<big><a name="age_avg_split.Default" id="age_avg_split.Default">Default</a></big>
 <br>
 The default value for 
-<code><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>age_avg_split</span></font></i></code>
  is the empty set
-in which case the average age grid is the set of 
+in which case the age average grid is the set of 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
 .
 

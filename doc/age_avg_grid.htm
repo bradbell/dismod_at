@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Split the Average Age Grid</title>
+<title>Split the Age Average Grid</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Split the Average Age Grid">
-<meta name="keywords" id="keywords" content=" split the average age grid syntax prototype ode_step_size avg_age_split age_table age_grid example ">
+<meta name="description" id="description" content="Split the Age Average Grid">
+<meta name="keywords" id="keywords" content=" split the age average grid syntax prototype ode_step_size age_avg_split age_table age_grid example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_avg_age_grid_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_age_avg_grid_htm.js'>
 </script>
 </head>
 <body>
@@ -37,7 +37,7 @@ A:active { color : purple }
 <option>dismod_at</option>
 <option>devel</option>
 <option>devel_utility</option>
-<option>avg_age_grid</option>
+<option>age_avg_grid</option>
 </select>
 </td>
 <td>
@@ -57,13 +57,13 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Prototype</option>
 <option>ode_step_size</option>
-<option>avg_age_split</option>
+<option>age_avg_split</option>
 <option>age_table</option>
 <option>age_grid</option>
 <option>Example</option>
 </select>
 </td>
-<td><a href="avg_age_grid_xam.cpp.htm" target="_top">Next</a>
+<td><a href="age_avg_grid_xam.cpp.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down3(this)'>
 <option>dismod_at-&gt;</option>
@@ -102,7 +102,7 @@ A:active { color : purple }
 <option>fixed_effect</option>
 <option>get_prior_mean</option>
 <option>number_random_const</option>
-<option>avg_age_grid</option>
+<option>age_avg_grid</option>
 <option>pack_info</option>
 <option>pack_prior</option>
 <option>residual_density</option>
@@ -116,21 +116,21 @@ A:active { color : purple }
 </td>
 <td>
 <select onchange='choose_down0(this)'>
-<option>avg_age_grid-&gt;</option>
-<option>avg_age_grid_xam.cpp</option>
+<option>age_avg_grid-&gt;</option>
+<option>age_avg_grid_xam.cpp</option>
 </select>
 </td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Split the Average Age Grid</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Split the Age Average Grid</big></big></b></center>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>age_grid</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;avg_age_grid(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+<code><i><font color="black"><span style='white-space: nowrap'>age_grid</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;age_avg_grid(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_avg_split</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -139,9 +139,9 @@ A:active { color : purple }
 <b><big><a name="Prototype" id="Prototype">Prototype</a></big></b>
 
 <pre><tt>
-CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">avg_age_grid</font></b><font color="#990000">(</font>
+CppAD<font color="#990000">::</font><font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">age_avg_grid</font></b><font color="#990000">(</font>
      <font color="#009900">double</font>                         ode_step_size  <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">string</font>              avg_age_split  <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font><font color="#008080">string</font>              age_avg_split  <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>   age_table      <font color="#990000">)</font></tt></pre>
 <br>
 <b><big><a name="ode_step_size" id="ode_step_size">ode_step_size</a></big></b>
@@ -151,9 +151,9 @@ is the <a href="option_table.htm#ode_step_size" target="_top"><span style='white
 
 <br>
 <br>
-<b><big><a name="avg_age_split" id="avg_age_split">avg_age_split</a></big></b>
+<b><big><a name="age_avg_split" id="age_avg_split">age_avg_split</a></big></b>
 <br>
-is the <a href="option_table.htm#avg_age_split" target="_top"><span style='white-space: nowrap'>avg_age_split</span></a>
+is the <a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
 .
 
 <br>
@@ -167,7 +167,7 @@ is the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>a
 <br>
 <b><big><a name="age_grid" id="age_grid">age_grid</a></big></b>
 <br>
-is the <a href="option_table.htm#avg_age_split.Average Age Grid" target="_top"><span style='white-space: nowrap'>average&nbsp;age&nbsp;grid</span></a>
+is the <a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
 .
 
 
@@ -175,12 +175,12 @@ is the <a href="option_table.htm#avg_age_split.Average Age Grid" target="_top"><
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The file <a href="avg_age_grid_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>avg_age_grid_xam.cpp</span></a>
+The file <a href="age_avg_grid_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>age_avg_grid_xam.cpp</span></a>
  contains an example and test
 of using this routine.
 
 
-<hr>Input File: devel/utility/avg_age_grid.cpp
+<hr>Input File: devel/utility/age_avg_grid.cpp
 
 </body>
 </html>

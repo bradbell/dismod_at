@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Model: Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Model: Constructor">
-<meta name="keywords" id="keywords" content=" data model: constructor syntax prototype data_object rate_case bound_random n_covariate ode_step_size avg_age_grid age_table time_table integrand_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object n_covariate_ ode_step_size_ pack_object_ minimum_meas_cv_ replace_like_called_ n_child_ data_subset_obj_ child_ran_zero_ data_info_ avgint_obj_ ">
+<meta name="keywords" id="keywords" content=" data model: constructor syntax prototype data_object rate_case bound_random n_covariate ode_step_size age_avg_grid age_table time_table integrand_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object n_covariate_ ode_step_size_ pack_object_ minimum_meas_cv_ replace_like_called_ n_child_ data_subset_obj_ child_ran_zero_ data_info_ avgint_obj_ ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -62,7 +62,7 @@ A:active { color : purple }
 <option>bound_random</option>
 <option>n_covariate</option>
 <option>ode_step_size</option>
-<option>avg_age_grid</option>
+<option>age_avg_grid</option>
 <option>age_table</option>
 <option>time_table</option>
 <option>integrand_table</option>
@@ -146,7 +146,7 @@ A:active { color : purple }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_covariate</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>avg_age_grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_avg_grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -171,7 +171,7 @@ data_model<font color="#990000">::</font><b><font color="#000000">data_model</fo
      <font color="#009900">double</font>                                   bound_random    <font color="#990000">,</font>
      <font color="#008080">size_t</font>                                   n_covariate     <font color="#990000">,</font>
      <font color="#009900">double</font>                                   ode_step_size   <font color="#990000">,</font>
-     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>             avg_age_grid    <font color="#990000">,</font>
+     <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>             age_avg_grid    <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>             age_table       <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>             time_table      <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>integrand_struct<font color="#990000">&gt;&amp;</font>   integrand_table <font color="#990000">,</font>
@@ -220,9 +220,9 @@ This is the <a href="option_table.htm#ode_step_size" target="_top"><span style='
 
 <br>
 <br>
-<b><big><a name="avg_age_grid" id="avg_age_grid">avg_age_grid</a></big></b>
+<b><big><a name="age_avg_grid" id="age_avg_grid">age_avg_grid</a></big></b>
 <br>
-This is the <a href="option_table.htm#avg_age_split.Average Age Grid" target="_top"><span style='white-space: nowrap'>average&nbsp;age&nbsp;grid</span></a>
+This is the <a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
 .
 
 <br>

@@ -43,6 +43,7 @@ var list_down1 = [
 'depend_var_table.htm',
 'start_var_table.htm',
 'scale_var_table.htm',
+'age_avg_table.htm',
 'fit_var_table.htm',
 'fit_data_subset_table.htm',
 'truth_var_table.htm',

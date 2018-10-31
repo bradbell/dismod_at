@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Constructing An Average Standard Deviation Effect Object</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Constructing An Average Standard Deviation Effect Object">
-<meta name="keywords" id="keywords" content=" constructing average standard deviation effect object syntax prototype ode_step_size avg_age_grid age_table time_table integrand_table w_info_vec s_info_vec pack_object example ">
+<meta name="keywords" id="keywords" content=" constructing average standard deviation effect object syntax prototype ode_step_size age_avg_grid age_table time_table integrand_table w_info_vec s_info_vec pack_object example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -58,7 +58,7 @@ A:active { color : purple }
 <option>Syntax</option>
 <option>Prototype</option>
 <option>ode_step_size</option>
-<option>avg_age_grid</option>
+<option>age_avg_grid</option>
 <option>age_table</option>
 <option>time_table</option>
 <option>integrand_table</option>
@@ -124,7 +124,7 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>avg_std_effect&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>avgstd_obj</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>avg_age_grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_avg_grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -139,7 +139,7 @@ A:active { color : purple }
 <pre><tt>
 avg_std_effect<font color="#990000">::</font><b><font color="#000000">avg_std_effect</font></b><font color="#990000">(</font>
           <font color="#009900">double</font>                                    ode_step_size    <font color="#990000">,</font>
-          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              avg_age_grid     <font color="#990000">,</font>
+          <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              age_avg_grid     <font color="#990000">,</font>
           <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              age_table        <font color="#990000">,</font>
           <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;&amp;</font>              time_table       <font color="#990000">,</font>
           <b><font color="#0000FF">const</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">&lt;</font>integrand_struct<font color="#990000">&gt;&amp;</font>    integrand_table  <font color="#990000">,</font>
@@ -155,17 +155,17 @@ This is the value of
 
 <br>
 <br>
-<b><big><a name="avg_age_grid" id="avg_age_grid">avg_age_grid</a></big></b>
+<b><big><a name="age_avg_grid" id="age_avg_grid">age_avg_grid</a></big></b>
 <br>
-This is the <a href="avg_age_grid.htm" target="_top"><span style='white-space: nowrap'>avg_age_grid</span></a>
+This is the <a href="age_avg_grid.htm" target="_top"><span style='white-space: nowrap'>age_avg_grid</span></a>
 .
 A reference to 
-<code><i><font color="black"><span style='white-space: nowrap'>avg_age_grid</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>age_avg_grid</span></font></i></code>
  is used by 
 <code><i><font color="black"><span style='white-space: nowrap'>avgstd_obj</span></font></i></code>
 
 (
-<code><i><font color="black"><span style='white-space: nowrap'>avg_age_grid</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>age_avg_grid</span></font></i></code>
  must no be deleted for as long as
 
 <code><i><font color="black"><span style='white-space: nowrap'>avgstd_obj</span></font></i></code>

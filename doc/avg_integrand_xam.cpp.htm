@@ -257,10 +257,10 @@ A:active { color : purple }
      <font color="#008080">size_t</font> n_ode_age     <font color="#990000">=</font> <font color="#993399">10</font><font color="#990000">;</font>
      <font color="#009900">double</font> ode_step_size <font color="#990000">=</font> <font color="#990000">(</font>age_end <font color="#990000">-</font> age_ini<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>n_ode_age <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// avg_age_grid</font></i>
-     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">avg_age_grid</font></b><font color="#990000">(</font>n_ode_age<font color="#990000">);</font>
+     <i><font color="#9A1900">// age_avg_grid</font></i>
+     <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">age_avg_grid</font></b><font color="#990000">(</font>n_ode_age<font color="#990000">);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_ode_age<font color="#990000">;</font> <font color="#990000">++</font>i<font color="#990000">)</font>
-          avg_age_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> age_ini <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">*</font> ode_step_size<font color="#990000">;</font>
+          age_avg_grid<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> age_ini <font color="#990000">+</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">*</font> ode_step_size<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// avgint_obj</font></i>
      dismod_at<font color="#990000">::</font><font color="#008080">avg_integrand</font> <b><font color="#000000">avgint_obj</font></b><font color="#990000">(</font>
@@ -268,7 +268,7 @@ A:active { color : purple }
           rate_case<font color="#990000">,</font>
           age_table<font color="#990000">,</font>
           time_table<font color="#990000">,</font>
-          avg_age_grid<font color="#990000">,</font>
+          age_avg_grid<font color="#990000">,</font>
           integrand_table<font color="#990000">,</font>
           w_info_vec<font color="#990000">,</font>
           s_info_vec<font color="#990000">,</font>

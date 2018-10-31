@@ -19,6 +19,7 @@ var list_current0 = [
 'db2csv_command.htm#database.dir',
 'db2csv_command.htm#option.csv',
 'db2csv_command.htm#log.csv',
+'db2csv_command.htm#avg_age.csv',
 'db2csv_command.htm#variable.csv',
 'db2csv_command.htm#variable.csv.var_id',
 'db2csv_command.htm#variable.csv.var_type',

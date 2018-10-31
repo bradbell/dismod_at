@@ -100,7 +100,7 @@ A:active { color : purple }
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/avg_std_effect.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/open_connection.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/null_int.hpp&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/avg_age_grid.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/age_avg_grid.hpp&gt;</font>
 
 <b><font color="#0000FF">namespace</font></b> <font color="#FF0000">{</font>
      <font color="#009900">double</font> age_max_<font color="#990000">,</font> time_max_<font color="#990000">,</font> x_j <font color="#990000">=</font> <font color="#993399">0.5</font><font color="#990000">;</font>
@@ -253,13 +253,13 @@ A:active { color : purple }
      <font color="#990000">);</font>
 
      <i><font color="#9A1900">// avgstd_obj</font></i>
-     std<font color="#990000">::</font><font color="#008080">string</font> avg_age_split <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
-     <font color="#008080">vector&lt;double&gt;</font> avg_age_grid <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">avg_age_grid</font></b><font color="#990000">(</font>
-          ode_step_size<font color="#990000">,</font> avg_age_split<font color="#990000">,</font> age_table
+     std<font color="#990000">::</font><font color="#008080">string</font> age_avg_split <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
+     <font color="#008080">vector&lt;double&gt;</font> age_avg_grid <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">age_avg_grid</font></b><font color="#990000">(</font>
+          ode_step_size<font color="#990000">,</font> age_avg_split<font color="#990000">,</font> age_table
      <font color="#990000">);</font>
      dismod_at<font color="#990000">::</font><font color="#008080">avg_std_effect</font> <b><font color="#000000">avgstd_obj</font></b><font color="#990000">(</font>
           ode_step_size<font color="#990000">,</font>
-          avg_age_grid<font color="#990000">,</font>
+          age_avg_grid<font color="#990000">,</font>
           age_table<font color="#990000">,</font>
           time_table<font color="#990000">,</font>
           integrand_table<font color="#990000">,</font>

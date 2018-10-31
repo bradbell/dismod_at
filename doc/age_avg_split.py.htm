@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Non-uniform Average Age Grid</title>
+<title>Non-uniform Age Average Grid</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Non-uniform Average Age Grid">
-<meta name="keywords" id="keywords" content=" non-uniform average age grid purpose variables prior data fit predict ode_step_size avg_age_split source ">
+<meta name="description" id="description" content="Non-uniform Age Average Grid">
+<meta name="keywords" id="keywords" content=" non-uniform age average grid purpose variables prior data fit predict ode_step_size age_avg_split source ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_avg_age_split.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_age_avg_split.py_htm.js'>
 </script>
 </head>
 <body>
@@ -36,7 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>user</option>
-<option>avg_age_split.py</option>
+<option>age_avg_split.py</option>
 </select>
 </td>
 <td>
@@ -60,7 +60,7 @@ A:active { color : purple }
 <option>Fit</option>
 <option>Predict</option>
 <option>ode_step_size</option>
-<option>avg_age_split</option>
+<option>age_avg_split</option>
 <option>Source</option>
 </select>
 </td>
@@ -89,7 +89,7 @@ A:active { color : purple }
 <option>user_fit_fixed_both.py</option>
 <option>user_posterior.py</option>
 <option>user_fit_sim.py</option>
-<option>avg_age_split.py</option>
+<option>age_avg_split.py</option>
 <option>user_diabetes.py</option>
 <option>user_asymptotic.py</option>
 <option>user_change_grid.py</option>
@@ -108,19 +108,19 @@ A:active { color : purple }
 <option>user_students.py</option>
 </select>
 </td>
-<td>avg_age_split.py</td>
+<td>age_avg_split.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Non-uniform Average Age Grid</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Non-uniform Age Average Grid</big></big></b></center>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 This example demonstrate one reason for using the
 
-<code><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>age_avg_split</span></font></i></code>
  option to create an
-<a href="option_table.htm#avg_age_split.Average Age Grid" target="_top"><span style='white-space: nowrap'>average&nbsp;age&nbsp;grid</span></a>
+<a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
 
 that is not uniformly spaced.
 
@@ -178,16 +178,16 @@ The <a href="option_table.htm#ode_step_size" target="_top"><span style='white-sp
  is
 <code><font color="blue">50.0</font></code> for this example.
 If there were no 
-<code><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>age_avg_split</span></font></i></code>
 , a linear approximation
 would be used from age 0.0 to age 50.
 
 <br>
 <br>
-<b><big><a name="avg_age_split" id="avg_age_split">avg_age_split</a></big></b>
+<b><big><a name="age_avg_split" id="age_avg_split">age_avg_split</a></big></b>
 <br>
-The average age grid is split at age <code><font color="blue">1.0</font></code>; i.e.,
-The average age grid points are <code><font color="blue">0.0</font></code>, <code><font color="blue">1.0</font></code>, <code><font color="blue">50.0</font></code>, and
+The age average grid is split at age <code><font color="blue">1.0</font></code>; i.e.,
+The age average grid points are <code><font color="blue">0.0</font></code>, <code><font color="blue">1.0</font></code>, <code><font color="blue">50.0</font></code>, and
 <code><font color="blue">100.0</font></code>.
 A piecewise linear function of age is used between these grid points.
 (Note everything is constant w.r.t time for this case.)
@@ -206,7 +206,7 @@ omega_1_100  <font color="#990000">=</font> <font color="#993399">1e-2</font>
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> subprocess
 <b><font color="#000080">import</font></b> copy
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/avg_age_split.py'</font>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/age_avg_split.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -335,7 +335,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>               <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'50.0'</font>                <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'avg_age_split'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1.0'</font>                 <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'age_avg_split'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1.0'</font>                 <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                   <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_zero_rho_zero'</font>  <font color="#990000">}</font>
      <font color="#990000">]</font>
@@ -398,10 +398,10 @@ tolerance         <font color="#990000">=</font> <font color="#993399">1e-10</fo
      value      <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'avg_integrand'</font><font color="#990000">]</font>
      <b><font color="#0000FF">assert</font></b><font color="#990000">(</font><b><font color="#000000">abs</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">-</font> value <font color="#990000">/</font> value_true<font color="#990000">)</font> <font color="#990000">&lt;</font> tolerance<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'avg_age_split.py: OK'</font><font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'age_avg_split.py: OK'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i></tt></pre>
 
-<hr>Input File: example/user/avg_age_split.py
+<hr>Input File: example/user/age_avg_split.py
 
 </body>
 </html>

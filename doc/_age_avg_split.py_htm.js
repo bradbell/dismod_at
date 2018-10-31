@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
 'user.htm',
-'avg_age_split.py.htm'
+'age_avg_split.py.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -11,15 +11,15 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'avg_age_split.py.htm#Purpose',
-'avg_age_split.py.htm#Variables',
-'avg_age_split.py.htm#Prior',
-'avg_age_split.py.htm#Data',
-'avg_age_split.py.htm#Fit',
-'avg_age_split.py.htm#Predict',
-'avg_age_split.py.htm#ode_step_size',
-'avg_age_split.py.htm#avg_age_split',
-'avg_age_split.py.htm#Source'
+'age_avg_split.py.htm#Purpose',
+'age_avg_split.py.htm#Variables',
+'age_avg_split.py.htm#Prior',
+'age_avg_split.py.htm#Data',
+'age_avg_split.py.htm#Fit',
+'age_avg_split.py.htm#Predict',
+'age_avg_split.py.htm#ode_step_size',
+'age_avg_split.py.htm#age_avg_split',
+'age_avg_split.py.htm#Source'
 ];
 var list_down2 = [
 'math_abstract.htm',
@@ -40,7 +40,7 @@ var list_down1 = [
 'user_fit_fixed_both.py.htm',
 'user_posterior.py.htm',
 'user_fit_sim.py.htm',
-'avg_age_split.py.htm',
+'age_avg_split.py.htm',
 'user_diabetes.py.htm',
 'user_asymptotic.py.htm',
 'user_change_grid.py.htm',

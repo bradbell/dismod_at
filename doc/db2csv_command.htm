@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed start depend truth sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv avg_age.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed start depend truth sam_avg sam_std fit_value res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density meas_value meas_std eta nu delta avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <option>---..dir</option>
 <option>option.csv</option>
 <option>log.csv</option>
+<option>avg_age.csv</option>
 <option>variable.csv</option>
 <option>---..var_id</option>
 <option>---..var_type</option>
@@ -256,6 +257,23 @@ The columns in this table are
 , and
 <a href="log_table.htm#message" target="_top"><span style='white-space: nowrap'>message</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="avg_age.csv" id="avg_age.csv">avg_age.csv</a></big></b>
+<br>
+The file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/avg_age.csv</span></font></code>
+ is written by this command.
+It is a CSV file with the contents of the <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+.
+Note that a <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set_command</span></a>
+ may change the value of
+<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+ or
+<a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+ but it will not
+write out the new avg_age table.
 
 <br>
 <br>

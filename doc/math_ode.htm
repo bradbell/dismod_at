@@ -1,0 +1,220 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>The Dismod_at Ordinary Differential Equation</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Dismod_at Ordinary Differential Equation">
+<meta name="keywords" id="keywords" content=" the dismod_at ordinary differential equation susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t) ode ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_math_ode_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>math_abstract</option>
+<option>math_ode</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="math_abstract.htm" target="_top">Prev</a>
+</td><td>
+<select onchange='choose_current0(this)'>
+<option>Current-&gt;</option>
+<option>Susceptible, S(a, t)</option>
+<option>With Condition, C(a, t)</option>
+<option>Prevalence, P(a, t)</option>
+<option>Incidence, iota(a, t)</option>
+<option>Remission, rho(a, t)</option>
+<option>Excess Mortality, chi(a, t)</option>
+<option>Other Cause Mortality, omega(a, t)</option>
+<option>Initial Prevalence, pini(t)</option>
+<option>The Dismod_at ODE</option>
+</select>
+</td>
+<td><a href="install_unix.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_down2(this)'>
+<option>dismod_at-&gt;</option>
+<option>math_abstract</option>
+<option>install_unix</option>
+<option>get_started</option>
+<option>user</option>
+<option>database</option>
+<option>model</option>
+<option>command</option>
+<option>python</option>
+<option>devel</option>
+<option>whats_new_2018</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
+<select onchange='choose_down1(this)'>
+<option>math_abstract-&gt;</option>
+<option>math_ode</option>
+</select>
+</td>
+<td>math_ode</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Dismod_at Ordinary Differential Equation</big></big></b></center>
+<br>
+<b><big><a name="Susceptible, S(a, t)" id="Susceptible, S(a, t)">Susceptible, S(a, t)</a></big></b>
+<br>
+We use <small>@(@
+S(a, t)
+@)@</small> to denote the population that is susceptible
+to a condition as a function of age and time.
+
+<br>
+<br>
+<b><big><a name="With Condition, C(a, t)" id="With Condition, C(a, t)">With Condition, C(a, t)</a></big></b>
+<br>
+We use <small>@(@
+C(a, t)
+@)@</small> to denote the population that has the
+condition.
+
+<br>
+<br>
+<b><big><a name="Prevalence, P(a, t)" id="Prevalence, P(a, t)">Prevalence, P(a, t)</a></big></b>
+<br>
+The prevalence <small>@(@
+P(a, t)
+@)@</small> is the fraction of the population that
+has the condition; i.e.,
+<small>@[@
+
+	P(a, t) = \frac{ C(a, t) }{ S(a, t) + C(a, t) }
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Incidence, iota(a, t)" id="Incidence, iota(a, t)">Incidence, iota(a, t)</a></big></b>
+<br>
+We use <small>@(@
+\iota (a, t)
+@)@</small> to denote the probability (per unit time)
+that a susceptible individual will get the condition.
+Note that age and time have the same units.
+
+<br>
+<br>
+<b><big><a name="Remission, rho(a, t)" id="Remission, rho(a, t)">Remission, rho(a, t)</a></big></b>
+<br>
+We use <small>@(@
+\rho (a, t)
+@)@</small> to denote the probability (per unit time)
+that an individual will be cured of the condition.
+
+<br>
+<br>
+<b><big><a name="Excess Mortality, chi(a, t)" id="Excess Mortality, chi(a, t)">Excess Mortality, chi(a, t)</a></big></b>
+<br>
+We use <small>@(@
+\chi (a, t)
+@)@</small> to denote the probability (per unit time)
+that an individual with die due to the condition.
+
+<br>
+<br>
+<b><big><a name="Other Cause Mortality, omega(a, t)" id="Other Cause Mortality, omega(a, t)">Other Cause Mortality, omega(a, t)</a></big></b>
+<br>
+We use <small>@(@
+\omega (a, t)
+@)@</small> to denote the probability (per unit time)
+that an individual with die from a cause other than the specific
+condition we are modeling.
+
+<br>
+<br>
+<b><big><a name="Initial Prevalence, pini(t)" id="Initial Prevalence, pini(t)">Initial Prevalence, pini(t)</a></big></b>
+<br>
+The initial prevalence <small>@(@
+P(0, t)
+@)@</small>
+is the faction of the population that is born with the condition.
+We normalize the function <small>@(@
+S(a, t)
+@)@</small> and <small>@(@
+C(a, t)
+@)@</small> so
+that the initial population <small>@(@
+S(0, t) + C(0, t)
+@)@</small> is equal to one.
+It follows that <small>@(@
+C(0, t) = P(0, t)
+@)@</small> and
+<small>@(@
+S(0, t) = 1 - P(0, t)
+@)@</small>
+
+<br>
+<br>
+<b><big><a name="The Dismod_at ODE" id="The Dismod_at ODE">The Dismod_at ODE</a></big></b>
+<br>
+Fix <small>@(@
+c
+@)@</small> the time of birth for one cohort.
+Given a function <small>@(@
+f(a, t)
+@)@</small> we use the notation
+<small>@(@
+f_c (a) = f(a, c + a)
+@)@</small>.
+The ordinary differential equation for this cohort is
+<small>@[@
+
+\begin{array}{rcl}
+S_c '(a)
+& = &
+- [ \iota_c (a) + \omega_c (a) ] S_c (a) + \rho_c (a) C_c (a)
+\\
+C_c '(a)
+& = &
++ \iota_c (a) S_c (a) - [ \rho_c (a) + \chi_c (a) + \omega_c (a) ] C_c (a)
+\end{array}
+
+@]@</small>
+
+
+
+<hr>Input File: omh/math/ode.omh
+
+</body>
+</html>

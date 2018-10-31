@@ -56,7 +56,7 @@ var list_down2 = [
 'fixed_effect.htm',
 'get_prior_mean.htm',
 'number_random_const.htm',
-'avg_age_grid.htm',
+'age_avg_grid.htm',
 'pack_info.htm',
 'pack_prior.htm',
 'residual_density.htm',

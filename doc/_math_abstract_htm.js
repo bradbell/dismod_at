@@ -10,7 +10,8 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'math_abstract.htm#Abstract'
+'math_abstract.htm#Abstract',
+'math_abstract.htm#Contents'
 ];
 var list_down1 = [
 'math_abstract.htm',
@@ -24,6 +25,9 @@ var list_down1 = [
 'devel.htm',
 'whats_new_2018.htm',
 'wish_list.htm'
+];
+var list_down0 = [
+'math_ode.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;

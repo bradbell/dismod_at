@@ -2,7 +2,7 @@ var list_up0 = [
 'dismod_at.htm',
 'devel.htm',
 'devel_utility.htm',
-'avg_age_grid.htm'
+'age_avg_grid.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -12,13 +12,13 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'avg_age_grid.htm#Syntax',
-'avg_age_grid.htm#Prototype',
-'avg_age_grid.htm#ode_step_size',
-'avg_age_grid.htm#avg_age_split',
-'avg_age_grid.htm#age_table',
-'avg_age_grid.htm#age_grid',
-'avg_age_grid.htm#Example'
+'age_avg_grid.htm#Syntax',
+'age_avg_grid.htm#Prototype',
+'age_avg_grid.htm#ode_step_size',
+'age_avg_grid.htm#age_avg_split',
+'age_avg_grid.htm#age_table',
+'age_avg_grid.htm#age_grid',
+'age_avg_grid.htm#Example'
 ];
 var list_down3 = [
 'math_abstract.htm',
@@ -50,7 +50,7 @@ var list_down1 = [
 'fixed_effect.htm',
 'get_prior_mean.htm',
 'number_random_const.htm',
-'avg_age_grid.htm',
+'age_avg_grid.htm',
 'pack_info.htm',
 'pack_prior.htm',
 'residual_density.htm',
@@ -62,7 +62,7 @@ var list_down1 = [
 'time_line_vec.htm'
 ];
 var list_down0 = [
-'avg_age_grid_xam.cpp.htm'
+'age_avg_grid_xam.cpp.htm'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
