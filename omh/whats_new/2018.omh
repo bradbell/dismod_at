@@ -89,6 +89,10 @@ If the $cref/avg_age_split/option_table/avg_age_split/$$ was not sorted,
 the program would error even if the $cref set_command$$ was
 trying to fix it. This has been changed so the set command
 can fix it.
+$lnext
+A check of the file
+$cref/avg_age.csv/db2csv_command/avg_age.csv/$$ was added to the
+$cref  db2csv_command.py$$ example.
 $lend
 
 $head 10-22$$

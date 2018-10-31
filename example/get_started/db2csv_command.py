@@ -111,6 +111,15 @@ adjusted_omega    = omega_world * math.exp(income_multiplier * 1000.0)
 meas_value        = math.exp( - adjusted_omega * 50.0 )
 meas_std          = meas_value / 20.
 # --------------------------------------------------------------------------
+# avg_age
+avg_age_table = get_table('avg_age')
+avg_age_check = [0, 5] + list( range(10, 101, 10) )
+n_avg_age = len(avg_age_table)
+assert n_avg_age == len(avg_age_check)
+for i in range(n_avg_age) :
+	value = float( avg_age_table[i]['age'] )
+	assert value == float( avg_age_check[i] )
+# --------------------------------------------------------------------------
 # data.csv
 data_table = get_table('data')
 #
