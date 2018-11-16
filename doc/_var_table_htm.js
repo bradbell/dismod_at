@@ -11,25 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'var_table.htm#var_id',
-'var_table.htm#var_type',
-'var_table.htm#var_type.mulstd_value',
-'var_table.htm#var_type.mulstd_dage',
-'var_table.htm#var_type.mulstd_dtime',
-'var_table.htm#var_type.rate',
-'var_table.htm#var_type.mulcov_rate_value',
-'var_table.htm#var_type.mulcov_meas_value',
-'var_table.htm#var_type.mulcov_meas_std',
-'var_table.htm#smooth_id',
-'var_table.htm#age_id',
-'var_table.htm#time_id',
-'var_table.htm#node_id',
-'var_table.htm#rate_id',
-'var_table.htm#integrand_id',
-'var_table.htm#covariate_id',
-'var_table.htm#Example'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -74,12 +55,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

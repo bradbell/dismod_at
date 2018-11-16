@@ -10,20 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'fixed_diff.htm#k, K',
-'fixed_diff.htm#I(k)',
-'fixed_diff.htm#J(k)',
-'fixed_diff.htm#lambda_k',
-'fixed_diff.htm#theta_i,j,k',
-'fixed_diff.htm#mu_i,j,k',
-'fixed_diff.htm#delta_i,j,k',
-'fixed_diff.htm#d_i,j,k',
-'fixed_diff.htm#Age Differences',
-'fixed_diff.htm#Age Differences.A^theta',
-'fixed_diff.htm#Time Differences',
-'fixed_diff.htm#Time Differences.T^theta'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -65,12 +51,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

@@ -11,20 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'solve_ode.htm#Syntax',
-'solve_ode.htm#2DO',
-'solve_ode.htm#Purpose',
-'solve_ode.htm#Notation',
-'solve_ode.htm#Float',
-'solve_ode.htm#i_max',
-'solve_ode.htm#j_max',
-'solve_ode.htm#step_size',
-'solve_ode.htm#pini',
-'solve_ode.htm#rate',
-'solve_ode.htm#S_out, C_out',
-'solve_ode.htm#Example'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -80,12 +66,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

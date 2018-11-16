@@ -10,25 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'statistic.htm#Notation',
-'statistic.htm#Log-Transformed Standard Deviation, sigma',
-'statistic.htm#Weighted Residual Function, R',
-'statistic.htm#Weighted Residual Function, R.Value',
-'statistic.htm#Weighted Residual Function, R.Difference',
-'statistic.htm#Weighted Residual Function, R.Uniform',
-'statistic.htm#Weighted Residual Function, R.Gaussian, Laplace, Student\'s-t',
-'statistic.htm#Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student\'s-t',
-'statistic.htm#Log-Density Function, D',
-'statistic.htm#Log-Density Function, D.Difference',
-'statistic.htm#Log-Density Function, D.Uniform',
-'statistic.htm#Log-Density Function, D.Gaussian',
-'statistic.htm#Log-Density Function, D.Laplace',
-'statistic.htm#Log-Density Function, D.Student\'s-t',
-'statistic.htm#Log-Density Function, D.Log-Gaussian',
-'statistic.htm#Log-Density Function, D.Log-Laplace',
-'statistic.htm#Log-Density Function, D.Log-Student\'s-t'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -70,12 +51,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

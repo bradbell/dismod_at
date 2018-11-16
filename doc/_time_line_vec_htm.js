@@ -11,29 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'time_line_vec.htm#Syntax',
-'time_line_vec.htm#Float',
-'time_line_vec.htm#time_point',
-'time_line_vec.htm#near_equal',
-'time_line_vec.htm#time_line_vec',
-'time_line_vec.htm#age_grid',
-'time_line_vec.htm#specialize',
-'time_line_vec.htm#extend_grid',
-'time_line_vec.htm#sub_lower',
-'time_line_vec.htm#sub_upper',
-'time_line_vec.htm#age_index',
-'time_line_vec.htm#add_point',
-'time_line_vec.htm#add_point.point',
-'time_line_vec.htm#time_line',
-'time_line_vec.htm#max_time_diff',
-'time_line_vec.htm#max_time_diff.age_index',
-'time_line_vec.htm#max_time_diff.time_index',
-'time_line_vec.htm#max_time_diff.max_diff',
-'time_line_vec.htm#age_time_avg',
-'time_line_vec.htm#Example',
-'time_line_vec.htm#Prototype'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -89,12 +66,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

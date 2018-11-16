@@ -11,14 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'number_random_const.htm#Syntax',
-'number_random_const.htm#bound_random',
-'number_random_const.htm#pack_object',
-'number_random_const.htm#var2prior',
-'number_random_const.htm#prior_table',
-'number_random_const.htm#Prototype'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -71,12 +63,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

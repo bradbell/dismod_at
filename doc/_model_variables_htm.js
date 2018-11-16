@@ -10,23 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'model_variables.htm#Introduction',
-'model_variables.htm#Function of Age and Time',
-'model_variables.htm#Function of Age and Time.Smoothing',
-'model_variables.htm#Function of Age and Time.Interpolation',
-'model_variables.htm#Children',
-'model_variables.htm#Fixed Effects, theta',
-'model_variables.htm#Fixed Effects, theta.Smoothing Standard Deviation Multipliers, lambda',
-'model_variables.htm#Fixed Effects, theta.Parent Rates',
-'model_variables.htm#Fixed Effects, theta.Covariate Multipliers',
-'model_variables.htm#Random Effects, u',
-'model_variables.htm#Random Effects, u.Child Rate Effects',
-'model_variables.htm#Age and Time Variation',
-'model_variables.htm#Age and Time Variation.Smoothing Standard Deviation Multiplier',
-'model_variables.htm#Age and Time Variation.Initial Prevalence',
-'model_variables.htm#Age and Time Variation.Other Groups'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -68,12 +51,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

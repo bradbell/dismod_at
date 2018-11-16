@@ -12,17 +12,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'manage_gsl_rng.htm#Syntax',
-'manage_gsl_rng.htm#Purpose',
-'manage_gsl_rng.htm#new_gsl_rng',
-'manage_gsl_rng.htm#new_gsl_rng.s_in',
-'manage_gsl_rng.htm#new_gsl_rng.s_out',
-'manage_gsl_rng.htm#get_gsl_rng',
-'manage_gsl_rng.htm#get_gsl_rng.rng',
-'manage_gsl_rng.htm#free_gsl_rng',
-'manage_gsl_rng.htm#Example'
-];
 var list_down4 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -82,12 +71,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;

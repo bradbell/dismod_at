@@ -11,15 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'age_avg_grid.htm#Syntax',
-'age_avg_grid.htm#Prototype',
-'age_avg_grid.htm#ode_step_size',
-'age_avg_grid.htm#age_avg_split',
-'age_avg_grid.htm#age_table',
-'age_avg_grid.htm#age_grid',
-'age_avg_grid.htm#Example'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -75,12 +66,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

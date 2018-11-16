@@ -10,17 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'age_avg_split.py.htm#Purpose',
-'age_avg_split.py.htm#Variables',
-'age_avg_split.py.htm#Prior',
-'age_avg_split.py.htm#Data',
-'age_avg_split.py.htm#Fit',
-'age_avg_split.py.htm#Predict',
-'age_avg_split.py.htm#ode_step_size',
-'age_avg_split.py.htm#age_avg_split',
-'age_avg_split.py.htm#Source'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -69,12 +58,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

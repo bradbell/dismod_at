@@ -11,41 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'smooth_info.htm#Syntax',
-'smooth_info.htm#Syntax.Default Constructor',
-'smooth_info.htm#Syntax.Normal Constructor',
-'smooth_info.htm#Syntax.Testing Constructor',
-'smooth_info.htm#Syntax.Assignment',
-'smooth_info.htm#Syntax.Member Functions',
-'smooth_info.htm#Purpose',
-'smooth_info.htm#Checks in Normal Constructor',
-'smooth_info.htm#s_info',
-'smooth_info.htm#s_info.age_table',
-'smooth_info.htm#s_info.time_table',
-'smooth_info.htm#s_info.smooth_id',
-'smooth_info.htm#s_info.smooth_table',
-'smooth_info.htm#s_info.smooth_grid_table',
-'smooth_info.htm#s_info.s_info',
-'smooth_info.htm#s_test',
-'smooth_info.htm#s_test.age_table',
-'smooth_info.htm#s_test.time_table',
-'smooth_info.htm#s_test.age_id',
-'smooth_info.htm#s_test.time_id',
-'smooth_info.htm#s_test.type_prior_id',
-'smooth_info.htm#s_test.mulstd_type',
-'smooth_info.htm#s_default',
-'smooth_info.htm#n_age',
-'smooth_info.htm#n_time',
-'smooth_info.htm#i',
-'smooth_info.htm#j',
-'smooth_info.htm#a_id',
-'smooth_info.htm#t_id',
-'smooth_info.htm#c_value',
-'smooth_info.htm#i_type',
-'smooth_info.htm#m_type',
-'smooth_info.htm#Example'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -115,12 +80,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

@@ -9,13 +9,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'get_started.htm#See Also',
-'get_started.htm#Database',
-'get_started.htm#Run One Example',
-'get_started.htm#get_started.db',
-'get_started.htm#Commands'
-];
 var list_down1 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -43,12 +36,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down1(item)
 {	var index          = item.selectedIndex;

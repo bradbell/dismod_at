@@ -10,25 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'fixed_prior.htm#theta',
-'fixed_prior.htm#theta.lambda',
-'fixed_prior.htm#theta.beta',
-'fixed_prior.htm#theta.theta',
-'fixed_prior.htm#Value Constraints',
-'fixed_prior.htm#Value Constraints.theta_k',
-'fixed_prior.htm#Value Constraints.L_k^v',
-'fixed_prior.htm#Value Constraints.U_k^v',
-'fixed_prior.htm#Age Difference Limits',
-'fixed_prior.htm#Age Difference Limits.a_i(k)',
-'fixed_prior.htm#Age Difference Limits.Delta^a',
-'fixed_prior.htm#Age Difference Limits.L_k^a',
-'fixed_prior.htm#Age Difference Limits.U_k^a',
-'fixed_prior.htm#Time Difference Limits',
-'fixed_prior.htm#Theta',
-'fixed_prior.htm#Normalization Constant, C_theta',
-'fixed_prior.htm#p(theta)'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -70,12 +51,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

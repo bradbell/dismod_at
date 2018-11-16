@@ -11,25 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'eigen_ode2.htm#Syntax',
-'eigen_ode2.htm#Purpose',
-'eigen_ode2.htm#Float',
-'eigen_ode2.htm#b',
-'eigen_ode2.htm#Assumption',
-'eigen_ode2.htm#yi',
-'eigen_ode2.htm#tf',
-'eigen_ode2.htm#yf',
-'eigen_ode2.htm#case_number',
-'eigen_ode2.htm#case_number.One',
-'eigen_ode2.htm#case_number.Two',
-'eigen_ode2.htm#case_number.Three',
-'eigen_ode2.htm#case_number.Four',
-'eigen_ode2.htm#Method',
-'eigen_ode2.htm#Method.Case Three',
-'eigen_ode2.htm#Method.Case Four',
-'eigen_ode2.htm#Example'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -85,12 +66,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

@@ -11,20 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'cpp_create_table.htm#Syntax',
-'cpp_create_table.htm#Purpose',
-'cpp_create_table.htm#db',
-'cpp_create_table.htm#table_name',
-'cpp_create_table.htm#col_name',
-'cpp_create_table.htm#col_type',
-'cpp_create_table.htm#col_unique',
-'cpp_create_table.htm#row_value',
-'cpp_create_table.htm#row_value.single quote',
-'cpp_create_table.htm#row_value.null',
-'cpp_create_table.htm#table_name_id',
-'cpp_create_table.htm#Example'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -94,12 +80,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

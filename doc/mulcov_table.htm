@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td>
 <select onchange='choose_up0(this)'>
@@ -51,24 +51,7 @@ A:active { color : purple }
 </select>
 </td>
 <td><a href="integrand_table.py.htm" target="_top">Prev</a>
-</td><td>
-<select onchange='choose_current0(this)'>
-<option>Current-&gt;</option>
-<option>mulcov_id</option>
-<option>mulcov_type</option>
-<option>---..rate_value</option>
-<option>---..meas_value</option>
-<option>---..meas_std</option>
-<option>rate_id</option>
-<option>integrand_id</option>
-<option>covariate_id</option>
-<option>smooth_id</option>
-<option>---..null</option>
-<option>---..pini</option>
-<option>Example</option>
-</select>
-</td>
-<td><a href="mulcov_table.py.htm" target="_top">Next</a>
+</td><td><a href="mulcov_table.py.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down3(this)'>
 <option>dismod_at-&gt;</option>
@@ -125,6 +108,19 @@ A:active { color : purple }
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The mulcov Table: Covariate Multipliers</big></big></b></center>
+
+<br><a href="mulcov_table.htm#mulcov_id" target="_top">mulcov_id</a>
+<br><a href="mulcov_table.htm#mulcov_type" target="_top">mulcov_type</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top">rate_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_value" target="_top">meas_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_std" target="_top">meas_std</a>
+<br><a href="mulcov_table.htm#rate_id" target="_top">rate_id</a>
+<br><a href="mulcov_table.htm#integrand_id" target="_top">integrand_id</a>
+<br><a href="mulcov_table.htm#covariate_id" target="_top">covariate_id</a>
+<br><a href="mulcov_table.htm#smooth_id" target="_top">smooth_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#smooth_id.null" target="_top">null</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#smooth_id.pini" target="_top">pini</a>
+<br><a href="mulcov_table.htm#Example" target="_top">Example</a><br>
 This table specifies the covariate multipliers and their priors.
 If this table is empty, there are no covariate multipliers in the model.
 This table has the following columns

@@ -9,19 +9,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'database.htm#Comment Columns and Tables',
-'database.htm#Primary Key',
-'database.htm#Name Column',
-'database.htm#Foreign Key',
-'database.htm#Foreign Key.parent',
-'database.htm#Text can be Null, not Empty',
-'database.htm#Integer Can be Null',
-'database.htm#Real Can be Null, not Nan',
-'database.htm#Bounds That are Null',
-'database.htm#Type Names',
-'database.htm#Contents'
-];
 var list_down1 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -50,12 +37,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down1(item)
 {	var index          = item.selectedIndex;

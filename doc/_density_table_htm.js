@@ -11,18 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'density_table.htm#density_id',
-'density_table.htm#density_name',
-'density_table.htm#density_name.uniform',
-'density_table.htm#density_name.gaussian',
-'density_table.htm#density_name.laplace',
-'density_table.htm#density_name.students',
-'density_table.htm#density_name.log_gaussian',
-'density_table.htm#density_name.log_laplace',
-'density_table.htm#density_name.log_students',
-'density_table.htm#Example'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -74,12 +62,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

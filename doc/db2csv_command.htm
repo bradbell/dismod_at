@@ -29,7 +29,7 @@ A:active { color : purple }
 <body>
 <table><tr>
 <td>
-<a href="https://github.com/bradbell/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
 <td>
 <select onchange='choose_up0(this)'>
@@ -50,83 +50,7 @@ A:active { color : purple }
 </select>
 </td>
 <td><a href="csv2db_command.htm" target="_top">Prev</a>
-</td><td>
-<select onchange='choose_current0(this)'>
-<option>Current-&gt;</option>
-<option>Syntax</option>
-<option>---..As Program</option>
-<option>---..As Python Function</option>
-<option>Convention</option>
-<option>database</option>
-<option>---..dir</option>
-<option>option.csv</option>
-<option>log.csv</option>
-<option>avg_age.csv</option>
-<option>variable.csv</option>
-<option>---..var_id</option>
-<option>---..var_type</option>
-<option>---..s_id</option>
-<option>---..age</option>
-<option>---..time</option>
-<option>---..rate</option>
-<option>---..integrand</option>
-<option>---..covariate</option>
-<option>---..node</option>
-<option>---..fixed</option>
-<option>---..start</option>
-<option>---..depend</option>
-<option>---..truth</option>
-<option>---..sam_avg</option>
-<option>---..sam_std</option>
-<option>---..fit_value</option>
-<option>---..res_value</option>
-<option>---..res_dage</option>
-<option>---..res_dtime</option>
-<option>---..lag_value</option>
-<option>---..lag_dage</option>
-<option>---..lag_dtime</option>
-<option>---..sim_v, sim_a, sim_t</option>
-<option>---..prior_info</option>
-<option>data.csv</option>
-<option>---..data_id</option>
-<option>---..data_extra_columns</option>
-<option>---..child</option>
-<option>---..node</option>
-<option>---..integrand</option>
-<option>---..weight</option>
-<option>---..age_lo</option>
-<option>---..age_up</option>
-<option>---..time_lo</option>
-<option>---..time_up</option>
-<option>---..out</option>
-<option>---..density</option>
-<option>---..meas_value</option>
-<option>---..meas_std</option>
-<option>---..eta</option>
-<option>---..nu</option>
-<option>---..Delta</option>
-<option>---..avgint</option>
-<option>---..residual</option>
-<option>---..sim_value</option>
-<option>---..sim_delta</option>
-<option>---..Covariates</option>
-<option>predict.csv</option>
-<option>---..avgint_id</option>
-<option>---..avgint_extra_columns</option>
-<option>---..s_index</option>
-<option>---..avgint</option>
-<option>---..age_lo</option>
-<option>---..age_up</option>
-<option>---..time_lo</option>
-<option>---..time_up</option>
-<option>---..integrand</option>
-<option>---..weight</option>
-<option>---..node</option>
-<option>---..Covariates</option>
-<option>Example</option>
-</select>
-</td>
-<td><a href="db2csv_command.py.htm" target="_top">Next</a>
+</td><td><a href="db2csv_command.py.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
@@ -173,6 +97,78 @@ A:active { color : purple }
 
 
 <center><b><big><big>Create Csv Files that Summarize The Database</big></big></b></center>
+
+<br><a href="db2csv_command.htm#Syntax" target="_top">Syntax</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#Syntax.As Program" target="_top">As&nbsp;Program</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#Syntax.As Python Function" target="_top">As&nbsp;Python&nbsp;Function</a>
+<br><a href="db2csv_command.htm#Convention" target="_top">Convention</a>
+<br><a href="db2csv_command.htm#database" target="_top">database</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#database.dir" target="_top">dir</a>
+<br><a href="db2csv_command.htm#option.csv" target="_top">option.csv</a>
+<br><a href="db2csv_command.htm#log.csv" target="_top">log.csv</a>
+<br><a href="db2csv_command.htm#avg_age.csv" target="_top">avg_age.csv</a>
+<br><a href="db2csv_command.htm#variable.csv" target="_top">variable.csv</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_id" target="_top">var_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_type" target="_top">var_type</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.s_id" target="_top">s_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.age" target="_top">age</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.time" target="_top">time</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.rate" target="_top">rate</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.integrand" target="_top">integrand</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.covariate" target="_top">covariate</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.node" target="_top">node</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.fixed" target="_top">fixed</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.start" target="_top">start</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.depend" target="_top">depend</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.truth" target="_top">truth</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.sam_avg" target="_top">sam_avg</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.sam_std" target="_top">sam_std</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.fit_value" target="_top">fit_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.res_value" target="_top">res_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.res_dage" target="_top">res_dage</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.res_dtime" target="_top">res_dtime</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.lag_value" target="_top">lag_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.lag_dage" target="_top">lag_dage</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.lag_dtime" target="_top">lag_dtime</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.sim_v, sim_a, sim_t" target="_top">sim_v,&nbsp;sim_a,&nbsp;sim_t</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.prior_info" target="_top">prior_info</a>
+<br><a href="db2csv_command.htm#data.csv" target="_top">data.csv</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.data_id" target="_top">data_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.data_extra_columns" target="_top">data_extra_columns</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.child" target="_top">child</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.node" target="_top">node</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.integrand" target="_top">integrand</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.weight" target="_top">weight</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.age_lo" target="_top">age_lo</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.age_up" target="_top">age_up</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.time_lo" target="_top">time_lo</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.time_up" target="_top">time_up</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.out" target="_top">out</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.density" target="_top">density</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.meas_value" target="_top">meas_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.meas_std" target="_top">meas_std</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.eta" target="_top">eta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.nu" target="_top">nu</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.Delta" target="_top">Delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.avgint" target="_top">avgint</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.residual" target="_top">residual</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.sim_value" target="_top">sim_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.sim_delta" target="_top">sim_delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.Covariates" target="_top">Covariates</a>
+<br><a href="db2csv_command.htm#predict.csv" target="_top">predict.csv</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.avgint_id" target="_top">avgint_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.avgint_extra_columns" target="_top">avgint_extra_columns</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.s_index" target="_top">s_index</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.avgint" target="_top">avgint</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.age_lo" target="_top">age_lo</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.age_up" target="_top">age_up</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.time_lo" target="_top">time_lo</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.time_up" target="_top">time_up</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.integrand" target="_top">integrand</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.weight" target="_top">weight</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.node" target="_top">node</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.Covariates" target="_top">Covariates</a>
+<br><a href="db2csv_command.htm#Example" target="_top">Example</a><br>
 <br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 

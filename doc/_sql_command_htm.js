@@ -10,12 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'sql_command.htm#Syntax',
-'sql_command.htm#connection',
-'sql_command.htm#command',
-'sql_command.htm#result'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -54,12 +48,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

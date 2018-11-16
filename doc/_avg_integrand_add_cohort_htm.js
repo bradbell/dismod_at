@@ -12,25 +12,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'avg_integrand_add_cohort.htm#Syntax',
-'avg_integrand_add_cohort.htm#Prototype',
-'avg_integrand_add_cohort.htm#time_ini',
-'avg_integrand_add_cohort.htm#time_lower',
-'avg_integrand_add_cohort.htm#time_upper',
-'avg_integrand_add_cohort.htm#weight_id',
-'avg_integrand_add_cohort.htm#integrand_id',
-'avg_integrand_add_cohort.htm#n_child_',
-'avg_integrand_add_cohort.htm#child',
-'avg_integrand_add_cohort.htm#x',
-'avg_integrand_add_cohort.htm#x.Float',
-'avg_integrand_add_cohort.htm#pack_vec',
-'avg_integrand_add_cohort.htm#time_line_object',
-'avg_integrand_add_cohort.htm#line_adj',
-'avg_integrand_add_cohort.htm#Member Variables',
-'avg_integrand_add_cohort.htm#Member Variables.line_age_',
-'avg_integrand_add_cohort.htm#Member Variables.line_time_'
-];
 var list_down4 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -74,12 +55,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;

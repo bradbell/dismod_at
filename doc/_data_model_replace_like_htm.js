@@ -12,16 +12,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'data_model_replace_like.htm#Syntax',
-'data_model_replace_like.htm#Purpose',
-'data_model_replace_like.htm#data_object',
-'data_model_replace_like.htm#data_object.subset_object',
-'data_model_replace_like.htm#data_object.n_subset',
-'data_model_replace_like.htm#data_object.subset_id',
-'data_model_replace_like.htm#data_subset_obj',
-'data_model_replace_like.htm#Laplace Density'
-];
 var list_down4 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -67,12 +57,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;

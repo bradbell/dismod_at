@@ -11,20 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'get_data_table.htm#Syntax',
-'get_data_table.htm#Purpose',
-'get_data_table.htm#db',
-'get_data_table.htm#n_covariate',
-'get_data_table.htm#age_min',
-'get_data_table.htm#age_max',
-'get_data_table.htm#time_min',
-'get_data_table.htm#time_max',
-'get_data_table.htm#data_table',
-'get_data_table.htm#data_table.data_struct',
-'get_data_table.htm#data_cov_value',
-'get_data_table.htm#Example'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -94,12 +80,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

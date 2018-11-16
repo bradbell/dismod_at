@@ -10,39 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'user_diabetes.py.htm#Running This example',
-'user_diabetes.py.htm#omega',
-'user_diabetes.py.htm#rho',
-'user_diabetes.py.htm#Weight Table and Grid',
-'user_diabetes.py.htm#Covariates',
-'user_diabetes.py.htm#Covariates.Covariate Table',
-'user_diabetes.py.htm#Covariates.Data Table',
-'user_diabetes.py.htm#Covariates.Multipliers',
-'user_diabetes.py.htm#Truth Var Table',
-'user_diabetes.py.htm#Truth Var Table.Parent Rates',
-'user_diabetes.py.htm#Truth Var Table.Child Rate Effects',
-'user_diabetes.py.htm#Predict Table',
-'user_diabetes.py.htm#Problem Parameters',
-'user_diabetes.py.htm#Problem Parameters.mulcov_dict',
-'user_diabetes.py.htm#Problem Parameters.node_list',
-'user_diabetes.py.htm#Problem Parameters.integrand_list',
-'user_diabetes.py.htm#Problem Parameters.parent_age_grid',
-'user_diabetes.py.htm#Problem Parameters.child_age_grid',
-'user_diabetes.py.htm#Problem Parameters.parent_time_grid',
-'user_diabetes.py.htm#Problem Parameters.child_time_grid',
-'user_diabetes.py.htm#Problem Parameters.ode_step_size',
-'user_diabetes.py.htm#Problem Parameters.meas_cv',
-'user_diabetes.py.htm#Problem Parameters.meas_repeat',
-'user_diabetes.py.htm#Problem Parameters.fit_with_noise_in_data',
-'user_diabetes.py.htm#Problem Parameters.random_seed',
-'user_diabetes.py.htm#Problem Parameters.quasi_fixed',
-'user_diabetes.py.htm#Problem Parameters.tolerance_fixed',
-'user_diabetes.py.htm#Problem Parameters.derivative_test_fixed',
-'user_diabetes.py.htm#Problem Parameters.truth2start',
-'user_diabetes.py.htm#Problem Parameters.accept_rel_err',
-'user_diabetes.py.htm#Source Code'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -91,12 +58,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

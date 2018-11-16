@@ -11,23 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'residual_density.htm#Syntax',
-'residual_density.htm#Float',
-'residual_density.htm#z',
-'residual_density.htm#y',
-'residual_density.htm#mu',
-'residual_density.htm#delta',
-'residual_density.htm#d_id',
-'residual_density.htm#d_eta',
-'residual_density.htm#d_nu',
-'residual_density.htm#index',
-'residual_density.htm#difference',
-'residual_density.htm#residual',
-'residual_density.htm#residual.residual_struct',
-'residual_density.htm#residual.wres',
-'residual_density.htm#residual.logden'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -80,12 +63,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

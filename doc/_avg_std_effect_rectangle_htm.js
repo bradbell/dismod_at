@@ -12,21 +12,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'avg_std_effect_rectangle.htm#Syntax',
-'avg_std_effect_rectangle.htm#Prototype',
-'avg_std_effect_rectangle.htm#age_lower',
-'avg_std_effect_rectangle.htm#age_upper',
-'avg_std_effect_rectangle.htm#time_lower',
-'avg_std_effect_rectangle.htm#time_upper',
-'avg_std_effect_rectangle.htm#weight_id',
-'avg_std_effect_rectangle.htm#integrand_id',
-'avg_std_effect_rectangle.htm#x',
-'avg_std_effect_rectangle.htm#Float',
-'avg_std_effect_rectangle.htm#pack_vec',
-'avg_std_effect_rectangle.htm#avg',
-'avg_std_effect_rectangle.htm#Example'
-];
 var list_down4 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -72,12 +57,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;

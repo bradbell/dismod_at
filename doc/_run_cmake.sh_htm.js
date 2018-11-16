@@ -10,20 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'run_cmake.sh.htm#verbose_makefile',
-'run_cmake.sh.htm#build_type',
-'run_cmake.sh.htm#dismod_at_prefix',
-'run_cmake.sh.htm#eigen_prefix',
-'run_cmake.sh.htm#ipopt_prefix',
-'run_cmake.sh.htm#cppad_prefix',
-'run_cmake.sh.htm#Debug and Release',
-'run_cmake.sh.htm#python3_executable',
-'run_cmake.sh.htm#Choosing C++ Compiler',
-'run_cmake.sh.htm#extra_cxx_flags',
-'run_cmake.sh.htm#cmake_libdir',
-'run_cmake.sh.htm#system_specific_library_list'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -52,12 +38,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

@@ -12,14 +12,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'pack_info_mulstd.htm#Syntax',
-'pack_info_mulstd.htm#pack_object',
-'pack_info_mulstd.htm#smooth_id',
-'pack_info_mulstd.htm#k',
-'pack_info_mulstd.htm#k.offset',
-'pack_info_mulstd.htm#Example'
-];
 var list_down4 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -80,12 +72,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;

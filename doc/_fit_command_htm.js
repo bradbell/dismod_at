@@ -10,22 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'fit_command.htm#Syntax',
-'fit_command.htm#database',
-'fit_command.htm#variables',
-'fit_command.htm#variables.fixed',
-'fit_command.htm#variables.random',
-'fit_command.htm#variables.both',
-'fit_command.htm#simulate_index',
-'fit_command.htm#simulate_index.data_sim_table',
-'fit_command.htm#simulate_index.prior_sim_table',
-'fit_command.htm#fit_var_table',
-'fit_command.htm#fit_data_subset_table',
-'fit_command.htm#Random Effects',
-'fit_command.htm#Convergence Problems',
-'fit_command.htm#Example'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -63,12 +47,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

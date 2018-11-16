@@ -12,19 +12,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'pack_info_rate_info.htm#Syntax',
-'pack_info_rate_info.htm#subvec_info',
-'pack_info_rate_info.htm#pack_object',
-'pack_info_rate_info.htm#rate_id',
-'pack_info_rate_info.htm#j',
-'pack_info_rate_info.htm#info',
-'pack_info_rate_info.htm#info.covariate_id',
-'pack_info_rate_info.htm#info.smooth_id',
-'pack_info_rate_info.htm#info.n_var',
-'pack_info_rate_info.htm#info.offset',
-'pack_info_rate_info.htm#Example'
-];
 var list_down4 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -85,12 +72,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;

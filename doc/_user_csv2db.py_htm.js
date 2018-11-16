@@ -10,17 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'user_csv2db.py.htm#Using This Example',
-'user_csv2db.py.htm#Discussion',
-'user_csv2db.py.htm#rate_true',
-'user_csv2db.py.htm#P',
-'user_csv2db.py.htm#Rate Grids',
-'user_csv2db.py.htm#Data',
-'user_csv2db.py.htm#Predictions',
-'user_csv2db.py.htm#mtall',
-'user_csv2db.py.htm#Source'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -69,12 +58,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

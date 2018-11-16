@@ -12,35 +12,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'data_model_ctor.htm#Syntax',
-'data_model_ctor.htm#Prototype',
-'data_model_ctor.htm#data_object',
-'data_model_ctor.htm#rate_case',
-'data_model_ctor.htm#bound_random',
-'data_model_ctor.htm#n_covariate',
-'data_model_ctor.htm#ode_step_size',
-'data_model_ctor.htm#age_avg_grid',
-'data_model_ctor.htm#age_table',
-'data_model_ctor.htm#time_table',
-'data_model_ctor.htm#integrand_table',
-'data_model_ctor.htm#subset_object',
-'data_model_ctor.htm#subset_cov_value',
-'data_model_ctor.htm#w_info_vec',
-'data_model_ctor.htm#s_info_vec',
-'data_model_ctor.htm#pack_object',
-'data_model_ctor.htm#child_object',
-'data_model_ctor.htm#n_covariate_',
-'data_model_ctor.htm#ode_step_size_',
-'data_model_ctor.htm#pack_object_',
-'data_model_ctor.htm#minimum_meas_cv_',
-'data_model_ctor.htm#replace_like_called_',
-'data_model_ctor.htm#n_child_',
-'data_model_ctor.htm#data_subset_obj_',
-'data_model_ctor.htm#child_ran_zero_',
-'data_model_ctor.htm#data_info_',
-'data_model_ctor.htm#avgint_obj_'
-];
 var list_down4 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -86,12 +57,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down4(item)
 {	var index          = item.selectedIndex;

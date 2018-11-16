@@ -10,19 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'bilinear.htm#Age Grid',
-'bilinear.htm#Time Grid',
-'bilinear.htm#Function Grid',
-'bilinear.htm#Interpolant',
-'bilinear.htm#Interpolant.Bilinear',
-'bilinear.htm#Interpolant.Below Minimum Age',
-'bilinear.htm#Interpolant.Above Maximum Age',
-'bilinear.htm#Interpolant.Below Minimum Time',
-'bilinear.htm#Interpolant.Above Maximum Time',
-'bilinear.htm#Interpolant.Outside Both Limits',
-'bilinear.htm#Plotting'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -64,12 +51,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

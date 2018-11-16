@@ -10,16 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'fixed_value.htm#theta_j',
-'fixed_value.htm#prior_id',
-'fixed_value.htm#lambda_j',
-'fixed_value.htm#mu_j',
-'fixed_value.htm#delta_j',
-'fixed_value.htm#d_j',
-'fixed_value.htm#V_j',
-'fixed_value.htm#V^theta'
-];
 var list_down2 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -61,12 +51,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down2(item)
 {	var index          = item.selectedIndex;

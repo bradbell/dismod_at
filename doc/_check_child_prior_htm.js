@@ -11,15 +11,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_current0 = [
-'check_child_prior.htm#syntax',
-'check_child_prior.htm#Purpose',
-'check_child_prior.htm#db',
-'check_child_prior.htm#rate_table',
-'check_child_prior.htm#smooth_grid',
-'check_child_prior.htm#nslist_pair',
-'check_child_prior.htm#prior_table'
-];
 var list_down3 = [
 'math_abstract.htm',
 'install_unix.htm',
@@ -86,12 +77,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;
