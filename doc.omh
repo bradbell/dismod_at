@@ -43,6 +43,10 @@ $spell
 $$
 $section Disease Rates as Functions of Age and Time: dismod_at-20181116$$
 
+$head Links$$
+$href%https://github.com/bradbell/dismod_at%github
+%$$
+
 $childtable%omh/math/abstract.omh
 	%omh/install/unix.omh
 	%example/get_started/get_started.omh
