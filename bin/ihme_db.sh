@@ -30,15 +30,11 @@ then
 fi
 case $person in
 	greg)
-	database_path="/snfs2/HOME/gma1/tmp/$database"
-	;;
-
-	alex)
-	database_path="/snfs1/Project/dismod_at/test_databases/$database"
+	database_path="/ihme/homes/gma1/tmp/$database"
 	;;
 
 	katie)
-	dir='/snfs1/Project/dismod_at/shiny/gbd_dismod_at_viz/sqlite_files'
+	dir='/ihme/Project/dismod_at/shiny/gbd_dismod_at_viz/sqlite_files'
 	database_path="$dir/$database"
 	;;
 
@@ -54,7 +50,7 @@ then
 cat << EOF
 usage: bin/ihme_db.sh direction person database'
        direction: get or put
-       person:    alex, greg, or katie
+       person:    greg, or katie
        database:  file name of the database in directory used by person.
 EOF
 	exit 1
