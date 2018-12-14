@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
 'user.htm',
-'user_asymptotic.py.htm'
+'user_fit_gamma.py.htm'
 ];
 var list_across0 = [
 '_contents.htm',

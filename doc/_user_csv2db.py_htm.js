@@ -29,6 +29,7 @@ var list_down1 = [
 'user_fit_fixed_both.py.htm',
 'user_posterior.py.htm',
 'user_fit_sim.py.htm',
+'user_fit_gamma.py.htm',
 'age_avg_split.py.htm',
 'user_diabetes.py.htm',
 'user_asymptotic.py.htm',
