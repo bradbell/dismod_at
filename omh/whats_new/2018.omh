@@ -63,6 +63,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-14$$
+Add $cref user_fit_gamma.py$$, an example that fits
+$cref/gamma/data_like/Measurement Standard Deviation Covariates/gamma_j/$$
+using simulated data.
+
 $head 10-30$$
 $list number$$
 The $icode avg_age_split$$ option was changed to the
