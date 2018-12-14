@@ -20,6 +20,7 @@ FOREACH(user_case
 	csv2db
 	diff_constraint
 	fit_fixed_both
+	fit_gamma
 	fit_random
 	fit_sim
 	jump_at_age
