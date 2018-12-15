@@ -851,6 +851,7 @@ def db2csv_command(database_file_arg) :
 		# BEGIN_SORT_THIS_LINE_PLUS_1
 		[ "accept_after_max_steps_fixed",      "5"],
 		[ "accept_after_max_steps_random",     "5"],
+		[ "age_avg_split",                     ""],
 		[ "avgint_extra_columns",              ""],
 		[ "bound_frac_fixed",                  "1e-2"],
 		[ "bound_random",                      ""],
@@ -860,7 +861,7 @@ def db2csv_command(database_file_arg) :
 		[ "limited_memory_max_history_fixed",  "30"],
 		[ "max_num_iter_fixed",                "100"],
 		[ "max_num_iter_random",               "100"],
-		[ "age_avg_split",                     ""],
+		[ "meas_std_effect",                   "add_std"],
 		[ "ode_step_size",                     "10.0"],
 		[ "parent_node_id",                    ""],
 		[ "parent_node_name",                  ""],

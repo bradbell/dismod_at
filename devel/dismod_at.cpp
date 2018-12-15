@@ -1456,6 +1456,9 @@ int main(int n_arg, const char** argv)
 	vector<double> prior_mean = get_prior_mean(
 		db_input.prior_table, var2prior
 	);
+	// meas_std_effect
+	string meas_std_effect = option_map["meas_std_effect"];
+	//
 	// rate_case
 	string rate_case = option_map["rate_case"];
 	//
@@ -1546,6 +1549,7 @@ int main(int n_arg, const char** argv)
 		//
 		// avgint_object
 		dismod_at::data_model avgint_object(
+			meas_std_effect          ,
 			rate_case                ,
 			bound_random             ,
 			n_covariate              ,
@@ -1609,6 +1613,7 @@ int main(int n_arg, const char** argv)
 				db_input.prior_table
 			);
 			dismod_at::data_model data_object(
+				meas_std_effect          ,
 				rate_case                ,
 				bound_random             ,
 				n_covariate              ,

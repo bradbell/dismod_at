@@ -17,6 +17,7 @@ $spell
 	covariates
 	mulcov
 	cv
+	var
 $$
 
 $section Data Likelihood and Weighted Residuals$$
@@ -139,14 +140,35 @@ E_i ( \theta )
 \] $$
 
 $head Adjusted Standard Deviation, delta_i$$
-For the adjusted standard deviation is
+For $latex j \in K_i$$ it should hold that
+$latex 0 \leq x_{i,j}$$, and
+$latex 0 \leq \gamma_j (a, t)$$
+so that $latex \Delta_i$$ is less than or equal $latex \delta_i ( \theta )$$
+defined below:
+Note that in both cases below, the effect $latex E_i ( \theta )$$ multiplies
+$cref/Delta_i/data_like/Data Table Notation/Delta_i/$$
+instead of the data value $latex y_i$$.
+This avoids have no effect when the data value is zero.
+
+$subhead add_std$$
+If $cref/meas_std_effect/option_table/meas_std_effect/$$ is
+$code add_std$$ (add standard deviations),
+the adjusted standard deviation is
 $latex \[
 \delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
 \] $$
-Note that for $latex j \in K_i$$ it should hold that
-$latex 0 \leq x_{i,j}$$, and
-$latex 0 \leq \gamma_j (a, t)$$
-so that $latex \Delta_i \leq \delta_i ( \theta )$$.
+
+$subhead add_var$$
+If $cref/meas_std_effect/option_table/meas_std_effect/$$ is
+$code add_var$$ (add variances), the adjusted standard deviation is
+$latex \[
+\delta_i ( \theta ) = \Delta_i \sqrt{ 1 + E_i (\theta)^2 }
+\] $$
+This definition requires more floating point operations
+(for every data point) but this is not expected to be significant.
+On the other hand, it is not clear that $code add_var$$
+will give significantly different results from $code add_std$$
+(aside from the covariate multiplier values $latex \gamma_j$$).
 
 $head Weighted Residual and Likelihood$$
 Given the random effects $latex u$$ and the fixed effects $latex \theta$$,

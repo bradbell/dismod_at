@@ -31,6 +31,7 @@ $section Data Model: Constructor$$
 
 $head Syntax$$
 $codei%data_model %data_object%(
+	%meas_std_effect%,
 	%rate_case%,
 	%bound_random%,
 	%n_covariate%,
@@ -55,6 +56,10 @@ $srcfile%devel/model/data_model.cpp%
 
 $head data_object$$
 This is the $code data_model$$ object being constructed.
+
+$head meas_std_effect$$
+This is the value of
+$cref/meas_std_effect/option_table/meas_std_effect/$$ in the option table.
 
 $head rate_case$$
 This is the value of
@@ -188,6 +193,7 @@ data_model::~data_model(void)
 // BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
 data_model::data_model(
+	const std::string&                       meas_std_effect ,
 	const std::string&                       rate_case       ,
 	double                                   bound_random    ,
 	size_t                                   n_covariate     ,
@@ -211,6 +217,7 @@ ode_step_size_     (ode_step_size)                 ,
 n_child_           ( child_object.child_size() )   ,
 subset_cov_value_  (subset_cov_value)              ,
 pack_object_       (pack_object)                   ,
+meas_std_add_std_  (meas_std_effect == "add_std")  ,
 avgint_obj_(
 	ode_step_size,
 	rate_case,
@@ -750,7 +757,14 @@ residual_struct<Float> data_model::like_one(
 	//
 	// Compute the adusted standard deviation
 	density_enum density = data_info_[subset_id].density;
-	delta_out  = Delta * (1.0  + std_effect);
+	if( meas_std_add_std_ )
+	{   // add standard deviations
+		delta_out  = Delta * (1.0  + std_effect);
+	}
+	else
+	{	// add variances
+		delta_out  = Delta * sqrt(1.0  + std_effect * std_effect);
+	}
 	//
 	Float not_used;
 	bool difference = false;
@@ -906,6 +920,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
+	const std::string&                       meas_std_effect ,  \
 	const std::string&                       rate_case       ,  \
 	double                                   bound_random    ,  \
 	size_t                                   n_covariate     ,  \

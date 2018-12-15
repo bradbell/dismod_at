@@ -41,6 +41,7 @@ private:
 	const size_t                 n_child_;
 	const CppAD::vector<double>& subset_cov_value_;
 	const pack_info&             pack_object_;
+	const bool                   meas_std_add_std_;
 	//
 	// set by constructor and not changed
 	CppAD::vector<bool>          child_ran_zero_;
@@ -69,6 +70,7 @@ private:
 public:
 	template <class SubsetStruct>
 	data_model(
+		const std::string&                       meas_std_effect ,
 		const std::string&                       rate_case       ,
 		double                                   bound_random    ,
 		size_t                                   n_covariate     ,

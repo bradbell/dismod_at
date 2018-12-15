@@ -42,9 +42,11 @@ bool get_option_table_xam(void)
 	// Furthermore, we have not included max_num_iter_fixed in list
 	// so that its default value of 100 gets used.
 	struct { const char* name; const char* value; } option_list[] = {
+		"meas_std_effect",                  "add_std",
 		// BEGIN_SORT_THIS_LINE_PLUS_1
 		"accept_after_max_steps_fixed",     "6",
 		"accept_after_max_steps_random",    "6",
+		"age_avg_split",                    "1.0 2.0",
 		"avgint_extra_columns",             "",
 		"bound_frac_fixed",                 "1e-3",
 		"bound_random",                     "3.0",
@@ -53,7 +55,6 @@ bool get_option_table_xam(void)
 		"derivative_test_random",           "first-order",
 		"limited_memory_max_history_fixed", "15",
 		"max_num_iter_random",              "50",
-		"age_avg_split",                    "1.0 2.0",
 		"ode_step_size",                    "20.0",
 		"parent_node_id",                   "1",
 		"parent_node_name",                 "north_america",

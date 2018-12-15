@@ -214,12 +214,14 @@ bool like_one_xam(void)
 	//
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
-	std::string rate_case = "iota_pos_rho_pos";
-	std::string age_avg_split = "";
+	std::string meas_std_effect = "add_std";
+	std::string rate_case       = "iota_pos_rho_pos";
+	std::string age_avg_split   = "";
 	vector<double> age_avg_grid = dismod_at::age_avg_grid(
 		ode_step_size, age_avg_split, age_table
 	);
 	dismod_at::data_model data_object(
+		meas_std_effect,
 		rate_case,
 		bound_random,
 		n_covariate,

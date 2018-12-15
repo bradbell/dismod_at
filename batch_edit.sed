@@ -1,3 +1,6 @@
+# Plan for future changes on master branch
+# 1. s|^\t\(  *\)GNU Affero|        GNU Affero|
+# 2. aplahbetical sort of headings in option table
 # ----------------------------------------------------------------------------
 # None of the lists below can have white space in an entry.
 #
@@ -29,5 +32,3 @@
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
 #
-# Plan for fixing master branch
-# s|^\t\(  *\)GNU Affero|        GNU Affero|
