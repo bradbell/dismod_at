@@ -53,6 +53,9 @@
 # There are $icode n_data$$ measurements of Sincidence and each has a standard
 # deviation $icode data_std$$ (before adding $icode gamma$$).
 #
+# $head meas_std_effect$$
+# see $cref/meas_std_effect/option_table/meas_std_effect/$$.
+#
 # $srcfile%
 #	example/user/fit_gamma.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -64,6 +67,7 @@ iota_true          = 0.01
 gamma_true         = 2.0
 n_data             = 1000
 data_std           = 0.001
+meas_std_effect    = 'add_std'
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -211,16 +215,17 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
+		{ 'name':'meas_std_effect',        'value':meas_std_effect     },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'random_seed',            'value':'0'            },
-		{ 'name':'zero_sum_random',        'value':'iota'         },
+		{ 'name':'parent_node_name',       'value':'world'             },
+		{ 'name':'random_seed',            'value':'0'                 },
+		{ 'name':'zero_sum_random',        'value':'iota'              },
 
-		{ 'name':'quasi_fixed',            'value':'false'        },
-		{ 'name':'derivative_test_fixed',  'value':'second-order' },
-		{ 'name':'max_num_iter_fixed',     'value':'100'          },
-		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'        }
+		{ 'name':'quasi_fixed',            'value':'false'             },
+		{ 'name':'derivative_test_fixed',  'value':'second-order'      },
+		{ 'name':'max_num_iter_fixed',     'value':'100'               },
+		{ 'name':'print_level_fixed',      'value':'0'                 },
+		{ 'name':'tolerance_fixed',        'value':'1e-10'             }
 	]
 	# ----------------------------------------------------------------------
 	# create database

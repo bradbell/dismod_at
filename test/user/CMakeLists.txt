@@ -15,6 +15,7 @@ FOREACH(user_case
 	bound_frac
 	bound_random
 	csv2db
+	fit_gamma
 	fit_sim
 	laplace
 	minimum_cv

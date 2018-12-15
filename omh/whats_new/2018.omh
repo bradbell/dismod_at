@@ -69,6 +69,9 @@ Change the measurement standard deviation effect on
 $cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$
 to be the same for all densities
 (same as it was for log-transformed densities).
+$lnext
+Add the
+$cref/meas_std_effect/option_table/meas_std_effect/$$ option.
 $lend
 
 
