@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint meas_std_effect zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -121,6 +121,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Data Subset Table" target="_top">Data&nbsp;Subset&nbsp;Table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Avgint Subset Table" target="_top">Avgint&nbsp;Subset&nbsp;Table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Changing" target="_top">Changing</a>
+<br><a href="option_table.htm#meas_std_effect" target="_top">meas_std_effect</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_std_effect.Default" target="_top">Default</a>
 <br><a href="option_table.htm#zero_sum_random" target="_top">zero_sum_random</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#zero_sum_random.Default" target="_top">Default</a>
 <br><a href="option_table.htm#data_extra_columns" target="_top">data_extra_columns</a>
@@ -313,6 +315,29 @@ all of the output tables become invalid.
 This value is in the option table,
 and not an argument to a particular command,
 because it is used by all the commands.
+
+<br>
+<br>
+<b><big><a name="meas_std_effect" id="meas_std_effect">meas_std_effect</a></big></b>
+<br>
+There are two options for how the
+<a href="data_like.htm#Average Standard Deviation Effect" target="_top"><span style='white-space: nowrap'>average&nbsp;standard&nbsp;deviation&nbsp;effect</span></a>
+
+changes the measurement standard deviation.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std_effect</span></font></i></code>
+ is <code><font color="blue">add_std</font></code> (<code><font color="blue">add_var</font></code>),
+the effect is added in standard deviation space (variance space); see
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+.
+
+<br>
+<br>
+<big><a name="meas_std_effect.Default" id="meas_std_effect.Default">Default</a></big>
+<br>
+The default value for this option is <code><font color="blue">add_std</font></code>
+which requires fewer floating point operations and may
+be faster in some cases.
 
 <br>
 <br>

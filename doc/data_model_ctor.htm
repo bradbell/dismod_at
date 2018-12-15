@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Model: Constructor</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Model: Constructor">
-<meta name="keywords" id="keywords" content=" data model: constructor syntax prototype data_object rate_case bound_random n_covariate ode_step_size age_avg_grid age_table time_table integrand_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object n_covariate_ ode_step_size_ pack_object_ minimum_meas_cv_ replace_like_called_ n_child_ data_subset_obj_ child_ran_zero_ data_info_ avgint_obj_ ">
+<meta name="keywords" id="keywords" content=" data model: constructor syntax prototype data_object meas_std_effect rate_case bound_random n_covariate ode_step_size age_avg_grid age_table time_table integrand_table subset_object subset_cov_value w_info_vec s_info_vec pack_object child_object n_covariate_ ode_step_size_ pack_object_ minimum_meas_cv_ replace_like_called_ n_child_ data_subset_obj_ child_ran_zero_ data_info_ avgint_obj_ ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -108,6 +108,7 @@ A:active { color : purple }
 <br><a href="data_model_ctor.htm#Syntax" target="_top">Syntax</a>
 <br><a href="data_model_ctor.htm#Prototype" target="_top">Prototype</a>
 <br><a href="data_model_ctor.htm#data_object" target="_top">data_object</a>
+<br><a href="data_model_ctor.htm#meas_std_effect" target="_top">meas_std_effect</a>
 <br><a href="data_model_ctor.htm#rate_case" target="_top">rate_case</a>
 <br><a href="data_model_ctor.htm#bound_random" target="_top">bound_random</a>
 <br><a href="data_model_ctor.htm#n_covariate" target="_top">n_covariate</a>
@@ -138,6 +139,7 @@ A:active { color : purple }
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>data_model&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_object</span></font></i><font color="blue"><span style='white-space: nowrap'>(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std_effect</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_random</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_covariate</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -163,6 +165,7 @@ A:active { color : purple }
 <pre><tt>
 <b><font color="#0000FF">template</font></b> <font color="#990000">&lt;</font><b><font color="#0000FF">class</font></b> <font color="#008080">SubsetStruct</font><font color="#990000">&gt;</font>
 data_model<font color="#990000">::</font><b><font color="#000000">data_model</font></b><font color="#990000">(</font>
+     <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>                       meas_std_effect <font color="#990000">,</font>
      <b><font color="#0000FF">const</font></b> std<font color="#990000">::</font>string<font color="#990000">&amp;</font>                       rate_case       <font color="#990000">,</font>
      <font color="#009900">double</font>                                   bound_random    <font color="#990000">,</font>
      <font color="#008080">size_t</font>                                   n_covariate     <font color="#990000">,</font>
@@ -182,6 +185,14 @@ data_model<font color="#990000">::</font><b><font color="#000000">data_model</fo
 <b><big><a name="data_object" id="data_object">data_object</a></big></b>
 <br>
 This is the <code><font color="blue">data_model</font></code> object being constructed.
+
+<br>
+<br>
+<b><big><a name="meas_std_effect" id="meas_std_effect">meas_std_effect</a></big></b>
+<br>
+This is the value of
+<a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+ in the option table.
 
 <br>
 <br>

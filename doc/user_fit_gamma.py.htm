@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting Data Standard Deviations, Gamma</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting Data Standard Deviations, Gamma">
-<meta name="keywords" id="keywords" content=" fitting data standard deviations gamma random effects iota other rates covariate multiplier ">
+<meta name="keywords" id="keywords" content=" fitting data standard deviations gamma random effects iota other rates covariate multiplier meas_std_effect ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -105,7 +105,8 @@ A:active { color : purple }
 <br><a href="user_fit_gamma.py.htm#Iota" target="_top">Iota</a>
 <br><a href="user_fit_gamma.py.htm#Other Rates" target="_top">Other&nbsp;Rates</a>
 <br><a href="user_fit_gamma.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
-<br><a href="user_fit_gamma.py.htm#Data" target="_top">Data</a><br>
+<br><a href="user_fit_gamma.py.htm#Data" target="_top">Data</a>
+<br><a href="user_fit_gamma.py.htm#meas_std_effect" target="_top">meas_std_effect</a><br>
 <br>
 <b><big><a name="Random Effects" id="Random Effects">Random Effects</a></big></b>
 <br>
@@ -149,13 +150,16 @@ There is one covariate multiplier on the covariate column <code><font color="blu
 This is a measurement standard deviation covariate multiplier
 <a href="data_like.htm#Measurement Standard Deviation Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma</span></a>
 .
-The prior for this multiplier is a uniform on the interval [0, 1].
+The prior for this multiplier is a uniform on the interval from zero
+to 
+<code><font color="blue"><span style='white-space: nowrap'>10&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>gamma_true</span></font></i></code>
+.
 The true value for this multiplier, used to simulate data, is
 called 
 <code><i><font color="black"><span style='white-space: nowrap'>gamma_true</span></font></i></code>
 .
 The mean for the prior is 
-<code><i><font color="black"><span style='white-space: nowrap'>gamma_true&nbsp;/&nbsp;10</span></font></i></code>
+<code><font color="blue"><span style='white-space: nowrap'>gamma_true</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;/&nbsp;10</span></font></i></code>
 
 (this is only used as a starting point for the optimization).
 Note that there is only one grid point in the covariate multiplier,
@@ -174,11 +178,19 @@ deviation
 <code><i><font color="black"><span style='white-space: nowrap'>gamma</span></font></i></code>
 ).
 
+<br>
+<br>
+<b><big><a name="meas_std_effect" id="meas_std_effect">meas_std_effect</a></big></b>
+<br>
+see <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+.
+
 <pre><tt><i><font color="#9A1900"># values used to simulate data</font></i>
 iota_true          <font color="#990000">=</font> <font color="#993399">0.01</font>
-gamma_true         <font color="#990000">=</font> <font color="#993399">0.002</font>
+gamma_true         <font color="#990000">=</font> <font color="#993399">2.0</font>
 n_data             <font color="#990000">=</font> <font color="#993399">1000</font>
 data_std           <font color="#990000">=</font> <font color="#993399">0.001</font>
+meas_std_effect    <font color="#990000">=</font> <font color="#FF0000">'add_std'</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
@@ -295,7 +307,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_gamma'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">10.0</font> <font color="#990000">*</font> gamma_true<font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     gamma_true <font color="#990000">/</font> <font color="#993399">10.0</font>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
@@ -326,16 +338,17 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># option_table</font></i>
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'meas_std_effect'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font>meas_std_effect     <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font> <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>        <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>            <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_random'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota'</font>         <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>             <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_random'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota'</font>              <font color="#990000">},</font>
 
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>        <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'second-order'</font> <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>          <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>            <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-10'</font>        <font color="#990000">}</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>             <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'second-order'</font>      <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>               <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-10'</font>             <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># create database</font></i>
