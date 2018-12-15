@@ -1,5 +1,5 @@
-# Starting here: all lines must begin with a # character:
 # ----------------------------------------------------------------------------
+# None of the lists below can have white space in an entry.
 #
 # list of directories that are added to the repository by batch_edit.sh
 # new_directories='
@@ -8,31 +8,26 @@
 # delete_files='
 # '
 # list of files that are not edited by the sed commands in this file
-# (with the possible exception of the extra_sed commands)
+# (with the possible exception of the extra_seds commands)
 # ignore_files='
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-# devel/utility/avg_age_grid.cpp
-# example/devel/utility/avg_age_grid_xam.cpp
-# example/user/avg_age_split.py
-# include/dismod_at/avg_age_grid.hpp
-# omh/table/avg_age_table.omh
 # '
-# sed command that maps ode file and or directory names to new file names
-# move_sed='
-#	s|avg_age_|age_avg_|
+# list of sed commands that maps old file and or directory names to new
+# file names (the characters @s gets converted to a single space)
+# move_seds='
 # '
-# list of files that re edited by the extra_sed command
+# list of files that get edited by the extra_seds command
 # extra_files='
 # '
-# sed command that is applied to the extra files
-# (after the other sed commands in this file)
-# extra_sed='
+# list of sed commands that are applied to the extra files,
+# after the other sed commands in this file
+# (the characters @s gets converted to a single space)
+# extra_seds='
 # '
 # ----------------------------------------------------------------------------
-# Starting here: lines with sed commands do not begin with a # character.
-s|avg_age_|age_avg_|g
-s|AVG_AGE_|AGE_AVG_|g
-s|Average Age|Age Average|
-s|average age|age average|
+# Put other sed commands below here and without # at start of line
+#
+# Plan for fixing master branch
+# s|^\t\(  *\)GNU Affero|        GNU Affero|
