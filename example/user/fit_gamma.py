@@ -40,10 +40,11 @@
 # (which has the constant value one) and the rate $code iota$$.
 # This is a measurement standard deviation covariate multiplier
 # $cref/gamma/data_like/Measurement Standard Deviation Covariates/gamma_j/$$.
-# The prior for this multiplier is a uniform on the interval [0, 1].
+# The prior for this multiplier is a uniform on the interval from zero
+# to $codei%10 * %gamma_true%$$.
 # The true value for this multiplier, used to simulate data, is
 # called $icode gamma_true$$.
-# The mean for the prior is $icode gamma_true / 10$$
+# The mean for the prior is $codei%gamma_true% / 10%$$
 # (this is only used as a starting point for the optimization).
 # Note that there is only one grid point in the covariate multiplier,
 # hence it is constant in age and time.
@@ -60,7 +61,7 @@
 # BEGIN PYTHON
 # values used to simulate data
 iota_true          = 0.01
-gamma_true         = 0.002
+gamma_true         = 2.0
 n_data             = 1000
 data_std           = 0.001
 # ------------------------------------------------------------------------
@@ -179,7 +180,7 @@ def example_db (file_name) :
 			'name':     'prior_gamma',
 			'density':  'uniform',
 			'lower':    0.0,
-			'upper':    1.0,
+			'upper':    10.0 * gamma_true,
 			'mean':     gamma_true / 10.0
 		}
 	]

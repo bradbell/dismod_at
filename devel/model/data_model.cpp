@@ -736,7 +736,6 @@ residual_struct<Float> data_model::like_one(
 	double meas_cv       = minimum_meas_cv_[integrand_id];
 	double Delta = std::max(meas_std, meas_cv * std::fabs(meas_value) );
 	//
-
 	// average standard deviation effect
 	Float std_effect = avgstd_obj_.rectangle(
 		age_lower,
@@ -751,13 +750,7 @@ residual_struct<Float> data_model::like_one(
 	//
 	// Compute the adusted standard deviation
 	density_enum density = data_info_[subset_id].density;
-	if( density == log_gaussian_enum
-	||  density == log_laplace_enum
-	||  density == log_students_enum
-	)
-		delta_out  = Delta * (1.0  + std_effect);
-	else
-		delta_out  = Delta + std_effect;
+	delta_out  = Delta * (1.0  + std_effect);
 	//
 	Float not_used;
 	bool difference = false;

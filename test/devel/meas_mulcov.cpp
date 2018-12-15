@@ -189,8 +189,10 @@ bool meas_mulcov(void)
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	smooth_table[smooth_id].n_age  =  int( s_info_vec[smooth_id].age_size() );
-		smooth_table[smooth_id].n_time =  int( s_info_vec[smooth_id].time_size() );
+	{	smooth_table[smooth_id].n_age  =
+            int( s_info_vec[smooth_id].age_size() );
+		smooth_table[smooth_id].n_time =
+            int( s_info_vec[smooth_id].time_size() );
 	}
 	// mul_cov
 	size_t omega_rate_id = dismod_at::omega_enum;
@@ -198,10 +200,10 @@ bool meas_mulcov(void)
 	mulcov_table[0].mulcov_type = dismod_at::meas_value_enum;
 	mulcov_table[1].mulcov_type = dismod_at::meas_std_enum;
 	for(size_t mulcov_id = 0; mulcov_id < 2; mulcov_id++)
-	{	mulcov_table[mulcov_id].rate_id        =  int( DISMOD_AT_NULL_INT );
-		mulcov_table[mulcov_id].integrand_id   =  int( dismod_at::mtother_enum );
-		mulcov_table[mulcov_id].covariate_id   =  int( 0 );
-		mulcov_table[mulcov_id].smooth_id      =  int( 0 );
+	{	mulcov_table[mulcov_id].rate_id      =  int( DISMOD_AT_NULL_INT );
+		mulcov_table[mulcov_id].integrand_id =  int( dismod_at::mtother_enum );
+		mulcov_table[mulcov_id].covariate_id =  int( 0 );
+		mulcov_table[mulcov_id].smooth_id    =  int( 0 );
 	}
 	// rate_table
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);
@@ -210,8 +212,8 @@ bool meas_mulcov(void)
 		if( rate_id == dismod_at::pini_enum )
 			smooth_id = 1; // only one age
 		rate_table[rate_id].parent_smooth_id =  int( smooth_id );
-		rate_table[rate_id].child_smooth_id =   int( smooth_id );
-		rate_table[rate_id].child_nslist_id =  int( DISMOD_AT_NULL_INT );
+		rate_table[rate_id].child_smooth_id  =  int( smooth_id );
+		rate_table[rate_id].child_nslist_id  =  int( DISMOD_AT_NULL_INT );
 	}
 	// child_info
 	dismod_at::child_info child_object(
@@ -318,7 +320,7 @@ bool meas_mulcov(void)
 	// check residual
 	double y     = data_table[data_id].meas_value;
 	double Delta = data_table[data_id].meas_std;
-	double delta = Delta  + avg_std_mulcov;
+	double delta = Delta * (1.0 + avg_std_mulcov);
 	Float  check = (y - avg_integrand) / delta;
 	ok          &= fabs( 1.0 - wres / check ) <= eps;
 	//

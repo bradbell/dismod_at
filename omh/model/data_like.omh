@@ -139,19 +139,14 @@ E_i ( \theta )
 \] $$
 
 $head Adjusted Standard Deviation, delta_i$$
-For the log-transformed densities, the adjusted standard deviation is
+For the adjusted standard deviation is
 $latex \[
 \delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
-\] $$
-For the other densities, the adjusted standard deviation is
-$latex \[
-\delta_i ( \theta ) = \Delta_i + E_i (\theta)
 \] $$
 Note that for $latex j \in K_i$$ it should hold that
 $latex 0 \leq x_{i,j}$$, and
 $latex 0 \leq \gamma_j (a, t)$$
 so that $latex \Delta_i \leq \delta_i ( \theta )$$.
-
 
 $head Weighted Residual and Likelihood$$
 Given the random effects $latex u$$ and the fixed effects $latex \theta$$,

@@ -63,6 +63,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head gamma branch$$
+$list number$$
+Change the measurement standard deviation effect on
+$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$
+to be the same for all densities
+(same as it was for log-transformed densities).
+$lend
+
+
 $head 12-14$$
 Add $cref user_fit_gamma.py$$, an example that fits
 $cref/gamma/data_like/Measurement Standard Deviation Covariates/gamma_j/$$
