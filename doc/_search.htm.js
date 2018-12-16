@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20181215  ',' links ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20181216  ',' links ',
 'math_abstract  An Introduction To The Mathematics of Dismod_at  ',' ',
 'math_ode  The Dismod_at Ordinary Differential Equation  ',' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t) ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test example ',
@@ -89,7 +89,7 @@ Keyword =
 'model  The Age-Time Dismod Model  ',' ',
 'model_variables  The Model Variables  ',' introduction function age time smoothing interpolation children fixed effects theta standard deviation multipliers lambda parent rates covariate random variation initial prevalence other groups ',
 'avg_integrand  Model for the Average Integrand  ',' ordinary differential equation data avgint table notation a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k covariate multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ',
-'data_like  Data Likelihood and Weighted Residuals  ',' table notation y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects theta average integrand adjusted add_std add_var ',
+'data_like  Data Likelihood and Weighted Residuals  ',' table notation y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects theta average integrand adjusted scaling variance deviations add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log ',
 'fixed_value  The Fixed Effects Value Density Function  ',' theta_j prior_id lambda_j mu_j delta_j d_j v_j v^theta ',
 'fixed_diff  Fixed Effects Differences Density Function  ',' k i(k) j(k) lambda_k theta_ijk mu_ijk delta_ijk d_ijk age a^theta time t^theta ',
 'fixed_prior  Prior for Fixed Effect Values  ',' theta lambda beta constraints theta_k l_k^v u_k^v age difference limits a_i(k) delta^a l_k^a u_k^a time normalization constant c_theta p(theta) ',

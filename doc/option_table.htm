@@ -320,24 +320,25 @@ because it is used by all the commands.
 <br>
 <b><big><a name="meas_std_effect" id="meas_std_effect">meas_std_effect</a></big></b>
 <br>
-There are two options for how the
+There are four options for how the
 <a href="data_like.htm#Average Standard Deviation Effect" target="_top"><span style='white-space: nowrap'>average&nbsp;standard&nbsp;deviation&nbsp;effect</span></a>
 
 changes the measurement standard deviation.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_std_effect</span></font></i></code>
- is <code><font color="blue">add_std</font></code> (<code><font color="blue">add_var</font></code>),
-the effect is added in standard deviation space (variance space); see
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+The possible options are
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_std_scale_all" target="_top"><span style='white-space: nowrap'>add_std_scale_all</span></a>
+,
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_std_scale_log" target="_top"><span style='white-space: nowrap'>add_std_scale_log</span></a>
+,
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var_scale_all" target="_top"><span style='white-space: nowrap'>add_var_scale_all</span></a>
+,
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var_scale_log" target="_top"><span style='white-space: nowrap'>add_var_scale_log</span></a>
 .
 
 <br>
 <br>
 <big><a name="meas_std_effect.Default" id="meas_std_effect.Default">Default</a></big>
 <br>
-The default value for this option is <code><font color="blue">add_std</font></code>
-which requires fewer floating point operations and may
-be faster in some cases.
+The default value for this option is <code><font color="blue">add_std_scale_all</font></code>.
 
 <br>
 <br>

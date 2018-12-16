@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Likelihood and Weighted Residuals</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Likelihood and Weighted Residuals">
-<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects u theta average integrand effect adjusted add_std add_var residual ">
+<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects u theta average integrand effect adjusted scaling variance deviations add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log residual ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -115,8 +115,12 @@ A:active { color : purple }
 <br><a href="data_like.htm#Average Integrand" target="_top">Average&nbsp;Integrand</a>
 <br><a href="data_like.htm#Average Standard Deviation Effect" target="_top">Average&nbsp;Standard&nbsp;Deviation&nbsp;Effect</a>
 <br><a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top">Adjusted&nbsp;Standard&nbsp;Deviation,&nbsp;delta_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_std" target="_top">add_std</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var" target="_top">add_var</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.Scaling" target="_top">Scaling</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.Variance or Standard Deviations" target="_top">Variance&nbsp;or&nbsp;Standard&nbsp;Deviations</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_std_scale_all" target="_top">add_std_scale_all</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_std_scale_log" target="_top">add_std_scale_log</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var_scale_all" target="_top">add_var_scale_all</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var_scale_log" target="_top">add_var_scale_log</a>
 <br><a href="data_like.htm#Weighted Residual and Likelihood" target="_top">Weighted&nbsp;Residual&nbsp;and&nbsp;Likelihood</a><br>
 <br>
 <b><big><a name="Data Table Notation" id="Data Table Notation">Data Table Notation</a></big></b>
@@ -386,23 +390,57 @@ so that <small>@(@
 \delta_i ( \theta )
 @)@</small>
 defined below:
-Note that in both cases below, the effect <small>@(@
+
+<br>
+<br>
+<big><a name="Adjusted Standard Deviation, delta_i.Scaling" id="Adjusted Standard Deviation, delta_i.Scaling">Scaling</a></big>
+<br>
+For some cases below, <small>@(@
 E_i ( \theta )
 @)@</small> multiplies
 <a href="data_like.htm#Data Table Notation.Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
 
-instead of the data value <small>@(@
+instead of multiplying <small>@(@
 y_i
 @)@</small>.
-This avoids have no effect when the data value is zero.
+This avoids have no effect when <small>@(@
+y_i
+@)@</small> is zero.
+It is also possible to scale <small>@(@
+E_i ( \theta )
+@)@</small>
+by any factor one chooses by changing the value of the covariates
+<small>@(@
+x_{ij}
+@)@</small> in the definition of <small>@(@
+E_i ( \theta )
+@)@</small>.
 
 <br>
 <br>
-<big><a name="Adjusted Standard Deviation, delta_i.add_std" id="Adjusted Standard Deviation, delta_i.add_std">add_std</a></big>
+<big><a name="Adjusted Standard Deviation, delta_i.Variance or Standard Deviations" id="Adjusted Standard Deviation, delta_i.Variance or Standard Deviations">Variance or Standard Deviations</a></big>
+<br>
+Adding Variances, instead of standard deviations, requires more
+floating point operations (for every data point)
+but this is not expected to be significant.
+It is not clear that adding variances
+will give a significantly different results,
+In fact, when one scales by <small>@(@
+\Delta_i
+@)@</small> and there is only on
+covariate multiplier, the maximum likelihood problems are equivalent,
+aside from the value of the covariate multiplier <small>@(@
+\gamma_j
+@)@</small>
+being different.
+
+<br>
+<br>
+<big><a name="Adjusted Standard Deviation, delta_i.add_std_scale_all" id="Adjusted Standard Deviation, delta_i.add_std_scale_all">add_std_scale_all</a></big>
 <br>
 If <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
  is
-<code><font color="blue">add_std</font></code> (add standard deviations),
+<code><font color="blue">add_std_scale_all</font></code> (add standard deviations and scale all cases)
 the adjusted standard deviation is
 <small>@[@
 
@@ -412,23 +450,60 @@ the adjusted standard deviation is
 
 <br>
 <br>
-<big><a name="Adjusted Standard Deviation, delta_i.add_var" id="Adjusted Standard Deviation, delta_i.add_var">add_var</a></big>
+<big><a name="Adjusted Standard Deviation, delta_i.add_std_scale_log" id="Adjusted Standard Deviation, delta_i.add_std_scale_log">add_std_scale_log</a></big>
 <br>
 If <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
  is
-<code><font color="blue">add_var</font></code> (add variances), the adjusted standard deviation is
+<code><font color="blue">add_std_scale_log</font></code>
+(add standard deviations and only scale log density cases)
+the adjusted standard deviation is
+<small>@[@
+
+\delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
+
+@]@</small>
+for the log density cases. Otherwise it is
+<small>@[@
+
+\delta_i ( \theta ) = \Delta_i + E_i (\theta)
+
+@]@</small>
+
+<br>
+<br>
+<big><a name="Adjusted Standard Deviation, delta_i.add_var_scale_all" id="Adjusted Standard Deviation, delta_i.add_var_scale_all">add_var_scale_all</a></big>
+<br>
+If <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+ is
+<code><font color="blue">add_var_scale_all</font></code> (add variances and scale all cases)
+the adjusted standard deviation is
 <small>@[@
 
 \delta_i ( \theta ) = \Delta_i \sqrt{ 1 + E_i (\theta)^2 }
 
 @]@</small>
-This definition requires more floating point operations
-(for every data point) but this is not expected to be significant.
-On the other hand, it is not clear that <code><font color="blue">add_var</font></code>
-will give significantly different results from <code><font color="blue">add_std</font></code>
-(aside from the covariate multiplier values <small>@(@
-\gamma_j
-@)@</small>).
+
+<br>
+<br>
+<big><a name="Adjusted Standard Deviation, delta_i.add_var_scale_log" id="Adjusted Standard Deviation, delta_i.add_var_scale_log">add_var_scale_log</a></big>
+<br>
+If <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+ is
+<code><font color="blue">add_var_scale_log</font></code>
+(add variances and only scale log density cases)
+the adjusted standard deviation is
+<small>@[@
+
+\delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
+
+@]@</small>
+for the log density cases. Otherwise it is
+<small>@[@
+
+\delta_i ( \theta ) = \sqrt{ \Delta_i^2 + E_i (\theta)^2 }
+
+@]@</small>
+
 
 <br>
 <br>
