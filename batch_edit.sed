@@ -31,4 +31,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-#
+s|"add_std"|"add_std_scale_all"|

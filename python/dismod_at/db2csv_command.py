@@ -861,7 +861,7 @@ def db2csv_command(database_file_arg) :
 		[ "limited_memory_max_history_fixed",  "30"],
 		[ "max_num_iter_fixed",                "100"],
 		[ "max_num_iter_random",               "100"],
-		[ "meas_std_effect",                   "add_std"],
+		[ "meas_std_effect",                   "add_std_scale_all"],
 		[ "ode_step_size",                     "10.0"],
 		[ "parent_node_id",                    ""],
 		[ "parent_node_name",                  ""],

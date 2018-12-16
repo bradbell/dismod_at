@@ -71,6 +71,8 @@ $cref/adjusting standard deviations
 	/data_like
 	/Adjusted Standard Deviation, delta_i
 /$$.
+It also gives the choice to scale or not scale
+the added standard deviations for non-log densities.
 
 $subhead API Change$$
 Change the measurement standard deviation effect on

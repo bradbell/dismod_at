@@ -217,7 +217,6 @@ ode_step_size_     (ode_step_size)                 ,
 n_child_           ( child_object.child_size() )   ,
 subset_cov_value_  (subset_cov_value)              ,
 pack_object_       (pack_object)                   ,
-meas_std_add_std_  (meas_std_effect == "add_std")  ,
 avgint_obj_(
 	ode_step_size,
 	rate_case,
@@ -244,6 +243,16 @@ avgstd_obj_(
 	// ------------------------------------------------------------------------
 	//
 	using std::string;
+	//
+	// meas_std_effect_
+	if( meas_std_effect == "add_std_scale_all" )
+		meas_std_effect_ = add_std_scale_all_enum;
+	else if( meas_std_effect == "add_std_scale_log" )
+		meas_std_effect_ = add_std_scale_log_enum;
+	else if( meas_std_effect == "add_var_scale_all" )
+		meas_std_effect_ = add_var_scale_all_enum;
+	else if( meas_std_effect == "add_var_scale_log" )
+		meas_std_effect_ = add_var_scale_log_enum;
 	//
 	// minimum_meas_cv_
 	minimum_meas_cv_.resize( integrand_table.size() );
@@ -755,15 +764,37 @@ residual_struct<Float> data_model::like_one(
 		pack_vec
 	);
 	//
-	// Compute the adusted standard deviation
+	// Compute the adusted standard deviation, delta_out
 	density_enum density = data_info_[subset_id].density;
-	if( meas_std_add_std_ )
-	{   // add standard deviations
+	bool log_density     = density == log_gaussian_enum;
+	log_density         |= density == log_laplace_enum;
+	log_density         |= density == log_students_enum;
+	switch( meas_std_effect_ )
+	{
+		case add_std_scale_all_enum:
 		delta_out  = Delta * (1.0  + std_effect);
-	}
-	else
-	{	// add variances
+		break;
+
+		case add_std_scale_log_enum:
+		if( log_density )
+			delta_out  = Delta * (1.0  + std_effect);
+		else
+			delta_out  = Delta + std_effect;
+		break;
+
+		case add_var_scale_all_enum:
 		delta_out  = Delta * sqrt(1.0  + std_effect * std_effect);
+		break;
+
+		case add_var_scale_log_enum:
+		if( log_density )
+			delta_out  = Delta * sqrt(1.0  + std_effect * std_effect);
+		else
+			delta_out  = sqrt( Delta * Delta + std_effect * std_effect );
+		break;
+
+		default:
+		assert(false);
 	}
 	//
 	Float not_used;

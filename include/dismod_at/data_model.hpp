@@ -25,6 +25,13 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "avg_std_effect.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
+	enum meas_std_effect_enum {
+		add_std_scale_all_enum,
+		add_std_scale_log_enum,
+		add_var_scale_all_enum,
+		add_var_scale_log_enum,
+		number_meas_std_effect_enum
+	};
 
 class data_model {
 	// infromation for each data point
@@ -41,9 +48,9 @@ private:
 	const size_t                 n_child_;
 	const CppAD::vector<double>& subset_cov_value_;
 	const pack_info&             pack_object_;
-	const bool                   meas_std_add_std_;
 	//
 	// set by constructor and not changed
+	meas_std_effect_enum         meas_std_effect_;
 	CppAD::vector<bool>          child_ran_zero_;
 	CppAD::vector<data_ode_info> data_info_;
 	CppAD::vector<double>        minimum_meas_cv_;

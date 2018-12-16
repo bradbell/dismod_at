@@ -240,7 +240,7 @@ bool rate_mulcov(void)
 	//
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
-	std::string meas_std_effect = "add_std";
+	std::string meas_std_effect = "add_std_scale_all";
 	std::string rate_case       = "iota_pos_rho_pos";
 	std::string age_avg_split   = "";
 	vector<double> age_avg_grid = dismod_at::age_avg_grid(

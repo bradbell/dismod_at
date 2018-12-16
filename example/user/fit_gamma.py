@@ -67,7 +67,7 @@ iota_true          = 0.01
 gamma_true         = 2.0
 n_data             = 1000
 data_std           = 0.001
-meas_std_effect    = 'add_std'
+meas_std_effect    = 'add_std_scale_all'
 # ------------------------------------------------------------------------
 import sys
 import os

@@ -116,23 +116,36 @@ and not an argument to a particular command,
 because it is used by all the commands.
 
 $head meas_std_effect$$
-There are two options for how the
+There are four options for how the
 $cref/average standard deviation effect
 	/data_like
 	/Average Standard Deviation Effect
 /$$
 changes the measurement standard deviation.
-If $icode meas_std_effect$$ is $code add_std$$ ($code add_var$$),
-the effect is added in standard deviation space (variance space); see
-$cref/adjusted standard deviation
+The possible options are
+$cref/add_std_scale_all
 	/data_like
 	/Adjusted Standard Deviation, delta_i
+	/add_std_scale_all
+/$$,
+$cref/add_std_scale_log
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+	/add_std_scale_log
+/$$,
+$cref/add_var_scale_all
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+	/add_var_scale_all
+/$$,
+$cref/add_var_scale_log
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+	/add_var_scale_log
 /$$.
 
 $subhead Default$$
-The default value for this option is $code add_std$$
-which requires fewer floating point operations and may
-be faster in some cases.
+The default value for this option is $code add_std_scale_all$$.
 
 $head zero_sum_random$$
 If $icode option_name$$ is $code zero_sum_random$$,

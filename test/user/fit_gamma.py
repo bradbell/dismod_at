@@ -109,10 +109,10 @@ def example_db (file_name, meas_std_effect) :
 		'node':        'world',
 		'one':          1.0
 	}
-	if meas_std_effect == 'add_std' :
+	if meas_std_effect == 'add_std_scale_all' :
 		delta      = data_std * (1.0 + gamma_true)
 	else :
-		assert meas_std_effect == 'add_var'
+		assert meas_std_effect == 'add_var_scale_all'
 		delta      = data_std * math.sqrt( 1.0 + gamma_true * gamma_true )
 	# values that change between rows:
 	for data_id in range( n_data ) :
@@ -201,7 +201,7 @@ def example_db (file_name, meas_std_effect) :
 	# ----------------------------------------------------------------------
 	return
 # ===========================================================================
-for meas_std_effect in [ 'add_std', 'add_var' ] :
+for meas_std_effect in [ 'add_std_scale_all', 'add_var_scale_all' ] :
 	# create database
 	file_name      = 'example.db'
 	example_db(file_name, meas_std_effect)
