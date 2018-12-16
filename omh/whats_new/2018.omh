@@ -64,21 +64,22 @@ $childtable%
 %$$
 
 $head 12-15$$
-Add the
-$cref/meas_std_effect/option_table/meas_std_effect/$$ option.
-The gives the choice of adding standard deviations or variances when
-$cref/adjusting standard deviations
+Add options for how the measurement standard deviation effect
+$cref/meas_std_effect/option_table/meas_std_effect/$$ is defined.
+The gives the choice of
+$cref/adding variances or standard deviations
 	/data_like
 	/Adjusted Standard Deviation, delta_i
-/$$.
-It also gives the choice to scale or not scale
+	/Add Variance or Standard Deviation
+/$$
+It also gives the choice to
+$cref/scale
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+	/Scaling
+/$$
 the added standard deviations for non-log densities.
 
-$subhead API Change$$
-Change the measurement standard deviation effect on
-$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$
-to be the same for all densities
-(same as it was for log-transformed densities).
 
 
 $head 12-14$$

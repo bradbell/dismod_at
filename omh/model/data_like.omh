@@ -153,9 +153,9 @@ instead of multiplying $latex y_i$$.
 This avoids have no effect when $latex y_i$$ is zero.
 It is also possible to scale $latex E_i ( \theta )$$
 by any factor one chooses by changing the value of the covariates
-$latex x_{ij}$$ in the definition of $latex E_i ( \theta )$$.
+$latex x_{ij}$$; see the definition of $latex E_i ( \theta )$$ above.
 
-$subhead Variance or Standard Deviations$$
+$subhead Add Variance or Standard Deviation$$
 Adding Variances, instead of standard deviations, requires more
 floating point operations (for every data point)
 but this is not expected to be significant.
