@@ -161,7 +161,7 @@ floating point operations (for every data point)
 but this is not expected to be significant.
 It is not clear that adding variances
 will give a significantly different results,
-In fact, when one scales by $latex \Delta_i$$ and there is only on
+In fact, when one scales by $latex \Delta_i$$ and there is only one
 covariate multiplier, the maximum likelihood problems are equivalent,
 aside from the value of the covariate multiplier $latex \gamma_j$$
 being different.
