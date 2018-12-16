@@ -145,10 +145,26 @@ $latex 0 \leq x_{i,j}$$, and
 $latex 0 \leq \gamma_j (a, t)$$
 so that $latex \Delta_i$$ is less than or equal $latex \delta_i ( \theta )$$
 defined below:
+
+$subhead Scaling$$
 For some cases below, $latex E_i ( \theta )$$ multiplies
 $cref/Delta_i/data_like/Data Table Notation/Delta_i/$$
 instead of multiplying $latex y_i$$.
 This avoids have no effect when $latex y_i$$ is zero.
+It is also possible to scale $latex E_i ( \theta )$$
+by any factor one chooses by changing the value of the covariates
+$latex x_{ij}$$ in the definition of $latex E_i ( \theta )$$.
+
+$subhead Variance or Standard Deviations$$
+Adding Variances, instead of standard deviations, requires more
+floating point operations (for every data point)
+but this is not expected to be significant.
+It is not clear that adding variances
+will give a significantly different results,
+In fact, when one scales by $latex \Delta_i$$ and there is only on
+covariate multiplier, the maximum likelihood problems are equivalent,
+aside from the value of the covariate multiplier $latex \gamma_j$$
+being different.
 
 $subhead add_std_scale_all$$
 If $cref/meas_std_effect/option_table/meas_std_effect/$$ is
@@ -178,11 +194,6 @@ the adjusted standard deviation is
 $latex \[
 \delta_i ( \theta ) = \Delta_i \sqrt{ 1 + E_i (\theta)^2 }
 \] $$
-This definition requires more floating point operations
-(for every data point) but this is not expected to be significant.
-On the other hand, it is not clear that $code add_var$$
-will give significantly different results from $code add_std$$
-(aside from the covariate multiplier values $latex \gamma_j$$).
 
 $subhead add_var_scale_log$$
 If $cref/meas_std_effect/option_table/meas_std_effect/$$ is
@@ -194,7 +205,7 @@ $latex \[
 \] $$
 for the log density cases. Otherwise it is
 $latex \[
-\delta_i ( \theta ) = sqrt{ \Delta_i^2 + E_i (\theta)^2 }
+\delta_i ( \theta ) = \sqrt{ \Delta_i^2 + E_i (\theta)^2 }
 \] $$
 
 
