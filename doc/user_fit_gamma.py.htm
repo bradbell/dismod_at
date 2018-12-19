@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting Data Standard Deviations, Gamma</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting Data Standard Deviations, Gamma">
-<meta name="keywords" id="keywords" content=" fitting data standard deviations gamma random effects iota other rates covariate multiplier meas_std_effect ">
+<meta name="keywords" id="keywords" content=" fitting data standard deviations gamma random effects iota other rates covariate multiplier meas_std_effect scaling ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -106,7 +106,8 @@ A:active { color : purple }
 <br><a href="user_fit_gamma.py.htm#Other Rates" target="_top">Other&nbsp;Rates</a>
 <br><a href="user_fit_gamma.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
 <br><a href="user_fit_gamma.py.htm#Data" target="_top">Data</a>
-<br><a href="user_fit_gamma.py.htm#meas_std_effect" target="_top">meas_std_effect</a><br>
+<br><a href="user_fit_gamma.py.htm#meas_std_effect" target="_top">meas_std_effect</a>
+<br><a href="user_fit_gamma.py.htm#Scaling Gamma" target="_top">Scaling&nbsp;Gamma</a><br>
 <br>
 <b><big><a name="Random Effects" id="Random Effects">Random Effects</a></big></b>
 <br>
@@ -173,10 +174,8 @@ There are
 <code><i><font color="black"><span style='white-space: nowrap'>n_data</span></font></i></code>
  measurements of Sincidence and each has a standard
 deviation 
-<code><i><font color="black"><span style='white-space: nowrap'>data_std</span></font></i></code>
- (before adding 
-<code><i><font color="black"><span style='white-space: nowrap'>gamma</span></font></i></code>
-).
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+ (before adding the covariate effect).
 
 <br>
 <br>
@@ -185,13 +184,37 @@ deviation
 see <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
 .
 
-<pre><tt><i><font color="#9A1900"># values used to simulate data</font></i>
+<br>
+<br>
+<b><big><a name="Scaling Gamma" id="Scaling Gamma">Scaling Gamma</a></big></b>
+<br>
+The function <code><font color="blue">gamma_true()</font></code> shows on the scaling of 
+<code><i><font color="black"><span style='white-space: nowrap'>gamma</span></font></i></code>
+
+depends on the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std_effect</span></font></i></code>
+.
+
+<pre><tt><i><font color="#9A1900"># You can changed the values below and rerun this program</font></i>
 iota_true          <font color="#990000">=</font> <font color="#993399">0.01</font>
-gamma_true         <font color="#990000">=</font> <font color="#993399">2.0</font>
+scale_gamma_true   <font color="#990000">=</font> <font color="#993399">2.0</font>
 n_data             <font color="#990000">=</font> <font color="#993399">1000</font>
-data_std           <font color="#990000">=</font> <font color="#993399">0.001</font>
+meas_std           <font color="#990000">=</font> <font color="#993399">0.001</font>
 meas_std_effect    <font color="#990000">=</font> <font color="#FF0000">'add_std_scale_all'</font>
-<i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># You can changed the values above and rerun this program</font></i>
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">gamma_true</font></b><font color="#990000">()</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> meas_std_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_all'</font> <font color="#990000">:</font>
+          result <font color="#990000">=</font> scale_gamma_true
+     <b><font color="#0000FF">elif</font></b> meas_std_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_log'</font> <font color="#990000">:</font>
+          result <font color="#990000">=</font> scale_gamma_true <font color="#990000">*</font> meas_std
+     <b><font color="#0000FF">elif</font></b> meas_std_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_all'</font> <font color="#990000">:</font>
+          result <font color="#990000">=</font> scale_gamma_true
+     <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> meas_std_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_log'</font>
+          result <font color="#990000">=</font> scale_gamma_true <font color="#990000">*</font> meas_std <font color="#990000">*</font> meas_std
+     <b><font color="#0000FF">return</font></b> result
+<i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
@@ -282,7 +305,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#FF0000">'time_lower'</font><font color="#990000">:</font>   <font color="#993399">2000</font><font color="#990000">.,</font>
           <font color="#FF0000">'time_upper'</font><font color="#990000">:</font>   <font color="#993399">2000</font><font color="#990000">.,</font>
           <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font>
-          <font color="#FF0000">'meas_std'</font><font color="#990000">:</font>     data_std<font color="#990000">,</font>
+          <font color="#FF0000">'meas_std'</font><font color="#990000">:</font>     meas_std<font color="#990000">,</font>
           <font color="#FF0000">'node'</font><font color="#990000">:</font>        <font color="#FF0000">'world'</font><font color="#990000">,</font>
           <font color="#FF0000">'one'</font><font color="#990000">:</font>          <font color="#993399">1.0</font>
      <font color="#990000">}</font>
@@ -307,8 +330,8 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_gamma'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">10.0</font> <font color="#990000">*</font> gamma_true<font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     gamma_true <font color="#990000">/</font> <font color="#993399">10.0</font>
+               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">10.0</font> <font color="#990000">*</font> <b><font color="#000000">gamma_true</font></b><font color="#990000">(),</font>
+               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <b><font color="#000000">gamma_true</font></b><font color="#990000">()</font> <font color="#990000">/</font> <font color="#993399">10.0</font>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
@@ -407,7 +430,7 @@ var_id2true  <font color="#990000">=</font> <b><font color="#000000">list</font>
                covariate_id   <font color="#990000">=</font> var_info<font color="#990000">[</font><font color="#FF0000">'covariate_id'</font><font color="#990000">]</font>
                covariate_name <font color="#990000">=</font> covariate_table<font color="#990000">[</font>covariate_id<font color="#990000">][</font><font color="#FF0000">'covariate_name'</font> <font color="#990000">]</font>
                <b><font color="#0000FF">assert</font></b><font color="#990000">(</font> covariate_name <font color="#990000">==</font> <font color="#FF0000">'one'</font> <font color="#990000">)</font>
-               truth_var_value <font color="#990000">=</font> gamma_true
+               truth_var_value <font color="#990000">=</font> <b><font color="#000000">gamma_true</font></b><font color="#990000">()</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
                <b><font color="#0000FF">assert</font></b><font color="#990000">(</font> False <font color="#990000">)</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
