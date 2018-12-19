@@ -51,10 +51,14 @@
 #
 # $head Data$$
 # There are $icode n_data$$ measurements of Sincidence and each has a standard
-# deviation $icode data_std$$ (before adding $icode gamma$$).
+# deviation $icode meas_std$$ (before adding the covariate effect).
 #
 # $head meas_std_effect$$
 # see $cref/meas_std_effect/option_table/meas_std_effect/$$.
+#
+# $head Scaling Gamma$$
+# The function $code gamma_true()$$ shows on the scaling of $icode gamma$$
+# depends on the value of $icode meas_std_effect$$.
 #
 # $srcfile%
 #	example/user/fit_gamma.py
@@ -62,13 +66,26 @@
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# values used to simulate data
+# You can changed the values below and rerun this program
 iota_true          = 0.01
-gamma_true         = 2.0
+scale_gamma_true   = 2.0
 n_data             = 1000
-data_std           = 0.001
+meas_std           = 0.001
 meas_std_effect    = 'add_std_scale_all'
-# ------------------------------------------------------------------------
+# You can changed the values above and rerun this program
+# ---------------------------------------------------------------------------
+def gamma_true() :
+	if meas_std_effect == 'add_std_scale_all' :
+		result = scale_gamma_true
+	elif meas_std_effect == 'add_std_scale_log' :
+		result = scale_gamma_true * meas_std
+	elif meas_std_effect == 'add_var_scale_all' :
+		result = scale_gamma_true
+	else :
+		assert meas_std_effect == 'add_var_scale_log'
+		result = scale_gamma_true * meas_std * meas_std
+	return result
+# ----------------------------------------------------------------------------
 import sys
 import os
 import distutils.dir_util
@@ -159,7 +176,7 @@ def example_db (file_name) :
 		'time_lower':   2000.,
 		'time_upper':   2000.,
 		'integrand':   'Sincidence',
-		'meas_std':     data_std,
+		'meas_std':     meas_std,
 		'node':        'world',
 		'one':          1.0
 	}
@@ -184,8 +201,8 @@ def example_db (file_name) :
 			'name':     'prior_gamma',
 			'density':  'uniform',
 			'lower':    0.0,
-			'upper':    10.0 * gamma_true,
-			'mean':     gamma_true / 10.0
+			'upper':    10.0 * gamma_true(),
+			'mean':     gamma_true() / 10.0
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -284,7 +301,7 @@ for var_id in range( len(var_table) ) :
 			covariate_id   = var_info['covariate_id']
 			covariate_name = covariate_table[covariate_id]['covariate_name' ]
 			assert( covariate_name == 'one' )
-			truth_var_value = gamma_true
+			truth_var_value = gamma_true()
 		else :
 			assert( False )
 	else :

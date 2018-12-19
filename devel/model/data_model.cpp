@@ -783,14 +783,14 @@ residual_struct<Float> data_model::like_one(
 		break;
 
 		case add_var_scale_all_enum:
-		delta_out  = Delta * sqrt(1.0  + std_effect * std_effect);
+		delta_out  = Delta * sqrt(1.0  + std_effect);
 		break;
 
 		case add_var_scale_log_enum:
 		if( log_density )
-			delta_out  = Delta * sqrt(1.0  + std_effect * std_effect);
+			delta_out  = Delta * sqrt(1.0  + std_effect);
 		else
-			delta_out  = sqrt( Delta * Delta + std_effect * std_effect );
+			delta_out  = sqrt( Delta * Delta + std_effect );
 		break;
 
 		default:

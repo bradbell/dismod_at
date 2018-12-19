@@ -117,11 +117,11 @@ def example_db (file_name, meas_std_effect) :
 		delta      = data_std + gamma_true
 	elif meas_std_effect == 'add_var_scale_all' :
 		gamma_true = gamma_true_scale
-		delta      = data_std * math.sqrt( 1.0 + gamma_true * gamma_true )
+		delta      = data_std * math.sqrt( 1.0 + gamma_true )
 	else :
 		assert meas_std_effect == 'add_var_scale_log'
 		gamma_true = gamma_true_scale * data_std
-		delta      = math.sqrt(data_std * data_std + gamma_true * gamma_true)
+		delta      = math.sqrt(data_std * data_std + gamma_true)
 	# values that change between rows:
 	for data_id in range( n_data ) :
 		row['meas_value'] = random.gauss(iota_true , delta)
