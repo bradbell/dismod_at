@@ -14,6 +14,6 @@
 image_link='https://bradbell.github.io/dismod_at'
 echo "image_link=$image_link"
 #
-# specialfiles that check_copyright.sh should ignore:
-copyright_ignore='
+# specialfiles that are ignored by the development tools
+ignore_files='
 '
