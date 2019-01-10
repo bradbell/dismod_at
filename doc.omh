@@ -56,7 +56,7 @@ $childtable%omh/math/abstract.omh
 	%devel/command.omh
 	%python/dismod_at/__init__.py
 	%devel/devel.omh
-	%omh/whats_new/2018.omh
+	%omh/whats_new/2019.omh
 	%omh/wish_list.omh
 %$$
 

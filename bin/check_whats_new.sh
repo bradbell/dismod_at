@@ -19,6 +19,7 @@ yyyy=`date +%Y`
 file='omh/install/unix.omh'
 if ! grep "\$cref whats_new_$yyyy\$\$ release notes" $file > /dev/null
 then
+	echo 'bin/check_whats_new.sh:'
 	echo "cannot find: \$cref whats_new_$yyyy\$\$ release notes"
 	echo "in file:     $file"
 	exit 1
@@ -26,4 +27,3 @@ fi
 # -----------------------------------------------------------------------------
 echo 'check_whats_new.sh: OK'
 exit 0
-

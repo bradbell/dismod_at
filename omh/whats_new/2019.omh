@@ -1,0 +1,26 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-18 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin whats_new_2019$$
+$spell
+	Dismod
+$$
+
+$section Changes and Additions to Dismod_at During 2019$$
+
+$childtable%
+	omh/whats_new/2018.omh%
+	omh/whats_new/2017.omh%
+	omh/whats_new/2016.omh%
+	omh/whats_new/2015.omh
+%$$
+
+
+$end

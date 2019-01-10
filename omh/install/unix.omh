@@ -260,7 +260,7 @@ can be used to install this package.
 $head dismod_at$$
 The steps above should only need to be executed once, not for
 each new version of $code dismod_at$$
-(unless the $cref whats_new_2018$$ release notes say otherwise).
+(unless the $cref whats_new_2019$$ release notes say otherwise).
 The steps below will need to be executed each time you install
 a new version of $code dismod_at$$:
 
