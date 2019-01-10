@@ -10,8 +10,8 @@
 # values used to simulate data
 iota_true          = 0.01
 gamma_true_scale   = 2.0
-n_data             = 1000
-data_std           = 0.001
+n_data             = 2000
+data_std           = iota_true / 3.0
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -110,18 +110,18 @@ def example_db (file_name, meas_std_effect) :
 		'one':          1.0
 	}
 	if meas_std_effect == 'add_std_scale_all' :
+		delta      = data_std * (1.0 + gamma_true_scale)
 		gamma_true = gamma_true_scale
-		delta      = data_std * (1.0 + gamma_true)
 	elif meas_std_effect == 'add_std_scale_log' :
+		delta      = data_std * (1.0 + gamma_true_scale)
 		gamma_true = gamma_true_scale * data_std
-		delta      = data_std + gamma_true
 	elif meas_std_effect == 'add_var_scale_all' :
+		delta      = data_std * math.sqrt( 1.0 + gamma_true_scale )
 		gamma_true = gamma_true_scale
-		delta      = data_std * math.sqrt( 1.0 + gamma_true )
 	else :
 		assert meas_std_effect == 'add_var_scale_log'
-		gamma_true = gamma_true_scale * data_std
-		delta      = math.sqrt(data_std * data_std + gamma_true)
+		delta      = data_std * math.sqrt( 1.0 + gamma_true_scale )
+		gamma_true = gamma_true_scale * data_std * data_std
 	# values that change between rows:
 	for data_id in range( n_data ) :
 		row['meas_value'] = random.gauss(iota_true , delta)
@@ -216,8 +216,10 @@ for meas_std_effect in [
 	'add_var_scale_log'
 ] :
 	gamma_true = gamma_true_scale
-	if meas_std_effect in [ 'add_std_scale_log', 'add_var_scale_log' ] :
+	if meas_std_effect == 'add_std_scale_log' :
 		gamma_true = gamma_true_scale * data_std
+	if meas_std_effect == 'add_var_scale_log' :
+		gamma_true = gamma_true_scale * data_std * data_std
 	#
 	# create database
 	file_name      = 'example.db'
@@ -257,9 +259,9 @@ for meas_std_effect in [
 			true_value = iota_true
 		assert( true_value != None )
 		# remove # at start of next line to see relative error values
-		# print( fit_value / true_value - 1.0 )
+		# print(meas_std_effect, var_type, fit_value / true_value - 1.0)
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
-	if max_error > 1e-1 :
+	if max_error > 0.20 :
 		print('max_error = ', max_error)
 		assert(False)
 # -----------------------------------------------------------------------------

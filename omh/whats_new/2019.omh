@@ -11,9 +11,14 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin whats_new_2019$$
 $spell
 	Dismod
+	py
 $$
 
 $section Changes and Additions to Dismod_at During 2019$$
+
+$head 01-10$$
+Reduce the change of random failure in $code test/user/fit_gamma.py$$
+during $cref/testing/install_unix/dismod_at/Test/$$.
 
 $childtable%
 	omh/whats_new/2018.omh%
