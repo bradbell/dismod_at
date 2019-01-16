@@ -22,7 +22,7 @@ var list_down4 = [
 'command.htm',
 'python.htm',
 'devel.htm',
-'whats_new_2018.htm',
+'whats_new_2019.htm',
 'wish_list.htm'
 ];
 var list_down3 = [

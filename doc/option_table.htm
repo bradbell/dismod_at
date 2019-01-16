@@ -64,7 +64,7 @@ A:active { color : purple }
 <option>command</option>
 <option>python</option>
 <option>devel</option>
-<option>whats_new_2018</option>
+<option>whats_new_2019</option>
 <option>wish_list</option>
 </select>
 </td>
@@ -446,26 +446,10 @@ The default value for this option is <code><font color="blue">true</font></code>
 <br>
 <b><big><a name="minimum_meas_cv" id="minimum_meas_cv">minimum_meas_cv</a></big></b>
 <br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;minimum_meas_cv</span></font></code>
-,
-the corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
- is a non-negative
-the minimum coefficient of variation for the measurement values.
-To be specific;
-<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- is the measurement value, and
-<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
- is the measurement standard,
-the measurement standard deviation used in the model is
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
-</span></font></code>
-see <a href="data_like.htm#Data Table Notation.Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
-
-in the data likelihood section.
+This option is no longer available because it is now
+integrand specific; see
+<a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+.
 
 <br>
 <br>

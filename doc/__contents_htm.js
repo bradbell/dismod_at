@@ -19,7 +19,7 @@ var list_down1 = [
 'command.htm',
 'python.htm',
 'devel.htm',
-'whats_new_2018.htm',
+'whats_new_2019.htm',
 'wish_list.htm'
 ];
 function choose_up0(item)
