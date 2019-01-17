@@ -138,6 +138,11 @@
 # $cref/start_var_value/start_var_table/start_var_value/$$
 # for this variable.
 #
+# $subhead scale$$
+# is the
+# $cref/scale_var_value/scale_var_table/scale_var_value/$$
+# for this variable.
+#
 # $subhead fit_value$$
 # If the $cref fit_command$$ has been run, this is the
 # $cref/fit_var_value/fit_var_table/fit_var_value/$$.
@@ -568,6 +573,7 @@ def db2csv_command(database_file_arg) :
 		'smooth',
 		'smooth_grid',
 		'start_var',
+		'scale_var',
 		'time',
 		'var',
 		'weight'
@@ -609,12 +615,14 @@ def db2csv_command(database_file_arg) :
 	# check tables that are supposed to be the same length
 	pair_list = [
 		[ 'var',            'start_var'],
+		[ 'var',            'scale_var'],
 		[ 'var',            'depend_var'],
 		[ 'var',            'truth_var'],
 		[ 'var',            'fit_var'],
 		[ 'data_subset',    'fit_data_subset' ]
 	]
 	have_table['start_var'] = True
+	have_table['scale_var'] = True
 	for [left, right] in pair_list :
 		if have_table[right] :
 			len_left  = len( table_data[left]  )
@@ -962,6 +970,7 @@ def db2csv_command(database_file_arg) :
 		'fixed',
 		'depend',
 		'start',
+		'scale',
 		'fit_value',
 		'truth',
 		'sam_avg',
@@ -1002,6 +1011,7 @@ def db2csv_command(database_file_arg) :
 		)
 		row_out['node'] = table_lookup('node', row_in['node_id'], 'node_name')
 		row_out['start'] = table_lookup('start_var', var_id, 'start_var_value')
+		row_out['scale'] = table_lookup('scale_var', var_id, 'scale_var_value')
 		#
 		# fixed
 		row_out['fixed'] = 'true'
