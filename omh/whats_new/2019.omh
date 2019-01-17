@@ -18,7 +18,7 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
-$head 01-17$$
+$head 01-16$$
 Add the $cref/scale/db2csv_command/variable.csv/scale/$$ column
 to the $code variable.csv$$ file create by the $code db2csv$$ command.
 In addition, group the start, sale, fit_value, truth, and sam_avg
