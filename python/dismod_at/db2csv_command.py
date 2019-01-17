@@ -126,17 +126,21 @@
 # $cref/fixed effect/model_variables/Fixed Effects, theta/$$,
 # otherwise it is $code false$$.
 #
-# $subhead start$$
-# is the
-# $cref/start_var_value/start_var_table/start_var_value/$$
-# for this variable.
-#
 # $subhead depend$$
 # If the $cref depend_var_table$$ exists, this has one of the following:
 # $code none$$ if neither the data nor the prior depends on this variable,
 # $code data$$ if only the data depends on this variable,
 # $code prior$$ if only the prior depends on this variable,
 # $code both$$ if both the data and the prior depend on this variable.
+#
+# $subhead start$$
+# is the
+# $cref/start_var_value/start_var_table/start_var_value/$$
+# for this variable.
+#
+# $subhead fit_value$$
+# If the $cref fit_command$$ has been run, this is the
+# $cref/fit_var_value/fit_var_table/fit_var_value/$$.
 #
 # $subhead truth$$
 # If the truth_var table exists, this is the
@@ -161,10 +165,6 @@
 # If there is only one $icode sample_index$$ in the sample table,
 # this column is empty because the standard deviation cannot be estimated
 # from one sample.
-#
-# $subhead fit_value$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/fit_var_value/fit_var_table/fit_var_value/$$.
 #
 # $subhead res_value$$
 # If the $cref fit_command$$ has been run, this is the
@@ -960,12 +960,12 @@ def db2csv_command(database_file_arg) :
 		'covariate',
 		'node',
 		'fixed',
-		'start',
 		'depend',
+		'start',
+		'fit_value',
 		'truth',
 		'sam_avg',
 		'sam_std',
-		'fit_value',
 		'res_value',
 		'res_dage',
 		'res_dtime',
