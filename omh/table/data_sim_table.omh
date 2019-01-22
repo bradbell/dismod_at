@@ -124,7 +124,7 @@ $latex e$$ is simulated from the corresponding linear distribution
 with mean zero and standard deviation $latex \sigma$$.
 It follows that
 $latex \[
-	y = \exp(e) * ( A + \eta )
+	y = \exp(e) * ( A + \eta ) - \eta
 \] $$
 The corresponding
 $cref/weighted residual

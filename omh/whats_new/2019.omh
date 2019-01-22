@@ -18,6 +18,20 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 01-22$$
+The documentation formula for
+$cref/log-transformed/data_sim_table/Method/y, Log-Transformed/$$
+data was
+$latex \[
+    y = \exp(e) * ( A + \eta )
+\] $$
+The correct formula is
+$latex \[
+    y = \exp(e) * ( A + \eta ) - \eta
+\] $$
+The documentation has been fixed
+(the implementation in software was correct).
+
 $head 01-16$$
 Add the $cref/scale/db2csv_command/variable.csv/scale/$$ column
 to the $code variable.csv$$ file create by the $code db2csv$$ command.
