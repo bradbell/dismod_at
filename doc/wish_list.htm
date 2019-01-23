@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution step size example minimum time age-time intervals prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing meas_std diagrams lagrange documentation real world user examples model sampling special hessian starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution step size example minimum time age-time intervals prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world user examples model sampling special hessian starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -91,6 +91,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Sample" target="_top">Sample</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Conditionals" target="_top">Conditionals</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Checkpointing" target="_top">Checkpointing</a>
+<br><a href="wish_list.htm#weighting" target="_top">weighting</a>
 <br><a href="wish_list.htm#meas_std" target="_top">meas_std</a>
 <br><a href="wish_list.htm#Command Diagrams" target="_top">Command&nbsp;Diagrams</a>
 <br><a href="wish_list.htm#Lagrange Multipliers" target="_top">Lagrange&nbsp;Multipliers</a>
@@ -406,6 +407,19 @@ It should greatly reduce memory if we use
 CppAD checkpointing of an ODE that has been
 extended to include derivatives with respect to parameters; see
 <a href="http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_extended_ode</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="weighting" id="weighting">weighting</a></big></b>
+<br>
+Perhaps a constant weighting should be interpreted when
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+ is <code><font color="blue">null</font></code> in the
+<a href="data_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>data&nbsp;table</span></a>
+ and
+<a href="avgint_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>avgint&nbsp;table</span></a>
 .
 
 <br>
