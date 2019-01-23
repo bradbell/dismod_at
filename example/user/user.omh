@@ -66,6 +66,7 @@ $childtable%example/user/csv2db.py
 	%example/user/fit_gamma.py
 	%example/user/age_avg_split.py
 	%example/user/diabetes.py
+	%example/user/ill_condition.py
 
 	%example/user/asymptotic.py
 	%example/user/change_grid.py

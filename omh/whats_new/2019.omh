@@ -19,6 +19,9 @@ $$
 $section Changes and Additions to Dismod_at During 2019$$
 
 $head 01-22$$
+$list number$$
+The $cref user_ill_condition.py$$ example was added.
+$lnext
 The documentation formula for
 $cref/log-transformed/data_sim_table/Method/y, Log-Transformed/$$
 data was
@@ -31,6 +34,7 @@ $latex \[
 \] $$
 The documentation has been fixed
 (the implementation in software was correct).
+$lend
 
 $head 01-16$$
 Add the $cref/scale/db2csv_command/variable.csv/scale/$$ column

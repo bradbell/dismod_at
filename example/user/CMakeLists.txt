@@ -23,6 +23,7 @@ FOREACH(user_case
 	fit_gamma
 	fit_random
 	fit_sim
+	ill_condition
 	jump_at_age
 	lasso_covariate
 	meas_covariate

@@ -124,7 +124,7 @@ def example_db (file_name) :
 	age_list    = [ 0.0, 100.0 ]
 	#
 	# time table:
-	time_list   = [ 1990.0, 2200.0 ]
+	time_list   = [ 1990.0, 2010.0 ]
 	#
 	# integrand table:
 	integrand_table = [
