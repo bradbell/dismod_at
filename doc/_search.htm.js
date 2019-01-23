@@ -20,6 +20,7 @@ Keyword =
 'user_fit_gamma.py  Fitting Data Standard Deviations, Gamma  ',' random effects iota other rates covariate multiplier meas_std_effect scaling ',
 'age_avg_split.py  Non-uniform Age Average Grid  ',' purpose variables prior data fit predict ode_step_size source ',
 'user_diabetes.py  An Example / Speed Test Fitting Simulated Diabetes Data  ',' running this omega rho weight table grid covariates multipliers truth parent rates child effects predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ',
+'user_ill_condition.py  An Ill Conditioned Example Where Re-Scaling is Helpful  ',' notation objective derivative ill-conditioning source ',
 'user_asymptotic.py  Sample from Asymptotic Distribution for Model Variables  ',' purpose notation likelihood ',
 'user_change_grid.py  Remove an Age or Time From a Smoothing  ',' ',
 'user_const_random.py  Fitting With Non-Zero Constant Random Effects in Smoothing Grid  ',' ',

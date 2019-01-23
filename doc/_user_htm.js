@@ -31,6 +31,7 @@ var list_down0 = [
 'user_fit_gamma.py.htm',
 'age_avg_split.py.htm',
 'user_diabetes.py.htm',
+'user_ill_condition.py.htm',
 'user_asymptotic.py.htm',
 'user_change_grid.py.htm',
 'user_const_random.py.htm',
