@@ -20,6 +20,8 @@ $section Changes and Additions to Dismod_at During 2019$$
 
 $head 01-22$$
 $list number$$
+The $cref/weighting/wish_list/weighting/$$ wish list item was added.
+$lnext
 The $cref user_ill_condition.py$$ example was added.
 $lnext
 The documentation formula for
