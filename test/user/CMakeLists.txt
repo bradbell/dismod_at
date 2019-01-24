@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# Build get_started Examples / Tests
+# Build test / user
 SET(depends "")
 FOREACH(user_case
 	avgint
@@ -17,6 +17,7 @@ FOREACH(user_case
 	csv2db
 	fit_gamma
 	fit_sim
+	init_covariate
 	laplace
 	minimum_cv
 	neg_iteration

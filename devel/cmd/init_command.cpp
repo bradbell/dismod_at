@@ -335,12 +335,14 @@ void init_command(
 		assert( n_var == n_age * n_time );
 # endif
 		for(size_t index = 0; index < n_var; index++)
-		{	size_t age_id   = index / n_time;
-			size_t time_id  = index % n_time;
+		{	size_t i        = index / n_time;
+			size_t j        = index % n_time;
 			var_id          = offset + index;
+			size_t age_id   = s_info_vec[smooth_id].age_id(i);
+			size_t time_id  = s_info_vec[smooth_id].time_id(j);
 # ifndef NDEBUG
-			for(size_t j = 0; j < n_col; j++)
-				assert( row_value[ n_col * var_id + j ] == "" );
+			for(size_t k = 0; k < n_col; k++)
+				assert( row_value[ n_col * var_id + k ] == "" );
 # endif
 			if( mulcov_type == rate_value_enum )
 			{	row_value[n_col * var_id + 0]  = "mulcov_rate_value";

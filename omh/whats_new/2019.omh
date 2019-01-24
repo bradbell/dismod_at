@@ -14,9 +14,17 @@ $spell
 	py
 	cv
 	csv
+	var
+	covariate
 $$
 
 $section Changes and Additions to Dismod_at During 2019$$
+
+$head 01-23$$
+There was a bug in the var table where
+$cref/age_id/var_table/age_id/$$ and $cref/time_id/var_table/time_id/$$
+were sometimes incorrect for variables were covariate multipliers.
+This has been fixed.
 
 $head 01-22$$
 $list number$$
