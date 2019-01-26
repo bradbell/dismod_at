@@ -273,11 +273,7 @@ connection      = dismod_at.create_connection(file_name, new)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
-parent_node_id = 1
-eps            = 1e-4
-#
 # check rates values
-count             = 0
 iota_rate_id      = 1
 max_err           = 0.0
 tolerance         = 1e-3
