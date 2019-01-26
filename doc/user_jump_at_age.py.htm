@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Case with a Jump in Rate at an Age</title>
+<title>Jump in Rate Value at a Known Age</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Case with a Jump in Rate at an Age">
-<meta name="keywords" id="keywords" content=" case with jump rate age ">
+<meta name="description" id="description" content="Jump in Rate Value at a Known Age">
+<meta name="keywords" id="keywords" content=" jump rate value known age purpose model variables truth simulated data ages table time source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,8 +49,8 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_diff_constraint.py.htm" target="_top">Prev</a>
-</td><td><a href="user_lasso_covariate.py.htm" target="_top">Next</a>
+<td><a href="user_ill_condition.py.htm" target="_top">Prev</a>
+</td><td><a href="user_asymptotic.py.htm" target="_top">Next</a>
 </td><td>
 <select onchange='choose_down2(this)'>
 <option>dismod_at-&gt;</option>
@@ -79,13 +79,13 @@ A:active { color : purple }
 <option>age_avg_split.py</option>
 <option>user_diabetes.py</option>
 <option>user_ill_condition.py</option>
+<option>user_jump_at_age.py</option>
 <option>user_asymptotic.py</option>
 <option>user_change_grid.py</option>
 <option>user_const_random.py</option>
 <option>user_const_value.py</option>
 <option>user_continue_fit.py</option>
 <option>user_diff_constraint.py</option>
-<option>user_jump_at_age.py</option>
 <option>user_lasso_covariate.py</option>
 <option>user_meas_covariate.py</option>
 <option>user_no_children.py</option>
@@ -100,13 +100,106 @@ A:active { color : purple }
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Case with a Jump in Rate at an Age</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Jump in Rate Value at a Known Age</big></big></b></center>
 
-<br><pre><tt><i><font color="#9A1900"># true values used to simulate data</font></i>
-iota_20        <font color="#990000">=</font> <font color="#993399">1e-4</font>
-iota_100       <font color="#990000">=</font> <font color="#993399">1e-1</font>
-iota_age_list  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">20.0</font><font color="#990000">,</font> <font color="#993399">21.0</font><font color="#990000">,</font> <font color="#993399">100.0</font> <font color="#990000">]</font>
-data_age_list  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">1.0</font><font color="#990000">,</font> <font color="#993399">5.0</font><font color="#990000">,</font> <font color="#993399">10.0</font><font color="#990000">,</font> <font color="#993399">20.0</font><font color="#990000">,</font> <font color="#993399">40.0</font><font color="#990000">,</font> <font color="#993399">80.0</font><font color="#990000">,</font> <font color="#993399">100.0</font> <font color="#990000">]</font>
+<br><a href="user_jump_at_age.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_jump_at_age.py.htm#Model Variables" target="_top">Model&nbsp;Variables</a>
+<br><a href="user_jump_at_age.py.htm#Truth" target="_top">Truth</a>
+<br><a href="user_jump_at_age.py.htm#Simulated Data" target="_top">Simulated&nbsp;Data</a>
+<br><a href="user_jump_at_age.py.htm#Model Ages" target="_top">Model&nbsp;Ages</a>
+<br><a href="user_jump_at_age.py.htm#Age Table" target="_top">Age&nbsp;Table</a>
+<br><a href="user_jump_at_age.py.htm#Time Table" target="_top">Time&nbsp;Table</a>
+<br><a href="user_jump_at_age.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Usually the prior for the rate is smooth.
+This requires lots of data, at a fine age spacing,
+to resolve a jump in a rate at an unknown age.
+If one know the age at which a jump occurs, it is possible to resolve
+the jump with less data by specifying a prior that has this knowledge.
+
+<br>
+<br>
+<b><big><a name="Model Variables" id="Model Variables">Model Variables</a></big></b>
+<br>
+This example's variables are all
+<a href="model_variables.htm#Fixed Effects, theta.Parent Rates" target="_top"><span style='white-space: nowrap'>parent&nbsp;rates</span></a>
+
+for <a href="rate_table.htm#rate_name.iota" target="_top"><span style='white-space: nowrap'>iota</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Truth" id="Truth">Truth</a></big></b>
+<br>
+For this example the rate 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ is one constant
+for ages less that 20, and a different constant for ages greater than 20.
+
+<br>
+<br>
+<b><big><a name="Simulated Data" id="Simulated Data">Simulated Data</a></big></b>
+<br>
+For this example, the simulated data is all
+<a href="avg_integrand.htm#Integrand, I_i(a,t).Sincidence" target="_top"><span style='white-space: nowrap'>Sincidence</span></a>
+; i.e.
+direct measurements of the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+.
+There is no noise simulated with the data; i.e., it is equal to the
+'true' value of 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+.
+On the other hand, its is modeled as if there is a 10% coefficient
+of variation in the data; i.e., as if there were measurement noise with
+standard deviation equal to 10% of the measurement value.
+
+<br>
+<br>
+<b><big><a name="Model Ages" id="Model Ages">Model Ages</a></big></b>
+<br>
+The value of 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ is modeled at the following ages:
+0, 20, 21, 100. The prior for 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ is modeled as being smooth
+all ages except age 20. This is done using a Log-Gaussian for the differences
+except the difference from age 20 to age 21 where a uniform prior is used.
+
+<br>
+<br>
+<b><big><a name="Age Table" id="Age Table">Age Table</a></big></b>
+<br>
+The <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ does not need to be monotone increasing.
+For this example, it is the same as the table of ages at which
+
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ is modeled and is called <code><font color="blue">model_age_list</font></code> below.
+You can change the order of this table and the example / test
+will still run correctly.
+
+<br>
+<br>
+<b><big><a name="Time Table" id="Time Table">Time Table</a></big></b>
+<br>
+The <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ does not need to be monotone increasing.
+You can the order of <code><font color="blue">time_table</font></code> below and it will
+not affect the results.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt>
+iota_before_20  <font color="#990000">=</font> <font color="#993399">1e-4</font>
+iota_after_20   <font color="#990000">=</font> <font color="#993399">1e-1</font>
+model_age_list  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">100.0</font><font color="#990000">,</font> <font color="#993399">21.0</font><font color="#990000">,</font> <font color="#993399">20.0</font> <font color="#990000">]</font>
+time_table      <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">2015.0</font><font color="#990000">,</font> <font color="#993399">1995.0</font> <font color="#990000">]</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
@@ -143,23 +236,22 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">iota_true</font></b><font color="#990000">(</font>age<font color="#990000">)</font> <font color="#990000">:</font>
      <b><font color="#0000FF">if</font></b> age <font color="#990000">&lt;=</font> <font color="#993399">20.0</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> iota_20
+          <b><font color="#0000FF">return</font></b> iota_before_20
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> iota_100
+          <b><font color="#0000FF">return</font></b> iota_after_20
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">example_db</font></b> <font color="#990000">(</font>file_name<font color="#990000">)</font> <font color="#990000">:</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># age table (in age_list above)</font></i>
-     age_list <font color="#990000">=</font> <b><font color="#000000">sorted</font></b><font color="#990000">(</font> <b><font color="#000000">set</font></b><font color="#990000">(</font> iota_age_list  <font color="#990000">)</font> <font color="#990000">)</font>
+     age_list <font color="#990000">=</font> model_age_list
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># time table</font></i>
-     time_list   <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">1995.0</font><font color="#990000">,</font> <font color="#993399">2015.0</font> <font color="#990000">]</font>
+     time_list   <font color="#990000">=</font> time_table
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># integrand table</font></i>
      integrand_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Sincidence'</font> <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'mtother'</font> <font color="#990000">}</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Sincidence'</font> <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># node table: world</font></i>
@@ -193,11 +285,11 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">'constant'</font><font color="#990000">,</font>
           <font color="#FF0000">'hold_out'</font><font color="#990000">:</font>     False<font color="#990000">,</font>
           <font color="#FF0000">'time_lower'</font><font color="#990000">:</font>   time_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font>
-          <font color="#FF0000">'time_upper'</font><font color="#990000">:</font>   time_list<font color="#990000">[-</font><font color="#993399">1</font><font color="#990000">]</font>
+          <font color="#FF0000">'time_upper'</font><font color="#990000">:</font>   time_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
      <font color="#990000">}</font>
-     <i><font color="#9A1900"># Sincidence data (exclude data at 100)</font></i>
+     <i><font color="#9A1900"># Sincidence data</font></i>
+     data_age_list  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">1.0</font><font color="#990000">,</font> <font color="#993399">5.0</font><font color="#990000">,</font> <font color="#993399">10.0</font><font color="#990000">,</font> <font color="#993399">20.0</font><font color="#990000">,</font> <font color="#993399">40.0</font><font color="#990000">,</font> <font color="#993399">80.0</font><font color="#990000">,</font> <font color="#993399">100.0</font> <font color="#990000">]</font>
      <b><font color="#0000FF">for</font></b> age <b><font color="#0000FF">in</font></b> data_age_list <font color="#990000">:</font>
-          <i><font color="#9A1900">#</font></i>
           meas_value <font color="#990000">=</font> <b><font color="#000000">iota_true</font></b><font color="#990000">(</font>age<font color="#990000">)</font>
           row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>    <font color="#990000">=</font> age
           row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>    <font color="#990000">=</font> age
@@ -206,7 +298,6 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>     <font color="#990000">=</font> meas_value <font color="#990000">*</font> <font color="#993399">0.1</font>
           row<font color="#990000">[</font><font color="#FF0000">'eta'</font><font color="#990000">]</font>          <font color="#990000">=</font> <font color="#993399">1e-6</font><font color="#990000">;</font>
           data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
-          <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># prior_table</font></i>
@@ -219,7 +310,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_difference'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">1.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.1</font><font color="#990000">,</font>
                <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-4</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_rate_parent</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_rate_parent'</font><font color="#990000">,</font>
@@ -227,27 +318,17 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">1e-5</font><font color="#990000">,</font>
                <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.1</font><font color="#990000">,</font>
-          <font color="#990000">},{</font> <i><font color="#9A1900"># prior_iota_20</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_iota_20'</font><font color="#990000">,</font>
-               <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
-               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    iota_20<font color="#990000">,</font>
-               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    iota_20<font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     iota_20<font color="#990000">,</font>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># smooth table</font></i>
      <i><font color="#9A1900">#</font></i>
-     iota_age_id <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">for</font></b> age <b><font color="#0000FF">in</font></b> iota_age_list <font color="#990000">:</font>
-          iota_age_id<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> age_list<font color="#990000">.</font><b><font color="#000000">index</font></b><font color="#990000">(</font>age<font color="#990000">)</font> <font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
      smooth_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <i><font color="#9A1900"># smooth_iota_parent</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>                     <font color="#FF0000">'smooth_iota_parent'</font><font color="#990000">,</font>
-               <font color="#FF0000">'age_id'</font><font color="#990000">:</font>                   iota_age_id<font color="#990000">,</font>
-               <font color="#FF0000">'time_id'</font><font color="#990000">:</font>                  <b><font color="#000000">range</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>time_list<font color="#990000">)),</font>
-               <font color="#FF0000">'fun'</font><font color="#990000">:</font>                       fun_iota_parent
+               <font color="#FF0000">'age_id'</font><font color="#990000">:</font>                   <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>model_age_list<font color="#990000">)</font> <font color="#990000">),</font>
+               <font color="#FF0000">'time_id'</font><font color="#990000">:</font>                  <font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font>
+               <font color="#FF0000">'fun'</font><font color="#990000">:</font>                      fun_iota_parent
           <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
@@ -329,7 +410,7 @@ count             <font color="#990000">=</font> <font color="#993399">0</font>
 iota_rate_id      <font color="#990000">=</font> <font color="#993399">1</font>
 max_err           <font color="#990000">=</font> <font color="#993399">0.0</font>
 tolerance         <font color="#990000">=</font> <font color="#993399">1e-3</font>
-age_list          <font color="#990000">=</font> <b><font color="#000000">sorted</font></b><font color="#990000">(</font> <b><font color="#000000">set</font></b><font color="#990000">(</font> iota_age_list <font color="#990000">)</font> <font color="#990000">)</font>
+age_list          <font color="#990000">=</font> model_age_list
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
      row   <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
      <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'rate'</font>
