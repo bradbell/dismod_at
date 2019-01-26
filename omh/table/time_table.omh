@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -24,6 +24,8 @@ $head time$$
 This column has type $code real$$ and is a set of time values.
 The values in the time column must be unique; i.e.,
 none of the values may be repeated.
+The values can be in any specific order; e.g.,
+they do not need to be increasing or decreasing.
 
 $subhead Ode Grid$$
 Note that the maximum minus the minimum time divided by the

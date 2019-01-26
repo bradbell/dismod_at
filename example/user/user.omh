@@ -67,6 +67,7 @@ $childtable%example/user/csv2db.py
 	%example/user/age_avg_split.py
 	%example/user/diabetes.py
 	%example/user/ill_condition.py
+	%example/user/jump_at_age.py
 
 	%example/user/asymptotic.py
 	%example/user/change_grid.py
@@ -74,7 +75,6 @@ $childtable%example/user/csv2db.py
 	%example/user/const_value.py
 	%example/user/continue_fit.py
 	%example/user/diff_constraint.py
-	%example/user/jump_at_age.py
 	%example/user/lasso_covariate.py
 	%example/user/meas_covariate.py
 	%example/user/no_children.py

@@ -20,6 +20,17 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 01-26$$
+Extra wording was added to the description of
+$cref/age/age_table/age/$$ in the age table and
+$cref/time/time_table/time/$$ in the time table to
+make it clear that these values do not need to be in a specific order.
+The $cref/jump_at_age.py/user_jump_at_age.py/$$
+example was modified so that its
+ages and times were not in increasing order.
+In addition, a discussion was added at the beginning of the
+$code jump_at_age.py$$ example.
+
 $head 01-23$$
 There was a bug in the var table where
 $cref/age_id/var_table/age_id/$$ and $cref/time_id/var_table/time_id/$$

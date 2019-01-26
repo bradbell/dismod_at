@@ -11,21 +11,66 @@
 # $begin user_jump_at_age.py$$ $newlinech #$$
 # $spell
 #	init
+#	Sincidence
 # $$
 #
-# $section Case with a Jump in Rate at an Age$$
+# $section Jump in Rate Value at a Known Age$$
 #
+# $head Purpose$$
+# Usually the prior for the rate is smooth.
+# This requires lots of data, at a fine age spacing,
+# to resolve a jump in a rate at an unknown age.
+# If one know the age at which a jump occurs, it is possible to resolve
+# the jump with less data by specifying a prior that has this knowledge.
+#
+# $head Model Variables$$
+# This example's variables are all
+# $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
+# for $cref/iota/rate_table/rate_name/iota/$$.
+#
+# $head Truth$$
+# For this example the rate $icode iota$$ is one constant
+# for ages less that 20, and a different constant for ages greater than 20.
+#
+# $head Simulated Data$$
+# For this example, the simulated data is all
+# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$; i.e.
+# direct measurements of the value of $icode iota$$.
+# There is no noise simulated with the data; i.e., it is equal to the
+# 'true' value of $icode iota$$.
+# On the other hand, its is modeled as if there is a 10% coefficient
+# of variation in the data; i.e., as if there were measurement noise with
+# standard deviation equal to 10% of the measurement value.
+#
+# $head Model Ages$$
+# The value of $icode iota$$ is modeled at the following ages:
+# 0, 20, 21, 100. The prior for $icode iota$$ is modeled as being smooth
+# all ages except age 20. This is done using a Log-Gaussian for the differences
+# except the difference from age 20 to age 21 where a uniform prior is used.
+#
+# $head Age Table$$
+# The $cref age_table$$ does not need to be monotone increasing.
+# For this example, it is the same as the table of ages at which
+# $icode iota$$ is modeled and is called $code model_age_list$$ below.
+# You can change the order of this table and the example / test
+# will still run correctly.
+#
+# $head Time Table$$
+# The $cref time_table$$ does not need to be monotone increasing.
+# You can the order of $code time_table$$ below and it will
+# not affect the results.
+#
+# $head Source Code$$
 # $srcfile%
 #	example/user/jump_at_age.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# true values used to simulate data
-iota_20        = 1e-4
-iota_100       = 1e-1
-iota_age_list  = [ 0.0, 20.0, 21.0, 100.0 ]
-data_age_list  = [ 0.0, 1.0, 5.0, 10.0, 20.0, 40.0, 80.0, 100.0 ]
+iota_before_20  = 1e-4
+iota_after_20   = 1e-1
+model_age_list  = [ 0.0, 100.0, 21.0, 20.0 ]
+time_table      = [ 2015.0, 1995.0 ]
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -62,23 +107,22 @@ def fun_iota_parent(a, t) :
 #
 def iota_true(age) :
 	if age <= 20.0 :
-		return iota_20
+		return iota_before_20
 	else :
-		return iota_100
+		return iota_after_20
 #
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# age table (in age_list above)
-	age_list = sorted( set( iota_age_list  ) )
+	age_list = model_age_list
 	#
 	# time table
-	time_list   = [ 1995.0, 2015.0 ]
+	time_list   = time_table
 	#
 	# integrand table
 	integrand_table = [
-		{ 'name':'Sincidence' },
-		{ 'name':'mtother' }
+		{ 'name':'Sincidence' }
 	]
 	#
 	# node table: world
@@ -112,11 +156,11 @@ def example_db (file_name) :
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   time_list[0],
-		'time_upper':   time_list[-1]
+		'time_upper':   time_list[0]
 	}
-	# Sincidence data (exclude data at 100)
+	# Sincidence data
+	data_age_list  = [ 0.0, 1.0, 5.0, 10.0, 20.0, 40.0, 80.0, 100.0 ]
 	for age in data_age_list :
-		#
 		meas_value = iota_true(age)
 		row['age_lower']    = age
 		row['age_upper']    = age
@@ -125,7 +169,6 @@ def example_db (file_name) :
 		row['meas_std']     = meas_value * 0.1
 		row['eta']          = 1e-6;
 		data_table.append( copy.copy(row) )
-		#
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
@@ -138,7 +181,7 @@ def example_db (file_name) :
 			'name':     'prior_difference',
 			'density':  'log_gaussian',
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      0.1,
 			'eta':      1e-4
 		},{ # prior_rate_parent
 			'name':     'prior_rate_parent',
@@ -146,27 +189,17 @@ def example_db (file_name) :
 			'lower':    1e-5,
 			'upper':    1.0,
 			'mean':     0.1,
-		},{ # prior_iota_20
-			'name':     'prior_iota_20',
-			'density':  'uniform',
-			'lower':    iota_20,
-			'upper':    iota_20,
-			'mean':     iota_20,
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
 	#
-	iota_age_id = list()
-	for age in iota_age_list :
-		iota_age_id.append( age_list.index(age) )
-	#
 	smooth_table = [
 		{ # smooth_iota_parent
 			'name':                     'smooth_iota_parent',
-			'age_id':                   iota_age_id,
-			'time_id':                  range(len(time_list)),
-			'fun':                       fun_iota_parent
+			'age_id':                   range( len(model_age_list) ),
+			'time_id':                  [0],
+			'fun':                      fun_iota_parent
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -248,7 +281,7 @@ count             = 0
 iota_rate_id      = 1
 max_err           = 0.0
 tolerance         = 1e-3
-age_list          = sorted( set( iota_age_list ) )
+age_list          = model_age_list
 for var_id in range( len(var_table) ) :
 	row   = var_table[var_id]
 	assert row['var_type'] == 'rate'
