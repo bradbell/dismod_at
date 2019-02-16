@@ -20,6 +20,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 02-16$$
+Add the script $code bin/speed_16_18.sh$$ which
+compares the last version of in 2016 with the last version in 2018.
+
 $head 01-26$$
 Extra wording was added to the description of
 $cref/age/age_table/age/$$ in the age table and
