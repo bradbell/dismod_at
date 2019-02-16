@@ -28,6 +28,7 @@ checkout_version() {
 		echo_eval git clone $remote $dir
 	fi
 	cd $dir
+	git reset --hard
 	git checkout --quiet $hash_code
 	check=`version.sh get`
 	if [ "$version" != "$check" ]
@@ -88,15 +89,23 @@ sed -i $new_file -f junk.sed
 # version_2016
 # ----------------------------------------------------------------------------
 cd "$HOME/trash/dismod_at-$version_2016"
-for package in eigen ipopt cppad cppad_mixed
+list='
+	install_suitesparse.sh
+	install_eigen.sh
+	install_ipopt.sh
+	install_cppad.sh
+	install_cppad_mixed.sh
+	run_cmake.sh
+'
+for file in $list
 do
-	sed -i bin/install_$package.sh \
+	sed -i bin/$file \
 		-e "s|^build_type=.*|build_type='release'|" \
 		-e "s|^log_fatal_error=.*|log_fatal_error='YES'|"
 	#
-	if ! grep "^build_type='release'" bin/install_$package.sh
+	if ! grep "^build_type='release'" bin/$file
 	then
-		echo 'expected build_type to be release in bin/install_$package.sh'
+		echo "expected build_type to be release in bin/$file"
 		exit 1
 	fi
 done
@@ -160,6 +169,10 @@ cd ..
 #
 echo "python3 speed/simulated.py $random_seed > simulated.out"
 python3 speed/simulated.py $random_seed > simulated.out
+#
+echo_eval cd build/speed
+echo_eval massif.sh ../devel/dismod_at example.db fit 0
+echo_eval mv massif.out ../../massif.out
 # ----------------------------------------------------------------------------
 # version_2018
 # ----------------------------------------------------------------------------
@@ -189,9 +202,19 @@ cd ..
 #
 echo "python3 example/user/simulated.py $random_seed > simulated.out"
 python3 example/user/simulated.py $random_seed > simulated.out
+#
+echo_eval cd build/example/user
+echo_eval massif.sh ../../devel/dismod_at example.db fit both 0
+echo_eval mv massif.out ../../../massif.out
 # ----------------------------------------------------------------------------
-echo "Compare result in the files using following comamnds:"
-echo "grep seconds $HOME/trash/dismod_at-$version_2016/simulated.out"
-echo "grep seconds $HOME/trash/dismod_at-$version_2018/simulated.out"
+cat << EOF
+Compare result speed in following files:
+	$HOME/trash/dismod_at-$version_2016/simulated.out
+	$HOME/trash/dismod_at-$version_2018/simulated.out
+Compare memory results in following files:
+	$HOME/trash/dismod_at-$version_2016/massif.out
+	$HOME/trash/dismod_at-$version_2018/massif.out
+EOF
+# ----------------------------------------------------------------------------
 echo 'junk.sh: OK'
 exit 0
