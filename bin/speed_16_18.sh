@@ -11,7 +11,8 @@
 # compare the speed of last version in 2016 with last version in 2018
 # ----------------------------------------------------------------------------
 remote='https://github.com/bradbell/dismod_at.git'
-random_seed='12345'
+random_seed='12345' # you can change this to test a different data set
+quasi_fixed='false' # you can change this: 'false'=Newton, 'true'=quasi-Newton
 # ----------------------------------------------------------------------------
 if [ "$0" != 'bin/speed_16_18.sh' ]
 then
@@ -67,7 +68,9 @@ checkout_version $hash_2018 $version_2018
 old_file="$HOME/trash/dismod_at-$version_2016/speed/simulated.py"
 new_file="$HOME/trash/dismod_at-$version_2018/example/user/simulated.py"
 #
-sed -i $old_file -e "/quasi_fixed/s|'true'|'false'|"
+sed -i $old_file \
+	-e "/quasi_fixed/s|'value':'true'|'value':'$quasi_fixed'|" \
+	-e "/quasi_fixed/s|'value':'false'|'value':'$quasi_fixed'|"
 #
 cp $old_file $new_file
 cat << EOF > junk.sed
