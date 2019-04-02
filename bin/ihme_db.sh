@@ -20,75 +20,83 @@ then
 	echo 'bin/ihme_db.sh: must be executed from its parent directory'
 	exit 1
 fi
-ok='yes'
-direction="$1"
-person="$2"
-database="$3"
-if [ "$4" != '' ]
+# -----------------------------------------------------------------------------
+if [ ! -d '/ihme' ]
 then
-	ok='no'
+	echo 'bin/ihme_db.sh: The directory /ihme does not exist.'
+	echo 'perhaps you need to mount it.'
+	exit 1
 fi
-case $person in
-	greg)
-	database_path="/ihme/homes/gma1/tmp/$database"
-	;;
-
-	katie)
-	dir='/ihme/Project/dismod_at/shiny/gbd_dismod_at_viz/sqlite_files'
-	database_path="$dir/$database"
-	;;
-
-	*)
-	ok='no'
-esac
-if [ "$direction" != 'get' ] && [ "$direction" != 'put' ]
+# -----------------------------------------------------------------------------
+if ! which dismodat.py >& /dev/null
 then
-	ok='no'
+	echo 'bin/ihme_db.sh: cannot find the the program dismodat.py'
+	echo 'You must add its location to you unix PATH shell variable'
+	exit 1
 fi
-if [ "$ok" == 'no' ]
+# -----------------------------------------------------------------------------
+ihme_path='
+	/ihme/homes/gma1/tmp
+	/ihme/epi/at_cascade/prod
+'
+if [ "$1" == '' ]
 then
 cat << EOF
-usage: bin/ihme_db.sh direction person database'
-       direction: get or put
-       person:    greg, or katie
-       database:  file name of the database in directory used by person.
+usage: bin/ihme_db.sh relative_path
+
+makes a copy of a database in the following location
+	build/ihme_db/relative_path
+where relative_path is a path relative to one of the following directories:
 EOF
+	for path in $ihme_path
+	do
+		echo "	$path"
+	done
 	exit 1
 fi
-# ---------------------------------------------------------------------------
-if [ "$direction" != 'get' ] && [ "$direction" != 'put' ]
-then
-	echo 'ihme_db.sh: direction is not "get" or "put"'
-	exit 1
-fi
-# ---------------------------------------------------------------------------
-if [ "$direction" == 'get' ] && [ ! -e "$database_path" ]
-then
-	echo "$database_path: does not exist"
-	exit 1
-fi
-if [ "$direction" == 'put' ] && [ ! -e "imhe_db/$database" ]
-then
-	echo "build/ihme_db/$database: does not exist"
-	exit 1
-fi
-if [ ! -e bin/dismodat.py ]
-then
-	echo 'bin/dismodat.py does not exist'
-	exit 1
-fi
-# ---------------------------------------------------------------------------
-if [ "$direction" == 'get' ]
-then
-	if [ ! -e build/ihme_db ]
+relative_path="$1"
+# -----------------------------------------------------------------------------
+full_path=''
+for path in $ihme_path
+do
+	if [ -e "$path/$relative_path" ]
 	then
-		echo_eval mkdir -p build/ihme_db
+		if [ "$full_path" != '' ]
+		then
+			echo 'bin/ihme_db.sh: Found two matching databases:'
+			echo "	$full_path"
+			echo "	$path/$relative_path"
+			echo 'Use a longer relative path so they are different'
+			exit 1
+		fi
+		full_path="$path/$relative_path"
 	fi
-	echo_eval cp $database_path build/ihme_db/$database
-	echo_eval chmod -x build/ihme_db/$database
-else
-	echo_eval cp build/ihme_db/$database $database
+done
+if [ "$full_path" == '' ]
+then
+	echo 'bin/ihme_db.sh: Cannot find either of the following databases:'
+	for path in $ihme_path
+	do
+		echo "	$path/$relative_path"
+	done
+	exit 1
 fi
+# -----------------------------------------------------------------------------
+local_dir=`echo $relative_path | sed -e 's|/[^/]*$||'`
+local_file=`echo $relative_path | sed -e 's|.*/||'`
+if [ "$local_dir" == "$relative_path" ]
+then
+	local_dir='build/ihme_db'
+else
+	local_dir="build/ihme_db/$local_dir"
+fi
+if [ ! -e "$local_dir" ]
+then
+	echo_eval mkdir -p "$local_dir"
+fi
+echo_eval cd $local_dir
+echo_eval cp $full_path $local_file
+echo_eval dismodat.py $local_file db2csv
 # ---------------------------------------------------------------------------
 echo 'bin/ihme_db.sh: OK'
 exit 0
