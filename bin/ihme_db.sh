@@ -28,13 +28,6 @@ then
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-if ! which dismodat.py >& /dev/null
-then
-	echo 'bin/ihme_db.sh: cannot find the the program dismodat.py'
-	echo 'You must add its location to you unix PATH shell variable'
-	exit 1
-fi
-# -----------------------------------------------------------------------------
 ihme_path='
 	/ihme/homes/gma1/tmp
 	/ihme/epi/at_cascade/prod
@@ -94,9 +87,8 @@ if [ ! -e "$local_dir" ]
 then
 	echo_eval mkdir -p "$local_dir"
 fi
-echo_eval cd $local_dir
-echo_eval cp $full_path $local_file
-echo_eval dismodat.py $local_file db2csv
+echo_eval cp $full_path $local_dir/$local_file
+echo_eval bin/dismodat.py $local_dir/$local_file db2csv
 # ---------------------------------------------------------------------------
 echo 'bin/ihme_db.sh: OK'
 exit 0
