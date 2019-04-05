@@ -93,5 +93,5 @@ do
 done
 cd ..
 # -----------------------------------------------------------------------------
-echo 'bin/example_instal.sh: OK'
+echo 'bin/example_install.sh: OK'
 # END BASH
