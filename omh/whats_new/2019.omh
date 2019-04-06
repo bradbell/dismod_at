@@ -20,6 +20,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-06$$
+The documentation for the
+$cref/fit_var_value/fit_var_table/fit_var_value/$$ column of the
+fit_var table was improved.
+
 $head 02-16$$
 Add the script $code bin/speed_16_18.sh$$ which
 compares the last version of in 2016 with the last version in 2018.
