@@ -79,7 +79,7 @@ $cref/scaling of gamma/user_fit_gamma.py/Scaling Gamma/$$.
 
 $head 12-15$$
 Add options for how the measurement standard deviation effect
-$cref/meas_std_effect/option_table/meas_std_effect/$$ is defined.
+$cref/meas_noise_effect/option_table/meas_noise_effect/$$ is defined.
 The gives the choice of
 $cref/adding variances or standard deviations
 	/data_like

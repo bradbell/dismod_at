@@ -139,7 +139,7 @@ $cref/beta_j
 	/Multiplier, beta_j
 /$$
 and the
-$cref/meas_std/mulcov_table/mulcov_type/meas_std/$$ covariate multipliers
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers
 $cref/gamma_j
 	/data_like
 	/Measurement Standard Deviation Covariates/gamma_j
@@ -577,7 +577,7 @@ $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i
 /$$.
-This makes the $cref/meas_std/mulcov_table/mulcov_type/meas_std/$$
+This makes the $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
 covariate multipliers more difficult to use because they have units.
 On the other hand, it is more flexible for
 use in meta-regression when the standard deviations for some measurements

@@ -320,7 +320,7 @@
 # Key       $cnext Value Type  $pre  $$ $cnext Description       $rnext
 # covariate $cnext str         $cnext is the covariate column    $rnext
 # type      $cnext str  $cnext
-# $code rate_value$$, $code meas_value$$, or $code meas_std$$ $rnext
+# $code rate_value$$, $code meas_value$$, or $code meas_noise$$ $rnext
 # effected  $cnext str         $cnext integrand or rate effected $rnext
 # smooth    $cnext str         $cnext smoothing name
 # $tend

@@ -78,7 +78,7 @@ def example_db (file_name) :
 	mulcov_table = [
 		{
 			'covariate': 'one',
-			'type':      'meas_std',
+			'type':      'meas_noise',
 			'effected':  'Sincidence',
 			'smooth':    'smooth_gamma'
 		}
@@ -152,7 +152,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',  'value':'north_america' },
-		{ 'name':'meas_std_effect',   'value':'add_var_scale_log' },
+		{ 'name':'meas_noise_effect',   'value':'add_var_scale_log' },
 		{ 'name':'print_level_fixed', 'value':'0' },
 	]
 	# ----------------------------------------------------------------------
@@ -208,7 +208,7 @@ for var_id in range( n_var ) :
 		assert row['rate_id'] == iota_rate_id
 		assert abs( value / iota_true - 1.0 ) < 1e-10
 	else :
-		assert row['var_type'] == 'mulcov_meas_std'
+		assert row['var_type'] == 'mulcov_meas_noise'
 		assert abs( value / gamma_true - 1.0 ) < 1e-5
 # -----------------------------------------------------------------------------
 print('scale_gamma.py: OK')

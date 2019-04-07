@@ -110,7 +110,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "limited_memory_max_history_fixed", "30"                 },
 		{ "max_num_iter_fixed",               "100"                },
 		{ "max_num_iter_random",              "100"                },
-		{ "meas_std_effect",                  "add_std_scale_all"  },
+		{ "meas_noise_effect",                  "add_std_scale_all"  },
 		{ "ode_step_size",                    "10.0"               },
 		{ "parent_node_id",                   ""                   },
 		{ "parent_node_name",                 ""                   },
@@ -167,14 +167,14 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		}
 		value_vec[match] = option_value[option_id];
 		//
-		if( name_vec[match] == "meas_std_effect" )
+		if( name_vec[match] == "meas_noise_effect" )
 		{	bool ok = false;
 			ok     |= option_value[option_id] == "add_std_scale_all";
 			ok     |= option_value[option_id] == "add_std_scale_log";
 			ok     |= option_value[option_id] == "add_var_scale_all";
 			ok     |= option_value[option_id] == "add_var_scale_log";
 			if( ! ok )
-			{	msg = "option table: meas_std_effect = '";
+			{	msg = "option table: meas_noise_effect = '";
 				msg += option_value[option_id] + "'";
 				error_exit(msg, table_name, option_id);
 			}

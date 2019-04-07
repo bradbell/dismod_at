@@ -136,7 +136,7 @@ For more clarification, see the discussion for
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$,
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$,
 and
-$cref/meas_std/mulcov_table/mulcov_type/meas_std/$$
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
 covariate multipliers.
 
 $head Random Effects, u$$

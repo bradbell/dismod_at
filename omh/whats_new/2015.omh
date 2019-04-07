@@ -1074,7 +1074,7 @@ $codei%
 see
 $cref/mulcov_rate_value/var_table/var_type/mulcov_rate_value/$$,
 $cref/mulcov_meas_value/var_table/var_type/mulcov_meas_value/$$ and
-$cref/mulcov_meas_std/var_table/var_type/mulcov_meas_std/$$.
+$cref/mulcov_meas_noise/var_table/var_type/mulcov_meas_noise/$$.
 $lend
 
 

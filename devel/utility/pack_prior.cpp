@@ -333,9 +333,9 @@ pack_prior::pack_prior(
 			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
 		}
 		// measurement std covariates for this integrand
-		n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
+		n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_std_info(integrand_id, j);
+		{	info   = pack_object.mulcov_meas_noise_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
 			set_prior(prior_vec_, offset, smooth_id, s_info_vec);

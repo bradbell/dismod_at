@@ -156,7 +156,7 @@ bool avg_std_effect_xam(void)
 	}
 	// mul_cov
 	vector<dismod_at::mulcov_struct> mulcov_table(1);
-	mulcov_table[0].mulcov_type  = dismod_at::meas_std_enum;
+	mulcov_table[0].mulcov_type  = dismod_at::meas_noise_enum;
 	mulcov_table[0].rate_id      =  int( DISMOD_AT_NULL_INT );
 	mulcov_table[0].integrand_id =  int( dismod_at::mtother_enum );
 	mulcov_table[0].covariate_id =  0;
@@ -204,7 +204,7 @@ bool avg_std_effect_xam(void)
 	vector<Float> pack_vec( pack_object.size() );
 	size_t mtother_id = dismod_at::mtother_enum;
 	dismod_at::pack_info::subvec_info info =
-		pack_object.mulcov_meas_std_info(mtother_id, 0);
+		pack_object.mulcov_meas_noise_info(mtother_id, 0);
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 	for(size_t i = 0; i < s_info.age_size(); i++)
 	{	age = age_table[ s_info.age_id(i) ];

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -58,8 +58,8 @@ private:
 	// mulcov_meas_value infromation
 	CppAD::vector< CppAD::vector<subvec_info> > mulcov_meas_value_info_;
 
-	// mulcov_meas_std infromation
-	CppAD::vector< CppAD::vector<subvec_info> > mulcov_meas_std_info_;
+	// mulcov_meas_noise infromation
+	CppAD::vector< CppAD::vector<subvec_info> > mulcov_meas_noise_info_;
 
 	// mulcov_rate_value infromation
 	CppAD::vector< CppAD::vector<subvec_info> > mulcov_rate_value_info_;
@@ -101,9 +101,9 @@ public:
 	size_t      mulcov_meas_value_n_cov(size_t integrand_id) const;
 	subvec_info mulcov_meas_value_info(size_t integrand_id, size_t j) const;
 
-	// mulcov_meas_std_
-	size_t      mulcov_meas_std_n_cov(size_t integrand_id) const;
-	subvec_info mulcov_meas_std_info(size_t integrand_id, size_t j) const;
+	// mulcov_meas_noise_
+	size_t      mulcov_meas_noise_n_cov(size_t integrand_id) const;
+	subvec_info mulcov_meas_noise_info(size_t integrand_id, size_t j) const;
 
 	// mulcov_rate_value_
 	size_t      mulcov_rate_value_n_cov(size_t integrand_id) const;

@@ -31,7 +31,7 @@ $section Data Model: Constructor$$
 
 $head Syntax$$
 $codei%data_model %data_object%(
-	%meas_std_effect%,
+	%meas_noise_effect%,
 	%rate_case%,
 	%bound_random%,
 	%n_covariate%,
@@ -57,9 +57,9 @@ $srcfile%devel/model/data_model.cpp%
 $head data_object$$
 This is the $code data_model$$ object being constructed.
 
-$head meas_std_effect$$
+$head meas_noise_effect$$
 This is the value of
-$cref/meas_std_effect/option_table/meas_std_effect/$$ in the option table.
+$cref/meas_noise_effect/option_table/meas_noise_effect/$$ in the option table.
 
 $head rate_case$$
 This is the value of
@@ -193,7 +193,7 @@ data_model::~data_model(void)
 // BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
 data_model::data_model(
-	const std::string&                       meas_std_effect ,
+	const std::string&                       meas_noise_effect ,
 	const std::string&                       rate_case       ,
 	double                                   bound_random    ,
 	size_t                                   n_covariate     ,
@@ -244,15 +244,15 @@ avgstd_obj_(
 	//
 	using std::string;
 	//
-	// meas_std_effect_
-	if( meas_std_effect == "add_std_scale_all" )
-		meas_std_effect_ = add_std_scale_all_enum;
-	else if( meas_std_effect == "add_std_scale_log" )
-		meas_std_effect_ = add_std_scale_log_enum;
-	else if( meas_std_effect == "add_var_scale_all" )
-		meas_std_effect_ = add_var_scale_all_enum;
-	else if( meas_std_effect == "add_var_scale_log" )
-		meas_std_effect_ = add_var_scale_log_enum;
+	// meas_noise_effect_
+	if( meas_noise_effect == "add_std_scale_all" )
+		meas_noise_effect_ = add_std_scale_all_enum;
+	else if( meas_noise_effect == "add_std_scale_log" )
+		meas_noise_effect_ = add_std_scale_log_enum;
+	else if( meas_noise_effect == "add_var_scale_all" )
+		meas_noise_effect_ = add_var_scale_all_enum;
+	else if( meas_noise_effect == "add_var_scale_log" )
+		meas_noise_effect_ = add_var_scale_log_enum;
 	//
 	// minimum_meas_cv_
 	minimum_meas_cv_.resize( integrand_table.size() );
@@ -769,7 +769,7 @@ residual_struct<Float> data_model::like_one(
 	bool log_density     = density == log_gaussian_enum;
 	log_density         |= density == log_laplace_enum;
 	log_density         |= density == log_students_enum;
-	switch( meas_std_effect_ )
+	switch( meas_noise_effect_ )
 	{
 		case add_std_scale_all_enum:
 		delta_out  = Delta * (1.0  + std_effect);
@@ -951,7 +951,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
 template data_model::data_model(                                \
-	const std::string&                       meas_std_effect ,  \
+	const std::string&                       meas_noise_effect ,  \
 	const std::string&                       rate_case       ,  \
 	double                                   bound_random    ,  \
 	size_t                                   n_covariate     ,  \

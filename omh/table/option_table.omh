@@ -115,7 +115,7 @@ This value is in the option table,
 and not an argument to a particular command,
 because it is used by all the commands.
 
-$head meas_std_effect$$
+$head meas_noise_effect$$
 There are four options for how the
 $cref/average standard deviation effect
 	/data_like

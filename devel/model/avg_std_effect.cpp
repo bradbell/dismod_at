@@ -293,9 +293,9 @@ Float avg_std_effect::rectangle(
 		effect[k] = 0.0;
 	//
 	// sum over the standard deviation covariates for this integrand
-	size_t n_cov = pack_object_.mulcov_meas_std_n_cov(integrand_id);
+	size_t n_cov = pack_object_.mulcov_meas_noise_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; ++j)
-	{	info  = pack_object_.mulcov_meas_std_info(integrand_id, j);
+	{	info  = pack_object_.mulcov_meas_noise_info(integrand_id, j);
 		size_t smooth_id = info.smooth_id;
 		double x_j       = x[ info.covariate_id ];
 		// interpolate from smoothing grid to cohort

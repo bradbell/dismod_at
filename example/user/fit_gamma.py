@@ -53,12 +53,12 @@
 # There are $icode n_data$$ measurements of Sincidence and each has a standard
 # deviation $icode meas_std$$ (before adding the covariate effect).
 #
-# $head meas_std_effect$$
-# see $cref/meas_std_effect/option_table/meas_std_effect/$$.
+# $head meas_noise_effect$$
+# see $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
 #
 # $head Scaling Gamma$$
 # The function $code gamma_true()$$ shows on the scaling of $icode gamma$$
-# depends on the value of $icode meas_std_effect$$.
+# depends on the value of $icode meas_noise_effect$$.
 #
 # $srcfile%
 #	example/user/fit_gamma.py
@@ -71,18 +71,18 @@ iota_true          = 0.01
 scale_gamma_true   = 2.0
 n_data             = 1000
 meas_std           = 0.001
-meas_std_effect    = 'add_std_scale_all'
+meas_noise_effect    = 'add_std_scale_all'
 # You can changed the values above and rerun this program
 # ---------------------------------------------------------------------------
 def gamma_true() :
-	if meas_std_effect == 'add_std_scale_all' :
+	if meas_noise_effect == 'add_std_scale_all' :
 		result = scale_gamma_true
-	elif meas_std_effect == 'add_std_scale_log' :
+	elif meas_noise_effect == 'add_std_scale_log' :
 		result = scale_gamma_true * meas_std
-	elif meas_std_effect == 'add_var_scale_all' :
+	elif meas_noise_effect == 'add_var_scale_all' :
 		result = scale_gamma_true
 	else :
-		assert meas_std_effect == 'add_var_scale_log'
+		assert meas_noise_effect == 'add_var_scale_log'
 		result = scale_gamma_true * meas_std * meas_std
 	return result
 # ----------------------------------------------------------------------------
@@ -153,7 +153,7 @@ def example_db (file_name) :
 	mulcov_table = [
 		{
 			'covariate': 'one',
-			'type':      'meas_std',
+			'type':      'meas_noise',
 			'effected':  'Sincidence',
 			'smooth':    'smooth_gamma'
 		}
@@ -232,7 +232,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'meas_std_effect',        'value':meas_std_effect     },
+		{ 'name':'meas_noise_effect',        'value':meas_noise_effect     },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'random_seed',            'value':'0'                 },
@@ -294,7 +294,7 @@ for var_id in range( len(var_table) ) :
 	var_info        = var_table[var_id]
 	truth_var_value = None
 	var_type        = var_info['var_type']
-	if var_type == 'mulcov_meas_std' :
+	if var_type == 'mulcov_meas_noise' :
 		integrand_id  = var_info['integrand_id']
 		integrand_name = integrand_table[integrand_id]['integrand_name']
 		if integrand_name == 'Sincidence' :

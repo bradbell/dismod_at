@@ -98,7 +98,7 @@ that affects the measurement value for the corresponding
 $icode age_id$$, $icode time_id$$,
 $icode integrand_id$$, and $icode covariate_id$$.
 
-$subhead mulcov_meas_std$$
+$subhead mulcov_meas_noise$$
 This variable is a
 $cref/covariate multiplier
 	/model_variables
@@ -123,14 +123,14 @@ $cref smooth_grid_table$$.
 
 $head age_id$$
 If $icode var_type$$ is $code rate$$,
-$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
+$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_noise$$,
 this is the $cref/age_id/age_table/age_id/$$ that identifies
 the age for the corresponding variable.
 Otherwise, this column is $code null$$.
 
 $head time_id$$
 If $icode var_type$$ is $code rate$$,
-$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
+$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_noise$$,
 this is the $cref/time_id/time_table/time_id/$$ that identifies
 the time for the corresponding variable.
 Otherwise, this column is $code null$$.
@@ -147,14 +147,14 @@ Otherwise, this column is $code null$$.
 
 $head integrand_id$$
 If $icode var_type$$ is
-$code mulcov_meas_value$$ or $code mulcov_meas_std$$,
+$code mulcov_meas_value$$ or $code mulcov_meas_noise$$,
 this is the $cref/integrand_id/integrand_table/integrand_id/$$
 that this variable applies to.
 Otherwise, this column is $code null$$.
 
 $head covariate_id$$
 If $icode var_type$$ is
-$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_std$$,
+$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_noise$$,
 this is the $cref/covariate_id/covariate_table/covariate_id/$$
 that this variable applies to.
 Otherwise, this column is $code null$$.

@@ -182,9 +182,9 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 			for(size_t k = 0; k < info.n_var; k++)
 				ret_val[fixed_index++] = pack_index++;
 		}
-		n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
+		n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.mulcov_meas_std_info(integrand_id, j);
+		{	info       = pack_object.mulcov_meas_noise_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				ret_val[fixed_index++] = pack_index++;
@@ -252,9 +252,9 @@ void unpack_fixed(
 			for(size_t k = 0; k < info.n_var; k++)
 				fixed_vec[fixed_index++] = pack_vec[pack_index++];
 		}
-		n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
+		n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.mulcov_meas_std_info(integrand_id, j);
+		{	info       = pack_object.mulcov_meas_noise_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				fixed_vec[fixed_index++] = pack_vec[pack_index++];
@@ -321,9 +321,9 @@ void pack_fixed(
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[pack_index++] = fixed_vec[fixed_index++];
 		}
-		n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
+		n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info       = pack_object.mulcov_meas_std_info(integrand_id, j);
+		{	info       = pack_object.mulcov_meas_noise_info(integrand_id, j);
 			pack_index = info.offset;
 			for(size_t k = 0; k < info.n_var; k++)
 				pack_vec[pack_index++] = fixed_vec[fixed_index++];

@@ -198,7 +198,7 @@ bool meas_mulcov(void)
 	size_t omega_rate_id = dismod_at::omega_enum;
 	vector<dismod_at::mulcov_struct> mulcov_table(2);
 	mulcov_table[0].mulcov_type = dismod_at::meas_value_enum;
-	mulcov_table[1].mulcov_type = dismod_at::meas_std_enum;
+	mulcov_table[1].mulcov_type = dismod_at::meas_noise_enum;
 	for(size_t mulcov_id = 0; mulcov_id < 2; mulcov_id++)
 	{	mulcov_table[mulcov_id].rate_id      =  int( DISMOD_AT_NULL_INT );
 		mulcov_table[mulcov_id].integrand_id =  int( dismod_at::mtother_enum );
@@ -244,14 +244,14 @@ bool meas_mulcov(void)
 	//
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
-	std::string meas_std_effect = "add_std_scale_all";
+	std::string meas_noise_effect = "add_std_scale_all";
 	std::string rate_case       = "iota_pos_rho_pos";
 	std::string age_avg_split   = "";
 	vector<double> age_avg_grid = dismod_at::age_avg_grid(
 		ode_step_size, age_avg_split, age_table
 	);
 	dismod_at::data_model data_object(
-		meas_std_effect,
+		meas_noise_effect,
 		rate_case,
 		bound_random,
 		n_covariate,
@@ -289,7 +289,7 @@ bool meas_mulcov(void)
 	{	if( k == 0 )
 			info = pack_object.mulcov_meas_value_info(mtother_id, 0);
 		else
-			info = pack_object.mulcov_meas_std_info(mtother_id, 0);
+			info = pack_object.mulcov_meas_noise_info(mtother_id, 0);
 		for(size_t i = 0; i < s_info.age_size(); i++)
 		{	age = age_table[ s_info.age_id(i) ];
 			for(size_t j = 0; j < s_info.time_size(); j++)

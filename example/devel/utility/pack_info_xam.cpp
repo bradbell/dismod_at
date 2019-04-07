@@ -62,7 +62,7 @@ bool pack_info_xam(void)
 	mulcov_table[1].integrand_id = 1;
 	mulcov_table[1].covariate_id = 1;
 	mulcov_table[1].smooth_id    = 1;
-	mulcov_table[2].mulcov_type  = dismod_at::meas_std_enum;
+	mulcov_table[2].mulcov_type  = dismod_at::meas_noise_enum;
 	mulcov_table[2].rate_id      = DISMOD_AT_NULL_INT;
 	mulcov_table[2].integrand_id = 2;
 	mulcov_table[2].covariate_id = 2;
@@ -149,11 +149,11 @@ bool pack_info_xam(void)
 			}
 		}
 	}
-	// set mulcov_meas_std
+	// set mulcov_meas_noise
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_std_info(integrand_id, j);
+		{	info   = pack_object.mulcov_meas_noise_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -214,15 +214,15 @@ bool pack_info_xam(void)
 			ok &= n_var == n_age * n_time;
 		}
 	}
-	// check mulcov_meas_std
+	// check mulcov_meas_noise
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.mulcov_meas_std_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
 		size_t check = 0;
 		if( integrand_id == 2 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_std_info(integrand_id, j);
+		{	info   = pack_object.mulcov_meas_noise_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)

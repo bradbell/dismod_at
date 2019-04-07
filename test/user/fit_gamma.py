@@ -47,7 +47,7 @@ def fun_iota(a, t) :
 def fun_gamma(a, t) :
 	return ('prior_gamma', None, None)
 # ------------------------------------------------------------------------
-def example_db (file_name, meas_std_effect) :
+def example_db (file_name, meas_noise_effect) :
 	# ----------------------------------------------------------------------
 	# age table:
 	age_list    = [ 0.0, 100.0 ]
@@ -82,7 +82,7 @@ def example_db (file_name, meas_std_effect) :
 	mulcov_table = [
 		{
 			'covariate': 'one',
-			'type':      'meas_std',
+			'type':      'meas_noise',
 			'effected':  'Sincidence',
 			'smooth':    'smooth_gamma'
 		}
@@ -109,17 +109,17 @@ def example_db (file_name, meas_std_effect) :
 		'node':        'world',
 		'one':          1.0
 	}
-	if meas_std_effect == 'add_std_scale_all' :
+	if meas_noise_effect == 'add_std_scale_all' :
 		delta      = data_std * (1.0 + gamma_true_scale)
 		gamma_true = gamma_true_scale
-	elif meas_std_effect == 'add_std_scale_log' :
+	elif meas_noise_effect == 'add_std_scale_log' :
 		delta      = data_std * (1.0 + gamma_true_scale)
 		gamma_true = gamma_true_scale * data_std
-	elif meas_std_effect == 'add_var_scale_all' :
+	elif meas_noise_effect == 'add_var_scale_all' :
 		delta      = data_std * math.sqrt( 1.0 + gamma_true_scale )
 		gamma_true = gamma_true_scale
 	else :
-		assert meas_std_effect == 'add_var_scale_log'
+		assert meas_noise_effect == 'add_var_scale_log'
 		delta      = data_std * math.sqrt( 1.0 + gamma_true_scale )
 		gamma_true = gamma_true_scale * data_std * data_std
 	# values that change between rows:
@@ -175,7 +175,7 @@ def example_db (file_name, meas_std_effect) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'meas_std_effect',        'value':meas_std_effect     },
+		{ 'name':'meas_noise_effect',        'value':meas_noise_effect     },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'random_seed',            'value':'0'            },
@@ -209,21 +209,21 @@ def example_db (file_name, meas_std_effect) :
 	# ----------------------------------------------------------------------
 	return
 # ===========================================================================
-for meas_std_effect in [
+for meas_noise_effect in [
 	'add_std_scale_all' ,
 	'add_std_scale_log' ,
 	'add_var_scale_all' ,
 	'add_var_scale_log'
 ] :
 	gamma_true = gamma_true_scale
-	if meas_std_effect == 'add_std_scale_log' :
+	if meas_noise_effect == 'add_std_scale_log' :
 		gamma_true = gamma_true_scale * data_std
-	if meas_std_effect == 'add_var_scale_log' :
+	if meas_noise_effect == 'add_var_scale_log' :
 		gamma_true = gamma_true_scale * data_std * data_std
 	#
 	# create database
 	file_name      = 'example.db'
-	example_db(file_name, meas_std_effect)
+	example_db(file_name, meas_noise_effect)
 	#
 	# initialize
 	program        = '../../devel/dismod_at'
@@ -253,13 +253,13 @@ for meas_std_effect in [
 		var_type   = var_table[var_id]['var_type']
 		fit_value  = row['fit_var_value']
 		true_value = None
-		if var_type == 'mulcov_meas_std' :
+		if var_type == 'mulcov_meas_noise' :
 			true_value = gamma_true
 		if var_type == 'rate' :
 			true_value = iota_true
 		assert( true_value != None )
 		# remove # at start of next line to see relative error values
-		# print(meas_std_effect, var_type, fit_value / true_value - 1.0)
+		# print(meas_noise_effect, var_type, fit_value / true_value - 1.0)
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
 	if max_error > 0.20 :
 		print('max_error = ', max_error)

@@ -276,15 +276,15 @@ n_child_        ( child_id2node_id.size() )
 		}
 	}
 
-	// mulcov_meas_value_info_ and mulcov_meas_std_info_
+	// mulcov_meas_value_info_ and mulcov_meas_noise_info_
 	mulcov_meas_value_info_.resize( n_integrand );
-	mulcov_meas_std_info_.resize( n_integrand );
+	mulcov_meas_noise_info_.resize( n_integrand );
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t mulcov_id;
 		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
 		{	bool match;
 			match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
-			match |= mulcov_table[mulcov_id].mulcov_type  == meas_std_enum;
+			match |= mulcov_table[mulcov_id].mulcov_type  == meas_noise_enum;
 			match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
 			match &= mulcov_table[mulcov_id].smooth_id!=DISMOD_AT_NULL_INT;
 			if( match )
@@ -297,9 +297,9 @@ n_child_        ( child_id2node_id.size() )
 				{	info_vec    = &( mulcov_meas_value_info_[integrand_id]) ;
 					mulcov_type = "'meas_value'";
 				}
-				if( mulcov_table[mulcov_id].mulcov_type == meas_std_enum )
-				{	info_vec    = &( mulcov_meas_std_info_[integrand_id]) ;
-					mulcov_type = "'meas_std'";
+				if( mulcov_table[mulcov_id].mulcov_type == meas_noise_enum )
+				{	info_vec    = &( mulcov_meas_noise_info_[integrand_id]) ;
+					mulcov_type = "'meas_noise'";
 				}
 				for(size_t j = 0; j < info_vec->size(); j++)
 				{	if( (*info_vec)[j].covariate_id == covariate_id )
@@ -576,11 +576,11 @@ $section Devel Pack Variables: Measurement Covariate Multipliers$$
 $head Syntax$$
 $icode%n_cov% = %pack_object%.mulcov_meas_value_n_cov(%integrand_id%)
 %$$
-$icode%n_cov% = %pack_object%.mulcov_meas_std_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_object%.mulcov_meas_noise_n_cov(%integrand_id%)
 %$$
 $icode%info% = %pack_object%.mulcov_meas_value_info(%integrand_id%, %j%)
 %$$
-$icode%info% = %pack_object%.mulcov_meas_std_info(%integrand_id%, %j%)
+$icode%info% = %pack_object%.mulcov_meas_noise_info(%integrand_id%, %j%)
 %$$
 
 $head meas_value$$
@@ -591,8 +591,8 @@ return information about the measurement mean covariate multipliers.
 
 $head meas_std$$
 The functions
-$code mulcov_meas_std_n_cov$$ and
-$code mulcov_meas_std_info$$
+$code mulcov_meas_noise_n_cov$$ and
+$code mulcov_meas_noise_info$$
 return information about the measurement standard deviation
 covariate multipliers.
 
@@ -666,9 +666,9 @@ pack_info::mulcov_meas_value_n_cov(size_t integrand_id) const
 	return mulcov_meas_value_info_[integrand_id].size();
 }
 size_t
-pack_info::mulcov_meas_std_n_cov(size_t integrand_id) const
+pack_info::mulcov_meas_noise_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
-	return mulcov_meas_std_info_[integrand_id].size();
+	return mulcov_meas_noise_info_[integrand_id].size();
 }
 //
 pack_info::subvec_info
@@ -677,9 +677,9 @@ pack_info::mulcov_meas_value_info(size_t integrand_id, size_t j) const
 	return mulcov_meas_value_info_[integrand_id][j];
 }
 pack_info::subvec_info
-pack_info::mulcov_meas_std_info(size_t integrand_id, size_t j) const
+pack_info::mulcov_meas_noise_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
-	return mulcov_meas_std_info_[integrand_id][j];
+	return mulcov_meas_noise_info_[integrand_id][j];
 }
 
 /*

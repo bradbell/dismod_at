@@ -252,7 +252,7 @@ bool prior_fixed_xam(void)
 	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
 	//
 	// mulcov_meas_value: none
-	// mulcov_meas_std: none
+	// mulcov_meas_noise: none
 	// mulcov_rate_value: none
 	dismod_at::prior_model prior_object(
 		pack_object, var2prior, age_table, time_table, prior_table

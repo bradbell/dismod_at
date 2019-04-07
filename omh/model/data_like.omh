@@ -91,7 +91,7 @@ $subhead K_i$$
 There is a set of rows in the mulcov table such that
 $cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
 and
-$cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_std$$.
+$cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_noise$$.
 We use $latex K_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.
@@ -108,7 +108,7 @@ $cref/covariate multiplier
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 Note that these are only
-$cref/meas_std/mulcov_table/mulcov_type/meas_std/$$ covariate multipliers.
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers.
 
 $head Effects, u, theta$$
 We use $latex u$$ and $latex \theta$$ to denote the vector of
@@ -167,7 +167,7 @@ aside from the value of the covariate multiplier $latex \gamma_j$$
 being different.
 
 $subhead add_std_scale_all$$
-If $cref/meas_std_effect/option_table/meas_std_effect/$$ is
+If $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
 $code add_std_scale_all$$ (add standard deviations and scale all cases)
 the adjusted standard deviation is
 $latex \[
@@ -175,7 +175,7 @@ $latex \[
 \] $$
 
 $subhead add_std_scale_log$$
-If $cref/meas_std_effect/option_table/meas_std_effect/$$ is
+If $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
 $code add_std_scale_log$$
 (add standard deviations and only scale log density cases)
 the adjusted standard deviation is
@@ -188,7 +188,7 @@ $latex \[
 \] $$
 
 $subhead add_var_scale_all$$
-If $cref/meas_std_effect/option_table/meas_std_effect/$$ is
+If $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
 $code add_var_scale_all$$ (add variances and scale all cases)
 the adjusted standard deviation is
 $latex \[
@@ -196,7 +196,7 @@ $latex \[
 \] $$
 
 $subhead add_var_scale_log$$
-If $cref/meas_std_effect/option_table/meas_std_effect/$$ is
+If $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
 $code add_var_scale_log$$
 (add variances and only scale log density cases)
 the adjusted standard deviation is
