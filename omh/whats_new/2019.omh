@@ -16,9 +16,14 @@ $spell
 	csv
 	var
 	covariate
+	std
 $$
 
 $section Changes and Additions to Dismod_at During 2019$$
+
+$head 04-07$$
+The covariate multiplier type $code meas_std$$ what changed to
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$.
 
 $head 04-06$$
 The documentation for the
