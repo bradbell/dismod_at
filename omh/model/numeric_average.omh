@@ -18,7 +18,7 @@ $section Numerical Approximation of Average Integrands$$
 
 $head Average Standard Deviation Effect$$
 This technique is also used to compute the
-$cref/average standard deviation effect
+$cref/average noise effect
 	/data_like
 	/Average Standard Deviation Effect
 /$$.

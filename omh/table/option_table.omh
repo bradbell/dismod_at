@@ -117,7 +117,7 @@ because it is used by all the commands.
 
 $head meas_noise_effect$$
 There are four options for how the
-$cref/average standard deviation effect
+$cref/average noise effect
 	/data_like
 	/Average Standard Deviation Effect
 /$$

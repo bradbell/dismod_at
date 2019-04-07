@@ -228,7 +228,7 @@ avgint_obj_(
 	s_info_vec,
 	pack_object
 ),
-avgstd_obj_(
+avg_noise_obj_(
 	ode_step_size,
 	age_avg_grid,
 	age_table,
@@ -752,8 +752,8 @@ residual_struct<Float> data_model::like_one(
 	double meas_cv       = minimum_meas_cv_[integrand_id];
 	double Delta = std::max(meas_std, meas_cv * std::fabs(meas_value) );
 	//
-	// average standard deviation effect
-	Float std_effect = avgstd_obj_.rectangle(
+	// average noise effect
+	Float std_effect = avg_noise_obj_.rectangle(
 		age_lower,
 		age_upper,
 		time_lower,

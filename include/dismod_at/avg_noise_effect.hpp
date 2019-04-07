@@ -7,17 +7,17 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_AVG_STD_EFFECT_HPP
-# define DISMOD_AT_AVG_STD_EFFECT_HPP
+# ifndef DISMOD_AT_AVG_NOISE_EFFECT_HPP
+# define DISMOD_AT_AVG_NOISE_EFFECT_HPP
 /*
-$begin devel_avg_std_effect$$
+$begin devel_avg_noise_effect$$
 $spell
 	Integrands
 $$
 
 $section Computing Average Standard Deviation Effect$$
 
-$childtable%devel/model/avg_std_effect.cpp
+$childtable%devel/model/avg_noise_effect.cpp
 %$$
 
 $end
@@ -34,7 +34,7 @@ $end
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-class avg_std_effect {
+class avg_noise_effect {
 private:
 	// constants
 	const double                              ode_step_size_;
@@ -75,8 +75,8 @@ private:
 	);
 
 public:
-	// avg_std_effect
-	avg_std_effect(
+	// avg_noise_effect
+	avg_noise_effect(
 		double                                    ode_step_size    ,
 		const CppAD::vector<double>&              age_avg_grid     ,
 		const CppAD::vector<double>&              age_table        ,

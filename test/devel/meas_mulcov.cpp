@@ -317,12 +317,12 @@ bool meas_mulcov(void)
 		age_lower + ode_step_size, age_lower + 2.0 *ode_step_size,
 		time_lower,                time_lower + ode_step_size
 	);
-	double avg_std_mulcov = (avg_mulcov_1 + avg_mulcov_2) / 2.0;
+	double avg_noise_mulcov = (avg_mulcov_1 + avg_mulcov_2) / 2.0;
 	//
 	// check residual
 	double y     = data_table[data_id].meas_value;
 	double Delta = data_table[data_id].meas_std;
-	double delta = Delta * (1.0 + avg_std_mulcov);
+	double delta = Delta * (1.0 + avg_noise_mulcov);
 	Float  check = (y - avg_integrand) / delta;
 	ok          &= fabs( 1.0 - wres / check ) <= eps;
 	//

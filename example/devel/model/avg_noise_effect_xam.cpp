@@ -10,15 +10,15 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
 /*
-$begin avg_std_effect_xam.cpp$$
+$begin avg_noise_effect_xam.cpp$$
 $spell
 	std
 	xam
 $$
 
-$section C++ avg_std_effect: Example and Test$$
+$section C++ avg_noise_effect: Example and Test$$
 
-$srcfile%example/devel/model/avg_std_effect_xam.cpp%
+$srcfile%example/devel/model/avg_noise_effect_xam.cpp%
 	0%// BEGIN C++%// END C++%1
 %$$
 
@@ -26,7 +26,7 @@ $end
 */
 // BEGIN C++
 # include <limits>
-# include <dismod_at/avg_std_effect.hpp>
+# include <dismod_at/avg_noise_effect.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/age_avg_grid.hpp>
@@ -52,7 +52,7 @@ namespace {
 		return sum / 4.0;
 	}
 }
-bool avg_std_effect_xam(void)
+bool avg_noise_effect_xam(void)
 {	bool   ok = true;
 	using CppAD::vector;
 	using std::cout;
@@ -181,12 +181,12 @@ bool avg_std_effect_xam(void)
 		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
 	);
 
-	// avgstd_obj
+	// avg_noise_obj
 	std::string age_avg_split = "";
 	vector<double> age_avg_grid = dismod_at::age_avg_grid(
 		ode_step_size, age_avg_split, age_table
 	);
-	dismod_at::avg_std_effect avgstd_obj(
+	dismod_at::avg_noise_effect avg_noise_obj(
 		ode_step_size,
 		age_avg_grid,
 		age_table,
@@ -222,7 +222,7 @@ bool avg_std_effect_xam(void)
 	double time_upper      = time_lower + ode_step_size;
 	size_t weight_id       = 0;
 	size_t integrand_id    =  int( dismod_at::mtother_enum );
-	Float avg = avgstd_obj.rectangle(
+	Float avg = avg_noise_obj.rectangle(
 		age_lower,
 		age_upper,
 		time_lower,

@@ -22,7 +22,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "residual_density.hpp"
 # include "get_data_sim_table.hpp"
 # include "avg_integrand.hpp"
-# include "avg_std_effect.hpp"
+# include "avg_noise_effect.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 	enum meas_noise_effect_enum {
@@ -70,9 +70,9 @@ private:
 	// (effectively const)
 	avg_integrand                avgint_obj_;
 
-	// Used to compute average of standard deviation effects
+	// Used to compute average of noise effects
 	// (effectively const)
-	avg_std_effect               avgstd_obj_;
+	avg_noise_effect             avg_noise_obj_;
 
 public:
 	template <class SubsetStruct>

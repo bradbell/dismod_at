@@ -8,17 +8,17 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 # include <cppad/mixed/exception.hpp>
-# include <dismod_at/avg_std_effect.hpp>
+# include <dismod_at/avg_noise_effect.hpp>
 # include <dismod_at/grid2line.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 /*
 ------------------------------------------------------------------------------
-$begin avg_std_effect_ctor$$
+$begin avg_noise_effect_ctor$$
 $spell
 	std
-	avgstd_obj
+	avg_noise_obj
 	vec
 	const
 	CppAD
@@ -28,7 +28,7 @@ $$
 $section Constructing An Average Standard Deviation Effect Object$$
 
 $head Syntax$$
-$codei%avg_std_effect %avgstd_obj%(
+$codei%avg_noise_effect %avg_noise_obj%(
 	%ode_step_size%,
 	%age_avg_grid%,
 	%age_table%,
@@ -41,8 +41,8 @@ $codei%avg_std_effect %avgstd_obj%(
 %$$
 
 $head Prototype$$
-$srcfile%devel/model/avg_std_effect.cpp%
-	0%// BEGIN_AVG_STD_EFFECT_PROTOTYPE%// END_AVG_STD_EFFECT_PROTOTYPE%1
+$srcfile%devel/model/avg_noise_effect.cpp%
+	0%// BEGIN_AVG_NOISE_EFFECT_PROTOTYPE%// END_AVG_NOISE_EFFECT_PROTOTYPE%1
 %$$
 
 $head ode_step_size$$
@@ -51,23 +51,23 @@ $cref/ode_step_size/option_table/ode_step_size/$$ in the option table.
 
 $head age_avg_grid$$
 This is the $cref age_avg_grid$$.
-A reference to $icode age_avg_grid$$ is used by $icode avgstd_obj$$
+A reference to $icode age_avg_grid$$ is used by $icode avg_noise_obj$$
 ($icode age_avg_grid$$ must no be deleted for as long as
-$icode avgstd_obj$$ is used).
+$icode avg_noise_obj$$ is used).
 
 $head age_table$$
 This argument is the $cref age_table$$.
-A reference to $icode age_table$$ is used by $icode avgstd_obj$$
+A reference to $icode age_table$$ is used by $icode avg_noise_obj$$
 ($icode age_table$$ must no be deleted for as long as
-$icode avgstd_obj$$ is used).
+$icode avg_noise_obj$$ is used).
 
 $head time_table$$
 This argument is the $cref time_table$$.
-A reference to $icode time_table$$ is used by $icode avgstd_obj$$.
+A reference to $icode time_table$$ is used by $icode avg_noise_obj$$.
 
 $head integrand_table$$
 This argument is the $cref integrand_table$$.
-A reference to $icode integrand_table$$ is used by $icode avgstd_obj$$.
+A reference to $icode integrand_table$$ is used by $icode avg_noise_obj$$.
 
 $head w_info_vec$$
 For each $cref/weight_id/weight_table/weight_id/$$,
@@ -83,20 +83,20 @@ $codei%
 %$$
 is the corresponding $cref smooth_info$$ information.
 None of the prior information in $icode s_info_vec$$ is used.
-A reference to $icode s_info_vec$$ is used by $icode avgstd_obj$$.
+A reference to $icode s_info_vec$$ is used by $icode avg_noise_obj$$.
 
 $head pack_object$$
 This is the $cref pack_info$$ information corresponding to
 the $cref model_variables$$.
 
 $head Example$$
-The file $cref avg_std_effect_xam.cpp$$ contains an example and test
+The file $cref avg_noise_effect_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
 */
-// BEGIN_AVG_STD_EFFECT_PROTOTYPE
-avg_std_effect::avg_std_effect(
+// BEGIN_AVG_NOISE_EFFECT_PROTOTYPE
+avg_noise_effect::avg_noise_effect(
 		double                                    ode_step_size    ,
 		const CppAD::vector<double>&              age_avg_grid     ,
 		const CppAD::vector<double>&              age_table        ,
@@ -105,7 +105,7 @@ avg_std_effect::avg_std_effect(
 		const CppAD::vector<weight_info>&         w_info_vec       ,
 		const CppAD::vector<smooth_info>&         s_info_vec       ,
 		const pack_info&                          pack_object      )
-// END_AVG_STD_EFFECT_PROTOTYPE
+// END_AVG_NOISE_EFFECT_PROTOTYPE
 :
 ode_step_size_             ( ode_step_size )   ,
 age_table_                 ( age_table )       ,
@@ -119,9 +119,9 @@ a1_double_time_line_object_( age_avg_grid )
 { }
 /*
 ------------------------------------------------------------------------------
-$begin avg_std_effect_rectangle$$
+$begin avg_noise_effect_rectangle$$
 $spell
-	avgstd_obj
+	avg_noise_obj
 	vec
 	const
 	CppAD
@@ -132,7 +132,7 @@ $$
 $section Computing One Average Integrand$$
 
 $head Syntax$$
-$icode%avg% = %avgstd_obj%.rectangle(
+$icode%avg% = %avg_noise_obj%.rectangle(
 	%age_lower%,
 	%age_upper%,
 	%time_lower%,
@@ -144,7 +144,7 @@ $icode%avg% = %avgstd_obj%.rectangle(
 )%$$
 
 $head Prototype$$
-$srcfile%devel/model/avg_std_effect.cpp%
+$srcfile%devel/model/avg_noise_effect.cpp%
 	0%// BEGIN_RECTANGLE_PROTOTYPE%// END_RECTANGLE_PROTOTYPE%1
 %$$
 
@@ -183,11 +183,11 @@ $head avg$$
 The return value $icode avg$$ is the average of the integrand
 using the specified weighting over the specified rectangle
 
-$children%example/devel/model/avg_std_effect_xam.cpp
+$children%example/devel/model/avg_noise_effect_xam.cpp
 %$$
 
 $head Example$$
-The file $cref avg_std_effect_xam.cpp$$ contains an example and test
+The file $cref avg_noise_effect_xam.cpp$$ contains an example and test
 of using this routine.
 
 $end
@@ -195,7 +195,7 @@ $end
 
 // BEGIN_RECTANGLE_PROTOTYPE
 template <class Float>
-Float avg_std_effect::rectangle(
+Float avg_noise_effect::rectangle(
 	double                           age_lower        ,
 	double                           age_upper        ,
 	double                           time_lower       ,
@@ -341,9 +341,9 @@ Float avg_std_effect::rectangle(
 	return avg;
 }
 
-# define DISMOD_AT_INSTANTIATE_AVG_STD_EFFECT_RECTANGLE(Float) \
+# define DISMOD_AT_INSTANTIATE_AVG_NOISE_EFFECT_RECTANGLE(Float) \
     template                                                   \
-	Float avg_std_effect::rectangle(                           \
+	Float avg_noise_effect::rectangle(                           \
 		double                           age_lower        ,    \
 		double                           age_upper        ,    \
 		double                           time_lower       ,    \
@@ -356,7 +356,7 @@ Float avg_std_effect::rectangle(
 		CppAD::vector<Float>&            line_adj              \
 	);                                                         \
 \
-	Float avg_std_effect::rectangle(                           \
+	Float avg_noise_effect::rectangle(                           \
 		double                           age_lower        ,    \
 		double                           age_upper        ,    \
 		double                           time_lower       ,    \
@@ -380,7 +380,7 @@ Float avg_std_effect::rectangle(
 	}
 
 // instantiations
-DISMOD_AT_INSTANTIATE_AVG_STD_EFFECT_RECTANGLE( double )
-DISMOD_AT_INSTANTIATE_AVG_STD_EFFECT_RECTANGLE( a1_double )
+DISMOD_AT_INSTANTIATE_AVG_NOISE_EFFECT_RECTANGLE( double )
+DISMOD_AT_INSTANTIATE_AVG_NOISE_EFFECT_RECTANGLE( a1_double )
 
 } // END_DISMOD_AT_NAMESPACE

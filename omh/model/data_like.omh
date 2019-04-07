@@ -127,7 +127,7 @@ $cref/average integrand/avg_integrand/Average Integrand, A_i/$$ for this
 $icode data_id$$.
 
 $head Average Standard Deviation Effect$$
-We define the average standard deviation effect by
+We define the average noise effect by
 $latex \[
 E_i ( \theta )
 =
