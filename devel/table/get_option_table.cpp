@@ -84,6 +84,7 @@ $end
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/split_space.hpp>
+# include <dismod_at/log_message.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -154,6 +155,15 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{	msg  = "minimum_meas_cv is no longer a valid option name";
 			msg += "\nThis was moved to integrand table on 2018-05-23.";
 			error_exit(msg, table_name, option_id);
+		}
+		if( option_name[option_id] == "meas_std_effect" )
+        {	msg  = "meas_std_effect was deprecated on 2019-04-07\n";
+			msg += "and may not work in the future. ";
+			msg += "It should be changed to meas_noise_effect.";
+			log_message(
+				db, &std::cout, "warning", msg, table_name, option_id
+			);
+			option_name[option_id] = "meas_noise_effect";
 		}
 		//
 		size_t match = n_option;

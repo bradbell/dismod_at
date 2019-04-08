@@ -887,6 +887,12 @@ def db2csv_command(database_file_arg) :
 	option_id = 0
 	for row in table_data['option'] :
 		found        = False
+		if row['option_name'] == 'meas_std_effect' :
+			msg = 'meas_std_effect was deprecated on 2019-04-07\n'
+			msg += 'and may not work in the future. '
+			msg += 'It should be changed to meas_noise_effect.'
+			print(msg)
+			row['option_name'] = 'meas_noise_effect'
 		for choice in option_list :
 			if row['option_name'] == choice[0] :
 				found = True

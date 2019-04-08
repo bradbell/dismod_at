@@ -65,9 +65,13 @@ $cref/beta
 /$$.
 
 $subhead meas_noise$$
-This covariate multiplier adjusts the
-$cref/measurement standard deviation/data_table/meas_std/$$; see
+This covariate multiplier adjusts the measurement noise; see
 $cref/gamma_j/data_like/Measurement Noise Covariates/gamma_j/$$.
+
+$subhead meas_std: Deprecated 2019-04-07$$
+The covariate multiplier type $code meas_std$$
+is the same as $code meas_noise$$.
+The type $code meas_std$$ still works but has been deprecated.
 
 $head rate_id$$
 This column has type $code integer$$.

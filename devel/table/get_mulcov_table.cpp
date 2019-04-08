@@ -97,6 +97,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/log_message.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -145,6 +146,16 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 			mulcov_table[i].mulcov_type = meas_value_enum;
 		else if( mulcov_type[i] == "meas_noise" )
 			mulcov_table[i].mulcov_type = meas_noise_enum;
+		else if( mulcov_type[i] == "meas_std" )
+		{	string msg  =
+			"The mulcov_type meas_std was deprecated on 2019-04-07\n"
+			"and may not work in the future. "
+			"It should be changed to meas_noise.";
+			log_message(
+				db, &std::cout, "warning", msg, table_name, i
+			);
+			mulcov_table[i].mulcov_type = meas_noise_enum;
+		}
 		else
 		{	string message = "mulcov_type = '" + mulcov_type[i] + "'";
 			message += " is not one of the following:\n"

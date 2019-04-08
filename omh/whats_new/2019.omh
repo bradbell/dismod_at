@@ -21,9 +21,20 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
-$head 04-07$$
-The covariate multiplier type $code meas_std$$ what changed to
+$head 04-08$$
+$list number$$
+The covariate multiplier type
+$cref/meas_std/mulcov_table/mulcov_type/meas_std: Deprecated 2019-04-07/$$
+was deprecated.
+It should be changed to
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$.
+$lnext
+The
+$cref/meas_std_effect/option_table/meas_std_effect: Deprecated 2019-04-07/$$
+option was deprecated.
+It should be changed to
+$cref/meas_noise_effect/option_table/meas_noise_effect/$$.
+$lend
 
 $head 04-06$$
 The documentation for the

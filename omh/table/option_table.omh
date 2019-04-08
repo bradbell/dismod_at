@@ -144,6 +144,10 @@ $cref/add_var_scale_log
 	/add_var_scale_log
 /$$.
 
+$head meas_std_effect: Deprecated 2019-04-07$$
+This option is deprecated but still works (may not work in the future).
+It should be changed to use its new name $icode meas_noise_effect$$.
+
 $subhead Default$$
 The default value for this option is $code add_std_scale_all$$.
 
