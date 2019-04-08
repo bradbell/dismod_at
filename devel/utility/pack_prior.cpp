@@ -97,7 +97,7 @@ $cref/smoothing standard deviation multiplier
 	/Fixed Effects, theta
 	/Smoothing Standard Deviation Multipliers, lambda
 /$$.
-In this case there is no standard deviation prior multiplier for the
+In this case there is no standard deviation multiplier for the
 value prior for this variables and the difference priors are null.
 Otherwise, this is the smoothing used for this variable and the
 offset for the corresponding standard deviation multipliers can be computed
@@ -260,7 +260,7 @@ pack_prior::pack_prior(
 		prior_vec_[var_id].fixed_effect   = true;
 	}
 	//
-	// get priors for standard devaition multipliers
+	// get priors for standard deviation multipliers
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	// multipliers for this smoothing
 		for(size_t k = 0; k < 3; k++)

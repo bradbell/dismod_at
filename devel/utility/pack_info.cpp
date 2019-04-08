@@ -404,7 +404,7 @@ $spell
 	dismod
 $$
 
-$section Devel Pack Variables: Standard Deviations Multipliers$$
+$section Devel Pack Variables: Standard Deviation Multipliers$$
 
 $head Syntax$$
 $icode%offset% = %pack_object%.mulstd_offset(%smooth_id%, %k%)
@@ -430,7 +430,7 @@ This argument has prototype
 $codei%
 	size_t %k%
 %$$
-It specifies which type of priors standard deviations that get multiplied
+It specifies which type of prior standard deviations that get multiplied
 by this variable as follows:
 $table
 $icode k$$ $pre  $$ $cnext Type of prior $rnext
@@ -589,12 +589,11 @@ $code mulcov_meas_value_n_cov$$ and
 $code mulcov_meas_value_info$$
 return information about the measurement mean covariate multipliers.
 
-$head meas_std$$
+$head meas_noise$$
 The functions
 $code mulcov_meas_noise_n_cov$$ and
 $code mulcov_meas_noise_info$$
-return information about the measurement standard deviation
-covariate multipliers.
+return information about the measurement noise covariate multipliers.
 
 $head subvec_info$$
 The type $code pack_info::subvec_info$$ is defined as follows:

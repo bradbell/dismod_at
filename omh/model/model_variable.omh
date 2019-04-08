@@ -45,7 +45,7 @@ corresponds to a single model variable.
 
 $head Function of Age and Time$$
 The model variables are divided into groups.
-One group is the standard deviation multiplies.
+One group is the standard deviation multipliers.
 Each of the other groups represents a single function of age and time.
 
 $subhead Smoothing$$

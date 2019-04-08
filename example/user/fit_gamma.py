@@ -15,7 +15,7 @@
 #	std
 # $$
 #
-# $section Fitting Data Standard Deviations, Gamma$$
+# $section Fitting Measurement Noise Covariate Multipliers, Gamma$$
 #
 # $head Random Effects$$
 # There are no random effects in this example.
@@ -71,7 +71,7 @@ iota_true          = 0.01
 scale_gamma_true   = 2.0
 n_data             = 1000
 meas_std           = 0.001
-meas_noise_effect    = 'add_std_scale_all'
+meas_noise_effect  = 'add_std_scale_all'
 # You can changed the values above and rerun this program
 # ---------------------------------------------------------------------------
 def gamma_true() :

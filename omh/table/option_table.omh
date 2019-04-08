@@ -121,7 +121,7 @@ $cref/average noise effect
 	/data_like
 	/Average Noise Effect
 /$$
-changes the measurement standard deviation.
+changes the measurement noise.
 The possible options are
 $cref/add_std_scale_all
 	/data_like

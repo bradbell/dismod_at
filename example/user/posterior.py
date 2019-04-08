@@ -47,7 +47,7 @@
 # There are no measurements for this example.
 # $lnext
 # The prior for the world omega is a gaussian with mean $latex \bar{\omega}$$
-# and # standard deviation $latex \bar{\omega}$$.
+# and standard deviation $latex \bar{\omega}$$.
 # $lnext
 # The prior for the difference in omega between time 1995
 # and time 2015 is a Gaussian

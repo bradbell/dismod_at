@@ -156,15 +156,17 @@ by any factor one chooses by changing the value of the covariates
 $latex x_{ij}$$; see the definition of $latex E_i ( \theta )$$ above.
 
 $subhead Add Variance or Standard Deviation$$
-Adding Variances, instead of standard deviations, requires more
+Adding standard deviations requires fewer
 floating point operations (for every data point)
 but this is not expected to be significant.
-It is not clear that adding variances
-will give a significantly different results,
-In fact, when one scales by $latex \Delta_i$$ and there is only one
-covariate multiplier, the maximum likelihood problems are equivalent,
-aside from the value of the covariate multiplier $latex \gamma_j$$
-being different.
+In addition, if the covariate value is one, the covariate multipliers
+have the same units as the data.
+On the other hand, an initial value of zero does not work well
+in this case because the derivative of the object with respect to the
+multiplier is zero.
+Adding variances does not have this problem,
+but when the covariate value is one, the covariate multipliers
+have data squared units.
 
 $subhead add_std_scale_all$$
 If $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
