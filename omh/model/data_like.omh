@@ -85,7 +85,7 @@ $codei%
 	%Delta_i% = max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )
 %$$
 
-$head Measurement Standard Deviation Covariates$$
+$head Measurement Noise Covariates$$
 
 $subhead K_i$$
 There is a set of rows in the mulcov table such that
@@ -126,7 +126,7 @@ Let $latex A_i ( u , \theta )$$ denote the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$ for this
 $icode data_id$$.
 
-$head Average Standard Deviation Effect$$
+$head Average Noise Effect$$
 We define the average noise effect by
 $latex \[
 E_i ( \theta )

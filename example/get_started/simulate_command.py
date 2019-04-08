@@ -112,7 +112,7 @@ sim_row  = data_sim_table[0]
 assert sim_row['simulate_index'] == 0
 # For this case, data_subset_id is same as data_id
 assert sim_row['data_subset_id'] == 0
-# There are no measurement standard deviation covariates, so
+# There are no measurement noise covariates, so
 assert abs( sim_row['data_sim_delta'] / data_row['meas_std'] - 1.0 ) < 1e-7
 # Compute the model value for the measurement (with no noise)
 # Note that age_lower is equal age_upper

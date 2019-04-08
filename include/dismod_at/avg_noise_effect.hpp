@@ -15,7 +15,7 @@ $spell
 	Integrands
 $$
 
-$section Computing Average Standard Deviation Effect$$
+$section Computing Average Noise Effect$$
 
 $childtable%devel/model/avg_noise_effect.cpp
 %$$

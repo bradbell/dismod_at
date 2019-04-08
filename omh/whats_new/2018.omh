@@ -66,7 +66,7 @@ $cref/add_var_scale_log
 when the initial value of corresponding covariate multiplier
 $cref/gamma_j
 	/data_like
-	/Measurement Standard Deviation Covariates
+	/Measurement Noise Covariates
 	/gamma_j
 /$$ was zero.
 This was because the derivative of the object w.r.t. this
@@ -98,7 +98,7 @@ the added standard deviations for non-log densities.
 
 $head 12-14$$
 Add $cref user_fit_gamma.py$$, an example that fits
-$cref/gamma/data_like/Measurement Standard Deviation Covariates/gamma_j/$$
+$cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$
 using simulated data.
 
 $head 10-30$$

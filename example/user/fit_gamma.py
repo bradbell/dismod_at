@@ -38,8 +38,8 @@
 # $head Covariate Multiplier$$
 # There is one covariate multiplier on the covariate column $code one$$
 # (which has the constant value one) and the rate $code iota$$.
-# This is a measurement standard deviation covariate multiplier
-# $cref/gamma/data_like/Measurement Standard Deviation Covariates/gamma_j/$$.
+# This is a measurement noise covariate multiplier
+# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$.
 # The prior for this multiplier is a uniform on the interval from zero
 # to $codei%10 * %gamma_true%$$.
 # The true value for this multiplier, used to simulate data, is

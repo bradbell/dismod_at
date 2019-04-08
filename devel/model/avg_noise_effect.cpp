@@ -25,7 +25,7 @@ $spell
 	Integrands
 $$
 
-$section Constructing An Average Standard Deviation Effect Object$$
+$section Constructing An Average Noise Effect Object$$
 
 $head Syntax$$
 $codei%avg_noise_effect %avg_noise_obj%(
@@ -292,7 +292,7 @@ Float avg_noise_effect::rectangle(
 	for(size_t k = 0; k < n_line; ++k)
 		effect[k] = 0.0;
 	//
-	// sum over the standard deviation covariates for this integrand
+	// sum over the noise covariates for this integrand
 	size_t n_cov = pack_object_.mulcov_meas_noise_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; ++j)
 	{	info  = pack_object_.mulcov_meas_noise_info(integrand_id, j);

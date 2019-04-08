@@ -16,14 +16,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	devel/model/avg_std_effect.cpp
-#	include/dismod_at/avg_std_effect.hpp
-#	example/devel/model/avg_std_effect_xam.cpp
 # '
 # list of sed commands that maps old file and or directory names to new
 # file names (the characters @s gets converted to a single space)
 # move_seds='
-#	s|avg_std|avg_noise|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -35,10 +31,9 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|_AVG_STD_|_AVG_NOISE_|g
-s|standard deviation effect|noise effect|g
-s|avg_std_effect  |avg_noise_effect|g
+s|Standard Deviation Effect|Noise Effect|g
+s|Standard Deviation Covariates|Noise Covariates|g
 #
-s|avg_std|avg_noise|g
-s|avgstd|avg_noise|g
+s|standard deviation covariate|noise covariate|g
+#
 

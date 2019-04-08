@@ -173,7 +173,7 @@ CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 		}
 	}
 
-	// measurement mean and standard deviation covariates
+	// measurement mean and noise covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
@@ -243,7 +243,7 @@ void unpack_fixed(
 		}
 	}
 
-	// measurement mean and standard deviation covariates
+	// measurement mean and noise covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
@@ -312,7 +312,7 @@ void pack_fixed(
 		}
 	}
 
-	// measurement mean and standard deviation covariates
+	// measurement mean and noise covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
