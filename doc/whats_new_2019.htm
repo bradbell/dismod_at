@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -48,38 +48,22 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="avg_std_effect_xam.cpp.htm" target="_top">Prev</a>
+<td><a href="avg_noise_effect_xam.cpp.htm" target="_top">Prev</a>
 </td><td><a href="whats_new_2018.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down1(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down0(this)'>
-<option>whats_new_2019-&gt;</option>
-<option>whats_new_2018</option>
-<option>whats_new_2017</option>
-<option>whats_new_2016</option>
-<option>whats_new_2015</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_whats_new_2019_htm.js'></script>
 </td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Changes and Additions to Dismod_at During 2019</big></big></b></center>
 
+<br><a href="whats_new_2019.htm#04-08" target="_top">04-08</a>
+<br><a href="whats_new_2019.htm#04-06" target="_top">04-06</a>
+<br><a href="whats_new_2019.htm#02-16" target="_top">02-16</a>
 <br><a href="whats_new_2019.htm#01-26" target="_top">01-26</a>
 <br><a href="whats_new_2019.htm#01-23" target="_top">01-23</a>
 <br><a href="whats_new_2019.htm#01-22" target="_top">01-22</a>
@@ -88,6 +72,46 @@ A:active { color : purple }
 <br><a href="whats_new_2019.htm#01-10" target="_top">01-10</a>
 <br><a href="whats_new_2019.htm#Contents" target="_top">Contents</a>
 <br><br>
+<b><big><a name="04-08" id="04-08">04-08</a></big></b>
+
+<ol type="1"><li>
+The covariate multiplier type
+<a href="mulcov_table.htm#mulcov_type.meas_std: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+was deprecated.
+It should be changed to
+<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
+.
+</li><li>
+
+The
+<a href="option_table.htm#meas_std_effect: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+
+option was deprecated.
+It should be changed to
+<a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="04-06" id="04-06">04-06</a></big></b>
+<br>
+The documentation for the
+<a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+ column of the
+fit_var table was improved.
+
+<br>
+<br>
+<b><big><a name="02-16" id="02-16">02-16</a></big></b>
+<br>
+Add the script <code><font color="blue">bin/speed_16_18.sh</font></code> which
+compares the last version of in 2016 with the last version in 2018.
+
+<br>
+<br>
 <b><big><a name="01-26" id="01-26">01-26</a></big></b>
 <br>
 Extra wording was added to the description of

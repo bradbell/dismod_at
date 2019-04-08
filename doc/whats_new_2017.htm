@@ -52,29 +52,10 @@ A:active { color : purple }
 <td><a href="whats_new_2018.htm" target="_top">Prev</a>
 </td><td><a href="whats_new_2016.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down2(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>whats_new_2019-&gt;</option>
-<option>whats_new_2018</option>
-<option>whats_new_2017</option>
-<option>whats_new_2016</option>
-<option>whats_new_2015</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_whats_new_2019_htm.js'></script>
 </td>
 <td>whats_new_2017</td>
 </tr></table><br>
@@ -282,9 +263,9 @@ Fix the definition of the
 <a href="avg_integrand.htm#Measurement Value Covariates.Multiplier, beta_j" target="_top"><span style='white-space: nowrap'>beta_j</span></a>
 
 and the
-<a href="mulcov_table.htm#mulcov_type.meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
  covariate multipliers
-<a href="data_like.htm#Measurement Standard Deviation Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
+<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
 .
 They used to be <small>@(@
 \beta_{i,j}
@@ -1006,12 +987,12 @@ the user should see no difference.
 <br>
 <b><big><a name="05-02" id="05-02">05-02</a></big></b>
 <br>
-The standard deviation covariate multipliers effect
+The noise covariate multipliers effect
 used to scale the measurement standard deviation.
 Now it is directly added to the measurement standard deviation; see
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
 .
-This makes the <a href="mulcov_table.htm#mulcov_type.meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+This makes the <a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
 
 covariate multipliers more difficult to use because they have units.
 On the other hand, it is more flexible for

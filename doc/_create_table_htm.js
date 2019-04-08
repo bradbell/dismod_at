@@ -10,36 +10,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_down2 = [
-'math_abstract.htm',
-'install_unix.htm',
-'get_started.htm',
-'user.htm',
-'database.htm',
-'model.htm',
-'command.htm',
-'python.htm',
-'devel.htm',
-'whats_new_2019.htm',
-'wish_list.htm'
-];
-var list_down1 = [
-'create_connection.htm',
-'create_table.htm',
-'create_database.htm',
-'csv2db_command.htm',
-'db2csv_command.htm',
-'get_name_type.htm',
-'get_row_list.htm',
-'get_table_dict.htm',
-'metropolis.htm',
-'modify_command.htm',
-'sql_command.htm',
-'unicode_tuple.htm'
-];
-var list_down0 = [
-'create_table.py.htm'
-];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

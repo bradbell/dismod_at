@@ -54,60 +54,16 @@ A:active { color : purple }
 <td><a href="fixed_effect.htm" target="_top">Prev</a>
 </td><td><a href="get_prior_mean.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down4(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down3(this)'>
-<option>devel-&gt;</option>
-<option>devel_table</option>
-<option>devel_utility</option>
-<option>devel_model</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>devel_utility-&gt;</option>
-<option>a1_double</option>
-<option>avgint_subset</option>
-<option>bilinear_interp</option>
-<option>child_info</option>
-<option>cohort_ode</option>
-<option>data_subset</option>
-<option>eigen_ode2</option>
-<option>error_exit</option>
-<option>fixed_effect</option>
-<option>get_prior_mean</option>
-<option>number_random_const</option>
-<option>age_avg_grid</option>
-<option>pack_info</option>
-<option>pack_prior</option>
-<option>residual_density</option>
-<option>random_number</option>
-<option>random_effect</option>
-<option>grid2line</option>
-<option>solve_ode</option>
-<option>split_space</option>
-<option>time_line_vec</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_utility_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>fixed_effect-&gt;</option>
-<option>fixed_effect_xam.cpp</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_fixed_effect_htm.js'></script>
 </td>
 <td>fixed_effect_xam.cpp</td>
 </tr></table><br>
@@ -167,8 +123,8 @@ A:active { color : purple }
      mulcov_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>smooth_id    <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
      n_fixed_effect <font color="#990000">+=</font> smooth_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>n_age <font color="#990000">*</font> smooth_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>n_time<font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
-     <i><font color="#9A1900">// mulcov_meas_std</font></i>
-     mulcov_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>mulcov_type  <font color="#990000">=</font> dismod_at<font color="#990000">::</font>meas_std_enum<font color="#990000">;</font>
+     <i><font color="#9A1900">// mulcov_meas_noise</font></i>
+     mulcov_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>mulcov_type  <font color="#990000">=</font> dismod_at<font color="#990000">::</font>meas_noise_enum<font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>rate_id      <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1</font><font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>integrand_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>covariate_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>

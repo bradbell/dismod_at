@@ -9,22 +9,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_down1 = [
-'math_abstract.htm',
-'install_unix.htm',
-'get_started.htm',
-'user.htm',
-'database.htm',
-'model.htm',
-'command.htm',
-'python.htm',
-'devel.htm',
-'whats_new_2019.htm',
-'wish_list.htm'
-];
-var list_down0 = [
-'math_ode.htm'
-];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

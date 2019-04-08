@@ -12,64 +12,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_down4 = [
-'math_abstract.htm',
-'install_unix.htm',
-'get_started.htm',
-'user.htm',
-'database.htm',
-'model.htm',
-'command.htm',
-'python.htm',
-'devel.htm',
-'whats_new_2019.htm',
-'wish_list.htm'
-];
-var list_down3 = [
-'devel_table.htm',
-'devel_utility.htm',
-'devel_model.htm'
-];
-var list_down2 = [
-'check_child_prior.htm',
-'check_pini_n_age.htm',
-'check_rate_limit.htm',
-'check_table_id.htm',
-'check_zero_sum.htm',
-'cpp_create_table.htm',
-'exec_sql_cmd.htm',
-'get_age_table.htm',
-'get_avgint_table.htm',
-'get_column_max.htm',
-'get_covariate_table.htm',
-'get_data_table.htm',
-'get_db_input.htm',
-'get_density_table.htm',
-'get_integrand_table.htm',
-'get_mulcov_table.htm',
-'get_node_table.htm',
-'get_option_table.htm',
-'get_prior_table.htm',
-'get_rate_table.htm',
-'get_sample_table.htm',
-'get_data_sim_table.htm',
-'get_smooth_grid.htm',
-'get_nslist_table.htm',
-'get_nslist_pair.htm',
-'get_smooth_table.htm',
-'get_table_column.htm',
-'get_time_table.htm',
-'get_weight_grid.htm',
-'get_weight_table.htm',
-'log_message.htm',
-'put_table_row.htm',
-'open_connection.htm',
-'smooth_info.htm',
-'weight_info.htm'
-];
-var list_down1 = [
-'get_data_table_xam.cpp.htm'
-];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

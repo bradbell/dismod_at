@@ -13,30 +13,6 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-var list_down4 = [
-'devel_table.htm',
-'devel_utility.htm',
-'devel_model.htm'
-];
-var list_down3 = [
-'devel_data_model.htm',
-'prior_model.htm',
-'fit_model.htm',
-'depend.htm',
-'adj_integrand.htm',
-'devel_avg_integrand.htm',
-'devel_avg_std_effect.htm'
-];
-var list_down2 = [
-'data_model_ctor.htm',
-'data_model_replace_like.htm',
-'data_model_average.htm',
-'data_model_like_one.htm',
-'data_model_like_all.htm'
-];
-var list_down1 = [
-'like_one_xam.cpp.htm'
-];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;

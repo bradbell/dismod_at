@@ -52,29 +52,10 @@ A:active { color : purple }
 <td><a href="whats_new_2019.htm" target="_top">Prev</a>
 </td><td><a href="whats_new_2017.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down2(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>whats_new_2019-&gt;</option>
-<option>whats_new_2018</option>
-<option>whats_new_2017</option>
-<option>whats_new_2016</option>
-<option>whats_new_2015</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_whats_new_2019_htm.js'></script>
 </td>
 <td>whats_new_2018</td>
 </tr></table><br>
@@ -185,7 +166,7 @@ The
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var_scale_log" target="_top"><span style='white-space: nowrap'>add_var_scale_log</span></a>
  would sometimes fail to converge
 when the initial value of corresponding covariate multiplier
-<a href="data_like.htm#Measurement Standard Deviation Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
+<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
  was zero.
 This was because the derivative of the object w.r.t. this
 multiplier was zero even though zero is not the solution.
@@ -203,8 +184,8 @@ how the new definition affects the
 <br>
 <b><big><a name="12-15" id="12-15">12-15</a></big></b>
 <br>
-Add options for how the measurement standard deviation effect
-<a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+Add options for how the measurement noise effect
+<a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is defined.
 The gives the choice of
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i.Add Variance or Standard Deviation" target="_top"><span style='white-space: nowrap'>adding&nbsp;variances&nbsp;or&nbsp;standard&nbsp;deviations</span></a>
@@ -222,7 +203,7 @@ the added standard deviations for non-log densities.
 <br>
 Add <a href="user_fit_gamma.py.htm" target="_top"><span style='white-space: nowrap'>user_fit_gamma.py</span></a>
 , an example that fits
-<a href="data_like.htm#Measurement Standard Deviation Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma</span></a>
+<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma</span></a>
 
 using simulated data.
 

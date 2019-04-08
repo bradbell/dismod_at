@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Identifying Model Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Identifying Model Variables">
-<meta name="keywords" id="keywords" content=" identifying model variables var_id var_type mulstd_value mulstd_dage mulstd_dtime rate mulcov_rate_value mulcov_meas_value mulcov_meas_std smooth_id age_id time_id node_id rate_id integrand_id covariate_id example ">
+<meta name="keywords" id="keywords" content=" identifying model variables var_id var_type mulstd_value mulstd_dage mulstd_dtime rate mulcov_rate_value mulcov_meas_value mulcov_meas_noise smooth_id age_id time_id node_id rate_id integrand_id covariate_id example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -53,46 +53,13 @@ A:active { color : purple }
 <td><a href="log_table.htm" target="_top">Prev</a>
 </td><td><a href="data_subset_table.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down3(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>database-&gt;</option>
-<option>input</option>
-<option>data_flow</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_database_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>data_flow-&gt;</option>
-<option>log_table</option>
-<option>var_table</option>
-<option>data_subset_table</option>
-<option>depend_var_table</option>
-<option>start_var_table</option>
-<option>scale_var_table</option>
-<option>age_avg_table</option>
-<option>fit_var_table</option>
-<option>fit_data_subset_table</option>
-<option>truth_var_table</option>
-<option>prior_sim_table</option>
-<option>data_sim_table</option>
-<option>sample_table</option>
-<option>predict_table</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_data_flow_htm.js'></script>
 </td>
 <td>var_table</td>
 </tr></table><br>
@@ -111,7 +78,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#var_type.rate" target="_top">rate</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#var_type.mulcov_rate_value" target="_top">mulcov_rate_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#var_type.mulcov_meas_value" target="_top">mulcov_meas_value</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#var_type.mulcov_meas_std" target="_top">mulcov_meas_std</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#var_type.mulcov_meas_noise" target="_top">mulcov_meas_noise</a>
 <br><a href="var_table.htm#smooth_id" target="_top">smooth_id</a>
 <br><a href="var_table.htm#age_id" target="_top">age_id</a>
 <br><a href="var_table.htm#time_id" target="_top">time_id</a>
@@ -253,7 +220,7 @@ that affects the measurement value for the corresponding
 
 <br>
 <br>
-<big><a name="var_type.mulcov_meas_std" id="var_type.mulcov_meas_std">mulcov_meas_std</a></big>
+<big><a name="var_type.mulcov_meas_noise" id="var_type.mulcov_meas_noise">mulcov_meas_noise</a></big>
 <br>
 This variable is a
 <a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
@@ -302,7 +269,7 @@ the corresponding priors can be found by matching
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
  is <code><font color="blue">rate</font></code>,
-<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_std</font></code>,
+<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_noise</font></code>,
 this is the <a href="age_table.htm#age_id" target="_top"><span style='white-space: nowrap'>age_id</span></a>
  that identifies
 the age for the corresponding variable.
@@ -315,7 +282,7 @@ Otherwise, this column is <code><font color="blue">null</font></code>.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
  is <code><font color="blue">rate</font></code>,
-<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_std</font></code>,
+<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_noise</font></code>,
 this is the <a href="time_table.htm#time_id" target="_top"><span style='white-space: nowrap'>time_id</span></a>
  that identifies
 the time for the corresponding variable.
@@ -350,7 +317,7 @@ Otherwise, this column is <code><font color="blue">null</font></code>.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
  is
-<code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_std</font></code>,
+<code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_noise</font></code>,
 this is the <a href="integrand_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
 
 that this variable applies to.
@@ -363,7 +330,7 @@ Otherwise, this column is <code><font color="blue">null</font></code>.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
  is
-<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_std</font></code>,
+<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_noise</font></code>,
 this is the <a href="covariate_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
 
 that this variable applies to.

@@ -53,39 +53,13 @@ A:active { color : purple }
 <td><a href="simulate_command.htm" target="_top">Prev</a>
 </td><td><a href="sample_command.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down3(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>command-&gt;</option>
-<option>set_command</option>
-<option>init_command</option>
-<option>depend_command</option>
-<option>fit_command</option>
-<option>simulate_command</option>
-<option>sample_command</option>
-<option>predict_command</option>
-<option>dismodat.py</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_command_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>simulate_command-&gt;</option>
-<option>simulate_command.py</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_simulate_command_htm.js'></script>
 </td>
 <td>simulate_command.py</td>
 </tr></table><br>
@@ -184,7 +158,7 @@ sim_row  <font color="#990000">=</font> data_sim_table<font color="#990000">[</f
 <b><font color="#0000FF">assert</font></b> sim_row<font color="#990000">[</font><font color="#FF0000">'simulate_index'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
 <i><font color="#9A1900"># For this case, data_subset_id is same as data_id</font></i>
 <b><font color="#0000FF">assert</font></b> sim_row<font color="#990000">[</font><font color="#FF0000">'data_subset_id'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<i><font color="#9A1900"># There are no measurement standard deviation covariates, so</font></i>
+<i><font color="#9A1900"># There are no measurement noise covariates, so</font></i>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> sim_row<font color="#990000">[</font><font color="#FF0000">'data_sim_delta'</font><font color="#990000">]</font> <font color="#990000">/</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-7</font>
 <i><font color="#9A1900"># Compute the model value for the measurement (with no noise)</font></i>
 <i><font color="#9A1900"># Note that age_lower is equal age_upper</font></i>

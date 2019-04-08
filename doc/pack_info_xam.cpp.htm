@@ -54,65 +54,16 @@ A:active { color : purple }
 <td><a href="pack_info_mulcov_rate.htm" target="_top">Prev</a>
 </td><td><a href="pack_prior.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down4(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down3(this)'>
-<option>devel-&gt;</option>
-<option>devel_table</option>
-<option>devel_utility</option>
-<option>devel_model</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>devel_utility-&gt;</option>
-<option>a1_double</option>
-<option>avgint_subset</option>
-<option>bilinear_interp</option>
-<option>child_info</option>
-<option>cohort_ode</option>
-<option>data_subset</option>
-<option>eigen_ode2</option>
-<option>error_exit</option>
-<option>fixed_effect</option>
-<option>get_prior_mean</option>
-<option>number_random_const</option>
-<option>age_avg_grid</option>
-<option>pack_info</option>
-<option>pack_prior</option>
-<option>residual_density</option>
-<option>random_number</option>
-<option>random_effect</option>
-<option>grid2line</option>
-<option>solve_ode</option>
-<option>split_space</option>
-<option>time_line_vec</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_utility_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>pack_info-&gt;</option>
-<option>pack_info_ctor</option>
-<option>pack_info_mulstd</option>
-<option>pack_info_rate_info</option>
-<option>pack_info_mulcov_meas</option>
-<option>pack_info_mulcov_rate</option>
-<option>pack_info_xam.cpp</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_pack_info_htm.js'></script>
 </td>
 <td>pack_info_xam.cpp</td>
 </tr></table><br>
@@ -163,7 +114,7 @@ A:active { color : purple }
      mulcov_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>integrand_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>covariate_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>smooth_id    <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
-     mulcov_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>mulcov_type  <font color="#990000">=</font> dismod_at<font color="#990000">::</font>meas_std_enum<font color="#990000">;</font>
+     mulcov_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>mulcov_type  <font color="#990000">=</font> dismod_at<font color="#990000">::</font>meas_noise_enum<font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>rate_id      <font color="#990000">=</font> DISMOD_AT_NULL_INT<font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>integrand_id <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">].</font>covariate_id <font color="#990000">=</font> <font color="#993399">2</font><font color="#990000">;</font>
@@ -250,11 +201,11 @@ A:active { color : purple }
                <font color="#FF0000">}</font>
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// set mulcov_meas_std</font></i>
+     <i><font color="#9A1900">// set mulcov_meas_noise</font></i>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> integrand_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> integrand_id <font color="#990000">&lt;</font> n_integrand<font color="#990000">;</font> integrand_id<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n_cov <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_std_n_cov</font></b><font color="#990000">(</font>integrand_id<font color="#990000">);</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n_cov <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_noise_n_cov</font></b><font color="#990000">(</font>integrand_id<font color="#990000">);</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_cov<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    info   <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_std_info</font></b><font color="#990000">(</font>integrand_id<font color="#990000">,</font> j<font color="#990000">);</font>
+          <font color="#FF0000">{</font>    info   <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_noise_info</font></b><font color="#990000">(</font>integrand_id<font color="#990000">,</font> j<font color="#990000">);</font>
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>
@@ -315,15 +266,15 @@ A:active { color : purple }
                ok <font color="#990000">&amp;=</font> n_var <font color="#990000">==</font> n_age <font color="#990000">*</font> n_time<font color="#990000">;</font>
           <font color="#FF0000">}</font>
      <font color="#FF0000">}</font>
-     <i><font color="#9A1900">// check mulcov_meas_std</font></i>
+     <i><font color="#9A1900">// check mulcov_meas_noise</font></i>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> integrand_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> integrand_id <font color="#990000">&lt;</font> n_integrand<font color="#990000">;</font> integrand_id<font color="#990000">++)</font>
-     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n_cov <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_std_n_cov</font></b><font color="#990000">(</font>integrand_id<font color="#990000">);</font>
+     <font color="#FF0000">{</font>    <font color="#008080">size_t</font> n_cov <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_noise_n_cov</font></b><font color="#990000">(</font>integrand_id<font color="#990000">);</font>
           <font color="#008080">size_t</font> check <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> integrand_id <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">)</font>
                check <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font>
           ok <font color="#990000">&amp;=</font> n_cov <font color="#990000">==</font> check<font color="#990000">;</font>
           <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> j <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> j <font color="#990000">&lt;</font> n_cov<font color="#990000">;</font> j<font color="#990000">++)</font>
-          <font color="#FF0000">{</font>    info   <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_std_info</font></b><font color="#990000">(</font>integrand_id<font color="#990000">,</font> j<font color="#990000">);</font>
+          <font color="#FF0000">{</font>    info   <font color="#990000">=</font> pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_noise_info</font></b><font color="#990000">(</font>integrand_id<font color="#990000">,</font> j<font color="#990000">);</font>
                offset <font color="#990000">=</font> info<font color="#990000">.</font>offset<font color="#990000">;</font>
                n_var  <font color="#990000">=</font> info<font color="#990000">.</font>n_var<font color="#990000">;</font>
                <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> k <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> k <font color="#990000">&lt;</font> n_var<font color="#990000">;</font> k<font color="#990000">++)</font>

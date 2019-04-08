@@ -55,39 +55,16 @@ A:active { color : purple }
 <td><a href="prior_random_effect.htm" target="_top">Prev</a>
 </td><td><a href="fit_model.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down4(this)'>
-<option>devel-&gt;</option>
-<option>devel_table</option>
-<option>devel_utility</option>
-<option>devel_model</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down3(this)'>
-<option>devel_model-&gt;</option>
-<option>devel_data_model</option>
-<option>prior_model</option>
-<option>fit_model</option>
-<option>depend</option>
-<option>adj_integrand</option>
-<option>devel_avg_integrand</option>
-<option>devel_avg_std_effect</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_model_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>prior_model-&gt;</option>
-<option>prior_model_ctor</option>
-<option>replace_mean</option>
-<option>prior_fixed_effect</option>
-<option>prior_random_effect</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_prior_model_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>prior_random_effect-&gt;</option>
-<option>prior_random_xam.cpp</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_prior_random_effect_htm.js'></script>
 </td>
 <td>prior_random_xam.cpp</td>
 </tr></table><br>
@@ -327,7 +304,7 @@ A:active { color : purple }
      dismod_at<font color="#990000">::</font><font color="#008080">pack_prior</font> <b><font color="#000000">var2prior</font></b><font color="#990000">(</font>pack_object<font color="#990000">,</font> s_info_vec<font color="#990000">);</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// mulcov_meas_value: none</font></i>
-     <i><font color="#9A1900">// mulcov_meas_std: none</font></i>
+     <i><font color="#9A1900">// mulcov_meas_noise: none</font></i>
      <i><font color="#9A1900">// mulcov_rate_value: none</font></i>
      dismod_at<font color="#990000">::</font><font color="#008080">prior_model</font> <b><font color="#000000">prior_object</font></b><font color="#990000">(</font>
           pack_object<font color="#990000">,</font> var2prior<font color="#990000">,</font> age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> prior_table

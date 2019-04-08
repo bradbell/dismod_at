@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint meas_std_effect zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -53,56 +53,16 @@ A:active { color : purple }
 <td><a href="nslist_table.py.htm" target="_top">Prev</a>
 </td><td><a href="option_table.py.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down3(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>database-&gt;</option>
-<option>input</option>
-<option>data_flow</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_database_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>input-&gt;</option>
-<option>age_table</option>
-<option>avgint_table</option>
-<option>covariate_table</option>
-<option>data_table</option>
-<option>density_table</option>
-<option>integrand_table</option>
-<option>mulcov_table</option>
-<option>node_table</option>
-<option>nslist_pair_table</option>
-<option>nslist_table</option>
-<option>option_table</option>
-<option>prior_table</option>
-<option>rate_table</option>
-<option>smooth_grid_table</option>
-<option>smooth_table</option>
-<option>time_table</option>
-<option>weight_grid_table</option>
-<option>weight_table</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_input_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down0(this)'>
-<option>option_table-&gt;</option>
-<option>option_table.py</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_option_table_htm.js'></script>
 </td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
@@ -121,8 +81,9 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Data Subset Table" target="_top">Data&nbsp;Subset&nbsp;Table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Avgint Subset Table" target="_top">Avgint&nbsp;Subset&nbsp;Table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Changing" target="_top">Changing</a>
-<br><a href="option_table.htm#meas_std_effect" target="_top">meas_std_effect</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_std_effect.Default" target="_top">Default</a>
+<br><a href="option_table.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
+<br><a href="option_table.htm#meas_std_effect: Deprecated 2019-04-07" target="_top">meas_std_effect:&nbsp;Deprecated&nbsp;2019-04-07</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_std_effect: Deprecated 2019-04-07.Default" target="_top">Default</a>
 <br><a href="option_table.htm#zero_sum_random" target="_top">zero_sum_random</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#zero_sum_random.Default" target="_top">Default</a>
 <br><a href="option_table.htm#data_extra_columns" target="_top">data_extra_columns</a>
@@ -318,12 +279,12 @@ because it is used by all the commands.
 
 <br>
 <br>
-<b><big><a name="meas_std_effect" id="meas_std_effect">meas_std_effect</a></big></b>
+<b><big><a name="meas_noise_effect" id="meas_noise_effect">meas_noise_effect</a></big></b>
 <br>
 There are four options for how the
-<a href="data_like.htm#Average Standard Deviation Effect" target="_top"><span style='white-space: nowrap'>average&nbsp;standard&nbsp;deviation&nbsp;effect</span></a>
+<a href="data_like.htm#Average Noise Effect" target="_top"><span style='white-space: nowrap'>average&nbsp;noise&nbsp;effect</span></a>
 
-changes the measurement standard deviation.
+changes the measurement noise.
 The possible options are
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_std_scale_all" target="_top"><span style='white-space: nowrap'>add_std_scale_all</span></a>
 ,
@@ -336,7 +297,16 @@ The possible options are
 
 <br>
 <br>
-<big><a name="meas_std_effect.Default" id="meas_std_effect.Default">Default</a></big>
+<b><big><a name="meas_std_effect: Deprecated 2019-04-07" id="meas_std_effect: Deprecated 2019-04-07">meas_std_effect: Deprecated 2019-04-07</a></big></b>
+<br>
+This option is deprecated but still works (may not work in the future).
+It should be changed to use its new name 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_noise_effect</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="meas_std_effect: Deprecated 2019-04-07.Default" id="meas_std_effect: Deprecated 2019-04-07.Default">Default</a></big>
 <br>
 The default value for this option is <code><font color="blue">add_std_scale_all</font></code>.
 

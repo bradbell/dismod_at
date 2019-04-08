@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Likelihood and Weighted Residuals</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Likelihood and Weighted Residuals">
-<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement standard deviation covariates k_i gamma_j effects u theta average integrand effect adjusted scaling add variance add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log residual ">
+<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement noise covariates k_i gamma_j effects u theta average integrand effect adjusted standard deviation scaling add variance add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log residual ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -52,40 +52,10 @@ A:active { color : purple }
 <td><a href="avg_integrand.htm" target="_top">Prev</a>
 </td><td><a href="fixed_value.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down2(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>model-&gt;</option>
-<option>model_variables</option>
-<option>avg_integrand</option>
-<option>data_like</option>
-<option>fixed_value</option>
-<option>fixed_diff</option>
-<option>fixed_prior</option>
-<option>random_value</option>
-<option>random_diff</option>
-<option>random_prior</option>
-<option>statistic</option>
-<option>bilinear</option>
-<option>ode_grid</option>
-<option>posterior</option>
-<option>prev_dep</option>
-<option>numeric_average</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_model_htm.js'></script>
 </td>
 <td>data_like</td>
 </tr></table><br>
@@ -108,12 +78,12 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.x_ij" target="_top">x_ij</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.w_i" target="_top">w_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.Delta_i" target="_top">Delta_i</a>
-<br><a href="data_like.htm#Measurement Standard Deviation Covariates" target="_top">Measurement&nbsp;Standard&nbsp;Deviation&nbsp;Covariates</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Standard Deviation Covariates.K_i" target="_top">K_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Standard Deviation Covariates.gamma_j" target="_top">gamma_j</a>
+<br><a href="data_like.htm#Measurement Noise Covariates" target="_top">Measurement&nbsp;Noise&nbsp;Covariates</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Noise Covariates.K_i" target="_top">K_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top">gamma_j</a>
 <br><a href="data_like.htm#Effects, u, theta" target="_top">Effects,&nbsp;u,&nbsp;theta</a>
 <br><a href="data_like.htm#Average Integrand" target="_top">Average&nbsp;Integrand</a>
-<br><a href="data_like.htm#Average Standard Deviation Effect" target="_top">Average&nbsp;Standard&nbsp;Deviation&nbsp;Effect</a>
+<br><a href="data_like.htm#Average Noise Effect" target="_top">Average&nbsp;Noise&nbsp;Effect</a>
 <br><a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top">Adjusted&nbsp;Standard&nbsp;Deviation,&nbsp;delta_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.Scaling" target="_top">Scaling</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.Add Variance or Standard Deviation" target="_top">Add&nbsp;Variance&nbsp;or&nbsp;Standard&nbsp;Deviation</a>
@@ -270,12 +240,12 @@ for the modified standard deviation used for this data
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta_i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
 </span></font></code>
 <br>
-<b><big><a name="Measurement Standard Deviation Covariates" id="Measurement Standard Deviation Covariates">Measurement Standard Deviation Covariates</a></big></b>
+<b><big><a name="Measurement Noise Covariates" id="Measurement Noise Covariates">Measurement Noise Covariates</a></big></b>
 
 
 <br>
 <br>
-<big><a name="Measurement Standard Deviation Covariates.K_i" id="Measurement Standard Deviation Covariates.K_i">K_i</a></big>
+<big><a name="Measurement Noise Covariates.K_i" id="Measurement Noise Covariates.K_i">K_i</a></big>
 <br>
 There is a set of rows in the mulcov table such that
 <a href="mulcov_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
@@ -284,7 +254,7 @@ I_i
 @)@</small>.
 and
 <a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
- is equal to <code><font color="blue">meas_std</font></code>.
+ is equal to <code><font color="blue">meas_noise</font></code>.
 We use <small>@(@
 K_i
 @)@</small> to denote the corresponding set of
@@ -294,7 +264,7 @@ which this is the case.
 
 <br>
 <br>
-<big><a name="Measurement Standard Deviation Covariates.gamma_j" id="Measurement Standard Deviation Covariates.gamma_j">gamma_j</a></big>
+<big><a name="Measurement Noise Covariates.gamma_j" id="Measurement Noise Covariates.gamma_j">gamma_j</a></big>
 <br>
 For each covariate index <small>@(@
 j \in K_i
@@ -309,7 +279,7 @@ variables for the corresponding
 <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
 .
 Note that these are only
-<a href="mulcov_table.htm#mulcov_type.meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
  covariate multipliers.
 
 <br>
@@ -355,9 +325,9 @@ A_i ( u , \theta )
 
 <br>
 <br>
-<b><big><a name="Average Standard Deviation Effect" id="Average Standard Deviation Effect">Average Standard Deviation Effect</a></big></b>
+<b><big><a name="Average Noise Effect" id="Average Noise Effect">Average Noise Effect</a></big></b>
 <br>
-We define the average standard deviation effect by
+We define the average noise effect by
 <small>@[@
 
 E_i ( \theta )
@@ -420,25 +390,23 @@ E_i ( \theta )
 <br>
 <big><a name="Adjusted Standard Deviation, delta_i.Add Variance or Standard Deviation" id="Adjusted Standard Deviation, delta_i.Add Variance or Standard Deviation">Add Variance or Standard Deviation</a></big>
 <br>
-Adding Variances, instead of standard deviations, requires more
+Adding standard deviations requires fewer
 floating point operations (for every data point)
 but this is not expected to be significant.
-It is not clear that adding variances
-will give a significantly different results,
-In fact, when one scales by <small>@(@
-\Delta_i
-@)@</small> and there is only one
-covariate multiplier, the maximum likelihood problems are equivalent,
-aside from the value of the covariate multiplier <small>@(@
-\gamma_j
-@)@</small>
-being different.
+In addition, if the covariate value is one, the covariate multipliers
+have the same units as the data.
+On the other hand, an initial value of zero does not work well
+in this case because the derivative of the object with respect to the
+multiplier is zero.
+Adding variances does not have this problem,
+but when the covariate value is one, the covariate multipliers
+have data squared units.
 
 <br>
 <br>
 <big><a name="Adjusted Standard Deviation, delta_i.add_std_scale_all" id="Adjusted Standard Deviation, delta_i.add_std_scale_all">add_std_scale_all</a></big>
 <br>
-If <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is
 <code><font color="blue">add_std_scale_all</font></code> (add standard deviations and scale all cases)
 the adjusted standard deviation is
@@ -452,7 +420,7 @@ the adjusted standard deviation is
 <br>
 <big><a name="Adjusted Standard Deviation, delta_i.add_std_scale_log" id="Adjusted Standard Deviation, delta_i.add_std_scale_log">add_std_scale_log</a></big>
 <br>
-If <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is
 <code><font color="blue">add_std_scale_log</font></code>
 (add standard deviations and only scale log density cases)
@@ -473,7 +441,7 @@ for the log density cases. Otherwise it is
 <br>
 <big><a name="Adjusted Standard Deviation, delta_i.add_var_scale_all" id="Adjusted Standard Deviation, delta_i.add_var_scale_all">add_var_scale_all</a></big>
 <br>
-If <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is
 <code><font color="blue">add_var_scale_all</font></code> (add variances and scale all cases)
 the adjusted standard deviation is
@@ -487,7 +455,7 @@ the adjusted standard deviation is
 <br>
 <big><a name="Adjusted Standard Deviation, delta_i.add_var_scale_log" id="Adjusted Standard Deviation, delta_i.add_var_scale_log">add_var_scale_log</a></big>
 <br>
-If <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is
 <code><font color="blue">add_var_scale_log</font></code>
 (add variances and only scale log density cases)

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Devel Pack Variables: Measurement Covariate Multipliers</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Devel Pack Variables: Measurement Covariate Multipliers">
-<meta name="keywords" id="keywords" content=" devel pack variables: measurement covariate multipliers syntax meas_value meas_std subvec_info pack_object integrand_id n_cov j info covariate_id smooth_id n_var offset example ">
+<meta name="keywords" id="keywords" content=" devel pack variables: measurement covariate multipliers syntax meas_value meas_noise subvec_info pack_object integrand_id n_cov j info covariate_id smooth_id n_var offset example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -54,65 +54,16 @@ A:active { color : purple }
 <td><a href="pack_info_rate_info.htm" target="_top">Prev</a>
 </td><td><a href="pack_info_mulcov_rate.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down4(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down3(this)'>
-<option>devel-&gt;</option>
-<option>devel_table</option>
-<option>devel_utility</option>
-<option>devel_model</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>devel_utility-&gt;</option>
-<option>a1_double</option>
-<option>avgint_subset</option>
-<option>bilinear_interp</option>
-<option>child_info</option>
-<option>cohort_ode</option>
-<option>data_subset</option>
-<option>eigen_ode2</option>
-<option>error_exit</option>
-<option>fixed_effect</option>
-<option>get_prior_mean</option>
-<option>number_random_const</option>
-<option>age_avg_grid</option>
-<option>pack_info</option>
-<option>pack_prior</option>
-<option>residual_density</option>
-<option>random_number</option>
-<option>random_effect</option>
-<option>grid2line</option>
-<option>solve_ode</option>
-<option>split_space</option>
-<option>time_line_vec</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_utility_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>pack_info-&gt;</option>
-<option>pack_info_ctor</option>
-<option>pack_info_mulstd</option>
-<option>pack_info_rate_info</option>
-<option>pack_info_mulcov_meas</option>
-<option>pack_info_mulcov_rate</option>
-<option>pack_info_xam.cpp</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_pack_info_htm.js'></script>
 </td>
 <td>pack_info_mulcov_meas</td>
 </tr></table><br>
@@ -125,7 +76,7 @@ A:active { color : purple }
 
 <br><a href="pack_info_mulcov_meas.htm#Syntax" target="_top">Syntax</a>
 <br><a href="pack_info_mulcov_meas.htm#meas_value" target="_top">meas_value</a>
-<br><a href="pack_info_mulcov_meas.htm#meas_std" target="_top">meas_std</a>
+<br><a href="pack_info_mulcov_meas.htm#meas_noise" target="_top">meas_noise</a>
 <br><a href="pack_info_mulcov_meas.htm#subvec_info" target="_top">subvec_info</a>
 <br><a href="pack_info_mulcov_meas.htm#pack_object" target="_top">pack_object</a>
 <br><a href="pack_info_mulcov_meas.htm#integrand_id" target="_top">integrand_id</a>
@@ -145,13 +96,13 @@ A:active { color : purple }
 <code><i><font color="black"><span style='white-space: nowrap'>n_cov</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.mulcov_meas_value_n_cov(</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>n_cov</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.mulcov_meas_std_n_cov(</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>n_cov</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.mulcov_meas_noise_n_cov(</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
 <code><i><font color="black"><span style='white-space: nowrap'>info</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.mulcov_meas_value_info(</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 
-<code><i><font color="black"><span style='white-space: nowrap'>info</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.mulcov_meas_std_info(</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>info</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pack_object</span></font></i><font color="blue"><span style='white-space: nowrap'>.mulcov_meas_noise_info(</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="meas_value" id="meas_value">meas_value</a></big></b>
@@ -163,13 +114,12 @@ return information about the measurement mean covariate multipliers.
 
 <br>
 <br>
-<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
+<b><big><a name="meas_noise" id="meas_noise">meas_noise</a></big></b>
 <br>
 The functions
-<code><font color="blue">mulcov_meas_std_n_cov</font></code> and
-<code><font color="blue">mulcov_meas_std_info</font></code>
-return information about the measurement standard deviation
-covariate multipliers.
+<code><font color="blue">mulcov_meas_noise_n_cov</font></code> and
+<code><font color="blue">mulcov_meas_noise_info</font></code>
+return information about the measurement noise covariate multipliers.
 
 <br>
 <br>

@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Fitting Data Standard Deviations, Gamma</title>
+<title>Fitting Measurement Noise Covariate Multipliers, Gamma</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Fitting Data Standard Deviations, Gamma">
-<meta name="keywords" id="keywords" content=" fitting data standard deviations gamma random effects iota other rates covariate multiplier meas_std_effect scaling ">
+<meta name="description" id="description" content="Fitting Measurement Noise Covariate Multipliers, Gamma">
+<meta name="keywords" id="keywords" content=" fitting measurement noise covariate multipliers gamma random effects iota other rates multiplier data meas_noise_effect scaling ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -52,62 +52,23 @@ A:active { color : purple }
 <td><a href="user_fit_sim.py.htm" target="_top">Prev</a>
 </td><td><a href="age_avg_split.py.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down2(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>user-&gt;</option>
-<option>user_csv2db.py</option>
-<option>user_fit_random.py</option>
-<option>user_fit_fixed_both.py</option>
-<option>user_posterior.py</option>
-<option>user_fit_sim.py</option>
-<option>user_fit_gamma.py</option>
-<option>age_avg_split.py</option>
-<option>user_diabetes.py</option>
-<option>user_ill_condition.py</option>
-<option>user_jump_at_age.py</option>
-<option>user_asymptotic.py</option>
-<option>user_change_grid.py</option>
-<option>user_const_random.py</option>
-<option>user_const_value.py</option>
-<option>user_continue_fit.py</option>
-<option>user_diff_constraint.py</option>
-<option>user_lasso_covariate.py</option>
-<option>user_meas_covariate.py</option>
-<option>user_no_children.py</option>
-<option>user_predict_fit.py</option>
-<option>user_zero_sum_random.py</option>
-<option>user_re_scale.py</option>
-<option>user_speed.py</option>
-<option>user_students.py</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
 </td>
 <td>user_fit_gamma.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting Data Standard Deviations, Gamma</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting Measurement Noise Covariate Multipliers, Gamma</big></big></b></center>
 
 <br><a href="user_fit_gamma.py.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
 <br><a href="user_fit_gamma.py.htm#Iota" target="_top">Iota</a>
 <br><a href="user_fit_gamma.py.htm#Other Rates" target="_top">Other&nbsp;Rates</a>
 <br><a href="user_fit_gamma.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
 <br><a href="user_fit_gamma.py.htm#Data" target="_top">Data</a>
-<br><a href="user_fit_gamma.py.htm#meas_std_effect" target="_top">meas_std_effect</a>
+<br><a href="user_fit_gamma.py.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
 <br><a href="user_fit_gamma.py.htm#Scaling Gamma" target="_top">Scaling&nbsp;Gamma</a>
 <br><br>
 <b><big><a name="Random Effects" id="Random Effects">Random Effects</a></big></b>
@@ -149,8 +110,8 @@ for the other rates.
 <br>
 There is one covariate multiplier on the covariate column <code><font color="blue">one</font></code>
 (which has the constant value one) and the rate <code><font color="blue">iota</font></code>.
-This is a measurement standard deviation covariate multiplier
-<a href="data_like.htm#Measurement Standard Deviation Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma</span></a>
+This is a measurement noise covariate multiplier
+<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma</span></a>
 .
 The prior for this multiplier is a uniform on the interval from zero
 to 
@@ -180,9 +141,9 @@ deviation
 
 <br>
 <br>
-<b><big><a name="meas_std_effect" id="meas_std_effect">meas_std_effect</a></big></b>
+<b><big><a name="meas_noise_effect" id="meas_noise_effect">meas_noise_effect</a></big></b>
 <br>
-see <a href="option_table.htm#meas_std_effect" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+see <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
 .
 
 <br>
@@ -193,7 +154,7 @@ The function <code><font color="blue">gamma_true()</font></code> shows on the sc
 <code><i><font color="black"><span style='white-space: nowrap'>gamma</span></font></i></code>
 
 depends on the value of 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_std_effect</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>meas_noise_effect</span></font></i></code>
 .
 
 <pre><tt><i><font color="#9A1900"># You can changed the values below and rerun this program</font></i>
@@ -201,18 +162,18 @@ iota_true          <font color="#990000">=</font> <font color="#993399">0.01</fo
 scale_gamma_true   <font color="#990000">=</font> <font color="#993399">2.0</font>
 n_data             <font color="#990000">=</font> <font color="#993399">1000</font>
 meas_std           <font color="#990000">=</font> <font color="#993399">0.001</font>
-meas_std_effect    <font color="#990000">=</font> <font color="#FF0000">'add_std_scale_all'</font>
+meas_noise_effect  <font color="#990000">=</font> <font color="#FF0000">'add_std_scale_all'</font>
 <i><font color="#9A1900"># You can changed the values above and rerun this program</font></i>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">gamma_true</font></b><font color="#990000">()</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">if</font></b> meas_std_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_all'</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_all'</font> <font color="#990000">:</font>
           result <font color="#990000">=</font> scale_gamma_true
-     <b><font color="#0000FF">elif</font></b> meas_std_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_log'</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">elif</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_log'</font> <font color="#990000">:</font>
           result <font color="#990000">=</font> scale_gamma_true <font color="#990000">*</font> meas_std
-     <b><font color="#0000FF">elif</font></b> meas_std_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_all'</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">elif</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_all'</font> <font color="#990000">:</font>
           result <font color="#990000">=</font> scale_gamma_true
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-          <b><font color="#0000FF">assert</font></b> meas_std_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_log'</font>
+          <b><font color="#0000FF">assert</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_log'</font>
           result <font color="#990000">=</font> scale_gamma_true <font color="#990000">*</font> meas_std <font color="#990000">*</font> meas_std
      <b><font color="#0000FF">return</font></b> result
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
@@ -283,7 +244,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      mulcov_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font>
                <font color="#FF0000">'covariate'</font><font color="#990000">:</font> <font color="#FF0000">'one'</font><font color="#990000">,</font>
-               <font color="#FF0000">'type'</font><font color="#990000">:</font>      <font color="#FF0000">'meas_std'</font><font color="#990000">,</font>
+               <font color="#FF0000">'type'</font><font color="#990000">:</font>      <font color="#FF0000">'meas_noise'</font><font color="#990000">,</font>
                <font color="#FF0000">'effected'</font><font color="#990000">:</font>  <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font>
                <font color="#FF0000">'smooth'</font><font color="#990000">:</font>    <font color="#FF0000">'smooth_gamma'</font>
           <font color="#990000">}</font>
@@ -362,7 +323,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># option_table</font></i>
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'meas_std_effect'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font>meas_std_effect     <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'meas_noise_effect'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font>meas_noise_effect     <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font> <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>             <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
@@ -424,7 +385,7 @@ var_id2true  <font color="#990000">=</font> <b><font color="#000000">list</font>
      var_info        <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
      truth_var_value <font color="#990000">=</font> None
      var_type        <font color="#990000">=</font> var_info<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font>
-     <b><font color="#0000FF">if</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'mulcov_meas_std'</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'mulcov_meas_noise'</font> <font color="#990000">:</font>
           integrand_id  <font color="#990000">=</font> var_info<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
           integrand_name <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
           <b><font color="#0000FF">if</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'Sincidence'</font> <font color="#990000">:</font>

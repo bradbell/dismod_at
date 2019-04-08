@@ -55,40 +55,16 @@ A:active { color : purple }
 <td><a href="data_model_like_one.htm" target="_top">Prev</a>
 </td><td><a href="data_model_like_all.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down4(this)'>
-<option>devel-&gt;</option>
-<option>devel_table</option>
-<option>devel_utility</option>
-<option>devel_model</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down3(this)'>
-<option>devel_model-&gt;</option>
-<option>devel_data_model</option>
-<option>prior_model</option>
-<option>fit_model</option>
-<option>depend</option>
-<option>adj_integrand</option>
-<option>devel_avg_integrand</option>
-<option>devel_avg_std_effect</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_model_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>devel_data_model-&gt;</option>
-<option>data_model_ctor</option>
-<option>data_model_replace_like</option>
-<option>data_model_average</option>
-<option>data_model_like_one</option>
-<option>data_model_like_all</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_data_model_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>data_model_like_one-&gt;</option>
-<option>like_one_xam.cpp</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_data_model_like_one_htm.js'></script>
 </td>
 <td>like_one_xam.cpp</td>
 </tr></table><br>
@@ -288,14 +264,14 @@ A:active { color : purple }
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// data_model</font></i>
      <font color="#009900">double</font> bound_random <font color="#990000">=</font> std<font color="#990000">::</font>numeric_limits<font color="#990000">&lt;</font><font color="#009900">double</font><font color="#990000">&gt;::</font><b><font color="#000000">infinity</font></b><font color="#990000">();</font>
-     std<font color="#990000">::</font><font color="#008080">string</font> meas_std_effect <font color="#990000">=</font> <font color="#FF0000">"add_std_scale_all"</font><font color="#990000">;</font>
+     std<font color="#990000">::</font><font color="#008080">string</font> meas_noise_effect <font color="#990000">=</font> <font color="#FF0000">"add_std_scale_all"</font><font color="#990000">;</font>
      std<font color="#990000">::</font><font color="#008080">string</font> rate_case       <font color="#990000">=</font> <font color="#FF0000">"iota_pos_rho_pos"</font><font color="#990000">;</font>
      std<font color="#990000">::</font><font color="#008080">string</font> age_avg_split   <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
      <font color="#008080">vector&lt;double&gt;</font> age_avg_grid <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">age_avg_grid</font></b><font color="#990000">(</font>
           ode_step_size<font color="#990000">,</font> age_avg_split<font color="#990000">,</font> age_table
      <font color="#990000">);</font>
      dismod_at<font color="#990000">::</font><font color="#008080">data_model</font> <b><font color="#000000">data_object</font></b><font color="#990000">(</font>
-          meas_std_effect<font color="#990000">,</font>
+          meas_noise_effect<font color="#990000">,</font>
           rate_case<font color="#990000">,</font>
           bound_random<font color="#990000">,</font>
           n_covariate<font color="#990000">,</font>

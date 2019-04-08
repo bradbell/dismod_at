@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The mulcov Table: Covariate Multipliers</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The mulcov Table: Covariate Multipliers">
-<meta name="keywords" id="keywords" content=" the mulcov table: covariate multipliers mulcov_id mulcov_type rate_value meas_value meas_std rate_id integrand_id covariate_id smooth_id null pini example ">
+<meta name="keywords" id="keywords" content=" the mulcov table: covariate multipliers mulcov_id mulcov_type rate_value meas_value meas_noise meas_std: deprecated 2019-04-07 rate_id integrand_id covariate_id smooth_id null pini example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -53,56 +53,16 @@ A:active { color : purple }
 <td><a href="integrand_table.py.htm" target="_top">Prev</a>
 </td><td><a href="mulcov_table.py.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down3(this)'>
-<option>dismod_at-&gt;</option>
-<option>math_abstract</option>
-<option>install_unix</option>
-<option>get_started</option>
-<option>user</option>
-<option>database</option>
-<option>model</option>
-<option>command</option>
-<option>python</option>
-<option>devel</option>
-<option>whats_new_2019</option>
-<option>wish_list</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>database-&gt;</option>
-<option>input</option>
-<option>data_flow</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_database_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>input-&gt;</option>
-<option>age_table</option>
-<option>avgint_table</option>
-<option>covariate_table</option>
-<option>data_table</option>
-<option>density_table</option>
-<option>integrand_table</option>
-<option>mulcov_table</option>
-<option>node_table</option>
-<option>nslist_pair_table</option>
-<option>nslist_table</option>
-<option>option_table</option>
-<option>prior_table</option>
-<option>rate_table</option>
-<option>smooth_grid_table</option>
-<option>smooth_table</option>
-<option>time_table</option>
-<option>weight_grid_table</option>
-<option>weight_table</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_input_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down0(this)'>
-<option>mulcov_table-&gt;</option>
-<option>mulcov_table.py</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_mulcov_table_htm.js'></script>
 </td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
@@ -113,7 +73,8 @@ A:active { color : purple }
 <br><a href="mulcov_table.htm#mulcov_type" target="_top">mulcov_type</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top">rate_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_value" target="_top">meas_value</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_std" target="_top">meas_std</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top">meas_noise</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_std: Deprecated 2019-04-07" target="_top">meas_std:&nbsp;Deprecated&nbsp;2019-04-07</a>
 <br><a href="mulcov_table.htm#rate_id" target="_top">rate_id</a>
 <br><a href="mulcov_table.htm#integrand_id" target="_top">integrand_id</a>
 <br><a href="mulcov_table.htm#covariate_id" target="_top">covariate_id</a>
@@ -172,13 +133,19 @@ This covariate multiplier adjusts the average integrand to match the
 
 <br>
 <br>
-<big><a name="mulcov_type.meas_std" id="mulcov_type.meas_std">meas_std</a></big>
+<big><a name="mulcov_type.meas_noise" id="mulcov_type.meas_noise">meas_noise</a></big>
 <br>
-This covariate multiplier adjusts the
-<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>measurement&nbsp;standard&nbsp;deviation</span></a>
-; see
-<a href="data_like.htm#Measurement Standard Deviation Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
+This covariate multiplier adjusts the measurement noise; see
+<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
 .
+
+<br>
+<br>
+<big><a name="mulcov_type.meas_std: Deprecated 2019-04-07" id="mulcov_type.meas_std: Deprecated 2019-04-07">meas_std: Deprecated 2019-04-07</a></big>
+<br>
+The covariate multiplier type <code><font color="blue">meas_std</font></code>
+is the same as <code><font color="blue">meas_noise</font></code>.
+The type <code><font color="blue">meas_std</font></code> still works but has been deprecated.
 
 <br>
 <br>
@@ -196,7 +163,7 @@ If
 the rate that this covariate and multiplier effects.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
- is <code><font color="blue">meas_value</font></code> or <code><font color="blue">meas_std</font></code>,
+ is <code><font color="blue">meas_value</font></code> or <code><font color="blue">meas_noise</font></code>,
 this column must be <code><font color="blue">null</font></code>.
 
 <br>
@@ -206,7 +173,7 @@ this column must be <code><font color="blue">null</font></code>.
 This column has type <code><font color="blue">integer</font></code>.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
- is <code><font color="blue">meas_value</font></code> or <code><font color="blue">meas_std</font></code>,
+ is <code><font color="blue">meas_value</font></code> or <code><font color="blue">meas_noise</font></code>,
 
 <code><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i></code>
  is the

@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>C++ avg_std_effect: Example and Test</title>
+<title>C++ avg_noise_effect: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="C++ avg_std_effect: Example and Test">
-<meta name="keywords" id="keywords" content=" c++ avg_std_effect: example test ">
+<meta name="description" id="description" content="C++ avg_noise_effect: Example and Test">
+<meta name="keywords" id="keywords" content=" c++ avg_noise_effect: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_avg_std_effect_xam.cpp_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_avg_noise_effect_xam.cpp_htm.js'>
 </script>
 </head>
 <body>
@@ -37,9 +37,9 @@ A:active { color : purple }
 <option>dismod_at</option>
 <option>devel</option>
 <option>devel_model</option>
-<option>devel_avg_std_effect</option>
-<option>avg_std_effect_rectangle</option>
-<option>avg_std_effect_xam.cpp</option>
+<option>devel_avg_noise_effect</option>
+<option>avg_noise_effect_rectangle</option>
+<option>avg_noise_effect_xam.cpp</option>
 </select>
 </td>
 <td>
@@ -52,52 +52,31 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="avg_std_effect_rectangle.htm" target="_top">Prev</a>
+<td><a href="avg_noise_effect_rectangle.htm" target="_top">Prev</a>
 </td><td><a href="whats_new_2019.htm" target="_top">Next</a>
 </td><td>
-<select onchange='choose_down4(this)'>
-<option>devel-&gt;</option>
-<option>devel_table</option>
-<option>devel_utility</option>
-<option>devel_model</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down3(this)'>
-<option>devel_model-&gt;</option>
-<option>devel_data_model</option>
-<option>prior_model</option>
-<option>fit_model</option>
-<option>depend</option>
-<option>adj_integrand</option>
-<option>devel_avg_integrand</option>
-<option>devel_avg_std_effect</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_model_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down2(this)'>
-<option>devel_avg_std_effect-&gt;</option>
-<option>avg_std_effect_ctor</option>
-<option>avg_std_effect_rectangle</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_devel_avg_noise_effect_htm.js'></script>
 </td>
 <td>
-<select onchange='choose_down1(this)'>
-<option>avg_std_effect_rectangle-&gt;</option>
-<option>avg_std_effect_xam.cpp</option>
-</select>
+<script type='text/javascript' language='JavaScript' src='_childtable_avg_noise_effect_rectangle_htm.js'></script>
 </td>
-<td>avg_std_effect_xam.cpp</td>
+<td>avg_noise_effect_xam.cpp</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
-<center><b><big><big>C++ avg_std_effect: Example and Test</big></big></b></center>
+<center><b><big><big>C++ avg_noise_effect: Example and Test</big></big></b></center>
 
 <br><pre><tt><b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;limits&gt;</font>
-<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/avg_std_effect.hpp&gt;</font>
+<b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/avg_noise_effect.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/open_connection.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/null_int.hpp&gt;</font>
 <b><font color="#000080"># include</font></b> <font color="#FF0000">&lt;dismod_at/age_avg_grid.hpp&gt;</font>
@@ -123,7 +102,7 @@ A:active { color : purple }
           <b><font color="#0000FF">return</font></b> sum <font color="#990000">/</font> <font color="#993399">4.0</font><font color="#990000">;</font>
      <font color="#FF0000">}</font>
 <font color="#FF0000">}</font>
-<font color="#009900">bool</font> <b><font color="#000000">avg_std_effect_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
+<font color="#009900">bool</font> <b><font color="#000000">avg_noise_effect_xam</font></b><font color="#990000">(</font><font color="#009900">void</font><font color="#990000">)</font>
 <font color="#FF0000">{</font>    <font color="#009900">bool</font>   ok <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> CppAD<font color="#990000">::</font>vector<font color="#990000">;</font>
      <b><font color="#0000FF">using</font></b> std<font color="#990000">::</font>cout<font color="#990000">;</font>
@@ -227,7 +206,7 @@ A:active { color : purple }
      <font color="#FF0000">}</font>
      <i><font color="#9A1900">// mul_cov</font></i>
      <font color="#008080">vector&lt;dismod_at::mulcov_struct&gt;</font> <b><font color="#000000">mulcov_table</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">);</font>
-     mulcov_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>mulcov_type  <font color="#990000">=</font> dismod_at<font color="#990000">::</font>meas_std_enum<font color="#990000">;</font>
+     mulcov_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>mulcov_type  <font color="#990000">=</font> dismod_at<font color="#990000">::</font>meas_noise_enum<font color="#990000">;</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>rate_id      <font color="#990000">=</font>  <font color="#009900">int</font><font color="#990000">(</font> DISMOD_AT_NULL_INT <font color="#990000">);</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>integrand_id <font color="#990000">=</font>  <font color="#009900">int</font><font color="#990000">(</font> dismod_at<font color="#990000">::</font>mtother_enum <font color="#990000">);</font>
      mulcov_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>covariate_id <font color="#990000">=</font>  <font color="#993399">0</font><font color="#990000">;</font>
@@ -252,12 +231,12 @@ A:active { color : purple }
           child_id2node_id<font color="#990000">,</font> smooth_table<font color="#990000">,</font> mulcov_table<font color="#990000">,</font> rate_table<font color="#990000">,</font> nslist_pair
      <font color="#990000">);</font>
 
-     <i><font color="#9A1900">// avgstd_obj</font></i>
+     <i><font color="#9A1900">// avg_noise_obj</font></i>
      std<font color="#990000">::</font><font color="#008080">string</font> age_avg_split <font color="#990000">=</font> <font color="#FF0000">""</font><font color="#990000">;</font>
      <font color="#008080">vector&lt;double&gt;</font> age_avg_grid <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">age_avg_grid</font></b><font color="#990000">(</font>
           ode_step_size<font color="#990000">,</font> age_avg_split<font color="#990000">,</font> age_table
      <font color="#990000">);</font>
-     dismod_at<font color="#990000">::</font><font color="#008080">avg_std_effect</font> <b><font color="#000000">avgstd_obj</font></b><font color="#990000">(</font>
+     dismod_at<font color="#990000">::</font><font color="#008080">avg_noise_effect</font> <b><font color="#000000">avg_noise_obj</font></b><font color="#990000">(</font>
           ode_step_size<font color="#990000">,</font>
           age_avg_grid<font color="#990000">,</font>
           age_table<font color="#990000">,</font>
@@ -275,7 +254,7 @@ A:active { color : purple }
      <font color="#008080">vector&lt;Float&gt;</font> <b><font color="#000000">pack_vec</font></b><font color="#990000">(</font> pack_object<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">);</font>
      <font color="#008080">size_t</font> mtother_id <font color="#990000">=</font> dismod_at<font color="#990000">::</font>mtother_enum<font color="#990000">;</font>
      dismod_at<font color="#990000">::</font>pack_info<font color="#990000">::</font><font color="#008080">subvec_info</font> info <font color="#990000">=</font>
-          pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_std_info</font></b><font color="#990000">(</font>mtother_id<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
+          pack_object<font color="#990000">.</font><b><font color="#000000">mulcov_meas_noise_info</font></b><font color="#990000">(</font>mtother_id<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">);</font>
      dismod_at<font color="#990000">::</font>smooth_info<font color="#990000">&amp;</font> s_info <font color="#990000">=</font> s_info_vec<font color="#990000">[</font>info<font color="#990000">.</font>smooth_id<font color="#990000">];</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> s_info<font color="#990000">.</font><b><font color="#000000">age_size</font></b><font color="#990000">();</font> i<font color="#990000">++)</font>
      <font color="#FF0000">{</font>    age <font color="#990000">=</font> age_table<font color="#990000">[</font> s_info<font color="#990000">.</font><b><font color="#000000">age_id</font></b><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">];</font>
@@ -293,7 +272,7 @@ A:active { color : purple }
      <font color="#009900">double</font> time_upper      <font color="#990000">=</font> time_lower <font color="#990000">+</font> ode_step_size<font color="#990000">;</font>
      <font color="#008080">size_t</font> weight_id       <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
      <font color="#008080">size_t</font> integrand_id    <font color="#990000">=</font>  <font color="#009900">int</font><font color="#990000">(</font> dismod_at<font color="#990000">::</font>mtother_enum <font color="#990000">);</font>
-     <font color="#008080">Float</font> avg <font color="#990000">=</font> avgstd_obj<font color="#990000">.</font><b><font color="#000000">rectangle</font></b><font color="#990000">(</font>
+     <font color="#008080">Float</font> avg <font color="#990000">=</font> avg_noise_obj<font color="#990000">.</font><b><font color="#000000">rectangle</font></b><font color="#990000">(</font>
           age_lower<font color="#990000">,</font>
           age_upper<font color="#990000">,</font>
           time_lower<font color="#990000">,</font>
@@ -325,7 +304,7 @@ A:active { color : purple }
      <b><font color="#0000FF">return</font></b> ok<font color="#990000">;</font>
 <font color="#FF0000">}</font></tt></pre>
 
-<hr>Input File: example/devel/model/avg_std_effect_xam.cpp
+<hr>Input File: example/devel/model/avg_noise_effect_xam.cpp
 
 </body>
 </html>
