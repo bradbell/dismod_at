@@ -297,14 +297,6 @@
 # is the
 # $cref/density_name/density_table/density_name/$$ for this row.
 #
-# $subhead meas_value$$
-# is the data table
-# $cref/meas_value/data_table/meas_value/$$.
-#
-# $subhead meas_std$$
-# is the data table
-# $cref/meas_std/data_table/meas_std/$$.
-#
 # $subhead eta$$
 # is the data table
 # $cref/eta/data_table/eta/$$ for this row.
@@ -313,9 +305,17 @@
 # is the data table
 # $cref/nu/data_table/nu/$$ for this row.
 #
+# $subhead meas_std$$
+# is the data table
+# $cref/meas_std/data_table/meas_std/$$.
+#
 # $subhead Delta$$
 # is the actual standard deviation used by the model; see
 # $cref/Delta_i/data_like/Data Table Notation/Delta_i/$$.
+#
+# $subhead meas_value$$
+# is the data table
+# $cref/meas_value/data_table/meas_value/$$.
 #
 # $subhead avgint$$
 # If the $cref fit_command$$ has been run, this is the
@@ -1118,11 +1118,11 @@ def db2csv_command(database_file_arg) :
 		'time_up',
 		'out',
 		'density',
-		'meas_value',
-		'meas_std',
 		'eta',
 		'nu',
+		'meas_std',
 		'Delta',
+		'meas_value',
 		'avgint',
 		'residual'
 	]
