@@ -41,6 +41,15 @@ $lnext
 Add the adjusted standard deviation column
 $cref/delta/db2csv_command/data.csv/delta/$$ to the $code data.csv$$
 file written by the $code db2csv$$ command.
+$lnext
+The discussion of data
+$cref/weighted residuals/data_like/Weighted Residual and Likelihood/$$
+was improved by defining
+$cref/reversed residuals
+	/statistic
+	/Weighted Residual Function, R
+	/Reversed Residual
+/$$.
 $lend
 
 $head 04-08$$

@@ -213,7 +213,12 @@ $latex \[
 
 $head Weighted Residual and Likelihood$$
 Given the random effects $latex u$$ and the fixed effects $latex \theta$$,
-the weighted residual is
+we use the
+$cref/reversed residual
+	/statistic
+	/Weighted Residual Function, R
+	/Reversed Residual
+/$$
 $latex \[
 - R [
 	A_i ( u, \theta )    \W{,}
@@ -222,8 +227,6 @@ $latex \[
 	d_i
 ]
 \] $$
-see the weight residual function
-$cref/R/statistic/Weighted Residual Function, R/$$.
 Note that $latex y_i$$ ($latex \mu$$) here is plays the role of
 $latex \mu$$ ($latex y$$) in the function
 $latex R(y, \mu , \delta , d)$$.

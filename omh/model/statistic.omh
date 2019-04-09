@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -18,25 +18,28 @@ $section Some Statistical Function Definitions$$
 
 $head Notation$$
 $table
-$latex y$$       $cnext
-quantity that we are computing a statistical density for
-$rnext
 $latex z$$       $cnext
-quantity we are differencing from $latex y$$
+If $latex z$$ is present,
+we are computing residual and statistical density for $latex z - y$$
+(used for smoothing).
+$rnext
+$latex y$$       $cnext
+If $latex z$$ is not present,
+we are computing residual and statistical density for $latex y$$.
 $rnext
 $latex \mu$$     $cnext
-expected value $latex y$$, difference, or difference of logs
+The expected value $latex y$$, difference, or difference of logs.
 $rnext
 $latex \delta$$  $cnext
-standard deviation for $latex y$$, difference, or difference of logs
+The standard deviation for $latex y$$, difference, or difference of logs.
 $rnext
-$latex d:id$$    $cnext
+$latex d.id$$    $cnext
 $cref/density_id/prior_table/density_id/$$
 $rnext
-$latex d:\eta$$  $cnext
+$latex d.\eta$$  $cnext
 $cref/eta/prior_table/eta/$$ the offset in log transform
 $rnext
-$latex d:\nu$$   $cnext
+$latex d.\nu$$   $cnext
 $cref/nu/data_table/nu/$$ degrees of freedom in Student's-t.
 $tend
 
@@ -67,6 +70,25 @@ has extra argument $latex z$$ and is also
 is defined separately below for each possible value
 of the density name.
 
+$subhead Reversed Residual$$
+In some cases, when $latex z$$ is not present,
+it is advantageous to switch the roles of $latex y$$ and $latex \mu$$.
+For example,
+suppose that $latex \mu$$ depends on the $cref model_variables$$,
+$latex y$$ is measured data,
+and we are using a log distribution.
+In this case $latex \sigma( \mu , \delta , \eta )$$ depends on the model
+variables and the feedback between the estimation of the mean and variance
+can make estimation unstable.
+This can be avoided by using the reversed residual
+$latex \[
+- R( \mu , y , \delta , d)
+=
+\frac{y - \mu}{ \log( y + d.\eta + \delta ) - \log ( y + d.\eta ) }
+\]$$.
+Note that this function has the same sign as the data minus the model; i.e.,
+$latex y_i - \mu$$.
+
 $subhead Uniform$$
 If the density name is $code uniform$$,
 the weighted residual functions are
@@ -96,16 +118,16 @@ $latex \[
 R(y, \mu, \delta, d)
 =
 \frac{
-	\log( y + d:\eta ) - \log( \mu + d:\eta )
+	\log( y + d.\eta ) - \log( \mu + d.\eta )
 }{
-	\sigma( \mu , \delta , d:\eta )
+	\sigma( \mu , \delta , d.\eta )
 }
 \] $$
 $latex \[
 R(z, y, \mu, \delta, d)
 =
 \frac{
-	\log(z + d:\eta ) - \log( y + d:\eta ) - \mu
+	\log(z + d.\eta ) - \log( y + d.\eta ) - \mu
 }{
 	\delta
 }
@@ -184,7 +206,7 @@ the log-density functions are defined by
 $latex \[
 D(y, \mu, \delta, d)
 =
-- \log \left[ \sigma( \mu , \delta , d:\eta ) \sqrt{2 \pi} \right]
+- \log \left[ \sigma( \mu , \delta , d.\eta ) \sqrt{2 \pi} \right]
 - \frac{1}{2} R(y, \mu, \delta, d)^2
 \] $$
 $latex \[
@@ -204,7 +226,7 @@ the log-density functions are
 $latex \[
 D(y, \mu, \delta, d)
 =
-- \log \left[ \sigma( \mu , \delta , d:\eta ) \sqrt{2} \right]
+- \log \left[ \sigma( \mu , \delta , d.\eta ) \sqrt{2} \right]
 - \sqrt{2} \left| R(y, \mu, \delta, d) \right|
 \] $$
 $latex \[
