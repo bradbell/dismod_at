@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Changes and Additions to Dismod_at During 2019</big></big></b></center>
 
+<br><a href="whats_new_2019.htm#04-09" target="_top">04-09</a>
 <br><a href="whats_new_2019.htm#04-08" target="_top">04-08</a>
 <br><a href="whats_new_2019.htm#04-06" target="_top">04-06</a>
 <br><a href="whats_new_2019.htm#02-16" target="_top">02-16</a>
@@ -72,6 +73,43 @@ A:active { color : purple }
 <br><a href="whats_new_2019.htm#01-10" target="_top">01-10</a>
 <br><a href="whats_new_2019.htm#Contents" target="_top">Contents</a>
 <br><br>
+<b><big><a name="04-09" id="04-09">04-09</a></big></b>
+
+<ol type="1"><li>
+In the case where the deprecated name
+<a href="mulcov_table.htm#mulcov_type.meas_std: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+is used, the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
+ was
+<a href="var_table.htm#var_type.mulcov_meas_noise" target="_top"><span style='white-space: nowrap'>mulcov_meas_noise</span></a>
+.
+This has been changed to <code><font color="blue">mulcov_meas_std</font></code> for backward compatibility.
+</li><li>
+
+In the <code><font color="blue">data.csv</font></code> file, the column
+<a href="db2csv_command.htm#data.csv.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+
+was moved to be next to 
+<code><i><font color="black"><span style='white-space: nowrap'>avgint</span></font></i></code>
+ and
+<a href="db2csv_command.htm#data.csv.meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+was moved to be next to 
+<code><i><font color="black"><span style='white-space: nowrap'>Delta</span></font></i></code>
+.
+This makes comparisons between these columns easier.
+</li><li>
+
+Add the adjusted standard deviation column
+<a href="db2csv_command.htm#data.csv.delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
+ to the <code><font color="blue">data.csv</font></code>
+file written by the <code><font color="blue">db2csv</font></code> command.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="04-08" id="04-08">04-08</a></big></b>
 
 <ol type="1"><li>
