@@ -299,6 +299,10 @@ void init_command(
 	vector<size_t> count_rate_value(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 		count_rate_value[rate_id] = 0;
+	string mulcov_meas_noise = "mulcov_meas_noise";
+	extern bool found_meas_std_in_mulcov_table_;
+	if( found_meas_std_in_mulcov_table_ )
+		mulcov_meas_noise = "mulcov_meas_std";
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 	if( mulcov_table[mulcov_id].smooth_id != DISMOD_AT_NULL_INT )
 	{	mulcov_type_enum mulcov_type;
@@ -353,7 +357,7 @@ void init_command(
 				row_value[n_col * var_id + 6] = to_string( integrand_id );
 			}
 			else if( mulcov_type == meas_noise_enum )
-			{	row_value[n_col * var_id + 0]  = "mulcov_meas_noise";
+			{	row_value[n_col * var_id + 0]  = mulcov_meas_noise;
 				row_value[n_col * var_id + 6] = to_string( integrand_id );
 			}
 			else assert(false);

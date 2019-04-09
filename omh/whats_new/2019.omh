@@ -17,9 +17,17 @@ $spell
 	var
 	covariate
 	std
+	mulcov
 $$
 
 $section Changes and Additions to Dismod_at During 2019$$
+
+$head 04-09$$
+In the case where the deprecated name
+$cref/meas_std/mulcov_table/mulcov_type/meas_std: Deprecated 2019-04-07/$$
+is used, the corresponding $icode var_type$$ was
+$cref/mulcov_meas_noise/var_table/var_type/mulcov_meas_noise/$$.
+This has been changed to $code mulcov_meas_std$$ for backward compatibility.
 
 $head 04-08$$
 $list number$$

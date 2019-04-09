@@ -86,6 +86,11 @@ $head Example$$
 The file $cref get_mulcov_table_xam.cpp$$ contains an example that uses
 this function.
 
+$head found_meas_std_in_mulcov_table_$$
+If this is true, get_mulcov_table found the deprecated name
+$cref/meas_std/mulcov_table/mulcov_type/meas_std: Deprecated 2019-04-07/$$
+in the mulcov_table.
+
 $end
 -----------------------------------------------------------------------------
 */
@@ -101,8 +106,14 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// initialize this flag as false
+bool found_meas_std_in_mulcov_table_ = false;
+
 CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 {	using std::string;
+
+	// so we can check if both names are there
+	bool found_meas_noise = false;
 
 	string table_name   = "mulcov";
 	size_t n_mulcov     = check_table_id(db, table_name);
@@ -145,15 +156,18 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 		else if( mulcov_type[i] == "meas_value" )
 			mulcov_table[i].mulcov_type = meas_value_enum;
 		else if( mulcov_type[i] == "meas_noise" )
+		{	found_meas_noise = true;
 			mulcov_table[i].mulcov_type = meas_noise_enum;
+		}
 		else if( mulcov_type[i] == "meas_std" )
 		{	string msg  =
 			"The mulcov_type meas_std was deprecated on 2019-04-07\n"
 			"and may not work in the future. "
 			"It should be changed to meas_noise.";
-			log_message(
+			if( ! found_meas_std_in_mulcov_table_ ) log_message(
 				db, &std::cout, "warning", msg, table_name, i
 			);
+			found_meas_std_in_mulcov_table_ = true;
 			mulcov_table[i].mulcov_type = meas_noise_enum;
 		}
 		else
@@ -163,6 +177,11 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 			table_name = "mulcov";
 			error_exit(message, table_name, i);
 		}
+	}
+	if( found_meas_noise && found_meas_std_in_mulcov_table_ )
+	{	string msg = "Found both meas_noise and meas_std in mulcov_table.\n";
+		msg       += "Must changen remaining meas_std to meas_noise.";
+		error_exit(msg, table_name);
 	}
 	return mulcov_table;
 }

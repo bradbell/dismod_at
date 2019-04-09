@@ -24,6 +24,27 @@ echo_eval() {
 	echo $*
 	eval $*
 }
+# -----------------------------------------------------------------------------
+file='example/user/fit_gamma.py'
+cp $file check_all.1
+sed -i $file -e 's|meas_noise_effect|meas_std_effect|g'
+if ! python3 $file  >& check_all.2
+then
+	echo 'check_all.sh: meas_std_effect: Error'
+	mv check_all.1 $file
+	rm check_all.2
+	exit 1
+fi
+if ! grep 'meas_std_effect was deprecated' check_all.2 > /dev/null
+then
+	echo 'check_all.sh: meas_std_effect: Error'
+	mv check_all.1 $file
+	rm check_all.2
+	exit 1
+fi
+echo 'check_all.sh: meas_std_effect: OK'
+mv check_all.1 $file
+rm check_all.2
 # ----------------------------------------------------------------------------
 # run cmake first so know right away if debug or release build
 set +e
