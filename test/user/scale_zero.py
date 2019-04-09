@@ -31,9 +31,9 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 	sys.path.insert(0, local_dir)
 import dismod_at
 #
-# change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
-os.chdir('build/example/user')
+# change into the build/test/user directory
+distutils.dir_util.mkpath('build/test/user')
+os.chdir('build/test/user')
 # ---------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :

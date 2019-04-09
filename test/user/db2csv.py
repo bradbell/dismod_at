@@ -8,10 +8,15 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# BEGIN PYTHON
-iota_true  = 1e-1
-meas_std   = 1e-2
-gamma_true = meas_std * meas_std
+# 1. Check meas_std, Delta, and delta in data.csv
+# ---------------------------------------------------------------------------
+#
+iota_true       = 1e-1
+meas_value      = 1.1 * iota_true
+meas_std        = 1e-5
+minimum_meas_cv = 1e-1
+Delta           = max(minimum_meas_cv * meas_value, meas_std)
+gamma_true      = Delta * Delta
 # ---------------------------------------------------------------------------
 import sys
 import os
@@ -19,7 +24,8 @@ import distutils.dir_util
 import subprocess
 import copy
 import math
-test_program = 'test/user/scale_gamma.py'
+import csv
+test_program = 'test/user/db2csv.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -33,9 +39,9 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 	sys.path.insert(0, local_dir)
 import dismod_at
 #
-# change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
-os.chdir('build/example/user')
+# change into the build/test/user directory
+distutils.dir_util.mkpath('build/test/user')
+os.chdir('build/test/user')
 # ---------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
@@ -55,7 +61,7 @@ def example_db (file_name) :
 	#
 	# integrand table
 	integrand_table = [
-		 { 'name':'Sincidence', 'minimum_meas_cv':0.0 },
+		 { 'name':'Sincidence', 'minimum_meas_cv':minimum_meas_cv },
 	]
 	#
 	# node table: north_america
@@ -93,7 +99,6 @@ def example_db (file_name) :
 	# data table: same order as age_list
 	data_table = list()
 	# values that are the same for all data rows
-	data_std = math.sqrt( meas_std * meas_std + gamma_true )
 	row = {
 		'node':        'north_america',
 		'density':     'gaussian',
@@ -104,7 +109,7 @@ def example_db (file_name) :
 		'integrand':   'Sincidence',
 		'age_lower':    50.0,
 		'age_upper':    50.0,
-		'meas_value':   iota_true + data_std,
+		'meas_value':   meas_value,
 		'meas_std':     meas_std,
 		'one':          1.0
 	}
@@ -115,15 +120,15 @@ def example_db (file_name) :
 		{	# prior_iota
 			'name':     'prior_iota',
 			'density':  'uniform',
-			'lower':    iota_true,
+			'lower':    iota_true / 10.0,
 			'mean':     iota_true,
-			'upper':    iota_true
+			'upper':    10.0 *iota_true
 		},{	# prior_gamma
 			'name':     'prior_gamma',
 			'density':  'uniform',
 			'lower':    0.00,
-			'upper':    10.0 * gamma_true,
-			'mean':     0.00,
+			'mean':     gamma_true,
+			'upper':    10.0 * gamma_true
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -151,9 +156,10 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'parent_node_name',  'value':'north_america' },
-		{ 'name':'meas_noise_effect', 'value':'add_var_scale_log' },
-		{ 'name':'print_level_fixed', 'value':'0' },
+		{ 'name':'max_num_iter_fixed', 'value':'-1' },
+		{ 'name':'parent_node_name',   'value':'north_america' },
+		{ 'name':'meas_noise_effect',  'value':'add_var_scale_log' },
+		{ 'name':'print_level_fixed',  'value':'0' },
 	]
 	# ----------------------------------------------------------------------
 	# create database
@@ -180,36 +186,43 @@ def example_db (file_name) :
 file_name  = 'example.db'
 example_db(file_name)
 #
-program      = '../../devel/dismod_at'
+program = '../../devel/dismod_at'
 command_list = [
-	[ program, file_name, 'init' ],
-	[ program, file_name, 'fit', 'fixed' ],
+	[ program  , file_name, 'init' ],
+	[ program  , file_name, 'fit', 'fixed' ],
 ]
 for command in command_list :
 	print( ' '.join(command) )
 	flag = subprocess.call( command )
 	if flag != 0 :
-		sys.exit('The dismod_at command failed')
+		sys.exit('db2csv.py: command failed')
+# must go back to distribution directory to run bin/dismodat.py in sandbox
+os.chdir('../../..')
+command = [ 'bin/dismodat.py', 'build/test/user/' + file_name, 'db2csv' ]
+print( ' '.join(command) )
+flag = subprocess.call( command )
+if flag != 0 :
+	sys.exit('db2csv.py: command failed')
 # -----------------------------------------------------------------------
-# result tables
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-var_table       = dismod_at.get_table_dict(connection, 'var')
-fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
-#
-n_var          = len( var_table )
-parent_node_id = 0
-iota_rate_id   = 1
-for var_id in range( n_var ) :
-	row    = var_table[var_id]
-	value  = fit_var_table[var_id]['fit_var_value']
-	if row['var_type'] == 'rate' :
-		assert row['node_id'] == parent_node_id
-		assert row['rate_id'] == iota_rate_id
-		assert abs( value / iota_true - 1.0 ) < 1e-10
-	else :
-		assert row['var_type'] == 'mulcov_meas_noise'
-		assert abs( value / gamma_true - 1.0 ) < 1e-5
+# data.csv
+data_file = open('build/test/user/data.csv', 'r')
+reader    = csv.DictReader(data_file)
+for row in reader :
+	# only one data row
+	assert int(row['data_id']) == 0
+	#
+	# meas_std
+	result = float( row['meas_std'] )
+	assert abs( 1.0 - result / meas_std) < 1e-4
+	#
+	# Delta
+	result = float( row['Delta'] )
+	assert abs( 1.0 - result / Delta) < 1e-4
+	#
+	# delta
+	result = float( row['delta'] )
+	delta  = math.sqrt( Delta * Delta + gamma_true)
+	assert abs( 1.0 - result / delta) < 1e-4
 # -----------------------------------------------------------------------------
-print('scale_gamma.py: OK')
-# END PYTHON
+print('db2csv.py: OK')
+sys.exit(0)

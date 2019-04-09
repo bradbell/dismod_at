@@ -37,6 +37,10 @@ was moved to be next to $icode avgint$$ and
 $cref/meas_std/db2csv_command/data.csv/meas_std/$$
 was moved to be next to $icode Delta$$.
 This makes comparisons between these columns easier.
+$lnext
+Add the adjusted standard deviation column
+$cref/delta/db2csv_command/data.csv/delta/$$ to the $code data.csv$$
+file written by the $code db2csv$$ command.
 $lend
 
 $head 04-08$$

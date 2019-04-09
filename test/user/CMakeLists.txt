@@ -15,6 +15,7 @@ FOREACH(user_case
 	bound_frac
 	bound_random
 	csv2db
+	db2csv
 	fit_gamma
 	fit_sim
 	init_covariate

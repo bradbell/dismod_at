@@ -326,6 +326,14 @@
 # $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$
 # for this row.
 #
+# $subhead delta$$
+# If the $cref fit_command$$ has been run, this is the
+# $cref/adjusted standard deviation
+#	/data_like
+#	/Adjusted Standard Deviation, delta_i
+# /$$ for this row.
+# This is calculation is not available when the residual is zero.
+#
 # $subhead sim_value$$
 # If the $cref simulate_command$$ has been run, this is the
 # $cref/data_sim_value/data_sim_table/data_sim_value/$$ for this
@@ -442,6 +450,20 @@ def db2csv_command(database_file_arg) :
 	# -------------------------------------------------------------------------
 	table_data     = dict()
 	parent_node_id = None
+	# -------------------------------------------------------------------------
+	def adjusted_meas_std(density, eta, meas_value, avgint, residual) :
+		log = density.startswith('log_')
+		if residual == None or residual == 0.0 :
+			delta = None
+		elif not log :
+			# residual = (meas_value - avgint) / delta
+			delta = (meas_value - avgint) / residual
+		else :
+			# residual = ( log(meas_value + eta) - log(avgint + eta) ) / sigma
+			sigma = ( log(meas_value + eta) - log(avgint + eta) ) / residual
+			# sigma = log(meas_value + eta + delta) - log(meas_value + eta)
+			delta   = (meas_value + eta) * (math.exp(sigma) - 1.0)
+		return delta
 	# -------------------------------------------------------------------------
 	def round_to(x, n_digits) :
 		if x == None or x == 0.0:
@@ -1122,6 +1144,7 @@ def db2csv_command(database_file_arg) :
 		'nu',
 		'meas_std',
 		'Delta',
+		'delta',
 		'meas_value',
 		'avgint',
 		'residual'
@@ -1167,6 +1190,7 @@ def db2csv_command(database_file_arg) :
 		Delta            = max( row_in['meas_std'], Delta)
 		row_out['Delta'] = convert2output( Delta )
 		#
+		#
 		row_out['integrand'] = table_lookup(
 			'integrand', row_in['integrand_id'], 'integrand_name'
 		)
@@ -1195,6 +1219,14 @@ def db2csv_command(database_file_arg) :
 			row                 = table_data['fit_data_subset'][subset_id]
 			row_out['avgint']   = convert2output( row['avg_integrand'] )
 			row_out['residual'] = convert2output( row['weighted_residual'] )
+			delta = adjusted_meas_std(
+				row_out['density']       ,
+				row_in['eta']            ,
+				row_in['meas_value']     ,
+				row['avg_integrand']     ,
+				row['weighted_residual']
+			)
+			row_out['delta'] = convert2output(delta)
 		if simulate_index != None :
 			data_sim_id =  n_subset * simulate_index + subset_id
 			sim_value = table_data['data_sim'][data_sim_id]['data_sim_value']
