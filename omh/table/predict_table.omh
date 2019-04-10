@@ -34,10 +34,9 @@ Only a subset of the rows of the avgint table is included.
 The subset is defined by the following node and covariate conditions:
 
 $subhead Node$$
-The $cref/node/avgint_table/node_id/$$ must be
-$cref/descendant/node_table/parent/Descendant/$$ of the
-$cref/parent node/option_table/parent_node_id/$$ specified by the
-option table.
+The $cref/node/avgint_table/node_id/$$ must be the
+$cref/parent node/option_table/parent_node_name/$$, or a
+$cref/descendant/node_table/parent/Descendant/$$ of the parent node.
 
 $subhead Covariates$$
 All of the

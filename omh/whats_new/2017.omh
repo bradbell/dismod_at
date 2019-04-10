@@ -176,7 +176,7 @@ In addition, the $cref/plotting/bilinear/Plotting/$$ discussion was added.
 $head 10-22$$
 $list number$$
 Add the option to specify
-$cref/parent_node_name/option_table/parent_node_id/parent_node_name/$$
+$cref/parent_node_name/option_table/parent_node_name/$$
 instead of parent_node_id.
 The $cref create_database$$ routine was changed to put the parent_node_name
 in the option table, instead of mapping it to the parent_node_id.
@@ -532,7 +532,7 @@ $cref/n_children/user_speed.py/n_children/$$ argument to the
 speed example / test.
 $lnext
 Add a definition of the
-$cref/children/option_table/parent_node_id/Children/$$
+$cref/children/option_table/parent_node_name/Children/$$
 to the option table.
 $lend
 

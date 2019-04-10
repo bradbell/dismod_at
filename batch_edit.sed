@@ -31,7 +31,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|Descendent|Descendant|g
-s|descendent|descendant|g
-#
-
+s|/option_table/parent_node_id/Children/|/option_table/parent_node_name/Children/|

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -32,7 +32,8 @@ This is defined by the set of rows in the $code data$$ table
 such that the following conditions hold:
 
 $subhead Node$$
-The $cref/node/data_table/node_id/$$ is a
+The $cref/node/data_table/node_id/$$ is the
+$cref/parent/option_table/parent_node_name/$$ or a
 $cref/descendant/node_table/parent/Descendant/$$
 of the parent node.
 

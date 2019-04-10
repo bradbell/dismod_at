@@ -69,8 +69,10 @@ If $icode%option_name% = parent_node_id%$$
 the corresponding $icode option_value$$
 is an integer that specifies the parent
 $cref/node_id/node_table/node_id/$$.
+It is easier (and equivalent) to use $icode parent_node_name$$
+instead of $icode parent_node_id$$; see below.
 
-$subhead parent_node_name$$
+$head parent_node_name$$
 If $icode%option_name% = parent_node_name%$$
 the corresponding $icode option_value$$
 is an string that specifies the parent
@@ -94,8 +96,8 @@ the specified $icode parent_node_id$$.
 $subhead Data Subset Table$$
 Rows in the $code data$$ table for which the
 $cref/node/data_table/node_id/$$
-is not a $cref/descendant/node_table/parent/Descendant/$$
-of the parent node,
+is not the parent node,
+or a $cref/descendant/node_table/parent/Descendant/$$ of the parent node,
 are not included in the $cref data_subset_table$$ and the
 $cref fit_data_subset_table$$.
 

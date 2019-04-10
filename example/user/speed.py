@@ -28,7 +28,7 @@
 #
 # $head n_children$$
 # is a positive integer specifying the number of
-# $cref/children/option_table/parent_node_id/Children/$$.
+# $cref/children/option_table/parent_node_name/Children/$$.
 # The number of data points (and number random effects) is twice
 # the number of children.
 #

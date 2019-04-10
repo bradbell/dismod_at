@@ -133,7 +133,7 @@ $cref/nslist_id/nslist_pair_table/nslist_id/$$.
 If it is not $code null$$, it identifies a list of
 ($icode node_id$$, $icode smooth_id$$) pairs.
 The $icode node_id$$ for each of the
-$cref/children/option_table/parent_node_id/Children/$$
+$cref/children/option_table/parent_node_name/Children/$$
 must appear in the list.
 The corresponding smoothing is used for the child rate effects
 for the rate corresponding to this row of the rate table.

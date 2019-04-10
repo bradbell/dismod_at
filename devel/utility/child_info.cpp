@@ -113,7 +113,7 @@ If $icode%child% < %n_child%$$,
 $codei%
 	%table%[%table_id%].node_id
 %$$
-is a descendant of
+is the child or a descendant of the child
 $codei%
 	%child_object%.child_id2node_id(%child%)
 %$$
