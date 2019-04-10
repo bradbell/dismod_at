@@ -110,9 +110,10 @@ This routine subsamples the
 <code><i><font color="black"><span style='white-space: nowrap'>avgint_table</span></font></i></code>
 , in the following way:
 <ol type="1"><li>
-Only rows corresponding to nodes that are descendants of the
+Only rows corresponding to the
 <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node</span></a>
- are included.
+,
+or a descendant of the parent node, are included.
 </li><li>
 
 Only rows for which the covariates satisfy the

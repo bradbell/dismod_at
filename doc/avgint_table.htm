@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The avgint Table: Defines Average Integrand Cases</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The avgint Table: Defines Average Integrand Cases">
-<meta name="keywords" id="keywords" content=" the avgint table: defines average integrand cases see also purpose usage avgint_id integrand_id node_id weight_id age_lower age_upper time_lower time_upper covariates example ">
+<meta name="keywords" id="keywords" content=" the avgint table: defines average integrand cases see also purpose usage parent rates child avgint_id integrand_id node_id weight_id age_lower age_upper time_lower time_upper covariates example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,7 +71,9 @@ A:active { color : purple }
 
 <br><a href="avgint_table.htm#See Also" target="_top">See&nbsp;Also</a>
 <br><a href="avgint_table.htm#Purpose" target="_top">Purpose</a>
-<br><a href="avgint_table.htm#Usage" target="_top">Usage</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avgint_table.htm#Purpose.Usage" target="_top">Usage</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avgint_table.htm#Purpose.Parent Rates" target="_top">Parent&nbsp;Rates</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avgint_table.htm#Purpose.Child Rates" target="_top">Child&nbsp;Rates</a>
 <br><a href="avgint_table.htm#avgint_id" target="_top">avgint_id</a>
 <br><a href="avgint_table.htm#integrand_id" target="_top">integrand_id</a>
 <br><a href="avgint_table.htm#node_id" target="_top">node_id</a>
@@ -96,18 +98,128 @@ A:active { color : purple }
 <br>
 Given a value for the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 ,
-this table contains the other information necessary to compute the
+this table contains the other information necessary so that
+the <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+ can compute
 <a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
-.
+ values
+that correspond to any possible case,
+(not just the cases in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+).
+For an example of how to use this table, see the discussion of
+parent and child rates below.
 
 <br>
 <br>
-<b><big><a name="Usage" id="Usage">Usage</a></big></b>
+<big><a name="Purpose.Usage" id="Purpose.Usage">Usage</a></big>
 <br>
 This table is only used by the <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
-,
-and hence it can be changed and the predict command can be re-run,
+.
+It can be changed, and the predict command can be re-run,
 without needing to re-run any other commands.
+
+<br>
+<br>
+<big><a name="Purpose.Parent Rates" id="Purpose.Parent Rates">Parent Rates</a></big>
+<br>
+The <a href="avg_integrand.htm#Rate Functions.Parent Rate, q_k" target="_top"><span style='white-space: nowrap'>parent&nbsp;rates</span></a>
+
+<small>@(@
+q_k (a, t)
+@)@</small> can be computed by using the following settings
+in this table:
+<ol type="1"><li>
+Set 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+ to the
+<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node&nbsp;id</span></a>
+.
+</li><li>
+
+Set 
+<code><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i></code>
+ to the integrand
+corresponding to rate 
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+.
+</li><li>
+
+Set 
+<code><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i></code>
+ set to <small>@(@
+a
+@)@</small>.
+</li><li>
+
+Set 
+<code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i></code>
+ to <small>@(@
+t
+@)@</small>.
+</li><li>
+
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+ does not matter because we are not averaging
+over age or time.
+</li><li>
+
+Set the
+<a href="avgint_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariates</span></a>
+ to their
+<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
+ values.
+</li></ol>
+
+Note that the rates and integrands have the following correspondence:
+<code><span style='white-space: nowrap'><br>
+</span></code>( 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+, <a href="avg_integrand.htm#Integrand, I_i(a,t)" target="_top"><span style='white-space: nowrap'>Sincidence</span></a>
+ ),
+( 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+, <a href="avg_integrand.htm#Integrand, I_i(a,t)" target="_top"><span style='white-space: nowrap'>remission</span></a>
+ ),
+( 
+<code><i><font color="black"><span style='white-space: nowrap'>chi</span></font></i></code>
+, <a href="avg_integrand.htm#Integrand, I_i(a,t)" target="_top"><span style='white-space: nowrap'>mtexcess</span></a>
+ ),
+( 
+<code><i><font color="black"><span style='white-space: nowrap'>omega</span></font></i></code>
+, <a href="avg_integrand.htm#Integrand, I_i(a,t)" target="_top"><span style='white-space: nowrap'>mtother</span></a>
+ ).
+
+<br>
+<br>
+<big><a name="Purpose.Child Rates" id="Purpose.Child Rates">Child Rates</a></big>
+<br>
+The child rates can be computed as
+<a href="avg_integrand.htm#Rate Functions.Adjusted Rate, r_ik" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;rates</span></a>
+
+<small>@(@
+r_{i,k} (a, t)
+@)@</small> using the following modifications to the
+parent rate settings above:
+<ol type="1"><li>
+Set 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+ to the node table
+<a href="node_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+ for this child.
+</li><li>
+
+Set each
+<a href="avgint_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariate</span></a>
+ to its average value
+for this child.
+</li></ol>
+
+
 
 <br>
 <br>
@@ -115,6 +227,8 @@ without needing to re-run any other commands.
 <br>
 This column has type <code><font color="blue">integer</font></code> and is the primary key for the
 <code><font color="blue">avgint</font></code> table.
+
+
 Its initial value is zero, and it increments by one for each row.
 
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Model for the Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Model for the Average Integrand">
-<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k covariate multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ">
+<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i covariate difference x_ij w_i n_i rate functions parent q_k child effect u_ik j_k multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -73,7 +73,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.b_i" target="_top">b_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.s_i" target="_top">s_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.t_i" target="_top">t_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.x_ij" target="_top">x_ij</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.Covariate Difference, x_ij" target="_top">Covariate&nbsp;Difference,&nbsp;x_ij</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.w_i" target="_top">w_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.n_i" target="_top">n_i</a>
 <br><a href="avg_integrand.htm#Rate Functions" target="_top">Rate&nbsp;Functions</a>
@@ -214,21 +214,27 @@ a_i
 
 <br>
 <br>
-<big><a name="Data or Avgint Table Notation.x_ij" id="Data or Avgint Table Notation.x_ij">x_ij</a></big>
+<big><a name="Data or Avgint Table Notation.Covariate Difference, x_ij" id="Data or Avgint Table Notation.Covariate Difference, x_ij">Covariate Difference, x_ij</a></big>
 <br>
 We use <small>@(@
 x_{i,j}
-@)@</small> to denote the corresponding
-<a href="data_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariate</span></a>
- values where <small>@(@
-j
-@)@</small>
-denotes the <a href="covariate_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+@)@</small> to denote the covariate difference for the
+<code><i>i</i></code>-th data point and the <code><i>j</i></code>-th covariate.
+Here 
+<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i></code>
+ denotes a
+<a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+ in the data table and
+
+<code><i><font color="black"><span style='white-space: nowrap'>j</span></font></i></code>
+ denotes a
+<a href="covariate_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+ in the covariate table.
+The difference is the corresponding data table
+<a href="data_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariate&nbsp;value</span></a>
+ minus the covariate table
+<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference&nbsp;value</span></a>
 .
-Note that the covariate
-<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
- has already
-been subtracted from these values.
 
 <br>
 <br>
@@ -274,29 +280,35 @@ q_k (a, t)
 @)@</small> the piecewise linear rate function
 for the corresponding to the
 <a href="model_variables.htm#Fixed Effects, theta.Parent Rates" target="_top"><span style='white-space: nowrap'>parent&nbsp;rate</span></a>
-
-model variables.
-This is an unadjusted rate corresponding to the
+.
+This is the model for the rate corresponding to the
 <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
-.
-The adjusted rates are discussed below; see
+
+and the reference value for the covariates; i.e.
+<small>@(@
+x_{i,j} = 0
+@)@</small>.
+The adjusted rate
 <a href="avg_integrand.htm#Rate Functions.Adjusted Rate, r_ik" target="_top"><span style='white-space: nowrap'>r_ik</span></a>
-.
+
+is defined below.
 
 <br>
 <br>
 <big><a name="Rate Functions.Child Rate Effect, u_ik" id="Rate Functions.Child Rate Effect, u_ik">Child Rate Effect, u_ik</a></big>
 <br>
-If <small>@(@
+If the node for this data point <small>@(@
 n_i
-@)@</small> is equal to or a descendant of one of the children of the
-parent node,
+@)@</small> is a
+<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child</span></a>
+ node,
+or a descendant of a child node,
 <small>@(@
 u_{i,k} (a, t)
 @)@</small> is the piecewise linear random effect
 for the corresponding
 <a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;and&nbsp;rate</span></a>
-
+.
 If <small>@(@
 n_i
 @)@</small> is the parent node,
@@ -306,30 +318,26 @@ u_{i,k} (a, t) = 0
 @)@</small>.
 Otherwise <small>@(@
 n_i
-@)@</small> is not a descendant of the parent node
-and the corresponding data is not used.
+@)@</small> is not the parent node or
+a descendant of the parent node and the corresponding data is not used.
 
 <br>
 <br>
 <big><a name="Rate Functions.J_k" id="Rate Functions.J_k">J_k</a></big>
 <br>
-For each rate index <small>@(@
-k
-@)@</small>,
-there is a set of rows in the mulcov table such that
-<a href="mulcov_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
- is equal to <small>@(@
-k
-@)@</small>
-and
-<a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
- is <code><font color="blue">rate_value</font></code>.
 We use <small>@(@
 J_k
 @)@</small> to denote the set of
 <a href="mulcov_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
- values for
-which this is the case.
+ values in the mulcov table
+such that the corresponding
+<a href="mulcov_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
+ is equal to <small>@(@
+k
+@)@</small> and
+<a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
+ is <code><font color="blue">rate_value</font></code>.
+These are the covariates that affect the <code><i>k</i></code>-th rate.
 
 <br>
 <br>
@@ -346,20 +354,17 @@ we use <small>@(@
 @)@</small> to denote the
 piecewise linear function corresponding to the
 <a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
-
-variables for the corresponding
-<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
 .
 Note that these are
 <a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
  covariate multipliers
-in the mulcov table.
+specified by the mulcov table.
 
 <br>
 <br>
 <big><a name="Rate Functions.Adjusted Rate, r_ik" id="Rate Functions.Adjusted Rate, r_ik">Adjusted Rate, r_ik</a></big>
 <br>
-We use the following notation for the adjusted rates:
+We define the adjusted <code><i>k</i></code>-th rate for the <code><i>i</i></code>-th data point by
 <small>@[@
 
 r_{i,k} (a , t)
@@ -367,18 +372,19 @@ r_{i,k} (a , t)
 \exp \left[
 	u_{i,k} (a, t) + \sum_{j \in J(k)} x_{i,j} \alpha_{j,k} (a, t)
 \right]
-q_{i,k} ( a, t )
+q_k ( a, t )
 
 @]@</small>
-Note that this is the adjusted rate for node <small>@(@
+If <small>@(@
 n_i
-@)@</small>
-which may, or may not, be the parent node.
-In the <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node</span></a>
- case,
-the random effects in the equation above <small>@(@
-u_{i,k} (a, t)
-@)@</small> are zero.
+@)@</small> is the parent node,
+the random effects is zero <small>@(@
+u_{i,k} (a, t) = 0
+@)@</small>.
+If this data point also has the reference value for the covariates,
+<small>@(@
+r_{i,k} (a, t) = q_k (a, t)
+@)@</small>.
 
 <br>
 <br>
@@ -689,20 +695,20 @@ I  = ( \omega  + \chi  ) / \omega
 <br>
 <big><a name="Measurement Value Covariates.K_i" id="Measurement Value Covariates.K_i">K_i</a></big>
 <br>
-There is a set of rows in the mulcov table such that
+We use <small>@(@
+K_i
+@)@</small> to the set of
+<a href="mulcov_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+ values in the mulcov table
+such that the corresponding
 <a href="mulcov_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
  corresponds to
 <small>@(@
 I_i (a, t)
 @)@</small> and
 <a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
- is equal to <code><font color="blue">meas_value</font></code>.
-We use <small>@(@
-K_i
-@)@</small> to denote the corresponding set of
-<a href="mulcov_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
- values for
-which this is the case.
+ is <code><font color="blue">meas_value</font></code>.
+These are the covariates that affect the <code><i>i</i></code>-th measurement value.
 
 <br>
 <br>
@@ -716,13 +722,11 @@ we use <small>@(@
 @)@</small> to denote the
 piecewise linear function corresponding to the
 <a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
-
-variables for the corresponding
-<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
 .
-Note that these are only
+Note that these are
 <a href="mulcov_table.htm#mulcov_type.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- covariate multipliers.
+ covariate multipliers
+specified by the mulcov table.
 
 <br>
 <br>

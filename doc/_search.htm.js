@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20190409  ',' links ',
+'dismod_at  Disease Rates as Functions of Age and Time: dismod_at-20190410  ',' links ',
 'math_abstract  An Introduction To The Mathematics of Dismod_at  ',' ',
 'math_ode  The Dismod_at Ordinary Differential Equation  ',' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t) ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test example ',
@@ -40,7 +40,7 @@ Keyword =
 'input  Tables That Are Only Used as Inputs  ',' ',
 'age_table  The Age Table  ',' age_id ode grid example ',
 'age_table.py  age_table: Example and Test  ',' ',
-'avgint_table  The avgint Table: Defines Average Integrand Cases  ',' see also purpose usage avgint_id integrand_id node_id weight_id age_lower age_upper time_lower time_upper covariates example ',
+'avgint_table  The avgint Table: Defines Average Integrand Cases  ',' see also purpose usage parent rates child avgint_id integrand_id node_id weight_id age_lower age_upper time_lower time_upper covariates example ',
 'avgint_table.py  avgint_table: Example and Test  ',' ',
 'covariate_table  The Covariate Table  ',' covariate_id covariate_name reference max_difference data subset avgint example ',
 'covariate_table.py  covariate_table: Example and Test  ',' ',
@@ -89,7 +89,7 @@ Keyword =
 'predict_table  The Predict Table: Average Integrand Predictions  ',' see also purpose avgint subset node covariates predict_id sample_index avgint_id avg_integrand example ',
 'model  The Age-Time Dismod Model  ',' ',
 'model_variables  The Model Variables  ',' introduction function age time smoothing interpolation children fixed effects theta standard deviation multipliers lambda parent rates covariate random variation initial prevalence other groups ',
-'avg_integrand  Model for the Average Integrand  ',' ordinary differential equation data avgint table notation a_i b_i s_i t_i x_ij w_i n_i rate functions parent q_k child effect u_ik j_k covariate multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ',
+'avg_integrand  Model for the Average Integrand  ',' ordinary differential equation data avgint table notation a_i b_i s_i t_i covariate difference x_ij w_i n_i rate functions parent q_k child effect u_ik j_k multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ',
 'data_like  Data Likelihood and Weighted Residuals  ',' table notation y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement noise covariates k_i gamma_j effects theta average integrand adjusted standard deviation scaling add variance add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log ',
 'fixed_value  The Fixed Effects Value Density Function  ',' theta_j prior_id lambda_j mu_j delta_j d_j v_j v^theta ',
 'fixed_diff  Fixed Effects Differences Density Function  ',' k i(k) j(k) lambda_k theta_ijk mu_ijk delta_ijk d_ijk age a^theta time t^theta ',
@@ -284,7 +284,7 @@ Keyword =
 'avg_noise_effect_ctor  Constructing An Average Noise Effect Object  ',' syntax prototype ode_step_size age_avg_grid age_table time_table integrand_table w_info_vec s_info_vec pack_object example ',
 'avg_noise_effect_rectangle  Computing One Average Integrand  ',' syntax prototype age_lower age_upper time_lower time_upper weight_id integrand_id float pack_vec example ',
 'avg_noise_effect_xam.cpp  C++ avg_noise_effect: Example and Test  ',' ',
-'whats_new_2019  Changes and Additions to Dismod_at During 2019  ',' 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ',
+'whats_new_2019  Changes and Additions to Dismod_at During 2019  ',' 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ',
 'whats_new_2018  Changes and Additions to Dismod_at During 2018  ',' 12-19 12-15 12-14 10-30 10-22 10-21 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ',
 'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
 'whats_new_2016  Changes and Additions to Dismod_at During 2016  ',' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ',

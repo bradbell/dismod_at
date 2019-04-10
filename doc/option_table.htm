@@ -75,12 +75,12 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Conventions.option_name" target="_top">option_name</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Conventions.option_value" target="_top">option_value</a>
 <br><a href="option_table.htm#parent_node_id" target="_top">parent_node_id</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.parent_node_name" target="_top">parent_node_name</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Default" target="_top">Default</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Children" target="_top">Children</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Data Subset Table" target="_top">Data&nbsp;Subset&nbsp;Table</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Avgint Subset Table" target="_top">Avgint&nbsp;Subset&nbsp;Table</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Changing" target="_top">Changing</a>
+<br><a href="option_table.htm#parent_node_name" target="_top">parent_node_name</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Default" target="_top">Default</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Children" target="_top">Children</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Data Subset Table" target="_top">Data&nbsp;Subset&nbsp;Table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Avgint Subset Table" target="_top">Avgint&nbsp;Subset&nbsp;Table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Changing" target="_top">Changing</a>
 <br><a href="option_table.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
 <br><a href="option_table.htm#meas_std_effect: Deprecated 2019-04-07" target="_top">meas_std_effect:&nbsp;Deprecated&nbsp;2019-04-07</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_std_effect: Deprecated 2019-04-07.Default" target="_top">Default</a>
@@ -186,10 +186,16 @@ the corresponding
 is an integer that specifies the parent
 <a href="node_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
 .
+It is easier (and equivalent) to use 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
+
+instead of 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+; see below.
 
 <br>
 <br>
-<big><a name="parent_node_id.parent_node_name" id="parent_node_id.parent_node_name">parent_node_name</a></big>
+<b><big><a name="parent_node_name" id="parent_node_name">parent_node_name</a></big></b>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;parent_node_name</span></font></code>
@@ -216,7 +222,7 @@ the corresponding
 
 <br>
 <br>
-<big><a name="parent_node_id.Default" id="parent_node_id.Default">Default</a></big>
+<big><a name="parent_node_name.Default" id="parent_node_name.Default">Default</a></big>
 <br>
 There is no default value when neither
 
@@ -227,7 +233,7 @@ There is no default value when neither
 
 <br>
 <br>
-<big><a name="parent_node_id.Children" id="parent_node_id.Children">Children</a></big>
+<big><a name="parent_node_name.Children" id="parent_node_name.Children">Children</a></big>
 <br>
 The child nodes are the elements of the
 <a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child&nbsp;group</span></a>
@@ -238,14 +244,14 @@ the specified
 
 <br>
 <br>
-<big><a name="parent_node_id.Data Subset Table" id="parent_node_id.Data Subset Table">Data Subset Table</a></big>
+<big><a name="parent_node_name.Data Subset Table" id="parent_node_name.Data Subset Table">Data Subset Table</a></big>
 <br>
 Rows in the <code><font color="blue">data</font></code> table for which the
 <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
 
-is not a <a href="node_table.htm#parent.Descendant" target="_top"><span style='white-space: nowrap'>descendant</span></a>
-
-of the parent node,
+is not the parent node,
+or a <a href="node_table.htm#parent.Descendant" target="_top"><span style='white-space: nowrap'>descendant</span></a>
+ of the parent node,
 are not included in the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
  and the
 <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
@@ -253,7 +259,7 @@ are not included in the <a href="data_subset_table.htm" target="_top"><span styl
 
 <br>
 <br>
-<big><a name="parent_node_id.Avgint Subset Table" id="parent_node_id.Avgint Subset Table">Avgint Subset Table</a></big>
+<big><a name="parent_node_name.Avgint Subset Table" id="parent_node_name.Avgint Subset Table">Avgint Subset Table</a></big>
 <br>
 Rows in the <code><font color="blue">avgint</font></code> table for which the
 <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
@@ -269,7 +275,7 @@ see the heading Note for the
 
 <br>
 <br>
-<big><a name="parent_node_id.Changing" id="parent_node_id.Changing">Changing</a></big>
+<big><a name="parent_node_name.Changing" id="parent_node_name.Changing">Changing</a></big>
 <br>
 If you change the parent node
 all of the output tables become invalid.
