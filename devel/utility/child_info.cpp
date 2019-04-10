@@ -113,7 +113,7 @@ If $icode%child% < %n_child%$$,
 $codei%
 	%table%[%table_id%].node_id
 %$$
-is a descendent of
+is a descendant of
 $codei%
 	%child_object%.child_id2node_id(%child%)
 %$$
@@ -133,7 +133,7 @@ If $icode%child% == %n_child%+1%$$,
 $codei%
 	%table%[%table_id%].node_id
 %$$
-is not the parent node and not a descendent of the parent node.
+is not the parent node and not a descendant of the parent node.
 
 $end
 */

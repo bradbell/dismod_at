@@ -203,7 +203,7 @@ void data_subset(
 				error_exit(message, table_name, data_id);
 			}
 		}
-		// check if this data is for parent or one of its descendents
+		// check if this data is for parent or one of its descendants
 		ok[data_id] = child <= n_child;
 		if( ok[data_id] )
 		{	for(size_t j = 0; j < n_covariate; j++)

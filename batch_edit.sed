@@ -31,9 +31,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|Standard Deviation Effect|Noise Effect|g
-s|Standard Deviation Covariates|Noise Covariates|g
-#
-s|standard deviation covariate|noise covariate|g
+s|Descendent|Descendant|g
+s|descendent|descendant|g
 #
 

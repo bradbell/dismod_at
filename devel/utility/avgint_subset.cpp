@@ -183,7 +183,7 @@ void avgint_subset(
 	CppAD::vector<bool> ok(n_avgint);
 	for(size_t avgint_id = 0; avgint_id < n_avgint; avgint_id++)
 	{	size_t child = child_object.table_id2child(avgint_id);
-		// check if this avgint is for parent or one of its descendents
+		// check if this avgint is for parent or one of its descendants
 		ok[avgint_id] = child <= n_child;
 		if( ok[avgint_id] )
 		{	for(size_t j = 0; j < n_covariate; j++)
