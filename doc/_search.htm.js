@@ -97,7 +97,7 @@ Keyword =
 'random_value  The Random Effects Value Density Function  ',' j k_j a_j t_j u_cj lambda_j delta_j d_j mu_j v_cj^u v^u ',
 'random_diff  Random Effects Difference Density Function  ',' k i(k) j(k) lambda_k u_ijkc delta_ijk d_ijk mu_ijk age differences a^u time t^u ',
 'random_prior  Prior for Random Effect Values  ',' p(u|theta) ',
-'statistic  Some Statistical Function Definitions  ',' notation log-transformed standard deviation sigma weighted residual value difference uniform gaussian laplace student\'s-t log-gaussian log-laplace log-student\'s-t log-density ',
+'statistic  Some Statistical Function Definitions  ',' notation log-transformed standard deviation sigma weighted residual value difference reversed uniform gaussian laplace student\'s-t log-gaussian log-laplace log-student\'s-t log-density ',
 'bilinear  dismod_at Bilinear Interpolation  ',' age grid time function interpolant below minimum above maximum outside both limits plotting ',
 'ode_grid  The dismod_at Ode Grid  ',' purpose delta a_min a_max t_min t_max number age points a_i time t_j ',
 'posterior  Simulating Posterior Distribution for Model Variables  ',' purpose lemma 1 proof remark 2 simulation ',
