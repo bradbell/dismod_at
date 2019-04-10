@@ -23,6 +23,15 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-10$$
+The $cref/parent_node/option_table/parent_node_name/$$,
+not just its $cref/descendants/node_table/parent/Descendant/$$,
+is included in the
+$cref/node/data_subset_table/Discussion/Node/$$ restrictions
+for the data_subset table.
+This and has been fixed in the data subset documentation
+and other places where it was not correctly stated.
+
 $head 04-09$$
 $list number$$
 In the case where the deprecated name
