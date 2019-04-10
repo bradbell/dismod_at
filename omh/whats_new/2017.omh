@@ -617,7 +617,7 @@ $head 04-29$$
 $list number$$
 The avgint_subset table has been removed.
 The avgint table is only
-$cref/used/avgint_table/Usage/$$ by the $cref predict_command$$.
+$cref/used/avgint_table/Purpose/Usage/$$ by the $cref predict_command$$.
 As such, it can be changed, and the predict command can be re-run,
 without having to first run any other commands.
 $lnext

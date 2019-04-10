@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-18 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -15,6 +15,10 @@ $spell
 	covariates
 	std
 	dismod
+	integrands
+	Sincidence
+	mtexcess
+	mtother
 $$
 
 $section The avgint Table: Defines Average Integrand Cases$$
@@ -25,17 +29,69 @@ $cref predict_table$$.
 
 $head Purpose$$
 Given a value for the $cref model_variables$$,
-this table contains the other information necessary to compute the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
+this table contains the other information necessary so that
+the $cref predict_command$$ can compute
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ values
+that correspond to any possible case,
+(not just the cases in the $cref data_table$$).
+For an example of how to use this table, see the discussion of
+parent and child rates below.
 
-$head Usage$$
-This table is only used by the $cref predict_command$$,
-and hence it can be changed and the predict command can be re-run,
+$subhead Usage$$
+This table is only used by the $cref predict_command$$.
+It can be changed, and the predict command can be re-run,
 without needing to re-run any other commands.
+
+$subhead Parent Rates$$
+The $cref/parent rates/avg_integrand/Rate Functions/Parent Rate, q_k/$$
+$latex q_k (a, t)$$ can be computed by using the following settings
+in this table:
+$list number$$
+Set $icode node_id$$ to the
+$cref/parent node id/option_table/parent_node_id/$$.
+$lnext
+Set $icode integrand_id$$ to the integrand
+corresponding to rate $icode k$$.
+$lnext
+Set $icode age_lower$$ and $icode age_upper$$ set to $latex a$$.
+$lnext
+Set $icode time_lower$$ and $icode time_upper$$ to $latex t$$.
+$lnext
+The $icode weight_id$$ does not matter because we are not averaging
+over age or time.
+$lnext
+Set the
+$cref/covariates/avgint_table/Covariates/$$ to their
+$cref/reference/covariate_table/reference/$$ values.
+$lend
+Note that the rates and integrands have the following correspondence:
+$pre
+$$
+( $icode iota$$, $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/$$ ),
+( $icode rho$$, $cref/remission/avg_integrand/Integrand, I_i(a,t)/$$ ),
+( $icode chi$$, $cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/$$ ),
+( $icode omega$$, $cref/mtother/avg_integrand/Integrand, I_i(a,t)/$$ ).
+
+$subhead Child Rates$$
+The child rates can be computed as
+$cref/adjusted rates/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$
+$latex r_{i,k} (a, t)$$ using the following modifications to the
+parent rate settings above:
+$list number$$
+Set $icode node_id$$ to the node table
+$cref/node_id/node_table/node_id/$$ for this child.
+$lnext
+Set each
+$cref/covariate/avgint_table/Covariates/$$ to its average value
+for this child.
+$lend
+
 
 $head avgint_id$$
 This column has type $code integer$$ and is the primary key for the
 $code avgint$$ table.
+
+
 Its initial value is zero, and it increments by one for each row.
 
 $head integrand_id$$

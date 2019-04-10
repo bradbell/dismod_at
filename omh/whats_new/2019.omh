@@ -24,6 +24,7 @@ $$
 $section Changes and Additions to Dismod_at During 2019$$
 
 $head 04-10$$
+$list number$$
 The $cref/parent_node/option_table/parent_node_name/$$,
 not just its $cref/descendants/node_table/parent/Descendant/$$,
 is included in the
@@ -31,6 +32,22 @@ $cref/node/data_subset_table/Discussion/Node/$$ restrictions
 for the data_subset table.
 This and has been fixed in the data subset documentation
 and other places where it was not correctly stated.
+$lnext
+The $latex x_{i,j}$$ values are now called
+$cref/covariate difference
+	/avg_integrand
+	/Data or Avgint Table Notation
+	/Covariate Difference, x_ij
+/$$
+to distinguish them from the
+$cref/covariate values/avgint_table/Covariates/$$ in the
+data table and the avgint table.
+$lnext
+Discussion for computing the
+$cref/parent/avgint_table/Purpose/Parent Rates/$$ and
+$cref/child/avgint_table/Purpose/Child Rates/$$ rates
+were added to the avgint table.
+$lend
 
 $head 04-09$$
 $list number$$
