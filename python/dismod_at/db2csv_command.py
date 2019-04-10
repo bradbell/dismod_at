@@ -356,8 +356,13 @@
 # For each covariate column and measurement row, the value in the
 # covariate column is covariate value for this measurement minus
 # the reference value for this covariate, i.e., the corresponding
-# $cref/x_ij/avg_integrand/Data or Avgint Table Notation/x_ij/$$ in the model
-# for the average integrand.
+# covariate difference
+# $cref/x_ij
+#	/avg_integrand
+#	/Data or Avgint Table Notation
+#	/Covariate Difference, x_ij
+# /$$
+# in the model for the average integrand.
 #
 # $head predict.csv$$
 # If the $cref predict_command$$ has was executed,
@@ -430,8 +435,13 @@
 # For each covariate column and measurement row, the value in the
 # covariate column is covariate value in the $cref avgint_table$$
 # minus the reference value for this covariate. i.e., the corresponding
-# $cref/x_ij/avg_integrand/Data or Avgint Table Notation/x_ij/$$ in the model
-# for the average integrand.
+# covariate difference
+# $cref/x_ij
+#	/avg_integrand
+#	/Data or Avgint Table Notation
+#	/Covariate Difference, x_ij
+# /$$
+# in the model for the average integrand.
 #
 # $children%example/get_started/db2csv_command.py
 # %$$
