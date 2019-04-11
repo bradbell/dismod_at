@@ -17,12 +17,15 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
+	void set_avgint_command(sqlite3* db);
+	//
 	void set_option_command(
 		sqlite3*                                        db           ,
 		const CppAD::vector<option_struct>&             option_table ,
 		const std::string&                              name         ,
 		const std::string&                              value
 	);
+	//
 	void set_command(
 		const std::string&                     table_out    ,
 		const std::string&                     source       ,

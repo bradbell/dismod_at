@@ -1519,6 +1519,14 @@ int main(int n_arg, const char** argv)
 			dismod_at::set_option_command(
 				db, db_input.option_table, name, value);
 		}
+		else if( std::strcmp(argv[3], "avgint") == 0 )
+		{	if( n_arg != 5 )
+			{	cerr << "expected data to follow "
+				"dismod_at database set avgint\n";
+				std::exit(1);
+			}
+			dismod_at::set_avgint_command(db);
+		}
 		else
 		{	std::string table_out     = argv[3];
 			std::string source        = argv[4];

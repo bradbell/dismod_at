@@ -25,12 +25,15 @@ $spell
 	var
 	dismod
 	init
+	avgint
 $$
 
 $section Directly Setting Table Values$$
 
 $head Syntax$$
 $codei%dismod_at %database% set option %name% %value%
+%$$
+$codei%dismod_at %database% set avgint data
 %$$
 $codei%dismod_at %database% set %table_out% %source%
 %$$
@@ -43,6 +46,8 @@ $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head option$$
+This documentation is for the case where
+$code option$$ follows $code set$$.
 
 $subhead name$$
 Is the name of the option we are setting.
@@ -60,8 +65,19 @@ In addition, if $icode option_name$$ is not $code parent_node_id$$,
 the $cref model_variables$$ do not change and you do not have to
 re-run the $cref init_command$$.
 
+$head avgint$$
+This documentation is for the case where
+$code avgint$$ follows $code set$$.
+In this case $code data$$ must follow $code avgint$$
+and the $cref avgint_table$$ is set to be equal to the $cref data_table$$.
+The only difference is that the column name
+$cref/data_id/data_table/data_id/$$
+in the data table has column name
+$cref/avgint_id/avgint_table/avgint_id/$$
+in the avgint table.
+
 $head table_out$$
-The $icode table_out$$ syntax sets the values in $icode table_out$$
+The $icode table_out$$ cases set the values in $icode table_out$$
 using the values specified by $icode source$$.
 If this table exists before the command,
 the values originally in the table are lost.
@@ -90,7 +106,6 @@ possibilities listed below
 (and not be the same as $icode table_out$$).
 Only the case where $icode source$$ is $icode sample$$
 has the extra argument $icode sample_index$$.
-
 
 $subhead sample$$
 If $icode source$$ is $code sample$$,
@@ -123,7 +138,6 @@ contains examples and tests using this command.
 
 $end
 */
-
 // ----------------------------------------------------------------------------
 void set_option_command(
 	sqlite3*                                        db           ,
@@ -170,6 +184,77 @@ void set_option_command(
 	//
 	return;
 }
+// ----------------------------------------------------------------------------
+void set_avgint_command(sqlite3* db )
+{	using std::string;
+	using CppAD::vector;
+	//
+	// remove old avgint
+	string sql_cmd = "drop table if exists avgint";
+	exec_sql_cmd(db, sql_cmd);
+	//
+	// information for data table
+	sql_cmd  = "pragma table_info(data)";
+	char sep = ',';
+	string data_info = exec_sql_cmd(db, sql_cmd, sep);
+	//
+	// Create empty avgint talble with same columns as data except that
+	// primary key is avgint_id instead of data_id
+	size_t start = 0;
+	char   eol   = '\n';
+	size_t line  = 0;
+	sql_cmd      = "create table avgint (\n";
+	while( start < data_info.size() )
+	{	// cid
+		size_t stop = data_info.find(sep, start);
+		string sub  = data_info.substr(start, stop - start);
+		assert( size_t( std::atoi( sub.c_str() ) ) == line  );
+		// name
+		start    = stop + 1;
+		stop     = data_info.find(sep, start);
+		sub      = data_info.substr(start, stop - start);
+		if( line == 0 )
+			sql_cmd += "avgint_id ";
+		else
+			sql_cmd += ",\n" + sub + " ";
+		// name
+		start = stop + 1;
+		stop  = data_info.find(sep, start);
+		sub   = data_info.substr(start, stop - start);
+		if( line == 0 )
+			sql_cmd += "integer primary key";
+		else
+			sql_cmd += sub;
+		// notnull
+		start = stop + 1;
+		stop  = data_info.find(sep, start);
+		sub   = data_info.substr(start, stop - start);
+		assert( sub == "0" );
+		// default
+		start = stop + 1;
+		stop  = data_info.find(sep, start);
+		sub   = data_info.substr(start, stop - start);
+		assert( sub == "" );
+		// primary
+		start = stop + 1;
+		stop  = data_info.find(eol, start);
+		sub   = data_info.substr(start, stop - start);
+		assert( line != 0 || sub == "1" );
+		assert( line == 0 || sub == "0" );
+		//
+		start = stop + 1;
+		++line;
+	}
+	sql_cmd += "\n)";
+	exec_sql_cmd(db, sql_cmd);
+	//
+	// copy values from data table to avgint table
+	sql_cmd = "insert into avgint select * from data";
+	exec_sql_cmd(db, sql_cmd);
+	//
+	return;
+}
+// ----------------------------------------------------------------------------
 void set_command(
 	const std::string&                     table_out    ,
 	const std::string&                     source       ,
@@ -186,8 +271,8 @@ void set_command(
 	if( table_out != "start_var"
 	&&  table_out != "scale_var"
 	&&  table_out != "truth_var" )
-	{	msg  = "dismod_at set command table_out = ";
-		msg += table_out + " is not one of the following: ";
+	{	msg  = "dismod_at set command table_out = " + table_out;
+		msg += "\nis not one of the following: ";
 		msg += "start_var, scale_var, truth_var";
 		error_exit(msg);
 	}
