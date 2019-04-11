@@ -24,8 +24,10 @@ $$
 $section Changes and Additions to Dismod_at During 2019$$
 
 $head 04-11$$
-Add the option to set the
-$cref/avgint/set_command/avgint/$$ table equal to the data table.
+There was a bug in the db2csv computation of the adjusted standard deviation
+$cref/delta/db2csv_command/data.csv/delta/$$ for the log
+$cref/density/db2csv_command/data.csv/density/$$ cases.
+This has been fixed.
 
 $head 04-10$$
 $list number$$

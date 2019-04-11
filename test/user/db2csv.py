@@ -101,7 +101,6 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'node':        'north_america',
-		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   2000.0,
@@ -111,8 +110,12 @@ def example_db (file_name) :
 		'age_upper':    50.0,
 		'meas_value':   meas_value,
 		'meas_std':     meas_std,
+		'eta':          meas_value / 100.,
 		'one':          1.0
 	}
+	row['density'] = 'gaussian'
+	data_table.append( copy.copy(row) )
+	row['density'] = 'log_gaussian'
 	data_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# prior_table
@@ -208,8 +211,6 @@ if flag != 0 :
 data_file = open('build/test/user/data.csv', 'r')
 reader    = csv.DictReader(data_file)
 for row in reader :
-	# only one data row
-	assert int(row['data_id']) == 0
 	#
 	# meas_std
 	result = float( row['meas_std'] )
@@ -221,7 +222,11 @@ for row in reader :
 	#
 	# delta
 	result = float( row['delta'] )
-	delta  = math.sqrt( Delta * Delta + gamma_true)
+	if row['density'] == 'gaussian' :
+		delta  = math.sqrt( Delta * Delta + gamma_true)
+	else :
+		assert row['density'] == 'log_gaussian'
+		delta  = Delta * math.sqrt( 1.0 + gamma_true)
 	assert abs( 1.0 - result / delta) < 1e-4
 # -----------------------------------------------------------------------------
 print('db2csv.py: OK')

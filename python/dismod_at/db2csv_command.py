@@ -470,7 +470,8 @@ def db2csv_command(database_file_arg) :
 			delta = (meas_value - avgint) / residual
 		else :
 			# residual = ( log(meas_value + eta) - log(avgint + eta) ) / sigma
-			sigma = ( log(meas_value + eta) - log(avgint + eta) ) / residual
+			difference  = math.log(meas_value + eta) - math.log(avgint + eta)
+			sigma = difference / residual
 			# sigma = log(meas_value + eta + delta) - log(meas_value + eta)
 			delta   = (meas_value + eta) * (math.exp(sigma) - 1.0)
 		return delta
