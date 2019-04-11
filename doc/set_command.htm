@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Directly Setting Table Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Directly Setting Table Values">
-<meta name="keywords" id="keywords" content=" directly setting table values syntax database option name value init table_out start_var scale_var truth_var source sample prior_mean fit_var start scale truth example ">
+<meta name="keywords" id="keywords" content=" directly setting table values syntax database option name value init avgint table_out start_var scale_var truth_var source sample prior_mean fit_var start scale truth example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,6 +71,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="set_command.htm#option.name" target="_top">name</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="set_command.htm#option.value" target="_top">value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="set_command.htm#option.init" target="_top">init</a>
+<br><a href="set_command.htm#avgint" target="_top">avgint</a>
 <br><a href="set_command.htm#table_out" target="_top">table_out</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="set_command.htm#table_out.start_var" target="_top">start_var</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="set_command.htm#table_out.scale_var" target="_top">scale_var</a>
@@ -87,6 +88,9 @@ A:active { color : purple }
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;set&nbsp;option&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;set&nbsp;avgint&nbsp;data<br>
 </span></font></code>
 
 <code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;set&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>source</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
@@ -106,7 +110,9 @@ Is an
 <br>
 <br>
 <b><big><a name="option" id="option">option</a></big></b>
-
+<br>
+This documentation is for the case where
+<code><font color="blue">option</font></code> follows <code><font color="blue">set</font></code>.
 
 <br>
 <br>
@@ -141,11 +147,29 @@ re-run the <a href="init_command.htm" target="_top"><span style='white-space: no
 
 <br>
 <br>
+<b><big><a name="avgint" id="avgint">avgint</a></big></b>
+<br>
+This documentation is for the case where
+<code><font color="blue">avgint</font></code> follows <code><font color="blue">set</font></code>.
+In this case <code><font color="blue">data</font></code> must follow <code><font color="blue">avgint</font></code>
+and the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
+ is set to be equal to the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
+The only difference is that the column name
+<a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+
+in the data table has column name
+<a href="avgint_table.htm#avgint_id" target="_top"><span style='white-space: nowrap'>avgint_id</span></a>
+
+in the avgint table.
+
+<br>
+<br>
 <b><big><a name="table_out" id="table_out">table_out</a></big></b>
 <br>
 The 
 <code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
- syntax sets the values in 
+ cases set the values in 
 <code><i><font color="black"><span style='white-space: nowrap'>table_out</span></font></i></code>
 
 using the values specified by 
@@ -212,7 +236,6 @@ Only the case where
 has the extra argument 
 <code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
 .
-
 
 <br>
 <br>
