@@ -35,65 +35,6 @@ $section Dismod_at Wish List$$
 
 $head ODE Solution$$
 
-$subhead Step Size$$
-Currently there is a single
-$cref/ode_step_size/option_table/ode_step_size/$$ that is used
-for all ages and times.
-In many models, the older ages have much larger mortality rates.
-Perhaps it would be good to have a step size that varied with age.
-The difficulty with this is that it becomes more difficult to solve
-on the $cref ode_grid$$ and uses these values to integrate over the
-different limits for each data point.
-
-$subhead Example$$
-Below is an example diagram for solving the ODE on a grid with two age
-step sizes, 2 and 5, and one time step size, 5.
-The grid points are denoted by the character $code x$$.
-The ODE is solved along the diagonals
-$code d1$$, $code d2$$, ..., starting at the
-minimum age in the age table
-$cref/a_min/ode_grid/a_min, a_max/$$ which is 0 for this example.
-The minimum time in the time table
-$cref/t_min/ode_grid/t_min, t_max/$$ is 1990 for this example.
-$codep
-     7       x    x    x
-            /|   /    /
-a          / |  /    /
-g         /  | /    /
-e        /   |/    /
-     2  /    x    x    x
-       /    /|   /    /
-     0/----/-x--/-x--/-x
-     d1   d2   d2   d4
-           1990 1995 2000
-                time
-$$
-Note that when the step size in age matches the step size in time,
-the results of the ODE solution at the previous (age, time) can be used
-as initial values for the next integration step.
-Also note that, the initial prevalence specifies the value of
-$latex S$$ and $latex C$$ at the initial age
-$icode a_min$$, so no ODE needs to be solved to obtain these values.
-We can make the first age step different (e.g., smaller) without having
-to do any extra ODE work (2 in the age-time diagram above).
-There is still extra software work necessary to deal with the non-uniform grid.
-
-$subhead Minimum Time$$
-For times less than $icode t_min$$, the rates are only a function of age
-and does not depend on time.
-For example, the integral along diagonal d1 and diagonal d1 is the
-same up to age 2.
-We could use an age grid that had non-uniform steps sizes for this integration.
-
-$subhead  Age-Time Intervals$$
-In the special case were a row in the $cref data_table$$ has
-$icode%age_lower% == %age_upper%$$ and
-$icode%time_lower% == %time_upper%$$ we should just integrate
-the ODE for that specific age, time and not solve for the surrounding
-ODE grid points.
-We could use a an age grid that had non-uniform step sizes
-for this case.
-
 $subhead Prevalence ODE$$
 If $latex S$$ and $latex C$$ satisfy the dismod_at
 $cref/ordinary differential equation
@@ -198,7 +139,6 @@ This would enable csv2db to set up
 $cref/predictions/predict_command/$$
 using model variables computed by another program.
 
-
 $subhead Conditionals$$
 It is now possible to use conditional expressions in the ODE solution
 (CppAD this will now work properly these conditionals
@@ -241,8 +181,8 @@ $cref/inputs and outputs by command/data_flow/Input and Output by Command/$$.
 $head Lagrange Multipliers$$
 Change the Lagrange multipliers
 $cref/lagrange_dage/fit_var_table/lagrange_dage/$$ (dtime) in the
-fit_var table to be null when there is no corresponding age (time) different; i.e.,
-at the maximum age (time).
+fit_var table to be null when there is no corresponding age (time) different;
+i.e., at the maximum age (time).
 
 
 $head Documentation$$
@@ -253,10 +193,9 @@ Since this is an open source program, we would need a data set
 that could be made distributed freely without any restriction on its use.
 
 $subhead User Examples$$
-Many of the $cref user$$ examples were written a long ago
-before certain options were available. It would improve the documentation
-to go over the user examples and make them more of a how do to certain
-things.
+The $cref user$$ examples before
+$cref user_change_grid.py$$ have a discussion at the top of each example.
+Add a discussion for the rest of the user examples.
 
 $subhead Model Documentation$$
 There are some subtitle issues in the documentation that perhaps should
@@ -283,7 +222,6 @@ $cref/R
 	/Log-Gaussian, Log-Laplace, Log-Student's-t
 /$$.
 
-
 $head Sampling Random Effects$$
 It is not expected that the
 $cref/asymptotic/sample_command/method/asymptotic/$$ statistics for the
@@ -291,15 +229,6 @@ random effects will always be accurate
 (due to insufficient data for individual random effects).
 One could use multiple asymptotic random effects samples as a proposal
 density for a Metropolis algorithm to get better sampling of these variables.
-
-$head Special Random Effects Hessian$$
-A new option enables the cppad_mixed user
-(in this case dismod_at) to define a special way to compute
-the Hessian w.r.t the random effects; see
-$href%
-https://bradbell.github.io/cppad_mixed/doc/ran_likelihood_hes.htm
-%ran_likelihood_hes
-%$$.
 
 $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects
