@@ -12,8 +12,8 @@ document.write('\
 <option>user_diabetes.py</option>\
 <option>user_ill_condition.py</option>\
 <option>user_jump_at_age.py</option>\
-<option>user_asymptotic.py</option>\
 <option>user_change_grid.py</option>\
+<option>user_asymptotic.py</option>\
 <option>user_const_random.py</option>\
 <option>user_const_value.py</option>\
 <option>user_continue_fit.py</option>\
@@ -40,8 +40,8 @@ function user_child(item)
 		'user_diabetes.py.htm',
 		'user_ill_condition.py.htm',
 		'user_jump_at_age.py.htm',
-		'user_asymptotic.py.htm',
 		'user_change_grid.py.htm',
+		'user_asymptotic.py.htm',
 		'user_const_random.py.htm',
 		'user_const_value.py.htm',
 		'user_continue_fit.py.htm',

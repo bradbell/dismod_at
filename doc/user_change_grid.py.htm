@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Remove an Age or Time From a Smoothing</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Remove an Age or Time From a Smoothing">
-<meta name="keywords" id="keywords" content=" remove age time from smoothing ">
+<meta name="keywords" id="keywords" content=" remove age time from smoothing purpose table parent value prior difference change fit source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,8 +49,8 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_asymptotic.py.htm" target="_top">Prev</a>
-</td><td><a href="user_const_random.py.htm" target="_top">Next</a>
+<td><a href="user_jump_at_age.py.htm" target="_top">Prev</a>
+</td><td><a href="user_asymptotic.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
@@ -63,7 +63,114 @@ A:active { color : purple }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Remove an Age or Time From a Smoothing</big></big></b></center>
 
-<br><pre><tt><i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
+<br><a href="user_change_grid.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_change_grid.py.htm#Age Table" target="_top">Age&nbsp;Table</a>
+<br><a href="user_change_grid.py.htm#Time Table" target="_top">Time&nbsp;Table</a>
+<br><a href="user_change_grid.py.htm#Parent Smoothing" target="_top">Parent&nbsp;Smoothing</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_change_grid.py.htm#Parent Smoothing.Value Prior" target="_top">Value&nbsp;Prior</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_change_grid.py.htm#Parent Smoothing.Difference Prior" target="_top">Difference&nbsp;Prior</a>
+<br><a href="user_change_grid.py.htm#Change Parent Smoothing" target="_top">Change&nbsp;Parent&nbsp;Smoothing</a>
+<br><a href="user_change_grid.py.htm#Fit" target="_top">Fit</a>
+<br><a href="user_change_grid.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This examples uses SQL commands to modify a data base.
+To be specific, it removes one of the age points from a smoothing grid.
+
+<br>
+<br>
+<b><big><a name="Age Table" id="Age Table">Age Table</a></big></b>
+<br>
+The <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ for this example is specified by the code
+<code><font color='blue'><pre style='display:inline'> 
+     age_list = [0, 1, 20, 30, 40, 50, 60, 70, 80, 90, 100 ]
+</pre></font></code>
+<br>
+<b><big><a name="Time Table" id="Time Table">Time Table</a></big></b>
+<br>
+The <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ is specified by
+<code><font color='blue'><pre style='display:inline'> 
+     time_list = [ 1960, 1995 ]
+</pre></font></code>
+<br>
+<b><big><a name="Parent Smoothing" id="Parent Smoothing">Parent Smoothing</a></big></b>
+<br>
+The original parent smoothing table contains all of the age and time points.
+
+<br>
+<br>
+<big><a name="Parent Smoothing.Value Prior" id="Parent Smoothing.Value Prior">Value Prior</a></big>
+<br>
+The value prior at each (age, time) pair is log-Gaussian with
+lower limit 
+<code><font color="blue"><span style='white-space: nowrap'>1e-2*</span></font><i><font color="black"><span style='white-space: nowrap'>iota_mean</span></font></i></code>
+,
+upper limit 
+<code><i><font color="black"><span style='white-space: nowrap'>1e+2*</span></font></i><font color="blue"><span style='white-space: nowrap'>iota_mean</span></font></code>
+,
+mean 
+<code><i><font color="black"><span style='white-space: nowrap'>iota&nbsp;mean</span></font></i></code>
+,
+standard deviation 
+<code><i><font color="black"><span style='white-space: nowrap'>iota_mean</span></font></i></code>
+,
+and the offset in the log transform 
+<code><font color="blue"><span style='white-space: nowrap'>1e-3*</span></font><i><font color="black"><span style='white-space: nowrap'>iota_mean</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Parent Smoothing.Difference Prior" id="Parent Smoothing.Difference Prior">Difference Prior</a></big>
+<br>
+The forward difference prior at each (age, time) pair is log-Gaussian with
+no lower limit,
+no upper limit,
+mean zero,
+standard deviation 
+<code><i><font color="black"><span style='white-space: nowrap'>1.0</span></font></i></code>
+,
+and the offset in the log transform <code><font color="blue">1e-6</font></code>.
+
+<br>
+<br>
+<b><big><a name="Change Parent Smoothing" id="Change Parent Smoothing">Change Parent Smoothing</a></big></b>
+<br>
+Note that the original age grid has 11 points.
+The last age point, and all the corresponding (age, time) pairs
+are removed from the smoothing grid with the following SQL commands:
+<code><font color='blue'><pre style='display:inline'> 
+     UPDATE smooth SET n_age = 10 WHERE smooth_id == 0;
+     UPDATE smooth_grid SET smooth_id = WHERE smooth_id == 0 AND age_id == 10;
+</pre></font></code>
+We refer to this as the modified smoothing.
+
+<br>
+<br>
+<b><big><a name="Fit" id="Fit">Fit</a></big></b>
+<br>
+The only variables in this example are the parent rates for 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+.
+Hence the number of variables in the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+ should be the number
+of grid points in the modified smoothing; i.e., 20.
+There is no data for this example.
+Hence the optimal fit is to have 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>iota_mean</span></font></i></code>
+
+for all the (age, time) paris in the modified smoothing.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt>
+<i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 iota_mean <font color="#990000">=</font> <font color="#993399">0.01</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
