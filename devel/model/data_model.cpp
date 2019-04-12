@@ -177,7 +177,6 @@ $end
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/get_rate_table.hpp>
-# include <dismod_at/solve_ode.hpp>
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/a1_double.hpp>
 # include <dismod_at/avgint_subset.hpp>

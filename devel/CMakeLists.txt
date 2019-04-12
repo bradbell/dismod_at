@@ -44,7 +44,6 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/residual_density.cpp
 	utility/sim_random.cpp
 	utility/grid2line.cpp
-	utility/solve_ode.cpp
 	utility/split_space.cpp
 	utility/pack_info.cpp
 	utility/pack_prior.cpp
