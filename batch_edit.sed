@@ -9,9 +9,7 @@
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
-#	include/dismod_at/solve_ode.hpp
-#	devel/utility/solve_ode.cpp
-#	example/devel/utility/solve_ode_xam.cpp
+#	omh/model/ode_grid.omh
 # '
 # list of files that are not edited by the sed commands in this file
 # (with the possible exception of the extra_seds commands)
@@ -34,6 +32,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/solve_ode.cpp/d
-/solve_ode.hpp/d
-/solve_ode_xam/d
+/ode_grid.omh/d

@@ -30,12 +30,12 @@ they do not need to be increasing or decreasing.
 $subhead Ode Grid$$
 Note that the maximum minus the minimum time divided by the
 $cref/ode_step_size/option_table/ode_step_size/$$ will determine the
-$cref/number of time points/ode_grid/Number of Time Points, N/$$
-in the grid used to integrate the
+time spacing between solutions of the
 $cref/ordinary differential equation
 	/avg_integrand
 	/Ordinary Differential Equation
-/$$.
+/$$
+along cohort lines.
 
 $children%example/table/time_table.py
 %$$

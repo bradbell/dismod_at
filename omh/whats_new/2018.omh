@@ -1052,7 +1052,7 @@ $list number$$
 Improve documentation of which data points require a separate solution of the
 $cref/ODE/integrand_table/integrand_name/ODE/$$.
 In addition, we added a discussion of the
-$cref/purpose/ode_grid/Purpose/$$ of the ODE grid.
+purpose of the ODE grid.
 $lnext
 Advance to $code cppad_mixed-20180123$$.
 This fixed a bug in $code cppad_mixed-20180122$$.

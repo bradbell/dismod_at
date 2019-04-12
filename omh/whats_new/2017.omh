@@ -501,7 +501,7 @@ There was a bug in setting the lower and upper limits of random effects
 equal that sometimes caused a $code nan$$ result during $code initialize$$.
 This has been fixed.
 $lnext
-Make $cref bilinear$$ and $cref ode_grid$$ separate sections
+Make $cref bilinear$$ and $code ode_grid$$ separate sections
 and improve their presentations.
 $lend
 

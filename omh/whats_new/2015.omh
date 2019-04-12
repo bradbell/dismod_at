@@ -817,7 +817,7 @@ Add the $cref/derivative_test/option_table/Fixed and Random/derivative_test/$$
 option (because it is to slow to do all the time).
 $lnext
 Fix the automatic setting of the number of age and time points in the
-$cref ode_grid$$.
+ode_grid.
 $lend
 
 $head 07-23$$
