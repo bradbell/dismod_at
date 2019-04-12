@@ -23,6 +23,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-12$$
+A discussion was added at the top of the
+$cref user_change_grid.py$$ example.
+
 $head 04-11$$
 $list number$$
 There was a bug in the db2csv computation of the adjusted standard deviation

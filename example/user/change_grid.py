@@ -12,6 +12,60 @@
 #
 # $section Remove an Age or Time From a Smoothing$$
 #
+# $head Purpose$$
+# This examples uses SQL commands to modify a data base.
+# To be specific, it removes one of the age points from a smoothing grid.
+#
+# $head Age Table$$
+# The $cref age_table$$ for this example is specified by the code
+# $codep
+#	age_list = [0, 1, 20, 30, 40, 50, 60, 70, 80, 90, 100 ]
+# $$
+#
+# $head Time Table$$
+# The $cref time_table$$ is specified by
+# $codep
+#	time_list = [ 1960, 1995 ]
+# $$
+#
+# $head Parent Smoothing$$
+# The original parent smoothing table contains all of the age and time points.
+#
+# $subhead Value Prior$$
+# The value prior at each (age, time) pair is log-Gaussian with
+# lower limit $codei%1e-2*%iota_mean%$$,
+# upper limit $icode%1e+2*%iota_mean%$$,
+# mean $icode iota mean$$,
+# standard deviation $icode iota_mean$$,
+# and the offset in the log transform $codei%1e-3*%iota_mean%$$.
+#
+# $subhead Difference Prior$$
+# The forward difference prior at each (age, time) pair is log-Gaussian with
+# no lower limit,
+# no upper limit,
+# mean zero,
+# standard deviation $icode 1.0$$,
+# and the offset in the log transform $code 1e-6$$.
+#
+# $head Change Parent Smoothing$$
+# Note that the original age grid has 11 points.
+# The last age point, and all the corresponding (age, time) pairs
+# are removed from the smoothing grid with the following SQL commands:
+# $codep
+#	UPDATE smooth SET n_age = 10 WHERE smooth_id == 0;
+#	UPDATE smooth_grid SET smooth_id = WHERE smooth_id == 0 AND age_id == 10;
+# $$
+# We refer to this as the modified smoothing.
+#
+# $head Fit$$
+# The only variables in this example are the parent rates for $icode iota$$.
+# Hence the number of variables in the $cref var_table$$ should be the number
+# of grid points in the modified smoothing; i.e., 20.
+# There is no data for this example.
+# Hence the optimal fit is to have $icode iota$$ equal to $icode iota_mean$$
+# for all the (age, time) paris in the modified smoothing.
+#
+# $head Source Code$$
 # $srcfile%
 #	example/user/change_grid.py
 #	%0% BEGIN PYTHON%# END PYTHON%1%$$
