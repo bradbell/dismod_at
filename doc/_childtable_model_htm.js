@@ -13,7 +13,6 @@ document.write('\
 <option>random_prior</option>\
 <option>statistic</option>\
 <option>bilinear</option>\
-<option>ode_grid</option>\
 <option>posterior</option>\
 <option>prev_dep</option>\
 <option>numeric_average</option>\
@@ -32,7 +31,6 @@ function model_child(item)
 		'random_prior.htm',
 		'statistic.htm',
 		'bilinear.htm',
-		'ode_grid.htm',
 		'posterior.htm',
 		'prev_dep.htm',
 		'numeric_average.htm'

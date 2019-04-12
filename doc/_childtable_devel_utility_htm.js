@@ -20,7 +20,6 @@ document.write('\
 <option>random_number</option>\
 <option>random_effect</option>\
 <option>grid2line</option>\
-<option>solve_ode</option>\
 <option>split_space</option>\
 <option>time_line_vec</option>\
 </select>\
@@ -45,7 +44,6 @@ function devel_utility_child(item)
 		'random_number.htm',
 		'random_effect.htm',
 		'grid2line.htm',
-		'solve_ode.htm',
 		'split_space.htm',
 		'time_line_vec.htm'
 	];

@@ -99,7 +99,6 @@ Keyword =
 'random_prior  Prior for Random Effect Values  ',' p(u|theta) ',
 'statistic  Some Statistical Function Definitions  ',' notation log-transformed standard deviation sigma weighted residual value difference reversed uniform gaussian laplace student\'s-t log-gaussian log-laplace log-student\'s-t log-density ',
 'bilinear  dismod_at Bilinear Interpolation  ',' age grid time function interpolant below minimum above maximum outside both limits plotting ',
-'ode_grid  The dismod_at Ode Grid  ',' purpose delta a_min a_max t_min t_max number age points a_i time t_j ',
 'posterior  Simulating Posterior Distribution for Model Variables  ',' purpose lemma 1 proof remark 2 simulation ',
 'prev_dep  Prevalence Does Not Depend On Other Cause Mortality  ',' lemma proof ',
 'numeric_average  Numerical Approximation of Average Integrands  ',' noise effect ode initial rectangle a_l a_u t_l t_u time step delta grid extended cohort solution line s_j lower cohorts upper refinement not required w(a t) g(a integration ',
@@ -241,8 +240,6 @@ Keyword =
 'random_effect_xam.cpp  C++ random_effect: Example and Test  ',' ',
 'grid2line  Interpolation from Smoothing Grid to a Line  ',' syntax prototype n_line grid_info float line_age line_time age_table time_table g_info grid_value line_value example ',
 'grid2line_xam.cpp  C++ grid2line: Example and Test  ',' ',
-'solve_ode  Solving the Dismod Ordinary Differential Equation  ',' syntax 2do purpose notation float i_max j_max step_size pini rate s_out c_out example ',
-'solve_ode_xam.cpp  C++ solve_ode: Example and Test  ',' ',
 'split_space  Split String Into Substrings With Spaces as Delimiter  ',' syntax vec empty example prototype ',
 'split_space_xam.cpp  C++ split_space: Example and Test  ',' ',
 'time_line_vec  Vector of Time Lines For Averaging a Function of Age and Time  ',' syntax float time_point near_equal age_grid specialize extend_grid sub_lower sub_upper age_index add_point max_time_diff time_index max_diff age_time_avg example prototype ',
@@ -289,7 +286,7 @@ Keyword =
 'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
 'whats_new_2016  Changes and Additions to Dismod_at During 2016  ',' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ',
 'whats_new_2015  Changes and Additions to Dismod_at During 2015  ',' 12-29 12-24 12-15 12-14 12-10 12-09 11-23 11-22 11-21 11-20 11-17 11-16 11-15 11-14 11-12 11-10 11-09 11-07 11-06 11-05 11-04 11-03 11-02 11-01 10-30 10-29 10-28 10-27 10-26 10-25 10-24 10-20 10-19 10-16 10-15 10-14 09-18 09-03 08-31 08-27 08-21 08-18 08-15 08-14 08-13 08-12 08-09 08-08 08-04 08-03 08-02 08-01 07-29 07-28 07-27 07-25 07-24 07-23 07-22 07-21 07-20 07-19 07-17 07-16 07-15 07-14 07-13 07-11 07-10 07-09 07-08 07-07 07-05 07-04 07-03 07-01 06-30 06-29 06-27 06-26 06-25 06-24 06-23 06-22 ',
-'wish_list  Dismod_at Wish List  ',' ode solution step size example minimum time age-time intervals prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world user examples model sampling special hessian starting tracing optimization windows install '
+'wish_list  Dismod_at Wish List  ',' ode solution prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world example user examples model sampling starting tracing optimization windows install '
 ]
 
 var MaxList = 100;
