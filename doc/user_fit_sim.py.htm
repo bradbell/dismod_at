@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting Simulated Data Example</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting Simulated Data Example">
-<meta name="keywords" id="keywords" content=" fitting simulated data example parent iota child other rates covariate multiplier ">
+<meta name="keywords" id="keywords" content=" fitting simulated data example parent iota child other rates covariate multiplier source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,6 +68,7 @@ A:active { color : purple }
 <br><a href="user_fit_sim.py.htm#Other Rates" target="_top">Other&nbsp;Rates</a>
 <br><a href="user_fit_sim.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
 <br><a href="user_fit_sim.py.htm#Data" target="_top">Data</a>
+<br><a href="user_fit_sim.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Parent Iota" id="Parent Iota">Parent Iota</a></big></b>
 <br>
@@ -136,7 +137,12 @@ hence it is constant in age and time.
 All of the data is for the prevalence integrand and has a standard
 deviation of 1e-3.
 
-<pre><tt><i><font color="#9A1900"># values used to simulate data</font></i>
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt>
+<i><font color="#9A1900"># values used to simulate data</font></i>
 iota_parent_true          <font color="#990000">=</font> <font color="#993399">0.01</font>
 mulcov_income_iota_true   <font color="#990000">=</font> <font color="#993399">1.0</font>
 n_children                <font color="#990000">=</font> <font color="#993399">2</font>

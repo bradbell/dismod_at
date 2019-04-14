@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting With Non-Zero Constant Random Effects in Smoothing Grid</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting With Non-Zero Constant Random Effects in Smoothing Grid">
-<meta name="keywords" id="keywords" content=" fitting with non-zero constant random effects smoothing grid ">
+<meta name="keywords" id="keywords" content=" fitting with non-zero constant random effects smoothing grid source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,7 +63,12 @@ A:active { color : purple }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting With Non-Zero Constant Random Effects in Smoothing Grid</big></big></b></center>
 
-<br><pre><tt><i><font color="#9A1900"># Values used to simulate data, child values are in log space; e.g.,</font></i>
+<br><a href="user_const_random.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt>
+<i><font color="#9A1900"># Values used to simulate data, child values are in log space; e.g.,</font></i>
 <i><font color="#9A1900"># actual iota_child_1 = exp( iota_true['child_1'] ) * iota_true['world')</font></i>
 iota_true <font color="#990000">=</font> <font color="#990000">{</font><font color="#FF0000">'world'</font><font color="#990000">:</font><font color="#993399">0.01</font><font color="#990000">,</font> <font color="#FF0000">'child_1'</font><font color="#990000">:-</font><font color="#993399">0.7</font><font color="#990000">,</font> <font color="#FF0000">'child_2'</font><font color="#990000">:+</font><font color="#993399">0.7</font><font color="#990000">}</font>
 chi_true  <font color="#990000">=</font> <font color="#990000">{</font><font color="#FF0000">'world'</font><font color="#990000">:</font><font color="#993399">0.1</font><font color="#990000">,</font>  <font color="#FF0000">'child_1'</font><font color="#990000">:+</font><font color="#993399">0.7</font><font color="#990000">,</font> <font color="#FF0000">'child_2'</font><font color="#990000">:-</font><font color="#993399">0.7</font><font color="#990000">}</font>

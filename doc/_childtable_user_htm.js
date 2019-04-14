@@ -13,12 +13,12 @@ document.write('\
 <option>user_ill_condition.py</option>\
 <option>user_jump_at_age.py</option>\
 <option>user_change_grid.py</option>\
+<option>user_lasso_covariate.py</option>\
 <option>user_asymptotic.py</option>\
 <option>user_const_random.py</option>\
 <option>user_const_value.py</option>\
 <option>user_continue_fit.py</option>\
 <option>user_diff_constraint.py</option>\
-<option>user_lasso_covariate.py</option>\
 <option>user_meas_covariate.py</option>\
 <option>user_no_children.py</option>\
 <option>user_predict_fit.py</option>\
@@ -41,12 +41,12 @@ function user_child(item)
 		'user_ill_condition.py.htm',
 		'user_jump_at_age.py.htm',
 		'user_change_grid.py.htm',
+		'user_lasso_covariate.py.htm',
 		'user_asymptotic.py.htm',
 		'user_const_random.py.htm',
 		'user_const_value.py.htm',
 		'user_continue_fit.py.htm',
 		'user_diff_constraint.py.htm',
-		'user_lasso_covariate.py.htm',
 		'user_meas_covariate.py.htm',
 		'user_no_children.py.htm',
 		'user_predict_fit.py.htm',
