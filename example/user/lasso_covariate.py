@@ -26,16 +26,19 @@
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# true values used to simulate data
-iota_true        = 0.05
+# problem parameters that can be changed
+import math
+mulcov_income    = 1.0
+iota_reference   = 0.05
 n_data           = 301
+laplace_std      = 0.1 / math.sqrt(n_data)
 # ------------------------------------------------------------------------
 import sys
 import os
 import distutils.dir_util
 import subprocess
 import copy
-import math
+import random
 test_program = 'example/user/lasso_covariate.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -57,12 +60,14 @@ os.chdir('build/example/user')
 # Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_rate_child(a, t) :
-	return ('prior_gauss_zero', None, None)
 def fun_iota_parent(a, t) :
-	return ('prior_value_parent', 'prior_gauss_zero', 'prior_gauss_zero')
-def fun_mulcov(a, t) :
-	return ('prior_mulcov', None, None)
+	return ('prior_value_parent', None, None)
+def fun_income(a, t) :
+	return ('prior_income', None, None)
+def fun_sex(a, t) :
+	return ('prior_sex', None, None)
+def fun_uniform(a, t) :
+	return ('prior_uniform', None, None)
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -81,9 +86,6 @@ def example_db (file_name) :
 	#             north_america -> (united_states, canada)
 	node_table = [
 		{ 'name':'world',         'parent':'' },
-		{ 'name':'north_america', 'parent':'world' },
-		{ 'name':'united_states', 'parent':'north_america' },
-		{ 'name':'canada',        'parent':'north_america' }
 	]
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
@@ -105,12 +107,12 @@ def example_db (file_name) :
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'iota',
-			'smooth':    'smooth_mulcov'
+			'smooth':    'smooth_income'
 		},{
 			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  'iota',
-			'smooth':    'smooth_mulcov'
+			'smooth':    'smooth_sex'
 		}
 	]
 	#
@@ -125,6 +127,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
+		'integrand':   'Sincidence',
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
@@ -134,18 +137,16 @@ def example_db (file_name) :
 		'age_upper':    0.0
 	}
 	# values that change between rows:
-	mulcov_income    = 1.0
 	income_reference = 0.5
 	for data_id in range( n_data ) :
-		income      = data_id / float(n_data-1)
-		sex         = ( data_id % 3 - 1.0 ) / 2.0
-		meas_value  = iota_true
-		meas_value *= math.exp( (income - income_reference) * mulcov_income )
-		meas_std    = 0.1 * meas_value
-		integrand   = integrand_table[0]['name']
+		income         = data_id / float(n_data-1)
+		sex            = ( data_id % 3 - 1.0 ) / 2.0
+		avg_integrand  = iota_reference
+		avg_integrand *= math.exp( (income - income_reference) * mulcov_income )
+		meas_value     = random.gauss(avg_integrand, 1e-1 * avg_integrand)
+		meas_std       = 0.1 * meas_value
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
-		row['integrand']  = integrand
 		row['income']     = income
 		row['sex']        = sex
 		data_table.append( copy.copy(row) )
@@ -153,46 +154,51 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{	# prior_gauss_zero
-			'name':     'prior_gauss_zero',
-			'density':  'gaussian',
+		{	# prior_uniform
+			'name':     'prior_uniform',
+			'density':  'uniform',
 			'mean':     0.0,
-			'std':      0.01,
 		},{ # prior_value_parent
 			'name':     'prior_value_parent',
 			'density':  'uniform',
 			'lower':    0.01,
 			'upper':    1.00,
 			'mean':     0.1,
-		},{ # prior_mulcov
-			'name':     'prior_mulcov',
+		},{ # prior_income
+			'name':     'prior_income',
 			'density':  'laplace',
 			'mean':     0.0,
-			'std':      0.005,
+			'std':      laplace_std,
+		},{ # prior_sex
+			'name':     'prior_sex',
+			'density':  'laplace',
+			'mean':     0.0,
+			'std':      laplace_std,
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	middle_age_id  = 1
-	middle_time_id = 1
-	last_age_id    = 2
-	last_time_id   = 2
 	smooth_table = [
-		{   # smooth_rate_child
-			'name':                     'smooth_rate_child',
-			'age_id':                   [ last_age_id ],
-			'time_id':                  [ last_time_id ],
-			'fun':                      fun_rate_child
-		},{ # smooth_iota_parent
+		{ # smooth_iota_parent
 			'name':                     'smooth_iota_parent',
-			'age_id':                   [ 0, last_age_id ],
-			'time_id':                  [ 0, last_time_id ],
-			'fun':                       fun_iota_parent
-		},{ # smooth_mulcov
-			'name':                     'smooth_mulcov',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ middle_time_id ],
-			'fun':                       fun_mulcov
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'fun':                      fun_iota_parent
+		},{ # smooth_income
+			'name':                     'smooth_income',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'fun':                      fun_income
+		},{ # smooth_sex
+			'name':                     'smooth_sex',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'fun':                      fun_sex
+		},{ # smooth_uniform
+			'name':                     'smooth_uniform',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'fun':                      fun_uniform
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -207,20 +213,17 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
-		{ 'name':'quasi_fixed',            'value':'true'         },
-		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
+		{ 'name':'quasi_fixed',            'value':'false'        },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-12'        },
+		{ 'name':'tolerance_fixed',        'value':'1e-13'        },
 
-		{ 'name':'derivative_test_random', 'value':'second-order' },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-12'        }
+		{ 'name':'tolerance_random',       'value':'1e-13'        }
 	]
 	# ----------------------------------------------------------------------
 	# create database
@@ -252,90 +255,74 @@ def example_db (file_name) :
 	#
 	return
 # ===========================================================================
-# Note that this process uses the fit results as the truth for simulated data
-# The fit_var table corresponds to fitting with no noise.
-# The sample table corresponds to fitting with noise.
+# Fit to determine nonzero covariate multipliers
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'fit', 'set', 'simulate', 'sample' ] :
+for command in [ 'init', 'fit' ] :
 	cmd = [ program, file_name, command ]
-	if command == 'simulate' :
-		number_simulate = '1'
-		cmd.append(number_simulate)
 	if command == 'fit' :
-		variables = 'both'
+		variables = 'fixed'
 		cmd.append(variables)
-	if command == 'set' :
-		cmd.append('truth_var')
-		cmd.append('fit_var')
-	if command == 'sample' :
-		cmd.append('simulate')
-		cmd.append('1') # number_sample = number_simulate = 1
 	print( ' '.join(cmd) )
 	flag = subprocess.call( cmd )
 	if flag != 0 :
 		sys.exit('The dismod_at ' + command + ' command failed')
-# -----------------------------------------------------------------------
+#
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# Results for fitting with no noise
-var_table     = dismod_at.get_table_dict(connection, 'var')
-fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
-#
-middle_age_id  = 1
-middle_time_id = 1
-last_age_id    = 2
-last_time_id   = 2
-parent_node_id = 0
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
 # check covariate multiplier values
-count          = 0
-mulcov_income  = 1.0
+nonzero_mulcov  = list()
 for var_id in range( len(var_table) ) :
 	row   = var_table[var_id]
 	match = row['var_type'] == 'mulcov_rate_value'
 	if match :
-		count       += 1
-		value        = fit_var_table[var_id]['fit_var_value']
-		covariate_id = row['covariate_id']
+		fit_var_value  = fit_var_table[var_id]['fit_var_value']
+		covariate_id   = row['covariate_id']
+		#
+		nonzero = abs(fit_var_value) > laplace_std
 		if covariate_id == 0 :
-			# income covariate
-			assert value >= 0.50 * mulcov_income
-			assert value < mulcov_income
+			assert nonzero
 		else :
-			# sex covariate
-			assert abs(value) <= mulcov_income * 1e-8;
-assert count == 2
-# -----------------------------------------------------------------------
-# Results for fitting with noise
-sample_dict = dismod_at.get_table_dict(connection, 'sample')
-#
-# check covariate multiplier values
-count = 0
-for var_id in range( len(var_table) ) :
-	# We can use var_id as sample_id because number_simulate = 1
-	assert sample_dict[var_id]['var_id'] == var_id
-	#
-	row   = var_table[var_id]
-	match = row['var_type'] == 'mulcov_rate_value'
-	if match :
-		count       += 1
-		value        = sample_dict[var_id]['var_value']
-		covariate_id = row['covariate_id']
-		if covariate_id == 0 :
-			# income covariate
-			assert value >= 0.50 * mulcov_income
-			assert value < mulcov_income
-		else :
-			# sex covariate
-			if abs(value) > mulcov_income * 1e-7 :
-				print(value, mulcov_income * 1e-7 )
-				assert(False)
-assert count == 2
+			assert not nonzero
+		nonzero_mulcov.append( nonzero )
+assert len(nonzero_mulcov) == 2
 # -----------------------------------------------------------------------------
+# Remove laplace prior on nonzero multipliers and re-fit
+prior_name = [ 'prior_income', 'prior_sex' ]
+for covariate_id in range(2):
+	if nonzero_mulcov[covariate_id] :
+		command = 'UPDATE prior SET density_id = 0 WHERE prior_name == '
+		command += '"' + prior_name[covariate_id] + '"'
+		dismod_at.sql_command(connection, command)
+	else :
+		command = 'UPDATE prior SET lower=0.0, upper=0.0 WHERE prior_name == '
+		command += '"' + prior_name[covariate_id] + '"'
+		dismod_at.sql_command(connection, command)
+cmd = [ program, file_name, 'fit', 'fixed' ]
+print( ' '.join(cmd) )
+flag = subprocess.call( cmd )
+if flag != 0 :
+	sys.exit('The dismod_at ' + command + ' command failed')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+#
+# check covariate multiplier values
+for var_id in range( len(var_table) ) :
+	row   = var_table[var_id]
+	match = row['var_type'] == 'mulcov_rate_value'
+	if match :
+		fit_var_value  = fit_var_table[var_id]['fit_var_value']
+		covariate_id   = row['covariate_id']
+		#
+		if covariate_id == 0 :
+			abs( 1.0 - fit_var_value / mulcov_income ) < 0.1
+		else :
+			assert fit_var_value == 0.0
 print('lasso_covariate.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
