@@ -23,6 +23,9 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-14$$
+Improve the $cref user_lasso_covariate.py$$ example.
+
 $head 04-12$$
 A discussion was added at the top of the
 $cref user_change_grid.py$$ example.

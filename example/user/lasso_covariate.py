@@ -13,6 +13,11 @@
 #	avgint
 #	Covariates
 #	covariate
+#	smoothings
+#	mulcov
+#	exp
+#	Sincidence
+#	std
 # $$
 #
 # $section Using Lasso on Covariate Multiplier$$
@@ -20,18 +25,122 @@
 # $head See Also$$
 # $cref user_meas_covariate.py$$
 #
+# $head Purpose$$
+# This example uses a $cref/laplace/density_table/density_name/laplace/$$
+# prior distribution on two covariate multipliers
+# to detect which covariate is present in the data.
+# It then refits the data with a uniform on the multiplier that is present
+# and the other multiplier constrained to be zero.
+#
+# $head Problem Parameters$$
+# The following values are used to simulate the data and set the priors
+# for fitting the data:
+# $srcfile%example/user/lasso_covariate.py%
+#	0%# begin problem parameters%# end problem parameters%1
+# %$$
+#
+# $head Age and Time Values$$
+# The age and time values do not matter for this problem
+# because all the functions are constant in age and time.
+# This can be seen by the fact that all of the smoothings have one age
+# and one time point.
+#
+# $head Variables$$
+# The are three model variables in this example:
+# $table
+# $icode iota_reference$$
+#	$cnext $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$
+#	corresponding to reference value of covariates
+# $rnext
+# $icode alpha_income$$ $cnext $cref/covariate multiplier/mulcov_table/$$
+#	corresponding to income.
+# $rnext
+# $icode alpha_sex$$ $cnext
+#	covariate multiplier corresponding to sex.
+# $tend
+#
+# $head Covariate Table$$
+# There are two $cref/covariates/covariate_table/$$,
+# $code income$$ and $code sex$$, in this example.
+# Income is a linear function of $cref/data_id/data_table/data_id/$$.
+# It starts with 0.0 and ends with 1.0.
+# To be specific,
+# $codei%
+#	%income% = %data_id% / (%n_data% - 1)
+# %$$
+# Sex cycles between the values -0.5, 0.0, +0.5
+# as a function of $icode data_id$$.
+# Note that income and sex have range 1.0.
+# This makes the scaling of the covariate multipliers simpler.
+# The reference value for each covariate has been set to the midpoint
+# of its range.
+# We use $icode x_income$$ ($icode x_sex$$) to denote the difference
+# of income (sex) minus its reference value.
+#
+# $head Mulcov Table$$
+# The $cref/covariate multiplier table/mulcov_table/$$ has two rows,
+# one for each covariate multiplier.
+# Both multipliers affects the value of
+# $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$,
+# but one multiplies income and the other sex.
+# We use $icode alpha_income$$ ($icode alpha_sex$$) to denote the
+# covariate multiplier corresponding to income (sex).
+# The model for the value of $icode iota$$ is
+# $codei%
+#	%iota_reference% * exp( %alpha_income%*%x_income% + %alpha_sex%*%x_sex% )
+# %$$
+#
+# $head Rate Table$$
+# The $cref rate_table$$ only specifies that $icode iota$$ for the parent
+# is the only nonzero rate for this example.
+# In addition, it specifies the smoothing for that rate which has only
+# one grid point. Hence there is only one model variable corresponding to
+# the rates.
+#
+# $head Data Table$$
+# For this example, all the data is
+# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
+# with a Gaussian density, with mean value
+# $codei%
+#	%iota_reference% * exp( %alpha_income% * x_income )
+# %$$
+# and with standard deviation equal 10% of the mean.
+#
+# $head Prior Table$$
+# There are three priors in the $cref prior_table$$, one for each
+# model variable.
+#
+# $subhead iota$$
+# The prior for fitting the reference value of $icode iota$$
+# is uniform with lower limit 0.001, and upper limit 1.
+# Its mean value 0.1 is only used as a starting and scaling point for the
+# fitting process; see $cref start_var_table$$ and $cref scale_var_table$$.
+#
+# $subhead alpha$$
+# There is a separate prior for $icode alpha_income$$ and $icode alpha_sex$$.
+# For the first fit, they are both a Laplace density with
+# mean zero and standard deviation $icode laplace_std$$.
+# The first fit is used to decide that $icode alpha_income$$ is nonzero
+# and $icode alpha_sex$$ is zero.
+# The prior for $icode alpha_income$$ is changed to a uniform
+# and the prior for $icode alpha_sex$$ is change to have upper and lower
+# limit zero.
+# A second fit is done to recover the value of $icode alpha_income$$
+# without shrinkage due to the Laplace prior.
+#
+# $head Source Code$$
 # $srcfile%
 #	example/user/lasso_covariate.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# problem parameters that can be changed
-import math
-mulcov_income    = 1.0
-iota_reference   = 0.05
-n_data           = 301
-laplace_std      = 0.1 / math.sqrt(n_data)
+# begin problem parameters
+alpha_income     = 1.0       # income covariate multiplier during simulation
+iota_reference   = 0.05      # iota corresponding to reference for covariates
+n_data           = 301       # number of simulated data points
+laplace_std      = 0.1/17.34 # 0.1 / sqrt(n_data)
+# end problem parameters
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -39,6 +148,7 @@ import distutils.dir_util
 import subprocess
 import copy
 import random
+import math
 test_program = 'example/user/lasso_covariate.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -61,13 +171,11 @@ os.chdir('build/example/user')
 def constant_weight_fun(a, t) :
 	return 1.0
 def fun_iota_parent(a, t) :
-	return ('prior_value_parent', None, None)
+	return ('prior_iota_parent', None, None)
 def fun_income(a, t) :
 	return ('prior_income', None, None)
 def fun_sex(a, t) :
 	return ('prior_sex', None, None)
-def fun_uniform(a, t) :
-	return ('prior_uniform', None, None)
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -97,7 +205,7 @@ def example_db (file_name) :
 	# covariate table:
 	covariate_table = [
 		{'name':'income', 'reference':0.5},
-		{'name':'sex',    'reference':0.0, 'max_difference':0.6}
+		{'name':'sex',    'reference':0.0}
 	]
 	#
 	# mulcov table
@@ -131,18 +239,18 @@ def example_db (file_name) :
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
+		'age_lower':    0.0,
+		'age_upper':    0.0,
 		'time_lower':   1995.0,
 		'time_upper':   1995.0,
-		'age_lower':    0.0,
-		'age_upper':    0.0
 	}
 	# values that change between rows:
 	income_reference = 0.5
 	for data_id in range( n_data ) :
 		income         = data_id / float(n_data-1)
 		sex            = ( data_id % 3 - 1.0 ) / 2.0
-		avg_integrand  = iota_reference
-		avg_integrand *= math.exp( (income - income_reference) * mulcov_income )
+		x_income       = income - income_reference
+		avg_integrand  = iota_reference * math.exp( alpha_income * x_income )
 		meas_value     = random.gauss(avg_integrand, 1e-1 * avg_integrand)
 		meas_std       = 0.1 * meas_value
 		row['meas_value'] = meas_value
@@ -154,14 +262,10 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{	# prior_uniform
-			'name':     'prior_uniform',
+		{ # prior_iota_parent
+			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'mean':     0.0,
-		},{ # prior_value_parent
-			'name':     'prior_value_parent',
-			'density':  'uniform',
-			'lower':    0.01,
+			'lower':    0.001,
 			'upper':    1.00,
 			'mean':     0.1,
 		},{ # prior_income
@@ -194,11 +298,6 @@ def example_db (file_name) :
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0 ],
 			'fun':                      fun_sex
-		},{ # smooth_uniform
-			'name':                     'smooth_uniform',
-			'age_id':                   [ 0 ],
-			'time_id':                  [ 0 ],
-			'fun':                      fun_uniform
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -320,7 +419,7 @@ for var_id in range( len(var_table) ) :
 		covariate_id   = row['covariate_id']
 		#
 		if covariate_id == 0 :
-			abs( 1.0 - fit_var_value / mulcov_income ) < 0.1
+			abs( 1.0 - fit_var_value / alpha_income ) < 0.1
 		else :
 			assert fit_var_value == 0.0
 print('lasso_covariate.py: OK')
