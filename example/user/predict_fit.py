@@ -15,6 +15,7 @@
 #
 # $section Predict Average Integrand Using Results of a Fit$$
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/predict_fit.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

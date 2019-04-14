@@ -56,6 +56,7 @@
 # All of the data is for the prevalence integrand and has a standard
 # deviation of 1e-3.
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/fit_sim.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

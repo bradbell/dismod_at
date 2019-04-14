@@ -18,6 +18,7 @@
 #
 # $section Case with no Children; i.e., no Random Effects$$
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/no_children.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

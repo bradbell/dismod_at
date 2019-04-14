@@ -18,6 +18,7 @@
 #
 # $section Case Where Re-Scaling is Useful$$
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/re_scale.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

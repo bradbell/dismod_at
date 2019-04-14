@@ -65,7 +65,7 @@
 # Note that the initial scaling, in the example below, uses the
 # mean values for $latex \chi_0$$, $latex \chi_1$$ which are zero.
 #
-# $head Source$$
+# $head Source Code$$
 # $srcfile%
 #	example/user/ill_condition.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

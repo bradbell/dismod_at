@@ -19,6 +19,7 @@
 # The $cref/zero_sum_random/option_table/zero_sum_random/$$
 # to improve the estimation of the fixed effects.
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/zero_sum_random.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

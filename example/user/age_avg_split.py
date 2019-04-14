@@ -57,7 +57,7 @@
 # A piecewise linear function of age is used between these grid points.
 # (Note everything is constant w.r.t time for this case.)
 #
-# $head Source$$
+# $head Source Code$$
 # $srcfile%example/user/age_avg_split.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1
 # %$$

@@ -15,6 +15,7 @@
 #
 # $section Fitting With Non-Zero Constant Random Effects in Smoothing Grid$$
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/const_random.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

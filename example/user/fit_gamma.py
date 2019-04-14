@@ -60,6 +60,7 @@
 # The function $code gamma_true()$$ shows on the scaling of $icode gamma$$
 # depends on the value of $icode meas_noise_effect$$.
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/fit_gamma.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

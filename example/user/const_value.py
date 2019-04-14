@@ -15,6 +15,7 @@
 #
 # $section Fitting Using const_value in Smoothing Grid$$
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/const_value.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$

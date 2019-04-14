@@ -22,6 +22,7 @@
 # $head See Also$$
 # $cref user_lasso_covariate.py$$
 #
+# $head Source Code$$
 # $srcfile%
 #	example/user/meas_covariate.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
