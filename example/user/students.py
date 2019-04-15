@@ -43,7 +43,7 @@
 # The good data is Gaussian with mean $icode iota_true$$
 # and standard deviation $icode%meas_cv%*%iota_true%$$.
 # The outlier data has mean $codei%10*%iota_true%$$
-# and standard deviation $icode%2*%iota_true%$$.
+# and standard deviation $codei%2*%iota_true%$$.
 #
 # $head Rate Table$$
 # The $cref rate_table$$ only specifies that $icode iota$$ for the parent
