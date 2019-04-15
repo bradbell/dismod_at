@@ -140,7 +140,7 @@ alpha_income     = 1.0       # income covariate multiplier during simulation
 iota_reference   = 0.05      # iota corresponding to reference for covariates
 n_data           = 301       # number of simulated data points
 laplace_std      = 0.1/17.34 # 0.1 / sqrt(n_data)
-# end problem parameters
+random_seed      = 0         # if zero, seed off the clock
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -149,6 +149,10 @@ import subprocess
 import copy
 import random
 import math
+import time
+if random_seed == 0 :
+	random_seed = int( time.time() )
+# end problem parameters
 test_program = 'example/user/lasso_covariate.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -246,6 +250,7 @@ def example_db (file_name) :
 	}
 	# values that change between rows:
 	income_reference = 0.5
+	random.seed(random_seed)
 	for data_id in range( n_data ) :
 		income         = data_id / float(n_data-1)
 		sex            = ( data_id % 3 - 1.0 ) / 2.0
@@ -311,8 +316,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
 		{ 'name':'quasi_fixed',            'value':'false'        },
@@ -385,8 +389,12 @@ for var_id in range( len(var_table) ) :
 		#
 		nonzero = abs(fit_var_value) > laplace_std
 		if covariate_id == 0 :
+			if( not nonzero ) :
+				print('random_seed = ', random_seed)
 			assert nonzero
 		else :
+			if( nonzero ) :
+				print('random_seed = ', random_seed)
 			assert not nonzero
 		nonzero_mulcov.append( nonzero )
 assert len(nonzero_mulcov) == 2
@@ -419,7 +427,10 @@ for var_id in range( len(var_table) ) :
 		covariate_id   = row['covariate_id']
 		#
 		if covariate_id == 0 :
-			abs( 1.0 - fit_var_value / alpha_income ) < 0.1
+			ok = abs( 1.0 - fit_var_value / alpha_income ) < 0.1
+			if not ok :
+				 print('random_seed = ', random_seed)
+			assert ok
 		else :
 			assert fit_var_value == 0.0
 print('lasso_covariate.py: OK')
