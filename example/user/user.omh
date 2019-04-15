@@ -70,6 +70,7 @@ $childtable%example/user/csv2db.py
 	%example/user/jump_at_age.py
 	%example/user/change_grid.py
 	%example/user/lasso_covariate.py
+	%example/user/students.py
 
 	%example/user/asymptotic.py
 	%example/user/const_random.py
@@ -82,7 +83,6 @@ $childtable%example/user/csv2db.py
 	%example/user/zero_sum_random.py
 	%example/user/re_scale.py
 	%example/user/speed.py
-	%example/user/students.py
 %$$
 
 $end

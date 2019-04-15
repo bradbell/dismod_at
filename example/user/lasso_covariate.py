@@ -142,6 +142,10 @@ n_data           = 301       # number of simulated data points
 laplace_std      = 0.1/17.34 # 0.1 / sqrt(n_data)
 random_seed      = 0         # if zero, seed off the clock
 # ------------------------------------------------------------------------
+import time
+if random_seed == 0 :
+	random_seed = int( time.time() )
+#
 import sys
 import os
 import distutils.dir_util
@@ -149,9 +153,6 @@ import subprocess
 import copy
 import random
 import math
-import time
-if random_seed == 0 :
-	random_seed = int( time.time() )
 # end problem parameters
 test_program = 'example/user/lasso_covariate.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -323,10 +324,6 @@ def example_db (file_name) :
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
 		{ 'name':'tolerance_fixed',        'value':'1e-13'        },
-
-		{ 'name':'max_num_iter_random',    'value':'100'          },
-		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-13'        }
 	]
 	# ----------------------------------------------------------------------
 	# create database

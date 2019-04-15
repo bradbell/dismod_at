@@ -10,9 +10,62 @@
 # $begin user_students.py$$ $newlinech #$$
 # $spell
 #	init
+#	Sincidence
+#	cv
 # $$
 #
-# $section Using Student's-t to Fitting Data with Outliers$$
+# $section Using Student's-t to Fit With Remove Outliers Present$$
+#
+# $head Purpose$$
+# This example uses the $cref/students/density_table/density_name/students/$$
+# density for the data to remove the effect on outliers in the data.
+#
+# $head Problem Parameters$$
+# The following values are used to simulate and model the data:
+# $srcfile%example/user/students.py%
+#	0%# begin problem parameters%# end problem parameters%1
+# %$$
+#
+# $head Age and Time Values$$
+# The age and time values do not matter for this problem
+# because all the functions are constant in age and time.
+# This can be seen by the fact that all of the smoothing has one age
+# and one time point.
+#
+# $head Variables$$
+# The constant value used to model
+# $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$
+# for the parent node is only one model variable in this example.
+#
+# $head Data Table$$
+# For this example, all the data is
+# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$.
+# The good data is Gaussian with mean $icode iota_true$$
+# and standard deviation $icode%meas_cv%*%iota_true%$$.
+# The outlier data has mean $codei%10*%iota_true%$$
+# and standard deviation $icode%2*%iota_true%$$.
+#
+# $head Rate Table$$
+# The $cref rate_table$$ only specifies that $icode iota$$ for the parent
+# is the only nonzero rate for this example.
+# In addition, it specifies the smoothing for that rate which has only
+# one grid point. Hence there is only one model variable corresponding to
+# the rates.
+#
+# $head Prior Table$$
+# The prior for $icode iota$$ is uniform with lower limit 1e-4,
+# upper limit 1.0 and mean 0.1.
+# Note that the mean is not really the mean of this uniform distribution
+# and it is only used to get the initial starting and scaling point
+# for the optimization; see $cref init_command$$.
+#
+# $head Fitting$$
+# A first fit is done using a Gaussian density for the data.
+# This is used to get a better starting point for the optimization.
+# All the density values in the data table are changed to be Students-t
+# and a second fit is done.
+# The results of the second fit are check for accuracy of the estimate
+# and for proper detection of the outliers.
 #
 # $head Source Code$$
 # $srcfile%
@@ -22,17 +75,28 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-iota_parent        = 1e-2   # true value of iota for parent
-iota_random_effect = 0.5;   # true positive random effect value
-n_data             = 30;    # must be a multiple of 3
-n_outlier          = 3;     # number of data points that are outliers
+# begin problem parameters
+iota_true    = 1e-2 # true value of iota used for simulating data
+meas_cv      = 0.1  # coefficient of variation for good data points
+n_data       = 50   # total number of data points
+n_outlier    = 5    # number of data points that are outliers
+nu           = 5.0  # degrees of freedom in data students-t density
+cutoff       = 3.5  # students-t weighted residual cutoff for outlier
+random_seed  = 0    # if zero, seed off the clock
+# end problem parameters
 # ------------------------------------------------------------------------
+import time
+if random_seed == 0 :
+	random_seed = int( time.time() )
+#
 import sys
 import os
 import distutils.dir_util
 import subprocess
 import copy
 import math
+import random
+import statistics
 test_program = 'example/user/students.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -54,10 +118,8 @@ os.chdir('build/example/user')
 # Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_rate_child(a, t) :
-	return ('prior_rate_child', None, 'prior_students_zero')
 def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', None, 'prior_students_zero')
+	return ('prior_iota_parent', None, None)
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import dismod_at
@@ -100,10 +162,9 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# data table: same order as list of integrands
 	data_table = list()
-	# valeus that are the same for all data
-	# If you change the density to gaussian, this program will report a bad fit.
+	meas_std = meas_cv * iota_true
 	row = {
-		'density':     'students',
+		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   2000.0,
@@ -111,65 +172,37 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
-		'meas_std':     iota_parent / 10.,
-		'nu':           3.0
+		'meas_std':     meas_std,
+		'nu':           nu
 	}
+	random.seed(random_seed)
 	for data_id in range( n_data ):
-		# make sure both child and parent data gets included in fit
-		# by balancing the offset between the two
-		if data_id % 3 == 0 :
-			row['node']        = 'united_states'
-			meas_value = iota_parent * math.exp( iota_random_effect )
-		elif data_id % 3 == 1 :
-			row['node']        = 'canada'
-			meas_value = iota_parent * math.exp( -iota_random_effect )
-		else :
-			row['node']        = 'north_america'
-			meas_value = iota_parent
+		row['node'] = 'north_america'
+		meas_value  = random.gauss(iota_true, meas_std)
 		#
-		sign = 2.0 * (data_id % 2) - 1.0
 		if data_id < n_outlier :
-			meas_value = math.exp(sign * 5.0) * meas_value
+			meas_value = random.gauss( 10.0 * iota_true, 2.0 * iota_true )
 		row['meas_value']  = meas_value
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{ # prior_rate_parent
-			'name':     'prior_rate_parent',
+		{ # prior_iota_parent
+			'name':     'prior_iota_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
 			'upper':    1.0,
 			'mean':     0.1,
-		},{ # prior_rate_child
-			'name':     'prior_rate_child',
-			'density':  'students',
-			'mean':     0.0,
-			'std':      10.0,
-			'nu':       10.0,
-		},{ # prior_students_zero
-			'name':     'prior_students_zero',
-			'density':  'students',
-			'mean':     0.0,
-			'std':      1e-2,
-			'nu':       10.0,
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	middle_age_id  = 1
-	last_time_id   = 2
 	smooth_table = [
-		{ # smooth_rate_child
-			'name':                     'smooth_rate_child',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ 0, last_time_id ],
-			'fun':                      fun_rate_child
-		},{ # smooth_rate_parent
+		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ 0, last_time_id ],
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
 			'fun':                      fun_rate_parent
 		}
 	]
@@ -179,27 +212,19 @@ def example_db (file_name) :
 		{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
 		}
 	]
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
-		{ 'name':'quasi_fixed',            'value':'true'          },
-		{ 'name':'derivative_test_fixed',  'value':'adaptive'      },
-		{ 'name':'max_num_iter_fixed',     'value':'100'           },
-		{ 'name':'print_level_fixed',      'value':'0'             },
-		{ 'name':'tolerance_fixed',        'value':'1e-11'         },
-
-		{ 'name':'derivative_test_random', 'value':'second-order'  },
-		{ 'name':'max_num_iter_random',    'value':'100'           },
-		{ 'name':'print_level_random',     'value':'0'             },
-		{ 'name':'tolerance_random',       'value':'1e-11'         }
+		{ 'name':'quasi_fixed',            'value':'false'             },
+		{ 'name':'max_num_iter_fixed',     'value':'100'               },
+		{ 'name':'print_level_fixed',      'value':'0'                 },
+		{ 'name':'tolerance_fixed',        'value':'1e-11'             },
 	]
 	# ----------------------------------------------------------------------
 	# create database
@@ -227,58 +252,84 @@ def example_db (file_name) :
 # Create database and run init, start, fit with just fixed effects
 file_name = 'example.db'
 example_db(file_name)
-program        = '../../devel/dismod_at'
-for command in [ 'init', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
-# -----------------------------------------------------------------------
-# connect to database
+program = '../../devel/dismod_at'
+#
+command = [ program, file_name, 'init' ]
+print( ' '.join(command) )
+flag = subprocess.call( command )
+if flag != 0 :
+	sys.exit('The dismod_at init command failed')
+#
+command = [ program, file_name, 'fit', 'fixed' ]
+print( ' '.join(command) )
+flag = subprocess.call( command )
+if flag != 0 :
+	sys.exit('The dismod_at fit fixed command failed')
+#
+# connect to database and get density table
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
+density_table   = dismod_at.get_table_dict(connection, 'density')
 #
-# get solution from fit_var table
-node_table     = dismod_at.get_table_dict(connection, 'node')
-rate_table     = dismod_at.get_table_dict(connection, 'rate')
-var_table      = dismod_at.get_table_dict(connection, 'var')
-fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
+# set start_var table equal to fit_var table
+command = [ program, file_name, 'set', 'start_var', 'fit_var' ]
+print( ' '.join(command) )
+flag = subprocess.call( command )
+if flag != 0 :
+	sys.exit('The dismod_at fit fixed command failed')
 #
-# optimal values when standard deviation of random effects is infinity
+# change data densities to be students-t
+assert density_table[3]['density_name'] == 'students'
+command = 'UPDATE data SET density_id = 3'
+dismod_at.sql_command(connection, command)
+#
+# fit with Students-t (now that we have a better starting point)
+command = [ program, file_name, 'fit', 'fixed' ]
+print( ' '.join(command) )
+flag = subprocess.call( command )
+if flag != 0 :
+	sys.exit('The dismod_at fit fixed command failed')
+#
+# get second fit information
+node_table      = dismod_at.get_table_dict(connection, 'node')
+rate_table      = dismod_at.get_table_dict(connection, 'rate')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+fit_data_subset = dismod_at.get_table_dict(connection, 'fit_data_subset')
+data_table      = dismod_at.get_table_dict(connection, 'data')
+#
 n_var = len( fit_var_table )
+assert n_var == 1
 for var_id in range( n_var ) :
 	var_type = var_table[var_id]['var_type']
-	assert( var_type == 'rate' )
-	#
 	rate_id = var_table[var_id]['rate_id']
+	node_id = var_table[var_id]['node_id']
+	#
+	assert( var_type == 'rate' )
 	assert( rate_table[rate_id]['rate_name'] == 'iota' )
+	assert node_table[node_id]['node_name'] == 'north_america'
 	#
 	value   = fit_var_table[var_id]['fit_var_value']
-	#
-	node_id  = var_table[var_id]['node_id']
-	north_america   = node_table[node_id]['node_name'] == 'north_america'
-	united_states   = node_table[node_id]['node_name'] == 'united_states'
-	canada          = node_table[node_id]['node_name'] == 'canada'
-	if north_america :
-		err = value / iota_parent - 1.0
-		if abs(err) > 1e-2:
-			print('north_america', iota_parent, value, err)
-			assert False
-	elif united_states :
-		err = value / iota_random_effect - 1.0
-		if abs(err) > 1e-2:
-			print('united_states', iota_random_effect, value, err)
-			assert False
-	else :
-		assert canada
-		err = value / iota_random_effect + 1.0
-		if abs(err) > 1e-2:
-			print('canada', - iota_random_effect, value, err)
-			assert False
+	err = value / iota_true - 1.0
+	if abs(err) > 3.0 * meas_cv / math.sqrt(n_data - n_outlier):
+		print('random_seed = ', random_seed)
+		assert False
+#
+# check that bad data (and only bad data) has large residuals
+ok = True
+for data_id in range(n_data) :
+	residual = fit_data_subset[data_id]['weighted_residual']
+	if abs(residual) > cutoff :
+		if data_id > n_outlier :
+			print('large residual at good data point: data_id = ', data_id)
+			ok = False
+	if abs(residual) < cutoff :
+		if data_id < n_outlier :
+			print('small residual at bad data point: data_id = ', data_id)
+			ok = False
+if not ok :
+	print('random_seed = ', random_seed)
+assert ok
 # -----------------------------------------------------------------------
 print('students: OK')
 # END PYTHON
