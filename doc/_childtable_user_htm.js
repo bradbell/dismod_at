@@ -14,6 +14,7 @@ document.write('\
 <option>user_jump_at_age.py</option>\
 <option>user_change_grid.py</option>\
 <option>user_lasso_covariate.py</option>\
+<option>user_students.py</option>\
 <option>user_asymptotic.py</option>\
 <option>user_const_random.py</option>\
 <option>user_const_value.py</option>\
@@ -25,7 +26,6 @@ document.write('\
 <option>user_zero_sum_random.py</option>\
 <option>user_re_scale.py</option>\
 <option>user_speed.py</option>\
-<option>user_students.py</option>\
 </select>\
 ');
 function user_child(item)
@@ -42,6 +42,7 @@ function user_child(item)
 		'user_jump_at_age.py.htm',
 		'user_change_grid.py.htm',
 		'user_lasso_covariate.py.htm',
+		'user_students.py.htm',
 		'user_asymptotic.py.htm',
 		'user_const_random.py.htm',
 		'user_const_value.py.htm',
@@ -52,8 +53,7 @@ function user_child(item)
 		'user_predict_fit.py.htm',
 		'user_zero_sum_random.py.htm',
 		'user_re_scale.py.htm',
-		'user_speed.py.htm',
-		'user_students.py.htm'
+		'user_speed.py.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
