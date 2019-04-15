@@ -123,10 +123,10 @@ os.chdir('build/example/user')
 # Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_rate_child(a, t) :
-	return ('prior_rate_child', None, 'prior_child_diff')
-def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', None, 'prior_parent_diff')
+def fun_iota_child(a, t) :
+	return ('prior_iota_child', None, 'prior_child_diff')
+def fun_iota_parent(a, t) :
+	return ('prior_iota_parent', None, 'prior_parent_diff')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import dismod_at
@@ -196,13 +196,13 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{ # prior_rate_parent
-			'name':     'prior_rate_parent',
+		{ # prior_iota_parent
+			'name':     'prior_iota_parent',
 			'density':  'uniform',
 			'lower':    iota_parent_true * 1e-2,
 			'mean':     iota_parent_true * 1e-2
-		},{ # prior_rate_child
-			'name':     'prior_rate_child',
+		},{ # prior_iota_child
+			'name':     'prior_iota_child',
 			'density':  'gaussian',
 			'mean':     0.0,
 			'std':      100.0, # very large so like a uniform distribution
@@ -223,16 +223,16 @@ def example_db (file_name) :
 	# smooth table
 	last_time_id   = 2
 	smooth_table = [
-		{ # smooth_rate_child
-			'name':                     'smooth_rate_child',
+		{ # smooth_iota_child
+			'name':                     'smooth_iota_child',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0, last_time_id ],
-			'fun':                      fun_rate_child
-		},{ # smooth_rate_parent
-			'name':                     'smooth_rate_parent',
+			'fun':                      fun_iota_child
+		},{ # smooth_iota_parent
+			'name':                     'smooth_iota_parent',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0, last_time_id ],
-			'fun':                       fun_rate_parent
+			'fun':                       fun_iota_parent
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -240,8 +240,8 @@ def example_db (file_name) :
 	rate_table = [
 		{
 			'name':          'iota',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': 'smooth_iota_parent',
+			'child_smooth':  'smooth_iota_child',
 		}
 	]
 	# ----------------------------------------------------------------------
