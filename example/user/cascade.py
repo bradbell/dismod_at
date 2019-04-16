@@ -157,7 +157,7 @@
 meas_cv       =  0.10  # coefficient of variation used to simulate data
 iota_true_0   =  0.02  # simulation value of iota in n1 at age 0
 iota_true_100 =  0.02  # value at age 100, iota_true_100 >= iota_true_0
-alpha_true    =  0.00  # value of covariate multiplier used to simulate data
+alpha_true    =  0.10  # rate_value covariate multiplier used to simulate data
 random_seed   =  0     # if zero, seed off the clock
 effect_true = dict()
 effect_true['n11']  =  0.0
@@ -168,9 +168,9 @@ effect_true['n121'] =  0.0
 effect_true['n122'] = -effect_true['n121']
 average_income = dict()
 average_income['n111'] = 1.0
-average_income['n112'] = 2.0
+average_income['n112'] = 1.0
 average_income['n121'] = 3.0
-average_income['n122'] = 4.0
+average_income['n122'] = 3.0
 # end problem parameters
 # ----------------------------------------------------------------------------
 import time
@@ -352,14 +352,15 @@ def example_db (file_name) :
 		'time_upper':  2000.0,
 		'one':         1.0,
 	}
-	income_reference = covariate_table[0]['reference']
+	assert covariate_table[1]['name'] == 'income'
+	income_reference = covariate_table[1]['reference']
 	random.seed(random_seed)
 	for age_id in range( len(age_table) ) :
 		age   = age_table[age_id]
 		iota  = iota_true_0 + (iota_true_100 - iota_true_0) * age / 100.0
 		for node in average_income :
-			for repeat in range(3) :
-				income = average_income[node] + repeat - 1
+			for repeat in range(1) :
+				income = average_income[node]
 				total_effect  = alpha_true * (income - income_reference)
 				total_effect += effect_true[node]
 				if node.startswith('n11') :
@@ -377,6 +378,7 @@ def example_db (file_name) :
 				row['age_lower']  = age
 				row['age_upper']  = age
 				row['income']     = income
+				print(total_effect, iota, iota_true_0, iota_true_100, age)
 				data_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# create database
