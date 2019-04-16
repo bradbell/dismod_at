@@ -133,8 +133,8 @@
 # a very small coefficient of variation for the measurement values
 # $icode meas_cv$$.
 # The simulation value of $icode iota$$, corresponding to $icode n1$$, is
-# linear with respect to age with value $icode iota_true_50$$ at age 50
-# and slope $icode iota_true_da$$.
+# linear with respect to age with value $icode iota_true_0$$ at age 0
+# and $icode iota_true_100$$ at age 100.
 # The effect for each leaf node, plus the effect for its parent,
 # plus the income effect is summed to get the total effect.
 # The mean of the data for a leaf node is the
@@ -154,18 +154,18 @@
 # ----------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters
-meas_cv      =  0.01 # coefficient of variation used to simulate data
-iota_true_50 =  0.04 # value of iota in n1 at age 50 used to simulate data
-iota_true_da =  4e-4 # simulation derivative of iota w.r.t age of iota in n1
-alpha_true   = -0.50 # value of covariate multiplier used to simulate data
-random_seed  =  0    # if zero, seed off the clock
+meas_cv       =  0.10  # coefficient of variation used to simulate data
+iota_true_0   =  0.02  # simulation value of iota in n1 at age 0
+iota_true_100 =  0.02  # value at age 100, iota_true_100 >= iota_true_0
+alpha_true    =  0.00  # value of covariate multiplier used to simulate data
+random_seed   =  0     # if zero, seed off the clock
 effect_true = dict()
-effect_true['n11']  = -0.2
-effect_true['n12']  = +0.2
-effect_true['n111'] = -0.2
-effect_true['n112'] = +0.2
-effect_true['n121'] = -0.2
-effect_true['n122'] = +0.2
+effect_true['n11']  =  0.0
+effect_true['n12']  = -effect_true['n11']
+effect_true['n111'] =  0.0
+effect_true['n112'] = -effect_true['n111']
+effect_true['n121'] =  0.0
+effect_true['n122'] = -effect_true['n121']
 average_income = dict()
 average_income['n111'] = 1.0
 average_income['n112'] = 2.0
@@ -264,15 +264,15 @@ def example_db (file_name) :
 		{   # prior_iota_parent_value
 			'name':    'prior_iota_parent_value',
 			'density': 'uniform',
-			'lower':   iota_true_50 / 100.0,
-			'upper':   iota_true_50 * 100.0,
-			'mean':    iota_true_50 * 10.0
+			'lower':   iota_true_0 / 10.0,
+			'upper':   iota_true_100 * 10.0,
+			'mean':    (iota_true_0 + iota_true_100) / 2.0
 		},{ # prior_iota_parent_dage
 			'name':    'prior_iota_parent_dage',
 			'density': 'log_gaussian',
 			'mean':     0.0,
 			'std':      1.0,
-			'eta':      iota_true_50 / 100.0,
+			'eta':      iota_true_0 / 10.0
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
 			'density': 'gaussian',
@@ -281,16 +281,16 @@ def example_db (file_name) :
 		},{ # prior_alpha
 			'name':    'prior_alpha',
 			'density': 'uniform',
-			'mean':     0.0,
-			'lower':    -1.0,
-			'upper':    +1.0,
+			'mean':     alpha_true,
+			'lower':    alpha_true,
+			'upper':    alpha_true,
 		},{ # prior_gamma
 			'name':    'prior_gamma',
 			'density': 'gaussian',
 			'mean':     0.0,
 			'std':      0.1,
 			'lower':    0.0,
-			'upper':    1.0,
+			'upper':    0.0,
 		}
 	]
 	# smooth_table
@@ -356,7 +356,7 @@ def example_db (file_name) :
 	random.seed(random_seed)
 	for age_id in range( len(age_table) ) :
 		age   = age_table[age_id]
-		iota  = iota_true_50 + iota_true_da * (age - 50.0)
+		iota  = iota_true_0 + (iota_true_100 - iota_true_0) * age / 100.0
 		for node in average_income :
 			for repeat in range(3) :
 				income = average_income[node] + repeat - 1
@@ -369,7 +369,8 @@ def example_db (file_name) :
 				#
 				iota       = iota * math.exp(total_effect)
 				meas_std   = iota * meas_cv
-				meas_value = random.gauss(iota, meas_std)
+				# meas_value = random.gauss(iota, meas_std)
+				meas_value = iota
 				row['node']       = node
 				row['meas_value'] = meas_value
 				row['meas_std']   = meas_std
@@ -405,7 +406,7 @@ example_db(file_name)
 dismod_at = '../../devel/dismod_at'
 dismodat  = '../../../bin/dismodat.py'
 system_command( [ dismod_at, file_name, 'init' ] )
-system_command( [ dismod_at, file_name, 'fit', 'both' ] )
+system_command( [ dismod_at, file_name, 'fit', 'fixed' ] )
 system_command( [ dismodat,  file_name, 'db2csv' ] )
 # ----------------------------------------------------------------------------
 # END PYTHON
