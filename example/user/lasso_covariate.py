@@ -141,6 +141,7 @@ iota_reference   = 0.05      # iota corresponding to reference for covariates
 n_data           = 301       # number of simulated data points
 laplace_std      = 0.1/17.34 # 0.1 / sqrt(n_data)
 random_seed      = 0         # if zero, seed off the clock
+# end problem parameters
 # ------------------------------------------------------------------------
 import time
 if random_seed == 0 :
@@ -153,7 +154,6 @@ import subprocess
 import copy
 import random
 import math
-# end problem parameters
 test_program = 'example/user/lasso_covariate.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'

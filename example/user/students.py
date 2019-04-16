@@ -252,8 +252,8 @@ def example_db (file_name) :
 # Create database and run init, start, fit with just fixed effects
 file_name = 'example.db'
 example_db(file_name)
-program = '../../devel/dismod_at'
 #
+program = '../../devel/dismod_at'
 command = [ program, file_name, 'init' ]
 print( ' '.join(command) )
 flag = subprocess.call( command )

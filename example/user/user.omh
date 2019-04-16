@@ -71,6 +71,7 @@ $childtable%example/user/csv2db.py
 	%example/user/change_grid.py
 	%example/user/lasso_covariate.py
 	%example/user/students.py
+	%example/user/cascade.py
 
 	%example/user/asymptotic.py
 	%example/user/const_random.py
