@@ -156,11 +156,11 @@
 # begin problem parameters
 meas_cv       =  0.10  # coefficient of variation used to simulate data
 iota_true_0   =  0.02  # simulation value of iota in n1 at age 0
-iota_true_100 =  0.02  # value at age 100, iota_true_100 >= iota_true_0
+iota_true_100 =  0.03  # value at age 100, iota_true_100 >= iota_true_0
 alpha_true    =  0.10  # rate_value covariate multiplier used to simulate data
 random_seed   =  0     # if zero, seed off the clock
 effect_true = dict()
-effect_true['n11']  =  0.0
+effect_true['n11']  =  0.2
 effect_true['n12']  = -effect_true['n11']
 effect_true['n111'] =  0.0
 effect_true['n112'] = -effect_true['n111']
@@ -277,13 +277,13 @@ def example_db (file_name) :
 			'name':    'prior_iota_child',
 			'density': 'gaussian',
 			'mean':     0.0,
-			'std':      0.5,
+			'std':      1.0,
 		},{ # prior_alpha
 			'name':    'prior_alpha',
 			'density': 'uniform',
-			'mean':     alpha_true,
-			'lower':    alpha_true,
-			'upper':    alpha_true,
+			'mean':     alpha_true * 2.0,
+			'lower':    alpha_true / 10.0,
+			'upper':    alpha_true * 10.0,
 		},{ # prior_gamma
 			'name':    'prior_gamma',
 			'density': 'gaussian',
@@ -356,11 +356,11 @@ def example_db (file_name) :
 	income_reference = covariate_table[1]['reference']
 	random.seed(random_seed)
 	for age_id in range( len(age_table) ) :
-		age   = age_table[age_id]
-		iota  = iota_true_0 + (iota_true_100 - iota_true_0) * age / 100.0
+		age       = age_table[age_id]
+		iota_age  = iota_true_0 + (iota_true_100 - iota_true_0) * age / 100.0
 		for node in average_income :
-			for repeat in range(1) :
-				income = average_income[node]
+			for offset in [-1.0, 0.0, 1.0] :
+				income = average_income[node] + offset
 				total_effect  = alpha_true * (income - income_reference)
 				total_effect += effect_true[node]
 				if node.startswith('n11') :
@@ -368,8 +368,8 @@ def example_db (file_name) :
 				else :
 					total_effect += effect_true['n12']
 				#
-				iota       = iota * math.exp(total_effect)
-				meas_std   = iota * meas_cv
+				iota       = iota_age * math.exp(total_effect)
+				meas_std   = iota_age * meas_cv
 				# meas_value = random.gauss(iota, meas_std)
 				meas_value = iota
 				row['node']       = node
@@ -378,7 +378,6 @@ def example_db (file_name) :
 				row['age_lower']  = age
 				row['age_upper']  = age
 				row['income']     = income
-				print(total_effect, iota, iota_true_0, iota_true_100, age)
 				data_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# create database
@@ -408,7 +407,7 @@ example_db(file_name)
 dismod_at = '../../devel/dismod_at'
 dismodat  = '../../../bin/dismodat.py'
 system_command( [ dismod_at, file_name, 'init' ] )
-system_command( [ dismod_at, file_name, 'fit', 'fixed' ] )
+system_command( [ dismod_at, file_name, 'fit', 'both' ] )
 system_command( [ dismodat,  file_name, 'db2csv' ] )
 # ----------------------------------------------------------------------------
 # END PYTHON
