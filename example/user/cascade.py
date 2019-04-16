@@ -97,18 +97,24 @@
 # and when fitting $icode n11$$ as the parent.)
 #
 # $head Covariates$$
-# The only $cref/covariate/covariate_table/$$ for this example is
-# $icode income$$.
-# We use the average income as the reference for income.
-# The average is different depending on whether $icode n1$$ or $icode n11$$
+# There are two $cref/covariates/covariate_table/$$ for this example is
+# the constant one and $icode income$$.
+# We use zero as the reference for the constant one
+# and the average income as the reference for income.
+# The average income is different depending on whether
+# $icode n1$$ or $icode n11$$
 # is the parent.
-# There is one
-# $cref/covariate multiplier
+# There are two
+# $cref/covariate multipliers
 #	/model_variables
 #	/Fixed Effects, theta
 #	/Covariate Multipliers
-# /$$
-# that models the effect of income on $icode iota$$.
+# /$$.
+# One multiples the constant one and models the unknown variation
+# in the data.
+# We call this covariate multiplier
+# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$.
+# The other multiplies income and affects $icode iota$$.
 # We call this covariate multiplier
 # $cref/alpha
 #	/avg_integrand
@@ -151,7 +157,7 @@
 meas_cv      =  0.01 # coefficient of variation used to simulate data
 iota_true_50 =  0.04 # value of iota in n1 at age 50 used to simulate data
 iota_true_da =  4e-4 # simulation derivative of iota w.r.t age of iota in n1
-alpha_true   = -0.20 # value of covariate multiplier used to simulate data
+alpha_true   = -0.50 # value of covariate multiplier used to simulate data
 random_seed  =  0    # if zero, seed off the clock
 effect_true = dict()
 effect_true['n11']  = -0.2
@@ -209,8 +215,10 @@ def fun_iota_parent(a, t) :
 	return ('prior_iota_parent_value', 'prior_iota_parent_dage', None)
 def fun_iota_child(a, t) :
 	return ('prior_iota_child', None, None)
-def fun_income(a, t) :
-	return ('prior_income', None, None)
+def fun_alpha(a, t) :
+	return ('prior_alpha', None, None)
+def fun_gamma(a, t) :
+	return ('prior_gamma', None, None)
 #
 def example_db (file_name) :
 	# node_table
@@ -234,10 +242,18 @@ def example_db (file_name) :
 		'child_smooth':  'smooth_iota_child',
 	} ]
 	# covariate_table
-	reference = sum( average_income.values() ) / len( average_income )
-	covariate_table = [ { 'name':'income', 'reference':reference } ]
+	reference_income = sum( average_income.values() ) / len( average_income )
+	covariate_table = [
+		{ 'name':'one',    'reference':0.0 },
+		{ 'name':'income', 'reference':reference_income },
+	]
 	# mulcov_table
 	mulcov_table = [ {
+		'covariate': 'one',
+		'type':      'meas_noise',
+		'effected':  'Sincidence',
+		'smooth':    'smooth_gamma'
+		},{
 		'covariate': 'income',
 		'type':      'rate_value',
 		'effected':  'iota',
@@ -255,19 +271,26 @@ def example_db (file_name) :
 			'name':    'prior_iota_parent_dage',
 			'density': 'log_gaussian',
 			'mean':     0.0,
-			'std':      0.5,
+			'std':      1.0,
 			'eta':      iota_true_50 / 100.0,
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
 			'density': 'gaussian',
 			'mean':     0.0,
 			'std':      0.5,
-		},{ # prior_income
-			'name':    'prior_income',
+		},{ # prior_alpha
+			'name':    'prior_alpha',
 			'density': 'uniform',
 			'mean':     0.0,
 			'lower':    -1.0,
 			'upper':    +1.0,
+		},{ # prior_gamma
+			'name':    'prior_gamma',
+			'density': 'gaussian',
+			'mean':     0.0,
+			'std':      0.1,
+			'lower':    0.0,
+			'upper':    1.0,
 		}
 	]
 	# smooth_table
@@ -286,7 +309,12 @@ def example_db (file_name) :
 			'name':     'smooth_income',
 			'age_id':   [0],
 			'time_id':  [0],
-			'fun':      fun_income
+			'fun':      fun_alpha
+		},{ # smooth_gamma
+			'name':     'smooth_gamma',
+			'age_id':   [0],
+			'time_id':  [0],
+			'fun':      fun_gamma
 		}
 	]
 	# weight_table
@@ -302,10 +330,11 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'parent_node_name',      'value':'n1'},
 		{ 'name':'rate_case',             'value':'iota_pos_rho_zero'},
-		{ 'name': 'zero_sum_random',      'value': 'iota'},
+		{ 'name': 'zero_sum_random',      'value':'iota'},
+		{ 'name': 'meas_noise_effect',    'value':'add_var_scale_all'},
 		{ 'name':'quasi_fixed',           'value':'false'},
 		{ 'name':'max_num_iter_fixed',    'value':'100'},
-		{ 'name':'print_level_fixed',     'value':'0'},
+		{ 'name':'print_level_fixed',     'value':'5'},
 		{ 'name':'tolerance_fixed',       'value':'1e-10'},
 	]
 	# integrand_table
@@ -321,6 +350,7 @@ def example_db (file_name) :
 		'hold_out':    False,
 		'time_lower':  2000.0,
 		'time_upper':  2000.0,
+		'one':         1.0,
 	}
 	income_reference = covariate_table[0]['reference']
 	random.seed(random_seed)
@@ -372,9 +402,10 @@ file_name = 'example.db'
 example_db(file_name)
 #
 # init
-program = '../../devel/dismod_at'
-system_command( [ program, file_name, 'init' ] )
-#
-system_command( [ '../../../bin/dismodat.py', file_name, 'db2csv' ] )
+dismod_at = '../../devel/dismod_at'
+dismodat  = '../../../bin/dismodat.py'
+system_command( [ dismod_at, file_name, 'init' ] )
+system_command( [ dismod_at, file_name, 'fit', 'both' ] )
+system_command( [ dismodat,  file_name, 'db2csv' ] )
 # ----------------------------------------------------------------------------
 # END PYTHON
