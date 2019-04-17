@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -220,7 +220,7 @@ def system_command(command) :
 	print( ' '.join(command) )
 	flag = subprocess.call( command )
 	if flag != 0 :
-		sys.exit('command failed')
+		sys.exit('command failed: flag = ' + str(flag))
 	return
 # ----------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
@@ -515,6 +515,6 @@ for var_id in range(n_var) :
 #
 # obtain
 # ----------------------------------------------------------------------------
-system_command( [ dismod_at_py, file_name, 'db2csv' ] )
+# system_command( [ dismod_at_py, file_name, 'db2csv' ] )
 print('cascade.py: OK')
 # END PYTHON
