@@ -13,6 +13,7 @@ SET(depends "")
 FOREACH(user_case
 	age_avg_split
 	asymptotic
+	cascade
 	change_grid
 	const_random
 	const_value

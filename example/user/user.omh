@@ -58,7 +58,7 @@ $comment
 Examples that have a discussion section are at the beginning of this list
 and in suggested read order
 $$
-$childtable%example/user/csv2db.py
+$children%example/user/csv2db.py
 	%example/user/fit_random.py
 	%example/user/fit_fixed_both.py
 	%example/user/posterior.py
@@ -85,5 +85,37 @@ $childtable%example/user/csv2db.py
 	%example/user/re_scale.py
 	%example/user/speed.py
 %$$
+
+$head Examples With Explanation$$
+$table
+$rref user_fit_random.py$$
+$rref user_fit_fixed_both.py$$
+$rref user_posterior.py$$
+$rref user_fit_sim.py$$
+$rref user_fit_gamma.py$$
+$rref user_age_avg_split.py$$
+$rref user_diabetes.py$$
+$rref user_ill_condition.py$$
+$rref user_jump_at_age.py$$
+$rref user_change_grid.py$$
+$rref user_lasso_covariate.py$$
+$rref user_students.py$$
+$rref user_cascade.py$$
+$tend
+
+$head More Examples$$
+$table
+$rref user_asymptotic.py$$
+$rref user_const_random.py$$
+$rref user_const_value.py$$
+$rref user_continue_fit.py$$
+$rref user_diff_constraint.py$$
+$rref user_meas_covariate.py$$
+$rref user_no_children.py$$
+$rref user_predict_fit.py$$
+$rref user_zero_sum_random.py$$
+$rref user_re_scale.py$$
+$rref user_speed.py$$
+$tend
 
 $end

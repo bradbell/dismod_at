@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin age_avg_split.py$$ $newlinech #$$
+# $begin user_age_avg_split.py$$ $newlinech #$$
 # $spell
 #	init
 # $$

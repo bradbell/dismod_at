@@ -27,10 +27,12 @@ none of the values may repeated.
 The values can be in any specific order; e.g.,
 they do not need to be increasing or decreasing.
 
-$subhead Ode Grid$$
+$subhead Age Average Grid$$
 Note that the maximum minus the minimum age divided by the
-$cref/ode_step_size/option_table/ode_step_size/$$ determines the
-$cref/average age grid/option_table/age_avg_split/Age Average Grid/$$.
+$cref/ode_step_size/option_table/ode_step_size/$$,
+together with the $cref/age_avg_split/option_table/age_avg_split/$$,
+determines the
+$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$.
 
 $children%example/table/age_table.py
 %$$

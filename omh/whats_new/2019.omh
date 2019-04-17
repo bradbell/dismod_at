@@ -23,9 +23,9 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
-$head 04-16$$
-Start work on the $cref cascade.py$$ example
-(under construction).
+$head 04-17$$
+Add the $cref user_cascade.py$$ example.
+This example is currently under construction; i.e., not yet complete.
 
 $head 04-15$$
 Improve the $cref user_students.py$$ example.

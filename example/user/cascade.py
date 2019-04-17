@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin cascade.py$$ $newlinech #$$
+# $begin user_cascade.py$$ $newlinech #$$
 # $spell
 #	covariate
 #	covariates
@@ -16,15 +16,17 @@
 #	Sincidence
 # $$
 #
-# $section Generating Priors For Next Level Down$$
+# $section Generating Priors For Next Level Down The Node Tree$$
 #
 # $head Under Construction$$
+# So far the $cref/Fit n1/user_cascade.py/Procedure/Fit n1/$$
+# step has been tested.
 #
 # $head Node Table$$
 # The following is a diagram of the $cref node_table$$:
 # $pre
 #                n1
-#          /             \
+#          /-----/\-----\
 #        n11            n12
 #      /     \        /     \
 #    n111   n112    n121   n122
@@ -37,35 +39,40 @@
 # with corresponding data $icode y11$$.
 #
 # $head Procedure$$
-# $list number$$
+#
+# $subhead Fit n1$$
 # Use $cref/fit both/fit_command/variables/both/$$
 # to fit with $icode n1$$ as the parent to obtain
 # $icode e1$$ the corresponding estimate for the $cref model_variables$$
-# $lnext
+#
+# $subhead Simulate Data$$
 # Set the $cref truth_var_table$$ equal to the estimate $icode e1$$
 # and then use the $cref simulate_command$$ to simulate $icode N$$ data sets.
-# $lnext
+#
+# $subhead Sample Posterior$$
 # Use the sample command with the
 # $cref/simulate/sample_command/method/simulate/$$ method
 # to create $icode N$$ samples of the model variables.
 # Call these samples $icode s1_1, ... , s1_N$$.
-# $lnext
+#
+# $subhead n11 Predictions$$
 # Use the predict command with the
 # $cref/sample/predict_command/source/sample/$$
 # to create $icode N$$ predictions for the
 # model variable corresponding to fit with $icode n11$$ as the parent.
 # Call these predictions $icode p11_1, ... , p11_N$$.
-# $lnext
+#
+# $subhead n11 Priors$$
 # Use the predictions $icode p11_1, ... , p11_N$$ to create a priors
 # for the model variables corresponding to fitting $icode n11$$
 # with data $icode y11$$.
 # In this process account for the fact that the data $icode y11$$ is a subset
 # of $icode y1$$ which was used to obtain the predictions.
-# $lnext
+#
+# $subhead Fit n11$$
 # Use $cref/fit both/fit_command/variables/both/$$
 # to fit with $icode n11$$ as the parent to obtain
 # $icode e1$$ corresponding estimate for the model variables.
-# $lend
 #
 # $head Problem Parameters$$
 # The following parameters, used in this example, can be changed:
@@ -154,19 +161,19 @@
 # ----------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters
+def iota_true(age) :
+	return 0.02 + 0.01 * age / 100.0 # must be non-decreasing with age
 data_per_leaf =  10    # number of simulated data points for each leaf node
 meas_cv       =  0.10  # coefficient of variation for each data point
-iota_true_0   =  0.02  # simulation value of iota in n1 at age 0
-iota_true_100 =  0.03  # value at age 100, iota_true_100 >= iota_true_0
 alpha_true    = -0.10  # rate_value covariate multiplier used to simulate data
 random_seed   =  0     # if zero, seed off the clock
-random_true = dict()
-random_true['n11']  =  0.3
-random_true['n12']  = -random_true['n11']
-random_true['n111'] =  0.2
-random_true['n112'] = -random_true['n111']
-random_true['n121'] =  0.2
-random_true['n122'] = -random_true['n121']
+random_effect = dict()
+random_effect['n11']  =  0.3
+random_effect['n12']  = -random_effect['n11']
+random_effect['n111'] =  0.2
+random_effect['n112'] = -random_effect['n111']
+random_effect['n121'] =  0.2
+random_effect['n122'] = -random_effect['n121']
 average_income = dict()
 average_income['n111'] = 2.0
 average_income['n112'] = 3.0
@@ -265,15 +272,15 @@ def example_db (file_name) :
 		{   # prior_iota_parent_value
 			'name':    'prior_iota_parent_value',
 			'density': 'uniform',
-			'lower':   iota_true_0 / 10.0,
-			'upper':   iota_true_100 * 10.0,
-			'mean':    (iota_true_0 + iota_true_100) / 2.0
+			'lower':   iota_true(0)   / 10.0,
+			'upper':   iota_true(100) * 10.0,
+			'mean':    iota_true(50)
 		},{ # prior_iota_parent_dage
 			'name':    'prior_iota_parent_dage',
 			'density': 'log_gaussian',
 			'mean':     0.0,
 			'std':      0.5,
-			'eta':      iota_true_0 / 10.0
+			'eta':      iota_true(0) / 10.0
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
 			'density': 'gaussian',
@@ -335,7 +342,7 @@ def example_db (file_name) :
 		{ 'name': 'meas_noise_effect',    'value':'add_var_scale_all'},
 		{ 'name':'quasi_fixed',           'value':'false'},
 		{ 'name':'max_num_iter_fixed',    'value':'100'},
-		{ 'name':'print_level_fixed',     'value':'5'},
+		{ 'name':'print_level_fixed',     'value':'0'},
 		{ 'name':'tolerance_fixed',       'value':'1e-10'},
 	]
 	# integrand_table
@@ -358,19 +365,18 @@ def example_db (file_name) :
 	random.seed(random_seed)
 	for age_id in range( len(age_table) ) :
 		age       = age_table[age_id]
-		iota_age  = iota_true_0 + (iota_true_100 - iota_true_0) * age / 100.0
 		for node in average_income :
 			for i in range(data_per_leaf) :
 				income = i * average_income[node] * 2.0 / (data_per_leaf - 1)
 				total_effect  = alpha_true * (income - income_reference)
-				total_effect += random_true[node]
+				total_effect += random_effect[node]
 				if node.startswith('n11') :
-					total_effect += random_true['n11']
+					total_effect += random_effect['n11']
 				else :
-					total_effect += random_true['n12']
+					total_effect += random_effect['n12']
 				#
-				iota       = iota_age * math.exp(total_effect)
-				meas_std   = iota_age * meas_cv
+				iota       = iota_true(age) * math.exp(total_effect)
+				meas_std   = iota * meas_cv
 				meas_value = random.gauss(iota, meas_std)
 				row['node']       = node
 				row['meas_value'] = meas_value
@@ -404,10 +410,50 @@ file_name = 'example.db'
 example_db(file_name)
 #
 # init
-dismod_at = '../../devel/dismod_at'
-dismodat  = '../../../bin/dismodat.py'
-system_command( [ dismod_at, file_name, 'init' ] )
-system_command( [ dismod_at, file_name, 'fit', 'both' ] )
-system_command( [ dismodat,  file_name, 'db2csv' ] )
+dismod_at_cpp = '../../devel/dismod_at'
+dismod_at_py  = '../../../bin/dismodat.py'
+system_command( [ dismod_at_cpp, file_name, 'init' ] )
+#
+# obtain e1, estimate of model variables with n1 as the parent node
+system_command( [ dismod_at_cpp, file_name, 'fit', 'both' ] )
+#
+# check e1
+new              = False
+connection       = dismod_at.create_connection(file_name, new)
+rate_table       = dismod_at.get_table_dict(connection, 'rate')
+node_table       = dismod_at.get_table_dict(connection, 'node')
+age_table        = dismod_at.get_table_dict(connection, 'age')
+var_table        = dismod_at.get_table_dict(connection, 'var')
+fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
+covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
+for var_id in range(len(var_table)) :
+	var_type     = var_table[var_id]['var_type']
+	age_id       = var_table[var_id]['age_id']
+	rate_id      = var_table[var_id]['rate_id']
+	node_id      = var_table[var_id]['node_id']
+	covariate_id = var_table[var_id]['covariate_id']
+	value    = fit_var_table[var_id]['fit_var_value']
+	if var_type == 'rate' :
+		age  = age_table[age_id]['age']
+		node = node_table[node_id]['node_name']
+		rate = rate_table[rate_id]['rate_name']
+		assert rate == 'iota'
+		if node == 'n1' :
+			truth = iota_true(age)
+		else :
+			truth = random_effect[node]
+		assert abs( 1.0 - value / truth ) < 1e-1
+	elif var_type == 'mulcov_rate_value' :
+		rate      = rate_table[rate_id]['rate_name']
+		covariate = covariate_table[covariate_id]['covariate_name']
+		assert rate == 'iota'
+		assert covariate == 'income'
+		assert abs( 1.0 - value / alpha_true ) < 2e-1
+	else :
+		covariate = covariate_table[covariate_id]['covariate_name']
+		assert var_type == 'mulcov_meas_noise'
+		assert covariate == 'one'
 # ----------------------------------------------------------------------------
+# system_command( [ dismod_at_py, file_name, 'db2csv' ] )
+print('cascade.py: OK')
 # END PYTHON
