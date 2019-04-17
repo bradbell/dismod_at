@@ -104,19 +104,7 @@ for fitting the data:
 iota_reference   <font color="#990000">=</font> <font color="#993399">0.05</font>      <i><font color="#9A1900"># iota corresponding to reference for covariates</font></i>
 n_data           <font color="#990000">=</font> <font color="#993399">301</font>       <i><font color="#9A1900"># number of simulated data points</font></i>
 laplace_std      <font color="#990000">=</font> <font color="#993399">0.1</font><font color="#990000">/</font><font color="#993399">17.34</font> <i><font color="#9A1900"># 0.1 / sqrt(n_data)</font></i>
-random_seed      <font color="#990000">=</font> <font color="#993399">0</font>         <i><font color="#9A1900"># if zero, seed off the clock</font></i>
-<i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
-<b><font color="#000080">import</font></b> time
-<b><font color="#0000FF">if</font></b> random_seed <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-<i><font color="#9A1900">#</font></i>
-<b><font color="#000080">import</font></b> sys
-<b><font color="#000080">import</font></b> os
-<b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
-<b><font color="#000080">import</font></b> subprocess
-<b><font color="#000080">import</font></b> copy
-<b><font color="#000080">import</font></b> random
-<b><font color="#000080">import</font></b> math</tt></pre>
+random_seed      <font color="#990000">=</font> <font color="#993399">0</font>         <i><font color="#9A1900"># if zero, seed off the clock</font></i></tt></pre>
 <br>
 <b><big><a name="Age and Time Values" id="Age and Time Values">Age and Time Values</a></big></b>
 <br>
@@ -298,6 +286,7 @@ iota_reference   <font color="#990000">=</font> <font color="#993399">0.05</font
 n_data           <font color="#990000">=</font> <font color="#993399">301</font>       <i><font color="#9A1900"># number of simulated data points</font></i>
 laplace_std      <font color="#990000">=</font> <font color="#993399">0.1</font><font color="#990000">/</font><font color="#993399">17.34</font> <i><font color="#9A1900"># 0.1 / sqrt(n_data)</font></i>
 random_seed      <font color="#990000">=</font> <font color="#993399">0</font>         <i><font color="#9A1900"># if zero, seed off the clock</font></i>
+<i><font color="#9A1900"># end problem parameters</font></i>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> time
 <b><font color="#0000FF">if</font></b> random_seed <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
@@ -310,7 +299,6 @@ random_seed      <font color="#990000">=</font> <font color="#993399">0</font>  
 <b><font color="#000080">import</font></b> copy
 <b><font color="#000080">import</font></b> random
 <b><font color="#000080">import</font></b> math
-<i><font color="#9A1900"># end problem parameters</font></i>
 test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/lasso_covariate.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>

@@ -362,7 +362,7 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">csv2db_command</
           sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at command failed'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'set option quasi_fixed       false'</font> <font color="#990000">)</font>
-<b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'set option ode_step_size     1'</font>     <font color="#990000">)</font>
+<b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'set option ode_step_size     5'</font>     <font color="#990000">)</font>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'init'</font> <font color="#990000">)</font>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'fit fixed'</font> <font color="#990000">)</font>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'predict fit_var'</font> <font color="#990000">)</font>
@@ -402,6 +402,7 @@ max_abs_res <font color="#990000">=</font> <font color="#993399">0.0</font>
      <b><font color="#0000FF">if</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'mtall'</font> <font color="#990000">:</font>
           weighted_residual <font color="#990000">=</font> fit_data_subset<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font>
           max_abs_res       <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">,</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>weighted_residual<font color="#990000">)</font> <font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> max_abs_res <font color="#990000">&gt;</font> <font color="#993399">0.1</font> <font color="#990000">:</font>
      sys<font color="#990000">.</font><b><font color="#000000">msg</font></b><font color="#990000">(</font><font color="#FF0000">'csv2db.py: max_abs_res = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">)</font> <font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>

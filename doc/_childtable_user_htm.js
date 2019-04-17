@@ -8,13 +8,14 @@ document.write('\
 <option>user_posterior.py</option>\
 <option>user_fit_sim.py</option>\
 <option>user_fit_gamma.py</option>\
-<option>age_avg_split.py</option>\
+<option>user_age_avg_split.py</option>\
 <option>user_diabetes.py</option>\
 <option>user_ill_condition.py</option>\
 <option>user_jump_at_age.py</option>\
 <option>user_change_grid.py</option>\
 <option>user_lasso_covariate.py</option>\
 <option>user_students.py</option>\
+<option>user_cascade.py</option>\
 <option>user_asymptotic.py</option>\
 <option>user_const_random.py</option>\
 <option>user_const_value.py</option>\
@@ -36,13 +37,14 @@ function user_child(item)
 		'user_posterior.py.htm',
 		'user_fit_sim.py.htm',
 		'user_fit_gamma.py.htm',
-		'age_avg_split.py.htm',
+		'user_age_avg_split.py.htm',
 		'user_diabetes.py.htm',
 		'user_ill_condition.py.htm',
 		'user_jump_at_age.py.htm',
 		'user_change_grid.py.htm',
 		'user_lasso_covariate.py.htm',
 		'user_students.py.htm',
+		'user_cascade.py.htm',
 		'user_asymptotic.py.htm',
 		'user_const_random.py.htm',
 		'user_const_value.py.htm',

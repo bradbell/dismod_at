@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
 'user.htm',
-'age_avg_split.py.htm'
+'user_age_avg_split.py.htm'
 ];
 var list_across0 = [
 '_contents.htm',
