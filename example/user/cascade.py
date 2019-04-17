@@ -154,23 +154,24 @@
 # ----------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters
-meas_cv       =  0.10  # coefficient of variation used to simulate data
+data_per_leaf =  10    # number of simulated data points for each leaf node
+meas_cv       =  0.10  # coefficient of variation for each data point
 iota_true_0   =  0.02  # simulation value of iota in n1 at age 0
 iota_true_100 =  0.03  # value at age 100, iota_true_100 >= iota_true_0
-alpha_true    =  0.10  # rate_value covariate multiplier used to simulate data
+alpha_true    = -0.10  # rate_value covariate multiplier used to simulate data
 random_seed   =  0     # if zero, seed off the clock
-effect_true = dict()
-effect_true['n11']  =  0.2
-effect_true['n12']  = -effect_true['n11']
-effect_true['n111'] =  0.0
-effect_true['n112'] = -effect_true['n111']
-effect_true['n121'] =  0.0
-effect_true['n122'] = -effect_true['n121']
+random_true = dict()
+random_true['n11']  =  0.3
+random_true['n12']  = -random_true['n11']
+random_true['n111'] =  0.2
+random_true['n112'] = -random_true['n111']
+random_true['n121'] =  0.2
+random_true['n122'] = -random_true['n121']
 average_income = dict()
-average_income['n111'] = 1.0
-average_income['n112'] = 1.0
-average_income['n121'] = 3.0
-average_income['n122'] = 3.0
+average_income['n111'] = 2.0
+average_income['n112'] = 3.0
+average_income['n121'] = 4.0
+average_income['n122'] = 5.0
 # end problem parameters
 # ----------------------------------------------------------------------------
 import time
@@ -271,7 +272,7 @@ def example_db (file_name) :
 			'name':    'prior_iota_parent_dage',
 			'density': 'log_gaussian',
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      0.5,
 			'eta':      iota_true_0 / 10.0
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
@@ -281,16 +282,16 @@ def example_db (file_name) :
 		},{ # prior_alpha
 			'name':    'prior_alpha',
 			'density': 'uniform',
-			'mean':     alpha_true * 2.0,
-			'lower':    alpha_true / 10.0,
-			'upper':    alpha_true * 10.0,
+			'mean':     0.0,
+			'lower':   -abs(alpha_true) * 10.0,
+			'upper':    abs(alpha_true) * 10.0,
 		},{ # prior_gamma
 			'name':    'prior_gamma',
 			'density': 'gaussian',
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      1.0,
 			'lower':    0.0,
-			'upper':    0.0,
+			'upper':   10.0,
 		}
 	]
 	# smooth_table
@@ -359,19 +360,18 @@ def example_db (file_name) :
 		age       = age_table[age_id]
 		iota_age  = iota_true_0 + (iota_true_100 - iota_true_0) * age / 100.0
 		for node in average_income :
-			for offset in [-1.0, 0.0, 1.0] :
-				income = average_income[node] + offset
+			for i in range(data_per_leaf) :
+				income = i * average_income[node] * 2.0 / (data_per_leaf - 1)
 				total_effect  = alpha_true * (income - income_reference)
-				total_effect += effect_true[node]
+				total_effect += random_true[node]
 				if node.startswith('n11') :
-					total_effect += effect_true['n11']
+					total_effect += random_true['n11']
 				else :
-					total_effect += effect_true['n12']
+					total_effect += random_true['n12']
 				#
 				iota       = iota_age * math.exp(total_effect)
 				meas_std   = iota_age * meas_cv
-				# meas_value = random.gauss(iota, meas_std)
-				meas_value = iota
+				meas_value = random.gauss(iota, meas_std)
 				row['node']       = node
 				row['meas_value'] = meas_value
 				row['meas_std']   = meas_std
