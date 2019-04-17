@@ -19,8 +19,10 @@
 # $section Generating Priors For Next Level Down The Node Tree$$
 #
 # $head Under Construction$$
-# So far the $cref/Fit n1/user_cascade.py/Procedure/Fit n1/$$
-# step has been tested.
+# So far the following steps have been tested:
+# $cref/fit n1/user_cascade.py/Procedure/Fit n1/$$,
+# $cref/sample data/user_cascade.py/Procedure/Simulate Data/$$,
+# $cref/sample posterior/user_cascade.py/Procedure/Sample Posterior/$$.
 #
 # $head Node Table$$
 # The following is a diagram of the $cref node_table$$:
@@ -163,10 +165,12 @@
 # begin problem parameters
 def iota_true(age) :
 	return 0.02 + 0.01 * age / 100.0 # must be non-decreasing with age
-data_per_leaf =  10    # number of simulated data points for each leaf node
+data_per_leaf =  20    # number of simulated data points for each leaf node
 meas_cv       =  0.10  # coefficient of variation for each data point
 alpha_true    = -0.10  # rate_value covariate multiplier used to simulate data
 random_seed   =  0     # if zero, seed off the clock
+number_sample =  10    # number of simulated data sets and posterior samples
+#
 random_effect = dict()
 random_effect['n11']  =  0.3
 random_effect['n12']  = -random_effect['n11']
@@ -174,6 +178,7 @@ random_effect['n111'] =  0.2
 random_effect['n112'] = -random_effect['n111']
 random_effect['n121'] =  0.2
 random_effect['n122'] = -random_effect['n121']
+#
 average_income = dict()
 average_income['n111'] = 2.0
 average_income['n112'] = 3.0
@@ -192,6 +197,7 @@ import subprocess
 import copy
 import random
 import math
+import numpy
 test_program = 'example/user/cascade.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -294,7 +300,7 @@ def example_db (file_name) :
 			'upper':    abs(alpha_true) * 10.0,
 		},{ # prior_gamma
 			'name':    'prior_gamma',
-			'density': 'gaussian',
+			'density': 'uniform',
 			'mean':     0.0,
 			'std':      1.0,
 			'lower':    0.0,
@@ -343,7 +349,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',           'value':'false'},
 		{ 'name':'max_num_iter_fixed',    'value':'100'},
 		{ 'name':'print_level_fixed',     'value':'0'},
-		{ 'name':'tolerance_fixed',       'value':'1e-10'},
+		{ 'name':'tolerance_fixed',       'value':'1e-12'},
 	]
 	# integrand_table
 	integrand_table = [ {'name':'Sincidence'} ]
@@ -406,16 +412,20 @@ def example_db (file_name) :
 	)
 # ---------------------------------------------------------------------------
 # create database
-file_name = 'example.db'
-example_db(file_name)
+file_name  = 'example.db'
+skip2predict = False
+if not skip2predict :
+	example_db(file_name)
 #
 # init
 dismod_at_cpp = '../../devel/dismod_at'
 dismod_at_py  = '../../../bin/dismodat.py'
-system_command( [ dismod_at_cpp, file_name, 'init' ] )
+if not skip2predict :
+	system_command( [ dismod_at_cpp, file_name, 'init' ] )
 #
 # obtain e1, estimate of model variables with n1 as the parent node
-system_command( [ dismod_at_cpp, file_name, 'fit', 'both' ] )
+if not skip2predict :
+	system_command( [ dismod_at_cpp, file_name, 'fit', 'both' ] )
 #
 # check e1
 new              = False
@@ -426,7 +436,8 @@ age_table        = dismod_at.get_table_dict(connection, 'age')
 var_table        = dismod_at.get_table_dict(connection, 'var')
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
-for var_id in range(len(var_table)) :
+n_var            = len(var_table)
+for var_id in range(n_var) :
 	var_type     = var_table[var_id]['var_type']
 	age_id       = var_table[var_id]['age_id']
 	rate_id      = var_table[var_id]['rate_id']
@@ -453,7 +464,57 @@ for var_id in range(len(var_table)) :
 		covariate = covariate_table[covariate_id]['covariate_name']
 		assert var_type == 'mulcov_meas_noise'
 		assert covariate == 'one'
+#
+# obtain s1_1, ... , s1_N
+N_str = str(number_sample)
+if not skip2predict :
+	system_command([ dismod_at_cpp, file_name, 'set', 'truth_var', 'fit_var' ])
+	system_command([ dismod_at_cpp, file_name, 'simulate', N_str ])
+	system_command([ dismod_at_cpp, file_name, 'sample', 'simulate', N_str ])
+#
+# check posterior distribution of variables
+connection.close()
+connection   = dismod_at.create_connection(file_name, new)
+sample_table = dismod_at.get_table_dict(connection, 'sample')
+sample_array = numpy.zeros( (number_sample, n_var), dtype = numpy.double )
+for sample_id in range( len(sample_table) ) :
+	sample_index = sample_table[sample_id]['sample_index']
+	var_id       = sample_table[sample_id]['var_id']
+	var_value    = sample_table[sample_id]['var_value']
+	assert sample_id == sample_index * n_var + var_id
+	sample_array[sample_index, var_id] = var_value
+sample_min  = numpy.amin(sample_array, axis=0)
+sample_max  = numpy.amax(sample_array, axis=0)
+sample_mean = numpy.mean(sample_array, axis=0)
+sample_std  = numpy.std(sample_array, axis=0, ddof = 1)
+for var_id in range(n_var) :
+	var_type     = var_table[var_id]['var_type']
+	age_id       = var_table[var_id]['age_id']
+	node_id      = var_table[var_id]['node_id']
+	covariate_id = var_table[var_id]['covariate_id']
+	mean         = sample_mean[var_id]
+	std          = sample_std[var_id]
+	if var_type == 'rate' :
+		age  = age_table[age_id]['age']
+		node = node_table[node_id]['node_name']
+		if node == 'n1' :
+			truth = iota_true(age)
+		else :
+			truth = random_effect[node]
+		# 2DO: need to get this to work with 2.5 * std
+		if abs( mean - truth ) > 10.0 * std :
+			print("(mean - truth) / std  = ", (mean - truth) / std)
+			print("random_seed = ", random_seed)
+			assert False
+	elif var_type == 'mulcov_rate_value' :
+		# 2DO: need to get this to work with 2.5 * std
+		if abs( mean - alpha_true ) > 10.0 * std :
+			print("(mean - truth) / std  = ", (mean - alpha_true) / std)
+			print("random_seed = ", random_seed)
+			assert False
+#
+# obtain
 # ----------------------------------------------------------------------------
-# system_command( [ dismod_at_py, file_name, 'db2csv' ] )
+system_command( [ dismod_at_py, file_name, 'db2csv' ] )
 print('cascade.py: OK')
 # END PYTHON
