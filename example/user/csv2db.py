@@ -266,7 +266,7 @@ def exec_shell_cmd(cmd) :
 		sys.exit('The dismod_at command failed')
 #
 exec_shell_cmd( 'set option quasi_fixed       false' )
-exec_shell_cmd( 'set option ode_step_size     1'     )
+exec_shell_cmd( 'set option ode_step_size     5'     )
 exec_shell_cmd( 'init' )
 exec_shell_cmd( 'fit fixed' )
 exec_shell_cmd( 'predict fit_var' )
@@ -306,6 +306,7 @@ for data_id in range( len(data_table) ) :
 	if integrand_name == 'mtall' :
 		weighted_residual = fit_data_subset[data_id]['weighted_residual']
 		max_abs_res       = max(max_abs_res, abs(weighted_residual) )
+print(max_abs_res)
 if max_abs_res > 0.1 :
 	sys.msg('csv2db.py: max_abs_res = ' + str(max_abs_res) )
 # ---------------------------------------------------------------------------
