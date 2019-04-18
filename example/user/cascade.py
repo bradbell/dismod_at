@@ -14,6 +14,7 @@
 #	cv
 #	da
 #	Sincidence
+#	misspecification
 # $$
 #
 # $section Generating Priors For Next Level Down The Node Tree$$
@@ -106,10 +107,9 @@
 # and when fitting $icode n11$$ as the parent.)
 #
 # $head Covariates$$
-# There are two $cref/covariates/covariate_table/$$ for this example is
-# the constant one and $icode income$$.
-# We use zero as the reference for the constant one
-# and the average income as the reference for income.
+# There are two $cref/covariates/covariate_table/$$ for this example.
+# One covariate has the constant one and reference zero.
+# The other covariate is income and uses the average for its reference.
 # The average income is different depending on whether
 # $icode n1$$ or $icode n11$$
 # is the parent.
@@ -120,7 +120,7 @@
 #	/Covariate Multipliers
 # /$$.
 # One multiples the constant one and models the unknown variation
-# in the data.
+# in the data (sometimes referred to as model misspecification).
 # We call this covariate multiplier
 # $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$.
 # The other multiplies income and affects $icode iota$$.
@@ -134,24 +134,25 @@
 # $head Data Table$$
 # For this example, all the data is
 # $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$.
-# There are only three data point for each leaf node; i.e.,
+# There are $icode data_per_leaf$$ data point for each leaf node; i.e.,
 # $icode n111, n112, n121, n122$$.
-# Income is made to vary within each leaf node so the random effect
+# Income is varies within each leaf node so the random effect
 # can be separated from the income effect.
 # Normally there is much more data, so we compensate by using
-# a very small coefficient of variation for the measurement values
+# a small coefficient of variation for the measurement values
 # $icode meas_cv$$.
 # The simulation value of $icode iota$$, corresponding to $icode n1$$, is
-# linear with respect to age with value $icode iota_true_0$$ at age 0
-# and $icode iota_true_100$$ at age 100.
-# The effect for each leaf node, plus the effect for its parent,
-# plus the income effect is summed to get the total effect.
-# The mean of the data for a leaf node is the
-# simulation value for $icode iota$$ at $icode n1$$
-# times the exponential of the total effect.
+# a function of age and defined by $codei%iota_true(%age%)%$$.
+# Each data point corresponds to a leaf node.
+# The total effect for a data point is
+# the random effect for the leaf node,
+# plus the random effect for parent of the leaf,
+# plus the income effect.
+# Each data point is for a specific age and the corresponding mean
+# is $icode%iota_true(%age%)%$$ times the exponential of the total effect.
 # The standard deviation of the data is $icode meas_cv$$ times its mean.
 # A Gaussian with this mean and standard deviation is used to simulate
-# the data for the leaf node.
+# each data point.
 #
 # $head Source Code$$
 # $srcfile%
@@ -520,6 +521,8 @@ for var_id in range(n_var) :
 		if abs(rel_err) >= abs(max_rel_err) :
 			max_rel_err = rel_err
 			max_var_id  = var_id
+# We expand the std by a factor 1 + gamma because the correponding
+# noise is probably not independent.
 max_rel_err = max_rel_err / (1.0 + gamma_fit )
 if abs(max_rel_err) > 3.0 :
 	print('std coverage : max_rel_err = ', max_rel_err)
