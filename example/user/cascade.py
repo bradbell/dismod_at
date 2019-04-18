@@ -165,24 +165,24 @@
 # begin problem parameters
 def iota_true(age) :
 	return 0.01 + 0.01 * age / 100.0 # must be non-decreasing with age
-data_per_leaf =  20    # number of simulated data points for each leaf node
+data_per_leaf =  10    # number of simulated data points for each leaf node
 meas_cv       =  0.10  # coefficient of variation for each data point
 alpha_true    = -0.10  # rate_value covariate multiplier used to simulate data
 random_seed   =  0     # if zero, seed off the clock
 number_sample =  10    # number of simulated data sets and posterior samples
 #
 random_effect = dict()
-random_effect['n11']  =  0.3
+random_effect['n11']  =  0.2
 random_effect['n12']  = -random_effect['n11']
-random_effect['n111'] =  0.2
+random_effect['n111'] =  0.1
 random_effect['n112'] = -random_effect['n111']
-random_effect['n121'] =  0.2
+random_effect['n121'] =  0.1
 random_effect['n122'] = -random_effect['n121']
 #
 average_income = dict()
-average_income['n111'] = 2.0
+average_income['n111'] = 1.0
 average_income['n112'] = 2.0
-average_income['n121'] = 4.0
+average_income['n121'] = 3.0
 average_income['n122'] = 4.0
 # end problem parameters
 # ----------------------------------------------------------------------------
@@ -291,7 +291,7 @@ def example_db (file_name) :
 			'name':    'prior_iota_child',
 			'density': 'gaussian',
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      1.0,
 		},{ # prior_alpha
 			'name':    'prior_alpha',
 			'density': 'uniform',
@@ -469,9 +469,9 @@ for var_id in range(n_var) :
 		if abs(rel_err) >= abs(max_rel_err) :
 			max_rel_err = rel_err
 			max_var_id  = var_id
-print('fit: max_rel_err = ', max_rel_err)
-if abs(max_rel_err) > 1e-1 :
-	print("seed, var_id, rel_err = ",  random_seed, max_var_id, max_rel_err)
+if abs(max_rel_err) > 2e-1 :
+	print('fit value: max_rel_err = ', max_rel_err)
+	print("random_seed = ",  random_seed)
 	assert False
 #
 # obtain s1_1, ... , s1_N
@@ -503,7 +503,6 @@ for var_id in range(n_var) :
 	covariate_id = var_table[var_id]['covariate_id']
 	mean         = sample_mean[var_id]
 	std          = sample_std[var_id]
-	truth        = None
 	if var_type == 'rate' :
 		age  = age_table[age_id]['age']
 		node = node_table[node_id]['node_name']
@@ -513,14 +512,18 @@ for var_id in range(n_var) :
 			truth = random_effect[node]
 	elif var_type == 'mulcov_rate_value' :
 		truth = alpha_true
-	if truth != None :
+	else :
+		assert var_type == 'mulcov_meas_noise'
+		gamma_fit = fit_var_table[var_id]['fit_var_value']
+	if var_type != 'mulcov_meas_noise' :
 		rel_err = (mean - truth) / std
 		if abs(rel_err) >= abs(max_rel_err) :
 			max_rel_err = rel_err
 			max_var_id  = var_id
-print('coverage: max_rel_err = ', max_rel_err)
-if abs(max_rel_err) > 10.0 :
-	print("seed, var_id, rel_err = ",  random_seed, max_var_id, max_rel_err)
+max_rel_err = max_rel_err / (1.0 + gamma_fit )
+if abs(max_rel_err) > 3.0 :
+	print('std coverage : max_rel_err = ', max_rel_err)
+	print("random_seed = ",  random_seed)
 	assert False
 #
 # obtain
