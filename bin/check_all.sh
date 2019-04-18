@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -60,24 +60,21 @@ else
 fi
 # -----------------------------------------------------------------------------
 # run bin/check_*.sh and ~/bradbell/bin/check_copyright.sh
-list=`ls bin/check_*.sh`
+list=`ls bin/check_*.sh | sed \
+	-e '/check_all.sh/d' -e '/check_install.sh/d' -e '/junk.sh/d' `
 for script in $list
 do
-	if [ "$script" != 'bin/check_all.sh' ] \
-	&& [ "$script" != 'bin/check_install.sh' ]
-	then
-		$script
-	fi
+	$script
 done
 #
 # check version number
-version.sh check
+echo_eval version.sh check
 #
 # check latex in omhelp
-run_omhelp.sh -xml doc
+echo_eval run_omhelp.sh -xml doc
 # ----------------------------------------------------------------------------
 #
-cd build
+echo_eval cd build
 #
 echo 'make check >& check.log'
 make check >& ../check.log
@@ -85,7 +82,7 @@ make check >& ../check.log
 echo 'make speed >& speed.log'
 make speed >& ../speed.log
 #
-cd ..
+echo_eval cd ..
 #
 echo 'bin/check_install.sh >& install.log'
 bin/check_install.sh >& install.log
@@ -100,3 +97,4 @@ do
 done
 # -----------------------------------------------------------------------------
 echo 'check_all.sh: OK'
+exit 0

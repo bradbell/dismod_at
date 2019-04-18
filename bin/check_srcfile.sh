@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -33,10 +33,6 @@ special_case='
 	bin/check_srcfile.sh
 	bin/batch_edit.sh
 '
-# -----------------------------------------------------------------------------
-# Make sure that OMhelp srcfile commands referr to same file as command
-echo "Checking that OMhelp srcfile commands include from file they appear in."
-echo "----------------------------------------------------------------------"
 list=`git ls-files`
 different="no"
 for file in $list
@@ -61,12 +57,10 @@ do
 		fi
 	done
 done
-echo "-------------------------------------------------------------------"
 if [ $different = "yes" ]
 then
-	echo "Error: nothing should be between the two dashed lines above"
+	echo "check_srcfile.sh: Error messages above."
 	exit 1
-else
-	echo "OK: nothing is between the two dashed lines above"
-	exit 0
 fi
+echo 'check_srcfile.sh: OK'
+exit 0

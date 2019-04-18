@@ -418,14 +418,13 @@ if not skip2predict :
 	example_db(file_name)
 #
 # init
-dismod_at_cpp = '../../devel/dismod_at'
-dismod_at_py  = '../../../bin/dismodat.py'
+program = '../../devel/dismod_at'
 if not skip2predict :
-	system_command( [ dismod_at_cpp, file_name, 'init' ] )
+	system_command( [ program, file_name, 'init' ] )
 #
 # obtain e1, estimate of model variables with n1 as the parent node
 if not skip2predict :
-	system_command( [ dismod_at_cpp, file_name, 'fit', 'both' ] )
+	system_command( [ program, file_name, 'fit', 'both' ] )
 #
 # check e1
 new              = False
@@ -478,9 +477,9 @@ if abs(max_rel_err) > 1e-1 :
 # obtain s1_1, ... , s1_N
 N_str = str(number_sample)
 if not skip2predict :
-	system_command([ dismod_at_cpp, file_name, 'set', 'truth_var', 'fit_var' ])
-	system_command([ dismod_at_cpp, file_name, 'simulate', N_str ])
-	system_command([ dismod_at_cpp, file_name, 'sample', 'simulate', N_str ])
+	system_command([ program, file_name, 'set', 'truth_var', 'fit_var' ])
+	system_command([ program, file_name, 'simulate', N_str ])
+	system_command([ program, file_name, 'sample', 'simulate', N_str ])
 #
 # check posterior distribution of variables
 connection.close()
@@ -526,6 +525,9 @@ if abs(max_rel_err) > 10.0 :
 #
 # obtain
 # ----------------------------------------------------------------------------
-system_command( [ dismod_at_py, file_name, 'db2csv' ] )
+os.chdir('../../..')
+file_name = 'build/example/user/' + file_name
+program   = 'bin/dismodat.py'
+system_command( [ program, file_name, 'db2csv' ] )
 print('cascade.py: OK')
 # END PYTHON
