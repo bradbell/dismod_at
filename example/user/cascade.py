@@ -19,7 +19,7 @@
 # $section Generating Priors For Next Level Down The Node Tree$$
 #
 # $head Under Construction$$
-# So far the following steps have been tested:
+# So far the following steps have been implemented:
 # $cref/fit n1/user_cascade.py/Procedure/Fit n1/$$,
 # $cref/sample data/user_cascade.py/Procedure/Simulate Data/$$,
 # $cref/sample posterior/user_cascade.py/Procedure/Sample Posterior/$$.
@@ -164,7 +164,7 @@
 # BEGIN PYTHON
 # begin problem parameters
 def iota_true(age) :
-	return 0.02 + 0.01 * age / 100.0 # must be non-decreasing with age
+	return 0.01 + 0.01 * age / 100.0 # must be non-decreasing with age
 data_per_leaf =  20    # number of simulated data points for each leaf node
 meas_cv       =  0.10  # coefficient of variation for each data point
 alpha_true    = -0.10  # rate_value covariate multiplier used to simulate data
@@ -181,9 +181,9 @@ random_effect['n122'] = -random_effect['n121']
 #
 average_income = dict()
 average_income['n111'] = 2.0
-average_income['n112'] = 3.0
+average_income['n112'] = 2.0
 average_income['n121'] = 4.0
-average_income['n122'] = 5.0
+average_income['n122'] = 4.0
 # end problem parameters
 # ----------------------------------------------------------------------------
 import time
@@ -291,7 +291,7 @@ def example_db (file_name) :
 			'name':    'prior_iota_child',
 			'density': 'gaussian',
 			'mean':     0.0,
-			'std':      1.0,
+			'std':      0.1,
 		},{ # prior_alpha
 			'name':    'prior_alpha',
 			'density': 'uniform',
@@ -437,6 +437,7 @@ var_table        = dismod_at.get_table_dict(connection, 'var')
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
 n_var            = len(var_table)
+max_rel_err      = 0.0
 for var_id in range(n_var) :
 	var_type     = var_table[var_id]['var_type']
 	age_id       = var_table[var_id]['age_id']
@@ -444,6 +445,7 @@ for var_id in range(n_var) :
 	node_id      = var_table[var_id]['node_id']
 	covariate_id = var_table[var_id]['covariate_id']
 	value    = fit_var_table[var_id]['fit_var_value']
+	truth    = None
 	if var_type == 'rate' :
 		age  = age_table[age_id]['age']
 		node = node_table[node_id]['node_name']
@@ -453,17 +455,25 @@ for var_id in range(n_var) :
 			truth = iota_true(age)
 		else :
 			truth = random_effect[node]
-		assert abs( 1.0 - value / truth ) < 1e-1
 	elif var_type == 'mulcov_rate_value' :
 		rate      = rate_table[rate_id]['rate_name']
 		covariate = covariate_table[covariate_id]['covariate_name']
 		assert rate == 'iota'
 		assert covariate == 'income'
-		assert abs( 1.0 - value / alpha_true ) < 2e-1
+		truth = alpha_true
 	else :
 		covariate = covariate_table[covariate_id]['covariate_name']
 		assert var_type == 'mulcov_meas_noise'
 		assert covariate == 'one'
+	if truth != None :
+		rel_err = (1.0 - value / truth)
+		if abs(rel_err) >= abs(max_rel_err) :
+			max_rel_err = rel_err
+			max_var_id  = var_id
+print('fit: max_rel_err = ', max_rel_err)
+if abs(max_rel_err) > 1e-1 :
+	print("seed, var_id, rel_err = ",  random_seed, max_var_id, max_rel_err)
+	assert False
 #
 # obtain s1_1, ... , s1_N
 N_str = str(number_sample)
@@ -494,6 +504,7 @@ for var_id in range(n_var) :
 	covariate_id = var_table[var_id]['covariate_id']
 	mean         = sample_mean[var_id]
 	std          = sample_std[var_id]
+	truth        = None
 	if var_type == 'rate' :
 		age  = age_table[age_id]['age']
 		node = node_table[node_id]['node_name']
@@ -501,20 +512,20 @@ for var_id in range(n_var) :
 			truth = iota_true(age)
 		else :
 			truth = random_effect[node]
-		# 2DO: need to get this to work with 2.5 * std
-		if abs( mean - truth ) > 10.0 * std :
-			print("(mean - truth) / std  = ", (mean - truth) / std)
-			print("random_seed = ", random_seed)
-			assert False
 	elif var_type == 'mulcov_rate_value' :
-		# 2DO: need to get this to work with 2.5 * std
-		if abs( mean - alpha_true ) > 10.0 * std :
-			print("(mean - truth) / std  = ", (mean - alpha_true) / std)
-			print("random_seed = ", random_seed)
-			assert False
+		truth = alpha_true
+	if truth != None :
+		rel_err = (mean - truth) / std
+		if abs(rel_err) >= abs(max_rel_err) :
+			max_rel_err = rel_err
+			max_var_id  = var_id
+print('coverage: max_rel_err = ', max_rel_err)
+if abs(max_rel_err) > 10.0 :
+	print("seed, var_id, rel_err = ",  random_seed, max_var_id, max_rel_err)
+	assert False
 #
 # obtain
 # ----------------------------------------------------------------------------
-# system_command( [ dismod_at_py, file_name, 'db2csv' ] )
+system_command( [ dismod_at_py, file_name, 'db2csv' ] )
 print('cascade.py: OK')
 # END PYTHON
