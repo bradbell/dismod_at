@@ -171,17 +171,18 @@ CppAD::vector<integrand_struct> get_integrand_table(
 	CppAD::vector<integrand_struct> integrand_table(n_integrand);
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	// integrand
+		string name              = integrand_name[integrand_id];
 		integrand_enum integrand = number_integrand_enum;
-		if( std::strncmp(integrand_name[integrand_id].c_str(), "mulcov_", 7) )
+		if( std::strncmp(name.c_str(), "mulcov_", 7) == 0 )
 			integrand = mulcov_enum;
 		for(size_t j = 0; j < number_integrand_enum; j++)
-		{	if( integrand_name[integrand_id] == integrand_enum2name[j] )
+		{	if( name == integrand_enum2name[j] )
 				integrand = integrand_enum(j);
-			if( integrand_name[integrand_id] == "mulcov" )
+			if( name == "mulcov" )
 				integrand = number_integrand_enum;
 		}
 		if( integrand == number_integrand_enum )
-		{	string msg = integrand_name[integrand_id];
+		{	string msg = name;
 			msg       += " is not a valid choice for integrand_name.";
 			error_exit(msg, table_name, integrand_id);
 		}
@@ -189,25 +190,23 @@ CppAD::vector<integrand_struct> get_integrand_table(
 		//
 		// minumum_meas_cv
 		if( integrand_table[integrand_id].minimum_meas_cv < 0.0 )
-		{	string msg = integrand_name[integrand_id];
-			msg       += " minimum_meas_cv < 0.0";
+		{	string msg = name + " minimum_meas_cv < 0.0";
 			error_exit(msg, table_name, integrand_id);
 		}
 		if( integrand_table[integrand_id].minimum_meas_cv > 1.0 )
-		{	string msg = integrand_name[integrand_id];
-			msg       += " minimum_meas_cv > 1.0";
+		{	string msg = name + " minimum_meas_cv > 1.0";
 			error_exit(msg, table_name, integrand_id);
 		}
 		integrand_table[integrand_id].minimum_meas_cv =
 			minimum_meas_cv[integrand_id];
 		integrand_table[integrand_id].mulcov_id = DISMOD_AT_NULL_INT;
 		if( integrand == mulcov_enum )
-		{	string mulcov_id_str = integrand_name[integrand_id].substr(7);
+		{	string mulcov_id_str = name.substr(7);
 			int    mulcov_id     = std::atoi(mulcov_id_str.c_str() );
 			if( n_mulcov <= size_t(mulcov_id) )
-			{	string msg = integrand_name[integrand_id];
-				msg       += " mulcov_id not non-negative and less than ";
-				msg       += CppAD::to_string(n_mulcov);
+			{	string msg = name;
+				msg       += " mulcov_id is greater or equal number of ";
+				msg       += "entriies  in mulcov table";
 				error_exit(msg, table_name, integrand_id);
 			}
 			integrand_table[integrand_id].mulcov_id = mulcov_id;

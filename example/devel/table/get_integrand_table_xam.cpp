@@ -24,6 +24,7 @@ $end
 # include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool get_integrand_table_xam(void)
 {
@@ -47,6 +48,7 @@ bool get_integrand_table_xam(void)
 	"insert into integrand values(3, 'Sincidence',  0.4 )",
 	"insert into integrand values(4, 'susceptible', 0.5 )",
 	"insert into integrand values(5, 'withC',       0.6 )",
+	"insert into integrand values(6, 'mulcov_1',    0.7 )",
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -54,10 +56,10 @@ bool get_integrand_table_xam(void)
 
 
 	// get the integrand table
-	size_t n_mulcov = 0;
+	size_t n_mulcov = 2;
 	vector<dismod_at::integrand_struct> integrand_table =
 		dismod_at::get_integrand_table(db, n_mulcov);
-	ok  &= integrand_table.size() == 6;
+	ok  &= integrand_table.size() == 7;
 	//
 	ok  &= integrand_table[0].integrand == dismod_at::mtall_enum;
 	ok  &= integrand_table[1].integrand == dismod_at::prevalence_enum;
@@ -65,9 +67,13 @@ bool get_integrand_table_xam(void)
 	ok  &= integrand_table[3].integrand == dismod_at::Sincidence_enum;
 	ok  &= integrand_table[4].integrand == dismod_at::susceptible_enum;
 	ok  &= integrand_table[5].integrand == dismod_at::withC_enum;
+	ok  &= integrand_table[6].integrand == dismod_at::mulcov_enum;
 	//
-	for(size_t i = 0; i < 6; i++)
+	for(size_t i = 0; i < 7; i++)
 		ok &= integrand_table[i].minimum_meas_cv == double(i + 1) / 10.0;
+	for(size_t i = 0; i < 6; i++)
+		ok &= integrand_table[i].mulcov_id == DISMOD_AT_NULL_INT;
+	ok &= integrand_table[6].mulcov_id == 1;
 	//
 	// close database and return
 	sqlite3_close(db);

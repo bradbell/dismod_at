@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -30,7 +30,8 @@ def integrand_table() :
 	row_list = [
 		[ 'Tincidence' , 1e-6 ],
 		[ 'remission' ,  1e-6 ],
-		[ 'mtall',       1e-6 ]
+		[ 'mtall',       1e-6 ],
+		[ 'mulcov_1',    1e-6 ]
 	]
 	tbl_name = 'integrand'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
