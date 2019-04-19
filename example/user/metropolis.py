@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -47,7 +47,7 @@ import time
 # Simulate data with and N(2, 0.5^2) distribution
 python_seed = int( time.time() )
 numpy.random.seed(seed = python_seed)
-N          = 1000
+N          = 2000
 mu_true    = 2.0
 sigma_true = 0.5
 y          = scipy.stats.norm.rvs(loc=mu_true, scale=sigma_true, size= N)

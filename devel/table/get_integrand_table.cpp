@@ -25,6 +25,7 @@ $spell
 	relrisk
 	mtspecific
 	cv
+	mulcov
 $$
 
 $section C++: Get the Integrand Table Information$$
