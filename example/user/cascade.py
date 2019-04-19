@@ -226,8 +226,8 @@ def system_command(command) :
 # ----------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_iota_parent(a, t) :
-	return ('prior_iota_parent_value', 'prior_iota_parent_dage', None)
+def fun_iota_n1(a, t) :
+	return ('prior_iota_n1_value', 'prior_iota_n1_dage', None)
 def fun_iota_child(a, t) :
 	return ('prior_iota_child', None, None)
 def fun_alpha(a, t) :
@@ -253,7 +253,7 @@ def example_db (file_name) :
 	# rate_table
 	rate_table = [ {
 		'name':          'iota',
-		'parent_smooth': 'smooth_iota_parent',
+		'parent_smooth': 'smooth_iota_n1',
 		'child_smooth':  'smooth_iota_child',
 	} ]
 	# covariate_table
@@ -276,14 +276,14 @@ def example_db (file_name) :
 	} ]
 	# prior_table
 	prior_table = [
-		{   # prior_iota_parent_value
-			'name':    'prior_iota_parent_value',
+		{   # prior_iota_n1_value
+			'name':    'prior_iota_n1_value',
 			'density': 'uniform',
 			'lower':   iota_true(0)   / 10.0,
 			'upper':   iota_true(100) * 10.0,
 			'mean':    iota_true(50)
-		},{ # prior_iota_parent_dage
-			'name':    'prior_iota_parent_dage',
+		},{ # prior_iota_n1_dage
+			'name':    'prior_iota_n1_dage',
 			'density': 'log_gaussian',
 			'mean':     0.0,
 			'std':      0.5,
@@ -310,11 +310,11 @@ def example_db (file_name) :
 	]
 	# smooth_table
 	smooth_table = [
-		{   # smooth_iota_parent
-			'name' :    'smooth_iota_parent',
+		{   # smooth_iota_n1
+			'name' :    'smooth_iota_n1',
 			'age_id':   range(len(age_list)),
 			'time_id':  [0],
-			'fun':      fun_iota_parent
+			'fun':      fun_iota_n1
 		},{ # smooth_iota_child
 			'name' :    'smooth_iota_child',
 			'age_id':   [0],
