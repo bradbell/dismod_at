@@ -247,9 +247,9 @@ def example_db (file_name) :
 		{ 'name':'n122',    'parent':'n12' },
 	]
 	# age_table
-	age_table = [ 0.0, 20.0, 40.0, 60.0, 80.0, 100.0 ]
+	age_list = [ 0.0, 20.0, 40.0, 60.0, 80.0, 100.0 ]
 	# time_table
-	time_table = [ 1990.0, 2020.0 ]
+	time_list = [ 1990.0, 2020.0 ]
 	# rate_table
 	rate_table = [ {
 		'name':          'iota',
@@ -312,7 +312,7 @@ def example_db (file_name) :
 	smooth_table = [
 		{   # smooth_iota_parent
 			'name' :    'smooth_iota_parent',
-			'age_id':   range(len(age_table)),
+			'age_id':   range(len(age_list)),
 			'time_id':  [0],
 			'fun':      fun_iota_parent
 		},{ # smooth_iota_child
@@ -337,8 +337,6 @@ def example_db (file_name) :
 	weight_table = [
 		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
 	]
-	# avgint_table
-	avgint_table = list()
 	# nslist_table
 	nslist_table = dict()
 	# option_table
@@ -370,8 +368,8 @@ def example_db (file_name) :
 	assert covariate_table[1]['name'] == 'income'
 	income_reference = covariate_table[1]['reference']
 	random.seed(random_seed)
-	for age_id in range( len(age_table) ) :
-		age       = age_table[age_id]
+	for age_id in range( len(age_list) ) :
+		age       = age_list[age_id]
 		for node in average_income :
 			for i in range(data_per_leaf) :
 				income = i * average_income[node] * 2.0 / (data_per_leaf - 1)
@@ -392,12 +390,32 @@ def example_db (file_name) :
 				row['age_upper']  = age
 				row['income']     = income
 				data_table.append( copy.copy(row) )
+	# ------------------------------------------------------------------------
+	# avgint_table
+	avgint_table = list()
+	# values that are the same for all data points
+	income = (average_income['n111'] + average_income['n112']) / 2.0
+	row = {
+		'node':        'n11',
+		'integrand':   'Sincidence',
+		'weight':      'constant',
+		'hold_out':    False,
+		'time_lower':  2000.0,
+		'time_upper':  2000.0,
+		'income':      income,
+		'one':         1.0,
+	}
+	for age_id in range( len(age_list) ) :
+		age  = age_list[age_id]
+		row['age_lower']  = age
+		row['age_upper']  = age
+		avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
-		age_table,
-		time_table,
+		age_list,
+		time_list,
 		integrand_table,
 		node_table,
 		weight_table,
@@ -493,8 +511,6 @@ for sample_id in range( len(sample_table) ) :
 	var_value    = sample_table[sample_id]['var_value']
 	assert sample_id == sample_index * n_var + var_id
 	sample_array[sample_index, var_id] = var_value
-sample_min  = numpy.amin(sample_array, axis=0)
-sample_max  = numpy.amax(sample_array, axis=0)
 sample_mean = numpy.mean(sample_array, axis=0)
 sample_std  = numpy.std(sample_array, axis=0, ddof = 1)
 for var_id in range(n_var) :
@@ -529,7 +545,30 @@ if abs(max_rel_err) > 3.0 :
 	print("random_seed = ",  random_seed)
 	assert False
 #
-# obtain
+# obtain p11_1, p_11_2, ...
+system_command([ program, file_name, 'predict', 'sample' ])
+avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
+predict_table   = dismod_at.get_table_dict(connection, 'predict')
+n_avgint        = len( avgint_table )
+n_predict       = len( predict_table )
+n_subset        = int( n_predict / number_sample )
+assert n_predict == n_subset * number_sample
+predict_array = numpy.zeros( (number_sample, n_avgint), dtype = numpy.double )
+predict_found = n_avgint * [False]
+for predict_id in range( n_predict ) :
+	sample_index  = predict_table[predict_id]['sample_index']
+	avgint_id     = predict_table[predict_id]['avgint_id']
+	avg_integrand = predict_table[predict_id]['avg_integrand']
+	predict_array[sample_index, avgint_id] = avg_integrand
+	predict_found[avgint_id] = True
+predict_mean = numpy.mean(predict_array, axis=0)
+predict_std  = numpy.std(predict_array, axis=0, ddof = 1)
+for avgint_id in range( n_avgint ) :
+	assert predict_found[avgint_id]
+	age  = avgint_table[avgint_id]['age_lower']
+	mean = predict_mean[avgint_id]
+	std  = predict_std[avgint_id]
+	print("age, mean, std = ", age, mean, std)
 # ----------------------------------------------------------------------------
 os.chdir('../../..')
 file_name = 'build/example/user/' + file_name
