@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -54,8 +54,9 @@ bool get_integrand_table_xam(void)
 
 
 	// get the integrand table
+	size_t n_mulcov = 0;
 	vector<dismod_at::integrand_struct> integrand_table =
-		dismod_at::get_integrand_table(db);
+		dismod_at::get_integrand_table(db, n_mulcov);
 	ok  &= integrand_table.size() == 6;
 	//
 	ok  &= integrand_table[0].integrand == dismod_at::mtall_enum;

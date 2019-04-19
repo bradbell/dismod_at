@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -136,7 +136,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.time_table        = get_time_table(db);
 	db_input.rate_table        = get_rate_table(db);
 	db_input.density_table     = get_density_table(db);
-	db_input.integrand_table   = get_integrand_table(db);
 	db_input.weight_table      = get_weight_table(db);
 	db_input.smooth_table      = get_smooth_table(db);
 	db_input.covariate_table   = get_covariate_table(db);
@@ -148,6 +147,9 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.option_table      = get_option_table(db);
 	db_input.nslist_table      = get_nslist_table(db);
 	db_input.nslist_pair_table = get_nslist_pair(db);
+	//
+	size_t n_mulcov           = db_input.mulcov_table.size();
+	db_input.integrand_table  = get_integrand_table(db, n_mulcov);
 	//
 	size_t n_covariate      = db_input.covariate_table.size();
 	double age_min          = min_vector( db_input.age_table );

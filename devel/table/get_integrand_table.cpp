@@ -30,7 +30,7 @@ $$
 $section C++: Get the Integrand Table Information$$
 
 $head Syntax$$
-$icode%integrand_table% = get_integrand_table(%db%)%$$
+$icode%integrand_table% = get_integrand_table(%db%, %n_mulcov%)%$$
 
 $head Purpose$$
 To read the $cref integrand_table$$ and return it as a C++ data structure.
@@ -41,6 +41,13 @@ $codei%
 	sqlite3* %db%
 %$$
 and is an open connection to the database.
+
+$head n_mulcov$$
+This argument has prototype
+$codei%
+	size_t %n_mulcov%
+%$$
+and is the size of the $cref/mulcov_table/get_mulcov_table/$$.
 
 $head integrand_table$$
 The return value $icode integrand_table$$ has prototype
@@ -111,6 +118,7 @@ $end
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/null_int.hpp>
+# include <cppad/utility/to_string.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -131,7 +139,10 @@ const char* integrand_enum2name[] = {
 	"relrisk",
 	"mulcov"
 };
-CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
+CppAD::vector<integrand_struct> get_integrand_table(
+	sqlite3* db       ,
+	size_t   n_mulcov
+)
 {	using std::string;
 
 	// check for minimum_cv column
@@ -192,6 +203,12 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 		if( integrand == mulcov_enum )
 		{	string mulcov_id_str = integrand_name[integrand_id].substr(7);
 			int    mulcov_id     = std::atoi(mulcov_id_str.c_str() );
+			if( n_mulcov <= size_t(mulcov_id) )
+			{	string msg = integrand_name[integrand_id];
+				msg       += " mulcov_id not non-negative and less than ";
+				msg       += CppAD::to_string(n_mulcov);
+				error_exit(msg, table_name, integrand_id);
+			}
 			integrand_table[integrand_id].mulcov_id = mulcov_id;
 		}
 	}

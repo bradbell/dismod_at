@@ -37,7 +37,10 @@ namespace dismod_at {
 		double          minimum_meas_cv;
 		int             mulcov_id;
 	};
-	extern CppAD::vector<integrand_struct> get_integrand_table(sqlite3*  db);
+	extern CppAD::vector<integrand_struct> get_integrand_table(
+		sqlite3*  db        ,
+		size_t    mulcov_id
+	);
 }
 
 
