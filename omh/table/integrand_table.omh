@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -25,6 +25,7 @@ $spell
 	covariate
 	cv
 	std
+	mulcov
 $$
 
 $section The Integrand Table$$
@@ -129,6 +130,10 @@ $rnext
 	$cref/relrisk/avg_integrand/Integrand, I_i(a,t)/relrisk/$$
 	$cnext relative risk
 	$cnext no
+$rnext
+	$codei%mulcov_%mulcov_id%$$
+	$cnext the covariate multiplier specified by
+	$cref/mulcov_id/mulcov_table/mulcov_id/$$
 $tend
 
 $children%example/table/integrand_table.py

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -104,11 +104,13 @@ $end
 
 
 
+# include <cstring>
 # include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -126,7 +128,8 @@ const char* integrand_enum2name[] = {
 	"mtspecific",
 	"mtall",
 	"mtstandard",
-	"relrisk"
+	"relrisk",
+	"mulcov"
 };
 CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 {	using std::string;
@@ -157,9 +160,13 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	// integrand
 		integrand_enum integrand = number_integrand_enum;
+		if( std::strncmp(integrand_name[integrand_id].c_str(), "mulcov_", 7) )
+			integrand = mulcov_enum;
 		for(size_t j = 0; j < number_integrand_enum; j++)
 		{	if( integrand_name[integrand_id] == integrand_enum2name[j] )
 				integrand = integrand_enum(j);
+			if( integrand_name[integrand_id] == "mulcov" )
+				integrand = number_integrand_enum;
 		}
 		if( integrand == number_integrand_enum )
 		{	string msg = integrand_name[integrand_id];
@@ -181,7 +188,12 @@ CppAD::vector<integrand_struct> get_integrand_table(sqlite3* db)
 		}
 		integrand_table[integrand_id].minimum_meas_cv =
 			minimum_meas_cv[integrand_id];
-
+		integrand_table[integrand_id].mulcov_id = DISMOD_AT_NULL_INT;
+		if( integrand == mulcov_enum )
+		{	string mulcov_id_str = integrand_name[integrand_id].substr(7);
+			int    mulcov_id     = std::atoi(mulcov_id_str.c_str() );
+			integrand_table[integrand_id].mulcov_id = mulcov_id;
+		}
 	}
 	return integrand_table;
 }
