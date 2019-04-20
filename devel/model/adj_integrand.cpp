@@ -173,6 +173,7 @@ adj_integrand::adj_integrand(
 	const CppAD::vector<double>&              age_table        ,
 	const CppAD::vector<double>&              time_table       ,
 	const CppAD::vector<integrand_struct>&    integrand_table  ,
+	const CppAD::vector<mulcov_struct>&       mulcov_table     ,
 	const CppAD::vector<smooth_info>&         s_info_vec       ,
 	const pack_info&                          pack_object      )
 // END_ADJ_INTEGRAND_PROTOTYPE
@@ -181,6 +182,7 @@ rate_case_         (rate_case)        ,
 age_table_         (age_table)        ,
 time_table_        (time_table)       ,
 integrand_table_   (integrand_table)  ,
+mulcov_table_      (mulcov_table)     ,
 s_info_vec_        (s_info_vec)       ,
 pack_object_       (pack_object)      ,
 double_rate_       (number_rate_enum) ,

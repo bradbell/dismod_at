@@ -25,6 +25,7 @@ private:
 	const CppAD::vector<double>&               age_table_;
 	const CppAD::vector<double>&               time_table_;
 	const CppAD::vector<integrand_struct>&     integrand_table_;
+	const CppAD::vector<mulcov_struct>&        mulcov_table_;
 	const CppAD::vector<smooth_info>&          s_info_vec_;
 	const pack_info&                           pack_object_;
 
@@ -55,6 +56,7 @@ public:
 		const CppAD::vector<double>&              age_table        ,
 		const CppAD::vector<double>&              time_table       ,
 		const CppAD::vector<integrand_struct>&    integrand_table  ,
+		const CppAD::vector<mulcov_struct>&       mulcov_table     ,
 		const CppAD::vector<smooth_info>&         s_info_vec       ,
 		const pack_info&                          pack_object
 	);

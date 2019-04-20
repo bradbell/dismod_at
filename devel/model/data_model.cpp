@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -201,6 +201,7 @@ data_model::data_model(
 	const CppAD::vector<double>&             age_table       ,
 	const CppAD::vector<double>&             time_table      ,
 	const CppAD::vector<integrand_struct>&   integrand_table ,
+	const CppAD::vector<mulcov_struct>&      mulcov_table    ,
 	const CppAD::vector<prior_struct>&       prior_table     ,
 	const CppAD::vector<SubsetStruct>&       subset_object   ,
 	const CppAD::vector<double>&             subset_cov_value,
@@ -223,6 +224,7 @@ avgint_obj_(
 	age_table,
 	time_table,
 	integrand_table,
+	mulcov_table,
 	w_info_vec,
 	s_info_vec,
 	pack_object
@@ -959,6 +961,7 @@ template data_model::data_model(                                \
 	const CppAD::vector<double>&             age_table       ,  \
 	const CppAD::vector<double>&             time_table      ,  \
 	const CppAD::vector<integrand_struct>&   integrand_table ,  \
+	const CppAD::vector<mulcov_struct>&      mulcov_table    ,  \
 	const CppAD::vector<prior_struct>&       prior_table     ,  \
 	const CppAD::vector<SubsetStruct>&       subset_object   ,  \
 	const CppAD::vector<double>&             subset_cov_value,  \
