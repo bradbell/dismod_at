@@ -279,6 +279,10 @@ CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/bin/setup.py.in
 	${CMAKE_CURRENT_SOURCE_DIR}/bin/setup.py
 )
+CONFIGURE_FILE(
+	${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.sh.in
+	${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.sh
+)
 # ----------------------------------------------------------------------------
 # subdirectories
 ADD_SUBDIRECTORY(devel)

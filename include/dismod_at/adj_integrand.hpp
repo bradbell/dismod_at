@@ -25,9 +25,12 @@ private:
 	const CppAD::vector<double>&               age_table_;
 	const CppAD::vector<double>&               time_table_;
 	const CppAD::vector<integrand_struct>&     integrand_table_;
-	const CppAD::vector<mulcov_struct>&        mulcov_table_;
 	const CppAD::vector<smooth_info>&          s_info_vec_;
 	const pack_info&                           pack_object_;
+
+	// Maps each mulcov_id to corresponding packing information.
+	// Set by constructor and effectory const
+	CppAD::vector<pack_info::subvec_info>     mulcov_pack_info_;
 
 	// temporaries
 	CppAD::vector<double>                      double_mulcov_;

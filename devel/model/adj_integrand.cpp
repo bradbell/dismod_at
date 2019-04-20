@@ -182,12 +182,57 @@ rate_case_         (rate_case)        ,
 age_table_         (age_table)        ,
 time_table_        (time_table)       ,
 integrand_table_   (integrand_table)  ,
-mulcov_table_      (mulcov_table)     ,
 s_info_vec_        (s_info_vec)       ,
 pack_object_       (pack_object)      ,
 double_rate_       (number_rate_enum) ,
 a1_double_rate_    (number_rate_enum)
-{ }
+{	// set mulcov_pack_info_
+	size_t n_integrand = integrand_table.size();
+	mulcov_pack_info_.resize( mulcov_table.size() );
+	CppAD::vector<size_t> rate_value_index(number_rate_enum);
+	CppAD::vector<size_t> meas_value_index(n_integrand);
+	CppAD::vector<size_t> meas_noise_index(n_integrand);
+	for(size_t i = 0; i < number_rate_enum; ++i)
+		rate_value_index[i] = 0;
+	for(size_t i = 0; i < n_integrand; ++i)
+	{	meas_value_index[i] = 0;
+		meas_noise_index[i] = 0;
+	}
+	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); ++mulcov_id)
+	{
+		size_t rate_id      = size_t( mulcov_table[mulcov_id].rate_id );
+		size_t integrand_id = size_t(mulcov_table[mulcov_id].integrand_id);
+		if( mulcov_table[mulcov_id].smooth_id != DISMOD_AT_NULL_INT )
+		switch( mulcov_table[mulcov_id].mulcov_type )
+		{	case rate_value_enum:
+			mulcov_pack_info_[mulcov_id] =
+				pack_object.mulcov_rate_value_info(
+					rate_id, rate_value_index[rate_id]
+			);
+			++rate_value_index[rate_id];
+			break;
+
+			case meas_value_enum:
+			mulcov_pack_info_[mulcov_id] =
+				pack_object.mulcov_meas_value_info(
+					integrand_id, meas_value_index[integrand_id]
+			);
+			++meas_value_index[integrand_id];
+			break;
+
+			case meas_noise_enum:
+			mulcov_pack_info_[mulcov_id] =
+				pack_object.mulcov_meas_noise_info(
+					integrand_id, meas_noise_index[integrand_id]
+			);
+			++meas_noise_index[integrand_id];
+			break;
+
+			default:
+			assert(false);
+		}
+	}
+}
 
 // BEGIN_LINE_PROTOTYPE
 template <class Float>

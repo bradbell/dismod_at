@@ -5,6 +5,7 @@
 /include/dismod_at/configure.hpp
 /bin/dismodat.py
 /bin/setup.py
+/bin/user_test.sh
 #
 # Directory were builds take place. Note that /build is a link, hence
 # it looks to git like a file instead of a directory.

@@ -1,0 +1,35 @@
+#! /bin/bash -e
+#  --------------------------------------------------------------------------
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
+#           Copyright (C) 2014-19 University of Washington
+#              (Bradley M. Bell bradbell@uw.edu)
+#
+# This program is distributed under the terms of the
+#	     GNU Affero General Public License version 3.0 or later
+# see http://www.gnu.org/licenses/agpl.txt
+# ---------------------------------------------------------------------------
+if [ "$0" != 'bin/user_test.sh' ]
+then
+	echo 'bin/user_test.sh: must be executed from its parent directory'
+	exit 1
+fi
+if [ ! -e "$1" ]
+then
+	echo 'usage: bin/user_test.sh user_test'
+	echo 'where user_test is the path to the python3 user test.'
+	exit 1
+fi
+user_test="$1"
+if @python3_executable@ $user_test
+then
+	echo 'user_test.sh: OK'
+	exit 0
+fi
+echo 'First try failed, re-running test with a different random seed:'
+if @python3_executable@ $user_test
+then
+	echo 'user_test.sh: OK'
+	exit 0
+fi
+echo 'user_test.sh: Error'
+exit 1
