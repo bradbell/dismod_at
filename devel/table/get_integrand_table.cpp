@@ -27,6 +27,7 @@ $spell
 	cv
 	mulcov
 	const
+	covariate
 $$
 
 $section C++: Get the Integrand Table Information$$
@@ -67,12 +68,17 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code integrand_enum$$ $cnext $code integrand$$ $cnext
+$code integrand_enum$$ $cnext
+	$code integrand$$ $cnext
 	An enum type for this integrand; see below
 $rnext
-$code double$$ $cnext $cnext
+$code double$$ $cnext
 	$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ $cnext
 	minimum measurement coefficient of variation for this integrand
+$rnext
+$code int$$ $cnext
+	$cref/mulcov_id/mulcov_table/mulcov_id/$$ $cnext
+	covariate multiplier corresponding to this integrand
 $tend
 
 $head integrand_enum$$
