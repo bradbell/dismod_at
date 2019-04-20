@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>
+# include <dismod_at/get_mulcov_table.hpp>
 
 namespace dismod_at {
 	enum integrand_enum {
@@ -38,8 +39,8 @@ namespace dismod_at {
 		int             mulcov_id;
 	};
 	extern CppAD::vector<integrand_struct> get_integrand_table(
-		sqlite3*  db        ,
-		size_t    mulcov_id
+		sqlite3*                            db           ,
+		const CppAD::vector<mulcov_struct>& mulcov_table
 	);
 }
 

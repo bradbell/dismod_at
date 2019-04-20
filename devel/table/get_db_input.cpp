@@ -148,8 +148,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.nslist_table      = get_nslist_table(db);
 	db_input.nslist_pair_table = get_nslist_pair(db);
 	//
-	size_t n_mulcov           = db_input.mulcov_table.size();
-	db_input.integrand_table  = get_integrand_table(db, n_mulcov);
+	// get_integrand_table uses mulcov_table to check for errors
+	db_input.integrand_table  = get_integrand_table(db, db_input.mulcov_table);
 	//
 	size_t n_covariate      = db_input.covariate_table.size();
 	double age_min          = min_vector( db_input.age_table );

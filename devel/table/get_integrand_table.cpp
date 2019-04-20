@@ -26,12 +26,13 @@ $spell
 	mtspecific
 	cv
 	mulcov
+	const
 $$
 
 $section C++: Get the Integrand Table Information$$
 
 $head Syntax$$
-$icode%integrand_table% = get_integrand_table(%db%, %n_mulcov%)%$$
+$icode%integrand_table% = get_integrand_table(%db%, %mulcov_table%)%$$
 
 $head Purpose$$
 To read the $cref integrand_table$$ and return it as a C++ data structure.
@@ -43,12 +44,12 @@ $codei%
 %$$
 and is an open connection to the database.
 
-$head n_mulcov$$
+$head mulcov_table$$
 This argument has prototype
 $codei%
-	size_t %n_mulcov%
+	const CppAD::vector<mulcov_struct>& %mulcov_table%
 %$$
-and is the size of the $cref/mulcov_table/get_mulcov_table/$$.
+and is the $cref/mulcov_table/get_mulcov_table/$$.
 
 $head integrand_table$$
 The return value $icode integrand_table$$ has prototype
@@ -90,7 +91,8 @@ $code prevalence_enum$$  $pre  $$ $cnext $code prevalence$$      $rnext
 $code mtspecific_enum$$  $pre  $$ $cnext $code mtspecific$$      $rnext
 $code mtall_enum$$       $pre  $$ $cnext $code mtall$$           $rnext
 $code mtstandard_enum$$  $pre  $$ $cnext $code mtstandard$$      $rnext
-$code relrisk_enum$$     $pre  $$ $cnext $code relrisk$$
+$code relrisk_enum$$     $pre  $$ $cnext $code relrisk$$         $rnext
+$code mulcov_enum$$      $pre  $$ $cnext $codei%mulcov_%mulcov_id%$$
 $tend
 
 
@@ -99,6 +101,10 @@ This is a global variable.
 If $icode%integrand%$$, is an $code integrand_enum$$ value,
 $codei%integrand_enum2name[%integrand%]%$$ is the
 $icode integrand_name$$ corresponding to the enum value.
+The mulcov case is special because
+$codei%
+	integrand_enum2name[mulcov_enum] == "mulcov"
+%$$
 
 $children%example/devel/table/get_integrand_table_xam.cpp
 %$$
@@ -141,8 +147,8 @@ const char* integrand_enum2name[] = {
 	"mulcov"
 };
 CppAD::vector<integrand_struct> get_integrand_table(
-	sqlite3* db       ,
-	size_t   n_mulcov
+	sqlite3*                            db           ,
+	const CppAD::vector<mulcov_struct>& mulcov_table
 )
 {	using std::string;
 
@@ -203,11 +209,21 @@ CppAD::vector<integrand_struct> get_integrand_table(
 		if( integrand == mulcov_enum )
 		{	string mulcov_id_str = name.substr(7);
 			int    mulcov_id     = std::atoi(mulcov_id_str.c_str() );
-			if( n_mulcov <= size_t(mulcov_id) )
+			//
+			// make sure that mulcov_id is valid
+			if( mulcov_table.size() <= size_t(mulcov_id) )
 			{	string msg = name;
 				msg       += " mulcov_id is greater or equal number of ";
 				msg       += "entriies  in mulcov table";
 				error_exit(msg, table_name, integrand_id);
+			}
+			//
+			for(size_t i = 0; i < mulcov_table.size(); ++i)
+			if( size_t(mulcov_table[i].integrand_id) == integrand_id )
+			{	string msg = "integrand_id ";
+				msg += CppAD::to_string(integrand_id);
+				msg += " corresponds to the covariate multiplier " + name;
+				error_exit(msg, "mulcov", i);
 			}
 			integrand_table[integrand_id].mulcov_id = mulcov_id;
 		}
