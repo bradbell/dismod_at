@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -293,7 +293,7 @@ The prevalence of the condition is
 $latex I  = P = C / ( S + C ) $$.
 
 $subhead Tincidence$$
-The  incidence rate relative to the total population is
+The incidence rate relative to the total population is
 $latex I  = \iota ( 1 - P ) $$.
 
 $subhead mtspecific$$
@@ -311,6 +311,12 @@ $latex I  = ( \omega  + \chi  ) / ( \omega  + \chi  P )$$.
 $subhead relrisk$$
 The relative risk is
 $latex I  = ( \omega  + \chi  ) / \omega $$.
+
+$subhead mulcov$$
+If the $cref/integrand_name/integrand_table/integrand_name/$$ is
+$codei%mulcov_%mulcov_id%$$, $latex I$$ is the covariate multiplier
+corresponding to $cref/mulcov_id/mulcov_table/mulcov_id/$$.
+In this case there are no covariate that affect the measurement.
 
 $head Measurement Value Covariates$$
 
@@ -348,6 +354,10 @@ The adjusted integrand is the following function of age and time:
 $latex \[
 	I_i (a, t) \; \exp \left[ E_i (a, t) \right]
 \] $$
+Note that if $latex I_i (a, t)$$ is a covariate multiplier
+$cref/mulcov/avg_integrand/Integrand, I_i(a,t)/mulcov/$$,
+the adjusted integrand is equal to $latex I_i(a,t)$$; i.e.,
+there is no adjustment.
 
 $head Weight Integral, wbar_i$$
 We use $latex \bar{w}_i$$ to denote the weight integral defined by

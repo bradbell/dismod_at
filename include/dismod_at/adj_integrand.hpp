@@ -45,7 +45,7 @@ private:
 		size_t                                    child            ,
 		const CppAD::vector<double>&              x                ,
 		const CppAD::vector<Float>&               pack_vec         ,
-		CppAD::vector<Float>&                     cov_mul          ,
+		CppAD::vector<Float>&                     mulcov           ,
 		CppAD::vector< CppAD::vector<Float> >&    rate
 	);
 public:

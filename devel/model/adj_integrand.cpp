@@ -198,7 +198,7 @@ CppAD::vector<Float> adj_integrand::line(
 	const CppAD::vector<double>&                       x                ,
 	const CppAD::vector<Float>&                        pack_vec         ,
 // END_LINE_PROTOTYPE
-	CppAD::vector<Float>&                              cov_mul          ,
+	CppAD::vector<Float>&                              mulcov           ,
 	CppAD::vector< CppAD::vector<Float> >&             rate             )
 {	using CppAD::vector;
 	//
@@ -208,7 +208,7 @@ CppAD::vector<Float> adj_integrand::line(
 	// ---------------------------------------------------------------------
 	// integrand for this average
 	integrand_enum integrand = integrand_table_[integrand_id].integrand;
-	bool need_ode = false;
+	bool need_ode     = false;
 	vector<bool> need_rate(number_rate_enum);
 	for(size_t k = 0; k < number_rate_enum; ++k)
 		need_rate[k] = false;
@@ -513,7 +513,7 @@ CppAD::vector<Float> adj_integrand::line(
 		size_t                                        child            ,    \
 		const CppAD::vector<double>&                  x                ,    \
 		const CppAD::vector<Float>&                   pack_vec         ,    \
-		CppAD::vector<Float>&                         cov_mul          ,    \
+		CppAD::vector<Float>&                         mulcov           ,    \
 		CppAD::vector< CppAD::vector<Float> >&        rate                  \
 	);                                                                      \
 \

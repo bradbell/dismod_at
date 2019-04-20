@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -84,12 +84,15 @@ this column must be $code null$$.
 
 $head integrand_id$$
 This column has type $code integer$$.
+If $icode mulcov_type$$ is $code rate_value$$,
+this column should be $code null$$.
 If $icode mulcov_type$$ is $code meas_value$$ or $code meas_noise$$,
 $icode integrand_id$$ is the
 $cref/integrand_id/integrand_table/integrand_id/$$ that determines
 which measurement integrand this multiplier effects.
-If $icode mulcov_type$$ is $code rate_value$$,
-this column should be $code null$$.
+The corresponding integrand cannot be a covariate multiplier; see
+$codei%mulcov_%mulcov_id%$$ below
+$cref/integrand_name/integrand_table/integrand_name/$$.
 
 $head covariate_id$$
 This column has type $code integer$$ and is a
