@@ -259,6 +259,7 @@ CppAD::vector<Float> adj_integrand::line(
 	// integrand for this average
 	integrand_enum integrand = integrand_table_[integrand_id].integrand;
 	bool need_ode     = false;
+	bool need_mulcov  = false;
 	vector<bool> need_rate(number_rate_enum);
 	for(size_t k = 0; k < number_rate_enum; ++k)
 		need_rate[k] = false;
@@ -307,6 +308,10 @@ CppAD::vector<Float> adj_integrand::line(
 		need_rate[omega_enum] = true;
 		break;
 
+		case mulcov_enum:
+		need_mulcov = true;
+		break;
+
 		// -----------------------------------------------------------------
 		default:
 		assert( false);
@@ -316,6 +321,35 @@ CppAD::vector<Float> adj_integrand::line(
 	//
 	// vector of effects
 	vector<Float> effect(n_line), temp(n_line);
+	// -----------------------------------------------------------------------
+	// mulcov is special case: no ode and no effects
+	if( need_mulcov )
+	{	mulcov.resize(n_line);
+		//
+		int mulcov_id    = integrand_table_[integrand_id].mulcov_id;
+		info             = mulcov_pack_info_[mulcov_id];
+		size_t smooth_id = info.smooth_id;
+		if( info.smooth_id == DISMOD_AT_NULL_SIZE_T )
+		{	for(size_t k = 0; k < n_line; ++k)
+				mulcov[k] = 0.0;
+		}
+		else
+		{	// interpolate covariate multiplier from smoothing grid to line
+			smooth_value.resize(info.n_var);
+			for(size_t k = 0; k < info.n_var; ++k)
+				smooth_value[k] = pack_vec[info.offset + k];
+			const smooth_info& s_info = s_info_vec_[smooth_id];
+			mulcov = grid2line(
+				line_age,
+				line_time,
+				age_table_,
+				time_table_,
+				s_info,
+				smooth_value
+			);
+		}
+		return mulcov;
+	}
 	// -----------------------------------------------------------------------
 	// get value for each rate that is needed
 	for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
