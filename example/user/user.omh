@@ -73,6 +73,7 @@ $children%example/user/csv2db.py
 	%example/user/students.py
 	%example/user/cascade.py
 	%example/user/predict_fit.py
+	%example/user/predict_mulcov.py
 
 	%example/user/asymptotic.py
 	%example/user/const_random.py

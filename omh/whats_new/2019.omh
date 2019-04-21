@@ -33,6 +33,9 @@ $cref/test/install_unix/dismod_at/Test/$$
 so that $code make check$$ does a re-try
 when it gets a failure.
 This makes the probability of a random failure much lower.
+$lnext
+Add $cref/mulcov/integrand_table/integrand_name/$$ integrand name; see the
+$cref user_predict_mulcov.py$$ example / test.
 $lend
 
 $head 04-18$$

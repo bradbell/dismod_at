@@ -279,6 +279,7 @@ Float avg_integrand::rectangle(
 		case mtother_enum:
 		case mtwith_enum:
 		case relrisk_enum:
+		case mulcov_enum:
 		break;
 
 		// -----------------------------------------------------------------
