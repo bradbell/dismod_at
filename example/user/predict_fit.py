@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -11,9 +11,88 @@
 # $begin user_predict_fit.py$$ $newlinech #$$
 # $spell
 #	init
+#	var
+#	smoothings
+#	Sincidence
+#	Avgint
 # $$
 #
 # $section Predict Average Integrand Using Results of a Fit$$
+#
+# $head Purpose$$
+# This examples used the $cref/fit both/fit_command/variables/both/$$ command
+# to estimate the model variables.
+# It then uses the $cref/predict fit_var/predict_command/source/fit_var/$$
+# command to compute the
+# $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
+# population $latex S(a)$$ at age $latex a = 50$$.
+#
+# $head Note Table$$
+# $pre
+#        north_america
+#         /          \
+#   united_states   canada
+# $$
+#
+# $head Problem Parameters$$
+# The following values are used to simulate the data and set the priors
+# for fitting the data:
+# $srcfile%example/user/predict_fit.py%
+#	0%# begin problem parameters%# end problem parameters%1
+# %$$
+#
+# $head Age and Time Values$$
+# The age and time values do not affect the fitting for this problem
+# because all the functions are constant in age and time.
+# This follows from the fact that all of the smoothings have one age
+# and one time point.
+#
+# $head Rate Table$$
+# The $cref rate_table$$ only specifies that the only
+# $cref/rate/var_table/var_type/rate/$$ variables are
+# $icode iota$$ for the parent and children.
+# In addition, it specifies the smoothings for these rates
+# each of which has one grid point.
+#
+# $head Variables$$
+# There are three model variables in this example:
+# $table
+# $icode iota_north_america$$
+#	$cnext The true value for
+#	$cref/iota(a,t)/math_ode/Incidence, iota(a, t)/$$ in north_america.
+# $rnext
+# $icode canada_effect$$
+#	$cnext The true model value for the canada
+#	$cref/child rate effect
+#		/model_variables
+#		/Random Effects, u
+#		/Child Rate Effects
+#	/$$ on iota.
+# $rnext
+# $icode united_states_effect$$
+#	$cnext The true model value for the united_states
+#	$cref/child rate effect
+#		/model_variables
+#		/Random Effects, u
+#		/Child Rate Effects
+#	/$$ on iota.
+# $tend
+#
+# $head Integrand Table$$
+# The $cref integrand_table$$ for this example includes
+# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$ and
+# $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$.
+#
+# $head Data Table$$
+# There are three measurements of $icode Sincidence$$
+# in the $cref data_table$$, one for each node.
+# No noise is added to the measurements, and the priors on
+# $icode iota$$ are uniform, so the fit should correspond to the
+# model values used to simulate the data.
+#
+# $head Avgint Table$$
+# There are three predictions of the susceptible population at
+# age 50 specified in the $cref avgint_table$$, one for each node.
 #
 # $head Source Code$$
 # $srcfile%
@@ -21,7 +100,12 @@
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
-iota_north_america = 1e-2
+# BEGIN PYTHON
+# begin problem parameters
+iota_north_america   = 1e-2
+canada_effect        = 0.2
+united_states_effect = - canada_effect
+# end problem parameters
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys
@@ -47,34 +131,30 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ---------------------------------------------------------------------------
-# Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_rate_child(a, t) :
-	return ('prior_rate_child', None, 'prior_dtime_child')
-def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', None, 'prior_dtime_parent')
+def fun_iota_child(a, t) :
+	return ('prior_iota_child', None,  None)
+def fun_iota_parent(a, t) :
+	return ('prior_iota_parent', None, None)
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# age table
-	age_list    = [    0.0, 50.0,    100.0 ]
+	age_list    = [  0.0,     100.0 ]
 	#
 	# time table
-	time_list   = [ 1995.0, 2005.0, 2015.0 ]
-	#
-	# integrand table
-	integrand_table = [
-		{ 'name':'Sincidence' },
-		{ 'name':'susceptible' }
-	]
-	#
-	# node table: world -> north_america
-	#             north_america -> (united_states, canada)
+	time_list   = [ 1995.0,  2015.0 ]
 	node_table = [
-		{ 'name':'world',         'parent':'' },
-		{ 'name':'north_america', 'parent':'world' },
+		{ 'name':'north_america', 'parent':''              },
 		{ 'name':'united_states', 'parent':'north_america' },
 		{ 'name':'canada',        'parent':'north_america' }
 	]
@@ -83,6 +163,11 @@ def example_db (file_name) :
 	fun = constant_weight_fun
 	weight_table = [
 		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
+	]
+	# integrand table
+	integrand_table = [
+		{ 'name':'Sincidence' },
+		{ 'name':'susceptible' }
 	]
 	#
 	# covariate table: no covriates
@@ -94,90 +179,33 @@ def example_db (file_name) :
 	# nslist_table:
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
-	# avgint table: same order as list of integrands
-	avgint_table = list()
-	# values that are the same for all data rows
-	row = {
-		'integrand':   'susceptible',
-		'node':        'north_america',
-		'weight':      'constant',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    50.0,
-		'age_upper':    50.0
-	}
-	avgint_table.append( copy.copy(row) )
-	row['node'] = 'canada'
-	avgint_table.append( copy.copy(row) )
-	row['node'] = 'united_states'
-	avgint_table.append( copy.copy(row) )
-	# ----------------------------------------------------------------------
-	# data table:
-	data_table = list()
-	row = {
-		'node':        'north_america',
-		'density':     'gaussian',
-		'weight':      'constant',
-		'hold_out':     False,
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    0.0,
-		'age_upper':    100.0,
-		'integrand':   'Sincidence',
-		'meas_value':   iota_north_america,
-		'meas_std':     1e-1 * iota_north_america,
-	}
-	data_table.append( copy.copy(row) )
-	row['node'] = 'canada';
-	row['meas_value'] = math.exp(0.2) * iota_north_america
-	data_table.append( copy.copy(row) )
-	row['node'] = 'united_states';
-	row['meas_value'] = math.exp(-0.2) * iota_north_america
-	data_table.append( copy.copy(row) )
-	#
-	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{ # prior_rate_parent
-			'name':     'prior_rate_parent',
+		{ # prior_iota_parent
+			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'lower':    1e-2 * iota_north_america,
-			'upper':    1e+2 * iota_north_america,
-			'mean':     iota_north_america,
-		},{ # prior_rate_child
-			'name':     'prior_rate_child',
-			'density':  'gaussian',
+			'lower':    iota_north_america / 100.0,
+			'upper':    iota_north_america * 100.0,
+			'mean':     iota_north_america * 3.0,
+		},{ # prior_iota_child
+			'name':     'prior_iota_child',
+			'density':  'uniform',
 			'mean':     0.0,
-			'std':      3.0,
-		},{ # prior_dtime_parent
-			'name':     'prior_dtime_parent',
-			'density':  'log_gaussian',
-			'mean':     0.0,
-			'std':      1.0,
-			'eta':      1e-6
-		},{ # prior_dtime_child
-			'name':     'prior_dtime_child',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      1.0,
-			'eta':      1e-6
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	middle_age_id  = 1
-	last_time_id   = 2
 	smooth_table = [
-		{ # smooth_rate_parent
-			'name':                     'smooth_rate_parent',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ 0, last_time_id ],
-			'fun':                      fun_rate_parent
-		}, { # smooth_rate_child
-			'name':                     'smooth_rate_child',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ 0, last_time_id ],
-			'fun':                      fun_rate_child
+		{ # smooth_iota_parent
+			'name':                     'smooth_iota_parent',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'fun':                      fun_iota_parent
+		}, { # smooth_iota_child
+			'name':                     'smooth_iota_child',
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
+			'fun':                      fun_iota_child
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -185,29 +213,69 @@ def example_db (file_name) :
 	rate_table = [
 		{
 			'name':          'iota',
-			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'parent_smooth': 'smooth_iota_parent',
+			'child_smooth':  'smooth_iota_child',
 		}
 	]
 	# --------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'parent_node_name',       'value':'north_america' },
-		{ 'name':'ode_step_size',          'value':'1.0'           },
-		{ 'name':'random_seed',            'value':'0'             },
+		{ 'name':'parent_node_name',       'value':'north_america'     },
+		{ 'name':'ode_step_size',          'value':'1.0'               },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
-		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
 		{ 'name':'max_num_iter_fixed',     'value':'30'           },
 		{ 'name':'print_level_fixed',      'value':'0'            },
 		{ 'name':'tolerance_fixed',        'value':'1e-10'        },
-
-		{ 'name':'derivative_test_random', 'value':'second-order' },
-		{ 'name':'max_num_iter_random',    'value':'30'           },
-		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
+	# ----------------------------------------------------------------------
+	# data table:
+	data_table = list()
+	row = {
+		'density':     'log_gaussian',
+		'eta':         '0.0',
+		'weight':      'constant',
+		'hold_out':     False,
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    0.0,
+		'age_upper':    100.0,
+		'integrand':   'Sincidence',
+	}
+	# north_america
+	row['node']       = 'north_america';
+	row['meas_value'] = iota_north_america
+	row['meas_std']   = row['meas_value'] / 10.0
+	data_table.append( copy.copy(row) )
+	# canada
+	row['node'] = 'canada';
+	row['meas_value'] = math.exp(canada_effect) * iota_north_america
+	row['meas_std']   = row['meas_value'] / 10.0
+	data_table.append( copy.copy(row) )
+	# united_states
+	row['node'] = 'united_states';
+	row['meas_value'] = math.exp(united_states_effect) * iota_north_america
+	row['meas_std']   = row['meas_value'] / 10.0
+	data_table.append( copy.copy(row) )
+	# ----------------------------------------------------------------------
+	# avgint table:
+	avgint_table = list()
+	# values that are the same for all data rows
+	row = {
+		'integrand':   'susceptible',
+		'weight':      'constant',
+		'time_lower':   2000.0,
+		'time_upper':   2000.0,
+		'age_lower':    50.0,
+		'age_upper':    50.0
+	}
+	row['node'] = 'north_america'
+	avgint_table.append( copy.copy(row) )
+	row['node'] = 'canada'
+	avgint_table.append( copy.copy(row) )
+	row['node'] = 'united_states'
+	avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -230,24 +298,15 @@ def example_db (file_name) :
 # ===========================================================================
 file_name             = 'example.db'
 example_db(file_name)
-program               = '../../devel/dismod_at'
-for command in [ 'init', 'fit', 'predict' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	if command == 'predict' :
-		cmd.append('fit_var')
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+#
+program = '../../devel/dismod_at'
+system_command([ program, file_name, 'init' ])
+system_command([ program, file_name, 'fit', 'both' ])
+system_command([ program, file_name, 'predict', 'fit_var' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# get predict table
 predict_table  = dismod_at.get_table_dict(connection, 'predict')
 avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
 node_table     = dismod_at.get_table_dict(connection, 'node')
@@ -256,9 +315,11 @@ node_table     = dismod_at.get_table_dict(connection, 'node')
 assert len(predict_table) == 3
 #
 # S(a) = exp( - iota * a )
-S_north_america = math.exp( - iota_north_america * 50.0 )
-S_canada        = math.exp( - math.exp(0.2) * iota_north_america * 50.0 )
-S_united_states = math.exp( - math.exp(-0.2) * iota_north_america * 50.0 )
+iota_canada        = math.exp(canada_effect) * iota_north_america
+iota_united_states = math.exp(united_states_effect) * iota_north_america
+S_north_america    = math.exp( - iota_north_america * 50.0 )
+S_canada           = math.exp( - iota_canada * 50.0 )
+S_united_states    = math.exp( - iota_united_states * 50.0 )
 truth = {
 	'north_america' : S_north_america,
 	'canada'        : S_canada,
@@ -270,7 +331,7 @@ for i in range(3) :
 	node      = node_table[node_id]['node_name']
 	check     = truth[node]
 	value     = predict_table[i]['avg_integrand']
-	assert( abs( value / check - 1.0 ) ) < 1e-2
+	assert( abs( value / check - 1.0 ) ) < 1e-6
 # -----------------------------------------------------------------------------
 print('predict_fit.py: OK')
 # END PYTHON

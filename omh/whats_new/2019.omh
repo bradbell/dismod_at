@@ -24,6 +24,17 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-20$$
+$list number$$
+Improve the $cref user_predict_fit.py$$ example.
+$lnext
+Change the install
+$cref/test/install_unix/dismod_at/Test/$$
+so that $code make check$$ does a re-try
+when it gets a failure.
+This makes the probability of a random failure much lower.
+$lend
+
 $head 04-18$$
 First version of $cref user_cascade.py$$ that gets
 good coverage by modeling the measurement noise covariate
