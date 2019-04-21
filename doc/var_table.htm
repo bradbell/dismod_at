@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Identifying Model Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Identifying Model Variables">
-<meta name="keywords" id="keywords" content=" identifying model variables var_id var_type mulstd_value mulstd_dage mulstd_dtime rate mulcov_rate_value mulcov_meas_value mulcov_meas_noise smooth_id age_id time_id node_id rate_id integrand_id covariate_id example ">
+<meta name="keywords" id="keywords" content=" identifying model variables var_id var_type mulstd_value mulstd_dage mulstd_dtime rate mulcov_rate_value mulcov_meas_value mulcov_meas_noise smooth_id age_id time_id node_id rate_id integrand_id covariate_id mulcov_id example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -86,6 +86,7 @@ A:active { color : purple }
 <br><a href="var_table.htm#rate_id" target="_top">rate_id</a>
 <br><a href="var_table.htm#integrand_id" target="_top">integrand_id</a>
 <br><a href="var_table.htm#covariate_id" target="_top">covariate_id</a>
+<br><a href="var_table.htm#mulcov_id" target="_top">mulcov_id</a>
 <br><a href="var_table.htm#Example" target="_top">Example</a>
 <br>The <code><font color="blue">variable</font></code> table maps the 
 <code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
@@ -336,8 +337,23 @@ Otherwise, this column is <code><font color="blue">null</font></code>.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
  is
-<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code> or <code><font color="blue">mulcov_meas_noise</font></code>,
+<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code>
+or <code><font color="blue">mulcov_meas_noise</font></code>,
 this is the <a href="covariate_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+
+that this variable applies to.
+Otherwise, this column is <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="mulcov_id" id="mulcov_id">mulcov_id</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
+ is
+<code><font color="blue">mulcov_rate_value</font></code>, <code><font color="blue">mulcov_meas_value</font></code>
+or <code><font color="blue">mulcov_meas_noise</font></code>,
+this is the <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
 
 that this variable applies to.
 Otherwise, this column is <code><font color="blue">null</font></code>.

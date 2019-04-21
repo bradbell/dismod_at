@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Model for the Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Model for the Average Integrand">
-<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i covariate difference x_ij w_i n_i rate functions parent q_k child effect u_ik j_k multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk measurement value covariates k_i beta_j weight integral wbar_i ">
+<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i covariate difference x_ij w_i n_i rate functions parent q_k child effect u_ik j_k multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk mulcov measurement value covariates k_i beta_j weight integral wbar_i ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -104,6 +104,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Integrand, I_i(a,t).mtall" target="_top">mtall</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Integrand, I_i(a,t).mtstandard" target="_top">mtstandard</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Integrand, I_i(a,t).relrisk" target="_top">relrisk</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Integrand, I_i(a,t).mulcov" target="_top">mulcov</a>
 <br><a href="avg_integrand.htm#Measurement Value Covariates" target="_top">Measurement&nbsp;Value&nbsp;Covariates</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Measurement Value Covariates.K_i" target="_top">K_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Measurement Value Covariates.Multiplier, beta_j" target="_top">Multiplier,&nbsp;beta_j</a>
@@ -645,7 +646,7 @@ I  = P = C / ( S + C )
 <br>
 <big><a name="Integrand, I_i(a,t).Tincidence" id="Integrand, I_i(a,t).Tincidence">Tincidence</a></big>
 <br>
-The  incidence rate relative to the total population is
+The incidence rate relative to the total population is
 <small>@(@
 I  = \iota ( 1 - P )
 @)@</small>.
@@ -685,6 +686,21 @@ The relative risk is
 <small>@(@
 I  = ( \omega  + \chi  ) / \omega
 @)@</small>.
+
+<br>
+<br>
+<big><a name="Integrand, I_i(a,t).mulcov" id="Integrand, I_i(a,t).mulcov">mulcov</a></big>
+<br>
+If the <a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
+ is
+
+<code><font color="blue"><span style='white-space: nowrap'>mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i></code>
+, <small>@(@
+I
+@)@</small> is the covariate multiplier
+corresponding to <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+.
+In this case there are no covariate that affect the measurement.
 
 <br>
 <br>
@@ -752,6 +768,15 @@ The adjusted integrand is the following function of age and time:
 	I_i (a, t) \; \exp \left[ E_i (a, t) \right]
 
 @]@</small>
+Note that if <small>@(@
+I_i (a, t)
+@)@</small> is a covariate multiplier
+<a href="avg_integrand.htm#Integrand, I_i(a,t).mulcov" target="_top"><span style='white-space: nowrap'>mulcov</span></a>
+,
+the adjusted integrand is equal to <small>@(@
+I_i(a,t)
+@)@</small>; i.e.,
+there is no adjustment.
 
 <br>
 <br>

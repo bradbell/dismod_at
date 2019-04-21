@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Changes and Additions to Dismod_at During 2019</big></big></b></center>
 
+<br><a href="whats_new_2019.htm#04-20" target="_top">04-20</a>
 <br><a href="whats_new_2019.htm#04-18" target="_top">04-18</a>
 <br><a href="whats_new_2019.htm#04-17" target="_top">04-17</a>
 <br><a href="whats_new_2019.htm#04-15" target="_top">04-15</a>
@@ -80,6 +81,45 @@ A:active { color : purple }
 <br><a href="whats_new_2019.htm#01-10" target="_top">01-10</a>
 <br><a href="whats_new_2019.htm#Contents" target="_top">Contents</a>
 <br><br>
+<b><big><a name="04-20" id="04-20">04-20</a></big></b>
+
+<ol type="1"><li>
+Improve the <a href="user_predict_fit.py.htm" target="_top"><span style='white-space: nowrap'>user_predict_fit.py</span></a>
+ example.
+</li><li>
+
+Change the install
+<a href="install_unix.htm#dismod_at.Test" target="_top"><span style='white-space: nowrap'>test</span></a>
+
+so that <code><font color="blue">make check</font></code> does a re-try
+when it gets a failure.
+This makes the probability of a random failure much lower.
+</li><li>
+
+Add the 
+<code><font color="blue"><span style='white-space: nowrap'>mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i></code>
+
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand&nbsp;name</span></a>
+; see the
+<a href="user_predict_mulcov.py.htm" target="_top"><span style='white-space: nowrap'>user_predict_mulcov.py</span></a>
+ example / test.
+</li><li>
+
+The <a href="var_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+ column was added to the
+var table.
+This identifies which variables a 
+<code><font color="blue"><span style='white-space: nowrap'>mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i></code>
+
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand&nbsp;name</span></a>
+ correspond to;
+see <a href="init_command.py.htm" target="_top"><span style='white-space: nowrap'>init_command.py</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="04-18" id="04-18">04-18</a></big></b>
 <br>
 First version of <a href="user_cascade.py.htm" target="_top"><span style='white-space: nowrap'>user_cascade.py</span></a>

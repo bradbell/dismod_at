@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv avg_age.csv variable.csv var_id var_type s_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std delta meas_value avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv avg_age.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std delta meas_value avgint residual sim_value sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,6 +81,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_id" target="_top">var_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_type" target="_top">var_type</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.s_id" target="_top">s_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.m_id" target="_top">m_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.age" target="_top">age</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.time" target="_top">time</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.rate" target="_top">rate</a>
@@ -280,6 +281,15 @@ If the variable is a
 this is the smoothing that this multiplier effects.
 Otherwise, it is the smoothing where the prior for this variable
 comes from.
+
+<br>
+<br>
+<big><a name="variable.csv.m_id" id="variable.csv.m_id">m_id</a></big>
+<br>
+If this variable is a covariate multiplier, this is the corresponding
+<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+.
+
 
 <br>
 <br>

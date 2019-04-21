@@ -16,6 +16,8 @@ document.write('\
 <option>user_lasso_covariate.py</option>\
 <option>user_students.py</option>\
 <option>user_cascade.py</option>\
+<option>user_predict_fit.py</option>\
+<option>user_predict_mulcov.py</option>\
 <option>user_asymptotic.py</option>\
 <option>user_const_random.py</option>\
 <option>user_const_value.py</option>\
@@ -23,7 +25,6 @@ document.write('\
 <option>user_diff_constraint.py</option>\
 <option>user_meas_covariate.py</option>\
 <option>user_no_children.py</option>\
-<option>user_predict_fit.py</option>\
 <option>user_zero_sum_random.py</option>\
 <option>user_re_scale.py</option>\
 <option>user_speed.py</option>\
@@ -45,6 +46,8 @@ function user_child(item)
 		'user_lasso_covariate.py.htm',
 		'user_students.py.htm',
 		'user_cascade.py.htm',
+		'user_predict_fit.py.htm',
+		'user_predict_mulcov.py.htm',
 		'user_asymptotic.py.htm',
 		'user_const_random.py.htm',
 		'user_const_value.py.htm',
@@ -52,7 +55,6 @@ function user_child(item)
 		'user_diff_constraint.py.htm',
 		'user_meas_covariate.py.htm',
 		'user_no_children.py.htm',
-		'user_predict_fit.py.htm',
 		'user_zero_sum_random.py.htm',
 		'user_re_scale.py.htm',
 		'user_speed.py.htm'

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>C++: Get the Integrand Table Information</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="C++: Get the Integrand Table Information">
-<meta name="keywords" id="keywords" content=" c++: get the integrand table information syntax purpose db integrand_table integrand_struct integrand_enum integrand_enum2name example ">
+<meta name="keywords" id="keywords" content=" c++: get the integrand table information syntax purpose db mulcov_table integrand_table integrand_struct integrand_enum integrand_enum2name example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,6 +72,7 @@ A:active { color : purple }
 <br><a href="get_integrand_table.htm#Syntax" target="_top">Syntax</a>
 <br><a href="get_integrand_table.htm#Purpose" target="_top">Purpose</a>
 <br><a href="get_integrand_table.htm#db" target="_top">db</a>
+<br><a href="get_integrand_table.htm#mulcov_table" target="_top">mulcov_table</a>
 <br><a href="get_integrand_table.htm#integrand_table" target="_top">integrand_table</a>
 <br><a href="get_integrand_table.htm#integrand_struct" target="_top">integrand_struct</a>
 <br><a href="get_integrand_table.htm#integrand_enum" target="_top">integrand_enum</a>
@@ -82,7 +83,7 @@ A:active { color : purple }
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;get_integrand_table(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;get_integrand_table(</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_table</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
 
 
 <br>
@@ -104,6 +105,18 @@ The argument
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sqlite3*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>db</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 and is an open connection to the database.
+
+<br>
+<br>
+<b><big><a name="mulcov_table" id="mulcov_table">mulcov_table</a></big></b>
+<br>
+This argument has prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;CppAD::vector&lt;mulcov_struct&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+and is the <a href="get_mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
+.
 
 <br>
 <br>
@@ -137,18 +150,26 @@ Type </td><td align='left'  valign='top'>
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">integrand_enum</font></code> </td><td align='left'  valign='top'>
- <code><font color="blue">integrand</font></code> </td><td align='left'  valign='top'>
+
+	<code><font color="blue">integrand</font></code> </td><td align='left'  valign='top'>
 
 	An enum type for this integrand; see below
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">double</font></code> </td><td align='left'  valign='top'>
- </td><td align='left'  valign='top'>
 
 	<a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
  </td><td align='left'  valign='top'>
 
 	minimum measurement coefficient of variation for this integrand
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">int</font></code> </td><td align='left'  valign='top'>
+
+	<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+ </td><td align='left'  valign='top'>
+
+	covariate multiplier corresponding to this integrand
 </td></tr>
 </table>
 <br>
@@ -201,7 +222,12 @@ This is an enum type with the following values:
  <code><font color="blue">mtstandard</font></code>      </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">relrisk_enum</font></code>     <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
- <code><font color="blue">relrisk</font></code>
+ <code><font color="blue">relrisk</font></code>         </td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">mulcov_enum</font></code>      <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ 
+<code><font color="blue"><span style='white-space: nowrap'>mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i></code>
+
 </td></tr>
 </table>
 <br>
@@ -217,9 +243,11 @@ If
 
 <code><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i></code>
  corresponding to the enum value.
+The mulcov case is special because
 
-
-<br>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;integrand_enum2name[mulcov_enum]&nbsp;==&nbsp;&quot;mulcov&quot;<br>
+</span></font></code>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>

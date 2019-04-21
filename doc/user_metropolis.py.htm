@@ -98,7 +98,7 @@ local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><fon
 <i><font color="#9A1900"># Simulate data with and N(2, 0.5^2) distribution</font></i>
 python_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
 numpy<font color="#990000">.</font>random<font color="#990000">.</font><b><font color="#000000">seed</font></b><font color="#990000">(</font>seed <font color="#990000">=</font> python_seed<font color="#990000">)</font>
-N          <font color="#990000">=</font> <font color="#993399">1000</font>
+N          <font color="#990000">=</font> <font color="#993399">2000</font>
 mu_true    <font color="#990000">=</font> <font color="#993399">2.0</font>
 sigma_true <font color="#990000">=</font> <font color="#993399">0.5</font>
 y          <font color="#990000">=</font> scipy<font color="#990000">.</font>stats<font color="#990000">.</font>norm<font color="#990000">.</font><b><font color="#000000">rvs</font></b><font color="#990000">(</font>loc<font color="#990000">=</font>mu_true<font color="#990000">,</font> scale<font color="#990000">=</font>sigma_true<font color="#990000">,</font> size<font color="#990000">=</font> N<font color="#990000">)</font>

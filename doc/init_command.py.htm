@@ -138,6 +138,7 @@ prior_mean       <font color="#990000">=</font> <b><font color="#000000">list</f
      rate_id      <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'rate_id'</font><font color="#990000">]</font>
      integrand_id <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
      covariate_id <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'covariate_id'</font><font color="#990000">]</font>
+     mulcov_id    <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'mulcov_id'</font><font color="#990000">]</font>
      smooth_name  <font color="#990000">=</font> smooth_table<font color="#990000">[</font>smooth_id<font color="#990000">][</font><font color="#FF0000">'smooth_name'</font><font color="#990000">]</font>
      rate_name    <font color="#990000">=</font> rate_table<font color="#990000">[</font>rate_id<font color="#990000">][</font><font color="#FF0000">'rate_name'</font><font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
@@ -157,19 +158,21 @@ prior_mean       <font color="#990000">=</font> <b><font color="#000000">list</f
      <b><font color="#0000FF">if</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'mulcov_rate_value'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> smooth_name <font color="#990000">==</font> <font color="#FF0000">'smooth_income_multiplier'</font>
           <b><font color="#0000FF">assert</font></b> rate_name <font color="#990000">==</font> <font color="#FF0000">'omega'</font>
+          <b><font color="#0000FF">assert</font></b> mulcov_id <font color="#990000">==</font> <font color="#993399">0</font>
           <i><font color="#9A1900">#</font></i>
           covariate_name <font color="#990000">=</font> covariate_table<font color="#990000">[</font>covariate_id<font color="#990000">][</font><font color="#FF0000">'covariate_name'</font><font color="#990000">]</font>
           <b><font color="#0000FF">assert</font></b> covariate_name <font color="#990000">==</font> <font color="#FF0000">'income'</font>
           <i><font color="#9A1900">#</font></i>
-          node_id <font color="#990000">==</font> None
-          integrand_id  <font color="#990000">==</font> None
+          <b><font color="#0000FF">assert</font></b> node_id <font color="#990000">==</font> None
+          <b><font color="#0000FF">assert</font></b> integrand_id  <font color="#990000">==</font> None
      <b><font color="#0000FF">elif</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'rate'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> smooth_name <font color="#990000">==</font> <font color="#FF0000">'smooth_omega_parent'</font>
           <b><font color="#0000FF">assert</font></b> rate_name <font color="#990000">==</font> <font color="#FF0000">'omega'</font>
           <b><font color="#0000FF">assert</font></b> node_id <font color="#990000">==</font> <font color="#993399">0</font>
           <i><font color="#9A1900">#</font></i>
-          covariate_id <font color="#990000">==</font> None
-          integrand_id  <font color="#990000">==</font> None
+          <b><font color="#0000FF">assert</font></b> covariate_id <font color="#990000">==</font> None
+          <b><font color="#0000FF">assert</font></b> integrand_id  <font color="#990000">==</font> None
+          <b><font color="#0000FF">assert</font></b> mulcov_id <font color="#990000">==</font> None
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> False
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>

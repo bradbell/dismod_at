@@ -173,6 +173,10 @@ this column must be <code><font color="blue">null</font></code>.
 This column has type <code><font color="blue">integer</font></code>.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ is <code><font color="blue">rate_value</font></code>,
+this column should be <code><font color="blue">null</font></code>.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
  is <code><font color="blue">meas_value</font></code> or <code><font color="blue">meas_noise</font></code>,
 
 <code><i><font color="black"><span style='white-space: nowrap'>integrand_id</span></font></i></code>
@@ -180,10 +184,12 @@ If
 <a href="integrand_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
  that determines
 which measurement integrand this multiplier effects.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
- is <code><font color="blue">rate_value</font></code>,
-this column should be <code><font color="blue">null</font></code>.
+The corresponding integrand cannot be a covariate multiplier; see
+
+<code><font color="blue"><span style='white-space: nowrap'>mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i></code>
+ below
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
+.
 
 <br>
 <br>
