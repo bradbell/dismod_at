@@ -99,6 +99,10 @@ $rnext
 	$cnext with condition mortality rate
 	$cnext no
 $rnext
+	$cref/relrisk/avg_integrand/Integrand, I_i(a,t)/relrisk/$$
+	$cnext relative risk
+	$cnext no
+$rnext
 	$cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
 	$cnext susceptible fraction of the population
 	$cnext yes
@@ -127,13 +131,10 @@ $rnext
 	$cnext standardized mortality ratio
 	$cnext yes
 $rnext
-	$cref/relrisk/avg_integrand/Integrand, I_i(a,t)/relrisk/$$
-	$cnext relative risk
-	$cnext no
-$rnext
 	$codei%mulcov_%mulcov_id%$$
 	$cnext the covariate multiplier specified by
 	$cref/mulcov_id/mulcov_table/mulcov_id/$$
+	$cnext no
 $tend
 
 $children%example/table/integrand_table.py

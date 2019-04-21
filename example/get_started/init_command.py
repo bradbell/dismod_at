@@ -115,15 +115,15 @@ for row in var_table :
 		covariate_name = covariate_table[covariate_id]['covariate_name']
 		assert covariate_name == 'income'
 		#
-		node_id == None
-		integrand_id  == None
+		assert node_id == None
+		assert integrand_id  == None
 	elif var_type == 'rate' :
 		assert smooth_name == 'smooth_omega_parent'
 		assert rate_name == 'omega'
 		assert node_id == 0
 		#
-		covariate_id == None
-		integrand_id  == None
+		assert covariate_id == None
+		assert integrand_id  == None
 		assert mulcov_id == None
 	else :
 		assert False
