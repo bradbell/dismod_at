@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -159,8 +159,17 @@ Otherwise, this column is $code null$$.
 
 $head covariate_id$$
 If $icode var_type$$ is
-$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_noise$$,
+$code mulcov_rate_value$$, $code mulcov_meas_value$$
+or $code mulcov_meas_noise$$,
 this is the $cref/covariate_id/covariate_table/covariate_id/$$
+that this variable applies to.
+Otherwise, this column is $code null$$.
+
+$head mulcov_id$$
+If $icode var_type$$ is
+$code mulcov_rate_value$$, $code mulcov_meas_value$$
+or $code mulcov_meas_noise$$,
+this is the $cref/mulcov_id/mulcov_table/mulcov_id/$$
 that this variable applies to.
 Otherwise, this column is $code null$$.
 

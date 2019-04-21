@@ -162,7 +162,7 @@ void init_command(
 	// -----------------------------------------------------------------------
 	// create var table
 	size_t n_row = pack_object.size();
-	size_t n_col = 8;
+	size_t n_col = 9;
 	table_name   = "var";
 	col_name.resize(n_col);
 	col_type.resize(n_col);
@@ -201,6 +201,10 @@ void init_command(
 	col_name[7]   = "covariate_id";
 	col_type[7]   = "integer";
 	col_unique[7] = false;
+	//
+	col_name[8]   = "mulcov_id";
+	col_type[8]   = "integer";
+	col_unique[8] = false;
 	//
 	// mulstd variables
 	size_t n_smooth = db_input.smooth_table.size();
@@ -294,7 +298,7 @@ void init_command(
 	vector<size_t> count_meas_value(n_integrand), count_meas_noise(n_integrand);
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	count_meas_value[integrand_id] = 0;
-		count_meas_noise[integrand_id]   = 0;
+		count_meas_noise[integrand_id] = 0;
 	}
 	vector<size_t> count_rate_value(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
@@ -366,6 +370,7 @@ void init_command(
 			row_value[n_col * var_id + 2] = to_string( age_id );
 			row_value[n_col * var_id + 3] = to_string( time_id );
 			row_value[n_col * var_id + 7] = to_string( covariate_id );
+			row_value[n_col * var_id + 8] = to_string( mulcov_id );
 		}
 	}
 	create_table(

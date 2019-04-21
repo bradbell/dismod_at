@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -166,6 +166,7 @@ for row in variable_table :
 		empty_field.append('node')
 	else :
 		empty_field.append('covariate')
+		empty_field.append('m_id')
 	for field in row :
 		if field in empty_field :
 			assert row[field] == ''
@@ -182,6 +183,7 @@ for row in variable_table :
 	assert near_equal(row['lag_value'], 0.0, 1e-5)
 	if row['var_type'] == 'rate' :
 		assert row['covariate']   == ''
+		assert row['m_id']        == ''
 		assert row['node']        == 'world'
 		assert int( row['s_id'] ) == 0 # smooth_omega_parent
 		assert near_equal(row['fit_value'], omega_world, 1e-5)
@@ -190,6 +192,7 @@ for row in variable_table :
 		assert row['covariate']   == 'income'
 		assert row['node']        == ''
 		assert int( row['s_id'] ) == 1 # smooth_income_multiplier
+		assert int( row['m_id'] ) == 0 # mulcov_id
 		assert near_equal(row['fit_value'], income_multiplier, 1e-5)
 # -----------------------------------------------------------------------
 print('db2csv_command: OK')

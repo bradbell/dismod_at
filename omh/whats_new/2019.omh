@@ -34,8 +34,15 @@ so that $code make check$$ does a re-try
 when it gets a failure.
 This makes the probability of a random failure much lower.
 $lnext
-Add $cref/mulcov/integrand_table/integrand_name/$$ integrand name; see the
+Add the $codei%mulcov_%mulcov_id%$$
+$cref/integrand name/integrand_table/integrand_name/$$; see the
 $cref user_predict_mulcov.py$$ example / test.
+$lnext
+The $cref/mulcov_id/var_table/mulcov_id/$$ column was added to the
+var table.
+This identifies which variables a $codei%mulcov_%mulcov_id%$$
+$cref/integrand name/integrand_table/integrand_name/$$ correspond to;
+see $cref init_command.py$$.
 $lend
 
 $head 04-18$$

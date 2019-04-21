@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -90,6 +90,7 @@ for row in var_table :
 	rate_id      = row['rate_id']
 	integrand_id = row['integrand_id']
 	covariate_id = row['covariate_id']
+	mulcov_id    = row['mulcov_id']
 	smooth_name  = smooth_table[smooth_id]['smooth_name']
 	rate_name    = rate_table[rate_id]['rate_name']
 	#
@@ -109,6 +110,7 @@ for row in var_table :
 	if var_type == 'mulcov_rate_value' :
 		assert smooth_name == 'smooth_income_multiplier'
 		assert rate_name == 'omega'
+		assert mulcov_id == 0
 		#
 		covariate_name = covariate_table[covariate_id]['covariate_name']
 		assert covariate_name == 'income'
@@ -122,6 +124,7 @@ for row in var_table :
 		#
 		covariate_id == None
 		integrand_id  == None
+		assert mulcov_id == None
 	else :
 		assert False
 # -----------------------------------------------------------------------

@@ -1,7 +1,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -26,7 +26,7 @@
 #	avgint
 #	dir
 #	dismodat
-#	tru
+#	mulcov
 # $$
 #
 # $section Create Csv Files that Summarize The Database$$
@@ -99,6 +99,11 @@
 # this is the smoothing that this multiplier effects.
 # Otherwise, it is the smoothing where the prior for this variable
 # comes from.
+#
+# $subhead m_id$$
+# If this variable is a covariate multiplier, this is the corresponding
+# $cref/mulcov_id/mulcov_table/mulcov_id/$$.
+#
 #
 # $subhead age$$
 # is the $cref/age/age_table/age/$$.
@@ -1000,6 +1005,7 @@ def db2csv_command(database_file_arg) :
 		'var_id',
 		'var_type',
 		's_id',
+		'm_id',
 		'age',
 		'time',
 		'rate',
@@ -1035,6 +1041,7 @@ def db2csv_command(database_file_arg) :
 		row_out['var_id']    = var_id
 		row_out['var_type']  = row_in['var_type']
 		row_out['s_id']      = row_in['smooth_id']
+		row_out['m_id']      = row_in['mulcov_id']
 		row_out['age']       = table_lookup('age',  row_in['age_id'], 'age')
 		row_out['time']      = table_lookup('time', row_in['time_id'], 'time')
 		row_out['sam_avg']   = round_to(sam_avg[var_id], 3)
