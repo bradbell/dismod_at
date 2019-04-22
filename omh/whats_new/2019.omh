@@ -24,6 +24,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-21$$
+First complete version of $cref user_cascade.py$$; i.e.,
+first version that passes priors for fitting one level down from the top level.
+
 $head 04-20$$
 $list number$$
 Improve the $cref user_predict_fit.py$$ example.

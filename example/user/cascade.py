@@ -17,10 +17,10 @@
 #	misspecification
 # $$
 #
-# $section Generating Priors For Next Level Down The Node Tree$$
+# $section Generating Priors For Next Level Down Node Tree$$
 #
 # $head Node Table$$
-# The following is a diagram of the $cref node_table$$:
+# The following is a diagram of the node tree for this example:
 # $pre
 #                n1
 #          /-----/\-----\
@@ -28,48 +28,57 @@
 #      /     \        /     \
 #    n111   n112    n121   n122
 # $$
+# We refer to $icode n1$$ as the root node and
+# $icode n111, n112, n121, n122$$ as the leaf nodes.
 #
 # $head Problem$$
-# Given the information for a fit with $icode n1$$ as the parent
+# Given the information for a fit with $icode n1$$ as the parent,
 # with corresponding data $icode y1$$,
 # pass down summary information for a fit with $icode n11$$ as the parent
 # with corresponding data $icode y11$$.
 #
 # $head Procedure$$
 #
-# $subhead Fit n1$$
+# $subhead Fit With n1 As Parent$$
 # Use $cref/fit both/fit_command/variables/both/$$
 # to fit with $icode n1$$ as the parent to obtain
-# $icode e1$$ the corresponding estimate for the $cref model_variables$$
+# $icode e1$$ the corresponding estimate for the $cref model_variables$$.
+# This is done using database $code fit_n1.db$$
 #
 # $subhead Simulate Data$$
 # Set the $cref truth_var_table$$ equal to the estimate $icode e1$$
 # and then use the $cref simulate_command$$ to simulate $icode N$$ data sets.
+# This is done using database $code fit_n1.db$$
 #
 # $subhead Sample Posterior$$
 # Use the sample command with the
 # $cref/simulate/sample_command/method/simulate/$$ method
 # to create $icode N$$ samples of the model variables.
 # Call these samples $icode s1_1, ... , s1_N$$.
+# This is done using database $code fit_n1.db$$
 #
-# $subhead n11 Predictions$$
+# $subhead Predictions For n11$$
 # Use the predict command with the
 # $cref/sample/predict_command/source/sample/$$
 # to create $icode N$$ predictions for the
 # model variable corresponding to fit with $icode n11$$ as the parent.
 # Call these predictions $icode p11_1, ... , p11_N$$.
+# This is done using database $code fit_n1.db$$
 #
-# $subhead n11 Priors$$
+# $subhead Priors For n11 As Parent$$
 # Use the predictions $icode p11_1, ... , p11_N$$ to create priors
-# for the model variables corresponding to fitting $icode n11$$
-# with data $icode y11$$.
+# for the model variables corresponding to fitting with $icode n11$$
+# as the parent and with data $icode y11$$.
 # In this process account for the fact that the data $icode y11$$ is a subset
 # of $icode y1$$ which was used to obtain the predictions.
+# These priors are written to the database $code fit_n11.db$$
+# which starts as a copy of the final $code fit_n1.db$$.
 #
-# $subhead Fit n11$$
+# $subhead Fit n11 As Parent$$
 # Use $cref/fit both/fit_command/variables/both/$$
 # to fit with $icode n11$$ as the parent to obtain
-# $icode e1$$ corresponding estimate for the model variables.
+# $icode e11$$ corresponding estimate for the model variables.
+# This is done using database $code fit_n11.db$$
 #
 # $head Problem Parameters$$
 # The following parameters, used in this example, can be changed:
@@ -138,8 +147,7 @@
 # $head Data Table$$
 # For this example, all the data is
 # $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$.
-# There are $icode data_per_leaf$$ data point for each leaf node; i.e.,
-# $icode n111, n112, n121, n122$$.
+# There are $icode data_per_leaf$$ data point for each leaf node.
 # Income is varies within each leaf node so the random effect
 # can be separated from the income effect.
 # Normally there is much more data, so we compensate by using
@@ -447,7 +455,8 @@ def example_db (file_name) :
 		option_table
 	)
 # ---------------------------------------------------------------------------
-# create database
+# Step 1: Create fit_n1.db
+# ---------------------------------------------------------------------------
 file_name  = 'fit_n1.db'
 example_db(file_name)
 #
@@ -455,7 +464,8 @@ example_db(file_name)
 program = '../../devel/dismod_at'
 system_command( [ program, file_name, 'init' ] )
 # -----------------------------------------------------------------------------
-# obtain e1, estimate of model variables with n1 as the parent node
+# Step 2: Fit With n1 As Parent
+# -----------------------------------------------------------------------------
 system_command( [ program, file_name, 'fit', 'both' ] )
 #
 # check e1
@@ -505,6 +515,9 @@ if abs(max_rel_err) > 2e-1 :
 	print('fit value: max_rel_err = ', max_rel_err)
 	print("random_seed = ",  random_seed)
 	assert False
+# -----------------------------------------------------------------------------
+# Step 3: Simulate Data
+# Step 4: Sample Posterior
 # -----------------------------------------------------------------------------
 # obtain s1_1, ... , s1_N
 N_str = str(number_sample)
@@ -558,6 +571,8 @@ if abs(max_rel_err) > 3.0 :
 	print("random_seed = ",  random_seed)
 	assert False
 # ----------------------------------------------------------------------------
+# Step 5: Predictions For n11
+# ----------------------------------------------------------------------------
 # obtain p11_1, p_11_2, ...
 # and add prior_n11_age values to data base
 system_command([ program, file_name, 'predict', 'sample' ])
@@ -577,6 +592,8 @@ for predict_id in range( n_predict ) :
 	predict_found[avgint_id] = True
 predict_mean = numpy.mean(predict_array, axis=0)
 predict_std  = numpy.std(predict_array, axis=0, ddof = 1)
+# -----------------------------------------------------------------------------
+# Step 6: Priors for n11 as Parent
 # -----------------------------------------------------------------------------
 # create fit_n11.db starting from fit_n1.db
 shutil.copyfile(file_name, 'fit_n11.db')
@@ -678,8 +695,6 @@ for avgint_id in range( n_avgint ) :
 	dismod_at.sql_command(connection, sqlcmd)
 #
 # change parent to be n11
-#
-# option table
 sqlcmd  = 'UPDATE option SET option_value = "n11"'
 sqlcmd += ' WHERE option_name == "parent_node_name"'
 dismod_at.sql_command(connection, sqlcmd)
@@ -698,6 +713,9 @@ dismod_at.sql_command(connection, sqlcmd)
 sqlcmd  = 'UPDATE covariate SET reference = ' + str(avg_income['n11'])
 sqlcmd += ' WHERE covariate_name == "income"'
 dismod_at.sql_command(connection, sqlcmd)
+# ----------------------------------------------------------------------------
+# Step 7: Fit With n11 as Parent
+# ----------------------------------------------------------------------------
 #
 # obtain e11, estimate of model variables with n11 as the parent node
 system_command( [ program, file_name, 'init' ] )
