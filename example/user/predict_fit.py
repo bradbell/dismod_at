@@ -139,14 +139,13 @@ def system_command(command) :
 		sys.exit('command failed: flag = ' + str(flag))
 	return
 # ---------------------------------------------------------------------------
-def constant_weight_fun(a, t) :
-	return 1.0
-def fun_iota_child(a, t) :
-	return ('prior_iota_child', None,  None)
-def fun_iota_parent(a, t) :
-	return ('prior_iota_parent', None, None)
-# ------------------------------------------------------------------------
 def example_db (file_name) :
+	def constant_weight_fun(a, t) :
+		return 1.0
+	def fun_iota_child(a, t) :
+		return ('prior_iota_child', None,  None)
+	def fun_iota_parent(a, t) :
+		return ('prior_iota_parent', None, None)
 	# ----------------------------------------------------------------------
 	# age table
 	age_list    = [  0.0,     100.0 ]

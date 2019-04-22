@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -120,10 +120,9 @@ distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
-def fun_rate_world(a, t) :
-	return ('prior_rate_world', None, 'prior_world_diff')
-# ------------------------------------------------------------------------
 def example_db (file_name) :
+	def fun_rate_world(a, t) :
+		return ('prior_rate_world', None, 'prior_world_diff')
 	import dismod_at
 	# ----------------------------------------------------------------------
 	# age table

@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -49,12 +49,11 @@ distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
-def constant_weight_fun(a, t) :
-	return 1.0
-def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', None, 'prior_gauss_zero')
-# ------------------------------------------------------------------------
 def example_db (file_name) :
+	def constant_weight_fun(a, t) :
+		return 1.0
+	def fun_rate_parent(a, t) :
+		return ('prior_rate_parent', None, 'prior_gauss_zero')
 	# ----------------------------------------------------------------------
 	# age table
 	age_list    = [    0.0, 50.0,    100.0 ]

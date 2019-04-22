@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -95,24 +95,22 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
-# Note that the a, t values are used for this example
-def constant_weight_fun(a, t) :
-	return 1.0
-#
-def fun_iota_parent(a, t) :
-	if 19.5 <= a and a <= 20.5 :
-		return ('prior_rate_parent', 'prior_none', 'prior_difference')
-	else :
-		return ('prior_rate_parent', 'prior_difference', 'prior_difference')
-#
 def iota_true(age) :
 	if age <= 20.0 :
 		return iota_before_20
 	else :
 		return iota_after_20
-#
 # ------------------------------------------------------------------------
+# Note that the a, t values are used for this example
 def example_db (file_name) :
+	def constant_weight_fun(a, t) :
+		return 1.0
+	#
+	def fun_iota_parent(a, t) :
+		if 19.5 <= a and a <= 20.5 :
+			return ('prior_rate_parent', 'prior_none', 'prior_difference')
+		else :
+			return ('prior_rate_parent', 'prior_difference', 'prior_difference')
 	# ----------------------------------------------------------------------
 	# age table (in age_list above)
 	age_list = model_age_list

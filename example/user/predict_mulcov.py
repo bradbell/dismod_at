@@ -130,14 +130,13 @@ def system_command(command) :
 		sys.exit('command failed: flag = ' + str(flag))
 	return
 # ---------------------------------------------------------------------------
-def constant_weight_fun(a, t) :
-	return 1.0
-def fun_income(a, t) :
-	return ('prior_income_value', 'prior_income_dage',  'prior_income_dtime')
-def fun_iota_parent(a, t) :
-	return ('prior_iota_parent', None, None)
-# ------------------------------------------------------------------------
 def example_db (file_name) :
+	def constant_weight_fun(a, t) :
+		return 1.0
+	def fun_income(a, t) :
+		return ('prior_income_value', 'prior_income_dage',  'prior_income_dtime')
+	def fun_iota_parent(a, t) :
+		return ('prior_iota_parent', None, None)
 	# ----------------------------------------------------------------------
 	# age table
 	#

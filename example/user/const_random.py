@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -53,21 +53,21 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 #
-def constant_one_fun(a, t) :
-	return 1.0
-def fun_iota_world(a, t) :
-	return ('prior_iota_world', None, None)
-def fun_iota_child(a, t) :
-	return ('prior_iota_child', None, None)
-def fun_chi_world(a, t) :
-	return (chi_true['world'],  None, None)
-def fun_chi_child_1(a, t) :
-	return (chi_true['child_1'], None, None)
-def fun_chi_child_2(a, t) :
-	return (chi_true['child_2'], None, None)
-# ------------------------------------------------------------------------
-# function that creates example database
 def example_db (file_name) :
+	def constant_one_fun(a, t) :
+		return 1.0
+	def fun_iota_world(a, t) :
+		return ('prior_iota_world', None, None)
+	def fun_iota_child(a, t) :
+		return ('prior_iota_child', None, None)
+	def fun_chi_world(a, t) :
+		return (chi_true['world'],  None, None)
+	def fun_chi_child_1(a, t) :
+		return (chi_true['child_1'], None, None)
+	def fun_chi_child_2(a, t) :
+		return (chi_true['child_2'], None, None)
+	# ------------------------------------------------------------------------
+	# function that creates example database
 	# ----------------------------------------------------------------------
 	# age table:
 	age_list    = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]

@@ -250,18 +250,18 @@ def sql_count_rows(connection, table_name) :
 	n_row  = result[0][0]
 	return n_row
 # ----------------------------------------------------------------------------
-def constant_weight_fun(a, t) :
-	return 1.0
-def fun_iota_n1(a, t) :
-	return ('prior_iota_n1_value', 'prior_iota_n1_dage', None)
-def fun_iota_child(a, t) :
-	return ('prior_iota_child', None, None)
-def fun_alpha_n1(a, t) :
-	return ('prior_alpha_n1', None, None)
-def fun_gamma(a, t) :
-	return ('prior_gamma', None, None)
-#
 def example_db (file_name) :
+	def constant_weight_fun(a, t) :
+		return 1.0
+	def fun_iota_n1(a, t) :
+		return ('prior_iota_n1_value', 'prior_iota_n1_dage', None)
+	def fun_iota_child(a, t) :
+		return ('prior_iota_child', None, None)
+	def fun_alpha_n1(a, t) :
+		return ('prior_alpha_n1', None, None)
+	def fun_gamma(a, t) :
+		return ('prior_gamma', None, None)
+	#
 	# node_table
 	node_table = [
 		{ 'name':'n1',      'parent':''    },

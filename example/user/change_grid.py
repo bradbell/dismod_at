@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -98,13 +98,12 @@ import dismod_at
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
 # ------------------------------------------------------------------------
-def constant_weight_fun(a, t) :
-	return 1.0
-# note that the a, t values are not used for this case
-def fun_iota_parent(a, t) :
-	return ('prior_value', 'prior_diff', 'prior_diff')
-# ------------------------------------------------------------------------
 def example_db (file_name) :
+	def constant_weight_fun(a, t) :
+		return 1.0
+	# note that the a, t values are not used for this case
+	def fun_iota_parent(a, t) :
+		return ('prior_value', 'prior_diff', 'prior_diff')
 	import copy
 	import dismod_at
 	import math

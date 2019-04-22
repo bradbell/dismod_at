@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -63,14 +63,13 @@ python_seed = int( time.time() )
 random.seed( python_seed )
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
-def constant_weight_fun(a, t) :
-	return 1.0
-def fun_rate_child(a, t) :
-	return ('prior_rate_child', None, 'prior_gauss_diff')
-def fun_rate_parent(a, t) :
-	return ('prior_rate_parent', None, 'prior_gauss_diff')
-# ------------------------------------------------------------------------
 def example_db (file_name) :
+	def constant_weight_fun(a, t) :
+		return 1.0
+	def fun_rate_child(a, t) :
+		return ('prior_rate_child', None, 'prior_gauss_diff')
+	def fun_rate_parent(a, t) :
+		return ('prior_rate_parent', None, 'prior_gauss_diff')
 	import dismod_at
 	# ----------------------------------------------------------------------
 	# age list
