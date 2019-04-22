@@ -19,12 +19,6 @@
 #
 # $section Generating Priors For Next Level Down The Node Tree$$
 #
-# $head Under Construction$$
-# So far the following steps have been implemented:
-# $cref/fit n1/user_cascade.py/Procedure/Fit n1/$$,
-# $cref/sample data/user_cascade.py/Procedure/Simulate Data/$$,
-# $cref/sample posterior/user_cascade.py/Procedure/Sample Posterior/$$.
-#
 # $head Node Table$$
 # The following is a diagram of the $cref node_table$$:
 # $pre
@@ -66,7 +60,7 @@
 # Call these predictions $icode p11_1, ... , p11_N$$.
 #
 # $subhead n11 Priors$$
-# Use the predictions $icode p11_1, ... , p11_N$$ to create a priors
+# Use the predictions $icode p11_1, ... , p11_N$$ to create priors
 # for the model variables corresponding to fitting $icode n11$$
 # with data $icode y11$$.
 # In this process account for the fact that the data $icode y11$$ is a subset
@@ -113,23 +107,33 @@
 # The average income is different depending on whether
 # $icode n1$$ or $icode n11$$
 # is the parent.
+#
+# $head Multipliers$$
 # There are two
 # $cref/covariate multipliers
 #	/model_variables
 #	/Fixed Effects, theta
 #	/Covariate Multipliers
 # /$$.
-# One multiples the constant one and models the unknown variation
+#
+# $subhead gamma$$
+# One multiplier multiples the constant one and models the unknown variation
 # in the data (sometimes referred to as model misspecification).
 # We call this covariate multiplier
 # $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$.
-# The other multiplies income and affects $icode iota$$.
+# We use a uniform prior on this multiplier so that it absorbs
+# all the noise due to model misspecification.
+#
+# $subhead alpha$$
+# The other multiplier multiplies income and affects $icode iota$$.
 # We call this covariate multiplier
 # $cref/alpha
 #	/avg_integrand
 #	/Rate Functions
 #	/Rate Covariate Multiplier, alpha_jk
 # /$$.
+# We note that both average income and random effects vary between the nodes.
+# This seems to cause a bias in the estimation of $icode alpha$$.
 #
 # $head Data Table$$
 # For this example, all the data is
@@ -180,11 +184,14 @@ random_effect['n112'] = -random_effect['n111']
 random_effect['n121'] =  0.1
 random_effect['n122'] = -random_effect['n121']
 #
-average_income = dict()
-average_income['n111'] = 1.0
-average_income['n112'] = 2.0
-average_income['n121'] = 3.0
-average_income['n122'] = 4.0
+avg_income = dict()
+avg_income['n111'] = 1.0
+avg_income['n112'] = 2.0
+avg_income['n121'] = 3.0
+avg_income['n122'] = 4.0
+avg_income['n11']  = (avg_income['n111'] + avg_income['n112'])/2.0
+avg_income['n12']  = (avg_income['n121'] + avg_income['n122'])/2.0
+avg_income['n1']   = (avg_income['n11']  + avg_income['n12']) /2.0
 # end problem parameters
 # ----------------------------------------------------------------------------
 import time
@@ -199,6 +206,7 @@ import copy
 import random
 import math
 import numpy
+import shutil
 test_program = 'example/user/cascade.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -223,6 +231,12 @@ def system_command(command) :
 	if flag != 0 :
 		sys.exit('command failed: flag = ' + str(flag))
 	return
+#
+def sql_count_rows(connection, table_name) :
+	sqlcmd = 'SELECT COUNT(*) FROM ' + table_name
+	result = dismod_at.sql_command(connection, sqlcmd)
+	n_row  = result[0][0]
+	return n_row
 # ----------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -230,8 +244,8 @@ def fun_iota_n1(a, t) :
 	return ('prior_iota_n1_value', 'prior_iota_n1_dage', None)
 def fun_iota_child(a, t) :
 	return ('prior_iota_child', None, None)
-def fun_alpha(a, t) :
-	return ('prior_alpha', None, None)
+def fun_alpha_n1(a, t) :
+	return ('prior_alpha_n1', None, None)
 def fun_gamma(a, t) :
 	return ('prior_gamma', None, None)
 #
@@ -257,10 +271,9 @@ def example_db (file_name) :
 		'child_smooth':  'smooth_iota_child',
 	} ]
 	# covariate_table
-	reference_income = sum( average_income.values() ) / len( average_income )
 	covariate_table = [
 		{ 'name':'one',    'reference':0.0 },
-		{ 'name':'income', 'reference':reference_income },
+		{ 'name':'income', 'reference':avg_income['n1'] },
 	]
 	# mulcov_table
 	mulcov_table = [ {
@@ -272,7 +285,7 @@ def example_db (file_name) :
 		'covariate': 'income',
 		'type':      'rate_value',
 		'effected':  'iota',
-		'smooth':    'smooth_income'
+		'smooth':    'smooth_alpha_n1'
 	} ]
 	# prior_table
 	prior_table = [
@@ -286,15 +299,15 @@ def example_db (file_name) :
 			'name':    'prior_iota_n1_dage',
 			'density': 'log_gaussian',
 			'mean':     0.0,
-			'std':      0.5,
-			'eta':      iota_true(0) / 10.0
+			'std':      1.0,
+			'eta':      iota_true(0) / 100.0
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
-			'density': 'gaussian',
+			'density': 'uniform',
 			'mean':     0.0,
 			'std':      1.0,
-		},{ # prior_alpha
-			'name':    'prior_alpha',
+		},{ # prior_alpha_n1
+			'name':    'prior_alpha_n1',
 			'density': 'uniform',
 			'mean':     0.0,
 			'lower':   -abs(alpha_true) * 10.0,
@@ -320,11 +333,11 @@ def example_db (file_name) :
 			'age_id':   [0],
 			'time_id':  [0],
 			'fun':      fun_iota_child
-		},{ # smooth_income
-			'name':     'smooth_income',
+		},{ # smooth_alpha_n1
+			'name':     'smooth_alpha_n1',
 			'age_id':   [0],
 			'time_id':  [0],
-			'fun':      fun_alpha
+			'fun':      fun_alpha_n1
 		},{ # smooth_gamma
 			'name':     'smooth_gamma',
 			'age_id':   [0],
@@ -351,7 +364,7 @@ def example_db (file_name) :
 		{ 'name':'tolerance_fixed',       'value':'1e-12'},
 	]
 	# integrand_table
-	integrand_table = [ {'name':'Sincidence'} ]
+	integrand_table = [ {'name':'Sincidence'}, {'name':'mulcov_1'} ]
 	# ------------------------------------------------------------------------
 	# data_table
 	data_table = list()
@@ -366,14 +379,13 @@ def example_db (file_name) :
 		'one':         1.0,
 	}
 	assert covariate_table[1]['name'] == 'income'
-	income_reference = covariate_table[1]['reference']
 	random.seed(random_seed)
 	for age_id in range( len(age_list) ) :
 		age       = age_list[age_id]
-		for node in average_income :
+		for node in [ 'n111', 'n112', 'n121', 'n122' ] :
 			for i in range(data_per_leaf) :
-				income = i * average_income[node] * 2.0 / (data_per_leaf - 1)
-				total_effect  = alpha_true * (income - income_reference)
+				income = i * avg_income[node] * 2.0 / (data_per_leaf - 1)
+				total_effect  = alpha_true * (income - avg_income['n1'])
 				total_effect += random_effect[node]
 				if node.startswith('n11') :
 					total_effect += random_effect['n11']
@@ -394,22 +406,27 @@ def example_db (file_name) :
 	# avgint_table
 	avgint_table = list()
 	# values that are the same for all data points
-	income = (average_income['n111'] + average_income['n112']) / 2.0
 	row = {
 		'node':        'n11',
-		'integrand':   'Sincidence',
 		'weight':      'constant',
 		'hold_out':    False,
 		'time_lower':  2000.0,
 		'time_upper':  2000.0,
-		'income':      income,
+		'income':      avg_income['n11'],
 		'one':         1.0,
 	}
 	for age_id in range( len(age_list) ) :
 		age  = age_list[age_id]
+		row['integrand']  = 'Sincidence'
 		row['age_lower']  = age
 		row['age_upper']  = age
 		avgint_table.append( copy.copy(row) )
+	# alpha is constant w.r.t age and time
+	assert mulcov_table[1]['type'] == 'rate_value'
+	row['integrand'] = 'mulcov_1'
+	row['age_lower'] = 0.0
+	row['age_upper'] = 0.0
+	avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -431,13 +448,13 @@ def example_db (file_name) :
 	)
 # ---------------------------------------------------------------------------
 # create database
-file_name  = 'example.db'
+file_name  = 'fit_n1.db'
 example_db(file_name)
 #
 # init
 program = '../../devel/dismod_at'
 system_command( [ program, file_name, 'init' ] )
-#
+# -----------------------------------------------------------------------------
 # obtain e1, estimate of model variables with n1 as the parent node
 system_command( [ program, file_name, 'fit', 'both' ] )
 #
@@ -488,7 +505,7 @@ if abs(max_rel_err) > 2e-1 :
 	print('fit value: max_rel_err = ', max_rel_err)
 	print("random_seed = ",  random_seed)
 	assert False
-#
+# -----------------------------------------------------------------------------
 # obtain s1_1, ... , s1_N
 N_str = str(number_sample)
 system_command([ program, file_name, 'set', 'truth_var', 'fit_var' ])
@@ -513,6 +530,7 @@ for var_id in range(n_var) :
 	age_id       = var_table[var_id]['age_id']
 	node_id      = var_table[var_id]['node_id']
 	covariate_id = var_table[var_id]['covariate_id']
+	fit          = fit_var_table[var_id]['fit_var_value']
 	mean         = sample_mean[var_id]
 	std          = sample_std[var_id]
 	if var_type == 'rate' :
@@ -526,21 +544,22 @@ for var_id in range(n_var) :
 		truth = alpha_true
 	else :
 		assert var_type == 'mulcov_meas_noise'
-		gamma_fit = fit_var_table[var_id]['fit_var_value']
+		gamma_fit = fit
 	if var_type != 'mulcov_meas_noise' :
 		rel_err = (mean - truth) / std
 		if abs(rel_err) >= abs(max_rel_err) :
 			max_rel_err = rel_err
 			max_var_id  = var_id
-# We expand the std by a factor 1 + gamma because the correponding
-# noise is probably not independent.
+# We expand the std by the factor (1 + 2*gamma) because the correponding
+# noise is not independent.
 max_rel_err = max_rel_err / (1.0 + gamma_fit )
 if abs(max_rel_err) > 3.0 :
 	print('std coverage : max_rel_err = ', max_rel_err)
 	print("random_seed = ",  random_seed)
 	assert False
-#
+# ----------------------------------------------------------------------------
 # obtain p11_1, p_11_2, ...
+# and add prior_n11_age values to data base
 system_command([ program, file_name, 'predict', 'sample' ])
 avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
 predict_table   = dismod_at.get_table_dict(connection, 'predict')
@@ -558,12 +577,167 @@ for predict_id in range( n_predict ) :
 	predict_found[avgint_id] = True
 predict_mean = numpy.mean(predict_array, axis=0)
 predict_std  = numpy.std(predict_array, axis=0, ddof = 1)
+# -----------------------------------------------------------------------------
+# create fit_n11.db starting from fit_n1.db
+shutil.copyfile(file_name, 'fit_n11.db')
+file_name = 'fit_n11.db'
+connection.close()
+connection       = dismod_at.create_connection(file_name, new)
+#
+# get last id from certain tables
+sqlcmd           = 'SELECT COUNT(prior_id) FROM prior'
+result           = dismod_at.sql_command(connection, sqlcmd)
+prior_id         = sql_count_rows(connection, 'prior') - 1
+smooth_id        = sql_count_rows(connection, 'smooth') - 1
+smooth_grid_id   = sql_count_rows(connection, 'smooth_grid') - 1
+uniform_id       = 0
+gaussian_id      = 1
+#
+# add smooth_iota_n11
+smooth_name = 'smooth_iota_n11'
+n_age       = len( age_table )
+smooth_id   = smooth_id + 1
+sqlcmd  = 'INSERT INTO smooth \n'
+sqlcmd += '(smooth_id, smooth_name, n_age, n_time) \n'
+sqlcmd += 'VALUES (' + str(smooth_id) + ','
+sqlcmd += '"' + smooth_name + '",'
+sqlcmd += str( n_age ) + ','
+sqlcmd += '1)'
+dismod_at.sql_command(connection, sqlcmd)
+iota_smooth_id = smooth_id
+#
+# add smooth_alpha_n11
+smooth_name = 'smooth_alpha_n11'
+smooth_id   = smooth_id + 1
+sqlcmd  = 'INSERT INTO smooth \n'
+sqlcmd += '(smooth_id, smooth_name, n_age, n_time) \n'
+sqlcmd += 'VALUES (' + str(smooth_id) + ','
+sqlcmd += '"' + smooth_name + '",'
+sqlcmd += '1,'
+sqlcmd += '1)'
+dismod_at.sql_command(connection, sqlcmd)
+alpha_smooth_id = smooth_id
+#
+# add prior_none
+prior_name = 'prior_none'
+prior_id   = prior_id + 1
+sqlcmd     = 'INSERT INTO prior \n'
+sqlcmd    += '(prior_id, prior_name, density_id, mean) \n'
+sqlcmd    += 'VALUES (' + str(prior_id) + ','
+sqlcmd    += '"' + prior_name + '",'
+sqlcmd    += str(uniform_id) + ','
+sqlcmd    += '0)'
+dismod_at.sql_command(connection, sqlcmd)
+none_prior_id = smooth_id
+#
+# add new entries in prior and smooth_grid tables
+assert len(age_table) == n_avgint - 1
 for avgint_id in range( n_avgint ) :
 	assert predict_found[avgint_id]
-	age  = avgint_table[avgint_id]['age_lower']
-	mean = predict_mean[avgint_id]
-	std  = predict_std[avgint_id]
-	print("age, mean, std = ", age, mean, std)
+	age        = avgint_table[avgint_id]['age_lower']
+	mean       = predict_mean[avgint_id]
+	std        = (1.0 + gamma_fit) * predict_std[avgint_id]
+	#
+	# entry in prior table
+	prior_id   = prior_id + 1
+	prior_name = 'prior_alpha_n11'
+	lower      = 'null'
+	if avgint_id < len(age_table) :
+		prior_name = 'prior_iota_n11_' + str(int(age))
+		lower      = str( iota_true(0) / 10.0 )
+	sqlcmd  = 'INSERT INTO prior \n'
+	sqlcmd += '(prior_id, prior_name, density_id, mean, std, lower) \n'
+	sqlcmd += 'VALUES (' + str(prior_id) + ','
+	sqlcmd += '"' + prior_name + '",'
+	sqlcmd += str(gaussian_id) + ','
+	sqlcmd += str( round(mean, 4) ) + ','
+	sqlcmd += str( round(std, 5) ) + ','
+	sqlcmd += lower + ')'
+	dismod_at.sql_command(connection, sqlcmd)
+	#
+	# entry in smooth_grid table
+	age_id          = 0
+	time_id         = 0
+	value_prior_id  = prior_id
+	dage_prior_id   = none_prior_id
+	tmp_smooth_id   = alpha_smooth_id
+	if avgint_id < len(age_table) :
+		assert age == age_table[avgint_id]['age']
+		age_id        = avgint_id
+		tmp_smooth_id = iota_smooth_id
+	smooth_grid_id   = smooth_grid_id + 1
+	sqlcmd  = 'INSERT INTO smooth_grid \n'
+	sqlcmd += '(smooth_grid_id, smooth_id, age_id, time_id, '
+	sqlcmd += 'value_prior_id, dage_prior_id) \n'
+	sqlcmd += 'VALUES (' + str(smooth_grid_id) + ','
+	sqlcmd += str(tmp_smooth_id) + ','
+	sqlcmd += str(age_id) + ','
+	sqlcmd += str(time_id) + ','
+	sqlcmd += str(value_prior_id) + ','
+	sqlcmd += str(dage_prior_id) + ')'
+	dismod_at.sql_command(connection, sqlcmd)
+#
+# change parent to be n11
+#
+# option table
+sqlcmd  = 'UPDATE option SET option_value = "n11"'
+sqlcmd += ' WHERE option_name == "parent_node_name"'
+dismod_at.sql_command(connection, sqlcmd)
+#
+# use smooth_iota_n11 for parent smoothing of iota
+sqlcmd  = 'UPDATE rate SET parent_smooth_id = ' + str(iota_smooth_id)
+sqlcmd += ' WHERE rate_name == "iota"'
+dismod_at.sql_command(connection, sqlcmd)
+#
+# use smooth_alpha_n11 for smoothing alpha
+sqlcmd  = 'UPDATE mulcov SET smooth_id = ' + str(alpha_smooth_id)
+sqlcmd += ' WHERE mulcov_type == "rate_value"'
+dismod_at.sql_command(connection, sqlcmd)
+#
+# change reference income
+sqlcmd  = 'UPDATE covariate SET reference = ' + str(avg_income['n11'])
+sqlcmd += ' WHERE covariate_name == "income"'
+dismod_at.sql_command(connection, sqlcmd)
+#
+# obtain e11, estimate of model variables with n11 as the parent node
+system_command( [ program, file_name, 'init' ] )
+system_command( [ program, file_name, 'fit', 'both' ] )
+#
+# check e11
+var_table        = dismod_at.get_table_dict(connection, 'var')
+fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
+n_var            = len(var_table)
+max_rel_err      = 0.0
+for var_id in range(n_var) :
+	var_type     = var_table[var_id]['var_type']
+	age_id       = var_table[var_id]['age_id']
+	rate_id      = var_table[var_id]['rate_id']
+	node_id      = var_table[var_id]['node_id']
+	covariate_id = var_table[var_id]['covariate_id']
+	value    = fit_var_table[var_id]['fit_var_value']
+	truth    = None
+	if var_type == 'rate' :
+		age  = age_table[age_id]['age']
+		node = node_table[node_id]['node_name']
+		rate = rate_table[rate_id]['rate_name']
+		assert rate == 'iota'
+		if node == 'n11' :
+			effect  = alpha_true * (avg_income['n11'] - avg_income['n1'])
+			effect += random_effect['n11']
+			truth = iota_true(age) * math.exp(effect)
+		else :
+			truth = random_effect[node]
+	elif var_type == 'mulcov_rate_value' :
+		truth = alpha_true
+	if truth != None :
+		rel_err = (1.0 - value / truth)
+		if abs(rel_err) >= abs(max_rel_err) :
+			max_rel_err = rel_err
+			max_var_id  = var_id
+if abs(max_rel_err) > 1e-1 :
+	print('fit value: max_rel_err = ', max_rel_err)
+	print("random_seed = ",  random_seed)
+	assert False
 # ----------------------------------------------------------------------------
 os.chdir('../../..')
 file_name = 'build/example/user/' + file_name
