@@ -20,9 +20,16 @@ $spell
 	mulcov
 	avgint
 	misspecification
+	smoothings
 $$
 
 $section Changes and Additions to Dismod_at During 2019$$
+
+$head 04-22$$
+In the $cref user$$ examples,
+move functions that to define smoothings
+inside the corresponding function that defines a database;
+see $cref/fun/create_database/smooth_table/fun/$$.
 
 $head 04-21$$
 First complete version of $cref user_cascade.py$$; i.e.,
