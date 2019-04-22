@@ -15,6 +15,7 @@
 #	da
 #	Sincidence
 #	misspecification
+#	init
 # $$
 #
 # $section Generating Priors For Next Level Down Node Tree$$
@@ -39,25 +40,30 @@
 #
 # $head Procedure$$
 #
-# $subhead Fit With n1 As Parent$$
+# $subhead Step 1: Create Database$$
+# This first database $code fit_n1.db$$
+# is for fitting with $icode n1$$ as the parent and predicting
+# for $icode n11$$.
+#
+# $subhead Step 2: Fit With n1 As Parent$$
 # Use $cref/fit both/fit_command/variables/both/$$
 # to fit with $icode n1$$ as the parent to obtain
 # $icode e1$$ the corresponding estimate for the $cref model_variables$$.
 # This is done using database $code fit_n1.db$$
 #
-# $subhead Simulate Data$$
+# $subhead Step 3: Simulate Data$$
 # Set the $cref truth_var_table$$ equal to the estimate $icode e1$$
 # and then use the $cref simulate_command$$ to simulate $icode N$$ data sets.
 # This is done using database $code fit_n1.db$$
 #
-# $subhead Sample Posterior$$
+# $subhead Step 4: Sample Posterior$$
 # Use the sample command with the
 # $cref/simulate/sample_command/method/simulate/$$ method
 # to create $icode N$$ samples of the model variables.
 # Call these samples $icode s1_1, ... , s1_N$$.
 # This is done using database $code fit_n1.db$$
 #
-# $subhead Predictions For n11$$
+# $subhead Step 5: Predictions For n11$$
 # Use the predict command with the
 # $cref/sample/predict_command/source/sample/$$
 # to create $icode N$$ predictions for the
@@ -65,7 +71,7 @@
 # Call these predictions $icode p11_1, ... , p11_N$$.
 # This is done using database $code fit_n1.db$$
 #
-# $subhead Priors For n11 As Parent$$
+# $subhead Step 6: Priors For n11 As Parent$$
 # Use the predictions $icode p11_1, ... , p11_N$$ to create priors
 # for the model variables corresponding to fitting with $icode n11$$
 # as the parent and with data $icode y11$$.
@@ -73,12 +79,14 @@
 # of $icode y1$$ which was used to obtain the predictions.
 # These priors are written to the database $code fit_n11.db$$
 # which starts as a copy of the final $code fit_n1.db$$.
+# This is done so that the subsequent
+# $cref/init/init_command/$$ and $cref/fit/fit_command/$$ commands
+# do not wipe out the results stored in $code fit_n1.db$$.
 #
-# $subhead Fit n11 As Parent$$
+# $subhead Step 7: Fit n11 As Parent$$
 # Use $cref/fit both/fit_command/variables/both/$$
 # to fit with $icode n11$$ as the parent to obtain
 # $icode e11$$ corresponding estimate for the model variables.
-# This is done using database $code fit_n11.db$$
 #
 # $head Problem Parameters$$
 # The following parameters, used in this example, can be changed:
@@ -249,6 +257,15 @@ def sql_count_rows(connection, table_name) :
 	result = dismod_at.sql_command(connection, sqlcmd)
 	n_row  = result[0][0]
 	return n_row
+#
+# average integrand
+def avg_integrand(age, income, node) :
+	total_effect  = alpha_true * (income - avg_income['n1'])
+	if len(node) >= 3 :
+		total_effect += random_effect[ node[0:3] ]
+	if len(node) == 4 :
+		total_effect += random_effect[node]
+	return iota_no_effect(age) * math.exp(total_effect)
 # ----------------------------------------------------------------------------
 def example_db (file_name) :
 	def constant_weight_fun(a, t) :
@@ -397,14 +414,7 @@ def example_db (file_name) :
 		for node in [ 'n111', 'n112', 'n121', 'n122' ] :
 			for i in range(data_per_leaf) :
 				income = i * avg_income[node] * 2.0 / (data_per_leaf - 1)
-				total_effect  = alpha_true * (income - avg_income['n1'])
-				total_effect += random_effect[node]
-				if node.startswith('n11') :
-					total_effect += random_effect['n11']
-				else :
-					total_effect += random_effect['n12']
-				#
-				iota       = iota_no_effect(age) * math.exp(total_effect)
+				iota       = avg_integrand(age, income, node)
 				meas_std   = iota * meas_cv
 				meas_value = random.gauss(iota, meas_std)
 				row['node']       = node
@@ -591,8 +601,8 @@ predict_found = n_avgint * [False]
 for predict_id in range( n_predict ) :
 	sample_index  = predict_table[predict_id]['sample_index']
 	avgint_id     = predict_table[predict_id]['avgint_id']
-	avg_integrand = predict_table[predict_id]['avg_integrand']
-	predict_array[sample_index, avgint_id] = avg_integrand
+	value         = predict_table[predict_id]['avg_integrand']
+	predict_array[sample_index, avgint_id] = value
 	predict_found[avgint_id] = True
 predict_mean = numpy.mean(predict_array, axis=0)
 predict_std  = numpy.std(predict_array, axis=0, ddof = 1)
@@ -720,7 +730,6 @@ dismod_at.sql_command(connection, sqlcmd)
 # ----------------------------------------------------------------------------
 # Step 7: Fit With n11 as Parent
 # ----------------------------------------------------------------------------
-#
 # obtain e11, estimate of model variables with n11 as the parent node
 system_command( [ program, file_name, 'init' ] )
 system_command( [ program, file_name, 'fit', 'both' ] )
@@ -744,9 +753,7 @@ for var_id in range(n_var) :
 		rate = rate_table[rate_id]['rate_name']
 		assert rate == 'iota'
 		if node == 'n11' :
-			effect  = alpha_true * (avg_income['n11'] - avg_income['n1'])
-			effect += random_effect['n11']
-			truth = iota_no_effect(age) * math.exp(effect)
+			truth = avg_integrand(age, avg_income[node], node)
 		else :
 			truth = random_effect[node]
 	elif var_type == 'mulcov_rate_value' :
@@ -761,9 +768,5 @@ if abs(max_rel_err) > 1e-1 :
 	print("random_seed = ",  random_seed)
 	assert False
 # ----------------------------------------------------------------------------
-os.chdir('../../..')
-file_name = 'build/example/user/' + file_name
-program   = 'bin/dismodat.py'
-system_command( [ program, file_name, 'db2csv' ] )
 print('cascade.py: OK')
 # END PYTHON
