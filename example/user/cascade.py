@@ -114,8 +114,8 @@
 #	/Child Rate Effects
 # /$$,
 # one for each child node.
-# (Note that there are two children when fitting $icode n1$$ as the parent
-# and when fitting $icode n11$$ as the parent.)
+# Note that there are two children when fitting $icode n1$$ as the parent
+# and when fitting $icode n11$$ as the parent.
 #
 # $head Covariates$$
 # There are two $cref/covariates/covariate_table/$$ for this example.
@@ -140,6 +140,13 @@
 # $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$.
 # We use a uniform prior on this multiplier so that it absorbs
 # all the noise due to model misspecification.
+# When checking for coverage by the samples $icode s1_1$$, ... , $icode s1_N$$,
+# we expand the sample standard deviation by a factor of
+# $codei%(1 + %gamma%)%$$.
+# This accounts for the fact that the noise absorbed by $icode gamma$$
+# is modeled as independent between data points.
+# When fitting with $icode n1$$ as the parent, this noise is
+# correlated between samples in the same leaf.
 #
 # $subhead alpha$$
 # The other multiplier multiplies income and affects $icode iota$$.
@@ -150,7 +157,9 @@
 #	/Rate Covariate Multiplier, alpha_jk
 # /$$.
 # We note that both average income and random effects vary between the nodes.
-# This seems to cause a bias in the estimation of $icode alpha$$.
+# When fitting with $icode n1$$ as the parent,
+# $icode alpha$$ tries to absorb the random effects at the leaf level.
+# We use a Laplace prior on $icode alpha$$ to reduce this effect.
 #
 # $head Data Table$$
 # For this example, all the data is
@@ -337,8 +346,9 @@ def example_db (file_name) :
 			'std':      1.0,
 		},{ # prior_alpha_n1
 			'name':    'prior_alpha_n1',
-			'density': 'uniform',
+			'density': 'laplace',
 			'mean':     0.0,
+			'std':      0.01,
 			'lower':   -abs(alpha_true) * 10.0,
 			'upper':    abs(alpha_true) * 10.0,
 		},{ # prior_gamma
@@ -492,15 +502,14 @@ var_table        = dismod_at.get_table_dict(connection, 'var')
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
 n_var            = len(var_table)
-max_rel_err      = 0.0
 for var_id in range(n_var) :
 	var_type     = var_table[var_id]['var_type']
 	age_id       = var_table[var_id]['age_id']
 	rate_id      = var_table[var_id]['rate_id']
 	node_id      = var_table[var_id]['node_id']
 	covariate_id = var_table[var_id]['covariate_id']
-	value    = fit_var_table[var_id]['fit_var_value']
-	truth    = None
+	value        = fit_var_table[var_id]['fit_var_value']
+	fixed        = True
 	if var_type == 'rate' :
 		age  = age_table[age_id]['age']
 		node = node_table[node_id]['node_name']
@@ -510,6 +519,7 @@ for var_id in range(n_var) :
 			truth = iota_no_effect(age)
 		else :
 			truth = random_effect[node]
+			fixed = False
 	elif var_type == 'mulcov_rate_value' :
 		rate      = rate_table[rate_id]['rate_name']
 		covariate = covariate_table[covariate_id]['covariate_name']
@@ -520,15 +530,15 @@ for var_id in range(n_var) :
 		covariate = covariate_table[covariate_id]['covariate_name']
 		assert var_type == 'mulcov_meas_noise'
 		assert covariate == 'one'
-	if truth != None :
+		gamma_fit_n1 = value
+	if var_type != 'mulcov_meas_noise' :
 		rel_err = (1.0 - value / truth)
-		if abs(rel_err) >= abs(max_rel_err) :
-			max_rel_err = rel_err
-			max_var_id  = var_id
-if abs(max_rel_err) > 2e-1 :
-	print('fit value: max_rel_err = ', max_rel_err)
-	print("random_seed = ",  random_seed)
-	assert False
+		fmt = 'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'
+		# print( fmt.format(fixed, truth, value, rel_err) )
+		if abs(rel_err) >= 2e-1 :
+			print( fmt.format(fixed, truth, value, rel_err) )
+			print("random_seed = ",  random_seed)
+			assert False
 # -----------------------------------------------------------------------------
 # Step 3: Simulate Data
 # Step 4: Sample Posterior
@@ -539,7 +549,7 @@ system_command([ program, file_name, 'set', 'truth_var', 'fit_var' ])
 system_command([ program, file_name, 'simulate', N_str ])
 system_command([ program, file_name, 'sample', 'simulate', N_str ])
 #
-# check posterior distribution of variables
+# check coverage of true values by posterior samples
 connection.close()
 connection   = dismod_at.create_connection(file_name, new)
 sample_table = dismod_at.get_table_dict(connection, 'sample')
@@ -552,6 +562,7 @@ for sample_id in range( len(sample_table) ) :
 	sample_array[sample_index, var_id] = var_value
 sample_mean = numpy.mean(sample_array, axis=0)
 sample_std  = numpy.std(sample_array, axis=0, ddof = 1)
+#
 for var_id in range(n_var) :
 	var_type     = var_table[var_id]['var_type']
 	age_id       = var_table[var_id]['age_id']
@@ -559,7 +570,7 @@ for var_id in range(n_var) :
 	covariate_id = var_table[var_id]['covariate_id']
 	fit          = fit_var_table[var_id]['fit_var_value']
 	mean         = sample_mean[var_id]
-	std          = sample_std[var_id]
+	std          = sample_std[var_id] * (1.0 + gamma_fit_n1)
 	if var_type == 'rate' :
 		age  = age_table[age_id]['age']
 		node = node_table[node_id]['node_name']
@@ -571,19 +582,14 @@ for var_id in range(n_var) :
 		truth = alpha_true
 	else :
 		assert var_type == 'mulcov_meas_noise'
-		gamma_fit = fit
 	if var_type != 'mulcov_meas_noise' :
-		rel_err = (mean - truth) / std
-		if abs(rel_err) >= abs(max_rel_err) :
-			max_rel_err = rel_err
-			max_var_id  = var_id
-# We expand the std by the factor (1 + 2*gamma) because the correponding
-# noise is not independent.
-max_rel_err = max_rel_err / (1.0 + gamma_fit )
-if abs(max_rel_err) > 3.0 :
-	print('std coverage : max_rel_err = ', max_rel_err)
-	print("random_seed = ",  random_seed)
-	assert False
+		std_factor = abs( (mean - truth) ) / std
+		fmt = 'truth={:7.4f}, mean={:7.4f}, std_factor={:6.3f}'
+		# print( fmt.format(truth, mean, std_factor) )
+		if std_factor > 3.0 :
+			print( fmt.format(truth, mean, std_factor) )
+			print("random_seed = ",  random_seed)
+			assert False
 # ----------------------------------------------------------------------------
 # Step 5: Predictions For n11
 # ----------------------------------------------------------------------------
@@ -667,7 +673,7 @@ for avgint_id in range( n_avgint ) :
 	assert predict_found[avgint_id]
 	age        = avgint_table[avgint_id]['age_lower']
 	mean       = predict_mean[avgint_id]
-	std        = (1.0 + gamma_fit) * predict_std[avgint_id]
+	std        = (1.0 + gamma_fit_n1) * predict_std[avgint_id]
 	#
 	# entry in prior table
 	prior_id   = prior_id + 1
@@ -738,15 +744,14 @@ system_command( [ program, file_name, 'fit', 'both' ] )
 var_table        = dismod_at.get_table_dict(connection, 'var')
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 n_var            = len(var_table)
-max_rel_err      = 0.0
 for var_id in range(n_var) :
 	var_type     = var_table[var_id]['var_type']
 	age_id       = var_table[var_id]['age_id']
 	rate_id      = var_table[var_id]['rate_id']
 	node_id      = var_table[var_id]['node_id']
 	covariate_id = var_table[var_id]['covariate_id']
-	value    = fit_var_table[var_id]['fit_var_value']
-	truth    = None
+	value        = fit_var_table[var_id]['fit_var_value']
+	fixed        = True
 	if var_type == 'rate' :
 		age  = age_table[age_id]['age']
 		node = node_table[node_id]['node_name']
@@ -756,17 +761,17 @@ for var_id in range(n_var) :
 			truth = avg_integrand(age, avg_income[node], node)
 		else :
 			truth = random_effect[node]
+			fixed = False
 	elif var_type == 'mulcov_rate_value' :
 		truth = alpha_true
-	if truth != None :
+	if var_type != 'mulcov_meas_noise' :
 		rel_err = (1.0 - value / truth)
-		if abs(rel_err) >= abs(max_rel_err) :
-			max_rel_err = rel_err
-			max_var_id  = var_id
-if abs(max_rel_err) > 1e-1 :
-	print('fit value: max_rel_err = ', max_rel_err)
-	print("random_seed = ",  random_seed)
-	assert False
+		fmt     = 'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'
+		# print( fmt.format(fixed, truth, value, rel_err) )
+		if abs(rel_err) >= 2e-1 :
+			print( fmt.format(fixed, truth, value, rel_err) )
+			print("random_seed = ",  random_seed)
+			assert False
 # ----------------------------------------------------------------------------
 print('cascade.py: OK')
 # END PYTHON

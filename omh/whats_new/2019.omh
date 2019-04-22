@@ -26,10 +26,17 @@ $$
 $section Changes and Additions to Dismod_at During 2019$$
 
 $head 04-22$$
+$list number$$
+Improve the $cref user_cascade.py$$ example.
+For example, use a Laplace prior to get a better estimate of
+$cref/alpha/user_cascade.py/Multipliers/alpha/$$,
+when fitting with $icode n1$$ as the parent.
+$lnext
 In the $cref user$$ examples,
 move functions that to define smoothings
 inside the corresponding function that defines a database;
 see $cref/fun/create_database/smooth_table/fun/$$.
+$lend
 
 $head 04-21$$
 First complete version of $cref user_cascade.py$$; i.e.,
