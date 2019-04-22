@@ -153,15 +153,15 @@
 # Normally there is much more data, so we compensate by using
 # a small coefficient of variation for the measurement values
 # $icode meas_cv$$.
-# The simulation value of $icode iota$$, corresponding to $icode n1$$, is
-# a function of age and defined by $codei%iota_true(%age%)%$$.
+# The simulation value of $icode iota$$, corresponding to no effect, is
+# a function of age and defined by $codei%iota_no_effect(%age%)%$$.
 # Each data point corresponds to a leaf node.
 # The total effect for a data point is
 # the random effect for the leaf node,
 # plus the random effect for parent of the leaf,
 # plus the income effect.
 # Each data point is for a specific age and the corresponding mean
-# is $icode%iota_true(%age%)%$$ times the exponential of the total effect.
+# is $icode%iota_no_effect(%age%)%$$ times the exponential of the total effect.
 # The standard deviation of the data is $icode meas_cv$$ times its mean.
 # A Gaussian with this mean and standard deviation is used to simulate
 # each data point.
@@ -176,7 +176,7 @@
 # ----------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters
-def iota_true(age) :
+def iota_no_effect(age) :
 	return 0.01 + 0.01 * age / 100.0 # must be non-decreasing with age
 data_per_leaf =  10    # number of simulated data points for each leaf node
 meas_cv       =  0.10  # coefficient of variation for each data point
@@ -202,10 +202,7 @@ avg_income['n12']  = (avg_income['n121'] + avg_income['n122'])/2.0
 avg_income['n1']   = (avg_income['n11']  + avg_income['n12']) /2.0
 # end problem parameters
 # ----------------------------------------------------------------------------
-import time
-if random_seed == 0 :
-	random_seed = int( time.time() )
-#
+# imports
 import sys
 import os
 import distutils.dir_util
@@ -215,6 +212,11 @@ import random
 import math
 import numpy
 import shutil
+import time
+if random_seed == 0 :
+	random_seed = int( time.time() )
+# ----------------------------------------------------------------------------
+# run in build/exampe/user using local (not installed) version of dismod_at
 test_program = 'example/user/cascade.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -233,6 +235,7 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
+# run a system command
 def system_command(command) :
 	print( ' '.join(command) )
 	flag = subprocess.call( command )
@@ -240,6 +243,7 @@ def system_command(command) :
 		sys.exit('command failed: flag = ' + str(flag))
 	return
 #
+# count number of rows in an sql file
 def sql_count_rows(connection, table_name) :
 	sqlcmd = 'SELECT COUNT(*) FROM ' + table_name
 	result = dismod_at.sql_command(connection, sqlcmd)
@@ -300,15 +304,15 @@ def example_db (file_name) :
 		{   # prior_iota_n1_value
 			'name':    'prior_iota_n1_value',
 			'density': 'uniform',
-			'lower':   iota_true(0)   / 10.0,
-			'upper':   iota_true(100) * 10.0,
-			'mean':    iota_true(50)
+			'lower':   iota_no_effect(0)   / 10.0,
+			'upper':   iota_no_effect(100) * 10.0,
+			'mean':    iota_no_effect(50)
 		},{ # prior_iota_n1_dage
 			'name':    'prior_iota_n1_dage',
 			'density': 'log_gaussian',
 			'mean':     0.0,
 			'std':      1.0,
-			'eta':      iota_true(0) / 100.0
+			'eta':      iota_no_effect(0) / 100.0
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
 			'density': 'uniform',
@@ -400,7 +404,7 @@ def example_db (file_name) :
 				else :
 					total_effect += random_effect['n12']
 				#
-				iota       = iota_true(age) * math.exp(total_effect)
+				iota       = iota_no_effect(age) * math.exp(total_effect)
 				meas_std   = iota * meas_cv
 				meas_value = random.gauss(iota, meas_std)
 				row['node']       = node
@@ -493,7 +497,7 @@ for var_id in range(n_var) :
 		rate = rate_table[rate_id]['rate_name']
 		assert rate == 'iota'
 		if node == 'n1' :
-			truth = iota_true(age)
+			truth = iota_no_effect(age)
 		else :
 			truth = random_effect[node]
 	elif var_type == 'mulcov_rate_value' :
@@ -550,7 +554,7 @@ for var_id in range(n_var) :
 		age  = age_table[age_id]['age']
 		node = node_table[node_id]['node_name']
 		if node == 'n1' :
-			truth = iota_true(age)
+			truth = iota_no_effect(age)
 		else :
 			truth = random_effect[node]
 	elif var_type == 'mulcov_rate_value' :
@@ -661,7 +665,7 @@ for avgint_id in range( n_avgint ) :
 	lower      = 'null'
 	if avgint_id < len(age_table) :
 		prior_name = 'prior_iota_n11_' + str(int(age))
-		lower      = str( iota_true(0) / 10.0 )
+		lower      = str( iota_no_effect(0) / 10.0 )
 	sqlcmd  = 'INSERT INTO prior \n'
 	sqlcmd += '(prior_id, prior_name, density_id, mean, std, lower) \n'
 	sqlcmd += 'VALUES (' + str(prior_id) + ','
@@ -742,7 +746,7 @@ for var_id in range(n_var) :
 		if node == 'n11' :
 			effect  = alpha_true * (avg_income['n11'] - avg_income['n1'])
 			effect += random_effect['n11']
-			truth = iota_true(age) * math.exp(effect)
+			truth = iota_no_effect(age) * math.exp(effect)
 		else :
 			truth = random_effect[node]
 	elif var_type == 'mulcov_rate_value' :
