@@ -245,7 +245,7 @@ The following parameters, used in this example, can be changed:
 data_per_leaf <font color="#990000">=</font>  <font color="#993399">10</font>    <i><font color="#9A1900"># number of simulated data points for each leaf node</font></i>
 meas_cv       <font color="#990000">=</font>  <font color="#993399">0.10</font>  <i><font color="#9A1900"># coefficient of variation for each data point</font></i>
 alpha_true    <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">0.10</font>  <i><font color="#9A1900"># rate_value covariate multiplier used to simulate data</font></i>
-random_seed   <font color="#990000">=</font>  <font color="#993399">0</font>     <i><font color="#9A1900"># if zero, seed off the clock</font></i>
+random_seed   <font color="#990000">=</font>   <font color="#993399">1555953130</font>    <i><font color="#9A1900"># if zero, seed off the clock</font></i>
 number_sample <font color="#990000">=</font>  <font color="#993399">10</font>    <i><font color="#9A1900"># number of simulated data sets and posterior samples</font></i>
 <i><font color="#9A1900">#</font></i>
 random_effect <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
@@ -428,7 +428,7 @@ each data point.
 data_per_leaf <font color="#990000">=</font>  <font color="#993399">10</font>    <i><font color="#9A1900"># number of simulated data points for each leaf node</font></i>
 meas_cv       <font color="#990000">=</font>  <font color="#993399">0.10</font>  <i><font color="#9A1900"># coefficient of variation for each data point</font></i>
 alpha_true    <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">0.10</font>  <i><font color="#9A1900"># rate_value covariate multiplier used to simulate data</font></i>
-random_seed   <font color="#990000">=</font>  <font color="#993399">0</font>     <i><font color="#9A1900"># if zero, seed off the clock</font></i>
+random_seed   <font color="#990000">=</font>   <font color="#993399">1555953130</font>    <i><font color="#9A1900"># if zero, seed off the clock</font></i>
 number_sample <font color="#990000">=</font>  <font color="#993399">10</font>    <i><font color="#9A1900"># number of simulated data sets and posterior samples</font></i>
 <i><font color="#9A1900">#</font></i>
 random_effect <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
@@ -571,7 +571,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <b><font color="#000000">iota_no_effect</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">100.0</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_iota_child</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>    <font color="#FF0000">'prior_iota_child'</font><font color="#990000">,</font>
-               <font color="#FF0000">'density'</font><font color="#990000">:</font> <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
+               <font color="#FF0000">'density'</font><font color="#990000">:</font> <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
                <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">1.0</font><font color="#990000">,</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_alpha_n1</font></i>
@@ -764,7 +764,7 @@ n_var            <font color="#990000">=</font> <b><font color="#000000">len</fo
      <b><font color="#0000FF">if</font></b> var_type <font color="#990000">!=</font> <font color="#FF0000">'mulcov_meas_noise'</font> <font color="#990000">:</font>
           rel_err <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">-</font> value <font color="#990000">/</font> truth<font color="#990000">)</font>
           fmt <font color="#990000">=</font> <font color="#FF0000">'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'</font>
-          <i><font color="#9A1900"># print( fmt.format(fixed, truth, value, rel_err) )</font></i>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font> fmt<font color="#990000">.</font><b><font color="#000000">format</font></b><font color="#990000">(</font>fixed<font color="#990000">,</font> truth<font color="#990000">,</font> value<font color="#990000">,</font> rel_err<font color="#990000">)</font> <font color="#990000">)</font>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_err<font color="#990000">)</font> <font color="#990000">&gt;=</font> <font color="#993399">2e-1</font> <font color="#990000">:</font>
                <b><font color="#0000FF">print</font></b><font color="#990000">(</font> fmt<font color="#990000">.</font><b><font color="#000000">format</font></b><font color="#990000">(</font>fixed<font color="#990000">,</font> truth<font color="#990000">,</font> value<font color="#990000">,</font> rel_err<font color="#990000">)</font> <font color="#990000">)</font>
                <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"random_seed = "</font><font color="#990000">,</font>  random_seed<font color="#990000">)</font>
@@ -997,7 +997,7 @@ n_var            <font color="#990000">=</font> <b><font color="#000000">len</fo
      <b><font color="#0000FF">if</font></b> var_type <font color="#990000">!=</font> <font color="#FF0000">'mulcov_meas_noise'</font> <font color="#990000">:</font>
           rel_err <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">-</font> value <font color="#990000">/</font> truth<font color="#990000">)</font>
           fmt     <font color="#990000">=</font> <font color="#FF0000">'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'</font>
-          <i><font color="#9A1900"># print( fmt.format(fixed, truth, value, rel_err) )</font></i>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font> fmt<font color="#990000">.</font><b><font color="#000000">format</font></b><font color="#990000">(</font>fixed<font color="#990000">,</font> truth<font color="#990000">,</font> value<font color="#990000">,</font> rel_err<font color="#990000">)</font> <font color="#990000">)</font>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_err<font color="#990000">)</font> <font color="#990000">&gt;=</font> <font color="#993399">2e-1</font> <font color="#990000">:</font>
                <b><font color="#0000FF">print</font></b><font color="#990000">(</font> fmt<font color="#990000">.</font><b><font color="#000000">format</font></b><font color="#990000">(</font>fixed<font color="#990000">,</font> truth<font color="#990000">,</font> value<font color="#990000">,</font> rel_err<font color="#990000">)</font> <font color="#990000">)</font>
                <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"random_seed = "</font><font color="#990000">,</font>  random_seed<font color="#990000">)</font>

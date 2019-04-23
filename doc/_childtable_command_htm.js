@@ -2,6 +2,7 @@
 document.write('\
 <select onchange="command_child(this)">\
 <option>command-&gt;</option>\
+<option>old2new_command</option>\
 <option>set_command</option>\
 <option>init_command</option>\
 <option>depend_command</option>\
@@ -14,6 +15,7 @@ document.write('\
 ');
 function command_child(item)
 {	var child_list = [
+		'old2new_command.htm',
 		'set_command.htm',
 		'init_command.htm',
 		'depend_command.htm',
