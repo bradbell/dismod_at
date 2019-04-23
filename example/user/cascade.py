@@ -198,7 +198,7 @@ def iota_no_effect(age) :
 data_per_leaf =  10    # number of simulated data points for each leaf node
 meas_cv       =  0.10  # coefficient of variation for each data point
 alpha_true    = -0.10  # rate_value covariate multiplier used to simulate data
-random_seed   =  0     # if zero, seed off the clock
+random_seed   =   1555953130    # if zero, seed off the clock
 number_sample =  10    # number of simulated data sets and posterior samples
 #
 random_effect = dict()
@@ -341,7 +341,7 @@ def example_db (file_name) :
 			'eta':      iota_no_effect(0) / 100.0
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
-			'density': 'uniform',
+			'density': 'gaussian',
 			'mean':     0.0,
 			'std':      1.0,
 		},{ # prior_alpha_n1
@@ -534,7 +534,7 @@ for var_id in range(n_var) :
 	if var_type != 'mulcov_meas_noise' :
 		rel_err = (1.0 - value / truth)
 		fmt = 'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'
-		# print( fmt.format(fixed, truth, value, rel_err) )
+		print( fmt.format(fixed, truth, value, rel_err) )
 		if abs(rel_err) >= 2e-1 :
 			print( fmt.format(fixed, truth, value, rel_err) )
 			print("random_seed = ",  random_seed)
@@ -767,7 +767,7 @@ for var_id in range(n_var) :
 	if var_type != 'mulcov_meas_noise' :
 		rel_err = (1.0 - value / truth)
 		fmt     = 'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'
-		# print( fmt.format(fixed, truth, value, rel_err) )
+		print( fmt.format(fixed, truth, value, rel_err) )
 		if abs(rel_err) >= 2e-1 :
 			print( fmt.format(fixed, truth, value, rel_err) )
 			print("random_seed = ",  random_seed)

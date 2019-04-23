@@ -598,6 +598,7 @@ Float data_model::average(
 		pack_vec
 	);
 	//
+	assert( ! CppAD::isnan(result) );
 	return result;
 }
 

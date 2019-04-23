@@ -27,7 +27,7 @@ $spell
 	initializes
 $$
 
-$section The Variable Command$$
+$section The Initialize Command$$
 
 $head Syntax$$
 $codei%dismod_at %database% init%$$
@@ -208,7 +208,8 @@ void init_command(
 	//
 	// mulstd variables
 	size_t n_smooth = db_input.smooth_table.size();
-	size_t offset = DISMOD_AT_NULL_SIZE_T, var_id = DISMOD_AT_NULL_SIZE_T;
+	size_t offset = DISMOD_AT_NULL_SIZE_T;
+	size_t var_id = DISMOD_AT_NULL_SIZE_T;
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
 	{	for(size_t k = 0; k < 3; k++)
 		{	offset  = pack_object.mulstd_offset(smooth_id, k);
@@ -291,8 +292,7 @@ void init_command(
 	}
 	//
 	// covariate multiplers
-	const vector<mulcov_struct>&
-		mulcov_table( db_input.mulcov_table );
+	const vector<mulcov_struct>& mulcov_table( db_input.mulcov_table );
 	size_t n_mulcov        = mulcov_table.size();
 	size_t n_integrand     = db_input.integrand_table.size();
 	vector<size_t> count_meas_value(n_integrand), count_meas_noise(n_integrand);
@@ -334,8 +334,8 @@ void init_command(
 		//
 		else assert(false);
 		//
-		offset    = info.offset;
 		assert( smooth_id == info.smooth_id);
+		offset    = info.offset;
 		n_var     = info.n_var;
 		n_time    = db_input.smooth_table[smooth_id].n_time;
 # ifndef NDEBUG

@@ -10,10 +10,11 @@
 # ---------------------------------------------------------------------------
 # devel
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
-	cmd/set_command.cpp
+	cmd/old2new_command.cpp
 	cmd/depend_command.cpp
 	cmd/init_command.cpp
 	cmd/sample_command.cpp
+	cmd/set_command.cpp
 
 	model/data_model.cpp
 	model/fit_model.cpp
