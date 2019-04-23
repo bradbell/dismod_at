@@ -50,6 +50,7 @@ $rref predict_command$$
 $rref db2csv_command$$
 $rref csv2db_command$$
 $rref modify_command$$
+$rref old2new_command$$
 $tend
 
 

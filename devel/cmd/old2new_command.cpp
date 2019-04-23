@@ -24,7 +24,7 @@ $spell
 	mulcov
 $$
 
-$section Command That Converts an Old Database to New Format$$
+$section Convert an Old Database to New Format$$
 
 $head Syntax$$
 $codei%dismod_at %database% old2new%$$
