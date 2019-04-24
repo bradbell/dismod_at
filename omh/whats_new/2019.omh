@@ -25,6 +25,9 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-24$$
+Add a plan for $cref/censoring negative data/censor_neg/$$.
+
 $head 04-23$$
 $list number$$
 The detection and reporting of problems,

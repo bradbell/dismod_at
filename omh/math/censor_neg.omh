@@ -1,0 +1,137 @@
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-19 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+      GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin censor_neg$$
+$spell
+	mu
+$$
+
+$section The Distributions With Censored Negative Values$$
+
+$head Under Construction$$
+This is a plan for censored distribution functions,
+but they have not yet been implemented.
+
+$head Discussion$$
+We use $latex \mu \geq 0$$ for the mean and
+$latex \delta > 0$$ for the standard deviation
+of a Gaussian or Laplace data $latex y$$.
+The crucial property is that the
+censored probability functions defined below
+are smooth function with respect to the mean value $latex \mu$$
+(but not even continuous with respect to the data $latex y$$).
+
+$head Gaussian$$
+
+$subhead Density$$
+The Gaussian density function is given by
+$latex \[
+G( y ; \mu , \delta )
+=
+\sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+\exp \left[ - \frac{1}{2} \left( \frac{y - u}{\delta} \right)^2 \right]
+\] $$
+
+$subhead Error Function$$
+The Error function is defined by
+$latex \[
+\R{erf}(x)
+=
+\sqrt{ \frac{1}{\pi} } \int_{-x}^{+x} \exp \left( - t^2 \right) \; \R{d} t
+\] $$
+Using he change of variables $latex t = (y - \mu) / ( \delta \sqrt{2} )$$
+we have
+$latex \[
+\R{erf}(x)
+=
+\sqrt{ \frac{1}{2 \pi \delta^2} }
+\int_{\mu - x}^{\mu + x}
+\exp \left[ - \frac{1}{2} \left( \frac{y - u}{\delta} \right)^2 \right]
+\; \R{d} y
+\] $$
+Setting $latex x = \mu$$ we obtain
+$latex \[
+\R{erf}(\mu)
+=
+\sqrt{ \frac{1}{2 \pi \delta^2} }
+\int_{0}^{2 \mu}
+\exp \left[ - \frac{1}{2} \left( \frac{y - u}{\delta} \right)^2 \right]
+\; \R{d} y
+\] $$
+using the fact the Gaussian density is symmetric about the value
+$latex y = \mu$$, and its integral from minus infinity to plus infinity is one,
+we obtain
+$latex \[
+\frac{1 - \R{erf}(\mu) }{2}
+=
+\sqrt{ \frac{1}{2 \pi \delta^2} }
+\int_{-\infty}^{0}
+\exp \left[ - \frac{1}{2} \left( \frac{y - u}{\delta} \right)^2 \right]
+\; \R{d} y
+\] $$
+
+
+$subhead Censored Probability, G_+$$
+Suppose that $latex y \sim N( \mu, \delta^2 )$$ and define
+$latex y_+ = \R{max}(x, 0)$$.
+We define the censored Gaussian probability by
+$latex \[
+G_+ ( y_+ ; \mu , \delta )
+=
+\left\{ \begin{array}{ll}
+	[ 1 - \R{erf}(\mu) ] / 2 & \R{if} \; y_+ = 0
+	\\
+	G( y_+ ; \mu , \delta )  & \R{otherwise}
+\end{array} \right.
+\] $$
+
+$head Laplace$$
+
+$subhead Density$$
+The Laplace density function is given by
+$latex \[
+L( y ; \mu , \delta )
+=
+\delta \sqrt{ \frac{1}{2} }
+\exp \left[ - \sqrt{2} \left| \frac{y - u}{\delta} \right| \right]
+\] $$
+
+$subhead Indefinite Integral$$
+The indefinite integral with respect to $latex y$$,
+for $latex x \leq \mu$$, is
+$latex \[
+\int_{-\infty}^{x} L( y ; \mu , \delta ) \; \R{d} y
+=
+\frac{1}{2}
+\exp \left( - \sqrt{2} \frac{ \mu - x}{\delta} \right)
+\] $$
+Using $latex 0 \leq \mu$$, we obtain
+$latex \[
+\int_{-\infty}^{0} L( y ; \mu , \delta ) \; \R{d} y
+=
+\frac{1}{2}
+\exp \left( - \sqrt{2} \frac{\mu}{\delta} \right)
+\] $$
+
+$subhead Censored Probability, L_+$$
+Suppose that $latex y \sim L( \mu, \delta^2 )$$ and define
+$latex y_+ = \R{max}(x, 0)$$.
+We define the censored Laplace probability by
+$latex \[
+L_+ ( y_+ ; \mu , \delta )
+=
+\left\{ \begin{array}{ll}
+(1 / 2 )
+\exp \left( - \mu \sqrt{2} / \delta \right) & \R{if} \; y_+ = 0
+	\\
+	L( y_+ ; \mu , \delta )                 & \R{otherwise}
+\end{array} \right.
+\] $$
+
+$end
