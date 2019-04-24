@@ -3,11 +3,13 @@ document.write('\
 <select onchange="math_abstract_child(this)">\
 <option>math_abstract-&gt;</option>\
 <option>math_ode</option>\
+<option>censor_neg</option>\
 </select>\
 ');
 function math_abstract_child(item)
 {	var child_list = [
-		'math_ode.htm'
+		'math_ode.htm',
+		'censor_neg.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
