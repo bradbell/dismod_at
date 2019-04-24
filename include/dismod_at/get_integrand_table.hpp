@@ -42,6 +42,7 @@ namespace dismod_at {
 		sqlite3*                            db           ,
 		const CppAD::vector<mulcov_struct>& mulcov_table
 	);
+	extern const char* integrand_enum2name[];
 }
 
 

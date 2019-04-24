@@ -13,6 +13,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/a1_double.hpp>
 # include <dismod_at/grid2line.hpp>
 # include <dismod_at/cohort_ode.hpp>
+# include <dismod_at/cohort_ode.hpp>
+# include <dismod_at/get_integrand_table.hpp>
 
 /*
 $begin adj_integrand$$
@@ -476,15 +478,7 @@ CppAD::vector<Float> adj_integrand::line(
 	Float zero     =  0.0;
 	for(size_t k = 0; k < n_line; ++k)
 	{	Float P = c_out[k] / ( s_out[k] + c_out[k] );
-		bool ok = zero <= P && P < infinity;
-		ok     |= integrand == susceptible_enum;
-		ok     |= integrand == withC_enum;
-		ok     |= ! need_ode;
-		if( ! ok )
-		{	std::string message = "Numerical integration error.\n"
-			"Need Prevalence and it is negative or infinite or Nan.";
-			throw CppAD::mixed::exception( "adj_integrand", message);
-		}
+		bool need_P = false;
 		switch(integrand)
 		{	// ----------------------------------------------------------------
 			// no ode cases
@@ -528,29 +522,53 @@ CppAD::vector<Float> adj_integrand::line(
 
 			case prevalence_enum:
 			result[k] = P;
+			need_P    = true;
 			break;
 
 			case Tincidence_enum:
 			result[k] = rate[iota_enum][k] * (1.0 - P);
+			need_P    = true;
 			break;
 
 			case mtspecific_enum:
 			result[k] = rate[chi_enum][k] * P;
+			need_P    = true;
 			break;
 
 			case mtall_enum:
 			result[k] = rate[omega_enum][k] + rate[chi_enum][k] * P;
+			need_P    = true;
 			break;
 
 			case mtstandard_enum:
 			result[k]  = rate[omega_enum][k] + rate[chi_enum][k];
 			result[k] /= rate[omega_enum][k] + rate[chi_enum][k] * P;
+			need_P    = true;
 			break;
 
 			// ---------------------------------------------------------------
 			default:
 			assert(false);
 			// ---------------------------------------------------------------
+		}
+		bool ok = - infinity < result[k] && result[k] < infinity;
+		if( need_P )
+			ok &= zero <= P;
+		if( ! ok )
+		{	std::string msg = "Cannot compute the ";
+			msg += integrand_enum2name[integrand];
+			msg += " integrand.\n";
+			if( need_P )
+			{	msg += "S=" + CppAD::to_string(s_out[k]);
+				msg += ", C=" + CppAD::to_string(c_out[k]);
+			}
+			for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
+			{	if( need_rate[rate_id] )
+				{	msg += ", " + get_rate_name(rate_id) ;
+					msg += "=" + CppAD::to_string( rate[rate_id][k] );
+				}
+			}
+			throw CppAD::mixed::exception( "adj_integrand", msg);
 		}
 	}
 	// -----------------------------------------------------------------------

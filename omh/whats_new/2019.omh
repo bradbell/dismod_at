@@ -26,7 +26,14 @@ $$
 $section Changes and Additions to Dismod_at During 2019$$
 
 $head 04-23$$
+$list number$$
+The detection and reporting of problems,
+when computing the value of an
+$cref/integrand/avg_integrand/Integrand, I_i(a,t)/$$, has been improved.
+For example, attempting to divide by zero.
+$lnext
 The $cref old2new_command$$ was added.
+$lend
 
 $head 04-22$$
 $list number$$
