@@ -136,25 +136,27 @@ The Error function is defined by
 
 @]@</small>
 Using he change of variables <small>@(@
-t = (y - \mu) / ( \delta \sqrt{2} )
+t = \sqrt{2}^{-1} (y - \mu) / \delta )
 @)@</small>
-we have
+we have <small>@(@
+y = \mu + t \delta \sqrt{2}
+@)@</small> and
 <small>@[@
 
 \R{erf}(x)
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
-\int_{\mu - x}^{\mu + x}
+\int_{\mu - x \delta \sqrt{2}}^{\mu + x \delta \sqrt{2}}
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 
 @]@</small>
 Setting <small>@(@
-x = \mu
+x = \sqrt{2}^{-1} \mu / \delta
 @)@</small> we obtain
 <small>@[@
 
-\R{erf}(\mu)
+\R{erf}\left( \sqrt{2}^{-1} \mu / \delta \right)
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
 \int_{0}^{2 \mu}
@@ -169,7 +171,9 @@ y = \mu
 we obtain
 <small>@[@
 
-\frac{1 - \R{erf}(\mu) }{2}
+\frac{
+	1 - \R{erf}\left( \sqrt{2}^{-1} \mu / \delta \right)
+}{2}
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
 \int_{-\infty}^{0}
@@ -195,7 +199,8 @@ We define the censored Gaussian probability by
 G_+ ( y_+ ; \mu , \delta )
 =
 \left\{ \begin{array}{ll}
-	[ 1 - \R{erf}(\mu) ] / 2 & \R{if} \; y_+ = 0
+	\left( 1 - \R{erf}\left( \sqrt{2}^{-1} \mu / \delta  \right) \right) / 2
+	& \R{if} \; y_+ = 0
 	\\
 	G( y_+ ; \mu , \delta )  & \R{otherwise}
 \end{array} \right.
