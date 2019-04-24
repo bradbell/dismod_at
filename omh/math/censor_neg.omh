@@ -45,19 +45,19 @@ $latex \[
 =
 \sqrt{ \frac{1}{\pi} } \int_{-x}^{+x} \exp \left( - t^2 \right) \; \R{d} t
 \] $$
-Using he change of variables $latex t = (y - \mu) / ( \delta \sqrt{2} )$$
-we have
+Using he change of variables $latex t = \sqrt{2}^{-1} (y - \mu) / \delta )$$
+we have $latex y = \mu + t \delta \sqrt{2}$$ and
 $latex \[
 \R{erf}(x)
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
-\int_{\mu - x}^{\mu + x}
+\int_{\mu - x \delta \sqrt{2}}^{\mu + x \delta \sqrt{2}}
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 \] $$
-Setting $latex x = \mu$$ we obtain
+Setting $latex x = \sqrt{2}^{-1} \mu / \delta$$ we obtain
 $latex \[
-\R{erf}(\mu)
+\R{erf}\left( \sqrt{2}^{-1} \mu / \delta \right)
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
 \int_{0}^{2 \mu}
@@ -68,7 +68,9 @@ using the fact the Gaussian density is symmetric about the value
 $latex y = \mu$$, and its integral from minus infinity to plus infinity is one,
 we obtain
 $latex \[
-\frac{1 - \R{erf}(\mu) }{2}
+\frac{
+	1 - \R{erf}\left( \sqrt{2}^{-1} \mu / \delta \right)
+}{2}
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
 \int_{-\infty}^{0}
@@ -85,7 +87,8 @@ $latex \[
 G_+ ( y_+ ; \mu , \delta )
 =
 \left\{ \begin{array}{ll}
-	[ 1 - \R{erf}(\mu) ] / 2 & \R{if} \; y_+ = 0
+	\left( 1 - \R{erf}\left( \sqrt{2}^{-1} \mu / \delta  \right) \right) / 2
+	& \R{if} \; y_+ = 0
 	\\
 	G( y_+ ; \mu , \delta )  & \R{otherwise}
 \end{array} \right.
