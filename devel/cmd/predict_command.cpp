@@ -8,6 +8,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
+# include <cppad/mixed/exception.hpp>
 # include <dismod_at/predict_command.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/get_table_column.hpp>
@@ -179,8 +180,17 @@ void predict_command(
 		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{
-			int avgint_id    = avgint_subset_obj[subset_id].original_id;
-			double avg = avgint_object.average(subset_id, pack_vec);
+			int avgint_id  = avgint_subset_obj[subset_id].original_id;
+			double avg     = 0.0;
+			try
+			{	avg = avgint_object.average(subset_id, pack_vec);
+			}
+			catch(const CppAD::mixed::exception& e)
+			{	string catcher    = "predict_command";
+				string message    = e.message(catcher);
+				table_name        = "avgint";
+				dismod_at::error_exit(message, table_name, avgint_id);
+			}
 			//
 			size_t predict_id = sample_index * n_subset + subset_id;
 			if( source == "sample" )
