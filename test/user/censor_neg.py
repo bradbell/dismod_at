@@ -8,13 +8,13 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# Under Construction: see omh/math/censor_neg.omh
+# See omh/math/censor_neg.omh
 # ---------------------------------------------------------------------------
 random_seed   = 0
 n_data        = 1000
 mu_true       = 0.5
 delta_true    = 1.0
-distribution  = 'gaussian'
+distribution  = 'laplace'
 # ---------------------------------------------------------------------------
 import sys
 import os
