@@ -35,7 +35,7 @@ $latex \[
 G( y ; \mu , \delta )
 =
 \sqrt{ \frac{1}{ 2 \pi \delta^2 } }
-\exp \left[ - \frac{1}{2} \left( \frac{y - u}{\delta} \right)^2 \right]
+\exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \] $$
 
 $subhead Error Function$$
@@ -52,7 +52,7 @@ $latex \[
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
 \int_{\mu - x}^{\mu + x}
-\exp \left[ - \frac{1}{2} \left( \frac{y - u}{\delta} \right)^2 \right]
+\exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 \] $$
 Setting $latex x = \mu$$ we obtain
@@ -61,7 +61,7 @@ $latex \[
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
 \int_{0}^{2 \mu}
-\exp \left[ - \frac{1}{2} \left( \frac{y - u}{\delta} \right)^2 \right]
+\exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 \] $$
 using the fact the Gaussian density is symmetric about the value
@@ -72,7 +72,7 @@ $latex \[
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
 \int_{-\infty}^{0}
-\exp \left[ - \frac{1}{2} \left( \frac{y - u}{\delta} \right)^2 \right]
+\exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 \] $$
 
@@ -99,7 +99,7 @@ $latex \[
 L( y ; \mu , \delta )
 =
 \delta \sqrt{ \frac{1}{2} }
-\exp \left[ - \sqrt{2} \left| \frac{y - u}{\delta} \right| \right]
+\exp \left[ - \sqrt{2} \left| \frac{y - \mu}{\delta} \right| \right]
 \] $$
 
 $subhead Indefinite Integral$$
