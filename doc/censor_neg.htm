@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Distributions With Censored Negative Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Distributions With Censored Negative Values">
-<meta name="keywords" id="keywords" content=" the distributions with censored negative values under construction discussion gaussian density error function probability g_+ laplace indefinite integral l_+ ">
+<meta name="keywords" id="keywords" content=" the distributions with censored negative values under construction reference discussion simulation test gaussian density error function probability g_+ laplace indefinite integral l_+ ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,7 +67,9 @@ A:active { color : purple }
 <center><b><big><big>The Distributions With Censored Negative Values</big></big></b></center>
 
 <br><a href="censor_neg.htm#Under Construction" target="_top">Under&nbsp;Construction</a>
+<br><a href="censor_neg.htm#Reference" target="_top">Reference</a>
 <br><a href="censor_neg.htm#Discussion" target="_top">Discussion</a>
+<br><a href="censor_neg.htm#Simulation Test" target="_top">Simulation&nbsp;Test</a>
 <br><a href="censor_neg.htm#Gaussian" target="_top">Gaussian</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="censor_neg.htm#Gaussian.Density" target="_top">Density</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="censor_neg.htm#Gaussian.Error Function" target="_top">Error&nbsp;Function</a>
@@ -81,6 +83,17 @@ A:active { color : purple }
 <br>
 This is a plan for censored distribution functions,
 but they have not yet been implemented.
+
+<br>
+<br>
+<b><big><a name="Reference" id="Reference">Reference</a></big></b>
+<br>
+See the heading
+<i>Likelihoods for mixed continuous-discrete distributions</i>
+on the
+<a href="https://en.wikipedia.org/wiki/Likelihood_function" target="_top"><span style='white-space: nowrap'>wiki&nbsp;page</span></a>
+
+for likelihood functions.
 
 <br>
 <br>
@@ -103,6 +116,14 @@ are smooth function with respect to the mean value <small>@(@
 (but not even continuous with respect to the data <small>@(@
 y
 @)@</small>).
+
+<br>
+<br>
+<b><big><a name="Simulation Test" id="Simulation Test">Simulation Test</a></big></b>
+<br>
+The file <code><font color="blue">test/user/censor_neg.py</font></code> contains a test
+of maximum likelihood estimation us the continuous-discrete distribution
+proposed below.
 
 <br>
 <br>
