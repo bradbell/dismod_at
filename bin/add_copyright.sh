@@ -1,8 +1,7 @@
 #! /bin/bash -e
-# $Id$
 # -----------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -56,10 +55,9 @@ fi
 case $ext in
 	cpp|hpp)
 	cat << EOF  >> bin/add_copyright.$$
-// \$Id:\$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -71,14 +69,13 @@ EOF
 
 	omh)
 	cat << EOF  >> bin/add_copyright.$$
-\$Id:\$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
-	     GNU Affero General Public License version 3.0 or later
+      GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 EOF
@@ -86,10 +83,9 @@ EOF
 
 	cmake | py | R |  sed | sh | txt )
 	cat << EOF  >> bin/add_copyright.$$
-# \$Id:\$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
