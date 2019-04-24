@@ -14,6 +14,7 @@ FOREACH(user_case
 	avgint
 	bound_frac
 	bound_random
+	censor_neg
 	csv2db
 	db2csv
 	fit_gamma

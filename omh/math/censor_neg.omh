@@ -10,6 +10,8 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin censor_neg$$
 $spell
 	mu
+	neg
+	py
 $$
 
 $section The Distributions With Censored Negative Values$$
@@ -17,6 +19,13 @@ $section The Distributions With Censored Negative Values$$
 $head Under Construction$$
 This is a plan for censored distribution functions,
 but they have not yet been implemented.
+
+$head Reference$$
+See the heading
+$italic Likelihoods for mixed continuous-discrete distributions$$
+on the
+$href%https://en.wikipedia.org/wiki/Likelihood_function%wiki page%$$
+for likelihood functions.
 
 $head Discussion$$
 We use $latex \mu \geq 0$$ for the mean and
@@ -26,6 +35,11 @@ The crucial property is that the
 censored probability functions defined below
 are smooth function with respect to the mean value $latex \mu$$
 (but not even continuous with respect to the data $latex y$$).
+
+$head Simulation Test$$
+The file $code test/user/censor_neg.py$$ contains a test
+of maximum likelihood estimation us the continuous-discrete distribution
+proposed below.
 
 $head Gaussian$$
 
