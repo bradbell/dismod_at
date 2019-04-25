@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -128,8 +128,8 @@ where $latex D$$ is the
 $cref/difference log-density function
 	/statistic
 	/Log-Density Function, D
-	/Difference
-/$$.
+/$$
+for differences.
 (As noted above,
 $latex \mu_{i,j,k}^a$$ must be zero,
 $latex { d_{i,j,k}^a }:name$$ must be $code gaussian$$,

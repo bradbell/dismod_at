@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -373,17 +373,17 @@ $cref/age/fixed_diff/Age Differences/$$ and
 $cref/time/fixed_diff/Time Differences/$$ differences.
 This required a complete re-write (and simplification) of the
 documentation for the weighted residuals and log-densities.
-In addition, the actual definitions were changed for the differences; see
+In addition, the actual definitions were changed for the differences;
+see the difference version of the
 $cref/weighted residuals
 	/statistic
 	/Weighted Residual Function, R
-	/Difference
-/$$ and
+/$$
+and
 $cref/log-densities
 	/statistic
 	/Log-Density Function, D
-	/Difference
-/$$ for differences.
+/$$.
 The corresponding wish list item has been removed.
 $lend
 

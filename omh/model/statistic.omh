@@ -74,113 +74,87 @@ $latex \[
 $head Weighted Residual Function, R$$
 
 $subhead Value$$
-The weighted residual function for values
+If the density is uniform,
+the weighted residual function for values is
+$latex \[
+	R(y, \mu, \delta, d) = 0
+\] $$
+If the density is linear (not log scaled) or uniform,
+the weighted residual function for values is
+$latex \[
+	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
+\] $$
+If the density is log scaled,
+the weighted residual function for values is
 $latex \[
 	R(y, \mu, \delta, d)
+	=
+	\frac{
+		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
+	}{
+		\sigma( \mu , \delta , \eta[d] )
+	}
 \] $$
-is defined separately below for each possible value
-of the density name.
+
 
 $subhead Difference$$
-The weighted residual function for differences
+If the density is uniform,
+the weighted residual function for differences is
+$latex \[
+	R(z, y, \mu, \delta, d) = 0
+\] $$
+If the density is linear or uniform,
+the weighted residual function for differences is
+$latex \[
+	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
+\] $$
+If the density is log scaled,
+the weighted residual function for differences is
 $latex \[
 	R(z, y, \mu, \delta, d)
+	=
+	\frac{
+		\log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
+	}{
+		\delta
+	}
 \] $$
-has extra argument $latex z$$ and is also
-is defined separately below for each possible value
-of the density name.
 
 $subhead Reversed Residual$$
-In some cases, when $latex z$$ is not present,
-it is advantageous to switch the roles of $latex y$$ and $latex \mu$$.
+In the log scaled case, where $latex z$$ is not present,
+it may be advantageous to switch the roles of $latex y$$ and $latex \mu$$.
 For example,
 suppose that $latex \mu$$ depends on the $cref model_variables$$,
 $latex y$$ is measured data,
-and we are using a log distribution.
 In this case $latex \sigma( \mu , \delta , \eta )$$ depends on the model
 variables and the feedback between the estimation of the mean and variance
 can make estimation unstable.
 This can be avoided by using the reversed residual
 $latex \[
-- R( \mu , y , \delta , d)
-=
-\frac{y - \mu}{ \log( y + \eta[d] + \delta ) - \log ( y + \eta[d] ) }
-\]$$.
-Note that this function has the same sign as the data minus the model; i.e.,
-$latex y_i - \mu$$.
-
-$subhead Uniform$$
-If the density name is $code uniform$$,
-the weighted residual functions are
-$latex \[
-	R(y, \mu, \delta, d) = 0
-\] $$
-$latex \[
-	R(z, y, \mu, \delta, d) = 0
-\] $$
-
-$subhead Gaussian, Laplace, Student's-t$$
-If the density name is
-$code gaussian$$, $code laplace$$, or $code students$$.
-the weighted residual functions are
-$latex \[
-	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
-\] $$
-$latex \[
-	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
-\] $$
-
-$subhead Log-Gaussian, Log-Laplace, Log-Student's-t$$
-If the density name is
-$code log_gaussian$$, $code log_laplace$$, or $code log_students$$,
-the weighted residual functions are
-$latex \[
-R(y, \mu, \delta, d)
-=
-\frac{
-	\log( y + \eta[d] ) - \log( \mu + \eta[d] )
-}{
-	\sigma( \mu , \delta , \eta[d] )
-}
-\] $$
-$latex \[
-R(z, y, \mu, \delta, d)
-=
-\frac{
-	\log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
-}{
-	\delta
-}
-\] $$
+	- R(\mu, y, \delta, d)
+	=
+	\frac{
+		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
+	}{
+		\sigma( y, \delta , \eta[d] )
+	}
+\]$$
+Note that this function has the same sign as
+$latex R(y, \mu, \delta, d)$$.
 
 $head Log-Density Function, D$$
-The log-density function
-$latex \[
-	D(y, \mu, \delta, d)
-\] $$
-is defined separately below for each possible value
-of the density name.
-
-$subhead Difference$$
-The log-density function for differences
-$latex \[
-	D(z, y, \mu, \delta, d)
-\] $$
-has extra argument $latex z$$ and is also
-is defined separately below for each possible value
-of the density name.
 
 $subhead Uniform$$
-If the density name is $code uniform$$,
-the log-density functions
-$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
-are define by $latex D = 0$$.
+If the density is $code uniform$$,
+the log-density function for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
+are both defined by $latex D = 0$$.
 
 $subhead Gaussian$$
 If the density name is $code gaussian$$,
-the log-density functions
-$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
-are define by
+the log-density functions for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
+are defined by
 $latex \[
 D
 =
@@ -192,11 +166,30 @@ see $cref/Weighted Residual Function, R
 	/Weighted Residual Function, R
 /$$.
 
+$subhead Log-Gaussian$$
+If the density name is $code log_gaussian$$,
+the log-density function for values is
+$latex \[
+D(y, \mu, \delta, d)
+=
+- \log \left[ \sigma( \mu , \delta , \eta[d] ) \sqrt{2 \pi} \right]
+- \frac{1}{2} R(y, \mu, \delta, d)^2
+\] $$
+see the definition of
+$cref/sigma/statistic /Log-Transformed Standard Deviation, sigma/$$ above.
+The log-density function for differences is
+$latex \[
+D(z, y, \mu, \delta, d)
+=
+- \log \left( \delta \sqrt{2 \pi} \right)
+- \frac{1}{2} R(z, y, \mu, \delta, d)^2
+\] $$
+
 $subhead Laplace$$
 If the density name is $code laplace$$,
-the log-density functions
-$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
-are define by
+the log-density functions for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
+are defined by
 $latex \[
 D
 =
@@ -204,11 +197,30 @@ D
 \] $$
 where $latex D$$ and $latex R$$ have the same arguments.
 
+$subhead Log-Laplace$$
+If the density name is $code log_laplace$$,
+the log-density values is
+$latex \[
+D(y, \mu, \delta, d)
+=
+- \log \left[ \sigma( \mu , \delta , \eta[d] ) \sqrt{2} \right]
+- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
+\] $$
+see the definition of
+$cref/sigma/statistic /Log-Transformed Standard Deviation, sigma/$$ above.
+The log-density function for differences is
+$latex \[
+D(z, y, \mu, \delta, d)
+=
+- \log \left( \delta \sqrt{2} \right)
+- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
+\] $$
+
 $subhead Student's-t$$
 If the density name is $code students$$,
-the log-density functions
-$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
-are define by
+the log-density functions for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
+are defined by
 $latex \[
 D
 =
@@ -218,43 +230,8 @@ D
 -
 \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
 \] $$
-where $latex D$$ and $latex R$$ have the same arguments.
-
-$subhead Log-Gaussian$$
-If the density name is $code log_gaussian$$,
-the log-density functions are defined by
-$latex \[
-D(y, \mu, \delta, d)
-=
-- \log \left[ \sigma( \mu , \delta , \eta[d] ) \sqrt{2 \pi} \right]
-- \frac{1}{2} R(y, \mu, \delta, d)^2
-\] $$
-$latex \[
-D(z, y, \mu, \delta, d)
-=
-- \log \left( \delta \sqrt{2 \pi} \right)
-- \frac{1}{2} R(z, y, \mu, \delta, d)^2
-\] $$
-see $cref/Log-Transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
-/$$.
-
-$subhead Log-Laplace$$
-If the density name is $code log_laplace$$,
-the log-density functions are
-$latex \[
-D(y, \mu, \delta, d)
-=
-- \log \left[ \sigma( \mu , \delta , \eta[d] ) \sqrt{2} \right]
-- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
-\] $$
-$latex \[
-D(z, y, \mu, \delta, d)
-=
-- \log \left( \delta \sqrt{2} \right)
-- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
-\] $$
+where $latex D$$ and $latex R$$ have the same arguments
+and we have abbreviated $latex \nu[d]$$ using just $latex \nu$$.
 
 $subhead Log-Student's-t$$
 If the density name is $code log_students$$,

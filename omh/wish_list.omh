@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -196,31 +196,6 @@ $subhead User Examples$$
 The $cref user$$ examples before
 $cref user_change_grid.py$$ have a discussion at the top of each example.
 Add a discussion for the rest of the user examples.
-
-$subhead Model Documentation$$
-There are some subtitle issues in the documentation that perhaps should
-be made easier to read. For example,
-consider the case where the value and difference priors are
-Log-Gaussian or Log-Laplace.
-In the function
-$cref/V_j/fixed_value/V_j/$$,
-the standard deviation
-$cref/delta_j/fixed_value/delta_j/$$ has the
-same units as the corresponding
-$cref/std/prior_table/std/$$ in the $code prior_table$$.
-In the function
-$cref/A^theta/fixed_diff/Age Differences/A^theta/$$,
-the standard deviation
-$cref/delta_j/fixed_diff/delta_i,j,k/$$ is a coefficient of variation
-for the log of the corresponding values.
-This can be seen by noting the difference in the corresponding
-weighted residual function; see
-Log-Gaussian and Log-Laplace weighted residual functions
-$cref/R
-	/statistic
-	/Weighted Residual Function, R
-	/Log-Gaussian, Log-Laplace, Log-Student's-t
-/$$.
 
 $head Sampling Random Effects$$
 It is not expected that the

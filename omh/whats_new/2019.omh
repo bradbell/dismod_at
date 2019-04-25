@@ -25,6 +25,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-25$$
+Simplify the discussion of residuals and densities by
+placing the ones that are similar next to each other so it is
+easier to compare them.
+
 $head 04-24$$
 Add a plan for $cref/censoring negative data/censor_neg/$$.
 

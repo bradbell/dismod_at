@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -99,7 +99,7 @@ $latex \[
 \] $$
 
 $subhead y, Linear$$
-If $latex d$$ is Gaussian, Laplace, or Student's-t,
+If $latex d$$ is linear (not log scaled)
 $latex \[
 	y = A + e
 \]$$
@@ -109,14 +109,14 @@ The corresponding
 $cref/weighted residual
 	/statistic
 	/Weighted Residual Function, R
-	/Gaussian, Laplace, Student's-t
+	/Value
 /$$ is
 $latex \[
 	R = e / \delta
 \]$$
 
 $subhead y, Log-Transformed$$
-If $latex d$$ is Log-Gaussian, Log-Laplace, or Log-Student's-t,
+If $latex d$$ is log scaled
 $latex \[
 	e = \log( y + \eta ) - \log( A + \eta )
 \] $$
@@ -130,7 +130,7 @@ The corresponding
 $cref/weighted residual
 	/statistic
 	/Weighted Residual Function, R
-	/Gaussian, Laplace, Student's-t
+	/Value
 /$$ is
 $latex \[
 	R = e / \sigma
