@@ -56,8 +56,8 @@ $cref/prior/prior_table/nu/$$ table.
 $subhead d$$
 We use $latex d$$ to denote the $icode density_id$$
 for the corresponding entry in the
-$cref/data_table/data_table/density_id/$$ or the
-$cref/prior_table/prior_table/density_id/$$.
+$cref/data/data_table/density_id/$$ or
+$cref/prior/prior_table/density_id/$$ table.
 In an abuse of notation,
 we write $latex \eta[d]$$, $latex \nu[d]$$
 for the offset and degrees corresponding to the same entry in the
@@ -199,7 +199,7 @@ where $latex D$$ and $latex R$$ have the same arguments.
 
 $subhead Log-Laplace$$
 If the density name is $code log_laplace$$,
-the log-density values is
+the log-density function for values is
 $latex \[
 D(y, \mu, \delta, d)
 =
@@ -235,9 +235,9 @@ and we have abbreviated $latex \nu[d]$$ using just $latex \nu$$.
 
 $subhead Log-Student's-t$$
 If the density name is $code log_students$$,
-the log-density functions
-$latex D(y, \mu, \delta, d)$$, and $latex D(z, y, \mu, \delta, d)$$
-are define by
+the log-density functions for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
+are defined by
 $latex \[
 D
 =
