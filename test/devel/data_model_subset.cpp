@@ -63,6 +63,16 @@ bool data_model_subset(void)
 	}
 	size_t n_time_table = time_table.size();
 	double time_max     = time_table[n_time_table - 1];
+	//
+	// density_table
+	vector<dismod_at::density_enum> density_table(7);
+	density_table[0] = dismod_at::uniform_enum;
+	density_table[1] = dismod_at::gaussian_enum;
+	density_table[2] = dismod_at::laplace_enum;
+	density_table[3] = dismod_at::students_enum;
+	density_table[4] = dismod_at::log_gaussian_enum;
+	density_table[5] = dismod_at::log_laplace_enum;
+	density_table[6] = dismod_at::log_students_enum;
 
 	// age and time smoothing grid indices
 	size_t n_age_si   = 3;
@@ -173,8 +183,10 @@ bool data_model_subset(void)
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
-	{	smooth_table[smooth_id].n_age  =  int( s_info_vec[smooth_id].age_size() );
-		smooth_table[smooth_id].n_time =  int( s_info_vec[smooth_id].time_size() );
+	{	smooth_table[smooth_id].n_age  =
+			int( s_info_vec[smooth_id].age_size() );
+		smooth_table[smooth_id].n_time =
+			int( s_info_vec[smooth_id].time_size() );
 	}
 	// mul_cov
 	vector<dismod_at::mulcov_struct> mulcov_table(0);
@@ -208,6 +220,7 @@ bool data_model_subset(void)
 	vector<dismod_at::data_subset_struct> data_subset_obj;
 	vector<double> data_subset_cov_value;
 	data_subset(
+		density_table,
 		data_table,
 		data_cov_value,
 		covariate_table,

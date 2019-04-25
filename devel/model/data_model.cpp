@@ -766,9 +766,6 @@ residual_struct<Float> data_model::like_one(
 	//
 	// Compute the adusted standard deviation, delta_out
 	density_enum density = data_info_[subset_id].density;
-	bool log_density     = density == log_gaussian_enum;
-	log_density         |= density == log_laplace_enum;
-	log_density         |= density == log_students_enum;
 	switch( meas_noise_effect_ )
 	{
 		case add_std_scale_all_enum:
@@ -776,7 +773,7 @@ residual_struct<Float> data_model::like_one(
 		break;
 
 		case add_std_scale_log_enum:
-		if( log_density )
+		if( log_density(density) )
 			delta_out  = Delta * (1.0  + std_effect);
 		else
 			delta_out  = Delta + std_effect;
@@ -787,7 +784,7 @@ residual_struct<Float> data_model::like_one(
 		break;
 
 		case add_var_scale_log_enum:
-		if( log_density )
+		if( log_density(density) )
 			delta_out  = Delta * sqrt(1.0  + std_effect);
 		else
 			delta_out  = sqrt( Delta * Delta + std_effect );

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -102,7 +102,9 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
+CppAD::vector<prior_struct> get_prior_table(
+	sqlite3*                           db            ,
+	const CppAD::vector<density_enum>& density_table )
 {	using std::string;
 
 	// user for error messaging
@@ -182,12 +184,12 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 		{	msg = "mean less than lower limit";
 			error_exit(msg, table_name, i);
 		}
-		ok = density_id[i] == uniform_enum || std[i] > 0.0;
+		ok = density_table[density_id[i]] == uniform_enum || std[i] > 0.0;
 		if( ! ok )
 		{	msg = "std <= 0 and density is not uniform";
 			error_exit(msg, table_name, i);
 		}
-		switch( density_enum( density_id[i] ) )
+		switch( density_table[density_id[i]]  )
 		{	case log_gaussian_enum:
 			case log_laplace_enum:
 			case log_students_enum:
@@ -201,7 +203,7 @@ CppAD::vector<prior_struct> get_prior_table(sqlite3* db)
 		{	msg = "This is a log density and eta not greater than zero.";
 			error_exit(msg, table_name, i);
 		}
-		switch( density_enum( density_id[i] ) )
+		switch( density_table[density_id[i]] )
 		{	case students_enum:
 			case log_students_enum:
 			ok = nu[i] > 2.0;

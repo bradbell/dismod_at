@@ -284,7 +284,7 @@ bool like_all_xam(void)
 		//
 		// check wres
 		Float check;
-		if( dismod_at::log_density(density_id) )
+		if( dismod_at::log_density( density_table[density_id] ) )
 			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(y+eta));
 		else
 			check = (y - avg) / delta;

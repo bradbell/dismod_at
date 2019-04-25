@@ -21,7 +21,7 @@ $section C++: Get the Density Table Information$$
 $head Syntax$$
 $icode%density_table% = get_density_table(%db%)
 %$$
-$icode%is_log% = log_density(%density_id%)%$$
+$icode%is_log% = log_density(%density%)%$$
 
 $head Purpose$$
 To read the $cref density_table$$ and return it as a C++ data structure.
@@ -61,8 +61,6 @@ $tend
 The number of these enum values is $code number_density_enum$$.
 
 $head log_density$$
-The $code log_density$$ argument $icode density_id$$ can have
-any type that can be converted to a $code density_enum$$.
 The return value $icode is_log$$ is true if the corresponding density is
 log_gaussian, log_laplace, or log_students.
 It is false otherwise.
@@ -152,6 +150,14 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 		density_table[density_id] = density;
 	}
 	return density_table;
+}
+// log_density is a function so that if we add another type of log density
+// all the current detection adapts to include the new density.
+bool log_density(density_enum density)
+{	bool result = density == log_gaussian_enum;
+	result     |= density == log_laplace_enum;
+	result     |= density == log_students_enum;
+	return result;
 }
 
 } // END DISMOD_AT_NAMESPACE

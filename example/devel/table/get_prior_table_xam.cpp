@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -34,6 +34,16 @@ bool get_prior_table_xam(void)
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
+	//
+	// density_table
+	vector<dismod_at::density_enum> density_table(7);
+	density_table[0] = dismod_at::uniform_enum;
+	density_table[1] = dismod_at::gaussian_enum;
+	density_table[2] = dismod_at::laplace_enum;
+	density_table[3] = dismod_at::students_enum;
+	density_table[4] = dismod_at::log_gaussian_enum;
+	density_table[5] = dismod_at::log_laplace_enum;
+	density_table[6] = dismod_at::log_students_enum;
 
 	// sql commands
 	// assume that density_id for uniform density is 0.
@@ -58,7 +68,7 @@ bool get_prior_table_xam(void)
 
 	// get the prior table
 	vector<dismod_at::prior_struct> prior_table =
-			dismod_at::get_prior_table(db);
+			dismod_at::get_prior_table(db, density_table);
 	ok  &= prior_table.size() == 2;
 	//
 	ok  &= prior_table[0].prior_name  == "none";

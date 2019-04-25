@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>
+# include "get_density_table.hpp"
 
 namespace dismod_at {
 	struct prior_struct {
@@ -25,7 +26,10 @@ namespace dismod_at {
 		double      eta;
 		double      nu;
 	};
-	extern CppAD::vector<prior_struct> get_prior_table(sqlite3*  db);
+	extern CppAD::vector<prior_struct> get_prior_table(
+		sqlite3*                           db            ,
+		const CppAD::vector<density_enum>& density_table
+	);
 }
 
 # endif

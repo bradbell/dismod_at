@@ -365,11 +365,11 @@ void get_data_table(
 		//
 		double eta       = data_table[data_id].eta;
 		bool eta_null    = std::isnan(eta);
-		if( log_density(density_id) && eta_null )
+		if( log_density( density_table[density_id] ) && eta_null )
 		{	msg = "density is a log density and eta is null";
 			error_exit(msg, table_name, data_id);
 		}
-		if( log_density(density_id) && eta < 0.0 )
+		if( log_density( density_table[density_id] ) && eta < 0.0 )
 		{	msg = "eta is less than zero";
 			error_exit(msg, table_name, data_id);
 		}
