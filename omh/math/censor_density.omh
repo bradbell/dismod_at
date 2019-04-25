@@ -7,7 +7,7 @@ This program is distributed under the terms of the
       GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin censor_neg$$
+$begin censor_density$$
 $spell
 	mu
 	neg
@@ -15,7 +15,7 @@ $spell
 	Lebesgue
 $$
 
-$section Censored Gaussian and Laplace Distributions$$
+$section The Censored Gaussian and Laplace Densities$$
 
 $head Under Construction$$
 This is a plan for censored distribution functions,
@@ -37,7 +37,7 @@ censoring the random variable at.
 The censored random variable is defined by
 $latex \[
 \underline{y} = \left\{ \begin{array}{ll}
-	c & \R{if}  y \leq c
+	c & \R{if} \; y \leq c
 	\\
 	y & \R{otherwise}
 \end{array} \right.
@@ -48,7 +48,7 @@ are smooth function with respect to the mean value $latex \mu$$
 (but not even continuous with respect to $latex c$$ or $latex y$$).
 
 $head Simulation Test$$
-The file $code test/user/censor_neg.py$$ contains a test
+The file $code test/user/censor_density.py$$ contains a test
 of maximum likelihood estimation using the continuous-discrete densities
 proposed below.
 
@@ -147,7 +147,7 @@ $latex \[
 \exp \left( - \sqrt{2} \frac{\mu - c}{\delta} \right)
 \] $$
 
-$subhead Censored Probability, L(y,mu,delta,c)$$
+$subhead Censored Density, L(y,mu,delta,c)$$
 The censored Laplace density is defined by
 $latex \[
 L ( \underline{y} , \mu , \delta , c )

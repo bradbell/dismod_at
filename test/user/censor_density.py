@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# See omh/math/censor_neg.omh
+# See omh/math/censor_density.omh
 # ---------------------------------------------------------------------------
 random_seed   = 0
 n_data        = 1000
@@ -22,7 +22,7 @@ import distutils.dir_util
 import scipy.stats
 import numpy
 import math
-test_program = 'test/user/censor_neg.py'
+test_program = 'test/user/censor_density.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -113,4 +113,4 @@ if abs(rel_err) > 1e-1 :
 	print("rel_err = ",     relerr)
 	print("random_seed = ", random_seed)
 # -----------------------------------------------------------------------------
-print('censor_neg.py: OK')
+print('censor_density.py: OK')

@@ -9,7 +9,6 @@
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
-#	omh/model/ode_grid.omh
 # '
 # list of files that are not edited by the sed commands in this file
 # (with the possible exception of the extra_seds commands)
@@ -17,10 +16,13 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#	omh/math/censor_neg.omh
+#	test/user/censor_neg.py
 # '
 # list of sed commands that maps old file and or directory names to new
 # file names (the characters @s gets converted to a single space)
 # move_seds='
+#	s|censor_neg|censor_density|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -32,4 +34,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/ode_grid.omh/d
+s|censor_neg|censor_density|

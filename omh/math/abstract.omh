@@ -62,7 +62,7 @@ fourth derivatives of the joint likelihood are required.
 Algorithmic differentiation is used to make this task feasible.
 
 $childtable%omh/math/ode.omh
-	%omh/math/censor_neg.omh
+	%omh/math/censor_density.omh
 %$$
 
 $end
