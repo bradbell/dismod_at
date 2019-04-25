@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world example user examples model sampling starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world example user examples sampling starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,7 +81,6 @@ A:active { color : purple }
 <br><a href="wish_list.htm#Documentation" target="_top">Documentation</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#Documentation.Real World Example" target="_top">Real&nbsp;World&nbsp;Example</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#Documentation.User Examples" target="_top">User&nbsp;Examples</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#Documentation.Model Documentation" target="_top">Model&nbsp;Documentation</a>
 <br><a href="wish_list.htm#Sampling Random Effects" target="_top">Sampling&nbsp;Random&nbsp;Effects</a>
 <br><a href="wish_list.htm#Random Starting Point" target="_top">Random&nbsp;Starting&nbsp;Point</a>
 <br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
@@ -375,36 +374,6 @@ The <a href="user.htm" target="_top"><span style='white-space: nowrap'>user</spa
 <a href="user_change_grid.py.htm" target="_top"><span style='white-space: nowrap'>user_change_grid.py</span></a>
  have a discussion at the top of each example.
 Add a discussion for the rest of the user examples.
-
-<br>
-<br>
-<big><a name="Documentation.Model Documentation" id="Documentation.Model Documentation">Model Documentation</a></big>
-<br>
-There are some subtitle issues in the documentation that perhaps should
-be made easier to read. For example,
-consider the case where the value and difference priors are
-Log-Gaussian or Log-Laplace.
-In the function
-<a href="fixed_value.htm#V_j" target="_top"><span style='white-space: nowrap'>V_j</span></a>
-,
-the standard deviation
-<a href="fixed_value.htm#delta_j" target="_top"><span style='white-space: nowrap'>delta_j</span></a>
- has the
-same units as the corresponding
-<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
- in the <code><font color="blue">prior_table</font></code>.
-In the function
-<a href="fixed_diff.htm#Age Differences.A^theta" target="_top"><span style='white-space: nowrap'>A^theta</span></a>
-,
-the standard deviation
-<a href="fixed_diff.htm#delta_i,j,k" target="_top"><span style='white-space: nowrap'>delta_j</span></a>
- is a coefficient of variation
-for the log of the corresponding values.
-This can be seen by noting the difference in the corresponding
-weighted residual function; see
-Log-Gaussian and Log-Laplace weighted residual functions
-<a href="statistic.htm#Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t" target="_top"><span style='white-space: nowrap'>R</span></a>
-.
 
 <br>
 <br>

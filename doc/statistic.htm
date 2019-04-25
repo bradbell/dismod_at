@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Some Statistical Function Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Some Statistical Function Definitions">
-<meta name="keywords" id="keywords" content=" some statistical function definitions notation log-transformed standard deviation sigma weighted residual r value difference reversed uniform gaussian laplace student's-t log-gaussian log-laplace log-student's-t log-density d ">
+<meta name="keywords" id="keywords" content=" some statistical function definitions notation z y mu delta eta nu d log-transformed standard deviation sigma weighted residual r value difference reversed log-density uniform gaussian log-gaussian laplace log-laplace student's-t log-student's-t ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,95 +67,139 @@ A:active { color : purple }
 <center><b><big><big>Some Statistical Function Definitions</big></big></b></center>
 
 <br><a href="statistic.htm#Notation" target="_top">Notation</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.z" target="_top">z</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.y" target="_top">y</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.mu" target="_top">mu</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.delta" target="_top">delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.eta" target="_top">eta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.nu" target="_top">nu</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.d" target="_top">d</a>
 <br><a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top">Log-Transformed&nbsp;Standard&nbsp;Deviation,&nbsp;sigma</a>
 <br><a href="statistic.htm#Weighted Residual Function, R" target="_top">Weighted&nbsp;Residual&nbsp;Function,&nbsp;R</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Value" target="_top">Value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Difference" target="_top">Difference</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Reversed Residual" target="_top">Reversed&nbsp;Residual</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Uniform" target="_top">Uniform</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Gaussian, Laplace, Student's-t" target="_top">Gaussian,&nbsp;Laplace,&nbsp;Student's-t</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t" target="_top">Log-Gaussian,&nbsp;Log-Laplace,&nbsp;Log-Student's-t</a>
 <br><a href="statistic.htm#Log-Density Function, D" target="_top">Log-Density&nbsp;Function,&nbsp;D</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Difference" target="_top">Difference</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Uniform" target="_top">Uniform</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Gaussian" target="_top">Gaussian</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Laplace" target="_top">Laplace</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Student's-t" target="_top">Student's-t</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Log-Gaussian" target="_top">Log-Gaussian</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Laplace" target="_top">Laplace</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Log-Laplace" target="_top">Log-Laplace</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Student's-t" target="_top">Student's-t</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Log-Student's-t" target="_top">Log-Student's-t</a>
 <br><br>
 <b><big><a name="Notation" id="Notation">Notation</a></big></b>
 
-<table><tr><td align='left'  valign='top'>
 
-<small>@(@
-z
-@)@</small>       </td><td align='left'  valign='top'>
-
+<br>
+<br>
+<big><a name="Notation.z" id="Notation.z">z</a></big>
+<br>
 If <small>@(@
 z
 @)@</small> is present,
 we are computing residual and statistical density for <small>@(@
 z - y
-@)@</small>
-(used for smoothing).
-</td></tr><tr><td align='left'  valign='top'>
+@)@</small>.
+This is used for smoothing difference of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 
-<small>@(@
-y
-@)@</small>       </td><td align='left'  valign='top'>
+with respect to age and time.
 
+<br>
+<br>
+<big><a name="Notation.y" id="Notation.y">y</a></big>
+<br>
 If <small>@(@
 z
 @)@</small> is not present,
 we are computing residual and statistical density for <small>@(@
 y
 @)@</small>.
-</td></tr><tr><td align='left'  valign='top'>
 
-<small>@(@
+<br>
+<br>
+<big><a name="Notation.mu" id="Notation.mu">mu</a></big>
+<br>
+In the linear case, <small>@(@
 \mu
-@)@</small>     </td><td align='left'  valign='top'>
-
-The expected value <small>@(@
+@)@</small> denotes
+the expected value for <small>@(@
 y
-@)@</small>, difference, or difference of logs.
-</td></tr><tr><td align='left'  valign='top'>
+@)@</small> or
+the difference between <small>@(@
+y
+@)@</small> and <small>@(@
+z
+@)@</small>.
+In the log case, it denotes
+the expected value for the log of <small>@(@
+y
+@)@</small> or
+the difference between the log of <small>@(@
+y
+@)@</small> and
+the log of <small>@(@
+z
+@)@</small>.
 
-<small>@(@
-\delta
-@)@</small>  </td><td align='left'  valign='top'>
-
+<br>
+<br>
+<big><a name="Notation.delta" id="Notation.delta">delta</a></big>
+<br>
 The standard deviation for <small>@(@
 y
 @)@</small>, difference, or difference of logs.
-</td></tr><tr><td align='left'  valign='top'>
 
-<small>@(@
-d.id
-@)@</small>    </td><td align='left'  valign='top'>
+<br>
+<br>
+<big><a name="Notation.eta" id="Notation.eta">eta</a></big>
+<br>
+We use <small>@(@
+\eta
+@)@</small> to denote the offset in log transform
+for the corresponding entry in the
+<a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>data</span></a>
+ or
+<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>prior</span></a>
+ table.
 
-<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+<br>
+<br>
+<big><a name="Notation.nu" id="Notation.nu">nu</a></big>
+<br>
+We use <small>@(@
+\nu
+@)@</small> to denote the degrees of freedom in Student's-t
+for the corresponding entry in the
+<a href="data_table.htm#nu" target="_top"><span style='white-space: nowrap'>data</span></a>
+ or
+<a href="prior_table.htm#nu" target="_top"><span style='white-space: nowrap'>prior</span></a>
+ table.
 
-</td></tr><tr><td align='left'  valign='top'>
+<br>
+<br>
+<big><a name="Notation.d" id="Notation.d">d</a></big>
+<br>
+We use <small>@(@
+d
+@)@</small> to denote the 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
 
-<small>@(@
-d.\eta
-@)@</small>  </td><td align='left'  valign='top'>
+for the corresponding entry in the
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+ or the
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
+.
+In an abuse of notation,
+we write <small>@(@
+\eta[d]
+@)@</small>, <small>@(@
+\nu[d]
+@)@</small>
+for the offset and degrees corresponding to the same entry in the
+data or prior table.
 
-<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
- the offset in log transform
-</td></tr><tr><td align='left'  valign='top'>
-
-<small>@(@
-d.\nu
-@)@</small>   </td><td align='left'  valign='top'>
-
-<a href="data_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
- degrees of freedom in Student's-t.
-</td></tr>
-</table>
+<br>
 <br>
 <b><big><a name="Log-Transformed Standard Deviation, sigma" id="Log-Transformed Standard Deviation, sigma">Log-Transformed Standard Deviation, sigma</a></big></b>
 <br>
@@ -177,39 +221,75 @@ We define the log-transformed standard deviation by
 <br>
 <big><a name="Weighted Residual Function, R.Value" id="Weighted Residual Function, R.Value">Value</a></big>
 <br>
-The weighted residual function for values
+If the density is uniform,
+the weighted residual function for values is
+<small>@[@
+
+	R(y, \mu, \delta, d) = 0
+
+@]@</small>
+If the density is linear (not log scaled) or uniform,
+the weighted residual function for values is
+<small>@[@
+
+	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
+
+@]@</small>
+If the density is log scaled,
+the weighted residual function for values is
 <small>@[@
 
 	R(y, \mu, \delta, d)
+	=
+	\frac{
+		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
+	}{
+		\sigma( \mu , \delta , \eta[d] )
+	}
 
 @]@</small>
-is defined separately below for each possible value
-of the density name.
+
 
 <br>
 <br>
 <big><a name="Weighted Residual Function, R.Difference" id="Weighted Residual Function, R.Difference">Difference</a></big>
 <br>
-The weighted residual function for differences
+If the density is uniform,
+the weighted residual function for differences is
+<small>@[@
+
+	R(z, y, \mu, \delta, d) = 0
+
+@]@</small>
+If the density is linear or uniform,
+the weighted residual function for differences is
+<small>@[@
+
+	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
+
+@]@</small>
+If the density is log scaled,
+the weighted residual function for differences is
 <small>@[@
 
 	R(z, y, \mu, \delta, d)
+	=
+	\frac{
+		\log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
+	}{
+		\delta
+	}
 
 @]@</small>
-has extra argument <small>@(@
-z
-@)@</small> and is also
-is defined separately below for each possible value
-of the density name.
 
 <br>
 <br>
 <big><a name="Weighted Residual Function, R.Reversed Residual" id="Weighted Residual Function, R.Reversed Residual">Reversed Residual</a></big>
 <br>
-In some cases, when <small>@(@
+In the log scaled case, where <small>@(@
 z
 @)@</small> is not present,
-it is advantageous to switch the roles of <small>@(@
+it may be advantageous to switch the roles of <small>@(@
 y
 @)@</small> and <small>@(@
 \mu
@@ -222,7 +302,6 @@ suppose that <small>@(@
 <small>@(@
 y
 @)@</small> is measured data,
-and we are using a log distribution.
 In this case <small>@(@
 \sigma( \mu , \delta , \eta )
 @)@</small> depends on the model
@@ -231,122 +310,37 @@ can make estimation unstable.
 This can be avoided by using the reversed residual
 <small>@[@
 
-- R( \mu , y , \delta , d)
-=
-\frac{y - \mu}{ \log( y + d.\eta + \delta ) - \log ( y + d.\eta ) }
+	- R(\mu, y, \delta, d)
+	=
+	\frac{
+		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
+	}{
+		\sigma( y, \delta , \eta[d] )
+	}
 
-@]@</small>.
-Note that this function has the same sign as the data minus the model; i.e.,
+@]@</small>
+Note that this function has the same sign as
 <small>@(@
-y_i - \mu
+R(y, \mu, \delta, d)
 @)@</small>.
 
 <br>
 <br>
-<big><a name="Weighted Residual Function, R.Uniform" id="Weighted Residual Function, R.Uniform">Uniform</a></big>
-<br>
-If the density name is <code><font color="blue">uniform</font></code>,
-the weighted residual functions are
-<small>@[@
-
-	R(y, \mu, \delta, d) = 0
-
-@]@</small>
-<small>@[@
-
-	R(z, y, \mu, \delta, d) = 0
-
-@]@</small>
-
-<br>
-<br>
-<big><a name="Weighted Residual Function, R.Gaussian, Laplace, Student's-t" id="Weighted Residual Function, R.Gaussian, Laplace, Student's-t">Gaussian, Laplace, Student's-t</a></big>
-<br>
-If the density name is
-<code><font color="blue">gaussian</font></code>, <code><font color="blue">laplace</font></code>, or <code><font color="blue">students</font></code>.
-the weighted residual functions are
-<small>@[@
-
-	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
-
-@]@</small>
-<small>@[@
-
-	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
-
-@]@</small>
-
-<br>
-<br>
-<big><a name="Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t" id="Weighted Residual Function, R.Log-Gaussian, Log-Laplace, Log-Student's-t">Log-Gaussian, Log-Laplace, Log-Student's-t</a></big>
-<br>
-If the density name is
-<code><font color="blue">log_gaussian</font></code>, <code><font color="blue">log_laplace</font></code>, or <code><font color="blue">log_students</font></code>,
-the weighted residual functions are
-<small>@[@
-
-R(y, \mu, \delta, d)
-=
-\frac{
-	\log( y + d.\eta ) - \log( \mu + d.\eta )
-}{
-	\sigma( \mu , \delta , d.\eta )
-}
-
-@]@</small>
-<small>@[@
-
-R(z, y, \mu, \delta, d)
-=
-\frac{
-	\log(z + d.\eta ) - \log( y + d.\eta ) - \mu
-}{
-	\delta
-}
-
-@]@</small>
-
-<br>
-<br>
 <b><big><a name="Log-Density Function, D" id="Log-Density Function, D">Log-Density Function, D</a></big></b>
-<br>
-The log-density function
-<small>@[@
 
-	D(y, \mu, \delta, d)
-
-@]@</small>
-is defined separately below for each possible value
-of the density name.
-
-<br>
-<br>
-<big><a name="Log-Density Function, D.Difference" id="Log-Density Function, D.Difference">Difference</a></big>
-<br>
-The log-density function for differences
-<small>@[@
-
-	D(z, y, \mu, \delta, d)
-
-@]@</small>
-has extra argument <small>@(@
-z
-@)@</small> and is also
-is defined separately below for each possible value
-of the density name.
 
 <br>
 <br>
 <big><a name="Log-Density Function, D.Uniform" id="Log-Density Function, D.Uniform">Uniform</a></big>
 <br>
-If the density name is <code><font color="blue">uniform</font></code>,
-the log-density functions
-<small>@(@
+If the density is <code><font color="blue">uniform</font></code>,
+the log-density function for values <small>@(@
 D(y, \mu, \delta, d)
-@)@</small>, and <small>@(@
+@)@</small>,
+and for differences <small>@(@
 D(z, y, \mu, \delta, d)
-@)@</small>
-are define by <small>@(@
+@)@</small>,
+are both defined by <small>@(@
 D = 0
 @)@</small>.
 
@@ -355,13 +349,13 @@ D = 0
 <big><a name="Log-Density Function, D.Gaussian" id="Log-Density Function, D.Gaussian">Gaussian</a></big>
 <br>
 If the density name is <code><font color="blue">gaussian</font></code>,
-the log-density functions
-<small>@(@
+the log-density functions for values <small>@(@
 D(y, \mu, \delta, d)
-@)@</small>, and <small>@(@
+@)@</small>,
+and for differences <small>@(@
 D(z, y, \mu, \delta, d)
-@)@</small>
-are define by
+@)@</small>,
+are defined by
 <small>@[@
 
 D
@@ -379,16 +373,43 @@ see <a href="statistic.htm#Weighted Residual Function, R" target="_top"><span st
 
 <br>
 <br>
+<big><a name="Log-Density Function, D.Log-Gaussian" id="Log-Density Function, D.Log-Gaussian">Log-Gaussian</a></big>
+<br>
+If the density name is <code><font color="blue">log_gaussian</font></code>,
+the log-density function for values is
+<small>@[@
+
+D(y, \mu, \delta, d)
+=
+- \log \left[ \sigma( \mu , \delta , \eta[d] ) \sqrt{2 \pi} \right]
+- \frac{1}{2} R(y, \mu, \delta, d)^2
+
+@]@</small>
+see the definition of
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+ above.
+The log-density function for differences is
+<small>@[@
+
+D(z, y, \mu, \delta, d)
+=
+- \log \left( \delta \sqrt{2 \pi} \right)
+- \frac{1}{2} R(z, y, \mu, \delta, d)^2
+
+@]@</small>
+
+<br>
+<br>
 <big><a name="Log-Density Function, D.Laplace" id="Log-Density Function, D.Laplace">Laplace</a></big>
 <br>
 If the density name is <code><font color="blue">laplace</font></code>,
-the log-density functions
-<small>@(@
+the log-density functions for values <small>@(@
 D(y, \mu, \delta, d)
-@)@</small>, and <small>@(@
+@)@</small>,
+and for differences <small>@(@
 D(z, y, \mu, \delta, d)
-@)@</small>
-are define by
+@)@</small>,
+are defined by
 <small>@[@
 
 D
@@ -404,16 +425,43 @@ R
 
 <br>
 <br>
+<big><a name="Log-Density Function, D.Log-Laplace" id="Log-Density Function, D.Log-Laplace">Log-Laplace</a></big>
+<br>
+If the density name is <code><font color="blue">log_laplace</font></code>,
+the log-density values is
+<small>@[@
+
+D(y, \mu, \delta, d)
+=
+- \log \left[ \sigma( \mu , \delta , \eta[d] ) \sqrt{2} \right]
+- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
+
+@]@</small>
+see the definition of
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+ above.
+The log-density function for differences is
+<small>@[@
+
+D(z, y, \mu, \delta, d)
+=
+- \log \left( \delta \sqrt{2} \right)
+- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
+
+@]@</small>
+
+<br>
+<br>
 <big><a name="Log-Density Function, D.Student's-t" id="Log-Density Function, D.Student's-t">Student's-t</a></big>
 <br>
 If the density name is <code><font color="blue">students</font></code>,
-the log-density functions
-<small>@(@
+the log-density functions for values <small>@(@
 D(y, \mu, \delta, d)
-@)@</small>, and <small>@(@
+@)@</small>,
+and for differences <small>@(@
 D(z, y, \mu, \delta, d)
-@)@</small>
-are define by
+@)@</small>,
+are defined by
 <small>@[@
 
 D
@@ -429,55 +477,12 @@ where <small>@(@
 D
 @)@</small> and <small>@(@
 R
-@)@</small> have the same arguments.
-
-<br>
-<br>
-<big><a name="Log-Density Function, D.Log-Gaussian" id="Log-Density Function, D.Log-Gaussian">Log-Gaussian</a></big>
-<br>
-If the density name is <code><font color="blue">log_gaussian</font></code>,
-the log-density functions are defined by
-<small>@[@
-
-D(y, \mu, \delta, d)
-=
-- \log \left[ \sigma( \mu , \delta , d.\eta ) \sqrt{2 \pi} \right]
-- \frac{1}{2} R(y, \mu, \delta, d)^2
-
-@]@</small>
-<small>@[@
-
-D(z, y, \mu, \delta, d)
-=
-- \log \left( \delta \sqrt{2 \pi} \right)
-- \frac{1}{2} R(z, y, \mu, \delta, d)^2
-
-@]@</small>
-see <a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>Log-Transformed&nbsp;standard&nbsp;deviation</span></a>
-.
-
-<br>
-<br>
-<big><a name="Log-Density Function, D.Log-Laplace" id="Log-Density Function, D.Log-Laplace">Log-Laplace</a></big>
-<br>
-If the density name is <code><font color="blue">log_laplace</font></code>,
-the log-density functions are
-<small>@[@
-
-D(y, \mu, \delta, d)
-=
-- \log \left[ \sigma( \mu , \delta , d.\eta ) \sqrt{2} \right]
-- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
-
-@]@</small>
-<small>@[@
-
-D(z, y, \mu, \delta, d)
-=
-- \log \left( \delta \sqrt{2} \right)
-- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
-
-@]@</small>
+@)@</small> have the same arguments
+and we have abbreviated <small>@(@
+\nu[d]
+@)@</small> using just <small>@(@
+\nu
+@)@</small>.
 
 <br>
 <br>
