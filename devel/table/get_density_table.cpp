@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -67,6 +67,13 @@ The return value $icode is_log$$ is true if the corresponding density is
 log_gaussian, log_laplace, or log_students.
 It is false otherwise.
 
+$head density_enum2name$$
+This is a global variable.
+If $icode%density%$$, is an $code density_enum$$ value,
+$codei%density_enum2name[%density%]%$$ is the
+$icode density_name$$ corresponding to the enum value.
+
+
 $children%example/devel/table/get_density_table_xam.cpp
 %$$
 $head Example$$
@@ -86,6 +93,17 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// density names in scame order as enum type in get_density.hpp
+const char* density_enum2name[] = {
+	"uniform",
+	"gaussian",
+	"laplace",
+	"students",
+	"log_gaussian",
+	"log_laplace",
+	"log_students"
+};
+
 
 CppAD::vector<density_enum> get_density_table(sqlite3* db)
 {	using std::string;
@@ -95,17 +113,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	string message;
 	size_t null_id  = DISMOD_AT_NULL_SIZE_T;
 	//
-	// density names in same order as enum type in get_density_table.hpp
-	// and in th documentationf for density_table.omh
-	const char* density_enum2name[] = {
-		"uniform",
-		"gaussian",
-		"laplace",
-		"students",
-		"log_gaussian",
-		"log_laplace",
-		"log_students"
-	};
+	// check density names in same order as enum type in get_density_table.hpp
 	assert( string("uniform")      == density_enum2name[uniform_enum] );
 	assert( string("gaussian")     == density_enum2name[gaussian_enum] );
 	assert( string("laplace")      == density_enum2name[laplace_enum] );
@@ -130,13 +138,18 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 
 	CppAD::vector<density_enum> density_table(number_density_enum);
 	for(size_t density_id = 0; density_id < number_density_enum; density_id++)
-	{	if( density_name[density_id] != density_enum2name[density_id] )
-		{	message = "expected density_name to be ";
-			message += density_enum2name[density_id];
-			message += " but found " + density_name[density_id];
-			error_exit(message, table_name, density_id);
+	{	string name          = density_name[density_id];
+		density_enum density = number_density_enum;
+		for(size_t j = 0; j < number_density_enum; ++j)
+		{	if( name == density_enum2name[j] )
+				density = density_enum(j);
 		}
-			density_table[density_id] = density_enum(density_id);
+		if( density == number_density_enum )
+		{	string msg  = name;
+			msg        += " is not a valid choice for a density_name";
+			error_exit(msg, table_name, density_id);
+		}
+		density_table[density_id] = density;
 	}
 	return density_table;
 }

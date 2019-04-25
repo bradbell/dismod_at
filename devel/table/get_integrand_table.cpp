@@ -101,7 +101,6 @@ $code relrisk_enum$$     $pre  $$ $cnext $code relrisk$$         $rnext
 $code mulcov_enum$$      $pre  $$ $cnext $codei%mulcov_%mulcov_id%$$
 $tend
 
-
 $head integrand_enum2name$$
 This is a global variable.
 If $icode%integrand%$$, is an $code integrand_enum$$ value,
@@ -135,7 +134,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-// rate names in same order as enum type in get_integrand_table.hpp
+// integrand names in same order as enum type in get_integrand_table.hpp
 const char* integrand_enum2name[] = {
 	"Sincidence",
 	"Tincidence",
