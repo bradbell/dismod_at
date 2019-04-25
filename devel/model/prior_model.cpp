@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -95,13 +95,15 @@ prior_model::prior_model(
 	const pack_prior&                      var2prior       ,
 	const CppAD::vector<double>&           age_table       ,
 	const CppAD::vector<double>&           time_table      ,
-	const CppAD::vector<prior_struct>&     prior_table     )
+	const CppAD::vector<prior_struct>&     prior_table     ,
+	const CppAD::vector<density_enum>&     density_table   )
 :
-pack_object_(pack_object)  ,
-var2prior_(var2prior)      ,
-age_table_(age_table)      ,
-time_table_(time_table)    ,
-prior_table_(prior_table)
+pack_object_(pack_object)     ,
+var2prior_(var2prior)         ,
+age_table_(age_table)         ,
+time_table_(time_table)       ,
+prior_table_(prior_table)     ,
+density_table_(density_table)
 {	// Set prior_mean_ to values in prior table (default)
 	size_t n_var = var2prior_.size();
 	prior_mean_.resize( 3 * n_var );
@@ -136,7 +138,7 @@ residual_struct<Float> prior_model::log_prior(
 {	assert ( 0 <= prior.density_id  );
 	assert ( prior.density_id < number_density_enum );
 
-	density_enum density = density_enum(prior.density_id);
+	density_enum density = density_table_[prior.density_id];
 	Float        mu      = Float(prior.mean);
 	Float        delta   = mulstd * Float(prior.std);
 	Float        eta     = Float(prior.eta);

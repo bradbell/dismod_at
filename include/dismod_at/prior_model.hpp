@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -25,9 +25,10 @@ namespace dismod_at {
 		// const data
 		const pack_info                    pack_object_;
 		const pack_prior                   var2prior_;
-		const CppAD::vector<double>        age_table_;
-		const CppAD::vector<double>        time_table_;
-		const CppAD::vector<prior_struct>  prior_table_;
+		const CppAD::vector<double>&       age_table_;
+		const CppAD::vector<double>&       time_table_;
+		const CppAD::vector<prior_struct>& prior_table_;
+		const CppAD::vector<density_enum>& density_table_;
 
 		// means used for priors, see documentation in replace_mean
 		CppAD::vector<double>              prior_mean_;
@@ -49,7 +50,8 @@ namespace dismod_at {
 			const pack_prior&                      var2prior       ,
 			const CppAD::vector<double>&           age_table       ,
 			const CppAD::vector<double>&           time_table      ,
-			const CppAD::vector<prior_struct>&     prior_table
+			const CppAD::vector<prior_struct>&     prior_table     ,
+			const CppAD::vector<density_enum>&     density_table
 		);
 		// replace_mean
 		void replace_mean(const CppAD::vector<double>& prior_mean);
