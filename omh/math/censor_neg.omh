@@ -12,9 +12,10 @@ $spell
 	mu
 	neg
 	py
+	Lebesgue
 $$
 
-$section The Distributions With Censored Negative Values$$
+$section Censored Gaussian and Laplace Distributions$$
 
 $head Under Construction$$
 This is a plan for censored distribution functions,
@@ -28,32 +29,42 @@ $href%https://en.wikipedia.org/wiki/Likelihood_function%wiki page%$$
 for likelihood functions.
 
 $head Discussion$$
-We use $latex \mu \geq 0$$ for the mean and
+We use $latex \mu$$ for the mean and
 $latex \delta > 0$$ for the standard deviation
-of a Gaussian or Laplace data $latex y$$.
+of a Gaussian or Laplace random variable $latex y$$.
+We use $latex c \leq \mu$$ for the value we are
+censoring the random variable at.
+The censored random variable is defined by
+$latex \[
+\underline{y} = \left\{ \begin{array}{ll}
+	c & \R{if}  y \leq c
+	\\
+	y & \R{otherwise}
+\end{array} \right.
+\] $$
 The crucial property is that the
-censored probability functions defined below
+censored density functions (defined below)
 are smooth function with respect to the mean value $latex \mu$$
-(but not even continuous with respect to the data $latex y$$).
+(but not even continuous with respect to $latex c$$ or $latex y$$).
 
 $head Simulation Test$$
 The file $code test/user/censor_neg.py$$ contains a test
-of maximum likelihood estimation us the continuous-discrete distribution
+of maximum likelihood estimation using the continuous-discrete densities
 proposed below.
 
 $head Gaussian$$
 
-$subhead Density$$
+$subhead Density, G(y,mu,delta)$$
 The Gaussian density function is given by
 $latex \[
-G( y ; \mu , \delta )
+G( y , \mu , \delta )
 =
 \sqrt{ \frac{1}{ 2 \pi \delta^2 } }
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \] $$
 
 $subhead Error Function$$
-The Error function is defined by
+The Error function is defined (for $latex 0 \leq x$$) by
 $latex \[
 \R{erf}(x)
 =
@@ -69,12 +80,12 @@ $latex \[
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 \] $$
-Setting $latex x = \sqrt{2}^{-1} \mu / \delta$$ we obtain
+Setting $latex x = \sqrt{2}^{-1} ( \mu - c ) / \delta$$ we obtain
 $latex \[
-\R{erf}\left( \sqrt{2}^{-1} \mu / \delta \right)
+\R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
-\int_{0}^{2 \mu}
+\int_{c}^{2 \mu - c}
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 \] $$
@@ -83,37 +94,37 @@ $latex y = \mu$$, and its integral from minus infinity to plus infinity is one,
 we obtain
 $latex \[
 \frac{
-	1 - \R{erf}\left( \sqrt{2}^{-1} \mu / \delta \right)
+	1 - \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
 }{2}
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
-\int_{-\infty}^{0}
+\int_{-\infty}^{c}
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 \] $$
 
 
-$subhead Censored Probability, G_+$$
-Suppose that $latex y \sim N( \mu, \delta^2 )$$ and define
-$latex y_+ = \R{max}(x, 0)$$.
-We define the censored Gaussian probability by
+$subhead Censored Density, G(y,mu,delta,c)$$
+The censored Gaussian density is defined by
 $latex \[
-G_+ ( y_+ ; \mu , \delta )
+G ( \underline{y} , \mu , \delta , c )
 =
 \left\{ \begin{array}{ll}
-	\left( 1 - \R{erf}\left( \sqrt{2}^{-1} \mu / \delta  \right) \right) / 2
-	& \R{if} \; y_+ = 0
-	\\
-	G( y_+ ; \mu , \delta )  & \R{otherwise}
+\left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right) / 2
+& \R{if} \; \underline{y} = c
+\\
+G( \underline{y} , \mu , \delta )  & \R{otherwise}
 \end{array} \right.
 \] $$
+This density function is with respect to the
+Lebesgue measure plus an atom with mass one at $latex \underline{y} = c$$.
 
 $head Laplace$$
 
-$subhead Density$$
+$subhead Density, L(y,mu,delta)$$
 The Laplace density function is given by
 $latex \[
-L( y ; \mu , \delta )
+L( y , \mu , \delta )
 =
 \delta \sqrt{ \frac{1}{2} }
 \exp \left[ - \sqrt{2} \left| \frac{y - \mu}{\delta} \right| \right]
@@ -123,32 +134,34 @@ $subhead Indefinite Integral$$
 The indefinite integral with respect to $latex y$$,
 for $latex x \leq \mu$$, is
 $latex \[
-\int_{-\infty}^{x} L( y ; \mu , \delta ) \; \R{d} y
+\int_{-\infty}^{x} L( y , \mu , \delta ) \; \R{d} y
 =
 \frac{1}{2}
 \exp \left( - \sqrt{2} \frac{ \mu - x}{\delta} \right)
 \] $$
-Using $latex 0 \leq \mu$$, we obtain
+Using $latex c \leq \mu$$, we obtain
 $latex \[
-\int_{-\infty}^{0} L( y ; \mu , \delta ) \; \R{d} y
+\int_{-\infty}^{c} L( y , \mu , \delta ) \; \R{d} y
 =
 \frac{1}{2}
-\exp \left( - \sqrt{2} \frac{\mu}{\delta} \right)
+\exp \left( - \sqrt{2} \frac{\mu - c}{\delta} \right)
 \] $$
 
-$subhead Censored Probability, L_+$$
-Suppose that $latex y \sim L( \mu, \delta^2 )$$ and define
-$latex y_+ = \R{max}(x, 0)$$.
-We define the censored Laplace probability by
+$subhead Censored Probability, L(y,mu,delta,c)$$
+The censored Laplace density is defined by
 $latex \[
-L_+ ( y_+ ; \mu , \delta )
+L ( \underline{y} , \mu , \delta , c )
 =
 \left\{ \begin{array}{ll}
 (1 / 2 )
-\exp \left( - \mu \sqrt{2} / \delta \right) & \R{if} \; y_+ = 0
+\exp \left( - ( \mu - c ) \sqrt{2} / \delta \right)
+	& \R{if} \; \underline{y} = c
 	\\
-	L( y_+ ; \mu , \delta )                 & \R{otherwise}
+	L( \underline{y} , \mu , \delta )
+	& \R{otherwise}
 \end{array} \right.
 \] $$
+This density function is with respect to the
+Lebesgue measure plus an atom with mass one at $latex \underline{y} = c$$.
 
 $end
