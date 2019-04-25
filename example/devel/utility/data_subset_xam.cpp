@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -37,6 +37,16 @@ bool data_subset_xam(void)
 	using  std::string;
 	using  CppAD::vector;
 	double inf = std::numeric_limits<double>::infinity();
+	//
+	// density_table
+	vector<dismod_at::density_enum> density_table(7);
+	density_table[0] = dismod_at::uniform_enum;
+	density_table[1] = dismod_at::gaussian_enum;
+	density_table[2] = dismod_at::laplace_enum;
+	density_table[3] = dismod_at::students_enum;
+	density_table[4] = dismod_at::log_gaussian_enum;
+	density_table[5] = dismod_at::log_laplace_enum;
+	density_table[6] = dismod_at::log_students_enum;
 
 	// covariate table
 	size_t n_covariate = 2;
@@ -95,6 +105,7 @@ bool data_subset_xam(void)
 	vector<dismod_at::data_subset_struct> data_subset_obj;
 	vector<double> data_subset_cov_value;
 	data_subset(
+		density_table,
 		data_table,
 		data_cov_value,
 		covariate_table,

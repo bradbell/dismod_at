@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -36,6 +36,16 @@ bool get_data_table_xam(void)
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
+	//
+	// density_table
+	vector<dismod_at::density_enum> density_table(7);
+	density_table[0] = dismod_at::uniform_enum;
+	density_table[1] = dismod_at::gaussian_enum;
+	density_table[2] = dismod_at::laplace_enum;
+	density_table[3] = dismod_at::students_enum;
+	density_table[4] = dismod_at::log_gaussian_enum;
+	density_table[5] = dismod_at::log_laplace_enum;
+	density_table[6] = dismod_at::log_students_enum;
 
 	// sql commands
 	const char* sql_cmd[] = {
@@ -89,7 +99,8 @@ bool get_data_table_xam(void)
 	vector<dismod_at::data_struct> data_table(0);
 	vector<double> data_cov_value(0);
 	dismod_at::get_data_table(
-		db, n_covariate, age_min, age_max, time_min, time_max,
+		db, density_table,
+		n_covariate, age_min, age_max, time_min, time_max,
 		data_table, data_cov_value
 	);
 	ok  &= data_table.size() == 1;

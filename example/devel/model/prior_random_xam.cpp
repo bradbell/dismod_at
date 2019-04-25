@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -54,6 +54,16 @@ bool prior_random_xam(void)
 	vector<double> time_table(n_time_table);
 	for(size_t i = 0; i < n_time_table; i++)
 		time_table[i] = (2015 - 1975) * double(i) / double(n_time_table - 1);
+	//
+	// density_table
+	vector<dismod_at::density_enum> density_table(7);
+	density_table[0] = dismod_at::uniform_enum;
+	density_table[1] = dismod_at::gaussian_enum;
+	density_table[2] = dismod_at::laplace_enum;
+	density_table[3] = dismod_at::students_enum;
+	density_table[4] = dismod_at::log_gaussian_enum;
+	density_table[5] = dismod_at::log_laplace_enum;
+	density_table[6] = dismod_at::log_students_enum;
 	// ----------------------- prior table ---------------------------------
 	size_t n_prior_table = 6;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
@@ -257,7 +267,7 @@ bool prior_random_xam(void)
 	// mulcov_meas_noise: none
 	// mulcov_rate_value: none
 	dismod_at::prior_model prior_object(
-		pack_object, var2prior, age_table, time_table, prior_table
+	pack_object, var2prior, age_table, time_table, prior_table, density_table
 	);
 	// -------------- compute fixed negative log-likelihood --------------------------------
 	CppAD::vector< dismod_at::residual_struct<double> > residual_vec;

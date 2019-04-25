@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -185,14 +185,15 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void get_data_table(
-	sqlite3* db                                   ,
-	size_t                      n_covariate       ,
-	double                      age_min           ,
-	double                      age_max           ,
-	double                      time_min          ,
-	double                      time_max          ,
-	CppAD::vector<data_struct>& data_table        ,
-	CppAD::vector<double>&      data_cov_value    )
+	sqlite3*                           db                ,
+	const CppAD::vector<density_enum>& density_table     ,
+	size_t                             n_covariate       ,
+	double                             age_min           ,
+	double                             age_max           ,
+	double                             time_min          ,
+	double                             time_max          ,
+	CppAD::vector<data_struct>&        data_table        ,
+	CppAD::vector<double>&             data_cov_value    )
 {	using std::string;
 
 	string table_name  = "data";
@@ -347,7 +348,7 @@ void get_data_table(
 			error_exit(msg, table_name, data_id);
 		}
 		int density_id = data_table[data_id].density_id;
-		if( density_enum( density_id ) == uniform_enum )
+		if( density_table[density_id] == uniform_enum )
 		{	msg = "density_id corresponds to the uniform distribution";
 			error_exit(msg, table_name, data_id);
 		}
@@ -375,8 +376,8 @@ void get_data_table(
 		//
 		double nu        = data_table[data_id].nu;
 		bool nu_null     = std::isnan(nu);
-		bool students    = density_enum(density_id) == students_enum;
-		students        |= density_enum(density_id) == log_students_enum;
+		bool students    = density_table[density_id] == students_enum;
+		students        |= density_table[density_id] == log_students_enum;
 		if( students && nu_null )
 		{	msg = "density is students or log_students and nu is null";
 			error_exit(msg, table_name, data_id);

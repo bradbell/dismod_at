@@ -157,7 +157,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	double time_min         = min_vector( db_input.time_table );
 	double time_max         = max_vector( db_input.time_table );
 	get_data_table(
-		db, n_covariate, age_min, age_max, time_min, time_max,
+		db, db_input.density_table,
+		n_covariate, age_min, age_max, time_min, time_max,
 		db_input.data_table, db_input.data_cov_value
 	);
 	get_avgint_table(
