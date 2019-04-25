@@ -503,7 +503,8 @@ void simulate_command(
 	const vector<dismod_at::data_subset_struct>&        data_subset_obj ,
 	dismod_at::data_model&                              data_object     ,
 	const dismod_at::pack_prior&                        var2prior       ,
-	const vector<dismod_at::prior_struct>&              prior_table
+	const vector<dismod_at::prior_struct>&              prior_table     ,
+	const vector<dismod_at::density_enum>&              density_table
 )
 {
 	using std::string;
@@ -562,8 +563,7 @@ void simulate_command(
 		data_object.like_one(subset_id, truth_var, avg, sim_delta);
 		//
 		// density corresponding to this data point
-		dismod_at::density_enum density =
-			dismod_at::density_enum( data_subset_obj[subset_id].density_id );
+		dismod_at::density_enum density = data_subset_obj[subset_id].density;
 		//
 		double difference   = false;
 		double eta          = data_subset_obj[subset_id].eta;
@@ -643,8 +643,8 @@ void simulate_command(
 				// k = 0 is a value prior, others are difference priors
 				bool difference = k > 0;
 				//
-				int    den   = prior_table[prior_id[k]].density_id;
-				dismod_at::density_enum density = dismod_at::density_enum(den);
+				int density_id = prior_table[prior_id[k]].density_id;
+				dismod_at::density_enum density = density_table[density_id];
 				//
 				if( density == dismod_at::uniform_enum )
 					sim_str[k] = "null";
@@ -1056,6 +1056,7 @@ int main(int n_arg, const char** argv)
 		vector<dismod_at::data_subset_struct> data_subset_obj;
 		vector<double> data_subset_cov_value;
 		data_subset(
+			db_input.density_table,
 			db_input.data_table,
 			db_input.data_cov_value,
 			db_input.covariate_table,
@@ -1142,7 +1143,8 @@ int main(int n_arg, const char** argv)
 					data_subset_obj          ,
 					data_object              ,
 					var2prior                ,
-					db_input.prior_table
+					db_input.prior_table     ,
+					db_input.density_table
 				);
 			}
 			else if( command_arg == "sample" )

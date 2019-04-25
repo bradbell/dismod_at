@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -174,6 +174,7 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void data_subset(
+	const CppAD::vector<density_enum>&     density_table         ,
 	const CppAD::vector<data_struct>&      data_table            ,
 	const CppAD::vector<double>&           data_cov_value        ,
 	const CppAD::vector<covariate_struct>& covariate_table       ,
@@ -194,9 +195,8 @@ void data_subset(
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	size_t child = child_object.table_id2child(data_id);
 		if( child < n_child )
-		{	density_enum density = density_enum(
-				data_table[data_id].density_id
-			);
+		{	int density_id = data_table[data_id].density_id;
+			density_enum density = density_table[density_id];
 			if( density == laplace_enum || density == log_laplace_enum )
 			{	std::string message =
 					"child data has laplace or log_lapace density";
@@ -250,7 +250,8 @@ void data_subset(
 			one_sample.time_upper   = data_table[data_id].time_upper;
 			// values not in avgint_subset_struct
 			one_sample.hold_out     = data_table[data_id].hold_out;
-			one_sample.density_id   = data_table[data_id].density_id;
+			int density_id          = data_table[data_id].density_id;
+			one_sample.density      = density_table[density_id];
 			one_sample.meas_value   = data_table[data_id].meas_value;
 			one_sample.meas_std     = data_table[data_id].meas_std;
 			one_sample.eta          = data_table[data_id].eta;
