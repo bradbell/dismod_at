@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Density Estimation as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -49,6 +49,16 @@ $cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
 
 $subhead log_students$$
 $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
+
+$head Notation$$
+
+$subhead Linear$$
+We refer to the following densities as linear:
+$code gaussian$$, $code laplace$$, $code students$$.
+
+$subhead Log Scaled$$
+We refer to the following densities as log scaled:
+$code log_gaussian$$, $code log_laplace$$, $code log_students$$.
 
 
 $children%example/table/density_table.py

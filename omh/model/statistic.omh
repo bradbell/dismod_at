@@ -74,17 +74,20 @@ $latex \[
 $head Weighted Residual Function, R$$
 
 $subhead Value$$
-If the density is uniform,
+If the density is
+$cref/uniform/density_table/density_name/uniform/$$,
 the weighted residual function for values is
 $latex \[
 	R(y, \mu, \delta, d) = 0
 \] $$
-If the density is linear (not log scaled) or uniform,
+If the density is
+$cref/linear/density_table/Notation/Linear/$$,
 the weighted residual function for values is
 $latex \[
 	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
 \] $$
-If the density is log scaled,
+If the density is
+$cref/log scaled/density_table/Notation/Log Scaled/$$,
 the weighted residual function for values is
 $latex \[
 	R(y, \mu, \delta, d)
@@ -103,12 +106,14 @@ the weighted residual function for differences is
 $latex \[
 	R(z, y, \mu, \delta, d) = 0
 \] $$
-If the density is linear or uniform,
+If the density is
+$cref/linear/density_table/Notation/Linear/$$,
 the weighted residual function for differences is
 $latex \[
 	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 \] $$
-If the density is log scaled,
+If the density is
+$cref/log scaled/density_table/Notation/Log Scaled/$$,
 the weighted residual function for differences is
 $latex \[
 	R(z, y, \mu, \delta, d)
@@ -143,6 +148,10 @@ Note that this function has the same sign as
 $latex R(y, \mu, \delta, d)$$.
 
 $head Log-Density Function, D$$
+In the discussion below,
+log scaling refers to scaling the argument to the density function and
+log-density refers to taking the log of the result of the
+density function.
 
 $subhead Uniform$$
 If the density is $code uniform$$,
