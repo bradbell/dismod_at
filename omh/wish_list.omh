@@ -29,9 +29,23 @@ $spell
 	csv
 	mtother
 	Covariate
+	def
+	args
+	kwargs
 $$
 
 $section Dismod_at Wish List$$
+
+$head create_database$$
+Make a version of $cref create_database$$ that uses
+keyword arguments and replaces the ones that are not present by
+default values. This could be done using the prototype
+$codei%
+	def create_database(*%args%, **%kwargs%) :
+%$$
+where $icode args$$ are the positional arguments and
+$icode kwargs$$ are the keyword arguments.
+This would enable backward compatibility.
 
 $head ODE Solution$$
 
