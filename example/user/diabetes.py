@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -1038,10 +1038,10 @@ del col_type[0]
 row_list = list()
 #
 # density_id for log_gaussian
-density_id = None
-for i in range( len( density_table ) ) :
-	if density_table[i]['density_name'] == 'log_gaussian' :
-		density_id = i
+log_gaussian_id = None
+for density_id in range( len( density_table ) ) :
+	if density_table[density_id]['density_name'] == 'log_gaussian' :
+		log_gaussian_id = density_id
 #
 for predict_id in range( len(predict_table) ) :
 	#
@@ -1058,7 +1058,7 @@ for predict_id in range( len(predict_table) ) :
 	eta        = 1e-7                     # a very small eta
 	meas_value = avg_integrand            # no noise version of meas_value
 	meas_std   = meas_cv * avg_integrand # noise in simulated data
-	row['density_id'] = density_id
+	row['density_id'] = log_gaussian_id
 	row['hold_out']   = 0
 	row['meas_std']   = meas_std
 	row['meas_value'] = meas_value

@@ -373,6 +373,13 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+density_table   = dismod_at.get_table_dict(connection, 'density')
+#
+# density_id for a uniform distribution
+uniform_id = None
+for density_id in range( len(density_table) ) :
+	if density_table[density_id]['density_name'] == 'uniform' :
+		uniform_id = density_id
 #
 # check covariate multiplier values
 nonzero_mulcov  = list()
@@ -399,7 +406,8 @@ assert len(nonzero_mulcov) == 2
 prior_name = [ 'prior_income', 'prior_sex' ]
 for covariate_id in range(2):
 	if nonzero_mulcov[covariate_id] :
-		command = 'UPDATE prior SET density_id = 0 WHERE prior_name == '
+		command = 'UPDATE prior SET density_id = '+ str(uniform_id)
+		command += ' WHERE prior_name == '
 		command += '"' + prior_name[covariate_id] + '"'
 		dismod_at.sql_command(connection, command)
 	else :

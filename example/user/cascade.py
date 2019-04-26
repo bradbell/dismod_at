@@ -534,7 +534,7 @@ for var_id in range(n_var) :
 	if var_type != 'mulcov_meas_noise' :
 		rel_err = (1.0 - value / truth)
 		fmt = 'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'
-		print( fmt.format(fixed, truth, value, rel_err) )
+		# print( fmt.format(fixed, truth, value, rel_err) )
 		if abs(rel_err) >= 2e-1 :
 			print( fmt.format(fixed, truth, value, rel_err) )
 			print("random_seed = ",  random_seed)
@@ -627,8 +627,14 @@ result           = dismod_at.sql_command(connection, sqlcmd)
 prior_id         = sql_count_rows(connection, 'prior') - 1
 smooth_id        = sql_count_rows(connection, 'smooth') - 1
 smooth_grid_id   = sql_count_rows(connection, 'smooth_grid') - 1
-uniform_id       = 0
-gaussian_id      = 1
+#
+sqlcmd      = 'SELECT density_id FROM density WHERE density_name=="uniform"'
+result      = dismod_at.sql_command(connection, sqlcmd)
+uniform_id  = result[0][0]
+#
+sqlcmd      = 'SELECT density_id FROM density WHERE density_name=="gaussian"'
+result      = dismod_at.sql_command(connection, sqlcmd)
+gaussian_id = result[0][0]
 #
 # add smooth_iota_n11
 smooth_name = 'smooth_iota_n11'
@@ -767,7 +773,7 @@ for var_id in range(n_var) :
 	if var_type != 'mulcov_meas_noise' :
 		rel_err = (1.0 - value / truth)
 		fmt     = 'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'
-		print( fmt.format(fixed, truth, value, rel_err) )
+		# print( fmt.format(fixed, truth, value, rel_err) )
 		if abs(rel_err) >= 2e-1 :
 			print( fmt.format(fixed, truth, value, rel_err) )
 			print("random_seed = ",  random_seed)
