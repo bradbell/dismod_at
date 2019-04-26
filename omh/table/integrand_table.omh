@@ -26,6 +26,7 @@ $spell
 	cv
 	std
 	mulcov
+	avgint
 $$
 
 $section The Integrand Table$$
@@ -57,8 +58,10 @@ $head integrand_name$$
 This column has type $code text$$.
 The following is a list of the possible values for $icode integrand_name$$.
 This column is unique; i.e., each name can only appear once in this table.
-Only the $cref/integrand_id/data_table/integrand_id/$$ that appear
-in the data table need appear in the integrand table.
+All of the $icode integrand_id$$ values that appear in the
+$cref/data/data_table/integrand_id/$$ and
+$cref/avgint/avgint_table/integrand_id/$$ tables
+need to appear in the integrand table.
 
 $subhead ODE$$
 If the column ODE below is yes, and a data point has a

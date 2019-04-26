@@ -29,7 +29,7 @@ and their corresponding meaning.
 This column is unique; i.e., each name can only appear ones in this table.
 All of the $icode density_id$$ values that appear in the
 $cref/prior/prior_table/density_id/$$ and
-$cref/data/data_table/density_id/$$ table
+$cref/data/data_table/density_id/$$ tables
 must appear in the density table.
 
 $subhead uniform$$
