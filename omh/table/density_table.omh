@@ -23,11 +23,14 @@ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
 $head density_name$$
-The names listed below and only the those names,
-must appear in the $icode density_name$$ column.
-In addition, they  must appear in the order below..
-Note that $icode density_name$$ is unique;
-i.e., each name only appears once.
+This column has type $code text$$.
+Below is a list of the possible density names
+and their corresponding meaning.
+This column is unique; i.e., each name can only appear ones in this table.
+All of the $icode density_id$$ values that appear in the
+$cref/prior/prior_table/density_id/$$ and
+$cref/data/data_table/density_id/$$ table
+must appear in the density table.
 
 $subhead uniform$$
 $cref/Uniform/statistic/Log-Density Function, D/Uniform/$$

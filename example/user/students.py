@@ -270,6 +270,11 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 density_table   = dismod_at.get_table_dict(connection, 'density')
 #
+students_id = None
+for density_id in range( len(density_table) ) :
+	if density_table[density_id]['density_name'] == 'students' :
+		students_id = density_id
+#
 # set start_var table equal to fit_var table
 command = [ program, file_name, 'set', 'start_var', 'fit_var' ]
 print( ' '.join(command) )
@@ -278,8 +283,7 @@ if flag != 0 :
 	sys.exit('The dismod_at fit fixed command failed')
 #
 # change data densities to be students-t
-assert density_table[3]['density_name'] == 'students'
-command = 'UPDATE data SET density_id = 3'
+command = 'UPDATE data SET density_id = ' + str(students_id)
 dismod_at.sql_command(connection, command)
 #
 # fit with Students-t (now that we have a better starting point)

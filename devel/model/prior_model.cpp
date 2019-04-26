@@ -136,7 +136,7 @@ residual_struct<Float> prior_model::log_prior(
 	size_t                index      ,  // the index for this residual
 	bool                  difference ) const // is this a difference residual
 {	assert ( 0 <= prior.density_id  );
-	assert ( prior.density_id < number_density_enum );
+	assert ( size_t(prior.density_id) < density_table_.size()  );
 
 	density_enum density = density_table_[prior.density_id];
 	Float        mu      = Float(prior.mean);
