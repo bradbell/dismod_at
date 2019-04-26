@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list ode solution prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world example user examples sampling starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list create_database ode solution prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world example user examples sampling starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -62,6 +62,7 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
+<br><a href="wish_list.htm#create_database" target="_top">create_database</a>
 <br><a href="wish_list.htm#ODE Solution" target="_top">ODE&nbsp;Solution</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Prevalence ODE" target="_top">Prevalence&nbsp;ODE</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Large Excess Mortality" target="_top">Large&nbsp;Excess&nbsp;Mortality</a>
@@ -86,6 +87,26 @@ A:active { color : purple }
 <br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
+<b><big><a name="create_database" id="create_database">create_database</a></big></b>
+<br>
+Make a version of <a href="create_database.htm" target="_top"><span style='white-space: nowrap'>create_database</span></a>
+ that uses
+keyword arguments and replaces the ones that are not present by
+default values. This could be done using the prototype
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;create_database(*</span></font><i><font color="black"><span style='white-space: nowrap'>args</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;**</span></font><i><font color="black"><span style='white-space: nowrap'>kwargs</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;:<br>
+</span></font></code>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>args</span></font></i></code>
+ are the positional arguments and
+
+<code><i><font color="black"><span style='white-space: nowrap'>kwargs</span></font></i></code>
+ are the keyword arguments.
+This would enable backward compatibility.
+
+<br>
+<br>
 <b><big><a name="ODE Solution" id="ODE Solution">ODE Solution</a></big></b>
 
 

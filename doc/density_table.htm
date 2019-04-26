@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Density Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Density Table">
-<meta name="keywords" id="keywords" content=" the density table density_id density_name uniform gaussian laplace students log_gaussian log_laplace log_students example ">
+<meta name="keywords" id="keywords" content=" the density table density_id density_name uniform gaussian laplace students log_gaussian log_laplace log_students notation linear log scaled example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,9 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.log_gaussian" target="_top">log_gaussian</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.log_laplace" target="_top">log_laplace</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.log_students" target="_top">log_students</a>
+<br><a href="density_table.htm#Notation" target="_top">Notation</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#Notation.Linear" target="_top">Linear</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#Notation.Log Scaled" target="_top">Log&nbsp;Scaled</a>
 <br><a href="density_table.htm#Example" target="_top">Example</a>
 <br>The <code><font color="blue">density</font></code> table is used to identify densities.
 It has the following columns:
@@ -94,15 +97,18 @@ Its initial value is zero, and it increments by one for each row.
 <br>
 <b><big><a name="density_name" id="density_name">density_name</a></big></b>
 <br>
-The names listed below and only the those names,
-must appear in the 
-<code><i><font color="black"><span style='white-space: nowrap'>density_name</span></font></i></code>
- column.
-In addition, they  must appear in the order below..
-Note that 
-<code><i><font color="black"><span style='white-space: nowrap'>density_name</span></font></i></code>
- is unique;
-i.e., each name only appears once.
+This column has type <code><font color="blue">text</font></code>.
+Below is a list of the possible density names
+and their corresponding meaning.
+This column is unique; i.e., each name can only appear ones in this table.
+All of the 
+<code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
+ values that appear in the
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>prior</span></a>
+ and
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>data</span></a>
+ tables
+must appear in the density table.
 
 <br>
 <br>
@@ -159,6 +165,25 @@ i.e., each name only appears once.
 <br>
 <a href="statistic.htm#Log-Density Function, D.Log-Student's-t" target="_top"><span style='white-space: nowrap'>Log-Student's-t</span></a>
 
+
+<br>
+<br>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Notation.Linear" id="Notation.Linear">Linear</a></big>
+<br>
+We refer to the following densities as linear:
+<code><font color="blue">gaussian</font></code>, <code><font color="blue">laplace</font></code>, <code><font color="blue">students</font></code>.
+
+<br>
+<br>
+<big><a name="Notation.Log Scaled" id="Notation.Log Scaled">Log Scaled</a></big>
+<br>
+We refer to the following densities as log scaled:
+<code><font color="blue">log_gaussian</font></code>, <code><font color="blue">log_laplace</font></code>, <code><font color="blue">log_students</font></code>.
 
 
 

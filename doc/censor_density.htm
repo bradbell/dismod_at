@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>The Distributions With Censored Negative Values</title>
+<title>The Censored Gaussian and Laplace Densities</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="The Distributions With Censored Negative Values">
-<meta name="keywords" id="keywords" content=" the distributions with censored negative values under construction reference discussion simulation test gaussian density error function probability g_+ laplace indefinite integral l_+ ">
+<meta name="description" id="description" content="The Censored Gaussian and Laplace Densities">
+<meta name="keywords" id="keywords" content=" the censored gaussian laplace densities under construction reference discussion simulation test density g(ymudelta) error function g(ymudeltac) l(ymudelta) indefinite integral l(ymudeltac) ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_censor_neg_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_censor_density_htm.js'>
 </script>
 </head>
 <body>
@@ -36,7 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>math_abstract</option>
-<option>censor_neg</option>
+<option>censor_density</option>
 </select>
 </td>
 <td>
@@ -57,27 +57,27 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_math_abstract_htm.js'></script>
 </td>
-<td>censor_neg</td>
+<td>censor_density</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
-<center><b><big><big>The Distributions With Censored Negative Values</big></big></b></center>
+<center><b><big><big>The Censored Gaussian and Laplace Densities</big></big></b></center>
 
-<br><a href="censor_neg.htm#Under Construction" target="_top">Under&nbsp;Construction</a>
-<br><a href="censor_neg.htm#Reference" target="_top">Reference</a>
-<br><a href="censor_neg.htm#Discussion" target="_top">Discussion</a>
-<br><a href="censor_neg.htm#Simulation Test" target="_top">Simulation&nbsp;Test</a>
-<br><a href="censor_neg.htm#Gaussian" target="_top">Gaussian</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_neg.htm#Gaussian.Density" target="_top">Density</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_neg.htm#Gaussian.Error Function" target="_top">Error&nbsp;Function</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_neg.htm#Gaussian.Censored Probability, G_+" target="_top">Censored&nbsp;Probability,&nbsp;G_+</a>
-<br><a href="censor_neg.htm#Laplace" target="_top">Laplace</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_neg.htm#Laplace.Density" target="_top">Density</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_neg.htm#Laplace.Indefinite Integral" target="_top">Indefinite&nbsp;Integral</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_neg.htm#Laplace.Censored Probability, L_+" target="_top">Censored&nbsp;Probability,&nbsp;L_+</a>
+<br><a href="censor_density.htm#Under Construction" target="_top">Under&nbsp;Construction</a>
+<br><a href="censor_density.htm#Reference" target="_top">Reference</a>
+<br><a href="censor_density.htm#Discussion" target="_top">Discussion</a>
+<br><a href="censor_density.htm#Simulation Test" target="_top">Simulation&nbsp;Test</a>
+<br><a href="censor_density.htm#Gaussian" target="_top">Gaussian</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Gaussian.Density, G(y,mu,delta)" target="_top">Density,&nbsp;G(y,mu,delta)</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Gaussian.Error Function" target="_top">Error&nbsp;Function</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Gaussian.Censored Density, G(y,mu,delta,c)" target="_top">Censored&nbsp;Density,&nbsp;G(y,mu,delta,c)</a>
+<br><a href="censor_density.htm#Laplace" target="_top">Laplace</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Laplace.Density, L(y,mu,delta)" target="_top">Density,&nbsp;L(y,mu,delta)</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Laplace.Indefinite Integral" target="_top">Indefinite&nbsp;Integral</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Laplace.Censored Density, L(y,mu,delta,c)" target="_top">Censored&nbsp;Density,&nbsp;L(y,mu,delta,c)</a>
 <br><br>
 <b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
 <br>
@@ -100,20 +100,36 @@ for likelihood functions.
 <b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
 <br>
 We use <small>@(@
-\mu \geq 0
+\mu
 @)@</small> for the mean and
 <small>@(@
 \delta > 0
 @)@</small> for the standard deviation
-of a Gaussian or Laplace data <small>@(@
+of a Gaussian or Laplace random variable <small>@(@
 y
 @)@</small>.
+We use <small>@(@
+c \leq \mu
+@)@</small> for the value we are
+censoring the random variable at.
+The censored random variable is defined by
+<small>@[@
+
+\underline{y} = \left\{ \begin{array}{ll}
+	c & \R{if} \; y \leq c
+	\\
+	y & \R{otherwise}
+\end{array} \right.
+
+@]@</small>
 The crucial property is that the
-censored probability functions defined below
+censored density functions (defined below)
 are smooth function with respect to the mean value <small>@(@
 \mu
 @)@</small>
-(but not even continuous with respect to the data <small>@(@
+(but not even continuous with respect to <small>@(@
+c
+@)@</small> or <small>@(@
 y
 @)@</small>).
 
@@ -121,8 +137,8 @@ y
 <br>
 <b><big><a name="Simulation Test" id="Simulation Test">Simulation Test</a></big></b>
 <br>
-The file <code><font color="blue">test/user/censor_neg.py</font></code> contains a test
-of maximum likelihood estimation us the continuous-discrete distribution
+The file <code><font color="blue">test/user/censor_density.py</font></code> contains a test
+of maximum likelihood estimation using the continuous-discrete densities
 proposed below.
 
 <br>
@@ -132,12 +148,12 @@ proposed below.
 
 <br>
 <br>
-<big><a name="Gaussian.Density" id="Gaussian.Density">Density</a></big>
+<big><a name="Gaussian.Density, G(y,mu,delta)" id="Gaussian.Density, G(y,mu,delta)">Density, G(y,mu,delta)</a></big>
 <br>
 The Gaussian density function is given by
 <small>@[@
 
-G( y ; \mu , \delta )
+G( y , \mu , \delta )
 =
 \sqrt{ \frac{1}{ 2 \pi \delta^2 } }
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
@@ -148,7 +164,9 @@ G( y ; \mu , \delta )
 <br>
 <big><a name="Gaussian.Error Function" id="Gaussian.Error Function">Error Function</a></big>
 <br>
-The Error function is defined by
+The Error function is defined (for <small>@(@
+0 \leq x
+@)@</small>) by
 <small>@[@
 
 \R{erf}(x)
@@ -173,14 +191,14 @@ y = \mu + t \delta \sqrt{2}
 
 @]@</small>
 Setting <small>@(@
-x = \sqrt{2}^{-1} \mu / \delta
+x = \sqrt{2}^{-1} ( \mu - c ) / \delta
 @)@</small> we obtain
 <small>@[@
 
-\R{erf}\left( \sqrt{2}^{-1} \mu / \delta \right)
+\R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
-\int_{0}^{2 \mu}
+\int_{c}^{2 \mu - c}
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 
@@ -193,11 +211,11 @@ we obtain
 <small>@[@
 
 \frac{
-	1 - \R{erf}\left( \sqrt{2}^{-1} \mu / \delta \right)
+	1 - \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
 }{2}
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
-\int_{-\infty}^{0}
+\int_{-\infty}^{c}
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 
@@ -206,27 +224,25 @@ we obtain
 
 <br>
 <br>
-<big><a name="Gaussian.Censored Probability, G_+" id="Gaussian.Censored Probability, G_+">Censored Probability, G_+</a></big>
+<big><a name="Gaussian.Censored Density, G(y,mu,delta,c)" id="Gaussian.Censored Density, G(y,mu,delta,c)">Censored Density, G(y,mu,delta,c)</a></big>
 <br>
-Suppose that <small>@(@
-y \sim N( \mu, \delta^2 )
-@)@</small> and define
-<small>@(@
-y_+ = \R{max}(x, 0)
-@)@</small>.
-We define the censored Gaussian probability by
+The censored Gaussian density is defined by
 <small>@[@
 
-G_+ ( y_+ ; \mu , \delta )
+G ( \underline{y} , \mu , \delta , c )
 =
 \left\{ \begin{array}{ll}
-	\left( 1 - \R{erf}\left( \sqrt{2}^{-1} \mu / \delta  \right) \right) / 2
-	& \R{if} \; y_+ = 0
-	\\
-	G( y_+ ; \mu , \delta )  & \R{otherwise}
+\left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right) / 2
+& \R{if} \; \underline{y} = c
+\\
+G( \underline{y} , \mu , \delta )  & \R{otherwise}
 \end{array} \right.
 
 @]@</small>
+This density function is with respect to the
+Lebesgue measure plus an atom with mass one at <small>@(@
+\underline{y} = c
+@)@</small>.
 
 <br>
 <br>
@@ -235,12 +251,12 @@ G_+ ( y_+ ; \mu , \delta )
 
 <br>
 <br>
-<big><a name="Laplace.Density" id="Laplace.Density">Density</a></big>
+<big><a name="Laplace.Density, L(y,mu,delta)" id="Laplace.Density, L(y,mu,delta)">Density, L(y,mu,delta)</a></big>
 <br>
 The Laplace density function is given by
 <small>@[@
 
-L( y ; \mu , \delta )
+L( y , \mu , \delta )
 =
 \delta \sqrt{ \frac{1}{2} }
 \exp \left[ - \sqrt{2} \left| \frac{y - \mu}{\delta} \right| \right]
@@ -259,50 +275,50 @@ x \leq \mu
 @)@</small>, is
 <small>@[@
 
-\int_{-\infty}^{x} L( y ; \mu , \delta ) \; \R{d} y
+\int_{-\infty}^{x} L( y , \mu , \delta ) \; \R{d} y
 =
 \frac{1}{2}
 \exp \left( - \sqrt{2} \frac{ \mu - x}{\delta} \right)
 
 @]@</small>
 Using <small>@(@
-0 \leq \mu
+c \leq \mu
 @)@</small>, we obtain
 <small>@[@
 
-\int_{-\infty}^{0} L( y ; \mu , \delta ) \; \R{d} y
+\int_{-\infty}^{c} L( y , \mu , \delta ) \; \R{d} y
 =
 \frac{1}{2}
-\exp \left( - \sqrt{2} \frac{\mu}{\delta} \right)
+\exp \left( - \sqrt{2} \frac{\mu - c}{\delta} \right)
 
 @]@</small>
 
 <br>
 <br>
-<big><a name="Laplace.Censored Probability, L_+" id="Laplace.Censored Probability, L_+">Censored Probability, L_+</a></big>
+<big><a name="Laplace.Censored Density, L(y,mu,delta,c)" id="Laplace.Censored Density, L(y,mu,delta,c)">Censored Density, L(y,mu,delta,c)</a></big>
 <br>
-Suppose that <small>@(@
-y \sim L( \mu, \delta^2 )
-@)@</small> and define
-<small>@(@
-y_+ = \R{max}(x, 0)
-@)@</small>.
-We define the censored Laplace probability by
+The censored Laplace density is defined by
 <small>@[@
 
-L_+ ( y_+ ; \mu , \delta )
+L ( \underline{y} , \mu , \delta , c )
 =
 \left\{ \begin{array}{ll}
 (1 / 2 )
-\exp \left( - \mu \sqrt{2} / \delta \right) & \R{if} \; y_+ = 0
+\exp \left( - ( \mu - c ) \sqrt{2} / \delta \right)
+	& \R{if} \; \underline{y} = c
 	\\
-	L( y_+ ; \mu , \delta )                 & \R{otherwise}
+	L( \underline{y} , \mu , \delta )
+	& \R{otherwise}
 \end{array} \right.
 
 @]@</small>
+This density function is with respect to the
+Lebesgue measure plus an atom with mass one at <small>@(@
+\underline{y} = c
+@)@</small>.
 
 
-<hr>Input File: omh/math/censor_neg.omh
+<hr>Input File: omh/math/censor_density.omh
 
 </body>
 </html>

@@ -518,6 +518,13 @@ new             <font color="#990000">=</font> False
 connection      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
 var_table       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
 fit_var_table   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
+density_table   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'density'</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># density_id for a uniform distribution</font></i>
+uniform_id <font color="#990000">=</font> None
+<b><font color="#0000FF">for</font></b> density_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>density_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> density_table<font color="#990000">[</font>density_id<font color="#990000">][</font><font color="#FF0000">'density_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'uniform'</font> <font color="#990000">:</font>
+          uniform_id <font color="#990000">=</font> density_id
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check covariate multiplier values</font></i>
 nonzero_mulcov  <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
@@ -544,7 +551,8 @@ nonzero_mulcov  <font color="#990000">=</font> <b><font color="#000000">list</fo
 prior_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'prior_income'</font><font color="#990000">,</font> <font color="#FF0000">'prior_sex'</font> <font color="#990000">]</font>
 <b><font color="#0000FF">for</font></b> covariate_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">):</font>
      <b><font color="#0000FF">if</font></b> nonzero_mulcov<font color="#990000">[</font>covariate_id<font color="#990000">]</font> <font color="#990000">:</font>
-          command <font color="#990000">=</font> <font color="#FF0000">'UPDATE prior SET density_id = 0 WHERE prior_name == '</font>
+          command <font color="#990000">=</font> <font color="#FF0000">'UPDATE prior SET density_id = '</font><font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>uniform_id<font color="#990000">)</font>
+          command <font color="#990000">+=</font> <font color="#FF0000">' WHERE prior_name == '</font>
           command <font color="#990000">+=</font> <font color="#FF0000">'"'</font> <font color="#990000">+</font> prior_name<font color="#990000">[</font>covariate_id<font color="#990000">]</font> <font color="#990000">+</font> <font color="#FF0000">'"'</font>
           dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> command<font color="#990000">)</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>

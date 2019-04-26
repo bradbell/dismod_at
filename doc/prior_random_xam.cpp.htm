@@ -104,6 +104,16 @@ A:active { color : purple }
      <font color="#008080">vector&lt;double&gt;</font> <b><font color="#000000">time_table</font></b><font color="#990000">(</font>n_time_table<font color="#990000">);</font>
      <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#008080">size_t</font> i <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> i <font color="#990000">&lt;</font> n_time_table<font color="#990000">;</font> i<font color="#990000">++)</font>
           time_table<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">2015</font> <font color="#990000">-</font> <font color="#993399">1975</font><font color="#990000">)</font> <font color="#990000">*</font> <font color="#009900">double</font><font color="#990000">(</font>i<font color="#990000">)</font> <font color="#990000">/</font> <font color="#009900">double</font><font color="#990000">(</font>n_time_table <font color="#990000">-</font> <font color="#993399">1</font><font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// density_table</font></i>
+     <font color="#008080">vector&lt;dismod_at::density_enum&gt;</font> <b><font color="#000000">density_table</font></b><font color="#990000">(</font><font color="#993399">7</font><font color="#990000">);</font>
+     density_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>uniform_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>gaussian_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>laplace_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>students_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>log_gaussian_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>log_laplace_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">6</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>log_students_enum<font color="#990000">;</font>
      <i><font color="#9A1900">// ----------------------- prior table ---------------------------------</font></i>
      <font color="#008080">size_t</font> n_prior_table <font color="#990000">=</font> <font color="#993399">6</font><font color="#990000">;</font>
      <font color="#008080">vector&lt;dismod_at::prior_struct&gt;</font> <b><font color="#000000">prior_table</font></b><font color="#990000">(</font>n_prior_table<font color="#990000">);</font>
@@ -307,7 +317,7 @@ A:active { color : purple }
      <i><font color="#9A1900">// mulcov_meas_noise: none</font></i>
      <i><font color="#9A1900">// mulcov_rate_value: none</font></i>
      dismod_at<font color="#990000">::</font><font color="#008080">prior_model</font> <b><font color="#000000">prior_object</font></b><font color="#990000">(</font>
-          pack_object<font color="#990000">,</font> var2prior<font color="#990000">,</font> age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> prior_table
+     pack_object<font color="#990000">,</font> var2prior<font color="#990000">,</font> age_table<font color="#990000">,</font> time_table<font color="#990000">,</font> prior_table<font color="#990000">,</font> density_table
      <font color="#990000">);</font>
      <i><font color="#9A1900">// -------------- compute fixed negative log-likelihood --------------------------------</font></i>
      CppAD<font color="#990000">::</font><font color="#008080">vector&lt; dismod_at::residual_struct&lt;double&gt; &gt;</font> residual_vec<font color="#990000">;</font>

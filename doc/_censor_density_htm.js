@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
 'math_abstract.htm',
-'censor_neg.htm'
+'censor_density.htm'
 ];
 var list_across0 = [
 '_contents.htm',

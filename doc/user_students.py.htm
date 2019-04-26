@@ -366,6 +366,11 @@ new             <font color="#990000">=</font> False
 connection      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
 density_table   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'density'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
+students_id <font color="#990000">=</font> None
+<b><font color="#0000FF">for</font></b> density_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>density_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> density_table<font color="#990000">[</font>density_id<font color="#990000">][</font><font color="#FF0000">'density_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'students'</font> <font color="#990000">:</font>
+          students_id <font color="#990000">=</font> density_id
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># set start_var table equal to fit_var table</font></i>
 command <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'fit_var'</font> <font color="#990000">]</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
@@ -374,8 +379,7 @@ flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><
      sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at fit fixed command failed'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change data densities to be students-t</font></i>
-<b><font color="#0000FF">assert</font></b> density_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">][</font><font color="#FF0000">'density_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'students'</font>
-command <font color="#990000">=</font> <font color="#FF0000">'UPDATE data SET density_id = 3'</font>
+command <font color="#990000">=</font> <font color="#FF0000">'UPDATE data SET density_id = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>students_id<font color="#990000">)</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> command<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># fit with Students-t (now that we have a better starting point)</font></i>

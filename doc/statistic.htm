@@ -186,10 +186,10 @@ d
 <code><i><font color="black"><span style='white-space: nowrap'>density_id</span></font></i></code>
 
 for the corresponding entry in the
-<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>data_table</span></a>
- or the
-<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
-.
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>data</span></a>
+ or
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>prior</span></a>
+ table.
 In an abuse of notation,
 we write <small>@(@
 \eta[d]
@@ -221,21 +221,27 @@ We define the log-transformed standard deviation by
 <br>
 <big><a name="Weighted Residual Function, R.Value" id="Weighted Residual Function, R.Value">Value</a></big>
 <br>
-If the density is uniform,
+If the density is
+<a href="density_table.htm#density_name.uniform" target="_top"><span style='white-space: nowrap'>uniform</span></a>
+,
 the weighted residual function for values is
 <small>@[@
 
 	R(y, \mu, \delta, d) = 0
 
 @]@</small>
-If the density is linear (not log scaled) or uniform,
+If the density is
+<a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+,
 the weighted residual function for values is
 <small>@[@
 
 	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
 
 @]@</small>
-If the density is log scaled,
+If the density is
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
 the weighted residual function for values is
 <small>@[@
 
@@ -261,14 +267,18 @@ the weighted residual function for differences is
 	R(z, y, \mu, \delta, d) = 0
 
 @]@</small>
-If the density is linear or uniform,
+If the density is
+<a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+,
 the weighted residual function for differences is
 <small>@[@
 
 	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 
 @]@</small>
-If the density is log scaled,
+If the density is
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
 the weighted residual function for differences is
 <small>@[@
 
@@ -327,7 +337,11 @@ R(y, \mu, \delta, d)
 <br>
 <br>
 <b><big><a name="Log-Density Function, D" id="Log-Density Function, D">Log-Density Function, D</a></big></b>
-
+<br>
+In the discussion below,
+log scaling refers to scaling the argument to the density function and
+log-density refers to taking the log of the result of the
+density function.
 
 <br>
 <br>
@@ -428,7 +442,7 @@ R
 <big><a name="Log-Density Function, D.Log-Laplace" id="Log-Density Function, D.Log-Laplace">Log-Laplace</a></big>
 <br>
 If the density name is <code><font color="blue">log_laplace</font></code>,
-the log-density values is
+the log-density function for values is
 <small>@[@
 
 D(y, \mu, \delta, d)
@@ -489,13 +503,13 @@ and we have abbreviated <small>@(@
 <big><a name="Log-Density Function, D.Log-Student's-t" id="Log-Density Function, D.Log-Student's-t">Log-Student's-t</a></big>
 <br>
 If the density name is <code><font color="blue">log_students</font></code>,
-the log-density functions
-<small>@(@
+the log-density functions for values <small>@(@
 D(y, \mu, \delta, d)
-@)@</small>, and <small>@(@
+@)@</small>,
+and for differences <small>@(@
 D(z, y, \mu, \delta, d)
-@)@</small>
-are define by
+@)@</small>,
+are defined by
 <small>@[@
 
 D

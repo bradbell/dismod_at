@@ -1326,10 +1326,10 @@ tbl_name             <font color="#990000">=</font> <font color="#FF0000">'data'
 row_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># density_id for log_gaussian</font></i>
-density_id <font color="#990000">=</font> None
-<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font> density_table <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">if</font></b> density_table<font color="#990000">[</font>i<font color="#990000">][</font><font color="#FF0000">'density_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'log_gaussian'</font> <font color="#990000">:</font>
-          density_id <font color="#990000">=</font> i
+log_gaussian_id <font color="#990000">=</font> None
+<b><font color="#0000FF">for</font></b> density_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font> density_table <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> density_table<font color="#990000">[</font>density_id<font color="#990000">][</font><font color="#FF0000">'density_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'log_gaussian'</font> <font color="#990000">:</font>
+          log_gaussian_id <font color="#990000">=</font> density_id
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">for</font></b> predict_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>predict_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
      <i><font color="#9A1900">#</font></i>
@@ -1346,7 +1346,7 @@ density_id <font color="#990000">=</font> None
      eta        <font color="#990000">=</font> <font color="#993399">1e-7</font>                     <i><font color="#9A1900"># a very small eta</font></i>
      meas_value <font color="#990000">=</font> avg_integrand            <i><font color="#9A1900"># no noise version of meas_value</font></i>
      meas_std   <font color="#990000">=</font> meas_cv <font color="#990000">*</font> avg_integrand <i><font color="#9A1900"># noise in simulated data</font></i>
-     row<font color="#990000">[</font><font color="#FF0000">'density_id'</font><font color="#990000">]</font> <font color="#990000">=</font> density_id
+     row<font color="#990000">[</font><font color="#FF0000">'density_id'</font><font color="#990000">]</font> <font color="#990000">=</font> log_gaussian_id
      row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0</font>
      row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> meas_std
      row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> meas_value

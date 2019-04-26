@@ -764,7 +764,7 @@ n_var            <font color="#990000">=</font> <b><font color="#000000">len</fo
      <b><font color="#0000FF">if</font></b> var_type <font color="#990000">!=</font> <font color="#FF0000">'mulcov_meas_noise'</font> <font color="#990000">:</font>
           rel_err <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">-</font> value <font color="#990000">/</font> truth<font color="#990000">)</font>
           fmt <font color="#990000">=</font> <font color="#FF0000">'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'</font>
-          <b><font color="#0000FF">print</font></b><font color="#990000">(</font> fmt<font color="#990000">.</font><b><font color="#000000">format</font></b><font color="#990000">(</font>fixed<font color="#990000">,</font> truth<font color="#990000">,</font> value<font color="#990000">,</font> rel_err<font color="#990000">)</font> <font color="#990000">)</font>
+          <i><font color="#9A1900"># print( fmt.format(fixed, truth, value, rel_err) )</font></i>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_err<font color="#990000">)</font> <font color="#990000">&gt;=</font> <font color="#993399">2e-1</font> <font color="#990000">:</font>
                <b><font color="#0000FF">print</font></b><font color="#990000">(</font> fmt<font color="#990000">.</font><b><font color="#000000">format</font></b><font color="#990000">(</font>fixed<font color="#990000">,</font> truth<font color="#990000">,</font> value<font color="#990000">,</font> rel_err<font color="#990000">)</font> <font color="#990000">)</font>
                <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"random_seed = "</font><font color="#990000">,</font>  random_seed<font color="#990000">)</font>
@@ -857,8 +857,14 @@ result           <font color="#990000">=</font> dismod_at<font color="#990000">.
 prior_id         <font color="#990000">=</font> <b><font color="#000000">sql_count_rows</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'prior'</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font>
 smooth_id        <font color="#990000">=</font> <b><font color="#000000">sql_count_rows</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'smooth'</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font>
 smooth_grid_id   <font color="#990000">=</font> <b><font color="#000000">sql_count_rows</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'smooth_grid'</font><font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font>
-uniform_id       <font color="#990000">=</font> <font color="#993399">0</font>
-gaussian_id      <font color="#990000">=</font> <font color="#993399">1</font>
+<i><font color="#9A1900">#</font></i>
+sqlcmd      <font color="#990000">=</font> <font color="#FF0000">'SELECT density_id FROM density WHERE density_name=="uniform"'</font>
+result      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> sqlcmd<font color="#990000">)</font>
+uniform_id  <font color="#990000">=</font> result<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
+<i><font color="#9A1900">#</font></i>
+sqlcmd      <font color="#990000">=</font> <font color="#FF0000">'SELECT density_id FROM density WHERE density_name=="gaussian"'</font>
+result      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> sqlcmd<font color="#990000">)</font>
+gaussian_id <font color="#990000">=</font> result<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#993399">0</font><font color="#990000">]</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># add smooth_iota_n11</font></i>
 smooth_name <font color="#990000">=</font> <font color="#FF0000">'smooth_iota_n11'</font>
@@ -997,7 +1003,7 @@ n_var            <font color="#990000">=</font> <b><font color="#000000">len</fo
      <b><font color="#0000FF">if</font></b> var_type <font color="#990000">!=</font> <font color="#FF0000">'mulcov_meas_noise'</font> <font color="#990000">:</font>
           rel_err <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">-</font> value <font color="#990000">/</font> truth<font color="#990000">)</font>
           fmt     <font color="#990000">=</font> <font color="#FF0000">'fixed={}, truth={:7.4f}, value={:7.4f}, rel_err={:6.3f}'</font>
-          <b><font color="#0000FF">print</font></b><font color="#990000">(</font> fmt<font color="#990000">.</font><b><font color="#000000">format</font></b><font color="#990000">(</font>fixed<font color="#990000">,</font> truth<font color="#990000">,</font> value<font color="#990000">,</font> rel_err<font color="#990000">)</font> <font color="#990000">)</font>
+          <i><font color="#9A1900"># print( fmt.format(fixed, truth, value, rel_err) )</font></i>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_err<font color="#990000">)</font> <font color="#990000">&gt;=</font> <font color="#993399">2e-1</font> <font color="#990000">:</font>
                <b><font color="#0000FF">print</font></b><font color="#990000">(</font> fmt<font color="#990000">.</font><b><font color="#000000">format</font></b><font color="#990000">(</font>fixed<font color="#990000">,</font> truth<font color="#990000">,</font> value<font color="#990000">,</font> rel_err<font color="#990000">)</font> <font color="#990000">)</font>
                <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"random_seed = "</font><font color="#990000">,</font>  random_seed<font color="#990000">)</font>
