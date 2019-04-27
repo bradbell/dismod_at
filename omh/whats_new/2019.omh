@@ -25,6 +25,10 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-27$$
+Fix bug in previous change to density table
+(should no longer need densities that are not used).
+
 $head 04-26$$
 $list number$$
 The $cref density_table$$ no longer needs to contain

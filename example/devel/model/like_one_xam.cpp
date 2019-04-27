@@ -71,6 +71,16 @@ bool like_one_xam(void)
 	density_table[4] = dismod_at::log_gaussian_enum;
 	density_table[5] = dismod_at::log_laplace_enum;
 	density_table[6] = dismod_at::log_students_enum;
+	//
+	// inverse density table
+	vector<int> density_enum2id(dismod_at::number_density_enum);
+	density_enum2id[dismod_at::uniform_enum]      = 0;
+	density_enum2id[dismod_at::gaussian_enum]     = 1;
+	density_enum2id[dismod_at::laplace_enum]      = 2;
+	density_enum2id[dismod_at::students_enum]     = 3;
+	density_enum2id[dismod_at::log_gaussian_enum] = 4;
+	density_enum2id[dismod_at::log_laplace_enum]  = 5;
+	density_enum2id[dismod_at::log_students_enum] = 6;
 
 	// age and time smoothing grid indices
 	size_t n_age_si   = 3;
@@ -98,7 +108,7 @@ bool like_one_xam(void)
 	double nan = std::numeric_limits<double>::quiet_NaN();
 	vector<dismod_at::prior_struct> prior_table(1);
 	prior_table[0].prior_name = "prior_zero";
-	prior_table[0].density_id = 0;
+	prior_table[0].density_id = density_enum2id[dismod_at::uniform_enum];
 	prior_table[0].lower      = -1.0;
 	prior_table[0].upper      = +1.0;
 	prior_table[0].mean       = 0.0;
@@ -170,9 +180,11 @@ bool like_one_xam(void)
 		data_table[data_id].meas_std   = data_table[data_id].meas_value / 10.;
 		data_table[data_id].eta        = 1e-4;
 		if( data_id == 0 )
-		data_table[data_id].density_id =  int( dismod_at::gaussian_enum );
+		data_table[data_id].density_id =
+			density_enum2id[dismod_at::gaussian_enum];
 		else
-		data_table[data_id].density_id = int( dismod_at::log_gaussian_enum );
+			data_table[data_id].density_id =
+				density_enum2id[dismod_at::log_gaussian_enum];
 	}
 	//
 	// smooth_table
@@ -301,7 +313,7 @@ bool like_one_xam(void)
 		*/
 		// check loglike
 		double pi =  3.14159265358979323846264338327950288;
-		switch( density_id )
+		switch( density_table[density_id] )
 		{	double sigma;
 
 			case dismod_at::uniform_enum:
@@ -329,7 +341,7 @@ bool like_one_xam(void)
 			default:
 			assert(false);
 		}
-		if( density_id == dismod_at::uniform_enum )
+		if( density_table[density_id] == dismod_at::uniform_enum )
 			ok &= check == loglike;
 		else
 		{	Float relerr = 1.0 - loglike / check;
@@ -338,7 +350,7 @@ bool like_one_xam(void)
 		/*
 		cout << "loglike = " << loglike;
 		cout << ", check = " << check;
-		if( density_id != dismod_at::uniform_enum )
+		if( density_table[density_id] != dismod_at::uniform_enum )
 		{	Float relerr = 1.0 - loglike / check;
 			cout << ", relerr    = " << relerr;
 			ok &= fabs( relerr ) <= eps;

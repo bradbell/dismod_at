@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -215,20 +215,21 @@ def example_db (file_name) :
 		mulcov_table,
 		option_table
 	)
-	# ----------------------------------------------------------------------
-	n_smooth  = len( smooth_table )
-	rate_true = []
-	for rate_id in range( len( data_table ) ) :
-		# for this particular example
-		data_id    = rate_id
-		meas_value = data_table[data_id]['meas_value']
-		rate_true.append(meas_value)
-	#
-	return (n_smooth, rate_true)
+	return
 # ===========================================================================
-file_name             = 'example.db'
-(n_smooth, rate_true) = example_db(file_name)
-program               = '../../devel/dismod_at'
+file_name  = 'example.db'
+example_db(file_name)
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+#
+# Test that density table does not need entries that are not used
+# (last entry is log_students so can delete without changing density ids)
+sqlcmd = 'DELETE FROM density WHERE density_name="log_students"'
+dismod_at.sql_command(connection, sqlcmd)
+connection.close()
+#
+# run init and fit
+program    = '../../devel/dismod_at'
 for command in [ 'init', 'fit' ] :
 	cmd = [ program, file_name, command ]
 	if command == 'fit' :
@@ -238,12 +239,9 @@ for command in [ 'init', 'fit' ] :
 	flag = subprocess.call( cmd )
 	if flag != 0 :
 		sys.exit('The dismod_at ' + command + ' command failed')
-# -----------------------------------------------------------------------
-# connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
+#
 # get variable and fit_var tables
+connection            = dismod_at.create_connection(file_name, new)
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 fit_data_subset_dict = dismod_at.get_table_dict(connection, 'fit_data_subset')

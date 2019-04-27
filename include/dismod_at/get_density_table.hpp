@@ -18,10 +18,10 @@ namespace dismod_at {
 	enum density_enum {
 		uniform_enum,
 		gaussian_enum,
-		laplace_enum,
-		students_enum,
 		log_gaussian_enum,
+		laplace_enum,
 		log_laplace_enum,
+		students_enum,
 		log_students_enum,
 		number_density_enum
 	};

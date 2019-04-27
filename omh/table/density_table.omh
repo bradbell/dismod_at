@@ -24,13 +24,13 @@ Its initial value is zero, and it increments by one for each row.
 
 $head density_name$$
 This column has type $code text$$.
-Below is a list of the possible density names
-and their corresponding meaning.
 This column is unique; i.e., each name can only appear ones in this table.
 All of the $icode density_id$$ values that appear in the
 $cref/prior/prior_table/density_id/$$ and
 $cref/data/data_table/density_id/$$ tables
 must appear in the density table.
+Below is a list of the possible density names
+and their corresponding meaning.
 
 $subhead uniform$$
 $cref/Uniform/statistic/Log-Density Function, D/Uniform/$$
@@ -38,17 +38,17 @@ $cref/Uniform/statistic/Log-Density Function, D/Uniform/$$
 $subhead gaussian$$
 $cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$
 
-$subhead laplace$$
-$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$
-
-$subhead students$$
-$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$
-
 $subhead log_gaussian$$
 $cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
 
+$subhead laplace$$
+$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$
+
 $subhead log_laplace$$
 $cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
+
+$subhead students$$
+$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$
 
 $subhead log_students$$
 $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Density Estimation as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -64,15 +64,6 @@ bool get_density_table_xam(void)
 	ok  &= density_table[4] == dismod_at::log_gaussian_enum;
 	ok  &= density_table[5] == dismod_at::log_laplace_enum;
 	ok  &= density_table[6] == dismod_at::log_students_enum;
-
-	// check the enum values
-	ok  &= dismod_at::density_enum(0) == dismod_at::uniform_enum;
-	ok  &= dismod_at::density_enum(1) == dismod_at::gaussian_enum;
-	ok  &= dismod_at::density_enum(2) == dismod_at::laplace_enum;
-	ok  &= dismod_at::density_enum(3) == dismod_at::students_enum;
-	ok  &= dismod_at::density_enum(4) == dismod_at::log_gaussian_enum;
-	ok  &= dismod_at::density_enum(5) == dismod_at::log_laplace_enum;
-	ok  &= dismod_at::density_enum(6) == dismod_at::log_students_enum;
 
 	// close database and return
 	sqlite3_close(db);

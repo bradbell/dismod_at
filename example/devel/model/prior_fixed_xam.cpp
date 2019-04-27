@@ -65,39 +65,49 @@ bool prior_fixed_xam(void)
 	density_table[4] = dismod_at::log_gaussian_enum;
 	density_table[5] = dismod_at::log_laplace_enum;
 	density_table[6] = dismod_at::log_students_enum;
+	//
+	// inverse density table
+	vector<int> density_enum2id(dismod_at::number_density_enum);
+	density_enum2id[dismod_at::uniform_enum]      = 0;
+	density_enum2id[dismod_at::gaussian_enum]     = 1;
+	density_enum2id[dismod_at::laplace_enum]      = 2;
+	density_enum2id[dismod_at::students_enum]     = 3;
+	density_enum2id[dismod_at::log_gaussian_enum] = 4;
+	density_enum2id[dismod_at::log_laplace_enum]  = 5;
+	density_enum2id[dismod_at::log_students_enum] = 6;
 	// ----------------------- prior table ---------------------------------
 	size_t n_prior_table = 6;
 	vector<dismod_at::prior_struct> prior_table(n_prior_table);
 	// prior_id = 0 (is the constant zero)
-	prior_table[0].density_id = int( dismod_at::uniform_enum );
+	prior_table[0].density_id = density_enum2id[dismod_at::uniform_enum];
 	prior_table[0].lower      = 0.0;
 	prior_table[0].mean       = 0.0;
 	prior_table[0].upper      = 0.0;
 	// prior_id = 1
-	prior_table[1].density_id = int( dismod_at::uniform_enum );
+	prior_table[1].density_id = density_enum2id[dismod_at::uniform_enum];
 	prior_table[1].lower      = DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
 	prior_table[1].mean       = DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
 	prior_table[1].upper      = DISMOD_AT_PRIOR_FIXED_XAM_MULSTD;
 	// size_t prior_id_none = 2;
-	prior_table[2].density_id = int( dismod_at::uniform_enum );
+	prior_table[2].density_id = density_enum2id[dismod_at::uniform_enum];
 	prior_table[2].lower      = -inf;
 	prior_table[2].mean       = 0.0;
 	prior_table[2].upper      = +inf;
 	prior_table[2].std        = 1.0;
 	size_t prior_id_gaussian = 3;
-	prior_table[3].density_id = int( dismod_at::gaussian_enum );
+	prior_table[3].density_id = density_enum2id[dismod_at::gaussian_enum];
 	prior_table[3].lower      = - 1.0;
 	prior_table[3].mean       = 0.0;
 	prior_table[3].upper      = 1.0;
 	prior_table[3].std        = 0.5;
 	size_t prior_id_laplace = 4;
-	prior_table[4].density_id = int( dismod_at::laplace_enum );
+	prior_table[4].density_id = density_enum2id[dismod_at::laplace_enum];
 	prior_table[4].lower      = -1.0;
 	prior_table[4].mean       = 0.0;
 	prior_table[4].upper      = 1.0;
 	prior_table[4].std        = 0.5;
 	size_t prior_id_log_gaussian = 5;
-	prior_table[5].density_id = int( dismod_at::log_gaussian_enum );
+	prior_table[5].density_id = density_enum2id[dismod_at::log_gaussian_enum];
 	prior_table[5].lower      = 0.01;
 	prior_table[5].mean       = 0.1;
 	prior_table[5].upper      = 1.0;

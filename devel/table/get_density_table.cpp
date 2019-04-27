@@ -46,16 +46,17 @@ is the enum value for the corresponding
 $cref/density_name/density_table/density_name/$$.
 
 $head density_enum$$
-The $icode density_table$$ can also be addressed
-using the $code density_enum$$ values as follows:
+This enum type has the following values:
+$align right$$
 $table
-$icode density_id$$        $pre  $$ $cnext $icode density_name$$ $rnext
+$icode value$$             $pre  $$ $cnext $icode density_name$$ $rnext
 $code uniform_enum$$       $pre  $$ $cnext $code uniform$$       $rnext
 $code gaussian_enum$$      $pre  $$ $cnext $code gaussian$$      $rnext
-$code laplace_enum$$       $pre  $$ $cnext $code laplace$$       $rnext
-$code students_enum$$      $pre  $$ $cnext $code students$$      $rnext
+$code c_gaussian_enum$$    $pre  $$ $cnext $code c_gaussian$$    $rnext
 $code log_gaussian_enum$$  $pre  $$ $cnext $code log_gaussian$$  $rnext
-$code log_laplace_enum$$   $pre  $$ $cnext $code log_laplace$$
+$code laplace_enum$$       $pre  $$ $cnext $code laplace$$       $rnext
+$code log_laplace_enum$$   $pre  $$ $cnext $code log_laplace$$   $rnext
+$code students_enum$$      $pre  $$ $cnext $code students$$      $rnext
 $code log_students_enum$$  $pre  $$ $cnext $code log_students$$
 $tend
 The number of these enum values is $code number_density_enum$$.
@@ -95,10 +96,10 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 const char* density_enum2name[] = {
 	"uniform",
 	"gaussian",
-	"laplace",
-	"students",
 	"log_gaussian",
+	"laplace",
 	"log_laplace",
+	"students",
 	"log_students"
 };
 
@@ -106,36 +107,34 @@ const char* density_enum2name[] = {
 CppAD::vector<density_enum> get_density_table(sqlite3* db)
 {	using std::string;
 	using CppAD::to_string;
+	using CppAD::vector;
 	//
 	// for error messaging
 	string message;
-	size_t null_id  = DISMOD_AT_NULL_SIZE_T;
 	//
 	// check density names in same order as enum type in get_density_table.hpp
 	assert( string("uniform")      == density_enum2name[uniform_enum] );
 	assert( string("gaussian")     == density_enum2name[gaussian_enum] );
-	assert( string("laplace")      == density_enum2name[laplace_enum] );
-	assert( string("students")     == density_enum2name[students_enum] );
 	assert( string("log_gaussian") == density_enum2name[log_gaussian_enum] );
+	assert( string("laplace")      == density_enum2name[laplace_enum] );
 	assert( string("log_laplace")  == density_enum2name[log_laplace_enum] );
+	assert( string("students")     == density_enum2name[students_enum] );
 	assert( string("log_students") == density_enum2name[log_students_enum] );
+	//
+	vector<bool> found(number_density_enum);
+	for(size_t i = 0; i < size_t(number_density_enum); i++)
+		found[i] = false;
 	//
 	string table_name  = "density";
 	size_t n_density   = check_table_id(db, table_name);
-
-	if( n_density != size_t( number_density_enum ) )
-	{	message  = "density table does not have ";
-		message += to_string( size_t( number_density_enum) ) + " rows.";
-		error_exit(message, table_name, null_id);
-	}
-
+	//
 	string column_name =  "density_name";
 	CppAD::vector<string>  density_name;
 	get_table_column(db, table_name, column_name, density_name);
 	assert( n_density == density_name.size() );
-
-	CppAD::vector<density_enum> density_table(number_density_enum);
-	for(size_t density_id = 0; density_id < number_density_enum; density_id++)
+	//
+	CppAD::vector<density_enum> density_table(n_density);
+	for(size_t density_id = 0; density_id < n_density; density_id++)
 	{	string name          = density_name[density_id];
 		density_enum density = number_density_enum;
 		for(size_t j = 0; j < number_density_enum; ++j)
@@ -147,6 +146,12 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 			msg        += " is not a valid choice for a density_name";
 			error_exit(msg, table_name, density_id);
 		}
+		if( found[density] )
+		{	string msg = "The density_name " + name;
+			msg += " appears more than once";
+			error_exit(msg, table_name, density_id);
+		}
+		found[density] = true;
 		density_table[density_id] = density;
 	}
 	return density_table;
