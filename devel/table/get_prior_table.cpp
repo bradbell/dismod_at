@@ -58,13 +58,17 @@ $code double$$ $cnext $code lower$$ $cnext
 	The $cref/lower/prior_table/lower/$$ limit for this prior
 $rnext
 $code double$$ $cnext $code upper$$         $cnext
-	The $cref/upper/prior_table/upper/$$ limit for this prior  $rnext
+	The $cref/upper/prior_table/upper/$$ limit for this prior
+$rnext
 $code double$$ $cnext $code mean$$          $cnext
-	The $cref/mean/prior_table/mean/$$ for this prior  $rnext
+	The $cref/mean/prior_table/mean/$$ for this prior
+$rnext
 $code double$$ $cnext $code std$$           $cnext
-	The $cref/std/prior_table/std/$$ for this prior  $rnext
+	The $cref/std/prior_table/std/$$ for this prior
+$rnext
 $code double$$ $cnext $code eta$$           $cnext
 	The $cref/eta/prior_table/eta/$$ for this prior
+$rnext
 $code double$$ $cnext $code nu$$            $cnext
 	The $cref/nu/prior_table/nu/$$ for this prior
 $tend

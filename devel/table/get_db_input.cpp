@@ -124,13 +124,13 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	assert( db_input.covariate_table.size() == 0 );
 	assert( db_input.node_table.size() == 0 );
 	assert( db_input.weight_grid_table.size() == 0 );
-	assert( db_input.smooth_grid_table.size() == 0 );
 	assert( db_input.mulcov_table.size() == 0 );
 	assert( db_input.option_table.size() == 0 );
 	assert( db_input.nslist_table.size() == 0 );
 	assert( db_input.nslist_pair_table.size() == 0 );
 	//
 	assert( db_input.prior_table.size() == 0 );
+	assert( db_input.smooth_grid_table.size() == 0 );
 	assert( db_input.integrand_table.size() == 0 );
 	assert( db_input.data_table.size() == 0 );
 	assert( db_input.avgint_table.size() == 0 );
@@ -144,18 +144,27 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.covariate_table   = get_covariate_table(db);
 	db_input.node_table        = get_node_table(db);
 	db_input.weight_grid_table = get_weight_grid(db);
-	db_input.smooth_grid_table = get_smooth_grid(db);
 	db_input.mulcov_table      = get_mulcov_table(db);
 	db_input.option_table      = get_option_table(db);
 	db_input.nslist_table      = get_nslist_table(db);
 	db_input.nslist_pair_table = get_nslist_pair(db);
 	//
-	// get_prior_table uses density_table to check for errors
-	db_input.prior_table       = get_prior_table(db, db_input.density_table);
+	// get_prior_table uses density_table
+	// to check for errors
+	db_input.prior_table = get_prior_table(db, db_input.density_table);
 	//
-	// get_integrand_table uses mulcov_table to check for errors
+	// get_smooth_grid_table uses density_table and prior_table
+	// to check for errors
+	db_input.smooth_grid_table = get_smooth_grid(
+		db, db_input.density_table, db_input.prior_table
+	);
+	//
+	// get_integrand_table uses mulcov_table
+	// to check for errors
 	db_input.integrand_table  = get_integrand_table(db, db_input.mulcov_table);
 	//
+	// get_data_table and get_avgint_table use this information
+	// to check for errors
 	size_t n_covariate      = db_input.covariate_table.size();
 	double age_min          = min_vector( db_input.age_table );
 	double age_max          = max_vector( db_input.age_table );

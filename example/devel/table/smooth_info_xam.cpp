@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -38,6 +38,18 @@ bool smooth_info_xam(void)
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
+	//
+	// density_table
+	CppAD::vector<dismod_at::density_enum> density_table(4);
+	density_table[0] = dismod_at::uniform_enum;
+	density_table[1] = dismod_at::cen_gaussian_enum;
+	//
+	// prior_table (only density_id is used by get_smooth_grid)
+	CppAD::vector<dismod_at::prior_struct> prior_table(10);
+	for(int prior_id = 0; prior_id < 4; prior_id++)
+		prior_table[prior_id].density_id = 0; // uniform
+	// prior_id = 1 is not used for a dage or dtime prior
+	prior_table[1].density_id = 1; // cen_gaussian
 
 	// sql commands
 	const char* sql_cmd[] = {
@@ -93,8 +105,8 @@ bool smooth_info_xam(void)
 		smooth_table = dismod_at::get_smooth_table(db);
 
 	// get the smooth_grid table
-	vector<dismod_at::smooth_grid_struct>
-		smooth_grid_table = dismod_at::get_smooth_grid(db);
+	vector<dismod_at::smooth_grid_struct> smooth_grid_table =
+		dismod_at::get_smooth_grid(db, density_table, prior_table);
 
 	// extract the smoothing information
 	size_t smooth_id = 0;

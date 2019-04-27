@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -104,7 +104,11 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
+CppAD::vector<smooth_grid_struct> get_smooth_grid(
+	sqlite3*                           db            ,
+	const CppAD::vector<density_enum>& density_table ,
+	const CppAD::vector<prior_struct>& prior_table
+)
 {	using std::string;
 
 	string table_name  = "smooth_grid";
@@ -145,6 +149,7 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 	get_table_column(db, table_name, column_name, const_value);
 	assert( const_value.size() == n_smooth );
 
+	size_t n_prior = prior_table.size();
 	CppAD::vector<smooth_grid_struct> smooth_grid(n_smooth);
 	for(size_t i = 0; i < n_smooth; i++)
 	{	smooth_grid[i].smooth_id      = smooth_id[i];
@@ -163,6 +168,28 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3* db)
 		{	string msg = "value_prior_id and const_value are both null\n"
 			"or are both not null.";
 			error_exit(msg, table_name, i);
+		}
+		// if prior_id >= n_prior and prior_id != DISMOD_AT_NULL_INT
+		// an error is printed elsewhere
+		int prior_id = dage_prior_id[i];
+		if( size_t(prior_id) < n_prior )
+		{	int density_id = prior_table[prior_id].density_id;
+			ok             = density_table[density_id] != cen_gaussian_enum;
+			if( ! ok )
+			{	string msg = "dage_prior_id corresponds to a "
+				"censored distribution";
+				error_exit(msg, table_name, i);
+			}
+		}
+		prior_id = dtime_prior_id[i];
+		if( size_t(prior_id) < n_prior )
+		{	int density_id = prior_table[prior_id].density_id;
+			ok             = density_table[density_id] != cen_gaussian_enum;
+			if( ! ok )
+			{	string msg = "dtime_prior_id corresponds to a "
+				"censored distribution";
+				error_exit(msg, table_name, i);
+			}
 		}
 	}
 	return smooth_grid;

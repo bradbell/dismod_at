@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -37,6 +37,18 @@ bool get_smooth_grid_xam(void)
 	string   file_name = "example.db";
 	bool     new_file  = true;
 	sqlite3* db        = dismod_at::open_connection(file_name, new_file);
+	//
+	// density_table
+	CppAD::vector<dismod_at::density_enum> density_table(4);
+	density_table[0] = dismod_at::uniform_enum;
+	density_table[1] = dismod_at::cen_gaussian_enum;
+	density_table[2] = dismod_at::gaussian_enum;
+	density_table[3] = dismod_at::log_gaussian_enum;
+	//
+	// prior_table (only density_id is used by get_smooth_grid)
+	CppAD::vector<dismod_at::prior_struct> prior_table(4);
+	for(int prior_id = 0; prior_id < 4; prior_id++)
+		prior_table[prior_id].density_id = prior_id;
 
 	// sql commands
 	const char* sql_cmd[] = {
@@ -74,8 +86,8 @@ bool get_smooth_grid_xam(void)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
 	// get the smooth table
-	vector<dismod_at::smooth_struct>
-		smooth_table = dismod_at::get_smooth_table(db);
+	vector<dismod_at::smooth_struct> smooth_table =
+		dismod_at::get_smooth_table(db);
 	ok  &= smooth_table.size()    == 4;
 	ok  &= smooth_table[0].smooth_name    == "constant";
 	ok  &= smooth_table[0].n_age          == 1;
@@ -106,8 +118,8 @@ bool get_smooth_grid_xam(void)
 	ok  &= smooth_table[3].mulstd_dtime_prior_id   == 11;
 	//
 	// get the smooth_grid table
-	vector<dismod_at::smooth_grid_struct>
-		smooth_grid = dismod_at::get_smooth_grid(db);
+	vector<dismod_at::smooth_grid_struct> smooth_grid =
+		dismod_at::get_smooth_grid(db, density_table, prior_table);
 	ok  &= smooth_grid.size() == 5;
 	//
 	ok  &= smooth_grid[0].smooth_id      ==  0;

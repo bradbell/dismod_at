@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,6 +14,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <string>
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>
+# include <dismod_at/get_density_table.hpp>
+# include <dismod_at/get_prior_table.hpp>
 
 namespace dismod_at {
 	struct smooth_grid_struct {
@@ -25,7 +27,11 @@ namespace dismod_at {
 		int    dtime_prior_id;
 		double const_value;
 	};
-	extern CppAD::vector<smooth_grid_struct> get_smooth_grid(sqlite3*  db);
+	extern CppAD::vector<smooth_grid_struct> get_smooth_grid(
+		sqlite3*                           db             ,
+		const CppAD::vector<density_enum>& density_table  ,
+		const CppAD::vector<prior_struct>& prior_table
+	);
 }
 
 # endif

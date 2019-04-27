@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,6 +17,7 @@ $spell
 	dtime
 	smoothings
 	const
+	cen
 $$
 
 $section The Smooth Grid Table$$
@@ -73,6 +74,10 @@ forward difference w.r.t age
 at the corresponding age and time; see age differences for
 $cref/fixed/fixed_diff/Age Differences/$$ and
 $cref/random/random_diff/Time Differences/$$ effects.
+The corresponding
+$cref/density_id/prior_table/density_id/$$
+cannot specify a censored density; e.g.,
+$cref/cen_gaussian/density_table/density_name/cen_gaussian/$$.
 
 $subhead null$$
 The prior at the maximum age, for each time, is not used may be null.
@@ -85,6 +90,10 @@ forward difference w.r.t time
 at the corresponding age and time; see time differences for
 $cref/fixed/fixed_diff/Time Differences/$$ and
 $cref/random/random_diff/Time Differences/$$ effects.
+The corresponding
+$cref/density_id/prior_table/density_id/$$
+cannot specify a censored density; e.g.,
+$cref/cen_gaussian/density_table/density_name/cen_gaussian/$$.
 
 $subhead null$$
 The prior at the maximum time, for each time, is not used and may be null.
