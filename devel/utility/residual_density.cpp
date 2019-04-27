@@ -232,6 +232,7 @@ residual_struct<Float> residual_density(
 		wres = 0.0;
 		break;
 
+		case cen_gaussian_enum:
 		case gaussian_enum:
 		case laplace_enum:
 		case students_enum:
