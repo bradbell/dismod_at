@@ -26,6 +26,8 @@ then
 	exit 0
 fi
 echo 'First try failed, re-running test with a different random seed:'
+echo 'sleep 1'
+sleep 1
 if @python3_executable@ $user_test
 then
 	echo 'user_test.sh: OK'

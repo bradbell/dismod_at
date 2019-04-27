@@ -96,6 +96,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 const char* density_enum2name[] = {
 	"uniform",
 	"gaussian",
+	"cen_gaussian",
 	"log_gaussian",
 	"laplace",
 	"log_laplace",
@@ -115,6 +116,7 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	// check density names in same order as enum type in get_density_table.hpp
 	assert( string("uniform")      == density_enum2name[uniform_enum] );
 	assert( string("gaussian")     == density_enum2name[gaussian_enum] );
+	assert( string("cen_gaussian") == density_enum2name[cen_gaussian_enum] );
 	assert( string("log_gaussian") == density_enum2name[log_gaussian_enum] );
 	assert( string("laplace")      == density_enum2name[laplace_enum] );
 	assert( string("log_laplace")  == density_enum2name[log_laplace_enum] );

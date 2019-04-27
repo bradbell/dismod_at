@@ -18,6 +18,7 @@ namespace dismod_at {
 	enum density_enum {
 		uniform_enum,
 		gaussian_enum,
+		cen_gaussian_enum,
 		log_gaussian_enum,
 		laplace_enum,
 		log_laplace_enum,

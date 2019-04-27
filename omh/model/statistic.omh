@@ -13,6 +13,7 @@ $spell
 	differencing
 	nu
 	mu
+	cen
 $$
 
 $section Some Statistical Function Definitions$$
@@ -174,6 +175,25 @@ see $cref/Weighted Residual Function, R
 	/statistic
 	/Weighted Residual Function, R
 /$$.
+
+$subhead Censored Gaussian$$
+If the density name is $code cen_gaussian$$
+the log-density function for values $latex y > 0$$ is the
+same as for the $code gaussian$$ case.
+The log-density function for the values $latex y \leq 0$$ is
+$latex \[
+D(y, \mu, \delta, d)
+=
+\log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
+\] $$
+where $latex \R{erfc}$$ is the complementary error function;
+see the Gaussian case for the
+$cref/censored density
+	/censor_density
+	/Gaussian
+	/Censored Density, G(y,mu,delta,c)
+/$$
+where the censoring value is $latex c = 0$$.
 
 $subhead Log-Gaussian$$
 If the density name is $code log_gaussian$$,

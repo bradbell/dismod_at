@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin density_table$$
 $spell
 	covariate
+	cen
 $$
 
 $section The Density Table$$
@@ -30,13 +31,17 @@ $cref/prior/prior_table/density_id/$$ and
 $cref/data/data_table/density_id/$$ tables
 must appear in the density table.
 Below is a list of the possible density names
-and their corresponding meaning.
+with a link to the corresponding meaning:
 
 $subhead uniform$$
 $cref/Uniform/statistic/Log-Density Function, D/Uniform/$$
 
 $subhead gaussian$$
 $cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$
+
+$subhead cen_gaussian$$
+$cref/Censored Gaussian/statistic/Log-Density Function, D/Censored Gaussian/$$
+(Under Construction)
 
 $subhead log_gaussian$$
 $cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
