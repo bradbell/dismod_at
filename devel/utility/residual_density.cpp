@@ -20,13 +20,14 @@ $spell
 	fabs
 	bool
 	var
+	diff
 $$
 
 $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%z%, %y%, %mu%, %delta%, %d_id%, %d_eta%, %d_nu%, %index%, %difference%
+	%z%, %y%, %mu%, %delta%, %d_id%, %d_eta%, %d_nu%, %index%, %diff%
 )%$$
 
 $head Float$$
@@ -38,16 +39,16 @@ This argument has prototype
 $codei%
 	const %Float%& z
 %$$
-If $icode difference$$ is true,
+If $icode diff$$ is true,
 it specifies the first random variable in the difference.
-This argument is not used when $icode difference$$ is false.
+This argument is not used when $icode diff$$ is false.
 
 $head y$$
 This argument has prototype
 $codei%
 	const %Float%& y
 %$$
-If $icode difference$$ is true,
+If $icode diff$$ is true,
 it specifies the second random variable in the difference.
 Otherwise it specifies the only random variable.
 
@@ -56,7 +57,7 @@ This argument has prototype
 $codei%
 	const %Float%& mu
 %$$
-If $icode difference$$ is true, it is the central value for the difference.
+If $icode diff$$ is true, it is the central value for the difference.
 Otherwise, it is the central value for $icode y$$.
 
 $head delta$$
@@ -104,7 +105,7 @@ This argument has prototype
 $codei%
 	bool %difference%
 %$$
-If $icode difference$$ is true,
+If $icode diff$$ is true,
 this calculation is for the difference of the
 random variables $latex z$$ and $latex y$$.
 Otherwise it is just for the random variable $latex y$$.
@@ -144,7 +145,7 @@ $code size_t$$ $cnext
 $tend
 
 $subhead wres$$
-If $icode difference$$ is false, $icode wres$$ is the value of
+If $icode diff$$ is false, $icode wres$$ is the value of
 $latex \[
 	R(y, \mu, \delta, d)
 \]$$
@@ -152,13 +153,13 @@ see $cref/weighted residual function
 	/statistic
 	/Weighted Residual Function, R
 /$$.
-If $icode difference$$ is true, $icode wres$$ is the value of
+If $icode diff$$ is true, $icode wres$$ is the value of
 $latex \[
 	R(z, y, \mu, \delta, d)
 \]$$
 
 $subhead logden$$
-If $icode difference$$ is false, the log-density function
+If $icode diff$$ is false, the log-density function
 $latex \[
 	D(y, \mu, \delta, d)
 \]$$
@@ -170,7 +171,7 @@ see $cref/log-density function
 	/statistic
 	/Log-Density Function, D
 /$$.
-If $icode difference$$ is true, the log-density function
+If $icode diff$$ is true, the log-density function
 $latex \[
 	D(z, y, \mu, \delta, d)
 \]$$
@@ -220,7 +221,7 @@ residual_struct<Float> residual_density(
 	const Float&       d_eta      ,
 	const Float&       d_nu       ,
 	size_t             index      ,
-	bool               difference )
+	bool               diff       )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
 	Float tiny( 10.0 / std::numeric_limits<double>::max() );
 
@@ -239,7 +240,7 @@ residual_struct<Float> residual_density(
 		print_forward_if_not_positive("delta", delta);
 		assert( delta > 0.0 );
 		sigma = delta;
-		if( difference )
+		if( diff )
 			wres  = ( z - y - mu) / sigma;
 		else
 			wres = (y - mu) / sigma;
@@ -249,11 +250,11 @@ residual_struct<Float> residual_density(
 		case log_laplace_enum:
 		case log_students_enum:
 		print_forward_if_not_positive("delta", delta);
-		if( difference )
+		if( diff )
 			print_forward_if_not_positive("z", z + tiny);
 		print_forward_if_not_positive("mu", mu + tiny);
 		assert( delta > 0.0 );
-		if( difference )
+		if( diff )
 		{	sigma = delta;
 			wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / sigma;
 		}
@@ -284,7 +285,7 @@ residual_struct<Float> residual_density(
 		break;
 
 		case cen_gaussian_enum:
-		assert( ! difference );
+		assert( ! diff );
 		if( y <= 0 )
 		{	Float erfc     = 1.0 - erf( mu / ( delta * std::sqrt(2.0) ) );
 			logden_smooth  = log(erfc / 2.0 );
@@ -337,7 +338,7 @@ residual_struct<Float> residual_density(
 		const Float&       d_eta        ,                     \
 		const Float&       d_nu         ,                     \
 		size_t             id           ,                     \
-		bool               difference                         \
+		bool               diff                               \
 	);
 
 // instantiations
