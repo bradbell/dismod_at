@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -276,6 +276,20 @@ residual_struct<Float> residual_density(
 
 		case gaussian_enum:
 		case log_gaussian_enum:
+		{	double pi2 = 8.0 * std::atan(1.0);
+			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres/ 2.0;
+			logden_sub_abs = 0.0;
+		}
+		break;
+
+		case cen_gaussian_enum:
+		assert( ! difference );
+		if( y <= 0 )
+		{	Float erfc     = 1.0 - erf( mu / ( delta * std::sqrt(2.0) ) );
+			logden_smooth  = log(erfc / 2.0 );
+			logden_sub_abs = 0.0;
+		}
+		else
 		{	double pi2 = 8.0 * std::atan(1.0);
 			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres/ 2.0;
 			logden_sub_abs = 0.0;

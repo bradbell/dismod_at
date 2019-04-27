@@ -177,12 +177,16 @@ see $cref/Weighted Residual Function, R
 /$$.
 
 $subhead Censored Gaussian$$
-If the density name is $code cen_gaussian$$
-the log-density function for values $latex y > 0$$ is the
-same as for the $code gaussian$$ case.
-The log-density function for the values $latex y \leq 0$$ is
+If the density name is $code cen_gaussian$$,
+the log-density function is not defined for differences.
+The log-density function for values $latex y > 0$$
+is the same as for the $code gaussian$$ case.
+The log-density function for the values $latex y \leq 0$$,
+is defined by
 $latex \[
 D(y, \mu, \delta, d)
+=
+D(z, y, \mu, \delta, d)
 =
 \log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
 \] $$

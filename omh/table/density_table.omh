@@ -62,11 +62,16 @@ $head Notation$$
 
 $subhead Linear$$
 We refer to the following densities as linear:
-$code gaussian$$, $code laplace$$, $code students$$.
+$code gaussian$$,
+$code cen_gaussian$$,
+$code laplace$$,
+$code students$$.
 
 $subhead Log Scaled$$
 We refer to the following densities as log scaled:
-$code log_gaussian$$, $code log_laplace$$, $code log_students$$.
+$code log_gaussian$$,
+$code log_laplace$$,
+$code log_students$$.
 
 
 $children%example/table/density_table.py

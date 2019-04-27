@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,6 +17,7 @@ $spell
 	enum
 	gsl_rng
 	bool
+	cen
 $$
 
 $section Simulate a Dismod_at Random Distribution$$
@@ -36,6 +37,8 @@ $codei%
 If it is true, this simulation is for a difference,
 otherwise it is for a value; see
 $cref/delta/sim_random/delta/difference/$$ below.
+If $icode density$$ is $code cen_gaussian$$,
+$icode difference$$ must be false.
 
 $head density$$
 This argument has prototype
@@ -47,19 +50,28 @@ for the distribution that we are simulating.
 The following table specifies the meaning of this choice:
 $table
 $code uniform_enum$$ $pre $$ $cnext
-	not allowed $rnext
+not allowed
+$rnext
 $code gaussian_enum$$ $pre  $$ $cnext
-	$cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$ $rnext
-$code laplace_enum$$ $pre  $$ $cnext
-	$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$ $rnext
-$code students_enum$$ $pre  $$ $cnext
-	$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ $rnext
+$cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$
+$rnext
+$code cen_gaussian_enum$$ $pre  $$ $cnext
+$cref/Censored Gaussian/statistic/Log-Density Function, D/Censored Gaussian/$$
+$rnext
 $code log_gaussian_enum$$ $pre  $$ $cnext
-	$cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$ $rnext
+$cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
+$rnext
+$code laplace_enum$$ $pre  $$ $cnext
+$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$
+$rnext
 $code log_laplace_enum$$ $pre  $$ $cnext
-	$cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$ $rnext
+$cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
+$rnext
+$code students_enum$$ $pre  $$ $cnext
+$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$
+$rnext
 $code log_students_enum$$ $pre  $$ $cnext
-	$cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
+$cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
 $tend
 
 $head mu$$
@@ -68,10 +80,11 @@ $codei%
 	double %mu%
 %$$
 In the case were $icode density$$ is
-$code gaussian_enum$$, $code laplace_enum$$ or $code students_enum$$,
-it is the mean for the distribution that we are simulating.
+$cref/linear/density_table/Notation/Linear/$$,
+it is the mean for the distribution that we are simulating
+(before possible censoring).
 Otherwise $codei%log( %mu% + %eta% )%$$ is the mean of the
-log-transformed data.
+log of the data we are simulating.
 
 $head delta$$
 This argument has prototype
@@ -81,14 +94,15 @@ $codei%
 It is assumed $icode delta$$ is greater than zero and not infinity.
 
 $subhead Linear$$
-In the case were $icode density$$ is
-$code gaussian_enum$$, $code laplace_enum$$, $code students_enum$$,
+In the case were $icode density$$ is linear,
 $icode delta$$
-it is the standard deviation for
-$icode%z% - %mu%$$.
+it is the standard deviation for $icode%z% - %mu%$$
+(before possible censoring).
 
 $subhead difference$$
-If the density is a log density, and difference is true,
+If the density is
+$cref/log scaled/density_table/Notation/Log Scaled/$$,
+and difference is true,
 $icode delta$$ is the standard deviation for
 $codei%
 	log( %z% + %eta% ) - log( %mu% + %eta% )
@@ -163,11 +177,14 @@ double sim_random(
 	//
 	if( density == gaussian_enum )
 		return mu + gsl_ran_gaussian(rng, delta);
+	if( density == cen_gaussian_enum )
+		return std::max(0.0, mu + gsl_ran_gaussian(rng, delta) );
 	//
 	if( density == laplace_enum )
 	{	double width = delta / std::sqrt(2.0);
 		return mu + gsl_ran_laplace(rng, width);
 	}
+	//
 	if( density == students_enum )
 	{	assert( nu > 2.0 );
 		double x = gsl_ran_tdist(rng, nu);

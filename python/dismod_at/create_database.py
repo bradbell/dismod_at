@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -421,7 +421,8 @@ def create_database(
 		['students'],
 		['log_gaussian'],
 		['log_laplace'],
-		['log_students']
+		['log_students'],
+		['cen_gaussian']
 	]
 	tbl_name = 'density'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
