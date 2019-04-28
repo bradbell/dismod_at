@@ -109,6 +109,14 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -267,14 +275,11 @@ def example_db (file_name) :
 	return
 # ===========================================================================
 # Run the init command to create the var table
-file_name      = 'example.db'
+file_name = 'example.db'
 example_db(file_name)
-program        = '../../devel/dismod_at'
-cmd            = [ program, file_name, 'init' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+#
+program = '../../devel/dismod_at'
+system_command([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
 new             = False
@@ -320,20 +325,8 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Simulate and then fit the data
-for command in [ 'simulate', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'simulate' :
-		number_simulate = '1'
-		cmd.append(number_simulate)
-	if command == 'fit' :
-		variables = 'fixed'
-		cmd.append(variables)
-		simulate_index = '0';
-		cmd.append(simulate_index)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+system_command([ program, file_name, 'simulate', '1' ])
+system_command([ program, file_name, 'fit', 'fixed' , '0' ])
 # -----------------------------------------------------------------------
 # check fit results
 new          = False

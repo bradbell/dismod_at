@@ -423,6 +423,14 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ------------------------------------------------------------------------
 def log_bilinear(grid_value, a, t) :
 	# denominator
@@ -998,25 +1006,17 @@ def create_truth_var_table() :
 	return
 # ===========================================================================
 # Run the init command to create the var table
-file_name      = 'example.db'
+file_name = 'example.db'
 example_db(file_name)
-program        = '../../devel/dismod_at'
-cmd            = [ program, file_name, 'init' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+#
+program = '../../devel/dismod_at'
+system_command([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # create truth_var table
 create_truth_var_table()
 # -----------------------------------------------------------------------------
 # create predict table
-cmd            = [ program, file_name, 'predict', 'truth_var' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at predict command failed')
-#
+system_command([ program, file_name, 'predict', 'truth_var' ])
 # -----------------------------------------------------------------------------
 # add data to data table
 new             = False
@@ -1081,13 +1081,7 @@ dismod_at.sql_command(connection, command)
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list )
 # -----------------------------------------------------------------------------
 # re-initailize to get data_subset table to correspond to new data
-file_name      = 'example.db'
-program        = '../../devel/dismod_at'
-cmd            = [ program, file_name, 'init' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+system_command([ program, file_name, 'init' ])
 #
 # Initializing erases the truth_var table.
 # Create a new version of truth_var table that will correspond to fit
@@ -1120,46 +1114,28 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 #
 # copy start_var table to scale_var table
-cmd = [ program, file_name, 'set' , 'scale_var', 'start_var' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at set command failed')
+system_command([ program, file_name, 'set' , 'scale_var', 'start_var' ])
 #
 # Simulate a data set corresponding to the truth
 number_simulate = '1'
-cmd             = [ program, file_name, 'simulate', number_simulate ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at simulate command failed')
+system_command([ program, file_name, 'simulate', number_simulate ])
 #
 # Do a fit with no random effects
 cmd            = [ program, file_name, 'fit', 'fixed' ]
 if fit_with_noise_in_data :
 	simulate_index = '0'
 	cmd += [ simulate_index ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at fit command failed')
+system_command(cmd)
 #
 # copy fit_var table to start_var table
-cmd = [ program, file_name, 'set' , 'start_var', 'fit_var' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at set command failed')
+system_command([ program, file_name, 'set' , 'start_var', 'fit_var' ])
 #
 # Do a fit with random effects
 cmd            = [ program, file_name, 'fit', 'both' ]
 if fit_with_noise_in_data :
 	simulate_index = '0'
 	cmd += [ simulate_index ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at fit command failed')
+system_command(cmd)
 # -----------------------------------------------------------------------------
 # compare truth and fit
 file_name      = 'example.db'

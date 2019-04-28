@@ -119,6 +119,14 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -282,16 +290,10 @@ def example_db (file_name) :
 # Create database and run init, start, fit with just fixed effects
 file_name = 'example.db'
 example_db(file_name)
-program        = '../../devel/dismod_at'
-for command in [ 'init', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'fixed'
-		cmd.append(variables)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+#
+program = '../../devel/dismod_at'
+system_command([ program, file_name, 'init' ])
+system_command([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
@@ -333,17 +335,10 @@ for var_id in range( n_var ) :
 # -----------------------------------------------------------------------
 # Copy results of fit fixed to start table
 cmd = '../../devel/dismod_at example.db set start_var fit_var'
-print(cmd)
-flag = subprocess.call( cmd.split() )
-if flag != 0 :
-	sys.exit('The dismod_at set command failed')
-# -----------------------------------------------------------------------
+system_command([ program, file_name, 'set', 'start_var', 'fit_var' ])
+#
 # Fit both fixed and random effects
-cmd = '../../devel/dismod_at example.db fit both'
-print(cmd)
-flag = subprocess.call( cmd.split() )
-if flag != 0 :
-	sys.exit('The dismod_at fit command failed')
+system_command([ program, file_name, 'fit', 'both' ])
 # -----------------------------------------------------------------------
 # check the non-zero random effects solution
 #

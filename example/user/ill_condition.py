@@ -100,6 +100,14 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -230,23 +238,15 @@ def example_db (file_name) :
 	return
 # ===========================================================================
 # create example.db
-file_name      = 'example.db'
+file_name = 'example.db'
 example_db(file_name)
+program = '../../devel/dismod_at'
 #
-# init command
-program        = '../../devel/dismod_at'
-cmd            = [ program, file_name, 'init' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+# init
+system_command([ program, file_name, 'init' ])
 #
-# fit command
-cmd            = [ program, file_name, 'fit', 'fixed' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at fit command failed')
+# fit fixed
+system_command([ program, file_name, 'fit', 'fixed' ])
 #
 # read database
 new             = False
@@ -275,18 +275,10 @@ for var_id in range( len(var_table) ) :
 		assert abs( 1.0 - fit_value / chi_bar ) > 1.0
 #
 # rescale
-cmd            = [ program, file_name, 'set', 'scale_var', 'fit_var' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at set command failed')
+system_command([ program, file_name, 'set', 'scale_var', 'fit_var' ])
 #
-# fit command
-cmd            = [ program, file_name, 'fit', 'fixed' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at fit command failed')
+# fit fixed
+system_command([ program, file_name, 'fit', 'fixed' ])
 #
 # read new fit values
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
