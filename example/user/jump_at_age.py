@@ -247,8 +247,6 @@ def example_db (file_name) :
 		option_table
 	)
 	# ----------------------------------------------------------------------
-	n_smooth  = len( smooth_table )
-	return
 # ===========================================================================
 file_name      = 'example.db'
 example_db(file_name)

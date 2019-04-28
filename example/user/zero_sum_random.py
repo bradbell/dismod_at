@@ -235,8 +235,6 @@ def example_db (file_name) :
 		option_table
 	)
 	# ----------------------------------------------------------------------
-	n_smooth  = len( smooth_table )
-	return
 # ===========================================================================
 # Create database and run init, start, fit with zero sum for random effects
 file_name = 'example.db'
