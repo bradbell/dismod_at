@@ -27,7 +27,7 @@ $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$
 $icode%residual% = residual_density(
-	%z%, %y%, %mu%, %delta%, %d_id%, %d_eta%, %d_nu%, %index%, %diff%
+	%z%, %y%, %mu%, %delta%, %d_id%, %d_eta%, %d_nu%, %index%, %diff%, %prior%
 )%$$
 
 $head Float$$
@@ -73,12 +73,13 @@ This argument has prototype
 $codei%
 	density_enum %d_id%
 %$$
-This value is equal to the corresponding
-$cref/density_id/prior_table/density_id/$$.
+If $icode prior$$ is true, this refers to the
+$cref/density_id/prior_table/density_id/$$ in a prior table.
+Otherwise, it refers to the
+$cref/density_id/data_table/density_id/$$ in a data table.
 
 $head d_eta$$
-If the density $icode d_id$$ corresponds to
-$code log_gaussian$$, $code log_laplace$$, or $code log_students$$,
+If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
 $icode eta$$ specifies the offset in the log transformation.
 Otherwise it is not used.
 
@@ -100,15 +101,21 @@ plus zero for value priors,
 plus one for age difference prior, and
 plus two for time difference prior.
 
-$head difference$$
+$head diff$$
 This argument has prototype
 $codei%
-	bool %difference%
+	bool %diff%
 %$$
 If $icode diff$$ is true,
 this calculation is for the difference of the
 random variables $latex z$$ and $latex y$$.
 Otherwise it is just for the random variable $latex y$$.
+
+$head prior$$
+If $icode prior$$ is true,
+this a prior density.
+Otherwise, it is a data density.
+If it is a data density, $icode diff$$ must be false.
 
 $head residual$$
 The return value has prototype
@@ -221,11 +228,12 @@ residual_struct<Float> residual_density(
 	const Float&       d_eta      ,
 	const Float&       d_nu       ,
 	size_t             index      ,
-	bool               diff       )
+	bool               diff       ,
+	bool               prior      )
 {	Float nan(std::numeric_limits<double>::quiet_NaN());
 	Float tiny( 10.0 / std::numeric_limits<double>::max() );
 
-	Float wres = nan;
+	Float wres  = nan;
 	Float sigma = nan;
 	switch( d_id )
 	{
@@ -255,11 +263,16 @@ residual_struct<Float> residual_density(
 		print_forward_if_not_positive("mu", mu + tiny);
 		assert( delta > 0.0 );
 		if( diff )
-		{	sigma = delta;
+		{	assert(prior);
+			sigma = delta;
 			wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / sigma;
 		}
-		else
+		else if( prior )
 		{	sigma = log( 1.0 + delta / (mu + d_eta) );
+			wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
+		}
+		else // data case
+		{	sigma = log( 1.0 + delta / (y + d_eta) );
 			wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
 		}
 		break;
@@ -267,7 +280,7 @@ residual_struct<Float> residual_density(
 		default:
 		assert(false);
 	}
-	Float logden_smooth = nan;
+	Float logden_smooth  = nan;
 	Float logden_sub_abs = nan;
 	switch( d_id )
 	{
@@ -338,7 +351,8 @@ residual_struct<Float> residual_density(
 		const Float&       d_eta        ,                     \
 		const Float&       d_nu         ,                     \
 		size_t             id           ,                     \
-		bool               diff                               \
+		bool               diff         ,                     \
+		bool               prior                              \
 	);
 
 // instantiations

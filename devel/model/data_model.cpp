@@ -795,22 +795,20 @@ residual_struct<Float> data_model::like_one(
 	}
 	//
 	Float not_used;
-	bool difference = false;
+	bool diff  = false;
+	bool prior = false;
 	struct residual_struct<Float> residual = residual_density(
 		not_used,
-		avg,
 		Float(meas_value),
+		avg,
 		delta_out,
 		density,
 		Float(eta),
 		Float(nu),
 		subset_id,
-		difference
+		diff,
+		prior
 	);
-	//
-	// switch the sign of the residual because it is computed as
-	// model minus data (to avoid having model scale the variance)
-	residual.wres = - residual.wres;
 	//
 	return residual;
 }

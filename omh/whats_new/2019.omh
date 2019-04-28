@@ -25,6 +25,17 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head censor branch$$
+$list number$$
+Change the definition of the
+$cref/log-transformed standard deviation
+	/statistic
+	/Log-Transformed Standard Deviation, sigma
+/$$
+so that it is different for data than for priors.
+This avoids the need for reversed residuals.
+$lend
+
 $head 04-27$$
 Fix bug in previous change to density table
 (should no longer need densities that are not used).
@@ -186,12 +197,8 @@ file written by the $code db2csv$$ command.
 $lnext
 The discussion of data
 $cref/weighted residuals/data_like/Weighted Residual and Likelihood/$$
-was improved by defining
-$cref/reversed residuals
-	/statistic
-	/Weighted Residual Function, R
-	/Reversed Residual
-/$$.
+was improved by defining reversed
+$cref/weighted residuals/statistic/Weighted Residual Function, R/$$.
 $lend
 
 $head 04-08$$

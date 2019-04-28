@@ -65,11 +65,21 @@ for the offset and degrees corresponding to the same entry in the
 data or prior table.
 
 $head Log-Transformed Standard Deviation, sigma$$
-We define the log-transformed standard deviation by
+If a density is being applied to a prior
+(its $cref/density_id/prior_table/density_id/$$ appears in the prior table)
+we define the log-transformed standard deviation by
 $latex \[
-\sigma( \mu, \delta , \eta )
+\sigma( y, \mu, \delta , \eta )
 =
 \log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
+\] $$
+If a density is being applied to data
+(its $cref/density_id/data_table/density_id/$$ appears in the data table)
+we define the log-transformed standard deviation by
+$latex \[
+\sigma( y, \mu, \delta , \eta )
+=
+\log ( y + \eta + \delta ) - \log ( y + \eta )
 \] $$
 
 $head Weighted Residual Function, R$$
@@ -96,7 +106,7 @@ $latex \[
 	\frac{
 		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
 	}{
-		\sigma( \mu , \delta , \eta[d] )
+		\sigma( y, \mu , \delta , \eta[d] )
 	}
 \] $$
 
@@ -125,28 +135,6 @@ $latex \[
 		\delta
 	}
 \] $$
-
-$subhead Reversed Residual$$
-In the log scaled case, where $latex z$$ is not present,
-it may be advantageous to switch the roles of $latex y$$ and $latex \mu$$.
-For example,
-suppose that $latex \mu$$ depends on the $cref model_variables$$,
-$latex y$$ is measured data,
-In this case $latex \sigma( \mu , \delta , \eta )$$ depends on the model
-variables and the feedback between the estimation of the mean and variance
-can make estimation unstable.
-This can be avoided by using the reversed residual
-$latex \[
-	- R(\mu, y, \delta, d)
-	=
-	\frac{
-		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
-	}{
-		\sigma( y, \delta , \eta[d] )
-	}
-\]$$
-Note that this function has the same sign as
-$latex R(y, \mu, \delta, d)$$.
 
 $head Log-Density Function, D$$
 In the discussion below,

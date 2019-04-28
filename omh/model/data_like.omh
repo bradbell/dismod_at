@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -212,37 +212,29 @@ $latex \[
 
 
 $head Weighted Residual and Likelihood$$
-Given the random effects $latex u$$ and the fixed effects $latex \theta$$,
-we use the
-$cref/reversed residual
-	/statistic
-	/Weighted Residual Function, R
-	/Reversed Residual
-/$$
+The $cref/weighted residual/statistic/Weighted Residual Function, R/$$
+is a function of the random effects $latex u$$
+and the fixed effects $latex \theta$$,
 $latex \[
-- R [
-	A_i ( u, \theta )    \W{,}
+ R [
 	y_i                  \W{,}
+	A_i ( u, \theta )    \W{,}
 	\delta_i ( \theta )  \W{,}
 	d_i
 ]
 \] $$
-Note that $latex y_i$$ ($latex \mu$$) here is plays the role of
-$latex \mu$$ ($latex y$$) in the function
-$latex R(y, \mu , \delta , d)$$.
-This is so that
-$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
-does not depend on the $cref model_variables$$.
-Also note the negative sign in front of the weighted residual is so that
-it has the same sign as $latex y_i - A_i ( u, \theta )$$
-(data minus model).
+Note that $latex y_i$$, not $latex A_i ( u , \theta )$$,
+is used in the corresponding definition of
+$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$.
+This is so that, in the log scaled case,
+$icode sigma$$ does not depend on the $cref model_variables$$.
 The likelihood is
 $latex \[
 \B{p}( y_i | u , \theta )
 =
 \exp \left( D [
-	A_i ( u, \theta )    \W{,}
 	y_i                  \W{,}
+	A_i ( u, \theta )    \W{,}
 	\delta_i ( \theta )  \W{,}
 	d_i
 ] \right)
