@@ -118,6 +118,14 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -234,32 +242,17 @@ example_db(file_name)
 program   = '../../devel/dismod_at'
 #
 # init
-cmd       = [ program, file_name, 'init' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+system_command([ program, file_name, 'init' ])
 #
 # set truth_var prior_mean
-cmd       = [ program, file_name, 'set', 'truth_var', 'prior_mean' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at set command failed')
+system_command([ program, file_name, 'set', 'truth_var', 'prior_mean' ])
 #
 # simulate number_sample
-cmd       = [ program, file_name, 'simulate', str(number_sample) ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at simulate command failed')
+system_command([ program, file_name, 'simulate', str(number_sample) ])
 #
 # sample simulate number_sample
-cmd       = [ program, file_name, 'sample', 'simulate', str(number_sample) ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at sample command failed')
+ns_str = str(number_sample)
+system_command([ program, file_name, 'sample', 'simulate', ns_str ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

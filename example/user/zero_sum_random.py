@@ -58,6 +58,14 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ------------------------------------------------------------------------
 python_seed = int( time.time() )
 random.seed( python_seed )
@@ -239,20 +247,10 @@ def example_db (file_name) :
 # Create database and run init, start, fit with zero sum for random effects
 file_name = 'example.db'
 example_db(file_name)
-program        = '../../devel/dismod_at'
-fit_count      = 0
-for command in [ 'init', 'fit', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		if fit_count == 0 :
-			variables = 'fixed' # not necessary, but here for testing
-		else :
-			variables = 'both'
-		cmd.append(variables)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+#
+program = '../../devel/dismod_at'
+system_command([ program, file_name, 'init' ])
+system_command([ program, file_name, 'fit', 'both' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

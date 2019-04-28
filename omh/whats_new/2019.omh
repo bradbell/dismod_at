@@ -26,6 +26,12 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$head 04-28$$
+Remove some dead code that was repeated between different
+$cref user$$ examples.
+In addition, use a local $code system_command$$ function
+to simplify the user examples.
+
 $head 04-27$$
 $list number$$
 Add the $cref/cen_gaussian/density_table/density_name/cen_gaussian/$$

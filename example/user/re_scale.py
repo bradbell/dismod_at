@@ -47,6 +47,14 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ---------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -193,26 +201,22 @@ def example_db (file_name) :
 file_name  = 'example.db'
 example_db(file_name)
 #
-program   = '../../devel/dismod_at'
-set_count = 0
-for command in [ 'init', 'set', 'fit', 'set', 'set', 'set', 'fit' ] :
-	cmd  = [ program, file_name, command ]
-	if command == 'set' :
-		set_count += 1
-		if set_count == 1 :
-			cmd +=  [ 'option' , 'max_num_iter_fixed', '1' ]
-		if set_count == 2 :
-			cmd +=  [ 'scale_var' , 'fit_var' ]
-		if set_count == 3 :
-			cmd +=  [ 'option' , 'max_num_iter_fixed', '30' ]
-		if set_count == 4 :
-			cmd +=  [ 'option' , 'warn_on_stderr', 'true' ]
-	if command == 'fit' :
-		cmd.append('both')
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+program = '../../devel/dismod_at'
+system_command([ program, file_name, 'init' ])
+system_command([
+	program, file_name, 'set', 'option', 'max_num_iter_fixed', '1'
+])
+system_command([ program, file_name, 'fit', 'both' ])
+system_command([
+	program, file_name, 'set', 'scale_var', 'fit_var'
+])
+system_command([
+	program, file_name, 'set', 'option', 'max_num_iter_fixed', '30'
+])
+system_command([
+	program, file_name, 'set', 'option', 'warn_on_stderr', 'true'
+])
+system_command([ program, file_name, 'fit', 'both' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
