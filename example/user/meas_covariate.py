@@ -266,15 +266,6 @@ def example_db (file_name) :
 		option_table
 	)
 	# ----------------------------------------------------------------------
-	n_smooth  = len( smooth_table )
-	rate_true = []
-	for rate_id in range( len( data_table ) ) :
-		# for this particular example
-		data_id    = rate_id
-		meas_value = data_table[data_id]['meas_value']
-		rate_true.append(meas_value)
-	#
-	return
 # ===========================================================================
 # Note that this process uses the fit results as the truth for simulated data
 # The fit_var table corresponds to fitting with no noise.
