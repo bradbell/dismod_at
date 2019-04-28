@@ -198,6 +198,14 @@ local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><fon
 <i><font color="#9A1900"># change into the build/example/user directory</font></i>
 distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+<i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># run a system command</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">system_command</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
+     flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> command <font color="#990000">)</font>
+     <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
+          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'command failed: flag = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>flag<font color="#990000">))</font>
+     <b><font color="#0000FF">return</font></b>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Note that the a, t values are not used for this example</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">example_db</font></b> <font color="#990000">(</font>file_name<font color="#990000">)</font> <font color="#990000">:</font>
@@ -361,16 +369,10 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 <i><font color="#9A1900"># Create database and run init, start, fit with just fixed effects</font></i>
 file_name <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
 <b><font color="#000000">example_db</font></b><font color="#990000">(</font>file_name<font color="#990000">)</font>
-program        <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
-<b><font color="#0000FF">for</font></b> command <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'init'</font><font color="#990000">,</font> <font color="#FF0000">'fit'</font> <font color="#990000">]</font> <font color="#990000">:</font>
-     cmd <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> command <font color="#990000">]</font>
-     <b><font color="#0000FF">if</font></b> command <font color="#990000">==</font> <font color="#FF0000">'fit'</font> <font color="#990000">:</font>
-          variables <font color="#990000">=</font> <font color="#FF0000">'fixed'</font>
-          cmd<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>variables<font color="#990000">)</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
-     flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
-     <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at '</font> <font color="#990000">+</font> command <font color="#990000">+</font> <font color="#FF0000">' command failed'</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+program <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># connect to database</font></i>
 new             <font color="#990000">=</font> False
@@ -412,17 +414,10 @@ n_var <font color="#990000">=</font> <b><font color="#000000">len</font></b><fon
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Copy results of fit fixed to start table</font></i>
 cmd <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at example.db set start_var fit_var'</font>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font>
-flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd<font color="#990000">.</font><b><font color="#000000">split</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at set command failed'</font><font color="#990000">)</font>
-<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'fit_var'</font> <font color="#990000">])</font>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># Fit both fixed and random effects</font></i>
-cmd <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at example.db fit both'</font>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font>
-flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd<font color="#990000">.</font><b><font color="#000000">split</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at fit command failed'</font><font color="#990000">)</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font> <font color="#990000">])</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># check the non-zero random effects solution</font></i>
 <i><font color="#9A1900">#</font></i>
