@@ -71,6 +71,7 @@ $children%example/user/csv2db.py
 	%example/user/change_grid.py
 	%example/user/lasso_covariate.py
 	%example/user/students.py
+	%example/user/censor.py
 	%example/user/cascade.py
 	%example/user/predict_fit.py
 	%example/user/predict_mulcov.py
@@ -101,7 +102,10 @@ $rref user_jump_at_age.py$$
 $rref user_change_grid.py$$
 $rref user_lasso_covariate.py$$
 $rref user_students.py$$
+$rref user_censor.py$$
 $rref user_cascade.py$$
+$rref user_predict_fit.py$$
+$rref user_predict_mulcov.py$$
 $tend
 
 $head More Examples$$
@@ -113,7 +117,6 @@ $rref user_continue_fit.py$$
 $rref user_diff_constraint.py$$
 $rref user_meas_covariate.py$$
 $rref user_no_children.py$$
-$rref user_predict_fit.py$$
 $rref user_zero_sum_random.py$$
 $rref user_re_scale.py$$
 $rref user_speed.py$$

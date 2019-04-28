@@ -18,11 +18,10 @@
 #	exp
 #	Sincidence
 #	std
+#	cen
 # $$
 #
 # $section Fitting Data That Has Negative Values Censored$$
-#
-# $head Under Construction$$
 #
 # $head Purpose$$
 # This example uses the
@@ -57,11 +56,8 @@
 # $head Data Table$$
 # For this example, all the data is
 # $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
-# with a Gaussian density, with mean value
-# $codei%
-#	%iota_reference% * exp( %alpha_income% * x_income )
-# %$$
-# and with standard deviation equal 10% of the mean.
+# with a Gaussian density, with mean $icode iota_true$$
+# and standard deviation $codei%2*%iota_true%$$.
 # The data is then censored, to be specific,
 # values below zero are replaced by the value zero.
 #
@@ -78,7 +74,7 @@
 # BEGIN PYTHON
 # begin problem parameters
 iota_true        = 0.05
-n_data           = 1000      # number of simulated data points
+n_data           = 2000      # number of simulated data points
 random_seed      = 0         # if zero, seed off the clock
 # end problem parameters
 # ------------------------------------------------------------------------
@@ -155,8 +151,10 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
-	# values that are the same for all data rows
-	meas_std = iota_true;
+	# Values that are the same for all data rows
+	# If you change cen_gaussian to gaussian, the test should fail
+	# (because the simultion censors the data)
+	meas_std = 2.0 * iota_true;
 	row = {
 		'node':        'world',
 		'integrand':   'Sincidence',
@@ -271,8 +269,11 @@ fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
 assert len(var_table) == 1
 estimate   = fit_var_table[0]['fit_var_value']
-# check result of the fit
-print(iota_true, estimate, 1.0 - estimate / iota_true)
+if abs( 1.0 - estimate / iota_true ) > 1e-1 :
+	print("random_seed = ", random_seed)
+	print(1.0 - estimate / iota_true)
+	assert False
+# -----------------------------------------------------------------------------
 print('censor.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

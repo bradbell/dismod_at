@@ -15,6 +15,7 @@ FOREACH(user_case
 	asymptotic
 	cascade
 	change_grid
+	censor
 	const_random
 	const_value
 	continue_fit

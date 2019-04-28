@@ -21,6 +21,7 @@ $spell
 	avgint
 	misspecification
 	smoothings
+	cen
 $$
 
 $section Changes and Additions to Dismod_at During 2019$$
@@ -34,6 +35,9 @@ $cref/log-transformed standard deviation
 /$$
 so that it is different for data than for priors.
 This avoids the need for reversed residuals.
+$lnext
+Add the $cref/cen_gaussian/density_table/density_name/cen_gaussian/$$
+density; see the example $cref user_censor.py$$.
 $lend
 
 $head 04-27$$
