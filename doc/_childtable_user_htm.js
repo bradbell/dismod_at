@@ -15,6 +15,7 @@ document.write('\
 <option>user_change_grid.py</option>\
 <option>user_lasso_covariate.py</option>\
 <option>user_students.py</option>\
+<option>user_censor.py</option>\
 <option>user_cascade.py</option>\
 <option>user_predict_fit.py</option>\
 <option>user_predict_mulcov.py</option>\
@@ -45,6 +46,7 @@ function user_child(item)
 		'user_change_grid.py.htm',
 		'user_lasso_covariate.py.htm',
 		'user_students.py.htm',
+		'user_censor.py.htm',
 		'user_cascade.py.htm',
 		'user_predict_fit.py.htm',
 		'user_predict_mulcov.py.htm',

@@ -91,6 +91,18 @@ A:active { color : purple }
      <font color="#008080">string</font>   file_name <font color="#990000">=</font> <font color="#FF0000">"example.db"</font><font color="#990000">;</font>
      <font color="#009900">bool</font>     new_file  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      sqlite3<font color="#990000">*</font> db        <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">open_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new_file<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// density_table</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;dismod_at::density_enum&gt;</font> <b><font color="#000000">density_table</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">);</font>
+     density_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>uniform_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>cen_gaussian_enum<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// prior_table (only density_id is used by get_smooth_grid)</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;dismod_at::prior_struct&gt;</font> <b><font color="#000000">prior_table</font></b><font color="#990000">(</font><font color="#993399">10</font><font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> prior_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> prior_id <font color="#990000">&lt;</font> <font color="#993399">4</font><font color="#990000">;</font> prior_id<font color="#990000">++)</font>
+          prior_table<font color="#990000">[</font>prior_id<font color="#990000">].</font>density_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> <i><font color="#9A1900">// uniform</font></i>
+     <i><font color="#9A1900">// prior_id = 1 is not used for a dage or dtime prior</font></i>
+     prior_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">].</font>density_id <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">;</font> <i><font color="#9A1900">// cen_gaussian</font></i>
 
      <i><font color="#9A1900">// sql commands</font></i>
      <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> sql_cmd<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
@@ -146,8 +158,8 @@ A:active { color : purple }
           smooth_table <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">get_smooth_table</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
 
      <i><font color="#9A1900">// get the smooth_grid table</font></i>
-     vector<font color="#990000">&lt;</font>dismod_at<font color="#990000">::</font>smooth_grid_struct<font color="#990000">&gt;</font>
-          smooth_grid_table <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">get_smooth_grid</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
+     <font color="#008080">vector&lt;dismod_at::smooth_grid_struct&gt;</font> smooth_grid_table <font color="#990000">=</font>
+          dismod_at<font color="#990000">::</font><b><font color="#000000">get_smooth_grid</font></b><font color="#990000">(</font>db<font color="#990000">,</font> density_table<font color="#990000">,</font> prior_table<font color="#990000">);</font>
 
      <i><font color="#9A1900">// extract the smoothing information</font></i>
      <font color="#008080">size_t</font> smooth_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Some Statistical Function Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Some Statistical Function Definitions">
-<meta name="keywords" id="keywords" content=" some statistical function definitions notation z y mu delta eta nu d log-transformed standard deviation sigma weighted residual r value difference reversed log-density uniform gaussian log-gaussian laplace log-laplace student's-t log-student's-t ">
+<meta name="keywords" id="keywords" content=" some statistical function definitions notation z y mu delta eta nu d log-transformed standard deviation sigma weighted residual r value difference log-density uniform gaussian censored log-gaussian laplace log-laplace student's-t log-student's-t ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,10 +78,10 @@ A:active { color : purple }
 <br><a href="statistic.htm#Weighted Residual Function, R" target="_top">Weighted&nbsp;Residual&nbsp;Function,&nbsp;R</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Value" target="_top">Value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Difference" target="_top">Difference</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Reversed Residual" target="_top">Reversed&nbsp;Residual</a>
 <br><a href="statistic.htm#Log-Density Function, D" target="_top">Log-Density&nbsp;Function,&nbsp;D</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Uniform" target="_top">Uniform</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Gaussian" target="_top">Gaussian</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Censored Gaussian" target="_top">Censored&nbsp;Gaussian</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Log-Gaussian" target="_top">Log-Gaussian</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Laplace" target="_top">Laplace</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Log-Laplace" target="_top">Log-Laplace</a>
@@ -203,12 +203,26 @@ data or prior table.
 <br>
 <b><big><a name="Log-Transformed Standard Deviation, sigma" id="Log-Transformed Standard Deviation, sigma">Log-Transformed Standard Deviation, sigma</a></big></b>
 <br>
-We define the log-transformed standard deviation by
+If a density is being applied to a prior
+(its <a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ appears in the prior table)
+we define the log-transformed standard deviation by
 <small>@[@
 
-\sigma( \mu, \delta , \eta )
+\sigma( y, \mu, \delta , \eta )
 =
 \log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
+
+@]@</small>
+If a density is being applied to data
+(its <a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ appears in the data table)
+we define the log-transformed standard deviation by
+<small>@[@
+
+\sigma( y, \mu, \delta , \eta )
+=
+\log ( y + \eta + \delta ) - \log ( y + \eta )
 
 @]@</small>
 
@@ -250,7 +264,7 @@ the weighted residual function for values is
 	\frac{
 		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
 	}{
-		\sigma( \mu , \delta , \eta[d] )
+		\sigma( y, \mu , \delta , \eta[d] )
 	}
 
 @]@</small>
@@ -291,48 +305,6 @@ the weighted residual function for differences is
 	}
 
 @]@</small>
-
-<br>
-<br>
-<big><a name="Weighted Residual Function, R.Reversed Residual" id="Weighted Residual Function, R.Reversed Residual">Reversed Residual</a></big>
-<br>
-In the log scaled case, where <small>@(@
-z
-@)@</small> is not present,
-it may be advantageous to switch the roles of <small>@(@
-y
-@)@</small> and <small>@(@
-\mu
-@)@</small>.
-For example,
-suppose that <small>@(@
-\mu
-@)@</small> depends on the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
-,
-<small>@(@
-y
-@)@</small> is measured data,
-In this case <small>@(@
-\sigma( \mu , \delta , \eta )
-@)@</small> depends on the model
-variables and the feedback between the estimation of the mean and variance
-can make estimation unstable.
-This can be avoided by using the reversed residual
-<small>@[@
-
-	- R(\mu, y, \delta, d)
-	=
-	\frac{
-		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
-	}{
-		\sigma( y, \delta , \eta[d] )
-	}
-
-@]@</small>
-Note that this function has the same sign as
-<small>@(@
-R(y, \mu, \delta, d)
-@)@</small>.
 
 <br>
 <br>
@@ -384,6 +356,39 @@ R
 @)@</small> have the same arguments;
 see <a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>Weighted&nbsp;Residual&nbsp;Function,&nbsp;R</span></a>
 .
+
+<br>
+<br>
+<big><a name="Log-Density Function, D.Censored Gaussian" id="Log-Density Function, D.Censored Gaussian">Censored Gaussian</a></big>
+<br>
+If the density name is <code><font color="blue">cen_gaussian</font></code>,
+the log-density function is not defined for differences.
+The log-density function for values <small>@(@
+y > 0
+@)@</small>
+is the same as for the <code><font color="blue">gaussian</font></code> case.
+The log-density function for the values <small>@(@
+y \leq 0
+@)@</small>,
+is defined by
+<small>@[@
+
+D(y, \mu, \delta, d)
+=
+D(z, y, \mu, \delta, d)
+=
+\log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
+
+@]@</small>
+where <small>@(@
+\R{erfc}
+@)@</small> is the complementary error function;
+see the Gaussian case for the
+<a href="censor_density.htm#Gaussian.Censored Density, G(y,mu,delta,c)" target="_top"><span style='white-space: nowrap'>censored&nbsp;density</span></a>
+
+where the censoring value is <small>@(@
+c = 0
+@)@</small>.
 
 <br>
 <br>

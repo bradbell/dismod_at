@@ -477,19 +477,19 @@ for the log density cases. Otherwise it is
 <br>
 <b><big><a name="Weighted Residual and Likelihood" id="Weighted Residual and Likelihood">Weighted Residual and Likelihood</a></big></b>
 <br>
-Given the random effects <small>@(@
+The <a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
+
+is a function of the random effects <small>@(@
 u
-@)@</small> and the fixed effects <small>@(@
+@)@</small>
+and the fixed effects <small>@(@
 \theta
 @)@</small>,
-we use the
-<a href="statistic.htm#Weighted Residual Function, R.Reversed Residual" target="_top"><span style='white-space: nowrap'>reversed&nbsp;residual</span></a>
-
 <small>@[@
 
-- R [
-	A_i ( u, \theta )    \W{,}
+ R [
 	y_i                  \W{,}
+	A_i ( u, \theta )    \W{,}
 	\delta_i ( \theta )  \W{,}
 	d_i
 ]
@@ -497,35 +497,25 @@ we use the
 @]@</small>
 Note that <small>@(@
 y_i
-@)@</small> (<small>@(@
-\mu
-@)@</small>) here is plays the role of
-<small>@(@
-\mu
-@)@</small> (<small>@(@
-y
-@)@</small>) in the function
-<small>@(@
-R(y, \mu , \delta , d)
-@)@</small>.
-This is so that
+@)@</small>, not <small>@(@
+A_i ( u , \theta )
+@)@</small>,
+is used in the corresponding definition of
 <a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
-
-does not depend on the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 .
-Also note the negative sign in front of the weighted residual is so that
-it has the same sign as <small>@(@
-y_i - A_i ( u, \theta )
-@)@</small>
-(data minus model).
+This is so that, in the log scaled case,
+
+<code><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
+ does not depend on the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
 The likelihood is
 <small>@[@
 
 \B{p}( y_i | u , \theta )
 =
 \exp \left( D [
-	A_i ( u, \theta )    \W{,}
 	y_i                  \W{,}
+	A_i ( u, \theta )    \W{,}
 	\delta_i ( \theta )  \W{,}
 	d_i
 ] \right)

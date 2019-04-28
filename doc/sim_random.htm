@@ -115,6 +115,12 @@ If it is true, this simulation is for a difference,
 otherwise it is for a value; see
 <a href="sim_random.htm#delta.difference" target="_top"><span style='white-space: nowrap'>delta</span></a>
  below.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
+ is <code><font color="blue">cen_gaussian</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+ must be false.
 
 <br>
 <br>
@@ -133,36 +139,48 @@ The following table specifies the meaning of this choice:
 
 <code><font color="blue">uniform_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-	not allowed </td></tr><tr><td align='left'  valign='top'>
+not allowed
+</td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">gaussian_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-	<a href="statistic.htm#Log-Density Function, D.Gaussian" target="_top"><span style='white-space: nowrap'>Gaussian</span></a>
- </td></tr><tr><td align='left'  valign='top'>
+<a href="statistic.htm#Log-Density Function, D.Gaussian" target="_top"><span style='white-space: nowrap'>Gaussian</span></a>
 
-<code><font color="blue">laplace_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+</td></tr><tr><td align='left'  valign='top'>
 
-	<a href="statistic.htm#Log-Density Function, D.Laplace" target="_top"><span style='white-space: nowrap'>Laplace</span></a>
- </td></tr><tr><td align='left'  valign='top'>
+<code><font color="blue">cen_gaussian_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-<code><font color="blue">students_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+<a href="statistic.htm#Log-Density Function, D.Censored Gaussian" target="_top"><span style='white-space: nowrap'>Censored&nbsp;Gaussian</span></a>
 
-	<a href="statistic.htm#Log-Density Function, D.Student's-t" target="_top"><span style='white-space: nowrap'>Student's-t</span></a>
- </td></tr><tr><td align='left'  valign='top'>
+</td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">log_gaussian_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-	<a href="statistic.htm#Log-Density Function, D.Log-Gaussian" target="_top"><span style='white-space: nowrap'>Log-Gaussian</span></a>
- </td></tr><tr><td align='left'  valign='top'>
+<a href="statistic.htm#Log-Density Function, D.Log-Gaussian" target="_top"><span style='white-space: nowrap'>Log-Gaussian</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">laplace_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+<a href="statistic.htm#Log-Density Function, D.Laplace" target="_top"><span style='white-space: nowrap'>Laplace</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">log_laplace_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-	<a href="statistic.htm#Log-Density Function, D.Log-Laplace" target="_top"><span style='white-space: nowrap'>Log-Laplace</span></a>
- </td></tr><tr><td align='left'  valign='top'>
+<a href="statistic.htm#Log-Density Function, D.Log-Laplace" target="_top"><span style='white-space: nowrap'>Log-Laplace</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<code><font color="blue">students_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+
+<a href="statistic.htm#Log-Density Function, D.Student's-t" target="_top"><span style='white-space: nowrap'>Student's-t</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">log_students_enum</font></code> <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
 
-	<a href="statistic.htm#Log-Density Function, D.Log-Student's-t" target="_top"><span style='white-space: nowrap'>Log-Student's-t</span></a>
+<a href="statistic.htm#Log-Density Function, D.Log-Student's-t" target="_top"><span style='white-space: nowrap'>Log-Student's-t</span></a>
 
 </td></tr>
 </table>
@@ -177,12 +195,14 @@ This argument has prototype
 In the case were 
 <code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
  is
-<code><font color="blue">gaussian_enum</font></code>, <code><font color="blue">laplace_enum</font></code> or <code><font color="blue">students_enum</font></code>,
-it is the mean for the distribution that we are simulating.
+<a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+,
+it is the mean for the distribution that we are simulating
+(before possible censoring).
 Otherwise 
 <code><font color="blue"><span style='white-space: nowrap'>log(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)</span></font></code>
  is the mean of the
-log-transformed data.
+log of the data we are simulating.
 
 <br>
 <br>
@@ -203,21 +223,23 @@ It is assumed
 <br>
 In the case were 
 <code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
- is
-<code><font color="blue">gaussian_enum</font></code>, <code><font color="blue">laplace_enum</font></code>, <code><font color="blue">students_enum</font></code>,
+ is linear,
 
 <code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
 
-it is the standard deviation for
-
+it is the standard deviation for 
 <code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i></code>
-.
+
+(before possible censoring).
 
 <br>
 <br>
 <big><a name="delta.difference" id="delta.difference">difference</a></big>
 <br>
-If the density is a log density, and difference is true,
+If the density is
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
+and difference is true,
 
 <code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
  is the standard deviation for

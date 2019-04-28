@@ -90,6 +90,18 @@ A:active { color : purple }
      <font color="#008080">string</font>   file_name <font color="#990000">=</font> <font color="#FF0000">"example.db"</font><font color="#990000">;</font>
      <font color="#009900">bool</font>     new_file  <font color="#990000">=</font> <b><font color="#0000FF">true</font></b><font color="#990000">;</font>
      sqlite3<font color="#990000">*</font> db        <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">open_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new_file<font color="#990000">);</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// density_table</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;dismod_at::density_enum&gt;</font> <b><font color="#000000">density_table</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">);</font>
+     density_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>uniform_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>cen_gaussian_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>gaussian_enum<font color="#990000">;</font>
+     density_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font> <font color="#990000">=</font> dismod_at<font color="#990000">::</font>log_gaussian_enum<font color="#990000">;</font>
+     <i><font color="#9A1900">//</font></i>
+     <i><font color="#9A1900">// prior_table (only density_id is used by get_smooth_grid)</font></i>
+     CppAD<font color="#990000">::</font><font color="#008080">vector&lt;dismod_at::prior_struct&gt;</font> <b><font color="#000000">prior_table</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">);</font>
+     <b><font color="#0000FF">for</font></b><font color="#990000">(</font><font color="#009900">int</font> prior_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font> prior_id <font color="#990000">&lt;</font> <font color="#993399">4</font><font color="#990000">;</font> prior_id<font color="#990000">++)</font>
+          prior_table<font color="#990000">[</font>prior_id<font color="#990000">].</font>density_id <font color="#990000">=</font> prior_id<font color="#990000">;</font>
 
      <i><font color="#9A1900">// sql commands</font></i>
      <b><font color="#0000FF">const</font></b> <font color="#009900">char</font><font color="#990000">*</font> sql_cmd<font color="#990000">[]</font> <font color="#990000">=</font> <font color="#FF0000">{</font>
@@ -127,8 +139,8 @@ A:active { color : purple }
           dismod_at<font color="#990000">::</font><b><font color="#000000">exec_sql_cmd</font></b><font color="#990000">(</font>db<font color="#990000">,</font> sql_cmd<font color="#990000">[</font>i<font color="#990000">]);</font>
 
      <i><font color="#9A1900">// get the smooth table</font></i>
-     vector<font color="#990000">&lt;</font>dismod_at<font color="#990000">::</font>smooth_struct<font color="#990000">&gt;</font>
-          smooth_table <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">get_smooth_table</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
+     <font color="#008080">vector&lt;dismod_at::smooth_struct&gt;</font> smooth_table <font color="#990000">=</font>
+          dismod_at<font color="#990000">::</font><b><font color="#000000">get_smooth_table</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
      ok  <font color="#990000">&amp;=</font> smooth_table<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font>    <font color="#990000">==</font> <font color="#993399">4</font><font color="#990000">;</font>
      ok  <font color="#990000">&amp;=</font> smooth_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>smooth_name    <font color="#990000">==</font> <font color="#FF0000">"constant"</font><font color="#990000">;</font>
      ok  <font color="#990000">&amp;=</font> smooth_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>n_age          <font color="#990000">==</font> <font color="#993399">1</font><font color="#990000">;</font>
@@ -159,8 +171,8 @@ A:active { color : purple }
      ok  <font color="#990000">&amp;=</font> smooth_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">].</font>mulstd_dtime_prior_id   <font color="#990000">==</font> <font color="#993399">11</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      <i><font color="#9A1900">// get the smooth_grid table</font></i>
-     vector<font color="#990000">&lt;</font>dismod_at<font color="#990000">::</font>smooth_grid_struct<font color="#990000">&gt;</font>
-          smooth_grid <font color="#990000">=</font> dismod_at<font color="#990000">::</font><b><font color="#000000">get_smooth_grid</font></b><font color="#990000">(</font>db<font color="#990000">);</font>
+     <font color="#008080">vector&lt;dismod_at::smooth_grid_struct&gt;</font> smooth_grid <font color="#990000">=</font>
+          dismod_at<font color="#990000">::</font><b><font color="#000000">get_smooth_grid</font></b><font color="#990000">(</font>db<font color="#990000">,</font> density_table<font color="#990000">,</font> prior_table<font color="#990000">);</font>
      ok  <font color="#990000">&amp;=</font> smooth_grid<font color="#990000">.</font><b><font color="#000000">size</font></b><font color="#990000">()</font> <font color="#990000">==</font> <font color="#993399">5</font><font color="#990000">;</font>
      <i><font color="#9A1900">//</font></i>
      ok  <font color="#990000">&amp;=</font> smooth_grid<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">].</font>smooth_id      <font color="#990000">==</font>  <font color="#993399">0</font><font color="#990000">;</font>

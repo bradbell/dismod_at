@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Compute Weighted Residual and Log-Density</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Compute Weighted Residual and Log-Density">
-<meta name="keywords" id="keywords" content=" compute weighted residual log-density syntax float z y mu delta d_id d_eta d_nu index difference residual_struct wres logden ">
+<meta name="keywords" id="keywords" content=" compute weighted residual log-density syntax float z y mu delta d_id d_eta d_nu index diff prior residual_struct wres logden ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,7 +77,8 @@ A:active { color : purple }
 <br><a href="residual_density.htm#d_eta" target="_top">d_eta</a>
 <br><a href="residual_density.htm#d_nu" target="_top">d_nu</a>
 <br><a href="residual_density.htm#index" target="_top">index</a>
-<br><a href="residual_density.htm#difference" target="_top">difference</a>
+<br><a href="residual_density.htm#diff" target="_top">diff</a>
+<br><a href="residual_density.htm#prior" target="_top">prior</a>
 <br><a href="residual_density.htm#residual" target="_top">residual</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="residual_density.htm#residual.residual_struct" target="_top">residual_struct</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="residual_density.htm#residual.wres" target="_top">wres</a>
@@ -88,7 +89,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>residual</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;residual_density(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_eta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_nu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_eta</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_nu</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -112,11 +113,11 @@ This argument has prototype
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;z<br>
 </span></font></code>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is true,
 it specifies the first random variable in the difference.
 This argument is not used when 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is false.
 
 <br>
@@ -129,7 +130,7 @@ This argument has prototype
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;y<br>
 </span></font></code>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is true,
 it specifies the second random variable in the difference.
 Otherwise it specifies the only random variable.
@@ -144,7 +145,7 @@ This argument has prototype
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Float</span></font></i><font color="blue"><span style='white-space: nowrap'>&amp;&nbsp;mu<br>
 </span></font></code>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is true, it is the central value for the difference.
 Otherwise, it is the central value for 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
@@ -171,18 +172,21 @@ This argument has prototype
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;density_enum&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-This value is equal to the corresponding
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>prior</span></font></i></code>
+ is true, this refers to the
 <a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
-.
+ in a prior table.
+Otherwise, it refers to the
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ in a data table.
 
 <br>
 <br>
 <b><big><a name="d_eta" id="d_eta">d_eta</a></big></b>
 <br>
-If the density 
-<code><i><font color="black"><span style='white-space: nowrap'>d_id</span></font></i></code>
- corresponds to
-<code><font color="blue">log_gaussian</font></code>, <code><font color="blue">log_laplace</font></code>, or <code><font color="blue">log_students</font></code>,
+If the density is <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
 
 <code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
  specifies the offset in the log transformation.
@@ -220,15 +224,15 @@ plus two for time difference prior.
 
 <br>
 <br>
-<b><big><a name="difference" id="difference">difference</a></big></b>
+<b><big><a name="diff" id="diff">diff</a></big></b>
 <br>
 This argument has prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is true,
 this calculation is for the difference of the
 random variables <small>@(@
@@ -239,6 +243,19 @@ y
 Otherwise it is just for the random variable <small>@(@
 y
 @)@</small>.
+
+<br>
+<br>
+<b><big><a name="prior" id="prior">prior</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>prior</span></font></i></code>
+ is true,
+this a prior density.
+Otherwise, it is a data density.
+If it is a data density, 
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
+ must be false.
 
 <br>
 <br>
@@ -311,7 +328,7 @@ Type </td><td align='left'  valign='top'>
 <big><a name="residual.wres" id="residual.wres">wres</a></big>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is false, 
 <code><i><font color="black"><span style='white-space: nowrap'>wres</span></font></i></code>
  is the value of
@@ -323,7 +340,7 @@ If
 see <a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual&nbsp;function</span></a>
 .
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is true, 
 <code><i><font color="black"><span style='white-space: nowrap'>wres</span></font></i></code>
  is the value of
@@ -338,7 +355,7 @@ If
 <big><a name="residual.logden" id="residual.logden">logden</a></big>
 <br>
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is false, the log-density function
 <small>@[@
 
@@ -353,7 +370,7 @@ is equal to
 see <a href="statistic.htm#Log-Density Function, D" target="_top"><span style='white-space: nowrap'>log-density&nbsp;function</span></a>
 .
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>difference</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>diff</span></font></i></code>
  is true, the log-density function
 <small>@[@
 

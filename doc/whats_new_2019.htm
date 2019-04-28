@@ -89,9 +89,25 @@ A:active { color : purple }
 <br><a href="whats_new_2019.htm#Contents" target="_top">Contents</a>
 <br><br>
 <b><big><a name="04-27" id="04-27">04-27</a></big></b>
-<br>
+
+<ol type="1"><li>
+Add the <a href="density_table.htm#density_name.cen_gaussian" target="_top"><span style='white-space: nowrap'>cen_gaussian</span></a>
+
+density; see the example <a href="user_censor.py.htm" target="_top"><span style='white-space: nowrap'>user_censor.py</span></a>
+.
+</li><li>
+
+Change the definition of the
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
+
+so that it is different for data than for priors.
+This avoids the need for reversed residuals.
+</li><li>
+
 Fix bug in previous change to density table
 (should no longer need densities that are not used).
+</li></ol>
+
 
 <br>
 <br>
@@ -360,8 +376,8 @@ file written by the <code><font color="blue">db2csv</font></code> command.
 The discussion of data
 <a href="data_like.htm#Weighted Residual and Likelihood" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residuals</span></a>
 
-was improved by defining
-<a href="statistic.htm#Weighted Residual Function, R.Reversed Residual" target="_top"><span style='white-space: nowrap'>reversed&nbsp;residuals</span></a>
+was improved by defining reversed
+<a href="statistic.htm#Weighted Residual Function, R" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residuals</span></a>
 .
 </li></ol>
 
