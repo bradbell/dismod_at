@@ -26,8 +26,11 @@ $$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
-$head censor branch$$
+$head 04-27$$
 $list number$$
+Add the $cref/cen_gaussian/density_table/density_name/cen_gaussian/$$
+density; see the example $cref user_censor.py$$.
+$lnext
 Change the definition of the
 $cref/log-transformed standard deviation
 	/statistic
@@ -36,13 +39,9 @@ $cref/log-transformed standard deviation
 so that it is different for data than for priors.
 This avoids the need for reversed residuals.
 $lnext
-Add the $cref/cen_gaussian/density_table/density_name/cen_gaussian/$$
-density; see the example $cref user_censor.py$$.
-$lend
-
-$head 04-27$$
 Fix bug in previous change to density table
 (should no longer need densities that are not used).
+$lend
 
 $head 04-26$$
 $list number$$
