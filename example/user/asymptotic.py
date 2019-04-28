@@ -103,6 +103,13 @@ os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
 random_seed = int( time.time() )
 # ---------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 #
 # no need to include sqrt{2 \pi} term (it does not depend on model variables)
 def h(y, mu, sigma ) :
@@ -284,21 +291,14 @@ def example_db (file_name) :
 		option_table
 	)
 # ===========================================================================
-file_name             = 'example.db'
+file_name  = 'example.db'
 example_db(file_name)
-program               = '../../devel/dismod_at'
-for command in [ 'init', 'fit', 'sample' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	if command == 'sample' :
-		cmd.append('asymptotic')
-		cmd.append( str(number_sample) )
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+#
+program   = '../../devel/dismod_at'
+ns_string = str(number_sample)
+system_command([ program, file_name, 'init' ])
+system_command([ program, file_name, 'fit', 'both' ])
+system_command([ program, file_name, 'sample', 'asymptotic', ns_string ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

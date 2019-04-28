@@ -97,6 +97,14 @@ import dismod_at
 # change into the build/test/user directory
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	def constant_weight_fun(a, t) :
@@ -251,16 +259,9 @@ dismod_at.sql_command(connection, command)
 # ===========================================================================
 # do a fit and check results
 # ===========================================================================
-program        = '../../devel/dismod_at'
-for command in [ 'init', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+program = '../../devel/dismod_at'
+system_command([ program, file_name, 'init' ])
+system_command([ program, file_name, 'fit', 'both' ])
 #
 # Results for fitting with no noise
 age_table     = dismod_at.get_table_dict(connection, 'age')
