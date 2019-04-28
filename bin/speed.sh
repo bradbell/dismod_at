@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # cppad_mixed: C++ Laplace Approximation of Mixed Effects Models
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -23,9 +23,6 @@ quasi_fixed='false'
 # smaller increase work per function evaluation
 ode_step_size='1.0'
 #
-# this branch name must not be empty
-branch1='master'
-#
 # If non-empty, compare branches.
 # If empty, and there is a new sub-directory, use new subdirectory for changes.
 # If empty, and no new sub-directory, only run branch1 case.
@@ -34,23 +31,27 @@ branch2=''
 # Assume that at beginning, installs correspond to master branch.
 # If true, re-install release version corresponding to each version and
 # at the end ensure installs correspond to master version.
-install_cppad='true'
-install_cppad_mixed='true'
+install_cppad='false'
+install_cppad_mixed='false'
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/speed.sh' ]
 then
 	echo 'bin/speed.sh must be run from its parent directory'
 	exit 1
 fi
+if [ "$1" == '' ]
+then
+	echo 'usage: bin/speed.sh branch1'
+	echo 'example: bin/speed.sh master'
+	echo 'see settings at top of bin/speed.sh'
+	exit 1
+fi
+branch1="$1"
+# -----------------------------------------------------------------------------
 current=`git branch | sed -n -e '/^\*/p' | sed -e 's|^\* *||'`
 if [ "$current" != 'master' ]
 then
 	echo 'bin/speed.sh must be run from master branch'
-	exit 1
-fi
-if [ "$branch1" == '' ]
-then
-	echo 'bin/speed.sh: branch1 cannot be empty'
 	exit 1
 fi
 if [ "$branch2" == 'master' ]
