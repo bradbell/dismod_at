@@ -56,46 +56,62 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_whats_new_2019_htm.js'></script>
 </td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Heading-&gt;</option>
+<option>Contents</option>
+<option>04-29</option>
+<option>04-28</option>
+<option>04-27</option>
+<option>04-26</option>
+<option>04-25</option>
+<option>04-24</option>
+<option>04-23</option>
+<option>04-22</option>
+<option>04-21</option>
+<option>04-20</option>
+<option>04-18</option>
+<option>04-17</option>
+<option>04-15</option>
+<option>04-14</option>
+<option>04-12</option>
+<option>04-11</option>
+<option>04-10</option>
+<option>04-09</option>
+<option>04-08</option>
+<option>04-06</option>
+<option>02-16</option>
+<option>01-26</option>
+<option>01-23</option>
+<option>01-22</option>
+<option>01-16</option>
+<option>01-15</option>
+<option>01-10</option>
+</select>
+</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Changes and Additions to Dismod_at During 2019</big></big></b></center>
-
-<br><a href="whats_new_2019.htm#04-29" target="_top">04-29</a>
-<br><a href="whats_new_2019.htm#04-28" target="_top">04-28</a>
-<br><a href="whats_new_2019.htm#04-27" target="_top">04-27</a>
-<br><a href="whats_new_2019.htm#04-26" target="_top">04-26</a>
-<br><a href="whats_new_2019.htm#04-25" target="_top">04-25</a>
-<br><a href="whats_new_2019.htm#04-24" target="_top">04-24</a>
-<br><a href="whats_new_2019.htm#04-23" target="_top">04-23</a>
-<br><a href="whats_new_2019.htm#04-22" target="_top">04-22</a>
-<br><a href="whats_new_2019.htm#04-21" target="_top">04-21</a>
-<br><a href="whats_new_2019.htm#04-20" target="_top">04-20</a>
-<br><a href="whats_new_2019.htm#04-18" target="_top">04-18</a>
-<br><a href="whats_new_2019.htm#04-17" target="_top">04-17</a>
-<br><a href="whats_new_2019.htm#04-15" target="_top">04-15</a>
-<br><a href="whats_new_2019.htm#04-14" target="_top">04-14</a>
-<br><a href="whats_new_2019.htm#04-12" target="_top">04-12</a>
-<br><a href="whats_new_2019.htm#04-11" target="_top">04-11</a>
-<br><a href="whats_new_2019.htm#04-10" target="_top">04-10</a>
-<br><a href="whats_new_2019.htm#04-09" target="_top">04-09</a>
-<br><a href="whats_new_2019.htm#04-08" target="_top">04-08</a>
-<br><a href="whats_new_2019.htm#04-06" target="_top">04-06</a>
-<br><a href="whats_new_2019.htm#02-16" target="_top">02-16</a>
-<br><a href="whats_new_2019.htm#01-26" target="_top">01-26</a>
-<br><a href="whats_new_2019.htm#01-23" target="_top">01-23</a>
-<br><a href="whats_new_2019.htm#01-22" target="_top">01-22</a>
-<br><a href="whats_new_2019.htm#01-16" target="_top">01-16</a>
-<br><a href="whats_new_2019.htm#01-15" target="_top">01-15</a>
-<br><a href="whats_new_2019.htm#01-10" target="_top">01-10</a>
-<br><a href="whats_new_2019.htm#Contents" target="_top">Contents</a>
-<br><br>
-<b><big><a name="04-29" id="04-29">04-29</a></big></b>
 <br>
+<b><big><a name="Contents" id="Contents">Contents</a></big></b>
+<br>
+<table>
+<tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="04-29" id="04-29">04-29</a></big></b>
+
+<ol type="1"><li>
 The user version of the documentation no longer includes
 things that are only meant for developers and are not part of the API.
 (The developer documentation can be built by starting <code><font color="blue">omhelp</font></code>
 with the file <code><font color="blue">dev.omh</font></code>.)
+</li><li>
+
+The jump tables at the top of the whats new sections were replace by
+drop Headings menus
+because they were long and not very informative.
+</li></ol>
+
 
 <br>
 <br>
@@ -532,12 +548,8 @@ Reduce the change of random failure in <code><font color="blue">test/user/fit_ga
 during <a href="install_unix.htm#dismod_at.Test" target="_top"><span style='white-space: nowrap'>testing</span></a>
 .
 
-<br>
-<br>
-<b><big><a name="Contents" id="Contents">Contents</a></big></b>
-<br>
-<table>
-<tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table>
+
+
 <hr>Input File: omh/whats_new/2019.omh
 
 </body>
