@@ -817,8 +817,7 @@ These integrands were already available, see
 <b><big><a name="09-20" id="09-20">09-20</a></big></b>
 <br>
 All warnings are now printed to standard error as well as being
-<a href="log_message.htm" target="_top"><span style='white-space: nowrap'>logged</span></a>
- in the database.
+logged in the database.
 Errors are also printed, but this is not a change.
 
 <br>
@@ -1161,8 +1160,7 @@ Add the <a href="option_table.htm#avgint_extra_columns" target="_top"><span styl
 <br>
 <b><big><a name="04-24" id="04-24">04-24</a></big></b>
 <br>
-Fix bug in <a href="eigen_ode2.htm" target="_top"><span style='white-space: nowrap'>eigen_ode2</span></a>
- where
+Fix bug in <code><font color="blue">dev::eigen_ode2.cpp</font></code> where
 the <code><font color="blue">std::abs</font></code> function was being called and <code><font color="blue">std::fabs</font></code>
 should have been called.
 (This caused some tests to fail on the Mac but not on Fedora.)

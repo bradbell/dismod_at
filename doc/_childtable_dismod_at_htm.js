@@ -10,7 +10,6 @@ document.write('\
 <option>model</option>\
 <option>command</option>\
 <option>python</option>\
-<option>devel</option>\
 <option>whats_new_2019</option>\
 <option>wish_list</option>\
 <option>_reference</option>\
@@ -29,7 +28,6 @@ function dismod_at_child(item)
 		'model.htm',
 		'command.htm',
 		'python.htm',
-		'devel.htm',
 		'whats_new_2019.htm',
 		'wish_list.htm',
 		'_reference.htm',

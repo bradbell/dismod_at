@@ -226,8 +226,7 @@ Move the <code><font color="blue">fit_residual</font></code> table to the
 .
 This is a better name as evidenced by the fact that a
 separate <code><font color="blue">data_subset_id</font></code> column is no longer necessary;
-see <a href="fit_data_subset_table.htm#fit_data_subset_id" target="_top"><span style='white-space: nowrap'>fit_data_subset_id</span></a>
-.
+see <code><font color="blue">dev::fit_data_subset_table::fit_data_subset_id</font></code>.
 </li><li>
 
 Change the previous <code><font color="blue">start_command</font></code> to have the
@@ -492,8 +491,7 @@ The dismod_at <a href="python.htm" target="_top"><span style='white-space: nowra
 .
 </li><li>
 
-Change the C++ <a href="get_table_column.htm" target="_top"><span style='white-space: nowrap'>get_table_column</span></a>
- so it will handle upper case for
+Change the C++ <code><font color="blue">dev::get_table_column.cpp</font></code> so it will handle upper case for
 column types. In addition, if a column has an invalid type, report the
 table and column and invalid type.
 </li></ol>
@@ -737,10 +735,8 @@ as much memory and time.
 The name was however changed from <code><font color="blue">rate_info</font></code> to
 <a href="option_table.htm#rate_case" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
  to avoid confusion with
-<a href="pack_info_rate_info.htm" target="_top"><span style='white-space: nowrap'>pack_info_rate_info</span></a>
-.
-In addition, the correction of the bug in <a href="eigen_ode2.htm" target="_top"><span style='white-space: nowrap'>eigen_ode2</span></a>
-
+<code><font color="blue">dev::pack_info_rate_info.cpp</font></code>.
+In addition, the correction of the bug in <code><font color="blue">dev::eigen_ode2.cpp</font></code>
 was retained.
 </li><li>
 
@@ -750,8 +746,7 @@ see <a href="database.htm#Real Can be Null, not Nan" target="_top"><span style='
 </li><li>
 
 Add tracing, during CppAD's forward mode, of values in the
-<a href="residual_density.htm" target="_top"><span style='white-space: nowrap'>residual_density</span></a>
- function that should not be negative.
+<code><font color="blue">dev::residual_density.cpp</font></code> function that should not be negative.
 This gives feedback as to the cause of CppAD's message that
 a forward mode result is <code><font color="blue">nan</font></code>.
 </li><li>
@@ -818,18 +813,15 @@ and in the log density cases
  is not null.
 </li><li>
 
-There was a bug in the <a href="eigen_ode2.htm" target="_top"><span style='white-space: nowrap'>eigen_ode2</span></a>
- routine whereby
+There was a bug in the <code><font color="blue">dev::eigen_ode2.cpp</font></code> routine whereby
 <code><font color="blue">nan</font></code> could result even if the rates satisfied their prescribed
 conditions. This has been fixed.
 </li><li>
 
-Modify <a href="eigen_ode2.htm" target="_top"><span style='white-space: nowrap'>eigen_ode2</span></a>
- so that it works for all combinations of rates
+Modify <code><font color="blue">dev::eigen_ode2.cpp</font></code> so that it works for all combinations of rates
 and remove <code><font color="blue">rate_info</font></code> from the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
 .
-Note that this is different from <a href="pack_info_rate_info.htm" target="_top"><span style='white-space: nowrap'>pack_info_rate_info</span></a>
-
+Note that this is different from <code><font color="blue">dev::pack_info_rate_info.cpp</font></code>
 (which is only in the developer documentation).
 </li></ol>
 
@@ -1153,15 +1145,13 @@ This has been fixed and is tested by the user example
 .
 </li><li>
 
-The routine <a href="data_subset.htm" target="_top"><span style='white-space: nowrap'>data_subset</span></a>
- was changes to pre-allocate its
+The routine <code><font color="blue">dev::data_subset.cpp</font></code> was changes to pre-allocate its
 result instead of growing the vector as needed.
 This resulted in a huge savings (in one test case a 24 minute
 run time was reduced to 3.5 minutes).
 </li><li>
 
-The <a href="get_db_input.htm" target="_top"><span style='white-space: nowrap'>get_db_input</span></a>
- routine now checks the lower and upper limits
+The <code><font color="blue">dev::get_db_input.cpp</font></code> routine now checks the lower and upper limits
 implied by the choice of <code><font color="blue">rate_info</font></code>.
 This was removed on <a href="whats_new_2015.htm#10-27" target="_top"><span style='white-space: nowrap'>2015-10-27</span></a>
 .
@@ -1313,10 +1303,8 @@ This has been fixed in the following user examples:
 <a href="create_database.py.htm" target="_top"><span style='white-space: nowrap'>create_database.py</span></a>
 .
 It was also fixed for the following developer examples:
-<a href="avgint_subset_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>avgint_subset_xam.cpp</span></a>
-,
-<a href="data_subset_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>data_subset_xam.cpp</span></a>
-.
+<code><font color="blue">dev::avgint_subset_xam.cpp.cpp</font></code>,
+<code><font color="blue">dev::data_subset_xam.cpp.cpp</font></code>.
 </li><li>
 
 Handle the case where the
@@ -1335,10 +1323,8 @@ section <code><font color="blue">cppad_mixed user</font></code>.
 <br>
 <b><big><a name="07-25" id="07-25">07-25</a></big></b>
 <br>
-Add the <a href="cpp_create_table.htm" target="_top"><span style='white-space: nowrap'>cpp_create_table</span></a>
- routine,
-and replace all uses of <a href="put_table_row.htm" target="_top"><span style='white-space: nowrap'>put_table_row</span></a>
- by <code><font color="blue">create_table</font></code>
+Add the <code><font color="blue">dev::cpp_create_table.cpp</font></code> routine,
+and replace all uses of <code><font color="blue">dev::put_table_row.cpp</font></code> by <code><font color="blue">create_table</font></code>
 (much faster).
 
 
@@ -1594,8 +1580,7 @@ Record the start of and end of each <a href="command.htm" target="_top"><span st
 </li><li>
 
 Once there is a database
-<a href="open_connection.htm" target="_top"><span style='white-space: nowrap'>connection</span></a>
-,
+<code><font color="blue">dev::open_connection</font></code>,
 use <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
  to record all error messages before exiting.
 </li><li>
@@ -1620,8 +1605,7 @@ Allow for <code><font color="blue">null</font></code> integer values; see
 .
 </li><li>
 
-The example <a href="sim_random_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>sim_random_xam.cpp</span></a>
- was missing from documentation.
+The example <code><font color="blue">dev::sim_random_xam.cpp.cpp</font></code> was missing from documentation.
 Increase 
 <code><i><font color="black"><span style='white-space: nowrap'>sample_size</span></font></i></code>
  in <code><font color="blue">sim_random_xam.cpp</font></code>
@@ -1827,11 +1811,9 @@ The python routine <code><font color="blue">create_table</font></code> now adds 
 <a href="database.htm#Name Column" target="_top"><span style='white-space: nowrap'>name&nbsp;columns</span></a>
 .
 This in turn is used by, and does the same for, <code><font color="blue">create_database</font></code>.
-In addition, the C++ examples for <a href="devel_table.htm" target="_top"><span style='white-space: nowrap'>tables</span></a>
-
-were changed to include is constraint; e.g.,
-<a href="get_integrand_table_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_integrand_table_xam.cpp</span></a>
-.
+In addition, the C++ examples for <code><font color="blue">dev::devel_table</font></code>
+were changed to include constraints; e.g.,
+<code><font color="blue">dev::get_integrand_table_xam.cpp.cpp</font></code>.
 </li><li>
 
 There was a bug in reading the data tables whereby the following error
@@ -1959,8 +1941,7 @@ The <a href="install_unix.htm" target="_top"><span style='white-space: nowrap'>i
  instructions have been improved.
 </li><li>
 
-There was a bug in the <a href="weight_info.htm" target="_top"><span style='white-space: nowrap'>weight_info</span></a>
- constructor
+There was a bug in the <code><font color="blue">dev::weight_info.cpp</font></code> constructor
 when the ages or times were not increasing.
 This was fixed and a second version for this date was created.
 </li></ol>
@@ -1983,11 +1964,9 @@ This has been fixed.
 </li><li>
 
 There were some non-standard references,
-in <a href="open_connection.htm" target="_top"><span style='white-space: nowrap'>open_connection</span></a>
-,
+in <code><font color="blue">dev::open_connection.cpp</font></code>,
 <code><font color="blue">cppad_mixed ipopt_xam</font></code>, and
-<a href="get_column_max_xam.cpp.htm" target="_top"><span style='white-space: nowrap'>get_column_max_xam.cpp</span></a>
-,
+<code><font color="blue">dev::get_column_max_xam.cpp.cpp</font></code>,
 that gave compiler errors on some systems.
 This has been fixed.
 </li><li>
