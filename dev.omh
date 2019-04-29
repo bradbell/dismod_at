@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin dismod_at$$
-$comment User documentation for dismod_at$$
+$comment Developer documentaiton for dismod_at$$
 
 $comment BEGIN: settings used by all sections ---------------------------- $$
 $escape $$
@@ -43,14 +43,10 @@ $spell
 	integrands
 	covariate
 $$
-$section dismod_at-20190428: User Documentation and API$$
+$section dismod_at-20190428: Developer Documentation$$
 
 $head Purpose$$
 Estimating disease rates as functions of age and time.
-
-$head Links$$
-$href%https://github.com/bradbell/dismod_at%github
-%$$
 
 $childtable%omh/math/abstract.omh
 	%omh/install/unix.omh
@@ -62,6 +58,7 @@ $childtable%omh/math/abstract.omh
 	%python/dismod_at/__init__.py
 	%omh/whats_new/2019.omh
 	%omh/wish_list.omh
+	%devel/devel.omh
 %$$
 
 $end

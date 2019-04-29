@@ -23,9 +23,17 @@ $spell
 	misspecification
 	smoothings
 	cen
+	omh
+	omhelp
 $$
 
 $section Changes and Additions to Dismod_at During 2019$$
+
+$head 04-29$$
+The user version of the documentation no longer includes
+things that are only meant for developers and are not part of the API.
+(The developer documentation can be built by starting $code omhelp$$
+with the file $code dev.omh$$.)
 
 $head 04-28$$
 Remove some dead code that was repeated between different

@@ -49,8 +49,11 @@ done
 # check version number
 echo_eval version.sh check
 #
-# check latex in omhelp
-echo_eval run_omhelp.sh -xml doc
+# build developer documentation and check latex
+echo_eval run_omhelp.sh dev
+#
+# build user documentation
+echo_eval run_omhelp.sh doc
 # ----------------------------------------------------------------------------
 #
 echo_eval cd build
