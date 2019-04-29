@@ -45,6 +45,6 @@ $children%example/table/nslist_pair_table.py
 %$$
 $head Example$$
 The file $cref nslist_pair_table.py$$
-contains an example $code nslist_pair$$ tables.
+contains an example $code nslist_pair$$ table.
 
 $end

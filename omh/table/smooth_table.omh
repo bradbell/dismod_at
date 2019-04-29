@@ -99,6 +99,6 @@ $comment%example/table/smooth_grid_table.py is included by smooth_grid_table.omh
 %$$
 $head Example$$
 The file $cref smooth_grid_table.py$$
-contains an example $code smooth$$ tables.
+contains an example $code smooth$$ table.
 
 $end

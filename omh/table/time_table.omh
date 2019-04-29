@@ -41,6 +41,6 @@ $children%example/table/time_table.py
 %$$
 $head Example$$
 The file $cref time_table.py$$
-contains an example $code time$$ tables.
+contains an example $code time$$ table.
 
 $end

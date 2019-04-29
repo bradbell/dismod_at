@@ -77,7 +77,7 @@ $code log_students$$.
 $children%example/table/density_table.py
 %$$
 $head Example$$
-The files $cref density_table.py$$  and $cref get_density_table_xam.cpp$$
-contain an example $code density$$ tables.
+The file $cref density_table.py$$
+contains an example $code density$$ table.
 
 $end

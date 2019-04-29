@@ -144,6 +144,6 @@ $children%example/table/integrand_table.py
 %$$
 $head Example$$
 The file $cref integrand_table.py$$
-contains an example $code integrand$$ tables.
+contains an example $code integrand$$ table.
 
 $end

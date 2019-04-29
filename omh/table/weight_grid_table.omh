@@ -61,6 +61,6 @@ $children%example/table/weight_grid_table.py
 %$$
 $head Example$$
 The file $cref weight_grid_table.py$$
-contains an example $code weight_grid$$ tables.
+contains an example $code weight_grid$$ table.
 
 $end

@@ -33,6 +33,6 @@ $children%example/table/nslist_table.py
 %$$
 $head Example$$
 The file $cref nslist_table.py$$
-contains an example $code nslist$$ tables.
+contains an example $code nslist$$ table.
 
 $end

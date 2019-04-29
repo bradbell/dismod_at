@@ -125,6 +125,6 @@ $children%example/table/mulcov_table.py
 %$$
 $head Example$$
 The file $cref mulcov_table.py$$
-contains an example $code covariate$$ tables.
+contains an example $code covariate$$ table.
 
 $end

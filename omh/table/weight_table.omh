@@ -37,6 +37,6 @@ $comment%example/table/weight_grid_table.py is included by weight_grid_table.omh
 %$$
 $head Example$$
 The file $cref weight_grid_table.py$$
-contains an example $code weight$$ tables.
+contains an example $code weight$$ table.
 
 $end

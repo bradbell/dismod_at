@@ -38,6 +38,6 @@ $children%example/table/age_table.py
 %$$
 $head Example$$
 The file $cref age_table.py$$
-contains an example $code age$$ tables.
+contains an example $code age$$ table.
 
 $end

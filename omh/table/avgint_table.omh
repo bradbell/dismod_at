@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -145,8 +145,7 @@ the corresponding covariate.
 $children%example/table/avgint_table.py
 %$$
 $head Example$$
-The files $cref avgint_table.py$$ and
-$cref get_avgint_table_xam.cpp$$
-create example $code avgint$$ tables.
+The file $cref avgint_table.py$$
+contains an example $code avgint$$ table.
 
 $end

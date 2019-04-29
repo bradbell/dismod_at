@@ -134,6 +134,6 @@ $children%example/table/prior_table.py
 %$$
 $head Example$$
 The file $cref prior_table.py$$
-contains an example $code prior$$ tables.
+contains an example $code prior$$ table.
 
 $end
