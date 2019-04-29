@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2017$$
 $spell
+	eigen
 	dev
 	sim
 	ran_obj_tst
@@ -468,7 +469,7 @@ $lend
 
 $head 09-20$$
 All warnings are now printed to standard error as well as being
-$cref/logged/log_message/$$ in the database.
+logged in the database.
 Errors are also printed, but this is not a change.
 
 $head 09-19$$

@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	eigen
 	dev
 	mixed mixed
 	num_iter
@@ -107,7 +108,7 @@ Move the $code fit_residual$$ table to the
 $cref fit_data_subset_table$$.
 This is a better name as evidenced by the fact that a
 separate $code data_subset_id$$ column is no longer necessary;
-see $cref/fit_data_subset_id/fit_data_subset_table/fit_data_subset_id/$$.
+see $code dev::fit_data_subset_table::fit_data_subset_id$$.
 $lnext
 Change the previous $code start_command$$ to have the
 $icode source$$ argument.
@@ -965,7 +966,7 @@ Record the start of and end of each $cref command$$ in the
 $cref log_table$$.
 $lnext
 Once there is a database
-$cref/connection/open_connection/$$,
+$code dev::open_connection$$,
 use $cref log_table$$ to record all error messages before exiting.
 $lnext
 The pure virtual function
@@ -981,7 +982,7 @@ $cref/text can be null, not empty/database/Text can be Null, not Empty/$$.
 Allow for $code null$$ integer values; see
 $cref/integer can be null/database/Integer Can be Null/$$.
 $lnext
-The example $cref sim_random_xam.cpp$$ was missing from documentation.
+The example $code dev::sim_random_xam.cpp.cpp$$ was missing from documentation.
 Increase $icode sample_size$$ in $code sim_random_xam.cpp$$
 (to reduce change of random failure).
 In addition, print random seed when test does fail.
@@ -1097,9 +1098,9 @@ The python routine $code create_table$$ now adds the
 $cref/unique/create_table/col_name/unique/$$ constraint to
 $cref/name columns/database/Name Column/$$.
 This in turn is used by, and does the same for, $code create_database$$.
-In addition, the C++ examples for $cref/tables/devel_table/$$
-were changed to include is constraint; e.g.,
-$cref get_integrand_table_xam.cpp$$.
+In addition, the C++ examples for $code dev::devel_table$$
+were changed to include constraints; e.g.,
+$code dev::get_integrand_table_xam.cpp.cpp$$.
 $lnext
 There was a bug in reading the data tables whereby the following error
 would be incorrectly generated:

@@ -529,7 +529,7 @@ Put $code cppad_mixed:$$ at the beginning of warnings and error messages
 that come from the
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$ package.
 $lnext
-Add missing $cref/message_type/log_message/message_type/$$ cases
+Add missing $code dev::log_message::message_type$$ cases
 to the $code log_message$$ documentation.
 $lnext
 Change $cref user_meas_covariate.py$$ to use $code null$$ smoothing
@@ -588,7 +588,7 @@ Add discussion about bounds and
 $cref/Lagrange multipliers/fit_var_table/Lagrange Multipliers/$$.
 $lnext
 Remove $code dismod_at::manage_gsl_rng$$ and instead use
-$cref/CppAD::mixed::manage_gsl_rng/manage_gsl_rng/$$.
+$code CppAD::mixed::manage_gsl_rng$$.
 This fixed that use of
 $cref/random_seed/option_table/random_seed/$$ so that it applies
 to all $code dismod_at$$ simulated values.
