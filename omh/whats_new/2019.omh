@@ -58,6 +58,9 @@ $lnext
 The jump tables at the top of the whats new sections were replace by
 drop Headings menus
 because they were long and not very informative.
+$lnext
+The $cref user_censor.py$$ example was extended to include
+simulating censored data using the $cref simulate_command$$.
 $lend
 
 $head 04-28$$
