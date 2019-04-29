@@ -241,9 +241,10 @@ residual_struct<Float> residual_density(
 		wres = 0.0;
 		break;
 
-		case cen_gaussian_enum:
 		case gaussian_enum:
+		case cen_gaussian_enum:
 		case laplace_enum:
+		case cen_laplace_enum:
 		case students_enum:
 		print_forward_if_not_positive("delta", delta);
 		assert( delta > 0.0 );
@@ -292,7 +293,7 @@ residual_struct<Float> residual_density(
 		case gaussian_enum:
 		case log_gaussian_enum:
 		{	double pi2 = 8.0 * std::atan(1.0);
-			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres/ 2.0;
+			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
 			logden_sub_abs = 0.0;
 		}
 		break;
@@ -306,13 +307,25 @@ residual_struct<Float> residual_density(
 		}
 		else
 		{	double pi2 = 8.0 * std::atan(1.0);
-			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres/ 2.0;
+			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
 			logden_sub_abs = 0.0;
 		}
 		break;
 
 		case laplace_enum:
 		case log_laplace_enum:
+		{	double r2   = sqrt(2.0);
+			logden_smooth  = - log( sigma * r2 );
+			logden_sub_abs = r2 * wres;
+		}
+		break;
+
+		case cen_laplace_enum:
+		assert( ! diff );
+		if( y <= 0 )
+		{	logden_smooth = - mu * std::sqrt(2.0) / delta - std::log(2.0);
+		}
+		else
 		{	double r2   = sqrt(2.0);
 			logden_smooth  = - log( sigma * r2 );
 			logden_sub_abs = r2 * wres;

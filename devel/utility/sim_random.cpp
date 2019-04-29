@@ -37,7 +37,8 @@ $codei%
 If it is true, this simulation is for a difference,
 otherwise it is for a value; see
 $cref/delta/sim_random/delta/difference/$$ below.
-If $icode density$$ is $code cen_gaussian$$,
+If $icode density$$ is
+$code cen_gaussian$$ or $code cen_laplace$$,
 $icode difference$$ must be false.
 
 $head density$$
@@ -63,6 +64,9 @@ $cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
 $rnext
 $code laplace_enum$$ $pre  $$ $cnext
 $cref/Laplace/statistic/Log-Density Function, D/Laplace/$$
+$rnext
+$code cen_laplace_enum$$ $pre  $$ $cnext
+$cref/Censored Laplace/statistic/Log-Density Function, D/Censored Laplace/$$
 $rnext
 $code log_laplace_enum$$ $pre  $$ $cnext
 $cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
@@ -183,6 +187,11 @@ double sim_random(
 	if( density == laplace_enum )
 	{	double width = delta / std::sqrt(2.0);
 		return mu + gsl_ran_laplace(rng, width);
+	}
+	//
+	if( density == cen_laplace_enum )
+	{	double width = delta / std::sqrt(2.0);
+		return std::max(0.0, mu + gsl_ran_laplace(rng, width) );
 	}
 	//
 	if( density == students_enum )

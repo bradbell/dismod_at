@@ -41,13 +41,15 @@ $cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$
 
 $subhead cen_gaussian$$
 $cref/Censored Gaussian/statistic/Log-Density Function, D/Censored Gaussian/$$
-(Under Construction)
 
 $subhead log_gaussian$$
 $cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
 
 $subhead laplace$$
 $cref/Laplace/statistic/Log-Density Function, D/Laplace/$$
+
+$subhead cen_laplace$$
+$cref/Censored Laplace/statistic/Log-Density Function, D/Censored Laplace/$$
 
 $subhead log_laplace$$
 $cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
@@ -65,7 +67,13 @@ We refer to the following densities as linear:
 $code gaussian$$,
 $code cen_gaussian$$,
 $code laplace$$,
+$code cen_laplace$$,
 $code students$$.
+
+$subhead Censored$$
+We refer to the following densities as censored:
+$code cen_gaussian$$,
+$code cen_laplace$$.
 
 $subhead Log Scaled$$
 We refer to the following densities as log scaled:

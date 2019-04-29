@@ -218,6 +218,29 @@ D
 \] $$
 where $latex D$$ and $latex R$$ have the same arguments.
 
+$subhead Censored Laplace$$
+If the density name is $code cen_laplace$$,
+the log-density function is not defined for differences.
+The log-density function for values $latex y > 0$$
+is the same as for the $code laplace$$ case.
+The log-density function for the values $latex y \leq 0$$,
+is defined by
+$latex \[
+D(y, \mu, \delta, d)
+=
+D(z, y, \mu, \delta, d)
+=
+- \mu \sqrt{2} / delta - log(2)
+\] $$
+where $latex \R{erfc}$$ is the complementary error function;
+see the Gaussian case for the
+$cref/censored density
+	/censor_density
+	/Gaussian
+	/Censored Density, G(y,mu,delta,c)
+/$$
+where the censoring value is $latex c = 0$$.
+
 $subhead Log-Laplace$$
 If the density name is $code log_laplace$$,
 the log-density function for values is

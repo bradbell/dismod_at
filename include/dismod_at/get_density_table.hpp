@@ -21,6 +21,7 @@ namespace dismod_at {
 		cen_gaussian_enum,
 		log_gaussian_enum,
 		laplace_enum,
+		cen_laplace_enum,
 		log_laplace_enum,
 		students_enum,
 		log_students_enum,

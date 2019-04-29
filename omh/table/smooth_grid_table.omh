@@ -76,8 +76,8 @@ $cref/fixed/fixed_diff/Age Differences/$$ and
 $cref/random/random_diff/Time Differences/$$ effects.
 The corresponding
 $cref/density_id/prior_table/density_id/$$
-cannot specify a censored density; e.g.,
-$cref/cen_gaussian/density_table/density_name/cen_gaussian/$$.
+cannot specify a
+$cref/censored density/density_table/Notation/Censored/$$.
 
 $subhead null$$
 The prior at the maximum age, for each time, is not used may be null.
@@ -92,8 +92,8 @@ $cref/fixed/fixed_diff/Time Differences/$$ and
 $cref/random/random_diff/Time Differences/$$ effects.
 The corresponding
 $cref/density_id/prior_table/density_id/$$
-cannot specify a censored density; e.g.,
-$cref/cen_gaussian/density_table/density_name/cen_gaussian/$$.
+cannot specify a
+$cref/censored density/density_table/Notation/Censored/$$.
 
 $subhead null$$
 The prior at the maximum time, for each time, is not used and may be null.
