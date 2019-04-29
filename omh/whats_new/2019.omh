@@ -26,14 +26,39 @@ $spell
 	omh
 	omhelp
 $$
+$navigate%
+	Up%Location%
+	Across%Search%
+	Prev%Prev%
+	Next%Next%
+	Down_up_4%_up_4%
+	Down_up_3%_up_3%
+	Down_up_2%_up_2%
+	Down_up_1%_up_1%
+	Down_up_0%_up_0%
+	Current%Heading
+%$$
 
 $section Changes and Additions to Dismod_at During 2019$$
 
+$childtable%
+	omh/whats_new/2018.omh%
+	omh/whats_new/2017.omh%
+	omh/whats_new/2016.omh%
+	omh/whats_new/2015.omh
+%$$
+
 $head 04-29$$
+$list number$$
 The user version of the documentation no longer includes
 things that are only meant for developers and are not part of the API.
 (The developer documentation can be built by starting $code omhelp$$
 with the file $code dev.omh$$.)
+$lnext
+The jump tables at the top of the whats new sections were replace by
+drop Headings menus
+because they were long and not very informative.
+$lend
 
 $head 04-28$$
 Remove some dead code that was repeated between different
@@ -295,13 +320,6 @@ to redirect one to the integrand table.
 $head 01-10$$
 Reduce the change of random failure in $code test/user/fit_gamma.py$$
 during $cref/testing/install_unix/dismod_at/Test/$$.
-
-$childtable%
-	omh/whats_new/2018.omh%
-	omh/whats_new/2017.omh%
-	omh/whats_new/2016.omh%
-	omh/whats_new/2015.omh
-%$$
 
 
 $end
