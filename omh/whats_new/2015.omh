@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+	dev
 	mixed mixed
 	num_iter
 	relrisk
@@ -259,7 +260,7 @@ $lnext
 The dismod_at $cref python$$ module is now part of the distribution; see
 $cref/install/install_unix/dismod_at/Install/$$.
 $lnext
-Change the C++ $cref get_table_column$$ so it will handle upper case for
+Change the C++ $code dev::get_table_column.cpp$$ so it will handle upper case for
 column types. In addition, if a column has an invalid type, report the
 table and column and invalid type.
 $lend
@@ -422,15 +423,15 @@ $code rate_info$$ was reverted because it used three times
 as much memory and time.
 The name was however changed from $code rate_info$$ to
 $cref/rate_case/option_table/rate_case/$$ to avoid confusion with
-$cref pack_info_rate_info$$.
-In addition, the correction of the bug in $cref eigen_ode2$$
+$code dev::pack_info_rate_info.cpp$$.
+In addition, the correction of the bug in $code dev::eigen_ode2.cpp$$
 was retained.
 $lnext
 It is now an error if the value $code nan$$ appears in the database;
 see $cref/real cannot be nan/database/Real Can be Null, not Nan/$$.
 $lnext
 Add tracing, during CppAD's forward mode, of values in the
-$cref residual_density$$ function that should not be negative.
+$code dev::residual_density.cpp$$ function that should not be negative.
 This gives feedback as to the cause of CppAD's message that
 a forward mode result is $code nan$$.
 $lnext
@@ -472,13 +473,13 @@ $icode%lower% <= %mean% <= %upper%$$,
 except for the uniform density case $icode%std% > 0%$$,
 and in the log density cases $icode eta$$ is not null.
 $lnext
-There was a bug in the $cref eigen_ode2$$ routine whereby
+There was a bug in the $code dev::eigen_ode2.cpp$$ routine whereby
 $code nan$$ could result even if the rates satisfied their prescribed
 conditions. This has been fixed.
 $lnext
-Modify $cref eigen_ode2$$ so that it works for all combinations of rates
+Modify $code dev::eigen_ode2.cpp$$ so that it works for all combinations of rates
 and remove $code rate_info$$ from the $cref option_table$$.
-Note that this is different from $cref pack_info_rate_info$$
+Note that this is different from $code dev::pack_info_rate_info.cpp$$
 (which is only in the developer documentation).
 $lend
 
@@ -691,12 +692,12 @@ or multiple rates.
 This has been fixed and is tested by the user example
 $cref user_meas_covariate.py$$.
 $lnext
-The routine $cref data_subset$$ was changes to pre-allocate its
+The routine $code dev::data_subset.cpp$$ was changes to pre-allocate its
 result instead of growing the vector as needed.
 This resulted in a huge savings (in one test case a 24 minute
 run time was reduced to 3.5 minutes).
 $lnext
-The $cref get_db_input$$ routine now checks the lower and upper limits
+The $code dev::get_db_input.cpp$$ routine now checks the lower and upper limits
 implied by the choice of $code rate_info$$.
 This was removed on $cref/2015-10-27/whats_new_2015/10-27/$$.
 $lend
@@ -794,8 +795,8 @@ This has been fixed in the following user examples:
 $code cppad_mixed no_random_xam.cpp$$,
 $cref create_database.py$$.
 It was also fixed for the following developer examples:
-$cref avgint_subset_xam.cpp$$,
-$cref data_subset_xam.cpp$$.
+$code dev::avgint_subset_xam.cpp.cpp$$,
+$code dev::data_subset_xam.cpp.cpp$$.
 $lnext
 Handle the case where the
 $code cppad_mixed fix_like$$ is empty.
@@ -806,8 +807,8 @@ Grouped all the user level $code cppad_mixed$$ examples in the
 section $code cppad_mixed user$$.
 
 $head 07-25$$
-Add the $cref cpp_create_table$$ routine,
-and replace all uses of $cref put_table_row$$ by $code create_table$$
+Add the $code dev::cpp_create_table.cpp$$ routine,
+and replace all uses of $code dev::put_table_row.cpp$$ by $code create_table$$
 (much faster).
 
 
@@ -1170,7 +1171,7 @@ values must be in increasing order in the corresponding tables.
 $lnext
 The $cref/install/install_unix/$$ instructions have been improved.
 $lnext
-There was a bug in the $cref weight_info$$ constructor
+There was a bug in the $code dev::weight_info.cpp$$ constructor
 when the ages or times were not increasing.
 This was fixed and a second version for this date was created.
 $lend
@@ -1187,9 +1188,9 @@ when using a compiler that does not support this feature.
 This has been fixed.
 $lnext
 There were some non-standard references,
-in $cref open_connection$$,
+in $code dev::open_connection.cpp$$,
 $code cppad_mixed ipopt_xam$$, and
-$cref get_column_max_xam.cpp$$,
+$code dev::get_column_max_xam.cpp.cpp$$,
 that gave compiler errors on some systems.
 This has been fixed.
 $lnext
