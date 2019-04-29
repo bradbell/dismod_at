@@ -124,7 +124,7 @@ variation w.r.t. age will have no effect (for this covariate multiplier).
 $children%example/table/mulcov_table.py
 %$$
 $head Example$$
-The files $cref mulcov_table.py$$ and $cref get_mulcov_table_xam.cpp$$
-contain example $code covariate$$ tables.
+The file $cref mulcov_table.py$$
+contains an example $code covariate$$ tables.
 
 $end

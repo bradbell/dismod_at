@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -133,7 +133,7 @@ this field can be $code null$$.
 $children%example/table/prior_table.py
 %$$
 $head Example$$
-The files $cref prior_table.py$$ and $cref get_prior_table_xam.cpp$$
-contain example $code prior$$ tables.
+The file $cref prior_table.py$$
+contains an example $code prior$$ tables.
 
 $end

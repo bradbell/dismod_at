@@ -143,7 +143,7 @@ $tend
 $children%example/table/integrand_table.py
 %$$
 $head Example$$
-The files $cref integrand_table.py$$ and $cref get_integrand_table_xam.cpp$$
-contain example $code integrand$$ tables.
+The file $cref integrand_table.py$$
+contains an example $code integrand$$ tables.
 
 $end

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -32,7 +32,7 @@ The names are intended to be easier for a human to remember than the ids.
 $children%example/table/nslist_table.py
 %$$
 $head Example$$
-The files $cref nslist_table.py$$ and $cref get_nslist_table_xam.cpp$$
-contain example $code nslist$$ tables.
+The file $cref nslist_table.py$$
+contains an example $code nslist$$ tables.
 
 $end

@@ -163,7 +163,7 @@ the corresponding covariate.
 $children%example/table/data_table.py
 %$$
 $head Example$$
-The files $cref data_table.py$$ and $cref get_data_table_xam.cpp$$
+The file $cref data_table.py$$
 create example $code data$$ tables.
 
 $end

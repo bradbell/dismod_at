@@ -131,7 +131,7 @@ that appears with this $icode smooth_id$$.
 $children%example/table/smooth_grid_table.py
 %$$
 $head Example$$
-The files $cref smooth_grid_table.py$$ and $cref get_smooth_grid_xam.cpp$$
-contain example $code smooth$$ tables.
+The file $cref smooth_grid_table.py$$
+contains an example $code smooth$$ tables.
 
 $end
