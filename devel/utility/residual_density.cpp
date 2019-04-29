@@ -230,8 +230,11 @@ residual_struct<Float> residual_density(
 	size_t             index      ,
 	bool               diff       ,
 	bool               prior      )
-{	Float nan(std::numeric_limits<double>::quiet_NaN());
-	Float tiny( 10.0 / std::numeric_limits<double>::max() );
+{
+	Float tiny = 10.0 / std::numeric_limits<double>::max();;
+	double nan = std::numeric_limits<double>::quiet_NaN();
+	double r2  = std::sqrt(2.0);
+	double pi2 = 8.0 * std::atan(1.0);
 
 	Float wres  = nan;
 	Float sigma = nan;
@@ -292,8 +295,7 @@ residual_struct<Float> residual_density(
 
 		case gaussian_enum:
 		case log_gaussian_enum:
-		{	double pi2 = 8.0 * std::atan(1.0);
-			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
+		{	logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
 			logden_sub_abs = 0.0;
 		}
 		break;
@@ -301,21 +303,19 @@ residual_struct<Float> residual_density(
 		case cen_gaussian_enum:
 		assert( ! diff );
 		if( y <= 0 )
-		{	Float erfc     = 1.0 - erf( mu / ( delta * std::sqrt(2.0) ) );
+		{	Float erfc     = 1.0 - erf( mu / ( delta * r2 ) );
 			logden_smooth  = log(erfc / 2.0 );
 			logden_sub_abs = 0.0;
 		}
 		else
-		{	double pi2 = 8.0 * std::atan(1.0);
-			logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
+		{	logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
 			logden_sub_abs = 0.0;
 		}
 		break;
 
 		case laplace_enum:
 		case log_laplace_enum:
-		{	double r2   = sqrt(2.0);
-			logden_smooth  = - log( sigma * r2 );
+		{	logden_smooth  = - log( sigma * r2 );
 			logden_sub_abs = r2 * wres;
 		}
 		break;
@@ -323,11 +323,10 @@ residual_struct<Float> residual_density(
 		case cen_laplace_enum:
 		assert( ! diff );
 		if( y <= 0 )
-		{	logden_smooth = - mu * std::sqrt(2.0) / delta - std::log(2.0);
+		{	logden_smooth = - mu * r2 / delta - std::log(2.0);
 		}
 		else
-		{	double r2   = sqrt(2.0);
-			logden_smooth  = - log( sigma * r2 );
+		{	logden_smooth  = - log( sigma * r2 );
 			logden_sub_abs = r2 * wres;
 		}
 		break;
