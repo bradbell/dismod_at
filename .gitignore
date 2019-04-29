@@ -1,7 +1,7 @@
 # temporary file used to make commits
 /git_commit.sh
 #
-# cmake configuration file that is put in source directory
+# cmake configuration files that are put in source directory
 /include/dismod_at/configure.hpp
 /bin/dismodat.py
 /bin/setup.py
@@ -10,7 +10,6 @@
 # Directory were builds take place. Note that /build is a link, hence
 # it looks to git like a file instead of a directory.
 /build
-/bug/build/
 #
 # a previous release build that /build can point to
 /build.release/
@@ -18,16 +17,25 @@
 # a previous debug build that /build can point to
 /build.debug/
 #
+# directory where user documentation is built
+# /doc/
+#
+# directory where developer documentation is built
+/dev/
+#
 # directories that are used for stashing files
 # (any new directory and new.* in top directory)
-new/
+/new/
 /new.*/
 #
 # vim swap files
 *.swp
 #
 # log files
-*.log
+/*.log
+#
+# error files
+/*.err
 #
 # python compiled files
 *.pyc
