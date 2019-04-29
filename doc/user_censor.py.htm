@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting Data That Has Negative Values Censored</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting Data That Has Negative Values Censored">
-<meta name="keywords" id="keywords" content=" fitting data that has negative values censored purpose problem parameters age time variables rate table prior source code ">
+<meta name="keywords" id="keywords" content=" fitting data that has negative values censored purpose problem parameters age time variables rate table prior discussion source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,6 +70,7 @@ A:active { color : purple }
 <br><a href="user_censor.py.htm#Rate Table" target="_top">Rate&nbsp;Table</a>
 <br><a href="user_censor.py.htm#Data Table" target="_top">Data&nbsp;Table</a>
 <br><a href="user_censor.py.htm#Prior Table" target="_top">Prior&nbsp;Table</a>
+<br><a href="user_censor.py.htm#Discussion" target="_top">Discussion</a>
 <br><a href="user_censor.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -145,6 +146,18 @@ values below zero are replaced by the value zero.
 There is one prior in the <a href="prior_table.htm" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
  for the only
 model variable.
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+This fits two data sets.
+The first is simulated using python and put in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
+The second is simulated using the <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+
+and put in the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+.
 
 <br>
 <br>
@@ -296,6 +309,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># option_table</font></i>
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><b><font color="#000000">str</font></b><font color="#990000">(</font>random_seed<font color="#990000">)</font>    <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>             <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font> <font color="#990000">},</font>
 
@@ -325,11 +339,14 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <font color="#990000">)</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <b><font color="#0000FF">return</font></b>
-<i><font color="#9A1900"># ===========================================================================</font></i>
-<i><font color="#9A1900"># Fit to estimate iota</font></i>
+<i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Fit to estimate iota from censored data</font></i>
+<i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">#</font></i>
 file_name <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
 <b><font color="#000000">example_db</font></b><font color="#990000">(</font>file_name<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># init and fit fixed</font></i>
 program <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
@@ -340,12 +357,44 @@ connection      <font color="#990000">=</font> dismod_at<font color="#990000">.<
 var_table       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
 fit_var_table   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check result of the fit fixed</font></i>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
-estimate   <font color="#990000">=</font> fit_var_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
-<b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> estimate <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1e-1</font> <font color="#990000">:</font>
+first_estimate <font color="#990000">=</font> fit_var_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
+<b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> first_estimate <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1e-1</font> <font color="#990000">:</font>
      <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"random_seed = "</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">-</font> estimate <font color="#990000">/</font> iota_true<font color="#990000">)</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">-</font> first_estimate <font color="#990000">/</font> iota_true<font color="#990000">)</font>
      <b><font color="#0000FF">assert</font></b> False
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Simulate a censored data set and fit it</font></i>
+<i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># set truth_var table to contain iota_true</font></i>
+tbl_name <font color="#990000">=</font> <font color="#FF0000">'truth_var'</font>
+col_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'truth_var_value'</font> <font color="#990000">]</font>
+col_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'real'</font> <font color="#990000">]</font>
+row_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">[</font>iota_true<font color="#990000">]</font> <font color="#990000">]</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># simulate a new data set and sample using it</font></i>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'avgint'</font><font color="#990000">,</font> <font color="#FF0000">'data'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">])</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check result of the second fit fixed</font></i>
+connection       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+fit_var_table    <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
+second_estimate  <font color="#990000">=</font> fit_var_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
+<b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> second_estimate <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1e-1</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"random_seed = "</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">-</font> second_estimate <font color="#990000">/</font> iota_true<font color="#990000">)</font>
+     <b><font color="#0000FF">assert</font></b> False
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check that the estimates were different; i,e., used the second data set</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#990000">(</font>first_estimate <font color="#990000">-</font> second_estimate<font color="#990000">)</font> <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1e-2</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check all the simulated data values were non-negative</font></i>
+data_sim_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'data_sim'</font><font color="#990000">)</font>
+<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> data_sim_table <font color="#990000">:</font>
+     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'data_sim_value'</font><font color="#990000">]</font> <font color="#990000">&gt;=</font> <font color="#993399">0.0</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'censor.py: OK'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i></tt></pre>

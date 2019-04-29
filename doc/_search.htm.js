@@ -26,7 +26,7 @@ Keyword =
 'user_change_grid.py  Remove an Age or Time From a Smoothing  ',' purpose table parent value prior difference fit source code ',
 'user_lasso_covariate.py  Using Lasso on Covariate Multiplier  ',' see also purpose problem parameters age time values variables table mulcov rate data prior iota alpha source code ',
 'user_students.py  Using Student\'s-t to Fit With Remove Outliers Present  ',' purpose problem parameters age time values variables data table rate prior fitting source code ',
-'user_censor.py  Fitting Data That Has Negative Values Censored  ',' purpose problem parameters age time variables rate table prior source code ',
+'user_censor.py  Fitting Data That Has Negative Values Censored  ',' purpose problem parameters age time variables rate table prior discussion source code ',
 'user_cascade.py  Generating Priors For Next Level Down Node Tree  ',' table problem procedure step 1: create database 2: fit with n1 parent 3: simulate 4: sample posterior 5: predictions n11 6: 7: parameters age time values rate covariates multipliers gamma alpha source code ',
 'user_predict_fit.py  Predict Average Integrand Using Results of a Fit  ',' purpose note table problem parameters time values rate variables data avgint source code ',
 'user_predict_mulcov.py  Predict Covariate Multiplier Values  ',' purpose problem parameters age time rate table variables integrand data avgint source code ',
