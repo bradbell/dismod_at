@@ -230,7 +230,7 @@ D(y, \mu, \delta, d)
 =
 D(z, y, \mu, \delta, d)
 =
-- \mu \sqrt{2} / delta - log(2)
+- \mu \sqrt{2} / \delta - \log(2)
 \] $$
 where $latex \R{erfc}$$ is the complementary error function;
 see the Gaussian case for the

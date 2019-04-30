@@ -303,7 +303,7 @@ residual_struct<Float> residual_density(
 		case cen_gaussian_enum:
 		assert( ! diff );
 		if( y <= 0 )
-		{	Float erfc     = 1.0 - erf( mu / ( delta * r2 ) );
+		{	Float erfc     = 1.0 - erf( mu / ( sigma * r2 ) );
 			logden_smooth  = log(erfc / 2.0 );
 			logden_sub_abs = 0.0;
 		}
@@ -323,7 +323,8 @@ residual_struct<Float> residual_density(
 		case cen_laplace_enum:
 		assert( ! diff );
 		if( y <= 0 )
-		{	logden_smooth = - mu * r2 / delta - std::log(2.0);
+		{	logden_smooth = - mu * r2 / sigma - std::log(2.0);
+			logden_sub_abs = 0.0;
 		}
 		else
 		{	logden_smooth  = - log( sigma * r2 );

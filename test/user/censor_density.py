@@ -15,6 +15,7 @@ n_data        = 1000
 mu_true       = 0.5
 delta_true    = 1.0
 distribution  = 'laplace'
+plot          = False
 # ---------------------------------------------------------------------------
 import sys
 import os
@@ -22,6 +23,7 @@ import distutils.dir_util
 import scipy.stats
 import numpy
 import math
+import matplotlib.pyplot as pyplot
 test_program = 'test/user/censor_density.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -99,6 +101,13 @@ def negloglike(mu) :
 	return ret
 #
 bounds = [0.0 , 2.0 * mu_true]
+if plot :
+	x_plot = numpy.linspace(bounds[0], bounds[1], 100)
+	y_plot = numpy.zeros(100)
+	for i in range(100) :
+		y_plot[i] = negloglike(x_plot[i])
+	pyplot.plot(x_plot, y_plot)
+	pyplot.show()
 method = 'bounded'
 disp   = 0 # 0, 1, 2, or 3: 0 least printing, 3 most
 result = scipy.optimize.minimize_scalar(

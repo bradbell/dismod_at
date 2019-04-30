@@ -737,10 +737,10 @@ residual_struct<Float> data_model::like_one(
 	CppAD::vector<double> x(n_covariate_);
 	for(size_t j = 0; j < n_covariate_; j++)
 		x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
-	double eta           = data_subset_obj_[subset_id].eta;
-	double nu            = data_subset_obj_[subset_id].nu;
-	double meas_value    = data_subset_obj_[subset_id].meas_value;
-	double meas_std      = data_subset_obj_[subset_id].meas_std;
+	double eta          = data_subset_obj_[subset_id].eta;
+	double nu           = data_subset_obj_[subset_id].nu;
+	double meas_value   = data_subset_obj_[subset_id].meas_value;
+	double meas_std     = data_subset_obj_[subset_id].meas_std;
 	double age_lower    = data_subset_obj_[subset_id].age_lower;
 	double age_upper    = data_subset_obj_[subset_id].age_upper;
 	double time_lower   = data_subset_obj_[subset_id].time_lower;
