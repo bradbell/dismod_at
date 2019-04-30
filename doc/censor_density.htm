@@ -258,7 +258,7 @@ The Laplace density function is given by
 
 L( y , \mu , \delta )
 =
-\delta \sqrt{ \frac{1}{2} }
+\sqrt{ \frac{1}{2 \delta^2 } }
 \exp \left[ - \sqrt{2} \left| \frac{y - \mu}{\delta} \right| \right]
 
 @]@</small>
@@ -277,8 +277,9 @@ x \leq \mu
 
 \int_{-\infty}^{x} L( y , \mu , \delta ) \; \R{d} y
 =
-\frac{1}{2}
-\exp \left( - \sqrt{2} \frac{ \mu - x}{\delta} \right)
+\sqrt{ \frac{1}{2 \delta^2 } }
+\int_{-\infty}^{x}
+\exp \left( - \sqrt{2} \frac{\mu - y}{\delta} \right) \; \R{d} y
 
 @]@</small>
 Using <small>@(@

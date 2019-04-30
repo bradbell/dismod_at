@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Density Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Density Table">
-<meta name="keywords" id="keywords" content=" the density table density_id density_name uniform gaussian cen_gaussian log_gaussian laplace log_laplace students log_students notation linear log scaled example ">
+<meta name="keywords" id="keywords" content=" the density table density_id density_name uniform gaussian cen_gaussian log_gaussian laplace cen_laplace log_laplace students log_students notation linear censored log scaled nonsmooth example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,12 +76,15 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.cen_gaussian" target="_top">cen_gaussian</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.log_gaussian" target="_top">log_gaussian</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.laplace" target="_top">laplace</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.cen_laplace" target="_top">cen_laplace</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.log_laplace" target="_top">log_laplace</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.students" target="_top">students</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#density_name.log_students" target="_top">log_students</a>
 <br><a href="density_table.htm#Notation" target="_top">Notation</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#Notation.Linear" target="_top">Linear</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#Notation.Censored" target="_top">Censored</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#Notation.Log Scaled" target="_top">Log&nbsp;Scaled</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="density_table.htm#Notation.Nonsmooth" target="_top">Nonsmooth</a>
 <br><a href="density_table.htm#Example" target="_top">Example</a>
 <br>The <code><font color="blue">density</font></code> table is used to identify densities.
 It has the following columns:
@@ -134,7 +137,6 @@ with a link to the corresponding meaning:
 <br>
 <a href="statistic.htm#Log-Density Function, D.Censored Gaussian" target="_top"><span style='white-space: nowrap'>Censored&nbsp;Gaussian</span></a>
 
-(Under Construction)
 
 <br>
 <br>
@@ -150,6 +152,14 @@ with a link to the corresponding meaning:
 
 <br>
 <a href="statistic.htm#Log-Density Function, D.Laplace" target="_top"><span style='white-space: nowrap'>Laplace</span></a>
+
+
+<br>
+<br>
+<big><a name="density_name.cen_laplace" id="density_name.cen_laplace">cen_laplace</a></big>
+
+<br>
+<a href="statistic.htm#Log-Density Function, D.Censored Laplace" target="_top"><span style='white-space: nowrap'>Censored&nbsp;Laplace</span></a>
 
 
 <br>
@@ -189,7 +199,16 @@ We refer to the following densities as linear:
 <code><font color="blue">gaussian</font></code>,
 <code><font color="blue">cen_gaussian</font></code>,
 <code><font color="blue">laplace</font></code>,
+<code><font color="blue">cen_laplace</font></code>,
 <code><font color="blue">students</font></code>.
+
+<br>
+<br>
+<big><a name="Notation.Censored" id="Notation.Censored">Censored</a></big>
+<br>
+We refer to the following densities as censored:
+<code><font color="blue">cen_gaussian</font></code>,
+<code><font color="blue">cen_laplace</font></code>.
 
 <br>
 <br>
@@ -199,6 +218,15 @@ We refer to the following densities as log scaled:
 <code><font color="blue">log_gaussian</font></code>,
 <code><font color="blue">log_laplace</font></code>,
 <code><font color="blue">log_students</font></code>.
+
+<br>
+<br>
+<big><a name="Notation.Nonsmooth" id="Notation.Nonsmooth">Nonsmooth</a></big>
+<br>
+We refer to the following densities as nonsmooth:
+<code><font color="blue">laplace</font></code>,
+<code><font color="blue">cen_laplace</font></code>,
+<code><font color="blue">log_laplace</font></code>.
 
 
 

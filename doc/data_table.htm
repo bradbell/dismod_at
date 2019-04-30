@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Data Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Data Table">
-<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id laplace node_id parent random effects child weight_id hold_out meas_value meas_std eta null nu age_lower age_upper time_lower time_upper covariates example ">
+<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id nonsmooth node_id parent random effects child weight_id hold_out meas_value meas_std eta null nu age_lower age_upper time_lower time_upper covariates example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -73,7 +73,7 @@ A:active { color : purple }
 <br><a href="data_table.htm#data_name" target="_top">data_name</a>
 <br><a href="data_table.htm#integrand_id" target="_top">integrand_id</a>
 <br><a href="data_table.htm#density_id" target="_top">density_id</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#density_id.Laplace" target="_top">Laplace</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#density_id.Nonsmooth" target="_top">Nonsmooth</a>
 <br><a href="data_table.htm#node_id" target="_top">node_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#node_id.Parent Data Random Effects" target="_top">Parent&nbsp;Data&nbsp;Random&nbsp;Effects</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#node_id.Child Data Random Effects" target="_top">Child&nbsp;Data&nbsp;Random&nbsp;Effects</a>
@@ -138,9 +138,10 @@ corresponding to
 
 <br>
 <br>
-<big><a name="density_id.Laplace" id="density_id.Laplace">Laplace</a></big>
+<big><a name="density_id.Nonsmooth" id="density_id.Nonsmooth">Nonsmooth</a></big>
 <br>
-If the density is <code><font color="blue">laplace</font></code> or <code><font color="blue">log_laplace</font></code>,
+If the density is <a href="density_table.htm#Notation.Nonsmooth" target="_top"><span style='white-space: nowrap'>nonsmooth</span></a>
+,
 the <a href="avg_integrand.htm" target="_top"><span style='white-space: nowrap'>average_integrand</span></a>
 
 cannot depend on any of the random effects.
@@ -152,6 +153,9 @@ For example, if the
 the average integrand does not depend on the random effects.
 Also, if the node corresponding to a child that has all its random effects
 constrained, the average integrand does not depend on the random effects.
+Each nonsmooth data point adds a hidden variable to the optimization
+problem (that is the max of the residual and its negative).
+Having a lot of these variables slows down the optimization.
 
 <br>
 <br>

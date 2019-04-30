@@ -84,6 +84,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Censored Gaussian" target="_top">Censored&nbsp;Gaussian</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Log-Gaussian" target="_top">Log-Gaussian</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Laplace" target="_top">Laplace</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Censored Laplace" target="_top">Censored&nbsp;Laplace</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Log-Laplace" target="_top">Log-Laplace</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Student's-t" target="_top">Student's-t</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Log-Density Function, D.Log-Student's-t" target="_top">Log-Student's-t</a>
@@ -441,6 +442,39 @@ D
 @)@</small> and <small>@(@
 R
 @)@</small> have the same arguments.
+
+<br>
+<br>
+<big><a name="Log-Density Function, D.Censored Laplace" id="Log-Density Function, D.Censored Laplace">Censored Laplace</a></big>
+<br>
+If the density name is <code><font color="blue">cen_laplace</font></code>,
+the log-density function is not defined for differences.
+The log-density function for values <small>@(@
+y > 0
+@)@</small>
+is the same as for the <code><font color="blue">laplace</font></code> case.
+The log-density function for the values <small>@(@
+y \leq 0
+@)@</small>,
+is defined by
+<small>@[@
+
+D(y, \mu, \delta, d)
+=
+D(z, y, \mu, \delta, d)
+=
+- \mu \sqrt{2} / \delta - \log(2)
+
+@]@</small>
+where <small>@(@
+\R{erfc}
+@)@</small> is the complementary error function;
+see the Gaussian case for the
+<a href="censor_density.htm#Gaussian.Censored Density, G(y,mu,delta,c)" target="_top"><span style='white-space: nowrap'>censored&nbsp;density</span></a>
+
+where the censoring value is <small>@(@
+c = 0
+@)@</small>.
 
 <br>
 <br>
