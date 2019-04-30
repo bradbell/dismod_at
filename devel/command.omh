@@ -36,6 +36,7 @@ $children%devel/cmd/depend_command.cpp
 	%devel/cmd/predict_command.cpp
 	%devel/cmd/sample_command.cpp
 	%devel/cmd/set_command.cpp
+	%devel/cmd/simulate_command.cpp
 	%devel/dismod_at.cpp
 	%bin/dismodat.py.in
 %$$

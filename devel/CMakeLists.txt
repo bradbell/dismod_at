@@ -16,6 +16,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	cmd/predict_command.cpp
 	cmd/sample_command.cpp
 	cmd/set_command.cpp
+	cmd/simulate_command.cpp
 
 	model/data_model.cpp
 	model/fit_model.cpp
