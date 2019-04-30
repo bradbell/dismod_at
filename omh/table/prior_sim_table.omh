@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -57,9 +57,6 @@ This column has type $code real$$ and is
 a simulated from the value prior for this variable.
 If there is no value prior, or if the density for the value prior
 is uniform, $icode prior_sim_value$$ is $code null$$.
-If the prior density is Laplace, and the prior mean is zero,
-$icode prior_sim_value$$ is set to zero instead of a simulated sample
-from the Laplace distribution. This simulates Lasso fitting.
 
 $head prior_sim_dage$$
 This column has type $code real$$ and is
@@ -73,6 +70,16 @@ a simulated from the dtime prior for this variable.
 If there is no dtime prior, or if the density for the dtime prior
 is uniform, $icode prior_sim_dtime$$ is $code null$$.
 
+$head Censoring$$
+If the simulated values for the prior is censored to be within the
+upper and lower limits for the corresponding variable.
+To be specific, if $icode sim$$ is the value simulated just using the
+$cref/density_id/prior_table/density_id/$$,
+and $icode lower$$, $icode upper$$ are the corresponding limits;
+the corresponding simulated value or difference is
+$codei%
+	max[ %upper%, min( %lower% , %sim% ) ]
+%$$
 
 $head Example$$
 See the $cref simulate_command.py$$ example and test.

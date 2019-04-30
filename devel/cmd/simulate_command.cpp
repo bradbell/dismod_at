@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/sim_random.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/get_density_table.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -56,7 +57,6 @@ This table can be create by the
 $cref/set_command/set_command/table_out/truth_var/$$,
 or the user can create it directly with the aid of the
 $cref var_table$$ (created by the $cref init_command$$).
-
 
 $head data_sim_table$$
 A new $cref data_sim_table$$ is created by this command.
@@ -241,15 +241,6 @@ void simulate_command(
 					//
 					sim = std::min(sim, upper);
 					sim = std::max(sim, lower);
-					//
-					if( density == dismod_at::log_gaussian_enum
-					||  density == dismod_at::log_laplace_enum
-					||  density == dismod_at::log_students_enum )
-						sim = std::max(sim, 0.0);
-					//
-					if( density == dismod_at::laplace_enum
-					&& k == 0 && mean == 0.0 )
-						sim = 0.0;
 					//
 					sim_str[k] = to_string( sim );
 				}

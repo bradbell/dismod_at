@@ -26,6 +26,7 @@ $spell
 	omh
 	omhelp
 	nonsmooth
+	sim
 $$
 $navigate%
 	Up%Location%
@@ -50,10 +51,20 @@ $childtable%
 %$$
 
 $head 04-30$$
+$list number$$
 The censored Laplace density
 $cref/cen_laplace/density_table/density_name/cen_laplace/$$ now works.
 See the discussion of $cref/nonsmooth/data_table/density_id/Nonsmooth/$$
 densities in the data table.
+$lnext
+Change the $cref prior_sim_table$$ by entering the a simulated Laplace
+random variate, instead of zero, when the mean for prior Laplace distribution
+is zero.
+$lnext
+Improve the documentation of
+$cref/censoring/prior_sim_table/Censoring/$$
+of simulated values in the $code prior_sim$$ table.
+$lend
 
 
 $head 04-29$$
