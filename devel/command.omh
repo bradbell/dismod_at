@@ -31,13 +31,13 @@ The second is an $code end$$ message and signifies that the command completed.
 
 
 $children%devel/cmd/depend_command.cpp
+	%devel/cmd/fit_command.cpp
 	%devel/cmd/init_command.cpp
 	%devel/cmd/old2new_command.cpp
 	%devel/cmd/predict_command.cpp
 	%devel/cmd/sample_command.cpp
 	%devel/cmd/set_command.cpp
 	%devel/cmd/simulate_command.cpp
-	%devel/dismod_at.cpp
 	%bin/dismodat.py.in
 %$$
 $head Commands$$

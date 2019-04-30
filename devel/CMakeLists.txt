@@ -11,6 +11,7 @@
 # devel
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	cmd/depend_command.cpp
+	cmd/fit_command.cpp
 	cmd/init_command.cpp
 	cmd/old2new_command.cpp
 	cmd/predict_command.cpp
