@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -1102,42 +1102,31 @@ fit_model::a1_vector fit_model::ran_likelihood(
 	if( n_data_ran == 0 && n_prior_ran == 0 )
 		return a1_vector(0);
 	//
-	// count the number of absolute value terms
-	size_t n_abs = 0;
+# ifndef NDEBUG
+	// no absolute value terms
 	for(size_t i = 0; i < n_data_ran; i++)
 	{	density_enum density = data_ran[i].density;
-		if( density == laplace_enum || density == log_laplace_enum )
-			n_abs++;
+		assert( ! nonsmooth_density(density) );
 	}
 	for(size_t i = 0; i < n_prior_ran; i++)
 	{	density_enum density = prior_ran[i].density;
-		if( density == laplace_enum || density == log_laplace_enum )
-			n_abs++;
+		assert( ! nonsmooth_density(density) );
 	}
+# endif
 	// size ran_den
-	a1_vector ran_den(1 + n_abs);
+	a1_vector ran_den(1);
 	//
 	// initialize summation of smooth part
 	ran_den[0] = 0.0;
 	//
-	// initialize index for non-smooth part
-	size_t i_abs = 0;
-	//
 	// data_ran terms
 	for(size_t i = 0; i < n_data_ran; i++)
-	{	ran_den[0] += data_ran[i].logden_smooth;
-		density_enum density = data_ran[i].density;
-		if( density == laplace_enum || density == log_laplace_enum )
-			ran_den[1 + i_abs++] = data_ran[i].logden_sub_abs;
-	}
+		ran_den[0] += data_ran[i].logden_smooth;
 	//
 	// random effects prior
 	for(size_t i = 0; i < n_prior_ran; i++)
-	{	ran_den[0] += prior_ran[i].logden_smooth;
-		density_enum density = prior_ran[i].density;
-		if( density == laplace_enum || density == log_laplace_enum )
-			ran_den[1 + i_abs++] = prior_ran[i].logden_sub_abs;
-	}
+		ran_den[0] += prior_ran[i].logden_smooth;
+	//
 	// convert from log-density to negative log density
 	ran_den[0] = - ran_den[0];
 	//
