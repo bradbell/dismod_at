@@ -24,7 +24,7 @@ import scipy.stats
 import numpy
 import math
 import matplotlib.pyplot as pyplot
-test_program = 'test/user/censor_density.py'
+test_program = 'test/user/censor_1.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -122,4 +122,4 @@ if abs(rel_err) > 1e-1 :
 	print("rel_err = ",     relerr)
 	print("random_seed = ", random_seed)
 # -----------------------------------------------------------------------------
-print('censor_density.py: OK')
+print('censor_1.py: OK')

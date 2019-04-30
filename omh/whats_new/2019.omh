@@ -50,8 +50,8 @@ $childtable%
 %$$
 
 $head 04-30$$
-The $cref/cen_laplace/density_table/density_name/cen_laplace/$$
-density now works.
+The censored Laplace density
+$cref/cen_laplace/density_table/density_name/cen_laplace/$$ now works.
 See the discussion of $cref/nonsmooth/data_table/density_id/Nonsmooth/$$
 densities in the data table.
 

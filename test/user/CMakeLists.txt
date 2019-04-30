@@ -14,7 +14,7 @@ FOREACH(user_case
 	avgint
 	bound_frac
 	bound_random
-	censor_density
+	censor_1
 	censor_2
 	csv2db
 	db2csv
