@@ -1180,13 +1180,11 @@ fit_model::a1_vector fit_model::fix_likelihood(
 	// count the number of absolute value terms
 	size_t n_abs = 0;
 	for(size_t i = 0; i < n_data_fix; i++)
-	{	density_enum density = data_fix[i].density;
-		if( density == laplace_enum || density == log_laplace_enum )
+	{	if( ! Constant(data_fix[i].logden_sub_abs) )
 			n_abs++;
 	}
 	for(size_t i = 0; i < n_prior_fix; i++)
-	{	density_enum density = prior_fix[i].density;
-		if( density == laplace_enum || density == log_laplace_enum )
+	{	if( ! Constant(prior_fix[i].logden_sub_abs) )
 			n_abs++;
 	}
 	// size fix_den
@@ -1201,16 +1199,14 @@ fit_model::a1_vector fit_model::fix_likelihood(
 	// data_fix terms
 	for(size_t i = 0; i < n_data_fix; i++)
 	{	fix_den[0] += data_fix[i].logden_smooth;
-		density_enum density = data_fix[i].density;
-		if( density == laplace_enum || density == log_laplace_enum )
+		if( ! Constant(data_fix[i].logden_sub_abs) )
 			fix_den[1 + i_abs++] = data_fix[i].logden_sub_abs;
 	}
 	//
 	// fixed effects prior
 	for(size_t i = 0; i < n_prior_fix; i++)
 	{	fix_den[0] += prior_fix[i].logden_smooth;
-		density_enum density = prior_fix[i].density;
-		if( density == laplace_enum || density == log_laplace_enum )
+		if( ! Constant(prior_fix[i].logden_sub_abs) )
 			fix_den[1 + i_abs++] = prior_fix[i].logden_sub_abs;
 	}
 	//

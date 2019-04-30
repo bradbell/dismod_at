@@ -193,7 +193,8 @@ This expresses the log-density
 in terms of smooth functions (for optimization purposes).
 
 $subhead Absolute Value Terms$$
-If $icode logden_sub_abs$$ is a CppAD constant and equal to zero,
+If $icode logden_sub_abs$$ is a CppAD constant,
+(not a dynamic parameter or variable),
 there is no absolute value term for this residual.
 
 

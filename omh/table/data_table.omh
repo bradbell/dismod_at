@@ -54,6 +54,9 @@ $cref/parent node/option_table/parent_node_id/$$,
 the average integrand does not depend on the random effects.
 Also, if the node corresponding to a child that has all its random effects
 constrained, the average integrand does not depend on the random effects.
+Each nonsmooth data point adds a hidden variable to the optimization
+problem (that is the max of the residual and its negative).
+Having a lot of these variables slows down the optimization.
 
 $head node_id$$
 This column has type $code integer$$ and is the

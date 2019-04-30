@@ -25,6 +25,7 @@ $spell
 	cen
 	omh
 	omhelp
+	nonsmooth
 $$
 $navigate%
 	Up%Location%
@@ -47,6 +48,13 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 04-30$$
+The $cref/cen_laplace/density_table/density_name/cen_laplace/$$
+density now works.
+See the discussion of $cref/nonsmooth/data_table/density_id/Nonsmooth/$$
+densities in the data table.
+
 
 $head 04-29$$
 $list number$$

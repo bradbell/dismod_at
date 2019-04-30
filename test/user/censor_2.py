@@ -9,9 +9,9 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters
-iota_true        = 0.05
-n_data           = 1000      # number of simulated data points
-random_seed      = 1234      # if zero, seed off the clock
+iota_true        = 0.05      # value used to simulate data
+n_data           = 500       # number of simulated data points
+random_seed      = 0         # if zero, seed off the clock
 # end problem parameters
 # ------------------------------------------------------------------------
 import time
@@ -24,7 +24,7 @@ import copy
 import numpy
 import scipy.stats
 import math
-test_program = 'test/user/censor.py'
+test_program = 'test/user/censor_2.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -101,7 +101,7 @@ def example_db (file_name) :
 	# Values that are the same for all data rows
 	# If you change cen_laplace to laplace, the test should fail
 	# (because the simultion censors the data)
-	meas_std   = iota_true / 2.0;
+	meas_std   = iota_true;
 	meas_scale = meas_std / math.sqrt(2.0)
 	row = {
 		'node':        'world',
@@ -207,7 +207,6 @@ fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 # check result of the fit fixed
 assert len(var_table) == 1
 first_estimate = fit_var_table[0]['fit_var_value']
-print(1.0 - first_estimate / iota_true)
 if abs( 1.0 - first_estimate / iota_true ) > 1e-1 :
 	print("random_seed = ", random_seed)
 	print(1.0 - first_estimate / iota_true)
@@ -232,20 +231,21 @@ system_command([ program, file_name, 'fit', 'fixed', '0' ])
 connection       = dismod_at.create_connection(file_name, new)
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 second_estimate  = fit_var_table[0]['fit_var_value']
-print(1.0 - second_estimate / iota_true)
 if abs( 1.0 - second_estimate / iota_true ) > 1e-1 :
 	print("random_seed = ", random_seed)
 	print(1.0 - second_estimate / iota_true)
 	assert False
 #
 # check that the estimates were different; i,e., used the second data set
-assert abs( (first_estimate - second_estimate) / iota_true ) > 1e-2
+if (first_estimate - second_estimate) / iota_true > 5e-3 :
+	print("random_seed = ", random_seed)
+	print( (first_estimate - second_estimate) / iota_true )
 #
 # check all the simulated data values were non-negative
 data_sim_table = dismod_at.get_table_dict(connection, 'data_sim')
 for row in data_sim_table :
 	assert row['data_sim_value'] >= 0.0
 # -----------------------------------------------------------------------------
-print('censor.py: OK')
+print('censor_2.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

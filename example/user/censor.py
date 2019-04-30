@@ -79,7 +79,7 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters
-iota_true        = 0.05
+iota_true        = 0.05      # value used to simulate data
 n_data           = 2000      # number of simulated data points
 random_seed      = 0         # if zero, seed off the clock
 # end problem parameters
