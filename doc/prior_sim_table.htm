@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Variation in Prior</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Variation in Prior">
-<meta name="keywords" id="keywords" content=" simulated variation prior prior_sim_id simulate_index var_id prior_sim_value prior_sim_dage prior_sim_dtime example ">
+<meta name="keywords" id="keywords" content=" simulated variation prior prior_sim_id simulate_index var_id prior_sim_value prior_sim_dage prior_sim_dtime censoring example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,6 +76,7 @@ A:active { color : purple }
 <br><a href="prior_sim_table.htm#prior_sim_value" target="_top">prior_sim_value</a>
 <br><a href="prior_sim_table.htm#prior_sim_dage" target="_top">prior_sim_dage</a>
 <br><a href="prior_sim_table.htm#prior_sim_dtime" target="_top">prior_sim_dtime</a>
+<br><a href="prior_sim_table.htm#Censoring" target="_top">Censoring</a>
 <br><a href="prior_sim_table.htm#Example" target="_top">Example</a>
 <br>The <code><font color="blue">prior_sim</font></code> table is created during a
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
@@ -148,11 +149,6 @@ If there is no value prior, or if the density for the value prior
 is uniform, 
 <code><i><font color="black"><span style='white-space: nowrap'>prior_sim_value</span></font></i></code>
  is <code><font color="blue">null</font></code>.
-If the prior density is Laplace, and the prior mean is zero,
-
-<code><i><font color="black"><span style='white-space: nowrap'>prior_sim_value</span></font></i></code>
- is set to zero instead of a simulated sample
-from the Laplace distribution. This simulates Lasso fitting.
 
 <br>
 <br>
@@ -176,8 +172,27 @@ is uniform,
 <code><i><font color="black"><span style='white-space: nowrap'>prior_sim_dtime</span></font></i></code>
  is <code><font color="blue">null</font></code>.
 
-
 <br>
+<br>
+<b><big><a name="Censoring" id="Censoring">Censoring</a></big></b>
+<br>
+If the simulated values for the prior is censored to be within the
+upper and lower limits for the corresponding variable.
+To be specific, if 
+<code><i><font color="black"><span style='white-space: nowrap'>sim</span></font></i></code>
+ is the value simulated just using the
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i></code>
+ are the corresponding limits;
+the corresponding simulated value or difference is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;min(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sim</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;]<br>
+</span></font></code>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
