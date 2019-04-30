@@ -15,6 +15,7 @@ $spell
 	enum
 	cpp
 	cen
+	nonsmooth
 $$
 
 $section C++: Get the Density Table Information$$
@@ -22,7 +23,10 @@ $section C++: Get the Density Table Information$$
 $head Syntax$$
 $icode%density_table% = get_density_table(%db%)
 %$$
-$icode%is_log% = log_density(%density%)%$$
+$icode%is_log% = log_density(%density%)
+%$$
+$icode%is_nonsmooth% = nonsmooth_density(%density%)
+%$$
 
 $head Purpose$$
 To read the $cref density_table$$ and return it as a C++ data structure.
@@ -65,7 +69,12 @@ The number of these enum values is $code number_density_enum$$.
 
 $head log_density$$
 The return value $icode is_log$$ is true if the corresponding density is
-log_gaussian, log_laplace, or log_students.
+$cref/log scaled/density_table/Notation/Log Scaled/$$.
+It is false otherwise.
+
+$head nonsmooth_density$$
+The return value $icode is_nonsmooth$$ is true if the corresponding density is
+$cref/nonsmooth/density_table/Notation/Nonsmooth/$$.
 It is false otherwise.
 
 $head density_enum2name$$
@@ -162,12 +171,16 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	}
 	return density_table;
 }
-// log_density is a function so that if we add another type of log density
-// all the current detection adapts to include the new density.
 bool log_density(density_enum density)
 {	bool result = density == log_gaussian_enum;
 	result     |= density == log_laplace_enum;
 	result     |= density == log_students_enum;
+	return result;
+}
+bool nonsmooth_density(density_enum density)
+{	bool result = density == laplace_enum;
+	result     |= density == cen_laplace_enum;
+	result     |= density == log_laplace_enum;
 	return result;
 }
 

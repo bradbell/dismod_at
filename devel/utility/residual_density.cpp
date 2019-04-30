@@ -21,6 +21,7 @@ $spell
 	bool
 	var
 	diff
+	CppAD
 $$
 
 $section Compute Weighted Residual and Log-Density$$
@@ -165,7 +166,7 @@ $latex \[
 	R(z, y, \mu, \delta, d)
 \]$$
 
-$subhead logden$$
+$subhead Log Density$$
 If $icode diff$$ is false, the log-density function
 $latex \[
 	D(y, \mu, \delta, d)
@@ -186,12 +187,15 @@ is equal to
 $codei%
     %logden_smooth% - fabs(%logden_sub_abs)%)
 %$$
+Both $icode logden_smooth$$ and $icode logden_sub_abs$$
+are smooth functions of $latex \mu$$ and $latex \delta$$.
 This expresses the log-density
 in terms of smooth functions (for optimization purposes).
-In the case of the uniform density,
-both $icode logden_smooth$$ and $icode logden_sub_abs$$ will be zero.
-In the case of the gaussian and log-gaussian densities,
-$icode logden_sub_abs$$ will be zero.
+
+$subhead Absolute Value Terms$$
+If $icode logden_sub_abs$$ is a CppAD constant and equal to zero,
+there is no absolute value term for this residual.
+
 
 $end
 */

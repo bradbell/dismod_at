@@ -12,6 +12,7 @@ $begin density_table$$
 $spell
 	covariate
 	cen
+	Nonsmooth
 $$
 
 $section The Density Table$$
@@ -80,6 +81,12 @@ We refer to the following densities as log scaled:
 $code log_gaussian$$,
 $code log_laplace$$,
 $code log_students$$.
+
+$subhead Nonsmooth$$
+We refer to the following densities as nonsmooth:
+$code laplace$$,
+$code cen_laplace$$,
+$code log_laplace$$.
 
 
 $children%example/table/density_table.py

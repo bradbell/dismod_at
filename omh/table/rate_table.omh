@@ -20,6 +20,7 @@ $spell
 	cppad
 	exp
 	ik
+	nonsmooth
 $$
 
 $section The Rate Table$$
@@ -166,9 +167,8 @@ $subhead Not Constant$$
 If a child value prior is not constant, it must satisfy the following
 conditions:
 $list number$$
-The $cref/density_id/prior_table/density_id/$$ must not correspond to
-$cref/laplace/density_table/density_name/laplace/$$ or
-$cref/log_laplace/density_table/density_name/log_laplace/$$.
+The $cref/density_id/prior_table/density_id/$$ must not correspond to a
+$cref/nonsmooth/density_table/Notation/Nonsmooth/$$ density.
 $lnext
 The $cref/lower/prior_table/lower/$$ limit
 ($cref/upper/prior_table/upper/$$ limit)
@@ -194,9 +194,8 @@ $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
 are called child difference priors.
 These priors must satisfy the following conditions:
 $list number$$
-The $cref/density_id/prior_table/density_id/$$ must not correspond to
-$cref/laplace/density_table/density_name/laplace/$$ or
-$cref/log_laplace/density_table/density_name/log_laplace/$$.
+The $cref/density_id/prior_table/density_id/$$ must not correspond to a
+$cref/nonsmooth/density_table/Notation/Nonsmooth/$$ density.
 $lnext
 The $cref/lower/prior_table/lower/$$ limit
 ($cref/upper/prior_table/upper/$$ limit)

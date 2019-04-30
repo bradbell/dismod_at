@@ -29,6 +29,7 @@ namespace dismod_at {
 	};
 	extern CppAD::vector<density_enum> get_density_table(sqlite3*  db);
 	extern bool log_density(density_enum density);
+	extern bool nonsmooth_density(density_enum density);
 }
 
 # endif

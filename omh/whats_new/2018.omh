@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2018$$
 $spell
+	nonsmooth
 	dev
 	suitesparse
 	Dismod
@@ -916,7 +917,7 @@ $cref/density/data_table/density_id/$$ in the data table when
 $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ was $code false$$.
 $lnext
 Detect and report an error when the density in the data table is
-$cref/laplace/data_table/density_id/Laplace/$$ or $code log_laplace$$.
+$cref/nonsmooth/density_table/Notation/Nonsmooth/$$.
 $lend
 
 

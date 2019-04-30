@@ -14,6 +14,7 @@ $spell
 	covariates
 	std
 	dismod
+	Nonsmooth
 $$
 
 $section The Data Table$$
@@ -43,8 +44,8 @@ The $cref/density_name/density_table/density_name/$$
 corresponding to $icode density_id$$ cannot be $code uniform$$.
 (Use $cref/hold_out/data_table/hold_out/$$ to ignore data during fitting.)
 
-$subhead Laplace$$
-If the density is $code laplace$$ or $code log_laplace$$,
+$subhead Nonsmooth$$
+If the density is $cref/nonsmooth/density_table/Notation/Nonsmooth/$$,
 the $cref/average_integrand/avg_integrand/$$
 cannot depend on any of the random effects.
 For example, if the
