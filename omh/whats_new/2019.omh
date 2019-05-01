@@ -27,6 +27,7 @@ $spell
 	omhelp
 	nonsmooth
 	sim
+	mu
 $$
 $navigate%
 	Up%Location%
@@ -51,6 +52,14 @@ $childtable%
 %$$
 
 $head 05-01$$
+$list number$$
+Due to the change in $cref prior_sim_table$$ on 04-30,
+$cref/log scaled/density_table/Notation/Log Scaled/$$ distributions
+can now simulate negative means.
+This was causing a message saying that
+$code residual_density: mu$$ was negative.
+This check has been changed to make sure $latex \mu + \eta$$ is positive.
+$lnext
 Add a discussion of the
 $cref/difference between means
 	/censor_density
@@ -58,6 +67,7 @@ $cref/difference between means
 	/Difference Between Means
 /$$
 for the censored distributions.
+$lend
 
 $head 04-30$$
 $list number$$

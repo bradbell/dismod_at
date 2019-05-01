@@ -267,9 +267,7 @@ residual_struct<Float> residual_density(
 		case log_laplace_enum:
 		case log_students_enum:
 		print_forward_if_not_positive("delta", delta);
-		if( diff )
-			print_forward_if_not_positive("z", z + tiny);
-		print_forward_if_not_positive("mu", mu + tiny);
+		print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
 		assert( delta > 0.0 );
 		if( diff )
 		{	assert(prior);

@@ -174,8 +174,7 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(
 		int prior_id = dage_prior_id[i];
 		if( size_t(prior_id) < n_prior )
 		{	int density_id = prior_table[prior_id].density_id;
-			ok  = density_table[density_id] != cen_gaussian_enum;
-			ok &= density_table[density_id] != cen_laplace_enum;
+			ok  = ! censored_density( density_table[density_id] );
 			if( ! ok )
 			{	string msg = "dage_prior_id corresponds to a "
 				"censored distribution";
@@ -185,8 +184,7 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(
 		prior_id = dtime_prior_id[i];
 		if( size_t(prior_id) < n_prior )
 		{	int density_id = prior_table[prior_id].density_id;
-			ok  = density_table[density_id] != cen_gaussian_enum;
-			ok &= density_table[density_id] != cen_laplace_enum;
+			ok  = ! censored_density( density_table[density_id] );
 			if( ! ok )
 			{	string msg = "dtime_prior_id corresponds to a "
 				"censored distribution";

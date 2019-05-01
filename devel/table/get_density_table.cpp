@@ -27,6 +27,8 @@ $icode%is_log% = log_density(%density%)
 %$$
 $icode%is_nonsmooth% = nonsmooth_density(%density%)
 %$$
+$icode%is_censored% = censored_density(%density%)
+%$$
 
 $head Purpose$$
 To read the $cref density_table$$ and return it as a C++ data structure.
@@ -75,6 +77,11 @@ It is false otherwise.
 $head nonsmooth_density$$
 The return value $icode is_nonsmooth$$ is true if the corresponding density is
 $cref/nonsmooth/density_table/Notation/Nonsmooth/$$.
+It is false otherwise.
+
+$head censored_density$$
+The return value $icode is_censored$$ is true if the corresponding density is
+$cref/censored/density_table/Notation/Censored/$$.
 It is false otherwise.
 
 $head density_enum2name$$
@@ -184,6 +191,11 @@ bool nonsmooth_density(density_enum density)
 {	bool result = density == laplace_enum;
 	result     |= density == cen_laplace_enum;
 	result     |= density == log_laplace_enum;
+	return result;
+}
+bool censored_density(density_enum density)
+{	bool result = density == cen_gaussian_enum;;
+	result     |= density == cen_laplace_enum;
 	return result;
 }
 
