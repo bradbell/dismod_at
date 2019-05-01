@@ -101,11 +101,26 @@ A:active { color : purple }
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
 <b><big><a name="05-01" id="05-01">05-01</a></big></b>
-<br>
+
+<ol type="1"><li>
+Due to the change in <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+ on 04-30,
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+ distributions
+can now simulate negative means.
+This was causing a message saying that
+<code><font color="blue">residual_density: mu</font></code> was negative.
+This check has been changed to make sure <small>@(@
+\mu + \eta
+@)@</small> is positive.
+</li><li>
+
 Add a discussion of the
 <a href="censor_density.htm#Gaussian.Difference Between Means" target="_top"><span style='white-space: nowrap'>difference&nbsp;between&nbsp;means</span></a>
 
 for the censored distributions.
+</li></ol>
+
 
 <br>
 <br>
