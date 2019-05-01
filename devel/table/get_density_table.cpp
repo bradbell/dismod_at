@@ -126,15 +126,18 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	string message;
 	//
 	// check density names in same order as enum type in get_density_table.hpp
-	assert( string("uniform")      == density_enum2name[uniform_enum] );
-	assert( string("gaussian")     == density_enum2name[gaussian_enum] );
-	assert( string("cen_gaussian") == density_enum2name[cen_gaussian_enum] );
-	assert( string("log_gaussian") == density_enum2name[log_gaussian_enum] );
-	assert( string("cen_laplace")  == density_enum2name[cen_laplace_enum] );
-	assert( string("laplace")      == density_enum2name[laplace_enum] );
-	assert( string("log_laplace")  == density_enum2name[log_laplace_enum] );
-	assert( string("students")     == density_enum2name[students_enum] );
-	assert( string("log_students") == density_enum2name[log_students_enum] );
+# ifndef NDEBUG
+	const char** enum2name = density_enum2name;
+	assert( string("uniform")          == enum2name[uniform_enum] );
+	assert( string("gaussian")         == enum2name[gaussian_enum] );
+	assert( string("cen_gaussian")     == enum2name[cen_gaussian_enum] );
+	assert( string("log_gaussian")     == enum2name[log_gaussian_enum] );
+	assert( string("cen_laplace")      == enum2name[cen_laplace_enum] );
+	assert( string("laplace")          == enum2name[laplace_enum] );
+	assert( string("log_laplace")      == enum2name[log_laplace_enum] );
+	assert( string("students")         == enum2name[students_enum] );
+	assert( string("log_students")     == enum2name[log_students_enum] );
+# endif
 	//
 	vector<bool> found(number_density_enum);
 	for(size_t i = 0; i < size_t(number_density_enum); i++)
