@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Censored Gaussian and Laplace Densities</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Censored Gaussian and Laplace Densities">
-<meta name="keywords" id="keywords" content=" the censored gaussian laplace densities under construction reference discussion simulation test density g(ymudelta) error function g(ymudeltac) l(ymudelta) indefinite integral l(ymudeltac) ">
+<meta name="keywords" id="keywords" content=" the censored gaussian laplace densities under construction reference discussion simulation test density g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac) ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,10 +74,12 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Gaussian.Density, G(y,mu,delta)" target="_top">Density,&nbsp;G(y,mu,delta)</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Gaussian.Error Function" target="_top">Error&nbsp;Function</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Gaussian.Censored Density, G(y,mu,delta,c)" target="_top">Censored&nbsp;Density,&nbsp;G(y,mu,delta,c)</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Gaussian.Difference Between Means" target="_top">Difference&nbsp;Between&nbsp;Means</a>
 <br><a href="censor_density.htm#Laplace" target="_top">Laplace</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Laplace.Density, L(y,mu,delta)" target="_top">Density,&nbsp;L(y,mu,delta)</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Laplace.Indefinite Integral" target="_top">Indefinite&nbsp;Integral</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Laplace.Censored Density, L(y,mu,delta,c)" target="_top">Censored&nbsp;Density,&nbsp;L(y,mu,delta,c)</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="censor_density.htm#Laplace.Difference Between Means" target="_top">Difference&nbsp;Between&nbsp;Means</a>
 <br><br>
 <b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
 <br>
@@ -246,6 +248,52 @@ Lebesgue measure plus an atom with mass one at <small>@(@
 
 <br>
 <br>
+<big><a name="Gaussian.Difference Between Means" id="Gaussian.Difference Between Means">Difference Between Means</a></big>
+<br>
+We use <small>@(@
+\overline{\underline{y}}
+@)@</small> to
+denote the mean after censoring the distribution:
+<small>@[@
+
+\frac{ \overline{\underline{y}} - \mu }{ \delta }
+=
+\frac{c - \mu}{2 \delta }
+\left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
++
+\sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+\int_c^{+\infty} \frac{y - \mu}{ \delta }
+ \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
+\; \R{d} y
+
+@]@</small>
+<small>@[@
+
+\frac{ \overline{\underline{y}} - \mu }{ \delta }
+=
+\frac{c - \mu}{2 \delta }
+\left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
+-
+\sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+\left[
+ \exp \left( - \frac{1}{2} \left[ \frac{y - \mu}{\delta} \right]^2 \right)
+\right]_c^{+\infty}
+
+@]@</small>
+<small>@[@
+
+\overline{\underline{y}} - \mu
+=
+\frac{c - \mu}{2}
+\left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
++
+\sqrt{ \frac{1}{ 2 \pi } }
+ \exp \left( - \frac{1}{2} \left[ \frac{c - \mu}{\delta} \right]^2 \right)
+
+@]@</small>
+
+<br>
+<br>
 <b><big><a name="Laplace" id="Laplace">Laplace</a></big></b>
 
 
@@ -317,6 +365,36 @@ This density function is with respect to the
 Lebesgue measure plus an atom with mass one at <small>@(@
 \underline{y} = c
 @)@</small>.
+
+<br>
+<br>
+<big><a name="Laplace.Difference Between Means" id="Laplace.Difference Between Means">Difference Between Means</a></big>
+<br>
+We use <small>@(@
+\overline{\underline{y}}
+@)@</small> to
+denote the mean after censoring the distribution:
+<small>@[@
+
+\frac{ \overline{\underline{y}} - \mu }{ \delta }
+=
+\frac{c - \mu}{2 \delta }
+\exp \left( - \sqrt{2} \frac{\mu - c}{\delta} \right)
++
+\sqrt{ \frac{1}{2 \delta^2 } }
+\int_c^{+\infty} \frac{y - \mu}{\delta}
+\exp \left[ - \sqrt{2} \left| \frac{y - \mu}{\delta} \right| \right]
+\; \R{d} y
+
+@]@</small>
+Using integration by parts,
+one can obtain a formula for <small>@(@
+\overline{\underline{y}} - \mu
+@)@</small>
+in a manner similar to calculation of the
+<a href="censor_density.htm#Gaussian.Difference Between Means" target="_top"><span style='white-space: nowrap'>difference&nbsp;between&nbsp;means</span></a>
+
+for the Gaussian case.
 
 
 <hr>Input File: omh/math/censor_density.omh
