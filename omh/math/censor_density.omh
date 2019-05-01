@@ -119,6 +119,41 @@ G( \underline{y} , \mu , \delta )  & \R{otherwise}
 This density function is with respect to the
 Lebesgue measure plus an atom with mass one at $latex \underline{y} = c$$.
 
+$subhead Difference Between Means$$
+We use $latex \overline{\underline{y}}$$ to
+denote the mean after censoring the distribution:
+$latex \[
+\frac{ \overline{\underline{y}} - \mu }{ \delta }
+=
+\frac{c - \mu}{2 \delta }
+\left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
++
+\sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+\int_c^{+\infty} \frac{y - \mu}{ \delta }
+ \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
+\; \R{d} y
+\] $$
+$latex \[
+\frac{ \overline{\underline{y}} - \mu }{ \delta }
+=
+\frac{c - \mu}{2 \delta }
+\left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
+-
+\sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+\left[
+ \exp \left( - \frac{1}{2} \left[ \frac{y - \mu}{\delta} \right]^2 \right)
+\right]_c^{+\infty}
+\] $$
+$latex \[
+\overline{\underline{y}} - \mu
+=
+\frac{c - \mu}{2}
+\left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
++
+\sqrt{ \frac{1}{ 2 \pi } }
+ \exp \left( - \frac{1}{2} \left[ \frac{c - \mu}{\delta} \right]^2 \right)
+\] $$
+
 $head Laplace$$
 
 $subhead Density, L(y,mu,delta)$$
@@ -164,5 +199,29 @@ L ( \underline{y} , \mu , \delta , c )
 \] $$
 This density function is with respect to the
 Lebesgue measure plus an atom with mass one at $latex \underline{y} = c$$.
+
+$subhead Difference Between Means$$
+We use $latex \overline{\underline{y}}$$ to
+denote the mean after censoring the distribution:
+$latex \[
+\frac{ \overline{\underline{y}} - \mu }{ \delta }
+=
+\frac{c - \mu}{2 \delta }
+\exp \left( - \sqrt{2} \frac{\mu - c}{\delta} \right)
++
+\sqrt{ \frac{1}{2 \delta^2 } }
+\int_c^{+\infty} \frac{y - \mu}{\delta}
+\exp \left[ - \sqrt{2} \left| \frac{y - \mu}{\delta} \right| \right]
+\; \R{d} y
+\] $$
+Using integration by parts,
+one can obtain a formula for $latex \overline{\underline{y}} - \mu$$
+in a manner similar to calculation of the
+$cref/difference between means
+	/censor_density
+	/Gaussian
+	/Difference Between Means
+/$$
+for the Gaussian case.
 
 $end
