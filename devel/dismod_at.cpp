@@ -416,8 +416,9 @@ int main(int n_arg, const char** argv)
 			db                   ,
 			db_input             ,
 			n_var                ,
-			avgint_object      ,
-			avgint_subset_obj
+			avgint_object        ,
+			avgint_subset_obj    ,
+			var2prior
 		);
 	}
 	else

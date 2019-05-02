@@ -67,6 +67,10 @@ $cref/difference between means
 	/Difference Between Means
 /$$
 for the censored distributions.
+$lnext
+A check as added to make sure that variable values,
+that are possibly provided by the user,
+are within their specified limits.
 $lend
 
 $head 04-30$$

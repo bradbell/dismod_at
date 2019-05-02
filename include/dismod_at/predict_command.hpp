@@ -18,6 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/avgint_subset.hpp>
+# include <dismod_at/pack_prior.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -27,7 +28,8 @@ void predict_command(
 	const dismod_at::db_input_struct&                     db_input            ,
 	size_t                                                n_var               ,
 	dismod_at::data_model&                                avgint_object       ,
-	const CppAD::vector<dismod_at::avgint_subset_struct>& avgint_subset_obj
+	const CppAD::vector<dismod_at::avgint_subset_struct>& avgint_subset_obj   ,
+	const pack_prior&                                     var2prior
 );
 
 } // END_DISMOD_AT_NAMESPACE

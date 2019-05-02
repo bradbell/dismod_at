@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_sample_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/create_table.hpp>
+# include <dismod_at/check_var_limit.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -90,7 +91,8 @@ void predict_command(
 	const dismod_at::db_input_struct&                     db_input            ,
 	size_t                                                n_var               ,
 	dismod_at::data_model&                                avgint_object       ,
-	const CppAD::vector<dismod_at::avgint_subset_struct>& avgint_subset_obj
+	const CppAD::vector<dismod_at::avgint_subset_struct>& avgint_subset_obj   ,
+	const pack_prior&                                     var2prior
 )
 {
 	using std::string;
@@ -177,7 +179,16 @@ void predict_command(
 	{	// copy the variable values for this sample index into pack_vec
 		for(size_t var_id = 0; var_id < n_var; var_id++)
 			pack_vec[var_id] = variable_value[sample_id++];
-		//
+# ifndef NDEBUG
+		size_t offset = sample_id - n_var;
+		check_var_limit(
+			source,
+			offset,
+			pack_vec,
+			var2prior,
+			db_input.prior_table
+		);
+# endif
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{
 			int avgint_id  = avgint_subset_obj[subset_id].original_id;
