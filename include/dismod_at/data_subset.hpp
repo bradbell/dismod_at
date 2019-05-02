@@ -28,7 +28,7 @@ namespace dismod_at {
 		double      age_upper;
 		double      time_lower;
 		double      time_upper;
-		// values not in avging_subset_struct
+		// values not in avgint_subset_struct
 		int          hold_out;
 		density_enum density;
 		double       meas_value;

@@ -259,6 +259,12 @@ void sample_command(
 				}
 				data_subset_obj[subset_id].meas_value =
 					data_sim_table[data_sim_id].data_sim_value;
+				if( log_density( data_subset_obj[subset_id].density ) )
+				{	// 2DO: should use data_sim_meas_std and not the adjusted
+					// measurement standard deviation delta.
+					data_subset_obj[subset_id].meas_std =
+						data_sim_table[data_sim_id].data_sim_delta;
+				}
 			}
 			// replace_like
 			data_object.replace_like(data_subset_obj);

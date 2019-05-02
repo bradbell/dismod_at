@@ -17,6 +17,7 @@ $spell
 	csv
 	var
 	covariate
+	covariates
 	std
 	mulcov
 	avgint
@@ -54,10 +55,19 @@ $childtable%
 $head Censor Branch$$
 
 $subhead 05-02$$
+$list number$$
 Add the
 $cref/cen_log_gaussian/density_table/density_name/cen_log_gaussian/$$ and
 $cref/cen_log_laplace/density_table/density_name/cen_log_laplace/$$
 densities.
+$lnext
+Partially fix a bug in fitting
+$cref/simulated data/simulate_command/$$ for
+$cref/log scaled/density_table/Notation/Log Scaled/$$ densities.
+There  is still problem when there are
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariates,
+that hopefully will be fixed soon.
+$lend
 
 $head 05-01$$
 $list number$$

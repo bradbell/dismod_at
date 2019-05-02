@@ -162,16 +162,16 @@ void simulate_command(
 			double sim_value   = dismod_at::sim_random(
 				difference, density, avg, sim_delta, eta, nu
 			);
-			if( density == dismod_at::log_gaussian_enum
-			||  density == dismod_at::log_laplace_enum
-			||  density == dismod_at::log_students_enum )
-				sim_value = std::max(sim_value, 0.0);
+			//
+			double delta = sim_delta;
+			if( log_density(density) )
+				delta = (std::exp(sim_delta) - 1.0) * (sim_value + eta);
 			//
 			size_t data_sim_id = sim_index * n_subset + subset_id;
 			row_value[data_sim_id * n_col + 0] = to_string( sim_index );
 			row_value[data_sim_id * n_col + 1] = to_string( subset_id );
 			row_value[data_sim_id * n_col + 2] = to_string( sim_value );
-			row_value[data_sim_id * n_col + 3] = to_string( sim_delta );
+			row_value[data_sim_id * n_col + 3] = to_string( delta );
 		}
 	}
 	dismod_at::create_table(
