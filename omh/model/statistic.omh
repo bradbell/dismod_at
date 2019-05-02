@@ -174,8 +174,6 @@ is defined by
 $latex \[
 D(y, \mu, \delta, d)
 =
-D(z, y, \mu, \delta, d)
-=
 \log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
 \] $$
 where $latex \R{erfc}$$ is the complementary error function;
@@ -228,16 +226,14 @@ is defined by
 $latex \[
 D(y, \mu, \delta, d)
 =
-D(z, y, \mu, \delta, d)
-=
 - \mu \sqrt{2} / \delta - \log(2)
 \] $$
 where $latex \R{erfc}$$ is the complementary error function;
 see the Gaussian case for the
 $cref/censored density
 	/censor_density
-	/Gaussian
-	/Censored Density, G(y,mu,delta,c)
+	/Laplace
+	/Censored Density, L(y,mu,delta,c)
 /$$
 where the censoring value is $latex c = 0$$.
 
