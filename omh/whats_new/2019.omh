@@ -51,6 +51,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head Censor Branch$$
+
+$subhead 05-02$$
+Add the
+$cref/cen_log_gaussian/density_table/density_name/cen_log_gaussian/$$ and
+$cref/cen_log_laplace/density_table/density_name/cen_log_laplace/$$
+densities.
+
 $head 05-01$$
 $list number$$
 Due to the change in $cref prior_sim_table$$ on 04-30,

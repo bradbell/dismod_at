@@ -56,16 +56,18 @@ $head density_enum$$
 This enum type has the following values:
 $align right$$
 $table
-$icode value$$             $pre  $$ $cnext $icode density_name$$ $rnext
-$code uniform_enum$$       $pre  $$ $cnext $code uniform$$       $rnext
-$code gaussian_enum$$      $pre  $$ $cnext $code gaussian$$      $rnext
-$code cen_gaussian_enum$$  $pre  $$ $cnext $code c_gaussian$$    $rnext
-$code log_gaussian_enum$$  $pre  $$ $cnext $code log_gaussian$$  $rnext
-$code laplace_enum$$       $pre  $$ $cnext $code laplace$$       $rnext
-$code cen_laplace_enum$$   $pre  $$ $cnext $code laplace$$       $rnext
-$code log_laplace_enum$$   $pre  $$ $cnext $code log_laplace$$   $rnext
-$code students_enum$$      $pre  $$ $cnext $code students$$      $rnext
-$code log_students_enum$$  $pre  $$ $cnext $code log_students$$
+$icode value$$                $pre  $$ $cnext $icode density_name$$     $rnext
+$code uniform_enum$$          $pre  $$ $cnext $code uniform$$           $rnext
+$code gaussian_enum$$         $pre  $$ $cnext $code gaussian$$          $rnext
+$code cen_gaussian_enum$$     $pre  $$ $cnext $code c_gaussian$$        $rnext
+$code log_gaussian_enum$$     $pre  $$ $cnext $code log_gaussian$$      $rnext
+$code cen_log_gaussian_enum$$ $pre  $$ $cnext $code cen_log_gaussian$$  $rnext
+$code laplace_enum$$          $pre  $$ $cnext $code laplace$$           $rnext
+$code cen_laplace_enum$$      $pre  $$ $cnext $code laplace$$           $rnext
+$code log_laplace_enum$$      $pre  $$ $cnext $code log_laplace$$       $rnext
+$code cen_log_laplace_enum$$  $pre  $$ $cnext $code cen_log_laplace$$   $rnext
+$code students_enum$$         $pre  $$ $cnext $code students$$          $rnext
+$code log_students_enum$$     $pre  $$ $cnext $code log_students$$
 $tend
 The number of these enum values is $code number_density_enum$$.
 
@@ -89,7 +91,6 @@ This is a global variable.
 If $icode%density%$$, is an $code density_enum$$ value,
 $codei%density_enum2name[%density%]%$$ is the
 $icode density_name$$ corresponding to the enum value.
-
 
 $children%example/devel/table/get_density_table_xam.cpp
 %$$
@@ -116,9 +117,11 @@ const char* density_enum2name[] = {
 	"gaussian",
 	"cen_gaussian",
 	"log_gaussian",
+	"cen_log_gaussian",
 	"laplace",
 	"cen_laplace",
 	"log_laplace",
+	"cen_log_laplace",
 	"students",
 	"log_students"
 };
@@ -139,9 +142,11 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 	assert( string("gaussian")         == enum2name[gaussian_enum] );
 	assert( string("cen_gaussian")     == enum2name[cen_gaussian_enum] );
 	assert( string("log_gaussian")     == enum2name[log_gaussian_enum] );
-	assert( string("cen_laplace")      == enum2name[cen_laplace_enum] );
+	assert( string("cen_log_gaussian") == enum2name[cen_log_gaussian_enum] );
 	assert( string("laplace")          == enum2name[laplace_enum] );
+	assert( string("cen_laplace")      == enum2name[cen_laplace_enum] );
 	assert( string("log_laplace")      == enum2name[log_laplace_enum] );
+	assert( string("cen_log_laplace")  == enum2name[cen_log_laplace_enum] );
 	assert( string("students")         == enum2name[students_enum] );
 	assert( string("log_students")     == enum2name[log_students_enum] );
 # endif
@@ -183,7 +188,9 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
 }
 bool log_density(density_enum density)
 {	bool result = density == log_gaussian_enum;
+	result     |= density == cen_log_gaussian_enum;
 	result     |= density == log_laplace_enum;
+	result     |= density == cen_log_laplace_enum;
 	result     |= density == log_students_enum;
 	return result;
 }
@@ -191,11 +198,14 @@ bool nonsmooth_density(density_enum density)
 {	bool result = density == laplace_enum;
 	result     |= density == cen_laplace_enum;
 	result     |= density == log_laplace_enum;
+	result     |= density == cen_log_laplace_enum;
 	return result;
 }
 bool censored_density(density_enum density)
 {	bool result = density == cen_gaussian_enum;;
+	result     |= density == cen_log_gaussian_enum;
 	result     |= density == cen_laplace_enum;
+	result     |= density == cen_log_laplace_enum;
 	return result;
 }
 

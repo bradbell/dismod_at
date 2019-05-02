@@ -204,6 +204,29 @@ D(z, y, \mu, \delta, d)
 - \frac{1}{2} R(z, y, \mu, \delta, d)^2
 \] $$
 
+$subhead Censored Log-Gaussian$$
+If the density name is $code cen_log_gaussian$$,
+the log-density function is not defined for differences.
+The log-density function for values $latex y > 0$$
+is the same as for the $code log_gaussian$$ case.
+The log-density function for the values $latex y \leq 0$$,
+is defined by
+$latex \[
+D(y, \mu, \delta, d)
+=
+\log ( \R{erfc}[ ( \mu - \eta ) / ( \sigma \sqrt{2} ) ] ) - \log(2)
+\] $$
+where we the arguments to $latex \sigma$$ are the same as
+in the log Gaussian case
+and $latex \R{erfc}$$ is the complementary error function;
+see the Gaussian case for the
+$cref/censored density
+	/censor_density
+	/Gaussian
+	/Censored Density, G(y,mu,delta,c)
+/$$
+where the censoring value is $latex c = \eta$$.
+
 $subhead Laplace$$
 If the density name is $code laplace$$,
 the log-density functions for values $latex D(y, \mu, \delta, d)$$,
@@ -255,6 +278,28 @@ D(z, y, \mu, \delta, d)
 - \log \left( \delta \sqrt{2} \right)
 - \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
 \] $$
+
+$subhead Censored Log-Laplace$$
+If the density name is $code cen_log_laplace$$,
+the log-density function is not defined for differences.
+The log-density function for values $latex y > 0$$
+is the same as for the $code log_laplace$$ case.
+The log-density function for the values $latex y \leq 0$$,
+is defined by
+$latex \[
+D(y, \mu, \delta, d)
+=
+- ( \mu - \eta ) \sqrt{2} / \sigma - \log(2)
+\] $$
+where we the arguments to $latex \sigma$$ are the same as
+in the log Laplace case.
+See the Laplace case for the
+$cref/censored density
+	/censor_density
+	/Laplace
+	/Censored Density, L(y,mu,delta,c)
+/$$
+where the censoring value is $latex c = \eta$$.
 
 $subhead Student's-t$$
 If the density name is $code students$$,

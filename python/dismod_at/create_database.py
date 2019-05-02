@@ -423,7 +423,9 @@ def create_database(
 		['log_laplace'],
 		['log_students'],
 		['cen_gaussian'],
-		['cen_laplace']
+		['cen_laplace'],
+		['cen_log_gaussian'],
+		['cen_log_laplace'],
 	]
 	tbl_name = 'density'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

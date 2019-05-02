@@ -20,9 +20,11 @@ namespace dismod_at {
 		gaussian_enum,
 		cen_gaussian_enum,
 		log_gaussian_enum,
+		cen_log_gaussian_enum,
 		laplace_enum,
 		cen_laplace_enum,
 		log_laplace_enum,
+		cen_log_laplace_enum,
 		students_enum,
 		log_students_enum,
 		number_density_enum

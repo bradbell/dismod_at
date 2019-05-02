@@ -209,11 +209,10 @@ double sim_random(
 	//
 	// difference from mean in transformed space
 	double d_log;
-	if( density == log_gaussian_enum )
+	if( density == log_gaussian_enum || density == cen_log_gaussian_enum )
 		d_log = gsl_ran_gaussian(rng, sigma);
-	else if( density == log_laplace_enum )
-	{	assert( density == log_laplace_enum );
-		double width = sigma / std::sqrt(2.0);
+	else if( density == log_laplace_enum || density == cen_log_laplace_enum )
+	{	double width = sigma / std::sqrt(2.0);
 		d_log = gsl_ran_laplace(rng, width);
 	}
 	else
@@ -225,6 +224,9 @@ double sim_random(
 	//
 	// d_log = log(z + eta) - log(mu + eta)
 	double z = std::exp( d_log ) * (mu + eta) - eta;
+	//
+	if( density == cen_log_gaussian_enum || density == cen_log_laplace_enum )
+		z = std::max(0.0, z);
 	//
 	return z;
 }

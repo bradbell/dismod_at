@@ -266,6 +266,8 @@ residual_struct<Float> residual_density(
 		case log_gaussian_enum:
 		case log_laplace_enum:
 		case log_students_enum:
+		case cen_log_gaussian_enum:
+		case cen_log_laplace_enum:
 		print_forward_if_not_positive("delta", delta);
 		print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
 		assert( delta > 0.0 );
@@ -304,9 +306,13 @@ residual_struct<Float> residual_density(
 		break;
 
 		case cen_gaussian_enum:
+		case cen_log_gaussian_enum:
 		assert( ! diff );
 		if( y <= 0 )
-		{	Float erfc     = 1.0 - erf( mu / ( sigma * r2 ) );
+		{	Float c = 0.0;
+			if( d_id == cen_log_gaussian_enum )
+				c = d_eta;
+			Float erfc     = 1.0 - erf( (mu - c) / ( sigma * r2 ) );
 			logden_smooth  = log(erfc / 2.0 );
 			logden_sub_abs = 0.0;
 		}
@@ -324,9 +330,13 @@ residual_struct<Float> residual_density(
 		break;
 
 		case cen_laplace_enum:
+		case cen_log_laplace_enum:
 		assert( ! diff );
 		if( y <= 0 )
-		{	logden_smooth = - mu * r2 / sigma - std::log(2.0);
+		{	Float c = 0.0;
+			if( d_id == cen_log_laplace_enum )
+				c = d_eta;
+			logden_smooth = - (mu - c) * r2 / sigma - std::log(2.0);
 			logden_sub_abs = 0.0;
 		}
 		else

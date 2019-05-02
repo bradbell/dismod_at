@@ -225,7 +225,8 @@ connection      = dismod_at.create_connection(file_name, new)
 # Test that density table does not need entries that are not used
 # (last entry is log_students so can delete without changing density ids)
 sqlcmd  = 'DELETE FROM density WHERE density_name IN '
-sqlcmd += '("log_students", "cen_gaussian", "cen_laplace")'
+sqlcmd += '("log_students", "cen_gaussian", "cen_laplace"'
+sqlcmd += ',"cen_log_gaussian", "cen_log_laplace")'
 dismod_at.sql_command(connection, sqlcmd)
 connection.close()
 #
