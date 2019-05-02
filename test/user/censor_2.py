@@ -102,7 +102,7 @@ def example_db (file_name) :
 	# Values that are the same for all data rows
 	# (because the simultion censors the data)
 	meas_std   = iota_true;
-	eta        = 1e-2 * iota_true
+	eta        = iota_true / 2.0 # large so get zeros for log scaled cases
 	row = {
 		'node':        'world',
 		'integrand':   'Sincidence',
@@ -124,7 +124,7 @@ def example_db (file_name) :
 	scale = sigma / math.sqrt(2.0)
 	for data_id in range( n_data ) :
 		# simulate the data for distribution without censoring
-		if density_name in [ 'laplace', 'cen_log_laplace' ] :
+		if density_name in [ 'cen_laplace', 'cen_log_laplace' ] :
 			meas_value  = numpy.random.laplace(mu, scale)
 		else :
 			meas_value  = numpy.random.normal(mu, sigma)
