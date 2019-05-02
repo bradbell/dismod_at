@@ -3,10 +3,10 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  dismod_at-20190501: User Documentation and API  ',' purpose links ',
+'dismod_at  dismod_at-20190502: User Documentation and API  ',' purpose links ',
 'math_abstract  An Introduction To The Mathematics of Dismod_at  ',' ',
 'math_ode  The Dismod_at Ordinary Differential Equation  ',' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t) ',
-'censor_density  The Censored Gaussian and Laplace Densities  ',' under construction reference discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac) ',
+'censor_density  The Censored Gaussian and Laplace Densities  ',' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac) ',
 'install_unix  Installing dismod_at in Unix  ',' system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test example ',
 'run_cmake.sh  bin/run_cmake.sh: User Configuration Options  ',' verbose_makefile build_type dismod_at_prefix eigen_prefix ipopt_prefix cppad_prefix debug release python3_executable choosing c++ compiler extra_cxx_flags cmake_libdir system_specific_library_list ',
 'example_install.sh  An Example Installation  ',' syntax ',
