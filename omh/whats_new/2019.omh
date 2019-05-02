@@ -52,9 +52,7 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
-$head Censor Branch$$
-
-$subhead 05-02$$
+$head 05-02$$
 $list number$$
 Add the
 $cref/cen_log_gaussian/density_table/density_name/cen_log_gaussian/$$ and
