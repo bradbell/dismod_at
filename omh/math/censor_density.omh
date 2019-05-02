@@ -17,12 +17,10 @@ $$
 
 $section The Censored Gaussian and Laplace Densities$$
 
-$head Under Construction$$
-This is a plan for censored distribution functions,
-but they have not yet been implemented.
-
-$head Reference$$
-See the heading
+$head References$$
+See
+$href%https://en.wikipedia.org/wiki/Censoring_(statistics)%censoring%$$
+and the heading
 $italic Likelihoods for mixed continuous-discrete distributions$$
 on the
 $href%https://en.wikipedia.org/wiki/Likelihood_function%wiki page%$$
