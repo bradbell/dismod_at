@@ -68,7 +68,9 @@ void check_var_limit(
 {
 	assert( var_value.size() == var2prior.size() );
 	using CppAD::to_string;
+# ifndef NDEBUG
 	size_t null_size_t = size_t(DISMOD_AT_NULL_INT);
+# endif
 	//
 	for(size_t var_id = 0; var_id < var_value.size(); ++var_id)
 	{	double const_value      = var2prior.const_value(var_id);
