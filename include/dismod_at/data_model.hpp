@@ -23,15 +23,9 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_data_sim_table.hpp"
 # include "avg_integrand.hpp"
 # include "avg_noise_effect.hpp"
+# include "meas_noise_effect.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
-	enum meas_noise_effect_enum {
-		add_std_scale_all_enum,
-		add_std_scale_log_enum,
-		add_var_scale_all_enum,
-		add_var_scale_log_enum,
-		number_meas_noise_effect_enum
-	};
 
 class data_model {
 	// infromation for each data point

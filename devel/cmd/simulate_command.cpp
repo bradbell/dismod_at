@@ -16,6 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/sim_random.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/get_density_table.hpp>
+# include <dismod_at/meas_noise_effect.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -106,6 +107,19 @@ void simulate_command(
 	}
 	size_t n_simulate = size_t(tmp);
 	// -----------------------------------------------------------------------
+	// meas_noise_effect
+	meas_noise_effect_enum type_effect;
+	if( meas_noise_effect == "add_std_scale_all" )
+		type_effect = add_std_scale_all_enum;
+	else if( meas_noise_effect == "add_std_scale_log" )
+		type_effect = add_std_scale_log_enum;
+	else if( meas_noise_effect == "add_var_scale_all" )
+		type_effect = add_var_scale_all_enum;
+	else if( meas_noise_effect == "add_var_scale_log" )
+		type_effect = add_var_scale_log_enum;
+	else
+		assert(false);
+	// -----------------------------------------------------------------------
 	// read truth_var table into truth_var
 	vector<double> truth_var;
 	string table_name = "truth_var";
@@ -172,25 +186,32 @@ void simulate_command(
 		//
 		// effect
 		double effect = nan;
-		if( meas_noise_effect == "add_std_scale_all" )
+		switch( type_effect )
+		{
+			case add_std_scale_all_enum:
 			effect = delta / Delta - 1.0;
-		else if( meas_noise_effect == "add_var_scale_all" )
+			break;
+
+			case add_var_scale_all_enum:
 			effect = (delta * delta) / (Delta * Delta) - 1.0;
-		else if( log_density(density) )
-		{	if( meas_noise_effect == "add_std_scale_log" )
+			break;
+
+			case add_std_scale_log_enum:
+			if( log_density(density) )
 				effect = delta / Delta - 1.0;
 			else
-			{	assert(meas_noise_effect == "add_var_scale_log" );
-				effect = (delta * delta) / (Delta * Delta) - 1.0;
-			}
-		}
-		else
-		{	if( meas_noise_effect == "add_std_scale_log" )
 				effect = delta - Delta;
+			break;
+
+			case add_var_scale_log_enum:
+			if( log_density(density) )
+				effect = (delta * delta) / (Delta * Delta) - 1.0;
 			else
-			{	assert(meas_noise_effect == "add_var_scale_log" );
-				effect = std::sqrt( delta * delta - Delta * Delta );
-			}
+				effect = (delta * delta) - (Delta * Delta);
+			break;
+
+			default:
+			assert(false);
 		}
 		//
 		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
@@ -208,27 +229,32 @@ void simulate_command(
 			//
 			// sim_stdcv
 			double sim_stdcv = nan;
-			if( meas_noise_effect == "add_std_scale_all" )
+			switch( type_effect )
+			{
+				case add_std_scale_all_enum:
 				sim_stdcv = sim_delta / (1.0 + effect);
-			else if( meas_noise_effect == "add_var_scale_all" )
+				break;
+
+				case add_var_scale_all_enum:
 				sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
-			else if( log_density(density) )
-			{	if( meas_noise_effect == "add_std_scale_log" )
+				break;
+
+				case add_std_scale_log_enum:
+				if( log_density(density) )
 					sim_stdcv = sim_delta / (1.0 + effect);
 				else
-				{	assert(meas_noise_effect == "add_var_scale_log" );
-					sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
-				}
-			}
-			else
-			{	if( meas_noise_effect == "add_std_scale_log" )
 					sim_stdcv = sim_delta - effect;
+				break;
+
+				case add_var_scale_log_enum:
+				if( log_density(density) )
+					sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
 				else
-				{	assert(meas_noise_effect == "add_var_scale_log" );
-					sim_stdcv = std::sqrt(
-						sim_delta * sim_delta - effect * effect
-					);
-				}
+					sim_stdcv = sim_delta * sim_delta - effect * effect;
+				break;
+
+				default:
+				assert(false);
 			}
 			//
 			size_t data_sim_id = sim_index * n_subset + subset_id;

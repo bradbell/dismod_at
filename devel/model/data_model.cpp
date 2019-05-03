@@ -254,6 +254,8 @@ avg_noise_obj_(
 		meas_noise_effect_ = add_var_scale_all_enum;
 	else if( meas_noise_effect == "add_var_scale_log" )
 		meas_noise_effect_ = add_var_scale_log_enum;
+	else
+		assert(false);
 	//
 	// minimum_meas_cv_
 	minimum_meas_cv_.resize( integrand_table.size() );
