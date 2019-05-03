@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,6 +60,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
 <option>Contents</option>
+<option>05-03</option>
 <option>05-02</option>
 <option>05-01</option>
 <option>04-30</option>
@@ -101,6 +102,54 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="05-03" id="05-03">05-03</a></big></b>
+
+<b><br>
+API Change:</b>
+The <a href="db2csv_command.htm#data.csv" target="_top"><span style='white-space: nowrap'>data.csv</span></a>
+ file columns
+<code><font color="blue">Delta</font></code> and <code><font color="blue">delta</font></code> have been changed to
+<a href="db2csv_command.htm#data.csv.meas_stdcv" target="_top"><span style='white-space: nowrap'>meas_stdcv</span></a>
+ and
+<a href="db2csv_command.htm#data.csv.meas_delta" target="_top"><span style='white-space: nowrap'>meas_delta</span></a>
+ respectively.
+The change of names was motivated by a problem using sqlite
+when two column names that only differed by case; i.e.,
+<code><font color="blue">Delta</font></code> and <code><font color="blue">delta</font></code>.
+<ol type="1"><li>
+The new column <a href="data_sim_table.htm#data_sim_stdcv" target="_top"><span style='white-space: nowrap'>data_sim_stdcv</span></a>
+
+in the data_sim table is value of 
+<code><i><font color="black"><span style='white-space: nowrap'>Delta</span></font></i></code>
+ that is used when
+fitting the corresponding simulated data.
+This corrects a bug in fitting simulated
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+ data that has
+<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
+ covariates which
+adjust the measurement standard deviation; see
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>delta_i</span></a>
+.
+</li><li>
+
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>Delta</span></font></i></code>
+, is now referred to as the
+<a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>minimum&nbsp;cv&nbsp;standard&nbsp;deviation</span></a>
+.
+</li><li>
+
+The
+<a href="db2csv_command.htm#data.csv.sim_stdcv" target="_top"><span style='white-space: nowrap'>sim_stdcv</span></a>
+ column has been added
+to the <a href="db2csv_command.htm#data.csv" target="_top"><span style='white-space: nowrap'>data.csv</span></a>
+ file..
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="05-02" id="05-02">05-02</a></big></b>
 
 <ol type="1"><li>
@@ -410,7 +459,7 @@ A discussion was added at the top of the
 
 <ol type="1"><li>
 There was a bug in the db2csv computation of the adjusted standard deviation
-<a href="db2csv_command.htm#data.csv.delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
+<a href="db2csv_command.htm#data.csv.meas_delta" target="_top"><span style='white-space: nowrap'>meas_delta</span></a>
  for the log
 <a href="db2csv_command.htm#data.csv.density" target="_top"><span style='white-space: nowrap'>density</span></a>
  cases.
@@ -495,7 +544,7 @@ This makes comparisons between these columns easier.
 </li><li>
 
 Add the adjusted standard deviation column
-<a href="db2csv_command.htm#data.csv.delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
+<a href="db2csv_command.htm#data.csv.meas_delta" target="_top"><span style='white-space: nowrap'>meas_delta</span></a>
  to the <code><font color="blue">data.csv</font></code>
 file written by the <code><font color="blue">db2csv</font></code> command.
 </li><li>

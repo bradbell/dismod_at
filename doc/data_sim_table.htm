@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Measurements and Adjusted Standard Deviations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Measurements and Adjusted Standard Deviations">
-<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_delta method d delta sigma y linear log-transformed example ">
+<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_stdcv data_sim_delta method d delta sigma y linear log-transformed example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,6 +74,7 @@ A:active { color : purple }
 <br><a href="data_sim_table.htm#simulate_index" target="_top">simulate_index</a>
 <br><a href="data_sim_table.htm#data_subset_id" target="_top">data_subset_id</a>
 <br><a href="data_sim_table.htm#data_sim_value" target="_top">data_sim_value</a>
+<br><a href="data_sim_table.htm#data_sim_stdcv" target="_top">data_sim_stdcv</a>
 <br><a href="data_sim_table.htm#data_sim_delta" target="_top">data_sim_delta</a>
 <br><a href="data_sim_table.htm#Method" target="_top">Method</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.d" target="_top">d</a>
@@ -172,11 +173,22 @@ this is the value
 
 <br>
 <br>
+<b><big><a name="data_sim_stdcv" id="data_sim_stdcv">data_sim_stdcv</a></big></b>
+<br>
+The column has type <code><font color="blue">real</font></code> and is the
+minimum cv standard deviation
+<a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
+,
+for use when fitting this simulated data.
+
+<br>
+<br>
 <b><big><a name="data_sim_delta" id="data_sim_delta">data_sim_delta</a></big></b>
 <br>
 The column has type <code><font color="blue">real</font></code> and is
-the adjusted measurement standard deviation used in the simulation; i.e.,
-<a href="data_sim_table.htm#Method.delta" target="_top"><span style='white-space: nowrap'>delta</span></a>
+the adjusted standard deviation used in the simulation; i.e.,
+the standard deviation of the simulation measurement after adjustment; see
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>delta_i</span></a>
 .
 
 <br>
@@ -210,7 +222,10 @@ We use <small>@(@
 
 corresponding to this 
 <code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-.
+;
+i.e., 
+<code><i><font color="black"><span style='white-space: nowrap'>sim_delta</span></font></i></code>
+ above.
 
 <br>
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Likelihood and Weighted Residuals</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Likelihood and Weighted Residuals">
-<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i delta_i measurement noise covariates k_i gamma_j effects u theta average integrand effect adjusted standard deviation scaling add variance add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log residual ">
+<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i minimum cv standard deviation delta_i measurement noise covariates k_i gamma_j effects u theta average integrand effect adjusted scaling add variance add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log residual ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,7 +77,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.I_i" target="_top">I_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.x_ij" target="_top">x_ij</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.w_i" target="_top">w_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.Delta_i" target="_top">Delta_i</a>
+<br><a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top">Minimum&nbsp;CV&nbsp;Standard&nbsp;Deviation,&nbsp;Delta_i</a>
 <br><a href="data_like.htm#Measurement Noise Covariates" target="_top">Measurement&nbsp;Noise&nbsp;Covariates</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Noise Covariates.K_i" target="_top">K_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top">gamma_j</a>
@@ -214,7 +214,7 @@ that corresponds to the
 
 <br>
 <br>
-<big><a name="Data Table Notation.Delta_i" id="Data Table Notation.Delta_i">Delta_i</a></big>
+<b><big><a name="Minimum CV Standard Deviation, Delta_i" id="Minimum CV Standard Deviation, Delta_i">Minimum CV Standard Deviation, Delta_i</a></big></b>
 <br>
 Let 
 <code><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i></code>
@@ -234,7 +234,7 @@ correspond to this data table
 We use the notation <small>@(@
 \Delta_i
 @)@</small>
-for the modified standard deviation used for this data
+for the minimum cv standard deviation for this data
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta_i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
@@ -368,7 +368,7 @@ defined below:
 For some cases below, <small>@(@
 E_i ( \theta )
 @)@</small> multiplies
-<a href="data_like.htm#Data Table Notation.Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
+<a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
 
 instead of multiplying <small>@(@
 y_i
