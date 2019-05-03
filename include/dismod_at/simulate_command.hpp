@@ -21,16 +21,19 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_density_table.hpp>
 
 namespace dismod_at {
-	void simulate_command(
-		const std::string&                                  number_simulate ,
-		sqlite3*                                            db              ,
-		const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
-		const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj ,
-		dismod_at::data_model&                              data_object     ,
-		const dismod_at::pack_prior&                        var2prior       ,
-		const CppAD::vector<dismod_at::prior_struct>&       prior_table     ,
-		const CppAD::vector<dismod_at::density_enum>&       density_table
+
+void simulate_command(
+	const std::string&                                  number_simulate   ,
+	const std::string&                                  meas_noise_effect ,
+	sqlite3*                                            db                ,
+	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table   ,
+	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj   ,
+	dismod_at::data_model&                              data_object       ,
+	const dismod_at::pack_prior&                        var2prior         ,
+	const CppAD::vector<dismod_at::prior_struct>&       prior_table       ,
+	const CppAD::vector<dismod_at::density_enum>&       density_table
 );
+
 }
 
 # endif

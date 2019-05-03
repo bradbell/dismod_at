@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -43,14 +43,15 @@ bool get_data_sim_table_xam(void)
 		" simulate_index integer,"
 		" data_subset_id integer,"
 		" data_sim_value real,"
+		" data_sim_stdcv real,"
 		" data_sim_delta real"
 	")",
-	"insert into data_sim values(0, 0, 0, 0e-3, 6e-4)",
-	"insert into data_sim values(1, 0, 1, 1e-3, 5e-4)",
-	"insert into data_sim values(2, 0, 2, 2e-3, 4e-4)",
-	"insert into data_sim values(3, 1, 0, 0e-3, 3e-4)",
-	"insert into data_sim values(4, 1, 1, 1e-3, 2e-4)",
-	"insert into data_sim values(5, 1, 2, 2e-3, 1e-4)"
+	"insert into data_sim values(0, 0, 0, 0e-3, 5e-4, 6e-4)",
+	"insert into data_sim values(1, 0, 1, 1e-3, 4e-4, 5e-4)",
+	"insert into data_sim values(2, 0, 2, 2e-3, 3e-4, 4e-4)",
+	"insert into data_sim values(3, 1, 0, 0e-3, 2e-4, 3e-4)",
+	"insert into data_sim values(4, 1, 1, 1e-3, 1e-4, 2e-4)",
+	"insert into data_sim values(5, 1, 2, 2e-3, 9e-5, 1e-4)"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -82,6 +83,13 @@ bool get_data_sim_table_xam(void)
 	ok  &= data_sim_table[3].data_sim_value == 0e-3;
 	ok  &= data_sim_table[4].data_sim_value == 1e-3;
 	ok  &= data_sim_table[5].data_sim_value == 2e-3;
+	//
+	ok  &= data_sim_table[0].data_sim_stdcv == 5e-4;
+	ok  &= data_sim_table[1].data_sim_stdcv == 4e-4;
+	ok  &= data_sim_table[2].data_sim_stdcv == 3e-4;
+	ok  &= data_sim_table[3].data_sim_stdcv == 2e-4;
+	ok  &= data_sim_table[4].data_sim_stdcv == 1e-4;
+	ok  &= data_sim_table[5].data_sim_stdcv == 9e-5;
 	//
 	ok  &= data_sim_table[0].data_sim_delta == 6e-4;
 	ok  &= data_sim_table[1].data_sim_delta == 5e-4;

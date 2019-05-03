@@ -82,13 +82,14 @@ using this command.
 $end
 */
 void simulate_command(
-	const std::string&                                  number_simulate ,
-	sqlite3*                                            db              ,
-	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table ,
-	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj ,
-	dismod_at::data_model&                              data_object     ,
-	const dismod_at::pack_prior&                        var2prior       ,
-	const CppAD::vector<dismod_at::prior_struct>&       prior_table     ,
+	const std::string&                                  number_simulate   ,
+	const std::string&                                  meas_noise_effect ,
+	sqlite3*                                            db                ,
+	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table   ,
+	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj   ,
+	dismod_at::data_model&                              data_object       ,
+	const dismod_at::pack_prior&                        var2prior         ,
+	const CppAD::vector<dismod_at::prior_struct>&       prior_table       ,
 	const CppAD::vector<dismod_at::density_enum>&       density_table
 )
 {
@@ -115,7 +116,7 @@ void simulate_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	table_name      = "data_sim";
-	size_t n_col    = 4;
+	size_t n_col    = 5;
 	size_t n_subset = data_subset_obj.size();
 	size_t n_row    = n_simulate * n_subset;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
@@ -133,45 +134,109 @@ void simulate_command(
 	col_type[2]   = "real";
 	col_unique[2] = false;
 	//
-	col_name[3]   = "data_sim_delta";
+	col_name[3]   = "data_sim_stdcv";
 	col_type[3]   = "real";
 	col_unique[3] = false;
 	//
+	col_name[4]   = "data_sim_delta";
+	col_type[4]   = "real";
+	col_unique[4] = false;
+	//
 	// for each measurement in the data_subset table
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	//
+	{	double nan = std::numeric_limits<double>::quiet_NaN();
+		//
 		// compute the average integrand, avg
 		double avg = data_object.average(subset_id, truth_var);
-		//
-		// compute the adjusted standard deviation corresponding
-		// to the values in the data table, delta.
-		double sim_delta;
-		data_object.like_one(subset_id, truth_var, avg, sim_delta);
 		//
 		// density corresponding to this data point
 		dismod_at::density_enum density = data_subset_obj[subset_id].density;
 		//
+		// data table information
 		double difference   = false;
+		int integrand_id    = data_subset_obj[subset_id].integrand_id;
+		double meas_value   = data_subset_obj[subset_id].meas_value;
+		double meas_std     = data_subset_obj[subset_id].meas_std;
 		double eta          = data_subset_obj[subset_id].eta;
 		double nu           = data_subset_obj[subset_id].nu;
+		//
+		// stdcv
+		assert( meas_std > 0.0 );
+		double meas_cv = integrand_table[integrand_id].minimum_meas_cv;
+		double Delta = std::max(meas_std, meas_cv * std::fabs(meas_value) );
+		//
+		// compute the adjusted standard deviation corresponding
+		// to the values in the data table, delta.
+		double delta;
+		data_object.like_one(subset_id, truth_var, avg, delta);
+		//
+		// effect
+		double effect = nan;
+		if( meas_noise_effect == "add_std_scale_all" )
+			effect = delta / Delta - 1.0;
+		else if( meas_noise_effect == "add_var_scale_all" )
+			effect = (delta * delta) / (Delta * Delta) - 1.0;
+		else if( log_density(density) )
+		{	if( meas_noise_effect == "add_std_scale_log" )
+				effect = delta / Delta - 1.0;
+			else
+			{	assert(meas_noise_effect == "add_var_scale_log" );
+				effect = (delta * delta) / (Delta * Delta) - 1.0;
+			}
+		}
+		else
+		{	if( meas_noise_effect == "add_std_scale_log" )
+				effect = delta - Delta;
+			else
+			{	assert(meas_noise_effect == "add_var_scale_log" );
+				effect = std::sqrt( delta * delta - Delta * Delta );
+			}
+		}
 		//
 		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 		{	// for each simulate_index
 			//
-			// compute the simulated measurement value
+			// sim_value
 			double sim_value   = dismod_at::sim_random(
-				difference, density, avg, sim_delta, eta, nu
+				difference, density, avg, delta, eta, nu
 			);
 			//
-			double delta = sim_delta;
+			// sim_delta
+			double sim_delta = delta;
 			if( log_density(density) )
-				delta = (std::exp(sim_delta) - 1.0) * (sim_value + eta);
+				sim_delta = (std::exp(delta) - 1.0) * (sim_value + eta);
+			//
+			// sim_stdcv
+			double sim_stdcv = nan;
+			if( meas_noise_effect == "add_std_scale_all" )
+				sim_stdcv = sim_delta / (1.0 + effect);
+			else if( meas_noise_effect == "add_var_scale_all" )
+				sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
+			else if( log_density(density) )
+			{	if( meas_noise_effect == "add_std_scale_log" )
+					sim_stdcv = sim_delta / (1.0 + effect);
+				else
+				{	assert(meas_noise_effect == "add_var_scale_log" );
+					sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
+				}
+			}
+			else
+			{	if( meas_noise_effect == "add_std_scale_log" )
+					sim_stdcv = sim_delta - effect;
+				else
+				{	assert(meas_noise_effect == "add_var_scale_log" );
+					sim_stdcv = std::sqrt(
+						sim_delta * sim_delta - effect * effect
+					);
+				}
+			}
 			//
 			size_t data_sim_id = sim_index * n_subset + subset_id;
 			row_value[data_sim_id * n_col + 0] = to_string( sim_index );
 			row_value[data_sim_id * n_col + 1] = to_string( subset_id );
 			row_value[data_sim_id * n_col + 2] = to_string( sim_value );
-			row_value[data_sim_id * n_col + 3] = to_string( delta );
+			row_value[data_sim_id * n_col + 3] = to_string( sim_stdcv );
+			row_value[data_sim_id * n_col + 4] = to_string( sim_delta );
 		}
 	}
 	dismod_at::create_table(

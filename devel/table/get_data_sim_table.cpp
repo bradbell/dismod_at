@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -16,6 +16,8 @@ $spell
 	CppAD
 	struct
 	std
+	cv
+	stdcv
 $$
 
 $section C++: Get the Data Simulation Table$$
@@ -62,12 +64,16 @@ $code double$$ $cnext $code data_sim_value$$ $cnext
 	The $cref/meas_value/data_table/meas_value/$$
 	for this simulated measurement.
 $rnext
+$code double$$ $cnext $code data_sim_stdcv$$ $cnext
+	The standard deviation before adjustment and expanded for min_cv; i.e.,
+	$cref/Delta_i/data_like/Data Table Notation/Delta_i/$$.
 $code double$$ $cnext $code data_sim_delta$$ $cnext
 	The $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i
 	/$$
 	for this simulated measurement.
+$rnext
 $tend
 
 $children%example/devel/table/get_data_sim_table_xam.cpp
@@ -107,6 +113,11 @@ CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, data_sim_value);
 	assert( data_sim_value.size() == n_data_sim );
 
+	column_name             =  "data_sim_stdcv";
+	CppAD::vector<double>       data_sim_stdcv;
+	get_table_column(db, table_name, column_name, data_sim_stdcv);
+	assert( data_sim_stdcv.size() == n_data_sim );
+
 	column_name             =  "data_sim_delta";
 	CppAD::vector<double>       data_sim_delta;
 	get_table_column(db, table_name, column_name, data_sim_delta);
@@ -117,6 +128,7 @@ CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3* db)
 	{	data_sim_table[i].simulate_index   = simulate_index[i];
 		data_sim_table[i].data_subset_id   = data_subset_id[i];
 		data_sim_table[i].data_sim_value   = data_sim_value[i];
+		data_sim_table[i].data_sim_stdcv   = data_sim_stdcv[i];
 		data_sim_table[i].data_sim_delta   = data_sim_delta[i];
 	}
 	return data_sim_table;

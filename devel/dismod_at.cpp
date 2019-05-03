@@ -510,6 +510,7 @@ int main(int n_arg, const char** argv)
 				data_object.replace_like(data_subset_obj );
 				simulate_command(
 					argv[3]                  , // number_simulate
+					meas_noise_effect        ,
 					db                       ,
 					db_input.integrand_table ,
 					data_subset_obj          ,
