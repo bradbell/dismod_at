@@ -132,7 +132,7 @@ assert row['weight']             == 'constant_one'
 assert row['density']            == 'gaussian'
 assert row['eta']                == ''
 assert row['nu']                 == ''
-assert row['Delta']              == row['meas_std']
+assert row['meas_stdcv']         == row['meas_std']
 assert int( row['data_id'] )     == 0
 assert int(row['out'])           == 0
 assert float(row['age_lo'])      == 50.0

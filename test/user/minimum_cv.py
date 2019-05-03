@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -188,9 +188,9 @@ avg_integrand = fit_data_table[0]['avg_integrand']
 check         = math.exp( - omega_mean * 50.0 )
 assert( abs(avg_integrand / check - 1.0) < eps )
 meas_value    = math.exp( - omega_true * 50.0 )
-Delta         = minimum_meas_cv * meas_value
+meas_stdcv    = minimum_meas_cv * meas_value
 residual      = fit_data_table[0]['weighted_residual']
-check         = (meas_value - avg_integrand) / Delta
+check         = (meas_value - avg_integrand) / meas_stdcv
 assert( abs(residual / check - 1.0) < eps )
 # -----------------------------------------------------------------------
 # run sandbox version of dismodat.py example.db db2csv
@@ -217,8 +217,8 @@ file_ptr.close()
 eps    = 1e-4
 n_data = len(data_table)
 assert( n_data == 1 )
-Delta  = float( data_table[0]['Delta'] )
-check  = minimum_meas_cv * meas_value
-assert( abs(Delta / check - 1.0) < 1e-4 )
+meas_stdcv  = float( data_table[0]['meas_stdcv'] )
+check       = minimum_meas_cv * meas_value
+assert( abs(meas_stdcv / check - 1.0) < 1e-4 )
 # -----------------------------------------------------------------------
 print('minimum_cv.py: OK')

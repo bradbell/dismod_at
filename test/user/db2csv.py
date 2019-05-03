@@ -1,22 +1,22 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# 1. Check meas_std, Delta, and delta in data.csv
+# 1. Check meas_std, meas_stdcv, and meas_delta in data.csv
 # ---------------------------------------------------------------------------
 #
 iota_true       = 1e-1
 meas_value      = 1.1 * iota_true
 meas_std        = 1e-5
 minimum_meas_cv = 1e-1
-Delta           = max(minimum_meas_cv * meas_value, meas_std)
-gamma_true      = Delta * Delta
+meas_stdcv      = max(minimum_meas_cv * meas_value, meas_std)
+gamma_true      = meas_stdcv * meas_stdcv
 # ---------------------------------------------------------------------------
 import sys
 import os
@@ -216,18 +216,18 @@ for row in reader :
 	result = float( row['meas_std'] )
 	assert abs( 1.0 - result / meas_std) < 1e-4
 	#
-	# Delta
-	result = float( row['Delta'] )
-	assert abs( 1.0 - result / Delta) < 1e-4
+	# meas_stdcv
+	result = float( row['meas_stdcv'] )
+	assert abs( 1.0 - result / meas_stdcv) < 1e-4
 	#
-	# delta
-	result = float( row['delta'] )
+	# meas_delta
+	result = float( row['meas_delta'] )
 	if row['density'] == 'gaussian' :
-		delta  = math.sqrt( Delta * Delta + gamma_true)
+		meas_delta  = math.sqrt( meas_stdcv * meas_stdcv + gamma_true)
 	else :
 		assert row['density'] == 'log_gaussian'
-		delta  = Delta * math.sqrt( 1.0 + gamma_true)
-	assert abs( 1.0 - result / delta) < 1e-4
+		meas_delta  = meas_stdcv * math.sqrt( 1.0 + gamma_true)
+	assert abs( 1.0 - result / meas_delta) < 1e-4
 # -----------------------------------------------------------------------------
 print('db2csv.py: OK')
 sys.exit(0)

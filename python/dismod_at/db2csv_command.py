@@ -28,6 +28,7 @@
 #	dismodat
 #	mulcov
 #	cv
+#	stdcv
 # $$
 #
 # $section Create Csv Files that Summarize The Database$$
@@ -315,7 +316,7 @@
 # is the data table
 # $cref/meas_std/data_table/meas_std/$$.
 #
-# $subhead Delta$$
+# $subhead meas_stdcv$$
 # is the minimum cv standard deviation used to define the likelihood; see
 # $cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$.
 #
@@ -332,13 +333,13 @@
 # $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$
 # for this row.
 #
-# $subhead delta$$
+# $subhead meas_delta$$
 # If the $cref fit_command$$ has been run, this is the
 # $cref/adjusted standard deviation
 #	/data_like
 #	/Adjusted Standard Deviation, delta_i
 # /$$ for this row.
-# This is calculation is not available when the residual is zero.
+# This is value is not valid when the residual is zero.
 #
 # $subhead sim_value$$
 # If the $cref simulate_command$$ has been run, this is the
@@ -349,6 +350,13 @@
 # If there is no $icode simulate_index$$
 # in the previous fit command, the
 # value zero is used for the $icode simulate_index$$.
+#
+# $subhead sim_stdcv$$
+# This is the minimum cv standard deviation
+# $cref/Delta/data_like/Minimum CV Standard Deviation, Delta_i/$$
+# that should be used when fitting the simulated data for this
+# $cref/data_id/db2csv_command/data.csv/data_id/$$ the
+# $icode simulate_index$$ (see $icode sim_value$$ above).
 #
 # $subhead sim_delta$$
 # This is the
@@ -1162,14 +1170,15 @@ def db2csv_command(database_file_arg) :
 		'eta',
 		'nu',
 		'meas_std',
-		'Delta',
-		'delta',
+		'meas_stdcv',
+		'meas_delta',
 		'meas_value',
 		'avgint',
 		'residual'
 	]
 	if simulate_index != None :
 		header.append('sim_value')
+		header.append('sim_stdcv')
 		header.append('sim_delta')
 	for row in table_data['covariate'] :
 		header.append( row['covariate_name'] )
@@ -1204,10 +1213,10 @@ def db2csv_command(database_file_arg) :
 		row_out['nu']          = convert2output( row_in['nu'] )
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 		#
-		meas_cv          = minimum_meas_cv[ row_in['integrand_id' ] ]
-		Delta            =  meas_cv * abs( row_in['meas_value'] )
-		Delta            = max( row_in['meas_std'], Delta)
-		row_out['Delta'] = convert2output( Delta )
+		meas_cv     = minimum_meas_cv[ row_in['integrand_id' ] ]
+		meas_stdcv  =  meas_cv * abs( row_in['meas_value'] )
+		meas_stdcv  = max( row_in['meas_std'], meas_stdcv)
+		row_out['meas_stdcv'] = convert2output( meas_stdcv )
 		#
 		#
 		row_out['integrand'] = table_lookup(
@@ -1238,19 +1247,21 @@ def db2csv_command(database_file_arg) :
 			row                 = table_data['fit_data_subset'][subset_id]
 			row_out['avgint']   = convert2output( row['avg_integrand'] )
 			row_out['residual'] = convert2output( row['weighted_residual'] )
-			delta = adjusted_meas_std(
+			meas_delta = adjusted_meas_std(
 				row_out['density']       ,
 				row_in['eta']            ,
 				row_in['meas_value']     ,
 				row['avg_integrand']     ,
 				row['weighted_residual']
 			)
-			row_out['delta'] = convert2output(delta)
+			row_out['meas_delta'] = convert2output(meas_delta)
 		if simulate_index != None :
 			data_sim_id =  n_subset * simulate_index + subset_id
 			sim_value = table_data['data_sim'][data_sim_id]['data_sim_value']
+			sim_stdcv = table_data['data_sim'][data_sim_id]['data_sim_stdcv']
 			sim_delta = table_data['data_sim'][data_sim_id]['data_sim_delta']
 			row_out['sim_value'] = convert2output( sim_value )
+			row_out['sim_stdcv'] = convert2output( sim_stdcv )
 			row_out['sim_delta'] = convert2output( sim_delta )
 		csv_writer.writerow(row_out)
 		subset_id += 1

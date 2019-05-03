@@ -30,6 +30,7 @@ $spell
 	sim
 	mu
 	stdcv
+	sqlite
 $$
 $navigate%
 	Up%Location%
@@ -54,14 +55,29 @@ $childtable%
 %$$
 
 $head 05-03$$
+$bold API Change:$$
+The $cref/data.csv/db2csv_command/data.csv/$$ file columns
+$code Delta$$ and $code delta$$ have been changed to
+$cref/meas_stdcv/db2csv_command/data.csv/meas_stdcv/$$ and
+$cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ respectively.
+The change of names was motivated by a problem using sqlite
+when two column names that only differed by case; i.e.,
+$code Delta$$ and $code delta$$.
+$list number$$
 The value $icode Delta$$, is now referred to as the
 $cref/minimum cv standard deviation
 	/data_like
 	/Minimum CV Standard Deviation, Delta_i
 /$$.
+$lnext
 The new column $cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$
 in the data_sim table is value of $icode Delta$$ that is used when
 fitting the corresponding simulated data (not yet implemented).
+$lnext
+The
+$cref/sim_stdcv/db2csv_command/data.csv/sim_stdcv/$$ column has been added
+to the $cref/data.csv/db2csv_command/data.csv/$$ file..
+$lend
 
 $head 05-02$$
 $list number$$
@@ -248,7 +264,7 @@ $cref user_change_grid.py$$ example.
 $head 04-11$$
 $list number$$
 There was a bug in the db2csv computation of the adjusted standard deviation
-$cref/delta/db2csv_command/data.csv/delta/$$ for the log
+$cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ for the log
 $cref/density/db2csv_command/data.csv/density/$$ cases.
 This has been fixed.
 $lnext
@@ -307,7 +323,7 @@ was moved to be next to $icode Delta$$.
 This makes comparisons between these columns easier.
 $lnext
 Add the adjusted standard deviation column
-$cref/delta/db2csv_command/data.csv/delta/$$ to the $code data.csv$$
+$cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ to the $code data.csv$$
 file written by the $code db2csv$$ command.
 $lnext
 The discussion of data
