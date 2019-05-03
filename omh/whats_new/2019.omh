@@ -67,8 +67,9 @@ $list number$$
 The new column $cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$
 in the data_sim table is value of $icode Delta$$ that is used when
 fitting the corresponding simulated data.
-This corrects a bug in fitting simulated data that has
-$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariates that
+This corrects a bug in fitting simulated
+$cref/log scaled/density_table/Notation/Log Scaled/$$ data that has
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariates which
 adjust the measurement standard deviation; see
 $cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$.
 $lnext
