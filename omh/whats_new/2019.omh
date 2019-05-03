@@ -29,6 +29,7 @@ $spell
 	nonsmooth
 	sim
 	mu
+	stdcv
 $$
 $navigate%
 	Up%Location%
@@ -51,6 +52,10 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 05-03$$
+Add the $cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$
+column to the data_sim table.
 
 $head 05-02$$
 $list number$$
