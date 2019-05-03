@@ -54,8 +54,14 @@ $childtable%
 %$$
 
 $head 05-03$$
-Add the $cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$
-column to the data_sim table.
+The value $icode Delta$$, is now referred to as the
+$cref/minimum cv standard deviation
+	/data_like
+	/Minimum CV Standard Deviation, Delta_i
+/$$.
+The new column $cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$
+in the data_sim table is value of $icode Delta$$ that is used when
+fitting the corresponding simulated data (not yet implemented).
 
 $head 05-02$$
 $list number$$

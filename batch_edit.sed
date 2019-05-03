@@ -16,13 +16,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	omh/math/censor_neg.omh
-#	test/user/censor_neg.py
 # '
 # list of sed commands that maps old file and or directory names to new
 # file names (the characters @s gets converted to a single space)
 # move_seds='
-#	s|censor_neg|censor_density|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -34,4 +31,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|censor_neg|censor_density|
+s|\$subhead Delta_i|\$head Minimum CV Standard Deviation, Delta_i|
+s|/Data Table Notation/Delta_i|/Minimum CV Standard Deviation, Delta_i|

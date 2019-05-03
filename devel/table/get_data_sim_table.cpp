@@ -65,8 +65,8 @@ $code double$$ $cnext $code data_sim_value$$ $cnext
 	for this simulated measurement.
 $rnext
 $code double$$ $cnext $code data_sim_stdcv$$ $cnext
-	The standard deviation before adjustment and expanded for min_cv; i.e.,
-	$cref/Delta_i/data_like/Data Table Notation/Delta_i/$$.
+	The minimum CV standard deviation
+	$cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$.
 $code double$$ $cnext $code data_sim_delta$$ $cnext
 	The $cref/adjusted standard deviation
 	/data_like

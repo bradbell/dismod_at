@@ -1040,7 +1040,7 @@ $cref/adjusted standard deviation
 /$$
 for the log transformed densities was changed so that the standard deviation
 effect multiplies
-$cref/Delta_i/data_like/Data Table Notation/Delta_i/$$.
+$cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$.
 $lnext
 There was a bug in how $cref db2csv_command$$ determined the reference value
 for covariates in the $cref avgint_table$$.

@@ -64,10 +64,10 @@ In the $cref/log-transformed/data_sim_table/Method/y, Log-Transformed/$$ case
 this is the value $codei%max(%y%, 0)%$$.
 
 $head data_sim_stdcv$$
-The column has type $code real$$ and is the standard deviation,
-expanded using $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$,
-used when fitting the simulated; see
-$cref/Delta_i/data_like/Data Table Notation/Delta_i/$$
+The column has type $code real$$ and is the
+minimum cv standard deviation
+$cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$,
+for use when fitting this simulated data.
 
 $head data_sim_delta$$
 The column has type $code real$$ and is

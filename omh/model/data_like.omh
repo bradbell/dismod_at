@@ -71,7 +71,7 @@ We use $latex w_i (a, t)$$ for the weighting as a function of age and time
 that corresponds to the
 $cref/weight_id/data_table/weight_id/$$ for this $icode data_id$$.
 
-$subhead Delta_i$$
+$head Minimum CV Standard Deviation, Delta_i$$
 Let $icode minimum_meas_cv$$ be the integrand table
 $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ corresponding to
 this integrand $latex I_i$$.
@@ -80,7 +80,7 @@ and $cref/meas_value/data_table/meas_value/$$
 correspond to this data table
 $cref/data_id/data_table/data_id/$$.
 We use the notation $latex \Delta_i$$
-for the modified standard deviation used for this data
+for the minimum cv standard deviation for this data
 $codei%
 	%Delta_i% = max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )
 %$$
@@ -148,7 +148,7 @@ defined below:
 
 $subhead Scaling$$
 For some cases below, $latex E_i ( \theta )$$ multiplies
-$cref/Delta_i/data_like/Data Table Notation/Delta_i/$$
+$cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$
 instead of multiplying $latex y_i$$.
 This avoids have no effect when $latex y_i$$ is zero.
 It is also possible to scale $latex E_i ( \theta )$$

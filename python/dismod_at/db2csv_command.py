@@ -27,6 +27,7 @@
 #	dir
 #	dismodat
 #	mulcov
+#	cv
 # $$
 #
 # $section Create Csv Files that Summarize The Database$$
@@ -315,8 +316,8 @@
 # $cref/meas_std/data_table/meas_std/$$.
 #
 # $subhead Delta$$
-# is the actual standard deviation used by the model; see
-# $cref/Delta_i/data_like/Data Table Notation/Delta_i/$$.
+# is the minimum cv standard deviation used to define the likelihood; see
+# $cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$.
 #
 # $subhead meas_value$$
 # is the data table
