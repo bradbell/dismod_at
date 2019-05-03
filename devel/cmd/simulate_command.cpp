@@ -108,7 +108,7 @@ void simulate_command(
 	size_t n_simulate = size_t(tmp);
 	// -----------------------------------------------------------------------
 	// meas_noise_effect
-	meas_noise_effect_enum type_effect;
+	meas_noise_effect_enum type_effect = number_meas_noise_effect_enum;
 	if( meas_noise_effect == "add_std_scale_all" )
 		type_effect = add_std_scale_all_enum;
 	else if( meas_noise_effect == "add_std_scale_log" )

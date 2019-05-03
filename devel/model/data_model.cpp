@@ -25,12 +25,14 @@ $spell
 	cov
 	cv
 	eigen
+	sim_stdcv
 $$
 
 $section Data Model: Constructor$$
 
 $head Syntax$$
 $codei%data_model %data_object%(
+	%no_minimum_meas_cv%,
 	%meas_noise_effect%,
 	%rate_case%,
 	%bound_random%,
@@ -56,6 +58,14 @@ $srcfile%devel/model/data_model.cpp%
 
 $head data_object$$
 This is the $code data_model$$ object being constructed.
+
+$head no_minimum_meas_cv$$
+If this is true, zero is used in place of the values for
+$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ in the
+integrand table.
+This option is intended for fitting values in the data_sim table
+because it has a column with the minimum cv already included; i.e.,
+$cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$.
 
 $head meas_noise_effect$$
 This is the value of
@@ -192,23 +202,24 @@ data_model::~data_model(void)
 // BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
 data_model::data_model(
-	const std::string&                       meas_noise_effect ,
-	const std::string&                       rate_case       ,
-	double                                   bound_random    ,
-	size_t                                   n_covariate     ,
-	double                                   ode_step_size   ,
-	const CppAD::vector<double>&             age_avg_grid    ,
-	const CppAD::vector<double>&             age_table       ,
-	const CppAD::vector<double>&             time_table      ,
-	const CppAD::vector<integrand_struct>&   integrand_table ,
-	const CppAD::vector<mulcov_struct>&      mulcov_table    ,
-	const CppAD::vector<prior_struct>&       prior_table     ,
-	const CppAD::vector<SubsetStruct>&       subset_object   ,
-	const CppAD::vector<double>&             subset_cov_value,
-	const CppAD::vector<weight_info>&        w_info_vec      ,
-	const CppAD::vector<smooth_info>&        s_info_vec      ,
-	const pack_info&                         pack_object     ,
-	const child_info&                        child_object    )
+	bool                                     no_minimum_meas_cv ,
+	const std::string&                       meas_noise_effect  ,
+	const std::string&                       rate_case          ,
+	double                                   bound_random       ,
+	size_t                                   n_covariate        ,
+	double                                   ode_step_size      ,
+	const CppAD::vector<double>&             age_avg_grid       ,
+	const CppAD::vector<double>&             age_table          ,
+	const CppAD::vector<double>&             time_table         ,
+	const CppAD::vector<integrand_struct>&   integrand_table    ,
+	const CppAD::vector<mulcov_struct>&      mulcov_table       ,
+	const CppAD::vector<prior_struct>&       prior_table        ,
+	const CppAD::vector<SubsetStruct>&       subset_object      ,
+	const CppAD::vector<double>&             subset_cov_value   ,
+	const CppAD::vector<weight_info>&        w_info_vec         ,
+	const CppAD::vector<smooth_info>&        s_info_vec         ,
+	const pack_info&                         pack_object        ,
+	const child_info&                        child_object       )
 // END_DATA_MODEL_PROTOTYPE
 :
 // const
@@ -260,7 +271,11 @@ avg_noise_obj_(
 	// minimum_meas_cv_
 	minimum_meas_cv_.resize( integrand_table.size() );
 	for(size_t i = 0; i < integrand_table.size(); ++i)
-		minimum_meas_cv_[i] = integrand_table[i].minimum_meas_cv;
+	{	if( no_minimum_meas_cv )
+			minimum_meas_cv_[i] = 0.0;
+		else
+			minimum_meas_cv_[i] = integrand_table[i].minimum_meas_cv;
+	}
 	//
 	// replace_like_called_: initialize
 	replace_like_called_ = false;
@@ -946,25 +961,26 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 }
 
 // ------------------------------------------------------------------------
-# define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)   \
-template data_model::data_model(                                \
-	const std::string&                       meas_noise_effect ,  \
-	const std::string&                       rate_case       ,  \
-	double                                   bound_random    ,  \
-	size_t                                   n_covariate     ,  \
-	double                                   ode_step_size   ,  \
-	const CppAD::vector<double>&             age_avg_grid    ,  \
-	const CppAD::vector<double>&             age_table       ,  \
-	const CppAD::vector<double>&             time_table      ,  \
-	const CppAD::vector<integrand_struct>&   integrand_table ,  \
-	const CppAD::vector<mulcov_struct>&      mulcov_table    ,  \
-	const CppAD::vector<prior_struct>&       prior_table     ,  \
-	const CppAD::vector<SubsetStruct>&       subset_object   ,  \
-	const CppAD::vector<double>&             subset_cov_value,  \
-	const CppAD::vector<weight_info>&        w_info_vec      ,  \
-	const CppAD::vector<smooth_info>&        s_info_vec      ,  \
-	const pack_info&                         pack_object     ,  \
-	const child_info&                        child_object       \
+# define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)       \
+template data_model::data_model(                                   \
+	bool                                     no_minimum_meas_cv ,  \
+	const std::string&                       meas_noise_effect  ,  \
+	const std::string&                       rate_case          ,  \
+	double                                   bound_random       ,  \
+	size_t                                   n_covariate        ,  \
+	double                                   ode_step_size      ,  \
+	const CppAD::vector<double>&             age_avg_grid       ,  \
+	const CppAD::vector<double>&             age_table          ,  \
+	const CppAD::vector<double>&             time_table         ,  \
+	const CppAD::vector<integrand_struct>&   integrand_table    ,  \
+	const CppAD::vector<mulcov_struct>&      mulcov_table       ,  \
+	const CppAD::vector<prior_struct>&       prior_table        ,  \
+	const CppAD::vector<SubsetStruct>&       subset_object      ,  \
+	const CppAD::vector<double>&             subset_cov_value   ,  \
+	const CppAD::vector<weight_info>&        w_info_vec         ,  \
+	const CppAD::vector<smooth_info>&        s_info_vec         ,  \
+	const pack_info&                         pack_object        ,  \
+	const child_info&                        child_object          \
 );
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(data_subset_struct)
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)

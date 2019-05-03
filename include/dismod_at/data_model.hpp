@@ -45,9 +45,9 @@ private:
 	//
 	// set by constructor and not changed
 	meas_noise_effect_enum         meas_noise_effect_;
-	CppAD::vector<bool>          child_ran_zero_;
-	CppAD::vector<data_ode_info> data_info_;
-	CppAD::vector<double>        minimum_meas_cv_;
+	CppAD::vector<bool>            child_ran_zero_;
+	CppAD::vector<data_ode_info>   data_info_;
+	CppAD::vector<double>          minimum_meas_cv_;
 	//
 	// Has replace_like been called.
 	// Set false by constructor and true by replace_like.
@@ -71,22 +71,23 @@ private:
 public:
 	template <class SubsetStruct>
 	data_model(
-		const std::string&                       meas_noise_effect ,
-		const std::string&                       rate_case       ,
-		double                                   bound_random    ,
-		size_t                                   n_covariate     ,
-		double                                   ode_step_size   ,
-		const CppAD::vector<double>&             age_avg_grid    ,
-		const CppAD::vector<double>&             age_table       ,
-		const CppAD::vector<double>&             time_table      ,
-		const CppAD::vector<integrand_struct>&   integrand_table ,
-		const CppAD::vector<mulcov_struct>&      mulcov_table    ,
-		const CppAD::vector<prior_struct>&       prior_table     ,
-		const CppAD::vector<SubsetStruct>&       subset_object   ,
-		const CppAD::vector<double>&             subset_cov_value,
-		const CppAD::vector<weight_info>&        w_info_vec      ,
-		const CppAD::vector<smooth_info>&        s_info_vec      ,
-		const pack_info&                         pack_object     ,
+		bool                                     no_minimum_meas_cv ,
+		const std::string&                       meas_noise_effect  ,
+		const std::string&                       rate_case          ,
+		double                                   bound_random       ,
+		size_t                                   n_covariate        ,
+		double                                   ode_step_size      ,
+		const CppAD::vector<double>&             age_avg_grid       ,
+		const CppAD::vector<double>&             age_table          ,
+		const CppAD::vector<double>&             time_table         ,
+		const CppAD::vector<integrand_struct>&   integrand_table    ,
+		const CppAD::vector<mulcov_struct>&      mulcov_table       ,
+		const CppAD::vector<prior_struct>&       prior_table        ,
+		const CppAD::vector<SubsetStruct>&       subset_object      ,
+		const CppAD::vector<double>&             subset_cov_value   ,
+		const CppAD::vector<weight_info>&        w_info_vec         ,
+		const CppAD::vector<smooth_info>&        s_info_vec         ,
+		const pack_info&                         pack_object        ,
 		const child_info&                        child_object
 	);
 	~data_model(void);

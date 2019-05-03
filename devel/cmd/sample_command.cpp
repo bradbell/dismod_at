@@ -260,10 +260,10 @@ void sample_command(
 				data_subset_obj[subset_id].meas_value =
 					data_sim_table[data_sim_id].data_sim_value;
 				if( log_density( data_subset_obj[subset_id].density ) )
-				{	// 2DO: should use data_sim_meas_std and not the adjusted
-					// measurement standard deviation delta.
+				{	// simulated data is fit with no mimumum_meas_cv
+					// so meas_std is same as meas_stdcv
 					data_subset_obj[subset_id].meas_std =
-						data_sim_table[data_sim_id].data_sim_delta;
+						data_sim_table[data_sim_id].data_sim_stdcv;
 				}
 			}
 			// replace_like

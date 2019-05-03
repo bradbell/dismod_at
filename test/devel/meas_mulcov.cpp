@@ -255,6 +255,7 @@ bool meas_mulcov(void)
 	//
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
+	bool        no_minimum_meas_cv = false;
 	std::string meas_noise_effect = "add_std_scale_all";
 	std::string rate_case       = "iota_pos_rho_pos";
 	std::string age_avg_split   = "";
@@ -262,6 +263,7 @@ bool meas_mulcov(void)
 		ode_step_size, age_avg_split, age_table
 	);
 	dismod_at::data_model data_object(
+		no_minimum_meas_cv,
 		meas_noise_effect,
 		rate_case,
 		bound_random,
