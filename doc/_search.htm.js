@@ -88,7 +88,7 @@ Keyword =
 'fit_data_subset_table  The Model and Weighted Residuals Corresponding to a Fit  ',' fit_data_subset_id avg_integrand weighted_residual example ',
 'truth_var_table  True Values Used During Simulations  ',' discussion truth_var_id truth_var_value example ',
 'prior_sim_table  Simulated Variation in Prior  ',' prior_sim_id simulate_index var_id prior_sim_value prior_sim_dage prior_sim_dtime censoring example ',
-'data_sim_table  Simulated Measurements and Adjusted Standard Deviations  ',' data_sim_id simulate_index data_subset_id data_sim_value data_sim_stdcv data_sim_delta method sigma y linear log-transformed example ',
+'data_sim_table  Simulated Measurements and Adjusted Standard Deviations  ',' data_sim_id simulate_index data_subset_id data_sim_value data_sim_stdcv data_sim_delta method y data_id eta sigma linear log scaled example ',
 'sample_table  The Sample Table: Samples of Variable Values  ',' simulated data user\'s choice sample_id sample_index var_id var_value example ',
 'predict_table  The Predict Table: Average Integrand Predictions  ',' see also purpose avgint subset node covariates predict_id sample_index avgint_id avg_integrand example ',
 'model  The Age-Time Dismod Model  ',' ',

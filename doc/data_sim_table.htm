@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Measurements and Adjusted Standard Deviations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Measurements and Adjusted Standard Deviations">
-<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_stdcv data_sim_delta method d delta sigma y linear log-transformed example ">
+<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_stdcv data_sim_delta method y delta data_id d eta sigma linear log scaled example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,12 +77,16 @@ A:active { color : purple }
 <br><a href="data_sim_table.htm#data_sim_stdcv" target="_top">data_sim_stdcv</a>
 <br><a href="data_sim_table.htm#data_sim_delta" target="_top">data_sim_delta</a>
 <br><a href="data_sim_table.htm#Method" target="_top">Method</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y" target="_top">y</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.Delta" target="_top">Delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.data_id" target="_top">data_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.d" target="_top">d</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta" target="_top">delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.A" target="_top">A</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta" target="_top">delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.sigma" target="_top">sigma</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y, Linear" target="_top">y,&nbsp;Linear</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y, Log-Transformed" target="_top">y,&nbsp;Log-Transformed</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y, Log Scaled" target="_top">y,&nbsp;Log&nbsp;Scaled</a>
 <br><a href="data_sim_table.htm#Example" target="_top">Example</a>
 <br>The <code><font color="blue">data_sim</font></code> table is created during a
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
@@ -160,16 +164,9 @@ the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
  in the data table.
-In the <a href="data_sim_table.htm#Method.y, Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
- case
-this is the value 
+This is the value 
 <code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
  below.
-In the <a href="data_sim_table.htm#Method.y, Log-Transformed" target="_top"><span style='white-space: nowrap'>log-transformed</span></a>
- case
-this is the value 
-<code><font color="blue"><span style='white-space: nowrap'>max(</span></font><i><font color="black"><span style='white-space: nowrap'>y</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;0)</span></font></code>
-.
 
 <br>
 <br>
@@ -198,16 +195,86 @@ the standard deviation of the simulation measurement after adjustment; see
 
 <br>
 <br>
+<big><a name="Method.y" id="Method.y">y</a></big>
+<br>
+We use <small>@(@
+y
+@)@</small> to denote the simulate measurement value
+
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_value</span></font></i></code>
+ corresponding to this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Method.Delta" id="Method.Delta">Delta</a></big>
+<br>
+We use <small>@(@
+\Delta
+@)@</small> to denote the
+<a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>minimum&nbsp;cv&nbsp;standard&nbsp;deviation</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_stdcv</span></font></i></code>
+
+corresponding to this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Method.data_id" id="Method.data_id">data_id</a></big>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+ to denote the
+<a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+ corresponding to the
+
+<code><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i></code>
+ corresponding to this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_id</span></font></i></code>
+.
+
+<br>
+<br>
 <big><a name="Method.d" id="Method.d">d</a></big>
 <br>
 We use <small>@(@
 d
 @)@</small> to denote the
 <a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
- and
+
+corresponding to this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Method.eta" id="Method.eta">eta</a></big>
+<br>
+We use <small>@(@
+\eta
+@)@</small> to denote the
 <a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
 
-corresponding to the 
+corresponding to this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Method.A" id="Method.A">A</a></big>
+<br>
+We use <small>@(@
+A
+@)@</small> denote the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+
+corresponding to the <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+
+value for the model variables and this 
 <code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
 .
 
@@ -220,25 +287,16 @@ We use <small>@(@
 @)@</small> to denote the
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
 
-corresponding to this 
-<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-;
-i.e., 
-<code><i><font color="black"><span style='white-space: nowrap'>sim_delta</span></font></i></code>
- above.
+corresponding to the <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
 
-<br>
-<br>
-<big><a name="Method.A" id="Method.A">A</a></big>
-<br>
-We use <small>@(@
-A
-@)@</small> denote the
-<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
-
-corresponding to the value for the model variables and
-this 
+value for the model variables, this 
 <code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+,
+and this <small>@(@
+\Delta
+@)@</small>.
+This is equal to 
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_delta</span></font></i></code>
 .
 
 <br>
@@ -252,7 +310,7 @@ We use <small>@(@
 
 <small>@[@
 
-	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
+	\sigma = \log( y + \eta + \delta ) - \log(y + \eta)
 
 @]@</small>
 
@@ -262,7 +320,8 @@ We use <small>@(@
 <br>
 If <small>@(@
 d
-@)@</small> is linear (not log scaled)
+@)@</small> is <a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+,
 <small>@[@
 
 	y = A + e
@@ -285,8 +344,12 @@ The corresponding
 
 <br>
 <br>
-<big><a name="Method.y, Log-Transformed" id="Method.y, Log-Transformed">y, Log-Transformed</a></big>
+<big><a name="Method.y, Log Scaled" id="Method.y, Log Scaled">y, Log Scaled</a></big>
 <br>
+If <small>@(@
+d
+@)@</small> is <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
 If <small>@(@
 d
 @)@</small> is log scaled
