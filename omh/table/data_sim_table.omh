@@ -58,10 +58,7 @@ This column has type $code real$$ and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
-In the $cref/linear/data_sim_table/Method/y, Linear/$$ case
-this is the value $icode y$$ below.
-In the $cref/log-transformed/data_sim_table/Method/y, Log-Transformed/$$ case
-this is the value $codei%max(%y%, 0)%$$.
+This is the value $icode y$$ below.
 
 $head data_sim_stdcv$$
 The column has type $code real$$ and is the
@@ -77,11 +74,39 @@ $cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$.
 
 $head Method$$
 
+$subhead y$$
+We use $latex y$$ to denote the simulate measurement value
+$icode data_sim_value$$ corresponding to this $icode data_sim_id$$.
+
+$subhead Delta$$
+We use $latex \Delta$$ to denote the
+$cref/minimum cv standard deviation
+	/data_like
+	/Minimum CV Standard Deviation, Delta_i
+/$$
+$icode data_sim_stdcv$$
+corresponding to this $icode data_sim_id$$.
+
+$subhead data_id$$
+We use $icode data_id$$ to denote the
+$cref/data_id/data_subset_table/data_id/$$ corresponding to the
+$icode data_subset_id$$ corresponding to this $icode data_sim_id$$.
+
 $subhead d$$
 We use $latex d$$ to denote the
-$cref/density_id/data_table/density_id/$$ and
+$cref/density_id/data_table/density_id/$$
+corresponding to this $icode data_id$$.
+
+$subhead eta$$
+We use $latex \eta$$ to denote the
 $cref/eta/data_table/eta/$$
-corresponding to the $icode data_id$$.
+corresponding to this $icode data_id$$.
+
+$subhead A$$
+We use $latex A$$ denote the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+corresponding to the $cref truth_var_table$$
+value for the model variables and this $icode data_id$$.
 
 $subhead delta$$
 We use $latex \delta$$ to denote the
@@ -89,14 +114,10 @@ $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i
 /$$
-corresponding to this $icode data_id$$;
-i.e., $icode sim_delta$$ above.
-
-$subhead A$$
-We use $latex A$$ denote the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-corresponding to the value for the model variables and
-this $icode data_id$$.
+corresponding to the $cref truth_var_table$$
+value for the model variables, this $icode data_id$$,
+and this $latex \Delta$$.
+This is equal to $icode data_sim_delta$$.
 
 $subhead sigma$$
 We use $latex \sigma$$ to denote the
@@ -105,11 +126,11 @@ $cref/log-transformed standard deviation
 	/Log-Transformed Standard Deviation, sigma
 /$$
 $latex \[
-	\sigma = \log( A + \eta + \delta ) - \log(A + \eta)
+	\sigma = \log( y + \eta + \delta ) - \log(y + \eta)
 \] $$
 
 $subhead y, Linear$$
-If $latex d$$ is linear (not log scaled)
+If $latex d$$ is $cref/linear/density_table/Notation/Linear/$$,
 $latex \[
 	y = A + e
 \]$$
@@ -125,7 +146,8 @@ $latex \[
 	R = e / \delta
 \]$$
 
-$subhead y, Log-Transformed$$
+$subhead y, Log Scaled$$
+If $latex d$$ is $cref/log scaled/density_table/Notation/Log Scaled/$$,
 If $latex d$$ is log scaled
 $latex \[
 	e = \log( y + \eta ) - \log( A + \eta )

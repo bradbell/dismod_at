@@ -82,6 +82,10 @@ $lnext
 The
 $cref/sim_stdcv/db2csv_command/data.csv/sim_stdcv/$$ column has been added
 to the $cref/data.csv/db2csv_command/data.csv/$$ file..
+$lnext
+The documentation of the
+$cref/method/data_sim_table/Method/$$ used to create the
+simulated data was improved and corrected.
 $lend
 
 $head 05-02$$
@@ -385,7 +389,7 @@ $lnext
 The $cref user_ill_condition.py$$ example was added.
 $lnext
 The documentation formula for
-$cref/log-transformed/data_sim_table/Method/y, Log-Transformed/$$
+$cref/log scaled/data_sim_table/Method/y, Log Scaled/$$
 data was
 $latex \[
     y = \exp(e) * ( A + \eta )
