@@ -37,6 +37,7 @@ class data_model {
 	} data_ode_info;
 private:
 	// constant values
+	const bool                   fit_simulated_data_;
 	const size_t                 n_covariate_;
 	const double                 ode_step_size_;
 	const size_t                 n_child_;
@@ -71,7 +72,7 @@ private:
 public:
 	template <class SubsetStruct>
 	data_model(
-		bool                                     no_minimum_meas_cv ,
+		bool                                     fit_simulated_data ,
 		const std::string&                       meas_noise_effect  ,
 		const std::string&                       rate_case          ,
 		double                                   bound_random       ,

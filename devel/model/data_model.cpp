@@ -32,7 +32,7 @@ $section Data Model: Constructor$$
 
 $head Syntax$$
 $codei%data_model %data_object%(
-	%no_minimum_meas_cv%,
+	%fit_simulated_data%,
 	%meas_noise_effect%,
 	%rate_case%,
 	%bound_random%,
@@ -59,13 +59,9 @@ $srcfile%devel/model/data_model.cpp%
 $head data_object$$
 This is the $code data_model$$ object being constructed.
 
-$head no_minimum_meas_cv$$
-If this is true, zero is used in place of the values for
-$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ in the
-integrand table.
-This option is intended for fitting values in the data_sim table
-because it has a column with the minimum cv already included; i.e.,
-$cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$.
+$head fit_simulated_data$$
+If this is true, we are fitting simulated that comes from the
+$cref data_sim_table$$.
 
 $head meas_noise_effect$$
 This is the value of
@@ -202,7 +198,7 @@ data_model::~data_model(void)
 // BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
 data_model::data_model(
-	bool                                     no_minimum_meas_cv ,
+	bool                                     fit_simulated_data ,
 	const std::string&                       meas_noise_effect  ,
 	const std::string&                       rate_case          ,
 	double                                   bound_random       ,
@@ -223,11 +219,12 @@ data_model::data_model(
 // END_DATA_MODEL_PROTOTYPE
 :
 // const
-n_covariate_       (n_covariate)                   ,
-ode_step_size_     (ode_step_size)                 ,
-n_child_           ( child_object.child_size() )   ,
-subset_cov_value_  (subset_cov_value)              ,
-pack_object_       (pack_object)                   ,
+fit_simulated_data_ ( fit_simulated_data)           ,
+n_covariate_        (n_covariate)                   ,
+ode_step_size_      (ode_step_size)                 ,
+n_child_            ( child_object.child_size() )   ,
+subset_cov_value_   (subset_cov_value)              ,
+pack_object_        (pack_object)                   ,
 avgint_obj_(
 	ode_step_size,
 	rate_case,
@@ -271,11 +268,7 @@ avg_noise_obj_(
 	// minimum_meas_cv_
 	minimum_meas_cv_.resize( integrand_table.size() );
 	for(size_t i = 0; i < integrand_table.size(); ++i)
-	{	if( no_minimum_meas_cv )
-			minimum_meas_cv_[i] = 0.0;
-		else
-			minimum_meas_cv_[i] = integrand_table[i].minimum_meas_cv;
-	}
+		minimum_meas_cv_[i] = integrand_table[i].minimum_meas_cv;
 	//
 	// replace_like_called_: initialize
 	replace_like_called_ = false;
@@ -283,7 +276,7 @@ avg_noise_obj_(
 	// -----------------------------------------------------------------------
 	// data_subset_obj_
 	//
-	// only set the fileds that are common to data_subset and avgint_subset
+	// only set the values that are common to data_subset and avgint_subset
 	size_t n_subset = subset_object.size();
 	data_subset_obj_.resize(n_subset);
 	assert( subset_cov_value.size() == n_covariate * n_subset );
@@ -333,7 +326,7 @@ avg_noise_obj_(
 		}
 	}
 	// -----------------------------------------------------------------------
-	// data_ode_info_
+	// data_info_
 	//
 	// has same size as data_subset_obj
 	data_info_.resize( n_subset );
@@ -422,6 +415,7 @@ $spell
 	std
 	obj
 	cv
+	sim_stdcv
 $$
 
 $section Set Value Necessary for Likelihood (not for Average Integrand)$$
@@ -473,6 +467,13 @@ and for $icode%field% = density_id%,% hold_out%,% meas_value%,% meas_std%$$,
 $icode%data_subset_obj%[%subset_id%].%field%$$,
 is used as a replacement for
 $icode%subset_object[%subset_id%]%.%field%$$.
+
+$subhead fit_simulated_data$$
+In the case where
+$cref/fit_simulated_data/data_model_ctor/fit_simulated_data/$$ is true,
+the value $icode%data_subset_obj%[%subset_id%]%.meas_std%$$
+is actually a
+$cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$ value.
 
 $head Laplace Density$$
 The Laplace density is only allowed if the model for the
@@ -622,6 +623,7 @@ Float data_model::average(
 $begin data_model_like_one$$
 
 $spell
+	sim_stdcv
 	avgint
 	Sincidence
 	Tincidence
@@ -679,6 +681,16 @@ see $cref/data_object constructor/data_model_ctor/data_object/$$.
 It is effectively const
 (some internal arrays are used for temporary work space and kept between
 calls to avoid re-allocating memory).
+
+$subhead fit_simulated_data$$
+If $cref/fit_simulated_data/data_model_ctor/fit_simulated_data/$$ is true,
+the $icode meas_std$$ is actually
+$cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$; see
+$cref/replace_like
+	/data_model_replace_like
+	/data_subset_obj
+	/fit_simulated_data
+/$$.
 
 $head Float$$
 The type $icode Float$$ must be $code double$$ or
@@ -765,10 +777,6 @@ residual_struct<Float> data_model::like_one(
 	size_t weight_id    = size_t( data_subset_obj_[subset_id].weight_id );
 	size_t integrand_id = size_t( data_subset_obj_[subset_id].integrand_id );
 	//
-	assert( meas_std  > 0.0 );
-	double meas_cv       = minimum_meas_cv_[integrand_id];
-	double Delta = std::max(meas_std, meas_cv * std::fabs(meas_value) );
-	//
 	// average noise effect
 	Float std_effect = avg_noise_obj_.rectangle(
 		age_lower,
@@ -780,6 +788,12 @@ residual_struct<Float> data_model::like_one(
 		x,
 		pack_vec
 	);
+	//
+	assert( meas_std  > 0.0 );
+	double meas_cv = minimum_meas_cv_[integrand_id];
+	double Delta   = std::max(meas_std, meas_cv * std::fabs(meas_value) );
+	if( fit_simulated_data_ )
+		Delta = meas_std;
 	//
 	// Compute the adusted standard deviation, delta_out
 	density_enum density = data_info_[subset_id].density;
@@ -963,7 +977,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)       \
 template data_model::data_model(                                   \
-	bool                                     no_minimum_meas_cv ,  \
+	bool                                     fit_simulated_data ,  \
 	const std::string&                       meas_noise_effect  ,  \
 	const std::string&                       rate_case          ,  \
 	double                                   bound_random       ,  \

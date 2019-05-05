@@ -333,12 +333,12 @@ int main(int n_arg, const char** argv)
 		else
 			bound_random = std::atof( tmp_str.c_str() );
 	}
-	// no_minimum_meas_cv
-	bool no_minimum_meas_cv = true; // not fitting or data in data_sim table
-	if( command_arg == "fit" && n_arg < 5 )
-	{	// fitting data in data table
-		no_minimum_meas_cv = false;
-	}
+	// fit_simulated_data
+	bool fit_simulated_data = false;
+	if( command_arg == "fit" && n_arg >= 5 )
+		fit_simulated_data = true;
+	if( command_arg == "sample" )
+		fit_simulated_data = true;
 	// =======================================================================
 # ifdef NDEBUG
 	try { // BEGIN_TRY_BLOCK (when not debugging)
@@ -397,7 +397,7 @@ int main(int n_arg, const char** argv)
 		//
 		// avgint_object
 		dismod_at::data_model avgint_object(
-			no_minimum_meas_cv       ,
+			fit_simulated_data       ,
 			meas_noise_effect        ,
 			rate_case                ,
 			bound_random             ,
@@ -466,7 +466,7 @@ int main(int n_arg, const char** argv)
 				db_input.density_table
 			);
 			dismod_at::data_model data_object(
-				no_minimum_meas_cv       ,
+				fit_simulated_data       ,
 				meas_noise_effect        ,
 				rate_case                ,
 				bound_random             ,
