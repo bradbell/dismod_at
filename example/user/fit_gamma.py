@@ -27,6 +27,8 @@
 # $icode iota_true / 100$$ and upper limit one.
 # The mean for the prior is $icode iota_true / 10$$
 # (this is only used as a starting point for the optimization).
+# There is only one grid point (one $cref/model_variable/model_variables/$$)
+# corresponding to $icode iota$$, hence it is constant in age and time.
 #
 # $head Other Rates$$
 # For this example the other rates are all zero.
@@ -37,7 +39,7 @@
 #
 # $head Covariate Multiplier$$
 # There is one covariate multiplier on the covariate column $code one$$
-# (which has the constant value one) and the rate $code iota$$.
+# and the rate $code iota$$.
 # This is a measurement noise covariate multiplier
 # $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$.
 # The prior for this multiplier is a uniform on the interval from zero
@@ -46,7 +48,8 @@
 # called $icode gamma_true$$.
 # The mean for the prior is $codei%gamma_true% / 10%$$
 # (this is only used as a starting point for the optimization).
-# Note that there is only one grid point in the covariate multiplier,
+# There is only one grid point
+# (one model variable) corresponding to the covariate multiplier,
 # hence it is constant in age and time.
 #
 # $head Data$$
@@ -240,7 +243,7 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'meas_noise_effect',        'value':meas_noise_effect     },
+		{ 'name':'meas_noise_effect',      'value':meas_noise_effect   },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'random_seed',            'value':'0'                 },
@@ -288,6 +291,7 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 integrand_table = dismod_at.get_table_dict(connection, 'integrand')
 covariate_table = dismod_at.get_table_dict(connection, 'covariate')
+node_table      = dismod_at.get_table_dict(connection, 'node')
 # -----------------------------------------------------------------------
 # truth table:
 tbl_name     = 'truth_var'
@@ -302,29 +306,31 @@ for var_id in range( len(var_table) ) :
 	if var_type == 'mulcov_meas_noise' :
 		integrand_id  = var_info['integrand_id']
 		integrand_name = integrand_table[integrand_id]['integrand_name']
-		if integrand_name == 'Sincidence' :
-			covariate_id   = var_info['covariate_id']
-			covariate_name = covariate_table[covariate_id]['covariate_name' ]
-			assert( covariate_name == 'one' )
-			truth_var_value = gamma_true()
-		else :
-			assert( False )
+		assert integrand_name == 'Sincidence'
+		#
+		covariate_id   = var_info['covariate_id']
+		covariate_name = covariate_table[covariate_id]['covariate_name' ]
+		assert( covariate_name == 'one' )
+		#
+		truth_var_value = gamma_true()
 	else :
 		assert( var_type == 'rate' )
 		rate_id   = var_info['rate_id']
 		rate_name = rate_table[rate_id]['rate_name']
+		assert rate_name == 'iota'
+		#
 		node_id   = var_info['node_id']
-		# node zero is the world
-		if node_id == 0 and rate_name == 'iota' :
-			truth_var_value = iota_true
-		else :
-			assert( False )
+		node_name = node_table[node_id]['node_name']
+		assert node_name == 'world'
+		#
+		truth_var_value = iota_true
+	#
 	var_id2true.append( truth_var_value )
 	row_list.append( [ truth_var_value ] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
-# Simulate and then fit the data
+# Simulate then fit the data
 system_command([ program, file_name, 'simulate', '1' ])
 system_command([ program, file_name, 'fit', 'fixed' , '0' ])
 # -----------------------------------------------------------------------
