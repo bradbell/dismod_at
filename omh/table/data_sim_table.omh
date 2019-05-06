@@ -213,6 +213,7 @@ $latex \[
 
 
 $head Example$$
-See the $cref simulate_command.py$$ example and test.
+See the $cref user_data_sim.py$$ and $cref simulate_command.py$$
+examples / tests.
 
 $end
