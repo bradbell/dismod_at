@@ -20,6 +20,7 @@ FOREACH(user_case
 	const_value
 	continue_fit
 	csv2db
+	data_sim
 	diff_constraint
 	fit_fixed_both
 	fit_gamma

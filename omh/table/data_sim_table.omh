@@ -16,6 +16,7 @@ $spell
 	covariates
 	cv
 	stdcv
+	var
 $$
 
 $section Simulated Measurements and Adjusted Standard Deviations$$
@@ -74,9 +75,15 @@ $cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$.
 
 $head Method$$
 
+$subhead data_id$$
+We use $icode data_id$$ to denote the
+$cref/data_id/data_subset_table/data_id/$$ corresponding to the
+$icode data_subset_id$$ corresponding to this $icode data_sim_id$$.
+
 $subhead y$$
-We use $latex y$$ to denote the simulate measurement value
-$icode data_sim_value$$ corresponding to this $icode data_sim_id$$.
+We use $latex y$$ to denote the data table
+$cref/meas_value/data_table/meas_value/$$
+corresponding to this $icode data_id$$.
 
 $subhead Delta$$
 We use $latex \Delta$$ to denote the
@@ -84,29 +91,24 @@ $cref/minimum cv standard deviation
 	/data_like
 	/Minimum CV Standard Deviation, Delta_i
 /$$
-$icode data_sim_stdcv$$
-corresponding to this $icode data_sim_id$$.
-
-$subhead data_id$$
-We use $icode data_id$$ to denote the
-$cref/data_id/data_subset_table/data_id/$$ corresponding to the
-$icode data_subset_id$$ corresponding to this $icode data_sim_id$$.
+corresponding to the data table and this $icode data_id$$.
 
 $subhead d$$
 We use $latex d$$ to denote the
 $cref/density_id/data_table/density_id/$$
-corresponding to this $icode data_id$$.
+corresponding to the data table and this $icode data_id$$.
 
 $subhead eta$$
 We use $latex \eta$$ to denote the
 $cref/eta/data_table/eta/$$
-corresponding to this $icode data_id$$.
+corresponding to the data table and this $icode data_id$$.
 
 $subhead A$$
 We use $latex A$$ denote the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-corresponding to the $cref truth_var_table$$
-value for the model variables and this $icode data_id$$.
+corresponding to the truth_var table
+value for the model variables, the values in the data table,
+and this $icode data_id$$.
 
 $subhead delta$$
 We use $latex \delta$$ to denote the
@@ -114,10 +116,9 @@ $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i
 /$$
-corresponding to the $cref truth_var_table$$
-value for the model variables, this $icode data_id$$,
-and this $latex \Delta$$.
-This is equal to $icode data_sim_delta$$.
+corresponding to the truth_var table
+value for the model variables,
+the values in the data table, and this $icode data_id$$.
 
 $subhead sigma$$
 We use $latex \sigma$$ to denote the
@@ -125,16 +126,50 @@ $cref/log-transformed standard deviation
 	/statistic
 	/Log-Transformed Standard Deviation, sigma
 /$$
+corresponding to the data table and this $icode data_id$$; i.e.,
 $latex \[
 	\sigma = \log( y + \eta + \delta ) - \log(y + \eta)
 \] $$
 
+$subhead z$$
+We use $latex z$$ to denote the simulated data value
+$icode data_sim_value$$ corresponding to this $icode data_sim_id$$.
+
+$subhead data_sim_delta$$
+Given $latex z$$, we can solve the equation
+$latex \[
+	\sigma = \log( z + \eta + \hat{\delta} ) - \log( z + \eta )
+\] $$
+to obtain the value
+$latex \[
+	\hat{\delta} = [ exp(\sigma) - 1 ] ( z + \eta )
+\] $$
+The value $latex \hat{\delta}$$ is written as $icode data_sim_delta$$
+in the data_sim table.
+
+$subhead sim_stdcv$$
+Given $latex \hat{\delta}$$ we can compute a
+$cref/minimum cv standard deviation
+	/data_like
+	/Minimum CV Standard Deviation, Delta_i
+/$$
+$latex \hat{\Delta}$$ such that,
+using the $cref truth_var_table$$ values for the model variables,
+the corresponding
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+/$$
+is equal to $latex \hat{\delta}$$.
+The value $latex \hat{\Delta}$$ is written as $icode data_sim_stdcv$$
+in the data_sim table.
+
 $subhead y, Linear$$
 If $latex d$$ is $cref/linear/density_table/Notation/Linear/$$,
 $latex \[
-	y = A + e
+	z = A + e
 \]$$
-where $latex e$$ is simulated from the corresponding distribution
+where $latex e$$ is simulated using density $icode d$$
 with mean zero and standard deviation $latex \delta$$.
 The corresponding
 $cref/weighted residual
@@ -148,15 +183,11 @@ $latex \[
 
 $subhead y, Log Scaled$$
 If $latex d$$ is $cref/log scaled/density_table/Notation/Log Scaled/$$,
-If $latex d$$ is log scaled
-$latex \[
-	e = \log( y + \eta ) - \log( A + \eta )
-\] $$
-$latex e$$ is simulated from the corresponding linear distribution
+$latex e$$ is simulated using the density $icode d$$
 with mean zero and standard deviation $latex \sigma$$.
-It follows that
+The simulated data value $icode sim_data_value$$ is given by
 $latex \[
-	y = \exp(e) * ( A + \eta ) - \eta
+	z = \exp(e) * ( A + \eta ) - \eta
 \] $$
 The corresponding
 $cref/weighted residual
@@ -167,6 +198,18 @@ $cref/weighted residual
 $latex \[
 	R = e / \sigma
 \]$$
+It follows, from the formula for $latex z$$ above, that
+$latex \[
+	e = \log( z + \eta ) - \log( A + \eta )
+\]$$
+Furthermore, if we use $latex \hat{\Delta}$$ as the
+minimum cv standard deviation,
+and the truth_var table value for the model variables,
+$latex \hat{\delta}$$ is the corresponding
+adjusted standard deviation and
+$latex \[
+	\sigma = \log( z + \eta + \hat{\delta} ) - \log(z + \eta )
+\] $$
 
 
 $head Example$$

@@ -54,6 +54,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-04$$
+The new example $cref user_data_sim.py$$ detected a problem in the
+simulation of $cref/log scaled/density_table/Notation/Log Scaled/$$ data.
+This problem has been fixed.
+
 $head 05-03$$
 $bold API Change:$$
 The $cref/data.csv/db2csv_command/data.csv/$$ file columns

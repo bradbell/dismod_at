@@ -174,13 +174,12 @@ void simulate_command(
 		double eta          = data_subset_obj[subset_id].eta;
 		double nu           = data_subset_obj[subset_id].nu;
 		//
-		// stdcv
+		// data table minimum cv standard deviation, Delta
 		assert( meas_std > 0.0 );
 		double meas_cv = integrand_table[integrand_id].minimum_meas_cv;
 		double Delta = std::max(meas_std, meas_cv * std::fabs(meas_value) );
 		//
-		// compute the adjusted standard deviation corresponding
-		// to the values in the data table, delta.
+		// data table adjusted standard deviation, delta
 		double delta;
 		data_object.like_one(subset_id, truth_var, avg, delta);
 		//
@@ -214,6 +213,10 @@ void simulate_command(
 			assert(false);
 		}
 		//
+		// data table sigma
+		double sigma = std::log(meas_value + delta + eta);
+		sigma       -= std::log(meas_value + eta);
+		//
 		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 		{	// for each simulate_index
 			//
@@ -225,7 +228,7 @@ void simulate_command(
 			// sim_delta
 			double sim_delta = delta;
 			if( log_density(density) )
-				sim_delta = (std::exp(delta) - 1.0) * (sim_value + eta);
+				sim_delta = (std::exp(sigma) - 1.0) * (sim_value + eta);
 			//
 			// sim_stdcv
 			double sim_stdcv = nan;

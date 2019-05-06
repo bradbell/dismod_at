@@ -75,6 +75,7 @@ $children%example/user/csv2db.py
 	%example/user/cascade.py
 	%example/user/predict_fit.py
 	%example/user/predict_mulcov.py
+	%example/user/data_sim.py
 
 	%example/user/asymptotic.py
 	%example/user/const_random.py
@@ -106,6 +107,7 @@ $rref user_censor.py$$
 $rref user_cascade.py$$
 $rref user_predict_fit.py$$
 $rref user_predict_mulcov.py$$
+$rref user_data_sim.py$$
 $tend
 
 $head More Examples$$
