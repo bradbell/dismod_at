@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -22,8 +22,8 @@ echo_eval() {
 }
 # --------------------------------------------------------------------------
 web_page='https://github.com/coin-or/CppAD.git'
-hash_key='fc16f2be97aef02ee33ed28b29b867a478bb38fe'
-version='20180925'
+hash_key='799b89d99414c69a45489cd411e22ce0904e94b4'
+version='20190507'
 # ---------------------------------------------------------------------------
 # Get user configuration options from run_cmake.sh
 #

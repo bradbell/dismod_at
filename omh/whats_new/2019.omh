@@ -31,6 +31,8 @@ $spell
 	mu
 	stdcv
 	sqlite
+	cppad
+	CppAD
 $$
 $navigate%
 	Up%Location%
@@ -53,6 +55,17 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 05-07$$
+Advance to using $code cppad-20190507$$.
+This enabled a fix of the
+$cref/cen_gaussian/density_table/density_name/cen_gaussian/$$ calculation.
+To be specific, when the $cref start_var_table$$ values were very poor,
+and there was zero measurement values,
+one minus the error function was numerically zero and its log was nan.
+This has been fixed using the complementary error functions
+which was recently added to CppAD.
+
 
 $head 05-05$$
 The new example $cref user_data_sim.py$$ detected a problem in the
