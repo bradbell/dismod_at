@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,6 +60,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
 <option>Contents</option>
+<option>05-07</option>
 <option>05-05</option>
 <option>05-03</option>
 <option>05-02</option>
@@ -103,6 +104,22 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="05-07" id="05-07">05-07</a></big></b>
+<br>
+Advance to using <code><font color="blue">cppad-20190507</font></code>.
+This enabled a fix of the
+<a href="density_table.htm#density_name.cen_gaussian" target="_top"><span style='white-space: nowrap'>cen_gaussian</span></a>
+ calculation.
+To be specific, when the <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+ values were very poor,
+and there was zero measurement values,
+one minus the error function was numerically zero and its log was nan.
+This has been fixed using the complementary error functions
+which was recently added to CppAD.
+
+
+<br>
+<br>
 <b><big><a name="05-05" id="05-05">05-05</a></big></b>
 <br>
 The new example <a href="user_data_sim.py.htm" target="_top"><span style='white-space: nowrap'>user_data_sim.py</span></a>
