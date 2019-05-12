@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list create_database ode solution prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world example user examples sampling starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list censored laplace create_database ode solution prevalence large excess mortality csv2db command covariate multipliers random effects grids value priors difference sample conditionals checkpointing weighting meas_std diagrams lagrange documentation real world example user examples sampling starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -62,6 +62,7 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
+<br><a href="wish_list.htm#Censored Laplace" target="_top">Censored&nbsp;Laplace</a>
 <br><a href="wish_list.htm#create_database" target="_top">create_database</a>
 <br><a href="wish_list.htm#ODE Solution" target="_top">ODE&nbsp;Solution</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Prevalence ODE" target="_top">Prevalence&nbsp;ODE</a>
@@ -87,6 +88,34 @@ A:active { color : purple }
 <br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
+<b><big><a name="Censored Laplace" id="Censored Laplace">Censored Laplace</a></big></b>
+<br>
+The censored density formula for a Gaussian
+<a href="censor_density.htm#Gaussian.Censored Density, G(y,mu,delta,c)" target="_top"><span style='white-space: nowrap'>G(y,mu,delta,c)</span></a>
+
+is correct even if <small>@(@
+c > \mu
+@)@</small>.
+On the other hand, the formula for the Laplace case
+<a href="censor_density.htm#Laplace.Censored Density, L(y,mu,delta,c)" target="_top"><span style='white-space: nowrap'>L(y,mu,delta,c)</span></a>
+
+requires <small>@(@
+c \leq \mu
+@)@</small>.
+The Laplace case can be extended using the fact that it is symmetric,
+integrating from <small>@(@
+\mu
+@)@</small> to <small>@(@
+c
+@)@</small>,
+using absolute values for the integration limits,
+and the Sign function.
+This will result in a non-smooth the optimization problem.
+Perhaps the problem can be reformulated with auxillary variables
+to be a smooth problem ?
+
+<br>
+<br>
 <b><big><a name="create_database" id="create_database">create_database</a></big></b>
 <br>
 Make a version of <a href="create_database.htm" target="_top"><span style='white-space: nowrap'>create_database</span></a>
