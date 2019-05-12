@@ -56,6 +56,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-12$$
+Add a $cref/censored Laplace/wish_list/Censored Laplace/$$ entry
+to the wish list.
+
 $head 05-07$$
 Advance to using $code cppad-20190507$$.
 This enabled a fix of the

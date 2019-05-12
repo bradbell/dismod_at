@@ -33,9 +33,33 @@ $spell
 	def
 	args
 	kwargs
+	mu
 $$
 
 $section Dismod_at Wish List$$
+
+$head Censored Laplace$$
+The censored density formula for a Gaussian
+$cref/G(y,mu,delta,c)
+	/censor_density
+	/Gaussian
+	/Censored Density, G(y,mu,delta,c)
+/$$
+is correct even if $latex c > \mu$$.
+On the other hand, the formula for the Laplace case
+$cref/L(y,mu,delta,c)
+	/censor_density
+	/Laplace
+	/Censored Density, L(y,mu,delta,c)
+/$$
+requires $latex c \leq \mu$$.
+The Laplace case can be extended using the fact that it is symmetric,
+integrating from $latex \mu$$ to $latex c$$,
+using absolute values for the integration limits,
+and the Sign function.
+This will result in a non-smooth the optimization problem.
+Perhaps the problem can be reformulated with auxillary variables
+to be a smooth problem ?
 
 $head create_database$$
 Make a version of $cref create_database$$ that uses

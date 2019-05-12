@@ -87,9 +87,10 @@ $latex \[
 \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
 \; \R{d} y
 \] $$
-using the fact the Gaussian density is symmetric about the value
-$latex y = \mu$$, and its integral from minus infinity to plus infinity is one,
-we obtain
+Note that this integral is negative when $latex c > \mu$$.
+The Gaussian density is symmetric about $latex y = \mu$$
+and its integral from minus infinity to plus infinity is one.
+Hence
 $latex \[
 \frac{
 	1 - \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
@@ -164,6 +165,7 @@ L( y , \mu , \delta )
 \] $$
 
 $subhead Indefinite Integral$$
+
 The indefinite integral with respect to $latex y$$,
 for $latex x \leq \mu$$, is
 $latex \[
