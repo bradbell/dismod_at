@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -96,6 +96,7 @@ then
 	echo_eval git clone $web_page cppad_mixed-$version
 fi
 cd cppad_mixed-$version
+echo_eval git pull
 echo_eval git checkout --quiet $hash_key
 check=`grep '^SET(cppad_mixed_version' CMakeLists.txt | \
 	sed -e 's|^[^"]*"\([^"]*\).*|\1|'`

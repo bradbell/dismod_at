@@ -56,6 +56,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-21$$
+There was a problem with the
+$cref/cppad/install_unix/Special Requirements/CppAD/$$ and
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$ install
+scripts.
+They sometimes failed because the corresponding repository was out of date.
+This has been fixed by adding a $code git pull$$ to the corresponding scripts.
+
 $head 05-12$$
 Add a $cref/censored Laplace/wish_list/Censored Laplace/$$ entry
 to the wish list.
