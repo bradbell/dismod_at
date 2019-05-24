@@ -96,6 +96,7 @@ then
 	echo_eval git clone $web_page cppad_mixed-$version
 fi
 cd cppad_mixed-$version
+echo_eval git checkout master
 echo_eval git pull
 echo_eval git checkout --quiet $hash_key
 check=`grep '^SET(cppad_mixed_version' CMakeLists.txt | \

@@ -61,6 +61,7 @@ fi
 pwd
 #
 echo_eval cd cppad-$version
+echo_eval git checkout master
 echo_eval git pull
 echo_eval git checkout --quiet $hash_key
 check=`grep '^SET(cppad_version' CMakeLists.txt | \

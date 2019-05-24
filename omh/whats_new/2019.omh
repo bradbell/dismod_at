@@ -56,6 +56,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 05-24$$
+Needed to also add a $code git checkout master$$ for problem mentioned
+on 05-21 below.
+
 $head 05-21$$
 There was a problem with the
 $cref/cppad/install_unix/Special Requirements/CppAD/$$ and
