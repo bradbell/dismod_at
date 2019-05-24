@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  dismod_at-20190524: User Documentation and API  ',' purpose links ',
+'dismod_at  dismod_at-20190521: User Documentation and API  ',' purpose links ',
 'math_abstract  An Introduction To The Mathematics of Dismod_at  ',' ',
 'math_ode  The Dismod_at Ordinary Differential Equation  ',' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t) ',
 'censor_density  The Censored Gaussian and Laplace Densities  ',' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac) ',
