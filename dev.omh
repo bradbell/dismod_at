@@ -11,42 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin dismod_at$$
 $comment Developer documentaiton for dismod_at$$
 
-$comment BEGIN: settings used by all sections ---------------------------- $$
-$escape $$
-$aindex section head subhead$$
-$latex
-	\newcommand{\R}[1]{ {\rm #1} }
-	\newcommand{\B}[1]{ {\bf #1} }
-	\newcommand{\W}[1]{ \; #1 \; }
-$$
-$navigate%
-	Up%Location%
-	Across%Search%
-	Prev%Prev%
-	Next%Next%
-	Down_up_4%_up_4%
-	Down_up_3%_up_3%
-	Down_up_2%_up_2%
-	Down_up_1%_up_1%
-	Down_up_0%_up_0%
-	Current%_jump_table
-%$$
-$comment END: settings used by all sections ---------------------------- $$
-
-$spell
-	xam
-	cpp
-	py
-	dage
-	dtime
-	dismod
-	integrands
-	covariate
-$$
-$section dismod_at-20190428: Developer Documentation$$
-
-$head Purpose$$
-Estimating disease rates as functions of age and time.
+$include omh/dismod_at.omh$$
 
 $childtable%omh/math/abstract.omh
 	%omh/install/unix.omh
