@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Make a Local Copy an IHME Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Make a Local Copy an IHME Dismod_at Database">
-<meta name="keywords" id="keywords" content=" make local copy ihme dismod_at database syntax purpose download absolute_dir --user relative_dir db2csv ">
+<meta name="keywords" id="keywords" content=" make local copy ihme dismod_at database syntax purpose download python3 absolute_dir --user relative_dir db2csv ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,6 +70,7 @@ A:active { color : purple }
 <br><a href="ihme_db.sh.htm#Syntax" target="_top">Syntax</a>
 <br><a href="ihme_db.sh.htm#Purpose" target="_top">Purpose</a>
 <br><a href="ihme_db.sh.htm#Download" target="_top">Download</a>
+<br><a href="ihme_db.sh.htm#python3" target="_top">python3</a>
 <br><a href="ihme_db.sh.htm#absolute_dir" target="_top">absolute_dir</a>
 <br><a href="ihme_db.sh.htm#--user" target="_top">--user</a>
 <br><a href="ihme_db.sh.htm#relative_dir" target="_top">relative_dir</a>
@@ -104,6 +105,18 @@ and then change into the dismod_at.git directory.
 This script can only be run from the download directory dismod_at.git.
 
 <br>
+<br>
+<b><big><a name="python3" id="python3">python3</a></big></b>
+<br>
+You must inform dismod_at where the python3 executable is located.
+The setting for this is in the
+<a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='white-space: nowrap'>run_cmake.sh</span></a>
+ file.
+If that setting is not correct, change it, and then execute the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/run_cmake.sh<br>
+</span></font></code>
 <br>
 <b><big><a name="absolute_dir" id="absolute_dir">absolute_dir</a></big></b>
 <br>
