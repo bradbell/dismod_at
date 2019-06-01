@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Initialize Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Initialize Command">
-<meta name="keywords" id="keywords" content=" the initialize command syntax purpose changing values database var_table data_subset_table start_var_table scale_var_table deleted tables example ">
+<meta name="keywords" id="keywords" content=" the initialize command syntax purpose changing values database age_avg_table var_table data_subset_table start_var_table scale_var_table deleted tables example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,6 +69,7 @@ A:active { color : purple }
 <br><a href="init_command.htm#Purpose" target="_top">Purpose</a>
 <br><a href="init_command.htm#Changing Values" target="_top">Changing&nbsp;Values</a>
 <br><a href="init_command.htm#database" target="_top">database</a>
+<br><a href="init_command.htm#age_avg_table" target="_top">age_avg_table</a>
 <br><a href="init_command.htm#var_table" target="_top">var_table</a>
 <br><a href="init_command.htm#data_subset_table" target="_top">data_subset_table</a>
 <br><a href="init_command.htm#start_var_table" target="_top">start_var_table</a>
@@ -95,6 +96,10 @@ except for the <a href="log_table.htm" target="_top"><span style='white-space: n
 ,
 and then creates new versions of the following tables:
 <table><tr><td align='left'  valign='top'>
+
+<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+       </td><td align='left'  valign='top'>
+ The Age Average Grid     </td></tr><tr><td align='left'  valign='top'>
 
 <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
            </td><td align='left'  valign='top'>
@@ -132,6 +137,17 @@ Is an
  database containing the
 <code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
  tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="age_avg_table" id="age_avg_table">age_avg_table</a></big></b>
+<br>
+A new <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+ is created when this command is run.
+In fact, this table is recreated when any command is run except for the
+python commands and the <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set_command</span></a>
+.
+
 
 <br>
 <br>

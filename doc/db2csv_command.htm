@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv avg_age.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_value avgint residual meas_delta sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_value avgint residual meas_delta sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,7 +76,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#database.dir" target="_top">dir</a>
 <br><a href="db2csv_command.htm#option.csv" target="_top">option.csv</a>
 <br><a href="db2csv_command.htm#log.csv" target="_top">log.csv</a>
-<br><a href="db2csv_command.htm#avg_age.csv" target="_top">avg_age.csv</a>
+<br><a href="db2csv_command.htm#age_avg.csv" target="_top">age_avg.csv</a>
 <br><a href="db2csv_command.htm#variable.csv" target="_top">variable.csv</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_id" target="_top">var_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_type" target="_top">var_type</a>
@@ -143,6 +143,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.node" target="_top">node</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.Covariates" target="_top">Covariates</a>
 <br><a href="db2csv_command.htm#Example" target="_top">Example</a>
+<br><a href="db2csv_command.htm#ihme_db.sh" target="_top">ihme_db.sh</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
@@ -230,10 +231,10 @@ The columns in this table are
 
 <br>
 <br>
-<b><big><a name="avg_age.csv" id="avg_age.csv">avg_age.csv</a></big></b>
+<b><big><a name="age_avg.csv" id="age_avg.csv">age_avg.csv</a></big></b>
 <br>
 The file 
-<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/avg_age.csv</span></font></code>
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/age_avg.csv</span></font></code>
  is written by this command.
 It is a CSV file with the contents of the <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
 .
@@ -243,7 +244,7 @@ Note that a <a href="set_command.htm" target="_top"><span style='white-space: no
  or
 <a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
  but it will not
-write out the new avg_age table.
+write out the new age_avg table.
 
 <br>
 <br>
@@ -977,6 +978,14 @@ in the model for the average integrand.
 The file <a href="db2csv_command.py.htm" target="_top"><span style='white-space: nowrap'>db2csv_command.py</span></a>
  contains an example and test
 using this command.
+
+<br>
+<br>
+<b><big><a name="ihme_db.sh" id="ihme_db.sh">ihme_db.sh</a></big></b>
+<br>
+The script <a href="ihme_db.sh.htm" target="_top"><span style='white-space: nowrap'>ihme_db.sh</span></a>
+ can be used to run <code><font color="blue">db2csv</font></code> for a
+dismod_at database on the IHME cluster.
 
 
 <hr>Input File: python/dismod_at/db2csv_command.py

@@ -51,7 +51,7 @@ A:active { color : purple }
 </select>
 </td>
 <td><a href="db2csv_command.htm" target="_top">Prev</a>
-</td><td><a href="get_name_type.htm" target="_top">Next</a>
+</td><td><a href="ihme_db.sh.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
@@ -159,12 +159,12 @@ adjusted_omega    <font color="#990000">=</font> omega_world <font color="#99000
 meas_value        <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> adjusted_omega <font color="#990000">*</font> <font color="#993399">50.0</font> <font color="#990000">)</font>
 meas_std          <font color="#990000">=</font> meas_value <font color="#990000">/</font> <font color="#993399">20</font><font color="#990000">.</font>
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># avg_age</font></i>
-age_avg_table <font color="#990000">=</font> <b><font color="#000000">get_table</font></b><font color="#990000">(</font><font color="#FF0000">'avg_age'</font><font color="#990000">)</font>
+<i><font color="#9A1900"># age_avg</font></i>
+age_avg_table <font color="#990000">=</font> <b><font color="#000000">get_table</font></b><font color="#990000">(</font><font color="#FF0000">'age_avg'</font><font color="#990000">)</font>
 age_avg_check <font color="#990000">=</font> <font color="#990000">[</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">5</font><font color="#990000">]</font> <font color="#990000">+</font> <b><font color="#000000">list</font></b><font color="#990000">(</font> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">10</font><font color="#990000">,</font> <font color="#993399">101</font><font color="#990000">,</font> <font color="#993399">10</font><font color="#990000">)</font> <font color="#990000">)</font>
-n_avg_age <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_avg_table<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b> n_avg_age <font color="#990000">==</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_avg_check<font color="#990000">)</font>
-<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font>n_avg_age<font color="#990000">)</font> <font color="#990000">:</font>
+n_age_avg <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_avg_table<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> n_age_avg <font color="#990000">==</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_avg_check<font color="#990000">)</font>
+<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font>n_age_avg<font color="#990000">)</font> <font color="#990000">:</font>
      value <font color="#990000">=</font> <b><font color="#000000">float</font></b><font color="#990000">(</font> age_avg_table<font color="#990000">[</font>i<font color="#990000">][</font><font color="#FF0000">'age'</font><font color="#990000">]</font> <font color="#990000">)</font>
      <b><font color="#0000FF">assert</font></b> value <font color="#990000">==</font> <b><font color="#000000">float</font></b><font color="#990000">(</font> age_avg_check<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>

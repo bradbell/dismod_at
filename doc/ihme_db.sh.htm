@@ -1,0 +1,175 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Make a Local Copy an IHME Dismod_at Database</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Make a Local Copy an IHME Dismod_at Database">
+<meta name="keywords" id="keywords" content=" make local copy ihme dismod_at database syntax purpose download absolute_dir --user relative_dir db2csv ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_ihme_db.sh_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>db2csv_command</option>
+<option>ihme_db.sh</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="db2csv_command.py.htm" target="_top">Prev</a>
+</td><td><a href="get_name_type.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_db2csv_command_htm.js'></script>
+</td>
+<td>ihme_db.sh</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Make a Local Copy an IHME Dismod_at Database</big></big></b></center>
+
+<br><a href="ihme_db.sh.htm#Syntax" target="_top">Syntax</a>
+<br><a href="ihme_db.sh.htm#Purpose" target="_top">Purpose</a>
+<br><a href="ihme_db.sh.htm#Download" target="_top">Download</a>
+<br><a href="ihme_db.sh.htm#absolute_dir" target="_top">absolute_dir</a>
+<br><a href="ihme_db.sh.htm#--user" target="_top">--user</a>
+<br><a href="ihme_db.sh.htm#relative_dir" target="_top">relative_dir</a>
+<br><a href="ihme_db.sh.htm#database" target="_top">database</a>
+<br><a href="ihme_db.sh.htm#db2csv" target="_top">db2csv</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>bin/ihme_db.sh&nbsp;[--</span></font><i><font color="black"><span style='white-space: nowrap'>user</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>relative_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This script copies a dismod_at database to a local directory
+and then runs the <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ on the database.
+The script is only intended to be used by members of IHME
+and to be run from the IHME cluster.
+It can also be run on a computer that has mounted the
+<code><font color="blue">/ihme/epi</font></code> and <code><font color="blue">/ihme/homes</font></code> directories.
+
+<br>
+<br>
+<b><big><a name="Download" id="Download">Download</a></big></b>
+<br>
+You must first change into a directory where you have write permission,
+download <a href="install_unix.htm#Download dismod_at.git" target="_top"><span style='white-space: nowrap'>dismod_at.git</span></a>
+,
+and then change into the dismod_at.git directory.
+This script can only be run from the download directory dismod_at.git.
+
+<br>
+<br>
+<b><big><a name="absolute_dir" id="absolute_dir">absolute_dir</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>absolute_dir</span></font></i></code>
+ to refer to an absolute path to a
+directory below which the database is stored before executing this script.
+You must have read permission below this directory
+(but do not need write permission).
+The default value for this directory is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>absolute_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>=/ihme/epi/at_cascade/prod<br>
+</span></font></code>
+<br>
+<b><big><a name="--user" id="--user">--user</a></big></b>
+<br>
+The brackets around 
+<code><font color="blue"><span style='white-space: nowrap'>--</span></font><i><font color="black"><span style='white-space: nowrap'>user</span></font></i></code>
+ indicate that this
+command line argument is optional.
+If it is present, 
+<code><i><font color="black"><span style='white-space: nowrap'>absolute_dir</span></font></i></code>
+ is the home directory for
+the specified user; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>absolute_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>=/ihme/homes/user<br>
+</span></font></code>
+<br>
+<b><big><a name="relative_dir" id="relative_dir">relative_dir</a></big></b>
+<br>
+The command line argument 
+<code><i><font color="black"><span style='white-space: nowrap'>relative_dir</span></font></i></code>
+ is the directory,
+relative to the absolute directory,
+where the database is stored before executing this script.
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+The command line argument 
+<code><i><font color="black"><span style='white-space: nowrap'>database</span></font></i></code>
+
+is the local name of the database file (has not <code><font color="blue">/</font></code> characters).
+The original database is stored in the location
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>absolute_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>relative_dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="db2csv" id="db2csv">db2csv</a></big></b>
+<br>
+The original database is copied to the directory
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ihme_db/</span></font><i><font color="black"><span style='white-space: nowrap'>relative_dir</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+relative to the download directory dismod_at.git.
+We refer to this as the local directory.
+The db2csv_command is run on the database.
+The resulting CSV files are all in the local directory.
+
+
+<hr>Input File: bin/ihme_db.sh
+
+</body>
+</html>
