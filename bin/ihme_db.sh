@@ -2,13 +2,86 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # -----------------------------------------------------------------------------
+# $begin ihme_db.sh$$ $newlinech #$$
+# $spell
+#	dismod
+#	ihme
+#	dir
+#	epi
+#	csv
+# $$
+#
+# $section Make a Local Copy an IHME Dismod_at Database$$
+#
+# $head Syntax$$
+# $codei%bin/ihme_db.sh [--%user%] %relative_dir% %database%
+# %$$
+#
+# $head Purpose$$
+# This script copies a dismod_at database to a local directory
+# and then runs the $cref db2csv_command$$ on the database.
+# The script is only intended to be used by members of IHME
+# and to be run from the IHME cluster.
+# It can also be run on a computer that has mounted the
+# $code /ihme/epi$$ and $code /ihme/homes$$ directories.
+#
+# $head Download$$
+# You must first change into a directory where you have write permission,
+# download $cref/dismod_at.git/install_unix/Download dismod_at.git/$$,
+# and then change into the dismod_at.git directory.
+# This script can only be run from the download directory dismod_at.git.
+#
+# $head absolute_dir$$
+# We use $icode absolute_dir$$ to refer to an absolute path to a
+# directory below which the database is stored before executing this script.
+# You must have read permission below this directory
+# (but do not need write permission).
+# The default value for this directory is
+# $codei%
+#      %absolute_dir%=/ihme/epi/at_cascade/prod
+# %$$
+#
+# $head --user$$
+# The brackets around $codei%--%user%$$ indicate that this
+# command line argument is optional.
+# If it is present, $icode absolute_dir$$ is the home directory for
+# the specified user; i.e.,
+# $codei%
+#      %absolute_dir%=/ihme/homes/user
+# %$$
+#
+# $head relative_dir$$
+# The command line argument $icode relative_dir$$ is the directory,
+# relative to the absolute directory,
+# where the database is stored before executing this script.
+#
+# $head database$$
+# The command line argument $icode database$$
+# is the local name of the database file (has not $code /$$ characters).
+# The original database is stored in the location
+# $codei%
+#      %absolute_dir%/%relative_dir%/%database%
+# %$$
+#
+# $head db2csv$$
+# The original database is copied to the directory
+# $codei%
+#      ihme_db/%relative_dir%
+# %$$
+# relative to the download directory dismod_at.git.
+# We refer to this as the local directory.
+# The db2csv_command is run on the database.
+# The resulting CSV files are all in the local directory.
+#
+# $end
+# ---------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
 	echo $*
@@ -20,75 +93,41 @@ then
 	echo 'bin/ihme_db.sh: must be executed from its parent directory'
 	exit 1
 fi
-# -----------------------------------------------------------------------------
 if [ ! -d '/ihme' ]
 then
 	echo 'bin/ihme_db.sh: The directory /ihme does not exist.'
-	echo 'perhaps you need to mount it.'
+	exit 1
+fi
+absolute_path='/ihme/epi/at_cascade/prod'
+if [[ "$1" == --* ]]
+then
+	user=`echo "$1" | sed -e 's|^--||'`
+	absolute_path="/ihme/homes/$user"
+	shift
+fi
+if [ "$2" == '' ]
+then
+	echo 'usage: bin/ihme_db.sh [--user] relative_dir database'
+	echo 'see: https://bradbell.github.io/dismod_at/doc/ihme_db.sh.htm'
+	exit 1
+fi
+relative_dir="$1"
+database="$2"
+full_path="$absolute_path/$relative_dir/$database"
+if [ ! -e "$full_path" ]
+then
+	echo 'bin/ihme_db.sh: Cannot find the following database:'
+	echo "$full_path"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
-ihme_path='
-	/ihme/homes/gma1/tmp
-	/ihme/epi/at_cascade/prod
-'
-if [ "$1" == '' ]
-then
-cat << EOF
-usage: bin/ihme_db.sh relative_path
-
-makes a copy of a database in the following location
-	build/ihme_db/relative_path
-where relative_path is a path relative to one of the following directories:
-EOF
-	for path in $ihme_path
-	do
-		echo "	$path"
-	done
-	exit 1
-fi
-relative_path="$1"
-# -----------------------------------------------------------------------------
-full_path=''
-for path in $ihme_path
-do
-	if [ -e "$path/$relative_path" ]
-	then
-		if [ "$full_path" != '' ]
-		then
-			echo 'bin/ihme_db.sh: Found two matching databases:'
-			echo "	$full_path"
-			echo "	$path/$relative_path"
-			echo 'Use a longer relative path so they are different'
-			exit 1
-		fi
-		full_path="$path/$relative_path"
-	fi
-done
-if [ "$full_path" == '' ]
-then
-	echo 'bin/ihme_db.sh: Cannot find either of the following databases:'
-	for path in $ihme_path
-	do
-		echo "	$path/$relative_path"
-	done
-	exit 1
-fi
-# -----------------------------------------------------------------------------
-local_dir=`echo $relative_path | sed -e 's|/[^/]*$||'`
-local_file=`echo $relative_path | sed -e 's|.*/||'`
-if [ "$local_dir" == "$relative_path" ]
-then
-	local_dir='build/ihme_db'
-else
-	local_dir="build/ihme_db/$local_dir"
-fi
+local_dir="ihme_db/$relative_dir"
 if [ ! -e "$local_dir" ]
 then
 	echo_eval mkdir -p "$local_dir"
 fi
-echo_eval cp $full_path $local_dir/$local_file
-echo_eval bin/dismodat.py $local_dir/$local_file db2csv
+echo_eval cp $full_path $local_dir/$database
+echo_eval bin/dismodat.py $local_dir/$database db2csv
 # ---------------------------------------------------------------------------
 echo 'bin/ihme_db.sh: OK'
 exit 0

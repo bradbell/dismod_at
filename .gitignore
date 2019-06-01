@@ -23,6 +23,9 @@
 # directory where developer documentation is built
 /dev/
 #
+# directory where ihme databases are copied
+/ihme_db/
+#
 # directories that are used for stashing files
 # (any new directory and new.* in top directory)
 /new/

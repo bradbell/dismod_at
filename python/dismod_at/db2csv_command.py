@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin db2csv_command$$ $newlinech #$$
 # $spell
+#	ihme
 #	const
 #	ij
 #	Csv
@@ -457,11 +458,17 @@
 # /$$
 # in the model for the average integrand.
 #
-# $children%example/get_started/db2csv_command.py
+# $children%
+#	example/get_started/db2csv_command.py
+#	%bin/ihme_db.sh
 # %$$
 # $head Example$$
 # The file $cref db2csv_command.py$$ contains an example and test
 # using this command.
+#
+# $head ihme_db.sh$$
+# The script $cref ihme_db.sh$$ can be used to run $code db2csv$$ for a
+# dismod_at database on the IHME cluster.
 #
 # $end
 def db2csv_command(database_file_arg) :

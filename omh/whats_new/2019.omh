@@ -56,6 +56,9 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-01$$
+The $cref ihme_db.sh$$ script was improved and documented.
+
 $head 05-24$$
 Needed to also add a $code git checkout master$$ for problem mentioned
 on 05-21 below.
