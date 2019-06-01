@@ -39,6 +39,7 @@ $cref/output tables/data_flow/Output Tables/$$,
 except for the $cref log_table$$,
 and then creates new versions of the following tables:
 $table
+$cref age_avg_table$$       $cnext $title age_avg_table$$     $rnext
 $cref var_table$$           $cnext $title var_table$$         $rnext
 $cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
 $cref start_var_table$$     $cnext $title start_var_table$$   $rnext
@@ -55,6 +56,12 @@ $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
+
+$head age_avg_table$$
+A new $cref age_avg_table$$ is created when this command is run.
+In fact, this table is recreated when any command is run except for the
+python commands and the $cref set_command$$.
+
 
 $head var_table$$
 A new $cref var_table$$ is created with the information

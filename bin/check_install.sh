@@ -33,7 +33,7 @@ echo_eval make install
 echo_eval cd ..
 #
 list='
-	avg_age.csv
+	age_avg.csv
 	option.csv
 	log.csv
 	data.csv

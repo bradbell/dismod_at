@@ -31,5 +31,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|\$subhead Delta_i|\$head Minimum CV Standard Deviation, Delta_i|
-s|/Data Table Notation/Delta_i|/Minimum CV Standard Deviation, Delta_i|
+s|avg_age|age_avg|g

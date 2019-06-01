@@ -72,13 +72,13 @@
 # $cref/unix_time/log_table/unix_time/$$, and
 # $cref/message/log_table/message/$$.
 #
-# $head avg_age.csv$$
-# The file $icode%dir%/avg_age.csv%$$ is written by this command.
+# $head age_avg.csv$$
+# The file $icode%dir%/age_avg.csv%$$ is written by this command.
 # It is a CSV file with the contents of the $cref age_avg_table$$.
 # Note that a $cref set_command$$ may change the value of
 # $cref/ode_step_size/option_table/ode_step_size/$$ or
 # $cref/age_avg_split/option_table/age_avg_split/$$ but it will not
-# write out the new avg_age table.
+# write out the new age_avg table.
 #
 # $head variable.csv$$
 # The file $icode%dir%/variable.csv%$$ is written by this command.
@@ -609,10 +609,11 @@ def db2csv_command(database_file_arg) :
 	new          = False
 	connection   = dismod_at.create_connection(file_name, new)
 	cursor       = connection.cursor()
+	#
+	# age_avg should eventually go in required list
 	required_table_list  = [
 		'age',
 		'avgint',
-		'avg_age',
 		'covariate',
 		'data',
 		'data_subset',
@@ -665,6 +666,16 @@ def db2csv_command(database_file_arg) :
 	# table_data
 	for table in table_list :
 		table_data[table] = dismod_at.get_table_dict(connection, table)
+	if check4table(cursor, 'age_avg') :
+		table_data['age_avg'] = dismod_at.get_table_dict(connection, 'age_avg')
+	elif check4table(cursor, 'avg_age') :
+		msg='This database created by old dismod_at and has avg_age table'
+		print( 'Warning: ' + msg );
+		table_data['age_avg'] = dismod_at.get_table_dict(connection, 'avg_age')
+	else :
+		msg  ='db2csv_command: the required table age_avg\n'
+		msg +='is missing from file' + file_name + '\n'
+		sys.exit(msg)
 	# ----------------------------------------------------------------------
 	# check tables that are supposed to be the same length
 	pair_list = [
@@ -972,14 +983,14 @@ def db2csv_command(database_file_arg) :
 		csv_writer.writerow(row)
 	csv_file.close()
 	# =========================================================================
-	# avg_age.csv
+	# age_avg.csv
 	# =========================================================================
-	file_name = os.path.join(database_dir, 'avg_age.csv')
+	file_name = os.path.join(database_dir, 'age_avg.csv')
 	csv_file  = open(file_name, 'w')
 	header = ['age']
 	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 	csv_writer.writeheader()
-	for row in table_data['avg_age'] :
+	for row in table_data['age_avg'] :
 		csv_writer.writerow(row)
 	csv_file.close()
 	# =========================================================================

@@ -57,7 +57,17 @@ $childtable%
 %$$
 
 $head 06-01$$
+$list number$$
 The $cref ihme_db.sh$$ script was improved and documented.
+$lnext
+In some cases, $code avg_age$$ was still being used instead of $code age_avg$$,
+see the discussion about the $code avg_age$$ on
+$cref/2018-10-30/whats_new_2018/10-30/$$.
+This has been fixed.
+$lnext
+This discussion of the $cref age_avg_table$$ in the $cref data_flow$$
+and $cref init_command$$ was improved.
+$lend
 
 $head 05-24$$
 Needed to also add a $code git checkout master$$ for problem mentioned

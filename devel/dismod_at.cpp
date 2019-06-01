@@ -296,7 +296,7 @@ int main(int n_arg, const char** argv)
 	// age_avg_split
 	string age_avg_split = option_map["age_avg_split"];
 	//
-	// age_avg_grid and avg_age table
+	// age_avg_grid and age_avg table
 	vector<double> age_avg_grid;
 	if( command_arg != "set" )
 	{	// do not execute this during a set command because it might
@@ -304,19 +304,19 @@ int main(int n_arg, const char** argv)
 		age_avg_grid = dismod_at::age_avg_grid(
 			ode_step_size, age_avg_split, db_input.age_table
 		);
-		size_t n_avg_age = age_avg_grid.size();
+		size_t n_age_avg = age_avg_grid.size();
 		//
-		// output avg_age table
-		string sql_cmd = "drop table if exists avg_age";
+		// output age_avg table
+		string sql_cmd = "drop table if exists age_avg";
 		dismod_at::exec_sql_cmd(db, sql_cmd);
 		//
-		table_name = "avg_age";
-		vector<string> col_name(1), col_type(1), row_value(n_avg_age);
+		table_name = "age_avg";
+		vector<string> col_name(1), col_type(1), row_value(n_age_avg);
 		vector<bool> col_unique(1);
 		col_name[0]   = "age";
 		col_type[0]   = "real";
 		col_unique[0] = true;
-		for(size_t i = 0; i < n_avg_age; ++i)
+		for(size_t i = 0; i < n_age_avg; ++i)
 			row_value[i] = CppAD::to_string( age_avg_grid[i] );
 		dismod_at::create_table(
 			db, table_name, col_name, col_type, col_unique, row_value
