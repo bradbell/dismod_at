@@ -16,6 +16,7 @@
 #	dir
 #	epi
 #	csv
+#	cmake
 # $$
 #
 # $section Make a Local Copy an IHME Dismod_at Database$$
@@ -37,6 +38,15 @@
 # download $cref/dismod_at.git/install_unix/Download dismod_at.git/$$,
 # and then change into the dismod_at.git directory.
 # This script can only be run from the download directory dismod_at.git.
+#
+# $head python3$$
+# You must inform dismod_at where the python3 executable is located.
+# The setting for this is in the
+# $cref/run_cmake.sh/run_cmake.sh/python3_executable/$$ file.
+# If that setting is not correct, change it, and then execute the command
+# $codei%
+#	bin/run_cmake.sh
+# %$$
 #
 # $head absolute_dir$$
 # We use $icode absolute_dir$$ to refer to an absolute path to a
