@@ -64,7 +64,7 @@
 # If it is present, $icode absolute_dir$$ is the home directory for
 # the specified user; i.e.,
 # $codei%
-#      %absolute_dir%=/ihme/homes/user
+#      %absolute_dir%=/ihme/homes/%user%
 # %$$
 #
 # $head relative_dir$$
@@ -74,7 +74,8 @@
 #
 # $head database$$
 # The command line argument $icode database$$
-# is the local name of the database file (has not $code /$$ characters).
+# is the local name of the database file; i.e.,
+# there are no $code /$$ characters in $icode database$$.
 # The original database is stored in the location
 # $codei%
 #      %absolute_dir%/%relative_dir%/%database%
