@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -121,7 +121,11 @@ cppad_prefix="$HOME/prefix/dismod_at"
 # &codep
 python3_executable='/usr/bin/python3'
 # &&
-# An alternative might be &code /usr/local/anaconda3-current/bin/python&&.
+# In the past, removing the &code #&& characters in front of the following
+# command would work for the IHME cluster:
+# &codei%
+# # python3_executable='/usr/local/anaconda3-current/bin/python'
+# %&&
 #
 # &head Choosing C++ Compiler&&
 # Which c++ compiler should cmake use (empty means cmake will choose it).
