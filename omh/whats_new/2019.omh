@@ -56,6 +56,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-02$$
+The version number in the title for the level of the documentation
+$cref dismod_at$$ was not updating.
+This started with version $code 20190521$$ and has been fixed.
+
 $head 06-01$$
 $list number$$
 The $cref ihme_db.sh$$ script was improved and documented.

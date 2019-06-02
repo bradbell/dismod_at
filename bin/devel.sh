@@ -12,7 +12,7 @@ image_link='https://bradbell.github.io/dismod_at'
 # List of files, besides CMakeLists.txt, that have have a copy of the
 # version number (can be empty).
 version_files='
-	doc.omh
+	omh/dismod_at.omh
 '
 #
 # List of special files, for this repository, that the devel tools ignore.
