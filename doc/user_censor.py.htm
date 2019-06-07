@@ -389,7 +389,8 @@ second_estimate  <font color="#990000">=</font> fit_var_table<font color="#99000
      <b><font color="#0000FF">assert</font></b> False
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check that the estimates were different; i,e., used the second data set</font></i>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#990000">(</font>first_estimate <font color="#990000">-</font> second_estimate<font color="#990000">)</font> <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1e-2</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#990000">(</font>first_estimate <font color="#990000">-</font> second_estimate<font color="#990000">)</font> <font color="#990000">/</font> iota_true <font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#990000">(</font>first_estimate <font color="#990000">-</font> second_estimate<font color="#990000">)</font> <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">5e-3</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check all the simulated data values were non-negative</font></i>
 data_sim_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'data_sim'</font><font color="#990000">)</font>

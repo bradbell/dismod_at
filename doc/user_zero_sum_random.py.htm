@@ -213,8 +213,9 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
           <font color="#990000">{</font> <i><font color="#9A1900"># prior_rate_parent</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_rate_parent'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
-               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">1e-4</font><font color="#990000">,</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">1e-1</font><font color="#990000">,</font>
+               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <b><font color="#000000">min</font></b><font color="#990000">(</font>iota_true<font color="#990000">,</font> rho_true<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">100.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <b><font color="#000000">max</font></b><font color="#990000">(</font>iota_true<font color="#990000">,</font> rho_true<font color="#990000">)</font> <font color="#990000">*</font> <font color="#993399">100.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#990000">(</font>iota_true <font color="#990000">+</font> rho_true<font color="#990000">),</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_rate_child</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_rate_child'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
@@ -359,7 +360,7 @@ ok           <font color="#990000">=</font> True
 <b><font color="#0000FF">assert</font></b> count_random <font color="#990000">==</font> <font color="#993399">8</font>
 <b><font color="#0000FF">for</font></b> rate <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'iota'</font><font color="#990000">,</font> <font color="#FF0000">'rho'</font> <font color="#990000">]</font> <font color="#990000">:</font>
      <b><font color="#0000FF">for</font></b> time_id <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">,</font> <font color="#993399">1</font> <font color="#990000">]</font> <font color="#990000">:</font>
-          ok <font color="#990000">=</font> ok <b><font color="#0000FF">and</font></b>  <b><font color="#000000">abs</font></b><font color="#990000">(</font> sum_random<font color="#990000">[</font>rate<font color="#990000">][</font>time_id<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-10</font>
+          ok <font color="#990000">=</font> ok <b><font color="#0000FF">and</font></b>  <b><font color="#000000">abs</font></b><font color="#990000">(</font> sum_random<font color="#990000">[</font>rate<font color="#990000">][</font>time_id<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-9</font>
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> ok <font color="#990000">:</font>
      <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'python_seed = '</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>

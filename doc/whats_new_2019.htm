@@ -123,6 +123,24 @@ A paragraph discussing
 <a href="fit_command.htm#Ipopt Options" target="_top"><span style='white-space: nowrap'>Ipopt&nbsp;options</span></a>
  was added to the
 fit command documentation.
+</li><li>
+
+If there was only a lower, or only an upper, limit in the prior
+for a variable, Ipopt would sometimes start the optimization at a point
+that was too far from the <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+ point.
+This has been fixed by prohibiting a lower limit without an upper
+(or an upper limit without a lower);
+see <a href="prior_table.htm#upper" target="_top"><span style='white-space: nowrap'>upper</span></a>
+ in prior table documentation.
+</li><li>
+
+Extra documentation was added for the
+<a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
+
+option (and 
+<code><i><font color="black"><span style='white-space: nowrap'>bound_push</span></font></i></code>
+ was set to zero).
 </li></ol>
 
 

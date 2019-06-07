@@ -911,21 +911,25 @@ none_prior_id <font color="#990000">=</font> smooth_id
      mean       <font color="#990000">=</font> predict_mean<font color="#990000">[</font>avgint_id<font color="#990000">]</font>
      std        <font color="#990000">=</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> gamma_fit_n1<font color="#990000">)</font> <font color="#990000">*</font> predict_std<font color="#990000">[</font>avgint_id<font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># entry in prior table</font></i>
+     <i><font color="#9A1900"># entry in prior table for alpha</font></i>
      prior_id   <font color="#990000">=</font> prior_id <font color="#990000">+</font> <font color="#993399">1</font>
      prior_name <font color="#990000">=</font> <font color="#FF0000">'prior_alpha_n11'</font>
      lower      <font color="#990000">=</font> <font color="#FF0000">'null'</font>
+     upper      <font color="#990000">=</font> <font color="#FF0000">'null'</font>
      <b><font color="#0000FF">if</font></b> avgint_id <font color="#990000">&lt;</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_table<font color="#990000">)</font> <font color="#990000">:</font>
+          <i><font color="#9A1900"># entry in prior table for iota</font></i>
           prior_name <font color="#990000">=</font> <font color="#FF0000">'prior_iota_n11_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font><b><font color="#000000">int</font></b><font color="#990000">(</font>age<font color="#990000">))</font>
           lower      <font color="#990000">=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> <b><font color="#000000">iota_no_effect</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">10.0</font> <font color="#990000">)</font>
+          upper      <font color="#990000">=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> <b><font color="#000000">iota_no_effect</font></b><font color="#990000">(</font><font color="#993399">100</font><font color="#990000">)</font> <font color="#990000">*</font> <font color="#993399">10.0</font> <font color="#990000">)</font>
      sqlcmd  <font color="#990000">=</font> <font color="#FF0000">'INSERT INTO prior \n'</font>
-     sqlcmd <font color="#990000">+=</font> <font color="#FF0000">'(prior_id, prior_name, density_id, mean, std, lower) \n'</font>
+     sqlcmd <font color="#990000">+=</font> <font color="#FF0000">'(prior_id, prior_name, density_id, mean, std, lower, upper)\n'</font>
      sqlcmd <font color="#990000">+=</font> <font color="#FF0000">'VALUES ('</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>prior_id<font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">','</font>
      sqlcmd <font color="#990000">+=</font> <font color="#FF0000">'"'</font> <font color="#990000">+</font> prior_name <font color="#990000">+</font> <font color="#FF0000">'",'</font>
      sqlcmd <font color="#990000">+=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>gaussian_id<font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">','</font>
      sqlcmd <font color="#990000">+=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> <b><font color="#000000">round</font></b><font color="#990000">(</font>mean<font color="#990000">,</font> <font color="#993399">4</font><font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">','</font>
      sqlcmd <font color="#990000">+=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> <b><font color="#000000">round</font></b><font color="#990000">(</font>std<font color="#990000">,</font> <font color="#993399">5</font><font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">','</font>
-     sqlcmd <font color="#990000">+=</font> lower <font color="#990000">+</font> <font color="#FF0000">')'</font>
+     sqlcmd <font color="#990000">+=</font> lower <font color="#990000">+</font> <font color="#FF0000">','</font>
+     sqlcmd <font color="#990000">+=</font> upper <font color="#990000">+</font> <font color="#FF0000">')'</font>
      dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> sqlcmd<font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># entry in smooth_grid table</font></i>

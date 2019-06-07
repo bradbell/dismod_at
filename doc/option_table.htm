@@ -845,10 +845,28 @@ the corresponding
 <code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
 
 is greater than zero and lese than or equal one half.
-It determines how much the initial point might have to be modified
-in order to be sufficiently inside the bounds.
-This is called <code><font color="blue">bound_frac</font></code> in the Ipopt documentation.
+It determines the maximum an initial value in the <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+,
+is moved to be interior to the corresponding upper and lower bounds.
+If there is an upper or lower bound for a fixed effect,
+then both are present in the <a href="prior_table.htm" target="_top"><span style='white-space: nowrap'>prior_table</span></a>
+ and
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_frac_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+is the maximum that <code><font color="blue">start_var</font></code> table value is moved.
+This is called <code><font color="blue">bound_frac</font></code> in the Ipopt documentation
+and <small>@(@
+\kappa_2
+@)@</small> in the corresponding paper.
 The default value for this option is <code><font color="blue">1e-2</font></code>.
+Note that 
+<code><i><font color="black"><span style='white-space: nowrap'>bound_push</span></font></i></code>
+ in the Ipopt documentation
+(<small>@(@
+\kappa_1
+@)@</small> in the paper) is set to be effectively zero.
 
 <br>
 <br>
