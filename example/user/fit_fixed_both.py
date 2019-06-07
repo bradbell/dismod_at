@@ -207,7 +207,8 @@ def example_db (file_name) :
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
 			'lower':    iota_parent_true * 1e-2,
-			'mean':     iota_parent_true * 1e-2
+			'upper':    iota_parent_true * 1e+2,
+			'mean':     iota_parent_true * 2.0
 		},{ # prior_iota_child
 			'name':     'prior_iota_child',
 			'density':  'gaussian',

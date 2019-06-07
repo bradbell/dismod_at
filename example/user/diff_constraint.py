@@ -151,6 +151,7 @@ def example_db (file_name) :
 			'name':     'prior_diff_parent',
 			'density':  'gaussian',
 			'lower':    0.01,
+			'upper':    1.0,
 			'mean':     0.01,
 			'std':      0.01,
 		}

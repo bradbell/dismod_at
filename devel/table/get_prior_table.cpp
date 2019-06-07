@@ -102,6 +102,7 @@ $end
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/log_message.hpp>
 # include <dismod_at/get_density_table.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -160,17 +161,32 @@ CppAD::vector<prior_struct> get_prior_table(
 	double minus_infinity = std::atof("-inf");
 	double plus_infinity  = std::atof("+inf");
 	CppAD::vector<prior_struct> prior_table(n_prior);
+	bool limit_warning = false;
 	for(size_t i = 0; i < n_prior; i++)
 	{	prior_table[i].prior_name  = prior_name[i];
 		prior_table[i].density_id = density_id[i];
 		//
+		size_t number_limit = 0;
+		//
 		prior_table[i].lower      = lower[i];
 		if( std::isnan( lower[i] ) )
 			prior_table[i].lower      = minus_infinity;
+		else
+			++number_limit;
 		//
 		prior_table[i].upper      = upper[i];
 		if( std::isnan( upper[i] ) )
 			prior_table[i].upper      = plus_infinity;
+		else
+			++number_limit;
+		//
+		if( (number_limit == 1) & (! limit_warning) )
+		{	msg = "A lower or upper limit is null (infinite) but not both.\n"
+				"This can lead to problems in Ipopt initialization.\n"
+				"It is currently a wanring but will be changed to an error.";
+			log_message(db, &std::cerr, "warning", msg, table_name, i);
+			limit_warning = true;
+		}
 		//
 		prior_table[i].mean       = mean[i];
 		prior_table[i].std        = std[i];

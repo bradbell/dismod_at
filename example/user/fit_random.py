@@ -201,7 +201,8 @@ def example_db (file_name) :
 		{	# prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
-			'lower':    1e-4,
+			'lower':    iota_parent_true / 100.,
+			'upper':    iota_parent_true * 100.,
 			# set prior so north_amaerica is set to value for united_states
 			'mean':     iota_parent_true * exp( united_states_random_effect )
 		},{ # prior_rate_child

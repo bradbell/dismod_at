@@ -303,7 +303,8 @@ if abs( 1.0 - second_estimate / iota_true ) > 1e-1 :
 	assert False
 #
 # check that the estimates were different; i,e., used the second data set
-assert abs( (first_estimate - second_estimate) / iota_true ) > 1e-2
+print( (first_estimate - second_estimate) / iota_true )
+assert abs( (first_estimate - second_estimate) / iota_true ) > 5e-3
 #
 # check all the simulated data values were non-negative
 data_sim_table = dismod_at.get_table_dict(connection, 'data_sim')

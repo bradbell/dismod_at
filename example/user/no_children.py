@@ -170,6 +170,7 @@ def example_db (file_name) :
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
 			'lower':    1e-4,
+			'upper':    1.0,
 			'mean':     1e-1,
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',

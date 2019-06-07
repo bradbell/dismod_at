@@ -161,8 +161,9 @@ def example_db (file_name) :
 		{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
-			'lower':    1e-4,
-			'mean':     1e-1,
+			'lower':    min(iota_true, rho_true) / 100.0,
+			'upper':    max(iota_true, rho_true) * 100.0,
+			'mean':     (iota_true + rho_true),
 		},{ # prior_rate_child
 			'name':     'prior_rate_child',
 			'density':  'gaussian',
@@ -307,7 +308,7 @@ for var_id in range( n_var ) :
 assert count_random == 8
 for rate in [ 'iota', 'rho' ] :
 	for time_id in [ 0 , 1 ] :
-		ok = ok and  abs( sum_random[rate][time_id] ) < 1e-10
+		ok = ok and  abs( sum_random[rate][time_id] ) < 1e-9
 #
 if not ok :
 	print('python_seed = ', python_seed)

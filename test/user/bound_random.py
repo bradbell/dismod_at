@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -110,9 +110,9 @@ def example_db (file_name) :
 		{ # prior_rate_parent
 			'name':     'prior_rate_parent',
 			'density':  'uniform',
-			'lower':    1e-4,
-			'upper':    None,
-			'mean':     1e-1,
+			'lower':    iota_true['north_america'] / 100,
+			'upper':    iota_true['north_america'] * 100,
+			'mean':     iota_true['north_america'] * 2,
 			'std':      None,
 			'eta':      None
 		},{ # prior_rate_child

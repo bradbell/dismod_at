@@ -681,21 +681,25 @@ for avgint_id in range( n_avgint ) :
 	mean       = predict_mean[avgint_id]
 	std        = (1.0 + gamma_fit_n1) * predict_std[avgint_id]
 	#
-	# entry in prior table
+	# entry in prior table for alpha
 	prior_id   = prior_id + 1
 	prior_name = 'prior_alpha_n11'
 	lower      = 'null'
+	upper      = 'null'
 	if avgint_id < len(age_table) :
+		# entry in prior table for iota
 		prior_name = 'prior_iota_n11_' + str(int(age))
 		lower      = str( iota_no_effect(0) / 10.0 )
+		upper      = str( iota_no_effect(100) * 10.0 )
 	sqlcmd  = 'INSERT INTO prior \n'
-	sqlcmd += '(prior_id, prior_name, density_id, mean, std, lower) \n'
+	sqlcmd += '(prior_id, prior_name, density_id, mean, std, lower, upper)\n'
 	sqlcmd += 'VALUES (' + str(prior_id) + ','
 	sqlcmd += '"' + prior_name + '",'
 	sqlcmd += str(gaussian_id) + ','
 	sqlcmd += str( round(mean, 4) ) + ','
 	sqlcmd += str( round(std, 5) ) + ','
-	sqlcmd += lower + ')'
+	sqlcmd += lower + ','
+	sqlcmd += upper + ')'
 	dismod_at.sql_command(connection, sqlcmd)
 	#
 	# entry in smooth_grid table

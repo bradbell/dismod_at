@@ -592,9 +592,13 @@ $end
 	unpack_random(pack_object_, start_var_, random_in);
 
 	// Ipopt fixed effects optimization options
+	std::string bound_push = CppAD::to_string(
+		std::numeric_limits<double>::min()
+	);
 	std::string options = "";
 	options += "String    sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
+	options += "\nNumeric bound_push " + bound_push;
 	options += "\nNumeric tol " + option_map["tolerance_fixed"];
 	options += "\nNumeric acceptable_tol " + option_map["tolerance_fixed"];
 	options += "\nInteger print_level " + option_map["print_level_fixed"];

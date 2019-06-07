@@ -67,6 +67,13 @@ $lnext
 A paragraph discussing
 $cref/Ipopt options/fit_command/Ipopt Options/$$ was added to the
 fit command documentation.
+$lnext
+If there was only a lower, or only an upper, limit in the prior
+for a variable, Ipopt would sometimes start the optimization at a point
+that was too far from the $cref/start_var/start_var_table/$$ point.
+This has been fixed by prohibiting a lower limit without an upper
+(or an upper limit without a lower);
+see $cref/upper/prior_table/upper/$$ in prior table documentation.
 $lend
 
 $head 06-02$$
