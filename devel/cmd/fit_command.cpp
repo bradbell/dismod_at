@@ -31,6 +31,7 @@ $spell
 	dismod
 	py
 	std
+    Ipopt
 $$
 
 $section The Fit Command$$
@@ -139,6 +140,15 @@ by using a uniform distribution, and a different prior mean,
 for a fixed effect that does not change.
 If this does not work, the data will not determine that fixed effect
 and you may have to constrain it to have the value you want.
+
+$head Ipopt Options$$
+Some of the options in the $cref option_table$$ are for controlling
+$href%https://coin-or.github.io/Ipopt/OPTIONS.html%Ipopt%$$.
+You can override these options, or set other options, using a file called
+$code ipopt.opt$$ in the directory where a fit command is run.
+Doing so not supported because $code dismod_at$$
+expects certain options to be set a certain way.
+The set of such options that is not specified and may change with time.
 
 $children%example/get_started/fit_command.py
 %$$

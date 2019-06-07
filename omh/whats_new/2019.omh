@@ -34,6 +34,7 @@ $spell
 	cppad
 	CppAD
     messaging
+    Ipopt
 $$
 $navigate%
 	Up%Location%
@@ -58,9 +59,15 @@ $childtable%
 %$$
 
 $head 06-07$$
+$list number$$
 Advance to cppad_mixed-20190607.
 This gives better error messaging when $code nan$$ occurs
 and $cref/build_type/run_cmake.sh/build_type/$$ is $code debug$$.
+$lnext
+A paragraph discussing
+$cref/Ipopt options/fit_command/Ipopt Options/$$ was added to the
+fit command documentation.
+$lend
 
 $head 06-02$$
 The version number in the title for the level of the documentation
