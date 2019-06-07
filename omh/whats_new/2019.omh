@@ -35,6 +35,7 @@ $spell
 	CppAD
     messaging
     Ipopt
+	frac
 $$
 $navigate%
 	Up%Location%
@@ -74,6 +75,10 @@ that was too far from the $cref/start_var/start_var_table/$$ point.
 This has been fixed by prohibiting a lower limit without an upper
 (or an upper limit without a lower);
 see $cref/upper/prior_table/upper/$$ in prior table documentation.
+$lnext
+Extra documentation was added for the
+$cref/bound_frac_fixed/option_table/Fixed Only/bound_frac_fixed/$$
+option (and $icode bound_push$$ was set to zero).
 $lend
 
 $head 06-02$$

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -431,10 +431,19 @@ If $icode option_name$$ is
 $code bound_frac_fixed$$
 the corresponding $icode option_value$$
 is greater than zero and lese than or equal one half.
-It determines how much the initial point might have to be modified
-in order to be sufficiently inside the bounds.
-This is called $code bound_frac$$ in the Ipopt documentation.
+It determines the maximum an initial value in the $cref start_var_table$$,
+is moved to be interior to the corresponding upper and lower bounds.
+If there is an upper or lower bound for a fixed effect,
+then both are present in the $cref prior_table$$ and
+$codei%
+	%bound_frac_fixed% * (%upper% - %lower%)
+%$$
+is the maximum that $code start_var$$ table value is moved.
+This is called $code bound_frac$$ in the Ipopt documentation
+and $latex \kappa_2$$ in the corresponding paper.
 The default value for this option is $code 1e-2$$.
+Note that $icode bound_push$$ in the Ipopt documentation
+($latex \kappa_1$$ in the paper) is set to be effectively zero.
 
 $subhead limited_memory_max_history_fixed$$
 if $icode option_name$$ is $code limited_memory_max_history_fixed$$,
