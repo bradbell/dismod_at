@@ -33,6 +33,7 @@ $spell
 	sqlite
 	cppad
 	CppAD
+    messaging
 $$
 $navigate%
 	Up%Location%
@@ -55,6 +56,11 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 06-07$$
+Advance to cppad_mixed-20190607.
+This gives better error messaging when $code nan$$ occurs
+and $cref/build_type/run_cmake.sh/build_type/$$ is $code debug$$.
 
 $head 06-02$$
 The version number in the title for the level of the documentation
