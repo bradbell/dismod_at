@@ -110,7 +110,7 @@ Keyword =
 'command  The dismod_at Commands  ',' data flow log messages ',
 'depend_command  The Depend Command  ',' syntax database depend_var_table example ',
 'depend_command.py  fit Command: Example and Test  ',' ',
-'fit_command  The Fit Command  ',' syntax database variables fixed random both simulate_index data_sim_table prior_sim_table fit_var_table fit_data_subset_table effects convergence problems example ',
+'fit_command  The Fit Command  ',' syntax database variables fixed random both simulate_index data_sim_table prior_sim_table fit_var_table fit_data_subset_table effects convergence problems ipopt options example ',
 'fit_command.py  fit Command: Example and Test  ',' ',
 'init_command  The Initialize Command  ',' syntax purpose changing values database age_avg_table var_table data_subset_table start_var_table scale_var_table deleted tables example ',
 'init_command.py  init Command: Example and Test  ',' ',

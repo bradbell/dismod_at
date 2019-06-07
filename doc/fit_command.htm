@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table fit_var_table fit_data_subset_table effects convergence problems example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table fit_var_table fit_data_subset_table effects convergence problems ipopt options example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,7 @@ A:active { color : purple }
 <br><a href="fit_command.htm#fit_data_subset_table" target="_top">fit_data_subset_table</a>
 <br><a href="fit_command.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
 <br><a href="fit_command.htm#Convergence Problems" target="_top">Convergence&nbsp;Problems</a>
+<br><a href="fit_command.htm#Ipopt Options" target="_top">Ipopt&nbsp;Options</a>
 <br><a href="fit_command.htm#Example" target="_top">Example</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
@@ -263,6 +264,20 @@ by using a uniform distribution, and a different prior mean,
 for a fixed effect that does not change.
 If this does not work, the data will not determine that fixed effect
 and you may have to constrain it to have the value you want.
+
+<br>
+<br>
+<b><big><a name="Ipopt Options" id="Ipopt Options">Ipopt Options</a></big></b>
+<br>
+Some of the options in the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+ are for controlling
+<a href="https://coin-or.github.io/Ipopt/OPTIONS.html" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
+.
+You can override these options, or set other options, using a file called
+<code><font color="blue">ipopt.opt</font></code> in the directory where a fit command is run.
+Doing so not supported because <code><font color="blue">dismod_at</font></code>
+expects certain options to be set a certain way.
+The set of such options that is not specified and may change with time.
 
 
 <br>
