@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_value avgint residual meas_delta sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -121,10 +121,10 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.nu" target="_top">nu</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.meas_std" target="_top">meas_std</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.meas_stdcv" target="_top">meas_stdcv</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.meas_delta" target="_top">meas_delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.meas_value" target="_top">meas_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.avgint" target="_top">avgint</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.residual" target="_top">residual</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.meas_delta" target="_top">meas_delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.sim_value" target="_top">sim_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.sim_stdcv" target="_top">sim_stdcv</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.sim_delta" target="_top">sim_delta</a>
@@ -713,6 +713,16 @@ is the minimum cv standard deviation used to define the likelihood; see
 
 <br>
 <br>
+<big><a name="data.csv.meas_delta" id="data.csv.meas_delta">meas_delta</a></big>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+ for this row.
+This is value is not valid when the residual is zero.
+
+<br>
+<br>
 <big><a name="data.csv.meas_value" id="data.csv.meas_value">meas_value</a></big>
 <br>
 is the data table
@@ -737,16 +747,6 @@ If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'
 <a href="fit_data_subset_table.htm#weighted_residual" target="_top"><span style='white-space: nowrap'>weighted_residual</span></a>
 
 for this row.
-
-<br>
-<br>
-<big><a name="data.csv.meas_delta" id="data.csv.meas_delta">meas_delta</a></big>
-<br>
-If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
- has been run, this is the
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
- for this row.
-This is value is not valid when the residual is zero.
 
 <br>
 <br>

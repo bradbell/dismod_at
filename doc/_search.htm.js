@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  dismod_at-20190607: User Documentation and API  ',' purpose links ',
+'dismod_at  dismod_at-20190619: User Documentation and API  ',' purpose links ',
 'math_abstract  An Introduction To The Mathematics of Dismod_at  ',' ',
 'math_ode  The Dismod_at Ordinary Differential Equation  ',' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t) ',
 'censor_density  The Censored Gaussian and Laplace Densities  ',' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac) ',
@@ -131,7 +131,7 @@ Keyword =
 'create_database  Create a Dismod_at Database  ',' syntax purpose primary key name column file_name age_list time_list integrand_table node_table weight_table covariate_table avgint_table avgint_extra_columns data_table data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table option_table example ',
 'create_database.py  create_database: Example and Test  ',' ',
 'csv2db_command  Conversion of a Csv File to a Dismod_at Database  ',' syntax program python function see also example mtall mtother constraint age-time pairs rectangular grid hold_out rate predictions configure_csv non_zero_rates measure_csv integrand sincidence remission mtexcess mtwith susceptible withc prevalence tincidence mtspecific mtstandard relrisk age_lower age_upper time_lower time_upper meas_value meas_std ',
-'db2csv_command  Create Csv Files that Summarize The Database  ',' syntax program python function convention dir option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_value avgint residual meas_delta sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ',
+'db2csv_command  Create Csv Files that Summarize The Database  ',' syntax program python function convention dir option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ',
 'db2csv_command.py  init Command: Example and Test  ',' ',
 'ihme_db.sh  Make a Local Copy an IHME Dismod_at Database  ',' syntax purpose download python3 absolute_dir --user relative_dir db2csv ',
 'get_name_type  Get Column Names and Types in a Table  ',' syntax connection table_name col_name col_type primary key example ',
