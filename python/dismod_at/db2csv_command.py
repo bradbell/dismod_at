@@ -321,6 +321,14 @@
 # is the minimum cv standard deviation used to define the likelihood; see
 # $cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$.
 #
+# $subhead meas_delta$$
+# If the $cref fit_command$$ has been run, this is the
+# $cref/adjusted standard deviation
+#	/data_like
+#	/Adjusted Standard Deviation, delta_i
+# /$$ for this row.
+# This is value is not valid when the residual is zero.
+#
 # $subhead meas_value$$
 # is the data table
 # $cref/meas_value/data_table/meas_value/$$.
@@ -333,14 +341,6 @@
 # If the $cref fit_command$$ has been run, this is the
 # $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$
 # for this row.
-#
-# $subhead meas_delta$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/adjusted standard deviation
-#	/data_like
-#	/Adjusted Standard Deviation, delta_i
-# /$$ for this row.
-# This is value is not valid when the residual is zero.
 #
 # $subhead sim_value$$
 # If the $cref simulate_command$$ has been run, this is the
