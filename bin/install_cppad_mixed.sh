@@ -68,6 +68,17 @@ eval $cmd
 cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
 eval $cmd
 # ---------------------------------------------------------------------------
+ipopt_pkg_config_path="$ipopt_prefix/$cmake_libdir/pkgconfig"
+if ! echo $PKG_CONFIG_PATH | grep $ipopt_pkg_config_path  > /dev/null
+then
+    if [ "$PKG_CONFIG_PATH" == '' ]
+    then
+        export PKG_CONFIG_PATH="$ipopt_pkg_config_path"
+    else
+        export PKG_CONFIG_PATH="$ipopt_pkg_config_path;$PKG_CONFIG_PATH"
+    fi
+fi
+# ---------------------------------------------------------------------------
 # optimize the AD operation sequences
 if [ "$build_type" == 'debug' ]
 then
