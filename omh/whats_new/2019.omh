@@ -59,6 +59,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-22$$
+Print value used for $code PKG_CONFIG_PATH$$ and
+fix set exit status for $cref example_install.sh$$.
+
 $head 06-21$$
 Automatically set
 $cref/PKG_CONFIG_PATH/install_unix/Paths/PKG_CONFIG_PATH/$$ during the

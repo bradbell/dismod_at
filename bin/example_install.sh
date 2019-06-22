@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -74,9 +74,9 @@ then
 	echo "Cannot find ipopt.pc in $ipopt_prefix directory"
 	exit 1
 else
+	echo 'pkg-config setting for ipopt'
 	echo_eval export PKG_CONFIG_PATH="$dir"
 fi
-echo_eval export PYTHONPATH=''
 #
 # bin/run_cmake.sh
 echo "bin/run_cmake.sh 1>> example_install.log 2>> example_install.err"
@@ -94,4 +94,5 @@ done
 cd ..
 # -----------------------------------------------------------------------------
 echo 'bin/example_install.sh: OK'
+exit 0
 # END BASH
