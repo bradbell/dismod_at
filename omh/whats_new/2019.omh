@@ -59,6 +59,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-24$$
+Some minor improvements
+were made to the $cref dock_dismod_at.sh$$ documentation,
+as well as the comments in its bash script.
+
 $head 06-23$$
 If you have the $code docker$$ package,
 you can now avoid the $cref install_unix$$ process using

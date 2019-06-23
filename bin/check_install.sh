@@ -9,6 +9,8 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# test install of python module and executable
+# ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_install.sh" ]
 then
 	echo "bin/check_install.sh: must be executed from its parent directory"
@@ -21,51 +23,85 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-# test install of python module and executable
-prefix="$HOME/prefix/dismod_at"
+# dismod_at_prefix
+cmd=`grep ^dismod_at_prefix bin/run_cmake.sh`
+eval $cmd
 #
-echo_eval rm -rf $prefix/bin/dismod_at
-echo_eval rm -rf $prefix/bin/dismodat.py
-echo_eval rm -rf $prefix/lib/python*
+# python3_executable
+cmd=`grep ^python3_executable bin/run_cmake.sh`
+eval $cmd
 #
+# get python site-packages directory
+python_dir=''
+if find -L $dismod_at_prefix -name site-packages > /dev/null
+then
+	python_dir=`find -L $dismod_at_prefix -name site-packages`
+fi
+bin_dir="$dismot_at_prefix/bin"
+#
+# remove old install executable and python packages
+echo_eval rm -rf $bin_dir/dismod_at
+echo_eval rm -rf $bin_dir/dismodat.py
+if [ "$python_dir" != '' ]
+then
+	echo_eval rm -rf $pyton_dir/dismod_at
+fi
+#
+# install fresh copy
 echo_eval cd build
 echo_eval make install
 echo_eval cd ..
 #
-list='
-	age_avg.csv
-	option.csv
-	log.csv
-	data.csv
-	variable.csv
-	predict.csv
-'
-for name in $list
-do
-	file="build/example/get_started/$name"
-	if [ -e "$file" ]
-	then
-		echo_eval rm $file
-	fi
-done
+# PATH
+export PATH="$bin_dir:$PATH"
 #
+# PYTHONPATH
 python_dir=`find -L $HOME/prefix/dismod_at -name site-packages`
 export PYTHONPATH="$python_dir"
 echo "PYTHONPATH=$PYTHONPATH"
 #
-python_executable=`head -1 $prefix/bin/dismodat.py | sed -e 's|^#!||'`
-echo_eval $python_executable example/get_started/predict_command.py
+# create check_install and change into it
+if [ -e 'build/check_install' ]
+then
+	echo_eval rm -r build/check_install
+fi
+echo_eval mkdir build/check_install
+echo_eval cd build/check_install
+echo_eval cp ../../example/get_started/get_started_db.py get_started_db.py
 #
-echo_eval \
-	$prefix/bin/dismodat.py build/example/get_started/get_started.db db2csv
+# create get_started.db
+cat << EOF > create_db.py
+import get_started_db
+get_started_db.get_started_db()
+EOF
+echo_eval $python3_executable create_db.py
 #
-for name in $list
+# test running dismod_at
+echo_eval dismod_at get_started.db init
+#
+# test running dismodat.py
+echo_eval dismodat.py get_started.db db2csv
+#
+if ! docker images | grep '^dismod_at.image' > /dev/null
+then
+	echo 'Cannot find docker images, skipping its test'
+	echo 'check_install.sh: OK'
+	exit 0
+fi
+# -----------------------------------------------------------------------------
+# Test that docker image gives the same result
+echo_eval mkdir docker
+echo_eval cd docker
+echo_eval cp ../../../bin/dock_dismod_at.sh dock_dismod_at.sh
+echo_eval cp ../get_started_db.py ../create_db.py .
+echo_eval $python3_executable create_db.py
+echo_eval ./dock_dismod_at.sh debug    get_started.db init
+echo_eval ./dock_dismod_at.sh release  get_started.db db2csv
+list='age_avg.csv  data.csv  option.csv  variable.csv'
+for file in $list
 do
-	file="build/example/get_started/$name"
-	if [ ! -e "$file" ]
-	then
-		echo "check_install.sh: Error: $file not found"
-	fi
+	# check that both version gave the same result
+	echo_eval diff $file ../$file
 done
 # -----------------------------------------------------------------------------
 echo 'check_install.sh: OK'

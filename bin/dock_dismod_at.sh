@@ -20,19 +20,21 @@
 # $section Install and Run dismod_at in a Docker Image$$
 #
 # $head Syntax$$
-# $codei%dock_dismod_at.sh build
+# $codei%./dock_dismod_at.sh build
 # %$$
-# $codei%dock_dismod_at.sh %build_type% %database% %command% %...%
+# $codei%./dock_dismod_at.sh %build_type% %database% %command% %...%
 # %$$
 #
 # $head Purpose$$
-# Using this script to build and run a docker image is an alternative to
-# going through the steps required to $cref install_unix$$ dismod_at.
+# This bash script will create or run a dismod_at docker image
+# and can be run from any directory.
+# Using this script is an  alternative to going through the steps required to
+# $cref/install_dismod_at/install_unix/$$.
 # You can get a copy of this script at the following link
 # $href%https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh
 #	%dock_dismod_at.sh
 # %$$
-# If understand docker, this script also serves as an example
+# If you understand docker, this script also serves as an example
 # install of dismod_at.
 #
 # $head Requirements$$
@@ -46,7 +48,7 @@
 #
 # $head Building Image$$
 #
-# $head dismod_at.image$$
+# $subhead dismod_at.image$$
 # The $code build$$ syntax will create a new docker image with the name
 # $code dismod_at.image$$.
 # This command will not execute if such an image already exists.
@@ -68,13 +70,15 @@
 #
 # $head Run Container$$
 #
-# $head build_type$$
+# $subhead build_type$$
 # The $icode build_type$$ syntax will run the correspond
 # $cref command$$ in the docker image.
 # The argument $icode build_type$$ must be either $code debug$$ or
 # $code release$$.
+# The $code release$$ version should be much faster.
+# The $code debug$$ version will do more extensive error checking.
 #
-# $head Other Arguments$$
+# $subhead Other Arguments$$
 # The other arguments to $code dock_dismod_at.sh$$ are the same as in the
 # syntax for the $cref command$$,
 # except that $code dismod_at$$ or $code dismodat.py$$
@@ -220,7 +224,7 @@ container_id=`docker ps -a -q --filter "name=$container_name"`
 echo "docker cp $database $container_id:/home/work/$database"
 docker cp "$database"  "$container_id:/home/work/$database"
 #
-# A temporary directory
+# create a temporary directory
 temporary_dir=`mktemp`
 rm $temporary_dir
 mkdir $temporary_dir
@@ -267,7 +271,7 @@ docker start $container_id
 echo "docker exec -it $container_id ./work.sh"
 docker exec -it $container_id ./work.sh
 #
-# copy the result back
+# copy the result back to temporary directory
 echo "docker cp $container_id:/home/work $temporary_dir/work"
 docker cp $container_id:/home/work "$temporary_dir/work"
 #
@@ -275,6 +279,7 @@ docker cp $container_id:/home/work "$temporary_dir/work"
 echo "docker rm --force $container_id"
 docker rm --force $container_id
 #
+# copy the results from temporary directory to working directory
 for file in `ls $temporary_dir/work/*`
 do
 	name=`echo $file | sed -e 's|.*/||'`
@@ -285,9 +290,9 @@ do
 	fi
 done
 #
+# remove the temporary directory
 echo "rm -r $temporary_dir"
 rm -r $temporary_dir
-#
+# ----------------------------------------------------------------------------
 echo 'dock_dismod_at.sh: OK'
 exit 0
-# ----------------------------------------------------------------------------
