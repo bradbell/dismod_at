@@ -1,8 +1,6 @@
 var list_up0 = [
 'dismod_at.htm',
-'install.htm',
-'install_unix.htm',
-'example_install.sh.htm'
+'install.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -22,18 +20,6 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
-}
-function choose_down3(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_down3[index-1];
-}
-function choose_down2(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_down2[index-1];
 }
 function choose_down1(item)
 {	var index          = item.selectedIndex;

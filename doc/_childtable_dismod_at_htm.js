@@ -3,7 +3,7 @@ document.write('\
 <select onchange="dismod_at_child(this)">\
 <option>dismod_at-&gt;</option>\
 <option>math_abstract</option>\
-<option>install_unix</option>\
+<option>install</option>\
 <option>get_started</option>\
 <option>user</option>\
 <option>database</option>\
@@ -21,7 +21,7 @@ document.write('\
 function dismod_at_child(item)
 {	var child_list = [
 		'math_abstract.htm',
-		'install_unix.htm',
+		'install.htm',
 		'get_started.htm',
 		'user.htm',
 		'database.htm',

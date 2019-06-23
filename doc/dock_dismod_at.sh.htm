@@ -1,0 +1,176 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Install and Run dismod_at in a Docker Image</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Install and Run dismod_at in a Docker Image">
+<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax purpose requirements building dismod_at.image dockerfile container build_type other arguments ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_dock_dismod_at.sh_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>install</option>
+<option>dock_dismod_at.sh</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="install.htm" target="_top">Prev</a>
+</td><td><a href="install_unix.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_install_htm.js'></script>
+</td>
+<td>dock_dismod_at.sh</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Install and Run dismod_at in a Docker Image</big></big></b></center>
+
+<br><a href="dock_dismod_at.sh.htm#Syntax" target="_top">Syntax</a>
+<br><a href="dock_dismod_at.sh.htm#Purpose" target="_top">Purpose</a>
+<br><a href="dock_dismod_at.sh.htm#Requirements" target="_top">Requirements</a>
+<br><a href="dock_dismod_at.sh.htm#Building Image" target="_top">Building&nbsp;Image</a>
+<br><a href="dock_dismod_at.sh.htm#dismod_at.image" target="_top">dismod_at.image</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#dismod_at.image.Dockerfile" target="_top">Dockerfile</a>
+<br><a href="dock_dismod_at.sh.htm#Run Container" target="_top">Run&nbsp;Container</a>
+<br><a href="dock_dismod_at.sh.htm#build_type" target="_top">build_type</a>
+<br><a href="dock_dismod_at.sh.htm#Other Arguments" target="_top">Other&nbsp;Arguments</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dock_dismod_at.sh&nbsp;build<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>dock_dismod_at.sh&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+Using this script to build and run a docker image is an alternative to
+going through the steps required to <a href="install_unix.htm" target="_top"><span style='white-space: nowrap'>install_unix</span></a>
+ dismod_at.
+You can get a copy of this script at the following link
+<a href="https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+
+If understand docker, this script also serves as an example
+install of dismod_at.
+
+<br>
+<br>
+<b><big><a name="Requirements" id="Requirements">Requirements</a></big></b>
+<br>
+You must have a copy of <a href="https://docs.docker.com/" target="_top"><span style='white-space: nowrap'>docker</span></a>
+
+installed on your system.
+In addition, you must have permission to use it.
+You can test this on your system by trying to execute the following command:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;run&nbsp;busybox&nbsp;echo&nbsp;'Hello&nbsp;World'<br>
+</span></font></code>
+<br>
+<b><big><a name="Building Image" id="Building Image">Building Image</a></big></b>
+
+
+<br>
+<br>
+<b><big><a name="dismod_at.image" id="dismod_at.image">dismod_at.image</a></big></b>
+<br>
+The <code><font color="blue">build</font></code> syntax will create a new docker image with the name
+<code><font color="blue">dismod_at.image</font></code>.
+This command will not execute if such an image already exists.
+You can remove and old image using the command
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;dismod_at.image<br>
+</span></font></code>
+You can keep the old image, under a different name, using the commands
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;tag&nbsp;dismod_at.image&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;dismod_at.image<br>
+</span></font></code>
+<br>
+<big><a name="dismod_at.image.Dockerfile" id="dismod_at.image.Dockerfile">Dockerfile</a></big>
+<br>
+The <code><font color="blue">build</font></code> syntax will create the file
+<a href="https://docs.docker.com/glossary/?term=Dockerfile" target="_top"><span style='white-space: nowrap'>Dockerfile</span></a>
+
+in the current working directory.
+If such a file already exists, it will need to be moved or deleted.
+
+<br>
+<br>
+<b><big><a name="Run Container" id="Run Container">Run Container</a></big></b>
+
+
+<br>
+<br>
+<b><big><a name="build_type" id="build_type">build_type</a></big></b>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
+ syntax will run the correspond
+<a href="command.htm" target="_top"><span style='white-space: nowrap'>command</span></a>
+ in the docker image.
+The argument 
+<code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
+ must be either <code><font color="blue">debug</font></code> or
+<code><font color="blue">release</font></code>.
+
+<br>
+<br>
+<b><big><a name="Other Arguments" id="Other Arguments">Other Arguments</a></big></b>
+<br>
+The other arguments to <code><font color="blue">dock_dismod_at.sh</font></code> are the same as in the
+syntax for the <a href="command.htm" target="_top"><span style='white-space: nowrap'>command</span></a>
+,
+except that <code><font color="blue">dismod_at</font></code> or <code><font color="blue">dismodat.py</font></code>
+have been replaced by 
+<code><font color="blue"><span style='white-space: nowrap'>dock_dismod_at.sh</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>build_type</span></font></code>
+.
+
+
+<hr>Input File: bin/dock_dismod_at.sh
+
+</body>
+</html>

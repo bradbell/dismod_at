@@ -35,6 +35,7 @@ A:active { color : purple }
 <select onchange='choose_up0(this)'>
 <option>Location-&gt;</option>
 <option>dismod_at</option>
+<option>install</option>
 <option>install_unix</option>
 <option>example_install.sh</option>
 </select>
@@ -53,6 +54,9 @@ A:active { color : purple }
 </td><td><a href="get_started.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_install_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_install_unix_htm.js'></script>
@@ -123,9 +127,9 @@ bin/example_install.sh</font></code>
      echo <font color="#FF0000">"Cannot find ipopt.pc in $ipopt_prefix directory"</font>
      <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
 <b><font color="#0000FF">else</font></b>
+     echo <font color="#FF0000">'pkg-config setting for ipopt'</font>
      echo_eval <b><font color="#0000FF">export</font></b> <font color="#009900">PKG_CONFIG_PATH</font><font color="#990000">=</font><font color="#FF0000">"$dir"</font>
 <b><font color="#0000FF">fi</font></b>
-echo_eval <b><font color="#0000FF">export</font></b> <font color="#009900">PYTHONPATH</font><font color="#990000">=</font><font color="#FF0000">''</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># bin/run_cmake.sh</font></i>
 echo <font color="#FF0000">"bin/run_cmake.sh 1&gt;&gt; example_install.log 2&gt;&gt; example_install.err"</font>
@@ -142,7 +146,8 @@ echo_eval cd build
 <b><font color="#0000FF">done</font></b>
 cd <font color="#990000">..</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
-echo <font color="#FF0000">'bin/example_install.sh: OK'</font></tt></pre>
+echo <font color="#FF0000">'bin/example_install.sh: OK'</font>
+<b><font color="#0000FF">exit</font></b> <font color="#993399">0</font></tt></pre>
 
 <hr>Input File: bin/example_install.sh
 
