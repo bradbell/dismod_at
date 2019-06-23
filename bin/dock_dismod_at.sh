@@ -20,9 +20,9 @@
 # $section Install and Run dismod_at in a Docker Image$$
 #
 # $head Syntax$$
-# $codei%dock_dismod_at.sh build %build_type%
+# $codei%dock_dismod_at.sh build
 # %$$
-# $codei%dock_dismod_at.sh %database% %command% %...%
+# $codei%dock_dismod_at.sh %build_type% %database% %command% %...%
 # %$$
 #
 # $head Purpose$$
@@ -32,6 +32,8 @@
 # $href%https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh
 #	%dock_dismod_at.sh
 # %$$
+# If understand docker, this script also serves as an example
+# install of dismod_at.
 #
 # $head Requirements$$
 # You must have a copy of $href%https://docs.docker.com/%docker%$$
@@ -65,18 +67,25 @@
 # If such a file already exists, it will need to be moved or deleted.
 #
 # $head Run Container$$
-# The $icode database$$ syntax will run the correspond
+#
+# $head build_type$$
+# The $icode build_type$$ syntax will run the correspond
 # $cref command$$ in the docker image.
-# The arguments to $code dock_dismod_at.sh$$ are the same as in the
-# syntax for the command, except that $code dismod_at$$ or $code dismodat.py$$
-# have been replaced by $code dock_dismod_at.sh$$.
+# The argument $icode build_type$$ must be either $code debug$$ or
+# $code release$$.
+#
+# $head Other Arguments$$
+# The other arguments to $code dock_dismod_at.sh$$ are the same as in the
+# syntax for the $cref command$$,
+# except that $code dismod_at$$ or $code dismodat.py$$
+# have been replaced by $codei%dock_dismod_at.sh% %build_type%$$.
 #
 # $end
 # ---------------------------------------------------------------------------
 if [ "$2" == '' ] && [ "$1" != 'build' ]
 then
 	echo 'usage: dock_dismod_at.sh build'
-	echo 'usage: dock_dismod_at.sh database command ...'
+	echo 'usage: dock_dismod_at.sh build_type database command ...'
 	exit 1
 fi
 # ---------------------------------------------------------------------------
@@ -126,10 +135,16 @@ wget
 WORKDIR /home
 RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
 
-# Change the install prefix to /home/prefix and install debug version
+# Change the install prefix to /home/prefix
 WORKDIR   /home/dismod_at.git
-RUN mkdir /home/prefix && \
-	sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g' && \
+RUN mkdir /home/prefix && sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
+
+# install debug version
+RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
+	bin/example_install.sh
+
+# install release version
+RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
 	bin/example_install.sh
 
 # start in /home/work directory
@@ -145,8 +160,10 @@ fi
 # ---------------------------------------------------------------------------
 # Run dismod_at in Docker container
 # ----------------------------------------------------------------------------
-database="$1"
-cmd="$2"
+build_type="$1"
+database="$2"
+cmd="$3"
+shift # so that $* are the argument database command ...
 # ----------------------------------------------------------------------------
 # check cmd
 dismod_at_cmd='init fit set depend sample predict old2new'
@@ -210,12 +227,35 @@ mkdir $temporary_dir
 #
 # copy work.sh to the container
 cat << EOF > "$temporary_dir/work.sh"
-PATH="/home/prefix/dismod_at/bin:\$PATH"
+#! /bin/bash -e
 #
-export PYTHONPATH=\`find -L /home/prefix/dismod_at -name site-packages\`
+# prefix for install
+prefix='/home/prefix/dismod_at'
+#
+# Add to executable path
+PATH="\$prefix/bin:\$PATH"
+#
+# Add to python path
+export PYTHONPATH=\`find -L \$prefix -name site-packages\`
+#
+# Add to load library path
+export LD_LIBRARY_PATH=\`find -L /home/prefix/dismod_at -name 'libipopt.*' | \
+	head -1 | sed -e 's|/[^/]*\$||'\`
+#
+# Set debug or release
+if [ -e \$prefix ]
+then
+	rm \$prefix
+fi
+ln -s \$prefix.$build_type \$prefix
+#
+# execute the dismod_at command
 $program $*
+#
+# done
 exit 0
 EOF
+chmod +x $temporary_dir/work.sh
 echo "docker cp $temporary_dir/work.sh $container_id:/home/work/work.sh"
 docker cp "$temporary_dir/work.sh" "$container_id:/home/work/work.sh"
 #
@@ -224,8 +264,8 @@ echo "docker start $container_id"
 docker start $container_id
 #
 # execute work.sh
-echo "docker exec -it $container_id bash work.sh"
-docker exec -it $container_id bash work.sh
+echo "docker exec -it $container_id ./work.sh"
+docker exec -it $container_id ./work.sh
 #
 # copy the result back
 echo "docker cp $container_id:/home/work $temporary_dir/work"
