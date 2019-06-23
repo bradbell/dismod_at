@@ -67,31 +67,33 @@ A:active { color : purple }
 <br><a href="dock_dismod_at.sh.htm#Purpose" target="_top">Purpose</a>
 <br><a href="dock_dismod_at.sh.htm#Requirements" target="_top">Requirements</a>
 <br><a href="dock_dismod_at.sh.htm#Building Image" target="_top">Building&nbsp;Image</a>
-<br><a href="dock_dismod_at.sh.htm#dismod_at.image" target="_top">dismod_at.image</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#dismod_at.image.Dockerfile" target="_top">Dockerfile</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.dismod_at.image" target="_top">dismod_at.image</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Dockerfile" target="_top">Dockerfile</a>
 <br><a href="dock_dismod_at.sh.htm#Run Container" target="_top">Run&nbsp;Container</a>
-<br><a href="dock_dismod_at.sh.htm#build_type" target="_top">build_type</a>
-<br><a href="dock_dismod_at.sh.htm#Other Arguments" target="_top">Other&nbsp;Arguments</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run Container.build_type" target="_top">build_type</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run Container.Other Arguments" target="_top">Other&nbsp;Arguments</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>dock_dismod_at.sh&nbsp;build<br>
+<code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;build<br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>dock_dismod_at.sh&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+<code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-Using this script to build and run a docker image is an alternative to
-going through the steps required to <a href="install_unix.htm" target="_top"><span style='white-space: nowrap'>install_unix</span></a>
- dismod_at.
+This bash script will create or run a dismod_at docker image
+and can be run from any directory.
+Using this script is an  alternative to going through the steps required to
+<a href="install_unix.htm" target="_top"><span style='white-space: nowrap'>install_dismod_at</span></a>
+.
 You can get a copy of this script at the following link
 <a href="https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
 
-If understand docker, this script also serves as an example
+If you understand docker, this script also serves as an example
 install of dismod_at.
 
 <br>
@@ -113,7 +115,7 @@ You can test this on your system by trying to execute the following command:
 
 <br>
 <br>
-<b><big><a name="dismod_at.image" id="dismod_at.image">dismod_at.image</a></big></b>
+<big><a name="Building Image.dismod_at.image" id="Building Image.dismod_at.image">dismod_at.image</a></big>
 <br>
 The <code><font color="blue">build</font></code> syntax will create a new docker image with the name
 <code><font color="blue">dismod_at.image</font></code>.
@@ -130,7 +132,7 @@ You can keep the old image, under a different name, using the commands
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;dismod_at.image<br>
 </span></font></code>
 <br>
-<big><a name="dismod_at.image.Dockerfile" id="dismod_at.image.Dockerfile">Dockerfile</a></big>
+<big><a name="Building Image.Dockerfile" id="Building Image.Dockerfile">Dockerfile</a></big>
 <br>
 The <code><font color="blue">build</font></code> syntax will create the file
 <a href="https://docs.docker.com/glossary/?term=Dockerfile" target="_top"><span style='white-space: nowrap'>Dockerfile</span></a>
@@ -145,7 +147,7 @@ If such a file already exists, it will need to be moved or deleted.
 
 <br>
 <br>
-<b><big><a name="build_type" id="build_type">build_type</a></big></b>
+<big><a name="Run Container.build_type" id="Run Container.build_type">build_type</a></big>
 <br>
 The 
 <code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
@@ -156,10 +158,12 @@ The argument
 <code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
  must be either <code><font color="blue">debug</font></code> or
 <code><font color="blue">release</font></code>.
+The <code><font color="blue">release</font></code> version should be much faster.
+The <code><font color="blue">debug</font></code> version will do more extensive error checking.
 
 <br>
 <br>
-<b><big><a name="Other Arguments" id="Other Arguments">Other Arguments</a></big></b>
+<big><a name="Run Container.Other Arguments" id="Run Container.Other Arguments">Other Arguments</a></big>
 <br>
 The other arguments to <code><font color="blue">dock_dismod_at.sh</font></code> are the same as in the
 syntax for the <a href="command.htm" target="_top"><span style='white-space: nowrap'>command</span></a>
