@@ -8,7 +8,70 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# Under Construction
+# $begin dock_dismod_at.sh$$ $newlinech #$$
+# $spell
+#	dismod
+#	busybox
+#	rmi
+#	Dockerfile
+#	dismodat.py
+# $$
+#
+# $section Install and Run dismod_at in a Docker Image$$
+#
+# $head Syntax$$
+# $codei%dock_dismod_at.sh build %build_type%
+# %$$
+# $codei%dock_dismod_at.sh %database% %command% %...%
+# %$$
+#
+# $head Purpose$$
+# Using this script to build and run a docker image is an alternative to
+# going through the steps required to $cref install_unix$$ dismod_at.
+# You can get a copy of this script at the following link
+# $href%https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh
+#	%dock_dismod_at.sh
+# %$$
+#
+# $head Requirements$$
+# You must have a copy of $href%https://docs.docker.com/%docker%$$
+# installed on your system.
+# In addition, you must have permission to use it.
+# You can test this on your system by trying to execute the following command:
+# $codei%
+#	docker run busybox echo 'Hello World'
+# %$$
+#
+# $head Building Image$$
+#
+# $head dismod_at.image$$
+# The $code build$$ syntax will create a new docker image with the name
+# $code dismod_at.image$$.
+# This command will not execute if such an image already exists.
+# You can remove and old image using the command
+# $codei%
+#	docker rmi dismod_at.image
+# %$$
+# You can keep the old image, under a different name, using the commands
+# $codei%
+#	docker tag dismod_at.image %different_name%
+#	docker rmi dismod_at.image
+# %$$
+#
+# $subhead Dockerfile$$
+# The $code build$$ syntax will create the file
+# $href%https://docs.docker.com/glossary/?term=Dockerfile%Dockerfile%$$
+# in the current working directory.
+# If such a file already exists, it will need to be moved or deleted.
+#
+# $head Run Container$$
+# The $icode database$$ syntax will run the correspond
+# $cref command$$ in the docker image.
+# The arguments to $code dock_dismod_at.sh$$ are the same as in the
+# syntax for the command, except that $code dismod_at$$ or $code dismodat.py$$
+# have been replaced by $code dock_dismod_at.sh$$.
+#
+# $end
 # ---------------------------------------------------------------------------
 if [ "$2" == '' ] && [ "$1" != 'build' ]
 then
@@ -63,7 +126,7 @@ wget
 WORKDIR /home
 RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
 
-# Change the install prefix to /home/prefix and install
+# Change the install prefix to /home/prefix and install debug version
 WORKDIR   /home/dismod_at.git
 RUN mkdir /home/prefix && \
 	sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g' && \
@@ -116,12 +179,6 @@ then
 	echo "cannot find the database $database"
 	exit 1
 fi
-if [ -e work ]
-then
-	echo '/dock_dismod_at.sh Error'
-	echo 'Must first remove the ./work directory'
-	exit 1
-fi
 container_name="dismod_at.$USER"
 # check that the previous dismod_at container has been deleted
 if docker ps -a | grep " $container_name\$" > /dev/null
@@ -130,6 +187,8 @@ then
 	echo 'Must first remove following docker containers:'
 	docker ps -a | head -1
 	docker ps -a | grep " $container_name\$"
+	echo 'Use the following command for each container_id above:'
+	echo 'docker rm contain_id'
 	exit 1
 fi
 #
@@ -144,16 +203,21 @@ container_id=`docker ps -a -q --filter "name=$container_name"`
 echo "docker cp $database $container_id:/home/work/$database"
 docker cp "$database"  "$container_id:/home/work/$database"
 #
+# A temporary directory
+temporary_dir=`mktemp`
+rm $temporary_dir
+mkdir $temporary_dir
+#
 # copy work.sh to the container
-cat << EOF > work.sh
+cat << EOF > "$temporary_dir/work.sh"
 PATH="/home/prefix/dismod_at/bin:\$PATH"
 #
 export PYTHONPATH=\`find -L /home/prefix/dismod_at -name site-packages\`
 $program $*
 exit 0
 EOF
-echo "docker cp work.sh $container_id:/home/work/work.sh"
-docker cp 'work.sh' "$container_id:/home/work/work.sh"
+echo "docker cp $temporary_dir/work.sh $container_id:/home/work/work.sh"
+docker cp "$temporary_dir/work.sh" "$container_id:/home/work/work.sh"
 #
 # start up the container
 echo "docker start $container_id"
@@ -164,19 +228,26 @@ echo "docker exec -it $container_id bash work.sh"
 docker exec -it $container_id bash work.sh
 #
 # copy the result back
-echo "docker cp $container_id:/home/work work"
-docker cp $container_id:/home/work work
+echo "docker cp $container_id:/home/work $temporary_dir/work"
+docker cp $container_id:/home/work "$temporary_dir/work"
 #
 # remove the container
 echo "docker rm --force $container_id"
 docker rm --force $container_id
 #
-echo "cp work/* ."
-cp work/* .
+for file in `ls $temporary_dir/work/*`
+do
+	name=`echo $file | sed -e 's|.*/||'`
+	if [ "$name" != 'work.sh' ]
+	then
+		echo "cp $file $name"
+		cp $file $name
+	fi
+done
 #
-echo 'rm -r work'
-rm -r work
+echo "rm -r $temporary_dir"
+rm -r $temporary_dir
 #
-echo 'dismod_at.sh: OK'
+echo 'dock_dismod_at.sh: OK'
 exit 0
 # ----------------------------------------------------------------------------

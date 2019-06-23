@@ -14,7 +14,7 @@ $comment Developer documentaiton for dismod_at$$
 $include omh/dismod_at.omh$$
 
 $childtable%omh/math/abstract.omh
-	%omh/install/unix.omh
+	%omh/install/install.omh
 	%example/get_started/get_started.omh
 	%example/user/user.omh
 	%omh/table/database.omh
