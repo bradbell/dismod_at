@@ -83,6 +83,33 @@ fi
 # Run dismod_at in Docker container
 # ----------------------------------------------------------------------------
 database="$1"
+cmd="$2"
+# ----------------------------------------------------------------------------
+# check cmd
+dismod_at_cmd='init fit set depend sample predict old2new'
+dismodat_py_cmd='db2csv csv2db modify'
+program=''
+for check in $dismod_at_cmd
+do
+	if [ "$check" == "$cmd" ]
+	then
+		program='dismod_at'
+	fi
+done
+for check in $dismodat_py_cmd
+do
+	if [ "$check" == "$cmd" ]
+	then
+		program='dismodat.py'
+	fi
+done
+if [ "$program" == '' ]
+then
+	echo 'dock_dismod_at.sh Error'
+	echo "$cmd is not a valid dismod_at command"
+	exit 1
+fi
+# ----------------------------------------------------------------------------
 if [ ! -f "$database" ]
 then
 	echo 'dock_dismod_at.sh Error'
@@ -122,7 +149,7 @@ cat << EOF > work.sh
 PATH="/home/prefix/dismod_at/bin:\$PATH"
 #
 export PYTHONPATH=\`find -L /home/prefix/dismod_at -name site-packages\`
-dismodat.py example.db db2csv
+$program $*
 exit 0
 EOF
 echo "docker cp work.sh $container_id:/home/work/work.sh"
@@ -136,13 +163,19 @@ docker start $container_id
 echo "docker exec -it $container_id bash work.sh"
 docker exec -it $container_id bash work.sh
 #
-# stop the container
-echo "docker stop $container_id"
-docker stop $container_id
-#
 # copy the result back
 echo "docker cp $container_id:/home/work work"
 docker cp $container_id:/home/work work
+#
+# remove the container
+echo "docker rm --force $container_id"
+docker rm --force $container_id
+#
+echo "cp work/* ."
+cp work/* .
+#
+echo 'rm -r work'
+rm -r work
 #
 echo 'dismod_at.sh: OK'
 exit 0
