@@ -15,6 +15,7 @@
 #	rmi
 #	Dockerfile
 #	dismodat.py
+#	rm
 # $$
 #
 # $section Install and Run dismod_at in a Docker Image$$
@@ -48,11 +49,34 @@
 #
 # $head Building Image$$
 #
+# $subhead Version$$
+# This script will build the following version of dismod_at:
+# $srccode%sh%
+	dismod_at_version='20190624'
+	dismod_at_hash='d05176e6bf0cff95f5930d92309fb56138ef6a07'
+# %$$
+#
 # $subhead dismod_at.image$$
 # The $code build$$ syntax will create a new docker image with the name
 # $code dismod_at.image$$.
 # This command will not execute if such an image already exists.
-# You can remove and old image using the command
+# You must remove containers that use an image before removing the image.
+#
+# $subhead Removing Containers$$
+# If an existing container uses $code dismod_at.image$$
+# you will be prompted with the corresponding $icode container_id$$.
+# The command
+# $codei%
+#	docker rm %container_id%
+# %$$
+# will remove the container.
+# If the container is still running, you will need to use
+# $codei%
+#	docker rm --force %container_id%
+# %$$
+#
+# $subhead Removing Images$$
+# You can remove and old $code dismod_at.image$$ using the command
 # $codei%
 #	docker rmi dismod_at.image
 # %$$
@@ -69,6 +93,21 @@
 # If such a file already exists, it will need to be moved or deleted.
 #
 # $head Run Container$$
+#
+# $subhead Removing Containers$$
+# The dismod_at container for a particular $icode user$$ will be named
+# $codei%dismod_at.%user%$$.
+# If such a container already exists,
+# you will be prompted with the corresponding $icode container_id$$.
+# The command
+# $codei%
+#	docker rm %container_id%
+# %$$
+# will remove the container.
+# If the container is still running, you will need to use
+# $codei%
+#	docker rm --force %container_id%
+# %$$
 #
 # $subhead build_type$$
 # The $icode build_type$$ syntax will run the correspond
@@ -103,12 +142,24 @@ then
 		echo "Must first remove ./Dockerfile"
 		exit 1
 	fi
+	if ! docker ps -a | awk '{ if( $2 == "dismod_at.image") {exit 1}  }'
+	then
+		echo 'dock_dismod_at.sh Error'
+		echo 'Must first remove following docker containers:'
+		docker ps -a | head -1
+		docker ps -a | awk '{ if( $2 == "dismod_at.image") {print}  }'
+		echo 'Use the following command for each container_id above:'
+		echo 'docker rm contain_id'
+		exit 1
+	fi
 	if docker images | grep '^dismod_at.image ' > /dev/null
 	then
 		echo 'dock_dismod_at.sh Error'
 		echo 'Must first remove following docker images:'
 		docker images | head -1
 		docker images | grep '^dismod_at.image '
+		echo 'Use the following command for each image above:'
+		echo 'docker rmi image_id'
 		exit 1
 	fi
 	echo 'Creating Dockerfile'
@@ -135,21 +186,26 @@ libsqlite3-dev \
 vim \
 wget
 
-# Get current verison of dismod_at source
+# 1. Get source corresponding to dismod_at-$dismod_at_version
+# 2. Check that the corresponding hash is $dismod_at_hash
+# 3. Change install prefix to /home/prefix/dismod_at
 WORKDIR /home
 RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
-
-# Change the install prefix to /home/prefix
 WORKDIR   /home/dismod_at.git
-RUN mkdir /home/prefix && sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
+
+RUN git pull && \
+git checkout --quiet $dismod_at_hash  && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
+mkdir /home/prefix && \
+sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
 
 # install debug version
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
-	bin/example_install.sh
+bin/example_install.sh
 
 # install release version
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
-	bin/example_install.sh
+bin/example_install.sh
 
 # start in /home/work directory
 WORKDIR /home/work

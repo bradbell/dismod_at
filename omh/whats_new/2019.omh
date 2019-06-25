@@ -36,6 +36,7 @@ $spell
     messaging
     Ipopt
 	frac
+	Dockerfile
 $$
 $navigate%
 	Up%Location%
@@ -58,6 +59,20 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 06-25$$
+The $code build$$ option for $code dock_dismod_at.sh$$ was not updating
+the docker image when the remote repository changed.
+This has been fixed by adding a $code git pull$$
+and checkout of a particular
+$cref/version/dock_dismod_at.sh/Building Image/Version/$$ to the Dockerfile
+created by $code dock_dismod_at.sh$$.
+In addition, more detection and discussion was added for
+$cref/removing containers
+	/dock_dismod_at.sh
+	/Building Image
+	/Removing Containers
+/$$.
 
 $head 06-24$$
 Some minor improvements
