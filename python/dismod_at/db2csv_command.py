@@ -51,9 +51,22 @@
 # This must be a $cref/dismod_at/database/$$ and
 # the $cref init_command$$ must have been run on the database.
 #
-# $subhead dir$$
+# $head dir$$
 # We use the notation $icode dir$$ for the directory where $icode database$$
 # is located.
+#
+# $head fit_var, fit_data_subset$$
+# The $cref log_table$$ is used to determine if the previous
+# fit command had a $cref/simulate_index/fit_command/simulate_index/$$.
+# If so, the $cref fit_var_table$$ and $cref fit_data_subset_table$$
+# corresponds to simulated data.
+# Otherwise, if they exist, the correspond to the measured data.
+#
+# $head simulate_index$$
+# If the previous fit command had a
+# $cref/simulate_index/fit_command/simulate_index/$$
+# that value is used for $icode simulate_index$$ below.
+# Otherwise, zero is used for $icode simulate_index$$ below.
 #
 # $head option.csv$$
 # The file $icode%dir%/option.csv%$$ is written by this command.
@@ -185,23 +198,28 @@
 #
 # $subhead res_dage$$
 # If the $cref fit_command$$ has been run, this is the
-# $cref/residual_dage/fit_var_table/residual_dage/$$.
+# $cref/residual_dage/fit_var_table/residual_dage/$$; see
+# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
 #
 # $subhead res_dtime$$
 # If the $cref fit_command$$ has been run, this is the
-# $cref/residual_dtime/fit_var_table/residual_dtime/$$.
+# $cref/residual_dtime/fit_var_table/residual_dtime/$$; see
+# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
 #
 # $subhead lag_value$$
 # If the $cref fit_command$$ has been run, this is the
-# $cref/lagrange_value/fit_var_table/lagrange_value/$$.
+# $cref/lagrange_value/fit_var_table/lagrange_value/$$; see
+# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
 #
 # $subhead lag_dage$$
 # If the $cref fit_command$$ has been run, this is the
-# $cref/lagrange_dage/fit_var_table/lagrange_dage/$$.
+# $cref/lagrange_dage/fit_var_table/lagrange_dage/$$; see
+# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
 #
 # $subhead lag_dtime$$
 # If the $cref fit_command$$ has been run, this is the
-# $cref/lagrange_dtime/fit_var_table/lagrange_dtime/$$.
+# $cref/lagrange_dtime/fit_var_table/lagrange_dtime/$$; see
+# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
 #
 # $subhead sim_v, sim_a, sim_t$$
 # If the $cref simulate_command$$ has been run,
@@ -210,11 +228,7 @@
 # $cref/prior_sim_dage/prior_sim_table/prior_sim_dage/$$, and
 # $cref/prior_sim_dtime/prior_sim_table/prior_sim_dtime/$$,
 # for the
-# $cref/simulate_index/fit_command/simulate_index/$$
-# in the previous fit command.
-# If there is no $icode simulate_index$$
-# in the previous fit command, the
-# value zero is used for the $icode simulate_index$$.
+# $cref/simulate_index/db2csv_command/simulate_index/$$.
 #
 # $subhead prior_info$$
 # There is a column named
@@ -322,12 +336,17 @@
 # $cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$.
 #
 # $subhead meas_delta$$
-# If the $cref fit_command$$ has been run, this is the
+# If the previous fit command had a
+# $cref/simulate_index/db2csv_command/simulate_index/$$,
+# this column is empty.
+# Otherwise, if there was a previous fit command,
+# this is the
 # $cref/adjusted standard deviation
 #	/data_like
 #	/Adjusted Standard Deviation, delta_i
 # /$$ for this row.
-# This is value is not valid when the residual is zero.
+# This value is computed for this command by dividing by the residual
+# and is not valid when the residual is zero.
 #
 # $subhead meas_value$$
 # is the data table
@@ -340,7 +359,9 @@
 # $subhead residual$$
 # If the $cref fit_command$$ has been run, this is the
 # $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$
-# for this row.
+# for this row; see
+# $cref/fit_data_subset/db2csv_command/fit_var, fit_data_subset/$$
+# above.
 #
 # $subhead sim_value$$
 # If the $cref simulate_command$$ has been run, this is the
@@ -876,11 +897,12 @@ def db2csv_command(database_file_arg) :
 			if row['option_value'] != None :
 				data_extra_columns = row['option_value'].split()
 	# ----------------------------------------------------------------------
-	# simulate_index
-	simulate_index = None
-	log_data       = dismod_at.get_table_dict(connection, 'log')
+	# simulate_index, fit_simulate_index
+	fit_simulate_index = False
+	simulate_index     = None
 	#
 	# search for the last fit command in the log table
+	log_data  = dismod_at.get_table_dict(connection, 'log')
 	for i in range( len(log_data) ) :
 		log_id        = len(log_data) - i - 1
 		row           = log_data[log_id]
@@ -898,8 +920,9 @@ def db2csv_command(database_file_arg) :
 			msg += 'fit command in the log table\n'
 			sys.exit(msg)
 		simulate_index = ''
-	if simulate_index != '' and not have_table['data_sim'] :
-		msg  = 'Previous fit command used simulated data but\n'
+	fit_simulate_index = simulate_index != ''
+	if fit_simulate_index and not have_table['data_sim'] :
+		msg  = 'Previous fit command in log table used simulated data but\n'
 		msg += 'cannot find data_sim table\n'
 		sys.exit(msg)
 	if not have_table['data_sim'] :
@@ -909,7 +932,6 @@ def db2csv_command(database_file_arg) :
 			simulate_index = 0
 		else :
 			simulate_index = int(simulate_index)
-
 	# =========================================================================
 	# option.csv
 	# =========================================================================
@@ -1265,14 +1287,15 @@ def db2csv_command(database_file_arg) :
 			row                 = table_data['fit_data_subset'][subset_id]
 			row_out['avgint']   = convert2output( row['avg_integrand'] )
 			row_out['residual'] = convert2output( row['weighted_residual'] )
-			meas_delta = adjusted_meas_std(
-				row_out['density']       ,
-				row_in['eta']            ,
-				row_in['meas_value']     ,
-				row['avg_integrand']     ,
-				row['weighted_residual']
-			)
-			row_out['meas_delta'] = convert2output(meas_delta)
+			if not fit_simulate_index :
+				meas_delta = adjusted_meas_std(
+					row_out['density']       ,
+					row_in['eta']            ,
+					row_in['meas_value']     ,
+					row['avg_integrand']     ,
+					row['weighted_residual']
+				)
+				row_out['meas_delta'] = convert2output(meas_delta)
 		if simulate_index != None :
 			data_sim_id =  n_subset * simulate_index + subset_id
 			sim_value = table_data['data_sim'][data_sim_id]['data_sim_value']

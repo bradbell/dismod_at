@@ -60,6 +60,18 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-26$$
+The $cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ column
+of the data.csv file output by the db2csv command has values when
+the previous fit corresponding to simulated data
+(not the measured value and standard deviation).
+This has been fixed by setting $icode meas_delta$$ to empty
+when the previous fit is for simulated data.
+In addition, more discussion was added for
+$cref/fit_var, fit_data_subset/db2csv_command/fit_var, fit_data_subset/$$
+tables and the
+$cref/simulate_index/db2csv_command/simulate_index/$$.
+
 $head 06-25$$
 The $code build$$ option for $code dock_dismod_at.sh$$ was not updating
 the docker image when the remote repository changed.
