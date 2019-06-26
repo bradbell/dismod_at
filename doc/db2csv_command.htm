@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -73,7 +73,9 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#Syntax.As Python Function" target="_top">As&nbsp;Python&nbsp;Function</a>
 <br><a href="db2csv_command.htm#Convention" target="_top">Convention</a>
 <br><a href="db2csv_command.htm#database" target="_top">database</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#database.dir" target="_top">dir</a>
+<br><a href="db2csv_command.htm#dir" target="_top">dir</a>
+<br><a href="db2csv_command.htm#fit_var, fit_data_subset" target="_top">fit_var,&nbsp;fit_data_subset</a>
+<br><a href="db2csv_command.htm#simulate_index" target="_top">simulate_index</a>
 <br><a href="db2csv_command.htm#option.csv" target="_top">option.csv</a>
 <br><a href="db2csv_command.htm#log.csv" target="_top">log.csv</a>
 <br><a href="db2csv_command.htm#age_avg.csv" target="_top">age_avg.csv</a>
@@ -185,7 +187,7 @@ the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>i
 
 <br>
 <br>
-<big><a name="database.dir" id="database.dir">dir</a></big>
+<b><big><a name="dir" id="dir">dir</a></big></b>
 <br>
 We use the notation 
 <code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i></code>
@@ -193,6 +195,34 @@ We use the notation
 <code><i><font color="black"><span style='white-space: nowrap'>database</span></font></i></code>
 
 is located.
+
+<br>
+<br>
+<b><big><a name="fit_var, fit_data_subset" id="fit_var, fit_data_subset">fit_var, fit_data_subset</a></big></b>
+<br>
+The <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+ is used to determine if the previous
+fit command had a <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+.
+If so, the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+ and <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
+
+corresponds to simulated data.
+Otherwise, if they exist, the correspond to the measured data.
+
+<br>
+<br>
+<b><big><a name="simulate_index" id="simulate_index">simulate_index</a></big></b>
+<br>
+If the previous fit command had a
+<a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+
+that value is used for 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ below.
+Otherwise, zero is used for 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ below.
 
 <br>
 <br>
@@ -447,7 +477,9 @@ If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'
 If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
  has been run, this is the
 <a href="fit_var_table.htm#residual_dage" target="_top"><span style='white-space: nowrap'>residual_dage</span></a>
-.
+; see
+<a href="db2csv_command.htm#fit_var, fit_data_subset" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+ above.
 
 <br>
 <br>
@@ -456,7 +488,9 @@ If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'
 If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
  has been run, this is the
 <a href="fit_var_table.htm#residual_dtime" target="_top"><span style='white-space: nowrap'>residual_dtime</span></a>
-.
+; see
+<a href="db2csv_command.htm#fit_var, fit_data_subset" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+ above.
 
 <br>
 <br>
@@ -465,7 +499,9 @@ If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'
 If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
  has been run, this is the
 <a href="fit_var_table.htm#lagrange_value" target="_top"><span style='white-space: nowrap'>lagrange_value</span></a>
-.
+; see
+<a href="db2csv_command.htm#fit_var, fit_data_subset" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+ above.
 
 <br>
 <br>
@@ -474,7 +510,9 @@ If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'
 If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
  has been run, this is the
 <a href="fit_var_table.htm#lagrange_dage" target="_top"><span style='white-space: nowrap'>lagrange_dage</span></a>
-.
+; see
+<a href="db2csv_command.htm#fit_var, fit_data_subset" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+ above.
 
 <br>
 <br>
@@ -483,7 +521,9 @@ If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'
 If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
  has been run, this is the
 <a href="fit_var_table.htm#lagrange_dtime" target="_top"><span style='white-space: nowrap'>lagrange_dtime</span></a>
-.
+; see
+<a href="db2csv_command.htm#fit_var, fit_data_subset" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+ above.
 
 <br>
 <br>
@@ -499,15 +539,7 @@ these are the values of
 <a href="prior_sim_table.htm#prior_sim_dtime" target="_top"><span style='white-space: nowrap'>prior_sim_dtime</span></a>
 ,
 for the
-<a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
-
-in the previous fit command.
-If there is no 
-<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
-
-in the previous fit command, the
-value zero is used for the 
-<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+<a href="db2csv_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
 .
 
 <br>
@@ -715,11 +747,16 @@ is the minimum cv standard deviation used to define the likelihood; see
 <br>
 <big><a name="data.csv.meas_delta" id="data.csv.meas_delta">meas_delta</a></big>
 <br>
-If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
- has been run, this is the
+If the previous fit command had a
+<a href="db2csv_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+,
+this column is empty.
+Otherwise, if there was a previous fit command,
+this is the
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
  for this row.
-This is value is not valid when the residual is zero.
+This value is computed for this command by dividing by the residual
+and is not valid when the residual is zero.
 
 <br>
 <br>
@@ -746,7 +783,10 @@ If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'
  has been run, this is the
 <a href="fit_data_subset_table.htm#weighted_residual" target="_top"><span style='white-space: nowrap'>weighted_residual</span></a>
 
-for this row.
+for this row; see
+<a href="db2csv_command.htm#fit_var, fit_data_subset" target="_top"><span style='white-space: nowrap'>fit_data_subset</span></a>
+
+above.
 
 <br>
 <br>
