@@ -95,9 +95,27 @@ for each row of the $code data$$ table;
 i.e., the measurement of the integrand, node,  etc.
 
 $head meas_std$$
-This column has type $code real$$ and is the standard deviation
+This column has type $code real$$,
+has same units at the data,
+and must be a positive number.
+
+$subhead Linear Scaling$$
+If the density is $cref/linear/density_table/Notation/Linear/$$
+$icode meas_std$$ is the standard deviation
 for this measurement value.
-This standard for this measurement and is in the same units at the data.
+
+$subhead Log Scaling$$
+If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
+$codei%
+	log(%meas_value% + %eta% + %meas_std%) - log(%meas_value% + %eta%)
+%$$
+is the standard deviation for the log of $icode%meas_value% + %eta%$$; see
+$cref/log-transformed standard deviation
+	/statistic
+	/Log-Transformed Standard Deviation, sigma
+/$$.
+
+
 
 $head eta$$
 This column has type $code real$$.

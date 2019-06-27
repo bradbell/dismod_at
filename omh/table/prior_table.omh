@@ -78,12 +78,30 @@ has no effect.
 
 
 $head std$$
-This column has type $code real$$ and specifies the standard deviation
-(before truncation by the lower and upper limits)
-for the prior.
+This column has type $code real$$.
 In the case where $icode density$$ is $code uniform$$,
 this value is not used and can be $code null$$.
 Otherwise, this value must be a positive number.
+
+$subhead Linear Scaling$$
+If the density is $cref/linear/density_table/Notation/Linear/$$,
+$icode std$$ is the standard deviation for the prior.
+
+$subhead Log Scaling$$
+If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
+$codei%
+	log(%mean% + %eta% + %std%) - log(%mean% + %eta%)
+%$$
+is the standard deviation for the
+log of the random variable plus $icode eta$$.
+These standard deviations are
+before truncation by the lower and upper limits; see
+$cref/log-transformed standard deviation
+	/statistic
+	/Log-Transformed Standard Deviation, sigma
+/$$.
+
+$subhead Discussion$$
 Note that $icode std$$ is $icode delta_j$$ for the
 $cref/fixed/fixed_value/delta_j/$$ and
 $cref/random/random_value/delta_j/$$ value priors; see $latex \delta$$ in
@@ -95,7 +113,6 @@ $cref/random/random_diff/delta_i,j,k/$$ difference priors;
 see $latex \delta$$ in
 $cref/Difference/statistic/Weighted Residual Function, R/Difference/$$
 definition for $latex R( z, y, \mu , \delta , d )$$.
-
 
 
 $head eta$$

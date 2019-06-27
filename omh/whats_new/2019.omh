@@ -60,6 +60,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 06-27$$
+The relation between of the standard deviations and
+the measured value (the mean value) was not clear for the
+$cref/log scaled/density_table/Notation/Log Scaled/$$ densities.
+This has been fixed by adding to a discussion
+about log scaling the standard deviations in
+the $cref/data table/data_table/meas_std/$$
+(the $cref/prior table/prior_table/std/$$).
+
 $head 06-26$$
 The $cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ column
 of the data.csv file output by the db2csv command has values when
