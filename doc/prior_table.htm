@@ -215,7 +215,7 @@ If the density is <a href="density_table.htm#Notation.Log Scaled" target="_top">
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 is the standard deviation for the
 log of the random variable plus 
@@ -224,9 +224,14 @@ log of the random variable plus
 These standard deviations are
 before truncation by the lower and upper limits; see
 <a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
-.
 
-<br>
+Using the notation <code><font color="blue">~=</font></code> for approximately equal,
+and taking the derivative of the log at the midpoint for the difference,
+we get
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;~=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>/2&nbsp;)<br>
+</span></font></code>
 <br>
 <big><a name="std.Discussion" id="std.Discussion">Discussion</a></big>
 <br>
