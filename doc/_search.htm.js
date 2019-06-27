@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  dismod_at-20190626: User Documentation and API  ',' purpose links ',
+'dismod_at  dismod_at-20190627: User Documentation and API  ',' purpose links ',
 'math_abstract  An Introduction To The Mathematics of Dismod_at  ',' ',
 'math_ode  The Dismod_at Ordinary Differential Equation  ',' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t) ',
 'censor_density  The Censored Gaussian and Laplace Densities  ',' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac) ',
@@ -51,7 +51,7 @@ Keyword =
 'avgint_table.py  avgint_table: Example and Test  ',' ',
 'covariate_table  The Covariate Table  ',' covariate_id covariate_name reference max_difference data subset avgint example ',
 'covariate_table.py  covariate_table: Example and Test  ',' ',
-'data_table  The Data Table  ',' data_id data_name integrand_id density_id nonsmooth node_id parent random effects child weight_id hold_out meas_value meas_std eta null age_lower age_upper time_lower time_upper covariates example ',
+'data_table  The Data Table  ',' data_id data_name integrand_id density_id nonsmooth node_id parent random effects child weight_id hold_out meas_value meas_std linear scaling log eta null age_lower age_upper time_lower time_upper covariates example ',
 'data_table.py  data_table: Example and Test  ',' ',
 'density_table  The Density Table  ',' density_id density_name uniform gaussian cen_gaussian log_gaussian cen_log_gaussian laplace cen_laplace log_laplace cen_log_laplace students log_students notation linear censored scaled nonsmooth example ',
 'density_table.py  density_table: Example and Test  ',' ',
@@ -67,7 +67,7 @@ Keyword =
 'nslist_table.py  nslist_table: Example and Test  ',' ',
 'option_table  The Option Table  ',' conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ',
 'option_table.py  option_table: Example and Test  ',' ',
-'prior_table  The Prior Table  ',' purpose prior_id prior_name density_id lower upper mean uniform std eta null scaling fixed effects example ',
+'prior_table  The Prior Table  ',' purpose prior_id prior_name density_id lower upper mean uniform std linear scaling log discussion eta null fixed effects example ',
 'prior_table.py  prior_table: Example and Test  ',' ',
 'rate_table  The Rate Table  ',' rate_id rate_name pini iota rho chi omega parent_smooth_id null child_smooth_id random effects hessian child_nslist_id value priors constant not difference example ',
 'rate_table.py  rate_table: Example and Test  ',' ',
@@ -149,7 +149,7 @@ Keyword =
 'sql_command  Execute an SQL command  ',' syntax connection result ',
 'unicode_tuple  Convert an Iterable Object to a Unicode String  ',' syntax quote_string none infinity u_tuple example ',
 'unicode_tuple.py  unicode_tuple: Example and Test  ',' ',
-'whats_new_2019  Changes and Additions to Dismod_at During 2019  ',' 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ',
+'whats_new_2019  Changes and Additions to Dismod_at During 2019  ',' 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ',
 'whats_new_2018  Changes and Additions to Dismod_at During 2018  ',' 12-19 12-15 12-14 10-30 10-22 10-21 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ',
 'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
 'whats_new_2016  Changes and Additions to Dismod_at During 2016  ',' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ',

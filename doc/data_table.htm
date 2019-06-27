@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Data Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Data Table">
-<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id nonsmooth node_id parent random effects child weight_id hold_out meas_value meas_std eta null nu age_lower age_upper time_lower time_upper covariates example ">
+<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id nonsmooth node_id parent random effects child weight_id hold_out meas_value meas_std linear scaling log eta null nu age_lower age_upper time_lower time_upper covariates example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -81,6 +81,8 @@ A:active { color : purple }
 <br><a href="data_table.htm#hold_out" target="_top">hold_out</a>
 <br><a href="data_table.htm#meas_value" target="_top">meas_value</a>
 <br><a href="data_table.htm#meas_std" target="_top">meas_std</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#meas_std.Linear Scaling" target="_top">Linear&nbsp;Scaling</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#meas_std.Log Scaling" target="_top">Log&nbsp;Scaling</a>
 <br><a href="data_table.htm#eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#eta.null" target="_top">null</a>
 <br><a href="data_table.htm#nu" target="_top">nu</a>
@@ -229,9 +231,38 @@ i.e., the measurement of the integrand, node,  etc.
 <br>
 <b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
 <br>
-This column has type <code><font color="blue">real</font></code> and is the standard deviation
+This column has type <code><font color="blue">real</font></code>,
+has same units at the data,
+and must be a positive number.
+
+<br>
+<br>
+<big><a name="meas_std.Linear Scaling" id="meas_std.Linear Scaling">Linear Scaling</a></big>
+<br>
+If the density is <a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+ is the standard deviation
 for this measurement value.
-This standard for this measurement and is in the same units at the data.
+
+<br>
+<br>
+<big><a name="meas_std.Log Scaling" id="meas_std.Log Scaling">Log Scaling</a></big>
+<br>
+If the density is <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+is the standard deviation for the log of 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+; see
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
+.
+
+
 
 <br>
 <br>

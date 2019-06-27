@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Prior Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Prior Table">
-<meta name="keywords" id="keywords" content=" the prior table purpose prior_id prior_name density_id lower upper mean uniform std eta null scaling fixed effects nu example ">
+<meta name="keywords" id="keywords" content=" the prior table purpose prior_id prior_name density_id lower upper mean uniform std linear scaling log discussion eta null fixed effects nu example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,9 @@ A:active { color : purple }
 <br><a href="prior_table.htm#mean" target="_top">mean</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="prior_table.htm#mean.uniform" target="_top">uniform</a>
 <br><a href="prior_table.htm#std" target="_top">std</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="prior_table.htm#std.Linear Scaling" target="_top">Linear&nbsp;Scaling</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="prior_table.htm#std.Log Scaling" target="_top">Log&nbsp;Scaling</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="prior_table.htm#std.Discussion" target="_top">Discussion</a>
 <br><a href="prior_table.htm#eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="prior_table.htm#eta.null" target="_top">null</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="prior_table.htm#eta.Scaling Fixed Effects" target="_top">Scaling&nbsp;Fixed&nbsp;Effects</a>
@@ -187,14 +190,46 @@ has no effect.
 <br>
 <b><big><a name="std" id="std">std</a></big></b>
 <br>
-This column has type <code><font color="blue">real</font></code> and specifies the standard deviation
-(before truncation by the lower and upper limits)
-for the prior.
+This column has type <code><font color="blue">real</font></code>.
 In the case where 
 <code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
  is <code><font color="blue">uniform</font></code>,
 this value is not used and can be <code><font color="blue">null</font></code>.
 Otherwise, this value must be a positive number.
+
+<br>
+<br>
+<big><a name="std.Linear Scaling" id="std.Linear Scaling">Linear Scaling</a></big>
+<br>
+If the density is <a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
+ is the standard deviation for the prior.
+
+<br>
+<br>
+<big><a name="std.Log Scaling" id="std.Log Scaling">Log Scaling</a></big>
+<br>
+If the density is <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+is the standard deviation for the
+log of the random variable plus 
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+.
+These standard deviations are
+before truncation by the lower and upper limits; see
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
+.
+
+<br>
+<br>
+<big><a name="std.Discussion" id="std.Discussion">Discussion</a></big>
+<br>
 Note that 
 <code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
  is 
@@ -228,7 +263,6 @@ see <small>@(@
 definition for <small>@(@
 R( z, y, \mu , \delta , d )
 @)@</small>.
-
 
 
 <br>
