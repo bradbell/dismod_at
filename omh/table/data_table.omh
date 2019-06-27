@@ -107,14 +107,19 @@ for this measurement value.
 $subhead Log Scaling$$
 If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
 $codei%
-	log(%meas_value% + %eta% + %meas_std%) - log(%meas_value% + %eta%)
+	%sigma% = log(%meas_value% + %eta% + %meas_std%) - log(%meas_value% + %eta%)
 %$$
 is the standard deviation for the log of $icode%meas_value% + %eta%$$; see
 $cref/log-transformed standard deviation
 	/statistic
 	/Log-Transformed Standard Deviation, sigma
 /$$.
-
+Using the notation $code ~=$$ for approximately equal,
+and taking the derivative of the log at the midpoint for the difference,
+we get
+$codei%
+	%sigma% ~= %meas_std% / ( %meas_value% + %eta% + %meas_std%/2 )
+%$$
 
 
 $head eta$$

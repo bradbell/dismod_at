@@ -90,7 +90,7 @@ $icode std$$ is the standard deviation for the prior.
 $subhead Log Scaling$$
 If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
 $codei%
-	log(%mean% + %eta% + %std%) - log(%mean% + %eta%)
+	%sigma% = log(%mean% + %eta% + %std%) - log(%mean% + %eta%)
 %$$
 is the standard deviation for the
 log of the random variable plus $icode eta$$.
@@ -99,7 +99,13 @@ before truncation by the lower and upper limits; see
 $cref/log-transformed standard deviation
 	/statistic
 	/Log-Transformed Standard Deviation, sigma
-/$$.
+/$$
+Using the notation $code ~=$$ for approximately equal,
+and taking the derivative of the log at the midpoint for the difference,
+we get
+$codei%
+	%sigma% ~= %std% / ( %mean% + %eta% + %std%/2 )
+%$$
 
 $subhead Discussion$$
 Note that $icode std$$ is $icode delta_j$$ for the
