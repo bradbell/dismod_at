@@ -15,6 +15,7 @@ $spell
 	std
 	dismod
 	Nonsmooth
+	cv
 $$
 
 $section The Data Table$$
@@ -99,15 +100,38 @@ This column has type $code real$$,
 has same units at the data,
 and must be a positive number.
 
+$subhead Adjusted Standard Deviation, delta$$
+In the simple case where the
+$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ is zero
+for this $cref/integrand/data_table/integrand_id/$$, the
+$cref/minimum cv standard deviation
+	/data_like
+	/Minimum CV Standard Deviation, Delta_i
+/$$
+is given by
+$codei%
+	%Delta% = %meas_std%
+%$$
+In the simple case where there are no
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
+covariate multipliers for this integrand, the
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i
+/$$
+is given by
+$codei%
+	%delta% = %Delta%
+%$$
+
 $subhead Linear Scaling$$
 If the density is $cref/linear/density_table/Notation/Linear/$$
-$icode meas_std$$ is the standard deviation
-for this measurement value.
+$icode delta$$ is the standard deviation for this measurement value.
 
 $subhead Log Scaling$$
 If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
 $codei%
-	%sigma% = log(%meas_value% + %eta% + %meas_std%) - log(%meas_value% + %eta%)
+	%sigma% = log(%meas_value% + %eta% + %delta%) - log(%meas_value% + %eta%)
 %$$
 is the standard deviation for the log of $icode%meas_value% + %eta%$$; see
 $cref/log-transformed standard deviation
@@ -118,7 +142,7 @@ Using the notation $code ~=$$ for approximately equal,
 and taking the derivative of the log at the midpoint for the difference,
 we get
 $codei%
-	%sigma% ~= %meas_std% / ( %meas_value% + %eta% + %meas_std%/2 )
+	%sigma% ~= %delta% / ( %meas_value% + %eta% + %delta% / 2 )
 %$$
 
 
