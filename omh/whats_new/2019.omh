@@ -37,6 +37,7 @@ $spell
     Ipopt
 	frac
 	Dockerfile
+	num_iter
 $$
 $navigate%
 	Up%Location%
@@ -59,6 +60,12 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 07-06$$
+Improve the documentation for the
+$cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$ option.
+Most importantly, make it clear what value is returned for the random
+effects when $icode max_num_iter_fix$$ is $code -1$$.
 
 $head 06-28$$
 Add discussion of relation ship between the

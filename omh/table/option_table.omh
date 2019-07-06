@@ -368,15 +368,18 @@ If $icode option_name$$ is
 $code max_num_iter_fixed$$ ($code max_num_iter_random$$),
 the corresponding $icode option_value$$
 is an integer greater than or equal $code -1$$ that specifies the
-maximum number of iterations
-($code max_iter$$ in Ipopt documentation).
-In the special case $icode%max_num_iter_fixed% == -1%$$,
-Ipopt is run with zero iterations, but the solution returned by Ipopt
-is replace by the initial fixed effects; i.e.,
-the fit $cref/fit_var_value/fit_var_table/fit_var_value/$$ column
-will contain the same values as the start table column
-$cref/start_var_value/start_var_table/start_var_value/$$.
-The default value for this option is $code 100$$.
+maximum number of iterations.
+This is called $code max_iter$$ in the Ipopt documentation.
+If Ipopt is run with zero iterations, the solution in the
+$cref/fit_var_value/fit_var_table/fit_var_value/$$ column of the fit table
+may not correspond to the starting fixed effects; i.e.,
+the fixed effects in the $cref start_var_table$$ table; see the heading
+$cref/bound_frac_fixed/option_table/Fixed Only/bound_frac_fixed/$$ below.
+In the special case where $icode max_num_iter_fixed$$ is $code -1$$,
+the solution in the fit table
+is the start_var table value for the fixed effects
+and the corresponding optimal value for the random effects.
+The default value for $icode max_num_fixed$$ is $code 100$$.
 
 $subhead print_level$$
 If $icode option_name$$ is
