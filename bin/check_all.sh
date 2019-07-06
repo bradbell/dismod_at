@@ -69,7 +69,9 @@ echo_eval cd ..
 echo 'bin/check_install.sh >& install.log'
 bin/check_install.sh >& install.log
 # -----------------------------------------------------------------------------
-for target in cmake check speed install
+# check.log output is generalted by bin/user_test.sh which checks for warnings
+# and re-runs. If a warning occurs a second time, bin/user_tes.sh error exits.
+for target in cmake speed install
 do
 	if grep -i 'warning:' $target.log
 	then
