@@ -740,19 +740,25 @@ the corresponding
 <code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
 
 is an integer greater than or equal <code><font color="blue">-1</font></code> that specifies the
-maximum number of iterations
-(<code><font color="blue">max_iter</font></code> in Ipopt documentation).
-In the special case 
-<code><i><font color="black"><span style='white-space: nowrap'>max_num_iter_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;==&nbsp;-1</span></font></code>
-,
-Ipopt is run with zero iterations, but the solution returned by Ipopt
-is replace by the initial fixed effects; i.e.,
-the fit <a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
- column
-will contain the same values as the start table column
-<a href="start_var_table.htm#start_var_value" target="_top"><span style='white-space: nowrap'>start_var_value</span></a>
-.
-The default value for this option is <code><font color="blue">100</font></code>.
+maximum number of iterations.
+This is called <code><font color="blue">max_iter</font></code> in the Ipopt documentation.
+If Ipopt is run with zero iterations, the solution in the
+<a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+ column of the fit table
+may not correspond to the starting fixed effects; i.e.,
+the fixed effects in the <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+ table; see the heading
+<a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
+ below.
+In the special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>max_num_iter_fixed</span></font></i></code>
+ is <code><font color="blue">-1</font></code>,
+the solution in the fit table
+is the start_var table value for the fixed effects
+and the corresponding optimal value for the random effects.
+The default value for 
+<code><i><font color="black"><span style='white-space: nowrap'>max_num_fixed</span></font></i></code>
+ is <code><font color="blue">100</font></code>.
 
 <br>
 <br>
