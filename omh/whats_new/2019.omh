@@ -62,11 +62,20 @@ $childtable%
 %$$
 
 $head 07-10$$
+$list number$$
 Advance to $code cppad_mixed-20190710$$.
 This makes the Newton method for the fixed effects more robust
 ($cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ false case).
 To be specific, one is less likely to an error message indicating
 that the Hessian w.r.t. the random effects is not positive definite.
+$lnext
+There is a new
+$cref/version/dock_dismod_at.sh/Building Image/Version/$$ of
+$code dock_dismod_at.sh$$.
+In addition, there are new instructions to help with one of the possible
+$cref/errors/dock_dismod_at.sh/Building Image/Errors/$$
+during the $code dock_dismod_at.sh build$$ command.
+$lend
 
 
 $head 07-06$$

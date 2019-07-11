@@ -52,8 +52,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at:
 # $srccode%sh%
-	dismod_at_version='20190626'
-	dismod_at_hash='9770e0c6817666e18a4221c80e0db9713767054b'
+	dismod_at_version='20190710'
+	dismod_at_hash='676520a7a4c2be6899899d57c8feb035c1e31f1c'
 # %$$
 #
 # $subhead dismod_at.image$$
@@ -91,6 +91,18 @@
 # $href%https://docs.docker.com/glossary/?term=Dockerfile%Dockerfile%$$
 # in the current working directory.
 # If such a file already exists, it will need to be moved or deleted.
+#
+# $subhead Errors$$
+# If you get the error message
+# $codei%
+#	 Unable to fetch some archives, maybe run apt-get update %...%
+# %$$
+# There may be an old docker image result for $code apt-get update$$
+# that is out of date.
+# You can list the images using the command $code docker images$$.
+# Try removing an old image that corresponds to a previous
+# $code apt-get update$$ and then re-run the
+# $code dock_dismod_at.sh build$$ command.
 #
 # $head Run Container$$
 #
