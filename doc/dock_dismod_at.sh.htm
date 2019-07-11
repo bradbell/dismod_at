@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Install and Run dismod_at in a Docker Image</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Install and Run dismod_at in a Docker Image">
-<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax purpose requirements building version dismod_at.image removing containers images dockerfile container build_type other arguments ">
+<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax purpose requirements building version dismod_at.image removing containers images dockerfile errors container build_type other arguments ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,6 +72,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Removing Containers" target="_top">Removing&nbsp;Containers</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Removing Images" target="_top">Removing&nbsp;Images</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Dockerfile" target="_top">Dockerfile</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Errors" target="_top">Errors</a>
 <br><a href="dock_dismod_at.sh.htm#Run Container" target="_top">Run&nbsp;Container</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run Container.Removing Containers" target="_top">Removing&nbsp;Containers</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run Container.build_type" target="_top">build_type</a>
@@ -123,8 +124,8 @@ You can test this on your system by trying to execute the following command:
 <br>
 This script will build the following version of dismod_at:
 <pre style='display:inline'><tt>
-     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20190626'</font>
-     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'9770e0c6817666e18a4221c80e0db9713767054b'</font>
+     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20190710'</font>
+     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'676520a7a4c2be6899899d57c8feb035c1e31f1c'</font>
 </tt></pre>
 <br>
 <big><a name="Building Image.dismod_at.image" id="Building Image.dismod_at.image">dismod_at.image</a></big>
@@ -175,6 +176,22 @@ The <code><font color="blue">build</font></code> syntax will create the file
 
 in the current working directory.
 If such a file already exists, it will need to be moved or deleted.
+
+<br>
+<br>
+<big><a name="Building Image.Errors" id="Building Image.Errors">Errors</a></big>
+<br>
+If you get the error message
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unable&nbsp;to&nbsp;fetch&nbsp;some&nbsp;archives,&nbsp;maybe&nbsp;run&nbsp;apt-get&nbsp;update&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+There may be an old docker image result for <code><font color="blue">apt-get update</font></code>
+that is out of date.
+You can list the images using the command <code><font color="blue">docker images</font></code>.
+Try removing an old image that corresponds to a previous
+<code><font color="blue">apt-get update</font></code> and then re-run the
+<code><font color="blue">dock_dismod_at.sh build</font></code> command.
 
 <br>
 <br>
