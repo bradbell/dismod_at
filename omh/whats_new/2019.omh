@@ -61,6 +61,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-13$$
+There was a mistake in the value of $icode dismod_at_hash$$
+for $cref/version/dock_dismod_at.sh/Building Image/Version/$$
+$code 20190710$$ of $code dock_dismod_at.sh$$. This has been fixed.
+
 $head 07-10$$
 $list number$$
 Advance to $code cppad_mixed-20190710$$.

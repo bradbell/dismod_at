@@ -53,7 +53,7 @@
 # This script will build the following version of dismod_at:
 # $srccode%sh%
 	dismod_at_version='20190710'
-	dismod_at_hash='676520a7a4c2be6899899d57c8feb035c1e31f1c'
+	dismod_at_hash='e368ade1fbb7dcecc11f0e6d69ba00022360f35e'
 # %$$
 #
 # $subhead dismod_at.image$$
@@ -93,6 +93,8 @@
 # If such a file already exists, it will need to be moved or deleted.
 #
 # $subhead Errors$$
+#
+# $list number$$
 # If you get the error message
 # $codei%
 #	 Unable to fetch some archives, maybe run apt-get update %...%
@@ -103,6 +105,16 @@
 # Try removing an old image that corresponds to a previous
 # $code apt-get update$$ and then re-run the
 # $code dock_dismod_at.sh build$$ command.
+#
+# $lnext
+# If you get the error message
+# $codei%
+#   Release file for %package% is not valid yet %...%
+# %$$
+# You system clock may be out of date (reporting an old day or time).
+# Try fixing the system clock.
+#
+# $lend
 #
 # $head Run Container$$
 #
@@ -133,7 +145,7 @@
 # The other arguments to $code dock_dismod_at.sh$$ are the same as in the
 # syntax for the $cref command$$,
 # except that $code dismod_at$$ or $code dismodat.py$$
-# have been replaced by $codei%dock_dismod_at.sh% %build_type%$$.
+# have been replaced by $codei%dock_dismod_at.sh %build_type%$$.
 #
 # $end
 # ---------------------------------------------------------------------------
