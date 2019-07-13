@@ -125,7 +125,7 @@ You can test this on your system by trying to execute the following command:
 This script will build the following version of dismod_at:
 <pre style='display:inline'><tt>
      <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20190710'</font>
-     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'676520a7a4c2be6899899d57c8feb035c1e31f1c'</font>
+     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'e368ade1fbb7dcecc11f0e6d69ba00022360f35e'</font>
 </tt></pre>
 <br>
 <big><a name="Building Image.dismod_at.image" id="Building Image.dismod_at.image">dismod_at.image</a></big>
@@ -180,7 +180,9 @@ If such a file already exists, it will need to be moved or deleted.
 <br>
 <br>
 <big><a name="Building Image.Errors" id="Building Image.Errors">Errors</a></big>
-<br>
+
+
+<ol type="1"><li>
 If you get the error message
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -192,6 +194,19 @@ You can list the images using the command <code><font color="blue">docker images
 Try removing an old image that corresponds to a previous
 <code><font color="blue">apt-get update</font></code> and then re-run the
 <code><font color="blue">dock_dismod_at.sh build</font></code> command.
+
+</li><li>
+
+If you get the error message
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;Release&nbsp;file&nbsp;for&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>package</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;is&nbsp;not&nbsp;valid&nbsp;yet&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+You system clock may be out of date (reporting an old day or time).
+Try fixing the system clock.
+
+</li></ol>
+
 
 <br>
 <br>
@@ -247,7 +262,7 @@ syntax for the <a href="command.htm" target="_top"><span style='white-space: now
 ,
 except that <code><font color="blue">dismod_at</font></code> or <code><font color="blue">dismodat.py</font></code>
 have been replaced by 
-<code><font color="blue"><span style='white-space: nowrap'>dock_dismod_at.sh</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>build_type</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>dock_dismod_at.sh&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
 .
 
 
