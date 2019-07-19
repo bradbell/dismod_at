@@ -61,6 +61,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-19$$
+Advance to $code cppad-20190719$$.
+This fixes a problem installing the CppAD binary library on the Mac.
+
 $head 07-13$$
 There was a mistake in the value of $icode dismod_at_hash$$
 for $cref/version/dock_dismod_at.sh/Building Image/Version/$$
