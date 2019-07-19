@@ -102,11 +102,11 @@ then
 fi
 echo_eval cd build/external
 # --------------------------------------------------------------------------
-if [ ! -e cppad_mixed-$version ]
+if [ ! -e cppad_mixed.git ]
 then
-	echo_eval git clone $web_page cppad_mixed-$version
+	echo_eval git clone $web_page cppad_mixed.git
 fi
-cd cppad_mixed-$version
+cd cppad_mixed.git
 echo_eval git checkout master
 echo_eval git pull
 echo_eval git checkout --quiet $hash_key
