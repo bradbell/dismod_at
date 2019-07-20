@@ -61,6 +61,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-20$$
+AAdvance to $code cppad_mixed-20190720$$.
+This fixes a print during the
+$cref/testing/install_unix/dismod_at/Test/$$ of $code dismod_at$$.
+
 $head 07-19$$
 Advance to $code cppad-20190719$$.
 This fixes a problem installing the CppAD binary library on the Mac.
