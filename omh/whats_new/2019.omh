@@ -61,6 +61,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-32$$
+Advance to cppad_mixed-20190723
+(this should give better error reporting during initialization).
+
 $head 07-20$$
 Advance to $code cppad_mixed-20190720$$.
 This fixes a print during the
