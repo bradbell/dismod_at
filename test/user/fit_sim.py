@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -167,8 +167,8 @@ def example_db (file_name) :
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
 			'lower':    iota_parent / 100.,
-			'upper':    1.0,
-			'mean':     0.1,
+			'upper':    iota_parent * 10.0,
+			'mean':     iota_parent / 2.0,
 			'std':      None,
 			'eta':      None
 		},{ # prior_mulcov
@@ -243,7 +243,7 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'none'         },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'         },
+		{ 'name':'tolerance_fixed',        'value':'1e-6'         },
 
 		{ 'name':'derivative_test_random', 'value':'none'         },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
