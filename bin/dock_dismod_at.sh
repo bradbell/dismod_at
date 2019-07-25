@@ -56,7 +56,7 @@
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
 	dismod_at_version='20190725'
-	dismod_at_hash='09c290da24e363a36986cacf88a8162c4d670a34'
+	dismod_at_hash='0f2e42c1d490c2579d68e1390524979419470b83'
 # %$$
 #
 # $subhead dismod_at.base$$
@@ -304,9 +304,10 @@ FROM dismod_at.base
 WORKDIR /home/dismod_at.git
 
 # get version of source specified above
-RUN git pull && \
+RUN git checkout master && \
+git pull && \
 git checkout --quiet $dismod_at_hash  && \
-grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null
 
 # install debug version of cppad, cppad_mixed, dismod_at
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
