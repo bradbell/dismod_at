@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,6 +60,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
 <option>Contents</option>
+<option>07-25</option>
 <option>07-24</option>
 <option>07-20</option>
 <option>07-19</option>
@@ -124,6 +125,32 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="07-25" id="07-25">07-25</a></big></b>
+
+<ol type="1"><li>
+The <code><font color="blue">dock_dismod_at.sh</font></code> command now has two stages to its build process;
+<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.base" target="_top"><span style='white-space: nowrap'>dismod_at.base</span></a>
+
+and
+<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.image" target="_top"><span style='white-space: nowrap'>dismod_at.image</span></a>
+.
+This avoids having to rebuild the entire image every time.
+</li><li>
+
+Extra <a href="dock_dismod_at.sh.htm#Debugging" target="_top"><span style='white-space: nowrap'>debugging</span></a>
+ instructions were
+added to the <code><font color="blue">dock_dismod_at.sh</font></code> command.
+</li><li>
+
+Advancer to cppad-20190725. This fixes a warning when
+<a href="dock_dismod_at.sh.htm#Building Images" target="_top"><span style='white-space: nowrap'>building&nbsp;images</span></a>
+ using
+<code><font color="blue">dock_dismod_at.sh</font></code>.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="07-24" id="07-24">07-24</a></big></b>
 <br>
 Advance to cppad_mixed-20190724
@@ -152,7 +179,7 @@ This fixes a problem installing the CppAD binary library on the Mac.
 There was a mistake in the value of 
 <code><i><font color="black"><span style='white-space: nowrap'>dismod_at_hash</span></font></i></code>
 
-for <a href="dock_dismod_at.sh.htm#Building Image.Version" target="_top"><span style='white-space: nowrap'>version</span></a>
+for <a href="dock_dismod_at.sh.htm#Building Images.Version" target="_top"><span style='white-space: nowrap'>version</span></a>
 
 <code><font color="blue">20190710</font></code> of <code><font color="blue">dock_dismod_at.sh</font></code>. This has been fixed.
 
@@ -170,11 +197,11 @@ that the Hessian w.r.t. the random effects is not positive definite.
 </li><li>
 
 There is a new
-<a href="dock_dismod_at.sh.htm#Building Image.Version" target="_top"><span style='white-space: nowrap'>version</span></a>
+<a href="dock_dismod_at.sh.htm#Building Images.Version" target="_top"><span style='white-space: nowrap'>version</span></a>
  of
 <code><font color="blue">dock_dismod_at.sh</font></code>.
 In addition, there are new instructions to help with one of the possible
-<a href="dock_dismod_at.sh.htm#Building Image.Errors" target="_top"><span style='white-space: nowrap'>errors</span></a>
+<a href="dock_dismod_at.sh.htm#Building Images.Errors" target="_top"><span style='white-space: nowrap'>errors</span></a>
 
 during the <code><font color="blue">dock_dismod_at.sh build</font></code> command.
 </li></ol>
@@ -249,11 +276,11 @@ The <code><font color="blue">build</font></code> option for <code><font color="b
 the docker image when the remote repository changed.
 This has been fixed by adding a <code><font color="blue">git pull</font></code>
 and checkout of a particular
-<a href="dock_dismod_at.sh.htm#Building Image.Version" target="_top"><span style='white-space: nowrap'>version</span></a>
+<a href="dock_dismod_at.sh.htm#Building Images.Version" target="_top"><span style='white-space: nowrap'>version</span></a>
  to the Dockerfile
 created by <code><font color="blue">dock_dismod_at.sh</font></code>.
 In addition, more detection and discussion was added for
-<a href="dock_dismod_at.sh.htm#Building Image.Removing Containers" target="_top"><span style='white-space: nowrap'>removing&nbsp;containers</span></a>
+<a href="dock_dismod_at.sh.htm#Building Images.Removing Containers" target="_top"><span style='white-space: nowrap'>removing&nbsp;containers</span></a>
 .
 
 <br>

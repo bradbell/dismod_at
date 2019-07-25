@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Install and Run dismod_at in a Docker Image</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Install and Run dismod_at in a Docker Image">
-<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax purpose requirements building version dismod_at.image removing containers images dockerfile errors container build_type other arguments ">
+<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax purpose requirements building images version dismod_at.base dismod_at.image removing containers dockerfile errors new container build_type other arguments debugging determine id start stop ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -66,23 +66,32 @@ A:active { color : purple }
 <br><a href="dock_dismod_at.sh.htm#Syntax" target="_top">Syntax</a>
 <br><a href="dock_dismod_at.sh.htm#Purpose" target="_top">Purpose</a>
 <br><a href="dock_dismod_at.sh.htm#Requirements" target="_top">Requirements</a>
-<br><a href="dock_dismod_at.sh.htm#Building Image" target="_top">Building&nbsp;Image</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Version" target="_top">Version</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.dismod_at.image" target="_top">dismod_at.image</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Removing Containers" target="_top">Removing&nbsp;Containers</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Removing Images" target="_top">Removing&nbsp;Images</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Dockerfile" target="_top">Dockerfile</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Image.Errors" target="_top">Errors</a>
-<br><a href="dock_dismod_at.sh.htm#Run Container" target="_top">Run&nbsp;Container</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run Container.Removing Containers" target="_top">Removing&nbsp;Containers</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run Container.build_type" target="_top">build_type</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run Container.Other Arguments" target="_top">Other&nbsp;Arguments</a>
+<br><a href="dock_dismod_at.sh.htm#Building Images" target="_top">Building&nbsp;Images</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Version" target="_top">Version</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.base" target="_top">dismod_at.base</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.image" target="_top">dismod_at.image</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Removing Containers" target="_top">Removing&nbsp;Containers</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Removing Images" target="_top">Removing&nbsp;Images</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Dockerfile" target="_top">Dockerfile</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Errors" target="_top">Errors</a>
+<br><a href="dock_dismod_at.sh.htm#Run New Container" target="_top">Run&nbsp;New&nbsp;Container</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run New Container.Removing Containers" target="_top">Removing&nbsp;Containers</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run New Container.build_type" target="_top">build_type</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Run New Container.Other Arguments" target="_top">Other&nbsp;Arguments</a>
+<br><a href="dock_dismod_at.sh.htm#Debugging" target="_top">Debugging</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Debugging.Determine Container Id" target="_top">Determine&nbsp;Container&nbsp;Id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Debugging.Start Container" target="_top">Start&nbsp;Container</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Debugging.Run Container" target="_top">Run&nbsp;Container</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Debugging.Stop Container" target="_top">Stop&nbsp;Container</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;build<br>
+<code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;image&nbsp;base<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;image&nbsp;dismod_at<br>
 </span></font></code>
 
 <code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
@@ -115,29 +124,44 @@ You can test this on your system by trying to execute the following command:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;run&nbsp;busybox&nbsp;echo&nbsp;'Hello&nbsp;World'<br>
 </span></font></code>
 <br>
-<b><big><a name="Building Image" id="Building Image">Building Image</a></big></b>
+<b><big><a name="Building Images" id="Building Images">Building Images</a></big></b>
 
 
 <br>
 <br>
-<big><a name="Building Image.Version" id="Building Image.Version">Version</a></big>
+<big><a name="Building Images.Version" id="Building Images.Version">Version</a></big>
 <br>
-This script will build the following version of dismod_at:
+This script will build the following version of dismod_at image:
 <pre style='display:inline'><tt>
-     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20190710'</font>
-     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'e368ade1fbb7dcecc11f0e6d69ba00022360f35e'</font>
+     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20190725'</font>
+     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'09c290da24e363a36986cacf88a8162c4d670a34'</font>
 </tt></pre>
 <br>
-<big><a name="Building Image.dismod_at.image" id="Building Image.dismod_at.image">dismod_at.image</a></big>
+<big><a name="Building Images.dismod_at.base" id="Building Images.dismod_at.base">dismod_at.base</a></big>
 <br>
-The <code><font color="blue">build</font></code> syntax will create a new docker image with the name
-<code><font color="blue">dismod_at.image</font></code>.
+The <code><font color="blue">image base</font></code> syntax creates a new docker image with the name
+<code><font color="blue">dismod_at.base</font></code>.
 This command will not execute if such an image already exists.
 You must remove containers that use an image before removing the image.
+This image must be created before <code><font color="blue">dismod_at.image</font></code> can be created.
+The <a href="whats_new_2019.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
+ instructions will tell you if
+you need to re-execute this command.
 
 <br>
 <br>
-<big><a name="Building Image.Removing Containers" id="Building Image.Removing Containers">Removing Containers</a></big>
+<big><a name="Building Images.dismod_at.image" id="Building Images.dismod_at.image">dismod_at.image</a></big>
+<br>
+The <code><font color="blue">image dismod_at</font></code> syntax creates a new docker image with the name
+<code><font color="blue">dismod_at.image</font></code>.
+This command will not execute if such an image already exists.
+The <a href="whats_new_2019.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
+ instructions will tell you if
+you need to re-execute this command.
+
+<br>
+<br>
+<big><a name="Building Images.Removing Containers" id="Building Images.Removing Containers">Removing Containers</a></big>
 <br>
 If an existing container uses <code><font color="blue">dismod_at.image</font></code>
 you will be prompted with the corresponding 
@@ -155,7 +179,7 @@ If the container is still running, you will need to use
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
-<big><a name="Building Image.Removing Images" id="Building Image.Removing Images">Removing Images</a></big>
+<big><a name="Building Images.Removing Images" id="Building Images.Removing Images">Removing Images</a></big>
 <br>
 You can remove and old <code><font color="blue">dismod_at.image</font></code> using the command
 
@@ -169,7 +193,7 @@ You can keep the old image, under a different name, using the commands
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;dismod_at.image<br>
 </span></font></code>
 <br>
-<big><a name="Building Image.Dockerfile" id="Building Image.Dockerfile">Dockerfile</a></big>
+<big><a name="Building Images.Dockerfile" id="Building Images.Dockerfile">Dockerfile</a></big>
 <br>
 The <code><font color="blue">build</font></code> syntax will create the file
 <a href="https://docs.docker.com/glossary/?term=Dockerfile" target="_top"><span style='white-space: nowrap'>Dockerfile</span></a>
@@ -179,7 +203,7 @@ If such a file already exists, it will need to be moved or deleted.
 
 <br>
 <br>
-<big><a name="Building Image.Errors" id="Building Image.Errors">Errors</a></big>
+<big><a name="Building Images.Errors" id="Building Images.Errors">Errors</a></big>
 
 
 <ol type="1"><li>
@@ -210,12 +234,16 @@ Try fixing the system clock.
 
 <br>
 <br>
-<b><big><a name="Run Container" id="Run Container">Run Container</a></big></b>
+<b><big><a name="Run New Container" id="Run New Container">Run New Container</a></big></b>
+<br>
+Once <code><font color="blue">dismod_at.image</font></code> has been created, you use the
 
+<code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
+ syntax to run dismod_at in a container.
 
 <br>
 <br>
-<big><a name="Run Container.Removing Containers" id="Run Container.Removing Containers">Removing Containers</a></big>
+<big><a name="Run New Container.Removing Containers" id="Run New Container.Removing Containers">Removing Containers</a></big>
 <br>
 The dismod_at container for a particular 
 <code><i><font color="black"><span style='white-space: nowrap'>user</span></font></i></code>
@@ -239,7 +267,7 @@ If the container is still running, you will need to use
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
-<big><a name="Run Container.build_type" id="Run Container.build_type">build_type</a></big>
+<big><a name="Run New Container.build_type" id="Run New Container.build_type">build_type</a></big>
 <br>
 The 
 <code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
@@ -255,7 +283,7 @@ The <code><font color="blue">debug</font></code> version will do more extensive 
 
 <br>
 <br>
-<big><a name="Run Container.Other Arguments" id="Run Container.Other Arguments">Other Arguments</a></big>
+<big><a name="Run New Container.Other Arguments" id="Run New Container.Other Arguments">Other Arguments</a></big>
 <br>
 The other arguments to <code><font color="blue">dock_dismod_at.sh</font></code> are the same as in the
 syntax for the <a href="command.htm" target="_top"><span style='white-space: nowrap'>command</span></a>
@@ -265,6 +293,51 @@ have been replaced by
 <code><font color="blue"><span style='white-space: nowrap'>dock_dismod_at.sh&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
 .
 
+<br>
+<br>
+<b><big><a name="Debugging" id="Debugging">Debugging</a></big></b>
+<br>
+Some times an error occurs during the running of a container
+and you would like to go inside the container and execute commands.
+The following instructions are useful for this:
+
+<br>
+<br>
+<big><a name="Debugging.Determine Container Id" id="Debugging.Determine Container Id">Determine Container Id</a></big>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;ps&nbsp;-a</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Debugging.Start Container" id="Debugging.Start Container">Start Container</a></big>
+<br>
+If a container status is <code><font color="blue">Exited</font></code>, you can start it using:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;start&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
+</span></font></i></code>
+<br>
+<big><a name="Debugging.Run Container" id="Debugging.Run Container">Run Container</a></big>
+<br>
+If a container status is <code><font color="blue">Up</font></code>, you can run it using:
+
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;exec&nbsp;-it&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bash<br>
+</span></font></code>
+You will be in the container until you <code><font color="blue">exit</font></code>
+the <code><font color="blue">bash</font></code> shell that is run by the command above.
+
+<br>
+<br>
+<big><a name="Debugging.Stop Container" id="Debugging.Stop Container">Stop Container</a></big>
+<br>
+If a container status is <code><font color="blue">Up</font></code>, you can stop it using:
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;stop&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
+</span></font></i></code>
 
 <hr>Input File: bin/dock_dismod_at.sh
 
