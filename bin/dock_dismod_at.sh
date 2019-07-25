@@ -16,6 +16,7 @@
 #	Dockerfile
 #	dismodat.py
 #	rm
+#	ps
 # $$
 #
 # $section Install and Run dismod_at in a Docker Image$$
@@ -52,8 +53,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at:
 # $srccode%sh%
-	dismod_at_version='20190710'
-	dismod_at_hash='e368ade1fbb7dcecc11f0e6d69ba00022360f35e'
+	dismod_at_version='20190724'
+	dismod_at_hash='9d82b7cd3d366f00ee1c617178939a88742a207b'
 # %$$
 #
 # $subhead dismod_at.image$$
@@ -116,7 +117,7 @@
 #
 # $lend
 #
-# $head Run Container$$
+# $head Run New Container$$
 #
 # $subhead Removing Containers$$
 # The dismod_at container for a particular $icode user$$ will be named
@@ -146,6 +147,33 @@
 # syntax for the $cref command$$,
 # except that $code dismod_at$$ or $code dismodat.py$$
 # have been replaced by $codei%dock_dismod_at.sh %build_type%$$.
+#
+# $head Debugging$$
+# Some times an error occurs during the running of a container
+# and you would like to go inside the container and execute commands.
+# The following instructions are useful for this:
+#
+# $subhead Determine Container Id$$
+# $codei%	docker ps -a%$$
+#
+# $subhead Start Container$$
+# If a container status is $code Exited$$, you can start it using:
+# $codei%
+#	docker start %container_id
+# %$$
+#
+# $subhead Run Container$$
+# If a container status is $code Up$$, you can run it using:
+# $codei%	docker exec -it %container_id% bash
+# %$$
+# You will be in the container until you $code exit$$
+# the $code bash$$ shell that is run by the command above.
+#
+# $subhead Start Container$$
+# If a container status is $code Up$$, you can stop it using:
+# $codei%
+#	docker stop %container_id
+# %$$
 #
 # $end
 # ---------------------------------------------------------------------------
