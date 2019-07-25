@@ -71,6 +71,10 @@ This avoids having to rebuild the entire image every time.
 $lnext
 Extra $cref/debugging/dock_dismod_at.sh/Debugging/$$ instructions were
 added to the $code dock_dismod_at.sh$$ command.
+$lnext
+Advancer to cppad-20190725. This fixes a warning when
+$cref/building images/dock_dismod_at.sh/Building Images/$$ using
+$code dock_dismod_at.sh$$.
 $lend
 
 $head 07-24$$
