@@ -142,7 +142,7 @@ Extra <a href="dock_dismod_at.sh.htm#Debugging" target="_top"><span style='white
 added to the <code><font color="blue">dock_dismod_at.sh</font></code> command.
 </li><li>
 
-Advancer to cppad-20190725. This fixes a warning when
+Advance to cppad-20190725. This fixes a warning when
 <a href="dock_dismod_at.sh.htm#Building Images" target="_top"><span style='white-space: nowrap'>building&nbsp;images</span></a>
  using
 <code><font color="blue">dock_dismod_at.sh</font></code>.
@@ -153,8 +153,11 @@ Advancer to cppad-20190725. This fixes a warning when
 <br>
 <b><big><a name="07-24" id="07-24">07-24</a></big></b>
 <br>
-Advance to cppad_mixed-20190724
-(this should give better error reporting during initialization).
+Advance to cppad_mixed-20190724.
+This gives better error reporting during initialization.
+It also automatically optimizes w.r.t. the random effect
+before initializing terms that require the Hessian w.r.t.
+the random effects to be positive definite.
 
 <br>
 <br>
