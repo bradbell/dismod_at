@@ -61,6 +61,18 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 07-25$$
+$list number$$
+The $code dock_dismod_at.sh$$ command now has two stages to its build process;
+$cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
+and
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+This avoids having to rebuild the entire image every time.
+$lnext
+Extra $cref/debugging/dock_dismod_at.sh/Debugging/$$ instructions were
+added to the $code dock_dismod_at.sh$$ command.
+$lend
+
 $head 07-24$$
 Advance to cppad_mixed-20190724
 (this should give better error reporting during initialization).
@@ -76,7 +88,7 @@ This fixes a problem installing the CppAD binary library on the Mac.
 
 $head 07-13$$
 There was a mistake in the value of $icode dismod_at_hash$$
-for $cref/version/dock_dismod_at.sh/Building Image/Version/$$
+for $cref/version/dock_dismod_at.sh/Building Images/Version/$$
 $code 20190710$$ of $code dock_dismod_at.sh$$. This has been fixed.
 
 $head 07-10$$
@@ -88,10 +100,10 @@ To be specific, one is less likely to an error message indicating
 that the Hessian w.r.t. the random effects is not positive definite.
 $lnext
 There is a new
-$cref/version/dock_dismod_at.sh/Building Image/Version/$$ of
+$cref/version/dock_dismod_at.sh/Building Images/Version/$$ of
 $code dock_dismod_at.sh$$.
 In addition, there are new instructions to help with one of the possible
-$cref/errors/dock_dismod_at.sh/Building Image/Errors/$$
+$cref/errors/dock_dismod_at.sh/Building Images/Errors/$$
 during the $code dock_dismod_at.sh build$$ command.
 $lend
 
@@ -135,12 +147,12 @@ The $code build$$ option for $code dock_dismod_at.sh$$ was not updating
 the docker image when the remote repository changed.
 This has been fixed by adding a $code git pull$$
 and checkout of a particular
-$cref/version/dock_dismod_at.sh/Building Image/Version/$$ to the Dockerfile
+$cref/version/dock_dismod_at.sh/Building Images/Version/$$ to the Dockerfile
 created by $code dock_dismod_at.sh$$.
 In addition, more detection and discussion was added for
 $cref/removing containers
 	/dock_dismod_at.sh
-	/Building Image
+	/Building Images
 	/Removing Containers
 /$$.
 

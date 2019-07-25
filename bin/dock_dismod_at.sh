@@ -22,7 +22,9 @@
 # $section Install and Run dismod_at in a Docker Image$$
 #
 # $head Syntax$$
-# $codei%./dock_dismod_at.sh build
+# $codei%./dock_dismod_at.sh image base
+# %$$
+# $codei%./dock_dismod_at.sh image dismod_at
 # %$$
 # $codei%./dock_dismod_at.sh %build_type% %database% %command% %...%
 # %$$
@@ -48,20 +50,30 @@
 #	docker run busybox echo 'Hello World'
 # %$$
 #
-# $head Building Image$$
+# $head Building Images$$
 #
 # $subhead Version$$
-# This script will build the following version of dismod_at:
+# This script will build the following version of dismod_at image:
 # $srccode%sh%
 	dismod_at_version='20190724'
 	dismod_at_hash='9d82b7cd3d366f00ee1c617178939a88742a207b'
 # %$$
 #
-# $subhead dismod_at.image$$
-# The $code build$$ syntax will create a new docker image with the name
-# $code dismod_at.image$$.
+# $subhead dismod_at.base$$
+# The $code image base$$ syntax creates a new docker image with the name
+# $code dismod_at.base$$.
 # This command will not execute if such an image already exists.
 # You must remove containers that use an image before removing the image.
+# This image must be created before $code dismod_at.image$$ can be created.
+# The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
+# you need to re-execute this command.
+#
+# $subhead dismod_at.image$$
+# The $code image dismod_at$$ syntax creates a new docker image with the name
+# $code dismod_at.image$$.
+# This command will not execute if such an image already exists.
+# The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
+# you need to re-execute this command.
 #
 # $subhead Removing Containers$$
 # If an existing container uses $code dismod_at.image$$
@@ -118,6 +130,8 @@
 # $lend
 #
 # $head Run New Container$$
+# Once $code dismod_at.image$$ has been created, you use the
+# $icode build_type$$ syntax to run dismod_at in a container.
 #
 # $subhead Removing Containers$$
 # The dismod_at container for a particular $icode user$$ will be named
@@ -169,7 +183,7 @@
 # You will be in the container until you $code exit$$
 # the $code bash$$ shell that is run by the command above.
 #
-# $subhead Start Container$$
+# $subhead Stop Container$$
 # If a container status is $code Up$$, you can stop it using:
 # $codei%
 #	docker stop %container_id
@@ -177,44 +191,66 @@
 #
 # $end
 # ---------------------------------------------------------------------------
-if [ "$2" == '' ] && [ "$1" != 'build' ]
+if [ "$1" == 'image' ]
 then
-	echo 'usage: dock_dismod_at.sh build'
-	echo 'usage: dock_dismod_at.sh build_type database command ...'
-	exit 1
+	if [ "$2" != 'base' ] && [ "$2" != 'dismod_at' ]
+	then
+		echo 'usage: dock_dismod_at.sh image base'
+		echo 'usage: dock_dismod_at.sh image dismod_at'
+		echo 'usage: dock_dismod_at.sh debug database command ...'
+		echo 'usage: dock_dismod_at.sh release database command ...'
+		exit 1
+	fi
+else
+	if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
+	then
+		echo 'usage: dock_dismod_at.sh image base'
+		echo 'usage: dock_dismod_at.sh image dismod_at'
+		echo 'usage: dock_dismod_at.sh debug   database command ...'
+		echo 'usage: dock_dismod_at.sh release database command ...'
+		exit 1
+	fi
 fi
 # ---------------------------------------------------------------------------
-# Build Docker image
+# Build Base Docker image
 # ----------------------------------------------------------------------------
-if [ "$1" == 'build' ] && [ "$2" == '' ]
+if [ "$1" == 'image' ]
 then
+	if [ "$2" == 'base' ]
+	then
+		image_name='dismod_at.base'
+	else
+		image_name='dismod_at.image'
+	fi
 	if [ -e 'Dockerfile' ]
 	then
 		echo 'dock_dismod_at.sh Error'
 		echo "Must first remove ./Dockerfile"
 		exit 1
 	fi
-	if ! docker ps -a | awk '{ if( $2 == "dismod_at.image") {exit 1}  }'
+	if docker ps -a | grep "$image_name" > /dev/null
 	then
 		echo 'dock_dismod_at.sh Error'
 		echo 'Must first remove following docker containers:'
 		docker ps -a | head -1
-		docker ps -a | awk '{ if( $2 == "dismod_at.image") {print}  }'
+		docker ps -a | grep "$image_name"
 		echo 'Use the following command for each container_id above:'
 		echo 'docker rm contain_id'
 		exit 1
 	fi
-	if docker images | grep '^dismod_at.image ' > /dev/null
+	if docker images | grep "$image_name" > /dev/null
 	then
 		echo 'dock_dismod_at.sh Error'
 		echo 'Must first remove following docker images:'
 		docker images | head -1
-		docker images | grep '^dismod_at.image '
+		docker images | grep "$image_name"
 		echo 'Use the following command for each image above:'
 		echo 'docker rmi image_id'
 		exit 1
 	fi
 	echo 'Creating Dockerfile'
+if [ "$image_name" == 'dismod_at.base' ]
+then
 cat << EOF > Dockerfile
 
 # Ubuntu 19.04 with dismod_at requirements
@@ -251,22 +287,55 @@ grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
 mkdir /home/prefix && \
 sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
 
-# install debug version
+# install debug version of eigen and ipopt
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
-bin/example_install.sh
+bin/install_eigen.sh && \
+bin/install_ipopt.sh
 
-# install release version
+# install release version of eigen and ipopt
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
-bin/example_install.sh
+bin/install_eigen.sh && \
+bin/install_ipopt.sh
 
-# start in /home/work directory
+EOF
+else
+cat << EOF > Dockerfile
+FROM dismod_at.base
+WORKDIR /home/dismod_at.git
+
+# get version of source specified above
+RUN git pull && \
+git checkout --quiet $dismod_at_hash  && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
+
+# install debug version of cppad, cppad_mixed, dismod_at
+RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
+bin/install_cppad.sh && \
+bin/install_cppad_mixed.sh && \
+bin/run_cmake.sh && \
+cd build && \
+make check && \
+make install && \
+cd ..
+
+# install debug version of cppad, cppad_mixed, dismod_at
+RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
+bin/install_cppad.sh && \
+bin/install_cppad_mixed.sh && \
+bin/run_cmake.sh && \
+cd build && \
+make check && \
+make install && \
+cd ..
+
 WORKDIR /home/work
 EOF
+fi
 #
-	echo 'Creating dismod_at.image'
-	docker build --tag dismod_at.image .
+	echo "Creating $image_name"
+	docker build --tag $image_name .
 	#
-	echo 'dock_dismod_at.sh build: OK'
+	echo "dock_dismod_at.sh $1 $2: OK"
 	exit 0
 fi
 # ---------------------------------------------------------------------------
