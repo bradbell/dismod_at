@@ -55,8 +55,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20190724'
-	dismod_at_hash='9d82b7cd3d366f00ee1c617178939a88742a207b'
+	dismod_at_version='20190725'
+	dismod_at_hash='09c290da24e363a36986cacf88a8162c4d670a34'
 # %$$
 #
 # $subhead dismod_at.base$$
