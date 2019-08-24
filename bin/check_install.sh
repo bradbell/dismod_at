@@ -37,7 +37,7 @@ if find -L $dismod_at_prefix -name site-packages > /dev/null
 then
 	python_dir=`find -L $dismod_at_prefix -name site-packages`
 fi
-bin_dir="$dismot_at_prefix/bin"
+bin_dir="$dismod_at_prefix/bin"
 #
 # remove old install executable and python packages
 echo_eval rm -rf $bin_dir/dismod_at

@@ -62,6 +62,7 @@ $childtable%
 %$$
 
 $head 08-24$$
+$list number$$
 The documentation now explicitly states that the empty string
 is stored as a null when it is used for the
 $cref/value/set_command/option/value/$$ in a set option command.
@@ -71,6 +72,12 @@ now explicitly states which default values are null
 Furthermore, the possible combinations of null and not null
 for the parent node id and name are discussed under the heading
 $cref/parent_node_name/option_table/parent_node_name/$$.
+$lnext
+A new version of $cref dock_dismod_at.sh$$
+automatically detects (and suggests solutions)
+when the docker daemon is not running
+or when you do not have the necessary permissions to run docker.
+$lend
 
 $head 07-25$$
 $list number$$
