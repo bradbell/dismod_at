@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id parent_node_name default children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,15 +75,17 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Conventions.option_name" target="_top">option_name</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Conventions.option_value" target="_top">option_value</a>
 <br><a href="option_table.htm#parent_node_id" target="_top">parent_node_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Default" target="_top">Default</a>
 <br><a href="option_table.htm#parent_node_name" target="_top">parent_node_name</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Default" target="_top">Default</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.name or id" target="_top">name&nbsp;or&nbsp;id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Children" target="_top">Children</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Data Subset Table" target="_top">Data&nbsp;Subset&nbsp;Table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Avgint Subset Table" target="_top">Avgint&nbsp;Subset&nbsp;Table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Changing" target="_top">Changing</a>
 <br><a href="option_table.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
-<br><a href="option_table.htm#meas_std_effect: Deprecated 2019-04-07" target="_top">meas_std_effect:&nbsp;Deprecated&nbsp;2019-04-07</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_std_effect: Deprecated 2019-04-07.Default" target="_top">Default</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_noise_effect.meas_std_effect: Deprecated 2019-04-07" target="_top">meas_std_effect:&nbsp;Deprecated&nbsp;2019-04-07</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_noise_effect.Default" target="_top">Default</a>
 <br><a href="option_table.htm#zero_sum_random" target="_top">zero_sum_random</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#zero_sum_random.Default" target="_top">Default</a>
 <br><a href="option_table.htm#data_extra_columns" target="_top">data_extra_columns</a>
@@ -93,7 +95,6 @@ A:active { color : purple }
 <br><a href="option_table.htm#warn_on_stderr" target="_top">warn_on_stderr</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#warn_on_stderr.Default" target="_top">Default</a>
 <br><a href="option_table.htm#minimum_meas_cv" target="_top">minimum_meas_cv</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#minimum_meas_cv.Default" target="_top">Default</a>
 <br><a href="option_table.htm#ode_step_size" target="_top">ode_step_size</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#ode_step_size.Default" target="_top">Default</a>
 <br><a href="option_table.htm#age_avg_split" target="_top">age_avg_split</a>
@@ -195,6 +196,12 @@ instead of
 
 <br>
 <br>
+<big><a name="parent_node_id.Default" id="parent_node_id.Default">Default</a></big>
+<br>
+The default value for this option is null.
+
+<br>
+<br>
 <b><big><a name="parent_node_name" id="parent_node_name">parent_node_name</a></big></b>
 <br>
 If 
@@ -206,30 +213,61 @@ the corresponding
 is an string that specifies the parent
 <a href="node_table.htm#node_name" target="_top"><span style='white-space: nowrap'>node_name</span></a>
 .
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
- is also specified,
-the corresponding node id and node name must agree.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
- is not specified,
-the <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node_table</span></a>
- is searched to determine
-the corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
-
-(this takes some extra time that it is not expected to be significant).
 
 <br>
 <br>
 <big><a name="parent_node_name.Default" id="parent_node_name.Default">Default</a></big>
 <br>
-There is no default value when neither
+The default value for this option is null.
+
+<br>
+<br>
+<big><a name="parent_node_name.name or id" id="parent_node_name.name or id">name or id</a></big>
+
+<ol type="1"><li>
+Either 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+ must
+not be null.
+</li><li>
+
+If both 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+ are not null,
+the corresponding <a href="node_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+
+and <a href="node_table.htm#node_name" target="_top"><span style='white-space: nowrap'>node_name</span></a>
+ must agree; see <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node_table</span></a>
+.
+</li><li>
+
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
+ is null and 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+ is not null,
 
 <code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
- nor 
+ determines the parent node.
+</li><li>
+
+If 
 <code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
- is present.
+ is not null and 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+ is null,
+the <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node_table</span></a>
+ is searched to determine
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
+.
+this takes some extra time that it is not expected to be significant.
+</li></ol>
+
 
 <br>
 <br>
@@ -303,16 +341,17 @@ The possible options are
 
 <br>
 <br>
-<b><big><a name="meas_std_effect: Deprecated 2019-04-07" id="meas_std_effect: Deprecated 2019-04-07">meas_std_effect: Deprecated 2019-04-07</a></big></b>
+<big><a name="meas_noise_effect.meas_std_effect: Deprecated 2019-04-07" id="meas_noise_effect.meas_std_effect: Deprecated 2019-04-07">meas_std_effect: Deprecated 2019-04-07</a></big>
 <br>
-This option is deprecated but still works (may not work in the future).
-It should be changed to use its new name 
-<code><i><font color="black"><span style='white-space: nowrap'>meas_noise_effect</span></font></i></code>
-.
+This 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+
+is deprecated but still works (may not work in the future).
+It should be changed to use its new name <code><font color="blue">meas_noise_effect</font></code>.
 
 <br>
 <br>
-<big><a name="meas_std_effect: Deprecated 2019-04-07.Default" id="meas_std_effect: Deprecated 2019-04-07.Default">Default</a></big>
+<big><a name="meas_noise_effect.Default" id="meas_noise_effect.Default">Default</a></big>
 <br>
 The default value for this option is <code><font color="blue">add_std_scale_all</font></code>.
 
@@ -429,12 +468,6 @@ integrand specific; see
 
 <br>
 <br>
-<big><a name="minimum_meas_cv.Default" id="minimum_meas_cv.Default">Default</a></big>
-<br>
-The default value for this option is <code><font color="blue">0.0</font></code>.
-
-<br>
-<br>
 <b><big><a name="ode_step_size" id="ode_step_size">ode_step_size</a></big></b>
 <br>
 If 
@@ -530,7 +563,7 @@ and for approximating the solution of the dismod_at
 <br>
 The default value for 
 <code><i><font color="black"><span style='white-space: nowrap'>age_avg_split</span></font></i></code>
- is the empty set
+ is null (empty set)
 in which case the age average grid is the set of 
 <code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
 .

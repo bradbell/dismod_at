@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,6 +60,7 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
 <option>Contents</option>
+<option>08-24</option>
 <option>07-25</option>
 <option>07-24</option>
 <option>07-20</option>
@@ -125,6 +126,33 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="08-24" id="08-24">08-24</a></big></b>
+
+<ol type="1"><li>
+The documentation now explicitly states that the empty string
+is stored as a null when it is used for the
+<a href="set_command.htm#option.value" target="_top"><span style='white-space: nowrap'>value</span></a>
+ in a set option command.
+In addition, the documentation for the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+
+now explicitly states which default values are null
+(instead of using other words like empty).
+Furthermore, the possible combinations of null and not null
+for the parent node id and name are discussed under the heading
+<a href="option_table.htm#parent_node_name" target="_top"><span style='white-space: nowrap'>parent_node_name</span></a>
+.
+</li><li>
+
+A new version of <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+
+automatically detects (and suggests solutions)
+when the docker daemon is not running
+or when you do not have the necessary permissions to run docker.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="07-25" id="07-25">07-25</a></big></b>
 
 <ol type="1"><li>
@@ -925,10 +953,10 @@ It should be changed to
 .
 </li><li>
 
-The
-<a href="option_table.htm#meas_std_effect: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
+The option
+<a href="option_table.htm#meas_noise_effect.meas_std_effect: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
 
-option was deprecated.
+was deprecated.
 It should be changed to
 <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
 .
