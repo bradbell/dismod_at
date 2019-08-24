@@ -72,21 +72,35 @@ $cref/node_id/node_table/node_id/$$.
 It is easier (and equivalent) to use $icode parent_node_name$$
 instead of $icode parent_node_id$$; see below.
 
+$subhead Default$$
+The default value for this option is null.
+
 $head parent_node_name$$
 If $icode%option_name% = parent_node_name%$$
 the corresponding $icode option_value$$
 is an string that specifies the parent
 $cref/node_name/node_table/node_name/$$.
-If $icode parent_node_id$$ is also specified,
-the corresponding node id and node name must agree.
-If $icode parent_node_id$$ is not specified,
-the $cref node_table$$ is searched to determine
-the corresponding $icode parent_node_id$$
-(this takes some extra time that it is not expected to be significant).
 
 $subhead Default$$
-There is no default value when neither
-$icode parent_node_id$$ nor $icode parent_node_name$$ is present.
+The default value for this option is null.
+
+$subhead name or id$$
+$list number$$
+Either $icode parent_node_name$$ or $icode parent_node_id$$ must
+not be null.
+$lnext
+If both $icode parent_node_name$$ and $icode parent_node_id$$ are not null,
+the corresponding $cref/node_id/node_table/node_id/$$
+and $cref/node_name/node_table/node_name/$$ must agree; see $cref node_table$$.
+$lnext
+If $icode parent_node_name$$ is null and $icode parent_node_id$$ is not null,
+$icode parent_node_id$$ determines the parent node.
+$lnext
+If $icode parent_node_name$$ is not null and $icode parent_node_id$$ is null,
+the $cref node_table$$ is searched to determine
+the corresponding $icode parent_node_id$$.
+this takes some extra time that it is not expected to be significant.
+$lend
 
 $subhead Children$$
 The child nodes are the elements of the
@@ -146,9 +160,10 @@ $cref/add_var_scale_log
 	/add_var_scale_log
 /$$.
 
-$head meas_std_effect: Deprecated 2019-04-07$$
-This option is deprecated but still works (may not work in the future).
-It should be changed to use its new name $icode meas_noise_effect$$.
+$subhead meas_std_effect: Deprecated 2019-04-07$$
+This $icode option_name$$
+is deprecated but still works (may not work in the future).
+It should be changed to use its new name $code meas_noise_effect$$.
 
 $subhead Default$$
 The default value for this option is $code add_std_scale_all$$.
@@ -216,9 +231,6 @@ This option is no longer available because it is now
 integrand specific; see
 $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$.
 
-$subhead Default$$
-The default value for this option is $code 0.0$$.
-
 $head ode_step_size$$
 If $icode%option_name% = ode_step_size%$$,
 the corresponding $icode option_value$$
@@ -268,7 +280,7 @@ $cref/ordinary differential equation
 /$$.
 
 $subhead Default$$
-The default value for $icode age_avg_split$$ is the empty set
+The default value for $icode age_avg_split$$ is null (empty set)
 in which case the age average grid is the set of $icode%a%[%i%]%$$.
 
 $head random_seed$$

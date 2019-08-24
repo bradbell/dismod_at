@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -58,6 +58,9 @@ $subhead value$$
 Is the new
 $cref/option_value/option_table/Conventions/option_value/$$
 for the specified option name.
+If $icode value$$ is the empty string, null is used for the corresponding
+value in the database; see
+$cref/text can be null, not empty/database/Text can be Null, not Empty/$$.
 
 $subhead init$$
 The set option commands does not require the $code init$$ to be run first.

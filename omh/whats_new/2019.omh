@@ -61,6 +61,17 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 08-24$$
+The documentation now explicitly states that the empty string
+is stored as a null when it is used for the
+$cref/value/set_command/option/value/$$ in a set option command.
+In addition, the documentation for the $cref option_table$$
+now explicitly states which default values are null
+(instead of using other words like empty).
+Furthermore, the possible combinations of null and not null
+for the parent node id and name are discussed under the heading
+$cref/parent_node_name/option_table/parent_node_name/$$.
+
 $head 07-25$$
 $list number$$
 The $code dock_dismod_at.sh$$ command now has two stages to its build process;
@@ -550,9 +561,14 @@ was deprecated.
 It should be changed to
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$.
 $lnext
-The
-$cref/meas_std_effect/option_table/meas_std_effect: Deprecated 2019-04-07/$$
-option was deprecated.
+The option
+$cref/
+    meas_std_effect/
+    option_table/
+    meas_noise_effect/
+    meas_std_effect: Deprecated 2019-04-07
+/$$
+was deprecated.
 It should be changed to
 $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
 $lend
