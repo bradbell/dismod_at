@@ -158,6 +158,7 @@ $section Fit Model Constructor$$
 $head Syntax$$
 $codei%fit_model %fit_object%(
 	%db%,
+	%simulate_index%,
 	%warn_on_stderr%,
 	%bound_random%,
 	%no_scaling%,
@@ -179,6 +180,12 @@ The $code fit_model$$ object being constructed.
 $head db$$
 This argument is the database connection for
 $cref/logging/log_message/$$ errors and warnings.
+
+$head simulate_index$$
+Is the $cref/simulate_index/data_sim_table/simulate_index/$$
+when simulated data.
+This index is $code -1$$ when we are fitting the
+$cref/meas_value/data_table/meas_value/$$ column in the data table.
 
 $head warn_on_stderr$$
 If true, warnings will be printed on stderr.
@@ -241,6 +248,7 @@ $head Prototype$$
 $srccode%cpp% */
 fit_model::fit_model(
 	sqlite3*                              db               ,
+	int                                   simulate_index   ,
 	bool                                  warn_on_stderr   ,
 	double                                bound_random     ,
 	bool                                  no_scaling       ,
@@ -273,6 +281,7 @@ $end
 	ran_con_rcv(bound_random, zero_sum_random, pack_object)
 ),
 db_            (db)                                 ,
+simulate_index_( simulate_index )                   ,
 warn_on_stderr_( warn_on_stderr )                   ,
 no_scaling_    ( no_scaling )                       ,
 n_fixed_       ( number_fixed(pack_object) )        ,
@@ -1233,12 +1242,20 @@ fit_model::a1_vector fit_model::fix_constraint(const a1_vector& fixed_vec)
 void fit_model::fatal_error(const std::string& error_message)
 {
 	std::string msg = "cppad_mixed: " + error_message;
+	if( simulate_index_ != -1 )
+	{	msg += "\nfitting simulate_index = ";
+		msg += CppAD::to_string(simulate_index_);
+	}
 	// prints on std::cerr, logs in database, generates an assert, then exits
 	error_exit(msg);
 }
 // warning
 void fit_model::warning(const std::string& warning_message)
 {	std::string msg = "cppad_mixed: " + warning_message;
+	if( simulate_index_ != -1 )
+	{	msg += "\nfitting simulate_index = ";
+		msg += CppAD::to_string(simulate_index_);
+	}
 	// prints on std::cerr as well as logs in database
 	if( warn_on_stderr_ )
 		log_message(db_, &std::cerr, "warning", msg);

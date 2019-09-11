@@ -379,9 +379,11 @@ bool fit_model_xam(void)
 	// warn_on_stderr
 	bool warn_on_stderr = true;
 	//
-	bool no_scaling = false;
+	bool no_scaling     = false;
+	int  simulate_index = -1;
 	dismod_at::fit_model fit_object(
 		db,
+		simulate_index,
 		warn_on_stderr,
 		bound_random,
 		no_scaling,

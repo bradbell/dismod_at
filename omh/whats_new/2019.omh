@@ -62,11 +62,16 @@ $childtable%
 %$$
 
 $head 09-11$$
+$list number$$
 Increase speed and reduce chance of failure for
 $code test/user/fit_sim.py$$.
 The problem here is that the simulated values for the mean
 of the prior of the random effects do not sum to zero.
 This should be fixed.
+$lnext
+The $cref/simulate_index/data_sim_table/simulate_index/$$
+was added to error messages printed when fitting simulated data.
+$lend
 
 $head 08-24$$
 $list number$$

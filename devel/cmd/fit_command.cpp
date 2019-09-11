@@ -199,6 +199,8 @@ void fit_command(
 	}
 	// random_only
 	bool random_only = variables == "random";
+	// simulation index corresponding to data
+	int simulation_index = -1;
 	// -----------------------------------------------------------------------
 	if( simulate_index != "" )
 	{	size_t sim_index = std::atoi( simulate_index.c_str() );
@@ -244,6 +246,9 @@ void fit_command(
 					data_sim_table[data_sim_id].data_sim_stdcv;
 			}
 		}
+
+		// simulation index
+		simulation_index = int(sim_index);
 	}
 	data_object.replace_like(data_subset_obj);
 	// -----------------------------------------------------------------------
@@ -278,6 +283,7 @@ void fit_command(
 	bool no_scaling = false;
 	dismod_at::fit_model fit_object(
 		db                   ,
+		simulation_index     ,
 		warn_on_stderr       ,
 		bound_random         ,
 		no_scaling           ,

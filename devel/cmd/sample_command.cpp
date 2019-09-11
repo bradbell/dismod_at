@@ -270,10 +270,12 @@ void sample_command(
 			data_object.replace_like(data_subset_obj);
 			//
 			// fit_model
-			bool no_scaling = false;
+			bool no_scaling      = false;
 			bool   random_only   = false;
+			int    simulate_index = int(sample_index);
 			dismod_at::fit_model fit_object(
 				db                   ,
+				simulate_index       ,
 				warn_on_stderr       ,
 				bound_random         ,
 				no_scaling           ,
@@ -346,9 +348,11 @@ void sample_command(
 	);
 	//
 	// fit_object
-	bool no_scaling = true;
+	bool no_scaling     = true;
+	int  simulate_index = -1; // used actual data in fit
 	dismod_at::fit_model fit_object(
 		db                   ,
+		simulate_index       ,
 		warn_on_stderr       ,
 		bound_random         ,
 		no_scaling           ,

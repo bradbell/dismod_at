@@ -38,6 +38,7 @@ namespace dismod_at {
 		//
 		// const member variables
 		sqlite3*                           db_;
+		const int                          simulate_index_;
 		const bool                         warn_on_stderr_;
 		const bool                         no_scaling_;
 		const size_t                       n_fixed_;
@@ -169,6 +170,7 @@ namespace dismod_at {
 		// constructor
 		fit_model(
 			sqlite3*                             db              ,
+			int                                  simulate_index  ,
 			bool                                 warn_on_stderr  ,
 			double                               bound_random    ,
 			bool                                 no_scaling      ,
