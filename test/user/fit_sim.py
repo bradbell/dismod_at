@@ -14,7 +14,7 @@
 # values used to simulate data
 iota_parent               = 0.01
 mulcov_income_iota_true   = 1.0
-n_children                = 2
+n_children                = 6
 n_data                    = 20
 # ------------------------------------------------------------------------
 import sys
@@ -100,8 +100,7 @@ def example_db (file_name) :
 	density_list = [ "gaussian", "students", "log_gaussian", "log_students" ]
 	# values that are the same for all data rows
 	row = {
-		'meas_value':  100., # measurement is way off truth
-		'meas_std':    1,    # 1 percent coefficient of variation
+		'meas_value':  1.,   # measurement is way off truth
 		'eta':         1e-6,
 		'nu':          10,
 		'weight':      'constant',
@@ -238,6 +237,7 @@ def example_db (file_name) :
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'zero_sum_random',        'value':'iota'         },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'none'         },
