@@ -270,13 +270,13 @@ void sample_command(
 			data_object.replace_like(data_subset_obj);
 			//
 			// fit_model
-			string fit_or_sample = "fit";
+			bool no_scaling = false;
 			bool   random_only   = false;
 			dismod_at::fit_model fit_object(
 				db                   ,
 				warn_on_stderr       ,
 				bound_random         ,
-				fit_or_sample        ,
+				no_scaling           ,
 				pack_object          ,
 				var2prior            ,
 				start_var_value      ,
@@ -346,12 +346,12 @@ void sample_command(
 	);
 	//
 	// fit_object
-	string fit_or_sample = "sample";
+	bool no_scaling = true;
 	dismod_at::fit_model fit_object(
 		db                   ,
 		warn_on_stderr       ,
 		bound_random         ,
-		fit_or_sample        ,
+		no_scaling           ,
 		pack_object          ,
 		var2prior            ,
 		fit_var_value        ,

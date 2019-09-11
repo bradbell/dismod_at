@@ -31,4 +31,18 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|avg_age|age_avg|g
+#
+s|std::string fit_or_sample = "sample";|bool no_scaling = ture;|
+s|std::string fit_or_sample = "fit";|bool no_scaling = false;|
+s|string fit_or_sample = "sample";|bool no_scaling = true;|
+s|string fit_or_sample = "fit";|bool no_scaling = false;|
+#
+/assert( fit_or_sample == "fit" ||/d
+s|assert( fit_or_sample_ == "fit" );|assert( ! no_scaling_ );|
+s|assert( fit_or_sample_ == "sample" );|assert( no_scaling_ );|
+s|&= fit_or_sample == "fit";|\&= ! no_scaling;|
+s|std::string\( *\)fit_or_sample_;|bool \1no_scaling_;|
+s|const std::string&\( *\)fit_or_sample *,|bool \1no_scaling ,| 
+#
+s|fit_or_sample  |no_scaling     |
+s|fit_or_sample|no_scaling|g

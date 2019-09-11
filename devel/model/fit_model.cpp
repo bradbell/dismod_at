@@ -160,7 +160,7 @@ $codei%fit_model %fit_object%(
 	%db%,
 	%warn_on_stderr%,
 	%bound_random%,
-	%fit_or_sample%,
+	%no_scaling%,
 	%pack_object%,
 	%var2prior%,
 	%start_var%,
@@ -189,12 +189,9 @@ This is the value of the
 $cref/bound_random/option_table/Random Only/bound_random/$$
 in the option table.
 
-$head fit_or_sample$$
-This argument is either $code fit$$ or $code sample$$.
-If it is $code fit$$ ($code sample$$)
-the $cref/run_fit/fit_model_run_fit/$$
-( $cref/sample_posterior/fit_model_sample_posterior/$$ )
-function can be used with this object.
+$head no_scaling$$
+If this argument is true, no
+$cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ is done.
 
 $head pack_object$$
 This argument is the $cref pack_info$$ information corresponding to the
@@ -246,7 +243,7 @@ fit_model::fit_model(
 	sqlite3*                              db               ,
 	bool                                  warn_on_stderr   ,
 	double                                bound_random     ,
-	const std::string&                    fit_or_sample    ,
+	bool                                  no_scaling       ,
 	const pack_info&                      pack_object      ,
 	const pack_prior&                     var2prior        ,
 	const CppAD::vector<double>&          start_var        ,
@@ -277,7 +274,7 @@ $end
 ),
 db_            (db)                                 ,
 warn_on_stderr_( warn_on_stderr )                   ,
-fit_or_sample_ ( fit_or_sample )                    ,
+no_scaling_    ( no_scaling )                       ,
 n_fixed_       ( number_fixed(pack_object) )        ,
 n_random_      ( pack_object.random_size() )        ,
 pack_object_   ( pack_object )                      ,
@@ -288,7 +285,6 @@ prior_table_   ( prior_table )                      ,
 prior_object_  ( prior_object )                     ,
 data_object_   ( data_object )
 {	assert( bound_random >= 0.0 );
-	assert( fit_or_sample == "fit" || fit_or_sample == "sample" );
 	double inf = std::numeric_limits<double>::infinity();
 	// ----------------------------------------------------------------------
 	// n_var
@@ -422,7 +418,7 @@ data_object_   ( data_object )
 			{	prior_struct prior          = prior_table[prior_id];
 				fixed_scale_eta_[fixed_id]  = prior.eta;
 				fixed_is_scaled_[fixed_id]  = ! std::isnan( prior.eta );
-				fixed_is_scaled_[fixed_id] &= fit_or_sample == "fit";
+				fixed_is_scaled_[fixed_id] &= ! no_scaling;
 				bool ok = std::isnan(prior.eta);
 				ok     |= prior.lower + prior.eta > 0.0;
 				if( ! ok  )
@@ -473,7 +469,7 @@ $icode%fit_object%.run_fit(%random_only%, %option_map%)
 
 $head fit_object$$
 This object must have been constructed with
-$cref/fit_or_sample/fit_model_ctor/fit_or_sample/$$ equal to $code fit$$.
+$cref/no_scaling/fit_model_ctor/no_scaling/$$ equal to $code fit$$.
 
 $head Scaling$$
 During optimization the
@@ -519,7 +515,7 @@ void fit_model::run_fit(
 /* %$$
 $end
 */
-{	assert( fit_or_sample_ == "fit" );
+{	assert( ! no_scaling_ );
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
@@ -832,7 +828,7 @@ $icode%fit_object%.sample_posterior(
 
 $head fit_object$$
 This object must have been constructed with
-$cref/fit_or_sample/fit_model_ctor/fit_or_sample/$$ equal to $code sample$$.
+$cref/no_scaling/fit_model_ctor/no_scaling/$$ equal to $code sample$$.
 
 $head sample$$
 This argument is a vector with size equal to the number of samples
@@ -889,7 +885,7 @@ void fit_model::sample_posterior(
 /* %$$
 $end
 */
-{	assert( fit_or_sample_ == "sample" );
+{	assert( no_scaling_ );
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( sample.size() % n_var == 0     );

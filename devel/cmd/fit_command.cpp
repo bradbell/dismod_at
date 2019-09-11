@@ -275,12 +275,12 @@ void fit_command(
 	// warn_on_stderr
 	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
 	//
-	string fit_or_sample = "fit";
+	bool no_scaling = false;
 	dismod_at::fit_model fit_object(
 		db                   ,
 		warn_on_stderr       ,
 		bound_random         ,
-		fit_or_sample        ,
+		no_scaling           ,
 		pack_object          ,
 		var2prior            ,
 		start_var            ,
