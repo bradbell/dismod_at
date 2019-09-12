@@ -31,7 +31,10 @@ void simulate_command(
 	dismod_at::data_model&                              data_object       ,
 	const dismod_at::pack_prior&                        var2prior         ,
 	const CppAD::vector<dismod_at::prior_struct>&       prior_table       ,
-	const CppAD::vector<dismod_at::density_enum>&       density_table
+	const CppAD::vector<dismod_at::density_enum>&       density_table     ,
+	const dismod_at::pack_info&                         pack_object       ,
+	// effectively const
+	std::map<std::string, std::string>&                 option_map
 );
 
 }

@@ -61,6 +61,14 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-12$$
+If $cref/zero_sum_random/option_table/zero_sum_random/$$
+is chosen for a rate, the simulated prior values for that
+corresponding child rate effects at each grid point now sum to zero; see
+$cref/zero_sum_random/prior_sim_table/prior_sim_value/zero_sum_random/$$
+in the prior_sim table documentation.
+
+
 $head 09-11$$
 $list number$$
 Increase speed and reduce chance of failure for

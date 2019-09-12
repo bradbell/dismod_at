@@ -12,6 +12,7 @@
 #	init
 #	covariate
 #	mulcov
+#	exp
 # $$
 #
 # $section Fitting Simulated Data Example$$
@@ -25,12 +26,19 @@
 # and $code 1$$ as the upper limit.
 #
 # $head Child Iota$$
-# The $icode iota$$ $cref/child rate effects
-#	/model_variables/Random Effects, u/Child Rate Effects/$$
-# have a Gaussian prior with a mean zero and standard deviation 0.1.
-# Note that there is only one grid point in the parent and child smoothing
+# The $icode iota$$
+# $cref/child rate effects
+#	/model_variables
+#	/Random Effects, u
+#	/Child Rate Effects
+# /$$
+# have a Gaussian prior with a mean zero and standard deviation 0.5.
+# Note that $code exp(0.5)$$ is approximately 1.6 so the confidence interval
+# corresponding to +/- two standard deviations is approximately
+# [ 1.0 / 3.2 , 3.2 ].
+# There is only one grid point in the parent and child smoothing
 # for iota, hence it is constant in age and time.
-# In addition, the sum of the child rate random effects is constrained to
+# In addition, the sum of the child rate effects is constrained to
 # be zero.
 #
 # $head Other Rates$$
@@ -55,6 +63,12 @@
 # $head Data$$
 # All of the data is for the prevalence integrand and has a standard
 # deviation of 1e-3.
+#
+# $head Simulated Priors$$
+# The $cref prior_sim_table$$ contains simulated values for the priors
+# on the variables. This example checks that, for each simulation,
+# the sum of the random effects is zero (because the zero sum option
+# is chosen for $icode iota$$).
 #
 # $head Source Code$$
 # $srcfile%
@@ -190,7 +204,7 @@ def example_db (file_name) :
 			'name':     'prior_iota_child',
 			'density':  'gaussian',
 			'mean':     0.0,
-			'std':      0.1,
+			'std':      0.5,
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
@@ -330,14 +344,13 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Simulate and then fit the data
-system_command([ program, file_name, 'simulate', '1' ])
-system_command([ program, file_name, 'fit', 'both', '0' ])
+system_command([ program, file_name, 'simulate', '2' ])
+system_command([ program, file_name, 'fit', 'both', '1' ])
 # -----------------------------------------------------------------------
 # check fit results
 new          = False
 connection   = dismod_at.create_connection(file_name, new)
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
-connection.close()
 #
 max_error    = 0.0
 for var_id in range( len(var_table) ) :
@@ -352,6 +365,27 @@ if max_error > 5e-2 :
 	print('max_error = ', max_error)
 	assert(False)
 # -----------------------------------------------------------------------------
+# check that the simulted random effects sum to zero
+prior_sim_table  = dismod_at.get_table_dict(connection, 'prior_sim')
+node_table       = dismod_at.get_table_dict(connection, 'node')
+n_prior_sim      = len(prior_sim_table)
+n_var            = len( var_table )
+n_simulate       = int(  n_prior_sim / n_var )
+assert( n_prior_sim == n_var * n_simulate )
+for simulate_index in range( n_simulate ) :
+	sum_random = 0.0
+	for var_id in range( n_var ) :
+		var_type  = var_table[var_id]['var_type']
+		if var_type == 'rate' :
+			node_id   = var_table[var_id]['node_id']
+			node_name = node_table[node_id]['node_name']
+			if node_name.startswith('child_') :
+				row = prior_sim_table[ simulate_index * n_var + var_id ]
+				prior_sim_value = row['prior_sim_value']
+				sum_random     += prior_sim_value
+	assert( sum_random < 1e-10 )
+# -----------------------------------------------------------------------------
+connection.close()
 print('fit_sim.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

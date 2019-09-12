@@ -21,11 +21,12 @@ $spell
 $$
 
 $section Simulated Variation in Prior$$
+
 The $code prior_sim$$ table is created during a
 $cref simulate_command$$.
 It contains $cref/number_simulate/simulate_command/number_simulate/$$
 sets of priors where each set
-has one row for each the $cref var_table$$.
+has one row for each variable in the $cref var_table$$.
 Each row has a value, age difference, and time difference prior.
 
 $head prior_sim_id$$
@@ -57,6 +58,22 @@ This column has type $code real$$ and is
 a simulated from the value prior for this variable.
 If there is no value prior, or if the density for the value prior
 is uniform, $icode prior_sim_value$$ is $code null$$.
+
+$subhead zero_sum_random$$
+If the $cref/zero_sum_random/option_table/zero_sum_random/$$ option
+is chosen for a rate, the simulated values for the corresponding
+$cref/child rate effects
+	/model_variables
+	/Random Effects, u
+	/Child Rate Effects
+/$$
+will sum to zero at each grid point in the corresponding smoothing for;
+see $cref/child_smooth_id/rate_table/child_smooth_id/$$ in the rate table.
+Note that using $code zero_sum_random$$ for a rate
+requires that the same smoothing is used by all the child random effects
+for that rate.
+This is done by simulating using independent priors and then subtracting
+averages of the simulated values.
 
 $head prior_sim_dage$$
 This column has type $code real$$ and is

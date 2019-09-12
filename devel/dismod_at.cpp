@@ -525,7 +525,9 @@ int main(int n_arg, const char** argv)
 					data_object              ,
 					var2prior                ,
 					db_input.prior_table     ,
-					db_input.density_table
+					db_input.density_table   ,
+					pack_object              ,
+					option_map
 				);
 			}
 			else if( command_arg == "sample" )

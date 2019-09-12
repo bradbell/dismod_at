@@ -91,7 +91,10 @@ void simulate_command(
 	dismod_at::data_model&                              data_object       ,
 	const dismod_at::pack_prior&                        var2prior         ,
 	const CppAD::vector<dismod_at::prior_struct>&       prior_table       ,
-	const CppAD::vector<dismod_at::density_enum>&       density_table
+	const CppAD::vector<dismod_at::density_enum>&       density_table     ,
+	const dismod_at::pack_info&                         pack_object       ,
+	// effectively const
+	std::map<std::string, std::string>&                 option_map
 )
 {
 	using std::string;
@@ -299,7 +302,9 @@ void simulate_command(
 	{	col_type[2+k]   = "real";
 		col_unique[2+k] = false;
 	}
-	// for each measurement in the data_subset table
+	// simulate value for mean of prior
+	// for each variable in the var table
+	vector<double> sim_prior_value(n_simulate * n_var);
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
 	{	//
 		// prior id for mean of this this variable
@@ -337,6 +342,10 @@ void simulate_command(
 					sim = std::max(sim, lower);
 					//
 					sim_str[k] = to_string( sim );
+					//
+					// store prior value for zero_sum_random constraint
+					if( k == 0 )
+						sim_prior_value[sim_index * n_var + var_id] = sim;
 				}
 			}
 			//
@@ -348,6 +357,69 @@ void simulate_command(
 			row_value[prior_sim_id * n_col + 4] = sim_str[2];
 		}
 	}
+	// ----------------------------------------------------------------------
+	// This is the code for adding the constraints on random effects
+	//
+	// n_child
+	size_t n_child = pack_object.child_size();
+	//
+	// zero_sum_random
+	size_t n_rate      = size_t(dismod_at::number_rate_enum);
+	size_t option_size = option_map["zero_sum_random"].size();
+	vector<bool> zero_sum_random(n_rate);
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	{	string rate_name = dismod_at::get_rate_name(rate_id);
+		size_t found     = option_map["zero_sum_random"].find( rate_name );
+		zero_sum_random[rate_id] = found < option_size;
+	}
+	for(size_t sim_index = 0; sim_index < n_simulate; ++sim_index)
+	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
+	if( zero_sum_random[rate_id] )
+	{	// packing information for first child and this rate
+		dismod_at::pack_info::subvec_info
+			info_0 = pack_object.rate_info(rate_id, 0);
+		//
+		// child smoothing id for first rate
+		size_t smooth_id = info_0.smooth_id;
+		if( smooth_id != DISMOD_AT_NULL_SIZE_T && n_child > 0)
+		{	//
+			// number of grid points for child smoothing for this rate
+			size_t n_grid = info_0.n_var;
+			vector<size_t> var_id_tmp(n_child);
+			for(size_t k = 0; k < n_grid; k++)
+			{	// for this simulation, rate, and grid point
+				double sum_random = 0.0;
+				for(size_t j = 0; j < n_child; j++)
+				{	// packing information for this child and this rate
+					dismod_at::pack_info::subvec_info
+						info_j = pack_object.rate_info(rate_id, j);
+# if NDEBUG
+					// for each rate, all children have the same smoothing
+					assert( info_j.smooth_id == info_0.smooth_id );
+					assert( info_j.n_var     == info_0.n_var );
+# endif
+					// offset for this rate and child
+					size_t offset = info_j.offset;
+					//
+					// variable index for this grid point
+					size_t var_id = offset + k;
+					var_id_tmp[j] = var_id;
+					//
+					// add random effect for this child
+					sum_random += sim_prior_value[sim_index * n_var + var_id];
+				}
+				for(size_t j = 0; j < n_child; ++j)
+				{	size_t var_id = var_id_tmp[j];
+					double value = sim_prior_value[sim_index * n_var + var_id];
+					value       -= sum_random / double(n_child);
+					size_t prior_sim_id = sim_index * n_var + var_id;
+					// overwrite the value priro because it is zero mean
+					row_value[prior_sim_id * n_col + 2] = to_string(value);
+				}
+			}
+		}
+	}
+	// create prior_sim table
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
