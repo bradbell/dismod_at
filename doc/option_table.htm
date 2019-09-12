@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -119,6 +119,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top">bound_frac_fixed</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed Only.limited_memory_max_history_fixed" target="_top">limited_memory_max_history_fixed</a>
 <br><a href="option_table.htm#Random Only" target="_top">Random&nbsp;Only</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Random Only.method_random" target="_top">method_random</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Random Only.bound_random" target="_top">bound_random</a>
 <br><a href="option_table.htm#Example" target="_top">Example</a>
 <br>These options control how the
@@ -927,6 +928,22 @@ The default value for this option is <code><font color="blue">30</font></code>.
 <br>
 The following options control the Ipopt optimization
 of the random effects:
+
+<br>
+<br>
+<big><a name="Random Only.method_random" id="Random Only.method_random">method_random</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is <code><font color="blue">method_random</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is either <code><font color="blue">ipopt_solve</font></code> or <code><font color="blue">ipopt_random</font></code>.
+The method <code><font color="blue">ipopt_solve</font></code> is part of the standard CppAD package.
+The method <code><font color="blue">ipopt_random</font></code> is a special purpose interface to ipopt
+designed to optimizer the random effects for the cppad_mixed package
+(which should be faster).
+The default value for this option is <code><font color="blue">ipopt_random</font></code>.
 
 <br>
 <br>

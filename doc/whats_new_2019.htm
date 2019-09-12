@@ -129,7 +129,8 @@ A:active { color : purple }
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
 <b><big><a name="09-12" id="09-12">09-12</a></big></b>
-<br>
+
+<ol type="1"><li>
 If <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
 
 is chosen for a rate, the simulated prior values for that
@@ -137,6 +138,22 @@ corresponding child rate effects at each grid point now sum to zero; see
 <a href="prior_sim_table.htm#prior_sim_value.zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
 
 in the prior_sim table documentation.
+</li><li>
+
+The <a href="option_table.htm#Random Only.method_random" target="_top"><span style='white-space: nowrap'>method_random</span></a>
+ option
+was added.
+This gives a different choice for optimizing the random effects.
+</li><li>
+
+The <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+ value in
+<a href="db2csv_command.htm#option.csv" target="_top"><span style='white-space: nowrap'>option.csv</span></a>
+ written by the <code><font color="blue">db2csv</font></code>
+command was <code><font color="blue">false</font></code> when it should have been empty.
+This has been fixed.
+</li></ol>
+
 
 
 <br>

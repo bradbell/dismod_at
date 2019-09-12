@@ -65,7 +65,7 @@ Keyword =
 'nslist_pair_table.py  nslist_pair_table: Example and Test  ',' ',
 'nslist_table  The Node Smoothing List Table  ',' nslist_id nslist_name example ',
 'nslist_table.py  nslist_table: Example and Test  ',' ',
-'option_table  The Option Table  ',' conventions changing values option_id option_name option_value parent_node_id default parent_node_name children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed bound_random example ',
+'option_table  The Option Table  ',' conventions changing values option_id option_name option_value parent_node_id default parent_node_name children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ',
 'option_table.py  option_table: Example and Test  ',' ',
 'prior_table  The Prior Table  ',' purpose prior_id prior_name density_id lower upper mean uniform std linear scaling log discussion eta null fixed effects example ',
 'prior_table.py  prior_table: Example and Test  ',' ',
