@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Variation in Prior</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Variation in Prior">
-<meta name="keywords" id="keywords" content=" simulated variation prior prior_sim_id simulate_index var_id prior_sim_value prior_sim_dage prior_sim_dtime censoring example ">
+<meta name="keywords" id="keywords" content=" simulated variation prior prior_sim_id simulate_index var_id prior_sim_value zero_sum_random prior_sim_dage prior_sim_dtime censoring example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,6 +74,7 @@ A:active { color : purple }
 <br><a href="prior_sim_table.htm#simulate_index" target="_top">simulate_index</a>
 <br><a href="prior_sim_table.htm#var_id" target="_top">var_id</a>
 <br><a href="prior_sim_table.htm#prior_sim_value" target="_top">prior_sim_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="prior_sim_table.htm#prior_sim_value.zero_sum_random" target="_top">zero_sum_random</a>
 <br><a href="prior_sim_table.htm#prior_sim_dage" target="_top">prior_sim_dage</a>
 <br><a href="prior_sim_table.htm#prior_sim_dtime" target="_top">prior_sim_dtime</a>
 <br><a href="prior_sim_table.htm#Censoring" target="_top">Censoring</a>
@@ -84,7 +85,7 @@ A:active { color : purple }
 It contains <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
 
 sets of priors where each set
-has one row for each the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+has one row for each variable in the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
 .
 Each row has a value, age difference, and time difference prior.
 
@@ -149,6 +150,24 @@ If there is no value prior, or if the density for the value prior
 is uniform, 
 <code><i><font color="black"><span style='white-space: nowrap'>prior_sim_value</span></font></i></code>
  is <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<big><a name="prior_sim_value.zero_sum_random" id="prior_sim_value.zero_sum_random">zero_sum_random</a></big>
+<br>
+If the <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+ option
+is chosen for a rate, the simulated values for the corresponding
+<a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effects</span></a>
+
+will sum to zero at each grid point in the corresponding smoothing for;
+see <a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
+ in the rate table.
+Note that using <code><font color="blue">zero_sum_random</font></code> for a rate
+requires that the same smoothing is used by all the child random effects
+for that rate.
+This is done by simulating using independent priors and then subtracting
+averages of the simulated values.
 
 <br>
 <br>

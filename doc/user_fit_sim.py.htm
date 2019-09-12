@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting Simulated Data Example</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting Simulated Data Example">
-<meta name="keywords" id="keywords" content=" fitting simulated data example parent iota child other rates covariate multiplier source code ">
+<meta name="keywords" id="keywords" content=" fitting simulated data example parent iota child other rates covariate multiplier priors source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,6 +68,7 @@ A:active { color : purple }
 <br><a href="user_fit_sim.py.htm#Other Rates" target="_top">Other&nbsp;Rates</a>
 <br><a href="user_fit_sim.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
 <br><a href="user_fit_sim.py.htm#Data" target="_top">Data</a>
+<br><a href="user_fit_sim.py.htm#Simulated Priors" target="_top">Simulated&nbsp;Priors</a>
 <br><a href="user_fit_sim.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Parent Iota" id="Parent Iota">Parent Iota</a></big></b>
@@ -91,12 +92,16 @@ and <code><font color="blue">1</font></code> as the upper limit.
 <br>
 The 
 <code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
- <a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effects</span></a>
 
-have a Gaussian prior with a mean zero and standard deviation 0.1.
-Note that there is only one grid point in the parent and child smoothing
+<a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effects</span></a>
+
+have a Gaussian prior with a mean zero and standard deviation 0.5.
+Note that <code><font color="blue">exp(0.5)</font></code> is approximately 1.6 so the confidence interval
+corresponding to +/- two standard deviations is approximately
+[ 1.0 / 3.2 , 3.2 ].
+There is only one grid point in the parent and child smoothing
 for iota, hence it is constant in age and time.
-In addition, the sum of the child rate random effects is constrained to
+In addition, the sum of the child rate effects is constrained to
 be zero.
 
 <br>
@@ -136,6 +141,18 @@ hence it is constant in age and time.
 <br>
 All of the data is for the prevalence integrand and has a standard
 deviation of 1e-3.
+
+<br>
+<br>
+<b><big><a name="Simulated Priors" id="Simulated Priors">Simulated Priors</a></big></b>
+<br>
+The <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+ contains simulated values for the priors
+on the variables. This example checks that, for each simulation,
+the sum of the random effects is zero (because the zero sum option
+is chosen for 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+).
 
 <br>
 <br>
@@ -269,7 +286,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_iota_child'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.1</font><font color="#990000">,</font>
+               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.5</font><font color="#990000">,</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_iota_parent</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_iota_parent'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
@@ -409,14 +426,13 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</fo
 connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Simulate and then fit the data</font></i>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'2'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># check fit results</font></i>
 new          <font color="#990000">=</font> False
 connection   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
 fit_var_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
-connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900">#</font></i>
 max_error    <font color="#990000">=</font> <font color="#993399">0.0</font>
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
@@ -431,6 +447,27 @@ max_error    <font color="#990000">=</font> <font color="#993399">0.0</font>
      <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'max_error = '</font><font color="#990000">,</font> max_error<font color="#990000">)</font>
      <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># check that the simulted random effects sum to zero</font></i>
+prior_sim_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'prior_sim'</font><font color="#990000">)</font>
+node_table       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
+n_prior_sim      <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>prior_sim_table<font color="#990000">)</font>
+n_var            <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font> var_table <font color="#990000">)</font>
+n_simulate       <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>  n_prior_sim <font color="#990000">/</font> n_var <font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font> n_prior_sim <font color="#990000">==</font> n_var <font color="#990000">*</font> n_simulate <font color="#990000">)</font>
+<b><font color="#0000FF">for</font></b> simulate_index <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> n_simulate <font color="#990000">)</font> <font color="#990000">:</font>
+     sum_random <font color="#990000">=</font> <font color="#993399">0.0</font>
+     <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> n_var <font color="#990000">)</font> <font color="#990000">:</font>
+          var_type  <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">][</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font>
+          <b><font color="#0000FF">if</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'rate'</font> <font color="#990000">:</font>
+               node_id   <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">][</font><font color="#FF0000">'node_id'</font><font color="#990000">]</font>
+               node_name <font color="#990000">=</font> node_table<font color="#990000">[</font>node_id<font color="#990000">][</font><font color="#FF0000">'node_name'</font><font color="#990000">]</font>
+               <b><font color="#0000FF">if</font></b> node_name<font color="#990000">.</font><b><font color="#000000">startswith</font></b><font color="#990000">(</font><font color="#FF0000">'child_'</font><font color="#990000">)</font> <font color="#990000">:</font>
+                    row <font color="#990000">=</font> prior_sim_table<font color="#990000">[</font> simulate_index <font color="#990000">*</font> n_var <font color="#990000">+</font> var_id <font color="#990000">]</font>
+                    prior_sim_value <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'prior_sim_value'</font><font color="#990000">]</font>
+                    sum_random     <font color="#990000">+=</font> prior_sim_value
+     <b><font color="#0000FF">assert</font></b><font color="#990000">(</font> sum_random <font color="#990000">&lt;</font> <font color="#993399">1e-10</font> <font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'fit_sim.py: OK'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i></tt></pre>
 
