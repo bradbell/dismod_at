@@ -62,11 +62,22 @@ $childtable%
 %$$
 
 $head 09-12$$
+$list number$$
 If $cref/zero_sum_random/option_table/zero_sum_random/$$
 is chosen for a rate, the simulated prior values for that
 corresponding child rate effects at each grid point now sum to zero; see
 $cref/zero_sum_random/prior_sim_table/prior_sim_value/zero_sum_random/$$
 in the prior_sim table documentation.
+$lnext
+The $cref/method_random/option_table/Random Only/method_random/$$ option
+was added.
+This gives a different choice for optimizing the random effects.
+$lnext
+The $cref/zero_sum_random/option_table/zero_sum_random/$$ value in
+$cref/option.csv/db2csv_command/option.csv/$$ written by the $code db2csv$$
+command was $code false$$ when it should have been empty.
+This has been fixed.
+$lend
 
 
 $head 09-11$$

@@ -954,6 +954,7 @@ def db2csv_command(database_file_arg) :
 		[ "derivative_test_fixed",             "none"],
 		[ "derivative_test_random",            "none"],
 		[ "limited_memory_max_history_fixed",  "30"],
+		[ "method_random",                     "ipopt_random"],
 		[ "max_num_iter_fixed",                "100"],
 		[ "max_num_iter_random",               "100"],
 		[ "meas_noise_effect",                   "add_std_scale_all"],
@@ -968,7 +969,7 @@ def db2csv_command(database_file_arg) :
 		[ "tolerance_fixed",                   "1e-8"],
 		[ "tolerance_random",                  "1e-8"],
 		[ "warn_on_stderr",                    "true"],
-		[ "zero_sum_random",                   "false"],
+		[ "zero_sum_random",                   ""],
 		# END_SORT_THIS_LINE_MINUS_1
 	]
 	option_id = 0

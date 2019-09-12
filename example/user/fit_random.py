@@ -255,7 +255,8 @@ def example_db (file_name) :
 
 		{ 'name':'derivative_test_random', 'value':'second-order'  },
 		{ 'name':'max_num_iter_random',    'value':'100'           },
-		{ 'name':'tolerance_random',       'value':'1e-10'         }
+		{ 'name':'tolerance_random',       'value':'1e-10'         },
+		{ 'name':'method_random',          'value':'ipopt_solve'   }
 	]
 	# ----------------------------------------------------------------------
 	# create database

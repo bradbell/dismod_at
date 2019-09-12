@@ -363,6 +363,7 @@ bool fit_model_xam(void)
 	option_map["limited_memory_max_history_fixed"]  = "30";
 	option_map["max_num_iter_fixed"]                = "100";
 	option_map["max_num_iter_random"]               = "100";
+	option_map["method_random"]                     = "ipopt_solve";
 	option_map["print_level_fixed"]                 = "0";
 	option_map["print_level_random"]                = "0";
 	option_map["tolerance_fixed"]                   = "1e-8";

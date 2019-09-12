@@ -112,6 +112,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "max_num_iter_fixed",               "100"                },
 		{ "max_num_iter_random",              "100"                },
 		{ "meas_noise_effect",                "add_std_scale_all"  },
+		{ "method_random",                    "ipopt_random"       },
 		{ "ode_step_size",                    "10.0"               },
 		{ "parent_node_id",                   ""                   },
 		{ "parent_node_name",                 ""                   },
@@ -332,6 +333,15 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 					msg += " is not a valid rate name";
 					error_exit(msg, table_name, option_id);
 				}
+			}
+		}
+		if( name_vec[match] == "method_random" )
+		{	if( option_value[option_id] != "ipopt_solve"  &&
+			    option_value[option_id] != "ipopt_random"
+			)
+			{	msg  = "method_random option is not ";
+				msg += "ipopt_solve or ipopt_random";
+				error_exit(msg, table_name);
 			}
 		}
 	}

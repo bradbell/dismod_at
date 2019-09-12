@@ -629,6 +629,7 @@ $end
 	options += "\nNumeric acceptable_tol " + option_map["tolerance_random"];
 	options += "\nInteger print_level " + option_map["print_level_random"];
 	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
+	options += "\nString evaluation_method " + option_map["method_random"];
 	//
 	options += "\nInteger accept_after_max_steps "
 		+ option_map["accept_after_max_steps_random"];

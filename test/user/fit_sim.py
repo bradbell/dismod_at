@@ -12,9 +12,9 @@
 # Test a case where sim_std is much different from meas_std.
 #
 # values used to simulate data
-iota_parent               = 0.01
+iota_parent_true          = 0.01
 mulcov_income_iota_true   = 1.0
-n_children                = 6
+n_children                = 2
 n_data                    = 20
 # ------------------------------------------------------------------------
 import sys
@@ -100,7 +100,7 @@ def example_db (file_name) :
 	density_list = [ "gaussian", "students", "log_gaussian", "log_students" ]
 	# values that are the same for all data rows
 	row = {
-		'meas_value':  1.,   # measurement is way off truth
+		'meas_value':  1.,   # measurement is way off truth and not used
 		'eta':         1e-6,
 		'nu':          10,
 		'weight':      'constant',
@@ -115,7 +115,7 @@ def example_db (file_name) :
 		#
 		# one percent coefficient of variation
 		if density == 'gaussian' or density == 'students' :
-			row['meas_std'] = iota_parent / 100.
+			row['meas_std'] = iota_parent_true / 100.
 		else :
 			row['meas_std'] = row['meas_value'] / 100.
 		fraction         = data_id / float(n_data-1)
@@ -165,9 +165,9 @@ def example_db (file_name) :
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'lower':    iota_parent / 100.,
-			'upper':    iota_parent * 10.0,
-			'mean':     iota_parent / 2.0,
+			'lower':    iota_parent_true / 100.,
+			'upper':    iota_parent_true * 10.0,
+			'mean':     iota_parent_true / 2.0,
 			'std':      None,
 			'eta':      None
 		},{ # prior_mulcov
@@ -248,7 +248,8 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_random', 'value':'none'         },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-8'         }
+		{ 'name':'tolerance_random',       'value':'1e-8'         },
+		{ 'name':'method_random',          'value':'ipopt_solve'  }
 	]
 	# ----------------------------------------------------------------------
 	# avgint table: empty
@@ -322,7 +323,7 @@ for var_id in range( len(var_table) ) :
 		node_id   = var_info['node_id']
 		# node zero is the world
 		if node_id == 0 and rate_name == 'iota' :
-			truth_var_value = iota_parent
+			truth_var_value = iota_parent_true
 		else :
 			truth_var_value = 0.0
 	var_id2true.append( truth_var_value )

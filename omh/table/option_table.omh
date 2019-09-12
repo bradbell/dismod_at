@@ -10,6 +10,8 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	optimizer
+	CppAD
 	mtother
 	csv
 	nslist
@@ -470,6 +472,15 @@ The default value for this option is $code 30$$.
 $head Random Only$$
 The following options control the Ipopt optimization
 of the random effects:
+
+$subhead method_random$$
+If $icode option_name$$ is $code method_random$$,
+$icode option_value$$ is either $code ipopt_solve$$ or $code ipopt_random$$.
+The method $code ipopt_solve$$ is part of the standard CppAD package.
+The method $code ipopt_random$$ is a special purpose interface to ipopt
+designed to optimizer the random effects for the cppad_mixed package
+(which should be faster).
+The default value for this option is $code ipopt_random$$.
 
 $subhead bound_random$$
 If $icode option_name$$ is
