@@ -234,7 +234,7 @@ bool fit_model_xam(void)
 	dismod_at::weight_info w_info(
 		age_table, time_table, age_id, time_id, weight
 	);
-	vector<dismod_at::weight_info> w_info_vec(1);
+	vector<dismod_at::weight_info> w_info_vec(2);
 	w_info_vec[0] = w_info;
 	//
 	// covariate table

@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/avg_integrand.hpp>
 # include <dismod_at/grid2line.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -79,6 +80,8 @@ $codei%
 	%w_info_vec%[ %weight_id% ]
 %$$
 is the corresponding $cref weight_info$$ information.
+In addition, the constant weight is included at the end of the vector; i.e.,
+at index $icode%w_info_vec%.size()-1%$$.
 
 $head s_info_vec$$
 For each $cref/smooth_id/smooth_table/smooth_id/$$,
@@ -616,7 +619,13 @@ void avg_integrand::add_cohort(
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// weight information for this average
-	const weight_info& w_info( w_info_vec_[weight_id] );
+	// constant weighting is at the end of w_info_vec_
+	size_t weight_index = w_info_vec_.size() - 1;
+	if( weight_id != DISMOD_AT_NULL_SIZE_T )
+	{	assert( weight_id < weight_index );
+		weight_index = weight_id;
+	}
+	const weight_info& w_info( w_info_vec_[weight_index] );
 
 	// extend_grid
 	const CppAD::vector<double>& extend_grid = time_line_object.extend_grid();

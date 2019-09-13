@@ -73,7 +73,7 @@ bool avg_integrand_xam(void)
 
 	//
 	// w_info_vec
-	vector<dismod_at::weight_info> w_info_vec(1);
+	vector<dismod_at::weight_info> w_info_vec(2);
 	w_info_vec[0] = w_info;
 
 	// priors are not used

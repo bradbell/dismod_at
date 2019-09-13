@@ -85,6 +85,11 @@ $head weight_id$$
 This column has type $code integer$$ and is the
 $cref/weight_id/weight_grid_table/weight_id/$$ that identifies
 the weighting used for this measurement.
+If $icode weight_id$$ is nu
+
+$subhead null$$
+If $icode weight_id$$ is $code null$$,
+the constant weighting is used for this data point.
 
 $head hold_out$$
 This column has type $code integer$$ and has value zero or one.

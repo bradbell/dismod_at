@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -20,7 +20,7 @@ $$
 $section Extract and Organize Information for One Weighting Function$$
 
 $head Syntax$$
-$codei%weight_info %w_default%()
+$codei%weight_info %w_constant%()
 %$$
 $codei%weight_info %w_info%(
 	%age_table%, %time_table%, %weight_id%, %weight_table%, %weight_grid_table%
@@ -49,9 +49,9 @@ the $cref weight_grid_table$$.
 In addition, this routine checks the $code weight_info$$ table
 $cref/rectangular grid/weight_grid_table/Rectangular Grid/$$ assumption.
 
-$head w_default$$
-This is the default constructor. It can be used to create
-an empty $code weight_info$$ object that is later set equal
+$head w_constant$$
+The default constructor creates a constant weighting.
+It is also used to create a $code weight_info$$ object that is later set equal
 to another $code weight_info$$ object.
 This is useful when creating vectors of such objects.
 
@@ -248,18 +248,26 @@ double weight_info::weight(size_t i, size_t j) const
 
 // Assignment operator
 void weight_info::operator=(const weight_info& w_info)
-{	age_id_ =  w_info.age_id_;
+{	// resize to zero so CppAD::vector assingments are legal
+	age_id_.resize(0);
+	time_id_.resize(0);
+	weight_.resize(0);
+	//
+	age_id_  =  w_info.age_id_;
 	time_id_ = w_info.time_id_;
 	weight_  = w_info.weight_;
 }
 
-// Default constructor
+// Default constructor (constant weighting)
 weight_info::weight_info(void)
 :
-age_id_(0),
-time_id_(0) ,
-weight_(0)
-{ }
+age_id_(1)  ,
+time_id_(1) ,
+weight_(1)
+{	age_id_[0]  = 0;
+	time_id_[0] = 0;
+	weight_[0]  = 1.0;
+}
 
 // Testing Constructor
 weight_info::weight_info(

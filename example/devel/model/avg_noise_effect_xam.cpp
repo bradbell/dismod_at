@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -107,7 +107,7 @@ bool avg_noise_effect_xam(void)
 	dismod_at::weight_info w_info(
 		age_table, time_table, age_id, time_id, weight
 	);
-	vector<dismod_at::weight_info> w_info_vec(1);
+	vector<dismod_at::weight_info> w_info_vec(2);
 	w_info_vec[0] = w_info;
 	//
 	// s_info_vec

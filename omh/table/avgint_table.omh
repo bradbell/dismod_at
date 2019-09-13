@@ -109,6 +109,10 @@ This column has type $code integer$$ and is the
 $cref/weight_id/weight_grid_table/weight_id/$$ that identifies
 the weighting used for this case.
 
+$subhead null$$
+If $icode weight_id$$ is $code null$$,
+the constant weighting is used for this data point.
+
 $head age_lower$$
 This column has type $code real$$ and is the lower age limit
 for this case.

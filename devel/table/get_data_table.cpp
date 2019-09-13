@@ -306,11 +306,7 @@ void get_data_table(
 	// (primary key conditions checked by calling routine)
 	string msg;
 	for(size_t data_id = 0; data_id < n_data; data_id++)
-	{	int weight_id = data_table[data_id].weight_id;
-		if( weight_id == DISMOD_AT_NULL_INT )
-		{	msg = "weight_id is null";
-			error_exit(msg, table_name, data_id);
-		}
+	{
 		// -------------------------------------------------------------
 		int hold_out = data_table[data_id].hold_out;
 		if( hold_out != 0 && hold_out != 1 )

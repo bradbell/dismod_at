@@ -113,6 +113,8 @@ $codei%
 	%w_info_vec%[ %weight_id% ]
 %$$
 is the corresponding $cref weight_info$$ information.
+In addition, the constant weight is included at the end of the vector; i.e.,
+at index $icode%w_info_vec%.size()-1%$$.
 
 $head s_info_vec$$
 For each $cref/smooth_id/smooth_table/smooth_id/$$,

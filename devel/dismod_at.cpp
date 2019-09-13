@@ -242,7 +242,7 @@ int main(int n_arg, const char** argv)
 	size_t n_smooth    = db_input.smooth_table.size();
 	// ---------------------------------------------------------------------
 	// w_info_vec
-	vector<dismod_at::weight_info> w_info_vec(n_weight);
+	vector<dismod_at::weight_info> w_info_vec(n_weight + 1);
 	for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
 	{	w_info_vec[weight_id] = dismod_at::weight_info(
 			db_input.age_table,
@@ -252,6 +252,9 @@ int main(int n_arg, const char** argv)
 			db_input.weight_grid_table
 		);
 	}
+	// The constant weighting is placed at the end of w_info_vec
+	w_info_vec[n_weight] = dismod_at::weight_info();
+	//
 	// s_info_vec
 	vector<dismod_at::smooth_info> s_info_vec(n_smooth);
 	for(size_t smooth_id = 0; smooth_id < n_smooth; smooth_id++)
