@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The avgint Table: Defines Average Integrand Cases</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The avgint Table: Defines Average Integrand Cases">
-<meta name="keywords" id="keywords" content=" the avgint table: defines average integrand cases see also purpose usage parent rates child avgint_id integrand_id node_id weight_id age_lower age_upper time_lower time_upper covariates example ">
+<meta name="keywords" id="keywords" content=" the avgint table: defines average integrand cases see also purpose usage parent rates child avgint_id integrand_id node_id weight_id null age_lower age_upper time_lower time_upper covariates example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,7 @@ A:active { color : purple }
 <br><a href="avgint_table.htm#integrand_id" target="_top">integrand_id</a>
 <br><a href="avgint_table.htm#node_id" target="_top">node_id</a>
 <br><a href="avgint_table.htm#weight_id" target="_top">weight_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avgint_table.htm#weight_id.null" target="_top">null</a>
 <br><a href="avgint_table.htm#age_lower" target="_top">age_lower</a>
 <br><a href="avgint_table.htm#age_upper" target="_top">age_upper</a>
 <br><a href="avgint_table.htm#time_lower" target="_top">time_lower</a>
@@ -257,6 +258,15 @@ This column has type <code><font color="blue">integer</font></code> and is the
 <a href="weight_grid_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
  that identifies
 the weighting used for this case.
+
+<br>
+<br>
+<big><a name="weight_id.null" id="weight_id.null">null</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+ is <code><font color="blue">null</font></code>,
+the constant weighting is used for this data point.
 
 <br>
 <br>

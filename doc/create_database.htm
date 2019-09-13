@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create a Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create a Dismod_at Database">
-<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_table node_table weight_table covariate_table avgint_table avgint_extra_columns data_table data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table option_table example ">
+<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_table node_table weight_table covariate_table avgint_table weight covariates avgint_extra_columns data_table data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table option_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,8 @@ A:active { color : purple }
 <br><a href="create_database.htm#weight_table" target="_top">weight_table</a>
 <br><a href="create_database.htm#covariate_table" target="_top">covariate_table</a>
 <br><a href="create_database.htm#avgint_table" target="_top">avgint_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#avgint_table.weight" target="_top">weight</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#avgint_table.covariates" target="_top">covariates</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#avgint_table.avgint_extra_columns" target="_top">avgint_extra_columns</a>
 <br><a href="create_database.htm#data_table" target="_top">data_table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#data_table.data_extra_columns" target="_top">data_extra_columns</a>
@@ -358,7 +360,7 @@ node         </td><td align='left'  valign='top'>
 
 weight       </td><td align='left'  valign='top'>
  str         </td><td align='left'  valign='top'>
- weighting function          </td></tr><tr><td align='left'  valign='top'>
+ weighting function name     </td></tr><tr><td align='left'  valign='top'>
 
 age_lower    </td><td align='left'  valign='top'>
  float       </td><td align='left'  valign='top'>
@@ -393,6 +395,23 @@ time_lower   </td><td align='left'  valign='top'>
  value of last covariate
 </td></tr>
 </table>
+<br>
+<big><a name="avgint_table.weight" id="avgint_table.weight">weight</a></big>
+<br>
+The weighting function name identifies an
+entry in the <a href="create_database.htm#weight_table" target="_top"><span style='white-space: nowrap'>weight_table</span></a>
+
+by its 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+. If 
+<code><i><font color="black"><span style='white-space: nowrap'>weight</span></font></i></code>
+ is the empty string,
+the constant weighting is used.
+
+<br>
+<br>
+<big><a name="avgint_table.covariates" id="avgint_table.covariates">covariates</a></big>
+<br>
 Note that 
 <code><i><font color="black"><span style='white-space: nowrap'>J</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;len(</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;1</span></font></code>
  and for

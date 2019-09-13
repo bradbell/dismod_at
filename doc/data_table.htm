@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Data Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Data Table">
-<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id nonsmooth node_id parent random effects child weight_id hold_out meas_value meas_std adjusted standard deviation delta linear scaling log eta null nu age_lower age_upper time_lower time_upper covariates example ">
+<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id nonsmooth node_id parent random effects child weight_id null hold_out meas_value meas_std adjusted standard deviation delta linear scaling log eta nu age_lower age_upper time_lower time_upper covariates example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#node_id.Parent Data Random Effects" target="_top">Parent&nbsp;Data&nbsp;Random&nbsp;Effects</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#node_id.Child Data Random Effects" target="_top">Child&nbsp;Data&nbsp;Random&nbsp;Effects</a>
 <br><a href="data_table.htm#weight_id" target="_top">weight_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#weight_id.null" target="_top">null</a>
 <br><a href="data_table.htm#hold_out" target="_top">hold_out</a>
 <br><a href="data_table.htm#meas_value" target="_top">meas_value</a>
 <br><a href="data_table.htm#meas_std" target="_top">meas_std</a>
@@ -211,6 +212,18 @@ This column has type <code><font color="blue">integer</font></code> and is the
 <a href="weight_grid_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
  that identifies
 the weighting used for this measurement.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+ is nu
+
+<br>
+<br>
+<big><a name="weight_id.null" id="weight_id.null">null</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>weight_id</span></font></i></code>
+ is <code><font color="blue">null</font></code>,
+the constant weighting is used for this data point.
 
 <br>
 <br>
