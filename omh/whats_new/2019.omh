@@ -62,6 +62,7 @@ $childtable%
 %$$
 
 $head 09-13$$
+$list number$$
 The constant weighting can now be specified using
 $code null$$ as $icode weight_id$$ in the
 $cref/data table/data_table/weight_id/null/$$ and
@@ -70,6 +71,9 @@ This weighting can also be specified by the empty
 string in $code create_database$$; see
 $cref/weight/create_database/avgint_table/weight/$$.
 The $cref user$$ examples were simplified using this option.
+$lnext
+Advance $code dock_dismod_at.sh$$ to version $code 20190913$$.
+$lend
 
 $head 09-12$$
 $list number$$
