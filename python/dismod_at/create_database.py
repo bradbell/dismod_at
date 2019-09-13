@@ -32,6 +32,7 @@
 #	nslist
 #	tuples
 #	cv
+#	covariates
 # $$
 #
 # $section Create a Dismod_at Database$$
@@ -152,7 +153,7 @@
 # Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
 # node         $cnext str         $cnext node in graph               $rnext
-# weight       $cnext str         $cnext weighting function          $rnext
+# weight       $cnext str         $cnext weighting function name     $rnext
 # age_lower    $cnext float       $cnext lower age limit             $rnext
 # age_upper    $cnext float       $cnext upper age limit             $rnext
 # time_lower   $cnext float       $cnext lower time limit            $rnext
@@ -161,6 +162,14 @@
 # ...          $cnext ...         $cnext  ...                        $rnext
 # $icode c_J$$ $cnext float       $cnext value of last covariate
 # $tend
+#
+# $subhead weight$$
+# The weighting function name identifies an
+# entry in the $cref/weight_table/create_database/weight_table/$$
+# by its $icode name$$. If $icode weight$$ is the empty string,
+# the constant weighting is used.
+#
+# $subhead covariates$$
 # Note that $icode%J% = len(%covariate_table%) - 1%$$ and for
 # $icode%j% = 0 , %...% , %J%$$,
 # $codei%
@@ -526,6 +535,8 @@ def create_database(
 	global_weight_name2id = {}
 	for i in range( len(weight_table) ) :
 		global_weight_name2id[ weight_table[i]['name'] ] = i
+	# null is used for constant weighting
+	global_weight_name2id[ '' ] = None
 	# ----------------------------------------------------------------------
 	# create weight_grid table
 	col_name = [  'weight_id', 'age_id',   'time_id',  'weight' ]

@@ -72,8 +72,6 @@ random.seed( python_seed )
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	def fun_rate_child(a, t) :
 		return ('prior_rate_child', None, 'prior_gauss_diff')
 	def fun_rate_parent(a, t) :
@@ -99,11 +97,8 @@ def example_db (file_name) :
 		{ 'name':'canada',        'parent':'north_america' }
 	]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	#
 	# covariate table: no covriates
 	covariate_table = list()
@@ -122,7 +117,7 @@ def example_db (file_name) :
 	# write out data
 	row = {
 		'density':     'gaussian',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'age_lower':    50.0,
 		'age_upper':    50.0,

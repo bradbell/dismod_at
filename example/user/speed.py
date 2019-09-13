@@ -104,8 +104,6 @@ def system_command(command) :
 	return
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	# note that the a, t values are not used for this case
 	def fun_rate_child(a, t) :
 		return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
@@ -138,14 +136,7 @@ def example_db (file_name) :
 		node_table.append( { 'name':name, 'parent':'world' } )
 	#
 	# weight table:
-	# The constant function 1.0, note any valid age and time id would work
-	name        = 'constant'
-	fun         = constant_weight_fun
-	age_mid_id  = int( len(age_list) / 2 )
-	time_mid_id = int( len(time_list) / 2 )
-	weight_table = [ {
-		'name':name, 'age_id':[age_mid_id], 'time_id':[time_mid_id], 'fun':fun
-	} ]
+	weight_table = list()
 	#
 	# covariate table:
 	covariate_table = [
@@ -175,7 +166,7 @@ def example_db (file_name) :
 	row = {
 		'meas_value':  0.0,             # not used (will be simulated)
 		'density':     'gaussian',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'age_lower':    50.,
 		'age_upper':    50.,

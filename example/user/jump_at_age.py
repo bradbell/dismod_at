@@ -111,8 +111,6 @@ def iota_true(age) :
 # ------------------------------------------------------------------------
 # Note that the a, t values are used for this example
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	#
 	def fun_iota_parent(a, t) :
 		if 19.5 <= a and a <= 20.5 :
@@ -134,11 +132,8 @@ def example_db (file_name) :
 	# node table: world
 	node_table = [ { 'name':'world',         'parent':'' } ]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	#
 	# covariate table:
 	covariate_table = list()
@@ -159,7 +154,7 @@ def example_db (file_name) :
 	row = {
 		'node':        'world',
 		'density':     'log_gaussian',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   time_list[0],
 		'time_upper':   time_list[0]

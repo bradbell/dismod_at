@@ -194,12 +194,6 @@ $href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
 	%checkpoint_extended_ode
 %$$.
 
-$head weighting$$
-Perhaps a constant weighting should be interpreted when
-the $icode weight_id$$ is $code null$$ in the
-$cref/data table/data_table/weight_id/$$ and
-$cref/avgint table/avgint_table/weight_id/$$.
-
 $head meas_std$$
 Currently the data table
 $cref/meas_std/data_table/meas_std/$$

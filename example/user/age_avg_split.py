@@ -102,8 +102,6 @@ def system_command(command) :
 # ------------------------------------------------------------------------
 # Note that the a, t values are used for this example
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	#
 	def fun_omega_parent(a, t) :
 		if  a <= 1.0 :
@@ -132,11 +130,8 @@ def example_db (file_name) :
 	# node table: world
 	node_table = [ { 'name':'world',         'parent':'' } ]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	#
 	# covariate table:
 	covariate_table = list()
@@ -149,7 +144,7 @@ def example_db (file_name) :
 	row = {
 		'integrand':  'mtother',
 		'node':       'world',
-		'weight':     'constant'
+		'weight':     '',
 	}
 	row['age_lower'] = 0.0
 	row['age_upper'] = 0.9

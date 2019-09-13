@@ -140,8 +140,6 @@ def system_command(command) :
 	return
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	def fun_iota_child(a, t) :
 		return ('prior_iota_child', None,  None)
 	def fun_iota_parent(a, t) :
@@ -158,11 +156,8 @@ def example_db (file_name) :
 		{ 'name':'canada',        'parent':'north_america' }
 	]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	# integrand table
 	integrand_table = [
 		{ 'name':'Sincidence' },
@@ -234,7 +229,7 @@ def example_db (file_name) :
 	row = {
 		'density':     'log_gaussian',
 		'eta':         '0.0',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   2000.0,
 		'time_upper':   2000.0,
@@ -263,7 +258,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'integrand':   'susceptible',
-		'weight':      'constant',
+		'weight':      '',
 		'time_lower':   2000.0,
 		'time_upper':   2000.0,
 		'age_lower':    50.0,

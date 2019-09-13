@@ -131,8 +131,6 @@ def system_command(command) :
 	return
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	def fun_income(a, t) :
 		return ('prior_income_value', 'prior_income_dage',  'prior_income_dtime')
 	def fun_iota_parent(a, t) :
@@ -145,11 +143,8 @@ def example_db (file_name) :
 		{ 'name':'north_america', 'parent':''              },
 	]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	# integrand table
 	integrand_table = [
 		{ 'name':'Sincidence' },
@@ -232,7 +227,7 @@ def example_db (file_name) :
 	row = {
 		'node':        'north_america',
 		'density':     'gaussian',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'integrand':   'Sincidence',
 		'income':      2.0,
@@ -257,7 +252,7 @@ def example_db (file_name) :
 	row = {
 		'node':        'north_america',
 		'integrand':   'mulcov_0',
-		'weight':      'constant',
+		'weight':      '',
 		'income':      does_not_matter,
 	}
 	for age in age_list :

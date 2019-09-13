@@ -182,8 +182,6 @@ def system_command(command) :
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	def fun_iota_parent(a, t) :
 		return ('prior_iota_parent', None, None)
 	def fun_income(a, t) :
@@ -208,11 +206,8 @@ def example_db (file_name) :
 		{ 'name':'world',         'parent':'' },
 	]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	#
 	# covariate table:
 	covariate_table = [
@@ -249,7 +244,7 @@ def example_db (file_name) :
 		'node':        'world',
 		'integrand':   'Sincidence',
 		'density':     'gaussian',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'age_lower':    0.0,
 		'age_upper':    0.0,

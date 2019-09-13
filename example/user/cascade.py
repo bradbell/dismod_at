@@ -277,8 +277,6 @@ def avg_integrand(age, income, node) :
 	return iota_no_effect(age) * math.exp(total_effect)
 # ----------------------------------------------------------------------------
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	def fun_iota_n1(a, t) :
 		return ('prior_iota_n1_value', 'prior_iota_n1_dage', None)
 	def fun_iota_child(a, t) :
@@ -384,11 +382,8 @@ def example_db (file_name) :
 			'fun':      fun_gamma
 		}
 	]
-	# weight_table
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	# nslist_table
 	nslist_table = dict()
 	# option_table
@@ -411,7 +406,7 @@ def example_db (file_name) :
 	row = {
 		'integrand':   'Sincidence',
 		'density':     'gaussian',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':    False,
 		'time_lower':  2000.0,
 		'time_upper':  2000.0,
@@ -440,7 +435,7 @@ def example_db (file_name) :
 	# values that are the same for all data points
 	row = {
 		'node':        'n11',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':    False,
 		'time_lower':  2000.0,
 		'time_upper':  2000.0,

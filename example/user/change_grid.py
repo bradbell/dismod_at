@@ -107,8 +107,6 @@ def system_command(command) :
 	return
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	# note that the a, t values are not used for this case
 	def fun_iota_parent(a, t) :
 		return ('prior_value', 'prior_diff', 'prior_diff')
@@ -131,11 +129,8 @@ def example_db (file_name) :
 		{ 'name':'world',         'parent':'' }
 	]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	#
 	# covariate table:
 	covariate_table = list()

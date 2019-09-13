@@ -117,8 +117,6 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-	def constant_weight_fun(a, t) :
-		return 1.0
 	def fun_rate_parent(a, t) :
 		return ('prior_iota_parent', None, None)
 	import dismod_at
@@ -141,11 +139,8 @@ def example_db (file_name) :
 		{ 'name':'canada',        'parent':'north_america' }
 	]
 	#
-	# weight table: The constant function 1.0 (one age and one time point)
-	fun = constant_weight_fun
-	weight_table = [
-		{ 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
-	]
+	# weight table:
+	weight_table = list()
 	#
 	# covariate table: no covriates
 	covariate_table = list()
@@ -164,7 +159,7 @@ def example_db (file_name) :
 	meas_std = meas_cv * iota_true
 	row = {
 		'density':     'gaussian',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   2000.0,
 		'time_upper':   2000.0,

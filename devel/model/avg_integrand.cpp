@@ -243,7 +243,13 @@ Float avg_integrand::rectangle(
 	double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
 	// weight information for this average
-	const weight_info& w_info( w_info_vec_[weight_id] );
+	// constant weighting is at the end of w_info_vec_
+	size_t weight_index = w_info_vec_.size() - 1;
+	if( weight_id != DISMOD_AT_NULL_SIZE_T )
+	{	assert( weight_id < weight_index );
+		weight_index = weight_id;
+	}
+	const weight_info& w_info( w_info_vec_[weight_index] );
 
 	// number of ages and time in the weight grid
 	size_t n_age  = w_info.age_size();

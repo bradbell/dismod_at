@@ -146,14 +146,7 @@ def example_db (file_name) :
 	node_table = [ { 'name':'world', 'parent':'' } ]
 	#
 	# weight table:
-	# The constant function 1.0, note any valid age and time id would work
-	name    = 'constant'
-	fun     = weight_fun
-	age_id  = 0
-	time_id = 0
-	weight_table = [
-		{ 'name':name,  'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	]
+	weight_table = list()
 	#
 	# covariate table:
 	covariate_table = [
@@ -182,7 +175,7 @@ def example_db (file_name) :
 	row = {
 		'meas_value':  0.0,             # not used (will be simulated)
 		'density':     'gaussian',
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   2000.,
 		'time_upper':   2000.,
