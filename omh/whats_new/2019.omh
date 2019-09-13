@@ -63,6 +63,10 @@ $childtable%
 
 $head 09-12$$
 $list number$$
+Advance $code dock_dismod_at.sh$$ to
+$cref/version/dock_dismod_at.sh/Building Images/Version/$$
+$code 20190912$$.
+$lnext
 If $cref/zero_sum_random/option_table/zero_sum_random/$$
 is chosen for a rate, the simulated prior values for that
 corresponding child rate effects at each grid point now sum to zero; see
