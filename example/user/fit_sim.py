@@ -64,6 +64,14 @@
 # All of the data is for the prevalence integrand and has a standard
 # deviation of 1e-3.
 #
+# $head Starting Point and Scaling$$
+# The variable values used to simulate truth are also used as a
+# starting point and scaling point for optimizing the simulated data.
+# The optimal point is expected to be different due to the measurement
+# noise and noise in the simulated priors.
+# Start at the truth gives us the best chance that optimizing
+# the simulated data will not end up at some other location minimum.
+#
 # $head Simulated Priors$$
 # The $cref prior_sim_table$$ contains simulated values for the priors
 # on the variables. This example checks that, for each simulation,
@@ -345,6 +353,8 @@ connection.close()
 # -----------------------------------------------------------------------
 # Simulate and then fit the data
 system_command([ program, file_name, 'simulate', '2' ])
+system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
+system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ])
 system_command([ program, file_name, 'fit', 'both', '1' ])
 # -----------------------------------------------------------------------
 # check fit results

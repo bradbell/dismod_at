@@ -546,6 +546,8 @@ for var_id in range(n_var) :
 # obtain s1_1, ... , s1_N
 N_str = str(number_sample)
 system_command([ program, file_name, 'set', 'truth_var', 'fit_var' ])
+system_command([ program, file_name, 'set', 'start_var', 'fit_var' ])
+system_command([ program, file_name, 'set', 'scale_var', 'fit_var' ])
 system_command([ program, file_name, 'simulate', N_str ])
 system_command([ program, file_name, 'sample', 'simulate', N_str ])
 #

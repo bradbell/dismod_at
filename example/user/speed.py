@@ -376,6 +376,8 @@ connection.close()
 # -----------------------------------------------------------------------
 # Run the simulate and start, and fit commands
 system_command([ program, file_name, 'simulate', '1' ])
+system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
+system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ])
 system_command([ program, file_name, 'fit', 'both', '0' ])
 # -----------------------------------------------------------------------
 # check simulation results

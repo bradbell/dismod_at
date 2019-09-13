@@ -291,6 +291,8 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # simulate a new data set and sample using it
 system_command([ program, file_name, 'set', 'avgint', 'data' ])
 system_command([ program, file_name, 'simulate', '1' ])
+system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ])
+system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
 system_command([ program, file_name, 'fit', 'fixed', '0' ])
 #
 # check result of the second fit fixed
@@ -303,7 +305,7 @@ if abs( 1.0 - second_estimate / iota_true ) > 1e-1 :
 	assert False
 #
 # check that the estimates were different; i,e., used the second data set
-print( (first_estimate - second_estimate) / iota_true )
+# print( (first_estimate - second_estimate) / iota_true )
 assert abs( (first_estimate - second_estimate) / iota_true ) > 5e-3
 #
 # check all the simulated data values were non-negative

@@ -332,6 +332,8 @@ connection.close()
 # -----------------------------------------------------------------------
 # Simulate then fit the data
 system_command([ program, file_name, 'simulate', '1' ])
+system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
+system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
 system_command([ program, file_name, 'fit', 'fixed' , '0' ])
 # -----------------------------------------------------------------------
 # check fit results

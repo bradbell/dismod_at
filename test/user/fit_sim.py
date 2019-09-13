@@ -39,6 +39,14 @@ import dismod_at
 # change into the build/test/user directory
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
+# ----------------------------------------------------------------------------
+# run a system command
+def system_command(command) :
+	print( ' '.join(command) )
+	flag = subprocess.call( command )
+	if flag != 0 :
+		sys.exit('command failed: flag = ' + str(flag))
+	return
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
 	return 1.0
@@ -236,7 +244,7 @@ def example_db (file_name) :
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
-		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'random_seed',            'value':'6'            },
 		{ 'name':'zero_sum_random',        'value':'iota'         },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
@@ -249,7 +257,7 @@ def example_db (file_name) :
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-8'         },
-		{ 'name':'method_random',          'value':'ipopt_solve'  }
+		{ 'name':'method_random',          'value':'ipopt_random'  }
 	]
 	# ----------------------------------------------------------------------
 	# avgint table: empty
@@ -283,11 +291,7 @@ def example_db (file_name) :
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-cmd            = [ program, file_name, 'init' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+system_command([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
 new             = False
@@ -332,21 +336,10 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Simulate and then fit the data
-for command in [ 'simulate', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'simulate' :
-		number_simulate = '2'
-		cmd.append(number_simulate)
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	if command == 'fit' :
-		simulate_index = '0';
-		cmd.append(simulate_index)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ])
+system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
+system_command([ program, file_name, 'simulate', '2' ])
+system_command([ program, file_name, 'fit', 'both', '0' ])
 # -----------------------------------------------------------------------
 # check fit results
 new          = False

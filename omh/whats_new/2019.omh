@@ -77,6 +77,12 @@ The $cref/zero_sum_random/option_table/zero_sum_random/$$ value in
 $cref/option.csv/db2csv_command/option.csv/$$ written by the $code db2csv$$
 command was $code false$$ when it should have been empty.
 This has been fixed.
+$lnext
+The examples that used simulated data were changed to set the
+$cref start_var_table$$ and $cref scale_var_table$$ equal to the
+$cref truth_var_table$$; see
+$cref/starting point and scaling/user_fit_sim.py/Starting Point and Scaling/$$
+for the $code example/user/fit_sim.py$$ example.
 $lend
 
 
