@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting Simulated Data Example</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting Simulated Data Example">
-<meta name="keywords" id="keywords" content=" fitting simulated data example parent iota child other rates covariate multiplier priors source code ">
+<meta name="keywords" id="keywords" content=" fitting simulated data example parent iota child other rates covariate multiplier starting point scaling priors source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,6 +68,7 @@ A:active { color : purple }
 <br><a href="user_fit_sim.py.htm#Other Rates" target="_top">Other&nbsp;Rates</a>
 <br><a href="user_fit_sim.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
 <br><a href="user_fit_sim.py.htm#Data" target="_top">Data</a>
+<br><a href="user_fit_sim.py.htm#Starting Point and Scaling" target="_top">Starting&nbsp;Point&nbsp;and&nbsp;Scaling</a>
 <br><a href="user_fit_sim.py.htm#Simulated Priors" target="_top">Simulated&nbsp;Priors</a>
 <br><a href="user_fit_sim.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
@@ -141,6 +142,17 @@ hence it is constant in age and time.
 <br>
 All of the data is for the prevalence integrand and has a standard
 deviation of 1e-3.
+
+<br>
+<br>
+<b><big><a name="Starting Point and Scaling" id="Starting Point and Scaling">Starting Point and Scaling</a></big></b>
+<br>
+The variable values used to simulate truth are also used as a
+starting point and scaling point for optimizing the simulated data.
+The optimal point is expected to be different due to the measurement
+noise and noise in the simulated priors.
+Start at the truth gives us the best chance that optimizing
+the simulated data will not end up at some other location minimum.
 
 <br>
 <br>
@@ -427,6 +439,8 @@ connection<font color="#990000">.</font><b><font color="#000000">close</font></b
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Simulate and then fit the data</font></i>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'2'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># check fit results</font></i>

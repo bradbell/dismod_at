@@ -377,6 +377,8 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</fo
 <i><font color="#9A1900"># simulate a new data set and sample using it</font></i>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'avgint'</font><font color="#990000">,</font> <font color="#FF0000">'data'</font> <font color="#990000">])</font>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check result of the second fit fixed</font></i>
@@ -389,7 +391,7 @@ second_estimate  <font color="#990000">=</font> fit_var_table<font color="#99000
      <b><font color="#0000FF">assert</font></b> False
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check that the estimates were different; i,e., used the second data set</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#990000">(</font>first_estimate <font color="#990000">-</font> second_estimate<font color="#990000">)</font> <font color="#990000">/</font> iota_true <font color="#990000">)</font>
+<i><font color="#9A1900"># print( (first_estimate - second_estimate) / iota_true )</font></i>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#990000">(</font>first_estimate <font color="#990000">-</font> second_estimate<font color="#990000">)</font> <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">5e-3</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check all the simulated data values were non-negative</font></i>
