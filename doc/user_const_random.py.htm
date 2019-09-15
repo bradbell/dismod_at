@@ -108,8 +108,6 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 <i><font color="#9A1900"># Note that the a, t values are not used for this example</font></i>
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">example_db</font></b> <font color="#990000">(</font>file_name<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">def</font></b> <b><font color="#000000">constant_one_fun</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#993399">1.0</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_world</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_world'</font><font color="#990000">,</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
@@ -142,12 +140,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># weight table:</font></i>
-     weight_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>         <font color="#FF0000">'weight_constant'</font><font color="#990000">,</font>
-               <font color="#FF0000">'age_id'</font><font color="#990000">:</font>       <font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font>
-               <font color="#FF0000">'time_id'</font><font color="#990000">:</font>      <font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font>
-               <font color="#FF0000">'fun'</font><font color="#990000">:</font>          constant_one_fun
-     <font color="#990000">}</font> <font color="#990000">]</font>
+     weight_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># covariate table:</font></i>
      covariate_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
@@ -164,7 +157,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      row <font color="#990000">=</font> <font color="#990000">{</font>
           <font color="#FF0000">'meas_value'</font><font color="#990000">:</font>  <font color="#993399">0.0</font><font color="#990000">,</font>             <i><font color="#9A1900"># not used (will be simulated)</font></i>
           <font color="#FF0000">'density'</font><font color="#990000">:</font>     <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
-          <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">'weight_constant'</font><font color="#990000">,</font>
+          <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">''</font><font color="#990000">,</font>
           <font color="#FF0000">'hold_out'</font><font color="#990000">:</font>     False<font color="#990000">,</font>
           <font color="#FF0000">'time_lower'</font><font color="#990000">:</font>   <font color="#993399">2000</font><font color="#990000">.,</font>
           <font color="#FF0000">'time_upper'</font><font color="#990000">:</font>   <font color="#993399">2000</font><font color="#990000">.</font>

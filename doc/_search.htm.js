@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-'dismod_at  dismod_at-20190913: User Documentation and API  ',' purpose links ',
+'dismod_at  dismod_at-20190915: User Documentation and API  ',' purpose links ',
 'math_abstract  An Introduction To The Mathematics of Dismod_at  ',' ',
 'math_ode  The Dismod_at Ordinary Differential Equation  ',' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t) ',
 'censor_density  The Censored Gaussian and Laplace Densities  ',' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac) ',
@@ -22,7 +22,7 @@ Keyword =
 'user_fit_sim.py  Fitting Simulated Data Example  ',' parent iota child other rates covariate multiplier starting point scaling priors source code ',
 'user_fit_gamma.py  Fitting Measurement Noise Covariate Multipliers, Gamma  ',' random effects iota other rates data meas_noise_effect scaling source code ',
 'user_age_avg_split.py  Non-uniform Age Average Grid  ',' purpose variables prior data fit predict ode_step_size source code ',
-'user_diabetes.py  An Example / Speed Test Fitting Simulated Diabetes Data  ',' running this omega rho weight table grid covariates multipliers truth parent rates child effects predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ',
+'user_diabetes.py  An Example / Speed Test Fitting Simulated Diabetes Data  ',' running this omega rho covariates table multipliers truth parent rates child effects predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ',
 'user_ill_condition.py  An Ill Conditioned Example Where Re-Scaling is Helpful  ',' notation objective derivative ill-conditioning source code ',
 'user_jump_at_age.py  Jump in Rate Value at a Known Age  ',' purpose model variables truth simulated data ages table time source code ',
 'user_change_grid.py  Remove an Age or Time From a Smoothing  ',' purpose table parent value prior difference fit source code ',
@@ -35,7 +35,7 @@ Keyword =
 'user_data_sim.py  Explanation of Simulated Data Table, data_sim  ',' random effects priors iota other rates covariate multiplier subset meas_noise_effect scaling gamma source code ',
 'user_asymptotic.py  Sample from Asymptotic Distribution for Model Variables  ',' purpose notation likelihood source code ',
 'user_const_random.py  Fitting With Non-Zero Constant Random Effects in Smoothing Grid  ',' source code ',
-'user_const_value.py  Fitting Using const_value in Smoothing Grid  ',' source code ',
+'user_const_value.py  Constrain Omega Using const_value  ',' node table problem parameters child random effects priors nslist iota parent data source code ',
 'user_continue_fit.py  Continuing a Fit From Where it Left Off  ',' option table source code ',
 'user_diff_constraint.py  Constraints on Differences in Age and Time  ',' source code ',
 'user_meas_covariate.py  Using Measurement Covariates on Multiple Integrands  ',' see also source code ',
@@ -149,7 +149,7 @@ Keyword =
 'sql_command  Execute an SQL command  ',' syntax connection result ',
 'unicode_tuple  Convert an Iterable Object to a Unicode String  ',' syntax quote_string none infinity u_tuple example ',
 'unicode_tuple.py  unicode_tuple: Example and Test  ',' ',
-'whats_new_2019  Changes and Additions to Dismod_at During 2019  ',' 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ',
+'whats_new_2019  Changes and Additions to Dismod_at During 2019  ',' 09-14 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ',
 'whats_new_2018  Changes and Additions to Dismod_at During 2018  ',' 12-19 12-15 12-14 10-30 10-22 10-21 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ',
 'whats_new_2017  Changes and Additions to Dismod_at During 2017  ',' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15 ',
 'whats_new_2016  Changes and Additions to Dismod_at During 2016  ',' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05 ',

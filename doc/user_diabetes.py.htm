@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Example / Speed Test Fitting Simulated Diabetes Data</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Example / Speed Test Fitting Simulated Diabetes Data">
-<meta name="keywords" id="keywords" content=" example / speed test fitting simulated diabetes data running this omega rho weight table grid covariates covariate multipliers truth var parent rates child rate effects predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ">
+<meta name="keywords" id="keywords" content=" example / speed test fitting simulated diabetes data running this omega rho covariates covariate table multipliers truth var parent rates child rate effects predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -66,7 +66,6 @@ A:active { color : purple }
 <br><a href="user_diabetes.py.htm#Running This example" target="_top">Running&nbsp;This&nbsp;example</a>
 <br><a href="user_diabetes.py.htm#omega" target="_top">omega</a>
 <br><a href="user_diabetes.py.htm#rho" target="_top">rho</a>
-<br><a href="user_diabetes.py.htm#Weight Table and Grid" target="_top">Weight&nbsp;Table&nbsp;and&nbsp;Grid</a>
 <br><a href="user_diabetes.py.htm#Covariates" target="_top">Covariates</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_diabetes.py.htm#Covariates.Covariate Table" target="_top">Covariate&nbsp;Table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_diabetes.py.htm#Covariates.Data Table" target="_top">Data&nbsp;Table</a>
@@ -116,15 +115,6 @@ is constrained to have the value used during simulation of the data.
 The model rate <a href="rate_table.htm#rate_name.rho" target="_top"><span style='white-space: nowrap'>rho</span></a>
 
 is constrained to be zero.
-
-<br>
-<br>
-<b><big><a name="Weight Table and Grid" id="Weight Table and Grid">Weight Table and Grid</a></big></b>
-<br>
-There is one weighting, with the constant value one,
-in the <a href="weight_table.htm" target="_top"><span style='white-space: nowrap'>weight_table</span></a>
- and <a href="weight_grid_table.htm" target="_top"><span style='white-space: nowrap'>weight_grid_table</span></a>
-.
 
 <br>
 <br>
@@ -849,10 +839,6 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># functions used for priors in smoothing</font></i>
      <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># weight table has constant value 1.0</font></i>
-     <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_constant_one</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#993399">1.0</font>
-     <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># Note that there are no forward differences for covariate multiplier grids.</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_mulcov_sex</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">return</font></b><font color="#990000">(</font><font color="#FF0000">'prior_sex'</font><font color="#990000">,</font>          None<font color="#990000">,</font> None<font color="#990000">)</font>
@@ -894,7 +880,6 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      fun<font color="#990000">[</font><font color="#FF0000">'mulcov_sex'</font><font color="#990000">]</font>         <font color="#990000">=</font> fun_mulcov_sex
      fun<font color="#990000">[</font><font color="#FF0000">'mulcov_bmi'</font><font color="#990000">]</font>         <font color="#990000">=</font> fun_mulcov_bmi
      fun<font color="#990000">[</font><font color="#FF0000">'mulcov_ms_2000'</font><font color="#990000">]</font>     <font color="#990000">=</font> fun_mulcov_ms_2000
-     fun<font color="#990000">[</font><font color="#FF0000">'constant_one'</font><font color="#990000">]</font>       <font color="#990000">=</font> fun_constant_one
      fun<font color="#990000">[</font><font color="#FF0000">'iota_parent'</font><font color="#990000">]</font>        <font color="#990000">=</font> fun_iota_parent
      fun<font color="#990000">[</font><font color="#FF0000">'iota_child'</font><font color="#990000">]</font>         <font color="#990000">=</font> fun_iota_child
      fun<font color="#990000">[</font><font color="#FF0000">'chi_parent'</font><font color="#990000">]</font>         <font color="#990000">=</font> fun_chi_parent
@@ -928,14 +913,8 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           node_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font>node_list<font color="#990000">[</font>i<font color="#990000">],</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font>parent_node <font color="#990000">}</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900"># weight table and weight_grid table:</font></i>
-     name    <font color="#990000">=</font> <font color="#FF0000">'weight_constant'</font>
-     weight_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font>
-          <font color="#FF0000">'name'</font><font color="#990000">:</font>      <font color="#FF0000">'weight_constant'</font><font color="#990000">,</font>
-          <font color="#FF0000">'age_id'</font><font color="#990000">:</font>    <font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font>
-          <font color="#FF0000">'time_id'</font><font color="#990000">:</font>   <font color="#990000">[</font><font color="#993399">0</font><font color="#990000">],</font>
-          <font color="#FF0000">'fun'</font><font color="#990000">:</font>       fun<font color="#990000">[</font><font color="#FF0000">'constant_one'</font><font color="#990000">]</font>
-     <font color="#990000">}</font> <font color="#990000">]</font>
+     <i><font color="#9A1900"># weight table</font></i>
+     weight_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># prior_table</font></i>
      prior_table <font color="#990000">=</font> <font color="#990000">[</font>
@@ -1184,7 +1163,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'node'</font><font color="#990000">:</font>        node<font color="#990000">,</font>
                <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   integrand<font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>     <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
-               <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">'weight_constant'</font><font color="#990000">,</font>
+               <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">''</font><font color="#990000">,</font>
                <font color="#FF0000">'age_lower'</font><font color="#990000">:</font>    age<font color="#990000">,</font>
                <font color="#FF0000">'age_upper'</font><font color="#990000">:</font>    age<font color="#990000">,</font>
                <font color="#FF0000">'time_lower'</font><font color="#990000">:</font>   time<font color="#990000">,</font>
@@ -1203,7 +1182,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'node'</font><font color="#990000">:</font>        node<font color="#990000">,</font>
                <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   integrand<font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>     <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
-               <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">'weight_constant'</font><font color="#990000">,</font>
+               <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">''</font><font color="#990000">,</font>
                <font color="#FF0000">'age_lower'</font><font color="#990000">:</font>    age<font color="#990000">,</font>
                <font color="#FF0000">'age_upper'</font><font color="#990000">:</font>    age<font color="#990000">,</font>
                <font color="#FF0000">'time_lower'</font><font color="#990000">:</font>   time<font color="#990000">,</font>
