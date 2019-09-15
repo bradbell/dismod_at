@@ -62,8 +62,6 @@ def system_command(command) :
 # Note that the a, t values are not used for this example
 #
 def example_db (file_name) :
-	def constant_one_fun(a, t) :
-		return 1.0
 	def fun_iota_world(a, t) :
 		return ('prior_iota_world', None, None)
 	def fun_iota_child(a, t) :
@@ -96,12 +94,7 @@ def example_db (file_name) :
 	]
 	#
 	# weight table:
-	weight_table = [ {
-			'name':         'weight_constant',
-			'age_id':       [0],
-			'time_id':      [0],
-			'fun':          constant_one_fun
-	} ]
+	weight_table = list()
 	#
 	# covariate table:
 	covariate_table = list()
@@ -118,7 +111,7 @@ def example_db (file_name) :
 	row = {
 		'meas_value':  0.0,             # not used (will be simulated)
 		'density':     'gaussian',
-		'weight':      'weight_constant',
+		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   2000.,
 		'time_upper':   2000.

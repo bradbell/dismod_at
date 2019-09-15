@@ -11,21 +11,74 @@
 # $spell
 #	init
 #	const
+#	nslist
 # $$
 #
-# $section Fitting Using const_value in Smoothing Grid$$
+# $section Constrain Omega Using const_value$$
+#
+# $head Node Table$$
+# For this example the $cref node_table$$ is
+# $pre
+#           world
+#          /      \
+#      child_1   child_2
+# $$
+#
+# $head Problem Parameters$$
+# The following values are used to simulate the data and set the priors
+# for fitting the data:
+# $srccode%hpp%
+iota_true    = { 'world':0.01, 'child_1':0.008, 'child_2':0.012 }
+omega_true   = { 'world':0.01, 'child_1':0.008, 'child_2':0.012 }
+n_data       = 51
+# %$$
+#
+# $head Child Random Effects$$
+# The following code converts the child rates to child rate effects:
+# $srccode%hpp%
+import math
+for key in [ 'child_1', 'child_2' ] :
+	iota_true[key]  = math.log( iota_true[key] / iota_true['world'] )
+	omega_true[key] = math.log( omega_true[key] / omega_true['world'] )
+# %$$
+#
+# $head Omega Priors$$
+# The parent and child rates for omega are constrained to be their
+# true value using the $cref/const_value/smooth_grid_table/const_value/$$
+# column in the smooth_grid table.
+#
+# $subhead nslist$$
+# Note that the different children have different priors for the
+# child random effects which requires using the
+# $cref/child_nslist/rate_table/child_nslist_id/$$ option in the
+# rate table.
+#
+# $head Iota Priors$$
+# The iota priors are uniform.
+#
+# $subhead Parent$$
+# For the parent, the lower (upper) limit is the true value
+# divided by ten (multiplied by ten).
+# The mean, which is two times the true value, is used for the
+# $cref start_var_table$$ and $cref scale_var_table$$;
+# see $cref init_command$$.
+#
+# $head Data$$
+# All of the data for this example is direct measurements of the
+# $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
+# population (as a fraction of the initial population).
 #
 # $head Source Code$$
+# Given the problem parameters define above, below is the rest of the
+# source code for this example:
 # $srcfile%
 #	example/user/const_value.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# values used to simulate data
-iota_true                 = 0.01
-chi_true                  = 0.1
-n_data                    = 51
+# begin problem parameters
+# end problem parameters
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -57,13 +110,20 @@ def system_command(command) :
 	if flag != 0 :
 		sys.exit('command failed: flag = ' + str(flag))
 	return
-# ------------------------------------------------------------------------
-# Note that the a, t values are not used for this case
+#
+#
 def example_db (file_name) :
-	def fun_iota(a, t) :
-		return ('prior_iota', None, None)
-	def fun_chi(a, t) :
-		return (chi_true, None, None)
+	from math import log
+	def fun_iota_world(a, t) :
+		return ('prior_iota_world', None, None)
+	def fun_iota_child(a, t) :
+		return ('prior_iota_child', None, None)
+	def fun_omega_world(a, t) :
+		return (omega_true['world'], None, None)
+	def fun_omega_child_1(a, t) :
+		return (omega_true['child_1'], None, None)
+	def fun_omega_child_2(a, t) :
+		return (omega_true['child_2'], None, None)
 	# ----------------------------------------------------------------------
 	# age table:
 	age_list    = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
@@ -73,11 +133,15 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name':'prevalence' }
+		 { 'name':'susceptible' }
 	]
 	#
 	# node table:
-	node_table = [ { 'name':'world', 'parent':'' } ]
+	node_table = [
+		{ 'name':'world', 'parent':'' },
+		{ 'name':'child_1', 'parent':'world' },
+		{ 'name':'child_2', 'parent':'world' }
+	]
 	#
 	# weight table:
 	weight_table = list()
@@ -90,9 +154,6 @@ def example_db (file_name) :
 	#
 	# avgint table: empty
 	avgint_table = list()
-	#
-	# nslist_table:
-	nslist_table = dict()
 	# ----------------------------------------------------------------------
 	# data table:
 	data_table = list()
@@ -103,61 +164,83 @@ def example_db (file_name) :
 		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   2000.,
-		'time_upper':   2000.
+		'time_upper':   2000.,
+		'integrand':    'susceptible',
+		'meas_std':     0.01
 	}
 	# values that change between rows:
+	node_name = [ 'world', 'child_1', 'child_2' ]
 	for data_id in range( n_data ) :
 		fraction = data_id / float(n_data-1)
 		age      = age_list[0] + (age_list[-1] - age_list[0])*fraction
 		row['age_lower'] = age
 		row['age_upper'] = age
-		row['node']      = 'world'
-		row['integrand'] = 'prevalence'
-		row['meas_std']  = 0.01
+		row['node']      = node_name[ data_id % 3 ]
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{ # prior_iota
-			'name':     'prior_iota',
+		{ # prior_iota_world
+			'name':     'prior_iota_world',
 			'density':  'uniform',
-			'lower':    iota_true / 10.,
-			'upper':    iota_true * 10.,
-			'mean':     iota_true * 2.0,
+			'lower':    iota_true['world'] / 10.,
+			'upper':    iota_true['world'] * 10.,
+			'mean':     iota_true['world'] * 2.0,
+		},{ # prior_iota_child
+			'name':     'prior_iota_child',
+			'density':  'uniform',
+			'lower':    -1.0,
+			'upper':    +1.0,
+			'mean':     0.0,
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	name           = 'smooth_iota'
-	fun            = fun_iota
-	age_id         = int( len( age_list ) / 2 )
-	time_id        = int( len( time_list ) / 2 )
 	smooth_table = [
-		{	'name':name,
-			'age_id':[age_id],
-			'time_id':[time_id],
-			'fun':fun
+		{	# smooth_iota_world
+			'name':'smooth_iota_world',
+			'age_id':[0],
+			'time_id':[0],
+			'fun':fun_iota_world
+		},{	# smooth_iota_child
+			'name':'smooth_omega_child',
+			'age_id':[0],
+			'time_id':[0],
+			'fun':fun_iota_child
+		},{	# smooth_omega_world
+			'name':'smooth_omega_world',
+			'age_id':[0],
+			'time_id':[0],
+			'fun':fun_omega_world
+		},{	# smooth_omega_child_1
+			'name':'smooth_omega_child_1',
+			'age_id':[0],
+			'time_id':[0],
+			'fun':fun_omega_child_1
+		},{	# smooth_omega_child_2
+			'name':'smooth_omega_child_2',
+			'age_id':[0],
+			'time_id':[0],
+			'fun':fun_omega_child_2
 		}
 	]
-	name           = 'smooth_chi'
-	fun            = fun_chi
-	age_id         = int( len( age_list ) / 2 )
-	time_id        = int( len( time_list ) / 2 )
-	smooth_table .append(
-		{	'name':name,
-			'age_id':[age_id],
-			'time_id':[time_id],
-			'fun':fun
-		}
-	)
+	#
+	# nslist_table:
+	nslist_table = dict()
+	nslist_table['omega_nslist'] = [
+		('child_1', 'smooth_omega_child_1'),
+		('child_2', 'smooth_omega_child_2')
+	]
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
 		{	'name':          'iota',
-			'parent_smooth': 'smooth_iota',
-		},{	'name':          'chi',
-			'parent_smooth': 'smooth_chi',
+			'parent_smooth': 'smooth_iota_world',
+		},{	'name':          'omega',
+			'parent_smooth': 'smooth_omega_world',
+		},{	'name':          'omega',
+			'child_nslist':  'omega_nslist',
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -211,6 +294,7 @@ new           = False
 connection    = dismod_at.create_connection(file_name, new)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
+node_table    = dismod_at.get_table_dict(connection, 'node')
 # -----------------------------------------------------------------------
 # truth table:
 tbl_name     = 'truth_var'
@@ -219,18 +303,18 @@ col_type     = [ 'real' ]
 row_list     = list()
 var_id2true  = list()
 for var_id in range( len(var_table) ) :
-	var_info        = var_table[var_id]
-	truth_var_value = None
-	var_type = var_info['var_type']
+	var_row         = var_table[var_id]
+	var_type        = var_row['var_type']
 	assert var_type == 'rate'
-	rate_id   = var_info['rate_id']
-	rate_name = rate_table[rate_id]['rate_name']
+	rate_id         = var_row['rate_id']
+	rate_name       = rate_table[rate_id]['rate_name']
+	node_id         = var_row['node_id']
+	node_name       = node_table[node_id]['node_name']
 	if rate_name == 'iota' :
-		value = iota_true
-	elif rate_name == 'chi' :
-		value = chi_true
+		value = iota_true[node_name]
 	else :
-		assert False
+		assert rate_name == 'omega'
+		value     = omega_true[node_name]
 	row_list.append( [ value ] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
@@ -242,24 +326,30 @@ system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ])
 system_command([ program, file_name, 'fit', 'both', '0' ])
 # -----------------------------------------------------------------------
 # check fit results
-new           = False
-connection    = dismod_at.create_connection(file_name, new)
-fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 connection.close()
 #
 max_error    = 0.0
 for var_id in range( len(var_table) ) :
-	fit_value = fit_var_table[var_id]['fit_var_value']
-	var_row   = var_table[var_id]
-	rate_id   = var_row['rate_id']
+	fit_value  = fit_var_table[var_id]['fit_var_value']
+	true_value = truth_var_table[var_id]['truth_var_value']
+	var_row    = var_table[var_id]
+	rate_id    = var_row['rate_id']
 	rate_name = rate_table[rate_id]['rate_name']
 	if rate_name == 'iota' :
-		ok = abs( fit_value / iota_true - 1.0 ) < .05
+		ok = abs( fit_value / true_value - 1.0 ) < .01
 		if not ok :
-			print( "iota relative error = ", fit_value / iota_true )
-			assert abs( fit_value / iota_true - 1.0 ) < .05
+			print( "iota relative error = ", fit_value / true_value )
+			assert False
 	else :
-		assert fit_value == chi_true
+		assert rate_name == 'omega'
+		ok = abs( fit_value / true_value - 1.0 ) < 1e-10
+		if not ok :
+			print( "iota relative error = ", fit_value / true_value )
+			assert False
 # -----------------------------------------------------------------------------
 print('const_value.py: OK')
 # -----------------------------------------------------------------------------

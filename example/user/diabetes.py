@@ -49,10 +49,6 @@
 # The model rate $cref/rho/rate_table/rate_name/rho/$$
 # is constrained to be zero.
 #
-# $head Weight Table and Grid$$
-# There is one weighting, with the constant value one,
-# in the $cref weight_table$$ and $cref weight_grid_table$$.
-#
 # $head Covariates$$
 #
 # $subhead Covariate Table$$
@@ -561,10 +557,6 @@ def example_db (file_name) :
 	# ------------------------------------------------------------------------
 	# functions used for priors in smoothing
 	#
-	# weight table has constant value 1.0
-	def fun_constant_one(a, t) :
-		return 1.0
-	#
 	# Note that there are no forward differences for covariate multiplier grids.
 	def fun_mulcov_sex(a, t) :
 		return('prior_sex',          None, None)
@@ -606,7 +598,6 @@ def example_db (file_name) :
 	fun['mulcov_sex']         = fun_mulcov_sex
 	fun['mulcov_bmi']         = fun_mulcov_bmi
 	fun['mulcov_ms_2000']     = fun_mulcov_ms_2000
-	fun['constant_one']       = fun_constant_one
 	fun['iota_parent']        = fun_iota_parent
 	fun['iota_child']         = fun_iota_child
 	fun['chi_parent']         = fun_chi_parent
@@ -640,14 +631,8 @@ def example_db (file_name) :
 		node_table.append( { 'name':node_list[i], 'parent':parent_node } )
 	#
 	# ----------------------------------------------------------------------
-	# weight table and weight_grid table:
-	name    = 'weight_constant'
-	weight_table = [ {
-		'name':      'weight_constant',
-		'age_id':    [0],
-		'time_id':   [0],
-		'fun':       fun['constant_one']
-	} ]
+	# weight table
+	weight_table = list()
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
@@ -896,7 +881,7 @@ def example_db (file_name) :
 			'node':        node,
 			'integrand':   integrand,
 			'density':     'log_gaussian',
-			'weight':      'weight_constant',
+			'weight':      '',
 			'age_lower':    age,
 			'age_upper':    age,
 			'time_lower':   time,
@@ -915,7 +900,7 @@ def example_db (file_name) :
 			'node':        node,
 			'integrand':   integrand,
 			'density':     'log_gaussian',
-			'weight':      'weight_constant',
+			'weight':      '',
 			'age_lower':    age,
 			'age_upper':    age,
 			'time_lower':   time,
