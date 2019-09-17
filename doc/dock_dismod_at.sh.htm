@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Install and Run dismod_at in a Docker Image</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Install and Run dismod_at in a Docker Image">
-<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax purpose requirements building images version dismod_at.base dismod_at.image removing containers dockerfile errors new container build_type other arguments debugging determine id start stop ">
+<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax logging output purpose requirements building images version dismod_at.base dismod_at.image removing containers dockerfile errors new container build_type other arguments debugging determine id start stop ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,6 +64,7 @@ A:active { color : purple }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Install and Run dismod_at in a Docker Image</big></big></b></center>
 
 <br><a href="dock_dismod_at.sh.htm#Syntax" target="_top">Syntax</a>
+<br><a href="dock_dismod_at.sh.htm#Logging Output" target="_top">Logging&nbsp;Output</a>
 <br><a href="dock_dismod_at.sh.htm#Purpose" target="_top">Purpose</a>
 <br><a href="dock_dismod_at.sh.htm#Requirements" target="_top">Requirements</a>
 <br><a href="dock_dismod_at.sh.htm#Building Images" target="_top">Building&nbsp;Images</a>
@@ -96,6 +97,29 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+<br>
+<b><big><a name="Logging Output" id="Logging Output">Logging Output</a></big></b>
+<br>
+You can save the output of any of the commands above by redirecting
+standard output and standard error to a file.
+For example,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;./dock_dismod_at.sh&nbsp;image&nbsp;base&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+will redirect standard output and standard error to 
+<code><i><font color="black"><span style='white-space: nowrap'>log_file</span></font></i></code>
+.
+If you do this, you will not see the progress during execution.
+If also want to monitor the progress, in another window use
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tail&nbsp;-f&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This <code><font color="blue">tail</font></code> command will not terminate until you enter
+control-C in the window where it is running.
+
+<br>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -133,8 +157,8 @@ You can test this on your system by trying to execute the following command:
 <br>
 This script will build the following version of dismod_at image:
 <pre style='display:inline'><tt>
-     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20190913'</font>
-     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'902b4a0784a1690f1582642acec685a8b09d8ebe'</font>
+     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20190917'</font>
+     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'bfa5a527a7067140da580443b4919047a3dc4ab5'</font>
 </tt></pre>
 <br>
 <big><a name="Building Images.dismod_at.base" id="Building Images.dismod_at.base">dismod_at.base</a></big>
@@ -204,7 +228,6 @@ If such a file already exists, it will need to be moved or deleted.
 <br>
 <br>
 <big><a name="Building Images.Errors" id="Building Images.Errors">Errors</a></big>
-
 
 <ol type="1"><li>
 If you get the error message
