@@ -38,6 +38,10 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head More Random Effects$$
+Perhaps each covariate multiplier in the
+$cref mulcov_table$$ should have an option to be a random effect.
+
 $head Censored Laplace$$
 The censored density formula for a Gaussian
 $cref/G(y,mu,delta,c)
