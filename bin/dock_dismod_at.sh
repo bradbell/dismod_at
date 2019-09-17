@@ -29,6 +29,22 @@
 # $codei%./dock_dismod_at.sh %build_type% %database% %command% %...%
 # %$$
 #
+# $head Logging Output$$
+# You can save the output of any of the commands above by redirecting
+# standard output and standard error to a file.
+# For example,
+# $codei%
+#	./dock_dismod_at.sh image base >& %log_file%
+# %$$
+# will redirect standard output and standard error to $icode log_file$$.
+# If you do this, you will not see the progress during execution.
+# If also want to monitor the progress, in another window use
+# $codei%
+#	tail -f %log_file%
+# %$$
+# This $code tail$$ command will not terminate until you enter
+# control-C in the window where it is running.
+#
 # $head Purpose$$
 # This bash script will create or run a dismod_at docker image
 # and can be run from any directory.
@@ -55,8 +71,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20190913'
-	dismod_at_hash='902b4a0784a1690f1582642acec685a8b09d8ebe'
+	dismod_at_version='20190917'
+	dismod_at_hash='bfa5a527a7067140da580443b4919047a3dc4ab5'
 # %$$
 #
 # $subhead dismod_at.base$$
@@ -106,7 +122,6 @@
 # If such a file already exists, it will need to be moved or deleted.
 #
 # $subhead Errors$$
-#
 # $list number$$
 # If you get the error message
 # $codei%

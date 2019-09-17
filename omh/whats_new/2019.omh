@@ -62,9 +62,17 @@ $childtable%
 %$$
 
 $head 09-17$$
+$list number$$
 The constant weight change on 09-13 below introduced a bug in the
 $cref user_speed.py$$ example.
 This has been fixed.
+$lnext
+Advance $code dock_dismod_at.sh$$ to version $code 20190917$$.
+$lnext
+Add instructions for
+$cref/logging output/dock_dismod_at.sh/Logging Output/$$ from the
+$code dock_dismod_at.sh$$ program.
+$lend
 
 $head 09-15$$
 Discussion was added to the
@@ -73,7 +81,6 @@ In addition, it was modified
 to show how to constrain child rates for omega
 (as one might do if they replaced all cause mortality data
 by constraints on other cause mortality).
-
 
 $head 09-13$$
 $list number$$
