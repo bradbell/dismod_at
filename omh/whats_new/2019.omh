@@ -61,6 +61,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-17$$
+The constant weight change on 09-13 below introduced a bug in the
+$cref user_speed.py$$ example.
+This has been fixed.
+
 $head 09-15$$
 Discussion was added to the
 $cref user_const_value.py$$ example.

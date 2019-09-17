@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # ifndef DISMOD_AT_SIMULATE_COMMAND_HPP
 # define DISMOD_AT_SIMULATE_COMMAND_HPP
 
+# include <map>
 # include <string>
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>

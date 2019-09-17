@@ -223,6 +223,8 @@ def example_db (file_name) :
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
+	age_mid_id     = int( len(age_list) / 2 )
+	time_mid_id    = int( len(time_list) / 2 )
 	name           = 'smooth_rate_child'
 	fun            = fun_rate_child
 	age_grid       = [ 0, age_mid_id, len(age_list)-1 ]

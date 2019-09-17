@@ -22,9 +22,9 @@ fi
 user_test="$1"
 if @python3_executable@ $user_test >& user_test.$$
 then
-	cat user_test.$$
 	if ! grep 'warning:' user_test.$$ > /dev/null
 	then
+		cat user_test.$$
 		rm user_test.$$
 		echo 'user_test.sh: OK'
 		exit 0
@@ -35,14 +35,15 @@ echo 'sleep 1'
 sleep 1
 if @python3_executable@ $user_test >& user_test.$$
 then
-	cat user_test.$$
 	if ! grep 'warning:' user_test.$$ > /dev/null
 	then
+		cat user_test.$$
 		rm user_test.$$
 		echo 'user_test.sh: OK'
 		exit 0
 	fi
 fi
+cat user_test.$$
 rm user_test.$$
 echo 'user_test.sh: Error or warning.'
 exit 1
