@@ -535,16 +535,17 @@ int main(int n_arg, const char** argv)
 			}
 			else if( command_arg == "sample" )
 			{	sample_command(
-					argv[3]          , // method
-					argv[4]          , // number_sample
-					db               ,
-					data_subset_obj  ,
-					data_object      , // not const
-					prior_object     , // not const
-					pack_object      ,
-					var2prior        ,
-					db_input         ,
-					option_map
+					argv[3]              , // const method
+					argv[4]              , // const number_sample
+					db                   , // not const
+					data_subset_obj      , // ...
+					data_object          , // ...
+					prior_object         , // ...
+					db_input.prior_table , // const
+					pack_object          , // ...
+					var2prior            , // ...
+					db_input             , // ...
+					option_map             // effectively const
 				);
 			}
 			else

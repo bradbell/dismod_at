@@ -27,6 +27,7 @@ void sample_command(
 	CppAD::vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
 	dismod_at::data_model&                             data_object      ,
 	dismod_at::prior_model&                            prior_object     ,
+	const CppAD::vector<dismod_at::prior_struct>&      prior_table      ,
 	const dismod_at::pack_info&                        pack_object      ,
 	const dismod_at::pack_prior&                       var2prior        ,
 	const dismod_at::db_input_struct&                  db_input         ,

@@ -117,6 +117,7 @@ void sample_command(
 	CppAD::vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
 	dismod_at::data_model&                             data_object      ,
 	dismod_at::prior_model&                            prior_object     ,
+	const CppAD::vector<dismod_at::prior_struct>&      prior_table      ,
 	const dismod_at::pack_info&                        pack_object      ,
 	const dismod_at::pack_prior&                       var2prior        ,
 	const dismod_at::db_input_struct&                  db_input         ,
@@ -254,16 +255,17 @@ void sample_command(
 			}
 		}
 
-		// vector used for replacement of prior means:
-		// for each variable it has a priror mean for value, dage and  dtime
+		// Vector used to replacement of the prior means:
+		// wor each variable it has a mean for value, dage and  dtime.
 		vector<double> prior_mean(n_var * 3);
 		//
-		// for each data set
+		// for each simulated data set
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-		{	// replace prior means for variable with index var_id
+		{	// replace prior means for fixed effects
 			for(size_t var_id = 0; var_id < n_var; ++var_id)
 			if( ! is_random_effect[var_id] )
-			{	size_t prior_sim_id = sample_index * n_var + var_id;
+			{	// This is a fixed effect so use prior_sim table means
+				size_t prior_sim_id = sample_index * n_var + var_id;
 				// value
 				prior_mean[var_id * 3 + 0] =
 					prior_sim_table[prior_sim_id].prior_sim_value;
@@ -273,6 +275,30 @@ void sample_command(
 				// dtime
 				prior_mean[var_id * 3 + 2] =
 					prior_sim_table[prior_sim_id].prior_sim_dtime;
+			}
+			else
+			{	// This is a random effects so use the prior table means
+				//
+				// value
+				size_t prior_id = var2prior.value_prior_id(var_id);
+				if( prior_id != DISMOD_AT_NULL_SIZE_T )
+					prior_mean[var_id * 3 + 0] = prior_table[prior_id].mean;
+				else
+					prior_mean[var_id * 3 + 0] = var2prior.const_value(var_id);
+				//
+				// dage
+				prior_id = var2prior.dage_prior_id(var_id);
+				if( prior_id != DISMOD_AT_NULL_SIZE_T )
+					prior_mean[var_id * 3 + 1] = prior_table[prior_id].mean;
+				else
+					prior_mean[var_id * 3 + 1] = var2prior.const_value(var_id);
+				//
+				// dtime
+				prior_id = var2prior.dtime_prior_id(var_id);
+				if( prior_id != DISMOD_AT_NULL_SIZE_T )
+					prior_mean[var_id * 3 + 2] = prior_table[prior_id].mean;
+				else
+					prior_mean[var_id * 3 + 2] = var2prior.const_value(var_id);
 			}
 			prior_object.replace_mean(prior_mean);
 			//
