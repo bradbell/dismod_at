@@ -12,7 +12,7 @@
 SET(depends "")
 FOREACH(user_case
 	age_avg_split
-	asymptotic
+	sample_asy
 	cascade
 	change_grid
 	censor

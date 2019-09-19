@@ -589,7 +589,7 @@ Add the $cref metropolis$$ MCMC utility for testing results.
 $lnext
 Complete implementation and testing of the sample command
 with $cref/method/sample_command/method/$$ equal to $code asymptotic$$;
-see the example and test in $cref user_asymptotic.py$$.
+see the example and test in $cref user_sample_asy.py$$.
 $lend
 
 $head 04-27$$

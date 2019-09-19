@@ -104,7 +104,7 @@ $children%example/get_started/sample_command.py
 %$$
 $head Example$$
 The files
-$cref sample_command.py$$ and $cref user_asymptotic.py$$
+$cref sample_command.py$$ and $cref user_sample_asy.py$$
 contain examples and tests using this command.
 
 $end

@@ -77,7 +77,7 @@ $children%example/user/csv2db.py
 	%example/user/predict_mulcov.py
 	%example/user/data_sim.py
 
-	%example/user/asymptotic.py
+	%example/user/sample_asy.py
 	%example/user/const_random.py
 	%example/user/const_value.py
 	%example/user/continue_fit.py
@@ -112,7 +112,7 @@ $tend
 
 $head More Examples$$
 $table
-$rref user_asymptotic.py$$
+$rref user_sample_asy.py$$
 $rref user_const_random.py$$
 $rref user_const_value.py$$
 $rref user_continue_fit.py$$

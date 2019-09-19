@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_asymptotic.py$$ $newlinech #$$
+# $begin user_sample_asy.py$$ $newlinech #$$
 # $spell
 #	init
 #	dismod
@@ -57,7 +57,7 @@
 #
 # $head Source Code$$
 # $srcfile%
-#	example/user/asymptotic.py
+#	example/user/sample_asy.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
@@ -83,7 +83,7 @@ import os
 import copy
 import distutils.dir_util
 import subprocess
-test_program = 'example/user/asymptotic.py'
+test_program = 'example/user/sample_asy.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
