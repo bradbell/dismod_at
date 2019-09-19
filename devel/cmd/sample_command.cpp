@@ -57,13 +57,21 @@ $subhead simulate$$
 If $icode method$$ is $code simulate$$,
 $icode number_sample$$ must be equal to
 $cref/number_simulate/simulate_command/number_simulate/$$.
-The variable sample corresponding to each
-$cref/sample_index/sample_table/sample_index/$$ the sample table
-is the optimal estimate corresponding to the
-$cref data_sim_table$$ and the $cref prior_sim_table$$ with
+There is a complete set of $cref model_variables$$
+corresponding to each $cref/sample_index/sample_table/sample_index/$$
+the sample table.
+They correspond to fitting the data in the data_sim table with
 $cref/simulate_index/data_sim_table/simulate_index/$$ equal to
-the sample index.
-This requires running $icode number_sample$$ fits of the model variables.
+$icode sample_index$$.
+The fixed effects correspond to the optimal fit of both the fixed and random
+effects with the prior for the fixed effects replaced by the corresponding
+values in the $cref prior_sim_table$$.
+This value is used for the fixed effects and the value for the
+random effects is obtained by optimizing just the random
+effects with the prior for the random effects replaced by the corresponding
+values in the $cref prior_sim_table$$.
+This requires running $icode number_sample$$ fits of the model variables
+(fitting just the random effects is faster compared to fitting both).
 See $cref/simulation/posterior/Simulation/$$ in the discussion of the
 posterior distribution of maximum likelihood estimates.
 

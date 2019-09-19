@@ -22,6 +22,7 @@ $$
 
 $section Simulated Variation in Prior$$
 
+$head Discussion$$
 The $code prior_sim$$ table is created during a
 $cref simulate_command$$.
 It contains $cref/number_simulate/simulate_command/number_simulate/$$

@@ -62,9 +62,19 @@ $childtable%
 %$$
 
 $head 09-19$$
+$list number$$
 Move the sample command
-$cref/asymptotic/sample_command/asymptotic/$$ example from
+$cref/asymptotic/sample_command/method/asymptotic/$$ example from
 $code user_asymptotic.py$$ to $cref user_sample_asy.py$$.
+$lnext
+The $cref prior_sim_table$$ values for the random effects
+are no longer included when sampling the fixed effects; see the
+$cref/simulate/sample_command/method/simulate/$$
+method for the sample command.
+$lnext
+Add the example $cref user_sample_sim.py$$ for the
+$cref sample_command$$ with the simulate method.
+$lend
 
 $head 09-17$$
 $list number$$

@@ -76,8 +76,9 @@ $children%example/user/csv2db.py
 	%example/user/predict_fit.py
 	%example/user/predict_mulcov.py
 	%example/user/data_sim.py
-
+	%example/user/sample_sim.py
 	%example/user/sample_asy.py
+
 	%example/user/const_random.py
 	%example/user/const_value.py
 	%example/user/continue_fit.py
@@ -108,14 +109,15 @@ $rref user_cascade.py$$
 $rref user_predict_fit.py$$
 $rref user_predict_mulcov.py$$
 $rref user_data_sim.py$$
+$rref user_sample_sim.py$$
+$rref user_sample_asy.py$$
+$rref user_continue_fit.py$$
 $tend
 
 $head More Examples$$
 $table
-$rref user_sample_asy.py$$
 $rref user_const_random.py$$
 $rref user_const_value.py$$
-$rref user_continue_fit.py$$
 $rref user_diff_constraint.py$$
 $rref user_meas_covariate.py$$
 $rref user_no_children.py$$

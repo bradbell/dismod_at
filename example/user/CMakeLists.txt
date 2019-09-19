@@ -13,6 +13,7 @@ SET(depends "")
 FOREACH(user_case
 	age_avg_split
 	sample_asy
+	sample_sim
 	cascade
 	change_grid
 	censor
