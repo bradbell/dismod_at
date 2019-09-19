@@ -261,46 +261,9 @@ void sample_command(
 		//
 		// for each simulated data set
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-		{	// replace prior means for fixed effects
-			for(size_t var_id = 0; var_id < n_var; ++var_id)
-			if( ! is_random_effect[var_id] )
-			{	// This is a fixed effect so use prior_sim table means
-				size_t prior_sim_id = sample_index * n_var + var_id;
-				// value
-				prior_mean[var_id * 3 + 0] =
-					prior_sim_table[prior_sim_id].prior_sim_value;
-				// dage
-				prior_mean[var_id * 3 + 1] =
-					prior_sim_table[prior_sim_id].prior_sim_dage;
-				// dtime
-				prior_mean[var_id * 3 + 2] =
-					prior_sim_table[prior_sim_id].prior_sim_dtime;
-			}
-			else
-			{	// This is a random effects so use the prior table means
-				//
-				// value
-				size_t prior_id = var2prior.value_prior_id(var_id);
-				if( prior_id != DISMOD_AT_NULL_SIZE_T )
-					prior_mean[var_id * 3 + 0] = prior_table[prior_id].mean;
-				else
-					prior_mean[var_id * 3 + 0] = var2prior.const_value(var_id);
-				//
-				// dage
-				prior_id = var2prior.dage_prior_id(var_id);
-				if( prior_id != DISMOD_AT_NULL_SIZE_T )
-					prior_mean[var_id * 3 + 1] = prior_table[prior_id].mean;
-				else
-					prior_mean[var_id * 3 + 1] = var2prior.const_value(var_id);
-				//
-				// dtime
-				prior_id = var2prior.dtime_prior_id(var_id);
-				if( prior_id != DISMOD_AT_NULL_SIZE_T )
-					prior_mean[var_id * 3 + 2] = prior_table[prior_id].mean;
-				else
-					prior_mean[var_id * 3 + 2] = var2prior.const_value(var_id);
-			}
-			prior_object.replace_mean(prior_mean);
+		{	// --------------------------------------------------------------
+			// estimate fixed effects for this sample_index
+			// --------------------------------------------------------------
 			//
 			// replace meas_value in data_subset_obj
 			size_t offset = n_subset * sample_index;
@@ -329,11 +292,49 @@ void sample_command(
 			// replace_like
 			data_object.replace_like(data_subset_obj);
 			//
-			// fit_model
+			// replace prior means for fixed effects
+			for(size_t var_id = 0; var_id < n_var; ++var_id)
+			if( ! is_random_effect[var_id] )
+			{	// This is a fixed effect so use prior_sim table means
+				size_t prior_sim_id = sample_index * n_var + var_id;
+				// value
+				prior_mean[var_id * 3 + 0] =
+					prior_sim_table[prior_sim_id].prior_sim_value;
+				// dage
+				prior_mean[var_id * 3 + 1] =
+					prior_sim_table[prior_sim_id].prior_sim_dage;
+				// dtime
+				prior_mean[var_id * 3 + 2] =
+					prior_sim_table[prior_sim_id].prior_sim_dtime;
+			}
+			else
+			{	// This is a random effects so use the prior table means
+				// value
+				size_t prior_id = var2prior.value_prior_id(var_id);
+				if( prior_id != DISMOD_AT_NULL_SIZE_T )
+					prior_mean[var_id * 3 + 0] = prior_table[prior_id].mean;
+				else
+					prior_mean[var_id * 3 + 0] = var2prior.const_value(var_id);
+				// dage
+				prior_id = var2prior.dage_prior_id(var_id);
+				if( prior_id != DISMOD_AT_NULL_SIZE_T )
+					prior_mean[var_id * 3 + 1] = prior_table[prior_id].mean;
+				else
+					prior_mean[var_id * 3 + 1] = var2prior.const_value(var_id);
+				// dtime
+				prior_id = var2prior.dtime_prior_id(var_id);
+				if( prior_id != DISMOD_AT_NULL_SIZE_T )
+					prior_mean[var_id * 3 + 2] = prior_table[prior_id].mean;
+				else
+					prior_mean[var_id * 3 + 2] = var2prior.const_value(var_id);
+			}
+			prior_object.replace_mean(prior_mean);
+			//
+			// fit both fixed and random effects
 			bool no_scaling      = false;
 			bool   random_only   = false;
 			int    simulate_index = int(sample_index);
-			dismod_at::fit_model fit_object(
+			dismod_at::fit_model fit_object_both(
 				db                   ,
 				simulate_index       ,
 				warn_on_stderr       ,
@@ -349,16 +350,73 @@ void sample_command(
 				zero_sum_random      ,
 				data_object
 			);
-			fit_object.run_fit(random_only, option_map);
+			fit_object_both.run_fit(random_only, option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
-			fit_object.get_solution(
+			fit_object_both.get_solution(
 				opt_value, lag_value, lag_dage, lag_dtime
 			);
 			assert( opt_value.size() == n_var );
 			//
-			// put solution for this sample_index in row_value
+			// solution for fixed effects and this sample_index -> row_value
 			string sample_index_str = to_string( sample_index );
 			for(size_t var_id = 0; var_id < n_var; var_id++)
+			if( ! is_random_effect[var_id] )
+			{	size_t sample_id = sample_index * n_var + var_id;
+				row_value[n_col * sample_id + 0] = sample_index_str;
+				row_value[n_col * sample_id + 1] = to_string( var_id );
+				row_value[n_col * sample_id + 2] =
+					to_string(opt_value[var_id] );
+			}
+			// --------------------------------------------------------------
+			// estimate random effects for this sample_index
+			// --------------------------------------------------------------
+			//
+			// Replace prior means for random effects. Prior means for
+			// fixed effects do not matter when only fitting random effects.
+			for(size_t var_id = 0; var_id < n_var; ++var_id)
+			if( is_random_effect[var_id] )
+			{	// This is a fixed effect so use prior_sim table means
+				size_t prior_sim_id = sample_index * n_var + var_id;
+				// value
+				prior_mean[var_id * 3 + 0] =
+					prior_sim_table[prior_sim_id].prior_sim_value;
+				// dage
+				prior_mean[var_id * 3 + 1] =
+					prior_sim_table[prior_sim_id].prior_sim_dage;
+				// dtime
+				prior_mean[var_id * 3 + 2] =
+					prior_sim_table[prior_sim_id].prior_sim_dtime;
+			}
+			prior_object.replace_mean(prior_mean);
+			//
+			// Only fit random effects.
+			// 2DO: add replacement of prior_object and start_var to fit_model
+			// and then use the same fit_model object for random effects.
+			random_only = true;
+			dismod_at::fit_model fit_object_random(
+				db                   ,
+				simulate_index       ,
+				warn_on_stderr       ,
+				bound_random         ,
+				no_scaling           ,
+				pack_object          ,
+				var2prior            ,
+				opt_value            , // use optimal value for fixed effects
+				scale_var_value      ,
+				db_input.prior_table ,
+				prior_object         ,
+				quasi_fixed          ,
+				zero_sum_random      ,
+				data_object
+			);
+			fit_object_random.run_fit(random_only, option_map);
+			fit_object_random.get_solution(
+				opt_value, lag_value, lag_dage, lag_dtime
+			);
+			//
+			// solution for random effects and this sample_index -> row_value
+			for(size_t var_id = 0; var_id < n_var; var_id++)
+			if( is_random_effect[var_id] )
 			{	size_t sample_id = sample_index * n_var + var_id;
 				row_value[n_col * sample_id + 0] = sample_index_str;
 				row_value[n_col * sample_id + 1] = to_string( var_id );
