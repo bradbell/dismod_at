@@ -136,19 +136,30 @@ If
  must be equal to
 <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
 .
-The variable sample corresponding to each
-<a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
- the sample table
-is the optimal estimate corresponding to the
-<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
- and the <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
- with
+There is a complete set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+corresponding to each <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
+
+the sample table.
+They correspond to fitting the data in the data_sim table with
 <a href="data_sim_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
  equal to
-the sample index.
+
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+.
+The fixed effects correspond to the optimal fit of both the fixed and random
+effects with the prior for the fixed effects replaced by the corresponding
+values in the <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+.
+This value is used for the fixed effects and the value for the
+random effects is obtained by optimizing just the random
+effects with the prior for the random effects replaced by the corresponding
+values in the <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+.
 This requires running 
 <code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
- fits of the model variables.
+ fits of the model variables
+(fitting just the random effects is faster compared to fitting both).
 See <a href="posterior.htm#Simulation" target="_top"><span style='white-space: nowrap'>simulation</span></a>
  in the discussion of the
 posterior distribution of maximum likelihood estimates.
@@ -235,7 +246,7 @@ on the random effects specified by
 <br>
 The files
 <a href="sample_command.py.htm" target="_top"><span style='white-space: nowrap'>sample_command.py</span></a>
- and <a href="user_asymptotic.py.htm" target="_top"><span style='white-space: nowrap'>user_asymptotic.py</span></a>
+ and <a href="user_sample_asy.py.htm" target="_top"><span style='white-space: nowrap'>user_sample_asy.py</span></a>
 
 contain examples and tests using this command.
 

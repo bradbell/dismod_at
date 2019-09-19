@@ -20,7 +20,8 @@ document.write('\
 <option>user_predict_fit.py</option>\
 <option>user_predict_mulcov.py</option>\
 <option>user_data_sim.py</option>\
-<option>user_asymptotic.py</option>\
+<option>user_sample_sim.py</option>\
+<option>user_sample_asy.py</option>\
 <option>user_const_random.py</option>\
 <option>user_const_value.py</option>\
 <option>user_continue_fit.py</option>\
@@ -52,7 +53,8 @@ function user_child(item)
 		'user_predict_fit.py.htm',
 		'user_predict_mulcov.py.htm',
 		'user_data_sim.py.htm',
-		'user_asymptotic.py.htm',
+		'user_sample_sim.py.htm',
+		'user_sample_asy.py.htm',
 		'user_const_random.py.htm',
 		'user_const_value.py.htm',
 		'user_continue_fit.py.htm',
