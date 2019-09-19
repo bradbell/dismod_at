@@ -20,28 +20,31 @@ $$
 $section C++: Get the Prior Table Information$$
 
 $head Syntax$$
-$icode%prior_table% = get_prior_table(%db%)%$$
+$icode%prior_table% = get_prior_table(%db%, %density_table%)%$$
+
+$head Prototype$$
+$srcfile%devel/table/get_prior_table.cpp%
+	0%// BEGIN_GET_PRIOR_TABLE%// END_GET_PRIOR_TABLE%1
+%$$
 
 $head Purpose$$
 To read the $cref prior_table$$ and return it as a C++ data structure.
 
 $head db$$
-The argument $icode db$$ has prototype
-$codei%
-	sqlite3* %db%
-%$$
-and is an open connection to the database.
+The argument $icode db$$
+is an open connection to the database.
 
 $head prior_table$$
-The return value $icode prior_table$$ has prototype
-$codei%
-	CppAD::vector<prior_struct> %prior_table%
-%$$
 For each $cref/prior_id/prior_table/prior_id/$$,
 $codei%
 	%prior_table%[%prior_id%]
 %$$
 is the information for the corresponding prior.
+
+$head density_table$$
+The $cref density_table$$ is used to check for errors in the prior table;
+e.g., the standard deviation for a prior must be positive unless the
+density is uniform.
 
 $head prior_struct$$
 This is a structure with the following fields
@@ -107,9 +110,11 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// BEGIN_GET_PRIOR_TABLE
 CppAD::vector<prior_struct> get_prior_table(
 	sqlite3*                           db            ,
 	const CppAD::vector<density_enum>& density_table )
+// END_GET_PRIOR_TABLE
 {	using std::string;
 
 	// user for error messaging
