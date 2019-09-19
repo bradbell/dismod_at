@@ -312,7 +312,7 @@ residual_struct<Float> residual_density(
 		{	Float c = 0.0;
 			if( d_id == cen_log_gaussian_enum )
 				c = d_eta;
-			Float erfc_value = erfc( (mu - c) / ( sigma * r2 ) );
+			Float erfc_value = CppAD::erfc( (mu - c) / ( sigma * r2 ) );
 			logden_smooth    = log(erfc_value / 2.0 );
 			logden_sub_abs   = 0.0;
 		}

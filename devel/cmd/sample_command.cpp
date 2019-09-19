@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_prior_sim_table.hpp>
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/create_table.hpp>
+# include <dismod_at/null_int.hpp>
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -202,14 +203,16 @@ void sample_command(
 		dismod_at::get_table_column(
 			db, table_name, column_name, scale_var_value
 		);
-		// get simulated data
+		// data_sim_table
 		vector<dismod_at::data_sim_struct> data_sim_table =
 				dismod_at::get_data_sim_table(db);
-		// get simulated prior
+		// prior_sim_table
 		vector<dismod_at::prior_sim_struct> prior_sim_table =
 				dismod_at::get_prior_sim_table(db);
-		//
+		// n_subset
 		size_t n_subset = data_subset_obj.size();
+		//
+		// check n_sample * n_subset == data_sim_table.size()
 		if( n_subset == 0 && data_sim_table.size() != 0  )
 		{	msg  = "dismod_at sample command method = simulate and ";
 			msg += "data_subset table size is zero and ";
@@ -227,16 +230,47 @@ void sample_command(
 			msg += "data_subset table size.";
 			dismod_at::error_exit(msg);
 		}
-		// vector used for replacement of prior means
+		//
+		// n_child
+		size_t n_child = pack_object.child_size();
+		//
+		// which components of variable vector are random effects
+		vector<bool> is_random_effect(n_var);
+		for(size_t var_id = 0; var_id < n_var; ++var_id)
+			is_random_effect[var_id] = false;
+		for(size_t rate_id = 0; rate_id < n_rate; ++rate_id)
+		for(size_t child_id = 0; child_id < n_child; ++child_id)
+		{	// packing information for this rate, child
+			dismod_at::pack_info::subvec_info info =
+				pack_object.rate_info(rate_id, child_id);
+			if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
+			{	size_t offset = info.offset;
+				size_t n_grid = info.n_var;
+				// grid points for this rate, child
+				for(size_t i_grid = 0; i_grid < n_grid; ++i_grid)
+				{	size_t var_id = offset + i_grid;
+					is_random_effect[var_id] = true;
+				}
+			}
+		}
+
+		// vector used for replacement of prior means:
+		// for each variable it has a priror mean for value, dage and  dtime
 		vector<double> prior_mean(n_var * 3);
+		//
+		// for each data set
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-		{	// replace prior means in prior_object
+		{	// replace prior means for variable with index var_id
 			for(size_t var_id = 0; var_id < n_var; ++var_id)
+			if( ! is_random_effect[var_id] )
 			{	size_t prior_sim_id = sample_index * n_var + var_id;
+				// value
 				prior_mean[var_id * 3 + 0] =
 					prior_sim_table[prior_sim_id].prior_sim_value;
+				// dage
 				prior_mean[var_id * 3 + 1] =
 					prior_sim_table[prior_sim_id].prior_sim_dage;
+				// dtime
 				prior_mean[var_id * 3 + 2] =
 					prior_sim_table[prior_sim_id].prior_sim_dtime;
 			}
