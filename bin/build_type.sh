@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -48,7 +48,7 @@ fi
 # -----------------------------------------------------------------------------
 if [ ! -e "$total_prefix" ]
 then
-	echo_eval mkdir "$total_prefix"
+	echo_eval mkdir -p "$total_prefix"
 fi
 if [ -e "$install_prefix" ]
 then
