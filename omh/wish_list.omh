@@ -34,9 +34,27 @@ $spell
 	args
 	kwargs
 	mu
+	const
+	smoothings
 $$
 
 $section Dismod_at Wish List$$
+
+$head Null prior_id$$
+It would be useful to have a null value for the
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
+in the smooth grid table
+interpreted as a uniform distribution with infinite lower and upper limits.
+This would make it easier to use
+$cref/const_value/smooth_grid_table/const_value/$$ to constrain an entire grid.
+
+$head Asymptotic Statistics$$
+The current version of the
+$cref/asymptotic/sample_command/method/asymptotic/$$ statistics is very slow
+and is not being used.
+Perhaps we should use the method without including the constraint information
+and see how well that works.
 
 $head More Random Effects$$
 Perhaps each covariate multiplier in the
@@ -233,14 +251,6 @@ $subhead User Examples$$
 The $cref user$$ examples before
 $cref user_change_grid.py$$ have a discussion at the top of each example.
 Add a discussion for the rest of the user examples.
-
-$head Sampling Random Effects$$
-It is not expected that the
-$cref/asymptotic/sample_command/method/asymptotic/$$ statistics for the
-random effects will always be accurate
-(due to insufficient data for individual random effects).
-One could use multiple asymptotic random effects samples as a proposal
-density for a Metropolis algorithm to get better sampling of these variables.
 
 $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects

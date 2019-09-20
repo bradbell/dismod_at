@@ -441,8 +441,7 @@ Advance to $code cppad_mixed-20150511$$.
 This yields sampling when covariance matrix is not positive definite
 (for diagnostic purposes).
 $lnext
-Add $cref/sampling random effects/wish_list/Sampling Random Effects/$$
-wish list item.
+Add sampling random effects to the wish list items.
 $lnext
 Add a description of the
 $cref/age and time variation/model_variables/Age and Time Variation/$$

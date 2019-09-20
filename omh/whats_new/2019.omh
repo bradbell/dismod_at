@@ -62,6 +62,18 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 09-20$$
+$list number$$
+The sampling random effects items was removed from the with list
+because the $cref user_sample_sim.py$$ method seems to work well.
+$lnext
+The
+$cref/asymptotic statistics/wish_list/Asymptotic Statistics/$$ and
+$cref/null prior_id/wish_list/Null prior_id/$$ items
+was added to the wish list
+$lend
+
+
 $head 09-19$$
 $list number$$
 Move the sample command
