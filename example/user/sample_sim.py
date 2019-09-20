@@ -101,7 +101,7 @@ delta  = math.log( 2.0 )
 #	h( y_n, \iota_n, s_n ] +
 #	h[ y_m, \exp( u_m ) \iota_n, s_m ] +
 #	h[ y_c, \exp( u_c ) \iota_n, s_c ] +
-#	h( u_m, 0, s ) + h( u_c , 0 , \delta )
+#	h( u_m, 0, \delta ) + h( u_c , 0 , \delta )
 # \] $$
 #
 # $head number_sample$$
