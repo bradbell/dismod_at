@@ -69,10 +69,10 @@
 # $head Building Images$$
 #
 # $subhead Version$$
-# This script will build the following version of dismod_at image:
+# This script will build the following version of dismod_ut image:
 # $srccode%sh%
-	dismod_at_version='20190917'
-	dismod_at_hash='bfa5a527a7067140da580443b4919047a3dc4ab5'
+	dismod_at_version='20190919'
+	dismod_at_hash='d8237680df264c9b5b0684c807057cb0acdb2ef6'
 # %$$
 #
 # $subhead dismod_at.base$$
@@ -193,7 +193,8 @@
 #
 # $subhead Run Container$$
 # If a container status is $code Up$$, you can run it using:
-# $codei%	docker exec -it %container_id% bash
+# $codei%
+#	docker exec -it %container_id% bash
 # %$$
 # You will be in the container until you $code exit$$
 # the $code bash$$ shell that is run by the command above.
@@ -317,15 +318,18 @@ grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
 mkdir /home/prefix && \
 sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
 
-# install debug version of eigen and ipopt
+# debug install debug version of eigen and ipopt
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
 bin/install_eigen.sh && \
 bin/install_ipopt.sh
 
-# install release version of eigen and ipopt
+# release install release version of eigen and ipopt
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
 bin/install_eigen.sh && \
 bin/install_ipopt.sh
+
+# restore run_cmake.sh to its original state
+Run git checkout bin/run_cmake.sh
 
 EOF
 else
@@ -337,9 +341,10 @@ WORKDIR /home/dismod_at.git
 RUN git checkout master && \
 git pull && \
 git checkout --quiet $dismod_at_hash  && \
+sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g' && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null
 
-# install debug version of cppad, cppad_mixed, dismod_at
+# debug install debug version of cppad, cppad_mixed, dismod_at
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
 bin/install_cppad.sh && \
 bin/install_cppad_mixed.sh && \
@@ -349,7 +354,7 @@ make check && \
 make install && \
 cd ..
 
-# install debug version of cppad, cppad_mixed, dismod_at
+# release install debug version of cppad, cppad_mixed, dismod_at
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
 bin/install_cppad.sh && \
 bin/install_cppad_mixed.sh && \
@@ -358,6 +363,9 @@ cd build && \
 make check && \
 make install && \
 cd ..
+
+# restore run_cmake.sh to its original state
+Run git checkout bin/run_cmake.sh
 
 WORKDIR /home/work
 EOF

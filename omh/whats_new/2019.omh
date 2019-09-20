@@ -38,6 +38,7 @@ $spell
 	frac
 	Dockerfile
 	num_iter
+	cmake
 $$
 $navigate%
 	Up%Location%
@@ -74,6 +75,13 @@ method for the sample command.
 $lnext
 Add the example $cref user_sample_sim.py$$ for the
 $cref sample_command$$ with the simulate method.
+$lnext
+Advance $code dock_dismod_at.sh$$ to version $code 20190919$$.
+A modified version of $code bin/run_cmake.sh$$ was in the
+dismod_at.base which caused a problem when building dismod_at.image.
+This has been fixed but you should rebuild
+$cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
+to get this fix.
 $lend
 
 $head 09-17$$
