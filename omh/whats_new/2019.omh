@@ -64,12 +64,26 @@ $childtable%
 %$$
 
 $head 09-21$$
+$list number$$
 The
 $cref/conditionals/wish_list/ODE Solution/Conditionals/$$ and
 $cref/checkpointing/wish_list/ODE Solution/Checkpointing/$$
 wish list items were under the csv2db Command heading.
 This was a mistake and they have been moved to be under the
 ODE Solution heading.
+$lnext
+The change of random failure in the $cref user_censor.py$$ example
+was reduced by reducing the number of values that get censored.
+To be specific, the line
+$srccode%py%
+	meas_std = 2.0 * iota_true;
+%$$
+was changed to
+$srccode%py%
+	meas_std = 1.5 * iota_true;
+%$$
+$lend
+
 
 
 $head 09-20$$

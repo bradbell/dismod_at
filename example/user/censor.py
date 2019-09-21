@@ -163,7 +163,7 @@ def example_db (file_name) :
 	# Values that are the same for all data rows
 	# If you change cen_gaussian to gaussian, the test should fail
 	# (because the simultion censors the data)
-	meas_std = 2.0 * iota_true;
+	meas_std = 1.5 * iota_true;
 	row = {
 		'node':        'world',
 		'integrand':   'Sincidence',
