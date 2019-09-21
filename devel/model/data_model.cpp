@@ -161,11 +161,6 @@ $head data_subset_obj_$$
 for each $icode subset_id$$, set $codei%data_subset_obj_[%subset_id%]%$$
 fields that are command both data_subset and avgint_subset.
 
-$head child_ran_zero_$$
-for each $icode%child% < n_child_%$$,
-$codei%child_ran_zero_%[%child%]%$$ is true if all the random effects
-for this child are constrained to be zero.
-
 $head data_info_$$
 for each $icode subset_id$$, set $codei%data_info_[%subset_id%]%$$
 is extra information for each data point.
@@ -291,41 +286,6 @@ avg_noise_obj_(
 		data_subset_obj_[i].age_upper    = subset_object[i].age_upper;
 		data_subset_obj_[i].time_lower   = subset_object[i].time_lower;
 		data_subset_obj_[i].time_upper   = subset_object[i].time_upper;
-	}
-	// -----------------------------------------------------------------------
-	// child_ran_zero_
-	double inf = std::numeric_limits<double>::infinity();
-	child_ran_zero_.resize(n_child_);
-	for(size_t child = 0; child < n_child_; ++child)
-	{	child_ran_zero_[child] = true;
-		for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
-		{	// check if any random effects for this rate are not constant
-			size_t smooth_id = pack_object.rate_info(rate_id, child).smooth_id;
-			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
-			{	const smooth_info& s_info = s_info_vec[smooth_id];
-				size_t             n_age  = s_info.age_size();
-				size_t             n_time = s_info.time_size();
-				for(size_t i = 0; i < n_age; i++)
-				{	for(size_t j = 0; j < n_time; j++)
-					{	size_t prior_id    = s_info.value_prior_id(i, j);
-						// if prior_id is null then const_value is not null
-						if( prior_id != DISMOD_AT_NULL_SIZE_T )
-						{
-# ifndef NDEBUG
-							double lower = prior_table[prior_id].lower;
-# endif
-							double upper = prior_table[prior_id].upper;
-							assert( upper == inf  || upper == lower );
-							assert( lower == -inf || upper == lower );
-							bool zero    = upper == 0.0;
-							zero        |= upper == inf && bound_random == 0.0;
-							if( ! zero )
-								child_ran_zero_[child] = false;
-						}
-					}
-				}
-			}
-		}
 	}
 	// -----------------------------------------------------------------------
 	// data_info_

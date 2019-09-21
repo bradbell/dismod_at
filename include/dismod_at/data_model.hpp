@@ -46,7 +46,6 @@ private:
 	//
 	// set by constructor and not changed
 	meas_noise_effect_enum         meas_noise_effect_;
-	CppAD::vector<bool>            child_ran_zero_;
 	CppAD::vector<data_ode_info>   data_info_;
 	CppAD::vector<double>          minimum_meas_cv_;
 	//
