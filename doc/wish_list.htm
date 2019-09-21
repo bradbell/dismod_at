@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list null prior_id asymptotic statistics more random effects censored laplace create_database ode solution prevalence large excess mortality csv2db command covariate multipliers grids value priors difference sample conditionals checkpointing meas_std diagrams lagrange documentation real world example user examples starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list null prior_id asymptotic statistics more random effects censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing csv2db command covariate multipliers grids value priors difference sample meas_std diagrams lagrange documentation real world example user examples starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,6 +70,8 @@ A:active { color : purple }
 <br><a href="wish_list.htm#ODE Solution" target="_top">ODE&nbsp;Solution</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Prevalence ODE" target="_top">Prevalence&nbsp;ODE</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Large Excess Mortality" target="_top">Large&nbsp;Excess&nbsp;Mortality</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Conditionals" target="_top">Conditionals</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Checkpointing" target="_top">Checkpointing</a>
 <br><a href="wish_list.htm#csv2db Command" target="_top">csv2db&nbsp;Command</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Covariate Multipliers" target="_top">Covariate&nbsp;Multipliers</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Random Effects" target="_top">Random&nbsp;Effects</a>
@@ -77,8 +79,6 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Value Priors" target="_top">Value&nbsp;Priors</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Difference Priors" target="_top">Difference&nbsp;Priors</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Sample" target="_top">Sample</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Conditionals" target="_top">Conditionals</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Checkpointing" target="_top">Checkpointing</a>
 <br><a href="wish_list.htm#meas_std" target="_top">meas_std</a>
 <br><a href="wish_list.htm#Command Diagrams" target="_top">Command&nbsp;Diagrams</a>
 <br><a href="wish_list.htm#Lagrange Multipliers" target="_top">Lagrange&nbsp;Multipliers</a>
@@ -286,6 +286,28 @@ handle this condition.
 
 <br>
 <br>
+<big><a name="ODE Solution.Conditionals" id="ODE Solution.Conditionals">Conditionals</a></big>
+<br>
+It is now possible to use conditional expressions in the ODE solution
+(CppAD this will now work properly these conditionals
+and two levels of AD and revere mode).
+This change would remove the need for the
+<a href="option_table.htm#rate_case" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
+ option.
+Note that this will also work with checkpointing.
+
+<br>
+<br>
+<big><a name="ODE Solution.Checkpointing" id="ODE Solution.Checkpointing">Checkpointing</a></big>
+<br>
+It should greatly reduce memory if we use
+CppAD checkpointing of an ODE that has been
+extended to include derivatives with respect to parameters; see
+<a href="http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_extended_ode</span></a>
+.
+
+<br>
+<br>
 <b><big><a name="csv2db Command" id="csv2db Command">csv2db Command</a></big></b>
 <br>
 The following is a wish list for extending the csv2db command.
@@ -362,28 +384,6 @@ This would enable csv2db to set up
 <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predictions</span></a>
 
 using model variables computed by another program.
-
-<br>
-<br>
-<big><a name="csv2db Command.Conditionals" id="csv2db Command.Conditionals">Conditionals</a></big>
-<br>
-It is now possible to use conditional expressions in the ODE solution
-(CppAD this will now work properly these conditionals
-and two levels of AD and revere mode).
-This change would remove the need for the
-<a href="option_table.htm#rate_case" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
- option.
-Note that this will also work with checkpointing.
-
-<br>
-<br>
-<big><a name="csv2db Command.Checkpointing" id="csv2db Command.Checkpointing">Checkpointing</a></big>
-<br>
-It should greatly reduce memory if we use
-CppAD checkpointing of an ODE that has been
-extended to include derivatives with respect to parameters; see
-<a href="http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_extended_ode</span></a>
-.
 
 <br>
 <br>
