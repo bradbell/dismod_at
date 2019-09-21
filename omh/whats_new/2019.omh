@@ -39,6 +39,7 @@ $spell
 	Dockerfile
 	num_iter
 	cmake
+	checkpointing
 $$
 $navigate%
 	Up%Location%
@@ -61,6 +62,15 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 09-21$$
+The
+$cref/conditionals/wish_list/ODE Solution/Conditionals/$$ and
+$cref/checkpointing/wish_list/ODE Solution/Checkpointing/$$
+wish list items were under the csv2db Command heading.
+This was a mistake and they have been moved to be under the
+ODE Solution heading.
+
 
 $head 09-20$$
 $list number$$

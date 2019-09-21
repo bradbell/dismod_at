@@ -147,6 +147,22 @@ this can result in exponential overflow and infinity or nan.
 It is possible to redo the calculations in case three to properly
 handle this condition.
 
+$subhead Conditionals$$
+It is now possible to use conditional expressions in the ODE solution
+(CppAD this will now work properly these conditionals
+and two levels of AD and revere mode).
+This change would remove the need for the
+$cref/rate_case/option_table/rate_case/$$ option.
+Note that this will also work with checkpointing.
+
+$subhead Checkpointing$$
+It should greatly reduce memory if we use
+CppAD checkpointing of an ODE that has been
+extended to include derivatives with respect to parameters; see
+$href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
+	%checkpoint_extended_ode
+%$$.
+
 $head csv2db Command$$
 The following is a wish list for extending the csv2db command.
 This command is only an $cref/example/csv2db_command/Example/$$
@@ -199,22 +215,6 @@ $cref sample_table$$.
 This would enable csv2db to set up
 $cref/predictions/predict_command/$$
 using model variables computed by another program.
-
-$subhead Conditionals$$
-It is now possible to use conditional expressions in the ODE solution
-(CppAD this will now work properly these conditionals
-and two levels of AD and revere mode).
-This change would remove the need for the
-$cref/rate_case/option_table/rate_case/$$ option.
-Note that this will also work with checkpointing.
-
-$subhead Checkpointing$$
-It should greatly reduce memory if we use
-CppAD checkpointing of an ODE that has been
-extended to include derivatives with respect to parameters; see
-$href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
-	%checkpoint_extended_ode
-%$$.
 
 $head meas_std$$
 Currently the data table

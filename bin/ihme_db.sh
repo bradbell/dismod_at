@@ -28,7 +28,7 @@
 # $head Purpose$$
 # This script copies a dismod_at database to a local directory
 # and then runs the $cref db2csv_command$$ on the database.
-# The script is only intended to be used by members of IHME
+# This script is only intended to be used by members of IHME
 # and to be run from the IHME cluster.
 # It can also be run on a computer that has mounted the
 # $code /ihme/epi$$ and $code /ihme/homes$$ directories.
