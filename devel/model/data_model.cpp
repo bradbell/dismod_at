@@ -351,10 +351,11 @@ avg_noise_obj_(
 					size_t             n_t = s_info.time_size();
 					for(size_t i = 0; i < n_a; i++)
 					{	for(size_t j = 0; j < n_t; j++)
-						{	size_t prior_id    = s_info.value_prior_id(i, j);
-							// if prior_id is null then const_value is not null
-							if( prior_id != DISMOD_AT_NULL_SIZE_T )
-							{	double lower = prior_table[prior_id].lower;
+						{	double const_value = s_info.const_value(i, j);
+							if( std::isnan(const_value) )
+							{	size_t prior_id = s_info.value_prior_id(i, j);
+								assert( prior_id != DISMOD_AT_NULL_SIZE_T );
+								double lower = prior_table[prior_id].lower;
 								double upper = prior_table[prior_id].upper;
 								if( lower != upper )
 									bound_ran_neq = true;

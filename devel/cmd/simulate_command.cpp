@@ -100,6 +100,7 @@ void simulate_command(
 	using std::string;
 	using CppAD::vector;
 	using CppAD::to_string;
+	double nan = std::numeric_limits<double>::quiet_NaN();
 	// -----------------------------------------------------------------------
 	string msg;
 	int tmp = std::atoi( number_simulate.c_str() );
@@ -161,7 +162,7 @@ void simulate_command(
 	//
 	// for each measurement in the data_subset table
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	double nan = std::numeric_limits<double>::quiet_NaN();
+	{
 		//
 		// compute the average integrand, avg
 		double avg = data_object.average(subset_id, truth_var);
@@ -310,13 +311,23 @@ void simulate_command(
 		// prior id for mean of this this variable
 		size_t prior_id[3];
 		vector<string> sim_str(3);
-		prior_id[0] = var2prior.value_prior_id(var_id);
-		prior_id[1] = var2prior.dage_prior_id(var_id);
-		prior_id[2] = var2prior.dtime_prior_id(var_id);
+		prior_id[0]        = var2prior.value_prior_id(var_id);
+		prior_id[1]        = var2prior.dage_prior_id(var_id);
+		prior_id[2]        = var2prior.dtime_prior_id(var_id);
+		double const_value = var2prior.const_value(var_id);
 		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 		{	for(size_t k = 0; k < 3; ++k)
-			if( prior_id[k] == DISMOD_AT_NULL_SIZE_T )
+			if( k == 0 && ! std::isnan(const_value) )
+			{	sim_prior_value[sim_index * n_var + var_id] = const_value;
+				sim_str[0] = to_string(const_value);
+			}
+			else if( prior_id[k] == DISMOD_AT_NULL_SIZE_T )
+			{	// The default prior is a uniform on [-inf, +inf]
+				// cannot simulate from this distribution
 				sim_str[k] = "null";
+				if( k == 0 )
+					sim_prior_value[sim_index * n_var + var_id] = nan;
+			}
 			else
 			{	double lower = prior_table[ prior_id[k] ].lower;
 				double upper = prior_table[ prior_id[k] ].upper;

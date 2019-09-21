@@ -316,25 +316,33 @@ void sample_command(
 					prior_sim_table[prior_sim_id].prior_sim_dtime;
 			}
 			else
-			{	// This is a random effects so use the prior table means
+			{	// This is a random effect so use the prior table means
+				//
 				// value
-				size_t prior_id = var2prior.value_prior_id(var_id);
-				if( prior_id != DISMOD_AT_NULL_SIZE_T )
-					prior_mean[var_id * 3 + 0] = prior_table[prior_id].mean;
+				double const_value = var2prior.const_value(var_id);
+				size_t prior_id    = var2prior.value_prior_id(var_id);
+				if( ! CppAD::isnan( const_value ) )
+					prior_mean[var_id * 3 + 0] = const_value;
 				else
-					prior_mean[var_id * 3 + 0] = var2prior.const_value(var_id);
+				{	assert( prior_id != DISMOD_AT_NULL_SIZE_T );
+					prior_mean[var_id * 3 + 0] = prior_table[prior_id].mean;
+				}
 				// dage
 				prior_id = var2prior.dage_prior_id(var_id);
 				if( prior_id != DISMOD_AT_NULL_SIZE_T )
 					prior_mean[var_id * 3 + 1] = prior_table[prior_id].mean;
 				else
-					prior_mean[var_id * 3 + 1] = var2prior.const_value(var_id);
+				{	// default is uniform on [-inf, +inf]
+					prior_mean[var_id * 3 + 1] = 0.0;
+				}
 				// dtime
 				prior_id = var2prior.dtime_prior_id(var_id);
 				if( prior_id != DISMOD_AT_NULL_SIZE_T )
 					prior_mean[var_id * 3 + 2] = prior_table[prior_id].mean;
 				else
-					prior_mean[var_id * 3 + 2] = var2prior.const_value(var_id);
+				{	// default is uniform on [-inf, +inf]
+					prior_mean[var_id * 3 + 2] = 0.0;
+				}
 			}
 			prior_object.replace_mean(prior_mean);
 			//

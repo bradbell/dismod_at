@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -84,9 +84,7 @@ it is equal to $icode%pack_object%.size()%$$.
 
 $head const_value$$
 For each $icode var_id$$,
-either $icode const_value$$ this is nan or
-$icode value_prior_id$$ is null but not both.
-If $icode value_prior_id$$ is null,
+if $icode const_value$$ is not nan (not null)
 $icode const_value$$ is the value at this variable is constrained to.
 
 $head smooth_id$$
@@ -104,32 +102,41 @@ offset for the corresponding standard deviation multipliers can be computed
 using $cref pack_info_mulstd$$.
 
 $head value_prior_id$$
-Either this is $code null$$ or $icode const_value$$ is nan but not both.
+If $icode const_value$$ is not nan,
+$icode value_prior_id$$ must be null.
 If $icode const_value$$ is nan,
 $icode value_prior_id$$ identifies the prior for
 the value of this variable.
+The null prior for this case corresponds to a uniform
+between minus and plus infinity.
 
 $head dage_prior_id$$
-If $icode dage_prior_id$$ is null,
-this variable corresponding to the maximum age in a smoothing grid.
-Otherwise $icode dage_prior_id$$ identifies the  prior for
+If $icode dage_var_id$$ is not null,
+$icode dage_prior_id$$ identifies the prior for
 the difference between the variable with index
 $icode var_id$$ and the variable with index $icode dage_var_id$$.
+The null prior for this case corresponds to a uniform
+between minus and plus infinity.
 
 $head dtime_prior_id$$
-If $icode dtime_prior_id$$ is null,
-this variable corresponding to the maximum time in a smoothing grid.
-Otherwise $icode dtime_prior_id$$ identifies the prior for
+If $icode dtime_var_id$$ is not null,
+$icode dtime_prior_id$$ identifies the prior for
 the difference between the variable with index
 $icode var_id$$ and the variable with index $icode dtime_var_id$$.
+The null prior for this case corresponds to a uniform
+between minus and plus infinity.
 
 $head dage_var_id$$
 If $icode dage_prior_id$$ is not null, this is the
 next variable in the age difference.
+If $icode var_id$$ corresponds to the maximum age in the grid,
+$icode dage_var_id$$ is null.
 
 $head dtime_var_id$$
 If $icode dtime_prior_id$$ is not null, this is the
 next variable in the time difference.
+If $icode var_id$$ corresponds to the maximum time in the grid,
+$icode dtime_var_id$$ is null.
 
 $head fixed_effect$$
 This $code bool$$ is true (false) if the variable with index

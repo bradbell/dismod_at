@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -73,13 +73,12 @@ namespace dismod_at {
 		// count how many random effects are constant
 		size_t n_random_const = 0;
 		for(size_t j = 0; j < pack_index.size(); j++)
-		{	size_t var_id   = pack_index[j];
-			size_t prior_id = var2prior.value_prior_id(var_id);
-			if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			{	assert( ! std::isnan( var2prior.const_value(var_id) ) );
+		{	size_t var_id      = pack_index[j];
+			size_t prior_id    = var2prior.value_prior_id(var_id);
+			double const_value = var2prior.const_value(var_id);
+			if( ! std::isnan(const_value) )
 				++n_random_const;
-			}
-			else
+			else if( prior_id != DISMOD_AT_NULL_SIZE_T )
 			{	double lower = prior_table[prior_id].lower;
 				double upper = prior_table[prior_id].upper;
 				if( lower ==  upper )

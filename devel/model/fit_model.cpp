@@ -301,19 +301,24 @@ data_object_   ( data_object )
 	assert( pack_object.size() == n_var );
 	assert( var2prior_.size() == n_var );
 	// ----------------------------------------------------------------------
+# ifndef NDEBUG
 	for(size_t var_id = 0; var_id < n_var; var_id++)
-	{	size_t prior_id = var2prior_.value_prior_id(var_id);
-		double lower    = var2prior_.const_value(var_id);
-		double upper    = lower;
-# ifndef NDEBUG
-		double mean     = lower;
-# endif
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-		{	lower = prior_table_[prior_id].lower;
-			upper = prior_table_[prior_id].upper;
-# ifndef NDEBUG
-			mean  = prior_table_[prior_id].mean;
-# endif
+	{	size_t prior_id    = var2prior_.value_prior_id(var_id);
+		double const_value = var2prior_.const_value(var_id);
+		double lower       = const_value;
+		double upper       = const_value;
+		double mean        = const_value;
+		if( std::isnan(const_value) )
+		{	if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			{	lower = -inf;
+				upper = +inf;
+				mean  = 0.0;
+			}
+			else
+			{	lower = prior_table_[prior_id].lower;
+				upper = prior_table_[prior_id].upper;
+				mean  = prior_table_[prior_id].mean;
+			}
 		}
 		assert(lower <= mean && mean <= upper);
 		if( (start_var_[var_id] < lower) | (upper < start_var_[var_id]) )
@@ -324,28 +329,35 @@ data_object_   ( data_object )
 			error_exit(msg, "start_var", var_id);
 		}
 	}
+# endif
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
 	//
 	// random lower in prior
 	d_vector pack_vec(n_var);
 	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id = var2prior_.value_prior_id(i);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[prior_id].lower;
+	{	size_t prior_id    = var2prior_.value_prior_id(i);
+		double const_value = var2prior_.const_value(i);
+		if( ! std::isnan(const_value) )
+			pack_vec[i] = const_value;
+		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = - inf;
 		else
-			pack_vec[i] = var2prior_.const_value(i);
+			pack_vec[i] = prior_table_[prior_id].lower;
 	}
 	random_lower_.resize(n_random_);
 	unpack_random(pack_object_, pack_vec, random_lower_);
 	//
 	// random upper in prior
 	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id = var2prior_.value_prior_id(i);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[prior_id].upper;
+	{	size_t prior_id    = var2prior_.value_prior_id(i);
+		double const_value = var2prior_.const_value(i);
+		if( ! std::isnan(const_value) )
+			pack_vec[i] = const_value;
+		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = + inf;
 		else
-			pack_vec[i] = var2prior_.const_value(i);
+			pack_vec[i] = prior_table_[prior_id].upper;
 	}
 	random_upper_.resize(n_random_);
 	unpack_random(pack_object_, pack_vec, random_upper_);
@@ -525,6 +537,7 @@ void fit_model::run_fit(
 $end
 */
 {	assert( ! no_scaling_ );
+	double inf = std::numeric_limits<double>::infinity();
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
@@ -534,11 +547,14 @@ $end
 	// fixed_lower
 	d_vector fixed_lower_noscale(n_fixed_), fixed_lower(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id = var2prior_.value_prior_id(i);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[prior_id].lower;
+	{	size_t prior_id    = var2prior_.value_prior_id(i);
+		double const_value = var2prior_.const_value(i);
+		if( ! std::isnan(const_value ) )
+			pack_vec[i] = const_value;
+		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = -inf;
 		else
-			pack_vec[i] = var2prior_.const_value(i);
+			pack_vec[i] = prior_table_[prior_id].lower;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_lower_noscale);
 	scale_fixed_effect(fixed_lower_noscale, fixed_lower);
@@ -546,11 +562,14 @@ $end
 	// fixed_upper
 	d_vector fixed_upper_noscale(n_fixed_), fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id = var2prior_.value_prior_id(i);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[prior_id].upper;
+	{	size_t prior_id    = var2prior_.value_prior_id(i);
+		double const_value = var2prior_.const_value(i);
+		if( ! std::isnan(const_value) )
+			pack_vec[i] = const_value;
+		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = +inf;
 		else
-			pack_vec[i] = var2prior_.const_value(i);
+			pack_vec[i] = prior_table_[prior_id].upper;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_upper_noscale);
 	scale_fixed_effect(fixed_upper_noscale, fixed_upper);
@@ -559,10 +578,13 @@ $end
 	d_vector fixed_mean(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 	{	size_t prior_id = var2prior_.value_prior_id(i);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[prior_id].mean;
+		double const_value = var2prior_.const_value(i);
+		if( ! std::isnan(const_value) )
+			pack_vec[i] = const_value;
+		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = 0.0;
 		else
-			pack_vec[i] = var2prior_.const_value(i);
+			pack_vec[i] = prior_table_[prior_id].mean;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_mean);
 	scale_fixed_effect(fixed_mean, fixed_mean);
@@ -895,7 +917,8 @@ void fit_model::sample_posterior(
 /* %$$
 $end
 */
-{	assert( no_scaling_ );
+{	double inf = std::numeric_limits<double>::infinity();
+	assert( no_scaling_ );
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( sample.size() % n_var == 0     );
@@ -945,11 +968,14 @@ $end
 	CppAD::vector<double> pack_vec( n_var );
 	CppAD::vector<double> fixed_lower(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id = var2prior_.value_prior_id(i);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[prior_id].lower;
+	{	size_t prior_id    = var2prior_.value_prior_id(i);
+		double const_value = var2prior_.const_value(i);
+		if( ! std::isnan(const_value ) )
+			pack_vec[i] = const_value;
+		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = -inf;
 		else
-			pack_vec[i] = var2prior_.const_value(i);
+			pack_vec[i] = prior_table_[prior_id].lower;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_lower);
 	scale_fixed_effect(fixed_lower, fixed_lower);
@@ -957,11 +983,14 @@ $end
 	// fixed_upper
 	CppAD::vector<double> fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id = var2prior_.value_prior_id(i);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = prior_table_[prior_id].upper;
+	{	size_t prior_id    = var2prior_.value_prior_id(i);
+		double const_value = var2prior_.const_value(i);
+		if( ! std::isnan(const_value) )
+			pack_vec[i] = const_value;
+		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			pack_vec[i] = +inf;
 		else
-			pack_vec[i] = var2prior_.const_value(i);
+			pack_vec[i] = prior_table_[prior_id].upper;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
 	scale_fixed_effect(fixed_upper, fixed_upper);

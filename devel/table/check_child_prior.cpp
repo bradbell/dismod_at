@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -148,7 +148,11 @@ void check_child_prior(
 				name[1]     = "child dage prior:\n";
 				prior_id[2] = smooth_grid[grid_id].dtime_prior_id;
 				name[2]     = "child dtime prior:\n";
-				// skip dage and dtime priors for last age and last time
+# ifndef NDEBUG
+				double const_value = smooth_grid[grid_id].const_value;
+				if( prior_id[0] == DISMOD_AT_NULL_INT )
+					assert( ! std::isnan(const_value) );
+# endif
 				for(size_t i = 0; i < 3; i++)
 				if( prior_id[i] != DISMOD_AT_NULL_INT )
 				{

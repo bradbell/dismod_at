@@ -159,14 +159,9 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(
 		smooth_grid[i].dage_prior_id  = dage_prior_id[i];
 		smooth_grid[i].dtime_prior_id = dtime_prior_id[i];
 		smooth_grid[i].const_value    = const_value[i];
-		bool ok = false;
-		if( std::isnan( const_value[i] ) )
-			ok = value_prior_id[i] != DISMOD_AT_NULL_INT;
-		else
-			ok = value_prior_id[i] == DISMOD_AT_NULL_INT;
-		if( ! ok )
-		{	string msg = "value_prior_id and const_value are both null\n"
-			"or are both not null.";
+		if( ! std::isnan( const_value[i] ) )
+		if( value_prior_id[i] != DISMOD_AT_NULL_INT)
+		{	string msg = "both const_value and value_prior_id are not null.\n";
 			error_exit(msg, table_name, i);
 		}
 		// if prior_id >= n_prior and prior_id != DISMOD_AT_NULL_INT
@@ -174,8 +169,7 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(
 		int prior_id = dage_prior_id[i];
 		if( size_t(prior_id) < n_prior )
 		{	int density_id = prior_table[prior_id].density_id;
-			ok  = ! censored_density( density_table[density_id] );
-			if( ! ok )
+			if( censored_density( density_table[density_id] ) )
 			{	string msg = "dage_prior_id corresponds to a "
 				"censored distribution";
 				error_exit(msg, table_name, i);
@@ -184,8 +178,7 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(
 		prior_id = dtime_prior_id[i];
 		if( size_t(prior_id) < n_prior )
 		{	int density_id = prior_table[prior_id].density_id;
-			ok  = ! censored_density( density_table[density_id] );
-			if( ! ok )
+			if( censored_density( density_table[density_id] ) )
 			{	string msg = "dtime_prior_id corresponds to a "
 				"censored distribution";
 				error_exit(msg, table_name, i);

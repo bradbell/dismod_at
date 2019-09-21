@@ -105,22 +105,33 @@ time_table_(time_table)       ,
 prior_table_(prior_table)     ,
 density_table_(density_table)
 {	// Set prior_mean_ to values in prior table (default)
+	//
 	size_t n_var = var2prior_.size();
 	prior_mean_.resize( 3 * n_var );
-	for(size_t i = 0; i < prior_mean_.size(); ++i)
-		prior_mean_[i] = std::numeric_limits<double>::quiet_NaN();
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
-	{	// value prior
-		size_t prior_id             = var2prior_.value_prior_id(var_id);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+	{
+		// value prior
+		double const_value = var2prior_.const_value(var_id);
+		size_t prior_id    = var2prior_.value_prior_id(var_id);
+		if( ! std::isnan(const_value) )
+			prior_mean_[var_id * 3 + 0] = const_value;
+		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			prior_mean_[var_id * 3 + 0] = 0.0;
+		else
 			prior_mean_[var_id * 3 + 0] = prior_table[prior_id].mean;
+		//
 		// dage prior
-		prior_id                    = var2prior_.dage_prior_id(var_id);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+		prior_id = var2prior_.dage_prior_id(var_id);
+		if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			prior_mean_[var_id * 3 + 1] = 0.0;
+		else
 			prior_mean_[var_id * 3 + 1] = prior_table[prior_id].mean;
+		//
 		// dtime prior
-		prior_id                    = var2prior_.dtime_prior_id(var_id);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
+		prior_id = var2prior_.dtime_prior_id(var_id);
+		if( prior_id == DISMOD_AT_NULL_SIZE_T )
+			prior_mean_[var_id * 3 + 1] = 0.0;
+		else
 			prior_mean_[var_id * 3 + 2] = prior_table[prior_id].mean;
 	}
 	return;
@@ -190,8 +201,6 @@ replace the mean in the
 $cref/value prior/pack_prior/value_prior_id/$$ ($icode%k%=0%$$),
 $cref/dage prior/pack_prior/dage_prior_id/$$ ($icode%k%=1%$$),
 $cref/dtime prior/pack_prior/dtime_prior_id/$$ ($icode%k%=2%$$).
-This value is not used when the corresponding
-$cref/prior_id/prior_table/prior_id/$$ is null.
 
 $end
 */
@@ -291,20 +300,22 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 		Float y = pack_vec[var_id];
 		//
 		// prior information
-# ifndef NDEBUG
-		double const_value    = var2prior_.const_value(var_id);
-# endif
 		size_t smooth_id      = var2prior_.smooth_id(var_id);
 		size_t value_prior_id = var2prior_.value_prior_id(var_id);
 		size_t dage_prior_id  = var2prior_.dage_prior_id(var_id);
 		size_t dtime_prior_id = var2prior_.dtime_prior_id(var_id);
 		bool   fixed_effect   = var2prior_.fixed_effect(var_id);
+# ifndef NDEBUG
+		double const_value = var2prior_.const_value(var_id);
+		if( ! std::isnan(const_value) )
+			assert( value_prior_id == DISMOD_AT_NULL_SIZE_T );
+# endif
 		//
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 		{	// standard deviation multipliers are fixed effects and do not
 			// have a smoothing, hence the following
 			assert( fixed_effect );
-			assert( std::isnan(const_value) );
+			assert( value_prior_id != DISMOD_AT_NULL_SIZE_T );
 			assert( dage_prior_id  == DISMOD_AT_NULL_SIZE_T );
 			assert( dtime_prior_id == DISMOD_AT_NULL_SIZE_T );
 			//

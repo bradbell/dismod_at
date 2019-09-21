@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -55,9 +55,13 @@ CppAD::vector<double> get_prior_mean(
 	CppAD::vector<double> result(n_var);
 	for(size_t var_id = 0; var_id < n_var; var_id++)
 	{	double var_value = var2prior.const_value(var_id);
-		size_t prior_id  = var2prior.value_prior_id(var_id);
-		if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			var_value = prior_table[prior_id].mean;
+		if( std::isnan(var_value) )
+		{	size_t prior_id = var2prior.value_prior_id(var_id);
+			if( prior_id == DISMOD_AT_NULL_SIZE_T )
+				var_value = 0.0;
+			else
+				var_value = prior_table[prior_id].mean;
+		}
 		result[var_id] = var_value;
 	}
 	return result;

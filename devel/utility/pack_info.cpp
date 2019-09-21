@@ -446,11 +446,13 @@ $codei%
 %$$
 and is the offset (index) in the packed variable vector
 where this multiplier is located.
-If it has value
+If $icode offset$$  has
 $codei%
 	DISMOD_AT_NULL_SIZE_T
 %$$
-This multiplier has value one and is not a variable.
+for $icode%k% = 0%$$, then it has the same value for
+$icode%k% = 1, 2%$$.
+In this case, the multiplier has value one and is not a variable.
 
 $head Example$$
 See $cref/pack_info Example/pack_info/Example/$$.
