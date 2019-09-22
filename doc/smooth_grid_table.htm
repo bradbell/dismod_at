@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Smooth Grid Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Smooth Grid Table">
-<meta name="keywords" id="keywords" content=" the smooth grid table purpose smooth_grid_id smooth_id null age_id time_id value_prior_id dage_prior_id dtime_prior_id const_value rectangular example ">
+<meta name="keywords" id="keywords" content=" the smooth grid table purpose smooth_grid_id smooth_id null age_id time_id value_prior_id dage_prior_id maximum age dtime_prior_id const_value rectangular example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,8 +78,10 @@ A:active { color : purple }
 <br><a href="smooth_grid_table.htm#value_prior_id" target="_top">value_prior_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="smooth_grid_table.htm#value_prior_id.null" target="_top">null</a>
 <br><a href="smooth_grid_table.htm#dage_prior_id" target="_top">dage_prior_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="smooth_grid_table.htm#dage_prior_id.Maximum Age" target="_top">Maximum&nbsp;Age</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="smooth_grid_table.htm#dage_prior_id.null" target="_top">null</a>
 <br><a href="smooth_grid_table.htm#dtime_prior_id" target="_top">dtime_prior_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="smooth_grid_table.htm#dtime_prior_id.Maximum Age" target="_top">Maximum&nbsp;Age</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="smooth_grid_table.htm#dtime_prior_id.null" target="_top">null</a>
 <br><a href="smooth_grid_table.htm#const_value" target="_top">const_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="smooth_grid_table.htm#const_value.null" target="_top">null</a>
@@ -169,10 +171,11 @@ at the corresponding age and time.
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>value_prior_id</span></font></i></code>
- is null (not null),
+ is null,
+<a href="smooth_grid_table.htm#const_value" target="_top"><span style='white-space: nowrap'>const_value</span></a>
 
-<code><i><font color="black"><span style='white-space: nowrap'>const_value</span></font></i></code>
- must not be null (must be null).
+must not be null and is used for the value prior
+at the corresponding age and time.
 
 <br>
 <br>
@@ -196,12 +199,21 @@ cannot specify a
 
 <br>
 <br>
+<big><a name="dage_prior_id.Maximum Age" id="dage_prior_id.Maximum Age">Maximum Age</a></big>
+<br>
+For each time grid point in the smoothing,
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>dage_prior_id</span></font></i></code>
+ at the maximum age is not used.
+
+<br>
+<br>
 <big><a name="dage_prior_id.null" id="dage_prior_id.null">null</a></big>
 <br>
-The prior at the maximum age, for each time, is not used may be null.
-All of the other 
-<code><i><font color="black"><span style='white-space: nowrap'>data_prior_id</span></font></i></code>
- must not be null.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>dage_prior_id</span></font></i></code>
+ is null, the corresponding prior is
+a uniform from minus to plus infinity.
 
 <br>
 <br>
@@ -225,19 +237,28 @@ cannot specify a
 
 <br>
 <br>
+<big><a name="dtime_prior_id.Maximum Age" id="dtime_prior_id.Maximum Age">Maximum Age</a></big>
+<br>
+For each age grid point in the smoothing,
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>dtime_prior_id</span></font></i></code>
+ at the maximum time is not used.
+
+<br>
+<br>
 <big><a name="dtime_prior_id.null" id="dtime_prior_id.null">null</a></big>
 <br>
-The prior at the maximum time, for each time, is not used and may be null.
-All of the other 
+If 
 <code><i><font color="black"><span style='white-space: nowrap'>dtime_prior_id</span></font></i></code>
- must not be null.
+ is null, the corresponding prior is
+a uniform from minus to plus infinity.
 
 <br>
 <br>
 <b><big><a name="const_value" id="const_value">const_value</a></big></b>
 <br>
-This column has type <code><font color="blue">real</font></code>.
-It specifies a specific value for a function using this smoothing
+This column has type <code><font color="blue">real</font></code>
+and specifies a specific value for a function using this smoothing
 at this age and time (when it is not null).
 This case is equivalent to
 <a href="prior_table.htm#lower" target="_top"><span style='white-space: nowrap'>lower</span></a>
@@ -258,14 +279,15 @@ and
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>const_value</span></font></i></code>
- is null (not null),
+ is null,
+<a href="smooth_grid_table.htm" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
+ must not be null.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>const_value</span></font></i></code>
+ is not null,
 
 <code><i><font color="black"><span style='white-space: nowrap'>value_prior_id</span></font></i></code>
- must not be null (must be null).
-See the <a href="create_database.htm#smooth_table.const_value" target="_top"><span style='white-space: nowrap'>const_value</span></a>
-
-heading for instructions on using this with <a href="create_database.htm" target="_top"><span style='white-space: nowrap'>create_database</span></a>
-.
+ must be null.
 
 <br>
 <br>
