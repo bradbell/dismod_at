@@ -75,6 +75,16 @@
 # the child rate effects.
 # (The mean for the child rate effects is zero.)
 #
+# $head random_seed$$
+# Set one random seed for use by both the python code and dismod_at.
+# In addition, if an error occurs, this random seed will be reported; see
+# $code random_seed$$ in the
+# $cref/source code/user_sample_sim.py/Source Code/$$ below.
+# $srccode%py%
+import time
+random_seed = int( time.time() )
+# %$$
+#
 # $subhead Values$$
 # $srccode%py%
 import math
@@ -137,7 +147,6 @@ u_c_true    = math.log( y_c / y_n )
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-import time
 import numpy
 import sys
 import os
@@ -162,14 +171,15 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
-random_seed = int( time.time() )
 # ---------------------------------------------------------------------------
 # run a system command
 def system_command(command) :
 	print( ' '.join(command) )
 	flag = subprocess.call( command )
 	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
+		msg  = 'command failed: flag = ' + str(flag) + '\n'
+		msg += 'random_seed          = ' + str(random_seed)
+		sys.exit(msg)
 	return
 #
 # no need to include sqrt{2 \pi} term (it does not depend on model variables)
@@ -381,6 +391,8 @@ connection.close()
 #
 ns_string = str(number_sample)
 system_command([ program, file_name, 'simulate', ns_string ])
+system_command([ program, file_name, 'set', 'start_var', 'truth_var' ] )
+system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ] )
 system_command([ program, file_name, 'sample', 'simulate', ns_string ])
 #
 new          = False
@@ -421,12 +433,14 @@ for i in range(3) :
 	err       = sim / mcmc - 1.0
 	if abs(err) > 0.05 :
 		print(node_name, '_avg (sim, mcmc, err) = ', sim, mcmc, err)
+		print('random_seed = ', random_seed)
 		assert(False)
 	sim       = sim_std[var_id]
 	mcmc      = mcmc_std[i]
 	err       = sim / mcmc - 1.0
 	if abs(err) > 0.5 :
 		print(node_name, '_std (sim, mcmc, err) = ', sim, mcmc, err)
+		print('random_seed = ', random_seed)
 		assert(False)
 # ----------------------------------------------------------------------------
 print('sample_sim.py: OK')

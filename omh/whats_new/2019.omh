@@ -67,6 +67,8 @@ $childtable%
 
 $head 09-22$$
 $list number$$
+Advance $code dock_dismod_at.sh$$ to version $code 20190922$$.
+$lnext
 The value null in the smooth grid table for
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ can now
@@ -79,6 +81,7 @@ The $cref user_const_value.py$$ example has been changed to use
 more grid points for the fixed rate effects than for the random rate effects.
 In addition, the omega constraint uses the new null feature for the
 $icode dage_prior_id$$ and $icode dtime_prior_id$$ in the smooth grid table.
+Furthermore, some problems with the example have been fixed.
 $lnext
 Improve the error message when the
 $cref/child value priors/rate_table/Child Value Priors/$$
@@ -86,6 +89,13 @@ do not satisfy their requirements.
 $lnext
 The random seed in $cref user_cascade.py$$ was a fixed value,
 this has been changed to seed of the clock for better testing.
+$lnext
+Add discussion of choosing the random seed and
+reporting its value when an error occurs to the
+$cref/random_seed/user_sample_sim.py/random_seed/$$ example..
+In addition, this example was changed so that the
+$cref start_var_table$$ and $cref scale_var_table$$ are equal to the
+$cref truth_var_table$$.
 $lend
 
 $head 09-21$$
