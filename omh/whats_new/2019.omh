@@ -72,6 +72,8 @@ $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ can now
 be used to specify an uninformative prior; i.e.,
 uniform from minus infinity to plus infinity.
+(The corresponding null prior id wish list item was removed; see
+$cref/09-20/whats_new_2019/09-20/$$.)
 $lnext
 The $cref user_const_value.py$$ example has been changed to use
 more grid points for the fixed rate effects than for the random rate effects.
@@ -114,7 +116,7 @@ because the $cref user_sample_sim.py$$ method seems to work well.
 $lnext
 The
 $cref/asymptotic statistics/wish_list/Asymptotic Statistics/$$ and
-$cref/null prior_id/wish_list/Null prior_id/$$ items
+null prior_id items
 was added to the wish list
 $lend
 
