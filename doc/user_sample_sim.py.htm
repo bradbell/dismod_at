@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sample Posterior Using Simulated Data</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sample Posterior Using Simulated Data">
-<meta name="keywords" id="keywords" content=" sample posterior using simulated data purpose node table model variables iota u x parameters y s delta values likelihood number_sample number_metropolis truth source code ">
+<meta name="keywords" id="keywords" content=" sample posterior using simulated data purpose node table model variables iota u x parameters y s delta values likelihood number_sample number_metropolis truth random_seed source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,7 @@ A:active { color : purple }
 <br><a href="user_sample_sim.py.htm#number_sample" target="_top">number_sample</a>
 <br><a href="user_sample_sim.py.htm#number_metropolis" target="_top">number_metropolis</a>
 <br><a href="user_sample_sim.py.htm#Truth Table" target="_top">Truth&nbsp;Table</a>
+<br><a href="user_sample_sim.py.htm#random_seed" target="_top">random_seed</a>
 <br><a href="user_sample_sim.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -262,10 +263,19 @@ It follows that
 
 <br>
 <br>
+<b><big><a name="random_seed" id="random_seed">random_seed</a></big></b>
+<br>
+Set one random seed for use by both the python code and dismod_at.
+In addition, if an error occurs, this random seed will be reported; see
+<code><font color="blue">random_seed</font></code> in the source code below.
+<pre style='display:inline'><tt>
+<b><font color="#000080">import</font></b> time
+random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+</tt></pre>
+<br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt>
-<b><font color="#000080">import</font></b> time
 <b><font color="#000080">import</font></b> numpy
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
@@ -290,14 +300,15 @@ local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><fon
 distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
-random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># run a system command</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">system_command</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">:</font>
      <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
      flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> command <font color="#990000">)</font>
      <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'command failed: flag = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>flag<font color="#990000">))</font>
+          msg  <font color="#990000">=</font> <font color="#FF0000">'command failed: flag = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>flag<font color="#990000">)</font> <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+          msg <font color="#990000">+=</font> <font color="#FF0000">'random_seed          = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>random_seed<font color="#990000">)</font>
+          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>msg<font color="#990000">)</font>
      <b><font color="#0000FF">return</font></b>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># no need to include sqrt{2 \pi} term (it does not depend on model variables)</font></i>
@@ -509,6 +520,8 @@ connection<font color="#990000">.</font><b><font color="#000000">close</font></b
 <i><font color="#9A1900">#</font></i>
 ns_string <font color="#990000">=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>number_sample<font color="#990000">)</font>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> ns_string <font color="#990000">])</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">]</font> <font color="#990000">)</font>
+<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">]</font> <font color="#990000">)</font>
 <b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> ns_string <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 new          <font color="#990000">=</font> False
@@ -549,12 +562,14 @@ mcmc_order <font color="#990000">=</font> <font color="#990000">[</font> <font c
      err       <font color="#990000">=</font> sim <font color="#990000">/</font> mcmc <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.05</font> <font color="#990000">:</font>
           <b><font color="#0000FF">print</font></b><font color="#990000">(</font>node_name<font color="#990000">,</font> <font color="#FF0000">'_avg (sim, mcmc, err) = '</font><font color="#990000">,</font> sim<font color="#990000">,</font> mcmc<font color="#990000">,</font> err<font color="#990000">)</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed = '</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
      sim       <font color="#990000">=</font> sim_std<font color="#990000">[</font>var_id<font color="#990000">]</font>
      mcmc      <font color="#990000">=</font> mcmc_std<font color="#990000">[</font>i<font color="#990000">]</font>
      err       <font color="#990000">=</font> sim <font color="#990000">/</font> mcmc <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.5</font> <font color="#990000">:</font>
           <b><font color="#0000FF">print</font></b><font color="#990000">(</font>node_name<font color="#990000">,</font> <font color="#FF0000">'_std (sim, mcmc, err) = '</font><font color="#990000">,</font> sim<font color="#990000">,</font> mcmc<font color="#990000">,</font> err<font color="#990000">)</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed = '</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'sample_sim.py: OK'</font><font color="#990000">)</font></tt></pre>

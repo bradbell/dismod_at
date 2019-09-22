@@ -33,7 +33,7 @@ Keyword =
 'user_predict_fit.py  Predict Average Integrand Using Results of a Fit  ',' purpose note table problem parameters time values rate variables data avgint source code ',
 'user_predict_mulcov.py  Predict Covariate Multiplier Values  ',' purpose problem parameters age time rate table variables integrand data avgint source code ',
 'user_data_sim.py  Explanation of Simulated Data Table, data_sim  ',' random effects priors iota other rates covariate multiplier subset meas_noise_effect scaling gamma source code ',
-'user_sample_sim.py  Sample Posterior Using Simulated Data  ',' purpose node table model variables iota x parameters delta values likelihood number_sample number_metropolis truth source code ',
+'user_sample_sim.py  Sample Posterior Using Simulated Data  ',' purpose node table model variables iota x parameters delta values likelihood number_sample number_metropolis truth random_seed source code ',
 'user_sample_asy.py  Sample from Asymptotic Distribution for Model Variables  ',' purpose notation likelihood source code ',
 'user_const_value.py  Constrain Omega Using const_value  ',' node table problem parameters child random effects priors nslist iota parent data random_seed source code ',
 'user_const_random.py  Fitting With Non-Zero Constant Random Effects in Smoothing Grid  ',' source code ',

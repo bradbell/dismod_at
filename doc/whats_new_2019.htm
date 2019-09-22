@@ -138,6 +138,9 @@ A:active { color : purple }
 <b><big><a name="09-22" id="09-22">09-22</a></big></b>
 
 <ol type="1"><li>
+Advance <code><font color="blue">dock_dismod_at.sh</font></code> to version <code><font color="blue">20190922</font></code>.
+</li><li>
+
 The value null in the smooth grid table for
 <a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
  and
@@ -159,6 +162,7 @@ In addition, the omega constraint uses the new null feature for the
  and 
 <code><i><font color="black"><span style='white-space: nowrap'>dtime_prior_id</span></font></i></code>
  in the smooth grid table.
+Furthermore, some problems with the example have been fixed.
 </li><li>
 
 Improve the error message when the
@@ -170,6 +174,18 @@ do not satisfy their requirements.
 The random seed in <a href="user_cascade.py.htm" target="_top"><span style='white-space: nowrap'>user_cascade.py</span></a>
  was a fixed value,
 this has been changed to seed of the clock for better testing.
+</li><li>
+
+Add discussion of choosing the random seed and
+reporting its value when an error occurs to the
+<a href="user_sample_sim.py.htm#random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
+ example..
+In addition, this example was changed so that the
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+ and <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
+ are equal to the
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+.
 </li></ol>
 
 
