@@ -75,16 +75,6 @@
 # the child rate effects.
 # (The mean for the child rate effects is zero.)
 #
-# $head random_seed$$
-# Set one random seed for use by both the python code and dismod_at.
-# In addition, if an error occurs, this random seed will be reported; see
-# $code random_seed$$ in the
-# $cref/source code/user_sample_sim.py/Source Code/$$ below.
-# $srccode%py%
-import time
-random_seed = int( time.time() )
-# %$$
-#
 # $subhead Values$$
 # $srccode%py%
 import math
@@ -139,6 +129,15 @@ u_c_true    = math.log( y_c / y_n )
 # %$$
 # It follows that $icode%y_m% = exp(%u_m_true%) * %iota_n_true%$$ and
 # $icode%y_c% = exp(%u_c_true%) * %iota_n_true%$$.
+#
+# $head random_seed$$
+# Set one random seed for use by both the python code and dismod_at.
+# In addition, if an error occurs, this random seed will be reported; see
+# $code random_seed$$ in the source code below.
+# $srccode%py%
+import time
+random_seed = int( time.time() )
+# %$$
 #
 # $head Source Code$$
 # $srcfile%
