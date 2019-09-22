@@ -12,6 +12,7 @@
 #	init
 #	const
 #	nslist
+#	dismod
 # $$
 #
 # $section Constrain Omega Using const_value$$
@@ -27,15 +28,15 @@
 # $head Problem Parameters$$
 # The following values are used to simulate the data and set the priors
 # for fitting the data:
-# $srccode%hpp%
-iota_true    = { 'world':0.01, 'child_1':0.008, 'child_2':0.012 }
-omega_true   = { 'world':0.01, 'child_1':0.008, 'child_2':0.012 }
+# $srccode%py%
+iota_true    = { 'world':0.004, 'child_1':0.002,  'child_2':0.008 }
+omega_true   = { 'world':0.01, 'child_1':0.005,  'child_2':0.002  }
 n_data       = 51
 # %$$
 #
 # $head Child Random Effects$$
 # The following code converts the child rates to child rate effects:
-# $srccode%hpp%
+# $srccode%py%
 import math
 for key in [ 'child_1', 'child_2' ] :
 	iota_true[key]  = math.log( iota_true[key] / iota_true['world'] )
@@ -67,6 +68,14 @@ for key in [ 'child_1', 'child_2' ] :
 # All of the data for this example is direct measurements of the
 # $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
 # population (as a fraction of the initial population).
+#
+# $head random_seed$$
+# Use the clock to seed random number generator, but pass it into
+# dismod_at using the $cref/option table/option_table/random_seed/$$:
+# $srccode%py%
+import time
+random_seed = int( time.time() )
+# %$$
 #
 # $head Source Code$$
 # Given the problem parameters define above, below is the rest of the
@@ -115,9 +124,11 @@ def system_command(command) :
 def example_db (file_name) :
 	from math import log
 	def fun_iota_world(a, t) :
-		return ('prior_iota_world', None, None)
+		value = 'prior_iota_world_value'
+		dage  = 'prior_iota_world_smooth'
+		return ('prior_iota_world_value', None, None)
 	def fun_iota_child(a, t) :
-		return ('prior_iota_child', None, None)
+		return ('prior_iota_child_value', None, None)
 	def fun_omega_world(a, t) :
 		return (omega_true['world'], None, None)
 	def fun_omega_child_1(a, t) :
@@ -126,10 +137,10 @@ def example_db (file_name) :
 		return (omega_true['child_2'], None, None)
 	# ----------------------------------------------------------------------
 	# age table:
-	age_list    = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
+	age_list    = [ 0.0, 100.0 ]
 	#
 	# time table:
-	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
+	time_list   = [ 1990.0, 2200.0 ]
 	#
 	# integrand table:
 	integrand_table = [
@@ -166,33 +177,42 @@ def example_db (file_name) :
 		'time_lower':   2000.,
 		'time_upper':   2000.,
 		'integrand':    'susceptible',
-		'meas_std':     0.01
+		'meas_std':     0.005
 	}
 	# values that change between rows:
-	node_name = [ 'world', 'child_1', 'child_2' ]
+	node_name  = [ 'world', 'child_1', 'child_2' ]
+	age_value  = [ 10, 100, 10, 100 ]
+	time_value = [ time_list[0], time_list[0], time_list[-1], time_list[-1] ]
 	for data_id in range( n_data ) :
 		fraction = data_id / float(n_data-1)
-		age      = age_list[0] + (age_list[-1] - age_list[0])*fraction
-		row['age_lower'] = age
-		row['age_upper'] = age
-		row['node']      = node_name[ data_id % 3 ]
+		age  =  age_value[ data_id % 4]
+		time = time_value[ data_id % 4]
+		row['age_lower']  = age
+		row['age_upper']  = age
+		row['time_lower'] = time
+		row['time_upper'] = time
+		row['node']       = node_name[ data_id % 3 ]
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{ # prior_iota_world
-			'name':     'prior_iota_world',
+		{ # prior_iota_world_value
+			'name':     'prior_iota_world_value',
 			'density':  'uniform',
 			'lower':    iota_true['world'] / 10.,
 			'upper':    iota_true['world'] * 10.,
 			'mean':     iota_true['world'] * 2.0,
-		},{ # prior_iota_child
-			'name':     'prior_iota_child',
-			'density':  'uniform',
-			'lower':    -1.0,
-			'upper':    +1.0,
+		},{ # prior_iota_child_value
+			'name':     'prior_iota_child_value',
+			'density':  'gaussian',
 			'mean':     0.0,
+			'std':      1.0
+		},{ # prior_iota_world_smooth
+			'name':     'prior_iota_world_smooth',
+			'density':  'gaussian',
+			'mean':     0.0,
+			'std':      iota_true['world'] / 10.0
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -200,18 +220,18 @@ def example_db (file_name) :
 	smooth_table = [
 		{	# smooth_iota_world
 			'name':'smooth_iota_world',
-			'age_id':[0],
-			'time_id':[0],
+			'age_id':[0, 1],
+			'time_id':[0, 1],
 			'fun':fun_iota_world
 		},{	# smooth_iota_child
-			'name':'smooth_omega_child',
+			'name':'smooth_iota_child',
 			'age_id':[0],
 			'time_id':[0],
 			'fun':fun_iota_child
 		},{	# smooth_omega_world
 			'name':'smooth_omega_world',
-			'age_id':[0],
-			'time_id':[0],
+			'age_id':[0, 1],
+			'time_id':[0, 1],
 			'fun':fun_omega_world
 		},{	# smooth_omega_child_1
 			'name':'smooth_omega_child_1',
@@ -237,9 +257,10 @@ def example_db (file_name) :
 	rate_table = [
 		{	'name':          'iota',
 			'parent_smooth': 'smooth_iota_world',
-		},{	'name':          'omega',
+			'child_smooth':  'smooth_iota_child',
+		},{
+			'name':          'omega',
 			'parent_smooth': 'smooth_omega_world',
-		},{	'name':          'omega',
 			'child_nslist':  'omega_nslist',
 		}
 	]
@@ -247,9 +268,9 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'ode_step_size',          'value':'10.0'         },
-		{ 'name':'random_seed',            'value':'0'            },
+		{ 'name':'parent_node_name',       'value':'world'             },
+		{ 'name':'ode_step_size',          'value':'10.0'              },
+		{ 'name':'random_seed',            'value':str(random_seed)    },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'max_num_iter_fixed',     'value':'50'           },
@@ -258,7 +279,8 @@ def example_db (file_name) :
 
 		{ 'name':'max_num_iter_random',    'value':'50'           },
 		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-8'         }
+		{ 'name':'tolerance_random',       'value':'1e-10'        },
+		{ 'name':'zero_sum_random',        'value':'iota'         }
 	]
 	# ----------------------------------------------------------------------
 	# create database
@@ -332,24 +354,26 @@ fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 connection.close()
 #
-max_error    = 0.0
 for var_id in range( len(var_table) ) :
 	fit_value  = fit_var_table[var_id]['fit_var_value']
 	true_value = truth_var_table[var_id]['truth_var_value']
 	var_row    = var_table[var_id]
 	rate_id    = var_row['rate_id']
 	rate_name = rate_table[rate_id]['rate_name']
+	relerr    = fit_value / true_value - 1.0
 	if rate_name == 'iota' :
-		ok = abs( fit_value / true_value - 1.0 ) < .01
+		ok = abs(relerr) < .1
 		if not ok :
-			print( "iota relative error = ", fit_value / true_value )
-			assert False
+			node_id    = var_row['node_id']
+			node_name  = node_table[node_id]['node_name']
+			print(random_seed)
+			print(node_name, rate_name, fit_value, true_value, relerr)
+			print( "iota relative error = ", relerr)
 	else :
 		assert rate_name == 'omega'
-		ok = abs( fit_value / true_value - 1.0 ) < 1e-10
+		ok = abs(relerr) < 1e-10
 		if not ok :
-			print( "iota relative error = ", fit_value / true_value )
-			assert False
+			print( "iota relative error = ", relerr)
 # -----------------------------------------------------------------------------
 print('const_value.py: OK')
 # -----------------------------------------------------------------------------

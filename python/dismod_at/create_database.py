@@ -274,9 +274,9 @@
 # The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
 # are the names for the value prior, age difference prior,
 # and time difference prior corresponding to the $th i$$ smoothing.
-# The value $icode da$$ is not used, and can be None,
+# The value $icode da$$ is not used,
 # when age $icode%a% = %age_id%[-1]%$$.
-# The value $icode dt$$ is not used, and can be None,
+# The value $icode dt$$ is not used,
 # when time $icode%t% = %time_id%[-1]%$$.
 # Note that there is an $icode i$$, $icode j$$ such that
 # $icode%a% = %age_list%[%age_id%[%i%]]%$$ and
@@ -641,19 +641,19 @@ def create_database(
 				#
 				if j == max_j :
 					da = None
-				else :
+				elif da != None :
 					da = global_prior_name2id[da]
 				#
 				if k == max_k :
 					dt = None
-				else :
+				elif dt != None :
 					dt = global_prior_name2id[dt]
 				#
 				const_value = None
 				if isinstance(v, float) :
 					const_value = v
 					v = None
-				else :
+				elif v != None :
 					v = global_prior_name2id[v]
 				row_list.append( [ i, j, k, v, da, dt, const_value] )
 	tbl_name = 'smooth_grid'

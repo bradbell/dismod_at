@@ -85,6 +85,18 @@ $srccode%py%
 $lend
 
 
+$head 09-22$$
+$list number$$
+Improve the error message when the
+$cref/child value priors/rate_table/Child Value Priors/$$
+do not satisfy their requirements.
+$lnext
+The random seed in $cref user_cascade.py$$ was a fixed value,
+this has been changed to seed of the clock for better testing.
+$lnext
+The $cref user_const_value.py$$ example has been changed to use
+more grid points for the fixed rate effects than for the random rate effects.
+$lend
 
 $head 09-20$$
 $list number$$

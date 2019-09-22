@@ -198,7 +198,7 @@ def iota_no_effect(age) :
 data_per_leaf =  10    # number of simulated data points for each leaf node
 meas_cv       =  0.10  # coefficient of variation for each data point
 alpha_true    = -0.10  # rate_value covariate multiplier used to simulate data
-random_seed   =   1555953130    # if zero, seed off the clock
+random_seed   = 0      # if zero, seed off the clock
 number_sample =  10    # number of simulated data sets and posterior samples
 #
 random_effect = dict()

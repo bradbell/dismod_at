@@ -570,35 +570,12 @@ smooth_info::smooth_info(
 			dtime_prior_id_[index] = smooth_grid_table[i].dtime_prior_id;
 			const_value_[index]    = smooth_grid_table[i].const_value;
 			//
-			// set dage_prior_id_ to null for the last age
-			// (may not be null in the smoth_grid table).
+			// set dage_prior_id_ to null for the last age and time
+			// (it is not used)
 			if( j_age == n_age - 1)
 				dage_prior_id_[index] = null_size_t;
-			//
-			// check dage_piror_id is not null for other ages
-			if( j_age != n_age -1 && dage_prior_id_[index] == null_size_t )
-			{	table_name = "smooth_grid";
-				row_id     = i;
-				msg  = "age_id = " + to_string( age_id_[j_age] );
-				msg += " is not the maximum age for smooth_id = ";
-				msg += to_string(smooth_id) + " but dage_prior_id is null ";
-				error_exit(msg, table_name, row_id);
-			}
-			//
-			// set dtime_prior_id_ to null for the last time
-			// (may not be null in smooth_grid_table).
 			if( j_time == n_time - 1)
 				 dtime_prior_id_[index] = null_size_t;
-			//
-			// check dtime_prior_id_ is not null for other times
-			if( j_time != n_time -1 && dtime_prior_id_[index] == null_size_t )
-			{	table_name = "smooth_grid";
-				row_id     = i;
-				msg  = "time_id = " + to_string( time_id_[j_time] );
-				msg += " is not the maximum time for smooth_id = ";
-				msg += to_string(smooth_id) + " but dtime_prior_id is null ";
-				error_exit(msg, table_name, row_id);
-			}
 		}
 	}
 

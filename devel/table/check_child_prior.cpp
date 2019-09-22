@@ -180,6 +180,7 @@ void check_child_prior(
 						}
 						if( upper != inf  )
 						{	if(msg != "" )
+								msg += ", ";
 							msg += "upper is not +infinity";
 						}
 					}
