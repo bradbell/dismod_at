@@ -64,8 +64,10 @@ $cref/prior_id/prior_table/prior_id/$$ for the function's values
 at the corresponding age and time.
 
 $subhead null$$
-If $icode value_prior_id$$ is null (not null),
-$icode const_value$$ must not be null (must be null).
+If $icode value_prior_id$$ is null,
+$cref/const_value/smooth_grid_table/const_value/$$
+must not be null and is used for the value prior
+at the corresponding age and time.
 
 $head dage_prior_id$$
 This column has type $code integer$$ and is the
@@ -79,9 +81,13 @@ $cref/density_id/prior_table/density_id/$$
 cannot specify a
 $cref/censored density/density_table/Notation/Censored/$$.
 
+$subhead Maximum Age$$
+For each time grid point in the smoothing,
+the $icode dage_prior_id$$ at the maximum age is not used.
+
 $subhead null$$
-The prior at the maximum age, for each time, is not used may be null.
-All of the other $icode data_prior_id$$ must not be null.
+If $icode dage_prior_id$$ is null, the corresponding prior is
+a uniform from minus to plus infinity.
 
 $head dtime_prior_id$$
 This column has type $code integer$$ and is the
@@ -95,13 +101,17 @@ $cref/density_id/prior_table/density_id/$$
 cannot specify a
 $cref/censored density/density_table/Notation/Censored/$$.
 
+$subhead Maximum Age$$
+For each age grid point in the smoothing,
+the $icode dtime_prior_id$$ at the maximum time is not used.
+
 $subhead null$$
-The prior at the maximum time, for each time, is not used and may be null.
-All of the other $icode dtime_prior_id$$ must not be null.
+If $icode dtime_prior_id$$ is null, the corresponding prior is
+a uniform from minus to plus infinity.
 
 $head const_value$$
-This column has type $code real$$.
-It specifies a specific value for a function using this smoothing
+This column has type $code real$$
+and specifies a specific value for a function using this smoothing
 at this age and time (when it is not null).
 This case is equivalent to
 $cref/lower/prior_table/lower/$$,
@@ -111,10 +121,10 @@ and
 $cref/density/prior_table/density_id/$$ is $code uniform$$.
 
 $subhead null$$
-If $icode const_value$$ is null (not null),
-$icode value_prior_id$$ must not be null (must be null).
-See the $cref/const_value/create_database/smooth_table/const_value/$$
-heading for instructions on using this with $cref create_database$$.
+If $icode const_value$$ is null,
+$cref/value_prior_id/smooth_grid_table/$$ must not be null.
+If $icode const_value$$ is not null,
+$icode value_prior_id$$ must be null.
 
 $head Rectangular Grid$$
 For each fixed value of $icode smooth_id$$

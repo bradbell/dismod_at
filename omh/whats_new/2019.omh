@@ -10,6 +10,8 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2019$$
 $spell
+	dage
+	dtime
 	dev
 	Dismod
 	py
@@ -87,15 +89,23 @@ $lend
 
 $head 09-22$$
 $list number$$
+The value null in the smooth grid table for
+$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$ and
+$cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ can now
+be used to specify an uninformative prior; i.e.,
+uniform from minus infinity to plus infinity.
+$lnext
+The $cref user_const_value.py$$ example has been changed to use
+more grid points for the fixed rate effects than for the random rate effects.
+In addition, the omega constraint uses the new null feature for the
+$icode dage_prior_id$$ and $icode dtime_prior_id$$ in the smooth grid table.
+$lnext
 Improve the error message when the
 $cref/child value priors/rate_table/Child Value Priors/$$
 do not satisfy their requirements.
 $lnext
 The random seed in $cref user_cascade.py$$ was a fixed value,
 this has been changed to seed of the clock for better testing.
-$lnext
-The $cref user_const_value.py$$ example has been changed to use
-more grid points for the fixed rate effects than for the random rate effects.
 $lend
 
 $head 09-20$$
