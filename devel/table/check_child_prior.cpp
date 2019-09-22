@@ -152,6 +152,8 @@ void check_child_prior(
 				double const_value = smooth_grid[grid_id].const_value;
 				if( prior_id[0] == DISMOD_AT_NULL_INT )
 					assert( ! std::isnan(const_value) );
+				else
+					assert( std::isnan(const_value) );
 # endif
 				for(size_t i = 0; i < 3; i++)
 				if( prior_id[i] != DISMOD_AT_NULL_INT )

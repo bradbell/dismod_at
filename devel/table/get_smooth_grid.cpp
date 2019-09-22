@@ -79,9 +79,13 @@ $tend
 
 $head Check$$
 The values in the $code smooth_grid_table$$ are checked to make sure that
-$cref/const_value/smooth_grid_table/const_value/$$ is $code null$$ or
-$cref/value_prior_id/smooth_grid_table/value_prior_id/$$ is $code null$$
-and not both are $code null$$.
+one of the following two cases holds:
+$list number$$
+$cref/const_value/smooth_grid_table/const_value/$$ is not $code null$$ and
+$cref/value_prior_id/smooth_grid_table/value_prior_id/$$ is $code null$$.
+$lnext
+$icode value_prior$$ is not $code null$$ and $icode const_value$$ is null.
+$lend
 
 $children%example/devel/table/get_smooth_grid_xam.cpp
 %$$
@@ -159,7 +163,12 @@ CppAD::vector<smooth_grid_struct> get_smooth_grid(
 		smooth_grid[i].dage_prior_id  = dage_prior_id[i];
 		smooth_grid[i].dtime_prior_id = dtime_prior_id[i];
 		smooth_grid[i].const_value    = const_value[i];
-		if( ! std::isnan( const_value[i] ) )
+		if( std::isnan(const_value[i]) )
+		if( value_prior_id[i] == DISMOD_AT_NULL_INT)
+		{	string msg = "both const_value and value_prior_id are null.\n";
+			error_exit(msg, table_name, i);
+		}
+		if( ! std::isnan(const_value[i]) )
 		if( value_prior_id[i] != DISMOD_AT_NULL_INT)
 		{	string msg = "both const_value and value_prior_id are not null.\n";
 			error_exit(msg, table_name, i);

@@ -77,9 +77,12 @@ namespace dismod_at {
 			size_t prior_id    = var2prior.value_prior_id(var_id);
 			double const_value = var2prior.const_value(var_id);
 			if( ! std::isnan(const_value) )
+			{	assert( prior_id == DISMOD_AT_NULL_SIZE_T );
 				++n_random_const;
-			else if( prior_id != DISMOD_AT_NULL_SIZE_T )
-			{	double lower = prior_table[prior_id].lower;
+			}
+			else
+			{	assert( prior_id != DISMOD_AT_NULL_SIZE_T );
+				double lower = prior_table[prior_id].lower;
 				double upper = prior_table[prior_id].upper;
 				if( lower ==  upper )
 					++n_random_const;

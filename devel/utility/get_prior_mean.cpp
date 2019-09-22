@@ -57,10 +57,8 @@ CppAD::vector<double> get_prior_mean(
 	{	double var_value = var2prior.const_value(var_id);
 		if( std::isnan(var_value) )
 		{	size_t prior_id = var2prior.value_prior_id(var_id);
-			if( prior_id == DISMOD_AT_NULL_SIZE_T )
-				var_value = 0.0;
-			else
-				var_value = prior_table[prior_id].mean;
+			assert( prior_id != DISMOD_AT_NULL_SIZE_T );
+			var_value = prior_table[prior_id].mean;
 		}
 		result[var_id] = var_value;
 	}

@@ -318,15 +318,15 @@ void simulate_command(
 		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 		{	for(size_t k = 0; k < 3; ++k)
 			if( k == 0 && ! std::isnan(const_value) )
-			{	sim_prior_value[sim_index * n_var + var_id] = const_value;
+			{	assert( prior_id[k] == DISMOD_AT_NULL_SIZE_T );
+				sim_prior_value[sim_index * n_var + var_id] = const_value;
 				sim_str[0] = to_string(const_value);
 			}
 			else if( prior_id[k] == DISMOD_AT_NULL_SIZE_T )
-			{	// The default prior is a uniform on [-inf, +inf]
+			{	assert( k != 0 );
+				// The default prior is a uniform on [-inf, +inf]
 				// cannot simulate from this distribution
 				sim_str[k] = "null";
-				if( k == 0 )
-					sim_prior_value[sim_index * n_var + var_id] = nan;
 			}
 			else
 			{	double lower = prior_table[ prior_id[k] ].lower;

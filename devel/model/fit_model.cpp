@@ -309,16 +309,10 @@ data_object_   ( data_object )
 		double upper       = const_value;
 		double mean        = const_value;
 		if( std::isnan(const_value) )
-		{	if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			{	lower = -inf;
-				upper = +inf;
-				mean  = 0.0;
-			}
-			else
-			{	lower = prior_table_[prior_id].lower;
-				upper = prior_table_[prior_id].upper;
-				mean  = prior_table_[prior_id].mean;
-			}
+		{	assert( prior_id != DISMOD_AT_NULL_SIZE_T );
+			lower = prior_table_[prior_id].lower;
+			upper = prior_table_[prior_id].upper;
+			mean  = prior_table_[prior_id].mean;
 		}
 		assert(lower <= mean && mean <= upper);
 		if( (start_var_[var_id] < lower) | (upper < start_var_[var_id]) )

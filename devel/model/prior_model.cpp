@@ -114,11 +114,13 @@ density_table_(density_table)
 		double const_value = var2prior_.const_value(var_id);
 		size_t prior_id    = var2prior_.value_prior_id(var_id);
 		if( ! std::isnan(const_value) )
+		{	assert( prior_id == DISMOD_AT_NULL_SIZE_T );
 			prior_mean_[var_id * 3 + 0] = const_value;
-		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			prior_mean_[var_id * 3 + 0] = 0.0;
+		}
 		else
+		{	assert( prior_id != DISMOD_AT_NULL_SIZE_T );
 			prior_mean_[var_id * 3 + 0] = prior_table[prior_id].mean;
+		}
 		//
 		// dage prior
 		prior_id = var2prior_.dage_prior_id(var_id);
@@ -309,6 +311,8 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 		double const_value = var2prior_.const_value(var_id);
 		if( ! std::isnan(const_value) )
 			assert( value_prior_id == DISMOD_AT_NULL_SIZE_T );
+		else
+			assert( value_prior_id != DISMOD_AT_NULL_SIZE_T );
 # endif
 		//
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )

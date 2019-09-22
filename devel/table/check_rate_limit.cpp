@@ -125,7 +125,8 @@ void check_rate_limit(
 				double upper    = smooth_grid[grid_id].const_value;
 				size_t prior_id = smooth_grid[grid_id].value_prior_id;
 				if( prior_id != DISMOD_AT_NULL_SIZE_T )
-				{	lower    = prior_table[prior_id].lower;
+				{	assert( std::isnan(lower) );
+					lower    = prior_table[prior_id].lower;
 					upper    = prior_table[prior_id].upper;
 				}
 				bool error;

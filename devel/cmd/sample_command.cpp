@@ -322,7 +322,9 @@ void sample_command(
 				double const_value = var2prior.const_value(var_id);
 				size_t prior_id    = var2prior.value_prior_id(var_id);
 				if( ! CppAD::isnan( const_value ) )
+				{	assert( prior_id == DISMOD_AT_NULL_SIZE_T );
 					prior_mean[var_id * 3 + 0] = const_value;
+				}
 				else
 				{	assert( prior_id != DISMOD_AT_NULL_SIZE_T );
 					prior_mean[var_id * 3 + 0] = prior_table[prior_id].mean;

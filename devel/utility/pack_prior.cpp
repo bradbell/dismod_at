@@ -102,10 +102,8 @@ offset for the corresponding standard deviation multipliers can be computed
 using $cref pack_info_mulstd$$.
 
 $head value_prior_id$$
-If $icode const_value$$ is not nan,
-$icode value_prior_id$$ must be null.
-If $icode const_value$$ is nan,
-$icode value_prior_id$$ identifies the prior for
+If $icode const_value$$ is null,
+$icode value_prior_id$$ must be null and identifies the prior for
 the value of this variable.
 The null prior for this case corresponds to a uniform
 between minus and plus infinity.

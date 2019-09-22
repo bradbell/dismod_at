@@ -65,8 +65,7 @@ void check_var_limit(
 	const pack_prior&                         var2prior     ,
 	const CppAD::vector<prior_struct>&        prior_table   )
 // END_PROTOTYPE
-{	double inf = std::numeric_limits<double>::infinity();
-	//
+{	//
 	assert( var_value.size() == var2prior.size() );
 	using CppAD::to_string;
 	//
@@ -76,14 +75,9 @@ void check_var_limit(
 		double lower = const_value;
 		double upper = const_value;
 		if( CppAD::isnan(const_value) )
-		{	if( value_prior_id == DISMOD_AT_NULL_SIZE_T )
-			{	lower = -inf;
-				upper = +inf;
-			}
-			else
-			{	lower = prior_table[value_prior_id].lower;
-				upper = prior_table[value_prior_id].upper;
-			}
+		{	assert( value_prior_id != DISMOD_AT_NULL_SIZE_T );
+			lower = prior_table[value_prior_id].lower;
+			upper = prior_table[value_prior_id].upper;
 		}
 		double value = var_value[var_id];
 		if( value < lower || upper < value )
