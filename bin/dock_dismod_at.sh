@@ -269,12 +269,12 @@ then
 		echo 'docker rm contain_id'
 		exit 1
 	fi
-	if docker images | grep "$image_name" > /dev/null
+	if docker images | grep "^$image_name " > /dev/null
 	then
 		echo 'dock_dismod_at.sh Error'
 		echo 'Must first remove following docker images:'
 		docker images | head -1
-		docker images | grep "$image_name"
+		docker images | grep "^$image_name "
 		echo 'Use the following command for each image above:'
 		echo 'docker rmi image_id'
 		exit 1
@@ -284,11 +284,11 @@ if [ "$image_name" == 'dismod_at.base' ]
 then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
-# Ubuntu 18.04 with dismod_at requirements that are installed using apt-get.
+# Ubuntu 19.10 with dismod_at requirements that are installed using apt-get.
 # The vim editor is included for use when debugging docker containers and
 # is not required by dismod_at.
 # -----------------------------------------------------------------------------
-FROM ubuntu:18.04
+FROM ubuntu:19.10
 RUN  apt-get update
 RUN  DEBIAN_FRONTEND=noninteractive apt-get install -y  \
 cmake \
