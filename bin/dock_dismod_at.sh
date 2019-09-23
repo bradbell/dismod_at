@@ -283,8 +283,11 @@ then
 if [ "$image_name" == 'dismod_at.base' ]
 then
 cat << EOF > Dockerfile
-
-# Ubuntu 19.04 with dismod_at requirements
+# -----------------------------------------------------------------------------
+# Ubuntu 18.04 with dismod_at requirements that are installed using apt-get.
+# The vim editor is included for use when debugging docker containers and
+# is not required by dismod_at.
+# -----------------------------------------------------------------------------
 FROM ubuntu:18.04
 RUN  apt-get update
 RUN  DEBIAN_FRONTEND=noninteractive apt-get install -y  \
@@ -328,23 +331,29 @@ RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
 bin/install_eigen.sh && \
 bin/install_ipopt.sh
 
-# restore run_cmake.sh to its original state
+# Restore run_cmake.sh to its original state
 Run git checkout bin/run_cmake.sh
 
 EOF
 else
 cat << EOF > Dockerfile
+# -----------------------------------------------------------------------------
+# dismod_at.base with dismod_at requirements that are installed locally in
+# /home/prefix
+# -----------------------------------------------------------------------------
 FROM dismod_at.base
 WORKDIR /home/dismod_at.git
 
-# get version of source specified above
+# 1. Get source corresponding to dismod_at-$dismod_at_version
+# 2. Check that the corresponding hash is $dismod_at_hash
+# 3. Change install prefix to /home/prefix/dismod_at
 RUN git checkout master && \
 git pull && \
 git checkout --quiet $dismod_at_hash  && \
 sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g' && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null
 
-# debug install debug version of cppad, cppad_mixed, dismod_at
+# Install debug version of cppad, cppad_mixed, and dismod_at
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
 bin/install_cppad.sh && \
 bin/install_cppad_mixed.sh && \
@@ -354,7 +363,7 @@ make check && \
 make install && \
 cd ..
 
-# release install debug version of cppad, cppad_mixed, dismod_at
+# Install release version of cppad, cppad_mixed, and dismod_at
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
 bin/install_cppad.sh && \
 bin/install_cppad_mixed.sh && \
@@ -364,7 +373,7 @@ make check && \
 make install && \
 cd ..
 
-# restore run_cmake.sh to its original state
+# Restore run_cmake.sh to its original state
 Run git checkout bin/run_cmake.sh
 
 WORKDIR /home/work
