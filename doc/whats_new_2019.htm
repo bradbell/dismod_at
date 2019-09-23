@@ -137,13 +137,26 @@ A:active { color : purple }
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
 <b><big><a name="09-23" id="09-23">09-23</a></big></b>
-<br>
+
+<ol type="1"><li>
 The comments in the dock_dismod_at.sh
 <a href="dock_dismod_at.sh.htm#Building Images.Dockerfile" target="_top"><span style='white-space: nowrap'>Dockerfile</span></a>
  were improved.
 This will help, people who understand docker,
 with the <a href="install.htm" target="_top"><span style='white-space: nowrap'>install</span></a>
  procedure.
+</li><li>
+
+The version of ubuntu in
+<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.base" target="_top"><span style='white-space: nowrap'>dismod_at.base</span></a>
+
+was changed from 18.04 to 19.10.
+This fixed a warning during the running of
+<a href="install_unix.htm#Special Requirements.CppAD" target="_top"><span style='white-space: nowrap'>CppAD</span></a>
+; see
+<a href="https://cmake.org/pipermail/cmake/2019-September/069977.html" target="_top"><span style='white-space: nowrap'>cmake&nbsp;mailing&nbsp;list</span></a>
+.
+</li></ol>
 
 <br>
 <br>
