@@ -77,7 +77,7 @@ The version of ubuntu in
 $cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
 was changed from 18.04 to 19.10.
 This fixed a warning during the running of
-$cref/CppAD/install_unix/Special Requirements/CppAD/$$; see
+$cref%bin/install_cppad.sh%install_unix%Special Requirements%CppAD%$$; see
 $href%https://cmake.org/pipermail/cmake/2019-September/069977.html
 	%cmake mailing list
 %$$.
