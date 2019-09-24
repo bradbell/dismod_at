@@ -272,9 +272,8 @@ Edit the $cref/prevalence ODE/wish_list/ODE Solution/Prevalence ODE/$$
 wish list item.
 
 $head 08-07$$
-Add the
-$cref/csv2db command/wish_list/csv2db Command/$$
-wish list items.
+Add the $cref csv2db_command$$ wish list items
+(removed on $cref/2019-09-24/whats_new_2019/09-24/$$).
 
 $head 08-06$$
 $list number$$

@@ -154,59 +154,6 @@ $href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
 	%checkpoint_extended_ode
 %$$.
 
-$head csv2db Command$$
-The following is a wish list for extending the csv2db command.
-This command is only an $cref/example/csv2db_command/Example/$$
-intended to help user's get started using dismod_at.
-
-$subhead Covariate Multipliers$$
-Extend $cref csv2db_command$$ to include
-$cref/rate covariate multipliers
-	/avg_integrand
-	/Rate Functions
-	/Rate Covariate Multiplier, alpha_jk
-/$$ and
-$cref/measurement value covariate multipliers
-	/avg_integrand
-	/Measurement Value Covariates
-	/Multiplier, beta_j
-/$$.
-
-$subhead Random Effects$$
-Extend $cref csv2db_command$$ to include
-$cref/child rate effects
-	/avg_integrand
-	/Rate Functions
-	/Child Rate Effect, u_ik
-/$$.
-
-$subhead Grids$$
-Extend $cref csv2db_command$$ to enable the user to specify
-different grids for different model variables.
-Currently all the variables use that same
-$cref/grid/csv2db_command/mtother/Rectangular Grid/$$ as the
-mtother data.
-
-$subhead Value Priors$$
-Extend $cref csv2db_command$$ to define a specific
-$cref/prior/prior_table/$$ for the value of each
-$cref/model variables/model_variables/$$.
-For example, this would enable one to specify limits, or a specific value,
-for a model variable.
-
-$subhead Difference Priors$$
-Extend $cref csv2db_command$$ to define a specific
-$cref/prior/prior_table/$$ for the differences of the
-$cref/model variables/model_variables/$$; i.e.,
-the amount of smoothing.
-
-$subhead Sample$$
-Extend $cref csv2db_command$$ to define the
-$cref sample_table$$.
-This would enable csv2db to set up
-$cref/predictions/predict_command/$$
-using model variables computed by another program.
-
 $head meas_std$$
 Currently the data table
 $cref/meas_std/data_table/meas_std/$$
@@ -216,7 +163,6 @@ $code null$$ in the case when the corresponding
 $cref/meas_value/data_table/meas_value/$$ must not be zero
 and the $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$
 would be used to determine the measurement accuracy.
-
 
 $head Command Diagrams$$
 It would be good to give a data flow diagram for each command

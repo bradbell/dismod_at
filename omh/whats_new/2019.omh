@@ -67,11 +67,17 @@ $childtable%
 %$$
 
 $head 09-24$$
+$list number$$
 Add mention that the install scripts under
 $cref/special requirements/install_unix/Special Requirements/$$ also
 serve as examples of how to install the corresponding packages.
 In addition, $cref run_cmake.sh$$ serves as an example of how
 to install dismod_at.
+$lnext
+The $cref csv2db_command$$ wish list items were removed because we
+assume that the dismod_at user can write code in some scripting language
+and can read the Python $cref user$$ examples.
+$lend
 
 $head 09-23$$
 $list number$$
