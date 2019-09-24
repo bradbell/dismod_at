@@ -114,6 +114,7 @@
 #	docker tag dismod_at.image %different_name%
 #	docker rmi dismod_at.image
 # %$$
+# Similar commands can be used for the $code dismod_at.base$$ image.
 #
 # $subhead Dockerfile$$
 # The $code build$$ syntax will create the file
