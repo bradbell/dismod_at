@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -221,7 +221,7 @@ scripts that install the special requirements. You must first change
 these settings to the appropriate values for your system before
 running these scripts.
 
-$subhead eigen$$
+$subhead install_eigen.sh$$
 The $href%http://eigen.tuxfamily.org%eigen%$$
 linear algebra package.
 Starting in the $code dismod_at.git$$ directory, the command
@@ -230,7 +230,7 @@ $codei%
 %$$
 can be used to install this package.
 
-$subhead ipopt$$
+$subhead install_ipopt.sh$$
 The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
 optimization package.
 Starting in the $code dismod_at.git$$ directory, the command
@@ -239,7 +239,7 @@ $codei%
 %$$
 can be used to install this package.
 
-$subhead CppAD$$
+$subhead install_cppad.sh$$
 The $href%http://www.coin-or.org/CppAD/%cppad%$$
 C++ algorithmic differentiation package.
 Starting in the $code dismod_at.git$$ directory, the command
@@ -248,7 +248,7 @@ $codei%
 %$$
 can be used to install this package.
 
-$subhead cppad_mixed$$
+$subhead install_cppad_mixed.sh$$
 The $href%https://bradbell.github.io/cppad_mixed%cppad_mixed%$$
 C++ random effects modeling package.
 Starting in the $code dismod_at.git$$ directory, the command

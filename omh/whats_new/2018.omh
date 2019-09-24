@@ -453,14 +453,14 @@ on some systems.
 
 $head 06-09$$
 Advance to using version 20180609 of
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 This changes $code suitesparse$$ from a special requirement to a
 $cref/system requirement/install_unix/System Requirements/suitesparse/$$.
 
 $head 06-04$$
 Advance to using version 20180604 of
-$cref/cppad/install_unix/Special Requirements/CppAD/$$ and
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad/install_unix/Special Requirements/install_cppad.sh/$$ and
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 This will probably have no effect but might reduce the amount of memory
 $code dismod_at$$ uses.
 
@@ -480,8 +480,8 @@ minimum measurement coefficients of variation for different integrands.
 
 $head 05-21$$
 Advance to using
-$cref/cppad-20180521/install_unix/Special Requirements/CppAD/$$, and
-$cref/cppad_mixed-20180521/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad-20180521/install_unix/Special Requirements/install_cppad.sh/$$, and
+$cref/cppad_mixed-20180521/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 This should both reduce memory usage.
 
 $head 05-14$$
@@ -507,8 +507,8 @@ This has been fixed.
 
 $head 05-07$$
 Advance to using
-$cref/cppad-20180507/install_unix/Special Requirements/CppAD/$$, and
-$cref/cppad_mixed-20180507/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad-20180507/install_unix/Special Requirements/install_cppad.sh/$$, and
+$cref/cppad_mixed-20180507/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 This should both increase speed and reduce memory usage.
 
 
@@ -529,8 +529,8 @@ $lend
 $head 05-04$$
 $list number$$
 Advance to using
-$cref/cppad-20180503/install_unix/Special Requirements/CppAD/$$, and
-$cref/cppad_mixed-20180503/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad-20180503/install_unix/Special Requirements/install_cppad.sh/$$, and
+$cref/cppad_mixed-20180503/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 This should reduce the amount of memory used
 without adversely affecting its speed.
 $lnext

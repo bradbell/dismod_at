@@ -47,7 +47,7 @@ $cref/fixed effects/model_variables/Fixed Effects, theta/$$ $latex ( \theta )$$
 that maximize the Laplace approximate objective $latex L( \theta)$$,
 and the random effects that maximum the joint likelihood
 $latex \hat{u} ( \theta )$$; see the
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$
 documentation for more details.
 
 $head residual_value$$

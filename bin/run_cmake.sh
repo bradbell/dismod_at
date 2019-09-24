@@ -63,7 +63,7 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 #
 # &head eigen_prefix&&
 # Prefix where
-# &cref/eigen/install_unix/Special Requirements/eigen/&&
+# &cref/eigen/install_unix/Special Requirements/install_eigen.sh/&&
 # is installed:
 # &codep
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
@@ -80,7 +80,7 @@ eigen_prefix="$HOME/prefix/dismod_at/eigen"
 #
 # &head ipopt_prefix&&
 # The prefix where
-# &cref/ipopt/install_unix/Special Requirements/ipopt/&&
+# &cref/ipopt/install_unix/Special Requirements/install_ipopt.sh/&&
 # is installed:
 # &codep
 ipopt_prefix="$HOME/prefix/dismod_at"
@@ -94,7 +94,7 @@ ipopt_prefix="$HOME/prefix/dismod_at"
 #
 # &head cppad_prefix&&
 # The prefix where
-# &cref/cppad/install_unix/Special Requirements/CppAD/&&
+# &cref/cppad/install_unix/Special Requirements/install_cppad.sh/&&
 # is installed:
 # &codep
 cppad_prefix="$HOME/prefix/dismod_at"

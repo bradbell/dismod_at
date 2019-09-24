@@ -494,7 +494,7 @@ $cref/bounds that are null/database/Bounds That are Null/$$.
 
 $list number$$
 The theory for
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$
 does not include bounds for the random effects.
 
 $lnext

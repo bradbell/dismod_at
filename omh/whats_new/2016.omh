@@ -212,8 +212,8 @@ Fix a warning (that appeared on some systems) about missing braces in
 $code devel/dismod_at.cpp$$.
 $lnext
 Add option so that user can specify the C++ compiler during the install of
-$cref/ipopt/install_unix/Special Requirements/ipopt/$$ and
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+$cref/ipopt/install_unix/Special Requirements/install_ipopt.sh/$$ and
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$
 $lnext
 $bold API Change:$$
 the $cref/data_name/data_table/data_name/$$ field
@@ -247,7 +247,7 @@ For example, $code data_dict$$ was changed to
 $cref/data_table/create_database/data_table/$$.
 $lnext
 There was a problem with the
-$cref/cppad/install_unix/Special Requirements/CppAD/$$ install script
+$cref/cppad/install_unix/Special Requirements/install_cppad.sh/$$ install script
 $code bin/install_cppad.sh$$ that caused a compiler error in
 $code forward2sweep.hpp$$ when CppAD was not using c++11 features.
 This has been fixed.
@@ -336,26 +336,26 @@ $lnext
 Change $code DEBUG$$ and $code RELEASE$$ to $code debug$$ and $code release$$
 in
 $cref run_cmake.sh$$ and the install for
-$cref/eigen/install_unix/Special Requirements/eigen/$$,
+$cref/eigen/install_unix/Special Requirements/install_eigen.sh/$$,
 $cref/suitesparse/install_unix/System Requirements/suitesparse/$$,
-$cref/ipopt/install_unix/Special Requirements/ipopt/$$,
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/ipopt/install_unix/Special Requirements/install_ipopt.sh/$$,
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 $lend
 
 $head 07-15$$
 In $code bin/install_cppad_mixed.sh$$
 change $code cmake_build_type$$ to $code build_type$$; see
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 In addition, add this parameter to the install for
-$cref/eigen/install_unix/Special Requirements/eigen/$$,
+$cref/eigen/install_unix/Special Requirements/install_eigen.sh/$$,
 $cref/suitesparse/install_unix/System Requirements/suitesparse/$$, and
-$cref/ipopt/install_unix/Special Requirements/ipopt/$$.
+$cref/ipopt/install_unix/Special Requirements/install_ipopt.sh/$$.
 CppAD does not need this choice as it adapter to the choice of
 the systems that use it.
 Note that the install for $code dismod_at$$
 must have the same $cref/build_type/run_cmake.sh/build_type/$$
 as
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 (This is no longer an issue.)
 
 
@@ -527,7 +527,7 @@ $lend
 
 $head 05-04$$
 $list number$$
-Print the $cref/ipopt/install_unix/Special Requirements/ipopt/$$
+Print the $cref/ipopt/install_unix/Special Requirements/install_ipopt.sh/$$
 library directories during the
 $cref/cmake command/install_unix/dismod_at/Cmake Command/$$.
 $lnext
@@ -538,7 +538,7 @@ $code res_dage$$ and $code res_dtime$$ respectively.
 $lnext
 Put $code cppad_mixed:$$ at the beginning of warnings and error messages
 that come from the
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$ package.
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$ package.
 $lnext
 Add missing $code dev::log_message::message_type$$ cases
 to the $code log_message$$ documentation.
@@ -699,7 +699,7 @@ Fix some errors and warnings when
 $cref/build_type/run_cmake.sh/build_type/$$ was
 $code RELEASE$$. Note that release version is about twice as fast
 as the debug version (when using the debug version of
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 
 $head 04-11$$
 Initialize the optimization when $icode max_num_iter_fixed$$
@@ -742,7 +742,7 @@ The $cref/SuiteSparse/install_unix/System Requirements/suitesparse/$$
 package is now required.
 This is because one now has the option to use it for Cholesky factorization;
 see the $code cholmod_cholesky$$ setting for installing
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
+$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 $lend
 
 
