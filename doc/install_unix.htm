@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Installing dismod_at in Unix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Installing dismod_at in Unix">
-<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to path pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test install example ">
+<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to path pkg_config_path ld_library_path pythonpath special run_cmake.sh install_eigen.sh install_ipopt.sh install_cppad.sh install_cppad_mixed.sh setup command build test install example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -84,10 +84,10 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Paths.PYTHONPATH" target="_top">PYTHONPATH</a>
 <br><a href="install_unix.htm#Special Requirements" target="_top">Special&nbsp;Requirements</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.run_cmake.sh" target="_top">run_cmake.sh</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.eigen" target="_top">eigen</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.ipopt" target="_top">ipopt</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.CppAD" target="_top">CppAD</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top">cppad_mixed</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.install_eigen.sh" target="_top">install_eigen.sh</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.install_ipopt.sh" target="_top">install_ipopt.sh</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.install_cppad.sh" target="_top">install_cppad.sh</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top">install_cppad_mixed.sh</a>
 <br><a href="install_unix.htm#dismod_at" target="_top">dismod_at</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#dismod_at.Setup" target="_top">Setup</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#dismod_at.Cmake Command" target="_top">Cmake&nbsp;Command</a>
@@ -361,13 +361,14 @@ and may not have standard system installs
 The settings in <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>bin/run_cmake.sh</span></a>
 
 are used by the
-scripts that install the special requirements. You must first change
+scripts that install the special requirements.
+You must first change
 these settings to the appropriate values for your system before
-running these scripts.
+running the install scripts below:
 
 <br>
 <br>
-<big><a name="Special Requirements.eigen" id="Special Requirements.eigen">eigen</a></big>
+<big><a name="Special Requirements.install_eigen.sh" id="Special Requirements.install_eigen.sh">install_eigen.sh</a></big>
 <br>
 The <a href="http://eigen.tuxfamily.org" target="_top"><span style='white-space: nowrap'>eigen</span></a>
 
@@ -378,10 +379,11 @@ Starting in the <code><font color="blue">dismod_at.git</font></code> directory, 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_eigen.sh<br>
 </span></font></code>
 can be used to install this package.
+This script also serves as an example of how to install eigen.
 
 <br>
 <br>
-<big><a name="Special Requirements.ipopt" id="Special Requirements.ipopt">ipopt</a></big>
+<big><a name="Special Requirements.install_ipopt.sh" id="Special Requirements.install_ipopt.sh">install_ipopt.sh</a></big>
 <br>
 The <a href="https://projects.coin-or.org/Ipopt" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
 
@@ -392,10 +394,11 @@ Starting in the <code><font color="blue">dismod_at.git</font></code> directory, 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_ipopt.sh<br>
 </span></font></code>
 can be used to install this package.
+This script also serves as an example of how to install ipopt.
 
 <br>
 <br>
-<big><a name="Special Requirements.CppAD" id="Special Requirements.CppAD">CppAD</a></big>
+<big><a name="Special Requirements.install_cppad.sh" id="Special Requirements.install_cppad.sh">install_cppad.sh</a></big>
 <br>
 The <a href="http://www.coin-or.org/CppAD/" target="_top"><span style='white-space: nowrap'>cppad</span></a>
 
@@ -406,10 +409,11 @@ Starting in the <code><font color="blue">dismod_at.git</font></code> directory, 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_cppad.sh<br>
 </span></font></code>
 can be used to install this package.
+This script also serves as an example of how to install cppad.
 
 <br>
 <br>
-<big><a name="Special Requirements.cppad_mixed" id="Special Requirements.cppad_mixed">cppad_mixed</a></big>
+<big><a name="Special Requirements.install_cppad_mixed.sh" id="Special Requirements.install_cppad_mixed.sh">install_cppad_mixed.sh</a></big>
 <br>
 The <a href="https://bradbell.github.io/cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 
@@ -420,6 +424,7 @@ Starting in the <code><font color="blue">dismod_at.git</font></code> directory, 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_cppad_mixed.sh<br>
 </span></font></code>
 can be used to install this package.
+This script also serves as an example of how to install cppad_mixed.
 
 <br>
 <br>
@@ -450,6 +455,9 @@ execute the following command:
 <code><font color='blue'><pre style='display:inline'> 
      bin/run_cmake.sh
 </pre></font></code>
+The script also serves as an example of how to install dismod_at.
+
+<br>
 <br>
 <big><a name="dismod_at.Build" id="dismod_at.Build">Build</a></big>
 <br>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list asymptotic statistics more random effects censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing csv2db command covariate multipliers grids value priors difference sample meas_std diagrams lagrange documentation real world example user examples starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list asymptotic statistics more random effects censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing meas_std command diagrams lagrange multipliers documentation real world example user examples starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,13 +71,6 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Large Excess Mortality" target="_top">Large&nbsp;Excess&nbsp;Mortality</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Conditionals" target="_top">Conditionals</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Checkpointing" target="_top">Checkpointing</a>
-<br><a href="wish_list.htm#csv2db Command" target="_top">csv2db&nbsp;Command</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Covariate Multipliers" target="_top">Covariate&nbsp;Multipliers</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Random Effects" target="_top">Random&nbsp;Effects</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Grids" target="_top">Grids</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Value Priors" target="_top">Value&nbsp;Priors</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Difference Priors" target="_top">Difference&nbsp;Priors</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#csv2db Command.Sample" target="_top">Sample</a>
 <br><a href="wish_list.htm#meas_std" target="_top">meas_std</a>
 <br><a href="wish_list.htm#Command Diagrams" target="_top">Command&nbsp;Diagrams</a>
 <br><a href="wish_list.htm#Lagrange Multipliers" target="_top">Lagrange&nbsp;Multipliers</a>
@@ -292,85 +285,6 @@ extended to include derivatives with respect to parameters; see
 
 <br>
 <br>
-<b><big><a name="csv2db Command" id="csv2db Command">csv2db Command</a></big></b>
-<br>
-The following is a wish list for extending the csv2db command.
-This command is only an <a href="csv2db_command.htm#Example" target="_top"><span style='white-space: nowrap'>example</span></a>
-
-intended to help user's get started using dismod_at.
-
-<br>
-<br>
-<big><a name="csv2db Command.Covariate Multipliers" id="csv2db Command.Covariate Multipliers">Covariate Multipliers</a></big>
-<br>
-Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
- to include
-<a href="avg_integrand.htm#Rate Functions.Rate Covariate Multiplier, alpha_jk" target="_top"><span style='white-space: nowrap'>rate&nbsp;covariate&nbsp;multipliers</span></a>
- and
-<a href="avg_integrand.htm#Measurement Value Covariates.Multiplier, beta_j" target="_top"><span style='white-space: nowrap'>measurement&nbsp;value&nbsp;covariate&nbsp;multipliers</span></a>
-.
-
-<br>
-<br>
-<big><a name="csv2db Command.Random Effects" id="csv2db Command.Random Effects">Random Effects</a></big>
-<br>
-Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
- to include
-<a href="avg_integrand.htm#Rate Functions.Child Rate Effect, u_ik" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effects</span></a>
-.
-
-<br>
-<br>
-<big><a name="csv2db Command.Grids" id="csv2db Command.Grids">Grids</a></big>
-<br>
-Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
- to enable the user to specify
-different grids for different model variables.
-Currently all the variables use that same
-<a href="csv2db_command.htm#mtother.Rectangular Grid" target="_top"><span style='white-space: nowrap'>grid</span></a>
- as the
-mtother data.
-
-<br>
-<br>
-<big><a name="csv2db Command.Value Priors" id="csv2db Command.Value Priors">Value Priors</a></big>
-<br>
-Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
- to define a specific
-<a href="prior_table.htm" target="_top"><span style='white-space: nowrap'>prior</span></a>
- for the value of each
-<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model&nbsp;variables</span></a>
-.
-For example, this would enable one to specify limits, or a specific value,
-for a model variable.
-
-<br>
-<br>
-<big><a name="csv2db Command.Difference Priors" id="csv2db Command.Difference Priors">Difference Priors</a></big>
-<br>
-Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
- to define a specific
-<a href="prior_table.htm" target="_top"><span style='white-space: nowrap'>prior</span></a>
- for the differences of the
-<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model&nbsp;variables</span></a>
-; i.e.,
-the amount of smoothing.
-
-<br>
-<br>
-<big><a name="csv2db Command.Sample" id="csv2db Command.Sample">Sample</a></big>
-<br>
-Extend <a href="csv2db_command.htm" target="_top"><span style='white-space: nowrap'>csv2db_command</span></a>
- to define the
-<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
-.
-This would enable csv2db to set up
-<a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predictions</span></a>
-
-using model variables computed by another program.
-
-<br>
-<br>
 <b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
 <br>
 Currently the data table
@@ -384,7 +298,6 @@ Perhaps we should allow for this standard deviation to be
 and the <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
 
 would be used to determine the measurement accuracy.
-
 
 <br>
 <br>
