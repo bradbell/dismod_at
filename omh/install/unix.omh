@@ -217,9 +217,10 @@ and may not have standard system installs
 $subhead run_cmake.sh$$
 The settings in $cref%bin/run_cmake.sh%run_cmake.sh%$$
 are used by the
-scripts that install the special requirements. You must first change
+scripts that install the special requirements.
+You must first change
 these settings to the appropriate values for your system before
-running these scripts.
+running the install scripts below:
 
 $subhead install_eigen.sh$$
 The $href%http://eigen.tuxfamily.org%eigen%$$
@@ -229,6 +230,7 @@ $codei%
 	bin/install_eigen.sh
 %$$
 can be used to install this package.
+This script also serves as an example of how to install eigen.
 
 $subhead install_ipopt.sh$$
 The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
@@ -238,6 +240,7 @@ $codei%
 	bin/install_ipopt.sh
 %$$
 can be used to install this package.
+This script also serves as an example of how to install ipopt.
 
 $subhead install_cppad.sh$$
 The $href%http://www.coin-or.org/CppAD/%cppad%$$
@@ -247,6 +250,7 @@ $codei%
 	bin/install_cppad.sh
 %$$
 can be used to install this package.
+This script also serves as an example of how to install cppad.
 
 $subhead install_cppad_mixed.sh$$
 The $href%https://bradbell.github.io/cppad_mixed%cppad_mixed%$$
@@ -256,6 +260,7 @@ $codei%
 	bin/install_cppad_mixed.sh
 %$$
 can be used to install this package.
+This script also serves as an example of how to install cppad_mixed.
 
 $head dismod_at$$
 The steps above should only need to be executed once, not for
@@ -275,6 +280,7 @@ execute the following command:
 $codep
 	bin/run_cmake.sh
 $$
+The script also serves as an example of how to install dismod_at.
 
 $subhead Build$$
 The following command is option and will just build the
