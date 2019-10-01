@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -100,7 +100,6 @@ import sys
 import os
 import csv
 import numpy
-import subprocess
 import scipy.integrate
 import distutils.dir_util
 #
@@ -260,10 +259,7 @@ dismod_at.csv2db_command(database, configure_csv, measure_csv)
 def exec_shell_cmd(cmd) :
 	program    = '../../devel/dismod_at'
 	command    = [ program, database ] + cmd.split()
-	print( ' '.join(command) )
-	flag       = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('The dismod_at command failed')
+	dismod_at.system_command_prc(command)
 #
 exec_shell_cmd( 'set option quasi_fixed       false' )
 exec_shell_cmd( 'set option ode_step_size     5'     )

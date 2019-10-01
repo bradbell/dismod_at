@@ -92,7 +92,6 @@ if random_seed == 0 :
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 import math
 import random
@@ -246,17 +245,8 @@ file_name = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
-command = [ program, file_name, 'init' ]
-print( ' '.join(command) )
-flag = subprocess.call( command )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
-#
-command = [ program, file_name, 'fit', 'fixed' ]
-print( ' '.join(command) )
-flag = subprocess.call( command )
-if flag != 0 :
-	sys.exit('The dismod_at fit fixed command failed')
+dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
 # connect to database and get density table
 new             = False
@@ -269,22 +259,16 @@ for density_id in range( len(density_table) ) :
 		students_id = density_id
 #
 # set start_var table equal to fit_var table
-command = [ program, file_name, 'set', 'start_var', 'fit_var' ]
-print( ' '.join(command) )
-flag = subprocess.call( command )
-if flag != 0 :
-	sys.exit('The dismod_at fit fixed command failed')
+dismod_at.system_command_prc(
+	[ program, file_name, 'set', 'start_var', 'fit_var' ]
+)
 #
 # change data densities to be students-t
 command = 'UPDATE data SET density_id = ' + str(students_id)
 dismod_at.sql_command(connection, command)
 #
 # fit with Students-t (now that we have a better starting point)
-command = [ program, file_name, 'fit', 'fixed' ]
-print( ' '.join(command) )
-flag = subprocess.call( command )
-if flag != 0 :
-	sys.exit('The dismod_at fit fixed command failed')
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
 # get second fit information
 node_table      = dismod_at.get_table_dict(connection, 'node')
