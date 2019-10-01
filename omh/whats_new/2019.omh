@@ -67,6 +67,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-01$$
+The $cref system_command_prc$$ utility was added used
+to simplify the $cref user$$ examples.
+
 $head 09-30$$
 Use a newer version of the program that generates the documentation
 $code omhelp$$.
