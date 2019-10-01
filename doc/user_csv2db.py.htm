@@ -196,7 +196,6 @@ As a check, we include the mtall data with hold_out equal to one.
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> csv
 <b><font color="#000080">import</font></b> numpy
-<b><font color="#000080">import</font></b> subprocess
 <b><font color="#000080">import</font></b> scipy<font color="#990000">.</font>integrate
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <i><font color="#9A1900">#</font></i>
@@ -356,10 +355,7 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">csv2db_command</
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">:</font>
      program    <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
      command    <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> database <font color="#990000">]</font> <font color="#990000">+</font> cmd<font color="#990000">.</font><b><font color="#000000">split</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
-     flag       <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> command <font color="#990000">)</font>
-     <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at command failed'</font><font color="#990000">)</font>
+     dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>command<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'set option quasi_fixed       false'</font> <font color="#990000">)</font>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'set option ode_step_size     5'</font>     <font color="#990000">)</font>

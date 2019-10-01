@@ -177,7 +177,6 @@ random_seed      <font color="#990000">=</font> <font color="#993399">0</font>  
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
-<b><font color="#000080">import</font></b> subprocess
 <b><font color="#000080">import</font></b> copy
 <b><font color="#000080">import</font></b> random
 <b><font color="#000080">import</font></b> math
@@ -198,14 +197,6 @@ local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><fon
 <i><font color="#9A1900"># change into the build/example/user directory</font></i>
 distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
-<i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># run a system command</font></i>
-<b><font color="#0000FF">def</font></b> <b><font color="#000000">system_command</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
-     flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> command <font color="#990000">)</font>
-     <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'command failed: flag = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>flag<font color="#990000">))</font>
-     <b><font color="#0000FF">return</font></b>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Note that the a, t values are not used for this example</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">example_db</font></b> <font color="#990000">(</font>file_name<font color="#990000">)</font> <font color="#990000">:</font>
@@ -343,8 +334,8 @@ file_name <font color="#990000">=</font> <font color="#FF0000">'example.db'</fon
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># init and fit fixed</font></i>
 program <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># connect to database</font></i>
 new             <font color="#990000">=</font> False
@@ -370,11 +361,11 @@ row_list <font color="#990000">=</font> <font color="#990000">[</font> <font col
 dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># simulate a new data set and sample using it</font></i>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'avgint'</font><font color="#990000">,</font> <font color="#FF0000">'data'</font> <font color="#990000">])</font>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
-<b><font color="#000000">system_command</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'avgint'</font><font color="#990000">,</font> <font color="#FF0000">'data'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check result of the second fit fixed</font></i>
 connection       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>

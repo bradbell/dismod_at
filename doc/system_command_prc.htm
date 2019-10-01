@@ -1,0 +1,124 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Print Run and Check a System Command</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Print Run and Check a System Command">
+<meta name="keywords" id="keywords" content=" print run check system command syntax purpose standard output error example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_system_command_prc_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>system_command_prc</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="sql_command.htm" target="_top">Prev</a>
+</td><td><a href="unicode_tuple.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
+</td>
+<td>system_command_prc</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@ 
+
+
+<center><b><big><big>Print Run and Check a System Command</big></big></b></center>
+
+<br><a href="system_command_prc.htm#Syntax" target="_top">Syntax</a>
+<br><a href="system_command_prc.htm#Purpose" target="_top">Purpose</a>
+<br><a href="system_command_prc.htm#command" target="_top">command</a>
+<br><a href="system_command_prc.htm#Standard Output and Error" target="_top">Standard&nbsp;Output&nbsp;and&nbsp;Error</a>
+<br><a href="system_command_prc.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at.system_command_prc(</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This routine combines the following steps:
+<ol type="1"><li>
+Print the system command as it would appear in the shell; i.e.,
+with arguments separated by spaces.
+</li><li>
+
+Run the system command and wait for it to complete.
+</li><li>
+
+Check the integer value returned by the system command.
+If it is non-zero, exit this python program with message saying
+that the command failed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="command" id="command">command</a></big></b>
+<br>
+is a <code><font color="blue">list</font></code> with <code><font color="blue">str</font></code> elements. The first element is the
+program to execute and the other elements are arguments to the program.
+
+<br>
+<br>
+<b><big><a name="Standard Output and Error" id="Standard Output and Error">Standard Output and Error</a></big></b>
+<br>
+These output streams are not displayed or returned.
+If an error occurs, re-run the command as printed to get this information.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+Many of the <a href="user.htm" target="_top"><span style='white-space: nowrap'>user</span></a>
+ examples use this utility.
+
+
+<hr>Input File: python/dismod_at/system_command_prc.py
+
+</body>
+</html>

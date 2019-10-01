@@ -13,6 +13,7 @@ document.write('\
 <option>metropolis</option>\
 <option>modify_command</option>\
 <option>sql_command</option>\
+<option>system_command_prc</option>\
 <option>unicode_tuple</option>\
 </select>\
 ');
@@ -29,6 +30,7 @@ function python_child(item)
 		'metropolis.htm',
 		'modify_command.htm',
 		'sql_command.htm',
+		'system_command_prc.htm',
 		'unicode_tuple.htm'
 	];
 	var index = item.selectedIndex;

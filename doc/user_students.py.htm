@@ -188,7 +188,6 @@ random_seed  <font color="#990000">=</font> <font color="#993399">0</font>    <i
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
-<b><font color="#000080">import</font></b> subprocess
 <b><font color="#000080">import</font></b> copy
 <b><font color="#000080">import</font></b> math
 <b><font color="#000080">import</font></b> random
@@ -342,17 +341,8 @@ file_name <font color="#990000">=</font> <font color="#FF0000">'example.db'</fon
 <b><font color="#000000">example_db</font></b><font color="#990000">(</font>file_name<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 program <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
-command <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">]</font>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
-flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> command <font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at init command failed'</font><font color="#990000">)</font>
-<i><font color="#9A1900">#</font></i>
-command <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">]</font>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
-flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> command <font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at fit fixed command failed'</font><font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># connect to database and get density table</font></i>
 new             <font color="#990000">=</font> False
@@ -365,22 +355,16 @@ students_id <font color="#990000">=</font> None
           students_id <font color="#990000">=</font> density_id
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># set start_var table equal to fit_var table</font></i>
-command <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'fit_var'</font> <font color="#990000">]</font>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
-flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> command <font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at fit fixed command failed'</font><font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'fit_var'</font> <font color="#990000">]</font>
+<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change data densities to be students-t</font></i>
 command <font color="#990000">=</font> <font color="#FF0000">'UPDATE data SET density_id = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>students_id<font color="#990000">)</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> command<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># fit with Students-t (now that we have a better starting point)</font></i>
-command <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">]</font>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>command<font color="#990000">)</font> <font color="#990000">)</font>
-flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> command <font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at fit fixed command failed'</font><font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># get second fit information</font></i>
 node_table      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
