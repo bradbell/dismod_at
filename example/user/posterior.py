@@ -98,7 +98,6 @@ number_sample     = 30
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 from math import exp
 test_program = 'example/user/posterior.py'
@@ -118,14 +117,6 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -242,17 +233,17 @@ example_db(file_name)
 program   = '../../devel/dismod_at'
 #
 # init
-system_command([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
 #
 # set truth_var prior_mean
-system_command([ program, file_name, 'set', 'truth_var', 'prior_mean' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'truth_var', 'prior_mean' ])
 #
 # simulate number_sample
-system_command([ program, file_name, 'simulate', str(number_sample) ])
+dismod_at.system_command_prc([ program, file_name, 'simulate', str(number_sample) ])
 #
 # sample simulate number_sample
 ns_str = str(number_sample)
-system_command([ program, file_name, 'sample', 'simulate', ns_str ])
+dismod_at.system_command_prc([ program, file_name, 'sample', 'simulate', ns_str ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

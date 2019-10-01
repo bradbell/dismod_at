@@ -79,7 +79,6 @@ iota_mean = 0.01
 import sys
 import os
 import distutils.dir_util
-import subprocess
 test_program = 'example/user/change_grid.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -97,14 +96,6 @@ import dismod_at
 # change into the build/test/user directory
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
@@ -255,8 +246,8 @@ dismod_at.sql_command(connection, command)
 # do a fit and check results
 # ===========================================================================
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
-system_command([ program, file_name, 'fit', 'both' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 #
 # Results for fitting with no noise
 age_table     = dismod_at.get_table_dict(connection, 'age')

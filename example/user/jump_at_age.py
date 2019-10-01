@@ -75,7 +75,6 @@ time_table      = [ 2015.0, 1995.0 ]
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 test_program = 'example/user/jump_at_age.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -94,14 +93,6 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 def iota_true(age) :
 	if age <= 20.0 :
@@ -255,8 +246,8 @@ file_name = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
-system_command([ program, file_name, 'fit', 'both' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

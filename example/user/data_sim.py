@@ -104,7 +104,6 @@ import math
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 test_program = 'example/user/data_sim.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -144,14 +143,6 @@ def delta_effect(Delta, effect) :
 		else :
 			delta = math.sqrt( Delta * Delta + effect )
 	return delta
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -304,7 +295,7 @@ file_name = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
 new             = False
@@ -351,7 +342,7 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # create and check the data_sim table
-system_command([ program, file_name, 'simulate', '1' ])
+dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
 #
 # check results in data_sim table
 new               = False

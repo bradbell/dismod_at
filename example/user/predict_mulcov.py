@@ -102,7 +102,6 @@ income_reference = 1.0
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 import math
 test_program = 'example/user/predict_mulcov.py'
@@ -122,13 +121,6 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ----------------------------------------------------------------------------
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	def fun_income(a, t) :
@@ -286,9 +278,9 @@ file_name             = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
-system_command([ program, file_name, 'fit', 'fixed' ])
-system_command([ program, file_name, 'predict', 'fit_var' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+dismod_at.system_command_prc([ program, file_name, 'predict', 'fit_var' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

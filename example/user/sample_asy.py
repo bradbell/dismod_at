@@ -82,7 +82,6 @@ import sys
 import os
 import copy
 import distutils.dir_util
-import subprocess
 test_program = 'example/user/sample_asy.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -103,13 +102,6 @@ os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
 random_seed = int( time.time() )
 # ---------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 #
 # no need to include sqrt{2 \pi} term (it does not depend on model variables)
 def h(y, mu, sigma ) :
@@ -291,9 +283,9 @@ example_db(file_name)
 #
 program   = '../../devel/dismod_at'
 ns_string = str(number_sample)
-system_command([ program, file_name, 'init' ])
-system_command([ program, file_name, 'fit', 'both' ])
-system_command([ program, file_name, 'sample', 'asymptotic', ns_string ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
+dismod_at.system_command_prc([ program, file_name, 'sample', 'asymptotic', ns_string ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

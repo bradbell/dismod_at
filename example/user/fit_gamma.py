@@ -93,7 +93,6 @@ def gamma_true() :
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 test_program = 'example/user/fit_gamma.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -112,14 +111,6 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -275,7 +266,7 @@ file_name = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
 new             = False
@@ -324,10 +315,10 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Simulate then fit the data
-system_command([ program, file_name, 'simulate', '1' ])
-system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
-system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
-system_command([ program, file_name, 'fit', 'fixed' , '0' ])
+dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' , '0' ])
 # -----------------------------------------------------------------------
 # check fit results
 new          = False

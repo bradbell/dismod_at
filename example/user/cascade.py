@@ -223,7 +223,6 @@ avg_income['n1']   = (avg_income['n11']  + avg_income['n12']) /2.0
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 import random
 import math
@@ -252,13 +251,6 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 #
 # count number of rows in an sql file
 def sql_count_rows(connection, table_name) :
@@ -481,11 +473,11 @@ example_db(file_name)
 #
 # init
 program = '../../devel/dismod_at'
-system_command( [ program, file_name, 'init' ] )
+dismod_at.system_command_prc( [ program, file_name, 'init' ] )
 # -----------------------------------------------------------------------------
 # Step 2: Fit With n1 As Parent
 # -----------------------------------------------------------------------------
-system_command( [ program, file_name, 'fit', 'both' ] )
+dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 #
 # check e1
 new              = False
@@ -540,11 +532,11 @@ for var_id in range(n_var) :
 # -----------------------------------------------------------------------------
 # obtain s1_1, ... , s1_N
 N_str = str(number_sample)
-system_command([ program, file_name, 'set', 'truth_var', 'fit_var' ])
-system_command([ program, file_name, 'set', 'start_var', 'fit_var' ])
-system_command([ program, file_name, 'set', 'scale_var', 'fit_var' ])
-system_command([ program, file_name, 'simulate', N_str ])
-system_command([ program, file_name, 'sample', 'simulate', N_str ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'truth_var', 'fit_var' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'fit_var' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'scale_var', 'fit_var' ])
+dismod_at.system_command_prc([ program, file_name, 'simulate', N_str ])
+dismod_at.system_command_prc([ program, file_name, 'sample', 'simulate', N_str ])
 #
 # check coverage of true values by posterior samples
 connection.close()
@@ -592,7 +584,7 @@ for var_id in range(n_var) :
 # ----------------------------------------------------------------------------
 # obtain p11_1, p_11_2, ...
 # and add prior_n11_age values to data base
-system_command([ program, file_name, 'predict', 'sample' ])
+dismod_at.system_command_prc([ program, file_name, 'predict', 'sample' ])
 avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
 predict_table   = dismod_at.get_table_dict(connection, 'predict')
 n_avgint        = len( avgint_table )
@@ -744,8 +736,8 @@ dismod_at.sql_command(connection, sqlcmd)
 # Step 7: Fit With n11 as Parent
 # ----------------------------------------------------------------------------
 # obtain e11, estimate of model variables with n11 as the parent node
-system_command( [ program, file_name, 'init' ] )
-system_command( [ program, file_name, 'fit', 'both' ] )
+dismod_at.system_command_prc( [ program, file_name, 'init' ] )
+dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 #
 # check e11
 var_table        = dismod_at.get_table_dict(connection, 'var')

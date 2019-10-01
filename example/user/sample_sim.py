@@ -151,7 +151,6 @@ import sys
 import os
 import copy
 import distutils.dir_util
-import subprocess
 test_program = 'example/user/sample_sim.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -170,16 +169,6 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
-# ---------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		msg  = 'command failed: flag = ' + str(flag) + '\n'
-		msg += 'random_seed          = ' + str(random_seed)
-		sys.exit(msg)
-	return
 #
 # no need to include sqrt{2 \pi} term (it does not depend on model variables)
 def h(y, mu, sigma ) :
@@ -348,7 +337,7 @@ example_db(file_name)
 #
 program   = '../../devel/dismod_at'
 na_string = str(number_sample)
-system_command([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
 #
 # -----------------------------------------------------------------------
 # create truth_table
@@ -389,10 +378,10 @@ connection.close()
 # sample simulate results
 #
 ns_string = str(number_sample)
-system_command([ program, file_name, 'simulate', ns_string ])
-system_command([ program, file_name, 'set', 'start_var', 'truth_var' ] )
-system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ] )
-system_command([ program, file_name, 'sample', 'simulate', ns_string ])
+dismod_at.system_command_prc([ program, file_name, 'simulate', ns_string ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ] )
+dismod_at.system_command_prc([ program, file_name, 'set', 'scale_var', 'truth_var' ] )
+dismod_at.system_command_prc([ program, file_name, 'sample', 'simulate', ns_string ])
 #
 new          = False
 connection   = dismod_at.create_connection(file_name, new)

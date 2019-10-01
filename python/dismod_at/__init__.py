@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -23,6 +23,7 @@
 #	%python/dismod_at/metropolis.py
 #	%python/dismod_at/modify_command.py
 #	%python/dismod_at/sql_command.py
+#	%python/dismod_at/system_command_prc.py
 #	%python/dismod_at/unicode_tuple.py
 # %$$
 #
@@ -39,4 +40,5 @@ from .get_table_dict      import get_table_dict
 from .metropolis          import metropolis
 from .modify_command      import modify_command
 from .sql_command         import sql_command
+from .system_command_prc  import system_command_prc
 from .unicode_tuple       import unicode_tuple

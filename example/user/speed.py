@@ -61,7 +61,6 @@ import sys
 import os
 import time
 import distutils.dir_util
-import subprocess
 test_program = 'example/user/speed.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 5 :
 	usage  = 'python3 ' + test_program + '\\\n'
@@ -94,14 +93,6 @@ import dismod_at
 # change into the build/speed directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
@@ -317,7 +308,7 @@ file_name  = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
 new             = False
@@ -368,10 +359,10 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Run the simulate and start, and fit commands
-system_command([ program, file_name, 'simulate', '1' ])
-system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
-system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ])
-system_command([ program, file_name, 'fit', 'both', '0' ])
+dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'scale_var', 'truth_var' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'both', '0' ])
 # -----------------------------------------------------------------------
 # check simulation results
 new          = False

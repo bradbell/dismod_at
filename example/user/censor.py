@@ -91,7 +91,6 @@ if random_seed == 0 :
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 import random
 import math
@@ -112,14 +111,6 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -257,8 +248,8 @@ example_db(file_name)
 #
 # init and fit fixed
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
-system_command([ program, file_name, 'fit', 'fixed' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
 # connect to database
 new             = False
@@ -284,11 +275,11 @@ row_list = [ [iota_true] ]
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 #
 # simulate a new data set and sample using it
-system_command([ program, file_name, 'set', 'avgint', 'data' ])
-system_command([ program, file_name, 'simulate', '1' ])
-system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ])
-system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
-system_command([ program, file_name, 'fit', 'fixed', '0' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'avgint', 'data' ])
+dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'scale_var', 'truth_var' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed', '0' ])
 #
 # check result of the second fit fixed
 connection       = dismod_at.create_connection(file_name, new)

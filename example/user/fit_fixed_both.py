@@ -99,7 +99,6 @@ united_states_random_effect = +0.5
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 from math import exp
 test_program = 'example/user/fit_fixed_both.py'
@@ -119,14 +118,6 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -288,8 +279,8 @@ file_name = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
-system_command([ program, file_name, 'fit', 'fixed' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
@@ -331,10 +322,10 @@ for var_id in range( n_var ) :
 # -----------------------------------------------------------------------
 # Copy results of fit fixed to start table
 cmd = '../../devel/dismod_at example.db set start_var fit_var'
-system_command([ program, file_name, 'set', 'start_var', 'fit_var' ])
+dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'fit_var' ])
 #
 # Fit both fixed and random effects
-system_command([ program, file_name, 'fit', 'both' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 # -----------------------------------------------------------------------
 # check the non-zero random effects solution
 #

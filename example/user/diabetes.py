@@ -398,7 +398,6 @@ accept_rel_err = 0.25
 import sys
 import os
 import distutils.dir_util
-import subprocess
 import copy
 import math
 import time
@@ -419,14 +418,6 @@ import dismod_at
 # change into the build/example/user directory
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
-# ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-	print( ' '.join(command) )
-	flag = subprocess.call( command )
-	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
-	return
 # ------------------------------------------------------------------------
 def log_bilinear(grid_value, a, t) :
 	# denominator
@@ -995,13 +986,13 @@ file_name = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # create truth_var table
 create_truth_var_table()
 # -----------------------------------------------------------------------------
 # create predict table
-system_command([ program, file_name, 'predict', 'truth_var' ])
+dismod_at.system_command_prc([ program, file_name, 'predict', 'truth_var' ])
 # -----------------------------------------------------------------------------
 # add data to data table
 new             = False
@@ -1066,7 +1057,7 @@ dismod_at.sql_command(connection, command)
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list )
 # -----------------------------------------------------------------------------
 # re-initailize to get data_subset table to correspond to new data
-system_command([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
 #
 # Initializing erases the truth_var table.
 # Create a new version of truth_var table that will correspond to fit
@@ -1099,28 +1090,28 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 #
 # copy start_var table to scale_var table
-system_command([ program, file_name, 'set' , 'scale_var', 'start_var' ])
+dismod_at.system_command_prc([ program, file_name, 'set' , 'scale_var', 'start_var' ])
 #
 # Simulate a data set corresponding to the truth
 number_simulate = '1'
-system_command([ program, file_name, 'simulate', number_simulate ])
+dismod_at.system_command_prc([ program, file_name, 'simulate', number_simulate ])
 #
 # Do a fit with no random effects
 cmd            = [ program, file_name, 'fit', 'fixed' ]
 if fit_with_noise_in_data :
 	simulate_index = '0'
 	cmd += [ simulate_index ]
-system_command(cmd)
+dismod_at.system_command_prc(cmd)
 #
 # copy fit_var table to start_var table
-system_command([ program, file_name, 'set' , 'start_var', 'fit_var' ])
+dismod_at.system_command_prc([ program, file_name, 'set' , 'start_var', 'fit_var' ])
 #
 # Do a fit with random effects
 cmd            = [ program, file_name, 'fit', 'both' ]
 if fit_with_noise_in_data :
 	simulate_index = '0'
 	cmd += [ simulate_index ]
-system_command(cmd)
+dismod_at.system_command_prc(cmd)
 # -----------------------------------------------------------------------------
 # compare truth and fit
 file_name      = 'example.db'
