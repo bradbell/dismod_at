@@ -68,8 +68,13 @@ $childtable%
 %$$
 
 $head 10-01$$
+$list number$$
 The $cref system_command_prc$$ utility was added used
 to simplify the $cref user$$ examples.
+$lnext
+The new $cref user_mulstd.py$$ example demonstrates
+estimating standard deviation multipliers.
+$lend
 
 $head 09-30$$
 Use a newer version of the program that generates the documentation
