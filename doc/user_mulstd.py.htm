@@ -89,12 +89,11 @@ to determine the standard deviation of the random effects.
 <b><big><a name="Problem Parameters" id="Problem Parameters">Problem Parameters</a></big></b>
 <br>
 The following values are used to simulate and model the data:
-<pre><tt>iota_world   <font color="#990000">=</font> <font color="#993399">1e-2</font>       <i><font color="#9A1900"># true iota for parent</font></i>
-effect_child_1 <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">0.5</font>     <i><font color="#9A1900"># true iota effect for child_1 and child_2</font></i>
-effect_child_2 <font color="#990000">=</font> <font color="#990000">-</font>effect_child_1
-meas_cv        <font color="#990000">=</font> <font color="#993399">0.05</font>     <i><font color="#9A1900"># coefficient of variation for data points</font></i>
-n_data         <font color="#990000">=</font> <font color="#993399">100</font>      <i><font color="#9A1900"># total number of data points</font></i>
-random_seed    <font color="#990000">=</font> <font color="#993399">0</font>        <i><font color="#9A1900"># if zero, seed off the clock</font></i></tt></pre>
+<pre><tt>iota_world      <font color="#990000">=</font> <font color="#993399">1e-2</font>     <i><font color="#9A1900"># true iota for parent</font></i>
+iota_effect_std <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">0.5</font>     <i><font color="#9A1900"># true iota effect standard deviation</font></i>
+meas_cv         <font color="#990000">=</font> <font color="#993399">0.05</font>     <i><font color="#9A1900"># coefficient of variation for data points</font></i>
+n_data          <font color="#990000">=</font> <font color="#993399">400</font>      <i><font color="#9A1900"># total number of data points</font></i>
+random_seed     <font color="#990000">=</font> <font color="#993399">0</font>        <i><font color="#9A1900"># if zero, seed off the clock</font></i></tt></pre>
 <br>
 <b><big><a name="Age and Time Values" id="Age and Time Values">Age and Time Values</a></big></b>
 <br>
@@ -191,14 +190,15 @@ which is equal to
 <pre><tt>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># begin problem parameters</font></i>
-iota_world   <font color="#990000">=</font> <font color="#993399">1e-2</font>       <i><font color="#9A1900"># true iota for parent</font></i>
-effect_child_1 <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">0.5</font>     <i><font color="#9A1900"># true iota effect for child_1 and child_2</font></i>
-effect_child_2 <font color="#990000">=</font> <font color="#990000">-</font>effect_child_1
-meas_cv        <font color="#990000">=</font> <font color="#993399">0.05</font>     <i><font color="#9A1900"># coefficient of variation for data points</font></i>
-n_data         <font color="#990000">=</font> <font color="#993399">100</font>      <i><font color="#9A1900"># total number of data points</font></i>
-random_seed    <font color="#990000">=</font> <font color="#993399">0</font>        <i><font color="#9A1900"># if zero, seed off the clock</font></i>
+iota_world      <font color="#990000">=</font> <font color="#993399">1e-2</font>     <i><font color="#9A1900"># true iota for parent</font></i>
+iota_effect_std <font color="#990000">=</font> <font color="#990000">+</font><font color="#993399">0.5</font>     <i><font color="#9A1900"># true iota effect standard deviation</font></i>
+meas_cv         <font color="#990000">=</font> <font color="#993399">0.05</font>     <i><font color="#9A1900"># coefficient of variation for data points</font></i>
+n_data          <font color="#990000">=</font> <font color="#993399">400</font>      <i><font color="#9A1900"># total number of data points</font></i>
+random_seed     <font color="#990000">=</font> <font color="#993399">0</font>        <i><font color="#9A1900"># if zero, seed off the clock</font></i>
 <i><font color="#9A1900"># end problem parameters</font></i>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
+effect_child_1 <font color="#990000">=</font> <font color="#990000">+</font> iota_effect_std
+effect_child_2 <font color="#990000">=</font> <font color="#990000">-</font> iota_effect_std
 <b><font color="#000080">import</font></b> time
 <b><font color="#0000FF">if</font></b> random_seed <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
      random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
@@ -352,7 +352,8 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>             <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>               <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-8'</font>              <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-11'</font>             <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_random'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota'</font>              <font color="#990000">},</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># create database</font></i>
@@ -392,7 +393,6 @@ fit_var_table   <font color="#990000">=</font> dismod_at<font color="#990000">.<
 rate_var_true <font color="#990000">=</font> <font color="#990000">{</font>
      <font color="#FF0000">'world'</font><font color="#990000">:</font>iota_world<font color="#990000">,</font> <font color="#FF0000">'child_1'</font><font color="#990000">:</font>effect_child_1<font color="#990000">,</font> <font color="#FF0000">'child_2'</font><font color="#990000">:</font>effect_child_2
 <font color="#990000">}</font>
-mulstd_var_true <font color="#990000">=</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>effect_child_1 <font color="#990000">-</font> effect_child_2<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table  <font color="#990000">)</font> <font color="#990000">):</font>
      fit_var_value <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">][</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
      var_type      <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">][</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font>
@@ -402,9 +402,9 @@ mulstd_var_true <font color="#990000">=</font> <b><font color="#000000">abs</fon
           true_value <font color="#990000">=</font> rate_var_true<font color="#990000">[</font>node_name<font color="#990000">]</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> var_type <font color="#990000">==</font> <font color="#FF0000">'mulstd_value'</font>
-          true_value <font color="#990000">=</font> mulstd_var_true
+          true_value <font color="#990000">=</font> iota_effect_std
      relerr <font color="#990000">=</font> fit_var_value <font color="#990000">/</font> true_value <font color="#990000">-</font> <font color="#993399">1.0</font>
-     <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relerr<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#990000">.</font><font color="#993399">05</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relerr<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#990000">.</font><font color="#993399">01</font> <font color="#990000">:</font>
           <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed = '</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>false<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
