@@ -89,14 +89,15 @@
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
 # begin problem parameters
-iota_world   = 1e-2       # true iota for parent
-effect_child_1 = +0.5     # true iota effect for child_1 and child_2
-effect_child_2 = -effect_child_1
-meas_cv        = 0.05     # coefficient of variation for data points
-n_data         = 100      # total number of data points
-random_seed    = 0        # if zero, seed off the clock
+iota_world      = 1e-2     # true iota for parent
+iota_effect_std = +0.5     # true iota effect standard deviation
+meas_cv         = 0.05     # coefficient of variation for data points
+n_data          = 400      # total number of data points
+random_seed     = 0        # if zero, seed off the clock
 # end problem parameters
 # ------------------------------------------------------------------------
+effect_child_1 = + iota_effect_std
+effect_child_2 = - iota_effect_std
 import time
 if random_seed == 0 :
 	random_seed = int( time.time() )
@@ -250,7 +251,8 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'false'             },
 		{ 'name':'max_num_iter_fixed',     'value':'100'               },
 		{ 'name':'print_level_fixed',      'value':'0'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'              },
+		{ 'name':'tolerance_fixed',        'value':'1e-11'             },
+		{ 'name':'zero_sum_random',        'value':'iota'              },
 	]
 	# ----------------------------------------------------------------------
 	# create database
@@ -290,7 +292,6 @@ fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 rate_var_true = {
 	'world':iota_world, 'child_1':effect_child_1, 'child_2':effect_child_2
 }
-mulstd_var_true = abs(effect_child_1 - effect_child_2) / 2.0
 for var_id in range( len(var_table  ) ):
 	fit_var_value = fit_var_table[var_id]['fit_var_value']
 	var_type      = var_table[var_id]['var_type']
@@ -300,9 +301,9 @@ for var_id in range( len(var_table  ) ):
 		true_value = rate_var_true[node_name]
 	else :
 		assert var_type == 'mulstd_value'
-		true_value = mulstd_var_true
+		true_value = iota_effect_std
 	relerr = fit_var_value / true_value - 1.0
-	if abs(relerr) > .05 :
+	if abs(relerr) > .01 :
 		print('random_seed = ', random_seed)
 		assert(false)
 # -----------------------------------------------------------------------

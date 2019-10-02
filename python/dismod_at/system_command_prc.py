@@ -48,6 +48,7 @@
 # $end
 # ---------------------------------------------------------------------------
 def system_command_prc(command) :
+	import sys
 	import subprocess
 	#
 	# print the system command with arguments separated by spaces
