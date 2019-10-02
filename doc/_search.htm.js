@@ -36,6 +36,7 @@ Keyword =
 { tag: 'user_sample_sim.py', title:'Sample Posterior Using Simulated Data', other:' purpose node table model variables iota x parameters delta values likelihood number_sample number_metropolis truth random_seed source code' },
 { tag: 'user_sample_asy.py', title:'Sample from Asymptotic Distribution for Model Variables', other:' purpose notation likelihood source code' },
 { tag: 'user_const_value.py', title:'Constrain Omega Using const_value', other:' node table problem parameters child random effects priors nslist iota parent data random_seed source code' },
+{ tag: 'user_mulstd.py', title:'Estimating Smoothing Standard Deviation Multiplies', other:' purpose problem parameters age time values variables parent children data table rate prior fitting source code' },
 { tag: 'user_const_random.py', title:'Fitting With Non-Zero Constant Random Effects in Smoothing Grid', other:' source code' },
 { tag: 'user_continue_fit.py', title:'Continuing a Fit From Where it Left Off', other:' option table source code' },
 { tag: 'user_diff_constraint.py', title:'Constraints on Differences in Age and Time', other:' source code' },

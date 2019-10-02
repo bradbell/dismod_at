@@ -23,6 +23,7 @@ document.write('\
 <option>user_sample_sim.py</option>\
 <option>user_sample_asy.py</option>\
 <option>user_const_value.py</option>\
+<option>user_mulstd.py</option>\
 <option>user_const_random.py</option>\
 <option>user_continue_fit.py</option>\
 <option>user_diff_constraint.py</option>\
@@ -56,6 +57,7 @@ function user_child(item)
 		'user_sample_sim.py.htm',
 		'user_sample_asy.py.htm',
 		'user_const_value.py.htm',
+		'user_mulstd.py.htm',
 		'user_const_random.py.htm',
 		'user_continue_fit.py.htm',
 		'user_diff_constraint.py.htm',
