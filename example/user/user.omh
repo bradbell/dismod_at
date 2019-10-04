@@ -115,6 +115,7 @@ $rref user_sample_asy.py$$
 $rref user_continue_fit.py$$
 $rref user_const_value.py$$
 $rref user_mulstd.py$$
+$rref user_zero_sum_random.py$$
 $tend
 
 $head More Examples$$
@@ -123,7 +124,6 @@ $rref user_const_random.py$$
 $rref user_diff_constraint.py$$
 $rref user_meas_covariate.py$$
 $rref user_no_children.py$$
-$rref user_zero_sum_random.py$$
 $rref user_re_scale.py$$
 $rref user_speed.py$$
 $tend

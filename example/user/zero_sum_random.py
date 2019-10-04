@@ -14,10 +14,38 @@
 #
 # $section Fitting With Sum of Random Effect Constrained to Zero$$
 #
-# $head Discussion$$
+# $head Purpose$$
 # This example demonstrates using
 # The $cref/zero_sum_random/option_table/zero_sum_random/$$
-# to improve the estimation of the fixed effects.
+# to improve the speed and estimation of the fixed effects.
+#
+# $head Problem Parameters$$
+# $srcfile%example/user/zero_sum_random.py%
+#	0%# begin problem parameters%# end problem parameters%1
+# %$$
+#
+# $head Data Simulation$$
+# The true rate for the parent region $code north_america$$,
+# used for simulating data, are
+# $icode iota_parent$$ and $icode rho_parent$$ problem parameters.
+# Rate effect used for $code canada$$ is $icode rate_effect_child$$
+# and for $code united_states$$ $codei%-%rate_effect_child%$$.
+# Note that these rates are constant in age and time.
+#
+# $head Nodes$$
+# There are just three nodes for this example,
+# The parent node, $code north_america$$, and the two child nodes
+# $code united_states$$ and $code canada$$.
+#
+# $head Model Variables$$
+# The non-zero $cref model_variables$$ for this example are
+# $cref/iota/rate_table/rate_name/iota/$$ and $icode rho$$.
+# Both the parent and child rates use a grid with one point in age
+# and two points in time. Thus there are six model variables for each rate,
+# two for the parent rates and four for the child rate effects.
+# The resulting rates will be constant
+# in age and constant in time except between the two time grid points
+# where it is linear.
 #
 # $head Source Code$$
 # $srcfile%
@@ -27,11 +55,13 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
-number_data   = 20
-iota_true     = 1e-2
-rho_true      = 2e-2
-incidence_cv  = 0.05
-remission_cv  = 0.05
+# begin problem parameters
+number_data       = 50
+iota_parent       = 1e-2
+rho_parent        = 2e-2
+rate_effect_child = 0.2;
+measurement_cv    = 0.01
+# end problem parameters
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -114,14 +144,19 @@ def example_db (file_name) :
 		'age_upper':    50.0,
 	}
 	for data_id in range(number_data) :
-		if data_id % 4 == 0 or data_id % 4 == 1 :
+		if data_id % 3 == 0 :
+			row['node']       = 'north_america'
+			row['data_name']  = 'na_' + str( data_id / 2 )
+			effect_true       = 0.0
+		if data_id % 3 == 1 :
 			row['node']       = 'united_states'
 			row['data_name']  = 'us_' + str( data_id / 2 )
-		else :
+			effect_true       = - rate_effect_child
+		if data_id % 3 == 2 :
 			row['node']       = 'canada'
 			row['data_name']  = 'ca_' + str( data_id / 2 )
-		#
-		if data_id % 4 == 0 or data_id % 4 == 2 :
+			effect_true       = + rate_effect_child
+		if data_id % 2 == 0 :
 			row['time_lower'] = 1990.0
 			row['time_upper'] = 1990.0
 		else :
@@ -129,14 +164,16 @@ def example_db (file_name) :
 			row['time_upper'] = 2010.0
 		#
 		if data_id < number_data / 2 :
+			iota_true         = math.exp(effect_true) * iota_parent
 			row['integrand']  = 'Sincidence'
-			row['meas_std']   = iota_true * incidence_cv
-			noise     = iota_true * random.gauss(0.0, incidence_cv)
+			row['meas_std']   = iota_true * measurement_cv
+			noise             = iota_true * random.gauss(0.0, measurement_cv)
 			row['meas_value'] = iota_true + noise
 		else :
+			rho_true          = math.exp(effect_true) * rho_parent
 			row['integrand']  = 'remission'
-			row['meas_std']   = rho_true * incidence_cv
-			noise     = rho_true * random.gauss(0.0, incidence_cv)
+			row['meas_std']   = rho_true * measurement_cv
+			noise             = rho_true * random.gauss(0.0, measurement_cv)
 			row['meas_value'] = rho_true + noise
 		#
 		data_table.append( copy.copy(row) )
@@ -203,7 +240,7 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'first-order'   },
 		{ 'name':'max_num_iter_fixed',     'value':'100'           },
 		{ 'name':'print_level_fixed',      'value':'0'             },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'         },
+		{ 'name':'tolerance_fixed',        'value':'1e-12'         },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'  },
 		{ 'name':'max_num_iter_random',    'value':'100'           },
@@ -284,21 +321,29 @@ for var_id in range( n_var ) :
 	#
 	if node_name == 'north_america' :
 		if rate_name == 'iota' :
-			err = value / iota_true - 1.0
+			err = value / iota_parent - 1.0
 		else :
-			err = value / rho_true - 1.0
-		ok = ok and abs(err) < 0.1
+			err = value / rho_parent - 1.0
+	elif node_name == 'canada' :
+		err = value / rate_effect_child  - 1.0
 	else :
+		assert node_name == 'united_states'
+		err = - value / rate_effect_child  - 1.0
+	if abs(err) > 0.1 :
+		print('node_name, err=', node_name, err)
+		print('python_seed = ', python_seed)
+		assert False
+	if node_name != 'north_america' :
 		sum_random[rate_name][time_id] += value
 		count_random += 1
 assert count_random == 8
 for rate in [ 'iota', 'rho' ] :
 	for time_id in [ 0 , 1 ] :
-		ok = ok and  abs( sum_random[rate][time_id] ) < 1e-9
+		if( abs( sum_random[rate][time_id] ) ) > 1e-9 :
+			print('rate, sum random = ', rate, sum_random[rate][time_id] )
+			print('python_seed = ', python_seed)
+			assert False
 #
-if not ok :
-	print('python_seed = ', python_seed)
-assert ok
 # -----------------------------------------------------------------------
 print('zero_sum_random: OK')
 # END PYTHON

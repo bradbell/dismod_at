@@ -67,6 +67,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-02$$
+Add discussion at the top of the
+$cref user_zero_sum_random.py$$ example.
+
 $head 10-01$$
 $list number$$
 The $cref system_command_prc$$ utility was added used
