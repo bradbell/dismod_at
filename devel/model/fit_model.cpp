@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/n_random_const.hpp>
 # include <dismod_at/configure.hpp>
+# include <dismod_at/remove_const.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::mixed::d_sparse_rcv ran_con_rcv(
