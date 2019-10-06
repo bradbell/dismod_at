@@ -155,6 +155,7 @@ namespace dismod_at {
 			}
 		}
 		assert( k == n_var() );
+		return both;
 	}
 
 }

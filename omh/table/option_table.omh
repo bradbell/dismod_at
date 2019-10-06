@@ -483,14 +483,16 @@ designed to optimizer the random effects for the cppad_mixed package
 The default value for this option is $code ipopt_random$$.
 
 $subhead bound_random$$
-If $icode option_name$$ is
-$code bound_random$$,
+If $icode option_name$$ is $code bound_random$$,
 plus and minus the corresponding $icode option_value$$
 are the bounds for each of the
 $cref/random effects/model_variables/Random Effects, u/$$.
 If $icode bound_random$$ is $code null$$,
 plus and minus infinity is used for the bounds; see
 $cref/bounds that are null/database/Bounds That are Null/$$.
+This bound does not apply for random effects that have their upper
+and lower limits equal; see
+$cref/constant child value priors/rate_table/Child Value Priors/Constant/$$.
 
 $list number$$
 The theory for

@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/n_random_const.hpp>
 # include <dismod_at/configure.hpp>
 # include <dismod_at/remove_const.hpp>
+# include <dismod_at/get_var_limits.hpp>
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::mixed::d_sparse_rcv ran_con_rcv(
@@ -329,44 +330,15 @@ data_object_   ( data_object )
 	// random_lower_, random_upper_
 	//
 	// random lower in prior
-	d_vector pack_vec(n_var);
-	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id    = var2prior_.value_prior_id(i);
-		double const_value = var2prior_.const_value(i);
-		if( ! std::isnan(const_value) )
-			pack_vec[i] = const_value;
-		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = - inf;
-		else
-			pack_vec[i] = prior_table_[prior_id].lower;
-	}
+	d_vector var_lower(n_var), var_upper(n_var);
+	get_var_limits(
+		var_lower, var_upper, bound_random, var2prior_, prior_table_
+	);
 	random_lower_.resize(n_random_);
-	unpack_random(pack_object_, pack_vec, random_lower_);
-	//
-	// random upper in prior
-	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id    = var2prior_.value_prior_id(i);
-		double const_value = var2prior_.const_value(i);
-		if( ! std::isnan(const_value) )
-			pack_vec[i] = const_value;
-		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = + inf;
-		else
-			pack_vec[i] = prior_table_[prior_id].upper;
-	}
 	random_upper_.resize(n_random_);
-	unpack_random(pack_object_, pack_vec, random_upper_);
+	unpack_random(pack_object_, var_lower, random_lower_);
+	unpack_random(pack_object_, var_upper, random_upper_);
 	//
-	// apply random bound
-	for(size_t i = 0; i < n_random_; i++)
-	{	if( random_lower_[i] == - inf )
-		{	assert( random_upper_[i] == + inf );
-			random_lower_[i] = - bound_random;
-			random_upper_[i] =   bound_random;
-		}
-		else
-			assert( random_lower_[i] == random_upper_[i] );
-	}
 	// -----------------------------------------------------------------------
 	// n_random_equal_
 	n_random_equal_ = 0;

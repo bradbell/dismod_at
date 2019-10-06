@@ -38,6 +38,7 @@ $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/split_space.cpp
 	%devel/utility/time_line_vec.cpp
 	%devel/utility/remove_const.cpp
+	%devel/utility/get_var_limits.cpp
 %$$
 
 $end

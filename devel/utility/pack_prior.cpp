@@ -27,23 +27,23 @@ $$
 $section Priors in Variable ID Order$$
 
 $head Syntax$$
-$codei%pack_prior% %var2prior%(%pack_object%, %s_info_vec%)
+$codei%pack_prior %var2prior%(%pack_object%, %s_info_vec%)
 %$$
 $icode%size%           = %var2prior%.size()
 %$$
 $icode%const_value%    = %var2prior%.const_value(%var_id%)
 %$$
-$icode%value_prior_id% = %var2prior%.%value_prior_id(%var_id%)
+$icode%value_prior_id% = %var2prior%.value_prior_id(%var_id%)
 %$$
-$icode%dage_prior_id%  = %var2prior%.%dage_prior_id(%var_id%)
+$icode%dage_prior_id%  = %var2prior%.dage_prior_id(%var_id%)
 %$$
-$icode%dtime_prior_id% = %var2prior%.%dtime_prior_id(%var_id%)
+$icode%dtime_prior_id% = %var2prior%.dtime_prior_id(%var_id%)
 %$$
-$icode%dage_var_id%    = %var2prior%.%dage_next(%var_id%)
+$icode%dage_var_id%    = %var2prior%.dage_next(%var_id%)
 %$$
-$icode%dtime_var_id%   = %var2prior%.%dtime_next(%var_id%)
+$icode%dtime_var_id%   = %var2prior%.dtime_next(%var_id%)
 %$$
-$icode%fixed_effect%   = %var2prior%.%fixed_effect(%var_id%)
+$icode%fixed_effect%   = %var2prior%.fixed_effect(%var_id%)
 %$$
 
 $head Prototype$$

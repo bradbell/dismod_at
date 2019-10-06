@@ -67,6 +67,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-06$$
+The $cref/bound_random/option_table/Random Only/bound_random/$$ documentation
+was improved by stating that it
+does not apply to random effects that have equal lower and upper limits.
+
 $head 10-02$$
 Add discussion at the top of the
 $cref user_zero_sum_random.py$$ example.
