@@ -502,36 +502,20 @@ $end
 	assert( var2prior_.size() == n_var );
 	d_vector pack_vec( n_var );
 
-	// fixed_lower
-	d_vector fixed_lower_noscale(n_fixed_), fixed_lower(n_fixed_);
-	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id    = var2prior_.value_prior_id(i);
-		double const_value = var2prior_.const_value(i);
-		if( ! std::isnan(const_value ) )
-			pack_vec[i] = const_value;
-		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = -inf;
-		else
-			pack_vec[i] = prior_table_[prior_id].lower;
-	}
-	unpack_fixed(pack_object_, pack_vec, fixed_lower_noscale);
+	// fixed_lower, fixed_upper
+	double bound_random = inf; // does not matter for fixed effects
+	d_vector var_lower(n_var), var_upper(n_var);
+	get_var_limits(
+		var_lower, var_upper, bound_random, var2prior_, prior_table_
+	);
+	d_vector fixed_lower_noscale(n_fixed_), fixed_upper_noscale(n_fixed_);
+	unpack_fixed(pack_object_, var_lower, fixed_lower_noscale);
+	unpack_fixed(pack_object_, var_upper, fixed_upper_noscale);
+	//
+	d_vector fixed_lower(n_fixed_), fixed_upper(n_fixed_);
 	scale_fixed_effect(fixed_lower_noscale, fixed_lower);
-
-	// fixed_upper
-	d_vector fixed_upper_noscale(n_fixed_), fixed_upper(n_fixed_);
-	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id    = var2prior_.value_prior_id(i);
-		double const_value = var2prior_.const_value(i);
-		if( ! std::isnan(const_value) )
-			pack_vec[i] = const_value;
-		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = +inf;
-		else
-			pack_vec[i] = prior_table_[prior_id].upper;
-	}
-	unpack_fixed(pack_object_, pack_vec, fixed_upper_noscale);
 	scale_fixed_effect(fixed_upper_noscale, fixed_upper);
-
+	//
 	// fixed_mean
 	d_vector fixed_mean(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
