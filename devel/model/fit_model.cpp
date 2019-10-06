@@ -328,8 +328,6 @@ data_object_   ( data_object )
 # endif
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_
-	//
-	// random lower in prior
 	d_vector var_lower(n_var), var_upper(n_var);
 	get_var_limits(
 		var_lower, var_upper, bound_random, var2prior_, prior_table_
@@ -341,15 +339,8 @@ data_object_   ( data_object )
 	//
 	// -----------------------------------------------------------------------
 	// n_random_equal_
-	n_random_equal_ = 0;
-	for(size_t i = 0; i < n_random_; i++)
-	{	if( random_lower_[i] == random_upper_[i] )
-			++n_random_equal_;
-	}
-	//
-	assert( n_random_equal_ == number_random_const(
-		bound_random, pack_object, var2prior, prior_table
-	) );
+	remove_const remove_random(random_lower_, random_upper_);
+	n_random_equal_ = remove_random.n_const();
 	// ----------------------------------------------------------------------
 	// diff_prior_
 	assert( diff_prior_.size() == 0 );

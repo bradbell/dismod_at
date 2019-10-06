@@ -19,7 +19,7 @@ $$
 $section Remove and Replace Components of a Vector that are Constant$$
 
 $head Syntax$$
-$icode%remove_obj% = remove_const(%lower_bound%, %upper_bound%)
+$codei%remove_const %remove_obj%(%lower_bound%, %upper_bound%)
 %$$
 $icode%n_both% = remove_obj.both()
 %$$

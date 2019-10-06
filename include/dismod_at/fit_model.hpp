@@ -50,7 +50,6 @@ namespace dismod_at {
 		const CppAD::vector<double>&       scale_var_;
 		const CppAD::vector<prior_struct>& prior_table_;
 		const prior_model&                 prior_object_;
-		const remove_const                 remove_obj_;
 		//
 		// effectively const
 		data_model&                        data_object_;
