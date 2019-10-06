@@ -27,6 +27,11 @@ $icode%get_var_limits(
 	%prior_table%
 )%$$
 
+$head Prototype$$
+$srcfile%devel/utility/get_var_limits.cpp
+	%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%
+%$$
+
 $head lower_limit, upper_limit$$
 $icode lower_limit$$ ($icode upper_limit$$)
 is a vector with size zero or equal to the number of $cref model_variables$$.
@@ -45,10 +50,6 @@ $cref model_variables$$.
 $head prior_table$$
 This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
 
-$head Prototype$$
-$srcfile%devel/utility/get_var_limits.cpp
-	%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%
-%$$
 
 $end
 */

@@ -26,6 +26,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/adj_integrand.cpp
 	model/avg_integrand.cpp
 	model/avg_noise_effect.cpp
+	model/ran_con_rcv.cpp
 
 	utility/avgint_subset.cpp
 	utility/bilinear_interp.cpp
