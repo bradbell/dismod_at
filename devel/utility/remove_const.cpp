@@ -97,7 +97,7 @@ namespace dismod_at {
 	// END_CTOR
 	:
 	lower_bound_(lower_bound)     ,
-	upper_bound_(lower_bound)     ,
+	upper_bound_(upper_bound)     ,
 	n_both_( lower_bound.size() )
 	{	assert( lower_bound.size() == upper_bound.size() );
 		//

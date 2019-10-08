@@ -299,8 +299,9 @@ data_object_   ( data_object )
 	CppAD::vector<double> random_vec(n_random_);
 	unpack_random(pack_object, start_var, random_vec);
 	//
+	remove_const random_const( random_lower_, random_upper_);
 	CppAD::vector<double> cppad_mixed_random_vec =
-		random_dismod_at2cppad_mixed( random_vec );
+		random_const.remove( random_vec );
 	//
 	initialize(fixed_vec, cppad_mixed_random_vec);
 }
@@ -480,15 +481,10 @@ $end
 	std::string random_options = options;
 	//
 	// convert from dismod_at random effects to cppad_mixed random effects
-	d_vector cppad_mixed_random_lower = random_dismod_at2cppad_mixed(
-		random_lower_
-	);
-	d_vector cppad_mixed_random_upper = random_dismod_at2cppad_mixed(
-		random_upper_
-	);
-	d_vector cppad_mixed_random_in = random_dismod_at2cppad_mixed(
-		random_in
-	);
+	remove_const random_const(random_lower_, random_upper_);
+	d_vector cppad_mixed_random_lower = random_const.remove( random_lower_ );
+	d_vector cppad_mixed_random_upper = random_const.remove( random_upper_ );
+	d_vector cppad_mixed_random_in    = random_const.remove( random_in );
 	//
 	// optimize the fixed effects
 	d_vector fixed_opt = fixed_in;
@@ -771,9 +767,8 @@ $end
 	unpack_random(pack_object_, fit_var_value, random_opt);
 	//
 	// convert dismod_at random effects to cppad_mixed random effects
-	d_vector cppad_mixed_random_opt = random_dismod_at2cppad_mixed(
-		random_opt
-	);
+	remove_const random_const( random_lower_ , random_upper_ );
+	d_vector cppad_mixed_random_opt = random_const.remove( random_opt );
 	//
 	// information_rcv
 	CppAD::mixed::d_sparse_rcv information_rcv = information_mat(
@@ -872,15 +867,9 @@ $end
 	unpack_random(pack_object_, start_var_, random_in);
 	//
 	// convert from dismod_at random effects to cppad_mixed random effects
-	d_vector cppad_mixed_random_lower = random_dismod_at2cppad_mixed(
-		random_lower_
-	);
-	d_vector cppad_mixed_random_upper = random_dismod_at2cppad_mixed(
-		random_upper_
-	);
-	d_vector cppad_mixed_random_in = random_dismod_at2cppad_mixed(
-		random_in
-	);
+	d_vector cppad_mixed_random_lower = random_const.remove( random_lower_ );
+	d_vector cppad_mixed_random_upper = random_const.remove( random_upper_ );
+	d_vector cppad_mixed_random_in    = random_const.remove( random_in );
 	//
 	CppAD::vector<double> one_sample_random(n_random_),
 		cppad_mixed_one_sample_random(n_random_ - n_random_equal_);
