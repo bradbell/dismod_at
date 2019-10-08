@@ -118,22 +118,6 @@ namespace dismod_at {
 					fixed_out[j] = fixed_in[j];
 			}
 		}
-		// random_cppad_mixed2dismod_at (add compoents with equal limits)
-		template <class Float>
-		CppAD::vector<Float> random_cppad_mixed2dismod_at(
-			const CppAD::vector<Float>& cppad_mixed_vec )
-		{	assert( cppad_mixed_vec.size() == n_random_ - n_random_equal_ );
-			CppAD::vector<Float> result( n_random_ );
-			size_t k = 0;
-			for(size_t i = 0; i < n_random_; i++)
-			{	if( random_lower_[i] == random_upper_[i] )
-					result[i] = random_lower_[i];
-				else
-					result[i] = cppad_mixed_vec[k++];
-			}
-			assert( k == n_random_ - n_random_equal_ );
-			return result;
-		}
 		// -------------------------------------------------------------------
 		// virtual functions used by cppad_mixed base class
 		virtual a1_vector ran_likelihood(

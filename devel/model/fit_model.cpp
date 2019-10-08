@@ -522,7 +522,7 @@ $end
 			cppad_mixed_random_upper,
 			cppad_mixed_random_in
 		);
-		random_opt = random_cppad_mixed2dismod_at( cppad_mixed_random_opt );
+		random_opt = random_const.restore( cppad_mixed_random_opt );
 	}
 	else
 	{	assert( n_random_ == n_random_equal_ );
@@ -888,7 +888,7 @@ $end
 					cppad_mixed_random_in
 				);
 			}
-			one_sample_random = random_cppad_mixed2dismod_at(
+			one_sample_random = random_const.restore(
 				cppad_mixed_one_sample_random
 			);
 			//
@@ -918,9 +918,8 @@ fit_model::a1_vector fit_model::ran_likelihood(
 		return a1_vector(0);
 	//
 	// convert from cppad_mixed random effects to dismod_at random effects
-	a1_vector random_vec = random_cppad_mixed2dismod_at(
-		cppad_mixed_random_vec
-	);
+	remove_const random_const( random_lower_ , random_upper_ );
+	a1_vector random_vec = random_const.restore( cppad_mixed_random_vec );
 	//
 	// packed vector
 	a1_vector pack_vec( pack_object_.size() );
