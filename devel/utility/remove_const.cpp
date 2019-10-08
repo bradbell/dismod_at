@@ -21,21 +21,26 @@ namespace dismod_at {
 	upper_bound_(upper_bound)     ,
 	n_both_( lower_bound.size() )
 	{	assert( lower_bound.size() == upper_bound.size() );
+		both2var_index_.resize(n_both_);
 		//
-		// n_const_
-		n_const_ = 0;
+		// both2var_index_, var2both_index_
 		for(size_t i = 0; i < n_both_; ++i)
-			if( lower_bound[i] == upper_bound[i] )
-				++n_const_;
+		{	if( lower_bound[i] == upper_bound[i] )
+				both2var_index_[i] = n_both_;
+			else
+			{	both2var_index_[i] = var2both_index_.size();
+				var2both_index_.push_back(i);
+			}
+		}
 	}
 	size_t remove_const::n_both(void) const
 	{	return n_both_; }
 	//
 	size_t remove_const::n_const(void) const
-	{	return n_const_; }
+	{	return n_both_ - var2both_index_.size(); }
 	//
 	size_t remove_const::n_var(void) const
-	{	return n_both_ - n_const_; }
+	{	return var2both_index_.size(); }
 	//
 	const CppAD::vector<double>& remove_const::lower(void) const
 	{	return lower_bound_; }
