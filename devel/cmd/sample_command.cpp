@@ -16,6 +16,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/get_var_limits.hpp>
+# include <dismod_at/remove_const.hpp>
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -195,6 +197,19 @@ void sample_command(
 	double bound_random = std::numeric_limits<double>::infinity();
 	if( tmp_str != "" )
 		bound_random = std::atof( tmp_str.c_str() );
+	//
+	// random_const
+	size_t n_random = pack_object.random_size();
+	CppAD::mixed::d_vector var_lower(n_var), var_upper(n_var);
+	get_var_limits(
+		var_lower, var_upper, bound_random, var2prior, db_input.prior_table
+	);
+	CppAD::mixed::d_vector random_lower(n_random);
+	CppAD::mixed::d_vector random_upper(n_random);
+	unpack_random(pack_object, var_lower, random_lower);
+	unpack_random(pack_object, var_upper, random_upper);
+	remove_const random_const(random_lower, random_upper);
+	//
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
 	{
@@ -243,7 +258,7 @@ void sample_command(
 		// n_child
 		size_t n_child = pack_object.child_size();
 		//
-		// which components of variable vector are random effects
+		// is_random_effect
 		vector<bool> is_random_effect(n_var);
 		for(size_t var_id = 0; var_id < n_var; ++var_id)
 			is_random_effect[var_id] = false;
@@ -262,7 +277,6 @@ void sample_command(
 				}
 			}
 		}
-
 		// Vector used to replacement of the prior means:
 		// wor each variable it has a mean for value, dage and  dtime.
 		vector<double> prior_mean(n_var * 3);
@@ -364,6 +378,7 @@ void sample_command(
 				scale_var_value      ,
 				db_input.prior_table ,
 				prior_object         ,
+				random_const         ,
 				quasi_fixed          ,
 				zero_sum_random      ,
 				data_object
@@ -423,6 +438,7 @@ void sample_command(
 				scale_var_value      ,
 				db_input.prior_table ,
 				prior_object         ,
+				random_const         ,
 				quasi_fixed          ,
 				zero_sum_random      ,
 				data_object
@@ -498,6 +514,7 @@ void sample_command(
 		fit_var_value        ,
 		db_input.prior_table ,
 		prior_object         ,
+		random_const         ,
 		quasi_fixed          ,
 		zero_sum_random      ,
 		data_object

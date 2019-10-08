@@ -45,6 +45,7 @@ $codei%fit_model %fit_object%(
 	%prior_table%,
 	%data_object%,
 	%prior_object%,
+	%random_const%,
 	%quasi_fixed%,
 	%zero_sum_random%
 )
@@ -102,6 +103,10 @@ $head prior_object$$
 This object contains the model for the fixed negative log-likelihood;
 see $cref prior_model$$.
 
+$head remove_const$$
+This is a $cref remove_const$$ for removing the subset of the
+random effects vector that are constant.
+
 $head quasi_fixed$$
 If this argument is true,
 a quasi-Newton method is used when optimizing the fixed effects.
@@ -134,6 +139,7 @@ fit_model::fit_model(
 	const CppAD::vector<double>&          scale_var        ,
 	const CppAD::vector<prior_struct>&    prior_table      ,
 	const prior_model&                    prior_object     ,
+	const remove_const&                   random_const     ,
 	bool                                  quasi_fixed      ,
 	const CppAD::vector<bool>&            zero_sum_random  ,
 	data_model&                           data_object      )
@@ -168,6 +174,7 @@ start_var_     ( start_var   )                      ,
 scale_var_     ( scale_var   )                      ,
 prior_table_   ( prior_table )                      ,
 prior_object_  ( prior_object )                     ,
+random_const_  ( random_const )                     ,
 data_object_   ( data_object )
 {	assert( bound_random >= 0.0 );
 	double inf = std::numeric_limits<double>::infinity();
@@ -201,20 +208,10 @@ data_object_   ( data_object )
 	}
 # endif
 	// ----------------------------------------------------------------------
-	// random_lower_, random_upper_
-	d_vector var_lower(n_var), var_upper(n_var);
-	get_var_limits(
-		var_lower, var_upper, bound_random, var2prior_, prior_table_
-	);
-	random_lower_.resize(n_random_);
-	random_upper_.resize(n_random_);
-	unpack_random(pack_object_, var_lower, random_lower_);
-	unpack_random(pack_object_, var_upper, random_upper_);
-	//
-	// -----------------------------------------------------------------------
-	// n_random_equal_
-	remove_const remove_random(random_lower_, random_upper_);
-	n_random_equal_ = remove_random.n_const();
+	// random_lower_, random_upper_, n_random_equal_
+	random_lower_   = random_const_.lower();
+	random_upper_   = random_const_.upper();
+	n_random_equal_ = random_const_.n_const();
 	// ----------------------------------------------------------------------
 	// diff_prior_
 	assert( diff_prior_.size() == 0 );
@@ -299,9 +296,8 @@ data_object_   ( data_object )
 	CppAD::vector<double> random_vec(n_random_);
 	unpack_random(pack_object, start_var, random_vec);
 	//
-	remove_const random_const( random_lower_, random_upper_);
 	CppAD::vector<double> cppad_mixed_random_vec =
-		random_const.remove( random_vec );
+		random_const_.remove( random_vec );
 	//
 	initialize(fixed_vec, cppad_mixed_random_vec);
 }
@@ -481,10 +477,9 @@ $end
 	std::string random_options = options;
 	//
 	// convert from dismod_at random effects to cppad_mixed random effects
-	remove_const random_const(random_lower_, random_upper_);
-	d_vector cppad_mixed_random_lower = random_const.remove( random_lower_ );
-	d_vector cppad_mixed_random_upper = random_const.remove( random_upper_ );
-	d_vector cppad_mixed_random_in    = random_const.remove( random_in );
+	d_vector cppad_mixed_random_lower = random_const_.remove( random_lower_ );
+	d_vector cppad_mixed_random_upper = random_const_.remove( random_upper_ );
+	d_vector cppad_mixed_random_in    = random_const_.remove( random_in );
 	//
 	// optimize the fixed effects
 	d_vector fixed_opt = fixed_in;
@@ -522,7 +517,7 @@ $end
 			cppad_mixed_random_upper,
 			cppad_mixed_random_in
 		);
-		random_opt = random_const.restore( cppad_mixed_random_opt );
+		random_opt = random_const_.restore( cppad_mixed_random_opt );
 	}
 	else
 	{	assert( n_random_ == n_random_equal_ );
@@ -767,8 +762,7 @@ $end
 	unpack_random(pack_object_, fit_var_value, random_opt);
 	//
 	// convert dismod_at random effects to cppad_mixed random effects
-	remove_const random_const( random_lower_ , random_upper_ );
-	d_vector cppad_mixed_random_opt = random_const.remove( random_opt );
+	d_vector cppad_mixed_random_opt = random_const_.remove( random_opt );
 	//
 	// information_rcv
 	CppAD::mixed::d_sparse_rcv information_rcv = information_mat(
@@ -867,9 +861,9 @@ $end
 	unpack_random(pack_object_, start_var_, random_in);
 	//
 	// convert from dismod_at random effects to cppad_mixed random effects
-	d_vector cppad_mixed_random_lower = random_const.remove( random_lower_ );
-	d_vector cppad_mixed_random_upper = random_const.remove( random_upper_ );
-	d_vector cppad_mixed_random_in    = random_const.remove( random_in );
+	d_vector cppad_mixed_random_lower = random_const_.remove( random_lower_ );
+	d_vector cppad_mixed_random_upper = random_const_.remove( random_upper_ );
+	d_vector cppad_mixed_random_in    = random_const_.remove( random_in );
 	//
 	CppAD::vector<double> one_sample_random(n_random_),
 		cppad_mixed_one_sample_random(n_random_ - n_random_equal_);
@@ -888,7 +882,7 @@ $end
 					cppad_mixed_random_in
 				);
 			}
-			one_sample_random = random_const.restore(
+			one_sample_random = random_const_.restore(
 				cppad_mixed_one_sample_random
 			);
 			//
@@ -918,8 +912,7 @@ fit_model::a1_vector fit_model::ran_likelihood(
 		return a1_vector(0);
 	//
 	// convert from cppad_mixed random effects to dismod_at random effects
-	remove_const random_const( random_lower_ , random_upper_ );
-	a1_vector random_vec = random_const.restore( cppad_mixed_random_vec );
+	a1_vector random_vec = random_const_.restore( cppad_mixed_random_vec );
 	//
 	// packed vector
 	a1_vector pack_vec( pack_object_.size() );

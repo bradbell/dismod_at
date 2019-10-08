@@ -16,6 +16,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/create_table.hpp>
+# include <dismod_at/get_var_limits.hpp>
+# include <dismod_at/remove_const.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -273,6 +275,19 @@ void fit_command(
 		size_t found     = option_map["zero_sum_random"].find( rate_name );
 		zero_sum_random[rate_id] = found < option_size;
 	}
+	// ----------------------------------------------------------------------
+	// random_const
+	size_t n_var    = pack_object.size();
+	size_t n_random = pack_object.random_size();
+	CppAD::mixed::d_vector var_lower(n_var), var_upper(n_var);
+	get_var_limits(
+		var_lower, var_upper, bound_random, var2prior, db_input.prior_table
+	);
+	CppAD::mixed::d_vector random_lower(n_random);
+	CppAD::mixed::d_vector random_upper(n_random);
+	unpack_random(pack_object, var_lower, random_lower);
+	unpack_random(pack_object, var_upper, random_upper);
+	remove_const random_const(random_lower, random_upper);
 	// ------------------ run fit_model ------------------------------------
 	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
@@ -293,6 +308,7 @@ void fit_command(
 		scale_var            ,
 		db_input.prior_table ,
 		prior_object         ,
+		random_const         ,
 		quasi_fixed          ,
 		zero_sum_random      ,
 		data_object
@@ -307,7 +323,7 @@ void fit_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	table_name   = "fit_var";
-	size_t n_var = opt_value.size();
+	assert( n_var == opt_value.size() );
 	size_t n_col = 7;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_var);
 	vector<bool>   col_unique(n_col);

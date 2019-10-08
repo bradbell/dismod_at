@@ -31,6 +31,8 @@ $end
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/age_avg_grid.hpp>
+# include <dismod_at/get_var_limits.hpp>
+# include <dismod_at/remove_const.hpp>
 
 bool fit_model_xam(void)
 {	bool   ok = true;
@@ -298,6 +300,21 @@ bool fit_model_xam(void)
 	dismod_at::prior_model prior_object(
 	pack_object, var2prior, age_table, time_table, prior_table, density_table
 	);
+	//
+	// random_const
+	double bound_random = std::numeric_limits<double>::infinity();
+	size_t n_var        = pack_object.size();
+	size_t n_random     = pack_object.random_size();
+	CppAD::mixed::d_vector var_lower(n_var), var_upper(n_var);
+	get_var_limits(
+		var_lower, var_upper, bound_random, var2prior, prior_table
+	);
+	CppAD::mixed::d_vector random_lower(n_random);
+	CppAD::mixed::d_vector random_upper(n_random);
+	unpack_random(pack_object, var_lower, random_lower);
+	unpack_random(pack_object, var_upper, random_upper);
+	dismod_at::remove_const random_const(random_lower, random_upper);
+	//
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj;
 	vector<double> data_subset_cov_value;
@@ -313,7 +330,6 @@ bool fit_model_xam(void)
 	//
 	// data_model
 	double ode_step_size = 20.;
-	double bound_random = std::numeric_limits<double>::infinity();
 	bool        fit_simulated_data = false;
 	std::string meas_noise_effect = "add_std_scale_all";
 	std::string rate_case       = "iota_pos_rho_pos";
@@ -394,6 +410,7 @@ bool fit_model_xam(void)
 		scale_var,
 		prior_table,
 		prior_object,
+		random_const,
 		quasi_fixed,
 		zero_sum_random,
 		data_object
@@ -412,7 +429,7 @@ bool fit_model_xam(void)
 		for(size_t child_id = 0; child_id <= n_child; child_id++)
 		{	info = pack_object.rate_info(rate_id, child_id);
 			size_t offset = info.offset;
-			size_t n_var  = info.n_var;
+			n_var  = info.n_var;
 			for(size_t i = 0; i < n_var; i++)
 			{	double err = solution[offset + i] / meas_value - 1.0;
 				if( child_id != n_child )
