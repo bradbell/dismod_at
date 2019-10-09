@@ -68,13 +68,16 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-09$$
+Advance $cref dock_dismod_at.sh$$ to version 20181008.
+This include to changes under 10-08 below.
+
 $head 10-08$$
 $list number$$
-Fix a bug in the
-If $cref/zero_sum_random/option_table/zero_sum_random/$$ option.
-This bug showed itself when one switched the role of $icode iota$$ and $icode omega$$
-in the $cref user_const_value.py$$ example; see
-$code test/user/const_value.py$$.
+Fix a bug in the $cref/zero_sum_random/option_table/zero_sum_random/$$ option.
+This bug caused $cref user_const_value.py$$ to fail  when one switched
+the role of $icode iota$$ and $icode omega$$;
+see $code test/user/const_value.py$$.
 $lnext
 Advance to cppad_mixed-20191008.
 This adds a check on the zero sum random constraint that would have
