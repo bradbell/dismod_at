@@ -69,8 +69,12 @@ $childtable%
 %$$
 
 $head 10-09$$
-Advance $cref dock_dismod_at.sh$$ to version 20181008.
-This include to changes under 10-08 below.
+Advance $cref dock_dismod_at.sh$$ to version 20181008, which
+includes to changes under 10-08 below.
+This requires running
+$codei%
+	./dock_dismod_at.sh image dismod_at
+%$$
 
 $head 10-08$$
 $list number$$
@@ -134,6 +138,11 @@ $lnext
 The version of ubuntu in
 $cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
 was changed from 18.04 to 19.10.
+This requires running
+$codei%
+	./dock_dismod_at.sh image base
+	./dock_dismod_at.sh image dismod_at
+%$$
 This fixed a warning during the running of
 $cref/install_cppad.sh/install_unix/Special Requirements/install_cppad.sh/$$;
 see
