@@ -69,11 +69,17 @@ $childtable%
 %$$
 
 $head 10-08$$
+$list number$$
 Fix a bug in the
 If $cref/zero_sum_random/option_table/zero_sum_random/$$ option.
 This bug showed itself when one switched the role of $icode iota$$ and $icode omega$$
 in the $cref user_const_value.py$$ example; see
 $code test/user/const_value.py$$.
+$lnext
+Advance to cppad_mixed-20191008.
+This adds a check on the zero sum random constraint that would have
+detected the bug mentioned in the previous item.
+$lend
 
 $head 10-06$$
 The $cref/bound_random/option_table/Random Only/bound_random/$$ documentation
