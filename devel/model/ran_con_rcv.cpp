@@ -121,8 +121,12 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	if( A_nr == 0 )
 		return A_rcv;
 	//
+	// Mapping from index in random vector to index in subset that
+	// is not constant
+	const CppAD::vector<size_t>& var_index = random_const.both2var_index();
+	//
 	// number of columns in random constraint equations
-	size_t A_nc = n_random;
+	size_t A_nc = random_const.n_var();
 	//
 	// number of non-zeros in random constraint equations
 	size_t A_nnz = A_nr * n_child;
@@ -168,6 +172,13 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 					//
 					// corresponding random effect index
 					size_t random_index = var_id2random[var_id];
+					assert( random_index < n_random );
+					//
+					// corresponding index in vector with constant
+					// random effects removed
+					random_index = var_index[ random_index ];
+					//
+					// check that lower and upper limits were not equal
 					assert( random_index < n_random );
 					//
 					// set this entry for grid point k, child j, rate rate_id

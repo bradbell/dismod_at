@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2019$$
 $spell
+	const
 	ubuntu
 	dage
 	dtime
@@ -66,6 +67,13 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 10-08$$
+Fix a bug in the
+If $cref/zero_sum_random/option_table/zero_sum_random/$$ option.
+This bug showed itself when one switched the role of $icode iota$$ and $icode omega$$
+in the $cref user_const_value.py$$ example; see
+$code test/user/const_value.py$$.
 
 $head 10-06$$
 The $cref/bound_random/option_table/Random Only/bound_random/$$ documentation

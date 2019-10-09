@@ -47,4 +47,10 @@ namespace dismod_at {
 	//
 	const CppAD::vector<double>& remove_const::upper(void) const
 	{	return upper_bound_; }
+	//
+	const CppAD::vector<size_t>& remove_const::var2both_index(void) const
+	{	return var2both_index_; }
+	//
+	const CppAD::vector<size_t>& remove_const::both2var_index(void) const
+	{	return both2var_index_; }
 }

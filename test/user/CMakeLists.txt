@@ -16,6 +16,7 @@ FOREACH(user_case
 	bound_random
 	censor_1
 	censor_2
+	const_value
 	csv2db
 	db2csv
 	fit_gamma
