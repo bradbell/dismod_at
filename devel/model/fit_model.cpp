@@ -160,7 +160,7 @@ $end
 	// bool_sparsity
 	false,
 	// A_rcv
-	ran_con_rcv(bound_random, zero_sum_random, pack_object)
+	ran_con_rcv(bound_random, zero_sum_random, pack_object, random_const)
 ),
 db_            (db)                                 ,
 simulate_index_( simulate_index )                   ,

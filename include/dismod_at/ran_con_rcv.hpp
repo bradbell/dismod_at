@@ -13,14 +13,15 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <cppad/utility/vector.hpp>
 # include <cppad/mixed/typedef.hpp>
-# include "pack_info.hpp"
-# include "random_effect.hpp"
+# include <dismod_at/pack_info.hpp>
+# include <dismod_at/remove_const.hpp>
 
 namespace dismod_at {
 	CppAD::mixed::d_sparse_rcv ran_con_rcv(
 		double                        bound_random    ,
 		const CppAD::vector<bool>&    zero_sum_random ,
-		const dismod_at::pack_info&   pack_object
+		const pack_info&              pack_object     ,
+		const remove_const&           random_const
 	);
 }
 

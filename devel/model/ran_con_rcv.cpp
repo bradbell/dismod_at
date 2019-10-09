@@ -57,13 +57,15 @@ $end
 
 # include <dismod_at/ran_con_rcv.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/random_effect.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // BEGIN_RAN_CON_RCV
 CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	double                        bound_random    ,
 	const CppAD::vector<bool>&    zero_sum_random ,
-	const dismod_at::pack_info&   pack_object     )
+	const dismod_at::pack_info&   pack_object     ,
+	const remove_const&           random_const    )
 // END_RAN_CON_RCV
 {	// number of fixed plus random effects
 	size_t n_var = pack_object.size();
