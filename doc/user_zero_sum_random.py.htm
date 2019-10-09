@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting With Sum of Random Effect Constrained to Zero</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting With Sum of Random Effect Constrained to Zero">
-<meta name="keywords" id="keywords" content=" fitting with sum random effect constrained to zero discussion source code ">
+<meta name="keywords" id="keywords" content=" fitting with sum random effect constrained to zero purpose problem parameters data simulation nodes model variables source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,15 +63,72 @@ A:active { color : purple }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting With Sum of Random Effect Constrained to Zero</big></big></b></center>
 
-<br><a href="user_zero_sum_random.py.htm#Discussion" target="_top">Discussion</a>
+<br><a href="user_zero_sum_random.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_zero_sum_random.py.htm#Problem Parameters" target="_top">Problem&nbsp;Parameters</a>
+<br><a href="user_zero_sum_random.py.htm#Data Simulation" target="_top">Data&nbsp;Simulation</a>
+<br><a href="user_zero_sum_random.py.htm#Nodes" target="_top">Nodes</a>
+<br><a href="user_zero_sum_random.py.htm#Model Variables" target="_top">Model&nbsp;Variables</a>
 <br><a href="user_zero_sum_random.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
-<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 This example demonstrates using
 The <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
 
-to improve the estimation of the fixed effects.
+to improve the speed and estimation of the fixed effects.
+
+<br>
+<br>
+<b><big><a name="Problem Parameters" id="Problem Parameters">Problem Parameters</a></big></b>
+
+<pre><tt>
+number_data       <font color="#990000">=</font> <font color="#993399">50</font>
+iota_parent       <font color="#990000">=</font> <font color="#993399">1e-2</font>
+rho_parent        <font color="#990000">=</font> <font color="#993399">2e-2</font>
+rate_effect_child <font color="#990000">=</font> <font color="#993399">0.2</font><font color="#990000">;</font>
+measurement_cv    <font color="#990000">=</font> <font color="#993399">0.01</font></tt></pre>
+<br>
+<b><big><a name="Data Simulation" id="Data Simulation">Data Simulation</a></big></b>
+<br>
+The true rate for the parent region <code><font color="blue">north_america</font></code>,
+used for simulating data, are
+
+<code><i><font color="black"><span style='white-space: nowrap'>iota_parent</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>rho_parent</span></font></i></code>
+ problem parameters.
+Rate effect used for <code><font color="blue">canada</font></code> is 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_effect_child</span></font></i></code>
+
+and for <code><font color="blue">united_states</font></code> 
+<code><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>rate_effect_child</span></font></i></code>
+.
+Note that these rates are constant in age and time.
+
+<br>
+<br>
+<b><big><a name="Nodes" id="Nodes">Nodes</a></big></b>
+<br>
+There are just three nodes for this example,
+The parent node, <code><font color="blue">north_america</font></code>, and the two child nodes
+<code><font color="blue">united_states</font></code> and <code><font color="blue">canada</font></code>.
+
+<br>
+<br>
+<b><big><a name="Model Variables" id="Model Variables">Model Variables</a></big></b>
+<br>
+The non-zero <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ for this example are
+<a href="rate_table.htm#rate_name.iota" target="_top"><span style='white-space: nowrap'>iota</span></a>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+.
+Both the parent and child rates use a grid with one point in age
+and two points in time. Thus there are six model variables for each rate,
+two for the parent rates and four for the child rate effects.
+The resulting rates will be constant
+in age and constant in time except between the two time grid points
+where it is linear.
 
 <br>
 <br>
@@ -79,11 +136,13 @@ to improve the estimation of the fixed effects.
 
 <pre><tt>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
-number_data   <font color="#990000">=</font> <font color="#993399">20</font>
-iota_true     <font color="#990000">=</font> <font color="#993399">1e-2</font>
-rho_true      <font color="#990000">=</font> <font color="#993399">2e-2</font>
-incidence_cv  <font color="#990000">=</font> <font color="#993399">0.05</font>
-remission_cv  <font color="#990000">=</font> <font color="#993399">0.05</font>
+<i><font color="#9A1900"># begin problem parameters</font></i>
+number_data       <font color="#990000">=</font> <font color="#993399">50</font>
+iota_parent       <font color="#990000">=</font> <font color="#993399">1e-2</font>
+rho_parent        <font color="#990000">=</font> <font color="#993399">2e-2</font>
+rate_effect_child <font color="#990000">=</font> <font color="#993399">0.2</font><font color="#990000">;</font>
+measurement_cv    <font color="#990000">=</font> <font color="#993399">0.01</font>
+<i><font color="#9A1900"># end problem parameters</font></i>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
@@ -166,14 +225,19 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
           <font color="#FF0000">'age_upper'</font><font color="#990000">:</font>    <font color="#993399">50.0</font><font color="#990000">,</font>
      <font color="#990000">}</font>
      <b><font color="#0000FF">for</font></b> data_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font>number_data<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">4</font> <font color="#990000">==</font> <font color="#993399">0</font> <b><font color="#0000FF">or</font></b> data_id <font color="#990000">%</font> <font color="#993399">4</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">3</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
+               row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'north_america'</font>
+               row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'na_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
+               effect_true       <font color="#990000">=</font> <font color="#993399">0.0</font>
+          <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">3</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">:</font>
                row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'united_states'</font>
                row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'us_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
-          <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+               effect_true       <font color="#990000">=</font> <font color="#990000">-</font> rate_effect_child
+          <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">3</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">:</font>
                row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'canada'</font>
                row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'ca_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
-          <i><font color="#9A1900">#</font></i>
-          <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">4</font> <font color="#990000">==</font> <font color="#993399">0</font> <b><font color="#0000FF">or</font></b> data_id <font color="#990000">%</font> <font color="#993399">4</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">:</font>
+               effect_true       <font color="#990000">=</font> <font color="#990000">+</font> rate_effect_child
+          <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
                row<font color="#990000">[</font><font color="#FF0000">'time_lower'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1990.0</font>
                row<font color="#990000">[</font><font color="#FF0000">'time_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1990.0</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
@@ -181,14 +245,16 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
                row<font color="#990000">[</font><font color="#FF0000">'time_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">2010.0</font>
           <i><font color="#9A1900">#</font></i>
           <b><font color="#0000FF">if</font></b> data_id <font color="#990000">&lt;</font> number_data <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">:</font>
+               iota_true         <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>effect_true<font color="#990000">)</font> <font color="#990000">*</font> iota_parent
                row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'Sincidence'</font>
-               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> iota_true <font color="#990000">*</font> incidence_cv
-               noise     <font color="#990000">=</font> iota_true <font color="#990000">*</font> random<font color="#990000">.</font><b><font color="#000000">gauss</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">,</font> incidence_cv<font color="#990000">)</font>
+               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> iota_true <font color="#990000">*</font> measurement_cv
+               noise             <font color="#990000">=</font> iota_true <font color="#990000">*</font> random<font color="#990000">.</font><b><font color="#000000">gauss</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">,</font> measurement_cv<font color="#990000">)</font>
                row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> iota_true <font color="#990000">+</font> noise
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+               rho_true          <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>effect_true<font color="#990000">)</font> <font color="#990000">*</font> rho_parent
                row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'remission'</font>
-               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> rho_true <font color="#990000">*</font> incidence_cv
-               noise     <font color="#990000">=</font> rho_true <font color="#990000">*</font> random<font color="#990000">.</font><b><font color="#000000">gauss</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">,</font> incidence_cv<font color="#990000">)</font>
+               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> rho_true <font color="#990000">*</font> measurement_cv
+               noise             <font color="#990000">=</font> rho_true <font color="#990000">*</font> random<font color="#990000">.</font><b><font color="#000000">gauss</font></b><font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">,</font> measurement_cv<font color="#990000">)</font>
                row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> rho_true <font color="#990000">+</font> noise
           <i><font color="#9A1900">#</font></i>
           data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
@@ -255,7 +321,7 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'first-order'</font>   <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>           <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>             <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-10'</font>         <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-12'</font>         <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_random'</font><font color="#990000">,</font> <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'second-order'</font>  <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_random'</font><font color="#990000">,</font>    <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>           <font color="#990000">},</font>
@@ -336,21 +402,29 @@ ok           <font color="#990000">=</font> True
      <i><font color="#9A1900">#</font></i>
      <b><font color="#0000FF">if</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'north_america'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> rate_name <font color="#990000">==</font> <font color="#FF0000">'iota'</font> <font color="#990000">:</font>
-               err <font color="#990000">=</font> value <font color="#990000">/</font> iota_true <font color="#990000">-</font> <font color="#993399">1.0</font>
+               err <font color="#990000">=</font> value <font color="#990000">/</font> iota_parent <font color="#990000">-</font> <font color="#993399">1.0</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               err <font color="#990000">=</font> value <font color="#990000">/</font> rho_true <font color="#990000">-</font> <font color="#993399">1.0</font>
-          ok <font color="#990000">=</font> ok <b><font color="#0000FF">and</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">0.1</font>
+               err <font color="#990000">=</font> value <font color="#990000">/</font> rho_parent <font color="#990000">-</font> <font color="#993399">1.0</font>
+     <b><font color="#0000FF">elif</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'canada'</font> <font color="#990000">:</font>
+          err <font color="#990000">=</font> value <font color="#990000">/</font> rate_effect_child  <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'united_states'</font>
+          err <font color="#990000">=</font> <font color="#990000">-</font> value <font color="#990000">/</font> rate_effect_child  <font color="#990000">-</font> <font color="#993399">1.0</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.1</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'node_name, err='</font><font color="#990000">,</font> node_name<font color="#990000">,</font> err<font color="#990000">)</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'python_seed = '</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
+          <b><font color="#0000FF">assert</font></b> False
+     <b><font color="#0000FF">if</font></b> node_name <font color="#990000">!=</font> <font color="#FF0000">'north_america'</font> <font color="#990000">:</font>
           sum_random<font color="#990000">[</font>rate_name<font color="#990000">][</font>time_id<font color="#990000">]</font> <font color="#990000">+=</font> value
           count_random <font color="#990000">+=</font> <font color="#993399">1</font>
 <b><font color="#0000FF">assert</font></b> count_random <font color="#990000">==</font> <font color="#993399">8</font>
 <b><font color="#0000FF">for</font></b> rate <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'iota'</font><font color="#990000">,</font> <font color="#FF0000">'rho'</font> <font color="#990000">]</font> <font color="#990000">:</font>
      <b><font color="#0000FF">for</font></b> time_id <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">,</font> <font color="#993399">1</font> <font color="#990000">]</font> <font color="#990000">:</font>
-          ok <font color="#990000">=</font> ok <b><font color="#0000FF">and</font></b>  <b><font color="#000000">abs</font></b><font color="#990000">(</font> sum_random<font color="#990000">[</font>rate<font color="#990000">][</font>time_id<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-9</font>
+          <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> sum_random<font color="#990000">[</font>rate<font color="#990000">][</font>time_id<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1e-9</font> <font color="#990000">:</font>
+               <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'rate, sum random = '</font><font color="#990000">,</font> rate<font color="#990000">,</font> sum_random<font color="#990000">[</font>rate<font color="#990000">][</font>time_id<font color="#990000">]</font> <font color="#990000">)</font>
+               <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'python_seed = '</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
+               <b><font color="#0000FF">assert</font></b> False
 <i><font color="#9A1900">#</font></i>
-<b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> ok <font color="#990000">:</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'python_seed = '</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b> ok
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'zero_sum_random: OK'</font><font color="#990000">)</font></tt></pre>
 

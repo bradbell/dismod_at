@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 10-01 09-30 09-24 09-23 09-22 09-21 09-20 09-19 09-17 09-15 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 10-09 10-08 10-06 10-02 10-01 09-30 09-24 09-23 09-22 09-21 09-20 09-19 09-17 09-15 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,6 +60,10 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
 <option>Contents</option>
+<option>10-09</option>
+<option>10-08</option>
+<option>10-06</option>
+<option>10-02</option>
 <option>10-01</option>
 <option>09-30</option>
 <option>09-24</option>
@@ -139,6 +143,54 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="10-09" id="10-09">10-09</a></big></b>
+<br>
+Advance <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+ to version 20181008.
+This include to changes under 10-08 below.
+
+<br>
+<br>
+<b><big><a name="10-08" id="10-08">10-08</a></big></b>
+
+<ol type="1"><li>
+Fix a bug in the <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+ option.
+This bug caused <a href="user_const_value.py.htm" target="_top"><span style='white-space: nowrap'>user_const_value.py</span></a>
+ to fail  when one switched
+the role of 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>omega</span></font></i></code>
+;
+see <code><font color="blue">test/user/const_value.py</font></code>.
+</li><li>
+
+Advance to cppad_mixed-20191008.
+This adds a check on the zero sum random constraint that would have
+detected the bug mentioned in the previous item.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="10-06" id="10-06">10-06</a></big></b>
+<br>
+The <a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+ documentation
+was improved by stating that it
+does not apply to random effects that have equal lower and upper limits.
+
+<br>
+<br>
+<b><big><a name="10-02" id="10-02">10-02</a></big></b>
+<br>
+Add discussion at the top of the
+<a href="user_zero_sum_random.py.htm" target="_top"><span style='white-space: nowrap'>user_zero_sum_random.py</span></a>
+ example.
+
+<br>
+<br>
 <b><big><a name="10-01" id="10-01">10-01</a></big></b>
 
 <ol type="1"><li>
