@@ -203,6 +203,59 @@ n_child_        ( child_id2node_id.size() )
 	// initialize offset
 	size_t offset = 0;
 
+	// resize rate_info_
+	rate_info_.resize( number_rate_enum );
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+		rate_info_[rate_id].resize(n_child_ + 1);
+
+	// -----------------------------------------------------------------------
+	// random effects
+	// -----------------------------------------------------------------------
+
+	// rate_info_, n_random_
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	for(size_t j = 0;  j < n_child_; j++)
+		{	size_t smooth_id = rate_table[rate_id].child_smooth_id;
+			size_t child_nslist_id = rate_table[rate_id].child_nslist_id;
+			if( child_nslist_id != DISMOD_AT_NULL_SIZE_T )
+			{	// search for the smooth_id for this child
+				assert( smooth_id == DISMOD_AT_NULL_SIZE_T );
+				size_t child_node_id = child_id2node_id[j];
+				for(size_t i = 0; i < nslist_pair.size(); i++)
+				{	size_t nslist_id = nslist_pair[i].nslist_id;
+					size_t node_id   = nslist_pair[i].node_id;
+					bool   match     = nslist_id == child_nslist_id;
+					match           &= node_id   == child_node_id;
+					if( match )
+						smooth_id = nslist_pair[i].smooth_id;
+				}
+				// following should have been checked previously
+				assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+			}
+			rate_info_[rate_id][j].smooth_id = smooth_id;
+			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
+			{	rate_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
+				rate_info_[rate_id][j].offset = DISMOD_AT_NULL_SIZE_T;
+			}
+			else
+			{	size_t n_age  = smooth_table[smooth_id].n_age;
+				size_t n_time = smooth_table[smooth_id].n_time;
+				size_t n_var  = n_age * n_time;
+				rate_info_[rate_id][j].n_var     = n_var;
+				rate_info_[rate_id][j].offset    = offset;
+				offset += n_var;
+				// check_rate_table should have checked this assumption
+				assert( rate_id != pini_enum || n_age == 1 );
+			}
+		}
+	}
+	n_random_ = offset;
+
+
+	// -----------------------------------------------------------------------
+	// fixed effects
+	// -----------------------------------------------------------------------
+
 	// mulstd_offset_
 	mulstd_offset_.resize(3 * n_smooth_);
 	for(size_t smooth_id = 0; smooth_id < n_smooth_; smooth_id++)
@@ -226,53 +279,24 @@ n_child_        ( child_id2node_id.size() )
 	}
 
 	// rate_info_ and n_random_
-	n_random_ = 0;
-	rate_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	rate_info_[rate_id].resize(n_child_ + 1);
-		for(size_t j = 0;  j <= n_child_; j++)
-		{	size_t smooth_id;
-			if(j == n_child_ )
-				smooth_id = rate_table[rate_id].parent_smooth_id;
-			else
-			{	smooth_id = rate_table[rate_id].child_smooth_id;
-				size_t child_nslist_id = rate_table[rate_id].child_nslist_id;
-				if( child_nslist_id != DISMOD_AT_NULL_SIZE_T )
-				{	// search for the smooth_id for this child
-					assert( smooth_id == DISMOD_AT_NULL_SIZE_T );
-					size_t child_node_id = child_id2node_id[j];
-					for(size_t i = 0; i < nslist_pair.size(); i++)
-					{	size_t nslist_id = nslist_pair[i].nslist_id;
-						size_t node_id   = nslist_pair[i].node_id;
-						bool   match     = nslist_id == child_nslist_id;
-						match           &= node_id   == child_node_id;
-						if( match )
-							smooth_id = nslist_pair[i].smooth_id;
-					}
-					// following should have been checked previously
-					assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
-				}
-			}
-			rate_info_[rate_id][j].smooth_id = smooth_id;
-			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-			{	rate_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
-				rate_info_[rate_id][j].offset = DISMOD_AT_NULL_SIZE_T;
-			}
-			else
-			{	size_t n_age  = smooth_table[smooth_id].n_age;
-				size_t n_time = smooth_table[smooth_id].n_time;
-				size_t n_var  = n_age * n_time;
-				rate_info_[rate_id][j].n_var     = n_var;
-				rate_info_[rate_id][j].offset    = offset;
-				offset += n_var;
-				// check_rate_table should have checked this assumption
-				assert( rate_id != pini_enum || n_age == 1 );
-				//
-				if( j < n_child_ )
-				{	// these variables are random effects
-					n_random_ += n_var;
-				}
-			}
+	{
+		size_t smooth_id = rate_table[rate_id].parent_smooth_id;
+		rate_info_[rate_id][n_child_].smooth_id = smooth_id;
+		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
+		{	rate_info_[rate_id][n_child_].n_var  = DISMOD_AT_NULL_SIZE_T;
+			rate_info_[rate_id][n_child_].offset = DISMOD_AT_NULL_SIZE_T;
+		}
+		else
+		{	size_t n_age  = smooth_table[smooth_id].n_age;
+			size_t n_time = smooth_table[smooth_id].n_time;
+			size_t n_var  = n_age * n_time;
+			rate_info_[rate_id][n_child_].n_var     = n_var;
+			rate_info_[rate_id][n_child_].offset    = offset;
+			offset += n_var;
+			//
+			// check_rate_table should have checked this assumption
+			assert( rate_id != pini_enum || n_age == 1 );
 		}
 	}
 

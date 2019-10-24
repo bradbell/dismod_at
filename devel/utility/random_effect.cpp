@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -128,28 +128,11 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // random2var_id
 CppAD::vector<size_t> random2var_id(const pack_info& pack_object )
 {
-	// n_child
-	size_t n_child = pack_object.child_size();
-	CppAD::vector<size_t> result;
-	if( n_child == 0 )
-		return result;
-
-	// resize result
 	size_t n_random = pack_object.random_size();
-	result.resize( n_random );
+	CppAD::vector<size_t> result( n_random );
+	for(size_t random_index = 0; random_index < n_random; ++random_index)
+		result[random_index] = random_index;
 
-	size_t random_index = 0;
-	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
-		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
-		{	for(size_t j = 0; j < n_child; j++)
-			{	info = pack_object.rate_info(rate_id, j);
-				size_t pack_index = info.offset;
-				for(size_t k = 0; k < info.n_var; k++)
-					result[random_index++] = pack_index++;
-			}
-		}
-	}
 	return result;
 }
 // -------------------------------------------------------------------------
@@ -163,24 +146,10 @@ void unpack_random(
 	assert( random_vec.size() == pack_object.random_size() );
 	assert( pack_vec.size()   == pack_object.size() );
 	//
-	size_t n_child = pack_object.child_size();
+	size_t n_random = pack_object.random_size();
+	for(size_t random_index = 0; random_index < n_random; ++random_index)
+		random_vec[random_index] = pack_vec[random_index];
 
-	// empty vector case
-	if( n_child == 0 )
-		return;
-
-	size_t random_index = 0;
-	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
-		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
-		{	for(size_t j = 0; j < n_child; j++)
-			{	info = pack_object.rate_info(rate_id, j);
-				size_t pack_index = info.offset;
-				for(size_t k = 0; k < info.n_var; k++)
-					random_vec[random_index++] = pack_vec[pack_index++];
-			}
-		}
-	}
 	return;
 }
 // -------------------------------------------------------------------------
@@ -194,35 +163,21 @@ void pack_random(
 	assert( random_vec.size() == pack_object.random_size() );
 	assert( pack_vec.size()   == pack_object.size() );
 	//
-	size_t n_child = pack_object.child_size();
+	size_t n_random = pack_object.random_size();
+	for(size_t random_index = 0; random_index < n_random; ++random_index)
+			pack_vec[random_index] = random_vec[random_index];
 
-	// empty vector case
-	if( n_child == 0 )
-		return;
-
-	size_t random_index = 0;
-	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	pack_info::subvec_info info = pack_object.rate_info(rate_id, 0);
-		if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
-		{	for(size_t j = 0; j < n_child; j++)
-			{	info = pack_object.rate_info(rate_id, j);
-				size_t pack_index = info.offset;
-				for(size_t k = 0; k < info.n_var; k++)
-					pack_vec[pack_index++] = random_vec[random_index++];
-			}
-		}
-	}
 	return;
 }
 
 # define DISMOD_AT_INSTANTIATE_RANDOM_EFFECT(Float)           \
-	template void unpack_random(                       \
-	const pack_info&             pack_object  ,                 \
+	template void unpack_random(                              \
+	const pack_info&             pack_object  ,                \
 	const CppAD::vector<Float>&  pack_vec   ,                 \
 	CppAD::vector<Float>&        random_vec                   \
 	);                                                        \
-	template void pack_random(                         \
-	const pack_info&             pack_object  ,                 \
+	template void pack_random(                                \
+	const pack_info&             pack_object  ,               \
 	CppAD::vector<Float>&        pack_vec   ,                 \
 	const CppAD::vector<Float>&  random_vec                   \
 	);
