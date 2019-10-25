@@ -68,6 +68,13 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 10-24$$
+The order of the variables in the  $cref var_table$$ was changed
+so that the random effects come first.
+This is in preparation for adding more random effects.
+It also makes it easier to find specific variables in the var table and
+the  $cref/variable.csv/db2csv_command/variable.csv/$$ file.
+
 $head 10-09$$
 Advance $cref dock_dismod_at.sh$$ to version 20181008, which
 includes to changes under 10-08 below.
