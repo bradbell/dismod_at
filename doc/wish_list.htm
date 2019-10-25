@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list asymptotic statistics more random effects censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing meas_std command diagrams lagrange multipliers documentation real world example user examples starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list multi-threading asymptotic statistics more random effects covariate multipliers data partitions user examples meas_std lagrange censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world example starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -62,8 +62,14 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
+<br><a href="wish_list.htm#Multi-Threading" target="_top">Multi-Threading</a>
 <br><a href="wish_list.htm#Asymptotic Statistics" target="_top">Asymptotic&nbsp;Statistics</a>
 <br><a href="wish_list.htm#More Random Effects" target="_top">More&nbsp;Random&nbsp;Effects</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#More Random Effects.Covariate Multipliers" target="_top">Covariate&nbsp;Multipliers</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#More Random Effects.Data Partitions" target="_top">Data&nbsp;Partitions</a>
+<br><a href="wish_list.htm#User Examples" target="_top">User&nbsp;Examples</a>
+<br><a href="wish_list.htm#meas_std" target="_top">meas_std</a>
+<br><a href="wish_list.htm#Lagrange Multipliers" target="_top">Lagrange&nbsp;Multipliers</a>
 <br><a href="wish_list.htm#Censored Laplace" target="_top">Censored&nbsp;Laplace</a>
 <br><a href="wish_list.htm#create_database" target="_top">create_database</a>
 <br><a href="wish_list.htm#ODE Solution" target="_top">ODE&nbsp;Solution</a>
@@ -71,32 +77,105 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Large Excess Mortality" target="_top">Large&nbsp;Excess&nbsp;Mortality</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Conditionals" target="_top">Conditionals</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Checkpointing" target="_top">Checkpointing</a>
-<br><a href="wish_list.htm#meas_std" target="_top">meas_std</a>
 <br><a href="wish_list.htm#Command Diagrams" target="_top">Command&nbsp;Diagrams</a>
-<br><a href="wish_list.htm#Lagrange Multipliers" target="_top">Lagrange&nbsp;Multipliers</a>
-<br><a href="wish_list.htm#Documentation" target="_top">Documentation</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#Documentation.Real World Example" target="_top">Real&nbsp;World&nbsp;Example</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#Documentation.User Examples" target="_top">User&nbsp;Examples</a>
+<br><a href="wish_list.htm#Real World Example" target="_top">Real&nbsp;World&nbsp;Example</a>
 <br><a href="wish_list.htm#Random Starting Point" target="_top">Random&nbsp;Starting&nbsp;Point</a>
 <br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
+<b><big><a name="Multi-Threading" id="Multi-Threading">Multi-Threading</a></big></b>
+<br>
+On a shared-memory system,
+it should be possible to split the data into subsets
+and evaluate the corresponding likelihood terms
+using a different thread for each subset.
+The function, and derivative values, corresponding to
+each thread would then be summed to get the value corresponding
+to the entire likelihood.
+This should be done for the initialization
+as well as for the function and derivative evaluation during optimization.
+The execution time for problems with large amounts of data
+should be divided by a number close to the number of cores
+available on the system.
+
+<br>
+<br>
 <b><big><a name="Asymptotic Statistics" id="Asymptotic Statistics">Asymptotic Statistics</a></big></b>
 <br>
 The current version of the
 <a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
  statistics is very slow
 and is not being used.
-Perhaps we should use the method without including the constraint information
+Perhaps we should try this without including the constraint information
 and see how well that works.
 
 <br>
 <br>
 <b><big><a name="More Random Effects" id="More Random Effects">More Random Effects</a></big></b>
+
+
 <br>
-Perhaps each covariate multiplier in the
+<br>
+<big><a name="More Random Effects.Covariate Multipliers" id="More Random Effects.Covariate Multipliers">Covariate Multipliers</a></big>
+<br>
+It is possible that the inaccuracy in fitting covariate multipliers
+is leading to correlated residuals.
+Perhaps the covariate multipliers in the
 <a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
- should have an option to be a random effect.
+ should have an option to be
+fixed effects, random effects, or both.
+
+<br>
+<br>
+<big><a name="More Random Effects.Data Partitions" id="More Random Effects.Data Partitions">Data Partitions</a></big>
+<br>
+Perhaps it would be good to allows for partitions of the
+data into subsets.
+Each partition of the data would have a random effect that has a
+different value for each subset of the partition.
+This would model correlation of the noise in the data from
+the same subset.
+It would also allow for another level or random effects,
+where a child node gets divided into subsets
+(if we use the convention that a null subset does not have any random effect).
+
+<br>
+<br>
+<b><big><a name="User Examples" id="User Examples">User Examples</a></big></b>
+<br>
+The <a href="user.htm" target="_top"><span style='white-space: nowrap'>user</span></a>
+ examples below
+<a href="user.htm#Examples With Explanation" target="_top"><span style='white-space: nowrap'>examples&nbsp;with&nbsp;explanation</span></a>
+
+have a discussion at the top of each example.
+Add a discussion for the other the user examples.
+
+<br>
+<br>
+<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
+<br>
+Currently the data table
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+
+must be specified (except for uniform density).
+Perhaps we should allow for this standard deviation to be
+<code><font color="blue">null</font></code> in the case when the corresponding
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ must not be zero
+and the <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+
+would be used to determine the measurement accuracy.
+
+<br>
+<br>
+<b><big><a name="Lagrange Multipliers" id="Lagrange Multipliers">Lagrange Multipliers</a></big></b>
+<br>
+Change the Lagrange multipliers
+<a href="fit_var_table.htm#lagrange_dage" target="_top"><span style='white-space: nowrap'>lagrange_dage</span></a>
+ (dtime) in the
+fit_var table to be null when there is no corresponding age (time) different;
+i.e., at the maximum age (time).
+(Currently these Lagrange multipliers are zero.)
 
 <br>
 <br>
@@ -285,22 +364,6 @@ extended to include derivatives with respect to parameters; see
 
 <br>
 <br>
-<b><big><a name="meas_std" id="meas_std">meas_std</a></big></b>
-<br>
-Currently the data table
-<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
-
-must be specified (except for uniform density).
-Perhaps we should allow for this standard deviation to be
-<code><font color="blue">null</font></code> in the case when the corresponding
-<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- must not be zero
-and the <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
-
-would be used to determine the measurement accuracy.
-
-<br>
-<br>
 <b><big><a name="Command Diagrams" id="Command Diagrams">Command Diagrams</a></big></b>
 <br>
 It would be good to give a data flow diagram for each command
@@ -309,39 +372,14 @@ the information under the heading
 <a href="data_flow.htm#Input and Output by Command" target="_top"><span style='white-space: nowrap'>inputs&nbsp;and&nbsp;outputs&nbsp;by&nbsp;command</span></a>
 .
 
-<br>
-<br>
-<b><big><a name="Lagrange Multipliers" id="Lagrange Multipliers">Lagrange Multipliers</a></big></b>
-<br>
-Change the Lagrange multipliers
-<a href="fit_var_table.htm#lagrange_dage" target="_top"><span style='white-space: nowrap'>lagrange_dage</span></a>
- (dtime) in the
-fit_var table to be null when there is no corresponding age (time) different;
-i.e., at the maximum age (time).
-
 
 <br>
 <br>
-<b><big><a name="Documentation" id="Documentation">Documentation</a></big></b>
-
-
-<br>
-<br>
-<big><a name="Documentation.Real World Example" id="Documentation.Real World Example">Real World Example</a></big>
+<b><big><a name="Real World Example" id="Real World Example">Real World Example</a></big></b>
 <br>
 It would be good to include a real world example.
 Since this is an open source program, we would need a data set
 that could be made distributed freely without any restriction on its use.
-
-<br>
-<br>
-<big><a name="Documentation.User Examples" id="Documentation.User Examples">User Examples</a></big>
-<br>
-The <a href="user.htm" target="_top"><span style='white-space: nowrap'>user</span></a>
- examples before
-<a href="user_change_grid.py.htm" target="_top"><span style='white-space: nowrap'>user_change_grid.py</span></a>
- have a discussion at the top of each example.
-Add a discussion for the rest of the user examples.
 
 <br>
 <br>
