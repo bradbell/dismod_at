@@ -16,7 +16,7 @@
 #	dtime
 # $$
 #
-# $section Constraints on Differences in Age and Time$$
+# $section Fitting with Constraints on Differences in Age and Time$$
 #
 # $head Source Code$$
 # $srcfile%
@@ -51,26 +51,25 @@ os.chdir('build/example/user')
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
 	def fun_rate_child(a, t) :
-		return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+		return ('prior_gauss_zero',   'prior_gauss_zero',  'prior_gauss_zero')
 	def fun_rate_parent(a, t) :
 		return ('prior_value_parent', 'prior_diff_parent', 'prior_diff_parent')
 	# ----------------------------------------------------------------------
 	# age table
-	age_list    = [    0.0, 50.0,    100.0 ]
+	age_list    = [    0.0,   50.0,   100.0 ]
 	#
 	# time table
-	time_list   = [ 1995.0, 2005.0, 2015.0 ]
+	time_list   = [ 1995.0, 2005.0,  2015.0 ]
 	#
 	# integrand table
 	integrand_table = [
-		{ 'name':'prevalence' },
 		{ 'name':'Sincidence' },
 		{ 'name':'remission' },
 		{ 'name':'mtexcess' },
 		{ 'name':'mtother' }
 	]
 	#
-	# node table: world -> north_america
+	# node table: world         -> north_america
 	#             north_america -> (united_states, canada)
 	node_table = [
 		{ 'name':'world',         'parent':'' },

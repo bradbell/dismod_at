@@ -40,16 +40,69 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Multi-Threading$$
+On a shared-memory system,
+it should be possible to split the data into subsets
+and evaluate the corresponding likelihood terms
+using a different thread for each subset.
+The function, and derivative values, corresponding to
+each thread would then be summed to get the value corresponding
+to the entire likelihood.
+This should be done for the initialization
+as well as for the function and derivative evaluation during optimization.
+The execution time for problems with large amounts of data
+should be divided by a number close to the number of cores
+available on the system.
+
 $head Asymptotic Statistics$$
 The current version of the
 $cref/asymptotic/sample_command/method/asymptotic/$$ statistics is very slow
 and is not being used.
-Perhaps we should use the method without including the constraint information
+Perhaps we should try this without including the constraint information
 and see how well that works.
 
 $head More Random Effects$$
-Perhaps each covariate multiplier in the
-$cref mulcov_table$$ should have an option to be a random effect.
+
+$subhead Covariate Multipliers$$
+It is possible that the inaccuracy in fitting covariate multipliers
+is leading to correlated residuals.
+Perhaps the covariate multipliers in the
+$cref mulcov_table$$ should have an option to be
+fixed effects, random effects, or both.
+
+$subhead Data Partitions$$
+Perhaps it would be good to allows for partitions of the
+data into subsets.
+Each partition of the data would have a random effect that has a
+different value for each subset of the partition.
+This would model correlation of the noise in the data from
+the same subset.
+It would also allow for another level or random effects,
+where a child node gets divided into subsets
+(if we use the convention that a null subset does not have any random effect).
+
+$head User Examples$$
+The $cref user$$ examples below
+$cref/examples with explanation/user/Examples With Explanation/$$
+have a discussion at the top of each example.
+Add a discussion for the other the user examples.
+
+$head meas_std$$
+Currently the data table
+$cref/meas_std/data_table/meas_std/$$
+must be specified (except for uniform density).
+Perhaps we should allow for this standard deviation to be
+$code null$$ in the case when the corresponding
+$cref/meas_value/data_table/meas_value/$$ must not be zero
+and the $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$
+would be used to determine the measurement accuracy.
+
+$head Lagrange Multipliers$$
+Change the Lagrange multipliers
+$cref/lagrange_dage/fit_var_table/lagrange_dage/$$ (dtime) in the
+fit_var table to be null when there is no corresponding age (time) different;
+i.e., at the maximum age (time).
+(Currently these Lagrange multipliers are zero.)
 
 $head Censored Laplace$$
 The censored density formula for a Gaussian
@@ -154,40 +207,17 @@ $href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
 	%checkpoint_extended_ode
 %$$.
 
-$head meas_std$$
-Currently the data table
-$cref/meas_std/data_table/meas_std/$$
-must be specified (except for uniform density).
-Perhaps we should allow for this standard deviation to be
-$code null$$ in the case when the corresponding
-$cref/meas_value/data_table/meas_value/$$ must not be zero
-and the $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$
-would be used to determine the measurement accuracy.
-
 $head Command Diagrams$$
 It would be good to give a data flow diagram for each command
 that corresponds to its inputs and outputs; i.e., to diagram
 the information under the heading
 $cref/inputs and outputs by command/data_flow/Input and Output by Command/$$.
 
-$head Lagrange Multipliers$$
-Change the Lagrange multipliers
-$cref/lagrange_dage/fit_var_table/lagrange_dage/$$ (dtime) in the
-fit_var table to be null when there is no corresponding age (time) different;
-i.e., at the maximum age (time).
 
-
-$head Documentation$$
-
-$subhead Real World Example$$
+$head Real World Example$$
 It would be good to include a real world example.
 Since this is an open source program, we would need a data set
 that could be made distributed freely without any restriction on its use.
-
-$subhead User Examples$$
-The $cref user$$ examples before
-$cref user_change_grid.py$$ have a discussion at the top of each example.
-Add a discussion for the rest of the user examples.
 
 $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects
