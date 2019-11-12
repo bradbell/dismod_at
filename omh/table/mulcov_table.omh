@@ -101,25 +101,46 @@ in the $code covariate$$ table.
 This specifies the covariate column in the
 $cref data_table$$ that this multiplier acts on.
 
-$head smooth_id$$
+$head group_id$$
+This column has type $code integer$$ and is a
+$cref/group_id/subgroup_table/group_id/$$.
+There is a fixed effect covariate multiplier for all the data
+that has a $cref/subgroup_id/data_table/subgroup_id/$$ that
+corresponds to this group id.
+If this $icode group_id$$ is null,
+the fixed effect corresponds to all the data.
+
+$head group_smooth_id$$
 This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
-It specifies the smoothing uses as a prior for this covariate multiplier.
-(Note that all covariate multipliers are fixed effects.)
-
-$subhead null$$
-If the $icode smooth_id$$ is $code null$$, the corresponding
+It specifies the smoothing uses as a prior for
+the fixed effects corresponding to this covariate multiplier.
+If the $icode group_smooth_id$$ is $code null$$, this
 covariate multiplier is always zero and no $cref model_variables$$ are
 allocated for it.
-
-$subhead pini$$
-Consider the case where $icode mulcov_type$$ is $code rate_value$$
+Otherwise, if $icode mulcov_type$$ is $code rate_value$$
 and $icode rate_id$$ corresponds to
-$cref/rate_name/rate_table/rate_name/$$ $code pini$$.
-In this case, $icode smooth_id$$ should correspond to
-$cref/n_age/smooth_table/n_age/$$ equal to one because
-variation w.r.t. age will have no effect (for this covariate multiplier).
+$cref/rate_name/rate_table/rate_name/$$ $code pini$$,
+$icode group_smooth_id$$ must correspond to
+$cref/n_age/smooth_table/n_age/$$ equal to one
+(because age will have no effect for this covariate multiplier).
+
+$head subgroup_smooth_id$$
+This column has type $code integer$$ and its value is a
+$cref/smooth_id/smooth_grid_table/smooth_id/$$
+in the $code smooth_grid$$ table.
+It specifies the smoothing uses as a prior for
+the random effects corresponding to these covariate multipliers.
+If the $icode subgroup_smooth_id$$ is $code null$$, these
+covariate multipliers are always zero and no $cref model_variables$$ are
+allocated for them.
+Otherwise, if $icode mulcov_type$$ is $code rate_value$$
+and $icode rate_id$$ corresponds to
+$cref/rate_name/rate_table/rate_name/$$ $code pini$$,
+$icode group_smooth_id$$ must correspond to
+$cref/n_age/smooth_table/n_age/$$ equal to one
+(because age will have no effect for these covariate multipliers).
 
 $children%example/table/mulcov_table.py
 %$$

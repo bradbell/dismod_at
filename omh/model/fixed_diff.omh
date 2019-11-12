@@ -29,7 +29,7 @@ $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
 In addition, for each
 $cref/mulcov_id/mulcov_table/mulcov_id/$$
 there is a
-$cref/smooth_id/mulcov_table/smooth_id/$$.
+$cref/smooth_id/mulcov_table/group_smooth_id/$$.
 We use $latex k$$ to index all the rates and covariates multipliers
 and $latex K$$ for the number of rates plus the number
 of covariate multipliers.

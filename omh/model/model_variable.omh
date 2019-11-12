@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -131,7 +131,7 @@ $subhead Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
 there is a corresponding function (group of model variables) and its
 smoothing is specified by the corresponding
-$cref/smooth_id/mulcov_table/smooth_id/$$.
+$cref/smooth_id/mulcov_table/group_smooth_id/$$.
 For more clarification, see the discussion for
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$,
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$,

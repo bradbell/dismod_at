@@ -31,7 +31,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|head Parent Data Random Effects|head Parent Data|
-s|head Child Data Random Effects|head Child Data|
-s|/Parent Data Random Effects/|/Parent Data/|
-s|/Child Data Random Effects/|/Child Data/|
+s|/mulcov_table/smooth_id/|/mulcov_table/group_smooth_id/|

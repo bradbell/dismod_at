@@ -81,6 +81,18 @@ $cref/log_laplace/density_table/density_name/log_laplace/$$.
 The corresponding densities would not be differentiable at zero
 and the Laplace approximation would not make sense in this case.
 
+$head subgroup_id$$
+This column has type $code integer$$ and is the
+$cref/subgroup_id/subgroup_table/subgroup_id/$$
+that this data point corresponds to.
+There is $cref/group_id/subgroup_table/group_id/$$ corresponding
+to this $icode subgroup_id$$.
+If the corresponding
+$cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$ is not null,
+the $icode density_id$$ cannot correspond to
+$cref/laplace/density_table/density_name/laplace/$$ or
+$cref/log_laplace/density_table/density_name/log_laplace/$$.
+
 $head weight_id$$
 This column has type $code integer$$ and is the
 $cref/weight_id/weight_grid_table/weight_id/$$ that identifies

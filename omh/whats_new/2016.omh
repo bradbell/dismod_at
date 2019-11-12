@@ -565,8 +565,8 @@ $lend
 
 $head 05-01$$
 $list number$$
-Allow for a covariate multiplier $icode smooth_id$$ to be
-$cref/null/mulcov_table/smooth_id/null/$$.
+Allow for a covariate multiplier
+$cref/group_smooth_id/mulcov_table/group_smooth_id/$$ to be null.
 This enables on the include, or drop out, a multiplier by
 only changing one entry the $cref mulcov_table$$.
 $lnext
