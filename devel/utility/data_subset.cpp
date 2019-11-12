@@ -51,7 +51,7 @@ $cref/reference/covariate_table/reference/$$ value is subtracted
 from the value of the covariate in $icode data_table$$.
 $lnext
 All of the
-$cref/child data/data_table/node_id/Child Data Random Effects/$$
+$cref/child data/data_table/node_id/Child Data/$$
 is checked to make sure that it does not use a
 $cref/laplace/density_table/density_name/laplace/$$ or
 $cref/log_laplace/density_table/density_name/log_laplace/$$ density.

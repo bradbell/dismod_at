@@ -64,13 +64,13 @@ This column has type $code integer$$ and is the
 $cref/node_id/node_table/node_id/$$ that identifies
 the node for this measurement.
 
-$subhead Parent Data Random Effects$$
+$subhead Parent Data$$
 If the $icode node_id$$ is the
 $cref/parent_node_id/option_table/parent_node_id/$$,
 this data will be associated with the parent node and not
 have any random effects in its model.
 
-$subhead Child Data Random Effects$$
+$subhead Child Data$$
 If the $icode node_id$$ is a
 $cref/child/node_table/parent/Child Group/$$ of the parent node,
 or a $cref/descendant/node_table/parent/Descendant/$$ of a child,

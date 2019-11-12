@@ -23,22 +23,15 @@
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#   omh/install/unix.omh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#   s|@dsubhead@seigen\@d|@dsubhead@sinstall_eigen.sh@d|
-#   s|@dsubhead@sipopt\@d|@dsubhead@sinstall_ipopt.sh@d|
-#   s|@dsubhead@sCppAD\@d|@dsubhead@sinstall_cppad.sh@d|
-#   s|@dsubhead@scppad_mixed\@d|@dsubhead@sinstall_cppad_mixed.sh@d|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/Special Requirements/eigen/|/Special Requirements/install_eigen.sh/|
-s|/Special Requirements/ipopt/|/Special Requirements/install_ipopt.sh/|
-s|/Special Requirements/CppAD/|/Special Requirements/install_cppad.sh/|
-s|/Special Requirements/cppad_mixed/|/Special Requirements/install_cppad_mixed.sh/|
-#
-s%|bin/install_eigen.sh|install_unix|Special Requirements|eigen|%/install_eigen.sh/install_unix/Special Requirements/install_eigen.sh/%
+s|head Parent Data Random Effects|head Parent Data|
+s|head Child Data Random Effects|head Child Data|
+s|/Parent Data Random Effects/|/Parent Data/|
+s|/Child Data Random Effects/|/Child Data/|

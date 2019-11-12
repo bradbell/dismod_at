@@ -266,7 +266,7 @@ $lend
 $head 10-14$$
 $list number$$
 Specifications were added to forbid
-$cref/child data/data_table/node_id/Child Data Random Effects/$$
+$cref/child data/data_table/node_id/Child Data/$$
 from having
 $cref/laplace/density_table/density_name/laplace/$$ or
 $cref/log_laplace/density_table/density_name/log_laplace/$$ densities.
