@@ -151,11 +151,12 @@ $subhead J_k$$
 We use $latex J_k$$ to denote the set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values in the mulcov table
 such that the corresponding
-$cref/rate_id/mulcov_table/rate_id/$$ is equal to $latex k$$ and
-$cref/mulcov_type/mulcov_table/mulcov_type/$$ is $code rate_value$$.
-These are the covariates that affect the $th k$$ rate.
+$cref/rate_id/mulcov_table/rate_id/$$ is equal to $latex k$$,
+$cref/mulcov_type/mulcov_table/mulcov_type/$$ is $code rate_value$$
+and $cref/group_id/mulcov_table/group_id/$$ equal to $latex g_i$$.
+These covariates that affect the $th k$$ rate for this group of measurements.
 
-$subhead Rate Covariate Multiplier, alpha_jk$$
+$subhead Group Rate Covariate Multiplier, alpha_jk$$
 For each rate index $latex k$$,
 and each covariate index $latex j \in J_k$$,
 we use $latex \alpha_{j,k} (a, t)$$ to denote the
@@ -169,14 +170,26 @@ Note that these are
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariate multipliers
 specified by the mulcov table.
 
+$subhead Subgroup Rate Covariate Multiplier, Delta alpha_jk$$
+For each rate index $latex k$$,
+and each covariate index $latex j \in J_k$$,
+we use $latex \Delta \alpha_{j,k} (a, t)$$ to denote the
+piecewise linear function corresponding to the $latex s_i$$
+$cref/subgroup covariate multiplier
+	/model_variables
+	/Random Effects, u
+	/Subgroup Covariate Multipliers
+/$$.
+
 $subhead Adjusted Rate, r_ik$$
 We define the adjusted $th k$$ rate for the $th i$$ data point by
 $latex \[
 r_{i,k} (a , t)
 =
-\exp \left[
-	u_{i,k} (a, t) + \sum_{j \in J(k)} x_{i,j} \alpha_{j,k} (a, t)
-\right]
+\exp \left \{
+	u_{i,k} (a, t) + \sum_{j \in J(k)}
+		x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
+\right \}
 q_k ( a, t )
 \] $$
 If $latex n_i$$ is the parent node,

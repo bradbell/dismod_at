@@ -154,7 +154,7 @@
 # $cref/alpha
 #	/avg_integrand
 #	/Rate Functions
-#	/Rate Covariate Multiplier, alpha_jk
+#	/Group Rate Covariate Multiplier, alpha_jk
 # /$$.
 # We note that both average income and random effects vary between the nodes.
 # When fitting with $icode n1$$ as the parent,

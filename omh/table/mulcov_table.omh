@@ -41,7 +41,7 @@ adjusts a rate in the average integrand calculation;
 see $cref/alpha
 	/avg_integrand
 	/Rate Functions
-	/Rate Covariate Multiplier, alpha_jk
+	/Group Rate Covariate Multiplier, alpha_jk
 /$$.
 A separate solution of the
 $cref/ordinary differential equation
