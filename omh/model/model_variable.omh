@@ -96,9 +96,8 @@ $head Children$$
 The parent node is specified by
 $cref/parent_node_id/option_table/parent_node_id/$$ in the
 option table.
-The
-$cref/children/node_table/parent/Children/$$
-corresponding to this parent node.
+The $cref/children/node_table/parent/Children/$$
+corresponding to the parent node.
 (The children is a set of nodes not a set of variables.)
 
 $head Fixed Effects, theta$$
@@ -128,22 +127,18 @@ set as well as the corresponding age and time values;
 see the unadjusted rates
 $cref/q_k/avg_integrand/Rate Functions/Parent Rate, q_k/$$ in the average integrand model.
 
-$subhead Covariate Multipliers$$
+$subhead Group Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
-there is a corresponding function (set of model variables) and its
-smoothing is specified by the corresponding
+there is a corresponding function (set of model variables) specified by the
 $cref/group_smooth_id/mulcov_table/group_smooth_id/$$.
+These model variables are fixed effects.
 For more clarification, see the discussion for
-$cref/rate_value/mulcov_table/mulcov_type/rate_value/$$,
-$cref/meas_value/mulcov_table/mulcov_type/meas_value/$$,
-and
-$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
-covariate multipliers.
+$cref/mulcov_type/mulcov_table/mulcov_type/$$.
 
 $head Random Effects, u$$
 we use $latex u$$ to denote the vector of random effects; i.e.,
 all of the model variables except for the fixed effects.
-Currently, the only random effects are the child rate effects.
+There are two types of random effects:
 
 $subhead Child Rate Effects$$
 For each $cref/rate/rate_table/rate_name/$$
@@ -161,6 +156,18 @@ the rate for the child is $latex \exp( u_{i,k} )$$
 times the rate for the parent;
 see the adjusted rates
 $cref/r_ik/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$ in the average integrand model.
+
+$subhead Subgroup Multiplier Effects$$
+For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
+there is a corresponding smoothing specified by the
+$cref/subgroup_smooth_id/mulcov_table/group_smooth_id/$$.
+For each $cref/subgroup_id/subgroup_table/subgroup_id/$$
+that corresponds to the
+$cref/group_id/mulcov_table/group_id/$$ for this covariate multiplier,
+there is a corresponding function (set of model variables) specified by the
+$icode group_smooth_id$$.
+These model variables are random effects.
+
 
 $head Age and Time Variation$$
 

@@ -127,10 +127,10 @@
 #
 # $head Multipliers$$
 # There are two
-# $cref/covariate multipliers
+# $cref/group covariate multipliers
 #	/model_variables
 #	/Fixed Effects, theta
-#	/Covariate Multipliers
+#	/Group Covariate Multipliers
 # /$$.
 #
 # $subhead gamma$$

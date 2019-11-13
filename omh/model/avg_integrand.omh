@@ -152,10 +152,10 @@ For each rate index $latex k$$,
 and each covariate index $latex j \in J_k$$,
 we use $latex \alpha_{j,k} (a, t)$$ to denote the
 piecewise linear function corresponding to the
-$cref/covariate multiplier
+$cref/group covariate multiplier
 	/model_variables
 	/Fixed Effects, theta
-	/Covariate Multipliers
+	/Group Covariate Multipliers
 /$$.
 Note that these are
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariate multipliers
@@ -333,10 +333,10 @@ $subhead Multiplier, beta_j$$
 For each covariate index $latex j \in K_i$$,
 we use $latex \beta_j (a, t) $$ to denote the
 piecewise linear function corresponding to the
-$cref/covariate multiplier
+$cref/group covariate multiplier
 	/model_variables/
 	Fixed Effects, theta/
-	Covariate Multipliers
+	Group Covariate Multipliers
 /$$.
 Note that these are
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers

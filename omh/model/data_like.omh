@@ -100,10 +100,10 @@ $subhead gamma_j$$
 For each covariate index $latex j \in K_i$$ ,
 we use $latex \gamma_j (a, t) $$ to denote the
 piecewise linear function corresponding to the
-$cref/covariate multiplier
+$cref/group covariate multiplier
 	/model_variables/
 	Fixed Effects, theta/
-	Covariate Multipliers
+	Group Covariate Multipliers
 /$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
