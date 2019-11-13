@@ -124,7 +124,7 @@ is defined below.
 
 $subhead Child Rate Effect, u_ik$$
 If the node for this data point $latex n_i$$ is a
-$cref/child/node_table/parent/Child Group/$$ node,
+$cref/child/node_table/parent/Children/$$ node,
 or a descendant of a child node,
 $latex u_{i,k} (a, t)$$ is the piecewise linear random effect
 for the corresponding

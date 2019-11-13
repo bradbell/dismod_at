@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -69,8 +69,8 @@ This return value has prototype
 $codei%
 	size_t %n_child%
 %$$
-and is the size of the
-$cref/child group/node_table/parent/Child Group/$$ corresponding to the
+and is the size of the set of
+$cref/children/node_table/parent/Children/$$ corresponding to the
 for the specified parent node.
 
 $head child_id2node_id$$

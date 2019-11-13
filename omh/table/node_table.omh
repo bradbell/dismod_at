@@ -34,8 +34,8 @@ Note that this is a value for the primary key in this table, but
 the name of this column does not follow the
 $cref/foreign key/database/Foreign Key/parent/$$ naming convention.
 
-$subhead Child Group$$
-The child group for node $icode p$$ is the sent of $icode node_id$$ values
+$subhead Children$$
+The children for node $icode p$$ is the sent of $icode node_id$$ values
 such that the corresponding $icode parent$$ is equal to $icode p$$.
 
 $subhead Descendant$$

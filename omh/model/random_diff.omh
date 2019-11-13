@@ -28,8 +28,8 @@ $cref/rate_id/rate_table/rate_id/$$
 and $latex K$$ for the number of rates.
 
 $head C$$
-We use $latex C$$ to denote the size of the
-$cref/child group/node_table/parent/Child Group/$$
+We use $latex C$$ to denote the number of the
+$cref/children/node_table/parent/Children/$$
 corresponding to the
 $cref/parent_node_id/option_table/parent_node_id/$$.
 For $latex c = 0 , \ldots , C-1$$, we use

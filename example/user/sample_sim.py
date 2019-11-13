@@ -52,7 +52,7 @@
 # for mexico (canada).
 #
 # $subhead x$$
-# The model variables for this example are grouped into a single vector
+# The model variables for this example are combined into a single vector
 # $latex x \in \B{R}^3$$ where
 # $latex x_0 = \iota_n$$,
 # $latex x_1 = u_m$$, and

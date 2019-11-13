@@ -44,15 +44,16 @@ $cref/variable.csv/db2csv_command/variable.csv/$$ file
 corresponds to a single model variable.
 
 $head Function of Age and Time$$
-The model variables are divided into groups.
-One group is the standard deviation multipliers.
-Each of the other groups represents a single function of age and time.
+There are two types of model variables.
+The first type are the standard deviation multipliers for a smoothing.
+The second type represent functions of age and time by
+specifying their values at the grid points for a smoothing.
 
 $subhead Smoothing$$
-A group of model variables defines a function of age and time
-using a $cref/smooth_id/smooth_table/smooth_id/$$.
-Each $icode smooth_id$$ specifies a prior for the corresponding model
-variables as follows:
+Model variables that specify the value of a smoothing at its grid points
+define a function of age and time.
+The corresponding $cref/smooth_id/smooth_table/smooth_id/$$
+specifies a prior for the model variables as follows:
 $table
 $cref/n_age/smooth_table/n_age/$$ $cnext
 	number of age points used to represent the function
@@ -78,7 +79,7 @@ $rnext
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$  $cnext
 	difference prior for a variable (and next variable) in time direction
 $tend
-The number of model variable in one of these groups
+The number of model variable (number of grid points)
 is $icode%n_age%*%n_time%$$.
 The age and time difference priors specify the smoothing in a mathematical
 sense.
@@ -87,7 +88,7 @@ $subhead Interpolation$$
 Given values on a smoothing grid,
 $cref bilinear$$ interpolation
 is used to define a corresponding function of age and time.
-For example, given the group of model variables corresponding
+For example, given the model variables corresponding
 to $code omega$$, the function $latex \omega(a, t)$$ is the
 corresponding bilinear piecewise interpolant.
 
@@ -95,18 +96,18 @@ $head Children$$
 The parent node is specified by
 $cref/parent_node_id/option_table/parent_node_id/$$ in the
 option table.
-The children is the
-$cref/child group/node_table/parent/Child Group/$$
+The
+$cref/children/node_table/parent/Children/$$
 corresponding to this parent node.
-(The child group this is a group of nodes not a group of variables.)
+(The children is a set of nodes not a set of variables.)
 
 $head Fixed Effects, theta$$
 we use $latex \theta$$ to denote the vector of fixed effects; i.e.,
 all of the model variables except for the random effects.
-Below is a list of the fixed effects groups of model variables:
+Below is a list of the types fixed effects:
 
 $subhead Smoothing Standard Deviation Multipliers, lambda$$
-This is the only group that does not represent a function of age and time.
+These model variables do not represent a function of age and time.
 For each $latex i = $$ $cref/smooth_id/smooth_table/smooth_id/$$,
 there are three smoothing standard deviation multiplier variables:
 $latex \lambda_i^v$$, $latex \lambda_i^a$$ and $latex \lambda_i^t$$.
@@ -118,20 +119,20 @@ $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$.
 $subhead Parent Rates$$
 For each $cref/rate/rate_table/rate_name/$$
 ($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
-there is a function (group of model variables)
+there is a function (set of model variables)
 corresponding to the parent value for the rate.
 The smoothing for each of these functions is specified by the corresponding
 $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
 Recall that the smoothing determines the number of variables in the
-group as well as the corresponding age and time values;
+set as well as the corresponding age and time values;
 see the unadjusted rates
 $cref/q_k/avg_integrand/Rate Functions/Parent Rate, q_k/$$ in the average integrand model.
 
 $subhead Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
-there is a corresponding function (group of model variables) and its
+there is a corresponding function (set of model variables) and its
 smoothing is specified by the corresponding
-$cref/smooth_id/mulcov_table/group_smooth_id/$$.
+$cref/group_smooth_id/mulcov_table/group_smooth_id/$$.
 For more clarification, see the discussion for
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$,
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$,
@@ -148,7 +149,7 @@ $subhead Child Rate Effects$$
 For each $cref/rate/rate_table/rate_name/$$
 ($code pini$$, $code iota$$, $code rho$$, $code chi$$, and $code omega$$)
 there is a
-function (group of model variables)
+function (set of model variables)
 corresponding to the child random effects for the rate.
 The smoothing can be the same for all the children
 (see $cref/child_smooth_id/rate_table/child_smooth_id/$$)
@@ -175,9 +176,9 @@ Hence it has a smoothing with only one age point
 This holds for the parent initial prevalence function
 and each child initial prevalence effect function.
 
-$subhead Other Groups$$
-All the other model variable are members of a group that represents
-a function of age and time and has an arbitrary smoothing.
+$subhead Other Cases$$
+All the other model variable are members of a set that represents
+a function of age and time using a smoothing.
 
 
 $end

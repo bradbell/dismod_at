@@ -27,9 +27,8 @@ Each row of the $code smooth_grid$$ table specifies an
 age, time, value prior, age difference prior, and time difference prior
 for a single $cref/model_variable/model_variables/$$.
 (The difference priors represent the smoothing in a mathematical sense.)
-A group of rows with the same $icode smooth_id$$,
+A set of rows with the same $icode smooth_id$$,
 defines a statistical prior for a function of age and time.
-
 
 $head smooth_grid_id$$
 This column has type $code integer$$ and is the primary key for

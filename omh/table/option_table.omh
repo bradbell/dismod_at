@@ -105,9 +105,8 @@ this takes some extra time that it is not expected to be significant.
 $lend
 
 $subhead Children$$
-The child nodes are the elements of the
-$cref/child group/node_table/parent/Child Group/$$ corresponding to
-the specified $icode parent_node_id$$.
+The $cref/children/node_table/parent/Children/$$ corresponding to
+the parent node.
 
 $subhead Data Subset Table$$
 Rows in the $code data$$ table for which the

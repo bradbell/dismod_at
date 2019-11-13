@@ -72,7 +72,7 @@ have any random effects in its model.
 
 $subhead Child Data$$
 If the $icode node_id$$ is a
-$cref/child/node_table/parent/Child Group/$$ of the parent node,
+$cref/child/node_table/parent/Children/$$ of the parent node,
 or a $cref/descendant/node_table/parent/Descendant/$$ of a child,
 the data will be associated with the random effects for that child.
 In this case $icode density_id$$ cannot correspond to
