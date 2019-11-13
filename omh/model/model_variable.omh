@@ -157,7 +157,7 @@ times the rate for the parent;
 see the adjusted rates
 $cref/r_ik/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$ in the average integrand model.
 
-$subhead Subgroup Multiplier Effects$$
+$subhead Subgroup Covariate Multipliers$$
 For each $cref/mulcov_id/mulcov_table/mulcov_id/$$
 there is a corresponding smoothing specified by the
 $cref/subgroup_smooth_id/mulcov_table/group_smooth_id/$$.

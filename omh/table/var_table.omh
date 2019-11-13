@@ -78,51 +78,29 @@ $cref/random effect/model_variables/Random Effects, u/Child Rate Effects/$$.
 
 $subhead mulcov_rate_value$$
 This variable corresponds to a
-$cref/group covariate multiplier
+$cref/group
 	/model_variables
 	/Fixed Effects, theta
 	/Group Covariate Multipliers
 /$$
-or a
-$cref/subgroup multiplier effect
+or
+$cref/subgroup
 	/model_variables
 	/Random Effects, u
-	/Subgroup Multiplier Effects
+	/Subgroup Covariate Multipliers
 /$$
-that affects the rate for the corresponding
+covariate multiplier that affects the rate for the corresponding
 $icode age_id$$, $icode time_id$$,
 $icode rate_id$$, and $icode covariate_id$$.
 
 $subhead mulcov_meas_value$$
-This variable corresponds to a
-$cref/group covariate multiplier
-	/model_variables
-	/Fixed Effects, theta
-	/Group Covariate Multipliers
-/$$
-or a
-$cref/subgroup multiplier effect
-	/model_variables
-	/Random Effects, u
-	/Subgroup Multiplier Effects
-/$$
+This variable corresponds to a group or subgroup covariate multiplier
 that affects the measurement value for the corresponding
 $icode age_id$$, $icode time_id$$,
 $icode integrand_id$$, and $icode covariate_id$$.
 
 $subhead mulcov_meas_noise$$
-This variable corresponds to a
-$cref/group covariate multiplier
-	/model_variables
-	/Fixed Effects, theta
-	/Group Covariate Multipliers
-/$$
-or a
-$cref/subgroup multiplier effect
-	/model_variables
-	/Random Effects, u
-	/Subgroup Multiplier Effects
-/$$
+This variable corresponds to a group or subgroup covariate multiplier
 that affects the measurement value
 $icode age_id$$, $icode time_id$$,
 $icode integrand_id$$, and $icode covariate_id$$.
@@ -206,8 +184,7 @@ or $code mulcov_meas_noise$$,
 this is the $cref/subgroup_id/subgroup_table/subgroup_id/$$
 that this random effect variable applies to.
 Otherwise, this column is $code null$$.
-It cannot be the case that both $icode group_id$$ and $icode subgroup_id$$
-are not null.
+If $icode group_id$$ is not null, $icode subgroup_id$$ is null.
 
 $head Example$$
 See the $cref init_command.py$$ example and test.

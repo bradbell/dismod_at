@@ -31,4 +31,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/mulcov_table/smooth_id/|/mulcov_table/group_smooth_id/|
+s|Subgroup Multiplier Effect|Subgroup Covariate Multiplier|
+
