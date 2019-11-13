@@ -173,6 +173,22 @@ this is the $cref/mulcov_id/mulcov_table/mulcov_id/$$
 that this variable applies to.
 Otherwise, this column is $code null$$.
 
+$head group_id$$
+If $icode var_type$$ is
+$code mulcov_rate_value$$, $code mulcov_meas_value$$
+or $code mulcov_meas_noise$$,
+this is the $cref/group_id/mulcov_table/group_id/$$
+that this variable applies to.
+Otherwise, this column is $code null$$.
+
+$head subgroup_id$$
+If $icode var_type$$ is
+$code mulcov_rate_value$$, $code mulcov_meas_value$$
+or $code mulcov_meas_noise$$,
+this is the $cref/subgroup_id/subgroup_table/subgroup_id/$$
+that this variable applies to.
+Otherwise, this column is $code null$$.
+
 $head Example$$
 See the $cref init_command.py$$ example and test.
 
