@@ -150,7 +150,7 @@ $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers
 $cref/beta_j
 	/avg_integrand
 	/Measurement Value Covariates
-	/Multiplier, beta_j
+	/Subgroup Measurement Covariate Multiplier, Delta beta_j
 /$$
 and the
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers
