@@ -165,7 +165,7 @@ For each $cref/subgroup_id/subgroup_table/subgroup_id/$$
 that corresponds to the
 $cref/group_id/mulcov_table/group_id/$$ for this covariate multiplier,
 there is a corresponding function (set of model variables) specified by the
-$icode group_smooth_id$$.
+$cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$.
 These model variables are random effects.
 
 
