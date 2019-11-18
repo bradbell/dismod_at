@@ -23,14 +23,14 @@ $$
 $section The Random Effects Value Density Function$$
 
 $head Child Rate Effects$$
-In this section we define to prior for the value of the
+Under this heading we define to prior for the value of the
 $cref/child rate effects
 	/model_variables
 	/Random Effects, u
 	/Child Rate Effects
 /$$:
 
-$head j$$
+$subhead j$$
 For each of the
 $cref/children/node_table/parent/Children/$$ corresponding to the
 $cref/parent_node/option_table/parent_node_id/$$,
@@ -46,35 +46,35 @@ child, rate, age, and time index.
 We only include indices for which the value prior lower and upper
 limits are not equal.
 
-$head u_j$$
+$subhead u_j$$
 We use $latex u_j$$ for the random effect corresponding to
 the child, rate, age and time specified by $latex j$$.
 
-$head lambda_j$$
+$subhead lambda_j$$
 We use $latex \lambda_j$$ for the
 $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$ multiplier
 for the smoothing corresponding to
 the child and rate specified by $latex j$$.
 
-$head delta_j$$
+$subhead delta_j$$
 We use $latex \delta_j$$ to denote the standard deviation
 $cref/std/prior_table/std/$$ in the
 $cref/child value prior/rate_table/Child Value Priors/$$
 corresponding to $latex j$$.
 
-$head d_j$$
+$subhead d_j$$
 We use $latex d_j$$ to denote the combination of
 $cref/density_id/prior_table/density_id/$$,
 $cref/eta/prior_table/eta/$$,
 $cref/nu/prior_table/nu/$$,
 in the child value prior corresponding to $icode j$$.
 
-$head mu_j$$
+$subhead mu_j$$
 We use $latex \mu_j$$ for the
 $cref/mean/prior_table/mean/$$
 in the child value prior corresponding to $icode j$$.
 
-$head V_j^u$$
+$subhead V_j^c$$
 The child value density function for the
 random effects corresponding to index $icode j$$ is
 $latex \[
@@ -87,14 +87,95 @@ V_j^u ( u | \theta )
 where $latex D$$ is the
 $cref/log-density function/statistic/Log-Density Function, D/$$.
 
-$head V^u$$
-Let $latex J$$ be the number of child rate effects,
+$subhead V^c$$
+Let $latex J$$ be the number of child random effects,
 for which the prior lower and upper limit are not equal.
-The child value density as a function of the effects $latex u$$ is defined by
+The child value density as a function of the
+random effects $latex u$$ is defined by
 $latex \[
 V^c ( u | \theta )
 =
 \prod_{j=0}^{J-1} V_j^c ( u | \theta )
+\] $$
+
+$head Subgroup Covariate Multipliers$$
+Under this heading we define to prior for the value of the
+$cref/subgroup covariate multipliers
+	/model_variables
+	/Random Effects, u
+	/Subgroup Covariate Multipliers
+/$$:
+
+$subhead i$$
+For each
+$cref/mulcov_id/mulcov_table/mulcov_id/$$ there is a corresponding
+$cref/group_id/mulcov_table/group_id/$$.
+For each subgroup within this group (see $cref subgroup_table$$)
+there is a smoothing.
+Hence there is a
+number of age points $cref/n_age/smooth_table/n_age/$$ and
+number of time points $cref/n_time/smooth_table/n_time/$$.
+We use the single index $latex i$$ (instead of four indices)
+to denote a each possible combination of
+covariate multiplier, subgroup, age, and time index.
+We only include indices for which the value prior lower and upper
+limits are not equal.
+
+$subhead u_i$$
+We use $latex u_i$$ for the random effect corresponding to
+the covariate multiplier, subgroup, age and time specified by $latex i$$.
+
+$subhead lambda_i$$
+We use $latex \lambda_i$$ for the
+$cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$ multiplier
+for the smoothing corresponding to
+the covariate multiplier and subgroup specified by $latex i$$.
+
+$subhead delta_i$$
+We use $latex \delta_i$$ to denote the standard deviation
+$cref/std/prior_table/std/$$ in the
+subgroup value prior corresponding to $latex i$$.
+
+$subhead d_i$$
+We use $latex d_i$$ to denote the combination of
+$cref/density_id/prior_table/density_id/$$,
+$cref/eta/prior_table/eta/$$,
+$cref/nu/prior_table/nu/$$,
+in the subgroup value prior corresponding to $icode i$$.
+
+$subhead mu_i$$
+We use $latex \mu_i$$ for the
+$cref/mean/prior_table/mean/$$
+in the subgroup value prior corresponding to $icode i$$.
+
+$subhead V_i^s$$
+The subgroup value density function for the
+random effects corresponding to index $icode i$$ is
+$latex \[
+V_i^s ( u | \theta )
+=
+\exp \left[
+	D \left( u_i \W{,} \mu_i \W{,} \lambda_i \delta_i  \W{,} d_i \right)
+\right]
+\] $$
+where $latex D$$ is the
+$cref/log-density function/statistic/Log-Density Function, D/$$.
+
+$subhead V^s$$
+Let $latex I$$ be the number of subgroup random effects,
+for which the prior lower and upper limit are not equal.
+The subgroup value density as a function of the
+random effects $latex u$$ is defined by
+$latex \[
+V^s ( u | \theta )
+=
+\prod_{i=0}^{I-1} V_i^s ( u | \theta )
+\] $$
+
+$head V^u$$
+The total value prior for the random effects is
+$latex \[
+	V^u ( u | \theta ) = V^c ( u | \theta ) V^s ( u | \theta )
 \] $$
 
 $end

@@ -108,18 +108,9 @@ $codei%
 %$$
 
 $subhead Discussion$$
-Note that $icode std$$ is $icode delta_j$$ for the
+For example,  $icode std$$ is $icode delta_j$$ for the
 $cref/fixed/fixed_value/delta_j/$$ and
-$cref/random/random_value/delta_j/$$ value priors; see $latex \delta$$ in
-$cref/Value/statistic/Weighted Residual Function, R/Value/$$
-definition for $latex R( y, \mu , \delta , d )$$.
-Also note that $icode std$$ is $icode delta_j$$ for the
-$cref/fixed/fixed_diff/delta_i,j,k/$$ and
-$cref/random/random_diff/delta_i,j,k/$$ difference priors;
-see $latex \delta$$ in
-$cref/Difference/statistic/Weighted Residual Function, R/Difference/$$
-definition for $latex R( z, y, \mu , \delta , d )$$.
-
+$cref/child_rate_effects/random_value/Child Rate Effects/delta_j/$$.
 
 $head eta$$
 This column has type $code real$$ and only affects the prior
