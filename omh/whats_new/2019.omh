@@ -45,6 +45,7 @@ $spell
 	cmake
 	checkpointing
     Goto
+	nslist
 $$
 $navigate%
 	Up%Location%
@@ -67,6 +68,14 @@ $childtable%
 	omh/whats_new/2016.omh%
 	omh/whats_new/2015.omh
 %$$
+
+$head 11-17$$
+Fix some out of date statements and simplify the
+documentation for the value prior for the random effects
+$cref random_value$$.
+To be specific, the corrections are necessary because we can now have
+different smoothings for different child nodes; see the rate table
+$cref/child_nslist_id/rate_table/child_nslist_id/$$.
 
 $head 10-24$$
 The order of the variables in the  $cref var_table$$ was changed
