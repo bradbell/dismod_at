@@ -45,7 +45,7 @@ Each row of the
 $cref/variable.csv/db2csv_command/variable.csv/$$ file
 corresponds to a single variable.
 
-$head Prior For A Variable$$
+$head Prior for a Variable$$
 There are two types of variables:
 
 $subhead Standard Deviation Multipliers$$

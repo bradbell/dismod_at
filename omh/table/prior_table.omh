@@ -110,7 +110,7 @@ $codei%
 $subhead Discussion$$
 For example,  $icode std$$ is $icode delta_j$$ for the
 $cref/fixed/fixed_value/delta_j/$$ and
-$cref/child_rate_effects/random_value/Child Rate Effects/delta_j/$$.
+$cref/random/random_value/delta_j/$$.
 
 $head eta$$
 This column has type $code real$$ and only affects the prior
