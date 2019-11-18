@@ -31,8 +31,8 @@ $cref/child rate effects
 /$$:
 
 $head j$$
-For each child in the
-$cref/child group/node_table/parent/Child Group/$$ corresponding to the
+For each of the
+$cref/children/node_table/parent/Children/$$ corresponding to the
 $cref/parent_node/option_table/parent_node_id/$$,
 and each $cref/rate_id/rate_table/rate_id/$$ there is a corresponding
 $cref/child_smooth_id/rate_table/child_smooth_id/$$ or
