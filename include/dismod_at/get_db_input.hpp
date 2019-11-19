@@ -31,6 +31,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_weight_table.hpp"
 # include "get_nslist_table.hpp"
 # include "get_nslist_pair.hpp"
+# include "get_subgroup_table.hpp"
 
 namespace dismod_at {
 	// BEGIN STRUCT
@@ -56,6 +57,7 @@ namespace dismod_at {
 		CppAD::vector<weight_grid_struct> weight_grid_table;
 		CppAD::vector<std::string>        nslist_table;
 		CppAD::vector<nslist_pair_struct> nslist_pair_table;
+		CppAD::vector<subgroup_struct>    subgroup_table;
 	};
 	// END STRUCT
 	extern void get_db_input(

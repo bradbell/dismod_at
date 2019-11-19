@@ -128,6 +128,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	assert( db_input.option_table.size() == 0 );
 	assert( db_input.nslist_table.size() == 0 );
 	assert( db_input.nslist_pair_table.size() == 0 );
+	assert( db_input.subgroup_table.size() == 0 );
 	//
 	assert( db_input.prior_table.size() == 0 );
 	assert( db_input.smooth_grid_table.size() == 0 );
@@ -148,6 +149,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	db_input.option_table      = get_option_table(db);
 	db_input.nslist_table      = get_nslist_table(db);
 	db_input.nslist_pair_table = get_nslist_pair(db);
+	db_input.subgroup_table    = get_subgroup_table(db);
 	//
 	// get_prior_table uses density_table
 	// to check for errors

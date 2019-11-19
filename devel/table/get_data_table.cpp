@@ -110,6 +110,7 @@ $subhead data_struct$$
 This is a structure with the following fields
 $table
 Type  $cnext Field $cnext Description
+$rnext
 $code int$$ $cnext $code integrand_id$$ $cnext
 	The $cref/integrand_id/data_table/integrand_id/$$ for this measurement
 $rnext

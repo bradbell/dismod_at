@@ -83,6 +83,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/get_time_table.cpp
 	table/get_weight_grid.cpp
 	table/get_weight_table.cpp
+	table/get_subgroup_table.cpp
 	table/log_message.cpp
 	table/open_connection.cpp
 	table/put_table_row.cpp

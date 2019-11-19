@@ -1,0 +1,185 @@
+// $Id$
+/* --------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-19 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-------------------------------------------------------------------------- */
+/*
+$begin get_subgroup_table$$
+$spell
+	sqlite
+	struct
+	std
+	subgroup
+$$
+
+$section C++: Get the Subgroup Table Information$$
+
+$head Syntax$$
+$icode%subgroup_table% = get_subgroup_table(%db%)%$$
+
+$head Prototype$$
+$srcfile%devel/table/get_subgroup_table.cpp%
+	0%// BEGIN_GET_SUBGROUP_TABLE%// END_GET_SUBGROUP_TABLE%1
+%$$
+
+$head Purpose$$
+To read the $cref subgroup_table$$ and return it as a C++ data structure.
+
+$head db$$
+The argument $icode db$$ has prototype
+$codei%
+	sqlite3* %db%
+%$$
+and is an open connection to the database.
+
+$head subgroup_table$$
+For each $cref/subgroup_id/subgroup_table/subgroup_id/$$,
+$codei%
+	%subgroup_table%[%subgroup_id%]
+%$$
+is the information for the corresponding subgroup.
+
+$head subgroup_struct$$
+This is a structure with the following fields
+$table
+Type $cnext Field $cnext Description
+$rnext
+$code std::string$$ $cnext
+	$code subgroup_name$$ $cnext
+	The $cref/subgroup_name/subgroup_table/subgroup_name/$$ for this subgroup
+$rnext
+$code int$$ $cnext
+	$code group_id$$ $cnext
+	The $cref/group_id/subgroup_table/group_id/$$ for this subgroup
+$code std::string$$ $cnext
+	$code group_name$$ $cnext
+	The $cref/group_name/subgroup_table/group_name/$$ for this subgroup
+$tend
+
+$children%example/devel/table/get_subgroup_table_xam.cpp
+%$$
+$head Example$$
+The file $cref get_subgroup_table_xam.cpp$$ contains an example that uses
+this function.
+
+$end
+-----------------------------------------------------------------------------
+*/
+
+
+
+# include <cstring>
+# include <dismod_at/get_subgroup_table.hpp>
+# include <dismod_at/get_table_column.hpp>
+# include <dismod_at/check_table_id.hpp>
+# include <dismod_at/error_exit.hpp>
+# include <dismod_at/null_int.hpp>
+# include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/log_message.hpp>
+# include <cppad/utility/to_string.hpp>
+
+namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
+
+// BEGIN_GET_SUBGROUP_TABLE
+CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
+// END_GET_SUBGROUP_TABLE
+{	using std::string;
+	string msg, sql_cmd;
+
+	sql_cmd = "SELECT name FROM sqlite_master WHERE ";
+	sql_cmd += "type = 'table' AND name = 'subgroup'";
+	char sep = ',';
+	string sql_cmd_ret = exec_sql_cmd(db, sql_cmd, sep);
+	if( sql_cmd_ret.size() == 0 )
+	{
+# if 0
+		msg  = "database does not contain subgroup table.\n";
+		msg += "Using a temporary fix with of a table with one row where\n";
+		msg += "subgroup_name='world', group_id=0, group_name='world'";
+		log_message(db, &std::cout, "warning", msg);
+# endif
+		//
+		CppAD::vector<subgroup_struct> subgroup_table(1);
+		subgroup_table[0].subgroup_name = "world";
+		subgroup_table[0].group_id      = 0;
+		subgroup_table[0].group_name    = "world";
+		//
+		return subgroup_table;
+	}
+
+	string table_name  = "subgroup";
+	size_t n_subgroup = check_table_id(db, table_name);
+
+	string column_name =  "subgroup_name";
+	CppAD::vector<string>  subgroup_name;
+	get_table_column(db, table_name, column_name, subgroup_name);
+	assert( n_subgroup == subgroup_name.size() );
+
+	column_name = "group_id";
+	CppAD::vector<int> group_id;
+	get_table_column(db, table_name, column_name, group_id);
+	assert( n_subgroup == group_id.size() );
+
+	column_name =  "group_name";
+	CppAD::vector<string>  group_name;
+	get_table_column(db, table_name, column_name, group_name);
+	assert( n_subgroup == group_name.size() );
+
+	// set subgroup_table
+	CppAD::vector<subgroup_struct> subgroup_table(n_subgroup);
+	for(size_t subgroup_id = 0; subgroup_id < n_subgroup; ++subgroup_id)
+	{
+		subgroup_table[subgroup_id].subgroup_name = subgroup_name[subgroup_id];
+		subgroup_table[subgroup_id].group_id      = group_id[subgroup_id];
+		subgroup_table[subgroup_id].group_name    = group_name[subgroup_id];
+	}
+
+# ifndef NDEBUG
+	// check for errors
+	int previous_group_id      = subgroup_table[0].group_id;
+	string previous_group_name = subgroup_table[0].group_name;
+	if( previous_group_id != 0 )
+	{	msg = "first group_id is not zero";
+		size_t subgroup_id = 0;
+		error_exit(msg, table_name, subgroup_id);
+	}
+	for(size_t subgroup_id = 1; subgroup_id < n_subgroup; ++subgroup_id)
+	{	int    this_group_id   = subgroup_table[subgroup_id].group_id;
+		string this_group_name = subgroup_table[subgroup_id].group_name;
+		if( this_group_id < previous_group_id )
+		{	msg = "group_id < previous group_id";
+			error_exit(msg, table_name, this_group_id);
+		}
+		else if( this_group_id == previous_group_id )
+		{	if( this_group_name != previous_group_name )
+			{	msg = "group_id equals previous group_id but the group names ";
+				msg += "are different";
+				error_exit(msg, table_name, this_group_id);
+			}
+		}
+		else if( this_group_id == previous_group_id + 1 )
+		{	for(size_t i = 0; i < subgroup_id; ++i)
+			{	if( this_group_name == subgroup_table[i].group_name )
+				{	msg = "This group_name was used for a different group";
+					error_exit(msg, table_name, this_group_id);
+				}
+			}
+		}
+		else
+		{	msg = "group_id != (previous group_id) or (previous group_id+1)";
+			error_exit(msg, table_name, this_group_id);
+		}
+		previous_group_id   = this_group_id;
+		previous_group_name = this_group_name;
+	}
+# endif
+
+	return subgroup_table;
+}
+
+} // END DISMOD_AT_NAMESPACE

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-14 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -53,10 +53,10 @@ $rnext
 $code std::string$$ $cnext $code weight_name$$ $cnext
 	The $cref/weight_name/weight_table/weight_name/$$ for this weighting.
 $rnext
-$code std::string$$ $cnext $code n_age$$ $cnext
+$code int$$ $cnext $code n_age$$ $cnext
 	The $cref/n_age/weight_table/n_age/$$ for this weighting.
 $rnext
-$code std::string$$ $cnext $code n_time$$ $cnext
+$code int$$ $cnext $code n_time$$ $cnext
 	The $cref/n_time/weight_table/n_time/$$ for this weighting.
 $tend
 
