@@ -154,8 +154,8 @@ C_\theta
 		\; \B{d} \theta
 \] $$
 See $cref/V^theta/fixed_value/V^theta/$$,
-$cref/A^theta/fixed_diff/Age Differences/A^theta/$$, and
-$cref/T^theta/fixed_diff/Time Differences/T^theta/$$  for the definitions of
+$cref/A^theta/fixed_diff/A^theta/$$, and
+$cref/T^theta/fixed_diff/T^theta/$$  for the definitions of
 $latex V^\theta$$, $latex A^\theta$$ and $latex T^\theta$$.
 
 $head p(theta)$$

@@ -1,0 +1,83 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-19 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin smooth_dtime$$
+$spell
+	mulstd
+	dtime
+	ij
+	std
+	mu
+$$
+
+$section Prior Density Function for Smoothing Time Difference$$
+
+$head s$$
+We are given a smoothing, $latex s$$.
+
+$head I$$
+We use $latex I$$ to denote
+$cref/n_age/smooth_table/n_age/$$ the number of age points in the smoothing.
+
+$head J$$
+We use $latex J$$ to denote
+$cref/n_time/smooth_table/n_time/$$ the number of time points in the smoothing.
+
+$head lambda$$
+We use $latex \lambda$$ to denote the
+$cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$ multiplier
+for the smoothing.
+
+$head prior_ij$$
+For $latex i = 0, \ldots , I-1$$, $latex j = 0, \ldots , J-2$$
+we use $icode prior_ij$$ to denote the
+$cref/dtime_prior/smooth_grid_table/dtime_prior_id/$$
+corresponding to age index
+$latex i$$ and time index $latex j$$ in the smoothing.
+
+$head d_ij$$
+We use $latex d_{i,j}$$ to denote the
+$cref/density/prior_table/density_id/$$ in $icode prior_ij$$.
+In an abuse of notation, we include the value of
+$cref/eta/prior_table/eta/$$ and
+$cref/nu/prior_table/nu/$$ and in $latex d_{i,j}$$; see
+$cref/d/statistic/Notation/d/$$.
+
+$head delta_ij$$
+We use $latex \delta_{i,j}$$ to denote the
+$cref/std/prior_table/std/$$ in $icode prior_ij$$.
+
+$head mu_ij$$
+We use $latex \mu_{i,j}$$ to denote the
+$cref/mean/prior_table/mean/$$ in $icode prior_ij$$.
+
+$head v_ij$$
+We use $latex v_{i,j}$$ for the value of the model variable
+corresponding to the $th i$$ age point and $th j$$ time point
+in the smoothing.
+We include the index $latex J-1$$ in this notation, but not the
+other notation above.
+
+$head T^s$$
+The time difference density $latex T^s (s, v)$$ is defined by
+$latex \[
+\log T^s (s, v, theta)
+=
+\sum_{i=0}^{I-1} \sum_{j=0}^{J-2} D \left(
+	v_{i,j} \W{,} v_{i,j+1} \W{,}
+	\mu_{i,j} \W{,} \lambda \delta_{i,j}  \W{,} d_{i,j}
+\right)
+\] $$
+where $latex D$$ is the
+$cref/log-density function/statistic/Log-Density Function, D/$$.
+Note that we include $latex \theta$$ as an argument because
+$latex lambda$$ is a component of $latex \theta$$.
+
+$end

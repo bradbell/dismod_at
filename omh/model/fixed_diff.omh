@@ -18,6 +18,8 @@ $spell
 	dage
 	mu
 	std
+	smoothings
+	subvector
 $$
 
 $section Fixed Effects Differences Density Function$$
@@ -29,138 +31,26 @@ $cref/parent_smooth_id/rate_table/parent_smooth_id/$$.
 In addition, for each
 $cref/mulcov_id/mulcov_table/mulcov_id/$$
 there is a
-$cref/smooth_id/mulcov_table/group_smooth_id/$$.
-We use $latex k$$ to index all the rates and covariates multipliers
-and $latex K$$ for the number of rates plus the number
-of covariate multipliers.
+$cref/smooth_id/mulcov_table/group_smooth_id/$$
+and a corresponding set of model variables.
+We use $latex k$$ to index these smoothings $latex s_k$$ and
+$latex K$$ for the number of these smoothings.
+We use $latex \theta^k$$ to denote the subvector of the fixed effects
+$latex \theta$$ that corresponds to the $th k$$ smoothing.
 
-$head I(k)$$
-We use $latex I(k)$$ to denote the number of age points
-in the smoothing with index $latex k$$.
-
-$head J(k)$$
-We use $latex J(k)$$ to denote the number of time points
-in the smoothing with index $latex k$$.
-
-$head lambda_k$$
-We use
-$latex \lambda_k^a$$
-( $latex \lambda_k^t$$ )
-to denote the
-$cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
-( $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$ )
-for $icode smooth_id$$ corresponding to $latex k$$.
-
-$head theta_i,j,k$$
-Let $latex \theta_{i,j,k}$$ denote the fixed effect corresponding to
-rate or covariate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-Note that if $latex k$$ corresponds to a rate, it is the corresponding
-$cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
-that are fixed effects.
-
-$head mu_i,j,k$$
-We use
-$latex \mu_{i,j,k}^a$$
-( $latex \mu_{i,j,k}^t$$ )
-to denote the
-$cref/mean/prior_table/mean/$$ corresponding to the
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate or covariate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-
-$head delta_i,j,k$$
-We use
-$latex \delta_{i,j,k}^a$$
-( $latex \delta_{i,j,k}^t$$ )
-to denote the
-$cref/std/prior_table/std/$$ corresponding to the
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate or covariate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-
-$head d_i,j,k$$
-We use
-$latex d_{i,j,k}^a$$
-( $latex d_{i,j,k}^t )$$
-to denote the
-$cref/density_id/prior_table/density_id/$$ and
-$cref/eta/prior_table/eta/$$
-corresponding to
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate or covariate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-
-$head Age Differences$$
-For
-$latex k = 0 , \ldots , K - 1$$,
-$latex i = 0, \ldots , I(k)-2$$, and
-$latex j = 0, \ldots , J(k)-1$$,
-the age difference density for grid index $latex (i, j)$$
-and smoothing index $latex k$$ is
+$head A^theta$$
+The fixed effects age difference function is
 $latex \[
-A_{i,j,k}^\theta ( \theta )
-=
-\exp \left[ D \left(
-	\theta_{i+1,j,k} \W{,}
-	\theta_{i,j,k}   \W{,}
-	\mu_{i,j,k}^a    \W{,}
-	\lambda_k^a \delta_{i,j,k}^a \W{,}
-	d_{i,j,k}^a
-\right) \right]
+A^\theta ( \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , \theta^k , \theta )
 \] $$
-where $latex D$$ is the
-$cref/log-density function
-	/statistic
-	/Log-Density Function, D
-/$$
-for differences.
+see definition of $cref/A^s/smooth_dage/A^s/$$.
 
-$subhead A^theta$$
-The age difference density
-for the entire fixed effects vector $latex \theta$$ is defined by
+$head T^theta$$
+The fixed effects time difference function is
 $latex \[
-A^\theta ( \theta )
-=
-\prod_{k=0}^{K-1} \prod_{i=0}^{I(k)-2} \prod_{j=0}^{J(k)-1}
-	A_{i,j,k}^\theta ( \theta )
+T^\theta ( \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , \theta^k , \theta )
 \] $$
-
-$head Time Differences$$
-For
-$latex k = 0 , \ldots , K - 1$$,
-$latex i = 0, \ldots , I(k)-1$$, and
-$latex j = 0, \ldots , J(k)-2$$,
-the time difference density for grid index $latex (i, j)$$
-and smoothing index $latex k$$ is
-$latex \[
-T_{i,j,k}^\theta ( \theta )
-=
-\exp \left[ D \left(
-	\theta_{i,j+1,k} \W{,}
-	\theta_{i,j,k}   \W{,}
-	\mu_{i,j,k}^t    \W{,}
-	\lambda_k^t \delta_{i,j,k}^t \W{,}
-	d_{i,j,k}^t
-\right) \right]
-\] $$
-
-$subhead T^theta$$
-The time difference density
-for the entire fixed effects vector $latex \theta$$ is defined by
-$latex \[
-T^\theta ( \theta )
-=
-\prod_{k=0}^{K-1} \prod_{i=0}^{I(k)-1} \prod_{j=0}^{J(k)-2}
-	T_{i,j,k}^\theta ( \theta )
-\] $$
+see definition of $cref/T^s/smooth_dtime/T^s/$$.
 
 
 $end

@@ -10,175 +10,48 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin random_diff$$
 $spell
-	subvector
-	smoothings
+	covariate
+	covariates
 	mulcov
 	mulstd
 	dtime
 	dage
 	mu
 	std
+	smoothings
+	subvector
 $$
 
-$section Random Effects Difference Density Function$$
+$section Random Effects Differences Density Function$$
 
 $head k, K$$
-We use $latex k$$ to denote a
-$cref/rate_id/rate_table/rate_id/$$
-and $latex K$$ for the number of rates.
-
-$head C$$
-We use $latex C$$ to denote the number of the
-$cref/children/node_table/parent/Children/$$
+For each $cref/rate_id/rate_table/rate_id/$$
+and each $cref/child/option_table/parent_node_name/Children/$$
+there is a smoothing and corresponding set of model variables.
+In addition, for each
+$cref/mulcov_id/mulcov_table/mulcov_id/$$
+and each $cref/subgroup_id/subgroup_table/subgroup_id/$$
 corresponding to the
-$cref/parent_node_id/option_table/parent_node_id/$$.
-For $latex c = 0 , \ldots , C-1$$, we use
-$latex c$$ to denote the corresponding child.
+$cref/group_id/mulcov_table/group_id/$$ for this $icode mulcov_id$$,
+there is a smoothing and a corresponding set of model variables.
+We use $latex k$$ to index these smoothings $latex s_k$$ and
+$latex K$$ for the number of these smoothings.
+We use $latex u^k$$ to denote the subvector of the random effects
+$latex u$$ that corresponds to the $th k$$ smoothing.
 
-$head I(k)$$
-We use $latex I(k)$$ to denote the number of age points
-in the smoothing with index $latex k$$.
-
-$head J(k)$$
-We use $latex J(k)$$ to denote the number of time points
-in the smoothing with index $latex k$$.
-
-$head lambda_k$$
-We use
-$latex \lambda_k^a$$
-( $latex \lambda_k^t$$ )
-to denote the
-$cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
-( $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$ )
-for the
-$cref/child_smooth_id/rate_table/child_smooth_id/$$
-corresponding to
-$icode%rate_id% = %k%$$
-
-$head u_i,j,k,c$$
-Let $latex u_{i,j,k,c}$$ denote the random effect corresponding to
-child index $latex c$$,
-rate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-
-$head delta_i,j,k$$
-We use
-$latex \delta_{i,j,k}^a$$
-( $latex \delta_{i,j,k}^t$$ )
-to denote the
-$cref/std/prior_table/std/$$ corresponding to the
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-
-$head d_i,j,k$$
-We use
-$latex d_{i,j,k}^a$$
-( $latex d_{i,j,k}^t )$$
-to denote the
-$cref/density_id/prior_table/density_id/$$ and
-$cref/eta/prior_table/eta/$$
-corresponding to
-$cref/density_id/prior_table/density_id/$$ corresponding to
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-
-
-$head mu_i,j,k$$
-We use
-$latex \mu_{i,j,k}^a$$
-( $latex \mu_{i,j,k}^t$$ )
-to denote the
-$cref/mean/prior_table/mean/$$ corresponding to the
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-( $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ )
-rate index $latex k$$,
-age index $latex i$$ and
-time index $latex j$$.
-This mean must be zero; see the
-child smoothing restrictions.
-
-
-$head Age Differences$$
-For
-$latex c = 0 , \ldots , C - 1$$,
-$latex k = 0 , \ldots , K - 1$$,
-$latex i = 0, \ldots , I(k)-2$$, and
-$latex j = 0, \ldots , J(k)-1$$,
-the age difference density for grid index $latex (i, j)$$
-and rate index $latex k$$ and child index $latex c$$ is
+$head A^u$$
+The random effects age difference function is
 $latex \[
-A_{i,j,k,c}^u ( u | \theta )
-=
-\exp \left[ D \left(
-	u_{i+1,j,k,c}    \W{,}
-	u_{i,j,k,c}      \W{,}
-	\mu_{i,j,k}^a    \W{,}
-	\lambda_k^a \delta_{i,j,k}^a \W{,}
-	d_{i,j,k}^a
-\right) \right]
+A^u ( u | \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , u^k, \theta )
 \] $$
-where $latex D$$ is the
-$cref/difference log-density function
-	/statistic
-	/Log-Density Function, D
-/$$
-for differences.
-(As noted above,
-$latex \mu_{i,j,k}^a$$ must be zero,
-$latex { d_{i,j,k}^a }:name$$ must be $code gaussian$$,
-and $latex {d_{i,j,k}^a}:\eta$$ does not matter.)
+see definition of $cref/A^s/smooth_dage/A^s/$$.
 
-$subhead A^u$$
-The age difference density
-for the entire random effects vector $latex u$$ is defined by
+$head T^u$$
+The random effects time difference function is
 $latex \[
-A^u ( u | \theta )
-=
-\prod_{c=0}^{C-1} \prod_{k=0}^{K-1} \prod_{i=0}^{I(k)-2} \prod_{j=0}^{J(k)-1}
-	A_{i,j,k,c}^u ( u | \theta )
+T^u ( u | \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , u^k, \theta )
 \] $$
-
-$head Time Differences$$
-For
-$latex c = 0 , \ldots , C - 1$$,
-$latex k = 0 , \ldots , K - 1$$,
-$latex i = 0, \ldots , I(k)-1$$, and
-$latex j = 0, \ldots , J(k)-2$$,
-the time difference density for grid index $latex (i, j)$$
-and rate index $latex k$$ and child index $latex c$$ is
-$latex \[
-T_{i,j,k,c}^u ( u | \theta )
-=
-\exp \left[ D \left(
-	u_{i,j+1,k,c}    \W{,}
-	u_{i,j,k,c}      \W{,}
-	\mu_{i,j,k}^t    \W{,}
-	\lambda_k^t \delta_{i,j,k}^t \W{,}
-	d_{i,j,k}^t
-\right) \right]
-\] $$
-where $latex D$$ is the difference log density function.
-(As noted above,
-$latex \mu_{i,j,k}^t$$ must be zero,
-$latex { d_{i,j,k}^t }:name$$ must be $code gaussian$$,
-and $latex { d_{i,j,k}^t }:\eta$$ does not matter.)
-
-$subhead T^u$$
-The time difference density
-for the entire random effects vector $latex u$$ is defined by
-$latex \[
-T^u ( u | \theta )
-=
-\prod_{c=0}^{C-1} \prod_{k=0}^{K-1} \prod_{i=0}^{I(k)-1} \prod_{j=0}^{J(k)-2}
-	T_{i,j,k,c}^u ( u | \theta )
-\] $$
+see definition of $cref/T^s/smooth_dtime/T^s/$$.
 
 
 $end

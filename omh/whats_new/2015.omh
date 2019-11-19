@@ -383,8 +383,8 @@ did not make sense and does not seem to be reproducible
 $lnext
 One can now use log-Gaussian and log-Laplace for the
 prior on differences for fixed effects; see fixed effects
-$cref/age/fixed_diff/Age Differences/$$ and
-$cref/time/fixed_diff/Time Differences/$$ differences.
+$cref/age/fixed_diff/A^theta/$$ and
+$cref/time/fixed_diff/T^theta/$$ differences.
 This required a complete re-write (and simplification) of the
 documentation for the weighted residuals and log-densities.
 In addition, the actual definitions were changed for the differences;
