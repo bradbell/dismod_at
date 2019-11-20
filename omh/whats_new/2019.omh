@@ -70,9 +70,16 @@ $childtable%
 %$$
 
 $head 11-20$$
+$list number$$
 The automatic conversion of $code meas_std$$ to
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ has been removed;
 see $cref/04-08/whats_new_2019/04-08/$$ below.
+$lnext
+The $code old2new$$ command that added the
+$cref/mulcov_id/var_table/mulcov_id/$$ column to the var table was removed;
+see $cref/04-20/whats_new_2019/04-20/$$
+and $cref/04-23/whats_new_2019/04-23/$$ below.
+$lend
 
 $head 11-18$$
 Group all of the sections for the prior of the model variables; see
@@ -703,7 +710,7 @@ when computing the value of an
 $cref/integrand/avg_integrand/Integrand, I_i(a,t)/$$, has been improved.
 For example, attempting to divide by zero.
 $lnext
-The $cref old2new_command$$ was added.
+The $code old2new_command$$ was added.
 $lend
 
 $head 04-22$$
