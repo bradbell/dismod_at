@@ -61,8 +61,7 @@ The $icode weight_id$$ does not matter because we are not averaging
 over age or time.
 $lnext
 Set the
-$cref/covariates/avgint_table/Covariates/$$ to their
-$cref/reference/covariate_table/reference/$$ values.
+$cref/covariates/avgint_table/Covariates/$$ to null.
 $lend
 Note that the rates and integrands have the following correspondence:
 $pre
@@ -84,14 +83,14 @@ $lnext
 Set each
 $cref/covariate/avgint_table/Covariates/$$ to its average value
 for this child.
+$lnext
+Set the $cref/subgroup_id/avgint_table/subgroup_id/$$ to the
+subgroup of interest for this child.
 $lend
-
 
 $head avgint_id$$
 This column has type $code integer$$ and is the primary key for the
 $code avgint$$ table.
-
-
 Its initial value is zero, and it increments by one for each row.
 
 $head integrand_id$$
@@ -103,6 +102,13 @@ $head node_id$$
 This column has type $code integer$$ and is the
 $cref/node_id/node_table/node_id/$$ that identifies
 the node for this case.
+
+$head subgroup_id$$
+This column has type $code integer$$ and is the
+$cref/subgroup_id/subgroup_table/subgroup_id/$$ that identifies
+the subgroup for this case.
+The chosen subgroup affects the results through its affect on
+the covariate multipliers; see $cref mulcov_table$$.
 
 $head weight_id$$
 This column has type $code integer$$ and is the

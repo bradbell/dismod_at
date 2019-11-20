@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -43,6 +43,7 @@ bool get_avgint_table_xam(void)
 		" avgint_id    integer primary key,"
 		" integrand_id   integer,"
 		" node_id        integer,"
+		" subgroup_id    integer,"
 		" weight_id      integer,"
 		" age_lower      real,"
 		" age_upper      real,"
@@ -55,7 +56,8 @@ bool get_avgint_table_xam(void)
 		"0,"                       // avgint_id
 		"1,"                       // integrand_id
 		"3,"                       // node_id
-		"4,"                       // weight_id
+		"4,"                       // subgroup_id
+		"5,"                       // weight_id
 		"10.0,"                    // age_lower
 		"90.0,"                    // age_upper
 		"2000,"                    // time_lower
@@ -84,7 +86,8 @@ bool get_avgint_table_xam(void)
 	//
 	ok  &= avgint_table[0].integrand_id      == 1;
 	ok  &= avgint_table[0].node_id           == 3;
-	ok  &= avgint_table[0].weight_id         == 4;
+	ok  &= avgint_table[0].subgroup_id       == 4;
+	ok  &= avgint_table[0].weight_id         == 5;
 	ok  &= avgint_table[0].age_lower         == 10.0;
 	ok  &= avgint_table[0].age_upper         == 90.0;
 	ok  &= avgint_table[0].time_lower        == 2000.0;

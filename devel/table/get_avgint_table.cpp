@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -117,6 +117,9 @@ $rnext
 $code int$$ $cnext $code node_id$$ $cnext
 	The $cref/node_id/avgint_table/node_id/$$ for this measurement
 $rnext
+$code int$$ $cnext $code subgroup_id$$ $cnext
+	The $cref/subgroup_id/avgint_table/subgroup_id/$$ for this measurement
+$rnext
 $code int$$ $cnext $code weight_id$$ $cnext
 	The $cref/weight_id/avgint_table/weight_id/$$ for this measurement
 $rnext
@@ -218,12 +221,35 @@ void get_avgint_table(
 		get_table_column(db, table_name, column_name, time_upper);
 		assert( n_avgint == time_upper.size() );
 
+		column_name  = "subgroup_id";
+		string ctype = get_table_column_type(db, table_name, column_name);
+		bool have_subgroup_id  = ctype != "";
+		CppAD::vector<int> subgroup_id;
+		if( ! have_subgroup_id )
+		{
+# if 0
+			string message =
+			"The mulcov_table does not contain the subgroup_id column.\n"
+			"Using default value: subgroup_id = 0\n"
+			"This kluge will not last long.\n";
+			log_message(db, &std::cout, "warning", message);
+# endif
+			subgroup_id.resize(n_avgint);
+			for(size_t i = 0; i < n_avgint; ++i)
+				subgroup_id[i]           = 0;
+		}
+		else
+		{	get_table_column(db, table_name, column_name, subgroup_id);
+			assert( n_avgint == subgroup_id.size() );
+		}
+
 		// set avgint_table
 		assert( avgint_table.size() == 0 );
 		avgint_table.resize(n_avgint);
 		for(size_t i = 0; i < n_avgint; i++)
 		{	avgint_table[i].integrand_id  = integrand_id[i];
 			avgint_table[i].node_id       = node_id[i];
+			avgint_table[i].subgroup_id   = subgroup_id[i];
 			avgint_table[i].weight_id     = weight_id[i];
 			avgint_table[i].age_lower     = age_lower[i];
 			avgint_table[i].age_upper     = age_upper[i];
