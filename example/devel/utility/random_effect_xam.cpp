@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -38,6 +38,13 @@ bool random_effect_xam(void)
 	// initialize
 	size_t n_random_effect = 0;
 	//
+	// subgroup_table
+	size_t n_subgroup = 1;
+	vector<dismod_at::subgroup_struct> subgroup_table(n_subgroup);
+	subgroup_table[0].subgroup_name = "world";
+	subgroup_table[0].group_id      = 0;
+	subgroup_table[0].group_name    = "world";
+	//
 	size_t n_smooth = 2;
 	vector<dismod_at::smooth_struct> smooth_table(n_smooth);
 	smooth_table[0].n_age  = 1;
@@ -65,8 +72,14 @@ bool random_effect_xam(void)
 	// values in child_id2node_id do not matter because child_nslist_id is null
 	vector<size_t> child_id2node_id(n_child);
 	vector<dismod_at::nslist_pair_struct> nslist_pair(0);
-	dismod_at::pack_info pack_object(n_integrand,
-		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
+	dismod_at::pack_info pack_object(
+		n_integrand,
+		child_id2node_id,
+		subgroup_table,
+		smooth_table,
+		mulcov_table,
+		rate_table,
+		nslist_pair
 	);
 	//
 	// check n_random_effect

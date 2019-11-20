@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>
 # include "get_node_table.hpp"
+# include "get_subgroup_table.hpp"
 # include "get_data_table.hpp"
 # include "get_smooth_table.hpp"
 # include "get_mulcov_table.hpp"
@@ -70,6 +71,7 @@ public:
 	pack_info(
 	size_t                                    n_integrand      ,
 	const CppAD::vector<size_t>               child_id2node_id ,
+	const CppAD::vector<subgroup_struct>&     subgroup_table   ,
 	const CppAD::vector<smooth_struct>&       smooth_table     ,
 	const CppAD::vector<mulcov_struct>&       mulcov_table     ,
 	const CppAD::vector<rate_struct>&         rate_table       ,

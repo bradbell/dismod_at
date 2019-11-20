@@ -34,6 +34,13 @@ bool pack_info_xam(void)
 	size_t n_integrand     = 4;
 	size_t n_child         = 2;
 	//
+	// subgroup_table
+	size_t n_subgroup = 1;
+	vector<dismod_at::subgroup_struct> subgroup_table(n_subgroup);
+	subgroup_table[0].subgroup_name = "world";
+	subgroup_table[0].group_id      = 0;
+	subgroup_table[0].group_name    = "world";
+	//
 	size_t n_smooth = 4;
 	vector<dismod_at::smooth_struct> smooth_table(n_smooth);
 	smooth_table[0].n_age  = 2;
@@ -94,8 +101,14 @@ bool pack_info_xam(void)
 	// values in child_id2node_id do not matter because child_nslist_id is null
 	vector<size_t> child_id2node_id(n_child);
 	vector<dismod_at::nslist_pair_struct> nslist_pair(0);
-	dismod_at::pack_info pack_object(n_integrand,
-		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
+	dismod_at::pack_info pack_object(
+		n_integrand,
+		child_id2node_id,
+		subgroup_table,
+		smooth_table,
+		mulcov_table,
+		rate_table,
+		nslist_pair
 	);
 	//
 	// check integrand_size, child_size, smooth_size, and random_size

@@ -122,6 +122,13 @@ bool avg_integrand_xam(void)
 	// child_id2node_id
 	vector<size_t> child_id2node_id(n_child);
 	//
+	// subgroup_table
+	size_t n_subgroup = 1;
+	vector<dismod_at::subgroup_struct> subgroup_table(n_subgroup);
+	subgroup_table[0].subgroup_name = "world";
+	subgroup_table[0].group_id      = 0;
+	subgroup_table[0].group_name    = "world";
+	//
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
@@ -150,6 +157,7 @@ bool avg_integrand_xam(void)
 	dismod_at::pack_info pack_object(
 		n_integrand,
 		child_id2node_id,
+		subgroup_table,
 		smooth_table,
 		mulcov_table,
 		rate_table,

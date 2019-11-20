@@ -30,6 +30,7 @@ $head Syntax$$
 $codei%pack_info %pack_object%(
 	%n_integrand%,
 	%child_id2node_id%,
+	%subgroup_table%,
 	%smooth_table%,
 	%mulcov_table%,
 	%rate_table%,
@@ -70,6 +71,14 @@ $codei%
 %$$
 for all $icode rate_id$$, only the size of this vector matters
 (its values are not used).
+
+$head subgroup_table$$
+This argument has prototype
+$codei%
+	const CppAD::vector<subgroup_struct>& %subgroup_table%
+%$$
+and is the
+$cref/subgroup_table/get_subgroup_table/subgroup_table/$$.
 
 $head smooth_table$$
 This argument has prototype
@@ -190,6 +199,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 pack_info::pack_info(
 	size_t                                    n_integrand      ,
 	const CppAD::vector<size_t>               child_id2node_id ,
+	const CppAD::vector<subgroup_struct>&     subgroup_table   ,
 	const CppAD::vector<smooth_struct>&       smooth_table     ,
 	const CppAD::vector<mulcov_struct>&       mulcov_table     ,
 	const CppAD::vector<rate_struct>&         rate_table       ,

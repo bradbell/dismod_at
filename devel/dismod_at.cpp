@@ -275,6 +275,7 @@ int main(int n_arg, const char** argv)
 	dismod_at::pack_info pack_object(
 		n_integrand                 ,
 		child_id2node_id            ,
+		db_input.subgroup_table     ,
 		db_input.smooth_table       ,
 		db_input.mulcov_table       ,
 		db_input.rate_table         ,

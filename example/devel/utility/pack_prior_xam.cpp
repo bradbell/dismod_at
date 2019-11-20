@@ -175,6 +175,14 @@ bool pack_prior_xam(void)
 		mulstd_value, mulstd_dage, mulstd_dtime
 	);
 	// ----------------------- pack_object --------------------------------
+	//
+	// subgroup_table
+	size_t n_subgroup = 1;
+	vector<dismod_at::subgroup_struct> subgroup_table(n_subgroup);
+	subgroup_table[0].subgroup_name = "world";
+	subgroup_table[0].group_id      = 0;
+	subgroup_table[0].group_name    = "world";
+	//
 	// smooth_table
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
@@ -206,8 +214,14 @@ bool pack_prior_xam(void)
 	size_t n_child     = 1;
 	vector<size_t> child_id2node_id(n_child);
 	vector<dismod_at::nslist_pair_struct> nslist_pair(0);
-	dismod_at::pack_info pack_object(n_integrand,
-		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
+	dismod_at::pack_info pack_object(
+		n_integrand,
+		child_id2node_id,
+		subgroup_table,
+		smooth_table,
+		mulcov_table,
+		rate_table,
+		nslist_pair
 	);
 	// ----------------------- value_prior -------------------------------
 	dismod_at::pack_prior var2prior(pack_object, s_info_vec);

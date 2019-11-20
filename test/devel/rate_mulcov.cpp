@@ -82,6 +82,13 @@ bool rate_mulcov(void)
 	density_table[4] = dismod_at::log_gaussian_enum;
 	density_table[5] = dismod_at::log_laplace_enum;
 	density_table[6] = dismod_at::log_students_enum;
+	//
+	// subgroup_table
+	size_t n_subgroup = 1;
+	vector<dismod_at::subgroup_struct> subgroup_table(n_subgroup);
+	subgroup_table[0].subgroup_name = "world";
+	subgroup_table[0].group_id      = 0;
+	subgroup_table[0].group_name    = "world";
 
 	// age and time smoothing grid indices
 	size_t n_age_si   = 3;
@@ -233,8 +240,14 @@ bool rate_mulcov(void)
 	// values in child_id2node_id do not matter because child_nslist_id is null
 	vector<size_t> child_id2node_id(n_child);
 	vector<dismod_at::nslist_pair_struct> nslist_pair(0);
-	dismod_at::pack_info pack_object(n_integrand,
-		child_id2node_id, smooth_table, mulcov_table, rate_table, nslist_pair
+	dismod_at::pack_info pack_object(
+		n_integrand,
+		child_id2node_id,
+		subgroup_table,
+		smooth_table,
+		mulcov_table,
+		rate_table,
+		nslist_pair
 	);
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj;
