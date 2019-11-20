@@ -210,6 +210,19 @@ n_integrand_    ( n_integrand )           ,
 n_child_        ( child_id2node_id.size() )
 {	using std::string;
 
+	// set first_subgroup_id_
+	first_subgroup_id_.push_back(0);
+	int previous_group_id = subgroup_table[0].group_id;
+	size_t n_subgroup     = subgroup_table.size();
+	for(size_t subgroup_id = 1; subgroup_id < n_subgroup; ++subgroup_id)
+	{	size_t group_id = subgroup_table[subgroup_id].group_id;
+		if( group_id != previous_group_id )
+		{	assert( group_id == previous_group_id + 1 );
+			first_subgroup_id_.push_back( subgroup_id );
+			previous_group_id = group_id;
+		}
+	}
+
 	// initialize offset
 	size_t offset = 0;
 

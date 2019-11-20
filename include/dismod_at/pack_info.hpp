@@ -50,20 +50,23 @@ private:
 	// number of random effects
 	size_t n_random_;
 
+	// subgroup_id corresponding to first member of each group
+	CppAD::vector<size_t>  first_subgroup_id_;
+
 	// mulstd variable offsets
 	CppAD::vector<size_t>  mulstd_offset_;
 
-	// rate variable information
+	// node_rate information
 	CppAD::vector< CppAD::vector<subvec_info> > node_rate_info_;
 
-	// mulcov_meas_value infromation
+	// group_rate_value information
+	CppAD::vector< CppAD::vector<subvec_info> > group_rate_value_info_;
+
+	// group_meas_value information
 	CppAD::vector< CppAD::vector<subvec_info> > group_meas_value_info_;
 
-	// mulcov_meas_noise infromation
+	// group_meas_noise information
 	CppAD::vector< CppAD::vector<subvec_info> > group_meas_noise_info_;
-
-	// mulcov_rate_value infromation
-	CppAD::vector< CppAD::vector<subvec_info> > group_rate_value_info_;
 
 	// total number of elements in the packed vector
 	size_t size_;
@@ -96,20 +99,20 @@ public:
 	// mulstd
 	size_t mulstd_offset(size_t smooth_id, size_t k) const;
 
-	// rate
+	// node_rate_
 	subvec_info node_rate_info(size_t rate_id, size_t j) const;
 
-	// mulcov_meas_value_
+	// group_rate_value_
+	size_t      group_rate_value_n_cov(size_t integrand_id) const;
+	subvec_info group_rate_value_info(size_t integrand_id, size_t j) const;
+
+	// group_meas_value_
 	size_t      group_meas_value_n_cov(size_t integrand_id) const;
 	subvec_info group_meas_value_info(size_t integrand_id, size_t j) const;
 
-	// mulcov_meas_noise_
+	// group_meas_noise_
 	size_t      group_meas_noise_n_cov(size_t integrand_id) const;
 	subvec_info group_meas_noise_info(size_t integrand_id, size_t j) const;
-
-	// mulcov_rate_value_
-	size_t      group_rate_value_n_cov(size_t integrand_id) const;
-	subvec_info group_rate_value_info(size_t integrand_id, size_t j) const;
 };
 
 } // END DISMOD_AT_NAMESPACE:
