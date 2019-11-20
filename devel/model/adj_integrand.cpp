@@ -210,7 +210,7 @@ a1_double_rate_    (number_rate_enum)
 		else switch( mulcov_table[mulcov_id].mulcov_type )
 		{	case rate_value_enum:
 			mulcov_pack_info_[mulcov_id] =
-				pack_object.mulcov_rate_value_info(
+				pack_object.group_rate_value_info(
 					rate_id, rate_value_index[rate_id]
 			);
 			++rate_value_index[rate_id];
@@ -218,7 +218,7 @@ a1_double_rate_    (number_rate_enum)
 
 			case meas_value_enum:
 			mulcov_pack_info_[mulcov_id] =
-				pack_object.mulcov_meas_value_info(
+				pack_object.group_meas_value_info(
 					integrand_id, meas_value_index[integrand_id]
 			);
 			++meas_value_index[integrand_id];
@@ -226,7 +226,7 @@ a1_double_rate_    (number_rate_enum)
 
 			case meas_noise_enum:
 			mulcov_pack_info_[mulcov_id] =
-				pack_object.mulcov_meas_noise_info(
+				pack_object.group_meas_noise_info(
 					integrand_id, meas_noise_index[integrand_id]
 			);
 			++meas_noise_index[integrand_id];
@@ -411,9 +411,9 @@ CppAD::vector<Float> adj_integrand::line(
 		}
 		//
 		// include the covariate effects on this rate
-		size_t n_cov = pack_object_.mulcov_rate_value_n_cov(rate_id);
+		size_t n_cov = pack_object_.group_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; ++j)
-		{	info        = pack_object_.mulcov_rate_value_info(rate_id, j);
+		{	info        = pack_object_.group_rate_value_info(rate_id, j);
 			smooth_id   = info.smooth_id;
 			double x_j  = x[ info.covariate_id ];
 			// interpolate from smoothing grid to line
@@ -577,9 +577,9 @@ CppAD::vector<Float> adj_integrand::line(
 	// initialize effect as zero
 	for(size_t k = 0; k < n_line; ++k)
 		effect[k] = 0.0;
-	size_t n_cov = pack_object_.mulcov_meas_value_n_cov(integrand_id);
+	size_t n_cov = pack_object_.group_meas_value_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; ++j)
-	{	info  = pack_object_.mulcov_meas_value_info(integrand_id, j);
+	{	info  = pack_object_.group_meas_value_info(integrand_id, j);
 		size_t smooth_id = info.smooth_id;
 		double x_j       = x[ info.covariate_id ];
 		// interpolate from smoothing grid to cohort

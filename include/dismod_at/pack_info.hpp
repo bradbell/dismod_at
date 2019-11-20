@@ -56,13 +56,13 @@ private:
 	CppAD::vector< CppAD::vector<subvec_info> > node_rate_info_;
 
 	// mulcov_meas_value infromation
-	CppAD::vector< CppAD::vector<subvec_info> > mulcov_meas_value_info_;
+	CppAD::vector< CppAD::vector<subvec_info> > group_meas_value_info_;
 
 	// mulcov_meas_noise infromation
-	CppAD::vector< CppAD::vector<subvec_info> > mulcov_meas_noise_info_;
+	CppAD::vector< CppAD::vector<subvec_info> > group_meas_noise_info_;
 
 	// mulcov_rate_value infromation
-	CppAD::vector< CppAD::vector<subvec_info> > mulcov_rate_value_info_;
+	CppAD::vector< CppAD::vector<subvec_info> > group_rate_value_info_;
 
 	// total number of elements in the packed vector
 	size_t size_;
@@ -98,16 +98,16 @@ public:
 	subvec_info node_rate_info(size_t rate_id, size_t j) const;
 
 	// mulcov_meas_value_
-	size_t      mulcov_meas_value_n_cov(size_t integrand_id) const;
-	subvec_info mulcov_meas_value_info(size_t integrand_id, size_t j) const;
+	size_t      group_meas_value_n_cov(size_t integrand_id) const;
+	subvec_info group_meas_value_info(size_t integrand_id, size_t j) const;
 
 	// mulcov_meas_noise_
-	size_t      mulcov_meas_noise_n_cov(size_t integrand_id) const;
-	subvec_info mulcov_meas_noise_info(size_t integrand_id, size_t j) const;
+	size_t      group_meas_noise_n_cov(size_t integrand_id) const;
+	subvec_info group_meas_noise_info(size_t integrand_id, size_t j) const;
 
 	// mulcov_rate_value_
-	size_t      mulcov_rate_value_n_cov(size_t integrand_id) const;
-	subvec_info mulcov_rate_value_info(size_t integrand_id, size_t j) const;
+	size_t      group_rate_value_n_cov(size_t integrand_id) const;
+	subvec_info group_rate_value_info(size_t integrand_id, size_t j) const;
 };
 
 } // END DISMOD_AT_NAMESPACE:

@@ -204,7 +204,7 @@ bool avg_noise_effect_xam(void)
 	vector<Float> pack_vec( pack_object.size() );
 	size_t mtother_id = dismod_at::mtother_enum;
 	dismod_at::pack_info::subvec_info info =
-		pack_object.mulcov_meas_noise_info(mtother_id, 0);
+		pack_object.group_meas_noise_info(mtother_id, 0);
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 	for(size_t i = 0; i < s_info.age_size(); i++)
 	{	age = age_table[ s_info.age_id(i) ];

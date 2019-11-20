@@ -138,9 +138,9 @@ bool pack_info_xam(void)
 	}
 	// set mulcov_meas_value
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.group_meas_value_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_value_info(integrand_id, j);
+		{	info   = pack_object.group_meas_value_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -151,9 +151,9 @@ bool pack_info_xam(void)
 	}
 	// set mulcov_meas_noise
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.group_meas_noise_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_noise_info(integrand_id, j);
+		{	info   = pack_object.group_meas_noise_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -164,9 +164,9 @@ bool pack_info_xam(void)
 	}
 	// set mulcov_rate_value
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
+	{	size_t n_cov = pack_object.group_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
+		{	info   = pack_object.group_rate_value_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -197,13 +197,13 @@ bool pack_info_xam(void)
 	}
 	// check mulcov_meas_value
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.group_meas_value_n_cov(integrand_id);
 		size_t check = 0;
 		if( integrand_id < 2 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_value_info(integrand_id, j);
+		{	info   = pack_object.group_meas_value_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -216,13 +216,13 @@ bool pack_info_xam(void)
 	}
 	// check mulcov_meas_noise
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
+	{	size_t n_cov = pack_object.group_meas_noise_n_cov(integrand_id);
 		size_t check = 0;
 		if( integrand_id == 2 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_noise_info(integrand_id, j);
+		{	info   = pack_object.group_meas_noise_info(integrand_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -235,13 +235,13 @@ bool pack_info_xam(void)
 	}
 	// check mulcov_rate_value
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
+	{	size_t n_cov = pack_object.group_rate_value_n_cov(rate_id);
 		size_t check = 0;
 		if( rate_id == 3 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
+		{	info   = pack_object.group_rate_value_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)
@@ -256,13 +256,13 @@ bool pack_info_xam(void)
 	// check copy constructor
 	dismod_at::pack_info pack_copy(pack_object);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	size_t n_cov = pack_copy.mulcov_rate_value_n_cov(rate_id);
+	{	size_t n_cov = pack_copy.group_rate_value_n_cov(rate_id);
 		size_t check = 0;
 		if( rate_id == 3 )
 			check = 1;
 		ok &= n_cov == check;
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_copy.mulcov_rate_value_info(rate_id, j);
+		{	info   = pack_copy.group_rate_value_info(rate_id, j);
 			offset = info.offset;
 			n_var  = info.n_var;
 			for(size_t k = 0; k < n_var; k++)

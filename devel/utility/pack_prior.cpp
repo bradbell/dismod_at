@@ -318,9 +318,9 @@ pack_prior::pack_prior(
 	// ------------------------------------------------------------------------
 	// get priors for rate mean covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t n_cov = pack_object.mulcov_rate_value_n_cov(rate_id);
+	{	size_t n_cov = pack_object.group_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_rate_value_info(rate_id, j);
+		{	info   = pack_object.group_rate_value_info(rate_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
 			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
@@ -330,17 +330,17 @@ pack_prior::pack_prior(
 	// get priors for measurement covariates
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	// measurement mean covariates for this integrand
-		size_t n_cov = pack_object.mulcov_meas_value_n_cov(integrand_id);
+		size_t n_cov = pack_object.group_meas_value_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_value_info(integrand_id, j);
+		{	info   = pack_object.group_meas_value_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
 			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
 		}
 		// measurement std covariates for this integrand
-		n_cov = pack_object.mulcov_meas_noise_n_cov(integrand_id);
+		n_cov = pack_object.group_meas_noise_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
-		{	info   = pack_object.mulcov_meas_noise_info(integrand_id, j);
+		{	info   = pack_object.group_meas_noise_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
 			set_prior(prior_vec_, offset, smooth_id, s_info_vec);

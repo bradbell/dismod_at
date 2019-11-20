@@ -300,9 +300,9 @@ n_child_        ( child_id2node_id.size() )
 		}
 	}
 
-	// mulcov_meas_value_info_ and mulcov_meas_noise_info_
-	mulcov_meas_value_info_.resize( n_integrand );
-	mulcov_meas_noise_info_.resize( n_integrand );
+	// group_meas_value_info_ and group_meas_noise_info_
+	group_meas_value_info_.resize( n_integrand );
+	group_meas_noise_info_.resize( n_integrand );
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	{	size_t mulcov_id;
 		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
@@ -318,11 +318,11 @@ n_child_        ( child_id2node_id.size() )
 				string mulcov_type;
 				CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULL_PTR;
 				if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
-				{	info_vec    = &( mulcov_meas_value_info_[integrand_id]) ;
+				{	info_vec    = &( group_meas_value_info_[integrand_id]) ;
 					mulcov_type = "'meas_value'";
 				}
 				if( mulcov_table[mulcov_id].mulcov_type == meas_noise_enum )
-				{	info_vec    = &( mulcov_meas_noise_info_[integrand_id]) ;
+				{	info_vec    = &( group_meas_noise_info_[integrand_id]) ;
 					mulcov_type = "'meas_noise'";
 				}
 				for(size_t j = 0; j < info_vec->size(); j++)
@@ -350,8 +350,8 @@ n_child_        ( child_id2node_id.size() )
 		}
 	}
 
-	// mulcov_rate_value_info_
-	mulcov_rate_value_info_.resize( number_rate_enum );
+	// group_rate_value_info_
+	group_rate_value_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	size_t mulcov_id;
 		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
@@ -364,7 +364,7 @@ n_child_        ( child_id2node_id.size() )
 					mulcov_table[mulcov_id].covariate_id
 				);
 				CppAD::vector<subvec_info>& info_vec =
-					mulcov_rate_value_info_[rate_id];
+					group_rate_value_info_[rate_id];
 				for(size_t j = 0; j < info_vec.size(); j++)
 				{	if( info_vec[j].covariate_id == covariate_id )
 					{	string msg = "covariate_id appears twice with "
@@ -600,25 +600,25 @@ $$
 $section Devel Pack Variables: Measurement Covariate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %pack_object%.mulcov_meas_value_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_object%.group_meas_value_n_cov(%integrand_id%)
 %$$
-$icode%n_cov% = %pack_object%.mulcov_meas_noise_n_cov(%integrand_id%)
+$icode%n_cov% = %pack_object%.group_meas_noise_n_cov(%integrand_id%)
 %$$
-$icode%info% = %pack_object%.mulcov_meas_value_info(%integrand_id%, %j%)
+$icode%info% = %pack_object%.group_meas_value_info(%integrand_id%, %j%)
 %$$
-$icode%info% = %pack_object%.mulcov_meas_noise_info(%integrand_id%, %j%)
+$icode%info% = %pack_object%.group_meas_noise_info(%integrand_id%, %j%)
 %$$
 
 $head meas_value$$
 The functions
-$code mulcov_meas_value_n_cov$$ and
-$code mulcov_meas_value_info$$
+$code group_meas_value_n_cov$$ and
+$code group_meas_value_info$$
 return information about the measurement mean covariate multipliers.
 
 $head meas_noise$$
 The functions
-$code mulcov_meas_noise_n_cov$$ and
-$code mulcov_meas_noise_info$$
+$code group_meas_noise_n_cov$$ and
+$code group_meas_noise_info$$
 return information about the measurement noise covariate multipliers.
 
 $head subvec_info$$
@@ -689,25 +689,25 @@ See $cref/pack_info Example/pack_info/Example/$$.
 $end
 */
 size_t
-pack_info::mulcov_meas_value_n_cov(size_t integrand_id) const
+pack_info::group_meas_value_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
-	return mulcov_meas_value_info_[integrand_id].size();
+	return group_meas_value_info_[integrand_id].size();
 }
 size_t
-pack_info::mulcov_meas_noise_n_cov(size_t integrand_id) const
+pack_info::group_meas_noise_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
-	return mulcov_meas_noise_info_[integrand_id].size();
+	return group_meas_noise_info_[integrand_id].size();
 }
 //
 pack_info::subvec_info
-pack_info::mulcov_meas_value_info(size_t integrand_id, size_t j) const
+pack_info::group_meas_value_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
-	return mulcov_meas_value_info_[integrand_id][j];
+	return group_meas_value_info_[integrand_id][j];
 }
 pack_info::subvec_info
-pack_info::mulcov_meas_noise_info(size_t integrand_id, size_t j) const
+pack_info::group_meas_noise_info(size_t integrand_id, size_t j) const
 {	assert( integrand_id < n_integrand_ );
-	return mulcov_meas_noise_info_[integrand_id][j];
+	return group_meas_noise_info_[integrand_id][j];
 }
 
 /*
@@ -728,9 +728,9 @@ $$
 $section Devel Pack Variables: Rate Covariate Multipliers$$
 
 $head Syntax$$
-$icode%n_cov% = %pack_object%.mulcov_rate_value_n_cov(%rate_id%)
+$icode%n_cov% = %pack_object%.group_rate_value_n_cov(%rate_id%)
 %$$
-$icode%info% = %pack_object%.mulcov_rate_value_info(%rate_id%, %j%)
+$icode%info% = %pack_object%.group_rate_value_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
@@ -801,15 +801,15 @@ See $cref/pack_info Example/pack_info/Example/$$.
 $end
 */
 size_t
-pack_info::mulcov_rate_value_n_cov(size_t rate_id) const
+pack_info::group_rate_value_n_cov(size_t rate_id) const
 {	assert( rate_id < number_rate_enum );
-	return mulcov_rate_value_info_[rate_id].size();
+	return group_rate_value_info_[rate_id].size();
 }
 //
 pack_info::subvec_info
-pack_info::mulcov_rate_value_info(size_t rate_id, size_t j) const
+pack_info::group_rate_value_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
-	return mulcov_rate_value_info_[rate_id][j];
+	return group_rate_value_info_[rate_id][j];
 }
 
 } // END DISMOD_AT_NAMESPACE

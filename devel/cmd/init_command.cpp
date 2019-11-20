@@ -321,17 +321,17 @@ void init_command(
 		//
 		pack_info::subvec_info info;
 		if( mulcov_type == rate_value_enum ) info =
-			pack_object.mulcov_rate_value_info(
+			pack_object.group_rate_value_info(
 				rate_id, count_rate_value[rate_id]++
 		);
 		//
 		else if( mulcov_type == meas_value_enum ) info =
-			pack_object.mulcov_meas_value_info(
+			pack_object.group_meas_value_info(
 				integrand_id, count_meas_value[integrand_id]++
 		);
 		//
 		else if( mulcov_type == meas_noise_enum ) info =
-			pack_object.mulcov_meas_noise_info(
+			pack_object.group_meas_noise_info(
 				integrand_id, count_meas_noise[integrand_id]++
 		);
 		//

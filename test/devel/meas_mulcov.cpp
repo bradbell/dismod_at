@@ -301,9 +301,9 @@ bool meas_mulcov(void)
 	dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 	for(size_t k = 0; k < 2; k++)
 	{	if( k == 0 )
-			info = pack_object.mulcov_meas_value_info(mtother_id, 0);
+			info = pack_object.group_meas_value_info(mtother_id, 0);
 		else
-			info = pack_object.mulcov_meas_noise_info(mtother_id, 0);
+			info = pack_object.group_meas_noise_info(mtother_id, 0);
 		for(size_t i = 0; i < s_info.age_size(); i++)
 		{	age = age_table[ s_info.age_id(i) ];
 			for(size_t j = 0; j < s_info.time_size(); j++)
