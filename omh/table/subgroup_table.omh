@@ -42,6 +42,12 @@ This column has type $code text$$.
 Rows that have the same (different) $icode group_id$$ must have the same
 (different) $icode group_name$$.
 
+$head Discussion$$
+One might think it would be easier to have a separate group table
+and not require $icode group_id$$ to be monotone and not have to include
+$icode group_name$$ in this table. The problem with this is $code group$$
+is a keyword in SQL and hence it is hard to work with a table named group.
+
 $comment%example/table/subgroup_table.py
 %$$
 $head Example$$
