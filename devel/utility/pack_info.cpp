@@ -203,16 +203,16 @@ n_child_        ( child_id2node_id.size() )
 	// initialize offset
 	size_t offset = 0;
 
-	// resize rate_info_
-	rate_info_.resize( number_rate_enum );
+	// resize node_rate_info_
+	node_rate_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-		rate_info_[rate_id].resize(n_child_ + 1);
+		node_rate_info_[rate_id].resize(n_child_ + 1);
 
 	// -----------------------------------------------------------------------
 	// random effects
 	// -----------------------------------------------------------------------
 
-	// rate_info_, n_random_
+	// node_rate_info_, n_random_
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	for(size_t j = 0;  j < n_child_; j++)
 		{	size_t smooth_id = rate_table[rate_id].child_smooth_id;
@@ -232,17 +232,17 @@ n_child_        ( child_id2node_id.size() )
 				// following should have been checked previously
 				assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
 			}
-			rate_info_[rate_id][j].smooth_id = smooth_id;
+			node_rate_info_[rate_id][j].smooth_id = smooth_id;
 			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-			{	rate_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
-				rate_info_[rate_id][j].offset = DISMOD_AT_NULL_SIZE_T;
+			{	node_rate_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
+				node_rate_info_[rate_id][j].offset = DISMOD_AT_NULL_SIZE_T;
 			}
 			else
 			{	size_t n_age  = smooth_table[smooth_id].n_age;
 				size_t n_time = smooth_table[smooth_id].n_time;
 				size_t n_var  = n_age * n_time;
-				rate_info_[rate_id][j].n_var     = n_var;
-				rate_info_[rate_id][j].offset    = offset;
+				node_rate_info_[rate_id][j].n_var     = n_var;
+				node_rate_info_[rate_id][j].offset    = offset;
 				offset += n_var;
 				// check_rate_table should have checked this assumption
 				assert( rate_id != pini_enum || n_age == 1 );
@@ -278,21 +278,21 @@ n_child_        ( child_id2node_id.size() )
 			mulstd_offset_[smooth_id * 3 + 2] = offset++;
 	}
 
-	// rate_info_ and n_random_
+	// node_rate_info_ and n_random_
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{
 		size_t smooth_id = rate_table[rate_id].parent_smooth_id;
-		rate_info_[rate_id][n_child_].smooth_id = smooth_id;
+		node_rate_info_[rate_id][n_child_].smooth_id = smooth_id;
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-		{	rate_info_[rate_id][n_child_].n_var  = DISMOD_AT_NULL_SIZE_T;
-			rate_info_[rate_id][n_child_].offset = DISMOD_AT_NULL_SIZE_T;
+		{	node_rate_info_[rate_id][n_child_].n_var  = DISMOD_AT_NULL_SIZE_T;
+			node_rate_info_[rate_id][n_child_].offset = DISMOD_AT_NULL_SIZE_T;
 		}
 		else
 		{	size_t n_age  = smooth_table[smooth_id].n_age;
 			size_t n_time = smooth_table[smooth_id].n_time;
 			size_t n_var  = n_age * n_time;
-			rate_info_[rate_id][n_child_].n_var     = n_var;
-			rate_info_[rate_id][n_child_].offset    = offset;
+			node_rate_info_[rate_id][n_child_].n_var     = n_var;
+			node_rate_info_[rate_id][n_child_].offset    = offset;
 			offset += n_var;
 			//
 			// check_rate_table should have checked this assumption
@@ -491,7 +491,7 @@ size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 }
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_rate_info$$
+$begin pack_info_node_rate_info$$
 $spell
 	Devel
 	std
@@ -507,7 +507,7 @@ $$
 $section Devel Pack Variables: Rates$$
 
 $head Syntax$$
-$icode%info% = %pack_object%.rate_info(%rate_id%, %j%)
+$icode%info% = %pack_object%.node_rate_info(%rate_id%, %j%)
 %$$
 
 $head subvec_info$$
@@ -543,7 +543,7 @@ $codei%
 %$$
 
 $subhead covariate_id$$
-This field is not used or set by $code rate_info$$.
+This field is not used or set by $code node_rate_info$$.
 
 $subhead smooth_id$$
 is the $cref/smooth_id/smooth_table/smooth_id/$$ for the rate.
@@ -577,9 +577,9 @@ See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
-pack_info::subvec_info pack_info::rate_info(size_t rate_id, size_t j) const
+pack_info::subvec_info pack_info::node_rate_info(size_t rate_id, size_t j) const
 {	assert( j <= n_child_ );
-	return rate_info_[rate_id][j];
+	return node_rate_info_[rate_id][j];
 }
 
 /*

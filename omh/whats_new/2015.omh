@@ -432,11 +432,11 @@ $lend
 $head 10-29$$
 $list number$$
 The change on $cref/10-27/whats_new_2015/10-27/$$ whereby
-$code rate_info$$ was reverted because it used three times
+$code node_rate_info$$ was reverted because it used three times
 as much memory and time.
-The name was however changed from $code rate_info$$ to
+The name was however changed from $code node_rate_info$$ to
 $cref/rate_case/option_table/rate_case/$$ to avoid confusion with
-$code dev::pack_info_rate_info.cpp$$.
+$code dev::pack_info_node_rate_info.cpp$$.
 In addition, the correction of the bug in $code dev::eigen_ode2.cpp$$
 was retained.
 $lnext
@@ -491,8 +491,8 @@ $code nan$$ could result even if the rates satisfied their prescribed
 conditions. This has been fixed.
 $lnext
 Modify $code dev::eigen_ode2.cpp$$ so that it works for all combinations of rates
-and remove $code rate_info$$ from the $cref option_table$$.
-Note that this is different from $code dev::pack_info_rate_info.cpp$$
+and remove $code node_rate_info$$ from the $cref option_table$$.
+Note that this is different from $code dev::pack_info_node_rate_info.cpp$$
 (which is only in the developer documentation).
 $lend
 
@@ -711,7 +711,7 @@ This resulted in a huge savings (in one test case a 24 minute
 run time was reduced to 3.5 minutes).
 $lnext
 The $code dev::get_db_input.cpp$$ routine now checks the lower and upper limits
-implied by the choice of $code rate_info$$.
+implied by the choice of $code node_rate_info$$.
 This was removed on $cref/2015-10-27/whats_new_2015/10-27/$$.
 $lend
 
@@ -723,7 +723,7 @@ $lnext
 Change the measurement covariate multiple type $code rate_mean$$ to
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$.
 $lnext
-Simplify the $code rate_info$$ choice in the
+Simplify the $code node_rate_info$$ choice in the
 option table.
 $lnext
 Fix $cref/logging/log_table/$$ an error message that has the
@@ -1138,7 +1138,7 @@ $lend
 
 $head 06-29$$
 $list number$$
-Add the $code rate_info$$ argument
+Add the $code node_rate_info$$ argument
 to the fit command.
 (This was removed on $cref/2015-10-27/whats_new_2015/10-27/$$.)
 This enables taking advantage of cases where $icode rho$$

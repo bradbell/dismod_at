@@ -263,7 +263,7 @@ void init_command(
 				node_id = child_object.child_id2node_id(child_id);
 			//
 			pack_info::subvec_info info;
-			info      = pack_object.rate_info(rate_id, child_id);
+			info      = pack_object.node_rate_info(rate_id, child_id);
 			size_t smooth_id = info.smooth_id;
 			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
 				n_var = 0;

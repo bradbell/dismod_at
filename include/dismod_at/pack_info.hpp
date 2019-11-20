@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -53,7 +53,7 @@ private:
 	CppAD::vector<size_t>  mulstd_offset_;
 
 	// rate variable information
-	CppAD::vector< CppAD::vector<subvec_info> > rate_info_;
+	CppAD::vector< CppAD::vector<subvec_info> > node_rate_info_;
 
 	// mulcov_meas_value infromation
 	CppAD::vector< CppAD::vector<subvec_info> > mulcov_meas_value_info_;
@@ -95,7 +95,7 @@ public:
 	size_t mulstd_offset(size_t smooth_id, size_t k) const;
 
 	// rate
-	subvec_info rate_info(size_t rate_id, size_t j) const;
+	subvec_info node_rate_info(size_t rate_id, size_t j) const;
 
 	// mulcov_meas_value_
 	size_t      mulcov_meas_value_n_cov(size_t integrand_id) const;

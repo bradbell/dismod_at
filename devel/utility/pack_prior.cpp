@@ -301,7 +301,7 @@ pack_prior::pack_prior(
 	{	// this rate
 		for(size_t j = 0; j <= n_child; j++)
 		{	// child if j < n_child, otherwise parent
-			info             = pack_object.rate_info(rate_id, j);
+			info             = pack_object.node_rate_info(rate_id, j);
 			size_t smooth_id = info.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset    = info.offset;

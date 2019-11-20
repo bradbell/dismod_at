@@ -253,7 +253,7 @@ bool prior_fixed_xam(void)
 	double time_max = time_table[n_time_table - 1];
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
-		{	info = pack_object.rate_info(rate_id, child_id);
+		{	info = pack_object.node_rate_info(rate_id, child_id);
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();
@@ -310,7 +310,7 @@ bool prior_fixed_xam(void)
 	size_t count_laplace = 0;
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	size_t child_id = n_child;
-		info = pack_object.rate_info(rate_id, child_id);
+		info = pack_object.node_rate_info(rate_id, child_id);
 		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 		n_age  = s_info.age_size();
 		n_time = s_info.time_size();

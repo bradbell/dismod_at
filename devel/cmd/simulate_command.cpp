@@ -388,7 +388,7 @@ void simulate_command(
 	if( zero_sum_random[rate_id] )
 	{	// packing information for first child and this rate
 		dismod_at::pack_info::subvec_info
-			info_0 = pack_object.rate_info(rate_id, 0);
+			info_0 = pack_object.node_rate_info(rate_id, 0);
 		//
 		// child smoothing id for first rate
 		size_t smooth_id = info_0.smooth_id;
@@ -403,7 +403,7 @@ void simulate_command(
 				for(size_t j = 0; j < n_child; j++)
 				{	// packing information for this child and this rate
 					dismod_at::pack_info::subvec_info
-						info_j = pack_object.rate_info(rate_id, j);
+						info_j = pack_object.node_rate_info(rate_id, j);
 # if NDEBUG
 					// for each rate, all children have the same smoothing
 					assert( info_j.smooth_id == info_0.smooth_id );

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -225,7 +225,7 @@ bool pack_prior_xam(void)
 	// check rates
 	for(size_t rate_id = 0; rate_id < rate_table.size(); rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
-		{	info = pack_object.rate_info(rate_id, child_id);
+		{	info = pack_object.node_rate_info(rate_id, child_id);
 			dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 			n_age  = s_info.age_size();
 			n_time = s_info.time_size();
