@@ -171,20 +171,37 @@ that this variable applies to.
 Otherwise, this column is $code null$$.
 
 $head group_id$$
-If $icode var_type$$ is
-$code mulcov_rate_value$$, $code mulcov_meas_value$$
-or $code mulcov_meas_noise$$,
-this is the $cref/group_id/mulcov_table/group_id/$$
+
+$subhead mulcov_meas_noise$$
+If $icode var_type$$ is $code mulcov_meas_noise$$,
+$icode group_id$$ is the mulcov table
+$cref/group_id/mulcov_table/group_id/$$
 that this fixed effect variable applies to.
-Otherwise, this column is $code null$$.
+
+$subhead mulcov_rate_value, mulcov_meas_value$$
+If $icode var_type$$ is $code mulcov_rate_value$$ or $code mulcov_meas_value$$.
+In this case either $icode group_id$$ or $icode subgroup_id$$
+(but not both) is not null.
+If $icode group_id$$ is not null,
+it is the mulcov table
+$cref/group_id/mulcov_table/group_id/$$
+that this fixed effect applies to.
+
+$subhead Otherwise$$
+$icode group_id$$ must be null.
 
 $head subgroup_id$$
-If $icode var_type$$ is
-$code mulcov_rate_value$$ or $code mulcov_meas_value$$,
-this is the $cref/subgroup_id/subgroup_table/subgroup_id/$$
-that this random effect variable applies to.
-Otherwise, this column is $code null$$.
-If $icode group_id$$ is not null, $icode subgroup_id$$ is null.
+
+$subhead mulcov_rate_value, mulcov_meas_value$$
+If $icode var_type$$ is $code mulcov_rate_value$$ or $code mulcov_meas_value$$.
+In this case either $icode group_id$$ or $icode subgroup_id$$
+(but not both) is not null.
+If $icode subgroup_id$$ is not null,
+it is the $cref/subgroup_id/subgroup_table/subgroup_id/$$
+that this random effect applies to.
+
+$subhead Otherwise$$
+$icode subgroup_id$$ must be null.
 
 $head Example$$
 See the $cref init_command.py$$ example and test.
