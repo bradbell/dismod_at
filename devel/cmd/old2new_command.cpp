@@ -109,7 +109,7 @@ void old2new_command(
 	//
 	const vector<mulcov_struct>& mulcov_table( db_input.mulcov_table );
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
-	if( mulcov_table[mulcov_id].smooth_id != DISMOD_AT_NULL_INT )
+	if( mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT )
 	{	mulcov_type_enum mulcov_type;
 		mulcov_type         = mulcov_table[mulcov_id].mulcov_type;
 		size_t rate_id      = mulcov_table[mulcov_id].rate_id;

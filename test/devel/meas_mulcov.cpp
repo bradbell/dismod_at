@@ -213,7 +213,7 @@ bool meas_mulcov(void)
 	{	mulcov_table[mulcov_id].rate_id      =  int( DISMOD_AT_NULL_INT );
 		mulcov_table[mulcov_id].integrand_id =  int( dismod_at::mtother_enum );
 		mulcov_table[mulcov_id].covariate_id =  int( 0 );
-		mulcov_table[mulcov_id].smooth_id    =  int( 0 );
+		mulcov_table[mulcov_id].group_smooth_id    =  int( 0 );
 	}
 	// rate_table
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);

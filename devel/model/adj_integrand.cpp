@@ -204,7 +204,7 @@ a1_double_rate_    (number_rate_enum)
 	{
 		size_t rate_id      = size_t( mulcov_table[mulcov_id].rate_id );
 		size_t integrand_id = size_t(mulcov_table[mulcov_id].integrand_id);
-		int    smooth_id    = mulcov_table[mulcov_id].smooth_id;
+		int    smooth_id    = mulcov_table[mulcov_id].group_smooth_id;
 		if( smooth_id == DISMOD_AT_NULL_INT )
 			mulcov_pack_info_[mulcov_id].smooth_id = size_t(smooth_id);
 		else switch( mulcov_table[mulcov_id].mulcov_type )

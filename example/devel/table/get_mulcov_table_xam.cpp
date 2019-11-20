@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -71,8 +71,8 @@ bool get_mulcov_table_xam(void)
 	ok  &= mulcov_table[0].covariate_id == 1;
 	ok  &= mulcov_table[1].covariate_id == 2;
 	//
-	ok  &= mulcov_table[0].smooth_id == 2;
-	ok  &= mulcov_table[1].smooth_id == 2;
+	ok  &= mulcov_table[0].group_smooth_id == 2;
+	ok  &= mulcov_table[1].group_smooth_id == 2;
 	//
 	// close database and return
 	sqlite3_close(db);

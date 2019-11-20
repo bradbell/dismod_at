@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -68,7 +68,7 @@ bool fixed_effect_xam(void)
 	mulcov_table[0].rate_id      = -1;
 	mulcov_table[0].integrand_id = 0;
 	mulcov_table[0].covariate_id = 0;
-	mulcov_table[0].smooth_id    = 1;
+	mulcov_table[0].group_smooth_id    = 1;
 	n_fixed_effect += smooth_table[1].n_age * smooth_table[1].n_time;
 	//
 	// mulcov_meas_noise
@@ -76,7 +76,7 @@ bool fixed_effect_xam(void)
 	mulcov_table[1].rate_id      = -1;
 	mulcov_table[1].integrand_id = 0;
 	mulcov_table[1].covariate_id = 1;
-	mulcov_table[1].smooth_id    = 0;
+	mulcov_table[1].group_smooth_id    = 0;
 	n_fixed_effect += smooth_table[0].n_age * smooth_table[0].n_time;
 	//
 	// mulcov_rate_value
@@ -84,7 +84,7 @@ bool fixed_effect_xam(void)
 	mulcov_table[2].rate_id      = 3;
 	mulcov_table[2].integrand_id = 0;
 	mulcov_table[2].covariate_id = 2;
-	mulcov_table[2].smooth_id    = 1;
+	mulcov_table[2].group_smooth_id    = 1;
 	n_fixed_effect += smooth_table[1].n_age * smooth_table[1].n_time;
 	//
 	// pack_object

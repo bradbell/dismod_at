@@ -160,7 +160,7 @@ bool avg_noise_effect_xam(void)
 	mulcov_table[0].rate_id      =  int( DISMOD_AT_NULL_INT );
 	mulcov_table[0].integrand_id =  int( dismod_at::mtother_enum );
 	mulcov_table[0].covariate_id =  0;
-	mulcov_table[0].smooth_id    =  0;
+	mulcov_table[0].group_smooth_id    =  0;
 
 	// rate_table
 	vector<dismod_at::rate_struct>   rate_table(dismod_at::number_rate_enum);

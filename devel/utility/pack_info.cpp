@@ -310,7 +310,7 @@ n_child_        ( child_id2node_id.size() )
 			match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
 			match |= mulcov_table[mulcov_id].mulcov_type  == meas_noise_enum;
 			match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
-			match &= mulcov_table[mulcov_id].smooth_id!=DISMOD_AT_NULL_INT;
+			match &= mulcov_table[mulcov_id].group_smooth_id!=DISMOD_AT_NULL_INT;
 			if( match )
 			{	size_t covariate_id = size_t(
 					mulcov_table[mulcov_id].covariate_id
@@ -334,7 +334,7 @@ n_child_        ( child_id2node_id.size() )
 						error_exit(msg, table_name, mulcov_id);
 					}
 				}
-				size_t smooth_id = mulcov_table[mulcov_id].smooth_id;
+				size_t smooth_id = mulcov_table[mulcov_id].group_smooth_id;
 				size_t n_age     = smooth_table[smooth_id].n_age;
 				size_t n_time    = smooth_table[smooth_id].n_time;
 				//
@@ -358,7 +358,7 @@ n_child_        ( child_id2node_id.size() )
 		{	bool match;
 			match  = mulcov_table[mulcov_id].mulcov_type  == rate_value_enum;
 			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
-			match &= mulcov_table[mulcov_id].smooth_id!=DISMOD_AT_NULL_INT;
+			match &= mulcov_table[mulcov_id].group_smooth_id!=DISMOD_AT_NULL_INT;
 			if( match )
 			{	size_t covariate_id = size_t(
 					mulcov_table[mulcov_id].covariate_id
@@ -373,7 +373,7 @@ n_child_        ( child_id2node_id.size() )
 						error_exit(msg, table_name, mulcov_id);
 					}
 				}
-				size_t smooth_id = mulcov_table[mulcov_id].smooth_id;
+				size_t smooth_id = mulcov_table[mulcov_id].group_smooth_id;
 				size_t n_age     = smooth_table[smooth_id].n_age;
 				size_t n_time    = smooth_table[smooth_id].n_time;
 				//

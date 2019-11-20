@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -21,7 +21,9 @@ namespace dismod_at {
 		int              rate_id;
 		int              integrand_id;
 		int              covariate_id;
-		int              smooth_id;
+		int              group_id;
+		int              group_smooth_id;
+		int              subgroup_smooth_id;
 	};
 	extern CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3*  db);
 }

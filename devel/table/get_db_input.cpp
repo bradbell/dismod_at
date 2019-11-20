@@ -208,10 +208,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_prior_id, prior);
 
 	// mulcov table
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id,      rate);
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, integrand_id, integrand);
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, covariate_id, covariate);
-	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, smooth_id,    smooth);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id,             rate);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, integrand_id,        integrand);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, covariate_id,        covariate);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, group_smooth_id,     smooth);
+	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, subgroup_smooth_id,  smooth);
 
 	// data table
 	DISMOD_AT_CHECK_PRIMARY_ID(data, integrand_id, integrand);

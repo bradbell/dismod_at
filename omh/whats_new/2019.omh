@@ -69,6 +69,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 11-20$$
+The automatic conversion of $code meas_std$$ to
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ has been removed;
+see $cref/04-08/whats_new_2019/04-08/$$ below.
+
 $head 11-18$$
 Group all of the sections for the prior of the model variables; see
 $cref variable_prior$$.
