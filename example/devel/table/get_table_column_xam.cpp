@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-16 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -88,6 +88,20 @@ bool get_table_column_xam(void)
 	ok &= column_type    == "real";
 	ok &= real_result[0] == 0.0;
 	ok &= real_result[1] == 1.0;
+
+	// check return value when column does not exist
+	column_name = "bad_column_name";
+	column_type = dismod_at::get_table_column_type(
+		db, table_name, column_name
+	);
+	ok &= column_type == "";
+
+	// check return value when table does not exist
+	table_name = "bad_table_name";
+	column_type = dismod_at::get_table_column_type(
+		db, table_name, column_name
+	);
+	ok &= column_type == "";
 
 	// close database and return
 	sqlite3_close(db);

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -53,7 +53,9 @@ This return value has prototype
 $codei%
 	std::string %column_type%
 %$$
-Its value is either $code text$$, $code integer$$, or $code real$$
+If there is no column named $icode column_name$$ in the table
+named $icode table_name$$, $icode column_type$$ is the empty string.
+Otherwise its value is either $code text$$, $code integer$$, or $code real$$
 depending on the type of the column in the database.
 
 $head result$$
@@ -112,6 +114,7 @@ $end
 # include <dismod_at/configure.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/exec_sql_cmd.hpp>
 
 namespace {
 	using std::string;
@@ -120,7 +123,6 @@ namespace {
 	typedef int (*callback_type)(void*, int, char**, char**);
 
 	// set by get_column, used by convert
-	sqlite3* db_;
 	string   table_name_;
 	string   column_name_;
 
@@ -218,52 +220,47 @@ std::string get_table_column_type(
 	sqlite3*           db          ,
 	const std::string& table_name  ,
 	const std::string& column_name )
-{	// check the type for this column
-
-	// set globals used by error messages
-	db_         = db;
-	table_name_ = table_name;
-	column_name_ = column_name;
-
-	const char *zDataType;
-	const char *zCollSeq;
-	int NotNull;
-	int PrimaryKey;
-	int Autoinc;
-	int rc = sqlite3_table_column_metadata(
-		db,
-		"main",
-		table_name.c_str(),
-		column_name.c_str(),
-		&zDataType,
-		&zCollSeq,
-		&NotNull,
-		&PrimaryKey,
-		&Autoinc
-	);
-	if( rc )
-	{	std::string message = "SQL error: ";
-		message += sqlite3_errmsg(db);
-		error_exit(message);
+{	// check if column exists
+	char sep = ',';
+	std::string sql_cmd = "PRAGMA table_info(" + table_name + ")";
+	std::string sql_ret = exec_sql_cmd(db, sql_cmd, sep);
+	std::string column_type = "";
+	size_t next_line       = 0;
+	while( next_line < sql_ret.size() && column_type == "" )
+	{	// start of next column name in this table
+		size_t start = sql_ret.find(sep, next_line) + 1;
+		size_t stop  = sql_ret.find(sep, start);
+		std::string column = sql_ret.substr(start, stop - start);
+		if( column == column_name )
+		{	start        = stop + 1;
+			stop         = sql_ret.find(sep, start);
+			column_type  = sql_ret.substr(start, stop - start);
+			assert( stop > start );
+		}
+		//
+		next_line = sql_ret.find('\n', next_line) + 1;
 	}
-	std::string ctype(zDataType);
+	if( column_type == "" )
+		return column_type;
 	//
 	// sqlite seems to use upper case for its types
-	for(size_t i = 0; i < ctype.size(); i++)
-		ctype[i] = char( std::tolower( ctype[i] ) );
+	for(size_t i = 0; i < column_type.size(); i++)
+		column_type[i] = char( std::tolower( column_type[i] ) );
 	//
 	// sqlite seems to use int for its integer type
-	if( ctype == "int" )
-		ctype = "integer";
+	if( column_type == "int" )
+		column_type = "integer";
 	//
-	bool ok = ctype == "integer" || ctype == "text" || ctype == "real";
+	bool ok = column_type == "integer";
+	ok |= column_type == "text";
+	ok |= column_type == "real";
 	if( ! ok )
-	{	string msg = "Column " + column_name + " has type " + ctype
+	{	string msg = "Column " + column_name + " has type " + column_type
 			+ "\nwhich is not one of the following: integer, real, or text";
 		dismod_at::error_exit(msg, table_name_);
 	}
 
-	return ctype;
+	return column_type;
 }
 
 
