@@ -31,11 +31,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|mulcov_meas_value_info\([^a-z]\)|group_meas_value_info\1|g
-s|mulcov_meas_value_n_cov\([^a-z]\)|group_meas_value_n_cov\1|g
-#
-s|mulcov_meas_noise_info\([^a-z]\)|group_meas_noise_info\1|g
-s|mulcov_meas_noise_n_cov\([^a-z]\)|group_meas_noise_n_cov\1|g
-#
-s|mulcov_rate_value_info\([^a-z]\)|group_rate_value_info\1|g
-s|mulcov_rate_value_n_cov\([^a-z]\)|group_rate_value_n_cov\1|g
+s|node_rate_info\([^a-z]\)|node_rate_value_info\1|g

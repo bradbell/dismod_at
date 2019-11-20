@@ -285,7 +285,7 @@ bool avg_yes_ode_xam(void)
 	size_t n_rate = dismod_at::number_rate_enum;
 	for(size_t child_id = 0; child_id <= n_child; child_id++)
 	{	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-		{	info = pack_object.node_rate_info(rate_id, child_id);
+		{	info = pack_object.node_rate_value_info(rate_id, child_id);
 			for(size_t k = 0; k < info.n_var; k++)
 			{	if( rate_id == size_t(dismod_at::iota_enum) )
 				{	if( child_id == n_child )

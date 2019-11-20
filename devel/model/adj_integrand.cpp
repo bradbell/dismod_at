@@ -359,7 +359,7 @@ CppAD::vector<Float> adj_integrand::line(
 	{	rate[rate_id].resize(n_line);
 		//
 		// parent rate for each point in the line
-		info             = pack_object_.node_rate_info(rate_id, n_child);
+		info             = pack_object_.node_rate_value_info(rate_id, n_child);
 		size_t smooth_id = info.smooth_id;
 		//
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
@@ -389,7 +389,7 @@ CppAD::vector<Float> adj_integrand::line(
 		// include the child effect
 		if( child < n_child )
 		{	// child effect rate for each point in the line
-			info      = pack_object_.node_rate_info(rate_id, child);
+			info      = pack_object_.node_rate_value_info(rate_id, child);
 			smooth_id = info.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	// interpolate from smoothing grid to line

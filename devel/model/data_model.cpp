@@ -344,7 +344,7 @@ avg_noise_obj_(
 			for(size_t ell = 0; ell < rate_id.size(); ell++)
 			{	// check if any random effects for this rate are not constant
 				size_t smooth_id =
-					pack_object.node_rate_info(rate_id[ell], child).smooth_id;
+					pack_object.node_rate_value_info(rate_id[ell], child).smooth_id;
 				if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 				{	const smooth_info& s_info = s_info_vec[smooth_id];
 					size_t             n_a  = s_info.age_size();

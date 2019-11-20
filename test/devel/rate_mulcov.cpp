@@ -296,7 +296,7 @@ bool rate_mulcov(void)
 	vector<Float> pack_vec( pack_object.size() );
 	dismod_at::pack_info::subvec_info info;
 	for(size_t child_id = 0; child_id <= n_child; child_id++)
-	{	info = pack_object.node_rate_info(omega_rate_id, child_id);
+	{	info = pack_object.node_rate_value_info(omega_rate_id, child_id);
 		dismod_at::smooth_info& s_info = s_info_vec[info.smooth_id];
 		for(size_t i = 0; i < s_info.age_size(); i++)
 		{	for(size_t j = 0; j < s_info.time_size(); j++)

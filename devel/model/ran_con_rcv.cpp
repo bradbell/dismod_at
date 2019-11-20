@@ -101,7 +101,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	{	if( zero_sum_random[rate_id] )
 		{	// packing information for first child
 			dismod_at::pack_info::subvec_info
-				info_0 = pack_object.node_rate_info(rate_id, 0);
+				info_0 = pack_object.node_rate_value_info(rate_id, 0);
 			// child smoothing id for this rate
 			size_t smooth_id = info_0.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
@@ -143,7 +143,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	if( zero_sum_random[rate_id] )
 	{	// packing information for first child and this rate
 		dismod_at::pack_info::subvec_info
-			info_0 = pack_object.node_rate_info(rate_id, 0);
+			info_0 = pack_object.node_rate_value_info(rate_id, 0);
 		//
 		// child smoothing id for first rate
 		size_t smooth_id = info_0.smooth_id;
@@ -156,7 +156,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 			for(size_t j = 0; j < n_child; j++)
 			{	// packing information for this child and this rate
 				dismod_at::pack_info::subvec_info
-					info_j = pack_object.node_rate_info(rate_id, j);
+					info_j = pack_object.node_rate_value_info(rate_id, j);
 				//
 				// for each rate, all children have the same smoothing
 				assert( info_j.smooth_id == info_0.smooth_id );

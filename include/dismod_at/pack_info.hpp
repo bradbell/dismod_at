@@ -57,7 +57,7 @@ private:
 	CppAD::vector<size_t>  mulstd_offset_;
 
 	// node_rate information
-	CppAD::vector< CppAD::vector<subvec_info> > node_rate_info_;
+	CppAD::vector< CppAD::vector<subvec_info> > node_rate_value_info_;
 
 	// group_rate_value information
 	CppAD::vector< CppAD::vector<subvec_info> > group_rate_value_info_;
@@ -100,7 +100,7 @@ public:
 	size_t mulstd_offset(size_t smooth_id, size_t k) const;
 
 	// node_rate_
-	subvec_info node_rate_info(size_t rate_id, size_t j) const;
+	subvec_info node_rate_value_info(size_t rate_id, size_t j) const;
 
 	// group_rate_value_
 	size_t      group_rate_value_n_cov(size_t integrand_id) const;

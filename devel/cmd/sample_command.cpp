@@ -266,7 +266,7 @@ void sample_command(
 		for(size_t child_id = 0; child_id < n_child; ++child_id)
 		{	// packing information for this rate, child
 			dismod_at::pack_info::subvec_info info =
-				pack_object.node_rate_info(rate_id, child_id);
+				pack_object.node_rate_value_info(rate_id, child_id);
 			if( info.smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset = info.offset;
 				size_t n_grid = info.n_var;

@@ -142,7 +142,7 @@ bool pack_info_xam(void)
 	size_t n_rate = dismod_at::number_rate_enum;
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	for(size_t j = 0; j <= n_child;  j++)
-		{	info = pack_object.node_rate_info(rate_id, j);
+		{	info = pack_object.node_rate_value_info(rate_id, j);
 			for(size_t k = 0; k < info.n_var; k++)
 			{	pack_vec[info.offset + k] = double(rate_id + 3 + j + k);
 				count++;
@@ -203,7 +203,7 @@ bool pack_info_xam(void)
 	// check rates
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	for(size_t j = 0; j <= n_child;  j++)
-		{	info = pack_object.node_rate_info(rate_id, j);
+		{	info = pack_object.node_rate_value_info(rate_id, j);
 			for(size_t k = 0; k < info.n_var; k++)
 				ok &= pack_vec[info.offset + k] == double(rate_id + 3 + j + k);
 		}
