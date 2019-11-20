@@ -21,6 +21,7 @@ namespace dismod_at {
 		// values in avgint_struct
 		int         integrand_id;
 		int         node_id;
+		int         subgroup_id;
 		int         weight_id;
 		double      age_lower;
 		double      age_upper;

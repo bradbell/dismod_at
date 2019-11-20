@@ -218,11 +218,13 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(data, integrand_id, integrand);
 	DISMOD_AT_CHECK_PRIMARY_ID(data, density_id,   density);
 	DISMOD_AT_CHECK_PRIMARY_ID(data, node_id,      node);
+	DISMOD_AT_CHECK_PRIMARY_ID(data, subgroup_id,  subgroup);
 	DISMOD_AT_CHECK_PRIMARY_ID(data, weight_id,    weight);
 
 	// avgint table
 	DISMOD_AT_CHECK_PRIMARY_ID(avgint, integrand_id, integrand);
 	DISMOD_AT_CHECK_PRIMARY_ID(avgint, node_id,      node);
+	DISMOD_AT_CHECK_PRIMARY_ID(avgint, subgroup_id,  subgroup);
 	DISMOD_AT_CHECK_PRIMARY_ID(avgint, weight_id,    weight);
 
 	// rate table

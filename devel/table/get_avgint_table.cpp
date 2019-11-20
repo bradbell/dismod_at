@@ -229,14 +229,14 @@ void get_avgint_table(
 		{
 # if 0
 			string message =
-			"The mulcov_table does not contain the subgroup_id column.\n"
+			"The avgint table does not contain the subgroup_id column.\n"
 			"Using default value: subgroup_id = 0\n"
 			"This kluge will not last long.\n";
 			log_message(db, &std::cout, "warning", message);
 # endif
 			subgroup_id.resize(n_avgint);
 			for(size_t i = 0; i < n_avgint; ++i)
-				subgroup_id[i]           = 0;
+				subgroup_id[i] = 0;
 		}
 		else
 		{	get_table_column(db, table_name, column_name, subgroup_id);
