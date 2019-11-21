@@ -243,6 +243,7 @@ void data_subset(
 			one_sample.original_id  = int( data_id );
 			one_sample.integrand_id = data_table[data_id].integrand_id;
 			one_sample.node_id      = data_table[data_id].node_id;
+			one_sample.subgroup_id  = data_table[data_id].subgroup_id;
 			one_sample.weight_id    = data_table[data_id].weight_id;
 			one_sample.age_lower    = data_table[data_id].age_lower;
 			one_sample.age_upper    = data_table[data_id].age_upper;
