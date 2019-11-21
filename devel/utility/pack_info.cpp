@@ -168,7 +168,7 @@ n_child_        ( child_id2node_id.size() )
 	null_info.n_var        = DISMOD_AT_NULL_SIZE_T;
 	null_info.offset       = DISMOD_AT_NULL_SIZE_T;
 
-	// set first_subgroup_id_, group_size_
+	// set first_subgroup_id_, subgroup_size_
 	size_t previous_group_id  = size_t( subgroup_table[0].group_id );
 	assert( previous_group_id == 0 );
 	size_t previous_subgroup_id = 0;
@@ -179,13 +179,13 @@ n_child_        ( child_id2node_id.size() )
 		if( group_id != previous_group_id )
 		{	assert( group_id == previous_group_id + 1 );
 			//
-			group_size_.push_back( subgroup_id - previous_subgroup_id );
+			subgroup_size_.push_back( subgroup_id - previous_subgroup_id );
 			first_subgroup_id_.push_back( subgroup_id );
 			previous_group_id    = group_id;
 			previous_subgroup_id = subgroup_id;
 		}
 	}
-	group_size_.push_back( n_subgroup - previous_subgroup_id );
+	subgroup_size_.push_back( n_subgroup - previous_subgroup_id );
 
 	// initialize offset
 	size_t offset = 0;
@@ -396,15 +396,21 @@ $$
 $section Variable Packing Information: Sizes$$
 
 $head Syntax$$
-$icode%size%            = %pack_object%.size()
+$icode%size%              = %pack_object%.size()
 %$$
-$icode%integrand_size%  = %pack_object%.integrand_size()
+$icode%integrand_size%    = %pack_object%.integrand_size()
 %$$
-$icode%child_size%      = %pack_object%.child_size()
+$icode%child_size%        = %pack_object%.child_size()
 %$$
-$icode%smooth_size%     = %pack_object%.smooth_size()
+$icode%smooth_size%       = %pack_object%.smooth_size()
 %$$
-$icode%random_size%     = %pack_object%.random_size()
+$icode%random_size%       = %pack_object%.random_size()
+%$$
+$icode%group_size%        = %pack_object%.group_size()
+%$$
+$icode%subgroup_size%     = %pack_object%.subgroup_size(%group_id%)
+%$$
+$icode%first_subgroup_id% = %pack_object%.first_subgroup_id(%group_id%)
 %$$
 
 $head pack_object$$
@@ -412,9 +418,9 @@ This object has prototype
 $codei%
 	const pack_info %pack_object%
 %$$
+i.e., these member functions to not modify $icode pack_object$$.
 
 $head size$$
-This function is $code const$$.
 Its return value has prototype
 $codei%
 	size_t %size%
@@ -423,39 +429,64 @@ and is the total number of variables; i.e.,
 the number of elements in the packed variable vector.
 
 $head integrand_size$$
-This function is $code const$$.
-Its return value has prototype
+This return value has prototype
 $codei%
 	size_t %integrand_size%
 %$$
-and is the value of $icode n_integrand$$ in the constructor.
+and is the size of the
+$cref/integrand_table/get_integrand_table/integrand_table/$$.
 
 $head child_size$$
-This function is $code const$$.
-Its return value has prototype
+This return value has prototype
 $codei%
 	size_t %child_size%
 %$$
-and is the value of
-$icode%child_id2node_id%.size()%$$.
+and is the number of children.
 
 $head smooth_size$$
-This function is $code const$$.
-Its return value has prototype
+This return value has prototype
 $codei%
 	size_t %smooth_size%
 %$$
-and is the value is $icode%smooth_table%.size()%$$ in the constructor.
+and is the size of
+$cref/smooth_table/get_smooth_table/smooth_table/$$.
 
 $head random_size$$
-This function is $code const$$.
-Its return value has prototype
+This return value has prototype
 $codei%
 	size_t %random_size%
 %$$
 and is the number of
 $cref/random effects/model_variables/Random Effects, u/$$ in the model
 (counting those that are constrained with equal upper and lower limits).
+
+$head group_size$$
+This return value has prototype
+$codei%
+	size_t %group_size%
+%$$
+and is the number of groups in the $cref subgroup_table$$.
+
+$head group_id$$
+This argument has prototype
+$codei%
+	size_t %group_id%
+%$$
+and must be less than $icode group_size$$.
+
+$head subgroup_size$$
+This return value has prototype
+$codei%
+	size_t %subgroup_size%
+%$$
+and is the number of subgroups in the specified group.
+
+$head first_subgroup_id$$
+This return value has prototype
+$codei%
+	size_t %first_subgroup_id%
+%$$
+and is the index of the first subgroup in the specified group.
 
 $end
 */
@@ -480,6 +511,19 @@ size_t pack_info::smooth_size(void) const
 // random_size
 size_t pack_info::random_size(void) const
 {	return n_random_; }
+
+// group_size
+size_t pack_info::group_size(void) const
+{	return subgroup_size_.size(); }
+
+// subgroup_size
+size_t pack_info::subgroup_size(size_t group_id) const
+{	return subgroup_size_[group_id]; }
+
+// first_subgroup_id
+size_t pack_info::first_subgroup_id(size_t group_id) const
+{	return first_subgroup_id_[group_id]; }
+
 
 /*
 ------------------------------------------------------------------------------

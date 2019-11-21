@@ -53,7 +53,7 @@ private:
 
 	// number of subgroups in each group and
 	// subgroup_id corresponding to first member of each group
-	CppAD::vector<size_t>  group_size_;
+	CppAD::vector<size_t>  subgroup_size_;
 	CppAD::vector<size_t>  first_subgroup_id_;
 
 	// mulstd variable offsets
@@ -98,6 +98,15 @@ public:
 
 	// number of random_effects
 	size_t random_size(void) const;
+
+	// number of groups
+	size_t group_size(void) const;
+
+	// number of subgroups in each group
+	size_t subgroup_size(size_t group) const;
+
+	// first subgroup in each group
+	size_t first_subgroup_id(size_t group) const;
 
 	// mulstd
 	size_t mulstd_offset(size_t smooth_id, size_t k) const;
