@@ -343,20 +343,21 @@ n_child_        ( child_id2node_id.size() )
 	// group_meas_value_info_ and group_meas_noise_info_
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
-	{	bool match;
-		match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
-		match |= mulcov_table[mulcov_id].mulcov_type  == meas_noise_enum;
-		match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
-		match &= mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT;
+	{	const mulcov_struct& mulcov_obj = mulcov_table[mulcov_id];
+		bool match;
+		match  = mulcov_obj.mulcov_type  == meas_value_enum;
+		match |= mulcov_obj.mulcov_type  == meas_noise_enum;
+		match &= mulcov_obj.integrand_id == int(integrand_id);
+		match &= mulcov_obj.group_smooth_id != DISMOD_AT_NULL_INT;
 		if( match )
-		{	size_t covariate_id = size_t(mulcov_table[mulcov_id].covariate_id);
+		{	size_t covariate_id = size_t(mulcov_obj.covariate_id);
 			string mulcov_type;
 			CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULL_PTR;
-			if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
+			if( mulcov_obj.mulcov_type == meas_value_enum )
 			{	info_vec    = &( group_meas_value_info_[integrand_id]) ;
 				mulcov_type = "'meas_value'";
 			}
-			if( mulcov_table[mulcov_id].mulcov_type == meas_noise_enum )
+			if( mulcov_obj.mulcov_type == meas_noise_enum )
 			{	info_vec    = &( group_meas_noise_info_[integrand_id]) ;
 				mulcov_type = "'meas_noise'";
 			}
@@ -369,7 +370,7 @@ n_child_        ( child_id2node_id.size() )
 					error_exit(msg, table_name, mulcov_id);
 				}
 			}
-			size_t smooth_id = mulcov_table[mulcov_id].group_smooth_id;
+			size_t smooth_id = mulcov_obj.group_smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
 			//
@@ -387,12 +388,13 @@ n_child_        ( child_id2node_id.size() )
 	// group_rate_value_info_
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
-	{	bool match;
-		match  = mulcov_table[mulcov_id].mulcov_type  == rate_value_enum;
-		match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
-		match &= mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT;
+	{	const mulcov_struct& mulcov_obj = mulcov_table[mulcov_id];
+		bool match;
+		match  = mulcov_obj.mulcov_type  == rate_value_enum;
+		match &= mulcov_obj.rate_id == int(rate_id);
+		match &= mulcov_obj.group_smooth_id != DISMOD_AT_NULL_INT;
 		if( match )
-		{	size_t covariate_id = size_t(mulcov_table[mulcov_id].covariate_id);
+		{	size_t covariate_id = size_t(mulcov_obj.covariate_id);
 			CppAD::vector<subvec_info>& info_vec =
 				group_rate_value_info_[rate_id];
 			for(size_t j = 0; j < info_vec.size(); j++)
@@ -403,7 +405,7 @@ n_child_        ( child_id2node_id.size() )
 					error_exit(msg, table_name, mulcov_id);
 				}
 			}
-			size_t smooth_id = mulcov_table[mulcov_id].group_smooth_id;
+			size_t smooth_id = mulcov_obj.group_smooth_id;
 			size_t n_age     = smooth_table[smooth_id].n_age;
 			size_t n_time    = smooth_table[smooth_id].n_time;
 			//
