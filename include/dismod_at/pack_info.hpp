@@ -50,7 +50,9 @@ private:
 	// number of random effects
 	size_t n_random_;
 
+	// number of subgroups in each group and
 	// subgroup_id corresponding to first member of each group
+	CppAD::vector<size_t>  group_size_;
 	CppAD::vector<size_t>  first_subgroup_id_;
 
 	// mulstd variable offsets

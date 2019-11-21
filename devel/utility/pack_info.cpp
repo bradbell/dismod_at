@@ -210,19 +210,24 @@ n_integrand_    ( n_integrand )           ,
 n_child_        ( child_id2node_id.size() )
 {	using std::string;
 
-	// set first_subgroup_id_
-	first_subgroup_id_.push_back(0);
-	int previous_group_id = subgroup_table[0].group_id;
-	size_t n_subgroup     = subgroup_table.size();
+	// set first_subgroup_id_, group_size_
+	size_t previous_group_id  = size_t( subgroup_table[0].group_id );
 	assert( previous_group_id == 0 );
+	size_t previous_subgroup_id = 0;
+	first_subgroup_id_.push_back(previous_subgroup_id);
+	size_t n_subgroup = subgroup_table.size();
 	for(size_t subgroup_id = 1; subgroup_id < n_subgroup; ++subgroup_id)
-	{	int group_id = subgroup_table[subgroup_id].group_id;
+	{	size_t group_id = size_t( subgroup_table[subgroup_id].group_id );
 		if( group_id != previous_group_id )
 		{	assert( group_id == previous_group_id + 1 );
+			//
+			group_size_.push_back( subgroup_id - previous_subgroup_id );
 			first_subgroup_id_.push_back( subgroup_id );
-			previous_group_id = group_id;
+			previous_group_id    = group_id;
+			previous_subgroup_id = subgroup_id;
 		}
 	}
+	group_size_.push_back( n_subgroup - previous_subgroup_id );
 
 	// initialize offset
 	size_t offset = 0;
@@ -344,9 +349,7 @@ n_child_        ( child_id2node_id.size() )
 		match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
 		match &= mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT;
 		if( match )
-		{	size_t covariate_id = size_t(
-				mulcov_table[mulcov_id].covariate_id
-			);
+		{	size_t covariate_id = size_t(mulcov_table[mulcov_id].covariate_id);
 			string mulcov_type;
 			CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULL_PTR;
 			if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
@@ -390,9 +393,7 @@ n_child_        ( child_id2node_id.size() )
 		match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
 		match &= mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT;
 		if( match )
-		{	size_t covariate_id = size_t(
-				mulcov_table[mulcov_id].covariate_id
-			);
+		{	size_t covariate_id = size_t(mulcov_table[mulcov_id].covariate_id);
 			CppAD::vector<subvec_info>& info_vec =
 				group_rate_value_info_[rate_id];
 			for(size_t j = 0; j < info_vec.size(); j++)
