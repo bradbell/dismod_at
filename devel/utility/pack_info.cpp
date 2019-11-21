@@ -214,8 +214,9 @@ n_child_        ( child_id2node_id.size() )
 	first_subgroup_id_.push_back(0);
 	int previous_group_id = subgroup_table[0].group_id;
 	size_t n_subgroup     = subgroup_table.size();
+	assert( previous_group_id == 0 );
 	for(size_t subgroup_id = 1; subgroup_id < n_subgroup; ++subgroup_id)
-	{	size_t group_id = subgroup_table[subgroup_id].group_id;
+	{	int group_id = subgroup_table[subgroup_id].group_id;
 		if( group_id != previous_group_id )
 		{	assert( group_id == previous_group_id + 1 );
 			first_subgroup_id_.push_back( subgroup_id );
@@ -235,14 +236,15 @@ n_child_        ( child_id2node_id.size() )
 	// random effects
 	// -----------------------------------------------------------------------
 
-	// node_rate_value_info_, n_random_
+	// node_rate_value_info_
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	for(size_t j = 0;  j < n_child_; j++)
+	{	size_t child_nslist_id = rate_table[rate_id].child_nslist_id;
+		for(size_t j = 0;  j < n_child_; j++)
 		{	size_t smooth_id = rate_table[rate_id].child_smooth_id;
-			size_t child_nslist_id = rate_table[rate_id].child_nslist_id;
 			if( child_nslist_id != DISMOD_AT_NULL_SIZE_T )
-			{	// search for the smooth_id for this child
-				assert( smooth_id == DISMOD_AT_NULL_SIZE_T );
+			{	assert( smooth_id == DISMOD_AT_NULL_SIZE_T );
+				//
+				// search for the smooth_id for this child
 				size_t child_node_id = child_id2node_id[j];
 				for(size_t i = 0; i < nslist_pair.size(); i++)
 				{	size_t nslist_id = nslist_pair[i].nslist_id;
@@ -257,8 +259,10 @@ n_child_        ( child_id2node_id.size() )
 			}
 			node_rate_value_info_[rate_id][j].smooth_id = smooth_id;
 			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-			{	node_rate_value_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
-				node_rate_value_info_[rate_id][j].offset = DISMOD_AT_NULL_SIZE_T;
+			{	node_rate_value_info_[rate_id][j].n_var  =
+					DISMOD_AT_NULL_SIZE_T;
+				node_rate_value_info_[rate_id][j].offset =
+					DISMOD_AT_NULL_SIZE_T;
 			}
 			else
 			{	size_t n_age  = smooth_table[smooth_id].n_age;
@@ -267,13 +271,17 @@ n_child_        ( child_id2node_id.size() )
 				node_rate_value_info_[rate_id][j].n_var     = n_var;
 				node_rate_value_info_[rate_id][j].offset    = offset;
 				offset += n_var;
+
 				// check_rate_table should have checked this assumption
 				assert( rate_id != pini_enum || n_age == 1 );
 			}
 		}
 	}
-	n_random_ = offset;
 
+	// subgroup_rate_value_info_
+
+	// n_random_
+	n_random_ = offset;
 
 	// -----------------------------------------------------------------------
 	// fixed effects
@@ -301,14 +309,16 @@ n_child_        ( child_id2node_id.size() )
 			mulstd_offset_[smooth_id * 3 + 2] = offset++;
 	}
 
-	// node_rate_value_info_ and n_random_
+	// node_rate_value_info_
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{
 		size_t smooth_id = rate_table[rate_id].parent_smooth_id;
 		node_rate_value_info_[rate_id][n_child_].smooth_id = smooth_id;
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-		{	node_rate_value_info_[rate_id][n_child_].n_var  = DISMOD_AT_NULL_SIZE_T;
-			node_rate_value_info_[rate_id][n_child_].offset = DISMOD_AT_NULL_SIZE_T;
+		{	node_rate_value_info_[rate_id][n_child_].n_var  =
+				DISMOD_AT_NULL_SIZE_T;
+			node_rate_value_info_[rate_id][n_child_].offset =
+				DISMOD_AT_NULL_SIZE_T;
 		}
 		else
 		{	size_t n_age  = smooth_table[smooth_id].n_age;
@@ -327,88 +337,84 @@ n_child_        ( child_id2node_id.size() )
 	group_meas_value_info_.resize( n_integrand );
 	group_meas_noise_info_.resize( n_integrand );
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	size_t mulcov_id;
-		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
-		{	bool match;
-			match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
-			match |= mulcov_table[mulcov_id].mulcov_type  == meas_noise_enum;
-			match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
-			match &= mulcov_table[mulcov_id].group_smooth_id!=DISMOD_AT_NULL_INT;
-			if( match )
-			{	size_t covariate_id = size_t(
-					mulcov_table[mulcov_id].covariate_id
-				);
-				string mulcov_type;
-				CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULL_PTR;
-				if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
-				{	info_vec    = &( group_meas_value_info_[integrand_id]) ;
-					mulcov_type = "'meas_value'";
-				}
-				if( mulcov_table[mulcov_id].mulcov_type == meas_noise_enum )
-				{	info_vec    = &( group_meas_noise_info_[integrand_id]) ;
-					mulcov_type = "'meas_noise'";
-				}
-				for(size_t j = 0; j < info_vec->size(); j++)
-				{	if( (*info_vec)[j].covariate_id == covariate_id )
-					{	string msg = "covariate_id appears twice with "
-							"mulcov_type equal to";
-						msg += mulcov_type;
-						string table_name = "mulcov";
-						error_exit(msg, table_name, mulcov_id);
-					}
-				}
-				size_t smooth_id = mulcov_table[mulcov_id].group_smooth_id;
-				size_t n_age     = smooth_table[smooth_id].n_age;
-				size_t n_time    = smooth_table[smooth_id].n_time;
-				//
-				subvec_info info;
-				info.covariate_id = covariate_id;
-				info.smooth_id    = smooth_id;
-				info.n_var        = n_age * n_time;
-				info.offset       = offset;
-				info_vec->push_back(info);
-				//
-				offset           += info.n_var;
+	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
+	{	bool match;
+		match  = mulcov_table[mulcov_id].mulcov_type  == meas_value_enum;
+		match |= mulcov_table[mulcov_id].mulcov_type  == meas_noise_enum;
+		match &= mulcov_table[mulcov_id].integrand_id == int(integrand_id);
+		match &= mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT;
+		if( match )
+		{	size_t covariate_id = size_t(
+				mulcov_table[mulcov_id].covariate_id
+			);
+			string mulcov_type;
+			CppAD::vector<subvec_info>* info_vec = DISMOD_AT_NULL_PTR;
+			if( mulcov_table[mulcov_id].mulcov_type == meas_value_enum )
+			{	info_vec    = &( group_meas_value_info_[integrand_id]) ;
+				mulcov_type = "'meas_value'";
 			}
+			if( mulcov_table[mulcov_id].mulcov_type == meas_noise_enum )
+			{	info_vec    = &( group_meas_noise_info_[integrand_id]) ;
+				mulcov_type = "'meas_noise'";
+			}
+			for(size_t j = 0; j < info_vec->size(); j++)
+			{	if( (*info_vec)[j].covariate_id == covariate_id )
+				{	string msg = "covariate_id appears twice with "
+						"mulcov_type equal to";
+					msg += mulcov_type;
+					string table_name = "mulcov";
+					error_exit(msg, table_name, mulcov_id);
+				}
+			}
+			size_t smooth_id = mulcov_table[mulcov_id].group_smooth_id;
+			size_t n_age     = smooth_table[smooth_id].n_age;
+			size_t n_time    = smooth_table[smooth_id].n_time;
+			//
+			subvec_info info;
+			info.covariate_id = covariate_id;
+			info.smooth_id    = smooth_id;
+			info.n_var        = n_age * n_time;
+			info.offset       = offset;
+			info_vec->push_back(info);
+			//
+			offset           += info.n_var;
 		}
 	}
 
 	// group_rate_value_info_
 	group_rate_value_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{	size_t mulcov_id;
-		for(mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
-		{	bool match;
-			match  = mulcov_table[mulcov_id].mulcov_type  == rate_value_enum;
-			match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
-			match &= mulcov_table[mulcov_id].group_smooth_id!=DISMOD_AT_NULL_INT;
-			if( match )
-			{	size_t covariate_id = size_t(
-					mulcov_table[mulcov_id].covariate_id
-				);
-				CppAD::vector<subvec_info>& info_vec =
-					group_rate_value_info_[rate_id];
-				for(size_t j = 0; j < info_vec.size(); j++)
-				{	if( info_vec[j].covariate_id == covariate_id )
-					{	string msg = "covariate_id appears twice with "
-							"mulcov_type equal to 'rate_value'";
-						string table_name = "mulcov";
-						error_exit(msg, table_name, mulcov_id);
-					}
+	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
+	{	bool match;
+		match  = mulcov_table[mulcov_id].mulcov_type  == rate_value_enum;
+		match &= mulcov_table[mulcov_id].rate_id == int(rate_id);
+		match &= mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT;
+		if( match )
+		{	size_t covariate_id = size_t(
+				mulcov_table[mulcov_id].covariate_id
+			);
+			CppAD::vector<subvec_info>& info_vec =
+				group_rate_value_info_[rate_id];
+			for(size_t j = 0; j < info_vec.size(); j++)
+			{	if( info_vec[j].covariate_id == covariate_id )
+				{	string msg = "covariate_id appears twice with "
+						"mulcov_type equal to 'rate_value'";
+					string table_name = "mulcov";
+					error_exit(msg, table_name, mulcov_id);
 				}
-				size_t smooth_id = mulcov_table[mulcov_id].group_smooth_id;
-				size_t n_age     = smooth_table[smooth_id].n_age;
-				size_t n_time    = smooth_table[smooth_id].n_time;
-				//
-				subvec_info info;
-				info.covariate_id = covariate_id;
-				info.smooth_id    = smooth_id;
-				info.n_var        = n_age * n_time;
-				info.offset       = offset;
-				info_vec.push_back(info);
-				//
-				offset           += info.n_var;
 			}
+			size_t smooth_id = mulcov_table[mulcov_id].group_smooth_id;
+			size_t n_age     = smooth_table[smooth_id].n_age;
+			size_t n_time    = smooth_table[smooth_id].n_time;
+			//
+			subvec_info info;
+			info.covariate_id = covariate_id;
+			info.smooth_id    = smooth_id;
+			info.n_var        = n_age * n_time;
+			info.offset       = offset;
+			info_vec.push_back(info);
+			//
+			offset           += info.n_var;
 		}
 	}
 
