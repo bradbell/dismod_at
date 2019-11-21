@@ -24,7 +24,7 @@ $spell
 	nslist
 $$
 
-$section Devel Variable Packing Information: Constructor$$
+$section Variable Packing Information: Constructor$$
 
 $head Syntax$$
 $codei%pack_info %pack_object%(
@@ -38,12 +38,6 @@ $codei%pack_info %pack_object%(
 )
 %$$
 $codei%pack_info %pack_copy%(%pack_object%)
-%$$
-$icode%size%            = %pack_object%.size()
-%$$
-$icode%integrand_size%  = %pack_object%.integrand_size()
-%$$
-$icode%child_size%      = %pack_object%.child_size()
 %$$
 
 $head n_integrand$$
@@ -124,50 +118,6 @@ have size zero.
 $head pack_copy$$
 This object is a copy of the $icode pack_object$$ object
 (and acts the same).
-
-$head size$$
-This function is $code const$$.
-Its return value has prototype
-$codei%
-	size_t %size%
-%$$
-and is the total number of variables; i.e.,
-the number of elements in the packed variable vector.
-
-$head integrand_size$$
-This function is $code const$$.
-Its return value has prototype
-$codei%
-	size_t %integrand_size%
-%$$
-and is the value of $icode n_integrand$$ in the constructor.
-
-$head child_size$$
-This function is $code const$$.
-Its return value has prototype
-$codei%
-	size_t %child_size%
-%$$
-and is the value of
-$icode%child_id2node_id%.size()%$$.
-
-$head smooth_size$$
-This function is $code const$$.
-Its return value has prototype
-$codei%
-	size_t %smooth_size%
-%$$
-and is the value is $icode%smooth_table%.size()%$$ in the constructor.
-
-$head random_size$$
-This function is $code const$$.
-Its return value has prototype
-$codei%
-	size_t %random_size%
-%$$
-and is the number of
-$cref/random effects/model_variables/Random Effects, u/$$ in the model
-(counting those that are constrained with equal upper and lower limits).
 
 $head Age-Time Order$$
 When an function of age and time is stored with a specified $icode offset$$
@@ -435,8 +385,81 @@ n_child_        ( child_id2node_id.size() )
 	// size is final offset
 	size_ = offset;
 }
-
 // use default copy constructor
+/*
+-------------------------------------------------------------------------------
+$begin pack_info_sizes$$
+$spell
+	const
+$$
+
+$section Variable Packing Information: Sizes$$
+
+$head Syntax$$
+$icode%size%            = %pack_object%.size()
+%$$
+$icode%integrand_size%  = %pack_object%.integrand_size()
+%$$
+$icode%child_size%      = %pack_object%.child_size()
+%$$
+$icode%smooth_size%     = %pack_object%.smooth_size()
+%$$
+$icode%random_size%     = %pack_object%.random_size()
+%$$
+
+$head pack_object$$
+This object has prototype
+$codei%
+	const pack_info %pack_object%
+%$$
+
+$head size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %size%
+%$$
+and is the total number of variables; i.e.,
+the number of elements in the packed variable vector.
+
+$head integrand_size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %integrand_size%
+%$$
+and is the value of $icode n_integrand$$ in the constructor.
+
+$head child_size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %child_size%
+%$$
+and is the value of
+$icode%child_id2node_id%.size()%$$.
+
+$head smooth_size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %smooth_size%
+%$$
+and is the value is $icode%smooth_table%.size()%$$ in the constructor.
+
+$head random_size$$
+This function is $code const$$.
+Its return value has prototype
+$codei%
+	size_t %random_size%
+%$$
+and is the number of
+$cref/random effects/model_variables/Random Effects, u/$$ in the model
+(counting those that are constrained with equal upper and lower limits).
+
+$end
+*/
+
 
 // size
 size_t pack_info::size(void) const
@@ -471,7 +494,7 @@ $spell
 	dismod
 $$
 
-$section Devel Pack Variables: Standard Deviation Multipliers$$
+$section Pack Variables: Standard Deviation Multipliers$$
 
 $head Syntax$$
 $icode%offset% = %pack_object%.mulstd_offset(%smooth_id%, %k%)
@@ -547,7 +570,7 @@ $spell
 	subvec
 $$
 
-$section Devel Pack Variables: Rates$$
+$section Pack Variables: Rates$$
 
 $head Syntax$$
 $icode%info% = %pack_object%.node_rate_value_info(%rate_id%, %j%)
@@ -640,7 +663,7 @@ $spell
 	subvec
 $$
 
-$section Devel Pack Variables: Measurement Covariate Multipliers$$
+$section Pack Variables: Measurement Covariate Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %pack_object%.group_meas_value_n_cov(%integrand_id%)
@@ -768,7 +791,7 @@ $spell
 	subvec
 $$
 
-$section Devel Pack Variables: Rate Covariate Multipliers$$
+$section Pack Variables: Rate Covariate Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %pack_object%.group_rate_value_n_cov(%rate_id%)
