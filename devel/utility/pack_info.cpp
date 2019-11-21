@@ -232,10 +232,17 @@ n_child_        ( child_id2node_id.size() )
 	// initialize offset
 	size_t offset = 0;
 
-	// resize node_rate_value_info_
+	// resize by number of rates
 	node_rate_value_info_.resize( number_rate_enum );
+	group_rate_value_info_.resize( number_rate_enum );
+
+	// resize by number of children
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 		node_rate_value_info_[rate_id].resize(n_child_ + 1);
+
+	// resize by number of integrands
+	group_meas_value_info_.resize( n_integrand );
+	group_meas_noise_info_.resize( n_integrand );
 
 	// -----------------------------------------------------------------------
 	// random effects
@@ -243,47 +250,42 @@ n_child_        ( child_id2node_id.size() )
 
 	// node_rate_value_info_
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	for(size_t j = 0;  j < n_child_; j++)
 	{	size_t child_nslist_id = rate_table[rate_id].child_nslist_id;
-		for(size_t j = 0;  j < n_child_; j++)
-		{	size_t smooth_id = rate_table[rate_id].child_smooth_id;
-			if( child_nslist_id != DISMOD_AT_NULL_SIZE_T )
-			{	assert( smooth_id == DISMOD_AT_NULL_SIZE_T );
-				//
-				// search for the smooth_id for this child
-				size_t child_node_id = child_id2node_id[j];
-				for(size_t i = 0; i < nslist_pair.size(); i++)
-				{	size_t nslist_id = nslist_pair[i].nslist_id;
-					size_t node_id   = nslist_pair[i].node_id;
-					bool   match     = nslist_id == child_nslist_id;
-					match           &= node_id   == child_node_id;
-					if( match )
-						smooth_id = nslist_pair[i].smooth_id;
-				}
-				// following should have been checked previously
-				assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+		size_t smooth_id = rate_table[rate_id].child_smooth_id;
+		if( child_nslist_id != DISMOD_AT_NULL_SIZE_T )
+		{	assert( smooth_id == DISMOD_AT_NULL_SIZE_T );
+			//
+			// search for the smooth_id for this child
+			size_t child_node_id = child_id2node_id[j];
+			for(size_t i = 0; i < nslist_pair.size(); i++)
+			{	size_t nslist_id = nslist_pair[i].nslist_id;
+				size_t node_id   = nslist_pair[i].node_id;
+				bool   match     = nslist_id == child_nslist_id;
+				match           &= node_id   == child_node_id;
+				if( match )
+					smooth_id = nslist_pair[i].smooth_id;
 			}
-			node_rate_value_info_[rate_id][j].smooth_id = smooth_id;
-			if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-			{	node_rate_value_info_[rate_id][j].n_var  =
-					DISMOD_AT_NULL_SIZE_T;
-				node_rate_value_info_[rate_id][j].offset =
-					DISMOD_AT_NULL_SIZE_T;
-			}
-			else
-			{	size_t n_age  = smooth_table[smooth_id].n_age;
-				size_t n_time = smooth_table[smooth_id].n_time;
-				size_t n_var  = n_age * n_time;
-				node_rate_value_info_[rate_id][j].n_var     = n_var;
-				node_rate_value_info_[rate_id][j].offset    = offset;
-				offset += n_var;
+			// following should have been checked previously
+			assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+		}
+		node_rate_value_info_[rate_id][j].smooth_id = smooth_id;
+		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
+		{	node_rate_value_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
+			node_rate_value_info_[rate_id][j].offset = DISMOD_AT_NULL_SIZE_T;
+		}
+		else
+		{	size_t n_age  = smooth_table[smooth_id].n_age;
+			size_t n_time = smooth_table[smooth_id].n_time;
+			size_t n_var  = n_age * n_time;
+			node_rate_value_info_[rate_id][j].n_var     = n_var;
+			node_rate_value_info_[rate_id][j].offset    = offset;
+			offset += n_var;
 
-				// check_rate_table should have checked this assumption
-				assert( rate_id != pini_enum || n_age == 1 );
-			}
+			// check_rate_table should have checked this assumption
+			assert( rate_id != pini_enum || n_age == 1 );
 		}
 	}
-
-	// subgroup_rate_value_info_
 
 	// n_random_
 	n_random_ = offset;
@@ -339,8 +341,6 @@ n_child_        ( child_id2node_id.size() )
 	}
 
 	// group_meas_value_info_ and group_meas_noise_info_
-	group_meas_value_info_.resize( n_integrand );
-	group_meas_noise_info_.resize( n_integrand );
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
 	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
 	{	bool match;
@@ -385,7 +385,6 @@ n_child_        ( child_id2node_id.size() )
 	}
 
 	// group_rate_value_info_
-	group_rate_value_info_.resize( number_rate_enum );
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
 	{	bool match;
