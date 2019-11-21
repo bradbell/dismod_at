@@ -159,6 +159,7 @@ $icode%avg% = %avgint_obj%.rectangle(
 	%integrand_id%,
 	%n_child%,
 	%child%,
+	%subgroup_id%,
 	%x%,
 	%pack_vec%
 )%$$
@@ -194,6 +195,9 @@ set to number of $cref/children/option_table/parent_node_name/Children/$$.
 $head child$$
 Is the $cref/child/child_info/table_id2child/child/$$ corresponding
 to this average.
+
+$head subgroup_id$$
+Is the $cref/subgroup_id/avgint_table/subgroup_id/$$ for this average integrand.
 
 $head x$$
 This is the vector of covariates for this average.
@@ -231,6 +235,7 @@ Float avg_integrand::rectangle(
 	size_t                           integrand_id     ,
 	size_t                           n_child          ,
 	size_t                           child            ,
+	size_t                           subgroup_id      ,
 	const CppAD::vector<double>&     x                ,
 	const CppAD::vector<Float>&      pack_vec         ,
 // END_RECTANGLE_PROTOTYPE
@@ -401,6 +406,7 @@ Float avg_integrand::rectangle(
 			integrand_id,
 			n_child,
 			child,
+			subgroup_id,
 			x,
 			pack_vec,
 			time_line_object,
@@ -439,6 +445,7 @@ Float avg_integrand::rectangle(
 				integrand_id,
 				n_child,
 				child,
+				subgroup_id,
 				x,
 				pack_vec,
 				time_line_object,
@@ -495,6 +502,7 @@ Float avg_integrand::rectangle(
 			integrand_id,
 			n_child,
 			child,
+			subgroup_id,
 			x,
 			pack_vec,
 			time_line_object,
@@ -530,6 +538,7 @@ $icode%avg% = %avgint_obj%.add_cohort(
 	%integrand_id%,
 	%n_child%,
 	%child%,
+	%subgroup_id%,
 	%x%,
 	%pack_vec%,
 	%extend_grid%,
@@ -568,6 +577,9 @@ set to number of $cref/children/option_table/parent_node_name/Children/$$.
 $head child$$
 Is the $cref/child/child_info/table_id2child/child/$$ corresponding
 to this average.
+
+$head subgroup_id$$
+Is the $cref/subgroup_id/avgint_table/subgroup_id/$$ for this average integrand.
 
 $head x$$
 This is the vector of covariates for this average.
@@ -616,6 +628,7 @@ void avg_integrand::add_cohort(
 	size_t                       integrand_id                     ,
 	size_t                       n_child                          ,
 	size_t                       child                            ,
+	size_t                       subgroup_id                      ,
 	const CppAD::vector<double>& x                                ,
 	const CppAD::vector<Float>&  pack_vec                         ,
 	time_line_vec<Float>&        time_line_object                 ,
@@ -730,6 +743,7 @@ void avg_integrand::add_cohort(
 		size_t                           integrand_id     ,    \
 		size_t                           n_child          ,    \
 		size_t                           child            ,    \
+		size_t                           subgroup_id      ,    \
 		const CppAD::vector<double>&     x                ,    \
 		const CppAD::vector<Float>&      pack_vec         ,    \
 		time_line_vec<Float>&            time_line_object ,    \
@@ -745,6 +759,7 @@ void avg_integrand::add_cohort(
 		size_t                           integrand_id     ,    \
 		size_t                           n_child          ,    \
 		size_t                           child            ,    \
+		size_t                           subgroup_id      ,    \
 		const CppAD::vector<double>&     x                ,    \
 		const CppAD::vector<Float>&      pack_vec         )    \
 	{	return rectangle(                                      \
@@ -756,6 +771,7 @@ void avg_integrand::add_cohort(
 			integrand_id,                                      \
 			n_child,                                           \
 			child,                                             \
+			subgroup_id,                                       \
 			x,                                                 \
 			pack_vec,                                          \
 			Float ## _time_line_object_,                       \
@@ -772,6 +788,7 @@ void avg_integrand::add_cohort(
 		size_t                       integrand_id         ,    \
 		size_t                       n_child              ,    \
 		size_t                       child                ,    \
+		size_t                       subgroup_id          ,    \
 		const CppAD::vector<double>& x                    ,    \
 		const CppAD::vector<Float>&  pack_vec             ,    \
 		time_line_vec<Float>&        time_line_object     ,    \

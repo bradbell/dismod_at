@@ -215,6 +215,7 @@ bool avg_integrand_xam(void)
 	double time_lower   = 2000.0;
 	double time_upper   = 2010.0;
 	size_t weight_id    = 0;
+	size_t subgroup_id  = 0;
 	// -----------------------------------------------------------------------
 	// Sincidence
 	size_t integrand_id = 0;
@@ -227,6 +228,7 @@ bool avg_integrand_xam(void)
 		integrand_id,
 		n_child,
 		child,
+		subgroup_id,
 		x,
 		pack_vec
 	);
@@ -245,6 +247,7 @@ bool avg_integrand_xam(void)
 		integrand_id,
 		n_child,
 		child,
+		subgroup_id,
 		x,
 		pack_vec
 	);

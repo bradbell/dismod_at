@@ -69,6 +69,7 @@ private:
 		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
+		size_t                           subgroup_id      ,
 		const CppAD::vector<double>&     x                ,
 		const CppAD::vector<Float>&      pack_vec         ,
 		//
@@ -86,6 +87,7 @@ private:
 		size_t                       integrand_id         ,
 		size_t                       n_child              ,
 		size_t                       child                ,
+		size_t                       subgroup_id          ,
 		const CppAD::vector<double>& x                    ,
 		const CppAD::vector<Float>&  pack_vec             ,
 		time_line_vec<Float>&        time_line_object     ,
@@ -116,6 +118,7 @@ public:
 		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
+		size_t                           subgroup_id      ,
 		const CppAD::vector<double>&     x                ,
 		const CppAD::vector<double>&     pack_vec
 	);
@@ -129,6 +132,7 @@ public:
 		size_t                           integrand_id     ,
 		size_t                           n_child          ,
 		size_t                           child            ,
+		size_t                           subgroup_id      ,
 		const CppAD::vector<double>&     x                ,
 		const CppAD::vector<a1_double>&  pack_vec
 	);

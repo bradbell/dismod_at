@@ -552,12 +552,14 @@ Float data_model::average(
 	const CppAD::vector<Float>&   pack_vec  )
 {
 	// arguments to avg_integrand::rectangle
-	double age_lower    = data_subset_obj_[subset_id].age_lower;
-	double age_upper    = data_subset_obj_[subset_id].age_upper;
-	double time_lower   = data_subset_obj_[subset_id].time_lower;
-	double time_upper   = data_subset_obj_[subset_id].time_upper;
-	size_t weight_id    = size_t( data_subset_obj_[subset_id].weight_id );
-	size_t integrand_id = size_t( data_subset_obj_[subset_id].integrand_id );
+	const data_subset_struct& data_item = data_subset_obj_[subset_id];
+	double age_lower    = data_item.age_lower;
+	double age_upper    = data_item.age_upper;
+	double time_lower   = data_item.time_lower;
+	double time_upper   = data_item.time_upper;
+	size_t weight_id    = size_t( data_item.weight_id );
+	size_t integrand_id = size_t( data_item.integrand_id );
+	size_t subgroup_id  = size_t( data_item.subgroup_id );
 	size_t child        = size_t( data_info_[subset_id].child );
 	CppAD::vector<double> x(n_covariate_);
 	for(size_t j = 0; j < n_covariate_; j++)
@@ -573,6 +575,7 @@ Float data_model::average(
 		integrand_id,
 		n_child_,
 		child,
+		subgroup_id,
 		x,
 		pack_vec
 	);
