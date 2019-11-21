@@ -32,6 +32,7 @@ public:
 	// BEGIN SUBVEC_INFO
 	typedef struct {
 		size_t covariate_id;
+		size_t group_id;
 		size_t smooth_id;
 		size_t n_var;
 		size_t offset;
@@ -58,20 +59,17 @@ private:
 	// mulstd variable offsets
 	CppAD::vector<size_t>  mulstd_offset_;
 
-	// node_rate_value_info_
+	// node_rate_value_info_ [number_rate_enum][n_child_ + 1]
 	CppAD::vector< CppAD::vector<subvec_info> > node_rate_value_info_;
 
-	// group_rate_value_info_
+	// group_rate_value_info_ [number_rate_enum][ncov(rate)]
 	CppAD::vector< CppAD::vector<subvec_info> > group_rate_value_info_;
 
-	// group_meas_value_info_
+	// group_meas_value_info_ [n_integrand_][ncov(integrand)]
 	CppAD::vector< CppAD::vector<subvec_info> > group_meas_value_info_;
 
-	// group_meas_noise_info_
+	// group_meas_noise_info_ [n_integrand_][ncov(integrand)]
 	CppAD::vector< CppAD::vector<subvec_info> > group_meas_noise_info_;
-
-	// subgroup_rate_value_info_
-	CppAD::vector< CppAD::vector<subvec_info> > subgroup_rate_value_info_;
 
 	// total number of elements in the packed vector
 	size_t size_;

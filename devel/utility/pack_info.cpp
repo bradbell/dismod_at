@@ -210,6 +210,14 @@ n_integrand_    ( n_integrand )           ,
 n_child_        ( child_id2node_id.size() )
 {	using std::string;
 
+	// used to set all fields to null
+	subvec_info null_info;
+	null_info.covariate_id = DISMOD_AT_NULL_SIZE_T;
+	null_info.smooth_id    = DISMOD_AT_NULL_SIZE_T;
+	null_info.group_id     = DISMOD_AT_NULL_SIZE_T;
+	null_info.n_var        = DISMOD_AT_NULL_SIZE_T;
+	null_info.offset       = DISMOD_AT_NULL_SIZE_T;
+
 	// set first_subgroup_id_, group_size_
 	size_t previous_group_id  = size_t( subgroup_table[0].group_id );
 	assert( previous_group_id == 0 );
@@ -269,19 +277,21 @@ n_child_        ( child_id2node_id.size() )
 			// following should have been checked previously
 			assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
 		}
-		node_rate_value_info_[rate_id][j].smooth_id = smooth_id;
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-		{	node_rate_value_info_[rate_id][j].n_var  = DISMOD_AT_NULL_SIZE_T;
-			node_rate_value_info_[rate_id][j].offset = DISMOD_AT_NULL_SIZE_T;
-		}
+			node_rate_value_info_[rate_id][j] = null_info;
 		else
 		{	size_t n_age  = smooth_table[smooth_id].n_age;
 			size_t n_time = smooth_table[smooth_id].n_time;
 			size_t n_var  = n_age * n_time;
-			node_rate_value_info_[rate_id][j].n_var     = n_var;
-			node_rate_value_info_[rate_id][j].offset    = offset;
+			subvec_info& info = node_rate_value_info_[rate_id][j];
+			info.covariate_id = DISMOD_AT_NULL_SIZE_T;
+			info.group_id     = DISMOD_AT_NULL_SIZE_T;
+			info.smooth_id    = smooth_id;
+			info.n_var        = n_var;
+			info.offset       = offset;
+			//
 			offset += n_var;
-
+			//
 			// check_rate_table should have checked this assumption
 			assert( rate_id != pini_enum || n_age == 1 );
 		}
@@ -318,21 +328,21 @@ n_child_        ( child_id2node_id.size() )
 
 	// node_rate_value_info_
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
-	{
-		size_t smooth_id = rate_table[rate_id].parent_smooth_id;
-		node_rate_value_info_[rate_id][n_child_].smooth_id = smooth_id;
+	{	size_t smooth_id  = rate_table[rate_id].parent_smooth_id;
+		subvec_info& info = node_rate_value_info_[rate_id][n_child_];
+
 		if( smooth_id == DISMOD_AT_NULL_SIZE_T )
-		{	node_rate_value_info_[rate_id][n_child_].n_var  =
-				DISMOD_AT_NULL_SIZE_T;
-			node_rate_value_info_[rate_id][n_child_].offset =
-				DISMOD_AT_NULL_SIZE_T;
-		}
+			info = null_info;
 		else
 		{	size_t n_age  = smooth_table[smooth_id].n_age;
 			size_t n_time = smooth_table[smooth_id].n_time;
 			size_t n_var  = n_age * n_time;
-			node_rate_value_info_[rate_id][n_child_].n_var     = n_var;
-			node_rate_value_info_[rate_id][n_child_].offset    = offset;
+			info.covariate_id = DISMOD_AT_NULL_SIZE_T;
+			info.group_id     = DISMOD_AT_NULL_SIZE_T;
+			info.smooth_id    = smooth_id;
+			info.n_var        = n_var;
+			info.offset       = offset;
+			//
 			offset += n_var;
 			//
 			// check_rate_table should have checked this assumption
@@ -376,6 +386,7 @@ n_child_        ( child_id2node_id.size() )
 			//
 			subvec_info info;
 			info.covariate_id = covariate_id;
+			info.group_id     = size_t(mulcov_obj.group_id);
 			info.smooth_id    = smooth_id;
 			info.n_var        = n_age * n_time;
 			info.offset       = offset;
@@ -411,6 +422,7 @@ n_child_        ( child_id2node_id.size() )
 			//
 			subvec_info info;
 			info.covariate_id = covariate_id;
+			info.group_id     = size_t(mulcov_obj.group_id);
 			info.smooth_id    = smooth_id;
 			info.n_var        = n_age * n_time;
 			info.offset       = offset;
