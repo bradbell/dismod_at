@@ -107,6 +107,8 @@ $cref/group_id/subgroup_table/group_id/$$.
 There is a fixed effect covariate multiplier for all the data
 that has a $cref/subgroup_id/data_table/subgroup_id/$$ that
 corresponds to this group id.
+This covariate only affects the average integrand for when this
+$cref/group_id/avg_integrand/Data or Avgint Table Notation/g_i/$$ is specified.
 If this $icode group_id$$ is null,
 the fixed effect corresponds to all the data.
 

@@ -81,12 +81,13 @@ $cref/data table/data_table/time_upper/$$ or
 $cref/avgint table/avgint_table/time_upper/$$.
 
 $subhead s_i$$
-We use $latex s_i$$ to denote the corresponding subgroup in the
-$cref/data table/data_table/subgroup_id/$$.
+We use $latex s_i$$ to denote the corresponding $icode subgroup_id$$ in the
+$cref/data table/data_table/subgroup_id/$$ or
+$cref/avgint table/avgint_table/subgroup_id/$$.
 
 $subhead g_i$$
-We use $latex g_i$$ to denote the group
-$cref/group/subgroup_table/group_id/$$ that $latex s_i$$ is part of.
+We use $latex g_i$$ to denote the
+$cref/group_id/subgroup_table/group_id/$$ that $latex s_i$$ is part of.
 
 $subhead Covariate Difference, x_ij$$
 We use $latex x_{i,j}$$ to denote the covariate difference for the
