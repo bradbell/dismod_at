@@ -16,10 +16,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#	example/user/meas_covariate.py
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#	s|meas_covariate.py|covariate_mul.py|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,4 +33,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|node_rate_info\([^a-z]\)|node_rate_value_info\1|g
+s|meas_covariate.py|covariate_mul.py|

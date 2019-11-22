@@ -703,7 +703,7 @@ There was a bug in the $code var_command$$ when there were
 $cref/covariate multipliers/mulcov_table/$$ for multiple integrands
 or multiple rates.
 This has been fixed and is tested by the user example
-$cref user_meas_covariate.py$$.
+$cref user_covariate_mul.py$$.
 $lnext
 The routine $code dev::data_subset.cpp$$ was changes to pre-allocate its
 result instead of growing the vector as needed.

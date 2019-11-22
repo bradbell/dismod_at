@@ -829,7 +829,7 @@ $lnext
 The $code bin/install_suitesparse.sh$$ script has been changed to
 work on the MAC (where the $code -lrt$$ library is not available).
 $lnext
-The optimization tolerance in $cref user_meas_covariate.py$$
+The optimization tolerance in $cref user_covariate_mul.py$$
 was made smaller to avoid test failures on some machines.
 $lend
 

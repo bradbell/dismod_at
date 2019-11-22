@@ -84,7 +84,7 @@ $children%example/user/csv2db.py
 	%example/user/const_random.py
 	%example/user/continue_fit.py
 	%example/user/diff_constraint.py
-	%example/user/meas_covariate.py
+	%example/user/covariate_mul.py
 	%example/user/no_children.py
 	%example/user/zero_sum_random.py
 	%example/user/re_scale.py
@@ -122,7 +122,7 @@ $head More Examples$$
 $table
 $rref user_const_random.py$$
 $rref user_diff_constraint.py$$
-$rref user_meas_covariate.py$$
+$rref user_covariate_mul.py$$
 $rref user_no_children.py$$
 $rref user_re_scale.py$$
 $rref user_speed.py$$

@@ -23,7 +23,7 @@
 # $section Using Lasso on Covariate Multiplier$$
 #
 # $head See Also$$
-# $cref user_meas_covariate.py$$
+# $cref user_covariate_mul.py$$
 #
 # $head Purpose$$
 # This example uses a $cref/laplace/density_table/density_name/laplace/$$

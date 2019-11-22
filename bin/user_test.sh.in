@@ -16,16 +16,16 @@ fi
 if [ ! -e "$1" ]
 then
 	echo 'usage: bin/user_test.sh user_test'
-	echo 'where user_test is the path to the python3 user test.'
+	echo "The user_test '$1' does not exist."
 	exit 1
 fi
 user_test="$1"
-if @python3_executable@ $user_test >& user_test.$$
+if @python3_executable@ $user_test >& user_test.tmp
 then
-	if ! grep 'warning:' user_test.$$ > /dev/null
+	if ! grep 'warning:' user_test.tmp > /dev/null
 	then
-		cat user_test.$$
-		rm user_test.$$
+		cat user_test.tmp
+		rm user_test.tmp
 		echo 'user_test.sh: OK'
 		exit 0
 	fi
@@ -33,17 +33,17 @@ fi
 echo "First try failed, re-running $user_test with a different random seed:"
 echo 'sleep 1'
 sleep 1
-if @python3_executable@ $user_test >& user_test.$$
+if @python3_executable@ $user_test >& user_test.tmp
 then
-	if ! grep 'warning:' user_test.$$ > /dev/null
+	if ! grep 'warning:' user_test.tmp > /dev/null
 	then
-		cat user_test.$$
-		rm user_test.$$
+		cat user_test.tmp
+		rm user_test.tmp
 		echo 'user_test.sh: OK'
 		exit 0
 	fi
 fi
-cat user_test.$$
-rm user_test.$$
+cat user_test.tmp
+rm user_test.tmp
 echo 'user_test.sh: Error or warning.'
 exit 1
