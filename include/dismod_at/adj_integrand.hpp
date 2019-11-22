@@ -32,7 +32,7 @@ private:
 
 	// Maps each mulcov_id to corresponding packing information.
 	// Set by constructor and effectory const
-	CppAD::vector<pack_info::subvec_info>     mulcov_pack_info_;
+	CppAD::vector<pack_info::subvec_info>      mulcov_pack_info_;
 
 	// temporaries
 	CppAD::vector<double>                      double_mulcov_;
@@ -49,6 +49,7 @@ private:
 		size_t                                    integrand_id     ,
 		size_t                                    n_child          ,
 		size_t                                    child            ,
+		size_t                                    subgroup_id      ,
 		const CppAD::vector<double>&              x                ,
 		const CppAD::vector<Float>&               pack_vec         ,
 		CppAD::vector<Float>&                     mulcov           ,
@@ -73,6 +74,7 @@ public:
 		size_t                                    integrand_id     ,
 		size_t                                    n_child          ,
 		size_t                                    child            ,
+		size_t                                    subgroup_id      ,
 		const CppAD::vector<double>&              x                ,
 		const CppAD::vector<double>&              pack_vec
 	);
@@ -83,6 +85,7 @@ public:
 		size_t                                    integrand_id     ,
 		size_t                                    n_child          ,
 		size_t                                    child            ,
+		size_t                                    subgroup_id      ,
 		const CppAD::vector<double>&              x                ,
 		const CppAD::vector<a1_double>&           pack_vec
 	);

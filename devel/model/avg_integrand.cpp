@@ -369,6 +369,7 @@ Float avg_integrand::rectangle(
 			integrand_id,
 			n_child,
 			child,
+			subgroup_id,
 			x,
 			pack_vec
 		);
@@ -701,6 +702,7 @@ void avg_integrand::add_cohort(
 		integrand_id,
 		n_child,
 		child,
+		subgroup_id,
 		x,
 		pack_vec
 	);

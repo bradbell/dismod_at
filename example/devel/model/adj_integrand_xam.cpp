@@ -196,12 +196,14 @@ bool adj_integrand_xam(void)
 		s_info_vec,
 		pack_object
 	);
+	size_t subgroup_id = 0;
 	vector<Float> adj_line = adjint_obj.line(
 		cohort_age,
 		cohort_time,
 		integrand_id,
 		n_child,
 		child,
+		subgroup_id,
 		x,
 		pack_vec
 	);

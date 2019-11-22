@@ -45,6 +45,7 @@ $icode%adj_line% = %adjint_obj%.line(
 	%integrand_id%,
 	%n_child%,
 	%child%,
+	%subgroup_id%,
 	%x%,
 	%pack_vec%
 )%$$
@@ -147,6 +148,10 @@ set to number of $cref/children/option_table/parent_node_name/Children/$$.
 
 $head child$$
 Is the $cref/child/child_info/table_id2child/child/$$ corresponding
+to this adjustment of the integrand.
+
+$head subgroup_id$$
+is the $cref/subgroup_id/avgint_table/subgroup_id/$$ corresponding
 to this adjustment of the integrand.
 
 $head pack_vec$$
@@ -255,6 +260,7 @@ CppAD::vector<Float> adj_integrand::line(
 	size_t                                             integrand_id     ,
 	size_t                                             n_child          ,
 	size_t                                             child            ,
+	size_t                                             subgroup_id      ,
 	const CppAD::vector<double>&                       x                ,
 	const CppAD::vector<Float>&                        pack_vec         ,
 // END_LINE_PROTOTYPE
@@ -621,6 +627,7 @@ CppAD::vector<Float> adj_integrand::line(
 		size_t                                        integrand_id     ,    \
 		size_t                                        n_child          ,    \
 		size_t                                        child            ,    \
+		size_t                                        subgroup_id      ,    \
 		const CppAD::vector<double>&                  x                ,    \
 		const CppAD::vector<Float>&                   pack_vec         ,    \
 		CppAD::vector<Float>&                         mulcov           ,    \
@@ -633,6 +640,7 @@ CppAD::vector<Float> adj_integrand::line(
 		size_t                                        integrand_id     ,    \
 		size_t                                        n_child          ,    \
 		size_t                                        child            ,    \
+		size_t                                        subgroup_id      ,    \
 		const CppAD::vector<double>&                  x                ,    \
 		const CppAD::vector<Float>&                   pack_vec         )    \
 	{	return line(                                                        \
@@ -641,6 +649,7 @@ CppAD::vector<Float> adj_integrand::line(
 			integrand_id,                                                   \
 			n_child,                                                        \
 			child,                                                          \
+			subgroup_id,                                                    \
 			x,                                                              \
 			pack_vec,                                                       \
 			Float ## _mulcov_,                                              \
