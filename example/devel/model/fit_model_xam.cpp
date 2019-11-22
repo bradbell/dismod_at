@@ -361,6 +361,7 @@ bool fit_model_xam(void)
 		age_avg_grid,
 		age_table,
 		time_table,
+		subgroup_table,
 		integrand_table,
 		mulcov_table,
 		prior_table,

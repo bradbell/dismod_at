@@ -190,6 +190,7 @@ bool adj_integrand_xam(void)
 		rate_case,
 		age_table,
 		time_table,
+		subgroup_table,
 		integrand_table,
 		mulcov_table,
 		s_info_vec,

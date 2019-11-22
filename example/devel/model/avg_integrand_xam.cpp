@@ -204,6 +204,7 @@ bool avg_integrand_xam(void)
 		age_table,
 		time_table,
 		age_avg_grid,
+		subgroup_table,
 		integrand_table,
 		mulcov_table,
 		w_info_vec,

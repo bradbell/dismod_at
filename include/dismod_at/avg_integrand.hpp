@@ -25,6 +25,7 @@ $end
 
 # include <cppad/utility/vector.hpp>
 # include "get_integrand_table.hpp"
+# include "get_subgroup_table.hpp"
 # include "pack_info.hpp"
 # include "a1_double.hpp"
 # include "adj_integrand.hpp"
@@ -40,6 +41,7 @@ private:
 	const double                              ode_step_size_;
 	const CppAD::vector<double>&              age_table_;
 	const CppAD::vector<double>&              time_table_;
+	const CppAD::vector<subgroup_struct>&     subgroup_table_;
 	const CppAD::vector<integrand_struct>&    integrand_table_;
 	const CppAD::vector<weight_info>&         w_info_vec_;
 
@@ -102,6 +104,7 @@ public:
 		const CppAD::vector<double>&              age_avg_grid     ,
 		const CppAD::vector<double>&              age_table        ,
 		const CppAD::vector<double>&              time_table       ,
+		const CppAD::vector<subgroup_struct>&     subgroup_table   ,
 		const CppAD::vector<integrand_struct>&    integrand_table  ,
 		const CppAD::vector<mulcov_struct>&       mulcov_table     ,
 		const CppAD::vector<weight_info>&         w_info_vec       ,

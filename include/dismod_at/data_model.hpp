@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <cppad/utility/vector.hpp>
 # include "data_subset.hpp"
 # include "get_integrand_table.hpp"
+# include "get_subgroup_table.hpp"
 # include "get_density_table.hpp"
 # include "get_prior_table.hpp"
 # include "weight_info.hpp"
@@ -80,6 +81,7 @@ public:
 		const CppAD::vector<double>&             age_avg_grid       ,
 		const CppAD::vector<double>&             age_table          ,
 		const CppAD::vector<double>&             time_table         ,
+		const CppAD::vector<subgroup_struct>&    subgroup_table     ,
 		const CppAD::vector<integrand_struct>&   integrand_table    ,
 		const CppAD::vector<mulcov_struct>&      mulcov_table       ,
 		const CppAD::vector<prior_struct>&       prior_table        ,

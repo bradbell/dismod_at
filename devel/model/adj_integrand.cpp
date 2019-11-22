@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/cohort_ode.hpp>
 # include <dismod_at/cohort_ode.hpp>
 # include <dismod_at/get_integrand_table.hpp>
+# include <dismod_at/get_subgroup_table.hpp>
 
 /*
 $begin adj_integrand$$
@@ -32,6 +33,7 @@ $codei%adj_integrand %adjint_obj%(
 	%rate_case%,
 	%age_table%,
 	%time_table%,
+	%subgroup_table%,
 	%integrand_table%,
 	%s_info_vec%,
 	%pack_object%
@@ -68,6 +70,10 @@ $icode adjint_obj$$ is used).
 $head time_table$$
 This argument is the $cref time_table$$.
 A reference to $icode time_table$$ is used by $icode adjint_obj$$.
+
+$head subgroup_table$$
+This argument is the $cref subgroup_table$$.
+A reference to $icode subgroup_table$$ is used by $icode adjint_obj$$.
 
 $head integrand_table$$
 This argument is the $cref integrand_table$$.
@@ -174,6 +180,7 @@ adj_integrand::adj_integrand(
 	const std::string&                        rate_case        ,
 	const CppAD::vector<double>&              age_table        ,
 	const CppAD::vector<double>&              time_table       ,
+	const CppAD::vector<subgroup_struct>&     subgroup_table   ,
 	const CppAD::vector<integrand_struct>&    integrand_table  ,
 	const CppAD::vector<mulcov_struct>&       mulcov_table     ,
 	const CppAD::vector<smooth_info>&         s_info_vec       ,
@@ -183,6 +190,7 @@ adj_integrand::adj_integrand(
 rate_case_         (rate_case)        ,
 age_table_         (age_table)        ,
 time_table_        (time_table)       ,
+subgroup_table_     (subgroup_table)  ,
 integrand_table_   (integrand_table)  ,
 s_info_vec_        (s_info_vec)       ,
 pack_object_       (pack_object)      ,

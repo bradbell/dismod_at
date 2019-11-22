@@ -41,6 +41,7 @@ $codei%data_model %data_object%(
 	%age_avg_grid%,
 	%age_table%,
 	%time_table%,
+	%subgroup_table%,
 	%integrand_table%,
 	%prior_table%,
 	%subset_object%,
@@ -90,6 +91,9 @@ This is the $cref/age_table/get_age_table/age_table/$$.
 
 $head time_table$$
 This is the $cref/time_table/get_time_table/time_table/$$.
+
+$head subgroup_table$$
+This is the $cref/subgroup_table/get_subgroup_table/subgroup_table/$$.
 
 $head integrand_table$$
 This is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
@@ -204,6 +208,7 @@ data_model::data_model(
 	const CppAD::vector<double>&             age_avg_grid       ,
 	const CppAD::vector<double>&             age_table          ,
 	const CppAD::vector<double>&             time_table         ,
+	const CppAD::vector<subgroup_struct>&    subgroup_table     ,
 	const CppAD::vector<integrand_struct>&   integrand_table    ,
 	const CppAD::vector<mulcov_struct>&      mulcov_table       ,
 	const CppAD::vector<prior_struct>&       prior_table        ,
@@ -228,6 +233,7 @@ avgint_obj_(
 	age_avg_grid,
 	age_table,
 	time_table,
+	subgroup_table,
 	integrand_table,
 	mulcov_table,
 	w_info_vec,
@@ -952,6 +958,7 @@ template data_model::data_model(                                   \
 	const CppAD::vector<double>&             age_avg_grid       ,  \
 	const CppAD::vector<double>&             age_table          ,  \
 	const CppAD::vector<double>&             time_table         ,  \
+	const CppAD::vector<subgroup_struct>&    subgroup_table     ,  \
 	const CppAD::vector<integrand_struct>&   integrand_table    ,  \
 	const CppAD::vector<mulcov_struct>&      mulcov_table       ,  \
 	const CppAD::vector<prior_struct>&       prior_table        ,  \

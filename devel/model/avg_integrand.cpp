@@ -34,6 +34,7 @@ $codei%avg_integrand %avgint_obj%(
 	%age_avg_grid%,
 	%age_table%,
 	%time_table%,
+	%subgroup_table%,
 	%integrand_table%,
 	%w_info_vec%,
 	%s_info_vec%,
@@ -69,6 +70,10 @@ $icode avgint_obj$$ is used).
 $head time_table$$
 This argument is the $cref time_table$$.
 A reference to $icode time_table$$ is used by $icode avgint_obj$$.
+
+$head subgroup_table$$
+This argument is the $cref subgroup_table$$.
+A reference to $icode subgroup_table$$ is used by $icode avgint_obj$$.
 
 $head integrand_table$$
 This argument is the $cref integrand_table$$.
@@ -111,6 +116,7 @@ avg_integrand::avg_integrand(
 		const CppAD::vector<double>&              age_avg_grid     ,
 		const CppAD::vector<double>&              age_table        ,
 		const CppAD::vector<double>&              time_table       ,
+		const CppAD::vector<subgroup_struct>&     subgroup_table   ,
 		const CppAD::vector<integrand_struct>&    integrand_table  ,
 		const CppAD::vector<mulcov_struct>&       mulcov_table     ,
 		const CppAD::vector<weight_info>&         w_info_vec       ,
@@ -121,6 +127,7 @@ avg_integrand::avg_integrand(
 ode_step_size_             ( ode_step_size )   ,
 age_table_                 ( age_table )       ,
 time_table_                ( time_table )      ,
+subgroup_table_            ( subgroup_table )  ,
 integrand_table_           ( integrand_table ) ,
 w_info_vec_                ( w_info_vec )      ,
 double_time_line_object_   ( age_avg_grid )    ,
@@ -129,6 +136,7 @@ adjint_obj_(
 	rate_case,
 	age_table,
 	time_table,
+	subgroup_table,
 	integrand_table,
 	mulcov_table,
 	s_info_vec,
