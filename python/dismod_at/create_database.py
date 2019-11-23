@@ -33,6 +33,7 @@
 #	tuples
 #	cv
 #	covariates
+#	subsmooth
 # $$
 #
 # $section Create a Dismod_at Database$$
@@ -44,6 +45,7 @@
 #	%time_list%
 #	%integrand_table%,
 #	%node_table%,
+#	%subgroup_table%,
 #	%weight_table%,
 #	%covariate_table%,
 #	%avgint_table%,
@@ -111,6 +113,16 @@
 # Note that if the i-th node does not have a parent, the empty string
 # should be used for the parent of that node.
 #
+# $head subgroup_table$$
+# This is a list of $code dict$$
+# that define the rows of the $cref subgroup_table$$.
+# The dictionary $icode%node_table%[%i%]%$$ has the following:
+# $table
+# Key      $cnext Value Type    $pre  $$ $cnext Description           $rnext
+# subgroup $cnext str           $cnext name for the $th i$$ subgroup  $rnext
+# group    $cnext str           $cnext name of group that subgroup is in
+# $tend
+#
 # $head weight_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref weight_table$$ and
@@ -152,7 +164,8 @@
 # $table
 # Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
 # integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
-# node         $cnext str         $cnext node in graph               $rnext
+# node         $cnext str         $cnext name of node in graph       $rnext
+# subgroup     $cnext str         $cnext name of subgroup            $rnext
 # weight       $cnext str         $cnext weighting function name     $rnext
 # age_lower    $cnext float       $cnext lower age limit             $rnext
 # age_upper    $cnext float       $cnext upper age limit             $rnext
@@ -162,6 +175,8 @@
 # ...          $cnext ...         $cnext  ...                        $rnext
 # $icode c_J$$ $cnext float       $cnext value of last covariate
 # $tend
+# if the $code subgroup$$ key is not present, the first subgroup in
+# $cref/subgroup_table/create_database/subgroup_table/$$ is used.
 #
 # $subhead weight$$
 # The weighting function name identifies an
@@ -202,6 +217,8 @@
 # The columns keys $code meas_std$$, $code eta$$, and $code nu$$
 # are optional. If they are not present, the value $code null$$ is used
 # for the corresponding row of the data table.
+# if the $code subgroup$$ key is not present, the first subgroup in
+# $cref/subgroup_table/create_database/subgroup_table/$$ is used.
 #
 # $subhead data_extra_columns$$
 # If a $icode row$$ of $icode option_table$$ has $icode%row%['name']%$$
@@ -326,13 +343,19 @@
 # that define the rows of the $cref mulcov_table$$.
 # The dictionary $icode%mulcov_table%[%i%]%$$ has the following:
 # $table
-# Key       $cnext Value Type  $pre  $$ $cnext Description       $rnext
-# covariate $cnext str         $cnext is the covariate column    $rnext
-# type      $cnext str  $cnext
+# Key        $cnext Value Type  $pre  $$ $cnext Description       $rnext
+# covariate  $cnext str         $cnext is the covariate column    $rnext
+# type       $cnext str  $cnext
 # $code rate_value$$, $code meas_value$$, or $code meas_noise$$ $rnext
-# effected  $cnext str         $cnext integrand or rate effected $rnext
-# smooth    $cnext str         $cnext smoothing name
+# effected   $cnext str         $cnext integrand or rate affected $rnext
+# group      $cnext str         $cnext the group that is affected $rnext
+# smooth     $cnext str         $cnext smoothing at group level  $rnext
+# subsmooth $cnext str          $cnext smoothing at subgroup level
 # $tend
+# If the $code group$$ key is not present, the first group in
+# $cref/subgroup_table/create_database/subgroup_table/$$ is used.
+# If the $code subsmooth$$ key is not present, the value null is used for
+# the subgroup smoothing in the corresponding row.
 #
 # $head option_table$$
 # This is a list of $code dict$$
@@ -358,6 +381,7 @@ def create_database(
 	time_list,
 	integrand_table,
 	node_table,
+	subgroup_table,
 	weight_table,
 	covariate_table,
 	avgint_table,
@@ -482,6 +506,33 @@ def create_database(
 			parent = global_node_name2id[parent]
 		row_list.append( [ name, parent ] )
 	tbl_name = 'node'
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# ----------------------------------------------------------------------
+	# create subgroup table
+	global_subgroup_name2id = {}
+	global_group_name2id = {}
+	group_id   = 0
+	group_name = subgroup_table[0]['group']
+	global_group_name2id[group_name] = group_id
+	for i in range( len(subgroup_table) ) :
+		global_subgroup_name2id[ subgroup_table[i]['subgroup'] ] = i
+		if subgroup_table[i]['group'] != group_name :
+			group_id   = group_id + 1
+			group_name = subgroup_table[i]['group']
+			global_group_name2id[group_name] = group_id
+	#
+	col_name = [ 'subgroup_name', 'group_id', 'group_name' ]
+	col_type = [ 'text',          'integer',  'text'       ]
+	row_list = []
+	group_id   = 0
+	group_name = subgroup_table[i]['group']
+	for i in range( len(subgroup_table) ) :
+		subgroup_name   = subgroup_table[i]['subgroup']
+		if subgroup_table[i]['group'] != group_name :
+			group_id   = group_id + 1
+			group_name = subgroup_table[i]['group']
+		row_list.append( [ subgroup_name, group_id, group_name ] )
+	tbl_name = 'subgroup'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ----------------------------------------------------------------------
 	# create prior table
@@ -723,34 +774,63 @@ def create_database(
 		'rate_id',
 		'integrand_id',
 		'covariate_id',
-		'smooth_id'
+		'group_id',
+		'group_smooth_id',
+		'subgroup_smooth_id',
 	]
 	col_type = [
 		'text',    # mulcov_type
 		'integer', # rate_id
 		'integer', # integrand_id
 		'integer', # covariate_id
-		'integer'  # smooth_id'
+		'integer', # group_id
+		'integer', # group_smooth_id
+		'integer', # subgroup_smooth_id
 	]
 	row_list = []
 	for i in range( len(mulcov_table) ) :
-		mulcov          = mulcov_table[i]
-		mulcov_type     = mulcov['type']
-		effected        = mulcov['effected']
+		mulcov       = mulcov_table[i]
+		mulcov_type  = mulcov['type']
+		effected     = mulcov['effected']
+		covariate_id = global_covariate_name2id[ mulcov['covariate'] ]
+		#
+		# rate_id and integrand_id
 		if mulcov_type == 'rate_value' :
 			rate_id      = global_rate_name2id[ effected ]
 			integrand_id = None
 		else :
 			integrand_id = global_integrand_name2id[ effected ]
 			rate_id      = None
-		covariate_id  = global_covariate_name2id[ mulcov['covariate'] ]
-		if mulcov['smooth'] == None :
-			smooth_id = None
+		#
+		# group_id
+		if 'group' in mulcov :
+			group_id = global_group_name2id[ mulcov['group'] ]
 		else :
-			smooth_id     = global_smooth_name2id[ mulcov['smooth'] ]
-		row_list.append(
-			[mulcov_type, rate_id, integrand_id, covariate_id, smooth_id]
-		)
+			group_id = 0
+		#
+		# group_smooth_id
+		if mulcov['smooth'] == None :
+			group_smooth_id = None
+		else :
+			group_smooth_id    = global_smooth_name2id[ mulcov['smooth'] ]
+		#
+		# subgroup_smooth_id
+		if not 'subsmooth' in mulcov :
+			subgroup_smooth_id = None
+		elif mulcov['subsmooth'] == None :
+			subgroup_smooth_id = None
+		else :
+			subgroup_smooth_id = global_smooth_name2id[ mulcov['subsmooth'] ]
+		#
+		row_list.append( [
+			mulcov_type,
+			rate_id,
+			integrand_id,
+			covariate_id,
+			group_id,
+			group_smooth_id,
+			subgroup_smooth_id,
+		] )
 	tbl_name = 'mulcov'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 	# ----------------------------------------------------------------------
@@ -776,6 +856,7 @@ def create_database(
 	col_name = extra_name + [
 		'integrand_id',
 		'node_id',
+		'subgroup_id',
 		'weight_id',
 		'age_lower',
 		'age_upper',
@@ -789,6 +870,7 @@ def create_database(
 	col_type = extra_type + [
 		'integer',              # integrand_id
 		'integer',              # node_id
+		'integer',              # subgroup_id
 		'integer',              # weight_id
 		'real',                 # age_lower
 		'real',                 # age_upper
@@ -803,6 +885,10 @@ def create_database(
 	for i in range( len(avgint_table) ) :
 		avgint = avgint_table[i]
 		#
+		# subgroup column has a default value
+		if 'subgroup' not in avgint :
+			avgint['subgroup'] = subgroup_table[0]['subgroup']
+		#
 		# extra columns first
 		row = list()
 		for name in extra_name :
@@ -811,10 +897,12 @@ def create_database(
 		avgint_id      = i
 		integrand_id = global_integrand_name2id[ avgint['integrand'] ]
 		node_id      = global_node_name2id[ avgint['node'] ]
+		subgroup_id  = global_subgroup_name2id[ avgint['subgroup'] ]
 		weight_id    = global_weight_name2id[ avgint['weight'] ]
 		row = row + [
 			integrand_id,
 			node_id,
+			subgroup_id,
 			weight_id,
 			avgint['age_lower'],
 			avgint['age_upper'],
@@ -850,6 +938,7 @@ def create_database(
 	col_name = extra_name + [
 		'integrand_id',
 		'node_id',
+		'subgroup_id',
 		'weight_id',
 		'age_lower',
 		'age_upper',
@@ -869,6 +958,7 @@ def create_database(
 	col_type = extra_type + [
 		'integer',              # integrand_id
 		'integer',              # node_id
+		'integer',              # subgroup_id
 		'integer',              # weight_id
 		'real',                 # age_lower
 		'real',                 # age_upper
@@ -897,14 +987,20 @@ def create_database(
 			if not key in data :
 				data[key] = None
 		#
+		# subgroup column has a default value
+		if not 'subgroup' in data :
+			data['subgroup'] = subgroup_table[0]['subgroup']
+		#
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
 		density_id   = global_density_name2id[ data['density'] ]
 		node_id      = global_node_name2id[ data['node'] ]
+		subgroup_id  = global_subgroup_name2id[ data['subgroup'] ]
 		weight_id    = global_weight_name2id[ data['weight'] ]
 		hold_out     = int( data['hold_out'] )
 		row = row + [
 			integrand_id,
 			node_id,
+			subgroup_id,
 			weight_id,
 			data['age_lower'],
 			data['age_upper'],

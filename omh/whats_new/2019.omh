@@ -824,8 +824,7 @@ $lend
 
 $head 04-09$$
 $list number$$
-In the case where the deprecated name
-$cref/meas_std/mulcov_table/mulcov_type/meas_std: Deprecated 2019-04-07/$$
+In the case where the deprecated name $code meas_std$$
 is used, the corresponding $icode var_type$$ was
 $cref/mulcov_meas_noise/var_table/var_type/mulcov_meas_noise/$$.
 This has been changed to $code mulcov_meas_std$$ for backward compatibility.
@@ -849,9 +848,8 @@ $lend
 
 $head 04-08$$
 $list number$$
-The covariate multiplier type
-$cref/meas_std/mulcov_table/mulcov_type/meas_std: Deprecated 2019-04-07/$$
-was deprecated.
+The covariate multiplier type $code meas_std$$ was deprecated
+(and was later removed).
 It should be changed to
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$.
 $lnext

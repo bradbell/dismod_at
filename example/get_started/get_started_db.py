@@ -238,6 +238,9 @@ def get_started_db ():
 	# nslist_table:
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
+	# subgroup_table
+	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+	# ----------------------------------------------------------------------
 	# create database
 	file_name = 'get_started.db'
 	dismod_at.create_database(
@@ -246,6 +249,7 @@ def get_started_db ():
 		time_list,
 		integrand_table,
 		node_table,
+		subgroup_table,
 		weight_table,
 		covariate_table,
 		avgint_table,

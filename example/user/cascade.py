@@ -447,6 +447,9 @@ def example_db (file_name) :
 	row['age_upper'] = 0.0
 	avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
+	# subgroup_table
+	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -454,6 +457,7 @@ def example_db (file_name) :
 		time_list,
 		integrand_table,
 		node_table,
+		subgroup_table,
 		weight_table,
 		covariate_table,
 		avgint_table,
@@ -724,7 +728,7 @@ sqlcmd += ' WHERE rate_name == "iota"'
 dismod_at.sql_command(connection, sqlcmd)
 #
 # use smooth_alpha_n11 for smoothing alpha
-sqlcmd  = 'UPDATE mulcov SET smooth_id = ' + str(alpha_smooth_id)
+sqlcmd  = 'UPDATE mulcov SET group_smooth_id = ' + str(alpha_smooth_id)
 sqlcmd += ' WHERE mulcov_type == "rate_value"'
 dismod_at.sql_command(connection, sqlcmd)
 #

@@ -748,11 +748,11 @@ def db2csv_command(database_file_arg) :
 	# mulcov
 	table_name    = 'mulcov'
 	table_columns = [
-		('mulcov_type',    'text'),
-		('rate_id',        'integer'),
-		('integrand_id',   'integer'),
-		('covariate_id',   'integer'),
-		('smooth_id',      'integer'),
+		('mulcov_type',     'text'),
+		('rate_id',         'integer'),
+		('integrand_id',    'integer'),
+		('covariate_id',    'integer'),
+		('group_smooth_id', 'integer'),
 	]
 	check_table_columns(connection, table_name, table_columns)
 	#

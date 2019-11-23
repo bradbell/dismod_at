@@ -104,12 +104,7 @@ This variable corresponds to a group covariate multiplier
 that affects the measurement value
 $icode age_id$$, $icode time_id$$,
 $icode integrand_id$$, and $icode covariate_id$$.
-(There are no subgroup covariate multipliers of this type.)
-If the deprecated name
-$cref/meas_std/mulcov_table/mulcov_type/meas_std: Deprecated 2019-04-07/$$
-is found in the mulcov table,
-this variable type is written as $code mulcov_meas_noise$$
-(because that is how it used to be).
+There are no subgroup covariate multipliers of this type.
 
 $head smooth_id$$
 If $icode var_type$$ is

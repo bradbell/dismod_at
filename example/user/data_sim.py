@@ -269,6 +269,9 @@ def example_db (file_name) :
 
 	]
 	# ----------------------------------------------------------------------
+	# subgroup_table
+	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -276,6 +279,7 @@ def example_db (file_name) :
 		time_list,
 		integrand_table,
 		node_table,
+		subgroup_table,
 		weight_table,
 		covariate_table,
 		avgint_table,

@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -555,6 +555,7 @@ def csv2db_command(database, configure_csv, measure_csv) :
 	# empty tables
 	nslist_table = list()
 	mulcov_table = list()
+	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
 	# -------------------------------------------------------------------------
 	file_name = database
 	dismod_at.create_database(
@@ -563,6 +564,7 @@ def csv2db_command(database, configure_csv, measure_csv) :
 	     time_list,
 	     integrand_table,
 	     node_table,
+	     subgroup_table,
 	     weight_table,
 	     covariate_table,
 	     avgint_table,

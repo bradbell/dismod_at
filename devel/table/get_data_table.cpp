@@ -185,6 +185,7 @@ $end
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/log_message.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -278,13 +279,12 @@ void get_data_table(
 		CppAD::vector<int> subgroup_id;
 		if( ! have_subgroup_id )
 		{
-# if 0
 			string message =
 			"The data table does not contain the subgroup_id column.\n"
 			"Using default value: subgroup_id = 0\n"
-			"This kluge will not last long.\n";
+			"This backward compatible kluge will not last long.\n";
 			log_message(db, &std::cout, "warning", message);
-# endif
+			//
 			subgroup_id.resize(n_data);
 			for(size_t i = 0; i < n_data; ++i)
 				subgroup_id[i] = 0;

@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -156,6 +156,9 @@ def example_db (file_name) :
 		{ 'name':'print_level_fixed', 'value':'0' },
 	]
 	# ----------------------------------------------------------------------
+	# subgroup_table
+	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
 		file_name,
@@ -163,6 +166,7 @@ def example_db (file_name) :
 		time_list,
 		integrand_table,
 		node_table,
+		subgroup_table,
 		weight_table,
 		covariate_table,
 		avgint_table,

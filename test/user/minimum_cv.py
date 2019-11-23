@@ -129,6 +129,10 @@ def example_db ():
 		{'name':'data_extra_columns',   'value':'data_info'         },
 		{'name':'max_num_iter_fixed',   'value':'-1'                }
 	]
+	# -------------------------------------------------------------------
+	# subgroup_table
+	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+	# -------------------------------------------------------------------
 	# create database
 	file_name = 'example.db'
 	dismod_at.create_database(
@@ -137,6 +141,7 @@ def example_db ():
 		time_list,
 		integrand_table,
 		node_table,
+		subgroup_table,
 		weight_table,
 		covariate_table,
 		avgint_table,

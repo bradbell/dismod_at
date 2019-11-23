@@ -144,13 +144,12 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 	CppAD::vector<int>    subgroup_smooth_id;
 	if( ! have_group_id )
 	{
-# if 0
 		string message =
 		"The mulcov_table does not contain the group_id column.\n"
 		"Using default values: group_id = 0, subgroup_smooth_id = null,\n"
-		"and group_smooth_id = smooth_id. This kluge will not last long.\n";
+		"and group_smooth_id = smooth_id.\\n"
+		"This backward compatible kluge will not last long.\n";
 		log_message(db, &std::cout, "warning", message);
-# endif
 		//
 		// set group_smooth_id = smooth_id
 		column_name    = "smooth_id";
