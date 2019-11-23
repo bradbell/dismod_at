@@ -69,6 +69,26 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 11-22$$
+The following changes below were made to the database input tables.
+Warnings are printed and backward compatible values are used if
+these changes are not present:
+$list number$$
+The $cref subgroup_table$$ was added.
+$lnext
+The $icode subgroup_id$$ column was added to the
+$cref/data table/avgint_table/subgroup_id/$$ and
+$cref/avgint table/avgint_table/subgroup_id/$$.
+$lnext
+The $icode smooth_id$$ column in the mulcov table was changed to
+$cref/group_smooth_id/mulcov_table/group_smooth_id/$$.
+In addition, the $icode group_id$$ and $icode subgroup_smooth_id$$
+columns were added to the mulcov table.
+$lend
+In addition, the $cref/subgroup_table/create_database/subgroup_table/$$
+argument was added to the $code create_database$$ routine.
+
+
 $head 11-20$$
 $list number$$
 The automatic conversion of $code meas_std$$ to
