@@ -169,7 +169,7 @@ void init_command(
 	// -----------------------------------------------------------------------
 	// create var table
 	size_t n_row = pack_object.size();
-	size_t n_col = 9;
+	size_t n_col = 11;
 	table_name   = "var";
 	col_name.resize(n_col);
 	col_type.resize(n_col);
@@ -212,6 +212,14 @@ void init_command(
 	col_name[8]   = "mulcov_id";
 	col_type[8]   = "integer";
 	col_unique[8] = false;
+	//
+	col_name[9]   = "group_id";
+	col_type[9]   = "integer";
+	col_unique[9] = false;
+	//
+	col_name[10]   = "subgroup_id";
+	col_type[10]   = "integer";
+	col_unique[10] = false;
 	//
 	// mulstd variables
 	size_t n_smooth = db_input.smooth_table.size();
@@ -310,6 +318,8 @@ void init_command(
 	vector<size_t> count_rate_value(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 		count_rate_value[rate_id] = 0;
+	//
+	// group covariate multipliers
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 	if( mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT )
 	{	mulcov_type_enum mulcov_type;
@@ -317,6 +327,7 @@ void init_command(
 		size_t rate_id         = mulcov_table[mulcov_id].rate_id;
 		size_t integrand_id    = mulcov_table[mulcov_id].integrand_id;
 		size_t covariate_id    = mulcov_table[mulcov_id].covariate_id;
+		size_t group_id        = mulcov_table[mulcov_id].group_id;
 		size_t group_smooth_id = mulcov_table[mulcov_id].group_smooth_id;
 		//
 		pack_info::subvec_info info;
@@ -374,6 +385,7 @@ void init_command(
 			row_value[n_col * var_id + 3] = to_string( time_id );
 			row_value[n_col * var_id + 7] = to_string( covariate_id );
 			row_value[n_col * var_id + 8] = to_string( mulcov_id );
+			row_value[n_col * var_id + 9] = to_string( group_id );
 		}
 	}
 	create_table(
