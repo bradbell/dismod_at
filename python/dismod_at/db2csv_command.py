@@ -142,6 +142,27 @@
 # is the
 # $cref/node_name/node_table/node_name/$$.
 #
+# $subhead group/sub$$
+# This field is non-empty for
+# $cref/group
+#	/model_variables
+#	/Fixed Effects, theta
+#	/Group Covariate Multipliers
+#/$$
+# and
+# $cref/subgroup
+#	/model_variables
+#	/Random Effects, u
+#	/Subgroup Covariate Multipliers
+#/$$
+# covariate multipliers.
+# If $icode fixed$$ is true (false) this is the
+# $cref/group_name/subgroup_table/group_name/$$
+# ($cref/subgroup_name/subgroup_table/subgroup_name/$$)
+# for this variable.
+# This will correspond to the data table
+# $cref/subgroup_id/data_table/subgroup_id/$$.
+#
 # $subhead fixed$$
 # is $code true$$ if this variable is a
 # $cref/fixed effect/model_variables/Fixed Effects, theta/$$,
@@ -286,7 +307,17 @@
 # $cref/node_name/node_table/node_name/$$ for this data row.
 # This will correspond directly to the data table
 # $cref/node_id/data_table/node_id/$$.
-3
+#
+# $subhead subgroup$$
+# is the
+# $cref/subgroup_name/subgroup_table/subgroup_name/$$ for this data row.
+# This will correspond directly to the data table
+# $cref/subgroup_id/data_table/subgroup_id/$$.
+#
+# $subhead group$$
+# is the $cref/group_name/subgroup_table/group_name/$$ corresponding
+# to the subgroup for this data row.
+#
 # $subhead integrand$$
 # is the integrand table
 # $cref/integrand_name/integrand_table/integrand_name/$$.
@@ -465,6 +496,16 @@
 # is the
 # $cref/node_name/node_table/node_name/$$ for this row.
 #
+# $subhead subgroup$$
+# is the
+# $cref/subgroup_name/subgroup_table/subgroup_name/$$ for this data row.
+# This will correspond directly to the avgint table
+# $cref/subgroup_id/avgint_table/subgroup_id/$$.
+#
+# $subhead group$$
+# is the $cref/group_name/subgroup_table/group_name/$$ corresponding
+# to the subgroup for this data row.
+#
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
 # the corresponding $icode covariate_name$$.
@@ -630,10 +671,10 @@ def db2csv_command(database_file_arg) :
 	new          = False
 	connection   = dismod_at.create_connection(file_name, new)
 	cursor       = connection.cursor()
-	#
-	# age_avg should eventually go in required list
+	# -------------------------------------------------------------------------
 	required_table_list  = [
 		'age',
+		'age_avg',
 		'avgint',
 		'covariate',
 		'data',
@@ -644,6 +685,7 @@ def db2csv_command(database_file_arg) :
 		'option',
 		'mulcov',
 		'node',
+		'subgroup',
 		'prior',
 		'rate',
 		'smooth',
@@ -687,16 +729,6 @@ def db2csv_command(database_file_arg) :
 	# table_data
 	for table in table_list :
 		table_data[table] = dismod_at.get_table_dict(connection, table)
-	if check4table(cursor, 'age_avg') :
-		table_data['age_avg'] = dismod_at.get_table_dict(connection, 'age_avg')
-	elif check4table(cursor, 'avg_age') :
-		msg='This database created by old dismod_at and has avg_age table'
-		print( 'Warning: ' + msg );
-		table_data['age_avg'] = dismod_at.get_table_dict(connection, 'avg_age')
-	else :
-		msg  ='db2csv_command: the required table age_avg\n'
-		msg +='is missing from file' + file_name + '\n'
-		sys.exit(msg)
 	# ----------------------------------------------------------------------
 	# check tables that are supposed to be the same length
 	pair_list = [
@@ -748,11 +780,13 @@ def db2csv_command(database_file_arg) :
 	# mulcov
 	table_name    = 'mulcov'
 	table_columns = [
-		('mulcov_type',     'text'),
-		('rate_id',         'integer'),
-		('integrand_id',    'integer'),
-		('covariate_id',    'integer'),
-		('group_smooth_id', 'integer'),
+		('mulcov_type',            'text'),
+		('rate_id',             'integer'),
+		('integrand_id',        'integer'),
+		('covariate_id',        'integer'),
+		('group_id',            'integer'),
+		('group_smooth_id',     'integer'),
+		('subgroup_smooth_id',  'integer'),
 	]
 	check_table_columns(connection, table_name, table_columns)
 	#
@@ -761,6 +795,15 @@ def db2csv_command(database_file_arg) :
 	table_columns = [
 		('node_name',  'text'),
 		('parent',     'integer'),
+	]
+	check_table_columns(connection, table_name, table_columns)
+	#
+	# subgroup
+	table_name    = 'subgroup'
+	table_columns = [
+		('subgroup_name',     'text'),
+		('group_id',       'integer'),
+		('group_name',        'text'),
 	]
 	check_table_columns(connection, table_name, table_columns)
 	#
@@ -837,11 +880,12 @@ def db2csv_command(database_file_arg) :
 	table_columns = [
 		('integrand_id', 'integer'),
 		('node_id',      'integer'),
+		('subgroup_id',  'integer'),
 		('weight_id',    'integer'),
-		('age_lower',    'real'),
-		('age_upper',    'real'),
-		('time_lower',   'real'),
-		('time_upper',   'real'),
+		('age_lower',       'real'),
+		('age_upper',       'real'),
+		('time_lower',      'real'),
+		('time_upper',      'real'),
 	]
 	check_table_columns(connection, table_name, table_columns)
 	#
@@ -957,7 +1001,7 @@ def db2csv_command(database_file_arg) :
 		[ "method_random",                     "ipopt_random"],
 		[ "max_num_iter_fixed",                "100"],
 		[ "max_num_iter_random",               "100"],
-		[ "meas_noise_effect",                   "add_std_scale_all"],
+		[ "meas_noise_effect",                 "add_std_scale_all"],
 		[ "ode_step_size",                     "10.0"],
 		[ "parent_node_id",                    ""],
 		[ "parent_node_name",                  ""],
@@ -975,12 +1019,6 @@ def db2csv_command(database_file_arg) :
 	option_id = 0
 	for row in table_data['option'] :
 		found        = False
-		if row['option_name'] == 'meas_std_effect' :
-			msg = 'meas_std_effect was deprecated on 2019-04-07\n'
-			msg += 'and may not work in the future. '
-			msg += 'It should be changed to meas_noise_effect.'
-			print(msg)
-			row['option_name'] = 'meas_noise_effect'
 		for choice in option_list :
 			if row['option_name'] == choice[0] :
 				found = True
@@ -1062,6 +1100,7 @@ def db2csv_command(database_file_arg) :
 		'integrand',
 		'covariate',
 		'node',
+		'group/sub',
 		'fixed',
 		'depend',
 		'start',
@@ -1087,6 +1126,14 @@ def db2csv_command(database_file_arg) :
 	row_out = dict()
 	for field in header :
 		row_out[field] = ''
+	#
+	# group_id2name
+	group_id2name = [ table_data['subgroup'][0]['group_name'] ]
+	for row in table_data['subgroup'] :
+		group_name = row['group_name']
+		if group_name != group_id2name[-1] :
+			group_id2name.append( group_name )
+		#
 	for row_in in table_data['var'] :
 		row_out['var_id']    = var_id
 		row_out['var_type']  = row_in['var_type']
@@ -1109,12 +1156,22 @@ def db2csv_command(database_file_arg) :
 		row_out['start'] = table_lookup('start_var', var_id, 'start_var_value')
 		row_out['scale'] = table_lookup('scale_var', var_id, 'scale_var_value')
 		#
-		# fixed
+		# fixed and group/sub
 		row_out['fixed'] = 'true'
 		if row_in['var_type'] == 'rate' :
 			if row_in['node_id'] != parent_node_id :
 				row_out['fixed'] = 'false'
-		#
+		if row_in['subgroup_id'] != None :
+			assert row_in['group_id'] == None
+			row_out['fixed'] = 'false'
+			subgroup_name = table_lookup(
+				'subgroup', row_in['subgroup_id'], 'subgroup_name'
+			)
+			row_out['group/sub'] = subgroup_name
+		if row_in['group_id'] != None :
+			assert row_in['subgroup_id'] == None
+			group_name = group_id2name[ row_in['group_id'] ]
+			row_out['group/sub'] = group_name
 		# depend
 		if have_table['depend_var'] :
 			data_depend  = table_data['depend_var'][var_id]['data_depend']
@@ -1200,6 +1257,8 @@ def db2csv_command(database_file_arg) :
 	header = ['data_id'] + data_extra_columns + [
 		'child',
 		'node',
+		'subgroup',
+		'group',
 		'integrand',
 		'weight',
 		'age_lo',
@@ -1253,25 +1312,37 @@ def db2csv_command(database_file_arg) :
 		row_out['eta']         = convert2output( row_in['eta'] )
 		row_out['nu']          = convert2output( row_in['nu'] )
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
+		row_out['child']       = node_id2child( row_in['node_id'] )
 		#
 		meas_cv     = minimum_meas_cv[ row_in['integrand_id' ] ]
 		meas_stdcv  =  meas_cv * abs( row_in['meas_value'] )
 		meas_stdcv  = max( row_in['meas_std'], meas_stdcv)
 		row_out['meas_stdcv'] = convert2output( meas_stdcv )
 		#
-		#
+		# integrand
 		row_out['integrand'] = table_lookup(
 			'integrand', row_in['integrand_id'], 'integrand_name'
 		)
+		# weight
 		row_out['weight'] = table_lookup(
 			'weight', row_in['weight_id'], 'weight_name'
 		)
+		# denisty
 		row_out['density'] = table_lookup(
 			'density', row_in['density_id'], 'density_name'
 		)
-		row_out['child'] = node_id2child( row_in['node_id'] )
-		row_out['node']  = table_data['node'][ row_in['node_id'] ]['node_name']
-		#
+		# node
+		row_out['node']  = table_lookup(
+			'node', row_in['node_id'],  'node_name'
+		)
+		# sub
+		row_out['subgroup']   = table_lookup(
+			'subgroup', row_in['subgroup_id'], 'subgroup_name'
+		)
+		# group
+		row_out['group'] = table_lookup(
+			'subgroup', row_in['subgroup_id'], 'group_name'
+		)
 		covariate_id = 0
 		for row in table_data['covariate'] :
 			field_in  = 'x_' + str(covariate_id)
@@ -1324,7 +1395,9 @@ def db2csv_command(database_file_arg) :
 			'time_up',
 			'integrand',
 			'weight',
-			'node'
+			'node',
+			'subgroup',
+			'group'
 		]
 		for row in table_data['covariate'] :
 			header.append( row['covariate_name'] )
@@ -1365,6 +1438,14 @@ def db2csv_command(database_file_arg) :
 			# node
 			row_out['node']      = table_lookup(
 				'node', avgint_row['node_id'], 'node_name'
+			)
+			# subgroup
+			row_out['subgroup']   = table_lookup(
+				'subgroup', row_in['subgroup_id'], 'subgroup_name'
+			)
+			# group
+			row_out['group'] = table_lookup(
+				'subgroup', row_in['subgroup_id'], 'group_name'
 			)
 			# covariates
 			covariate_id = 0

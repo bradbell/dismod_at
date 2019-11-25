@@ -70,6 +70,7 @@ $childtable%
 %$$
 
 $head 11-24$$
+$list number$$
 An $code old2new_command$$ was added.
 This time it adds the $cref subgroup_table$$
 and other related information,
@@ -82,6 +83,15 @@ $cref/backward compatibility
 	/Backward Compatibility
 /$$
 was added to the $code create_database$$ function.
+$lnext
+The $cref db2csv_command$$ was modified in the following ways:
+The $cref%group/sub%db2csv_command%variable.csv%group/sub%$$
+column as added to variable.csv.
+The $cref%subgroup%db2csv_command%data.csv%subgroup%$$ and
+$cref%group%db2csv_command%data.csv%group%$$ columns were added to data.csv
+The $cref%subgroup%db2csv_command%data.csv%subgroup%$$
+column was added to predict.csv
+$lend
 
 $head 11-22$$
 The following changes below were made to the database input tables.

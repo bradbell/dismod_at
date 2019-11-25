@@ -168,6 +168,7 @@ for row in variable_table :
 	else :
 		empty_field.append('covariate')
 		empty_field.append('m_id')
+		empty_field.append('group/sub')
 	for field in row :
 		if field in empty_field :
 			assert row[field] == ''
