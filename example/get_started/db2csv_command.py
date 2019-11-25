@@ -150,9 +150,12 @@ assert near_equal(row['meas_std'],   meas_std,   1e-5)
 # variable.csv
 variable_table = get_table('variable')
 #
+# empty because: rate covariate, no depend command, no truth table,
+# no sample command
+always_empty  = [ 'integrand', 'depend', 'truth', 'sam_avg', 'sam_std' ]
+#
 # res_value is empty because value prior is uniform
 # sim_v, sim_a, sim_t are empty because have not run simulate command
-always_empty  = [ 'integrand', 'depend', 'truth', 'sam_avg', 'sam_std' ]
 always_empty += [ 'res_value', 'res_dage', 'res_dtime' ]
 always_empty += [ 'std_v', 'eta_v', 'nu_v' ]
 always_empty += [ 'sim_v', 'sim_a', 'sim_t' ]
@@ -192,7 +195,7 @@ for row in variable_table :
 	else :
 		assert row['var_type'] == 'mulcov_rate_value'
 		assert row['covariate']   == 'income'
-		assert row['node']        == ''
+		assert row['group/sub']   == 'world'
 		assert int( row['s_id'] ) == 1 # smooth_income_multiplier
 		assert int( row['m_id'] ) == 0 # mulcov_id
 		assert near_equal(row['fit_value'], income_multiplier, 1e-5)
