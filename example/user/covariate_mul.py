@@ -32,7 +32,7 @@
 # true values used to simulate data
 iota_true  = 0.05
 rho_true   = 0.10
-n_data     = 51
+n_data     = 4
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -85,8 +85,8 @@ def example_db (file_name) :
 	#
 	# subgroup_table
 	subgroup_table = [
-		{ 'subgroup':'north_america', 'group':'world' },
-		{ 'subgroup':'south_america', 'group':'world' },
+		{ 'subgroup':'north_america', 'group':'north_america' },
+		{ 'subgroup':'south_america', 'group':'south_america' },
 	]
 	#
 	# weight table:
@@ -105,19 +105,19 @@ def example_db (file_name) :
 			'covariate': 'income',
 			'type':      'meas_value',
 			'effected':  'Sincidence',
-			'group':     'world',
+			'group':     'north_america',
 			'smooth':    'smooth_mulcov'
 		},{ # sex effects south american remission
 			'covariate': 'sex',
 			'type':      'meas_value',
 			'effected':  'remission',
-			'group':     'world',
+			'group':     'south_america',
 			'smooth':    'smooth_mulcov'
 		},{ # example covariate that is not being used
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'rho',
-			'group':     'world',
+			'group':     'north_america',
 			'smooth':    None # not used because smoothing is null
 		}
 	]
@@ -154,13 +154,17 @@ def example_db (file_name) :
 		income      = data_id / float(n_data-1)
 		sex         = ( data_id % 3 - 1.0 ) / 2.0
 		integrand   = integrand_table[ data_id % 2 ]['name']
-		if integrand == 'Sincidence' :
+		if integrand == 'Sincidence' and subgroup == 'north_america' :
 			effect      = (income - income_reference) * mulcov_incidence
 			meas_value  = math.exp(effect) * iota_true
-		else :
-			assert integrand == 'remission'
+		elif integrand == 'remission' and subgroup == 'south_america' :
 			effect      = (sex - sex_reference) * mulcov_remission
 			meas_value  = math.exp(effect) * rho_true
+		elif integrand == 'Sincidence' :
+			meas_value = iota_true
+		else :
+			assert integrand == 'remission'
+			meas_value = rho_true
 		meas_std    = 0.1 * meas_value
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
@@ -183,13 +187,13 @@ def example_db (file_name) :
 			'density':  'uniform',
 			'lower':    0.01,
 			'upper':    1.00,
-			'mean':     0.1,
+			'mean':     iota_true / 3.0,
 		},{ # prior_mulcov
 			'name':     'prior_mulcov',
 			'density':  'uniform',
 			'lower':    -5.0,
 			'upper':     5.0,
-			'mean':     0.0,
+			'mean':     mulcov_incidence / 3.0
 		}
 	]
 	assert -5.0 < mulcov_incidence and mulcov_incidence < +5.0

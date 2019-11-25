@@ -531,16 +531,17 @@ def create_database(
 			group_name = subgroup_table[i]['group']
 			global_group_name2id[group_name] = group_id
 	#
-	col_name = [ 'subgroup_name', 'group_id', 'group_name' ]
-	col_type = [ 'text',          'integer',  'text'       ]
-	row_list = []
-	group_id   = 0
-	group_name = subgroup_table[i]['group']
+	col_name      = [ 'subgroup_name', 'group_id', 'group_name' ]
+	col_type      = [ 'text',          'integer',  'text'       ]
+	row_list      = []
 	for i in range( len(subgroup_table) ) :
-		subgroup_name   = subgroup_table[i]['subgroup']
-		if subgroup_table[i]['group'] != group_name :
+		if i == 0 :
+			group_id   = 0
+			group_name = subgroup_table[0]['group']
+		elif subgroup_table[i]['group'] != group_name :
 			group_id   = group_id + 1
 			group_name = subgroup_table[i]['group']
+		subgroup_name   = subgroup_table[i]['subgroup']
 		row_list.append( [ subgroup_name, group_id, group_name ] )
 	tbl_name = 'subgroup'
 	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

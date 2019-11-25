@@ -287,6 +287,7 @@ avg_noise_obj_(
 	{	data_subset_obj_[i].original_id  = subset_object[i].original_id;
 		data_subset_obj_[i].integrand_id = subset_object[i].integrand_id;
 		data_subset_obj_[i].node_id      = subset_object[i].node_id;
+		data_subset_obj_[i].subgroup_id  = subset_object[i].subgroup_id;
 		data_subset_obj_[i].weight_id    = subset_object[i].weight_id;
 		data_subset_obj_[i].age_lower    = subset_object[i].age_lower;
 		data_subset_obj_[i].age_upper    = subset_object[i].age_upper;

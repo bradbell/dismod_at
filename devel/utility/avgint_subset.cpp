@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -223,6 +223,7 @@ void avgint_subset(
 			one_sample.original_id  = int( avgint_id );
 			one_sample.integrand_id = avgint_table[avgint_id].integrand_id;
 			one_sample.node_id      = avgint_table[avgint_id].node_id;
+			one_sample.subgroup_id  = avgint_table[avgint_id].subgroup_id;
 			one_sample.weight_id    = avgint_table[avgint_id].weight_id;
 			one_sample.age_lower    = avgint_table[avgint_id].age_lower;
 			one_sample.age_upper    = avgint_table[avgint_id].age_upper;
