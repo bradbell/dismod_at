@@ -10,11 +10,12 @@
 # ---------------------------------------------------------------------------
 # $begin db2csv_command.py$$ $newlinech #$$
 # $spell
+#	csv
 #	init
 #	dismod
 # $$
 #
-# $section init Command: Example and Test$$
+# $section db2csv Command: Example and Test$$
 #
 # $srcfile%
 #	example/get_started/db2csv_command.py

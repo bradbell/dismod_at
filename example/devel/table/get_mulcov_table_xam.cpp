@@ -46,9 +46,11 @@ bool get_mulcov_table_xam(void)
 			" rate_id            integer,"
 			" integrand_id       integer,"
 			" covariate_id       integer,"
-			" smooth_id          integer)",
-		"insert into mulcov values(0, 'meas_value', null,  2,   1, 2)",
-		"insert into mulcov values(1, 'rate_value',     1, null, 2, 2)"
+			" group_id           integer,"
+			" group_smooth_id    integer,"
+			" subgroup_smooth_id integer)",
+		"insert into mulcov values(0, 'meas_value', null, 1,  2, 3, 4, 5 )",
+		"insert into mulcov values(1, 'rate_value', 1, null,  6, 7, 8, 9 )"
 	};
 	size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
 	for(size_t i = 0; i < n_command; i++)
@@ -65,14 +67,20 @@ bool get_mulcov_table_xam(void)
 	ok  &= mulcov_table[0].rate_id == DISMOD_AT_NULL_INT;
 	ok  &= mulcov_table[1].rate_id == 1;
 	//
-	ok  &= mulcov_table[0].integrand_id == 2;
+	ok  &= mulcov_table[0].integrand_id == 1;
 	ok  &= mulcov_table[1].integrand_id == DISMOD_AT_NULL_INT;
 	//
-	ok  &= mulcov_table[0].covariate_id == 1;
-	ok  &= mulcov_table[1].covariate_id == 2;
+	ok  &= mulcov_table[0].covariate_id == 2;
+	ok  &= mulcov_table[1].covariate_id == 6;
 	//
-	ok  &= mulcov_table[0].group_smooth_id == 2;
-	ok  &= mulcov_table[1].group_smooth_id == 2;
+	ok  &= mulcov_table[0].group_id == 3;
+	ok  &= mulcov_table[1].group_id == 7;
+	//
+	ok  &= mulcov_table[0].group_smooth_id == 4;
+	ok  &= mulcov_table[1].group_smooth_id == 8;
+	//
+	ok  &= mulcov_table[0].subgroup_smooth_id == 5;
+	ok  &= mulcov_table[1].subgroup_smooth_id == 9;
 	//
 	// close database and return
 	sqlite3_close(db);

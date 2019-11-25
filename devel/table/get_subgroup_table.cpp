@@ -91,26 +91,6 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 {	using std::string;
 	string msg, sql_cmd;
 
-	sql_cmd = "SELECT name FROM sqlite_master WHERE ";
-	sql_cmd += "type = 'table' AND name = 'subgroup'";
-	char sep = ',';
-	string sql_cmd_ret = exec_sql_cmd(db, sql_cmd, sep);
-	if( sql_cmd_ret.size() == 0 )
-	{
-		msg  = "database does not contain subgroup table.\n";
-		msg += "Using a temporary fix with of a table with one row where\n";
-		msg += "subgroup_name='world', group_id=0, group_name='world'\n";
-		msg += "This backward compatible kluge will not last for long";
-		log_message(db, &std::cout, "warning", msg);
-		//
-		CppAD::vector<subgroup_struct> subgroup_table(1);
-		subgroup_table[0].subgroup_name = "world";
-		subgroup_table[0].group_id      = 0;
-		subgroup_table[0].group_name    = "world";
-		//
-		return subgroup_table;
-	}
-
 	string table_name  = "subgroup";
 	size_t n_subgroup = check_table_id(db, table_name);
 

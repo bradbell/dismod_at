@@ -8,15 +8,15 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin depend_command.py$$ $newlinech #$$
+# $begin old2new_command.py$$ $newlinech #$$
 # $spell
-#	dismod
+#	var
 # $$
 #
-# $section depend Command: Example and Test$$
+# $section old2new Command: Example and Test$$
 #
 # $srcfile%
-#	example/get_started/depend_command.py
+#	example/get_started/old2new_command.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
@@ -28,7 +28,7 @@ import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
-example = 'example/get_started/depend_command.py'
+example = 'example/get_started/old2new_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + example + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -52,30 +52,52 @@ os.chdir('build/example/get_started')
 # create get_started.db
 get_started_db.get_started_db()
 # -----------------------------------------------------------------------
-program        = '../../devel/dismod_at'
-file_name      = 'get_started.db'
-for command in [ 'init', 'depend' ] :
-	cmd = [ program, file_name, command ]
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
-# -----------------------------------------------------------------------
 # connect to database
-new        = False
-connection = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# get variable and depend_var tables
-var_table         = dismod_at.get_table_dict(connection, 'var')
-depend_var_table  = dismod_at.get_table_dict(connection, 'depend_var')
+new            = False
+file_name      = 'get_started.db'
+connection     = dismod_at.create_connection(file_name, new)
+subgroup_table = dismod_at.get_table_dict(connection, 'subgroup')
 #
-for var_id in range( len(var_table) ) :
-	var_row         = var_table[var_id]
-	depend_var_row  = depend_var_table[var_id]
-	# data depends on both variables
-	assert depend_var_row[ 'data_depend' ] == 1
-	# uniform prior does not depend on argument value
-	assert depend_var_row[ 'prior_depend' ] == 0
+# Check that there is only one row in subgroup table
+assert len(subgroup_table) == 1
+#
+# Drop subgroup table
+sql_cmd = 'DROP TABLE subgroup'
+dismod_at.sql_command(connection, sql_cmd)
+#
+# Drop subgroup_id column from data table
+sql_cmd = 'ALTER TABLE data RENAME COLUMN subgroup_id TO not_used'
+dismod_at.sql_command(connection, sql_cmd)
+#
+# Drop subgroup_id column from avgint table
+sql_cmd = 'ALTER TABLE avgint RENAME COLUMN subgroup_id TO not_used'
+dismod_at.sql_command(connection, sql_cmd)
+#
+# Drop group_id column from mulcov table
+sql_cmd = 'ALTER TABLE mulcov RENAME COLUMN group_id TO not_used_one'
+dismod_at.sql_command(connection, sql_cmd)
+#
+# Drop subgroup_smooth_id column from mulcov table
+sql_cmd = 'ALTER TABLE mulcov RENAME COLUMN subgroup_smooth_id TO not_used_two'
+dismod_at.sql_command(connection, sql_cmd)
+#
+# Rename group_smooth_id column to smooth_id in mulcov table
+sql_cmd = 'ALTER TABLE mulcov RENAME COLUMN group_smooth_id TO smooth_id'
+dismod_at.sql_command(connection, sql_cmd)
+#
+# close the database
+connection.close()
+#
+# use old2new_command to restore the database
+program   = '../../devel/dismod_at'
+file_name = 'get_started.db'
+command   = 'old2new'
+dismod_at.system_command_prc( [ program, file_name, command ] )
+#
+# check that restore worked by running init command
+command   = 'init'
+dismod_at.system_command_prc( [ program, file_name, command ] )
+#
 # -----------------------------------------------------------------------
-print('depend_command: OK')
+print('old2new_command: OK')
 # END PYTHON

@@ -123,6 +123,16 @@
 # group    $cnext str           $cnext name of group that subgroup is in
 # $tend
 #
+# $subhead Backward Compatibility$$
+# To get backward compatibility to before the subgroup information was added,
+# add the following table to the $code create_database$$ call
+# (just after the $icode node_table$$):
+# $codei%
+#	%subgroup_table% = [ { 'subgroup':'world', 'group':'world' } ]
+# %$$
+# No other changes to the $code create_database$$ call should be necessary
+# (for backward compatibility).
+#
 # $head weight_table$$
 # This is a list of $code dict$$
 # that define the rows of the $cref weight_table$$ and

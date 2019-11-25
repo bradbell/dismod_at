@@ -282,9 +282,13 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "text" )
-	{	std::string message = "get_table_column for column = " + column_name;
-		message += ". Expected type to be text not " + col_type;
-		error_exit(message, table_name, null_id);
+	{	std::string msg = "get_table_column for column = " + column_name;
+		msg += " in table " + table_name + ".\n";
+		if( col_type == "" )
+			msg += "Could not find table or column in table.";
+		else
+			msg += "Expected type to be text not " + col_type;
+		error_exit(msg, table_name, null_id);
 	}
 
 	// Use template function for rest
@@ -311,9 +315,13 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "integer" )
-	{	std::string message = "get_table_column for column = " + column_name;
-		message += ". Expected type to be integer not " + col_type;
-		error_exit(message, table_name, null_id);
+	{	std::string msg = "get_table_column for column = " + column_name;
+		msg += " in table " + table_name + ".\n";
+		if( col_type == "" )
+			msg += "Could not find table or column in table.";
+		else
+			msg += "Expected type to be integer not " + col_type;
+		error_exit(msg, table_name, null_id);
 	}
 
 	// Use template function for rest
@@ -340,9 +348,13 @@ void get_table_column(
 	// check the type for this column
 	std::string col_type = get_table_column_type(db, table_name, column_name);
 	if( col_type != "real" )
-	{	std::string message = "get_table_column for column = " + column_name;
-		message += ". Expected type to be real not " + col_type;
-		error_exit(message, table_name, null_id);
+	{	std::string msg = "get_table_column for column = " + column_name;
+		msg += " in table " + table_name + ".\n";
+		if( col_type == "" )
+			msg += "Could not find table or column in table.";
+		else
+			msg += "Expected type to be real not " + col_type;
+		error_exit(msg, table_name, null_id);
 	}
 
 	// Use template function for rest

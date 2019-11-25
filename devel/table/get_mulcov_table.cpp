@@ -137,46 +137,19 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 	assert( covariate_id.size() == n_mulcov );
 
 	column_name         = "group_id";
-	string column_type  = get_table_column_type(db, table_name, column_name);
-	bool have_group_id  = column_type != "";
 	CppAD::vector<int>    group_id;
-	CppAD::vector<int>    group_smooth_id;
-	CppAD::vector<int>    subgroup_smooth_id;
-	if( ! have_group_id )
-	{
-		string message =
-		"The mulcov_table does not contain the group_id column.\n"
-		"Using default values: group_id = 0, subgroup_smooth_id = null,\n"
-		"and group_smooth_id = smooth_id.\\n"
-		"This backward compatible kluge will not last long.\n";
-		log_message(db, &std::cout, "warning", message);
-		//
-		// set group_smooth_id = smooth_id
-		column_name    = "smooth_id";
-		get_table_column(db, table_name, column_name, group_smooth_id);
-		assert( group_smooth_id.size() == n_mulcov );
-		//
-		// set group_id = 0, subgroup_smooth_id = null
-		group_id.resize(n_mulcov);
-		subgroup_smooth_id.resize(n_mulcov);
-		for(size_t i = 0; i < n_mulcov; ++i)
-		{	group_id[i]           = 0;
-			subgroup_smooth_id[i] = DISMOD_AT_NULL_INT;
-		}
-	}
-	else
-	{
-		get_table_column(db, table_name, column_name, group_id);
-		assert( group_id.size() == n_mulcov );
-		//
-		column_name     = "group_smooth_id";
-		get_table_column(db, table_name, column_name, group_smooth_id);
-		assert( group_smooth_id.size() == n_mulcov );
-		//
-		column_name     = "subgroup_smooth_id";
-		get_table_column(db, table_name, column_name, subgroup_smooth_id);
-		assert( subgroup_smooth_id.size() == n_mulcov );
-	}
+	get_table_column(db, table_name, column_name, group_id);
+	assert( group_id.size() == n_mulcov );
+
+	column_name         = "group_smooth_id";
+	CppAD::vector<int>     group_smooth_id;
+	get_table_column(db, table_name, column_name, group_smooth_id);
+	assert( group_smooth_id.size() == n_mulcov );
+	//
+	column_name         = "subgroup_smooth_id";
+	CppAD::vector<int>     subgroup_smooth_id;
+	get_table_column(db, table_name, column_name, subgroup_smooth_id);
+	assert( subgroup_smooth_id.size() == n_mulcov );
 
 	CppAD::vector<mulcov_struct>     mulcov_table(n_mulcov);
 	for(size_t i = 0; i < n_mulcov; i++)

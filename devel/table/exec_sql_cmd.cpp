@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -45,8 +45,11 @@ $codei%
 It contains the command that is executed.
 
 $head sep$$
-If this argument is present,
-this character is used to separate columns on the same line of the result
+If this argument is present, it has prototype
+$codei%
+	char %sep%
+%$$
+and is the character is used to separate columns on the same line of the result
 ($code '\n'$$ is used to separate lines of the result).
 It is assumed that $icode sep$$ and $code '\n'$$ do not occur
 in any of the result values.

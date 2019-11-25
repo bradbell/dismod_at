@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/depend_command.hpp>
 # include <dismod_at/fit_command.hpp>
 # include <dismod_at/init_command.hpp>
+# include <dismod_at/old2new_command.hpp>
 # include <dismod_at/predict_command.hpp>
 # include <dismod_at/sample_command.hpp>
 # include <dismod_at/set_command.hpp>
@@ -61,6 +62,7 @@ int main(int n_arg, const char** argv)
 	using CppAD::vector;
 	// ---------------- command line arguments ---------------------------
 	struct { const char* name; int n_arg; } command_info[] = {
+		{"old2new",   3},
 		{"init",      3},
 		{"set",       5},
 		{"set",       6},
@@ -147,6 +149,15 @@ int main(int n_arg, const char** argv)
 	}
 	std::time_t unix_time =
 		dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
+	// ----------------------------------------------------------------------
+	// old2new command must fix database before get_db_input can be run
+	if( command_arg == "old2new" )
+	{	dismod_at::old2new_command(db);
+		message = "end " + command_arg;
+		dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
+		sqlite3_close(db);
+		return 0;
+	}
 	// --------------- get the input tables ---------------------------------
 	dismod_at::db_input_struct db_input;
 	get_db_input(db, db_input);

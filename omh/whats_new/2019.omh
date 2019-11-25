@@ -69,6 +69,20 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 11-24$$
+An $code old2new_command$$ was added.
+This time it adds the $cref subgroup_table$$
+and other related information,
+to the database in a backward compatible fashion; see
+$cref old2new_command$$ and 11-22 below.
+In addition, directions for obtaining this
+$cref/backward compatibility
+	/create_database
+	/subgroup_table
+	/Backward Compatibility
+/$$
+was added to the $code create_database$$ function.
+
 $head 11-22$$
 The following changes below were made to the database input tables.
 Warnings are printed and backward compatible values are used if

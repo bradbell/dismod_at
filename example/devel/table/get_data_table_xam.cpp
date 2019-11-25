@@ -54,6 +54,7 @@ bool get_data_table_xam(void)
 		" integrand_id   integer,"
 		" density_id     integer,"
 		" node_id        integer,"
+		" subgroup_id    integer,"
 		" weight_id      integer,"
 		" hold_out       integer,"
 		" meas_value     real,"
@@ -72,7 +73,8 @@ bool get_data_table_xam(void)
 		"1,"                       // integrand_id
 		"1,"                       // density_id (gaussian)
 		"3,"                       // node_id
-		"4,"                       // weight_id
+		"4,"                       // subgroup_id
+		"5,"                       // weight_id
 		"1,"                       // hold_out
 		"1e-4,"                    // meas_value
 		"1e-5,"                    // meas_std
@@ -108,7 +110,8 @@ bool get_data_table_xam(void)
 	ok  &= data_table[0].integrand_id      == 1;
 	ok  &= data_table[0].density_id        == 1;
 	ok  &= data_table[0].node_id           == 3;
-	ok  &= data_table[0].weight_id         == 4;
+	ok  &= data_table[0].subgroup_id       == 4;
+	ok  &= data_table[0].weight_id         == 5;
 	ok  &= data_table[0].hold_out          == 1;
 	ok  &= data_table[0].meas_value        == 1e-4;
 	ok  &= data_table[0].meas_std          == 1e-5;

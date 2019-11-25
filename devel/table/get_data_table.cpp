@@ -273,26 +273,10 @@ void get_data_table(
 		get_table_column(db, table_name, column_name, time_upper);
 		assert( n_data == time_upper.size() );
 
-		column_name  = "subgroup_id";
-		string ctype = get_table_column_type(db, table_name, column_name);
-		bool have_subgroup_id  = ctype != "";
-		CppAD::vector<int> subgroup_id;
-		if( ! have_subgroup_id )
-		{
-			string message =
-			"The data table does not contain the subgroup_id column.\n"
-			"Using default value: subgroup_id = 0\n"
-			"This backward compatible kluge will not last long.\n";
-			log_message(db, &std::cout, "warning", message);
-			//
-			subgroup_id.resize(n_data);
-			for(size_t i = 0; i < n_data; ++i)
-				subgroup_id[i] = 0;
-		}
-		else
-		{	get_table_column(db, table_name, column_name, subgroup_id);
-			assert( n_data == subgroup_id.size() );
-		}
+		column_name           = "subgroup_id";
+		CppAD::vector<int>       subgroup_id;
+		get_table_column(db, table_name, column_name, subgroup_id);
+		assert( n_data == subgroup_id.size() );
 
 		// set data_table
 		assert( data_table.size() == 0 );
