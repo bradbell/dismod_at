@@ -30,9 +30,9 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # true values used to simulate data
-iota_true        = 0.05
-remission_true   = 0.10
-n_data           = 51
+iota_true  = 0.05
+rho_true   = 0.10
+n_data     = 51
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -59,11 +59,8 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-	# note that the a, t values are not used for this case
-	def fun_rate_child(a, t) :
-		return ('prior_gauss_zero', None, None)
 	def fun_rate_parent(a, t) :
-		return ('prior_value_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+		return ('prior_value_parent', 'prior_diff_parent', 'prior_diff_parent')
 	def fun_mulcov(a, t) :
 		return ('prior_mulcov', None, None)
 	# ----------------------------------------------------------------------
@@ -79,13 +76,17 @@ def example_db (file_name) :
 		{ 'name':'remission' }
 	]
 	#
-	# node table: world -> north_america
-	#             north_america -> (united_states, canada)
+	# node table: world -> (north_america, south_america)
 	node_table = [
 		{ 'name':'world',         'parent':'' },
 		{ 'name':'north_america', 'parent':'world' },
-		{ 'name':'united_states', 'parent':'north_america' },
-		{ 'name':'canada',        'parent':'north_america' }
+		{ 'name':'south_america', 'parent':'world' },
+	]
+	#
+	# subgroup_table
+	subgroup_table = [
+		{ 'subgroup':'north_america', 'group':'world' },
+		{ 'subgroup':'south_america', 'group':'world' },
 	]
 	#
 	# weight table:
@@ -100,21 +101,24 @@ def example_db (file_name) :
 	# mulcov table
 	# income has been scaled the same as sex so man use same smoothing
 	mulcov_table = [
-		{
+		{	# income effects north american incidence
 			'covariate': 'income',
 			'type':      'meas_value',
 			'effected':  'Sincidence',
+			'group':     'world',
 			'smooth':    'smooth_mulcov'
-		},{	# Example of a mulcov table entry that is not used
+		},{ # sex effects south american remission
+			'covariate': 'sex',
+			'type':      'meas_value',
+			'effected':  'remission',
+			'group':     'world',
+			'smooth':    'smooth_mulcov'
+		},{ # example covariate that is not being used
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'rho',
-			'smooth':    None
-		},{
-			'covariate': 'income',
-			'type':      'meas_value',
-			'effected':  'remission',
-			'smooth':    'smooth_mulcov'
+			'group':     'world',
+			'smooth':    None # not used because smoothing is null
 		}
 	]
 	#
@@ -141,32 +145,36 @@ def example_db (file_name) :
 	mulcov_incidence = 1.0
 	mulcov_remission = 2.0;
 	income_reference = 0.5
-	n_integrand      = len(integrand_table)
+	sex_reference    = 0.0
 	for data_id in range( n_data ) :
-		integrand   = integrand_table[ data_id % n_integrand ]['name']
+		if data_id % 4 == 0 or data_id % 4 == 1 :
+			subgroup = 'north_america'
+		else :
+			subgroup = 'south_america'
 		income      = data_id / float(n_data-1)
 		sex         = ( data_id % 3 - 1.0 ) / 2.0
-		meas_value  = iota_true
-		effect      = (income - income_reference) * mulcov_incidence
-		meas_value *= math.exp(effect)
-		if integrand == 'remission' :
-			meas_value  = remission_true
-			# note that sex has no effect
-			effect      = (income - income_reference) * mulcov_remission
-			meas_value *= math.exp(effect)
+		integrand   = integrand_table[ data_id % 2 ]['name']
+		if integrand == 'Sincidence' :
+			effect      = (income - income_reference) * mulcov_incidence
+			meas_value  = math.exp(effect) * iota_true
+		else :
+			assert integrand == 'remission'
+			effect      = (sex - sex_reference) * mulcov_remission
+			meas_value  = math.exp(effect) * rho_true
 		meas_std    = 0.1 * meas_value
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
 		row['income']     = income
 		row['sex']        = sex
+		row['subgroup']   = subgroup
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{	# prior_gauss_zero
-			'name':     'prior_gauss_zero',
+		{	# prior_diff_parent
+			'name':     'prior_diff_parent',
 			'density':  'gaussian',
 			'mean':     0.0,
 			'std':      0.01,
@@ -184,27 +192,22 @@ def example_db (file_name) :
 			'mean':     0.0,
 		}
 	]
+	assert -5.0 < mulcov_incidence and mulcov_incidence < +5.0
+	assert -5.0 < mulcov_remission and mulcov_remission < +5.0
 	# ----------------------------------------------------------------------
 	# smooth table
-	middle_age_id  = 1
-	middle_time_id = 1
-	last_age_id    = 2
-	last_time_id   = 2
+	last_age_id    = len(age_list) - 1
+	last_time_id   = len(time_list) - 1
 	smooth_table = [
-		{   # smooth_rate_child
-			'name':                     'smooth_rate_child',
-			'age_id':                   [ last_age_id ],
-			'time_id':                  [ last_time_id ],
-			'fun':                      fun_rate_child
-		},{ # smooth_rate_parent
+		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ 0, last_age_id ],
 			'time_id':                  [ 0, last_time_id ],
 			'fun':                       fun_rate_parent
 		},{ # smooth_mulcov
 			'name':                     'smooth_mulcov',
-			'age_id':                   [ middle_age_id ],
-			'time_id':                  [ middle_time_id ],
+			'age_id':                   [ 0 ],
+			'time_id':                  [ 0 ],
 			'fun':                       fun_mulcov
 		}
 	]
@@ -214,11 +217,11 @@ def example_db (file_name) :
 		{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'child_smooth':  None,
 		},{
 			'name':          'rho',
 			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'child_smooth':  None,
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -240,9 +243,6 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-10'        }
 	]
-	# ----------------------------------------------------------------------
-	# subgroup_table
-	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -273,7 +273,7 @@ example_db(file_name)
 #
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
@@ -283,48 +283,42 @@ connection      = dismod_at.create_connection(file_name, new)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
-middle_age_id  = 1
-middle_time_id = 1
-last_age_id    = 2
-last_time_id   = 2
 parent_node_id = 0
 tol            = 5e-7
 #
-# check parent iota and remission values
+# check rate fixed effects
 count             = 0
 iota_rate_id      = 1
 remission_rate_id = 2
 for var_id in range( len(var_table) ) :
 	row   = var_table[var_id]
-	match = row['var_type'] == 'rate'
-	match = match and row['node_id'] == parent_node_id
-	if match and row['rate_id'] == iota_rate_id :
+	value = fit_var_table[var_id]['fit_var_value']
+	rate_fixed_effect = row['node_id'] == parent_node_id
+	rate_fixed_effect = rate_fixed_effect and row['var_type'] == 'rate'
+	if rate_fixed_effect and row['rate_id'] == iota_rate_id :
 		count += 1
-		value = fit_var_table[var_id]['fit_var_value']
 		assert abs( value / iota_true - 1.0 ) < tol
-	if match and row['rate_id'] == remission_rate_id :
+	if rate_fixed_effect and row['rate_id'] == remission_rate_id :
 		count += 1
-		value = fit_var_table[var_id]['fit_var_value']
-		assert abs( value / remission_true - 1.0 ) < 5.0 * tol
+		assert abs( value / rho_true - 1.0 ) < 5.0 * tol
 assert count == 8
 #
 # check covariate multiplier values
 count                   = 0
 mulcov_incidence        = 1.0
 mulcov_remission        = 2.0;
+Sincidence_integrand_id = 0
 remission_integrand_id  = 1
 for var_id in range( len(var_table) ) :
 	row   = var_table[var_id]
-	match = row['var_type'] == 'mulcov_meas_value'
-	if match :
-		integrand_id = row['integrand_id']
-		count       += 1
-		value        = fit_var_table[var_id]['fit_var_value']
-		if integrand_id == remission_integrand_id :
-			assert abs( value / mulcov_remission - 1.0 ) < tol
-		else :
-			assert abs( value / mulcov_incidence - 1.0 ) < tol
-			assert abs( value / mulcov_incidence - 1.0 ) < tol
+	value = fit_var_table[var_id]['fit_var_value']
+	mulcov_var = row['var_type'] == 'mulcov_meas_value'
+	if mulcov_var and row['integrand_id'] == Sincidence_integrand_id :
+		count  += 1
+		assert abs( value / mulcov_incidence - 1.0 ) < tol
+	if mulcov_var and row['integrand_id'] == remission_integrand_id :
+		count  += 1
+		assert abs( value / mulcov_remission - 1.0 ) < tol
 assert count == 2
 # -----------------------------------------------------------------------------
 print('covariate_mul.py: OK')
