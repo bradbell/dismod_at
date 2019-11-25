@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -24,7 +24,6 @@
 import sys
 import os
 import copy
-import subprocess
 import distutils.dir_util
 from math import exp
 # ---------------------------------------------------------------------------
@@ -56,12 +55,7 @@ get_started_db.get_started_db()
 # create the var table
 program        = '../../devel/dismod_at'
 file_name      = 'get_started.db'
-command        = 'init'
-cmd = [ program, file_name, command ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+dismod_at.system_command_prc( [program, file_name, 'init'] )
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
@@ -94,11 +88,7 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 program         = '../../devel/dismod_at'
 command         = 'simulate'
 number_simulate = '1'
-cmd = [ program, file_name, command , number_simulate ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at simulate command failed')
+dismod_at.system_command_prc( [program, file_name, command , number_simulate] )
 # -----------------------------------------------------------------------
 # check the data_sim table
 data_table      = dismod_at.get_table_dict(connection, 'data')

@@ -28,7 +28,6 @@
 import sys
 import os
 import copy
-import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
@@ -58,15 +57,8 @@ get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 file_name      = 'get_started.db'
-for command in [ 'init', 'fit'] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+dismod_at.system_command_prc( [program, file_name, 'init'] )
+dismod_at.system_command_prc( [program, file_name, 'fit', 'both'] )
 # -----------------------------------------------------------------------
 # connect to database
 new        = False
@@ -90,16 +82,13 @@ for var_id in range( len(var_table) ) :
 		assert False
 #
 # set truth_var = fit_var, start_var = truth_var, scale_var = start_var
-cmd_list = [
+system_cmd_list = [
 	[ program, file_name, 'set', 'truth_var', 'fit_var' ],
 	[ program, file_name, 'set', 'start_var', 'truth_var' ],
 	[ program, file_name, 'set', 'scale_var', 'start_var' ]
 ]
-for i in range( len( cmd_list ) ) :
-	print( ' '.join(cmd_list[i]) )
-	flag = subprocess.call( cmd_list[i] )
-	if flag != 0 :
-		sys.exit('The dismod_at set command failed')
+for system_cmd in system_cmd_list :
+	dismod_at.system_command_prc( system_cmd )
 #
 new             = False
 connection      = dismod_at.create_connection(file_name, new)

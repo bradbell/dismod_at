@@ -25,7 +25,6 @@
 import sys
 import os
 import copy
-import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
@@ -55,13 +54,7 @@ get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 file_name      = 'get_started.db'
-command        = 'init'
-cmd            = [ program, file_name, command ]
-#
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at init command failed')
+dismod_at.system_command_prc( [program, file_name, 'init'] )
 # -----------------------------------------------------------------------
 # connect to database
 new        = False

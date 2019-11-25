@@ -24,7 +24,6 @@
 import sys
 import os
 import copy
-import subprocess
 import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory

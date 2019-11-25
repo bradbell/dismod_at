@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -24,7 +24,6 @@
 import sys
 import os
 import copy
-import subprocess
 import distutils.dir_util
 from math import exp
 # ---------------------------------------------------------------------------
@@ -55,17 +54,9 @@ get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 file_name      = 'get_started.db'
-for command in [ 'init', 'fit', 'predict' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	if command == 'predict' :
-		cmd.append('fit_var')
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+dismod_at.system_command_prc( [program, file_name, 'init'] )
+dismod_at.system_command_prc( [program, file_name, 'fit', 'both'] )
+dismod_at.system_command_prc( [program, file_name, 'predict', 'fit_var'] )
 # -----------------------------------------------------------------------
 # connect to database
 new        = False

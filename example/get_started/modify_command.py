@@ -25,7 +25,6 @@
 import sys
 import os
 import copy
-import subprocess
 import distutils.dir_util
 import csv
 import math
@@ -72,7 +71,7 @@ table_name       = 'data'       # table we are modifiying
 column_name      = 'density_id' # column we are modifying
 row_expression   = 'data_id==0' # row we are modifiying
 value_expression = '6'          # value we are placeing in that row, column
-cmd            = [
+system_cmd       = [
 	program,
 	file_name,
 	command,
@@ -81,12 +80,7 @@ cmd            = [
 	row_expression,
 	value_expression
 ]
-#
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at modify command failed')
-os.chdir(test_dir)
+dismod_at.system_command_prc( system_cmd )
 # -----------------------------------------------------------------------
 # get data table
 new        = False

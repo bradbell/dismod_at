@@ -69,6 +69,10 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 11-25$$
+Use $cref system_command_prc$$ to simplify the
+$cref get_started$$ examples.
+
 $head 11-24$$
 $list number$$
 An $code old2new_command$$ was added.

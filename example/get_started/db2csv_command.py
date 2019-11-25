@@ -26,7 +26,6 @@
 import sys
 import os
 import copy
-import subprocess
 import distutils.dir_util
 import csv
 import math
@@ -64,15 +63,8 @@ get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 program        = '../../devel/dismod_at'
 file_name      = 'get_started.db'
-for command in [ 'init', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+dismod_at.system_command_prc( [ program, file_name, 'init' ] )
+dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 #
 # change into distribution directory to run sandbox version of dismodat.py
 # return to test_dir when done.
@@ -80,13 +72,7 @@ os.chdir(dist_dir)
 print( os.getcwd() )
 program        = 'bin/dismodat.py'
 file_name      = test_dir + '/get_started.db'
-command        = 'db2csv'
-cmd            = [ program, file_name, command ]
-#
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at db2csv command failed')
+dismod_at.system_command_prc( [ program, file_name, 'db2csv'] )
 os.chdir(test_dir)
 # ---------------------------------------------------------------------------
 # get_table
@@ -128,6 +114,10 @@ data_table = get_table('data')
 assert len(data_table) == 1
 row = data_table[0]
 assert row['c_data_info']        == 'd1'
+assert row['child']              == ''
+assert row['node']               == 'world'
+assert row['subgroup']           == 'world'
+assert row['group']              == 'world'
 assert row['integrand']          == 'susceptible'
 assert row['weight']             == 'constant_one'
 assert row['density']            == 'gaussian'
