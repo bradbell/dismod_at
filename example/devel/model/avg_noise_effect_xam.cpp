@@ -204,6 +204,7 @@ bool avg_noise_effect_xam(void)
 		age_avg_grid,
 		age_table,
 		time_table,
+		subgroup_table,
 		integrand_table,
 		w_info_vec,
 		s_info_vec,
@@ -234,6 +235,7 @@ bool avg_noise_effect_xam(void)
 	double time_lower      = time_min;
 	double time_upper      = time_lower + ode_step_size;
 	size_t weight_id       = 0;
+	size_t subgroup_id     = 0;
 	size_t integrand_id    =  int( dismod_at::mtother_enum );
 	Float avg = avg_noise_obj.rectangle(
 		age_lower,
@@ -241,6 +243,7 @@ bool avg_noise_effect_xam(void)
 		time_lower,
 		time_upper,
 		weight_id,
+		subgroup_id,
 		integrand_id,
 		x,
 		pack_vec

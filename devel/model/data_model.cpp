@@ -245,6 +245,7 @@ avg_noise_obj_(
 	age_avg_grid,
 	age_table,
 	time_table,
+	subgroup_table,
 	integrand_table,
 	w_info_vec,
 	s_info_vec,
@@ -748,6 +749,7 @@ residual_struct<Float> data_model::like_one(
 	double time_lower   = data_subset_obj_[subset_id].time_lower;
 	double time_upper   = data_subset_obj_[subset_id].time_upper;
 	size_t weight_id    = size_t( data_subset_obj_[subset_id].weight_id );
+	size_t subgroup_id  = size_t( data_subset_obj_[subset_id].subgroup_id );
 	size_t integrand_id = size_t( data_subset_obj_[subset_id].integrand_id );
 	//
 	// average noise effect
@@ -757,6 +759,7 @@ residual_struct<Float> data_model::like_one(
 		time_lower,
 		time_upper,
 		weight_id,
+		subgroup_id,
 		integrand_id,
 		x,
 		pack_vec

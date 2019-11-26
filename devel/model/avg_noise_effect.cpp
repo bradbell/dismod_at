@@ -34,6 +34,7 @@ $codei%avg_noise_effect %avg_noise_obj%(
 	%age_avg_grid%,
 	%age_table%,
 	%time_table%,
+	%subgroup_table%,
 	%integrand_table%,
 	%w_info_vec%,
 	%s_info_vec%,
@@ -65,6 +66,10 @@ $icode avg_noise_obj$$ is used).
 $head time_table$$
 This argument is the $cref time_table$$.
 A reference to $icode time_table$$ is used by $icode avg_noise_obj$$.
+
+$head subgroup_table$$
+This argument is the $cref subgroup_table$$.
+A reference to $icode subgroup_table$$ is used by $icode avg_noise_obj$$.
 
 $head integrand_table$$
 This argument is the $cref integrand_table$$.
@@ -104,6 +109,7 @@ avg_noise_effect::avg_noise_effect(
 		const CppAD::vector<double>&              age_avg_grid     ,
 		const CppAD::vector<double>&              age_table        ,
 		const CppAD::vector<double>&              time_table       ,
+		const CppAD::vector<subgroup_struct>&     subgroup_table   ,
 		const CppAD::vector<integrand_struct>&    integrand_table  ,
 		const CppAD::vector<weight_info>&         w_info_vec       ,
 		const CppAD::vector<smooth_info>&         s_info_vec       ,
@@ -113,6 +119,7 @@ avg_noise_effect::avg_noise_effect(
 ode_step_size_             ( ode_step_size )   ,
 age_table_                 ( age_table )       ,
 time_table_                ( time_table )      ,
+subgroup_table_            ( subgroup_table )  ,
 integrand_table_           ( integrand_table ) ,
 w_info_vec_                ( w_info_vec )      ,
 s_info_vec_                ( s_info_vec )      ,
@@ -141,6 +148,7 @@ $icode%avg% = %avg_noise_obj%.rectangle(
 	%time_lower%,
 	%time_upper%,
 	%weight_id%,
+	%subgroup_id%,
 	%integrand_id%,
 	%x%,
 	%pack_vec%
@@ -166,6 +174,10 @@ the upper time in the rectangle; $icode%time_lower% <= %time_upper%$$.
 $head weight_id$$
 This is the $cref/weight_id/weight_table/weight_id/$$
 in the weight table corresponding to this average integrand.
+
+$head subgroup_id$$
+This is the $cref/subgroup_id/subgroup_table/subgroup_id/$$
+in the subgroup table corresponding to this average integrand.
 
 $head integrand_id$$
 This is the $cref/integrand_id/integrand_table/integrand_id/$$
@@ -204,6 +216,7 @@ Float avg_noise_effect::rectangle(
 	double                           time_lower       ,
 	double                           time_upper       ,
 	size_t                           weight_id        ,
+	size_t                           subgroup_id      ,
 	size_t                           integrand_id     ,
 	const CppAD::vector<double>&     x                ,
 	const CppAD::vector<Float>&      pack_vec         ,
@@ -305,24 +318,27 @@ Float avg_noise_effect::rectangle(
 	size_t n_cov = pack_object_.group_meas_noise_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; ++j)
 	{	info  = pack_object_.group_meas_noise_info(integrand_id, j);
+		size_t group_id  = info.group_id;
 		size_t smooth_id = info.smooth_id;
 		double x_j       = x[ info.covariate_id ];
-		// interpolate from smoothing grid to cohort
-		smooth_value.resize(info.n_var);
-		for(size_t k = 0; k < info.n_var; ++k)
-			smooth_value[k] = pack_vec[info.offset + k];
-		const smooth_info& s_info = s_info_vec_[smooth_id];
-		temp = grid2line(
-			line_age_,
-			line_time_,
-			age_table_,
-			time_table_,
-			s_info,
-			smooth_value
-		);
-		// add in this multiplier times covariate effect
-		for(size_t k = 0; k < n_line; ++k)
-			effect[k] += temp[k] * x_j;
+		if( group_id == size_t( subgroup_table_[subgroup_id].group_id ) )
+		{	// interpolate from smoothing grid to cohort
+			smooth_value.resize(info.n_var);
+			for(size_t k = 0; k < info.n_var; ++k)
+				smooth_value[k] = pack_vec[info.offset + k];
+			const smooth_info& s_info = s_info_vec_[smooth_id];
+			temp = grid2line(
+				line_age_,
+				line_time_,
+				age_table_,
+				time_table_,
+				s_info,
+				smooth_value
+			);
+			// add in this multiplier times covariate effect
+			for(size_t k = 0; k < n_line; ++k)
+				effect[k] += temp[k] * x_j;
+		}
 	}
 	// -----------------------------------------------------------------------
 	// line_weight_
@@ -358,6 +374,7 @@ Float avg_noise_effect::rectangle(
 		double                           time_lower       ,    \
 		double                           time_upper       ,    \
 		size_t                           weight_id        ,    \
+		size_t                           subgroup_id      ,    \
 		size_t                           integrand_id     ,    \
 		const CppAD::vector<double>&     x                ,    \
 		const CppAD::vector<Float>&      pack_vec         ,    \
@@ -371,6 +388,7 @@ Float avg_noise_effect::rectangle(
 		double                           time_lower       ,    \
 		double                           time_upper       ,    \
 		size_t                           weight_id        ,    \
+		size_t                           subgroup_id      ,    \
 		size_t                           integrand_id     ,    \
 		const CppAD::vector<double>&     x                ,    \
 		const CppAD::vector<Float>&      pack_vec         )    \
@@ -380,6 +398,7 @@ Float avg_noise_effect::rectangle(
 			time_lower,                                        \
 			time_upper,                                        \
 			weight_id,                                         \
+			subgroup_id,                                       \
 			integrand_id,                                      \
 			x,                                                 \
 			pack_vec,                                          \
