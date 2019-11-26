@@ -543,7 +543,7 @@ $lnext
 Add missing $code dev::log_message::message_type$$ cases
 to the $code log_message$$ documentation.
 $lnext
-Change $cref user_covariate_mul.py$$ to use $code null$$ smoothing
+Change $cref user_group_mulcov.py$$ to use $code null$$ smoothing
 pointer in the middle (not last) covariate multiplier (better test).
 $lnext
 Change $code test/user/relrisk.py$$ tolerance so that the

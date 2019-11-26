@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_covariate_mul.py$$ $newlinech #$$
+# $begin user_group_mulcov.py$$ $newlinech #$$
 # $spell
 #	init
 #	avgint
@@ -17,14 +17,14 @@
 #	Integrands
 # $$
 #
-# $section Using Measurement Covariates on Multiple Integrands$$
+# $section Using Group Covariate Multipliers$$
 #
 # $head See Also$$
-# $cref user_lasso_covariate.py$$
+# $cref user_lasso_covariate.py$$.
 #
 # $head Source Code$$
 # $srcfile%
-#	example/user/covariate_mul.py
+#	example/user/group_mulcov.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
@@ -39,7 +39,7 @@ import os
 import distutils.dir_util
 import copy
 import math
-test_program = 'example/user/covariate_mul.py'
+test_program = 'example/user/group_mulcov.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -325,6 +325,6 @@ for var_id in range( len(var_table) ) :
 		assert abs( value / mulcov_remission - 1.0 ) < tol
 assert count == 2
 # -----------------------------------------------------------------------------
-print('covariate_mul.py: OK')
+print('group_mulcov.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

@@ -20,7 +20,6 @@ FOREACH(user_case
 	const_random
 	const_value
 	continue_fit
-	covariate_mul
 	csv2db
 	data_sim
 	diff_constraint
@@ -28,6 +27,7 @@ FOREACH(user_case
 	fit_gamma
 	fit_random
 	fit_sim
+	group_mulcov
 	ill_condition
 	jump_at_age
 	lasso_covariate
