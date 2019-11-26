@@ -159,12 +159,9 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		}
 		if( option_name[option_id] == "meas_std_effect" )
         {	msg  = "meas_std_effect was deprecated on 2019-04-07\n";
-			msg += "and may not work in the future. ";
+			msg += "and removed on 2019-11-26.\n";
 			msg += "It should be changed to meas_noise_effect.";
-			log_message(
-				db, &std::cout, "warning", msg, table_name, option_id
-			);
-			option_name[option_id] = "meas_noise_effect";
+			error_exit(msg, table_name, option_id);
 		}
 		//
 		size_t match = n_option;

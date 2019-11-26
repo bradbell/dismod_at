@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_fit_gamma.py$$ $newlinech #$$
+# $begin user_fit_meas_noise.py$$ $newlinech #$$
 # $spell
 #	init
 #	covariate
@@ -80,7 +80,7 @@
 #
 # $head Source Code$$
 # $srcfile%
-#	example/user/fit_gamma.py
+#	example/user/fit_meas_noise.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
@@ -109,7 +109,7 @@ import sys
 import os
 import distutils.dir_util
 import copy
-test_program = 'example/user/fit_gamma.py'
+test_program = 'example/user/fit_meas_noise.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -366,6 +366,6 @@ if max_error > 1e-1 :
 	print('max_error = ', max_error)
 	assert(False)
 # -----------------------------------------------------------------------------
-print('fit_gamma.py: OK')
+print('fit_meas_noise.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

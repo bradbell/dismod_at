@@ -87,9 +87,9 @@ This was because the derivative of the object w.r.t. this
 multiplier was zero even though zero is not the solution.
 This has been fixed by changing the definition when adding variances
 to use $icode gamma_j$$ for the variance (instead of the standard deviation).
-The $cref user_fit_gamma.py$$ example was modified so that it demonstrates
+The $cref user_fit_meas_noise.py$$ example was modified so that it demonstrates
 how the new definition affects the
-$cref/scaling of gamma/user_fit_gamma.py/Scaling Gamma/$$.
+$cref/scaling of gamma/user_fit_meas_noise.py/Scaling Gamma/$$.
 
 $head 12-15$$
 Add options for how the measurement noise effect
@@ -111,7 +111,7 @@ the added standard deviations for non-log densities.
 
 
 $head 12-14$$
-Add $cref user_fit_gamma.py$$, an example that fits
+Add $cref user_fit_meas_noise.py$$, an example that fits
 $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$
 using simulated data.
 

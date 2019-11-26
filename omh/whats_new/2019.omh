@@ -78,8 +78,14 @@ $lnext
 The constant weighting function was removed from the $cref user$$ examples
 (it is now the default weighting and hence no longer needed).
 $lnext
-Change $cref user_fit_gamma.py$$ so that it used groups to identify a subset of
-that data that has extra measurement noise.
+Change $cref user_fit_meas_noise.py$$ so that it used groups to identify a
+subset of that data that has extra measurement noise.
+$lnext
+The $code meas_std_effect$$
+$cref/option_name/option_table/Conventions/option_name/$$ was removed.
+It was deprecated (see $cref/04-08/whats_new_2019/04-08/$$ below)
+and should have been replaced by
+$cref/meas_noise_effect/option_table/meas_noise_effect/$$.
 $lend
 
 $head 11-25$$
@@ -111,9 +117,7 @@ column was added to predict.csv
 $lend
 
 $head 11-22$$
-The following changes below were made to the database input tables.
-Warnings are printed and backward compatible values are used if
-these changes are not present:
+The following changes below were made to the database input tables:
 $list number$$
 The $cref subgroup_table$$ was added.
 $lnext
@@ -914,14 +918,7 @@ The covariate multiplier type $code meas_std$$ was deprecated
 It should be changed to
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$.
 $lnext
-The option
-$cref/
-    meas_std_effect/
-    option_table/
-    meas_noise_effect/
-    meas_std_effect: Deprecated 2019-04-07
-/$$
-was deprecated.
+The option $code meas_std_effect$$ option was deprecated.
 It should be changed to
 $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
 $lend
@@ -986,7 +983,7 @@ $cref/minimum_meas_cv/option_table/minimum_meas_cv/$$
 to redirect one to the integrand table.
 
 $head 01-10$$
-Reduce the change of random failure in $code test/user/fit_gamma.py$$
+Reduce the change of random failure in $code test/user/fit_meas_noise.py$$
 during $cref/testing/install_unix/dismod_at/Test/$$.
 
 

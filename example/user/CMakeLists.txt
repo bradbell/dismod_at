@@ -24,7 +24,7 @@ FOREACH(user_case
 	data_sim
 	diff_constraint
 	fit_fixed_both
-	fit_gamma
+	fit_meas_noise
 	fit_random
 	fit_sim
 	group_mulcov

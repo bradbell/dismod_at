@@ -20,7 +20,7 @@ import subprocess
 import copy
 import random
 import math
-test_program = 'test/user/fit_gamma.py'
+test_program = 'test/user/fit_meas_noise.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -269,4 +269,4 @@ for meas_noise_effect in [
 		print('max_error = ', max_error)
 		assert(False)
 # -----------------------------------------------------------------------------
-print('fit_gamma.py: OK')
+print('fit_meas_noise.py: OK')

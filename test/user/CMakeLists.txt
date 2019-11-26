@@ -19,7 +19,7 @@ FOREACH(user_case
 	const_value
 	csv2db
 	db2csv
-	fit_gamma
+	fit_meas_noise
 	fit_sim
 	init_covariate
 	laplace
