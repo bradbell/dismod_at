@@ -77,6 +77,9 @@ In addition, a discussion of this example was added.
 $lnext
 The constant weighting function was removed from the $cref user$$ examples
 (it is now the default weighting and hence no longer needed).
+$lnext
+Change $cref user_fit_gamma.py$$ so that it used groups to identify a subset of
+that data that has extra measurement noise.
 $lend
 
 $head 11-25$$

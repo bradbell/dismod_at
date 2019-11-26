@@ -15,7 +15,16 @@
 #	std
 # $$
 #
-# $section Fitting Measurement Noise Covariate Multipliers, Gamma$$
+# $section Group Measurement Noise Covariate Multipliers, Gamma$$
+#
+# $head Purpose$$
+# This example demonstrates fitting
+# $cref/group covariate multipliers
+#	/model_variables
+#	/Fixed Effects, theta
+#	/Group Covariate Multipliers
+# /$$
+# that effect the measurement noise.
 #
 # $head Random Effects$$
 # There are no random effects in this example.
@@ -37,11 +46,16 @@
 # $cref/child_smooth_id/rate_table/child_smooth_id/$$ to null
 # for the other rates.
 #
+# $head Subgroup Table$$
+# The data is divided into two groups.
+# The first group is hospital data and the second group is survey data.
+#
 # $head Covariate Multiplier$$
 # There is one covariate multiplier on the covariate column $code one$$
 # and the rate $code iota$$.
 # This is a measurement noise covariate multiplier
-# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$.
+# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$
+# that only effects the hospital data.
 # The prior for this multiplier is a uniform on the interval from zero
 # to $codei%10 * %gamma_true%$$.
 # The true value for this multiplier, used to simulate data, is
@@ -53,8 +67,9 @@
 # hence it is constant in age and time.
 #
 # $head Data$$
-# There are $icode n_data$$ measurements of Sincidence and each has a standard
-# deviation $icode meas_std$$ (before adding the covariate effect).
+# There are $icode n_data$$ measurements of Sincidence.
+# The hospital data has standard deviation $icode meas_std$$.
+# The survey data has addition noise determine by the covariate effect.
 #
 # $head meas_noise_effect$$
 # see $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
@@ -72,7 +87,7 @@
 # BEGIN PYTHON
 # You can changed the values below and rerun this program
 iota_true          = 0.01
-scale_gamma_true   = 2.0
+scale_gamma_true   = 4.0
 n_data             = 1000
 meas_std           = 0.001
 meas_noise_effect  = 'add_std_scale_all'
@@ -134,6 +149,12 @@ def example_db (file_name) :
 	# node table:
 	node_table = [ { 'name':'world', 'parent':'' } ]
 	#
+	# subgroup_table
+	subgroup_table = [
+		{ 'subgroup':'hospital', 'group':'hospital' },
+		{ 'subgroup':'survey',   'group':'survey' },
+	]
+	#
 	# weight table:
 	weight_table = list()
 	#
@@ -144,11 +165,13 @@ def example_db (file_name) :
 	#
 	# mulcov table:
 	mulcov_table = [
-		{
+		{	# covariate multiplier effects Sincidence survey data measurements
 			'covariate': 'one',
 			'type':      'meas_noise',
 			'effected':  'Sincidence',
-			'smooth':    'smooth_gamma'
+			'group':     'survey',
+			'smooth':    'smooth_gamma',
+			'subsmooth': None
 		}
 	]
 	#
@@ -175,6 +198,11 @@ def example_db (file_name) :
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
+		if data_id % 2 == 0 :
+			row['subgroup'] = 'hospital'
+		else :
+			row['subgroup'] = 'survey'
+		#
 		fraction         = data_id / float(n_data-1)
 		age              = age_list[0] + (age_list[-1] - age_list[0])*fraction
 		row['age_lower'] = age
@@ -237,9 +265,6 @@ def example_db (file_name) :
 		{ 'name':'print_level_fixed',      'value':'0'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-10'             }
 	]
-	# ----------------------------------------------------------------------
-	# subgroup_table
-	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
