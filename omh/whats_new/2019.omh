@@ -70,9 +70,14 @@ $childtable%
 %$$
 
 $head 11-26$$
+$list number$$
 The $code meas_covariate.py$$ example was changed to be an example
 using group covariate multipliers; see $cref user_group_mulcov.py$$.
 In addition, a discussion of this example was added.
+$lnext
+The constant weighting function was removed from the $cref user$$ examples
+(it is now the default weighting and hence no longer needed).
+$lend
 
 $head 11-25$$
 Use $cref system_command_prc$$ to simplify the

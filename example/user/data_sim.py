@@ -146,8 +146,6 @@ def delta_effect(Delta, effect) :
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-	def weight_fun(a, t) :
-		return 1.0
 	# note that the a, t values are not used for this case
 	def fun_iota(a, t) :
 		return ('prior_iota', None, None)
