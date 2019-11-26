@@ -69,6 +69,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 11-26$$
+The $code meas_covariate.py$$ example was changed to be an example
+using group covariate multipliers; see $cref user_group_mulcov.py$$.
+In addition, a discussion of this example was added.
+
 $head 11-25$$
 Use $cref system_command_prc$$ to simplify the
 $cref get_started$$ examples.

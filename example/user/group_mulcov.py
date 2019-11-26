@@ -11,16 +11,98 @@
 # $begin user_group_mulcov.py$$ $newlinech #$$
 # $spell
 #	init
-#	avgint
-#	Covariates
+#	covariates
 #	covariate
-#	Integrands
+#	integrands
+#	Sincidence
+#	mulcov
 # $$
 #
 # $section Using Group Covariate Multipliers$$
 #
 # $head See Also$$
 # $cref user_lasso_covariate.py$$.
+#
+# $head Purpose$$
+# This example demonstrates using
+# $cref/group covariate multipliers
+#	/model_variables
+#	/Fixed Effects, theta
+#	/Group Covariate Multipliers
+# /$$.
+#
+# $head True Value of Variables$$
+# The values of the unknown variables that is used to
+# simulate the data are
+# $srcfile%example/user/group_mulcov.py%
+#	0%# True values used to simulate data%# --------%1
+# %$$
+#
+# $head Integrand$$
+# There are only two integrands in this example,
+# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$ and
+# $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$.
+#
+# $head Node Tables$$
+# The node table for this example is
+# $pre
+#                world
+#               /     \
+#  north_america       south_america
+# $$
+#
+# $head Subgroup Table$$
+# For this example there are two groups, north_america and south_america,
+# and only one element in each group.
+# Thus we use the same name for the subgroup as for the group.
+#
+# $head Covariates$$
+# There are two covariates in this example, $icode income$$ and $icode sex$$.
+# Both these covariates are scaled so their lowest value is -0.5 and highest
+# value is +0.5.
+#
+# $head Covariate Multipliers$$
+# There are two covariate multipliers in this example.
+# The first multiples $icode income$$ and effects the Sincidence measurements,
+# but only in north_america.
+# The second multiples $icode sex$$ and effects the remission measurements,
+# but only in south_america.
+# Both are group covariate multipliers and hence fixed effects.
+#
+# $head Simulated Data$$
+# The data is simulated using the true value for the variables,
+# and the covariate effects mentioned above. No noise is added to the data,
+# but it is modeled as having a ten percent coefficient of variation.
+#
+# $head Rate Variables$$
+# The rate variables define the functions
+# $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$ and
+# $cref/rho/avg_integrand/Rate Functions/rho_i(a,t)/$$ using
+# $cref/bilinear interpolation/bilinear/$$ of a rectangular grid.
+# The grid's minimum age and time is (0, 1995). Its maximum age and time
+# is (100, 2015). Thus there are four iota variables and four rho variables.
+# The value prior for both these variables is uniform with lower (upper) limit
+# 0.001 (1.0). The mean is the true value of iota divided by 3.
+# This mean effects the starting and scaling
+# points during the optimization, but not the statistics (for a uniform).
+# The difference priors for the rate variables are gaussian
+# with mean zero and standard deviation 0.01.
+#
+# $head Covariate Multipliers Variables$$
+# The covariate multiplier functions for this example are constant.
+# Hence there is one variable for each function.
+# These are group covariate multipliers so there is only one
+# function for each row of the mulcov_table (for which the group smoothing
+# is not null); i.e., there are two group covariate multiplier variables.
+# The first multiplies income and affects the measurement of
+# Sincidence for north_america.
+# The second multiplies sex and affects the measurement of
+# remission for south_america.
+# The prior for both these variables is uniform with lower (upper) limit
+# -5.0 (+5.0). The mean is the true value of the incidence covariate
+# multiplier divided by 3. This mean effects the starting and scaling
+# points during the optimization, but not the statistics (for a uniform).
+#
 #
 # $head Source Code$$
 # $srcfile%
@@ -29,10 +111,11 @@
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# true values used to simulate data
-iota_true  = 0.05
-rho_true   = 0.10
-n_data     = 4
+# True values used to simulate data
+iota_true        = 0.05  # incidence rate
+rho_true         = 0.10  # remission rate
+mulcov_incidence = 1.0   # covariate multiplier for indicence data
+mulcov_remission = 2.0;  # covariate multiplier for remission data
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -142,10 +225,9 @@ def example_db (file_name) :
 		'age_upper':    0.0
 	}
 	# values that change between rows:
-	mulcov_incidence = 1.0
-	mulcov_remission = 2.0;
 	income_reference = 0.5
 	sex_reference    = 0.0
+	n_data           = 4
 	for data_id in range( n_data ) :
 		if data_id % 4 == 0 or data_id % 4 == 1 :
 			subgroup = 'north_america'
@@ -185,7 +267,7 @@ def example_db (file_name) :
 		},{ # prior_value_parent
 			'name':     'prior_value_parent',
 			'density':  'uniform',
-			'lower':    0.01,
+			'lower':    0.001,
 			'upper':    1.00,
 			'mean':     iota_true / 3.0,
 		},{ # prior_mulcov
@@ -269,24 +351,22 @@ def example_db (file_name) :
 	)
 	# ----------------------------------------------------------------------
 # ===========================================================================
-# Note that this process uses the fit results as the truth for simulated data
-# The fit_var table corresponds to fitting with no noise.
-# The sample table corresponds to fitting with noise.
 file_name = 'example.db'
 example_db(file_name)
 #
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
-# -----------------------------------------------------------------------
+#
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# Results for fitting with no noise
+#
+# Results for fit fixed command
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 #
+# parent node and tolerance
 parent_node_id = 0
 tol            = 5e-7
 #
@@ -309,8 +389,6 @@ assert count == 8
 #
 # check covariate multiplier values
 count                   = 0
-mulcov_incidence        = 1.0
-mulcov_remission        = 2.0;
 Sincidence_integrand_id = 0
 remission_integrand_id  = 1
 for var_id in range( len(var_table) ) :
