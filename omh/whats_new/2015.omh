@@ -436,7 +436,7 @@ $code node_rate_value_info$$ was reverted because it used three times
 as much memory and time.
 The name was however changed from $code node_rate_value_info$$ to
 $cref/rate_case/option_table/rate_case/$$ to avoid confusion with
-$code dev::pack_info_node_rate_value_info.cpp$$.
+$code dev::pack_info_node_rate.cpp$$.
 In addition, the correction of the bug in $code dev::eigen_ode2.cpp$$
 was retained.
 $lnext
@@ -492,7 +492,7 @@ conditions. This has been fixed.
 $lnext
 Modify $code dev::eigen_ode2.cpp$$ so that it works for all combinations of rates
 and remove $code node_rate_value_info$$ from the $cref option_table$$.
-Note that this is different from $code dev::pack_info_node_rate_value_info.cpp$$
+Note that this is different from $code dev::pack_info_node_rate.cpp$$
 (which is only in the developer documentation).
 $lend
 

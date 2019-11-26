@@ -601,7 +601,7 @@ size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 }
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_node_rate_value_info$$
+$begin pack_info_node_rate$$
 $spell
 	Devel
 	std
@@ -694,7 +694,7 @@ pack_info::subvec_info pack_info::node_rate_value_info(size_t rate_id, size_t j)
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_mulcov_meas$$
+$begin pack_info_group_meas$$
 $spell
 	Devel
 	std
@@ -822,7 +822,7 @@ pack_info::group_meas_noise_info(size_t integrand_id, size_t j) const
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_mulcov_rate$$
+$begin pack_info_group_rate$$
 $spell
 	Devel
 	std

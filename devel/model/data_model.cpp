@@ -686,7 +686,7 @@ $codei%
 and is all the $cref model_variables$$ in the order
 specified by $cref pack_info$$; i.e.,
 $latex (u , \theta)$$.
-Only the $cref pack_info_mulcov_meas$$ subvectors of $icode pack_vec$$ are used
+Only the $cref pack_info_group_meas$$ subvectors of $icode pack_vec$$ are used
 by $code like_one$$ (note that other components of $latex (u, \theta )$$
 are used to compute $icode avg$$ documented below).
 
