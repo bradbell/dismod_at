@@ -1042,7 +1042,7 @@ size_t pack_info::subgroup_rate_value_n_sub(size_t rate_id, size_t j) const
 }
 //
 pack_info::subvec_info
-pack_info::group_rate_value_info(size_t rate_id, size_t j, size_t k) const
+pack_info::subgroup_rate_value_info(size_t rate_id, size_t j, size_t k) const
 {	assert( rate_id < number_rate_enum );
 	return subgroup_rate_value_info_[rate_id][j][k];
 }

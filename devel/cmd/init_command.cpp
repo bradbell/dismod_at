@@ -306,86 +306,125 @@ void init_command(
 		}
 	}
 	//
-	// covariate multiplers
+	// mulcov_table
 	const vector<mulcov_struct>& mulcov_table( db_input.mulcov_table );
 	size_t n_mulcov        = mulcov_table.size();
 	size_t n_integrand     = db_input.integrand_table.size();
-	vector<size_t> count_meas_value(n_integrand), count_meas_noise(n_integrand);
+	//
+	// initialize counters for different types of covariate multipliers
+	vector<size_t> count_group_meas_value(n_integrand);
+	vector<size_t> count_group_meas_noise(n_integrand);
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	count_meas_value[integrand_id] = 0;
-		count_meas_noise[integrand_id] = 0;
+	{	count_group_meas_value[integrand_id] = 0;
+		count_group_meas_noise[integrand_id] = 0;
 	}
-	vector<size_t> count_rate_value(n_rate);
+	vector<size_t> count_group_rate_value(n_rate);
+	vector<size_t> count_subgroup_rate_value(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-		count_rate_value[rate_id] = 0;
+	{	count_group_rate_value[rate_id]    = 0;
+		count_subgroup_rate_value[rate_id] = 0;
+	}
 	//
 	// group covariate multipliers
+	vector<size_t> smooth_id_loop(2), n_subgroup(2);
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
-	if( mulcov_table[mulcov_id].group_smooth_id != DISMOD_AT_NULL_INT )
 	{	mulcov_type_enum mulcov_type;
-		mulcov_type            = mulcov_table[mulcov_id].mulcov_type;
-		size_t rate_id         = mulcov_table[mulcov_id].rate_id;
-		size_t integrand_id    = mulcov_table[mulcov_id].integrand_id;
-		size_t covariate_id    = mulcov_table[mulcov_id].covariate_id;
-		size_t group_id        = mulcov_table[mulcov_id].group_id;
-		size_t group_smooth_id = mulcov_table[mulcov_id].group_smooth_id;
+		mulcov_type              = mulcov_table[mulcov_id].mulcov_type;
+		size_t rate_id           = mulcov_table[mulcov_id].rate_id;
+		size_t integrand_id      = mulcov_table[mulcov_id].integrand_id;
+		size_t covariate_id      = mulcov_table[mulcov_id].covariate_id;
+		size_t group_id          = mulcov_table[mulcov_id].group_id;
+		size_t first_subgroup_id = pack_object.first_subgroup_id(group_id);
 		//
-		pack_info::subvec_info info;
-		if( mulcov_type == rate_value_enum ) info =
-			pack_object.group_rate_value_info(
-				rate_id, count_rate_value[rate_id]++
-		);
+		smooth_id_loop[0]        = mulcov_table[mulcov_id].group_smooth_id;
+		smooth_id_loop[1]        = mulcov_table[mulcov_id].subgroup_smooth_id;
+		n_subgroup[0]            = 1;
+		n_subgroup[1]            = pack_object.subgroup_size(group_id);
 		//
-		else if( mulcov_type == meas_value_enum ) info =
-			pack_object.group_meas_value_info(
-				integrand_id, count_meas_value[integrand_id]++
-		);
-		//
-		else if( mulcov_type == meas_noise_enum ) info =
-			pack_object.group_meas_noise_info(
-				integrand_id, count_meas_noise[integrand_id]++
-		);
-		//
-		else assert(false);
-		//
-		assert( group_smooth_id == info.smooth_id);
-		offset    = info.offset;
-		n_var     = info.n_var;
-		n_time    = db_input.smooth_table[group_smooth_id].n_time;
-# ifndef NDEBUG
-		size_t n_age = db_input.smooth_table[group_smooth_id].n_age;
-		assert( n_var == n_age * n_time );
-# endif
-		for(size_t index = 0; index < n_var; index++)
-		{	size_t i        = index / n_time;
-			size_t j        = index % n_time;
-			var_id          = offset + index;
-			size_t age_id   = s_info_vec[group_smooth_id].age_id(i);
-			size_t time_id  = s_info_vec[group_smooth_id].time_id(j);
-# ifndef NDEBUG
-			for(size_t k = 0; k < n_col; k++)
-				assert( row_value[ n_col * var_id + k ] == "" );
-# endif
-			if( mulcov_type == rate_value_enum )
-			{	row_value[n_col * var_id + 0]  = "mulcov_rate_value";
-				row_value[n_col * var_id + 5] = to_string( rate_id );
+		for(size_t loop = 0; loop < 2; ++loop)
+		for(size_t k = 0; k < n_subgroup[loop]; ++k)
+		if( smooth_id_loop[loop] != DISMOD_AT_NULL_SIZE_T )
+		{	size_t smooth_id = smooth_id_loop[loop];
+			pack_info::subvec_info info;
+			switch( mulcov_type )
+			{
+				case rate_value_enum:
+				if( loop == 0 )
+				{	info = pack_object.group_rate_value_info(
+						rate_id, count_group_rate_value[rate_id]++
+					);
+				}
+				else
+				{	info = pack_object.subgroup_rate_value_info(
+						rate_id, count_subgroup_rate_value[rate_id], k
+					);
+					if( k == n_subgroup[loop] - 1 )
+						++count_subgroup_rate_value[rate_id];
+				}
+				break;
+
+				case meas_value_enum:
+				assert(loop == 0 );
+				info = pack_object.group_meas_value_info(
+					integrand_id, count_group_meas_value[integrand_id]++
+				);
+				break;
+
+				case meas_noise_enum:
+				assert(loop == 0 );
+				info = pack_object.group_meas_noise_info(
+					integrand_id, count_group_meas_noise[integrand_id]++
+				);
+				break;
+
+				default:
+				assert(false);
 			}
-			else if( mulcov_type == meas_value_enum )
-			{	row_value[n_col * var_id + 0]  = "mulcov_meas_value";
-				row_value[n_col * var_id + 6] = to_string( integrand_id );
-			}
-			else if( mulcov_type == meas_noise_enum )
-			{	row_value[n_col * var_id + 0]  = "mulcov_meas_noise";
-				row_value[n_col * var_id + 6] = to_string( integrand_id );
-			}
-			else assert(false);
 			//
-			row_value[n_col * var_id + 1] = to_string( group_smooth_id );
-			row_value[n_col * var_id + 2] = to_string( age_id );
-			row_value[n_col * var_id + 3] = to_string( time_id );
-			row_value[n_col * var_id + 7] = to_string( covariate_id );
-			row_value[n_col * var_id + 8] = to_string( mulcov_id );
-			row_value[n_col * var_id + 9] = to_string( group_id );
+			assert( smooth_id == info.smooth_id);
+			offset    = info.offset;
+			n_var     = info.n_var;
+			n_time    = db_input.smooth_table[smooth_id].n_time;
+	# ifndef NDEBUG
+			size_t n_age = db_input.smooth_table[smooth_id].n_age;
+			assert( n_var == n_age * n_time );
+	# endif
+			for(size_t index = 0; index < n_var; index++)
+			{	size_t i        = index / n_time;
+				size_t j        = index % n_time;
+				var_id          = offset + index;
+				size_t age_id   = s_info_vec[smooth_id].age_id(i);
+				size_t time_id  = s_info_vec[smooth_id].time_id(j);
+	# ifndef NDEBUG
+				for(size_t k = 0; k < n_col; k++)
+					assert( row_value[ n_col * var_id + k ] == "" );
+	# endif
+				if( mulcov_type == rate_value_enum )
+				{	row_value[n_col * var_id + 0]  = "mulcov_rate_value";
+					row_value[n_col * var_id + 5] = to_string( rate_id );
+				}
+				else if( mulcov_type == meas_value_enum )
+				{	row_value[n_col * var_id + 0]  = "mulcov_meas_value";
+					row_value[n_col * var_id + 6] = to_string( integrand_id );
+				}
+				else if( mulcov_type == meas_noise_enum )
+				{	row_value[n_col * var_id + 0]  = "mulcov_meas_noise";
+					row_value[n_col * var_id + 6] = to_string( integrand_id );
+				}
+				else assert(false);
+				//
+				row_value[n_col * var_id + 1] = to_string( smooth_id );
+				row_value[n_col * var_id + 2] = to_string( age_id );
+				row_value[n_col * var_id + 3] = to_string( time_id );
+				row_value[n_col * var_id + 7] = to_string( covariate_id );
+				row_value[n_col * var_id + 8] = to_string( mulcov_id );
+				if( loop == 0 )
+					row_value[n_col * var_id + 9] = to_string( group_id );
+				else
+				{	size_t subgroup_id = first_subgroup_id + k;
+					row_value[n_col * var_id + 10] = to_string( subgroup_id );
+				}
+			}
 		}
 	}
 	create_table(

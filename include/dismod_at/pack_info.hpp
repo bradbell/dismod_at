@@ -120,8 +120,8 @@ public:
 	subvec_info node_rate_value_info(size_t rate_id, size_t j) const;
 
 	// group_rate_value_info
-	size_t      group_rate_value_n_cov(size_t integrand_id) const;
-	subvec_info group_rate_value_info(size_t integrand_id, size_t j) const;
+	size_t      group_rate_value_n_cov(size_t rate_id) const;
+	subvec_info group_rate_value_info(size_t rate_id, size_t j) const;
 
 	// group_meas_value_info
 	size_t      group_meas_value_n_cov(size_t integrand_id) const;
@@ -135,7 +135,7 @@ public:
 	size_t      subgroup_rate_value_n_cov(size_t integrand_id) const;
 	size_t      subgroup_rate_value_n_sub(size_t integrand_id, size_t j) const;
 	subvec_info
-	group_rate_value_info(size_t integrand_id, size_t j, size_t k) const;
+	subgroup_rate_value_info(size_t integrand_id, size_t j, size_t k) const;
 
 };
 
