@@ -59,26 +59,33 @@ bool pack_info_xam(void)
 	//
 	size_t n_mulcov = 4;
 	vector<dismod_at::mulcov_struct> mulcov_table(n_mulcov);
-	mulcov_table[0].mulcov_type  = dismod_at::meas_value_enum;
-	mulcov_table[0].rate_id      = DISMOD_AT_NULL_INT;
-	mulcov_table[0].integrand_id = 0;
-	mulcov_table[0].covariate_id = 0;
+	mulcov_table[0].mulcov_type        = dismod_at::meas_value_enum;
+	mulcov_table[0].rate_id            = DISMOD_AT_NULL_INT;
+	mulcov_table[0].integrand_id       = 0;
+	mulcov_table[0].covariate_id       = 0;
 	mulcov_table[0].group_smooth_id    = 0;
-	mulcov_table[1].mulcov_type  = dismod_at::meas_value_enum;
-	mulcov_table[1].rate_id      = DISMOD_AT_NULL_INT;
-	mulcov_table[1].integrand_id = 1;
-	mulcov_table[1].covariate_id = 1;
+	mulcov_table[0].subgroup_smooth_id = DISMOD_AT_NULL_INT;
+	//
+	mulcov_table[1].mulcov_type        = dismod_at::meas_value_enum;
+	mulcov_table[1].rate_id            = DISMOD_AT_NULL_INT;
+	mulcov_table[1].integrand_id       = 1;
+	mulcov_table[1].covariate_id       = 1;
 	mulcov_table[1].group_smooth_id    = 1;
-	mulcov_table[2].mulcov_type  = dismod_at::meas_noise_enum;
-	mulcov_table[2].rate_id      = DISMOD_AT_NULL_INT;
-	mulcov_table[2].integrand_id = 2;
-	mulcov_table[2].covariate_id = 2;
+	mulcov_table[1].subgroup_smooth_id = DISMOD_AT_NULL_INT;
+	//
+	mulcov_table[2].mulcov_type        = dismod_at::meas_noise_enum;
+	mulcov_table[2].rate_id            = DISMOD_AT_NULL_INT;
+	mulcov_table[2].integrand_id       = 2;
+	mulcov_table[2].covariate_id       = 2;
 	mulcov_table[2].group_smooth_id    = 2;
-	mulcov_table[3].mulcov_type  = dismod_at::rate_value_enum;
-	mulcov_table[3].rate_id      = 3;
-	mulcov_table[3].integrand_id = DISMOD_AT_NULL_INT;
-	mulcov_table[3].covariate_id = 3;
-	mulcov_table[3].group_smooth_id    = 3;
+	mulcov_table[2].subgroup_smooth_id = DISMOD_AT_NULL_INT;
+	//
+	mulcov_table[3].mulcov_type        = dismod_at::rate_value_enum;
+	mulcov_table[3].rate_id            = 3;
+	mulcov_table[3].integrand_id       = DISMOD_AT_NULL_INT;
+	mulcov_table[3].covariate_id       = 3;
+	mulcov_table[3].group_smooth_id          = 3;
+	mulcov_table[3].subgroup_smooth_id = DISMOD_AT_NULL_INT;
 	//
 	size_t n_random = 0;
 	vector<dismod_at::rate_struct> rate_table(dismod_at::number_rate_enum);

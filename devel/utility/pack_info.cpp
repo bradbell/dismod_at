@@ -170,8 +170,8 @@ n_child_        ( child_id2node_id.size() )
 	assert( previous_group_id == 0 );
 	size_t previous_subgroup_id = 0;
 	first_subgroup_id_.push_back(previous_subgroup_id);
-	size_t n_subgroup = subgroup_table.size();
-	for(size_t subgroup_id = 1; subgroup_id < n_subgroup; ++subgroup_id)
+	size_t end_subgroup = subgroup_table.size();
+	for(size_t subgroup_id = 1; subgroup_id < end_subgroup; ++subgroup_id)
 	{	size_t group_id = size_t( subgroup_table[subgroup_id].group_id );
 		if( group_id != previous_group_id )
 		{	assert( group_id == previous_group_id + 1 );
@@ -182,7 +182,7 @@ n_child_        ( child_id2node_id.size() )
 			previous_subgroup_id = subgroup_id;
 		}
 	}
-	subgroup_size_.push_back( n_subgroup - previous_subgroup_id );
+	subgroup_size_.push_back( end_subgroup - previous_subgroup_id );
 
 	// initialize offset
 	size_t offset = 0;
@@ -242,6 +242,36 @@ n_child_        ( child_id2node_id.size() )
 			//
 			// check_rate_table should have checked this assumption
 			assert( rate_id != pini_enum || n_age == 1 );
+		}
+	}
+
+	// subgroup_rate_value_info_
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
+	{	const mulcov_struct& mulcov_obj = mulcov_table[mulcov_id];
+		bool match;
+		match  = mulcov_obj.mulcov_type  == rate_value_enum;
+		match &= mulcov_obj.rate_id == int(rate_id);
+		match &= mulcov_obj.subgroup_smooth_id != DISMOD_AT_NULL_INT;
+		if( match )
+		{
+			size_t covariate_id = size_t(mulcov_obj.covariate_id);
+			size_t group_id     = size_t(mulcov_obj.group_id);
+			size_t smooth_id    = mulcov_obj.subgroup_smooth_id;
+			size_t n_age        = smooth_table[smooth_id].n_age;
+			size_t n_time       = smooth_table[smooth_id].n_time;
+			size_t n_subgroup   = subgroup_size_[group_id];
+			//
+			CppAD::vector<subvec_info> info_vec(n_subgroup);
+			for(size_t k = 0; k < n_subgroup; ++k)
+			{	info_vec[k].covariate_id = covariate_id;
+				info_vec[k].group_id     = size_t(mulcov_obj.group_id);
+				info_vec[k].smooth_id    = smooth_id;
+				info_vec[k].n_var        = n_age * n_time;
+				info_vec[k].offset       = offset;
+				offset += info_vec[k].n_var;
+			}
+			subgroup_rate_value_info_[rate_id].push_back( info_vec );
 		}
 	}
 
