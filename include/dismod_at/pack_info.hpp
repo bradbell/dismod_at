@@ -39,6 +39,9 @@ public:
 	} subvec_info;
 	// END SUBVEC_INFO
 private:
+	// total number of elements in the packed vector
+	size_t size_;
+
 	// number of smoothings
 	const size_t n_smooth_;
 
@@ -59,10 +62,10 @@ private:
 	// mulstd variable offsets
 	CppAD::vector<size_t>  mulstd_offset_;
 
-	// node_rate_value_info_ [number_rate_enum][n_child_ + 1]
+	// node_rate_value_info_ [n_rate][n_child_ + 1]
 	CppAD::vector< CppAD::vector<subvec_info> > node_rate_value_info_;
 
-	// group_rate_value_info_ [number_rate_enum][ncov(rate)]
+	// group_rate_value_info_ [n_rate][ncov(rate)]
 	CppAD::vector< CppAD::vector<subvec_info> > group_rate_value_info_;
 
 	// group_meas_value_info_ [n_integrand_][ncov(integrand)]
@@ -71,8 +74,10 @@ private:
 	// group_meas_noise_info_ [n_integrand_][ncov(integrand)]
 	CppAD::vector< CppAD::vector<subvec_info> > group_meas_noise_info_;
 
-	// total number of elements in the packed vector
-	size_t size_;
+	// subgroup_rate_value_info_ [n_rate][ncov(rate)][n_sub(rate,j)]
+	CppAD::vector< CppAD::vector< CppAD::vector<subvec_info> > >
+	subgroup_rate_value_info_;
+
 public:
 	pack_info(
 	size_t                                    n_integrand      ,
@@ -125,6 +130,13 @@ public:
 	// group_meas_noise_info
 	size_t      group_meas_noise_n_cov(size_t integrand_id) const;
 	subvec_info group_meas_noise_info(size_t integrand_id, size_t j) const;
+
+	// subgroup_rate_value_info
+	size_t      subgroup_rate_value_n_cov(size_t integrand_id) const;
+	size_t      subgroup_rate_value_n_sub(size_t integrand_id, size_t j) const;
+	subvec_info
+	group_rate_value_info(size_t integrand_id, size_t j, size_t k) const;
+
 };
 
 } // END DISMOD_AT_NAMESPACE:

@@ -8,11 +8,9 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-
 /*
 $begin pack_info_ctor$$
 $spell
-	Devel
 	mulcov
 	CppAD
 	struct
@@ -20,11 +18,10 @@ $spell
 	var
 	const
 	integrands
-	sqlite
 	nslist
 $$
 
-$section Variable Packing Information: Constructor$$
+$section Variable Pack Info: Constructor$$
 
 $head Syntax$$
 $codei%pack_info %pack_object%(
@@ -393,7 +390,7 @@ $spell
 	const
 $$
 
-$section Variable Packing Information: Sizes$$
+$section Variable Pack Info: Sizes$$
 
 $head Syntax$$
 $icode%size%              = %pack_object%.size()
@@ -529,8 +526,6 @@ size_t pack_info::first_subgroup_id(size_t group_id) const
 ------------------------------------------------------------------------------
 $begin pack_info_mulstd$$
 $spell
-	Devel
-	var
 	mulstd
 	dage
 	dtime
@@ -538,7 +533,7 @@ $spell
 	dismod
 $$
 
-$section Pack Variables: Standard Deviation Multipliers$$
+$section Variable Pack Info: Standard Deviation Multipliers$$
 
 $head Syntax$$
 $icode%offset% = %pack_object%.mulstd_offset(%smooth_id%, %k%)
@@ -555,9 +550,8 @@ This argument has prototype
 $codei%
 	size_t %smooth_id%
 %$$
-and is the
-$cref/smooth_id/smooth_table/smooth_id/$$
-for this multiplier.
+and is the $cref/smooth_id/smooth_table/smooth_id/$$
+for the smoothing that this multiplier effects.
 
 $head k$$
 This argument has prototype
@@ -603,7 +597,6 @@ size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 ------------------------------------------------------------------------------
 $begin pack_info_node_rate$$
 $spell
-	Devel
 	std
 	cov
 	var
@@ -614,7 +607,7 @@ $spell
 	subvec
 $$
 
-$section Pack Variables: Rates$$
+$section Variable Pack Info: Node Rates$$
 
 $head Syntax$$
 $icode%info% = %pack_object%.node_rate_value_info(%rate_id%, %j%)
@@ -653,10 +646,13 @@ $codei%
 %$$
 
 $subhead covariate_id$$
-This field is not used or set by $code node_rate_value_info$$.
+This field is set to null.
+
+$subhead group_id$$
+This field is set to null.
 
 $subhead smooth_id$$
-is the $cref/smooth_id/smooth_table/smooth_id/$$ for the rate.
+is the $cref/group_smooth_id/mulcov_table/group_smooth_id/$$ for this rate.
 If $icode%j% == %n_child%$$,
 this smoothing corresponds to the parent rates.
 Otherwise it corresponds to the child rate effects and is the same
@@ -696,7 +692,6 @@ pack_info::subvec_info pack_info::node_rate_value_info(size_t rate_id, size_t j)
 ------------------------------------------------------------------------------
 $begin pack_info_group_meas$$
 $spell
-	Devel
 	std
 	cov
 	var
@@ -707,7 +702,7 @@ $spell
 	subvec
 $$
 
-$section Pack Variables: Measurement Covariate Multipliers$$
+$section Variable Pack Info: Group Measurement Covariate Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %pack_object%.group_meas_value_n_cov(%integrand_id%)
@@ -756,8 +751,8 @@ This return value has prototype
 $codei%
 	size_t %n_cov%
 %$$
-and is the number of covariate multipliers for the specified
-$icode integrand_id$$.
+and is the number of covariate multipliers
+(rows in $cref mulcov_table$$) for the specified $icode integrand_id$$.
 This is referred to as $codei%n_cov(%integrand_id%)%$$ below.
 
 $head j$$
@@ -780,13 +775,17 @@ $subhead covariate_id$$
 is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
 $th j$$ covariate multiplier for this $icode integrand_id$$.
 
+$subhead group_id$$
+is the $cref/group_id/mulcov_table/group_id/$$ for the
+$th j$$ covariate multiplier for this $icode integrand_id$$.
+
 $subhead smooth_id$$
-is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
+is the $cref/group_smooth_id/mulcov_table/group_smooth_id/$$ for the
 $th j$$ covariate multiplier for this $icode integrand_id$$.
 
 $subhead n_var$$
 is the number of variables for this covariate multiplier; i.e.
-the product of the number are age and time points corresponding to
+the product of the number of age and time points corresponding to
 this $icode smooth_id$$.
 
 $subhead offset$$
@@ -798,13 +797,11 @@ See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
-size_t
-pack_info::group_meas_value_n_cov(size_t integrand_id) const
+size_t pack_info::group_meas_value_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
 	return group_meas_value_info_[integrand_id].size();
 }
-size_t
-pack_info::group_meas_noise_n_cov(size_t integrand_id) const
+size_t pack_info::group_meas_noise_n_cov(size_t integrand_id) const
 {	assert( integrand_id < n_integrand_ );
 	return group_meas_noise_info_[integrand_id].size();
 }
@@ -824,7 +821,6 @@ pack_info::group_meas_noise_info(size_t integrand_id, size_t j) const
 ------------------------------------------------------------------------------
 $begin pack_info_group_rate$$
 $spell
-	Devel
 	std
 	cov
 	var
@@ -835,7 +831,7 @@ $spell
 	subvec
 $$
 
-$section Pack Variables: Rate Covariate Multipliers$$
+$section Variable Pack Info: Group Rate Covariate Multipliers$$
 
 $head Syntax$$
 $icode%n_cov% = %pack_object%.group_rate_value_n_cov(%rate_id%)
@@ -868,8 +864,8 @@ This return value has prototype
 $codei%
 	size_t %n_cov%
 %$$
-and is the number of covariate multipliers for the specified
-$icode rate_id$$.
+and is the number of covariate multipliers
+(rows in $cref mulcov_table$$) for the specified $icode rate_id$$.
 This is referred to as $codei%n_cov(%rate_id%)%$$ below.
 
 $head j$$
@@ -889,16 +885,20 @@ $codei%
 %$$
 
 $subhead covariate_id$$
-is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
-$th j$$ covariate multiplier for this $icode rate_id$$.
+is the $cref/covariate_id/covariate_table/covariate_id/$$
+for the $th j$$ covariate multiplier for this $icode rate_id$$.
+
+$subhead group_id$$
+is the $cref/group_id/mulcov_table/group_id/$$
+for the $th j$$ covariate multiplier for this $icode rate_id$$.
 
 $subhead smooth_id$$
-is the $cref/smooth_id/smooth_table/smooth_id/$$ for the
+is the $cref/group_smooth_id/mulcov_table/group_smooth_id/$$ for the
 $th j$$ covariate multiplier for this $icode rate_id$$.
 
 $subhead n_var$$
 is the number of variables for this covariate multiplier; i.e.
-the product of the number are age and time points corresponding to
+the product of the number of age and time points corresponding to
 this $icode smooth_id$$.
 
 $subhead offset$$
@@ -910,8 +910,7 @@ See $cref/pack_info Example/pack_info/Example/$$.
 
 $end
 */
-size_t
-pack_info::group_rate_value_n_cov(size_t rate_id) const
+size_t pack_info::group_rate_value_n_cov(size_t rate_id) const
 {	assert( rate_id < number_rate_enum );
 	return group_rate_value_info_[rate_id].size();
 }
@@ -920,6 +919,132 @@ pack_info::subvec_info
 pack_info::group_rate_value_info(size_t rate_id, size_t j) const
 {	assert( rate_id < number_rate_enum );
 	return group_rate_value_info_[rate_id][j];
+}
+/*
+------------------------------------------------------------------------------
+$begin pack_info_subgroup_rate$$
+$spell
+	std
+	cov
+	var
+	mulcov
+	dismod
+	const
+	covariate
+	subvec
+$$
+
+$section Variable Pack Info: Subgroup Rate Covariate Multipliers$$
+
+$head Syntax$$
+$icode%n_cov% = %pack_object%.subgroup_rate_value_n_cov(%rate_id%)
+%$$
+$icode%n_sub% = %pack_object%.subgroup_rate_value_n_subgroup(%rate_id%, %j%)
+%$$
+$icode%info% = %pack_object%.subgroup_rate_value_info(%rate_id%, %j%, %k%)
+%$$
+
+$head subvec_info$$
+The type $code pack_info::subvec_info$$ is defined as follows:
+$srcfile%include/dismod_at/pack_info.hpp
+%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
+
+$head pack_object$$
+This object has prototype
+$codei%
+	const pack_info %pack_object%
+%$$
+
+$head rate_id$$
+This argument has prototype
+$codei%
+	size_t %rate_id%
+%$$
+and it specifies the
+$cref/rate_id/rate_table/rate_id/$$
+for the covariate multipliers.
+
+$head n_cov$$
+This return value has prototype
+$codei%
+	size_t %n_cov%
+%$$
+and is the number of covariate multipliers
+(rows in $cref mulcov_table$$) for the specified $icode rate_id$$.
+This is referred to as $codei%n_cov(%rate_id%)%$$ below.
+
+$head n_sub$$
+This return value has prototype
+$codei%
+	size_t %n_sub%
+%$$
+and is the number of subgroups corresponding to the
+$cref/group/mulcov_table/group_id/$$ for this covariate multiplier.
+This is referred to as $codei%n_sub(%rate_id%, %j%)%$$ below.
+
+$head j$$
+This argument has prototype
+$codei%
+	size_t %j%
+%$$
+and $icode%j% < n_cov(%rate_id%)%$$.
+For each fixed $icode rate_id$$, the
+$cref/mulcov_id/mulcov_table/mulcov_id/$$ index corresponding to $icode j$$
+is monotone increasing with $icode j$$.
+
+$head k$$
+This argument has prototype
+$codei%
+	size_t %k%
+%$$
+and $icode%k% < n_sub(%rate_id%, %j%)%$$.
+For each fixed $icode rate_id$$ and $icode j$$, the
+$cref/subgroup_id/subgroup_table/subgroup_id/$$ index corresponding to
+$icode k$$ is monotone increasing with $icode k$$.
+
+$head info$$
+this return value has prototype
+$codei%
+	pack_info::subvec_info %info%
+%$$
+
+$subhead covariate_id$$
+is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
+$th j$$ covariate multiplier for this $icode rate_id$$.
+
+$subhead smooth_id$$
+is the $cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$ for the
+$th j$$ covariate multiplier, and this $icode rate_id$$.
+Note that the smoothing does not depend on $icode k$$; see
+$cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$.
+
+$subhead n_var$$
+is the number of variables for this covariate multiplier; i.e.
+the product of the number of age and time points corresponding to
+this $icode smooth_id$$.
+
+$subhead offset$$
+is the offset in the packed variable vector where the
+$icode n_var$$ variables begin (for this covariate multiplier and subgroup).
+
+$head Example$$
+See $cref/pack_info Example/pack_info/Example/$$.
+
+$end
+*/
+size_t pack_info::subgroup_rate_value_n_cov(size_t rate_id) const
+{	assert( rate_id < number_rate_enum );
+	return subgroup_rate_value_info_[rate_id].size();
+}
+size_t pack_info::subgroup_rate_value_n_sub(size_t rate_id, size_t j) const
+{	assert( rate_id < number_rate_enum );
+	return subgroup_rate_value_info_[rate_id][j].size();
+}
+//
+pack_info::subvec_info
+pack_info::group_rate_value_info(size_t rate_id, size_t j, size_t k) const
+{	assert( rate_id < number_rate_enum );
+	return subgroup_rate_value_info_[rate_id][j][k];
 }
 
 } // END DISMOD_AT_NAMESPACE
