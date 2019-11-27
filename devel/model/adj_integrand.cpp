@@ -217,9 +217,12 @@ a1_double_rate_    (number_rate_enum)
 	{
 		size_t rate_id      = size_t( mulcov_table[mulcov_id].rate_id );
 		size_t integrand_id = size_t(mulcov_table[mulcov_id].integrand_id);
+		//
+		// only group covariate multipliers can be integrands
 		int    smooth_id    = mulcov_table[mulcov_id].group_smooth_id;
 		if( smooth_id == DISMOD_AT_NULL_INT )
 			mulcov_pack_info_[mulcov_id].smooth_id = size_t(smooth_id);
+		//
 		else switch( mulcov_table[mulcov_id].mulcov_type )
 		{	case rate_value_enum:
 			mulcov_pack_info_[mulcov_id] =
@@ -277,6 +280,10 @@ CppAD::vector<Float> adj_integrand::line(
 	//
 	// group for this average
 	size_t group_id = subgroup_table_[subgroup_id].group_id;
+	//
+	// first subgroup for this group
+	size_t first_subgroup_id = pack_object_.first_subgroup_id(group_id);
+	assert( first_subgroup_id <= subgroup_id );
 	//
 	// initialize other values for this average
 	bool need_ode     = false;
@@ -429,7 +436,7 @@ CppAD::vector<Float> adj_integrand::line(
 			}
 		}
 		//
-		// include the covariate effects on this rate
+		// include the group covariate effects on this rate
 		size_t n_cov    = pack_object_.group_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; ++j)
 		{	info        = pack_object_.group_rate_value_info(rate_id, j);
@@ -451,6 +458,34 @@ CppAD::vector<Float> adj_integrand::line(
 				);
 				for(size_t k = 0; k < n_line; ++k)
 					effect[k] += temp[k] * x_j;
+			}
+		}
+		//
+		// include the subgroup covariate effects on this rate
+		n_cov = pack_object_.subgroup_rate_value_n_cov(rate_id);
+		for(size_t j = 0; j < n_cov; ++j)
+		{	info  = pack_object_.subgroup_rate_value_info(rate_id, j, 0);
+			if( info.group_id == group_id )
+			{	size_t k = subgroup_id - first_subgroup_id;
+				assert( k < pack_object_.subgroup_size(group_id) );
+				info  = pack_object_.subgroup_rate_value_info(rate_id, j, k);
+				smooth_id   = info.smooth_id;
+				double x_j  = x[ info.covariate_id ];
+				// interpolate from smoothing grid to line
+				smooth_value.resize(info.n_var);
+				for(size_t ell = 0; ell < info.n_var; ++ell)
+					smooth_value[ell] = pack_vec[info.offset + ell];
+				const smooth_info& s_info = s_info_vec_[smooth_id];
+				temp = grid2line(
+					line_age,
+					line_time,
+					age_table_,
+					time_table_,
+					s_info,
+					smooth_value
+				);
+				for(size_t ell = 0; ell < n_line; ++ell)
+					effect[ell] += temp[ell] * x_j;
 			}
 		}
 		//

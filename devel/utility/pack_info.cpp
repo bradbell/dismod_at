@@ -190,6 +190,7 @@ n_child_        ( child_id2node_id.size() )
 	// resize by number of rates
 	node_rate_value_info_.resize( number_rate_enum );
 	group_rate_value_info_.resize( number_rate_enum );
+	subgroup_rate_value_info_.resize( number_rate_enum );
 
 	// resize by number of children
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)

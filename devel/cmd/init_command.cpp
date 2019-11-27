@@ -396,8 +396,8 @@ void init_command(
 				size_t age_id   = s_info_vec[smooth_id].age_id(i);
 				size_t time_id  = s_info_vec[smooth_id].time_id(j);
 	# ifndef NDEBUG
-				for(size_t k = 0; k < n_col; k++)
-					assert( row_value[ n_col * var_id + k ] == "" );
+				for(size_t ell = 0; ell < n_col; k++)
+					assert( row_value[ n_col * var_id + ell ] == "" );
 	# endif
 				if( mulcov_type == rate_value_enum )
 				{	row_value[n_col * var_id + 0]  = "mulcov_rate_value";

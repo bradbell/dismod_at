@@ -135,7 +135,7 @@ $rnext
 	$cnext yes
 $rnext
 	$codei%mulcov_%mulcov_id%$$
-	$cnext the covariate multiplier specified by
+	$cnext the group covariate multiplier specified by
 	$cref/mulcov_id/mulcov_table/mulcov_id/$$
 	$cnext no
 $tend
