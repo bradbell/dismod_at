@@ -185,7 +185,9 @@
 # ...          $cnext ...         $cnext  ...                        $rnext
 # $icode c_J$$ $cnext float       $cnext value of last covariate
 # $tend
-# if the $code subgroup$$ key is not present, the first subgroup in
+#
+# $subhead subgroup$$
+# If the $code subgroup$$ key is not present, the first subgroup in
 # $cref/subgroup_table/create_database/subgroup_table/$$ is used.
 #
 # $subhead weight$$
@@ -362,8 +364,12 @@
 # smooth     $cnext str         $cnext smoothing at group level  $rnext
 # subsmooth $cnext str          $cnext smoothing at subgroup level
 # $tend
+#
+# $subhead group$$
 # If the $code group$$ key is not present, the first group in
 # $cref/subgroup_table/create_database/subgroup_table/$$ is used.
+#
+# $subhead subsmooth$$
 # If the $code subsmooth$$ key is not present, the value null is used for
 # the subgroup smoothing in the corresponding row.
 #

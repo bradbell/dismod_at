@@ -85,13 +85,16 @@ $head subgroup_id$$
 This column has type $code integer$$ and is the
 $cref/subgroup_id/subgroup_table/subgroup_id/$$
 that this data point corresponds to.
+
+$subhead group_id$$
 There is $cref/group_id/subgroup_table/group_id/$$ corresponding
 to this $icode subgroup_id$$.
-If the corresponding
-$cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$ is not null,
-the $icode density_id$$ cannot correspond to
-$cref/laplace/density_table/density_name/laplace/$$ or
-$cref/log_laplace/density_table/density_name/log_laplace/$$.
+
+$subhead Nonsmooth$$
+If the density is
+$cref/nonsmooth/data_table/density_id/Nonsmooth/$$,
+the $cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$
+corresponding to $icode subgroup_id$$ must be null.
 
 $head weight_id$$
 This column has type $code integer$$ and is the
@@ -224,6 +227,8 @@ For each valid $cref/covariate_id/covariate_table/covariate_id/$$,
 column $codei%x_%covariate_id%$$ contains
 the value, for this measurement, of the covariate specified by
 $icode covariate_id$$.
+
+$subhead Null$$
 The covariate value $code null$$ is interpreted as the
 $cref/reference/covariate_table/reference/$$ value for
 the corresponding covariate.
