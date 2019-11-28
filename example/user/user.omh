@@ -80,6 +80,7 @@ $children%example/user/csv2db.py
 	%example/user/sample_asy.py
 	%example/user/const_value.py
 	%example/user/mulstd.py
+	%example/user/bilevel_random.py
 
 	%example/user/const_random.py
 	%example/user/continue_fit.py
@@ -117,6 +118,7 @@ $rref user_const_value.py$$
 $rref user_mulstd.py$$
 $rref user_zero_sum_random.py$$
 $rref user_group_mulcov.py$$
+$rref user_bilevel_random.py$$
 $tend
 
 $head More Examples$$

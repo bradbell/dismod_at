@@ -69,6 +69,15 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 11-28$$
+Add the $cref user_bilevel_random.py$$ example demonstrating
+fitting two levels of random effects using
+$cref/subgroup covariate multipliers
+	/model_variables
+	/Random Effects, u
+	/Subgroup Covariate Multipliers
+/$$.
+
 $head 11-26$$
 $list number$$
 The $code meas_covariate.py$$ example was changed to be an example

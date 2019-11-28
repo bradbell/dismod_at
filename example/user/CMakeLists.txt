@@ -11,6 +11,7 @@
 # Build check_example_user
 SET(depends "")
 FOREACH(user_case
+	bilevel_random
 	age_avg_split
 	sample_asy
 	sample_sim

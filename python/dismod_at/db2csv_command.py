@@ -308,15 +308,15 @@
 # This will correspond directly to the data table
 # $cref/node_id/data_table/node_id/$$.
 #
+# $subhead group$$
+# is the $cref/group_name/subgroup_table/group_name/$$ corresponding
+# to the subgroup for this data row.
+#
 # $subhead subgroup$$
 # is the
 # $cref/subgroup_name/subgroup_table/subgroup_name/$$ for this data row.
 # This will correspond directly to the data table
 # $cref/subgroup_id/data_table/subgroup_id/$$.
-#
-# $subhead group$$
-# is the $cref/group_name/subgroup_table/group_name/$$ corresponding
-# to the subgroup for this data row.
 #
 # $subhead integrand$$
 # is the integrand table
@@ -496,15 +496,15 @@
 # is the
 # $cref/node_name/node_table/node_name/$$ for this row.
 #
+# $subhead group$$
+# is the $cref/group_name/subgroup_table/group_name/$$ corresponding
+# to the subgroup for this data row.
+#
 # $subhead subgroup$$
 # is the
 # $cref/subgroup_name/subgroup_table/subgroup_name/$$ for this data row.
 # This will correspond directly to the avgint table
 # $cref/subgroup_id/avgint_table/subgroup_id/$$.
-#
-# $subhead group$$
-# is the $cref/group_name/subgroup_table/group_name/$$ corresponding
-# to the subgroup for this data row.
 #
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
@@ -1257,8 +1257,8 @@ def db2csv_command(database_file_arg) :
 	header = ['data_id'] + data_extra_columns + [
 		'child',
 		'node',
-		'subgroup',
 		'group',
+		'subgroup',
 		'integrand',
 		'weight',
 		'age_lo',
@@ -1335,13 +1335,13 @@ def db2csv_command(database_file_arg) :
 		row_out['node']  = table_lookup(
 			'node', row_in['node_id'],  'node_name'
 		)
-		# sub
-		row_out['subgroup']   = table_lookup(
-			'subgroup', row_in['subgroup_id'], 'subgroup_name'
-		)
 		# group
 		row_out['group'] = table_lookup(
 			'subgroup', row_in['subgroup_id'], 'group_name'
+		)
+		# subgroup
+		row_out['subgroup']   = table_lookup(
+			'subgroup', row_in['subgroup_id'], 'subgroup_name'
 		)
 		covariate_id = 0
 		for row in table_data['covariate'] :
@@ -1396,8 +1396,8 @@ def db2csv_command(database_file_arg) :
 			'integrand',
 			'weight',
 			'node',
+			'group',
 			'subgroup',
-			'group'
 		]
 		for row in table_data['covariate'] :
 			header.append( row['covariate_name'] )
@@ -1439,13 +1439,13 @@ def db2csv_command(database_file_arg) :
 			row_out['node']      = table_lookup(
 				'node', avgint_row['node_id'], 'node_name'
 			)
-			# subgroup
-			row_out['subgroup']   = table_lookup(
-				'subgroup', row_in['subgroup_id'], 'subgroup_name'
-			)
 			# group
 			row_out['group'] = table_lookup(
 				'subgroup', row_in['subgroup_id'], 'group_name'
+			)
+			# subgroup
+			row_out['subgroup']   = table_lookup(
+				'subgroup', row_in['subgroup_id'], 'subgroup_name'
 			)
 			# covariates
 			covariate_id = 0
