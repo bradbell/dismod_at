@@ -99,6 +99,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
+		'subgroup':    'world',
 		'density':     'log_gaussian',
 		'weight':      'constant',
 		'hold_out':     False,

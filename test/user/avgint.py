@@ -44,7 +44,7 @@ def data_list2dict(value_list) :
 	key_list = [
 		'integrand',  'density',    'node',      'weight',    'hold_out',
 		'meas_value', 'meas_std',   'eta',       'age_lower', 'age_upper',
-		'time_lower', 'time_upper', 'sex',       'one'
+		'time_lower', 'time_upper', 'sex',       'one',       'subgroup'
 	]
 	assert len(value_list) == len(key_list)
 	dict_out = dict()
@@ -84,23 +84,23 @@ def example_db (file_name) :
 	#
 	# ----------------------------------------------------------------------
 	# data table: order for value_list
-	#	'integrand',  'density',    'node',      'weight', '     hold_out',
+	#	'integrand',  'density',    'node',      'weight',      'hold_out',
 	#	'meas_value', 'meas_std',   'age_lower', 'age_upper',
-	#   'time_lower', 'time_upper', 'sex',       'one'
+	#   'time_lower', 'time_upper', 'sex',       'one',         'subgroup'
 	data_table = list()
 	#
 	# Sincidence
 	value_list = [
 		'Sincidence', 'log_gaussian', 'world',    'weight_one',  0,
 		4.0e-3,       2.0e-3,         1e-6,        40,          40,
-		1995,         1995,           0.0,         1
+		1995,         1995,           0.0,         1,           'world'
 	]
 	data_table.append( data_list2dict( value_list ) );
 	#
 	value_list = [
 		'Sincidence', 'log_gaussian', 'world',    'weight_one',  0,
 		4.0e-2,       2.0e-2,         1e-6,        100,          100,
-		1995,         1995,           0.0,         1
+		1995,         1995,           0.0,         1,           'world'
 	]
 	data_table.append( data_list2dict( value_list ) );
 	#

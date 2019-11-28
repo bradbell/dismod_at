@@ -84,6 +84,7 @@ def example_db (file_name, meas_noise_effect) :
 			'covariate': 'one',
 			'type':      'meas_noise',
 			'effected':  'Sincidence',
+			'group':     'world',
 			'smooth':    'smooth_gamma'
 		}
 	]
@@ -107,6 +108,7 @@ def example_db (file_name, meas_noise_effect) :
 		'integrand':   'Sincidence',
 		'meas_std':     data_std,
 		'node':        'world',
+		'subgroup':    'world',
 		'one':          1.0
 	}
 	if meas_noise_effect == 'add_std_scale_all' :

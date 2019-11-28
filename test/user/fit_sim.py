@@ -98,6 +98,7 @@ def example_db (file_name) :
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'iota',
+			'group':     'world',
 			'smooth':    'smooth_mulcov'
 		}
 	]
@@ -114,7 +115,8 @@ def example_db (file_name) :
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   2000.,
-		'time_upper':   2000.
+		'time_upper':   2000.,
+		'subgroup':     'world',
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :

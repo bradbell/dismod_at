@@ -87,7 +87,8 @@ def example_db (file_name) :
 		'hold_out':     False,
 		'meas_std':     1e-2,
 		'eta':          None,
-		'integrand':    'withC'
+		'integrand':    'withC',
+		'subgroup':     'world',
 	}
 	#
 	for i_data in range( n_data ) :

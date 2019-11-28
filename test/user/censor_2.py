@@ -105,6 +105,7 @@ def example_db (file_name) :
 	eta        = iota_true / 2.0 # large so get zeros for log scaled cases
 	row = {
 		'node':        'world',
+		'subgroup':    'world',
 		'integrand':   'Sincidence',
 		'density':     density_name,
 		'weight':      'constant',

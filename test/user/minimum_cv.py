@@ -78,6 +78,7 @@ def example_db ():
 			'data_info':   'd1',
 			'integrand':   'susceptible',
 			'node':        'world',
+			'subgroup':    'world',
 			'weight':      'constant_one',
 			'age_lower':   50.0,
 			'age_upper':   50.0,

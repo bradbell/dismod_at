@@ -96,7 +96,8 @@ def example_db (file_name) :
 		'time_lower':   2000.,
 		'time_upper':   2000.,
 		'integrand':    'susceptible',
-		'meas_std':     0.005
+		'meas_std':     0.005,
+		'subgroup':     'world'
 	}
 	# values that change between rows:
 	node_name  = [ 'world', 'child_1', 'child_2' ]

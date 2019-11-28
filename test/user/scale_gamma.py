@@ -80,6 +80,7 @@ def example_db (file_name) :
 			'covariate': 'one',
 			'type':      'meas_noise',
 			'effected':  'Sincidence',
+			'group':     'world',
 			'smooth':    'smooth_gamma'
 		}
 	]
@@ -96,6 +97,7 @@ def example_db (file_name) :
 	data_std = math.sqrt( meas_std * meas_std + gamma_true )
 	row = {
 		'node':        'north_america',
+		'subgroup':    'world',
 		'density':     'gaussian',
 		'weight':      'constant',
 		'hold_out':     False,

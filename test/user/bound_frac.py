@@ -99,7 +99,8 @@ def example_db (file_name) :
 		'meas_value':   iota_true,
 		'meas_std':     iota_true * 0.1,
 		'eta':          None,
-		'integrand':    'Sincidence'
+		'integrand':    'Sincidence',
+		'subgroup':     'world',
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :

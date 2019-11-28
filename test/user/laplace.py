@@ -94,7 +94,8 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
-		'meas_std':     iota_parent / 10.
+		'meas_std':     iota_parent / 10.,
+		'subgroup':     'world',
 	}
 	for data_id in range( n_data ):
 		# make sure both child and parent data gets included in fit

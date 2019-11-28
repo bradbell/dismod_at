@@ -86,6 +86,7 @@ def example_db (file_name) :
 			'covariate': 'one',
 			'type':      'meas_noise',
 			'effected':  'Sincidence',
+			'group':     'world',
 			'smooth':    'smooth_gamma'
 		}
 	]
@@ -101,6 +102,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'node':        'north_america',
+		'subgroup':    'world',
 		'weight':      'constant',
 		'hold_out':     False,
 		'time_lower':   2000.0,
