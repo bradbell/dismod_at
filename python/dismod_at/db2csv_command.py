@@ -1123,9 +1123,6 @@ def db2csv_command(database_file_arg) :
 	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 	csv_writer.writeheader()
 	var_id  = 0
-	row_out = dict()
-	for field in header :
-		row_out[field] = ''
 	#
 	# group_id2name
 	group_id2name = [ table_data['subgroup'][0]['group_name'] ]
@@ -1135,6 +1132,10 @@ def db2csv_command(database_file_arg) :
 			group_id2name.append( group_name )
 		#
 	for row_in in table_data['var'] :
+		row_out = dict()
+		for field in header :
+			row_out[field] = ''
+		#
 		row_out['var_id']    = var_id
 		row_out['var_type']  = row_in['var_type']
 		row_out['s_id']      = row_in['smooth_id']
@@ -1157,21 +1158,28 @@ def db2csv_command(database_file_arg) :
 		row_out['scale'] = table_lookup('scale_var', var_id, 'scale_var_value')
 		#
 		# fixed and group/sub
-		row_out['fixed'] = 'true'
 		if row_in['var_type'] == 'rate' :
 			if row_in['node_id'] != parent_node_id :
 				row_out['fixed'] = 'false'
-		if row_in['subgroup_id'] != None :
-			assert row_in['group_id'] == None
-			row_out['fixed'] = 'false'
-			subgroup_name = table_lookup(
-				'subgroup', row_in['subgroup_id'], 'subgroup_name'
-			)
-			row_out['group/sub'] = subgroup_name
-		if row_in['group_id'] != None :
-			assert row_in['subgroup_id'] == None
-			group_name = group_id2name[ row_in['group_id'] ]
-			row_out['group/sub'] = group_name
+			else :
+				row_out['fixed'] = 'true'
+		else :
+			if row_in['subgroup_id'] != None :
+				assert row_in['group_id'] == None
+				subgroup_name = table_lookup(
+					'subgroup', row_in['subgroup_id'], 'subgroup_name'
+				)
+				row_out['group/sub'] = subgroup_name
+				row_out['fixed'] = 'false'
+			else :
+				assert row_in['group_id'] != None
+				assert row_in['subgroup_id'] == None
+				group_name = table_lookup(
+					'subgroup', row_in['group_id'], 'subgroup_name'
+				)
+				row_out['group/sub'] = group_name
+				row_out['fixed'] = 'true'
+		#
 		# depend
 		if have_table['depend_var'] :
 			data_depend  = table_data['depend_var'][var_id]['data_depend']

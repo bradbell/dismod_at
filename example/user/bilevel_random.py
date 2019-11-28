@@ -73,6 +73,9 @@
 #      /     \        /     \
 #    n111   n112    n121   n122
 # $$
+# In addition, a special subgroup called $code none$$ is
+# used for data points that correspond to nodes n1, n11, and n12; i.e.,
+# the parent node and the nodes at the first level.
 #
 # $head Mulcov Table$$
 # There are two entries in the mulcov table.
@@ -91,17 +94,16 @@
 # begin problem parameters
 # True value of iota at node n1
 def iota_n1(age) :
-	# not yet working with non-zero multiplier of age
-	return 0.01 + 0.00 * age / 100.0 # must be non-decreasing with age
-data_per_leaf =  1     # number of simulated data points for each leaf node
-meas_cv       =  0.01  # coefficient of variation for each data point
+	return 0.01 + 0.01 * age / 100.0 # must be non-decreasing with age
+data_per_node =  100   # number of simulated data points for each leaf node
+meas_cv       =  0.1   # coefficient of variation for each data point
 random_seed   = 0      # if zero, seed off the clock
 #
 # True value for random effects
 random_effect = dict()
-random_effect['n11']  =  0.0 # not yet working with non-zero here
+random_effect['n11']  =  0.1
 random_effect['n12']  = -random_effect['n11']
-random_effect['n111'] =  0.1
+random_effect['n111'] =  0.2
 random_effect['n112'] = -random_effect['n111']
 random_effect['n121'] =  0.3
 random_effect['n122'] = -random_effect['n121']
@@ -179,10 +181,11 @@ def example_db (file_name) :
 	#
 	# subgroup_table
 	subgroup_table = [
-		{ 'subgroup':'n111', 'group':'n11' },
-		{ 'subgroup':'n112', 'group':'n11' },
-		{ 'subgroup':'n121', 'group':'n12' },
-		{ 'subgroup':'n122', 'group':'n12' },
+		{ 'subgroup':'none',  'group':'none' },
+		{ 'subgroup':'n111',  'group':'n11'  },
+		{ 'subgroup':'n112',  'group':'n11'  },
+		{ 'subgroup':'n121',  'group':'n12'  },
+		{ 'subgroup':'n122',  'group':'n12'  },
 	]
 	# covariate_table
 	covariate_table = [
@@ -210,19 +213,19 @@ def example_db (file_name) :
 	prior_table = [
 		{   # prior_iota_n1_value
 			'name':    'prior_iota_n1_value',
-			'density': 'gaussian',
+			'density': 'uniform',
 			'lower':   iota_n1(0)   / 100.0,
 			'upper':   iota_n1(100) * 100.0,
-			'mean':    iota_n1(50),
+			'mean':    iota_n1(50) / 2.0,
 			'std':     iota_n1(50)
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
-			'density': 'gaussian',
+			'density': 'uniform',
 			'mean':     0.0,
 			'std':      100.0,
 		},{ # prior_iota_subgroup
 			'name':    'prior_iota_subgroup',
-			'density': 'gaussian',
+			'density': 'uniform',
 			'mean':     0.0,
 			'std':      100.0,
 		}
@@ -256,7 +259,7 @@ def example_db (file_name) :
 		{ 'name':'rate_case',             'value':'iota_pos_rho_zero'},
 		{ 'name': 'zero_sum_random',      'value':'iota'},
 		{ 'name':'quasi_fixed',           'value':'false'},
-		{ 'name':'max_num_iter_fixed',    'value':'-1'},
+		{ 'name':'max_num_iter_fixed',    'value':'100'},
 		{ 'name':'print_level_fixed',     'value':'0'},
 		{ 'name':'tolerance_fixed',       'value':'1e-12'},
 	]
@@ -278,14 +281,16 @@ def example_db (file_name) :
 	random.seed(random_seed)
 	for age_id in range( len(age_list) ) :
 		age       = age_list[age_id]
-		for node in [ 'n111', 'n112', 'n121', 'n122' ] :
-			for i in range(data_per_leaf) :
+		for node in [ 'n1', 'n11', 'n12', 'n111', 'n112', 'n121', 'n122' ] :
+			for i in range(data_per_node) :
 				iota       = avg_integrand(age, node)
 				meas_std   = iota * meas_cv
-				# meas_value = random.gauss(iota, meas_std)
-				meas_value   = iota
+				meas_value = random.gauss(iota, meas_std)
+				if node in [ 'n1', 'n11', 'n12' ] :
+					row['subgroup'] = 'none'
+				else :
+					row['subgroup']   = node
 				row['node']       = node
-				row['subgroup']   = node
 				row['meas_value'] = meas_value
 				row['meas_std']   = meas_std
 				row['age_lower']  = age
@@ -356,12 +361,13 @@ for var_id in range(n_var) :
 	row_list.append( [ truth_var_value ] )
 	#
 	fit_var_value = fit_var_table[var_id]['fit_var_value']
-	err           = fit_var_value - truth_var_value
-	if abs(err) > 1e-8 :
-		print(node_name, truth_var_value, fit_var_value, err)
+	relerr           = 1.0 - fit_var_value / truth_var_value
+	if abs(relerr) > meas_cv :
+		print(node_name, truth_var_value, fit_var_value, relerr)
 		assert False
 #
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+connection.close()
 # ----------------------------------------------------------------------------
 print('bilevel_random.py: OK')
 # END PYTHON
