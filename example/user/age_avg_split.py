@@ -135,6 +135,7 @@ def example_db (file_name) :
 	row = {
 		'integrand':  'mtother',
 		'node':       'world',
+		'subgroup':   'world',
 		'weight':     '',
 	}
 	row['age_lower'] = 0.0

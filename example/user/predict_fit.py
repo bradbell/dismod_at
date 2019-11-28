@@ -228,6 +228,7 @@ def example_db (file_name) :
 		'age_lower':    0.0,
 		'age_upper':    100.0,
 		'integrand':   'Sincidence',
+		'subgroup':     'world',
 	}
 	# north_america
 	row['node']       = 'north_america';
@@ -254,7 +255,8 @@ def example_db (file_name) :
 		'time_lower':   2000.0,
 		'time_upper':   2000.0,
 		'age_lower':    50.0,
-		'age_upper':    50.0
+		'age_upper':    50.0,
+		'subgroup':     'world'
 	}
 	row['node'] = 'north_america'
 	avgint_table.append( copy.copy(row) )

@@ -176,6 +176,7 @@ def example_db (file_name) :
 	data_table = list()
 	row = {
 		'node':        'north_america',
+		'subgroup':    'world',
 		'density':     'gaussian',
 		'weight':      '',
 		'hold_out':     False,

@@ -442,6 +442,7 @@ def csv2db_command(database, configure_csv, measure_csv) :
 					row = {
 							'integrand': integrand,
 							'node':      'no_name',
+							'subgroup':  'world',
 							'weight':    'constant',
 							'age_lower':  age,
 							'age_upper':  age,

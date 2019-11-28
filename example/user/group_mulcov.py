@@ -188,18 +188,21 @@ def example_db (file_name) :
 			'covariate': 'income',
 			'type':      'meas_value',
 			'effected':  'Sincidence',
+			'group':     'world',
 			'group':     'north_america',
 			'smooth':    'smooth_mulcov'
 		},{ # sex effects south american remission
 			'covariate': 'sex',
 			'type':      'meas_value',
 			'effected':  'remission',
+			'group':     'world',
 			'group':     'south_america',
 			'smooth':    'smooth_mulcov'
 		},{ # example covariate that is not being used
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'rho',
+			'group':     'world',
 			'group':     'north_america',
 			'smooth':    None # not used because smoothing is null
 		}
@@ -216,6 +219,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
+		'subgroup':    'world',
 		'density':     'gaussian',
 		'weight':      '',
 		'hold_out':     False,

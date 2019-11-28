@@ -180,6 +180,7 @@ def example_db (file_name) :
 			'covariate': 'one',
 			'type':      'meas_noise',
 			'effected':  'Sincidence',
+			'group':     'world',
 			'smooth':    'smooth_gamma'
 		}
 	]
@@ -197,6 +198,7 @@ def example_db (file_name) :
 		'weight':      '',
 		'hold_out':     False,
 		'node':        'world',
+		'subgroup':    'world',
 		'one':          1.0   ,
 		'age_lower':    50.0,
 		'age_upper':    50.0,

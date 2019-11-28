@@ -105,7 +105,8 @@ def example_db (file_name) :
 		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   2000.,
-		'time_upper':   2000.
+		'time_upper':   2000.,
+		'subgroup':     'world'
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :

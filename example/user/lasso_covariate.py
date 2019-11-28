@@ -213,11 +213,13 @@ def example_db (file_name) :
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'iota',
+			'group':     'world',
 			'smooth':    'smooth_income'
 		},{
 			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  'iota',
+			'group':     'world',
 			'smooth':    'smooth_sex'
 		}
 	]
@@ -233,6 +235,7 @@ def example_db (file_name) :
 	# values that are the same for all data rows
 	row = {
 		'node':        'world',
+		'subgroup':    'world',
 		'integrand':   'Sincidence',
 		'density':     'gaussian',
 		'weight':      '',

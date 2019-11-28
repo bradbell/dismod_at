@@ -308,11 +308,13 @@ def example_db (file_name) :
 		'covariate': 'one',
 		'type':      'meas_noise',
 		'effected':  'Sincidence',
+		'group':     'world',
 		'smooth':    'smooth_gamma'
 		},{
 		'covariate': 'income',
 		'type':      'rate_value',
 		'effected':  'iota',
+		'group':     'world',
 		'smooth':    'smooth_alpha_n1'
 	} ]
 	# prior_table

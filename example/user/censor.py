@@ -157,6 +157,7 @@ def example_db (file_name) :
 	meas_std = 1.5 * iota_true;
 	row = {
 		'node':        'world',
+		'subgroup':    'world',
 		'integrand':   'Sincidence',
 		'density':     'cen_gaussian',
 		'weight':      '',

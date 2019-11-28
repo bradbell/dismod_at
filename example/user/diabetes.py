@@ -779,18 +779,21 @@ def example_db (file_name) :
 			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  'iota',
+			'group':     'world',
 			'smooth':    'smooth_mulcov_sex'
 		} , {
 			# alpha for iota and bmi
 			'covariate': 'bmi',
 			'type':      'rate_value',
 			'effected':  'iota',
+			'group':     'world',
 			'smooth':    'smooth_mulcov_bmi'
 		} , {
 			# beta for prevalence and ms_2000
 			'covariate': 'ms_2000',
 			'type':      'meas_value',
 			'effected':  'prevalence',
+			'group':     'world',
 			'smooth':    'smooth_mulcov_ms_2000'
 		}
 	]

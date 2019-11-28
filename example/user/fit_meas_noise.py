@@ -169,6 +169,7 @@ def example_db (file_name) :
 			'covariate': 'one',
 			'type':      'meas_noise',
 			'effected':  'Sincidence',
+			'group':     'world',
 			'group':     'survey',
 			'smooth':    'smooth_gamma',
 			'subsmooth': None
@@ -194,6 +195,7 @@ def example_db (file_name) :
 		'integrand':   'Sincidence',
 		'meas_std':     meas_std,
 		'node':        'world',
+		'subgroup':    'world',
 		'one':          1.0
 	}
 	# values that change between rows:

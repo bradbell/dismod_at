@@ -166,6 +166,7 @@ def example_db (file_name) :
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'integrand':    'Sincidence',
+		'subgroup':     'world',
 	}
 	row['node']        = 'north_america'
 	row['meas_value']  = iota_parent_true

@@ -151,6 +151,7 @@ def example_db (file_name) :
 		'covariate': 'income',
 		'type':      'rate_value',
 		'effected':  'iota',
+		'group':     'world',
 		'smooth':    'smooth_income'
 	} ]
 	#
@@ -218,6 +219,7 @@ def example_db (file_name) :
 	data_table = list()
 	row = {
 		'node':        'north_america',
+		'subgroup':    'world',
 		'density':     'gaussian',
 		'weight':      '',
 		'hold_out':     False,
@@ -243,6 +245,7 @@ def example_db (file_name) :
 	does_not_matter = 5.0
 	row = {
 		'node':        'north_america',
+		'subgroup':    'world',
 		'integrand':   'mulcov_0',
 		'weight':      '',
 		'income':      does_not_matter,

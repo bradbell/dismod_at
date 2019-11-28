@@ -188,7 +188,8 @@
 #
 # $subhead subgroup$$
 # If the $code subgroup$$ key is not present, the first subgroup in
-# $cref/subgroup_table/create_database/subgroup_table/$$ is used.
+# $cref/subgroup_table/create_database/subgroup_table/$$ is used
+# and a warning is printed.
 #
 # $subhead weight$$
 # The weighting function name identifies an
@@ -226,11 +227,16 @@
 # eta          $cnext float       $cnext offset in log-transform     $rnext
 # nu           $cnext float       $cnext Student's-t degrees of freedom
 # $tend
+#
+# $subhead meas_std, eta, nu$$
 # The columns keys $code meas_std$$, $code eta$$, and $code nu$$
 # are optional. If they are not present, the value $code null$$ is used
 # for the corresponding row of the data table.
+#
+# $subhead subgroup$$
 # if the $code subgroup$$ key is not present, the first subgroup in
-# $cref/subgroup_table/create_database/subgroup_table/$$ is used.
+# $cref/subgroup_table/create_database/subgroup_table/$$ is used
+# and a warning is printed.
 #
 # $subhead data_extra_columns$$
 # If a $icode row$$ of $icode option_table$$ has $icode%row%['name']%$$
@@ -371,7 +377,7 @@
 #
 # $subhead subsmooth$$
 # If the $code subsmooth$$ key is not present, the value null is used for
-# the subgroup smoothing in the corresponding row.
+# the subgroup smoothing in the corresponding row and a wanring is printed.
 #
 # $head option_table$$
 # This is a list of $code dict$$
@@ -805,6 +811,7 @@ def create_database(
 		'integer', # subgroup_smooth_id
 	]
 	row_list = []
+	warning_printed = False
 	for i in range( len(mulcov_table) ) :
 		mulcov       = mulcov_table[i]
 		mulcov_type  = mulcov['type']
@@ -824,6 +831,13 @@ def create_database(
 			group_id = global_group_name2id[ mulcov['group'] ]
 		else :
 			group_id = 0
+			if not warning_printed :
+				msg  = 'create_database Warning: '
+				msg += 'group key missing in mulcov table,\n'
+				msg += 'using default value; i.e., first group '
+				msg += '(you should fix this).'
+				print(msg)
+				warning_printed = True
 		#
 		# group_smooth_id
 		if mulcov['smooth'] == None :
@@ -899,12 +913,20 @@ def create_database(
 	#
 	# row_list
 	row_list = [ ]
+	warning_printed = False;
 	for i in range( len(avgint_table) ) :
 		avgint = avgint_table[i]
 		#
 		# subgroup column has a default value
 		if 'subgroup' not in avgint :
 			avgint['subgroup'] = subgroup_table[0]['subgroup']
+			if not warning_printed :
+				msg  = 'create_database Warning: '
+				msg += 'subgroup key missing in avgint table,\n'
+				msg += 'using default value; i.e., first subgroup '
+				msg += '(you should fix this).'
+				print(msg)
+				warning_printed = True
 		#
 		# extra columns first
 		row = list()
@@ -991,6 +1013,7 @@ def create_database(
 	for j in range( len(covariate_table) )  :
 		col_type.append( 'real' )
 	row_list = [ ]
+	warning_printed = False
 	for i in range( len(data_table) ) :
 		data         = data_table[i]
 		#
@@ -1007,6 +1030,13 @@ def create_database(
 		# subgroup column has a default value
 		if not 'subgroup' in data :
 			data['subgroup'] = subgroup_table[0]['subgroup']
+			if not warning_printed :
+				msg  = 'create_database Warning: '
+				msg += 'subgroup key missing in data table,\n'
+				msg += 'using default value; i.e., first subgroup '
+				msg += '(you should fix this).'
+				print(msg)
+				warning_printed = True
 		#
 		integrand_id = global_integrand_name2id[ data['integrand'] ]
 		density_id   = global_density_name2id[ data['density'] ]

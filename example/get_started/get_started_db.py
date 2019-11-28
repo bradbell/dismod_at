@@ -134,6 +134,7 @@ def get_started_db ():
 			'avgint_info': 'a0',
 			'integrand':   'susceptible',
 			'node':        'world',
+			'subgroup':    'world',
 			'weight':      'constant_one',
 			'age_lower':   100.0,
 			'age_upper':   100.0,
@@ -153,6 +154,7 @@ def get_started_db ():
 			'c_data_info':  'd1',
 			'integrand':   'susceptible',
 			'node':        'world',
+			'subgroup':    'world',
 			'weight':      'constant_one',
 			'age_lower':   50.0,
 			'age_upper':   50.0,
@@ -221,6 +223,7 @@ def get_started_db ():
 		{	'covariate':'income',
 			'type':     'rate_value',
 			'effected': 'omega',
+			'group':    'world',
 			'smooth':   'smooth_income_multiplier'
 		}
 	]

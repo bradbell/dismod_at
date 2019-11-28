@@ -142,6 +142,7 @@ def example_db (file_name) :
 		'hold_out':     False,
 		'age_lower':    50.0,
 		'age_upper':    50.0,
+		'subgroup':     'world',
 	}
 	for data_id in range(number_data) :
 		if data_id % 3 == 0 :

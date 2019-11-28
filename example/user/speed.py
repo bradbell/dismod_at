@@ -142,11 +142,13 @@ def example_db (file_name) :
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'iota',
+			'group':     'world',
 			'smooth':    'smooth_mulcov'
 		},{
 			'covariate': 'sex',
 			'type':      'rate_value',
 			'effected':  'rho',
+			'group':     'world',
 			'smooth':    'smooth_mulcov'
 		}
 	]

@@ -1,4 +1,4 @@
-#  --------------------------------------------------------------------------
+#,  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-19 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
@@ -302,7 +302,6 @@ for data_id in range( len(data_table) ) :
 	if integrand_name == 'mtall' :
 		weighted_residual = fit_data_subset[data_id]['weighted_residual']
 		max_abs_res       = max(max_abs_res, abs(weighted_residual) )
-print(max_abs_res)
 if max_abs_res > 0.1 :
 	sys.msg('csv2db.py: max_abs_res = ' + str(max_abs_res) )
 # ---------------------------------------------------------------------------
