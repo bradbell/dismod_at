@@ -377,7 +377,7 @@
 #
 # $subhead subsmooth$$
 # If the $code subsmooth$$ key is not present, the value null is used for
-# the subgroup smoothing in the corresponding row and a wanring is printed.
+# the subgroup smoothing in the corresponding row and a warning is printed.
 #
 # $head option_table$$
 # This is a list of $code dict$$

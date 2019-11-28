@@ -13,6 +13,7 @@
 #	covariates
 #	subgraph
 #	Mulcov
+#	var
 # $$
 #
 # $section Example Fitting With Two Levels of Random Effects$$
@@ -82,6 +83,17 @@
 # The first (second) entry is for group n11 (n12) and corresponds to the
 # subgroup covariate multipliers for n111, n112 (n121, n122).
 #
+# $head Procedure$$
+#
+# $subhead Fit Both$$
+# Create the database, initialize it, and fit both fixed and random effects.
+#
+# $subhead Compare Fit and Truth$$
+# check the fit results and create the truth_var table.
+#
+# $subhead Sample Posterior and Check Coverage$$
+# Sample from the posterior distribution and check for coverage.
+#
 # $head Source Code$$
 # $srcfile%
 #	example/user/bilevel_random.py
@@ -95,9 +107,10 @@
 # True value of iota at node n1
 def iota_n1(age) :
 	return 0.01 + 0.01 * age / 100.0 # must be non-decreasing with age
-data_per_node =  100   # number of simulated data points for each leaf node
+data_per_node =  10    # number of simulated data points for each leaf node
 meas_cv       =  0.1   # coefficient of variation for each data point
 random_seed   = 0      # if zero, seed off the clock
+number_sample = 10     # number of posterior samples
 #
 # True value for random effects
 random_effect = dict()
@@ -150,6 +163,7 @@ def avg_integrand(age, node) :
 		total_effect += random_effect[node]
 	return iota_n1(age) * math.exp(total_effect)
 # ----------------------------------------------------------------------------
+# example.db function
 def example_db (file_name) :
 	def fun_iota_n1(a, t) :
 		return ('prior_iota_n1_value', None, None)
@@ -320,15 +334,24 @@ def example_db (file_name) :
 		option_table
 	)
 # ---------------------------------------------------------------------------
+# Fit Both
+# ---------------------------------------------------------------------------
+#
+# create the database
 file_name  = 'example.db'
 example_db(file_name)
 #
-# init
+# initialize the database
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc( [ program, file_name, 'init' ] )
-dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 #
-# read var table and supporting information
+# fit both the fixed and random effects
+dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
+# ---------------------------------------------------------------------------
+# Compare Fit and Truth
+# ---------------------------------------------------------------------------
+#
+# read var table and supporting information including the fit
 new              = False
 connection       = dismod_at.create_connection(file_name, new)
 subgroup_table   = dismod_at.get_table_dict(connection, 'subgroup')
@@ -338,11 +361,12 @@ var_table        = dismod_at.get_table_dict(connection, 'var')
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 n_var            = len(var_table)
 #
-# check results and create truth_var table
-tbl_name = 'truth_var'
-col_name = [ 'truth_var_value' ]
-col_type = [ 'real' ]
-row_list = list()
+# check fit results and create the truth_var table
+tbl_name         = 'truth_var'
+col_name         = [ 'truth_var_value' ]
+col_type         = [ 'real' ]
+row_list         = list()
+var_id2node_name = list()
 for var_id in range(n_var) :
 	var_type     = var_table[var_id]['var_type']
 	age_id       = var_table[var_id]['age_id']
@@ -359,15 +383,53 @@ for var_id in range(n_var) :
 	else :
 		truth_var_value = random_effect[node_name]
 	row_list.append( [ truth_var_value ] )
+	var_id2node_name.append(node_name)
 	#
 	fit_var_value = fit_var_table[var_id]['fit_var_value']
 	relerr           = 1.0 - fit_var_value / truth_var_value
-	if abs(relerr) > meas_cv :
+	if abs(relerr) > 3.0 * meas_cv :
 		print(node_name, truth_var_value, fit_var_value, relerr)
 		assert False
 #
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
+# ---------------------------------------------------------------------------
+# Sample Posterior and Check Coverage
+# ---------------------------------------------------------------------------
+#
+# sample from the posterior distribution
+n_str = str(number_sample)
+dismod_at.system_command_prc( [program, file_name, 'simulate', n_str] )
+dismod_at.system_command_prc(
+	[program, file_name, 'sample',  'simulate', n_str]
+)
+#
+# compute sample standard deviation and check for coverate
+connection   = dismod_at.create_connection(file_name, new)
+sample_table    = dismod_at.get_table_dict(connection, 'sample')
+sample_array    = numpy.zeros( (number_sample, n_var), dtype = numpy.double )
+for sample_id in range( len(sample_table) ) :
+	sample_index = sample_table[sample_id]['sample_index']
+	var_id       = sample_table[sample_id]['var_id']
+	var_value    = sample_table[sample_id]['var_value']
+	assert sample_id == sample_index * n_var + var_id
+	sample_array[sample_index, var_id] = var_value
+sample_std  = numpy.std(sample_array, axis=0, ddof = 1)
+#
+# check for covarage
+truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
+for var_id in range(n_var) :
+	var_type        = var_table[var_id]['var_type']
+	age_id          = var_table[var_id]['age_id']
+	node_name       = var_id2node_name[var_id]
+	fit_var_value   = fit_var_table[var_id]['fit_var_value']
+	truth_var_value = truth_var_table[var_id]['truth_var_value']
+	std             = sample_std[var_id]
+	std_factor      = (fit_var_value - truth_var_value) / std
+	if abs(std_factor) > 2.0 :
+		print(node_name, "std_factor = ", std_factor)
+		assert False
+#
 # ----------------------------------------------------------------------------
 print('bilevel_random.py: OK')
 # END PYTHON
