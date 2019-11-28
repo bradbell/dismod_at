@@ -69,7 +69,9 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+
 $head 11-28$$
+$list number$$
 Add the $cref user_bilevel_random.py$$ example demonstrating
 fitting two levels of random effects using
 $cref/subgroup covariate multipliers
@@ -77,6 +79,12 @@ $cref/subgroup covariate multipliers
 	/Random Effects, u
 	/Subgroup Covariate Multipliers
 /$$.
+$lnext
+Fix the coverage check in $cref user_cascade.py$$.
+To be specific, change
+$code abs( (mean - truth) ) / std$$ to
+$code abs( (fit - truth) ) / std$$.
+$lend
 
 $head 11-26$$
 $list number$$

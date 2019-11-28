@@ -405,6 +405,7 @@ def example_db (file_name) :
 		'time_lower':  2000.0,
 		'time_upper':  2000.0,
 		'one':         1.0,
+		'subgroup':    'world',
 	}
 	assert covariate_table[1]['name'] == 'income'
 	random.seed(random_seed)
@@ -429,6 +430,7 @@ def example_db (file_name) :
 	# values that are the same for all data points
 	row = {
 		'node':        'n11',
+		'subgroup':    'world',
 		'weight':      '',
 		'hold_out':    False,
 		'time_lower':  2000.0,
@@ -544,7 +546,7 @@ dismod_at.system_command_prc([ program, file_name, 'set', 'scale_var', 'fit_var'
 dismod_at.system_command_prc([ program, file_name, 'simulate', N_str ])
 dismod_at.system_command_prc([ program, file_name, 'sample', 'simulate', N_str ])
 #
-# check coverage of true values by posterior samples
+# check coverage of true values by posterior samples standard deviation
 connection.close()
 connection   = dismod_at.create_connection(file_name, new)
 sample_table = dismod_at.get_table_dict(connection, 'sample')
@@ -555,7 +557,6 @@ for sample_id in range( len(sample_table) ) :
 	var_value    = sample_table[sample_id]['var_value']
 	assert sample_id == sample_index * n_var + var_id
 	sample_array[sample_index, var_id] = var_value
-sample_mean = numpy.mean(sample_array, axis=0)
 sample_std  = numpy.std(sample_array, axis=0, ddof = 1)
 #
 for var_id in range(n_var) :
@@ -564,7 +565,6 @@ for var_id in range(n_var) :
 	node_id      = var_table[var_id]['node_id']
 	covariate_id = var_table[var_id]['covariate_id']
 	fit          = fit_var_table[var_id]['fit_var_value']
-	mean         = sample_mean[var_id]
 	std          = sample_std[var_id] * (1.0 + gamma_fit_n1)
 	if var_type == 'rate' :
 		age  = age_table[age_id]['age']
@@ -578,11 +578,11 @@ for var_id in range(n_var) :
 	else :
 		assert var_type == 'mulcov_meas_noise'
 	if var_type != 'mulcov_meas_noise' :
-		std_factor = abs( (mean - truth) ) / std
-		fmt = 'truth={:7.4f}, mean={:7.4f}, std_factor={:6.3f}'
-		# print( fmt.format(truth, mean, std_factor) )
+		std_factor = abs( (fit - truth) ) / std
+		fmt = 'truth={:7.4f}, fit={:7.4f}, std_factor={:6.3f}'
+		# print( fmt.format(truth, fit, std_factor) )
 		if std_factor > 3.0 :
-			print( fmt.format(truth, mean, std_factor) )
+			print( fmt.format(truth, fit, std_factor) )
 			print("random_seed = ",  random_seed)
 			assert False
 # ----------------------------------------------------------------------------
