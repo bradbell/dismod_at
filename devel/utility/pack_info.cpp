@@ -970,7 +970,7 @@ $section Variable Pack Info: Subgroup Rate Covariate Multipliers$$
 $head Syntax$$
 $icode%n_cov% = %pack_object%.subgroup_rate_value_n_cov(%rate_id%)
 %$$
-$icode%n_sub% = %pack_object%.subgroup_rate_value_n_subgroup(%rate_id%, %j%)
+$icode%n_sub% = %pack_object%.subgroup_rate_value_n_sub(%rate_id%, %j%)
 %$$
 $icode%info% = %pack_object%.subgroup_rate_value_info(%rate_id%, %j%, %k%)
 %$$

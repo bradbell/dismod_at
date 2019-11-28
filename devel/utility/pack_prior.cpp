@@ -316,7 +316,23 @@ pack_prior::pack_prior(
 		}
 	}
 	// ------------------------------------------------------------------------
-	// get priors for rate mean covariates
+	// get priors for subgroup rate value covariates
+	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
+	{	size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+		for(size_t j = 0; j < n_cov; j++)
+		{	size_t n_sub = pack_object.subgroup_rate_value_n_sub(rate_id, j);
+			for(size_t k = 0; k < n_sub; ++k)
+			{	info   = pack_object.subgroup_rate_value_info(rate_id, j, k);
+				size_t offset    = info.offset;
+				size_t smooth_id = info.smooth_id;
+				set_prior(prior_vec_, offset, smooth_id, s_info_vec);
+				for(size_t i = 0; i < info.n_var; i++)
+					prior_vec_[offset + i].fixed_effect = false;
+			}
+		}
+	}
+	// ------------------------------------------------------------------------
+	// get priors for rate value covariates
 	for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
 	{	size_t n_cov = pack_object.group_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
