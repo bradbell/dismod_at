@@ -167,7 +167,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		// zero_sum_random
 		if( option_name[option_id] == "zero_sum_random" )
         {	option_name[option_id] = "zero_sum_child_rate";
-			msg  = "zero_sum_random was changed to zero_sum_child_rate ";
+			msg  = "zero_sum_random was changed to zero_sum_child_rate\n";
 			msg += "on 2019-11-29 (you should fix this).\n";
 			msg += "For the time being, this change is automatic.";
 			string msg_type  = "warning";

@@ -74,6 +74,8 @@ The $code zero_sum_random$$ option was changed to
 $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$.
 A warning is printed when $code zero_sum_random$$ is used and
 this change is made automatically.
+In addition, the $code old2new$$ command will make this change to the
+$cref/option table/old2new_command/option Table/$$.
 
 $head 11-28$$
 $list number$$
