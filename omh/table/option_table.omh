@@ -174,7 +174,7 @@ $cref/random effects/model_variables/Random Effects, u/$$ estimates
 is constrained to be zero.
 These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
-The file $cref/zero_sum_child_rate.py/user_zero_sum_child_rate.py/$$
+The file $cref/zero_sum_rate.py/user_zero_sum_rate.py/$$
 contains an example and test using these constraints.
 Note that for each rate in $icode zero_sum_child_rate$$,
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null; i.e.,

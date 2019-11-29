@@ -223,7 +223,7 @@ does not apply to random effects that have equal lower and upper limits.
 
 $head 10-02$$
 Add discussion at the top of the
-$cref user_zero_sum_child_rate.py$$ example.
+$cref user_zero_sum_rate.py$$ example.
 
 $head 10-01$$
 $list number$$

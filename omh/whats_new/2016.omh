@@ -178,7 +178,7 @@ $lend
 
 $head 10-16$$
 $list number$$
-The $cref/zero_sum_child_rate.py/user_zero_sum_child_rate.py/$$
+The $cref/zero_sum_rate.py/user_zero_sum_rate.py/$$
 example / test was added.
 $lnext
 There was a bug (that has been fixed) in
