@@ -873,6 +873,7 @@ def example_db (file_name) :
 		#
 		row = {
 			'node':        node,
+			'subgroup':    'world',
 			'integrand':   integrand,
 			'density':     'log_gaussian',
 			'weight':      '',
@@ -892,6 +893,7 @@ def example_db (file_name) :
 			time = (time_list[i_time] + time_list[i_time-1]) / 2.0
 		row = {
 			'node':        node,
+			'subgroup':    'world',
 			'integrand':   integrand,
 			'density':     'log_gaussian',
 			'weight':      '',

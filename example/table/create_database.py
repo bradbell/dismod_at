@@ -70,7 +70,8 @@ def create_database() :
 		'age_upper':100.0,
 		'time_lower':1990.0,
 		'time_upper':2010.0,
-		'sex':0.5
+		'sex':0.5,
+		'subgroup':'world',
 	}
 	row['data_name']  = 'one'
 	row['node']       = 'north_america'
@@ -167,6 +168,7 @@ def create_database() :
 		{	'covariate':'sex',
 			'type':'rate_value',
 			'effected':'omega',
+			'group':'world',
 			'smooth':'uniform_01_constant'
 		}
 	]
@@ -191,7 +193,8 @@ def create_database() :
 		'age_upper':100.0,
 		'time_lower':1990.0,
 		'time_upper':2010.0,
-		'sex':0.5
+		'sex':0.5,
+		'subgroup':'world',
 	}
 	row['node']       = 'north_america'
 	avgint_table.append( copy.copy(row) )

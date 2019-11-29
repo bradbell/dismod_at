@@ -164,7 +164,8 @@ def example_db (file_name) :
 		'age_lower':    50.,
 		'age_upper':    50.,
 		'time_lower':   2000.,
-		'time_upper':   2000.
+		'time_upper':   2000.,
+		'subgroup':     'world',
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :

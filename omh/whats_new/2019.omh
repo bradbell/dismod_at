@@ -84,6 +84,12 @@ Fix the coverage check in $cref user_cascade.py$$.
 To be specific, change
 $code abs( (mean - truth) ) / std$$ to
 $code abs( (fit - truth) ) / std$$.
+$lnext
+Add warnings to create_database when subgroup (group)
+information is missing for the
+$cref/data table/create_database/data_table/subgroup/$$ and
+$cref/avgint table/create_database/avgint_table/subgroup/$$
+( $cref/mulcov table/create_database/mulcov_table/group/$$) tables.
 $lend
 
 $head 11-26$$
