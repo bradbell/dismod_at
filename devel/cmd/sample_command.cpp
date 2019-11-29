@@ -186,6 +186,19 @@ void sample_command(
 		zero_sum_child_rate[rate_id] = found < option_size;
 	}
 	// ----------------------------------------------------------------------
+	// zero_sum_mulcov_group
+	size_t n_group = pack_object.group_size();
+	option_size    = option_map["zero_sum_mulcov_group"].size();
+	vector<bool> zero_sum_mulcov_group(n_group);
+	for(size_t group_id = 0; group_id < n_group; group_id++)
+	{	const vector<subgroup_struct>&
+			subgroup_table( db_input.subgroup_table );
+		size_t first_subgroup_id = pack_object.first_subgroup_id(group_id);
+		string group_name = subgroup_table[first_subgroup_id].group_name;
+		size_t found = option_map["zero_sum_mulcov_group"].find(group_name);
+		zero_sum_mulcov_group[group_id] = found < option_size;
+	}
+	// ----------------------------------------------------------------------
 	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
 	//
@@ -381,6 +394,7 @@ void sample_command(
 				random_const         ,
 				quasi_fixed          ,
 				zero_sum_child_rate  ,
+				zero_sum_mulcov_group,
 				data_object
 			);
 			fit_object_both.run_fit(random_only, option_map);
@@ -441,6 +455,7 @@ void sample_command(
 				random_const         ,
 				quasi_fixed          ,
 				zero_sum_child_rate  ,
+				zero_sum_mulcov_group,
 				data_object
 			);
 			fit_object_random.run_fit(random_only, option_map);
@@ -517,6 +532,7 @@ void sample_command(
 		random_const         ,
 		quasi_fixed          ,
 		zero_sum_child_rate  ,
+		zero_sum_mulcov_group,
 		data_object
 	);
 	//

@@ -408,6 +408,12 @@ bool fit_model_xam(void)
 	for(size_t rate_id = 0; rate_id < dismod_at::number_rate_enum; rate_id++)
 		zero_sum_child_rate[rate_id] = false;
 	//
+	// zero_sum_mulcov_group
+	size_t n_group = pack_object.group_size();
+	vector<bool> zero_sum_mulcov_group(n_group);
+	for(size_t group_id = 0; group_id < n_group; ++group_id)
+		zero_sum_mulcov_group[group_id] = false;
+	//
 	// warn_on_stderr
 	bool warn_on_stderr = true;
 	//
@@ -428,6 +434,7 @@ bool fit_model_xam(void)
 		random_const,
 		quasi_fixed,
 		zero_sum_child_rate,
+		zero_sum_mulcov_group,
 		data_object
 	);
 	bool random_only = false;

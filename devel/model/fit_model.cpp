@@ -22,6 +22,7 @@ namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
 $begin fit_model_ctor$$
 $spell
+	mulcov
 	var
 	vec
 	const
@@ -47,7 +48,8 @@ $codei%fit_model %fit_object%(
 	%prior_object%,
 	%random_const%,
 	%quasi_fixed%,
-	%zero_sum_child_rate%
+	%zero_sum_child_rate%,
+	%zero_sum_mulcov_group%
 )
 %$$
 
@@ -116,8 +118,16 @@ $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$.
 $head zero_sum_child_rate$$
 If this vector has size $code number_rate_enum$$.
 If $icode%zero_sum_child_rate%[%rate_id%]%$$ is true,
-for each age, time,
-the sum of the random effects for the corresponding rate
+for each age, time, and rate,
+the sum of the random effects with respect the children
+is constrained to be zero.
+
+$head zero_sum_mulcov_group$$
+If this vector has size equal to the number of groups in
+$cref subgroup_table$$.
+If $icode%zero_sum_mulcov_group%[%group_id%]%$$ is true,
+for each age, time, and $cref mulcov_table$$ row,
+the sum of the random effects with respect to subgroup
 is constrained to be zero.
 
 $head data_object$$
@@ -142,6 +152,7 @@ fit_model::fit_model(
 	const remove_const&                   random_const     ,
 	bool                                  quasi_fixed      ,
 	const CppAD::vector<bool>&            zero_sum_child_rate  ,
+	const CppAD::vector<bool>&            zero_sum_mulcov_group,
 	data_model&                           data_object      )
 /* %$$
 $end
@@ -160,7 +171,13 @@ $end
 	// bool_sparsity
 	false,
 	// A_rcv
-	ran_con_rcv(bound_random, zero_sum_child_rate, pack_object, random_const)
+	ran_con_rcv(
+		bound_random,
+		zero_sum_child_rate,
+		zero_sum_mulcov_group,
+		pack_object,
+		random_const
+	)
 ),
 db_            (db)                                 ,
 simulate_index_( simulate_index )                   ,

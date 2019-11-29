@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin ran_con_rcv$$
 $spell
+	mulcov
 	rcv
 	enum
 $$
@@ -18,7 +19,7 @@ $section Matrix Representation of Random Constraints$$
 
 $head Syntax$$
 $icode%A_rcv% = ran_con_rcv(
-	%bound_random%, %zero_sum_child_rate%, %pack_object%
+%bound_random%, %zero_sum_child_rate%, %zero_sum_mulcov_group%, %pack_object%
 )%$$
 
 $head Prototype$$
@@ -34,8 +35,16 @@ in the option table.
 $head zero_sum_child_rate$$
 If this vector has size $code number_rate_enum$$.
 If $icode%zero_sum_child_rate%[%rate_id%]%$$ is true,
-for each age, time,
-the sum of the random effects for the corresponding rate
+for each age, time, and rate,
+the sum of the random effects with respect the children
+is constrained to be zero.
+
+$head zero_sum_mulcov_group$$
+If this vector has size equal to the number of groups in
+$cref subgroup_table$$.
+If $icode%zero_sum_mulcov_group%[%group_id%]%$$ is true,
+for each age, time, and $cref mulcov_table$$ row,
+the sum of the random effects with respect to subgroup
 is constrained to be zero.
 
 $head pack_object$$
@@ -62,10 +71,11 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // BEGIN_RAN_CON_RCV
 CppAD::mixed::d_sparse_rcv ran_con_rcv(
-	double                        bound_random    ,
-	const CppAD::vector<bool>&    zero_sum_child_rate ,
-	const dismod_at::pack_info&   pack_object     ,
-	const remove_const&           random_const    )
+	double                        bound_random          ,
+	const CppAD::vector<bool>&    zero_sum_child_rate   ,
+	const CppAD::vector<bool>&    zero_sum_mulcov_group ,
+	const dismod_at::pack_info&   pack_object           ,
+	const remove_const&           random_const          )
 // END_RAN_CON_RCV
 {	// number of fixed plus random effects
 	size_t n_var = pack_object.size();
@@ -88,17 +98,25 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	// n_child
 	size_t n_child = pack_object.child_size();
 	//
+	// n_group
+	size_t n_group = pack_object.group_size();
+	//
 	// check for first case where random constraint matrix is empty
 	CppAD::mixed::d_sparse_rcv A_rcv;
-	if( n_child == 0 || bound_random == 0 )
+	if( ( n_child == 0 && n_group == 0 ) || bound_random == 0 )
 		return A_rcv;
 	//
 	// initilaize count of number of random constraint equations
-	size_t A_nr = 0;
+	size_t A_nr  = 0;
+	//
+	// initialize count of number of non-zeros in random constraint matrix
+	size_t A_nnz = 0;
 	//
 	// for each rate
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	if( zero_sum_child_rate[rate_id] )
+	{	// -------------------------------------------------------------------
+		// zero_sum_child_rate
+		if( zero_sum_child_rate[rate_id] )
 		{	// packing information for first child
 			dismod_at::pack_info::subvec_info
 				info_0 = pack_object.node_rate_value_info(rate_id, 0);
@@ -112,7 +130,27 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 				size_t n_grid = info_0.n_var;
 				assert( n_grid > 0 );
 				// each grid point corresponds to a random constraint equation
-				A_nr += n_grid;
+				A_nr  += n_grid;
+				A_nnz += n_grid * n_child;
+			}
+		}
+		// --------------------------------------------------------------------
+		// zero_sum_mulcov_group
+		size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+		for(size_t j = 0; j < n_cov; ++j)
+		{	// packing information for first subgroup
+			dismod_at::pack_info::subvec_info
+				info_0 = pack_object.subgroup_rate_value_info(rate_id, j, 0);
+			assert( info_0.smooth_id != DISMOD_AT_NULL_SIZE_T );
+			if( zero_sum_mulcov_group[info_0.group_id] )
+			{	size_t n_grid = info_0.n_var;
+				assert( n_grid > 0 );
+				size_t n_sub  =
+					pack_object.subgroup_rate_value_n_sub(rate_id, j);
+				assert( n_sub > 0 );
+				// each grid point corresponds to a random constraint equation
+				A_nr  += n_grid;
+				A_nnz += n_grid * n_sub;
 			}
 		}
 	}
@@ -128,9 +166,6 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	// number of columns in random constraint equations
 	size_t A_nc = random_const.n_var();
 	//
-	// number of non-zeros in random constraint equations
-	size_t A_nnz = A_nr * n_child;
-	//
 	// sparsity pattern for random constraints
 	CppAD::mixed::sparse_rc A_rc(A_nr, A_nc, A_nnz);
 	//
@@ -140,52 +175,105 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	//
 	// for each rate
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	if( zero_sum_child_rate[rate_id] )
-	{	// packing information for first child and this rate
-		dismod_at::pack_info::subvec_info
-			info_0 = pack_object.node_rate_value_info(rate_id, 0);
-		//
-		// child smoothing id for first rate
-		size_t smooth_id = info_0.smooth_id;
-		if( smooth_id != DISMOD_AT_NULL_SIZE_T )
-		{	//
-			// number of grid points for child smoothing for this rate
-			size_t n_grid = info_0.n_var;
+	{	// ------------------------------------------------------------------
+		// zero_sum_child_rate
+		if( zero_sum_child_rate[rate_id] )
+		{	// packing information for first child
+			dismod_at::pack_info::subvec_info
+				info_0 = pack_object.node_rate_value_info(rate_id, 0);
 			//
-			// for each child for this rate
-			for(size_t j = 0; j < n_child; j++)
-			{	// packing information for this child and this rate
-				dismod_at::pack_info::subvec_info
-					info_j = pack_object.node_rate_value_info(rate_id, j);
+			// child smoothing id for this rate
+			size_t smooth_id = info_0.smooth_id;
+			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
+			{	//
+				// number of grid points same for all children
+				size_t n_grid = info_0.n_var;
 				//
-				// for each rate, all children have the same smoothing
-				assert( info_j.smooth_id == info_0.smooth_id );
-				assert( info_j.n_var     == info_0.n_var );
-				//
-				// offset for this rate and child
-				size_t offset = info_j.offset;
-				//
-				// for each grid point for this rate
-				for(size_t k = 0; k < n_grid; k++)
-				{	// variable index for this grid point
-					size_t var_id = offset + k;
+				// for each child
+				for(size_t j = 0; j < n_child; j++)
+				{	// packing information for this child
+					dismod_at::pack_info::subvec_info
+						info_j = pack_object.node_rate_value_info(rate_id, j);
 					//
-					// corresponding random effect index
-					size_t random_index = var_id2random[var_id];
-					assert( random_index < n_random );
+					// for each rate, all children have the same smoothing
+					assert( info_j.smooth_id == info_0.smooth_id );
+					assert( info_j.n_var     == info_0.n_var );
 					//
-					// corresponding index in vector with constant
-					// random effects removed
-					random_index = var_index[ random_index ];
+					// offset for this child
+					size_t offset = info_j.offset;
 					//
-					// check that lower and upper limits were not equal
-					assert( random_index < n_random );
-					//
-					// set this entry for grid point k, child j, rate rate_id
-					A_rc.set(nnz_index++, row_index + k, random_index);
+					// for each grid point in this smoothing
+					for(size_t k = 0; k < n_grid; k++)
+					{	// variable index for this grid point
+						size_t var_id = offset + k;
+						//
+						// corresponding random effect index
+						size_t random_index = var_id2random[var_id];
+						assert( random_index < n_random );
+						//
+						// corresponding index in vector with constant
+						// random effects removed
+						random_index = var_index[ random_index ];
+						//
+						// check that lower and upper limits were not equal
+						assert( random_index < n_random );
+						//
+						// entry for this grid point k, child j, rate rate_id
+						A_rc.set(nnz_index++, row_index + k, random_index);
+					}
 				}
+				row_index += n_grid;
 			}
-			row_index += n_grid;
+		}
+		// --------------------------------------------------------------------
+		// zero_sum_mulcov_group
+		size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+		for(size_t j = 0; j < n_cov; ++j)
+		{	// packing information corresponding to first subgroup
+			dismod_at::pack_info::subvec_info
+				info_0 = pack_object.subgroup_rate_value_info(rate_id, j, 0);
+			if( zero_sum_mulcov_group[info_0.group_id] )
+			{	size_t smooth_id = info_0.smooth_id;
+				assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+				//
+				// number of grid points same for all subgroups
+				size_t n_grid = info_0.n_var;
+				//
+				// number of subgroups
+				size_t n_sub =
+					pack_object.subgroup_rate_value_n_sub(rate_id, j);
+				//
+				// for each subgroup
+				for(size_t k = 0; k < n_sub; ++k)
+				{	// packing information for this child
+					dismod_at::pack_info::subvec_info info_k =
+						pack_object.subgroup_rate_value_info(rate_id, j, k);
+					//
+					// subgroups have same smoothing
+					assert( info_k.smooth_id == info_0.smooth_id );
+					assert( info_k.n_var     == info_0.n_var );
+					//
+					// offset for theis subgroup
+					size_t offset = info_k.offset;
+					//
+					// for each grid point in this smoothing
+					for(size_t ell = 0; ell < n_grid; ++ell)
+					{	// variable index for this grid point
+						size_t var_id = offset + ell;
+						//
+						// corresponding index in vector with constant
+						// random effects removed
+						size_t random_index = var_id2random[var_id];
+						//
+						// check that lower and upper limits were not equal
+						assert( random_index < n_random );
+						//
+						// entry for this grid point ell, subgroup k, rate
+						A_rc.set(nnz_index++, row_index + ell, random_index);
+					}
+				}
+				row_index += n_grid;
+			}
 		}
 	}
 	assert( row_index == A_nr );

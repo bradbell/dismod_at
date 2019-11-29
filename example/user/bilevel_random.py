@@ -107,7 +107,7 @@
 # True value of iota at node n1
 def iota_n1(age) :
 	return 0.01 + 0.01 * age / 100.0 # must be non-decreasing with age
-data_per_node =  10    # number of simulated data points for each leaf node
+data_per_node =  20    # number of simulated data points for each leaf node
 meas_cv       =  0.1   # coefficient of variation for each data point
 random_seed   = 0      # if zero, seed off the clock
 number_sample = 10     # number of posterior samples
@@ -422,12 +422,13 @@ for var_id in range(n_var) :
 	var_type        = var_table[var_id]['var_type']
 	age_id          = var_table[var_id]['age_id']
 	node_name       = var_id2node_name[var_id]
-	fit_var_value   = fit_var_table[var_id]['fit_var_value']
-	truth_var_value = truth_var_table[var_id]['truth_var_value']
+	fit             = fit_var_table[var_id]['fit_var_value']
+	truth           = truth_var_table[var_id]['truth_var_value']
 	std             = sample_std[var_id]
-	std_factor      = (fit_var_value - truth_var_value) / std
-	if abs(std_factor) > 2.0 :
-		print(node_name, "std_factor = ", std_factor)
+	std_factor      = (fit - truth) / std
+	if abs(std_factor) > 3.0 :
+		print(node_name, ", std_factor = ", std_factor)
+		print("std = ", std, ", fit = ", fit, ", truth = ", truth)
 		assert False
 #
 # ----------------------------------------------------------------------------

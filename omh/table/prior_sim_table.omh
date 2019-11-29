@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin prior_sim_table$$
 $spell
+	mulcov
 	sim
 	std
 	covariate
@@ -75,6 +76,18 @@ requires that the same smoothing is used by all the child random effects
 for that rate.
 This is done by simulating using independent priors and then subtracting
 averages of the simulated values.
+
+$subhead zero_sum_mulcov_group$$
+If the $cref/zero_sum_mulcov_group/option_table/zero_sum_mulcov_group/$$ option
+is chosen for a group, the simulated values for the corresponding
+$cref/subgroup covariate multipliers
+	/model_variables
+	/Random Effects, u
+	/Subgroup Covariate Multipliers
+/$$
+will sum to zero at each grid point in the corresponding smoothing.
+This summation is with respect to subgroups in the group specified
+by a $cref/group_id/mulcov_table/group_id/$$ in the mulcov table.
 
 $head prior_sim_dage$$
 This column has type $code real$$ and is

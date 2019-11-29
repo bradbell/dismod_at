@@ -83,31 +83,34 @@ using this command.
 $end
 */
 void simulate_command(
-	const std::string&                                  number_simulate   ,
-	const std::string&                                  meas_noise_effect ,
-	sqlite3*                                            db                ,
-	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table   ,
-	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj   ,
-	dismod_at::data_model&                              data_object       ,
-	const dismod_at::pack_prior&                        var2prior         ,
-	const CppAD::vector<dismod_at::prior_struct>&       prior_table       ,
-	const CppAD::vector<dismod_at::density_enum>&       density_table     ,
-	const dismod_at::pack_info&                         pack_object       ,
+	const std::string&                       number_simulate   ,
+	const std::string&                       meas_noise_effect ,
+	sqlite3*                                 db                ,
+	const CppAD::vector<data_subset_struct>& data_subset_obj   ,
+	data_model&                              data_object       ,
+	const pack_prior&                        var2prior         ,
+	const pack_info&                         pack_object       ,
+	const db_input_struct&                   db_input          ,
 	// effectively const
-	std::map<std::string, std::string>&                 option_map
+	std::map<std::string, std::string>&      option_map
 )
 {
 	using std::string;
 	using CppAD::vector;
 	using CppAD::to_string;
 	double nan = std::numeric_limits<double>::quiet_NaN();
+	//
+	const vector<integrand_struct>& integrand_table( db_input.integrand_table );
+	const vector<prior_struct>&     prior_table( db_input.prior_table );
+	const vector<density_enum>&     density_table( db_input.density_table );
+	const vector<subgroup_struct>&  subgroup_table( db_input.subgroup_table );
 	// -----------------------------------------------------------------------
 	string msg;
 	int tmp = std::atoi( number_simulate.c_str() );
 	if( tmp <= 0 )
 	{	msg  = "dismod_at simulate command number_simulate = ";
 		msg += number_simulate + " is not an integer greater than zero";
-		dismod_at::error_exit(msg);
+		error_exit(msg);
 	}
 	size_t n_simulate = size_t(tmp);
 	// -----------------------------------------------------------------------
@@ -128,10 +131,10 @@ void simulate_command(
 	vector<double> truth_var;
 	string table_name = "truth_var";
 	string column_name = "truth_var_value";
-	dismod_at::get_table_column(db, table_name, column_name, truth_var);
+	get_table_column(db, table_name, column_name, truth_var);
 	// ----------------- data_sim_table ----------------------------------
 	string sql_cmd = "drop table if exists data_sim";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
+	exec_sql_cmd(db, sql_cmd);
 	//
 	table_name      = "data_sim";
 	size_t n_col    = 5;
@@ -168,7 +171,7 @@ void simulate_command(
 		double avg = data_object.average(subset_id, truth_var);
 		//
 		// density corresponding to this data point
-		dismod_at::density_enum density = data_subset_obj[subset_id].density;
+		density_enum density = data_subset_obj[subset_id].density;
 		//
 		// data table information
 		double difference   = false;
@@ -225,7 +228,7 @@ void simulate_command(
 		{	// for each simulate_index
 			//
 			// sim_value
-			double sim_value   = dismod_at::sim_random(
+			double sim_value   = sim_random(
 				difference, density, avg, delta, eta, nu
 			);
 			//
@@ -272,12 +275,12 @@ void simulate_command(
 			row_value[data_sim_id * n_col + 4] = to_string( sim_delta );
 		}
 	}
-	dismod_at::create_table(
+	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
 	// ----------------- prior_sim_table ----------------------------------
 	sql_cmd = "drop table if exists prior_sim";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
+	exec_sql_cmd(db, sql_cmd);
 	//
 	table_name    = "prior_sim";
 	n_col         = 5;
@@ -303,8 +306,8 @@ void simulate_command(
 	{	col_type[2+k]   = "real";
 		col_unique[2+k] = false;
 	}
-	// simulate value for mean of prior
-	// for each variable in the var table
+	// -----------------------------------------------------------------------
+	// simulate value for mean of prior for each variable in the var table
 	vector<double> sim_prior_value(n_simulate * n_var);
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
 	{	//
@@ -340,12 +343,12 @@ void simulate_command(
 				bool difference = k > 0;
 				//
 				int density_id = prior_table[prior_id[k]].density_id;
-				dismod_at::density_enum density = density_table[density_id];
+				density_enum density = density_table[density_id];
 				//
-				if( density == dismod_at::uniform_enum )
+				if( density == uniform_enum )
 					sim_str[k] = "null";
 				else
-				{	double sim = dismod_at::sim_random(
+				{	double sim = sim_random(
 						difference, density, mean, std, eta, nu
 					);
 					//
@@ -354,7 +357,7 @@ void simulate_command(
 					//
 					sim_str[k] = to_string( sim );
 					//
-					// store prior value for zero_sum_child_rate constraint
+					// store value prior for later use by zero sum constraints
 					if( k == 0 )
 						sim_prior_value[sim_index * n_var + var_id] = sim;
 				}
@@ -369,69 +372,162 @@ void simulate_command(
 		}
 	}
 	// ----------------------------------------------------------------------
-	// This is the code for adding the constraints on random effects
+	// Enforce zero_sum_child_rate contraints
 	//
 	// n_child
 	size_t n_child = pack_object.child_size();
 	//
 	// zero_sum_child_rate
-	size_t n_rate      = size_t(dismod_at::number_rate_enum);
+	size_t n_rate      = size_t(number_rate_enum);
 	size_t option_size = option_map["zero_sum_child_rate"].size();
 	vector<bool> zero_sum_child_rate(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	string rate_name = dismod_at::get_rate_name(rate_id);
+	{	string rate_name = get_rate_name(rate_id);
 		size_t found     = option_map["zero_sum_child_rate"].find( rate_name );
 		zero_sum_child_rate[rate_id] = found < option_size;
 	}
+	// for each simulation index and each rate
 	for(size_t sim_index = 0; sim_index < n_simulate; ++sim_index)
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	if( zero_sum_child_rate[rate_id] )
-	{	// packing information for first child and this rate
-		dismod_at::pack_info::subvec_info
+	{	// packing information for first child
+		pack_info::subvec_info
 			info_0 = pack_object.node_rate_value_info(rate_id, 0);
 		//
 		// child smoothing id for first rate
 		size_t smooth_id = info_0.smooth_id;
 		if( smooth_id != DISMOD_AT_NULL_SIZE_T && n_child > 0)
 		{	//
-			// number of grid points for child smoothing for this rate
+			// number of grid points in child smoothing for this rate
 			size_t n_grid = info_0.n_var;
+			//
+			// var_id corresponding to each child
 			vector<size_t> var_id_tmp(n_child);
+			//
+			// loop over grid points
 			for(size_t k = 0; k < n_grid; k++)
-			{	// for this simulation, rate, and grid point
+			{	// initialize summation for this grid point
 				double sum_random = 0.0;
+				//
+				// sum over childern
 				for(size_t j = 0; j < n_child; j++)
-				{	// packing information for this child and this rate
-					dismod_at::pack_info::subvec_info
+				{	// packing information for this child
+					pack_info::subvec_info
 						info_j = pack_object.node_rate_value_info(rate_id, j);
-# if NDEBUG
-					// for each rate, all children have the same smoothing
+					//
+					// all the children hav the same smoothing
 					assert( info_j.smooth_id == info_0.smooth_id );
 					assert( info_j.n_var     == info_0.n_var );
-# endif
-					// offset for this rate and child
+					//
+					// offset for this child
 					size_t offset = info_j.offset;
 					//
-					// variable index for this grid point
+					// variable index for this grid point and child
 					size_t var_id = offset + k;
 					var_id_tmp[j] = var_id;
 					//
-					// add random effect for this child
+					// add to sum of random effect for this grid point
 					sum_random += sim_prior_value[sim_index * n_var + var_id];
 				}
+				//
+				// zero mean this grid point
 				for(size_t j = 0; j < n_child; ++j)
 				{	size_t var_id = var_id_tmp[j];
 					double value = sim_prior_value[sim_index * n_var + var_id];
 					value       -= sum_random / double(n_child);
 					size_t prior_sim_id = sim_index * n_var + var_id;
-					// overwrite the value priro because it is zero mean
+					//
+					// overwrite the value prior to be zero mean
 					row_value[prior_sim_id * n_col + 2] = to_string(value);
 				}
 			}
 		}
 	}
+	// ----------------------------------------------------------------------
+	// Enforce zero_sum_mulcov_group contraints
+	//
+	// n_group
+	size_t n_group = pack_object.group_size();
+	//
+	// zero_sum_mulcov_group
+	option_size    = option_map["zero_sum_mulcov_group"].size();
+	vector<bool> zero_sum_mulcov_group(n_group);
+	for(size_t group_id = 0; group_id < n_group; group_id++)
+	{	size_t first_subgroup_id = pack_object.first_subgroup_id(group_id);
+		string group_name = subgroup_table[first_subgroup_id].group_name;
+		size_t found = option_map["zero_sum_mulcov_group"].find(group_name);
+		zero_sum_mulcov_group[group_id] = found < option_size;
+	}
+	// for each simulation index and each rate
+	for(size_t sim_index = 0; sim_index < n_simulate; ++sim_index)
+	for(size_t rate_id = 0; rate_id < n_rate; ++rate_id)
+	{	// for each mulcov table entry for this rate
+		size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+		for(size_t j = 0; j < n_cov; ++j)
+		{	// number of subgroups
+			size_t n_sub = pack_object.subgroup_rate_value_n_sub(rate_id, j);
+			//
+			// packing information for first subgroup
+			pack_info::subvec_info info_0 =
+				pack_object.subgroup_rate_value_info(rate_id, j, 0);
+			//
+			// only consider groups that are zero sum contrained
+			if( zero_sum_mulcov_group[info_0.group_id] )
+			{	// smoothing for subgroups
+				size_t smooth_id = info_0.smooth_id;
+				assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+				//
+				// number of grid points in subgroup smoothing for this mulcov
+				size_t n_grid = info_0.n_var;
+				//
+				// var_id corresponding to each subgroup
+				vector<size_t> var_id_tmp(n_sub);
+				//
+				// loop over grid points
+				for(size_t ell = 0; ell < n_grid; ++ell)
+				{	// initialize sum for this grid point
+					double sum_random = 0.0;
+					//
+					// sum over subgroups
+					for(size_t k = 0; k < n_sub; ++k)
+					{	// packing information for this subgroup
+						pack_info::subvec_info info_k =
+							pack_object.subgroup_rate_value_info(rate_id, j, k);
+						//
+						// all subgroups have the same smoothing
+						assert( info_k.smooth_id == info_0.smooth_id );
+						assert( info_k.n_var     == info_0.n_var );
+						//
+						// offset for this subgroup
+						size_t offset = info_k.offset;
+						//
+						// var_id for this grid point and subgroup
+						size_t var_id = offset + ell;
+						var_id_tmp[k] = var_id;
+						//
+						// add to sum of random effect for this grid point
+						sum_random +=
+							sim_prior_value[sim_index * n_var + var_id];
+					}
+					//
+					// zero mean this grid point's sum
+					for(size_t k = 0; k < n_sub; ++k)
+					{	size_t var_id = var_id_tmp[j];
+						double value =
+							sim_prior_value[sim_index * n_var + var_id];
+						value       -= sum_random / double(n_sub);
+						size_t prior_sim_id = sim_index * n_var + var_id;
+						//
+						// overwrite the value prior to be zero mean
+						row_value[prior_sim_id * n_col + 2] = to_string(value);
+					}
+				}
+			}
+		}
+	}
+	// ------------------------------------------------------------------------
 	// create prior_sim table
-	dismod_at::create_table(
+	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
 	return;

@@ -15,27 +15,24 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <string>
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>
-# include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/data_subset.hpp>
 # include <dismod_at/data_model.hpp>
 # include <dismod_at/pack_prior.hpp>
-# include <dismod_at/get_density_table.hpp>
+# include <dismod_at/get_db_input.hpp>
 
 namespace dismod_at {
 
 void simulate_command(
-	const std::string&                                  number_simulate   ,
-	const std::string&                                  meas_noise_effect ,
-	sqlite3*                                            db                ,
-	const CppAD::vector<dismod_at::integrand_struct>&   integrand_table   ,
-	const CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj   ,
-	dismod_at::data_model&                              data_object       ,
-	const dismod_at::pack_prior&                        var2prior         ,
-	const CppAD::vector<dismod_at::prior_struct>&       prior_table       ,
-	const CppAD::vector<dismod_at::density_enum>&       density_table     ,
-	const dismod_at::pack_info&                         pack_object       ,
+	const std::string&                       number_simulate   ,
+	const std::string&                       meas_noise_effect ,
+	sqlite3*                                 db                ,
+	const CppAD::vector<data_subset_struct>& data_subset_obj   ,
+	data_model&                              data_object       ,
+	const pack_prior&                        var2prior         ,
+	const pack_info&                         pack_object       ,
+	const db_input_struct&                   db_input          ,
 	// effectively const
-	std::map<std::string, std::string>&                 option_map
+	std::map<std::string, std::string>&      option_map
 );
 
 }

@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	mulcov
 	optimizer
 	CppAD
 	mtother
@@ -34,6 +35,7 @@ $spell
 	cv
 	std
 	stderr
+	covariate
 $$
 
 $section The Option Table$$
@@ -170,8 +172,12 @@ the corresponding value is a space separated subset of the
 $cref/rate names/rate_table/rate_name/$$.
 For each rate in the list, each age, and each time,
 the sum of the corresponding
-$cref/random effects/model_variables/Random Effects, u/$$ estimates
-is constrained to be zero.
+$cref/child rate effect
+	/model_variables
+	/Random Effects, u
+	/Child Rate Effects
+/$$
+estimates is constrained to be zero.
 These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
 The file $cref/zero_sum_rate.py/user_zero_sum_rate.py/$$
@@ -182,7 +188,27 @@ all of the child must use the same smoothing for this rate.
 
 $subhead Default$$
 The default value for this option is null; i.e.,
-no zero sum constraints on the random effects.
+no zero sum constraints on these random effects.
+
+$head zero_sum_mulcov_group$$
+If $icode option_name$$ is $code mulcov_group$$,
+the corresponding value is a space separated subset of the
+$cref/group names/subgroup_table/group_name/$$.
+For each group in the list, each age, and each time, and each
+$cref/mulcov_id/mulcov_table/mulcov_id/$$,
+the sum of the corresponding
+$cref/subgroup covariate multiplier
+	/model_variables
+	/Random Effects, u
+	/Subgroup Covariate Multipliers
+/$$
+estimates is constrained to be zero.
+These are additional constraints in the optimization problem for the
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$.
+
+$subhead Default$$
+The default value for this option is null; i.e.,
+no zero sum constraints on these random effects.
 
 $head data_extra_columns$$
 If $icode option_name$$ is $code data_extra_columns$$,

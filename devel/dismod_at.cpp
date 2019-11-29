@@ -532,13 +532,11 @@ int main(int n_arg, const char** argv)
 					argv[3]                  , // number_simulate
 					meas_noise_effect        ,
 					db                       ,
-					db_input.integrand_table ,
 					data_subset_obj          ,
 					data_object              ,
 					var2prior                ,
-					db_input.prior_table     ,
-					db_input.density_table   ,
 					pack_object              ,
+					db_input                 ,
 					option_map
 				);
 			}

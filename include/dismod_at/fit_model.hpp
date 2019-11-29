@@ -141,20 +141,21 @@ namespace dismod_at {
 	public:
 		// constructor
 		fit_model(
-			sqlite3*                             db              ,
-			int                                  simulate_index  ,
-			bool                                 warn_on_stderr  ,
-			double                               bound_random    ,
-			bool                                 no_scaling      ,
-			const pack_info&                     pack_object     ,
-			const pack_prior&                    var2prior       ,
-			const CppAD::vector<double>&         start_var       ,
-			const CppAD::vector<double>&         scale_var       ,
-			const CppAD::vector<prior_struct>&   prior_table     ,
-			const prior_model&                   prior_object    ,
-			const remove_const&                  random_const    ,
-			bool                                 quasi_fixed     ,
-			const CppAD::vector<bool>&           zero_sum_child_rate ,
+			sqlite3*                             db                    ,
+			int                                  simulate_index        ,
+			bool                                 warn_on_stderr        ,
+			double                               bound_random          ,
+			bool                                 no_scaling            ,
+			const pack_info&                     pack_object           ,
+			const pack_prior&                    var2prior             ,
+			const CppAD::vector<double>&         start_var             ,
+			const CppAD::vector<double>&         scale_var             ,
+			const CppAD::vector<prior_struct>&   prior_table           ,
+			const prior_model&                   prior_object          ,
+			const remove_const&                  random_const          ,
+			bool                                 quasi_fixed           ,
+			const CppAD::vector<bool>&           zero_sum_child_rate   ,
+			const CppAD::vector<bool>&           zero_sum_mulcov_group ,
 			data_model&                          data_object
 		);
 		//
