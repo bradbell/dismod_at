@@ -199,7 +199,7 @@ def example_db (file_name) :
 		{ 'name':'max_num_iter_random',    'value':'50'           },
 		{ 'name':'print_level_random',     'value':'0'            },
 		{ 'name':'tolerance_random',       'value':'1e-10'        },
-		{ 'name':'zero_sum_random',        'value':'omega'        }
+		{ 'name':'zero_sum_child_rate',    'value':'omega'        }
 	]
 	# ----------------------------------------------------------------------
 	# subgroup_table

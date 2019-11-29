@@ -18,7 +18,7 @@ $section Matrix Representation of Random Constraints$$
 
 $head Syntax$$
 $icode%A_rcv% = ran_con_rcv(
-	%bound_random%, %zero_sum_random%, %pack_object%
+	%bound_random%, %zero_sum_child_rate%, %pack_object%
 )%$$
 
 $head Prototype$$
@@ -31,9 +31,9 @@ This is the value of the
 $cref/bound_random/option_table/Random Only/bound_random/$$
 in the option table.
 
-$head zero_sum_random$$
+$head zero_sum_child_rate$$
 If this vector has size $code number_rate_enum$$.
-If $icode%zero_sum_random%[%rate_id%]%$$ is true,
+If $icode%zero_sum_child_rate%[%rate_id%]%$$ is true,
 for each age, time,
 the sum of the random effects for the corresponding rate
 is constrained to be zero.
@@ -63,7 +63,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // BEGIN_RAN_CON_RCV
 CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	double                        bound_random    ,
-	const CppAD::vector<bool>&    zero_sum_random ,
+	const CppAD::vector<bool>&    zero_sum_child_rate ,
 	const dismod_at::pack_info&   pack_object     ,
 	const remove_const&           random_const    )
 // END_RAN_CON_RCV
@@ -98,7 +98,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	//
 	// for each rate
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	{	if( zero_sum_random[rate_id] )
+	{	if( zero_sum_child_rate[rate_id] )
 		{	// packing information for first child
 			dismod_at::pack_info::subvec_info
 				info_0 = pack_object.node_rate_value_info(rate_id, 0);
@@ -140,7 +140,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	//
 	// for each rate
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
-	if( zero_sum_random[rate_id] )
+	if( zero_sum_child_rate[rate_id] )
 	{	// packing information for first child and this rate
 		dismod_at::pack_info::subvec_info
 			info_0 = pack_object.node_rate_value_info(rate_id, 0);

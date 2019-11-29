@@ -124,7 +124,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "tolerance_fixed",                  "1e-8"               },
 		{ "tolerance_random",                 "1e-8"               },
 		{ "warn_on_stderr",                   "true"               },
-		{ "zero_sum_random",                  ""                   }
+		{ "zero_sum_child_rate",              ""                   }
 		// END_SORT_THIS_LINE_MINUS_1
 	};
 	size_t n_option = sizeof( option_list ) / sizeof( option_list[0] );
@@ -157,11 +157,21 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			msg += "\nThis was moved to integrand table on 2018-05-23.";
 			error_exit(msg, table_name, option_id);
 		}
+		// meas_std_effect
 		if( option_name[option_id] == "meas_std_effect" )
         {	msg  = "meas_std_effect was deprecated on 2019-04-07\n";
 			msg += "and removed on 2019-11-26.\n";
 			msg += "It should be changed to meas_noise_effect.";
 			error_exit(msg, table_name, option_id);
+		}
+		// zero_sum_random
+		if( option_name[option_id] == "zero_sum_random" )
+        {	option_name[option_id] = "zero_sum_child_rate";
+			msg  = "zero_sum_random was changed to zero_sum_child_rate ";
+			msg += "on 2019-11-29 (you should fix this).\n";
+			msg += "For the time being, this change is automatic.";
+			string msg_type  = "warning";
+			log_message(db, &std::cerr, msg_type, msg, table_name, option_id);
 		}
 		//
 		size_t match = n_option;
@@ -315,7 +325,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 					derivative_test_fixed_level = 1;
 			}
 		}
-		if( name_vec[match] == "zero_sum_random" )
+		if( name_vec[match] == "zero_sum_child_rate" )
 		{	CppAD::vector<string> rate_list = split_space(
 					option_value[option_id]
 			);

@@ -37,7 +37,7 @@ FOREACH(user_case
 	posterior
 	predict_fit
 	predict_mulcov
-	zero_sum_random
+	zero_sum_child_rate
 	re_scale
 	students
 )

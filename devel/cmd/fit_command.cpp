@@ -266,14 +266,14 @@ void fit_command(
 	column_name = "scale_var_value";
 	dismod_at::get_table_column(db, table_name, column_name, scale_var);
 	// ----------------------------------------------------------------------
-	// zero_sum_random
+	// zero_sum_child_rate
 	size_t n_rate      = size_t(dismod_at::number_rate_enum);
-	size_t option_size = option_map["zero_sum_random"].size();
-	vector<bool> zero_sum_random(n_rate);
+	size_t option_size = option_map["zero_sum_child_rate"].size();
+	vector<bool> zero_sum_child_rate(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	string rate_name = dismod_at::get_rate_name(rate_id);
-		size_t found     = option_map["zero_sum_random"].find( rate_name );
-		zero_sum_random[rate_id] = found < option_size;
+		size_t found     = option_map["zero_sum_child_rate"].find( rate_name );
+		zero_sum_child_rate[rate_id] = found < option_size;
 	}
 	// ----------------------------------------------------------------------
 	// random_const
@@ -310,7 +310,7 @@ void fit_command(
 		prior_object         ,
 		random_const         ,
 		quasi_fixed          ,
-		zero_sum_random      ,
+		zero_sum_child_rate  ,
 		data_object
 	);
 	fit_object.run_fit(random_only, option_map);

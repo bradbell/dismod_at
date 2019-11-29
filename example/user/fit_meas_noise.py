@@ -259,7 +259,7 @@ def example_db (file_name) :
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'random_seed',            'value':'0'                 },
-		{ 'name':'zero_sum_random',        'value':'iota'              },
+		{ 'name':'zero_sum_child_rate',    'value':'iota'              },
 
 		{ 'name':'quasi_fixed',            'value':'false'             },
 		{ 'name':'derivative_test_fixed',  'value':'second-order'      },

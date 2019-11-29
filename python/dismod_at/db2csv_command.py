@@ -1013,7 +1013,7 @@ def db2csv_command(database_file_arg) :
 		[ "tolerance_fixed",                   "1e-8"],
 		[ "tolerance_random",                  "1e-8"],
 		[ "warn_on_stderr",                    "true"],
-		[ "zero_sum_random",                   ""],
+		[ "zero_sum_child_rate",               ""],
 		# END_SORT_THIS_LINE_MINUS_1
 	]
 	option_id = 0

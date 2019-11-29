@@ -69,6 +69,11 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 11-29$$
+The $code zero_sum_random$$ option was changed to
+$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$.
+A warning is printed when $code zero_sum_random$$ is used and
+this change is made automatically.
 
 $head 11-28$$
 $list number$$
@@ -200,7 +205,8 @@ $codei%
 
 $head 10-08$$
 $list number$$
-Fix a bug in the $cref/zero_sum_random/option_table/zero_sum_random/$$ option.
+Fix a bug in the
+$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$ option.
 This bug caused $cref user_const_value.py$$ to fail  when one switched
 the role of $icode iota$$ and $icode omega$$;
 see $code test/user/const_value.py$$.
@@ -217,7 +223,7 @@ does not apply to random effects that have equal lower and upper limits.
 
 $head 10-02$$
 Add discussion at the top of the
-$cref user_zero_sum_random.py$$ example.
+$cref user_zero_sum_child_rate.py$$ example.
 
 $head 10-01$$
 $list number$$
@@ -401,17 +407,21 @@ Advance $code dock_dismod_at.sh$$ to
 $cref/version/dock_dismod_at.sh/Building Images/Version/$$
 $code 20190912$$.
 $lnext
-If $cref/zero_sum_random/option_table/zero_sum_random/$$
+If $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$
 is chosen for a rate, the simulated prior values for that
 corresponding child rate effects at each grid point now sum to zero; see
-$cref/zero_sum_random/prior_sim_table/prior_sim_value/zero_sum_random/$$
+$cref/zero_sum_child_rate
+	/prior_sim_table
+	/prior_sim_value
+	/zero_sum_child_rate
+/$$
 in the prior_sim table documentation.
 $lnext
 The $cref/method_random/option_table/Random Only/method_random/$$ option
 was added.
 This gives a different choice for optimizing the random effects.
 $lnext
-The $cref/zero_sum_random/option_table/zero_sum_random/$$ value in
+The $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$ value in
 $cref/option.csv/db2csv_command/option.csv/$$ written by the $code db2csv$$
 command was $code false$$ when it should have been empty.
 This has been fixed.

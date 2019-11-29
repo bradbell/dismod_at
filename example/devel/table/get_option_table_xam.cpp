@@ -67,7 +67,7 @@ bool get_option_table_xam(void)
 		"tolerance_fixed",                  "1e-7",
 		"tolerance_random",                 "1e-7",
 		"warn_on_stderr",                   "true",
-		"zero_sum_random",                  "iota  omega"
+		"zero_sum_child_rate",              "iota  omega"
 		// END_SORT_THIS_LINE_MINUS_1
 	};
 	size_t n_option = sizeof(option_list) / sizeof( option_list[0] );

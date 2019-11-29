@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_zero_sum_random.py$$ $newlinech #$$
+# $begin user_zero_sum_child_rate.py$$ $newlinech #$$
 # $spell
 #	init
 # $$
@@ -16,11 +16,11 @@
 #
 # $head Purpose$$
 # This example demonstrates using
-# The $cref/zero_sum_random/option_table/zero_sum_random/$$
+# The $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$
 # to improve the speed and estimation of the fixed effects.
 #
 # $head Problem Parameters$$
-# $srcfile%example/user/zero_sum_random.py%
+# $srcfile%example/user/zero_sum_child_rate.py%
 #	0%# begin problem parameters%# end problem parameters%1
 # %$$
 #
@@ -49,7 +49,7 @@
 #
 # $head Source Code$$
 # $srcfile%
-#	example/user/zero_sum_random.py
+#	example/user/zero_sum_child_rate.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
@@ -70,7 +70,7 @@ import copy
 import math
 import random
 import time
-test_program = 'example/user/zero_sum_random.py'
+test_program = 'example/user/zero_sum_child_rate.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -232,7 +232,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'zero_sum_random',        'value':'iota rho'          },
+		{ 'name':'zero_sum_child_rate',    'value':'iota rho'          },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos'  },
@@ -350,5 +350,5 @@ for rate in [ 'iota', 'rho' ] :
 			assert False
 #
 # -----------------------------------------------------------------------
-print('zero_sum_random: OK')
+print('zero_sum_child_rate: OK')
 # END PYTHON

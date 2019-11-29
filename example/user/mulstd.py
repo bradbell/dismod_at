@@ -252,7 +252,7 @@ def example_db (file_name) :
 		{ 'name':'max_num_iter_fixed',     'value':'100'               },
 		{ 'name':'print_level_fixed',      'value':'0'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-11'             },
-		{ 'name':'zero_sum_random',        'value':'iota'              },
+		{ 'name':'zero_sum_child_rate',    'value':'iota'              },
 	]
 	# ----------------------------------------------------------------------
 	# subgroup_table

@@ -271,7 +271,7 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'parent_node_name',      'value':'n1'},
 		{ 'name':'rate_case',             'value':'iota_pos_rho_zero'},
-		{ 'name': 'zero_sum_random',      'value':'iota'},
+		{ 'name': 'zero_sum_child_rate',  'value':'iota'},
 		{ 'name':'quasi_fixed',           'value':'false'},
 		{ 'name':'max_num_iter_fixed',    'value':'100'},
 		{ 'name':'print_level_fixed',     'value':'0'},

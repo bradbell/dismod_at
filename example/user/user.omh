@@ -87,7 +87,7 @@ $children%example/user/csv2db.py
 	%example/user/diff_constraint.py
 	%example/user/group_mulcov.py
 	%example/user/no_children.py
-	%example/user/zero_sum_random.py
+	%example/user/zero_sum_child_rate.py
 	%example/user/re_scale.py
 	%example/user/speed.py
 %$$
@@ -116,7 +116,7 @@ $rref user_sample_asy.py$$
 $rref user_continue_fit.py$$
 $rref user_const_value.py$$
 $rref user_mulstd.py$$
-$rref user_zero_sum_random.py$$
+$rref user_zero_sum_child_rate.py$$
 $rref user_group_mulcov.py$$
 $rref user_bilevel_random.py$$
 $tend

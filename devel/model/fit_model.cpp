@@ -47,7 +47,7 @@ $codei%fit_model %fit_object%(
 	%prior_object%,
 	%random_const%,
 	%quasi_fixed%,
-	%zero_sum_random%
+	%zero_sum_child_rate%
 )
 %$$
 
@@ -113,9 +113,9 @@ a quasi-Newton method is used when optimizing the fixed effects.
 Otherwise a full Newton method is used; see
 $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$.
 
-$head zero_sum_random$$
+$head zero_sum_child_rate$$
 If this vector has size $code number_rate_enum$$.
-If $icode%zero_sum_random%[%rate_id%]%$$ is true,
+If $icode%zero_sum_child_rate%[%rate_id%]%$$ is true,
 for each age, time,
 the sum of the random effects for the corresponding rate
 is constrained to be zero.
@@ -141,7 +141,7 @@ fit_model::fit_model(
 	const prior_model&                    prior_object     ,
 	const remove_const&                   random_const     ,
 	bool                                  quasi_fixed      ,
-	const CppAD::vector<bool>&            zero_sum_random  ,
+	const CppAD::vector<bool>&            zero_sum_child_rate  ,
 	data_model&                           data_object      )
 /* %$$
 $end
@@ -160,7 +160,7 @@ $end
 	// bool_sparsity
 	false,
 	// A_rcv
-	ran_con_rcv(bound_random, zero_sum_random, pack_object, random_const)
+	ran_con_rcv(bound_random, zero_sum_child_rate, pack_object, random_const)
 ),
 db_            (db)                                 ,
 simulate_index_( simulate_index )                   ,

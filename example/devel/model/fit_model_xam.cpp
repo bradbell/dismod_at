@@ -403,10 +403,10 @@ bool fit_model_xam(void)
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
 	//
-	// zero_sum_random
-	vector<bool> zero_sum_random( dismod_at::number_rate_enum );
+	// zero_sum_child_rate
+	vector<bool> zero_sum_child_rate( dismod_at::number_rate_enum );
 	for(size_t rate_id = 0; rate_id < dismod_at::number_rate_enum; rate_id++)
-		zero_sum_random[rate_id] = false;
+		zero_sum_child_rate[rate_id] = false;
 	//
 	// warn_on_stderr
 	bool warn_on_stderr = true;
@@ -427,7 +427,7 @@ bool fit_model_xam(void)
 		prior_object,
 		random_const,
 		quasi_fixed,
-		zero_sum_random,
+		zero_sum_child_rate,
 		data_object
 	);
 	bool random_only = false;

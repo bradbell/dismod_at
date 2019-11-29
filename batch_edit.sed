@@ -16,10 +16,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#	example/user/zero_sum_random.py
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#	s|zero_sum_random|zero_sum_child_rate|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,6 +33,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|pack_info_node_rate_value_info|pack_info_node_rate|
-s|pack_info_mulcov_meas|pack_info_group_meas|
-s|pack_info_mulcov_rate|pack_info_group_rate|
+s|zero_sum_random',    |zero_sum_child_rate',|g
+s|zero_sum_random",    |zero_sum_child_rate",|g
+s|zero_sum_random     |zero_sum_child_rate |g
+s|zero_sum_random|zero_sum_child_rate|g

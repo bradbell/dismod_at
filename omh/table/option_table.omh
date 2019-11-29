@@ -164,8 +164,8 @@ $cref/add_var_scale_log
 $subhead Default$$
 The default value for this option is $code add_std_scale_all$$.
 
-$head zero_sum_random$$
-If $icode option_name$$ is $code zero_sum_random$$,
+$head zero_sum_child_rate$$
+If $icode option_name$$ is $code zero_sum_child_rate$$,
 the corresponding value is a space separated subset of the
 $cref/rate names/rate_table/rate_name/$$.
 For each rate in the list, each age, and each time,
@@ -174,9 +174,9 @@ $cref/random effects/model_variables/Random Effects, u/$$ estimates
 is constrained to be zero.
 These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
-The file $cref/zero_sum_random.py/user_zero_sum_random.py/$$
+The file $cref/zero_sum_child_rate.py/user_zero_sum_child_rate.py/$$
 contains an example and test using these constraints.
-Note that for each rate in $icode zero_sum_random$$,
+Note that for each rate in $icode zero_sum_child_rate$$,
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null; i.e.,
 all of the child must use the same smoothing for this rate.
 

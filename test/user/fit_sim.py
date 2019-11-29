@@ -247,7 +247,7 @@ def example_db (file_name) :
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
 		{ 'name':'random_seed',            'value':'0'            },
-		{ 'name':'zero_sum_random',        'value':'iota'         },
+		{ 'name':'zero_sum_child_rate',    'value':'iota'         },
 
 		{ 'name':'quasi_fixed',            'value':'true'         },
 		{ 'name':'derivative_test_fixed',  'value':'none'         },

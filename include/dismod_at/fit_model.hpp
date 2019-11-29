@@ -154,7 +154,7 @@ namespace dismod_at {
 			const prior_model&                   prior_object    ,
 			const remove_const&                  random_const    ,
 			bool                                 quasi_fixed     ,
-			const CppAD::vector<bool>&           zero_sum_random ,
+			const CppAD::vector<bool>&           zero_sum_child_rate ,
 			data_model&                          data_object
 		);
 		//

@@ -60,8 +60,8 @@ a simulated from the value prior for this variable.
 If there is no value prior, or if the density for the value prior
 is uniform, $icode prior_sim_value$$ is $code null$$.
 
-$subhead zero_sum_random$$
-If the $cref/zero_sum_random/option_table/zero_sum_random/$$ option
+$subhead zero_sum_child_rate$$
+If the $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$ option
 is chosen for a rate, the simulated values for the corresponding
 $cref/child rate effects
 	/model_variables
@@ -70,7 +70,7 @@ $cref/child rate effects
 /$$
 will sum to zero at each grid point in the corresponding smoothing for;
 see $cref/child_smooth_id/rate_table/child_smooth_id/$$ in the rate table.
-Note that using $code zero_sum_random$$ for a rate
+Note that using $code zero_sum_child_rate$$ for a rate
 requires that the same smoothing is used by all the child random effects
 for that rate.
 This is done by simulating using independent priors and then subtracting
