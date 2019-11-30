@@ -18,8 +18,6 @@
 #
 # $section Example Fitting With Two Levels of Random Effects$$
 #
-# $head Under Construction$$
-#
 # $head Node Table$$
 # The following is a diagram of the node tree for this example:
 # $pre
@@ -83,6 +81,16 @@
 # The first (second) entry is for group n11 (n12) and corresponds to the
 # subgroup covariate multipliers for n111, n112 (n121, n122).
 #
+# $head Data Table$$
+# If there was only data for the leaf nodes,
+# (n111, n112, n121, n122) there would be an ambiguity in the solution.
+# For example, we could shift the estimates for n111 and n112 by
+# $latex + \Delta$$ and the estimate for n11 by $latex - \Delta$$
+# and get the same fit to the data and prior
+# (because we are using a uniform of the priors).
+# For this reason, we have included data for n11, n12, and n1.
+# If you like, you can think of this data as prior information.
+#
 # $head Procedure$$
 #
 # $subhead Fit Both$$
@@ -93,6 +101,9 @@
 #
 # $subhead Sample Posterior and Check Coverage$$
 # Sample from the posterior distribution and check for coverage.
+# Note that using two levels of random effects (instead of one)
+# should give a better value of the uncertainty of the model variables
+# (when there are two levels of random effects).
 #
 # $head Source Code$$
 # $srcfile%

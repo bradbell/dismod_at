@@ -10,6 +10,8 @@
 # $begin user_zero_sum_group.py$$ $newlinech #$$
 # $spell
 #	init
+#	mulcov
+#	covariate
 # $$
 #
 # $head See Also$$
@@ -17,13 +19,10 @@
 #
 # $section Constrain Sum of Subgroup Covariate Multipliers to Zero$$
 #
-# $head Under Construction$$
-# Note yet working.
-#
 # $head Purpose$$
 # This example demonstrates using
 # The $cref/zero_sum_mulcov_group/option_table/zero_sum_mulcov_group/$$
-# to improve the speed and and accuracy of estimation of the fixed effects.
+# to improve the speed and accuracy of estimation of the fixed effects.
 #
 # $head Problem Parameters$$
 # $srcfile%example/user/zero_sum_group.py%
@@ -38,7 +37,7 @@
 # $cref/subgroup covariate multipliers
 #	/model_variables
 #	/Random Effects, u
-#	/Subgroup Covarite Multipliers
+#	/Subgroup Covariate Multipliers
 # /$$
 # for $code canada$$ is $icode subgroup_mulcov$$
 # and for the $code united_states$$ is $codei%-%subgroup_mulcov%$$.
@@ -49,13 +48,13 @@
 # The parent node, $code north_america$$, and the two child nodes
 # $code united_states$$ and $code canada$$.
 # The child rate effects are constrained to be
-# zero because we are using subgroup covariate multipliers in thier place.
+# zero because we use subgroup covariate multipliers in their place.
 #
 # $head Model Variables$$
 # The non-zero fixed effects for this example are
 # $cref/iota/rate_table/rate_name/iota/$$ and $icode rho$$
 # for the parent node $code north_america$$.
-# The non-zero random effects are the subgroup covariate multiplers
+# The non-zero random effects are the subgroup covariate multipliers
 # for the $code united_states$$ and $code canada$$.
 # The parent rates and subgroup covariate multipliers use a grid with
 # one point in age and two points in time. Thus there are six model variables
@@ -278,7 +277,7 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'parent_node_name',       'value':'north_america'     },
-		{ 'name':'zero_sum_child_rate',    'value':'iota rho'          },
+		{ 'name':'zero_sum_mulcov_group',  'value':'north_america'     },
 		{ 'name':'random_seed',            'value':'0'                 },
 		{ 'name':'ode_step_size',          'value':'10.0'              },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_pos'  },
@@ -336,6 +335,7 @@ fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
 rate_table     = dismod_at.get_table_dict(connection, 'rate')
 node_table     = dismod_at.get_table_dict(connection, 'node')
 time_table     = dismod_at.get_table_dict(connection, 'time')
+subgroup_table = dismod_at.get_table_dict(connection, 'subgroup')
 #
 # For each rate (iota and rho) there are two fixed effects.
 # In addition, for each rate and each subgroup there are two random effects.
@@ -360,8 +360,11 @@ for var_id in range( n_var ) :
 		node_id   = var_table[var_id]['node_id']
 		node_name = node_table[node_id]['node_name']
 	else :
-		assert var_type == 'rate_value'
-		node_name = var_table[var_id]['subgroup_name']
+		assert var_type == 'mulcov_rate_value'
+		group_id  = var_table[var_id]['group_id']
+		assert group_id == None
+		subgroup_id  = var_table[var_id]['subgroup_id']
+		node_name = subgroup_table[subgroup_id]['subgroup_name']
 	#
 	# note there are only two time_id values in time_table
 	time_id   = var_table[var_id]['time_id']
@@ -370,16 +373,16 @@ for var_id in range( n_var ) :
 	#
 	if node_name == 'north_america' :
 		if rate_name == 'iota' :
-			err = value / iota_parent - 1.0
+			relerr = value / iota_parent - 1.0
 		else :
-			err = value / rho_parent - 1.0
+			relerr = value / rho_parent - 1.0
 	elif node_name == 'canada' :
-		err = value / subgroup_mulcov  - 1.0
+		relerr = value / subgroup_mulcov  - 1.0
 	else :
 		assert node_name == 'united_states'
-		err = - value / subgroup_mulcov  - 1.0
-	if abs(err) > 0.1 :
-		print('node_name, err=', node_name, err)
+		relerr = - value / subgroup_mulcov  - 1.0
+	if abs(relerr) > 0.1 :
+		print('node_name, relerr=', node_name, relerr)
 		print('python_seed = ', python_seed)
 		assert False
 	if node_name != 'north_america' :

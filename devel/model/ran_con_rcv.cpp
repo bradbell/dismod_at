@@ -183,8 +183,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 				info_0 = pack_object.node_rate_value_info(rate_id, 0);
 			//
 			// child smoothing id for this rate
-			size_t smooth_id = info_0.smooth_id;
-			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
+			if( info_0.smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	//
 				// number of grid points same for all children
 				size_t n_grid = info_0.n_var;

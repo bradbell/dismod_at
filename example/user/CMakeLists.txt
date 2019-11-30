@@ -10,6 +10,8 @@
 # ---------------------------------------------------------------------------
 # Build check_example_user
 SET(depends "")
+#
+# BEGIN_SORT_THIS_LINE_PLUS_2
 FOREACH(user_case
 	bilevel_random
 	age_avg_split
@@ -38,9 +40,11 @@ FOREACH(user_case
 	predict_fit
 	predict_mulcov
 	zero_sum_rate
+	zero_sum_group
 	re_scale
 	students
 )
+# END_SORT_THIS_LINE_MINUS_2
 	ADD_CUSTOM_TARGET(
 		check_example_user_${user_case}
 		bin/user_test.sh example/user/${user_case}.py

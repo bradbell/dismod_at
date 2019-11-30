@@ -15,7 +15,7 @@
 # $section Constrain Sum of Child Rate Effect to Zero$$
 #
 # $head See Also$$
-# $comment user_zero_sum_group.py$$
+# $cref user_zero_sum_group.py$$
 #
 # $head Purpose$$
 # This example demonstrates using
@@ -333,16 +333,16 @@ for var_id in range( n_var ) :
 	#
 	if node_name == 'north_america' :
 		if rate_name == 'iota' :
-			err = value / iota_parent - 1.0
+			relerr = value / iota_parent - 1.0
 		else :
-			err = value / rho_parent - 1.0
+			relerr = value / rho_parent - 1.0
 	elif node_name == 'canada' :
-		err = value / rate_effect_child  - 1.0
+		relerr = value / rate_effect_child  - 1.0
 	else :
 		assert node_name == 'united_states'
-		err = - value / rate_effect_child  - 1.0
-	if abs(err) > 0.1 :
-		print('node_name, err=', node_name, err)
+		relerr = - value / rate_effect_child  - 1.0
+	if abs(relerr) > 0.1 :
+		print('node_name, relerr=', node_name, relerr)
 		print('python_seed = ', python_seed)
 		assert False
 	if node_name != 'north_america' :

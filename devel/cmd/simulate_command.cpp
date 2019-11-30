@@ -474,8 +474,7 @@ void simulate_command(
 			// only consider groups that are zero sum contrained
 			if( zero_sum_mulcov_group[info_0.group_id] )
 			{	// smoothing for subgroups
-				size_t smooth_id = info_0.smooth_id;
-				assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+				assert( info_0.smooth_id != DISMOD_AT_NULL_SIZE_T );
 				//
 				// number of grid points in subgroup smoothing for this mulcov
 				size_t n_grid = info_0.n_var;

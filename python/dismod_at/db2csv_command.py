@@ -1014,6 +1014,7 @@ def db2csv_command(database_file_arg) :
 		[ "tolerance_random",                  "1e-8"],
 		[ "warn_on_stderr",                    "true"],
 		[ "zero_sum_child_rate",               ""],
+		[ "zero_sum_mulcov_group",             ""],
 		# END_SORT_THIS_LINE_MINUS_1
 	]
 	option_id = 0
