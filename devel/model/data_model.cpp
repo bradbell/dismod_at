@@ -319,8 +319,7 @@ avg_noise_obj_(
 		size_t subgroup_id       = subset_object[subset_id].subgroup_id;
 		size_t group_id          = subgroup_table[subgroup_id].group_id;
 
-		// set the information for this data point
-		data_info_[subset_id].integrand = integrand;
+		// set child information for this data point
 		data_info_[subset_id].child     = child;
 
 		// Does this data point depend on the random effects

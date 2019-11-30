@@ -31,7 +31,6 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 class data_model {
 	// infromation for each data point
 	typedef struct {
-		integrand_enum        integrand;
 		density_enum          density;
 		size_t                child;
 		bool                  bound_ran_neq;
