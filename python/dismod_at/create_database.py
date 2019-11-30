@@ -371,6 +371,10 @@
 # subsmooth $cnext str          $cnext smoothing at subgroup level
 # $tend
 #
+# $subhead effected$$
+# If $icode type$$ is $code rate_value$$, $icode effected$$ is a rate.
+# Otherwise it is an integrand.
+#
 # $subhead group$$
 # If the $code group$$ key is not present, the first group in
 # $cref/subgroup_table/create_database/subgroup_table/$$ is used.

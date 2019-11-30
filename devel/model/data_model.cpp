@@ -320,39 +320,40 @@ avg_noise_obj_(
 		// that do not have equal bounds
 		bool bound_ran_neq = false;
 		if( child < n_child_ && bound_random > 0.0 )
-		{	CppAD::vector<size_t> rate_id;
+		{	CppAD::vector<size_t> rate_id_vec;
 			switch( integrand )
 			{	case Sincidence_enum:
-				rate_id.push_back( size_t(iota_enum) );
+				rate_id_vec.push_back( size_t(iota_enum) );
 				break;
 
 				case remission_enum:
-				rate_id.push_back( size_t(rho_enum) );
+				rate_id_vec.push_back( size_t(rho_enum) );
 				break;
 
 				case mtexcess_enum:
-				rate_id.push_back( size_t(chi_enum) );
+				rate_id_vec.push_back( size_t(chi_enum) );
 				break;
 
 				case mtother_enum:
-				rate_id.push_back( size_t(omega_enum) );
+				rate_id_vec.push_back( size_t(omega_enum) );
 				break;
 
 				case mtwith_enum:
 				case relrisk_enum:
-				rate_id.push_back( size_t(chi_enum) );
-				rate_id.push_back( size_t(omega_enum) );
+				rate_id_vec.push_back( size_t(chi_enum) );
+				rate_id_vec.push_back( size_t(omega_enum) );
 				break;
 
 				default:
 				for(size_t ell = 0; ell < number_rate_enum; ell++)
-					rate_id.push_back( ell );
+					rate_id_vec.push_back( ell );
 				break;
 			}
-			for(size_t ell = 0; ell < rate_id.size(); ell++)
-			{	// check if any random effects for this rate are not constant
+			for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
+			{	size_t rate_id = rate_id_vec[ell];
+				// check if any random effects for this rate are not constant
 				size_t smooth_id =
-					pack_object.node_rate_value_info(rate_id[ell], child).smooth_id;
+					pack_object.node_rate_value_info(rate_id, child).smooth_id;
 				if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 				{	const smooth_info& s_info = s_info_vec[smooth_id];
 					size_t             n_a  = s_info.age_size();

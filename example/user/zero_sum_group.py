@@ -7,56 +7,67 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_zero_sum_rate.py$$ $newlinech #$$
+# $begin user_zero_sum_group.py$$ $newlinech #$$
 # $spell
 #	init
 # $$
 #
-# $section Constrain Sum of Child Rate Effect to Zero$$
-#
 # $head See Also$$
-# $comment user_zero_sum_group.py$$
+# $cref user_zero_sum_rate.py$$
+#
+# $section Constrain Sum of Subgroup Covariate Multipliers to Zero$$
+#
+# $head Under Construction$$
+# Note yet working.
 #
 # $head Purpose$$
 # This example demonstrates using
-# The $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$
-# to improve the speed and accuracy of estimation of the fixed effects.
+# The $cref/zero_sum_mulcov_group/option_table/zero_sum_mulcov_group/$$
+# to improve the speed and and accuracy of estimation of the fixed effects.
 #
 # $head Problem Parameters$$
-# $srcfile%example/user/zero_sum_rate.py%
+# $srcfile%example/user/zero_sum_group.py%
 #	0%# begin problem parameters%# end problem parameters%1
 # %$$
 #
 # $head Data Simulation$$
 # The true rate for the parent region $code north_america$$,
 # used for simulating data, are
-# $icode iota_parent$$ and $icode rho_parent$$ problem parameters. The
-# $cref/child rate effect
+# $icode iota_parent$$ and $icode rho_parent$$ problem parameters.
+# The
+# $cref/subgroup covariate multipliers
 #	/model_variables
 #	/Random Effects, u
-#	/Child Rate Effects
+#	/Subgroup Covarite Multipliers
 # /$$
-# for $code canada$$ is $icode rate_effect_child$$
-# and for the $code united_states$$ is $codei%-%rate_effect_child%$$.
+# for $code canada$$ is $icode subgroup_mulcov$$
+# and for the $code united_states$$ is $codei%-%subgroup_mulcov%$$.
+# These multipliers effect the rates (not the measurements).
 #
 # $head Nodes$$
 # There are just three nodes for this example,
 # The parent node, $code north_america$$, and the two child nodes
 # $code united_states$$ and $code canada$$.
+# The child rate effects are constrained to be
+# zero because we are using subgroup covariate multipliers in thier place.
 #
 # $head Model Variables$$
-# The non-zero $cref model_variables$$ for this example are
-# $cref/iota/rate_table/rate_name/iota/$$ and $icode rho$$.
-# Both the parent and child rates use a grid with one point in age
-# and two points in time. Thus there are six model variables for each rate,
-# two for the parent rates and four for the child rate effects.
+# The non-zero fixed effects for this example are
+# $cref/iota/rate_table/rate_name/iota/$$ and $icode rho$$
+# for the parent node $code north_america$$.
+# The non-zero random effects are the subgroup covariate multiplers
+# for the $code united_states$$ and $code canada$$.
+# The parent rates and subgroup covariate multipliers use a grid with
+# one point in age and two points in time. Thus there are six model variables
+# for each rate, two for the parent rates and four for the
+# covariate multipliers.
 # The resulting rates will be constant
 # in age and constant in time except between the two time grid points
-# where it is linear with respect to time.
+# where it is linear.
 #
 # $head Source Code$$
 # $srcfile%
-#	example/user/zero_sum_rate.py
+#	example/user/zero_sum_group.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
@@ -66,7 +77,7 @@
 number_data       = 50
 iota_parent       = 1e-2
 rho_parent        = 2e-2
-rate_effect_child = 0.2;
+subgroup_mulcov   = 0.2;
 measurement_cv    = 0.01
 # end problem parameters
 # ------------------------------------------------------------------------
@@ -77,7 +88,7 @@ import copy
 import math
 import random
 import time
-test_program = 'example/user/zero_sum_rate.py'
+test_program = 'example/user/zero_sum_group.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -100,8 +111,8 @@ random.seed( python_seed )
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-	def fun_rate_child(a, t) :
-		return ('prior_rate_child', None, 'prior_gauss_diff')
+	def fun_rate_subgroup(a, t) :
+		return ('prior_rate_subgroup', None, 'prior_gauss_diff')
 	def fun_rate_parent(a, t) :
 		return ('prior_rate_parent', None, 'prior_gauss_diff')
 	import dismod_at
@@ -125,14 +136,39 @@ def example_db (file_name) :
 		{ 'name':'canada',        'parent':'north_america' }
 	]
 	#
+	# subgroup_table
+	subgroup_table = [
+		{ 'subgroup':'none',          'group':'none'          },
+		{ 'subgroup':'united_states', 'group':'north_america' },
+		{ 'subgroup':'canada',        'group':'north_america' },
+	]
+	#
+	# mulcov table
+	mulcov_table = [
+		{	# subgroup covariate multiplers effecting iota
+			'covariate':'one',
+			'type':'rate_value',
+			'effected':'iota',
+			'group':'north_america',
+			'smooth':None,
+			'subsmooth':'smooth_rate_subgroup'
+		},{ # subgroup covariate multipliers effecting rho
+			'covariate':'one',
+			'type':'rate_value',
+			'effected':'rho',
+			'group':'north_america',
+			'smooth':None,
+			'subsmooth':'smooth_rate_subgroup'
+		 }
+	]
+	#
 	# weight table:
 	weight_table = list()
 	#
 	# covariate table: no covriates
-	covariate_table = list()
-	#
-	# mulcov table
-	mulcov_table = list()
+	covariate_table = [
+		{ 'name':'one', 'reference':0.0, 'max_difference':None }
+	]
 	#
 	# avgint table: same order as list of integrands
 	avgint_table = list()
@@ -149,21 +185,24 @@ def example_db (file_name) :
 		'hold_out':     False,
 		'age_lower':    50.0,
 		'age_upper':    50.0,
-		'subgroup':     'world',
+		'one':          1.0,
 	}
 	for data_id in range(number_data) :
 		if data_id % 3 == 0 :
 			row['node']       = 'north_america'
+			row['subgroup']   = 'none'
 			row['data_name']  = 'na_' + str( data_id / 2 )
 			effect_true       = 0.0
 		if data_id % 3 == 1 :
 			row['node']       = 'united_states'
+			row['subgroup']   = 'united_states'
 			row['data_name']  = 'us_' + str( data_id / 2 )
-			effect_true       = - rate_effect_child
+			effect_true       = - subgroup_mulcov
 		if data_id % 3 == 2 :
 			row['node']       = 'canada'
+			row['subgroup']   = 'canada'
 			row['data_name']  = 'ca_' + str( data_id / 2 )
-			effect_true       = + rate_effect_child
+			effect_true       = + subgroup_mulcov
 		if data_id % 2 == 0 :
 			row['time_lower'] = 1990.0
 			row['time_upper'] = 1990.0
@@ -195,8 +234,8 @@ def example_db (file_name) :
 			'lower':    min(iota_true, rho_true) / 100.0,
 			'upper':    max(iota_true, rho_true) * 100.0,
 			'mean':     (iota_true + rho_true),
-		},{ # prior_rate_child
-			'name':     'prior_rate_child',
+		},{ # prior_rate_subgroup
+			'name':     'prior_rate_subgroup',
 			'density':  'gaussian',
 			'mean':     0.0,
 			'std':      100.0, # very large so like a uniform distribution
@@ -210,11 +249,11 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# smooth table
 	smooth_table = [
-		{ # smooth_rate_child
-			'name':                     'smooth_rate_child',
+		{ # smooth_rate_subgroup
+			'name':                     'smooth_rate_subgroup',
 			'age_id':                   [ 0 ],
 			'time_id':                  [ 0, 1 ],
-			'fun':                      fun_rate_child
+			'fun':                      fun_rate_subgroup
 		},{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
 			'age_id':                   [ 0 ],
@@ -228,11 +267,11 @@ def example_db (file_name) :
 		{
 			'name':          'iota',
 			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'child_smooth':  None,
 		},{
 			'name':          'rho',
 			'parent_smooth': 'smooth_rate_parent',
-			'child_smooth':  'smooth_rate_child',
+			'child_smooth':  None,
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -255,9 +294,6 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'             },
 		{ 'name':'tolerance_random',       'value':'1e-10'         }
 	]
-	# ----------------------------------------------------------------------
-	# subgroup_table
-	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
 	# ----------------------------------------------------------------------
 	# create database
 	dismod_at.create_database(
@@ -295,15 +331,15 @@ connection      = dismod_at.create_connection(file_name, new)
 # check the zero random effects solution
 #
 # get variable and fit_var tables
-var_table     = dismod_at.get_table_dict(connection, 'var')
-fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
-rate_table    = dismod_at.get_table_dict(connection, 'rate')
-node_table    = dismod_at.get_table_dict(connection, 'node')
-time_table    = dismod_at.get_table_dict(connection, 'time')
+var_table      = dismod_at.get_table_dict(connection, 'var')
+fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
+rate_table     = dismod_at.get_table_dict(connection, 'rate')
+node_table     = dismod_at.get_table_dict(connection, 'node')
+time_table     = dismod_at.get_table_dict(connection, 'time')
 #
-# for rate = iota, rho :
-#	for node = north_america, canada, united_states
-#		for time = 1990, 2010
+# For each rate (iota and rho) there are two fixed effects.
+# In addition, for each rate and each subgroup there are two random effects.
+# Thus there are four fixed effects and 8 random effects.
 n_var = len(var_table)
 assert n_var == 12
 #
@@ -316,19 +352,20 @@ sum_random = {
 count_random = 0
 ok           = True
 for var_id in range( n_var ) :
-	var_type = var_table[var_id]['var_type']
-	assert( var_type == 'rate' )
-	#
+	var_type  = var_table[var_id]['var_type']
 	rate_id   = var_table[var_id]['rate_id']
 	rate_name = rate_table[rate_id]['rate_name']
 	#
-	node_id   = var_table[var_id]['node_id']
-	node_name = node_table[node_id]['node_name']
+	if var_type == 'rate' :
+		node_id   = var_table[var_id]['node_id']
+		node_name = node_table[node_id]['node_name']
+	else :
+		assert var_type == 'rate_value'
+		node_name = var_table[var_id]['subgroup_name']
 	#
 	# note there are only two time_id values in time_table
 	time_id   = var_table[var_id]['time_id']
 	time      = time_table[time_id]['time']
-	#
 	value     = fit_var_table[var_id]['fit_var_value']
 	#
 	if node_name == 'north_america' :
@@ -337,10 +374,10 @@ for var_id in range( n_var ) :
 		else :
 			err = value / rho_parent - 1.0
 	elif node_name == 'canada' :
-		err = value / rate_effect_child  - 1.0
+		err = value / subgroup_mulcov  - 1.0
 	else :
 		assert node_name == 'united_states'
-		err = - value / rate_effect_child  - 1.0
+		err = - value / subgroup_mulcov  - 1.0
 	if abs(err) > 0.1 :
 		print('node_name, err=', node_name, err)
 		print('python_seed = ', python_seed)
@@ -357,5 +394,5 @@ for rate in [ 'iota', 'rho' ] :
 			assert False
 #
 # -----------------------------------------------------------------------
-print('zero_sum_rate: OK')
+print('zero_sum_group: OK')
 # END PYTHON
