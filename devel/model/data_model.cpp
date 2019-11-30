@@ -315,6 +315,10 @@ avg_noise_obj_(
 		// child of parent node that this data is associated with
 		size_t  child            = child_object.table_id2child(original_id);
 
+		// group_id for this data point
+		size_t subgroup_id       = subset_object[subset_id].subgroup_id;
+		size_t group_id          = subgroup_table[subgroup_id].group_id;
+
 		// set the information for this data point
 		data_info_[subset_id].integrand = integrand;
 		data_info_[subset_id].child     = child;
@@ -322,7 +326,7 @@ avg_noise_obj_(
 		// Does this data point depend on the random effects
 		// that do not have equal bounds
 		bool bound_ran_neq = false;
-		if( child < n_child_ && bound_random > 0.0 )
+		if( bound_random > 0.0 )
 		{	CppAD::vector<size_t> rate_id_vec;
 			switch( integrand )
 			{	case Sincidence_enum:
@@ -352,6 +356,8 @@ avg_noise_obj_(
 					rate_id_vec.push_back( ell );
 				break;
 			}
+			// change bound_ran_neq for rate effects that are not constant
+			if( child < n_child_ )
 			for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
 			{	size_t rate_id = rate_id_vec[ell];
 				// check if any random effects for this rate are not constant
@@ -376,6 +382,48 @@ avg_noise_obj_(
 								}
 							}
 						}
+					}
+				}
+			}
+			// change bound_ran_neq for subgroup covariate multipliers
+			for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
+			{	size_t rate_id = rate_id_vec[ell];
+				size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+				for(size_t j = 0; j < n_cov; ++j)
+				{	const pack_info::subvec_info info_0 =
+						pack_object.subgroup_rate_value_info(rate_id, j, 0);
+					size_t n_sub =
+						pack_object.subgroup_rate_value_n_sub(rate_id, j);
+					if( info_0.group_id == group_id )
+					for(size_t k = 0; k < n_sub; ++k)
+					{
+const pack_info::subvec_info info =
+		pack_object.subgroup_rate_value_info(rate_id, j, k);
+assert( info.group_id  == info_0.group_id );
+assert( info.smooth_id == info_0.smooth_id );
+//
+size_t smooth_id = info.smooth_id;
+assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+const smooth_info& s_info = s_info_vec[smooth_id];
+//
+size_t n_a = s_info.age_size();
+size_t n_t = s_info.time_size();
+for(size_t i1 = 0; i1 < n_a; i1++)
+{	for(size_t j1 = 0; j1 < n_t; j1++)
+	{	double const_value = s_info.const_value(i1, j1);
+		if( std::isnan(const_value) )
+		{	size_t prior_id = s_info.value_prior_id(i1, j1);
+			assert( prior_id != DISMOD_AT_NULL_SIZE_T );
+			double lower = prior_table[prior_id].lower;
+			double upper = prior_table[prior_id].upper;
+			if( lower != upper )
+			{	assert( lower == - inf );
+				assert( upper == + inf );
+				bound_ran_neq = true;
+			}
+		}
+	}
+}
 					}
 				}
 			}
