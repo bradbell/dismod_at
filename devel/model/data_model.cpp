@@ -11,6 +11,8 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin data_model_ctor$$
 $spell
+	var
+	bool
 	avgint
 	logden
 	std
@@ -166,8 +168,30 @@ for each $icode subset_id$$, set $codei%data_subset_obj_[%subset_id%]%$$
 fields that are command both data_subset and avgint_subset.
 
 $head data_info_$$
-for each $icode subset_id$$, set $codei%data_info_[%subset_id%]%$$
+for each $icode subset_id$$, set
+$codei%data_info_[%subset_id%]%$$
 is extra information for each data point.
+Each of the fields in
+$codei%data_info_[%subset_id%]%$$
+is described below:
+
+$subhead density$$
+Is the
+$cref/density_enum/get_density_table/density_enum/$$ corresponding
+to the $icode subset_id$$.
+
+$subhead child$$
+This $code size_t$$ value is the
+$cref/child/child_info/table_id2child/child/$$ index corresponding
+to this $icode subset_id$$.
+Note that if it is equal to $code n_child_$$,
+this data point corresponds to th parent node.
+
+$subhead depend_on_ran_var$$
+This $code bool$$ value is true (false) if the data point corresponding to
+$icode subset_id$$ depends (does not depend) on a random effect
+that is a variable; i.e., not constrained to be a constant.
+
 
 $head avgint_obj_$$
 The $code avg_integrand$$ $cref/constructor/avg_integrand_ctor/$$
@@ -324,7 +348,7 @@ avg_noise_obj_(
 
 		// Does this data point depend on the random effects
 		// that do not have equal bounds
-		bool bound_ran_neq = false;
+		bool depend_on_ran_var = false;
 		if( bound_random > 0.0 )
 		{	CppAD::vector<size_t> rate_id_vec;
 			switch( integrand )
@@ -355,7 +379,7 @@ avg_noise_obj_(
 					rate_id_vec.push_back( ell );
 				break;
 			}
-			// change bound_ran_neq for rate effects that are not constant
+			// change depend_on_ran_var for rate effects that are not constant
 			if( child < n_child_ )
 			for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
 			{	size_t rate_id = rate_id_vec[ell];
@@ -377,14 +401,14 @@ avg_noise_obj_(
 								if( lower != upper )
 								{	assert( lower == - inf );
 									assert( upper == + inf );
-									bound_ran_neq = true;
+									depend_on_ran_var = true;
 								}
 							}
 						}
 					}
 				}
 			}
-			// change bound_ran_neq for subgroup covariate multipliers
+			// change depend_on_ran_var for subgroup covariate multipliers
 			for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
 			{	size_t rate_id = rate_id_vec[ell];
 				size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
@@ -418,7 +442,7 @@ for(size_t i1 = 0; i1 < n_a; i1++)
 			if( lower != upper )
 			{	assert( lower == - inf );
 				assert( upper == + inf );
-				bound_ran_neq = true;
+				depend_on_ran_var = true;
 			}
 		}
 	}
@@ -427,7 +451,7 @@ for(size_t i1 = 0; i1 < n_a; i1++)
 				}
 			}
 		}
-		data_info_[subset_id].bound_ran_neq = bound_ran_neq;
+		data_info_[subset_id].depend_on_ran_var = depend_on_ran_var;
 	}
 }
 /*
@@ -534,7 +558,7 @@ void data_model::replace_like(
 		//
 		bool laplace = data_info_[subset_id].density == laplace_enum;
 		laplace     |= data_info_[subset_id].density == log_laplace_enum;
-		if( laplace && data_info_[subset_id].bound_ran_neq )
+		if( laplace && data_info_[subset_id].depend_on_ran_var )
 		{	std::string msg, table_name;
 			size_t data_id = data_subset_obj_[subset_id].original_id;
 			table_name = "data";
@@ -987,9 +1011,9 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	{	bool keep = hold_out == false;
 		keep     |= data_subset_obj_[subset_id].hold_out == 0;
 		if( random_depend )
-			keep &= data_info_[subset_id].bound_ran_neq == true;
+			keep &= data_info_[subset_id].depend_on_ran_var == true;
 		else
-			keep &= data_info_[subset_id].bound_ran_neq == false;
+			keep &= data_info_[subset_id].depend_on_ran_var == false;
 		assert( data_info_[subset_id].child <= n_child_ );
 		if( keep )
 		{	Float avg = average(subset_id, pack_vec);

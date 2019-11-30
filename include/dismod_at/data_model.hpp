@@ -33,7 +33,7 @@ class data_model {
 	typedef struct {
 		density_enum          density;
 		size_t                child;
-		bool                  bound_ran_neq;
+		bool                  depend_on_ran_var;
 	} data_ode_info;
 private:
 	// constant values
