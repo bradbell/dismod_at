@@ -256,6 +256,9 @@ avg_noise_obj_(
 	// ------------------------------------------------------------------------
 	//
 	using std::string;
+# ifndef NDEBUG
+	double inf = std::numeric_limits<double>::infinity();
+# endif
 	//
 	// meas_noise_effect_
 	if( meas_noise_effect == "add_std_scale_all" )
@@ -367,7 +370,10 @@ avg_noise_obj_(
 								double lower = prior_table[prior_id].lower;
 								double upper = prior_table[prior_id].upper;
 								if( lower != upper )
+								{	assert( lower == - inf );
+									assert( upper == + inf );
 									bound_ran_neq = true;
+								}
 							}
 						}
 					}
