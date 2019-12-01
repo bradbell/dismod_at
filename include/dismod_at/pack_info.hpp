@@ -78,6 +78,11 @@ private:
 	CppAD::vector< CppAD::vector< CppAD::vector<subvec_info> > >
 	subgroup_rate_value_info_;
 
+	// subgroup_meas_value_info_
+	//	[n_integrad][ncov(integrand)][n_sub(integrand,j)]
+	CppAD::vector< CppAD::vector< CppAD::vector<subvec_info> > >
+	subgroup_meas_value_info_;
+
 public:
 	pack_info(
 	size_t                                    n_integrand      ,
@@ -132,10 +137,16 @@ public:
 	subvec_info group_meas_noise_info(size_t integrand_id, size_t j) const;
 
 	// subgroup_rate_value_info
-	size_t      subgroup_rate_value_n_cov(size_t integrand_id) const;
-	size_t      subgroup_rate_value_n_sub(size_t integrand_id, size_t j) const;
+	size_t      subgroup_rate_value_n_cov(size_t rate_id) const;
+	size_t      subgroup_rate_value_n_sub(size_t rate_id, size_t j) const;
 	subvec_info
-	subgroup_rate_value_info(size_t integrand_id, size_t j, size_t k) const;
+	subgroup_rate_value_info(size_t rate_id, size_t j, size_t k) const;
+
+	// subgroup_meas_value_info
+	size_t      subgroup_meas_value_n_cov(size_t integrand_id) const;
+	size_t      subgroup_meas_value_n_sub(size_t integrand_id, size_t j) const;
+	subvec_info
+	subgroup_meas_value_info(size_t integrand_id, size_t j, size_t k) const;
 
 };
 
