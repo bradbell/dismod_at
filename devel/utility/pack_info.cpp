@@ -199,6 +199,7 @@ n_child_        ( child_id2node_id.size() )
 	// resize by number of integrands
 	group_meas_value_info_.resize( n_integrand );
 	group_meas_noise_info_.resize( n_integrand );
+	subgroup_meas_value_info_.resize( n_integrand );
 
 	// -----------------------------------------------------------------------
 	// random effects
@@ -272,6 +273,36 @@ n_child_        ( child_id2node_id.size() )
 				offset += info_vec[k].n_var;
 			}
 			subgroup_rate_value_info_[rate_id].push_back( info_vec );
+		}
+	}
+
+	// subgroup_meas_value_info_
+	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
+	for(size_t mulcov_id = 0; mulcov_id < mulcov_table.size(); mulcov_id++)
+	{	const mulcov_struct& mulcov_obj = mulcov_table[mulcov_id];
+		bool match;
+		match  = mulcov_obj.mulcov_type  == meas_value_enum;
+		match &= mulcov_obj.integrand_id == int(integrand_id);
+		match &= mulcov_obj.subgroup_smooth_id != DISMOD_AT_NULL_INT;
+		if( match )
+		{
+			size_t covariate_id = size_t(mulcov_obj.covariate_id);
+			size_t group_id     = size_t(mulcov_obj.group_id);
+			size_t smooth_id    = mulcov_obj.subgroup_smooth_id;
+			size_t n_age        = smooth_table[smooth_id].n_age;
+			size_t n_time       = smooth_table[smooth_id].n_time;
+			size_t n_subgroup   = subgroup_size_[group_id];
+			//
+			CppAD::vector<subvec_info> info_vec(n_subgroup);
+			for(size_t k = 0; k < n_subgroup; ++k)
+			{	info_vec[k].covariate_id = covariate_id;
+				info_vec[k].group_id     = size_t(mulcov_obj.group_id);
+				info_vec[k].smooth_id    = smooth_id;
+				info_vec[k].n_var        = n_age * n_time;
+				info_vec[k].offset       = offset;
+				offset += info_vec[k].n_var;
+			}
+			subgroup_meas_value_info_[integrand_id].push_back( info_vec );
 		}
 	}
 
