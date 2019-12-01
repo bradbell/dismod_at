@@ -208,7 +208,8 @@ void pack_prior::set_prior(
 			size_t var_id   = offset + i * n_time + j;
 			//
 			// const_value
-			prior_vec[var_id].const_value    = s_info.const_value(i, j);
+			double const_value            = s_info.const_value(i, j);
+			prior_vec[var_id].const_value = const_value;
 			//
 			// smooth_id
 			prior_vec[var_id].smooth_id = smooth_id;
@@ -217,7 +218,8 @@ void pack_prior::set_prior(
 			prior_vec[var_id].n_time = n_time;
 			//
 			// value prior
-			prior_vec[var_id].value_prior_id = s_info.value_prior_id(i, j);
+			size_t value_prior_id            = s_info.value_prior_id(i, j);
+			prior_vec[var_id].value_prior_id = value_prior_id;
 			//
 			// dage prior
 			prior_vec[var_id].dage_prior_id = s_info.dage_prior_id(i, j);
@@ -230,6 +232,14 @@ void pack_prior::set_prior(
 			CPPAD_ASSERT_UNKNOWN( j + 1 < n_time ||
 				prior_vec[var_id].dtime_prior_id == DISMOD_AT_NULL_SIZE_T
 			);
+			//
+# ifndef NDEBUG
+			bool value_prior_null = value_prior_id == DISMOD_AT_NULL_SIZE_T;
+			bool const_value_null = std::isnan( const_value );
+			assert( ! (value_prior_null && const_value_null) );
+			assert( ! value_prior_null || ! const_value_null );
+
+# endif
 		}
 	}
 	return;
