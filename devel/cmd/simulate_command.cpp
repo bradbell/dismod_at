@@ -458,18 +458,43 @@ void simulate_command(
 		size_t found = option_map["zero_sum_mulcov_group"].find(group_name);
 		zero_sum_mulcov_group[group_id] = found < option_size;
 	}
+	size_t n_integrand = db_input.integrand_table.size();
+	size_t n_id[2];
+	n_id[0] = n_rate;
+	n_id[1] = n_integrand;
 	// for each simulation index and each rate
 	for(size_t sim_index = 0; sim_index < n_simulate; ++sim_index)
-	for(size_t rate_id = 0; rate_id < n_rate; ++rate_id)
-	{	// for each mulcov table entry for this rate
-		size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+	for(size_t loop = 0; loop < 2; ++loop)
+	for(size_t id = 0; id < n_id[loop]; ++id)
+	{	size_t rate_id      = DISMOD_AT_NULL_SIZE_T;
+		size_t integrand_id = DISMOD_AT_NULL_SIZE_T;
+		if( loop == 0 )
+			rate_id = id;
+		else
+			integrand_id = id;
+		//
+		// number of covariate multipliers for this rate or integrand
+		size_t n_cov;
+		if( loop == 0 )
+			n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+		else
+			n_cov = pack_object.subgroup_meas_value_n_cov(integrand_id);
+		//
+		// for each covariate multiplier
 		for(size_t j = 0; j < n_cov; ++j)
-		{	// number of subgroups
-			size_t n_sub = pack_object.subgroup_rate_value_n_sub(rate_id, j);
-			//
-			// packing information for first subgroup
-			pack_info::subvec_info info_0 =
-				pack_object.subgroup_rate_value_info(rate_id, j, 0);
+		{	// number of subgroups and packing information for first subgroup
+			size_t n_sub;
+			pack_info::subvec_info info_0;
+			if( loop == 0 )
+			{	n_sub  = pack_object.subgroup_rate_value_n_sub(rate_id, j);
+				info_0 = pack_object.subgroup_rate_value_info(rate_id, j, 0);
+			}
+			else
+			{	n_sub  = pack_object.subgroup_meas_value_n_sub(integrand_id, j);
+				info_0 = pack_object.subgroup_meas_value_info(
+					integrand_id, j, 0
+				);
+			}
 			//
 			// only consider groups that are zero sum contrained
 			if( zero_sum_mulcov_group[info_0.group_id] )
@@ -490,8 +515,15 @@ void simulate_command(
 					// sum over subgroups
 					for(size_t k = 0; k < n_sub; ++k)
 					{	// packing information for this subgroup
-						pack_info::subvec_info info_k =
-							pack_object.subgroup_rate_value_info(rate_id, j, k);
+						pack_info::subvec_info info_k;
+						if( loop == 0 )
+							info_k = pack_object.subgroup_rate_value_info(
+								rate_id, j, k
+							);
+						else
+							info_k = pack_object.subgroup_meas_value_info(
+								integrand_id, j, k
+							);
 						//
 						// all subgroups have the same smoothing
 						assert( info_k.smooth_id == info_0.smooth_id );
