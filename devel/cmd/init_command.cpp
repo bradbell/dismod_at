@@ -314,9 +314,11 @@ void init_command(
 	// initialize counters for different types of covariate multipliers
 	vector<size_t> count_group_meas_value(n_integrand);
 	vector<size_t> count_group_meas_noise(n_integrand);
+	vector<size_t> count_subgroup_meas_value(n_integrand);
 	for(size_t integrand_id = 0; integrand_id < n_integrand; integrand_id++)
-	{	count_group_meas_value[integrand_id] = 0;
-		count_group_meas_noise[integrand_id] = 0;
+	{	count_group_meas_value[integrand_id]    = 0;
+		count_group_meas_noise[integrand_id]    = 0;
+		count_subgroup_meas_value[integrand_id] = 0;
 	}
 	vector<size_t> count_group_rate_value(n_rate);
 	vector<size_t> count_subgroup_rate_value(n_rate);
@@ -364,10 +366,20 @@ void init_command(
 				break;
 
 				case meas_value_enum:
-				assert(loop == 0 );
-				info = pack_object.group_meas_value_info(
-					integrand_id, count_group_meas_value[integrand_id]++
-				);
+				if( loop == 0 )
+				{	info = pack_object.group_meas_value_info(
+						integrand_id, count_group_meas_value[integrand_id]++
+					);
+				}
+				else
+				{	info = pack_object.subgroup_meas_value_info(
+						integrand_id,
+						count_subgroup_meas_value[integrand_id],
+						k
+					);
+					if( k == n_subgroup[loop] - 1 )
+						++count_subgroup_meas_value[rate_id];
+				}
 				break;
 
 				case meas_noise_enum:

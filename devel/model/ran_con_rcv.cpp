@@ -232,8 +232,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 			dismod_at::pack_info::subvec_info
 				info_0 = pack_object.subgroup_rate_value_info(rate_id, j, 0);
 			if( zero_sum_mulcov_group[info_0.group_id] )
-			{	size_t smooth_id = info_0.smooth_id;
-				assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+			{	assert( info_0.smooth_id != DISMOD_AT_NULL_SIZE_T );
 				//
 				// number of grid points same for all subgroups
 				size_t n_grid = info_0.n_var;
