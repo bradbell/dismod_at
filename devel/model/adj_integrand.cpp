@@ -633,6 +633,8 @@ CppAD::vector<Float> adj_integrand::line(
 	// initialize effect as zero
 	for(size_t k = 0; k < n_line; ++k)
 		effect[k] = 0.0;
+	//
+	// group_meas_value covariates
 	size_t n_cov = pack_object_.group_meas_value_n_cov(integrand_id);
 	for(size_t j = 0; j < n_cov; ++j)
 	{	info  = pack_object_.group_meas_value_info(integrand_id, j);
@@ -656,6 +658,34 @@ CppAD::vector<Float> adj_integrand::line(
 				effect[k] += temp[k] * x_j;
 		}
 	}
+	//
+	// subgroup_meas_value covariates
+	n_cov = pack_object_.subgroup_meas_value_n_cov(integrand_id);
+	for(size_t j = 0; j < n_cov; ++j)
+	{	info  = pack_object_.subgroup_meas_value_info(integrand_id, j, 0);
+		if( info.group_id == group_id )
+		{	size_t k = subgroup_id - first_subgroup_id;
+			info  = pack_object_.subgroup_meas_value_info(integrand_id, j, k);
+			size_t smooth_id = info.smooth_id;
+			double x_j       = x[ info.covariate_id ];
+			// interpolate from smoothing grid to cohort
+			smooth_value.resize(info.n_var);
+			for(size_t ell = 0; ell < info.n_var; ++ell)
+				smooth_value[ell] = pack_vec[info.offset + ell];
+			const smooth_info& s_info = s_info_vec_[smooth_id];
+			temp = grid2line(
+				line_age,
+				line_time,
+				age_table_,
+				time_table_,
+				s_info,
+				smooth_value
+			);
+			for(size_t ell = 0; ell < n_line; ++ell)
+				effect[ell] += temp[ell] * x_j;
+		}
+	}
+	// -----------------------------------------------------------------------
 	// multiply by exponential of total effect
 	for(size_t k = 0; k < n_line; ++k)
 		 result[k] *= exp( effect[k] );
