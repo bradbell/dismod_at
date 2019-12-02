@@ -112,6 +112,7 @@ bool fit_model_xam(void)
 	vector<size_t> value_prior_id, dage_prior_id, dtime_prior_id;
 	vector<double> const_value;
 	size_t mulstd_value, mulstd_dage, mulstd_dtime;
+	bool all_const_value = false;
 	size_t n_age, n_time, n_grid;
 
 	vector<dismod_at::smooth_info> s_info_vec(2);
@@ -152,7 +153,7 @@ bool fit_model_xam(void)
 	s_info_vec[smooth_id_gaussian_zero] = dismod_at::smooth_info(
 		age_table, time_table, age_id, time_id,
 		value_prior_id, dage_prior_id, dtime_prior_id, const_value,
-		mulstd_value, mulstd_dage, mulstd_dtime
+		mulstd_value, mulstd_dage, mulstd_dtime, all_const_value
 	);
 	//
 	// smooth_id_positive
@@ -164,7 +165,7 @@ bool fit_model_xam(void)
 	s_info_vec[smooth_id_positive] = dismod_at::smooth_info(
 		age_table, time_table, age_id, time_id,
 		value_prior_id, dage_prior_id, dtime_prior_id, const_value,
-		mulstd_value, mulstd_dage, mulstd_dtime
+		mulstd_value, mulstd_dage, mulstd_dtime, all_const_value
 	);
 	//
 	// subgroup_table

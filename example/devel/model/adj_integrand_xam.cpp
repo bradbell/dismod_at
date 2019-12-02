@@ -64,6 +64,7 @@ bool adj_integrand_xam(void)
 	time_si_id[0] = n_time_table - 2;
 
 	// priors are not used
+	bool all_const_value = true;
 	vector<size_t> value_prior_id(1);
 	vector<size_t> dage_prior_id(1);
 	vector<size_t> dtime_prior_id(1);
@@ -84,7 +85,8 @@ bool adj_integrand_xam(void)
 		const_value,
 		mulstd_value,
 		mulstd_dage,
-		mulstd_dtime
+		mulstd_dtime,
+		all_const_value
 	);
 	//
 	// s_info_vec

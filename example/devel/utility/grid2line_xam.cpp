@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-19 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -62,6 +62,7 @@ bool grid2line_xam(void)
 	size_t mulstd_value   = 1;
 	size_t mulstd_dage    = 1;
 	size_t mulstd_dtime   = 1;
+	bool all_const_value = false;
 
 	// testing constructor
 	dismod_at::smooth_info g_info(
@@ -75,7 +76,8 @@ bool grid2line_xam(void)
 		const_value,
 		mulstd_value,
 		mulstd_dage,
-		mulstd_dtime
+		mulstd_dtime,
+		all_const_value
 	);
 
 	// variable values on smoothing grid

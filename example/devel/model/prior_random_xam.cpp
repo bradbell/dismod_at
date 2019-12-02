@@ -117,6 +117,7 @@ bool prior_random_xam(void)
 	vector<size_t> value_prior_id, dage_prior_id, dtime_prior_id;
 	vector<double> const_value;
 	size_t mulstd_value, mulstd_dage, mulstd_dtime;
+	bool all_const_value = false;
 	size_t n_age, n_time, n_grid;
 
 	vector<dismod_at::smooth_info> s_info_vec(2);
@@ -156,7 +157,7 @@ bool prior_random_xam(void)
 	s_info_vec[0] = dismod_at::smooth_info(
 		age_table, time_table, age_id, time_id,
 		value_prior_id, dage_prior_id, dtime_prior_id, const_value,
-		mulstd_value, mulstd_dage, mulstd_dtime
+		mulstd_value, mulstd_dage, mulstd_dtime, all_const_value
 	);
 	// ------------------ second smoothing -----------------------------------
 	// age_id
@@ -192,7 +193,7 @@ bool prior_random_xam(void)
 	s_info_vec[1] = dismod_at::smooth_info(
 		age_table, time_table, age_id, time_id,
 		value_prior_id, dage_prior_id, dtime_prior_id, const_value,
-		mulstd_value, mulstd_dage, mulstd_dtime
+		mulstd_value, mulstd_dage, mulstd_dtime, all_const_value
 	);
 	// ----------------------- pack_object --------------------------------
 	//

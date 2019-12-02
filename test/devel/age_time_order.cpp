@@ -106,7 +106,12 @@ test_smooth_info(void)
 	// extract the smoothing information
 	size_t smooth_id = 0;
 	dismod_at::smooth_info  s_info(
-		age_table, time_table, smooth_id, smooth_table, smooth_grid_table
+		smooth_id,
+		age_table,
+		time_table,
+		prior_table,
+		smooth_table,
+		smooth_grid_table
 	);
 
 	ok  &= s_info.age_size()  == 3;

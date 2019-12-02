@@ -127,6 +127,7 @@ bool rate_mulcov(void)
 	// s_info_vec
 	vector<dismod_at::smooth_info> s_info_vec(2);
 	size_t mulstd_value = 1, mulstd_dage = 1, mulstd_dtime = 1;
+	bool all_const_value = false;
 	for(size_t smooth_id = 0; smooth_id < 2; smooth_id++)
 	{	vector<size_t> age_id_tmp;
 		if( smooth_id == 0 )
@@ -144,10 +145,12 @@ bool rate_mulcov(void)
 		for(size_t i = 0; i < n_si; i++)
 			value_prior_id[i] = 0;
 		vector<double> const_value(n_si);
+		for(size_t i = 0; i < n_si; ++i)
+			const_value[i] = std::numeric_limits<double>::quiet_NaN();
 		dismod_at::smooth_info s_info(
 			age_table, time_table, age_id_tmp, time_id,
 			value_prior_id, dage_prior_id, dtime_prior_id, const_value,
-			mulstd_value, mulstd_dage, mulstd_dtime
+			mulstd_value, mulstd_dage, mulstd_dtime, all_const_value
 		);
 		s_info_vec[smooth_id] = s_info;
 	}

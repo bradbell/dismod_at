@@ -111,7 +111,12 @@ bool smooth_info_xam(void)
 	// extract the smoothing information
 	size_t smooth_id = 0;
 	dismod_at::smooth_info  s_info(
-		age_table, time_table, smooth_id, smooth_table, smooth_grid_table
+		smooth_id,
+		age_table,
+		time_table,
+		prior_table,
+		smooth_table,
+		smooth_grid_table
 	);
 	//
 	size_t null_size_t = DISMOD_AT_NULL_SIZE_T;

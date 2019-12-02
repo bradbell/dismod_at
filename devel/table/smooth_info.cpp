@@ -66,7 +66,12 @@ $section smooth_info: Constructor$$
 
 $head Syntax$$
 $codei%smooth_info %s_info%(
-	%age_table%, %time_table%, %smooth_id%, %smooth_table%, %smooth_grid_table%
+	%smooth_id%,
+	%age_table%,
+	%time_table%,
+	%prior_table%,
+	%smooth_table%,
+	%smooth_grid_table%
 )%$$
 $codei%smooth_info %s_default%()
 %$$
@@ -103,6 +108,9 @@ $cref/n_time/smooth_table/n_time/$$ are the number if age values
 and number of time values in the corresponding rectangular grid in
 $cref smooth_grid_table$$.
 
+$head smooth_id$$
+Is the $cref/smooth_id/smooth_table/smooth_id/$$ for this smoothing.
+
 $head age_table$$
 is the $cref/age_table/get_age_table/age_table/$$
 returned by $code get_age_table$$.
@@ -110,6 +118,10 @@ returned by $code get_age_table$$.
 $head time_table$$
 is the $cref/time_table/get_time_table/time_table/$$
 returned by $code get_time_table$$.
+
+$head prior_table$$
+is the $cref/prior_table/get_prior_table/prior_table/$$
+returned by $code get_prior_table$$.
 
 $head smooth_table$$
 is the $cref/smooth_table/get_smooth_table/smooth_table/$$
@@ -134,13 +146,14 @@ $end
 */
 // BEGIN_NORMAL_CTOR
 smooth_info::smooth_info(
+	size_t                                   smooth_id         ,
 	const CppAD::vector<double>&             age_table         ,
 	const CppAD::vector<double>&             time_table        ,
-	size_t                                   smooth_id         ,
+	const CppAD::vector<prior_struct>&       prior_table       ,
 	const CppAD::vector<smooth_struct>&      smooth_table      ,
 	const CppAD::vector<smooth_grid_struct>& smooth_grid_table )
 // END_NORMAL_CTOR
-{	size_t i, j, id;
+{	size_t id;
 	using std::string;
 	using CppAD::to_string;
 	//
@@ -159,7 +172,7 @@ smooth_info::smooth_info(
 	assert( time_id_.size() == 0 );
 	CppAD::vector<key_id> age_vec, time_vec;
 	size_t n_smooth_grid = smooth_grid_table.size();
-	for(i = 0; i < n_smooth_grid; i++)
+	for(size_t i = 0; i < n_smooth_grid; i++)
 	{	if( smooth_grid_table[i].smooth_id == int( smooth_id ) )
 		{	key_id element;
 			//
@@ -194,11 +207,11 @@ smooth_info::smooth_info(
 
 	// age ids in order of increasing age for this smoothing
 	age_id_.resize(n_age);
-	for(i = 0; i < n_age; i++)
+	for(size_t i = 0; i < n_age; i++)
 		age_id_[i] = age_vec[i].id;
 	// time ids in order of increasing time for this smoothing
 	time_id_.resize(n_time);
-	for(j = 0; j < n_time; j++)
+	for(size_t j = 0; j < n_time; j++)
 		time_id_[j] = time_vec[j].id;
 
 	// set smoothing priors and count number of times each
@@ -208,20 +221,20 @@ smooth_info::smooth_info(
 	dage_prior_id_.resize ( n_age * n_time );
 	dtime_prior_id_.resize( n_age * n_time );
 	const_value_.resize   ( n_age * n_time );
-	for(i = 0; i < n_age * n_time; i++)
+	for(size_t i = 0; i < n_age * n_time; i++)
 		count[i] = 0;
-	for( i = 0; i < n_smooth_grid; i++)
+	for(size_t i = 0; i < n_smooth_grid; i++)
 	{	if( smooth_grid_table[i].smooth_id == int( smooth_id ) )
 		{	id           = smooth_grid_table[i].age_id;
 			size_t j_age = n_age;
-			for(j = 0; j < n_age; j++ )
+			for(size_t j = 0; j < n_age; j++ )
 				if( id == age_id_[j] )
 					j_age = j;
 			assert( j_age < n_age );
 			//
 			id            = smooth_grid_table[i].time_id;
 			size_t j_time = n_time;
-			for(j = 0; j < n_time; j++ )
+			for(size_t j = 0; j < n_time; j++ )
 				if( id == time_id_[j] )
 					j_time = j;
 			assert( j_time < n_time );
@@ -243,7 +256,7 @@ smooth_info::smooth_info(
 	}
 
 	// make sure each age, time pair appears once
-	for(i = 0; i < n_age * n_time; i++)
+	for(size_t i = 0; i < n_age * n_time; i++)
 	{	if( count[i] != 1 )
 		{	size_t j_time = i % n_time;
 			size_t j_age  = (i - j_time) / n_time;
@@ -258,6 +271,21 @@ smooth_info::smooth_info(
 		}
 	}
 
+	// all_const_value_
+	all_const_value_ = true;
+	for(size_t i = 0; i < n_age; ++i)
+	{	for(size_t j = 0; j < n_time; ++j)
+		{	double value = const_value_[ i * n_time + j ];
+			if( std::isnan(value) )
+			{	size_t prior_id = value_prior_id_[ i * n_time + j ];
+				assert( prior_id != DISMOD_AT_NULL_SIZE_T );
+				double lower = prior_table[prior_id].lower;
+				double upper = prior_table[prior_id].upper;
+				assert( lower <= upper );
+				all_const_value_ &= lower == upper;
+			}
+		}
+	}
 }
 
 // BEGIN_DEFAULT_CTOR
@@ -396,6 +424,8 @@ $icode%dage_prior_id%  = %s_info%.dage_prior_id(%i%, %j%)
 %$$
 $icode%dtime_prior_id%  = %s_info%.dtime_prior_id(%i%, %j%)
 %$$
+$icode%all_const_value% = %s_info%.all_const_value()
+%$$
 
 $head Prototype$$
 $srcfile%devel/table/smooth_info.cpp%
@@ -409,6 +439,9 @@ $srcfile%devel/table/smooth_info.cpp%
 %$$
 $srcfile%devel/table/smooth_info.cpp%
 	0%// BEGIN_DTIME_PRIOR_ID%// END_DTIME_PRIOR_ID%1
+%$$
+$srcfile%devel/table/smooth_info.cpp%
+	0%// BEGIN_ALL_CONST_VALUE%// END_ALL_CONST_VALUE%1
 %$$
 
 $head i$$
@@ -438,7 +471,6 @@ If $icode%i% == %s_info%.age_size()-1%$$ then
 $icode dage_prior_id$$ is $code DISMOD_AT_NULL_SIDE_T$$
 (this may not be true in for the corresponding smooth_grid table values).
 
-
 $head dtime_prior_id$$
 is the $cref/prior_id/prior_table/prior_id/$$
 for the dtime prior for this smoothing
@@ -446,6 +478,11 @@ corresponding to this $icode i$$, $icode j$$.
 If $icode%j% == %s_info%.time_size()-1%$$ then
 $icode dtime_prior_id$$ is $code DISMOD_AT_NULL_SIDE_T$$
 (this may not be true in for the corresponding smooth_grid table values).
+
+$head all_const_value$$
+is true if all the value priors are equivalent to a $icode const_value$$; i.e.,
+$icode const_value$$ is not null or the upper and lower limit for
+$icode value_prior_id$$ are equal.
 
 $end
 */
@@ -477,6 +514,10 @@ size_t smooth_info::dtime_prior_id(size_t i, size_t j) const
 	assert( j < time_id_.size() );
 	return dtime_prior_id_[ i * time_id_.size() + j];
 }
+// BEGIN_ALL_CONST_VALUE
+bool smooth_info::all_const_value(void) const
+{	return all_const_value_; }
+// END_ALL_CONST_VALUE
 /*
 ------------------------------------------------------------------------------
 $begin smooth_info_mulstd$$
@@ -614,7 +655,8 @@ smooth_info::smooth_info(
 	const CppAD::vector<double>& const_value            ,
 	size_t                       mulstd_value_prior_id  ,
 	size_t                       mulstd_dage_prior_id   ,
-	size_t                       mulstd_dtime_prior_id  )
+	size_t                       mulstd_dtime_prior_id  ,
+	bool                         all_const_value        )
 // END_TEST_CTOR
 {	age_id_          = age_id;
 	time_id_         = time_id;
@@ -625,6 +667,7 @@ smooth_info::smooth_info(
 	mulstd_value_    = mulstd_value_prior_id;
 	mulstd_dage_     = mulstd_dage_prior_id;
 	mulstd_dtime_    = mulstd_dtime_prior_id;
+	all_const_value_ = all_const_value;
 	//
 	size_t n_age  = age_id.size();
 	size_t n_time = time_id.size();
