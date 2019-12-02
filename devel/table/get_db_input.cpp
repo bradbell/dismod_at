@@ -26,8 +26,8 @@ $head Syntax$$
 $codei%get_db_input(%db%, %db_input%)%$$
 
 $head See Also$$
-See the $code smooth_info$$
-$cref/checks in normal constructor/smooth_info/Checks in Normal Constructor/$$.
+See the $code smooth_info$$ constructor
+$cref/checks/smooth_info_ctor/Checks/$$.
 
 $head Purpose$$
 Read all the input tables and return them as a C++ data structure.

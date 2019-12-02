@@ -50,7 +50,7 @@ $childtable%devel/table/check_child_prior.cpp
 	%devel/table/log_message.cpp
 	%devel/table/put_table_row.cpp
 	%devel/table/open_connection.cpp
-	%devel/table/smooth_info.cpp
+	%devel/table/smooth_info.omh
 	%devel/table/weight_info.cpp
 %$$
 
