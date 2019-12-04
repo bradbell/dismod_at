@@ -378,7 +378,7 @@ void init_command(
 						k
 					);
 					if( k == n_subgroup[loop] - 1 )
-						++count_subgroup_meas_value[rate_id];
+						++count_subgroup_meas_value[integrand_id];
 				}
 				break;
 

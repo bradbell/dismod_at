@@ -54,44 +54,43 @@ $codei%
 which can be inspected using any sqlite viewer; e.g.,
 $href%http://sqlitebrowser.org/%$$.
 
-$comment
-Examples that have a discussion section are at the beginning of this list
-and in suggested read order
-$$
-$children%example/user/csv2db.py
-	%example/user/fit_random.py
-	%example/user/fit_fixed_both.py
-	%example/user/posterior.py
-	%example/user/fit_sim.py
-	%example/user/fit_meas_noise.py
-	%example/user/age_avg_split.py
-	%example/user/diabetes.py
-	%example/user/ill_condition.py
-	%example/user/jump_at_age.py
-	%example/user/change_grid.py
-	%example/user/lasso_covariate.py
-	%example/user/students.py
-	%example/user/censor.py
-	%example/user/cascade.py
-	%example/user/predict_fit.py
-	%example/user/predict_mulcov.py
-	%example/user/data_sim.py
-	%example/user/sample_sim.py
-	%example/user/sample_asy.py
-	%example/user/const_value.py
-	%example/user/mulstd.py
-	%example/user/bilevel_random.py
-
-	%example/user/const_random.py
-	%example/user/continue_fit.py
-	%example/user/diff_constraint.py
-	%example/user/group_mulcov.py
-	%example/user/no_children.py
-	%example/user/zsum_child_rate.py
-	%example/user/zsum_mulcov_rate.py
-	%example/user/re_scale.py
-	%example/user/speed.py
+$comment BEGIN_SORT_THIS_LINE_PLUS_2$$
+$children%
+	example/user/age_avg_split.py%
+	example/user/bilevel_random.py%
+	example/user/cascade.py%
+	example/user/censor.py%
+	example/user/change_grid.py%
+	example/user/const_random.py%
+	example/user/const_value.py%
+	example/user/continue_fit.py%
+	example/user/csv2db.py%
+	example/user/data_sim.py%
+	example/user/diabetes.py%
+	example/user/diff_constraint.py%
+	example/user/fit_fixed_both.py%
+	example/user/fit_meas_noise.py%
+	example/user/fit_random.py%
+	example/user/fit_sim.py%
+	example/user/group_mulcov.py%
+	example/user/ill_condition.py%
+	example/user/jump_at_age.py%
+	example/user/lasso_covariate.py%
+	example/user/mulstd.py%
+	example/user/no_children.py%
+	example/user/posterior.py%
+	example/user/predict_fit.py%
+	example/user/predict_mulcov.py%
+	example/user/re_scale.py%
+	example/user/sample_asy.py%
+	example/user/sample_sim.py%
+	example/user/speed.py%
+	example/user/students.py%
+	example/user/zsum_child_rate.py%
+	example/user/zsum_mulcov_meas.py%
+	example/user/zsum_mulcov_rate.py
 %$$
+$comment END_SORT_THIS_LINE_MINUS_3$$
 
 $head Examples With Explanation$$
 $table
@@ -117,14 +116,16 @@ $rref user_sample_asy.py$$
 $rref user_continue_fit.py$$
 $rref user_const_value.py$$
 $rref user_mulstd.py$$
+$rref user_group_mulcov.py$$
 $rref user_zsum_child_rate.py$$
 $rref user_zsum_mulcov_rate.py$$
-$rref user_group_mulcov.py$$
+$rref user_zsum_mulcov_meas.py$$
 $rref user_bilevel_random.py$$
 $tend
 
 $head More Examples$$
 $table
+$rref user_metropolis.py$$
 $rref user_const_random.py$$
 $rref user_diff_constraint.py$$
 $rref user_no_children.py$$

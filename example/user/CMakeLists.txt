@@ -41,6 +41,7 @@ FOREACH(user_case
 	predict_mulcov
 	zsum_child_rate
 	zsum_mulcov_rate
+	zsum_mulcov_meas
 	re_scale
 	students
 )

@@ -418,7 +418,7 @@ avg_noise_obj_(
 			{	const pack_info::subvec_info info_0 =
 					pack_object.subgroup_meas_value_info(integrand_id, j, 0);
 				size_t n_sub =
-					pack_object.subgroup_meas_value_n_sub(integrand, j);
+					pack_object.subgroup_meas_value_n_sub(integrand_id, j);
 				if( info_0.group_id == group_id )
 				for(size_t k = 0; k < n_sub; ++k)
 				{	const pack_info::subvec_info info =

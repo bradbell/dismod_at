@@ -69,11 +69,17 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-04$$
+Add the $cref user_zsum_mulcov_meas.py$$ example
+which demonstrates using the
+$cref/zero_sum_mulcov_group/option_table/zero_sum_mulcov_group/$$
+option with subgroup measurement covariate multipliers.
+
 $head 11-30$$
 Add the $cref user_zsum_mulcov_rate.py$$ example
-which demonstrates using the new
-$cref/zero_sum_mulcov_group /option_table /zero_sum_mulcov_group/$$
-option.
+which demonstrates using the
+$cref/zero_sum_mulcov_group/option_table/zero_sum_mulcov_group/$$
+option with subgroup rate covariate multipliers.
 
 $head 11-29$$
 The $code zero_sum_random$$ option was changed to

@@ -15,9 +15,10 @@
 # $$
 #
 # $head See Also$$
-# $cref user_zsum_child_rate.py$$
+# $cref user_zsum_child_rate.py$$,
+# $cref user_zsum_mulcov_meas.py$$
 #
-# $section Constrain Sum of Subgroup Covariate Multipliers to Zero$$
+# $section Constrain Sum of Subgroup Rate Covariate Multipliers to Zero$$
 #
 # $head Purpose$$
 # This example demonstrates using
@@ -54,7 +55,7 @@
 # The non-zero fixed effects for this example are
 # $cref/iota/rate_table/rate_name/iota/$$ and $icode rho$$
 # for the parent node $code north_america$$.
-# The non-zero random effects are the subgroup covariate multipliers
+# The non-zero random effects are the subgroup rate covariate multipliers
 # for the $code united_states$$ and $code canada$$.
 # The parent rates and subgroup covariate multipliers use a grid with
 # one point in age and two points in time. Thus there are six model variables
@@ -397,5 +398,5 @@ for rate in [ 'iota', 'rho' ] :
 			assert False
 #
 # -----------------------------------------------------------------------
-print('zero_sum_group: OK')
+print('zsum_mulcov_rate: OK')
 # END PYTHON

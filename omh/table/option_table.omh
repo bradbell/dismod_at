@@ -206,8 +206,9 @@ $cref/subgroup covariate multiplier
 estimates is constrained to be zero.
 These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
-The file $cref/zsum_mulcov_rate.py/user_zsum_mulcov_rate.py/$$
-contains an example and test using these constraints.
+The files $cref/zsum_mulcov_rate.py/user_zsum_mulcov_rate.py/$$
+and $cref/zsum_mulcov_meas.py/user_zsum_mulcov_meas.py/$$
+contain examples and tests using these constraints.
 
 $subhead Default$$
 The default value for this option is null; i.e.,
