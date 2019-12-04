@@ -315,6 +315,7 @@ void smooth_info::operator=(const smooth_info& s_info)
 	mulstd_value_    = s_info.mulstd_value_;
 	mulstd_dage_     = s_info.mulstd_dage_;
 	mulstd_dtime_    = s_info.mulstd_dtime_;
+	all_const_value_ = s_info.all_const_value_;
 }
 /*
 ------------------------------------------------------------------------------
