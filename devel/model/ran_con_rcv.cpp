@@ -135,7 +135,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 			}
 		}
 		// --------------------------------------------------------------------
-		// zero_sum_mulcov_group
+		// zero sum subgroup_rate_value covariate multipliers
 		size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; ++j)
 		{	// packing information for first subgroup
@@ -153,6 +153,30 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 				A_nnz += n_grid * n_sub;
 			}
 		}
+	}
+	// -----------------------------------------------------------------------
+	// zero sum subgroup_meas_value covariate multipliers
+	size_t n_integrand = pack_object.integrand_size();
+	for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
+	{	size_t n_cov = pack_object.subgroup_meas_value_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; ++j)
+		{	// packing information for first subgroup
+			dismod_at::pack_info::subvec_info info_0 =
+				pack_object.subgroup_meas_value_info(integrand_id, j, 0);
+			//
+			assert( info_0.smooth_id != DISMOD_AT_NULL_SIZE_T );
+			if( zero_sum_mulcov_group[info_0.group_id] )
+			{	size_t n_grid = info_0.n_var;
+				assert( n_grid > 0 );
+				size_t n_sub  =
+					pack_object.subgroup_meas_value_n_sub(integrand_id, j);
+				assert( n_sub > 0 );
+				// each grid point corresponds to a random constraint equation
+				A_nr  += n_grid;
+				A_nnz += n_grid * n_sub;
+			}
+		}
+
 	}
 	//
 	// check for second case where random constraint matrix is empty
@@ -225,7 +249,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 			}
 		}
 		// --------------------------------------------------------------------
-		// zero_sum_mulcov_group
+		// zero sum subgroup_rate_value covariate multipliers
 		size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; ++j)
 		{	// packing information corresponding to first subgroup
@@ -251,7 +275,58 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 					assert( info_k.smooth_id == info_0.smooth_id );
 					assert( info_k.n_var     == info_0.n_var );
 					//
-					// offset for theis subgroup
+					// offset for this subgroup
+					size_t offset = info_k.offset;
+					//
+					// for each grid point in this smoothing
+					for(size_t ell = 0; ell < n_grid; ++ell)
+					{	// variable index for this grid point
+						size_t var_id = offset + ell;
+						//
+						// corresponding index in vector with constant
+						// random effects removed
+						size_t random_index = var_id2random[var_id];
+						//
+						// check that lower and upper limits were not equal
+						assert( random_index < n_random );
+						//
+						// entry for this grid point ell, subgroup k, rate
+						A_rc.set(nnz_index++, row_index + ell, random_index);
+					}
+				}
+				row_index += n_grid;
+			}
+		}
+	}
+	// --------------------------------------------------------------------
+	// zero sum subgroup_meas_value covariate multipliers
+	for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
+	{	size_t n_cov = pack_object.subgroup_meas_value_n_cov(integrand_id);
+		for(size_t j = 0; j < n_cov; ++j)
+		{	// packing information corresponding to first subgroup
+			dismod_at::pack_info::subvec_info info_0 =
+				pack_object.subgroup_meas_value_info(integrand_id, j, 0);
+			if( zero_sum_mulcov_group[info_0.group_id] )
+			{	assert( info_0.smooth_id != DISMOD_AT_NULL_SIZE_T );
+				//
+				// number of grid points same for all subgroups
+				size_t n_grid = info_0.n_var;
+				//
+				// number of subgroups
+				size_t n_sub =
+					pack_object.subgroup_meas_value_n_sub(integrand_id, j);
+				//
+				// for each subgroup
+				for(size_t k = 0; k < n_sub; ++k)
+				{	// packing information for this child
+					dismod_at::pack_info::subvec_info info_k =
+					pack_object.subgroup_meas_value_info(integrand_id, j, k);
+					//
+					// subgroups have same smoothing
+					assert( info_k.smooth_id == info_0.smooth_id );
+					assert( info_k.n_var     == info_0.n_var );
+					//
+					// offset for this subgroup
 					size_t offset = info_k.offset;
 					//
 					// for each grid point in this smoothing
