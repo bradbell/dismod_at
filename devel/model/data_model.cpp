@@ -388,7 +388,7 @@ avg_noise_obj_(
 					depend_on_ran_var |= ! s_info.all_const_value();
 				}
 			}
-			// change depend_on_ran_var for subgroup covariate multipliers
+			// change depend_on_ran_var for subgroup_rate_value covariates
 			for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
 			{	size_t rate_id = rate_id_vec[ell];
 				size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
@@ -401,6 +401,7 @@ avg_noise_obj_(
 					for(size_t k = 0; k < n_sub; ++k)
 					{	const pack_info::subvec_info info =
 						pack_object.subgroup_rate_value_info(rate_id, j, k);
+						//
 						assert( info.group_id  == info_0.group_id );
 						assert( info.smooth_id == info_0.smooth_id );
 						//
@@ -409,6 +410,27 @@ avg_noise_obj_(
 						const smooth_info& s_info = s_info_vec[smooth_id];
 						depend_on_ran_var |= ! s_info.all_const_value();
 					}
+				}
+			}
+			// change depend_on_ran_var for subgroup_meas_value covariates
+			size_t n_cov = pack_object.subgroup_meas_value_n_cov(integrand_id);
+			for(size_t j = 0; j < n_cov; ++j)
+			{	const pack_info::subvec_info info_0 =
+					pack_object.subgroup_meas_value_info(integrand_id, j, 0);
+				size_t n_sub =
+					pack_object.subgroup_meas_value_n_sub(integrand, j);
+				if( info_0.group_id == group_id )
+				for(size_t k = 0; k < n_sub; ++k)
+				{	const pack_info::subvec_info info =
+					pack_object.subgroup_meas_value_info(integrand_id, j, k);
+					//
+					assert( info.group_id  == info_0.group_id );
+					assert( info.smooth_id == info_0.smooth_id );
+					//
+					size_t smooth_id = info.smooth_id;
+					assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+					const smooth_info& s_info = s_info_vec[smooth_id];
+					depend_on_ran_var |= ! s_info.all_const_value();
 				}
 			}
 		}
