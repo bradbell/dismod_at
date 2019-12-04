@@ -152,20 +152,23 @@ always_empty += [ 'sim_v', 'sim_a', 'sim_t' ]
 for prefix in [ 'lower', 'upper', 'mean', 'std', 'eta', 'nu', 'density' ] :
 	for suffix in ['_a', '_t'] :
 		always_empty.append( prefix + suffix )
+always_empty += [ 'subgroup' ]
 for row in variable_table :
 	empty_field = copy.copy( always_empty )
-	if row['var_type'] != 'rate' and row['var_type'] != 'mulcov_rate_value' :
-		empty_field.append('rate')
-	if row['var_type'].startswith('mulcov_') :
-		empty_field.append('node')
-	else :
+	if row['var_type'] == 'rate' :
 		empty_field.append('covariate')
 		empty_field.append('m_id')
-		empty_field.append('group/sub')
+		empty_field.append('group')
+	else:
+		assert row['var_type'] == 'mulcov_rate_value'
+		empty_field.append('node')
+	#
 	for field in row :
 		if field in empty_field :
 			assert row[field] == ''
 		else :
+			if row[field] == '' :
+				print(field, row)
 			assert row[field] != ''
 	#
 	assert row['rate']               == 'omega'
@@ -185,7 +188,7 @@ for row in variable_table :
 	else :
 		assert row['var_type'] == 'mulcov_rate_value'
 		assert row['covariate']   == 'income'
-		assert row['group/sub']   == 'world'
+		assert row['group']       == 'world'
 		assert int( row['s_id'] ) == 1 # smooth_income_multiplier
 		assert int( row['m_id'] ) == 0 # mulcov_id
 		assert near_equal(row['fit_value'], income_multiplier, 1e-5)

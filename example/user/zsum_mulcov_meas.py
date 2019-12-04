@@ -233,7 +233,7 @@ def example_db (file_name) :
 			'mean':     2.0 * max(iota_parent, rho_parent),
 		},{ # prior_meas_subgroup
 			'name':     'prior_meas_subgroup',
-			'density':  'uniform',
+			'density':  'gaussian',
 			'mean':     0.0,
 			'std':      100.0, # very large so like uniform distribution
 		},{ # prior_gauss_diff
@@ -321,7 +321,6 @@ from dismod_at import system_command_prc
 program = '../../devel/dismod_at'
 system_command_prc([ program, file_name, 'init' ])
 system_command_prc([ program, file_name, 'fit', 'fixed' ])
-system_command_prc([ program, file_name, 'set', 'scale_var', 'fit_var'])
 system_command_prc([ program, file_name, 'fit', 'both' ])
 # -----------------------------------------------------------------------
 # connect to database

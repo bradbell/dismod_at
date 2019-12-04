@@ -70,10 +70,16 @@ $childtable%
 %$$
 
 $head 12-04$$
+$list number$$
 Add the $cref user_zsum_mulcov_meas.py$$ example
 which demonstrates using the
 $cref/zero_sum_mulcov_group/option_table/zero_sum_mulcov_group/$$
 option with subgroup measurement covariate multipliers.
+$lnext
+Include both
+$cref/group/db2csv_command/variable.csv/group/$$ and subgroup
+in the variable.csv file created by the db2csv command.
+$lend
 
 $head 11-30$$
 Add the $cref user_zsum_mulcov_rate.py$$ example
@@ -150,8 +156,10 @@ $cref/backward compatibility
 was added to the $code create_database$$ function.
 $lnext
 The $cref db2csv_command$$ was modified in the following ways:
-The $cref%group/sub%db2csv_command%variable.csv%group/sub%$$
-column as added to variable.csv.
+The $code group/sub$$ column as added to
+$cref/variable.csv/db2csv_command/variable.csv/$$
+(changed to $code group$$ and $code subgroup$$ on
+$cref/12-04/whats_new_2019/12-04/$$).
 The $cref%subgroup%db2csv_command%data.csv%subgroup%$$ and
 $cref%group%db2csv_command%data.csv%group%$$ columns were added to data.csv
 The $cref%subgroup%db2csv_command%data.csv%subgroup%$$

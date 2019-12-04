@@ -142,26 +142,21 @@
 # is the
 # $cref/node_name/node_table/node_name/$$.
 #
-# $subhead group/sub$$
+# $subhead group$$
 # This field is non-empty for
-# $cref/group
+# $cref/group covariate multipliers
 #	/model_variables
 #	/Fixed Effects, theta
 #	/Group Covariate Multipliers
-#/$$
-# and
-# $cref/subgroup
+#/$$.
+#
+# $subhead subgroup$$
+# This field is non-empty for
+# $cref/subgroup covariate multipliers
 #	/model_variables
 #	/Random Effects, u
 #	/Subgroup Covariate Multipliers
-#/$$
-# covariate multipliers.
-# If $icode fixed$$ is true (false) this is the
-# $cref/group_name/subgroup_table/group_name/$$
-# ($cref/subgroup_name/subgroup_table/subgroup_name/$$)
-# for this variable.
-# This will correspond to the data table
-# $cref/subgroup_id/data_table/subgroup_id/$$.
+#/$$.
 #
 # $subhead fixed$$
 # is $code true$$ if this variable is a
@@ -1101,7 +1096,8 @@ def db2csv_command(database_file_arg) :
 		'integrand',
 		'covariate',
 		'node',
-		'group/sub',
+		'group',
+		'subgroup',
 		'fixed',
 		'depend',
 		'start',
@@ -1158,7 +1154,7 @@ def db2csv_command(database_file_arg) :
 		row_out['start'] = table_lookup('start_var', var_id, 'start_var_value')
 		row_out['scale'] = table_lookup('scale_var', var_id, 'scale_var_value')
 		#
-		# fixed and group/sub
+		# fixed and group and sub
 		if row_in['var_type'] == 'rate' :
 			if row_in['node_id'] != parent_node_id :
 				row_out['fixed'] = 'false'
@@ -1170,15 +1166,13 @@ def db2csv_command(database_file_arg) :
 				subgroup_name = table_lookup(
 					'subgroup', row_in['subgroup_id'], 'subgroup_name'
 				)
-				row_out['group/sub'] = subgroup_name
+				row_out['subgroup'] = subgroup_name
 				row_out['fixed'] = 'false'
 			else :
 				assert row_in['group_id'] != None
 				assert row_in['subgroup_id'] == None
-				group_name = table_lookup(
-					'subgroup', row_in['group_id'], 'subgroup_name'
-				)
-				row_out['group/sub'] = group_name
+				group_name  = group_id2name[ row_in['group_id'] ]
+				row_out['group'] = group_name
 				row_out['fixed'] = 'true'
 		#
 		# depend
