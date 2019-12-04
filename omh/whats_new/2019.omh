@@ -70,7 +70,7 @@ $childtable%
 %$$
 
 $head 11-30$$
-Add the $cref user_zero_sum_group.py$$ example
+Add the $cref user_zsum_mulcov_rate.py$$ example
 which demonstrates using the new
 $cref/zero_sum_mulcov_group /option_table /zero_sum_mulcov_group/$$
 option.
@@ -231,7 +231,7 @@ does not apply to random effects that have equal lower and upper limits.
 
 $head 10-02$$
 Add discussion at the top of the
-$cref user_zero_sum_rate.py$$ example.
+$cref user_zsum_child_rate.py$$ example.
 
 $head 10-01$$
 $list number$$

@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin option_table$$
 $spell
+	zsum
 	mulcov
 	optimizer
 	CppAD
@@ -180,7 +181,7 @@ $cref/child rate effect
 estimates is constrained to be zero.
 These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
-The file $cref/zero_sum_rate.py/user_zero_sum_rate.py/$$
+The file $cref/zsum_child_rate.py/user_zsum_child_rate.py/$$
 contains an example and test using these constraints.
 Note that for each rate in $icode zero_sum_child_rate$$,
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null; i.e.,
@@ -205,7 +206,7 @@ $cref/subgroup covariate multiplier
 estimates is constrained to be zero.
 These are additional constraints in the optimization problem for the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
-The file $cref/zero_sum_group.py/user_zero_sum_group.py/$$
+The file $cref/zsum_mulcov_rate.py/user_zsum_mulcov_rate.py/$$
 contains an example and test using these constraints.
 
 $subhead Default$$

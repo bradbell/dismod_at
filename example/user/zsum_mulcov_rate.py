@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_zero_sum_group.py$$ $newlinech #$$
+# $begin user_zsum_mulcov_rate.py$$ $newlinech #$$
 # $spell
 #	init
 #	mulcov
@@ -15,7 +15,7 @@
 # $$
 #
 # $head See Also$$
-# $cref user_zero_sum_rate.py$$
+# $cref user_zsum_child_rate.py$$
 #
 # $section Constrain Sum of Subgroup Covariate Multipliers to Zero$$
 #
@@ -25,7 +25,7 @@
 # to improve the speed and accuracy of estimation of the fixed effects.
 #
 # $head Problem Parameters$$
-# $srcfile%example/user/zero_sum_group.py%
+# $srcfile%example/user/zsum_mulcov_rate.py%
 #	0%# begin problem parameters%# end problem parameters%1
 # %$$
 #
@@ -66,7 +66,7 @@
 #
 # $head Source Code$$
 # $srcfile%
-#	example/user/zero_sum_group.py
+#	example/user/zsum_mulcov_rate.py
 #	%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
@@ -87,7 +87,7 @@ import copy
 import math
 import random
 import time
-test_program = 'example/user/zero_sum_group.py'
+test_program = 'example/user/zsum_mulcov_rate.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'

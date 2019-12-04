@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2016$$
 $spell
+	zsum
 	dev
 	hpp
 	Dismod
@@ -178,7 +179,7 @@ $lend
 
 $head 10-16$$
 $list number$$
-The $cref/zero_sum_rate.py/user_zero_sum_rate.py/$$
+The $cref/zsum_child_rate.py/user_zsum_child_rate.py/$$
 example / test was added.
 $lnext
 There was a bug (that has been fixed) in
