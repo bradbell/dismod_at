@@ -22,6 +22,7 @@ $srcfile%example/devel/table/get_mulcov_table_xam.cpp%0%// BEGIN C++%// END C++%
 $end
 */
 // BEGIN C++
+# include <cppad/utility/to_string.hpp>
 # include <dismod_at/get_mulcov_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
@@ -56,9 +57,18 @@ bool get_mulcov_table_xam(void)
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
+	int n_subgroup = 8; // greater than maximum group_id above
+	vector<dismod_at::subgroup_struct> subgroup_table(n_subgroup);
+	for(int subgroup_id = 0; subgroup_id < n_subgroup; ++subgroup_id)
+	{	string subgroup_name = CppAD::to_string(subgroup_id);
+		subgroup_table[subgroup_id].subgroup_name = subgroup_name;
+		subgroup_table[subgroup_id].group_id      = subgroup_id;
+		subgroup_table[subgroup_id].group_name    = subgroup_name;
+	}
+
 	// get the mulcov table
 	vector<dismod_at::mulcov_struct>
-		mulcov_table = dismod_at::get_mulcov_table(db);
+		mulcov_table = dismod_at::get_mulcov_table(db, subgroup_table);
 	ok  &= mulcov_table.size() == 2;
 	//
 	ok  &= mulcov_table[0].mulcov_type  == dismod_at::meas_value_enum;
