@@ -79,6 +79,13 @@ $lnext
 Include both
 $cref/group/db2csv_command/variable.csv/group/$$ and subgroup
 in the variable.csv file created by the db2csv command.
+$lnext
+Advance $cref dock_dismod_at.sh$$ to version 20181008, which
+includes to changes under 10-08 below.
+This requires running
+$codei%
+	./dock_dismod_at.sh image dismod_at
+%$$
 $lend
 
 $head 11-30$$
@@ -218,7 +225,7 @@ It also makes it easier to find specific variables in the var table and
 the  $cref/variable.csv/db2csv_command/variable.csv/$$ file.
 
 $head 10-09$$
-Advance $cref dock_dismod_at.sh$$ to version 20181008, which
+Advance $cref dock_dismod_at.sh$$ to version 20191008, which
 includes to changes under 10-08 below.
 This requires running
 $codei%
