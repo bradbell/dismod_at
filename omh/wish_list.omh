@@ -61,26 +61,6 @@ and is not being used.
 Perhaps we should try this without including the constraint information
 and see how well that works.
 
-$head More Random Effects$$
-
-$subhead Covariate Multipliers$$
-It is possible that the inaccuracy in fitting covariate multipliers
-is leading to correlated residuals.
-Perhaps the covariate multipliers in the
-$cref mulcov_table$$ should have an option to be
-fixed effects, random effects, or both.
-
-$subhead Data Partitions$$
-Perhaps it would be good to allows for partitions of the
-data into subsets.
-Each partition of the data would have a random effect that has a
-different value for each subset of the partition.
-This would model correlation of the noise in the data from
-the same subset.
-It would also allow for another level or random effects,
-where a child node gets divided into subsets
-(if we use the convention that a null subset does not have any random effect).
-
 $head User Examples$$
 The $cref user$$ examples below
 $cref/examples with explanation/user/Examples With Explanation/$$
