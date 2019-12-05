@@ -79,6 +79,11 @@ $cref/group_id/subgroup_table/group_id/$$ values.
 $lnext
 The error messaging for the subgroup table was using the wrong
 $icode subgroup_id$$, this has been fixed.
+$lnext
+Advance $cref dock_dismod_at.sh$$ to version 20191205. This requires running
+$codei%
+	./dock_dismod_at.sh image dismod_at
+%$$
 $lend
 
 
@@ -93,9 +98,7 @@ Include both
 $cref/group/db2csv_command/variable.csv/group/$$ and subgroup
 in the variable.csv file created by the db2csv command.
 $lnext
-Advance $cref dock_dismod_at.sh$$ to version 20181008, which
-includes to changes under 10-08 below.
-This requires running
+Advance $cref dock_dismod_at.sh$$ to version 20191204. This requires running
 $codei%
 	./dock_dismod_at.sh image dismod_at
 %$$
