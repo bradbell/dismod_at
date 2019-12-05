@@ -17,8 +17,9 @@ $section The Subgroup Table$$
 
 $head Purpose$$
 This table allows one to divide the data into groups and subgroups.
-A groups (subgroup) can corresponding to a fixed effects (random effect)
-corresponding to covariate multipliers; see $cref mulcov_table$$.
+A group (subgroups within a group) correspond to the fixed effects
+(random effects) created by one row in the covariate multiplier table
+$cref mulcov_table$$.
 
 $head subgroup_id$$
 This column has type $code integer$$ and is the primary key for this table.

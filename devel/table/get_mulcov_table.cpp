@@ -110,8 +110,14 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
+CppAD::vector<mulcov_struct> get_mulcov_table(
+	sqlite3* db                                           ,
+	const CppAD::vector<subgroup_struct>& subgroup_table  )
 {	using std::string;
+
+	// determine the number of groups
+	size_t n_subgroup = subgroup_table.size();
+	size_t n_group    = size_t(subgroup_table[n_subgroup - 1].group_id + 1);
 
 	string table_name   = "mulcov";
 	size_t n_mulcov     = check_table_id(db, table_name);
@@ -161,6 +167,7 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 		mulcov_table[i].group_smooth_id     = group_smooth_id[i];
 		mulcov_table[i].subgroup_smooth_id  = subgroup_smooth_id[i];
 		//
+		// mulcov_type
 		if( mulcov_type[i] == "rate_value" )
 			mulcov_table[i].mulcov_type = rate_value_enum;
 		else if( mulcov_type[i] == "meas_value" )
@@ -171,7 +178,17 @@ CppAD::vector<mulcov_struct> get_mulcov_table(sqlite3* db)
 		{	string message = "mulcov_type = '" + mulcov_type[i] + "'";
 			message += " is not one of the following:\n"
 				"'rate_value', 'meas_value', 'meas_noise'.";
-			table_name = "mulcov";
+			error_exit(message, table_name, i);
+		}
+		//
+		// check group_id
+		if( group_id[i] == DISMOD_AT_NULL_INT )
+		{	string message = "group_id is null";
+			error_exit(message, table_name, i);
+		}
+		if( size_t( group_id[i] ) >= n_group )
+		{	string message =
+				"group_id is not <= maximum group_id in subgroup table";
 			error_exit(message, table_name, i);
 		}
 	}

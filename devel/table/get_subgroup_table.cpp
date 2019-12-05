@@ -132,26 +132,26 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 		string this_group_name = subgroup_table[subgroup_id].group_name;
 		if( this_group_id < previous_group_id )
 		{	msg = "group_id < previous group_id";
-			error_exit(msg, table_name, this_group_id);
+			error_exit(msg, table_name, subgroup_id);
 		}
 		else if( this_group_id == previous_group_id )
 		{	if( this_group_name != previous_group_name )
 			{	msg = "group_id equals previous group_id but the group names ";
 				msg += "are different";
-				error_exit(msg, table_name, this_group_id);
+				error_exit(msg, table_name, subgroup_id);
 			}
 		}
 		else if( this_group_id == previous_group_id + 1 )
 		{	for(size_t i = 0; i < subgroup_id; ++i)
 			{	if( this_group_name == subgroup_table[i].group_name )
 				{	msg = "This group_name was used for a different group";
-					error_exit(msg, table_name, this_group_id);
+					error_exit(msg, table_name, subgroup_id);
 				}
 			}
 		}
 		else
 		{	msg = "group_id != (previous group_id) or (previous group_id+1)";
-			error_exit(msg, table_name, this_group_id);
+			error_exit(msg, table_name, subgroup_id);
 		}
 		previous_group_id   = this_group_id;
 		previous_group_name = this_group_name;

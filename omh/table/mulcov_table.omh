@@ -104,8 +104,7 @@ that has a $cref/subgroup_id/data_table/subgroup_id/$$ that
 corresponds to this group id.
 This covariate only affects the average integrand for when this
 $cref/group_id/avg_integrand/Data or Avgint Table Notation/g_i/$$ is specified.
-If this $icode group_id$$ is null,
-the fixed effect corresponds to all the data.
+The $icode group_id$$ cannot be null.
 
 $head group_smooth_id$$
 This column has type $code integer$$ and its value is a
