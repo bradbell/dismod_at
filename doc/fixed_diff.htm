@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fixed Effects Differences Density Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fixed Effects Differences Density Function">
-<meta name="keywords" id="keywords" content=" fixed effects differences density function k i(k) j(k) lambda_k theta_ijk mu_ijk delta_ijk d_ijk age a^theta time t^theta ">
+<meta name="keywords" id="keywords" content=" fixed effects differences density function k a^theta t^theta ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -36,6 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>model</option>
+<option>variable_prior</option>
 <option>fixed_diff</option>
 </select>
 </td>
@@ -49,13 +50,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="fixed_value.htm" target="_top">Prev</a>
-</td><td><a href="fixed_prior.htm" target="_top">Next</a>
+<td><a href="smooth_dtime.htm" target="_top">Prev</a>
+</td><td><a href="random_diff.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_model_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_variable_prior_htm.js'></script>
 </td>
 <td>fixed_diff</td>
 </tr></table><br>
@@ -67,17 +71,8 @@ A:active { color : purple }
 <center><b><big><big>Fixed Effects Differences Density Function</big></big></b></center>
 
 <br><a href="fixed_diff.htm#k, K" target="_top">k,&nbsp;K</a>
-<br><a href="fixed_diff.htm#I(k)" target="_top">I(k)</a>
-<br><a href="fixed_diff.htm#J(k)" target="_top">J(k)</a>
-<br><a href="fixed_diff.htm#lambda_k" target="_top">lambda_k</a>
-<br><a href="fixed_diff.htm#theta_i,j,k" target="_top">theta_i,j,k</a>
-<br><a href="fixed_diff.htm#mu_i,j,k" target="_top">mu_i,j,k</a>
-<br><a href="fixed_diff.htm#delta_i,j,k" target="_top">delta_i,j,k</a>
-<br><a href="fixed_diff.htm#d_i,j,k" target="_top">d_i,j,k</a>
-<br><a href="fixed_diff.htm#Age Differences" target="_top">Age&nbsp;Differences</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="fixed_diff.htm#Age Differences.A^theta" target="_top">A^theta</a>
-<br><a href="fixed_diff.htm#Time Differences" target="_top">Time&nbsp;Differences</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="fixed_diff.htm#Time Differences.T^theta" target="_top">T^theta</a>
+<br><a href="fixed_diff.htm#A^theta" target="_top">A^theta</a>
+<br><a href="fixed_diff.htm#T^theta" target="_top">T^theta</a>
 <br><br>
 <b><big><a name="k, K" id="k, K">k, K</a></big></b>
 <br>
@@ -90,277 +85,49 @@ In addition, for each
 <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
 
 there is a
-<a href="mulcov_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
-.
+<a href="mulcov_table.htm#group_smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+
+and a corresponding set of model variables.
 We use <small>@(@
 k
-@)@</small> to index all the rates and covariates multipliers
-and <small>@(@
+@)@</small> to index these smoothings <small>@(@
+s_k
+@)@</small> and
+<small>@(@
 K
-@)@</small> for the number of rates plus the number
-of covariate multipliers.
-
-<br>
-<br>
-<b><big><a name="I(k)" id="I(k)">I(k)</a></big></b>
-<br>
+@)@</small> for the number of these smoothings.
 We use <small>@(@
-I(k)
-@)@</small> to denote the number of age points
-in the smoothing with index <small>@(@
-k
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="J(k)" id="J(k)">J(k)</a></big></b>
-<br>
-We use <small>@(@
-J(k)
-@)@</small> to denote the number of time points
-in the smoothing with index <small>@(@
-k
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="lambda_k" id="lambda_k">lambda_k</a></big></b>
-<br>
-We use
+\theta^k
+@)@</small> to denote the subvector of the fixed effects
 <small>@(@
-\lambda_k^a
-@)@</small>
-( <small>@(@
-\lambda_k^t
-@)@</small> )
-to denote the
-<a href="smooth_table.htm#mulstd_dage_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_id</span></a>
-
-( <a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_id</span></a>
- )
-for 
-<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
- corresponding to <small>@(@
-k
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="theta_i,j,k" id="theta_i,j,k">theta_i,j,k</a></big></b>
-<br>
-Let <small>@(@
-\theta_{i,j,k}
-@)@</small> denote the fixed effect corresponding to
-rate or covariate index <small>@(@
-k
-@)@</small>,
-age index <small>@(@
-i
-@)@</small> and
-time index <small>@(@
-j
-@)@</small>.
-Note that if <small>@(@
-k
-@)@</small> corresponds to a rate, it is the corresponding
-<a href="model_variables.htm#Fixed Effects, theta.Parent Rates" target="_top"><span style='white-space: nowrap'>parent&nbsp;rates</span></a>
-
-that are fixed effects.
-
-<br>
-<br>
-<b><big><a name="mu_i,j,k" id="mu_i,j,k">mu_i,j,k</a></big></b>
-<br>
-We use
-<small>@(@
-\mu_{i,j,k}^a
-@)@</small>
-( <small>@(@
-\mu_{i,j,k}^t
-@)@</small> )
-to denote the
-<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
- corresponding to the
-<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
-
-( <a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
- )
-rate or covariate index <small>@(@
-k
-@)@</small>,
-age index <small>@(@
-i
-@)@</small> and
-time index <small>@(@
-j
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="delta_i,j,k" id="delta_i,j,k">delta_i,j,k</a></big></b>
-<br>
-We use
-<small>@(@
-\delta_{i,j,k}^a
-@)@</small>
-( <small>@(@
-\delta_{i,j,k}^t
-@)@</small> )
-to denote the
-<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
- corresponding to the
-<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
-
-( <a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
- )
-rate or covariate index <small>@(@
-k
-@)@</small>,
-age index <small>@(@
-i
-@)@</small> and
-time index <small>@(@
-j
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="d_i,j,k" id="d_i,j,k">d_i,j,k</a></big></b>
-<br>
-We use
-<small>@(@
-d_{i,j,k}^a
-@)@</small>
-( <small>@(@
-d_{i,j,k}^t )
-@)@</small>
-to denote the
-<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
- and
-<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
-
-corresponding to
-<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
-
-( <a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
- )
-rate or covariate index <small>@(@
-k
-@)@</small>,
-age index <small>@(@
-i
-@)@</small> and
-time index <small>@(@
-j
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="Age Differences" id="Age Differences">Age Differences</a></big></b>
-<br>
-For
-<small>@(@
-k = 0 , \ldots , K - 1
-@)@</small>,
-<small>@(@
-i = 0, \ldots , I(k)-2
-@)@</small>, and
-<small>@(@
-j = 0, \ldots , J(k)-1
-@)@</small>,
-the age difference density for grid index <small>@(@
-(i, j)
-@)@</small>
-and smoothing index <small>@(@
-k
-@)@</small> is
-<small>@[@
-
-A_{i,j,k}^\theta ( \theta )
-=
-\exp \left[ D \left(
-	\theta_{i+1,j,k} \W{,}
-	\theta_{i,j,k}   \W{,}
-	\mu_{i,j,k}^a    \W{,}
-	\lambda_k^a \delta_{i,j,k}^a \W{,}
-	d_{i,j,k}^a
-\right) \right]
-
-@]@</small>
-where <small>@(@
-D
-@)@</small> is the
-<a href="statistic.htm#Log-Density Function, D" target="_top"><span style='white-space: nowrap'>log-density&nbsp;function</span></a>
-
-for differences.
-
-<br>
-<br>
-<big><a name="Age Differences.A^theta" id="Age Differences.A^theta">A^theta</a></big>
-<br>
-The age difference density
-for the entire fixed effects vector <small>@(@
 \theta
-@)@</small> is defined by
+@)@</small> that corresponds to the <code><i>k</i></code>-th smoothing.
+
+<br>
+<br>
+<b><big><a name="A^theta" id="A^theta">A^theta</a></big></b>
+<br>
+The fixed effects age difference function is
 <small>@[@
 
-A^\theta ( \theta )
-=
-\prod_{k=0}^{K-1} \prod_{i=0}^{I(k)-2} \prod_{j=0}^{J(k)-1}
-	A_{i,j,k}^\theta ( \theta )
+A^\theta ( \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , \theta^k , \theta )
 
 @]@</small>
+see definition of <a href="smooth_dage.htm#A^s" target="_top"><span style='white-space: nowrap'>A^s</span></a>
+.
 
 <br>
 <br>
-<b><big><a name="Time Differences" id="Time Differences">Time Differences</a></big></b>
+<b><big><a name="T^theta" id="T^theta">T^theta</a></big></b>
 <br>
-For
-<small>@(@
-k = 0 , \ldots , K - 1
-@)@</small>,
-<small>@(@
-i = 0, \ldots , I(k)-1
-@)@</small>, and
-<small>@(@
-j = 0, \ldots , J(k)-2
-@)@</small>,
-the time difference density for grid index <small>@(@
-(i, j)
-@)@</small>
-and smoothing index <small>@(@
-k
-@)@</small> is
+The fixed effects time difference function is
 <small>@[@
 
-T_{i,j,k}^\theta ( \theta )
-=
-\exp \left[ D \left(
-	\theta_{i,j+1,k} \W{,}
-	\theta_{i,j,k}   \W{,}
-	\mu_{i,j,k}^t    \W{,}
-	\lambda_k^t \delta_{i,j,k}^t \W{,}
-	d_{i,j,k}^t
-\right) \right]
+T^\theta ( \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , \theta^k , \theta )
 
 @]@</small>
-
-<br>
-<br>
-<big><a name="Time Differences.T^theta" id="Time Differences.T^theta">T^theta</a></big>
-<br>
-The time difference density
-for the entire fixed effects vector <small>@(@
-\theta
-@)@</small> is defined by
-<small>@[@
-
-T^\theta ( \theta )
-=
-\prod_{k=0}^{K-1} \prod_{i=0}^{I(k)-1} \prod_{j=0}^{J(k)-2}
-	T_{i,j,k}^\theta ( \theta )
-
-@]@</small>
+see definition of <a href="smooth_dtime.htm#T^s" target="_top"><span style='white-space: nowrap'>T^s</span></a>
+.
 
 
 

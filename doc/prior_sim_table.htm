@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Variation in Prior</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Variation in Prior">
-<meta name="keywords" id="keywords" content=" simulated variation prior discussion prior_sim_id simulate_index var_id prior_sim_value zero_sum_random prior_sim_dage prior_sim_dtime censoring example ">
+<meta name="keywords" id="keywords" content=" simulated variation prior discussion prior_sim_id simulate_index var_id prior_sim_value zero_sum_child_rate zero_sum_mulcov_group prior_sim_dage prior_sim_dtime censoring example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,7 +75,8 @@ A:active { color : purple }
 <br><a href="prior_sim_table.htm#simulate_index" target="_top">simulate_index</a>
 <br><a href="prior_sim_table.htm#var_id" target="_top">var_id</a>
 <br><a href="prior_sim_table.htm#prior_sim_value" target="_top">prior_sim_value</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="prior_sim_table.htm#prior_sim_value.zero_sum_random" target="_top">zero_sum_random</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="prior_sim_table.htm#prior_sim_value.zero_sum_child_rate" target="_top">zero_sum_child_rate</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="prior_sim_table.htm#prior_sim_value.zero_sum_mulcov_group" target="_top">zero_sum_mulcov_group</a>
 <br><a href="prior_sim_table.htm#prior_sim_dage" target="_top">prior_sim_dage</a>
 <br><a href="prior_sim_table.htm#prior_sim_dtime" target="_top">prior_sim_dtime</a>
 <br><a href="prior_sim_table.htm#Censoring" target="_top">Censoring</a>
@@ -157,9 +158,9 @@ is uniform,
 
 <br>
 <br>
-<big><a name="prior_sim_value.zero_sum_random" id="prior_sim_value.zero_sum_random">zero_sum_random</a></big>
+<big><a name="prior_sim_value.zero_sum_child_rate" id="prior_sim_value.zero_sum_child_rate">zero_sum_child_rate</a></big>
 <br>
-If the <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+If the <a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  option
 is chosen for a rate, the simulated values for the corresponding
 <a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effects</span></a>
@@ -167,11 +168,25 @@ is chosen for a rate, the simulated values for the corresponding
 will sum to zero at each grid point in the corresponding smoothing for;
 see <a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
  in the rate table.
-Note that using <code><font color="blue">zero_sum_random</font></code> for a rate
+Note that using <code><font color="blue">zero_sum_child_rate</font></code> for a rate
 requires that the same smoothing is used by all the child random effects
 for that rate.
 This is done by simulating using independent priors and then subtracting
 averages of the simulated values.
+
+<br>
+<br>
+<big><a name="prior_sim_value.zero_sum_mulcov_group" id="prior_sim_value.zero_sum_mulcov_group">zero_sum_mulcov_group</a></big>
+<br>
+If the <a href="option_table.htm#zero_sum_mulcov_group" target="_top"><span style='white-space: nowrap'>zero_sum_mulcov_group</span></a>
+ option
+is chosen for a group, the simulated values for the corresponding
+<a href="model_variables.htm#Random Effects, u.Subgroup Covariate Multipliers" target="_top"><span style='white-space: nowrap'>subgroup&nbsp;covariate&nbsp;multipliers</span></a>
+
+will sum to zero at each grid point in the corresponding smoothing.
+This summation is with respect to subgroups in the group specified
+by a <a href="mulcov_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+ in the mulcov table.
 
 <br>
 <br>

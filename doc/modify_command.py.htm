@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>init Command: Example and Test</title>
+<title>modify Command: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="init Command: Example and Test">
-<meta name="keywords" id="keywords" content=" init command: example test ">
+<meta name="description" id="description" content="modify Command: Example and Test">
+<meta name="keywords" id="keywords" content=" modify command: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,12 +68,11 @@ A:active { color : purple }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
-<center><b><big><big>init Command: Example and Test</big></big></b></center>
+<center><b><big><big>modify Command: Example and Test</big></big></b></center>
 
 <br><pre><tt><b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> copy
-<b><font color="#000080">import</font></b> subprocess
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> csv
 <b><font color="#000080">import</font></b> math
@@ -120,7 +119,7 @@ table_name       <font color="#990000">=</font> <font color="#FF0000">'data'</fo
 column_name      <font color="#990000">=</font> <font color="#FF0000">'density_id'</font> <i><font color="#9A1900"># column we are modifying</font></i>
 row_expression   <font color="#990000">=</font> <font color="#FF0000">'data_id==0'</font> <i><font color="#9A1900"># row we are modifiying</font></i>
 value_expression <font color="#990000">=</font> <font color="#FF0000">'6'</font>          <i><font color="#9A1900"># value we are placeing in that row, column</font></i>
-cmd            <font color="#990000">=</font> <font color="#990000">[</font>
+system_cmd       <font color="#990000">=</font> <font color="#990000">[</font>
      program<font color="#990000">,</font>
      file_name<font color="#990000">,</font>
      command<font color="#990000">,</font>
@@ -129,12 +128,7 @@ cmd            <font color="#990000">=</font> <font color="#990000">[</font>
      row_expression<font color="#990000">,</font>
      value_expression
 <font color="#990000">]</font>
-<i><font color="#9A1900">#</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
-flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at modify command failed'</font><font color="#990000">)</font>
-os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font>test_dir<font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font> system_cmd <font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># get data table</font></i>
 new        <font color="#990000">=</font> False

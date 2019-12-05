@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Fitting With Sum of Random Effect Constrained to Zero</title>
+<title>Constrain Sum of Child Rate Effect to Zero</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Fitting With Sum of Random Effect Constrained to Zero">
-<meta name="keywords" id="keywords" content=" fitting with sum random effect constrained to zero purpose problem parameters data simulation nodes model variables source code ">
+<meta name="description" id="description" content="Constrain Sum of Child Rate Effect to Zero">
+<meta name="keywords" id="keywords" content=" constrain sum child rate effect to zero see also purpose problem parameters data simulation nodes model variables source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_zero_sum_random.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_zsum_child_rate.py_htm.js'>
 </script>
 </head>
 <body>
@@ -36,7 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>user</option>
-<option>user_zero_sum_random.py</option>
+<option>user_zsum_child_rate.py</option>
 </select>
 </td>
 <td>
@@ -49,33 +49,44 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_no_children.py.htm" target="_top">Prev</a>
-</td><td><a href="user_re_scale.py.htm" target="_top">Next</a>
+<td><a href="user_students.py.htm" target="_top">Prev</a>
+</td><td><a href="user_zsum_mulcov_meas.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
 </td>
-<td>user_zero_sum_random.py</td>
+<td>user_zsum_child_rate.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting With Sum of Random Effect Constrained to Zero</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Constrain Sum of Child Rate Effect to Zero</big></big></b></center>
 
-<br><a href="user_zero_sum_random.py.htm#Purpose" target="_top">Purpose</a>
-<br><a href="user_zero_sum_random.py.htm#Problem Parameters" target="_top">Problem&nbsp;Parameters</a>
-<br><a href="user_zero_sum_random.py.htm#Data Simulation" target="_top">Data&nbsp;Simulation</a>
-<br><a href="user_zero_sum_random.py.htm#Nodes" target="_top">Nodes</a>
-<br><a href="user_zero_sum_random.py.htm#Model Variables" target="_top">Model&nbsp;Variables</a>
-<br><a href="user_zero_sum_random.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><a href="user_zsum_child_rate.py.htm#See Also" target="_top">See&nbsp;Also</a>
+<br><a href="user_zsum_child_rate.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_zsum_child_rate.py.htm#Problem Parameters" target="_top">Problem&nbsp;Parameters</a>
+<br><a href="user_zsum_child_rate.py.htm#Data Simulation" target="_top">Data&nbsp;Simulation</a>
+<br><a href="user_zsum_child_rate.py.htm#Nodes" target="_top">Nodes</a>
+<br><a href="user_zsum_child_rate.py.htm#Model Variables" target="_top">Model&nbsp;Variables</a>
+<br><a href="user_zsum_child_rate.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="user_zsum_mulcov_rate.py.htm" target="_top"><span style='white-space: nowrap'>user_zsum_mulcov_rate.py</span></a>
+,
+<a href="user_zsum_mulcov_meas.py.htm" target="_top"><span style='white-space: nowrap'>user_zsum_mulcov_meas.py</span></a>
+
+
+<br>
+<br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 This example demonstrates using
-The <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+The <a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
 
-to improve the speed and estimation of the fixed effects.
+to improve the speed and accuracy of estimation of the fixed effects.
 
 <br>
 <br>
@@ -96,14 +107,15 @@ used for simulating data, are
 <code><i><font color="black"><span style='white-space: nowrap'>iota_parent</span></font></i></code>
  and 
 <code><i><font color="black"><span style='white-space: nowrap'>rho_parent</span></font></i></code>
- problem parameters.
-Rate effect used for <code><font color="blue">canada</font></code> is 
+ problem parameters. The
+<a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effect</span></a>
+
+for <code><font color="blue">canada</font></code> is 
 <code><i><font color="black"><span style='white-space: nowrap'>rate_effect_child</span></font></i></code>
 
-and for <code><font color="blue">united_states</font></code> 
+and for the <code><font color="blue">united_states</font></code> is 
 <code><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>rate_effect_child</span></font></i></code>
 .
-Note that these rates are constant in age and time.
 
 <br>
 <br>
@@ -128,7 +140,7 @@ and two points in time. Thus there are six model variables for each rate,
 two for the parent rates and four for the child rate effects.
 The resulting rates will be constant
 in age and constant in time except between the two time grid points
-where it is linear.
+where it is linear with respect to time.
 
 <br>
 <br>
@@ -151,7 +163,7 @@ measurement_cv    <font color="#990000">=</font> <font color="#993399">0.01</fon
 <b><font color="#000080">import</font></b> math
 <b><font color="#000080">import</font></b> random
 <b><font color="#000080">import</font></b> time
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/zero_sum_random.py'</font>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/zsum_child_rate.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -214,7 +226,7 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
      <i><font color="#9A1900"># nslist_table:</font></i>
      nslist_table <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900"># data table: same order as list of integrands</font></i>
+     <i><font color="#9A1900"># data table</font></i>
      data_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <i><font color="#9A1900"># write out data</font></i>
      row <font color="#990000">=</font> <font color="#990000">{</font>
@@ -223,19 +235,20 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
           <font color="#FF0000">'hold_out'</font><font color="#990000">:</font>     False<font color="#990000">,</font>
           <font color="#FF0000">'age_lower'</font><font color="#990000">:</font>    <font color="#993399">50.0</font><font color="#990000">,</font>
           <font color="#FF0000">'age_upper'</font><font color="#990000">:</font>    <font color="#993399">50.0</font><font color="#990000">,</font>
+          <font color="#FF0000">'subgroup'</font><font color="#990000">:</font>     <font color="#FF0000">'world'</font><font color="#990000">,</font>
      <font color="#990000">}</font>
      <b><font color="#0000FF">for</font></b> data_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font>number_data<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">3</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
                row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'north_america'</font>
-               row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'na_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
+               row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'na_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">3</font> <font color="#990000">)</font>
                effect_true       <font color="#990000">=</font> <font color="#993399">0.0</font>
           <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">3</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">:</font>
                row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'united_states'</font>
-               row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'us_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
+               row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'us_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">3</font> <font color="#990000">)</font>
                effect_true       <font color="#990000">=</font> <font color="#990000">-</font> rate_effect_child
           <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">3</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">:</font>
                row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'canada'</font>
-               row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'ca_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
+               row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'ca_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> data_id <font color="#990000">/</font> <font color="#993399">3</font> <font color="#990000">)</font>
                effect_true       <font color="#990000">=</font> <font color="#990000">+</font> rate_effect_child
           <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
                row<font color="#990000">[</font><font color="#FF0000">'time_lower'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">1990.0</font>
@@ -272,12 +285,12 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_rate_child'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">100.0</font><font color="#990000">,</font> <i><font color="#9A1900"># very large so like a uniform distribution</font></i>
+               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">100.0</font><font color="#990000">,</font> <i><font color="#9A1900"># very large so like uniform distribution</font></i>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_gauss_diff</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_gauss_diff'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
-               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">100.0</font><font color="#990000">,</font> <i><font color="#9A1900"># very large so like uniform</font></i>
+               <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">100.0</font><font color="#990000">,</font> <i><font color="#9A1900"># very large so like uniform distribution</font></i>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
@@ -312,7 +325,7 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
      <i><font color="#9A1900"># option_table</font></i>
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font>     <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_random'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota rho'</font>          <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_child_rate'</font><font color="#990000">,</font>    <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota rho'</font>          <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'10.0'</font>              <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_pos'</font>  <font color="#990000">},</font>
@@ -329,6 +342,9 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_random'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-10'</font>         <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900"># subgroup_table</font></i>
+     subgroup_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font> <font color="#FF0000">'group'</font><font color="#990000">:</font><font color="#FF0000">'world'</font> <font color="#990000">}</font> <font color="#990000">]</font>
+     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># create database</font></i>
      dismod_at<font color="#990000">.</font><b><font color="#000000">create_database</font></b><font color="#990000">(</font>
           file_name<font color="#990000">,</font>
@@ -336,6 +352,7 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
           time_list<font color="#990000">,</font>
           integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
+          subgroup_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>
           avgint_table<font color="#990000">,</font>
@@ -402,16 +419,16 @@ ok           <font color="#990000">=</font> True
      <i><font color="#9A1900">#</font></i>
      <b><font color="#0000FF">if</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'north_america'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> rate_name <font color="#990000">==</font> <font color="#FF0000">'iota'</font> <font color="#990000">:</font>
-               err <font color="#990000">=</font> value <font color="#990000">/</font> iota_parent <font color="#990000">-</font> <font color="#993399">1.0</font>
+               relerr <font color="#990000">=</font> value <font color="#990000">/</font> iota_parent <font color="#990000">-</font> <font color="#993399">1.0</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               err <font color="#990000">=</font> value <font color="#990000">/</font> rho_parent <font color="#990000">-</font> <font color="#993399">1.0</font>
+               relerr <font color="#990000">=</font> value <font color="#990000">/</font> rho_parent <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">elif</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'canada'</font> <font color="#990000">:</font>
-          err <font color="#990000">=</font> value <font color="#990000">/</font> rate_effect_child  <font color="#990000">-</font> <font color="#993399">1.0</font>
+          relerr <font color="#990000">=</font> value <font color="#990000">/</font> rate_effect_child  <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'united_states'</font>
-          err <font color="#990000">=</font> <font color="#990000">-</font> value <font color="#990000">/</font> rate_effect_child  <font color="#990000">-</font> <font color="#993399">1.0</font>
-     <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.1</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'node_name, err='</font><font color="#990000">,</font> node_name<font color="#990000">,</font> err<font color="#990000">)</font>
+          relerr <font color="#990000">=</font> <font color="#990000">-</font> value <font color="#990000">/</font> rate_effect_child  <font color="#990000">-</font> <font color="#993399">1.0</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relerr<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.1</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'node_name, relerr='</font><font color="#990000">,</font> node_name<font color="#990000">,</font> relerr<font color="#990000">)</font>
           <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'python_seed = '</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b> False
      <b><font color="#0000FF">if</font></b> node_name <font color="#990000">!=</font> <font color="#FF0000">'north_america'</font> <font color="#990000">:</font>
@@ -426,9 +443,9 @@ ok           <font color="#990000">=</font> True
                <b><font color="#0000FF">assert</font></b> False
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'zero_sum_random: OK'</font><font color="#990000">)</font></tt></pre>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'zsum_child_rate: OK'</font><font color="#990000">)</font></tt></pre>
 
-<hr>Input File: example/user/zero_sum_random.py
+<hr>Input File: example/user/zsum_child_rate.py
 
 </body>
 </html>

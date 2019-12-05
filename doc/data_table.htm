@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Data Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Data Table">
-<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id nonsmooth node_id parent random effects child weight_id null hold_out meas_value meas_std adjusted standard deviation delta linear scaling log eta nu age_lower age_upper time_lower time_upper covariates example ">
+<meta name="keywords" id="keywords" content=" the data table data_id data_name integrand_id density_id nonsmooth node_id parent child subgroup_id group_id weight_id null hold_out meas_value meas_std adjusted standard deviation delta linear scaling log eta nu age_lower age_upper time_lower time_upper covariates example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,8 +75,11 @@ A:active { color : purple }
 <br><a href="data_table.htm#density_id" target="_top">density_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#density_id.Nonsmooth" target="_top">Nonsmooth</a>
 <br><a href="data_table.htm#node_id" target="_top">node_id</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#node_id.Parent Data Random Effects" target="_top">Parent&nbsp;Data&nbsp;Random&nbsp;Effects</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#node_id.Child Data Random Effects" target="_top">Child&nbsp;Data&nbsp;Random&nbsp;Effects</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#node_id.Parent Data" target="_top">Parent&nbsp;Data</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#node_id.Child Data" target="_top">Child&nbsp;Data</a>
+<br><a href="data_table.htm#subgroup_id" target="_top">subgroup_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#subgroup_id.group_id" target="_top">group_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#subgroup_id.Nonsmooth" target="_top">Nonsmooth</a>
 <br><a href="data_table.htm#weight_id" target="_top">weight_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#weight_id.null" target="_top">null</a>
 <br><a href="data_table.htm#hold_out" target="_top">hold_out</a>
@@ -94,6 +97,7 @@ A:active { color : purple }
 <br><a href="data_table.htm#time_lower" target="_top">time_lower</a>
 <br><a href="data_table.htm#time_upper" target="_top">time_upper</a>
 <br><a href="data_table.htm#Covariates" target="_top">Covariates</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_table.htm#Covariates.Null" target="_top">Null</a>
 <br><a href="data_table.htm#Example" target="_top">Example</a>
 <br>Each row of the data table corresponds to one measurement;
 see <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
@@ -172,7 +176,7 @@ the node for this measurement.
 
 <br>
 <br>
-<big><a name="node_id.Parent Data Random Effects" id="node_id.Parent Data Random Effects">Parent Data Random Effects</a></big>
+<big><a name="node_id.Parent Data" id="node_id.Parent Data">Parent Data</a></big>
 <br>
 If the 
 <code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
@@ -184,12 +188,12 @@ have any random effects in its model.
 
 <br>
 <br>
-<big><a name="node_id.Child Data Random Effects" id="node_id.Child Data Random Effects">Child Data Random Effects</a></big>
+<big><a name="node_id.Child Data" id="node_id.Child Data">Child Data</a></big>
 <br>
 If the 
 <code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
  is a
-<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child</span></a>
+<a href="node_table.htm#parent.Children" target="_top"><span style='white-space: nowrap'>child</span></a>
  of the parent node,
 or a <a href="node_table.htm#parent.Descendant" target="_top"><span style='white-space: nowrap'>descendant</span></a>
  of a child,
@@ -203,6 +207,38 @@ In this case
 .
 The corresponding densities would not be differentiable at zero
 and the Laplace approximation would not make sense in this case.
+
+<br>
+<br>
+<b><big><a name="subgroup_id" id="subgroup_id">subgroup_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="subgroup_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
+
+that this data point corresponds to.
+
+<br>
+<br>
+<big><a name="subgroup_id.group_id" id="subgroup_id.group_id">group_id</a></big>
+<br>
+There is <a href="subgroup_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+ corresponding
+to this 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="subgroup_id.Nonsmooth" id="subgroup_id.Nonsmooth">Nonsmooth</a></big>
+<br>
+If the density is
+<a href="data_table.htm#density_id.Nonsmooth" target="_top"><span style='white-space: nowrap'>nonsmooth</span></a>
+,
+the <a href="mulcov_table.htm#subgroup_smooth_id" target="_top"><span style='white-space: nowrap'>subgroup_smooth_id</span></a>
+
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+ must be null.
 
 <br>
 <br>
@@ -423,6 +459,11 @@ the value, for this measurement, of the covariate specified by
 
 <code><i><font color="black"><span style='white-space: nowrap'>covariate_id</span></font></i></code>
 .
+
+<br>
+<br>
+<big><a name="Covariates.Null" id="Covariates.Null">Null</a></big>
+<br>
 The covariate value <code><font color="blue">null</font></code> is interpreted as the
 <a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
  value for

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect meas_std_effect: deprecated 2019-04-07 zero_sum_random data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect zero_sum_child_rate zero_sum_mulcov_group data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -84,10 +84,11 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Avgint Subset Table" target="_top">Avgint&nbsp;Subset&nbsp;Table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Changing" target="_top">Changing</a>
 <br><a href="option_table.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_noise_effect.meas_std_effect: Deprecated 2019-04-07" target="_top">meas_std_effect:&nbsp;Deprecated&nbsp;2019-04-07</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_noise_effect.Default" target="_top">Default</a>
-<br><a href="option_table.htm#zero_sum_random" target="_top">zero_sum_random</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#zero_sum_random.Default" target="_top">Default</a>
+<br><a href="option_table.htm#zero_sum_child_rate" target="_top">zero_sum_child_rate</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#zero_sum_child_rate.Default" target="_top">Default</a>
+<br><a href="option_table.htm#zero_sum_mulcov_group" target="_top">zero_sum_mulcov_group</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#zero_sum_mulcov_group.Default" target="_top">Default</a>
 <br><a href="option_table.htm#data_extra_columns" target="_top">data_extra_columns</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#data_extra_columns.Default" target="_top">Default</a>
 <br><a href="option_table.htm#avgint_extra_columns" target="_top">avgint_extra_columns</a>
@@ -274,12 +275,9 @@ this takes some extra time that it is not expected to be significant.
 <br>
 <big><a name="parent_node_name.Children" id="parent_node_name.Children">Children</a></big>
 <br>
-The child nodes are the elements of the
-<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child&nbsp;group</span></a>
+The <a href="node_table.htm#parent.Children" target="_top"><span style='white-space: nowrap'>children</span></a>
  corresponding to
-the specified 
-<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
-.
+the parent node.
 
 <br>
 <br>
@@ -342,43 +340,33 @@ The possible options are
 
 <br>
 <br>
-<big><a name="meas_noise_effect.meas_std_effect: Deprecated 2019-04-07" id="meas_noise_effect.meas_std_effect: Deprecated 2019-04-07">meas_std_effect: Deprecated 2019-04-07</a></big>
-<br>
-This 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
-
-is deprecated but still works (may not work in the future).
-It should be changed to use its new name <code><font color="blue">meas_noise_effect</font></code>.
-
-<br>
-<br>
 <big><a name="meas_noise_effect.Default" id="meas_noise_effect.Default">Default</a></big>
 <br>
 The default value for this option is <code><font color="blue">add_std_scale_all</font></code>.
 
 <br>
 <br>
-<b><big><a name="zero_sum_random" id="zero_sum_random">zero_sum_random</a></big></b>
+<b><big><a name="zero_sum_child_rate" id="zero_sum_child_rate">zero_sum_child_rate</a></big></b>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
- is <code><font color="blue">zero_sum_random</font></code>,
+ is <code><font color="blue">zero_sum_child_rate</font></code>,
 the corresponding value is a space separated subset of the
 <a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate&nbsp;names</span></a>
 .
 For each rate in the list, each age, and each time,
 the sum of the corresponding
-<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
- estimates
-is constrained to be zero.
+<a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effect</span></a>
+
+estimates is constrained to be zero.
 These are additional constraints in the optimization problem for the
 <a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effects</span></a>
 .
-The file <a href="user_zero_sum_random.py.htm" target="_top"><span style='white-space: nowrap'>zero_sum_random.py</span></a>
+The file <a href="user_zsum_child_rate.py.htm" target="_top"><span style='white-space: nowrap'>zsum_child_rate.py</span></a>
 
 contains an example and test using these constraints.
 Note that for each rate in 
-<code><i><font color="black"><span style='white-space: nowrap'>zero_sum_random</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>zero_sum_child_rate</span></font></i></code>
 ,
 <a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
  must be null; i.e.,
@@ -386,10 +374,43 @@ all of the child must use the same smoothing for this rate.
 
 <br>
 <br>
-<big><a name="zero_sum_random.Default" id="zero_sum_random.Default">Default</a></big>
+<big><a name="zero_sum_child_rate.Default" id="zero_sum_child_rate.Default">Default</a></big>
 <br>
 The default value for this option is null; i.e.,
-no zero sum constraints on the random effects.
+no zero sum constraints on these random effects.
+
+<br>
+<br>
+<b><big><a name="zero_sum_mulcov_group" id="zero_sum_mulcov_group">zero_sum_mulcov_group</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is <code><font color="blue">zero_sum_mulcov_group</font></code>,
+the corresponding value is a space separated subset of the
+<a href="subgroup_table.htm#group_name" target="_top"><span style='white-space: nowrap'>group&nbsp;names</span></a>
+.
+For each group in the list, each age, and each time, and each
+<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+,
+the sum of the corresponding
+<a href="model_variables.htm#Random Effects, u.Subgroup Covariate Multipliers" target="_top"><span style='white-space: nowrap'>subgroup&nbsp;covariate&nbsp;multiplier</span></a>
+
+estimates is constrained to be zero.
+These are additional constraints in the optimization problem for the
+<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effects</span></a>
+.
+The files <a href="user_zsum_mulcov_rate.py.htm" target="_top"><span style='white-space: nowrap'>zsum_mulcov_rate.py</span></a>
+
+and <a href="user_zsum_mulcov_meas.py.htm" target="_top"><span style='white-space: nowrap'>zsum_mulcov_meas.py</span></a>
+
+contain examples and tests using these constraints.
+
+<br>
+<br>
+<big><a name="zero_sum_mulcov_group.Default" id="zero_sum_mulcov_group.Default">Default</a></big>
+<br>
+The default value for this option is null; i.e.,
+no zero sum constraints on these random effects.
 
 <br>
 <br>

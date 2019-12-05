@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Random Effects Difference Density Function</title>
+<title>Random Effects Differences Density Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Random Effects Difference Density Function">
-<meta name="keywords" id="keywords" content=" random effects difference density function k c i(k) j(k) lambda_k u_ijkc delta_ijk d_ijk mu_ijk age differences a^u time t^u ">
+<meta name="description" id="description" content="Random Effects Differences Density Function">
+<meta name="keywords" id="keywords" content=" random effects differences density function k a^u t^u ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -36,6 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>model</option>
+<option>variable_prior</option>
 <option>random_diff</option>
 </select>
 </td>
@@ -49,13 +50,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="random_value.htm" target="_top">Prev</a>
-</td><td><a href="random_prior.htm" target="_top">Next</a>
+<td><a href="fixed_diff.htm" target="_top">Prev</a>
+</td><td><a href="fixed_prior.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_model_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_variable_prior_htm.js'></script>
 </td>
 <td>random_diff</td>
 </tr></table><br>
@@ -64,351 +68,70 @@ A:active { color : purple }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
-<center><b><big><big>Random Effects Difference Density Function</big></big></b></center>
+<center><b><big><big>Random Effects Differences Density Function</big></big></b></center>
 
 <br><a href="random_diff.htm#k, K" target="_top">k,&nbsp;K</a>
-<br><a href="random_diff.htm#C" target="_top">C</a>
-<br><a href="random_diff.htm#I(k)" target="_top">I(k)</a>
-<br><a href="random_diff.htm#J(k)" target="_top">J(k)</a>
-<br><a href="random_diff.htm#lambda_k" target="_top">lambda_k</a>
-<br><a href="random_diff.htm#u_i,j,k,c" target="_top">u_i,j,k,c</a>
-<br><a href="random_diff.htm#delta_i,j,k" target="_top">delta_i,j,k</a>
-<br><a href="random_diff.htm#d_i,j,k" target="_top">d_i,j,k</a>
-<br><a href="random_diff.htm#mu_i,j,k" target="_top">mu_i,j,k</a>
-<br><a href="random_diff.htm#Age Differences" target="_top">Age&nbsp;Differences</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="random_diff.htm#Age Differences.A^u" target="_top">A^u</a>
-<br><a href="random_diff.htm#Time Differences" target="_top">Time&nbsp;Differences</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="random_diff.htm#Time Differences.T^u" target="_top">T^u</a>
+<br><a href="random_diff.htm#A^u" target="_top">A^u</a>
+<br><a href="random_diff.htm#T^u" target="_top">T^u</a>
 <br><br>
 <b><big><a name="k, K" id="k, K">k, K</a></big></b>
 <br>
-We use <small>@(@
-k
-@)@</small> to denote a
-<a href="rate_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
+For each <a href="rate_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
 
-and <small>@(@
-K
-@)@</small> for the number of rates.
+and each <a href="option_table.htm#parent_node_name.Children" target="_top"><span style='white-space: nowrap'>child</span></a>
 
-<br>
-<br>
-<b><big><a name="C" id="C">C</a></big></b>
-<br>
-We use <small>@(@
-C
-@)@</small> to denote the size of the
-<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child&nbsp;group</span></a>
+there is a smoothing and corresponding set of model variables.
+In addition, for each
+<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+
+and each <a href="subgroup_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
 
 corresponding to the
-<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+<a href="mulcov_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+ for this 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i></code>
+,
+there is a smoothing and a corresponding set of model variables.
+We use <small>@(@
+k
+@)@</small> to index these smoothings <small>@(@
+s_k
+@)@</small> and
+<small>@(@
+K
+@)@</small> for the number of these smoothings.
+We use <small>@(@
+u^k
+@)@</small> to denote the subvector of the random effects
+<small>@(@
+u
+@)@</small> that corresponds to the <code><i>k</i></code>-th smoothing.
+
+<br>
+<br>
+<b><big><a name="A^u" id="A^u">A^u</a></big></b>
+<br>
+The random effects age difference function is
+<small>@[@
+
+A^u ( u | \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , u^k, \theta )
+
+@]@</small>
+see definition of <a href="smooth_dage.htm#A^s" target="_top"><span style='white-space: nowrap'>A^s</span></a>
 .
-For <small>@(@
-c = 0 , \ldots , C-1
-@)@</small>, we use
-<small>@(@
-c
-@)@</small> to denote the corresponding child.
 
 <br>
 <br>
-<b><big><a name="I(k)" id="I(k)">I(k)</a></big></b>
+<b><big><a name="T^u" id="T^u">T^u</a></big></b>
 <br>
-We use <small>@(@
-I(k)
-@)@</small> to denote the number of age points
-in the smoothing with index <small>@(@
-k
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="J(k)" id="J(k)">J(k)</a></big></b>
-<br>
-We use <small>@(@
-J(k)
-@)@</small> to denote the number of time points
-in the smoothing with index <small>@(@
-k
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="lambda_k" id="lambda_k">lambda_k</a></big></b>
-<br>
-We use
-<small>@(@
-\lambda_k^a
-@)@</small>
-( <small>@(@
-\lambda_k^t
-@)@</small> )
-to denote the
-<a href="smooth_table.htm#mulstd_dage_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_id</span></a>
-
-( <a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_id</span></a>
- )
-for the
-<a href="rate_table.htm#child_smooth_id" target="_top"><span style='white-space: nowrap'>child_smooth_id</span></a>
-
-corresponding to
-
-<code><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
-
-
-<br>
-<br>
-<b><big><a name="u_i,j,k,c" id="u_i,j,k,c">u_i,j,k,c</a></big></b>
-<br>
-Let <small>@(@
-u_{i,j,k,c}
-@)@</small> denote the random effect corresponding to
-child index <small>@(@
-c
-@)@</small>,
-rate index <small>@(@
-k
-@)@</small>,
-age index <small>@(@
-i
-@)@</small> and
-time index <small>@(@
-j
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="delta_i,j,k" id="delta_i,j,k">delta_i,j,k</a></big></b>
-<br>
-We use
-<small>@(@
-\delta_{i,j,k}^a
-@)@</small>
-( <small>@(@
-\delta_{i,j,k}^t
-@)@</small> )
-to denote the
-<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
- corresponding to the
-<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
-
-( <a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
- )
-rate index <small>@(@
-k
-@)@</small>,
-age index <small>@(@
-i
-@)@</small> and
-time index <small>@(@
-j
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="d_i,j,k" id="d_i,j,k">d_i,j,k</a></big></b>
-<br>
-We use
-<small>@(@
-d_{i,j,k}^a
-@)@</small>
-( <small>@(@
-d_{i,j,k}^t )
-@)@</small>
-to denote the
-<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
- and
-<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
-
-corresponding to
-<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
- corresponding to
-<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
-
-( <a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
- )
-rate index <small>@(@
-k
-@)@</small>,
-age index <small>@(@
-i
-@)@</small> and
-time index <small>@(@
-j
-@)@</small>.
-
-
-<br>
-<br>
-<b><big><a name="mu_i,j,k" id="mu_i,j,k">mu_i,j,k</a></big></b>
-<br>
-We use
-<small>@(@
-\mu_{i,j,k}^a
-@)@</small>
-( <small>@(@
-\mu_{i,j,k}^t
-@)@</small> )
-to denote the
-<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
- corresponding to the
-<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
-
-( <a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
- )
-rate index <small>@(@
-k
-@)@</small>,
-age index <small>@(@
-i
-@)@</small> and
-time index <small>@(@
-j
-@)@</small>.
-This mean must be zero; see the
-child smoothing restrictions.
-
-
-<br>
-<br>
-<b><big><a name="Age Differences" id="Age Differences">Age Differences</a></big></b>
-<br>
-For
-<small>@(@
-c = 0 , \ldots , C - 1
-@)@</small>,
-<small>@(@
-k = 0 , \ldots , K - 1
-@)@</small>,
-<small>@(@
-i = 0, \ldots , I(k)-2
-@)@</small>, and
-<small>@(@
-j = 0, \ldots , J(k)-1
-@)@</small>,
-the age difference density for grid index <small>@(@
-(i, j)
-@)@</small>
-and rate index <small>@(@
-k
-@)@</small> and child index <small>@(@
-c
-@)@</small> is
+The random effects time difference function is
 <small>@[@
 
-A_{i,j,k,c}^u ( u | \theta )
-=
-\exp \left[ D \left(
-	u_{i+1,j,k,c}    \W{,}
-	u_{i,j,k,c}      \W{,}
-	\mu_{i,j,k}^a    \W{,}
-	\lambda_k^a \delta_{i,j,k}^a \W{,}
-	d_{i,j,k}^a
-\right) \right]
+T^u ( u | \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , u^k, \theta )
 
 @]@</small>
-where <small>@(@
-D
-@)@</small> is the
-<a href="statistic.htm#Log-Density Function, D" target="_top"><span style='white-space: nowrap'>difference&nbsp;log-density&nbsp;function</span></a>
-
-for differences.
-(As noted above,
-<small>@(@
-\mu_{i,j,k}^a
-@)@</small> must be zero,
-<small>@(@
-{ d_{i,j,k}^a }:name
-@)@</small> must be <code><font color="blue">gaussian</font></code>,
-and <small>@(@
-{d_{i,j,k}^a}:\eta
-@)@</small> does not matter.)
-
-<br>
-<br>
-<big><a name="Age Differences.A^u" id="Age Differences.A^u">A^u</a></big>
-<br>
-The age difference density
-for the entire random effects vector <small>@(@
-u
-@)@</small> is defined by
-<small>@[@
-
-A^u ( u | \theta )
-=
-\prod_{c=0}^{C-1} \prod_{k=0}^{K-1} \prod_{i=0}^{I(k)-2} \prod_{j=0}^{J(k)-1}
-	A_{i,j,k,c}^u ( u | \theta )
-
-@]@</small>
-
-<br>
-<br>
-<b><big><a name="Time Differences" id="Time Differences">Time Differences</a></big></b>
-<br>
-For
-<small>@(@
-c = 0 , \ldots , C - 1
-@)@</small>,
-<small>@(@
-k = 0 , \ldots , K - 1
-@)@</small>,
-<small>@(@
-i = 0, \ldots , I(k)-1
-@)@</small>, and
-<small>@(@
-j = 0, \ldots , J(k)-2
-@)@</small>,
-the time difference density for grid index <small>@(@
-(i, j)
-@)@</small>
-and rate index <small>@(@
-k
-@)@</small> and child index <small>@(@
-c
-@)@</small> is
-<small>@[@
-
-T_{i,j,k,c}^u ( u | \theta )
-=
-\exp \left[ D \left(
-	u_{i,j+1,k,c}    \W{,}
-	u_{i,j,k,c}      \W{,}
-	\mu_{i,j,k}^t    \W{,}
-	\lambda_k^t \delta_{i,j,k}^t \W{,}
-	d_{i,j,k}^t
-\right) \right]
-
-@]@</small>
-where <small>@(@
-D
-@)@</small> is the difference log density function.
-(As noted above,
-<small>@(@
-\mu_{i,j,k}^t
-@)@</small> must be zero,
-<small>@(@
-{ d_{i,j,k}^t }:name
-@)@</small> must be <code><font color="blue">gaussian</font></code>,
-and <small>@(@
-{ d_{i,j,k}^t }:\eta
-@)@</small> does not matter.)
-
-<br>
-<br>
-<big><a name="Time Differences.T^u" id="Time Differences.T^u">T^u</a></big>
-<br>
-The time difference density
-for the entire random effects vector <small>@(@
-u
-@)@</small> is defined by
-<small>@[@
-
-T^u ( u | \theta )
-=
-\prod_{c=0}^{C-1} \prod_{k=0}^{K-1} \prod_{i=0}^{I(k)-1} \prod_{j=0}^{J(k)-2}
-	T_{i,j,k,c}^u ( u | \theta )
-
-@]@</small>
+see definition of <a href="smooth_dtime.htm#T^s" target="_top"><span style='white-space: nowrap'>T^s</span></a>
+.
 
 
 

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The avgint Table: Defines Average Integrand Cases</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The avgint Table: Defines Average Integrand Cases">
-<meta name="keywords" id="keywords" content=" the avgint table: defines average integrand cases see also purpose usage parent rates child avgint_id integrand_id node_id weight_id null age_lower age_upper time_lower time_upper covariates example ">
+<meta name="keywords" id="keywords" content=" the avgint table: defines average integrand cases see also purpose usage parent rates child avgint_id integrand_id node_id subgroup_id weight_id null age_lower age_upper time_lower time_upper covariates example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,7 @@ A:active { color : purple }
 <br><a href="avgint_table.htm#avgint_id" target="_top">avgint_id</a>
 <br><a href="avgint_table.htm#integrand_id" target="_top">integrand_id</a>
 <br><a href="avgint_table.htm#node_id" target="_top">node_id</a>
+<br><a href="avgint_table.htm#subgroup_id" target="_top">subgroup_id</a>
 <br><a href="avgint_table.htm#weight_id" target="_top">weight_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avgint_table.htm#weight_id.null" target="_top">null</a>
 <br><a href="avgint_table.htm#age_lower" target="_top">age_lower</a>
@@ -171,9 +172,7 @@ over age or time.
 
 Set the
 <a href="avgint_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariates</span></a>
- to their
-<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
- values.
+ to null.
 </li></ol>
 
 Note that the rates and integrands have the following correspondence:
@@ -218,8 +217,12 @@ Set each
 <a href="avgint_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariate</span></a>
  to its average value
 for this child.
-</li></ol>
+</li><li>
 
+Set the <a href="avgint_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
+ to the
+subgroup of interest for this child.
+</li></ol>
 
 
 <br>
@@ -228,8 +231,6 @@ for this child.
 <br>
 This column has type <code><font color="blue">integer</font></code> and is the primary key for the
 <code><font color="blue">avgint</font></code> table.
-
-
 Its initial value is zero, and it increments by one for each row.
 
 <br>
@@ -249,6 +250,18 @@ This column has type <code><font color="blue">integer</font></code> and is the
 <a href="node_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
  that identifies
 the node for this case.
+
+<br>
+<br>
+<b><big><a name="subgroup_id" id="subgroup_id">subgroup_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the
+<a href="subgroup_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
+ that identifies
+the subgroup for this case.
+The chosen subgroup affects the results through its affect on
+the covariate multipliers; see <a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
+.
 
 <br>
 <br>

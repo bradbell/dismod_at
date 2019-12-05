@@ -124,7 +124,8 @@ A:active { color : purple }
           <font color="#FF0000">'age_upper'</font><font color="#990000">:</font><font color="#993399">100.0</font><font color="#990000">,</font>
           <font color="#FF0000">'time_lower'</font><font color="#990000">:</font><font color="#993399">1990.0</font><font color="#990000">,</font>
           <font color="#FF0000">'time_upper'</font><font color="#990000">:</font><font color="#993399">2010.0</font><font color="#990000">,</font>
-          <font color="#FF0000">'sex'</font><font color="#990000">:</font><font color="#993399">0.5</font>
+          <font color="#FF0000">'sex'</font><font color="#990000">:</font><font color="#993399">0.5</font><font color="#990000">,</font>
+          <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font>
      <font color="#990000">}</font>
      row<font color="#990000">[</font><font color="#FF0000">'data_name'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'one'</font>
      row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'north_america'</font>
@@ -221,6 +222,7 @@ A:active { color : purple }
           <font color="#990000">{</font>    <font color="#FF0000">'covariate'</font><font color="#990000">:</font><font color="#FF0000">'sex'</font><font color="#990000">,</font>
                <font color="#FF0000">'type'</font><font color="#990000">:</font><font color="#FF0000">'rate_value'</font><font color="#990000">,</font>
                <font color="#FF0000">'effected'</font><font color="#990000">:</font><font color="#FF0000">'omega'</font><font color="#990000">,</font>
+               <font color="#FF0000">'group'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'smooth'</font><font color="#990000">:</font><font color="#FF0000">'uniform_01_constant'</font>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
@@ -245,7 +247,8 @@ A:active { color : purple }
           <font color="#FF0000">'age_upper'</font><font color="#990000">:</font><font color="#993399">100.0</font><font color="#990000">,</font>
           <font color="#FF0000">'time_lower'</font><font color="#990000">:</font><font color="#993399">1990.0</font><font color="#990000">,</font>
           <font color="#FF0000">'time_upper'</font><font color="#990000">:</font><font color="#993399">2010.0</font><font color="#990000">,</font>
-          <font color="#FF0000">'sex'</font><font color="#990000">:</font><font color="#993399">0.5</font>
+          <font color="#FF0000">'sex'</font><font color="#990000">:</font><font color="#993399">0.5</font><font color="#990000">,</font>
+          <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font>
      <font color="#990000">}</font>
      row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'north_america'</font>
      avgint_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
@@ -257,12 +260,17 @@ A:active { color : purple }
      <i><font color="#9A1900"># nslist_table</font></i>
      nslist_table <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
      <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900"># subgroup_table</font></i>
+     subgroup_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font> <font color="#FF0000">'group'</font><font color="#990000">:</font><font color="#FF0000">'world'</font> <font color="#990000">}</font> <font color="#990000">]</font>
+     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      dismod_at<font color="#990000">.</font><b><font color="#000000">create_database</font></b><font color="#990000">(</font>
           file_name<font color="#990000">,</font>
           age_list<font color="#990000">,</font>
           time_list<font color="#990000">,</font>
           integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
+          subgroup_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>
           avgint_table<font color="#990000">,</font>
@@ -406,10 +414,11 @@ A:active { color : purple }
      <i><font color="#9A1900"># mulcov_table</font></i>
      tbl_name <font color="#990000">=</font> <font color="#FF0000">'mulcov'</font>
      col_name <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#FF0000">'mulcov_type'</font><font color="#990000">,</font> <font color="#FF0000">'rate_id'</font><font color="#990000">,</font> <font color="#FF0000">'integrand_id'</font><font color="#990000">,</font> <font color="#FF0000">'covariate_id'</font><font color="#990000">,</font> <font color="#FF0000">'smooth_id'</font>
+          <font color="#FF0000">'mulcov_type'</font><font color="#990000">,</font> <font color="#FF0000">'rate_id'</font><font color="#990000">,</font> <font color="#FF0000">'integrand_id'</font><font color="#990000">,</font> <font color="#FF0000">'covariate_id'</font><font color="#990000">,</font>
+          <font color="#FF0000">'group_id'</font><font color="#990000">,</font> <font color="#FF0000">'subgroup_smooth_id'</font><font color="#990000">,</font> <font color="#FF0000">'group_smooth_id'</font>
      <font color="#990000">]</font>
      row_list   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_row_list</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">)</font>
-     check_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">[</font> <font color="#FF0000">'rate_value'</font><font color="#990000">,</font> <font color="#993399">4</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">]</font>
+     check_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">[</font> <font color="#FF0000">'rate_value'</font><font color="#990000">,</font> <font color="#993399">4</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">0</font><font color="#990000">,</font> None<font color="#990000">,</font> <font color="#993399">0</font> <font color="#990000">]</font> <font color="#990000">]</font>
      <b><font color="#0000FF">assert</font></b> row_list <font color="#990000">==</font> check_list
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># option_table</font></i>

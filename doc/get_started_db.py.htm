@@ -125,7 +125,7 @@ The model for other cause mortality
 <a href="rate_table.htm#rate_name.omega" target="_top"><span style='white-space: nowrap'>omega</span></a>
 ,
 and the model for the rate covariate multiplier
-<a href="avg_integrand.htm#Rate Functions.Rate Covariate Multiplier, alpha_jk" target="_top"><span style='white-space: nowrap'>alpha</span></a>
+<a href="avg_integrand.htm#Rate Functions.Group Rate Covariate Multiplier, alpha_jk" target="_top"><span style='white-space: nowrap'>alpha</span></a>
 ,
 are constant in age and time.
 </li></ol>
@@ -221,6 +221,7 @@ known_income_multiplier <font color="#990000">=</font> <font color="#990000">-</
                <font color="#FF0000">'avgint_info'</font><font color="#990000">:</font> <font color="#FF0000">'a0'</font><font color="#990000">,</font>
                <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   <font color="#FF0000">'susceptible'</font><font color="#990000">,</font>
                <font color="#FF0000">'node'</font><font color="#990000">:</font>        <font color="#FF0000">'world'</font><font color="#990000">,</font>
+               <font color="#FF0000">'subgroup'</font><font color="#990000">:</font>    <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">'constant_one'</font><font color="#990000">,</font>
                <font color="#FF0000">'age_lower'</font><font color="#990000">:</font>   <font color="#993399">100.0</font><font color="#990000">,</font>
                <font color="#FF0000">'age_upper'</font><font color="#990000">:</font>   <font color="#993399">100.0</font><font color="#990000">,</font>
@@ -240,6 +241,7 @@ known_income_multiplier <font color="#990000">=</font> <font color="#990000">-</
                <font color="#FF0000">'c_data_info'</font><font color="#990000">:</font>  <font color="#FF0000">'d1'</font><font color="#990000">,</font>
                <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   <font color="#FF0000">'susceptible'</font><font color="#990000">,</font>
                <font color="#FF0000">'node'</font><font color="#990000">:</font>        <font color="#FF0000">'world'</font><font color="#990000">,</font>
+               <font color="#FF0000">'subgroup'</font><font color="#990000">:</font>    <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">'constant_one'</font><font color="#990000">,</font>
                <font color="#FF0000">'age_lower'</font><font color="#990000">:</font>   <font color="#993399">50.0</font><font color="#990000">,</font>
                <font color="#FF0000">'age_upper'</font><font color="#990000">:</font>   <font color="#993399">50.0</font><font color="#990000">,</font>
@@ -308,6 +310,7 @@ known_income_multiplier <font color="#990000">=</font> <font color="#990000">-</
           <font color="#990000">{</font>    <font color="#FF0000">'covariate'</font><font color="#990000">:</font><font color="#FF0000">'income'</font><font color="#990000">,</font>
                <font color="#FF0000">'type'</font><font color="#990000">:</font>     <font color="#FF0000">'rate_value'</font><font color="#990000">,</font>
                <font color="#FF0000">'effected'</font><font color="#990000">:</font> <font color="#FF0000">'omega'</font><font color="#990000">,</font>
+               <font color="#FF0000">'group'</font><font color="#990000">:</font>    <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'smooth'</font><font color="#990000">:</font>   <font color="#FF0000">'smooth_income_multiplier'</font>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
@@ -325,6 +328,9 @@ known_income_multiplier <font color="#990000">=</font> <font color="#990000">-</
      <i><font color="#9A1900"># nslist_table:</font></i>
      nslist_table <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900"># subgroup_table</font></i>
+     subgroup_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font> <font color="#FF0000">'group'</font><font color="#990000">:</font><font color="#FF0000">'world'</font> <font color="#990000">}</font> <font color="#990000">]</font>
+     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># create database</font></i>
      file_name <font color="#990000">=</font> <font color="#FF0000">'get_started.db'</font>
      dismod_at<font color="#990000">.</font><b><font color="#000000">create_database</font></b><font color="#990000">(</font>
@@ -333,6 +339,7 @@ known_income_multiplier <font color="#990000">=</font> <font color="#990000">-</
           time_list<font color="#990000">,</font>
           integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
+          subgroup_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>
           avgint_table<font color="#990000">,</font>

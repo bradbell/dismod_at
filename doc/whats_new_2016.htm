@@ -339,7 +339,7 @@ argument to the cmake install script.
 <b><big><a name="10-16" id="10-16">10-16</a></big></b>
 
 <ol type="1"><li>
-The <a href="user_zero_sum_random.py.htm" target="_top"><span style='white-space: nowrap'>zero_sum_random.py</span></a>
+The <a href="user_zsum_child_rate.py.htm" target="_top"><span style='white-space: nowrap'>zsum_child_rate.py</span></a>
 
 example / test was added.
 </li><li>
@@ -378,7 +378,7 @@ Report invalid prevalence values in the <a href="log_table.htm" target="_top"><s
 <b><big><a name="10-15" id="10-15">10-15</a></big></b>
 <br>
 Add the
-<a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  option which
 constrains the sum of the random effects to be zero.
 
@@ -917,7 +917,7 @@ Add missing <code><font color="blue">dev::log_message::message_type</font></code
 to the <code><font color="blue">log_message</font></code> documentation.
 </li><li>
 
-Change <a href="user_meas_covariate.py.htm" target="_top"><span style='white-space: nowrap'>user_meas_covariate.py</span></a>
+Change <a href="user_group_mulcov.py.htm" target="_top"><span style='white-space: nowrap'>user_group_mulcov.py</span></a>
  to use <code><font color="blue">null</font></code> smoothing
 pointer in the middle (not last) covariate multiplier (better test).
 </li><li>
@@ -954,11 +954,9 @@ Fix warning in <code><font color="blue">devel/utility/pack_info.cpp</font></code
 <b><big><a name="05-01" id="05-01">05-01</a></big></b>
 
 <ol type="1"><li>
-Allow for a covariate multiplier 
-<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
- to be
-<a href="mulcov_table.htm#smooth_id.null" target="_top"><span style='white-space: nowrap'>null</span></a>
-.
+Allow for a covariate multiplier
+<a href="mulcov_table.htm#group_smooth_id" target="_top"><span style='white-space: nowrap'>group_smooth_id</span></a>
+ to be null.
 This enables on the include, or drop out, a multiplier by
 only changing one entry the <a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
 .

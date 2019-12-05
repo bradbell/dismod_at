@@ -49,8 +49,8 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_age_avg_split.py.htm" target="_top">Prev</a>
-</td><td><a href="user_ill_condition.py.htm" target="_top">Next</a>
+<td><a href="user_data_sim.py.htm" target="_top">Prev</a>
+</td><td><a href="user_diff_constraint.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
@@ -1061,18 +1061,21 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'covariate'</font><font color="#990000">:</font> <font color="#FF0000">'sex'</font><font color="#990000">,</font>
                <font color="#FF0000">'type'</font><font color="#990000">:</font>      <font color="#FF0000">'rate_value'</font><font color="#990000">,</font>
                <font color="#FF0000">'effected'</font><font color="#990000">:</font>  <font color="#FF0000">'iota'</font><font color="#990000">,</font>
+               <font color="#FF0000">'group'</font><font color="#990000">:</font>     <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'smooth'</font><font color="#990000">:</font>    <font color="#FF0000">'smooth_mulcov_sex'</font>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
                <i><font color="#9A1900"># alpha for iota and bmi</font></i>
                <font color="#FF0000">'covariate'</font><font color="#990000">:</font> <font color="#FF0000">'bmi'</font><font color="#990000">,</font>
                <font color="#FF0000">'type'</font><font color="#990000">:</font>      <font color="#FF0000">'rate_value'</font><font color="#990000">,</font>
                <font color="#FF0000">'effected'</font><font color="#990000">:</font>  <font color="#FF0000">'iota'</font><font color="#990000">,</font>
+               <font color="#FF0000">'group'</font><font color="#990000">:</font>     <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'smooth'</font><font color="#990000">:</font>    <font color="#FF0000">'smooth_mulcov_bmi'</font>
           <font color="#990000">}</font> <font color="#990000">,</font> <font color="#990000">{</font>
                <i><font color="#9A1900"># beta for prevalence and ms_2000</font></i>
                <font color="#FF0000">'covariate'</font><font color="#990000">:</font> <font color="#FF0000">'ms_2000'</font><font color="#990000">,</font>
                <font color="#FF0000">'type'</font><font color="#990000">:</font>      <font color="#FF0000">'meas_value'</font><font color="#990000">,</font>
                <font color="#FF0000">'effected'</font><font color="#990000">:</font>  <font color="#FF0000">'prevalence'</font><font color="#990000">,</font>
+               <font color="#FF0000">'group'</font><font color="#990000">:</font>     <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'smooth'</font><font color="#990000">:</font>    <font color="#FF0000">'smooth_mulcov_ms_2000'</font>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
@@ -1152,6 +1155,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <i><font color="#9A1900">#</font></i>
           row <font color="#990000">=</font> <font color="#990000">{</font>
                <font color="#FF0000">'node'</font><font color="#990000">:</font>        node<font color="#990000">,</font>
+               <font color="#FF0000">'subgroup'</font><font color="#990000">:</font>    <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   integrand<font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>     <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">''</font><font color="#990000">,</font>
@@ -1171,6 +1175,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                time <font color="#990000">=</font> <font color="#990000">(</font>time_list<font color="#990000">[</font>i_time<font color="#990000">]</font> <font color="#990000">+</font> time_list<font color="#990000">[</font>i_time<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">])</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
           row <font color="#990000">=</font> <font color="#990000">{</font>
                <font color="#FF0000">'node'</font><font color="#990000">:</font>        node<font color="#990000">,</font>
+               <font color="#FF0000">'subgroup'</font><font color="#990000">:</font>    <font color="#FF0000">'world'</font><font color="#990000">,</font>
                <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   integrand<font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>     <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'weight'</font><font color="#990000">:</font>      <font color="#FF0000">''</font><font color="#990000">,</font>
@@ -1204,6 +1209,9 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_random'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-8'</font>                 <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+     <i><font color="#9A1900"># subgroup_table</font></i>
+     subgroup_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font> <font color="#FF0000">'group'</font><font color="#990000">:</font><font color="#FF0000">'world'</font> <font color="#990000">}</font> <font color="#990000">]</font>
+     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># create database</font></i>
      dismod_at<font color="#990000">.</font><b><font color="#000000">create_database</font></b><font color="#990000">(</font>
           file_name<font color="#990000">,</font>
@@ -1211,6 +1219,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           time_list<font color="#990000">,</font>
           integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
+          subgroup_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>
           avgint_table<font color="#990000">,</font>

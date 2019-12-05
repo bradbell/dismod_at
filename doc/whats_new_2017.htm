@@ -265,7 +265,7 @@ for the measurement values
 Fix the definition of the
 <a href="mulcov_table.htm#mulcov_type.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
  covariate multipliers
-<a href="avg_integrand.htm#Measurement Value Covariates.Multiplier, beta_j" target="_top"><span style='white-space: nowrap'>beta_j</span></a>
+<a href="avg_integrand.htm#Measurement Value Covariates.Subgroup Measurement Covariate Multiplier, Delta beta_j" target="_top"><span style='white-space: nowrap'>beta_j</span></a>
 
 and the
 <a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
@@ -460,7 +460,7 @@ The <a href="modify_command.htm" target="_top"><span style='white-space: nowrap'
 
 <ol type="1"><li>
 Specifications were added to forbid
-<a href="data_table.htm#node_id.Child Data Random Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;data</span></a>
+<a href="data_table.htm#node_id.Child Data" target="_top"><span style='white-space: nowrap'>child&nbsp;data</span></a>
 
 from having
 <a href="density_table.htm#density_name.laplace" target="_top"><span style='white-space: nowrap'>laplace</span></a>
@@ -600,8 +600,8 @@ In addition, remove the corresponding setting to <code><font color="blue">None</
 Change <code><font color="blue">random_bound</font></code> to
 <a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
 .
-Change <code><font color="blue">zero_sum_random</font></code> to
-<a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+Change <code><font color="blue">zero_sum_child_rate</font></code> to
+<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
 .
 Change <code><font color="blue">fixed_bound_frac</font></code> to
 <a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
@@ -1070,7 +1070,7 @@ There was a bug and the case
 <a href="fit_command.htm#variables.fixed" target="_top"><span style='white-space: nowrap'>fit&nbsp;fixed</span></a>
  would not run
 when
-<a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  was not null
 (specified one or more rates).
 This has been fixed.
@@ -1079,7 +1079,7 @@ This has been fixed.
 For each 
 <code><i><font color="black"><span style='white-space: nowrap'>rate_name</span></font></i></code>
  in
-<a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
 
 the corresponding
 <a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
@@ -1093,7 +1093,7 @@ An error messages is reported if this is not the case.
 <br>
 <b><big><a name="04-27" id="04-27">04-27</a></big></b>
 <br>
-Change the <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+Change the <a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  option
 so it can select specific rates to have zero sum.
 This was necessary so that
@@ -1369,7 +1369,7 @@ The <code><font color="blue">bin/install_suitesparse.sh</font></code> script has
 work on the MAC (where the <code><font color="blue">-lrt</font></code> library is not available).
 </li><li>
 
-The optimization tolerance in <a href="user_meas_covariate.py.htm" target="_top"><span style='white-space: nowrap'>user_meas_covariate.py</span></a>
+The optimization tolerance in <a href="user_group_mulcov.py.htm" target="_top"><span style='white-space: nowrap'>user_group_mulcov.py</span></a>
 
 was made smaller to avoid test failures on some machines.
 </li></ol>

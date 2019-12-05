@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2019</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2019">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 10-24 10-09 10-08 10-06 10-02 10-01 09-30 09-24 09-23 09-22 09-21 09-20 09-19 09-17 09-15 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2019 12-04 11-30 11-29 11-28 11-26 11-25 11-24 11-22 11-20 11-18 11-17 10-24 10-09 10-08 10-06 10-02 10-01 09-30 09-24 09-23 09-22 09-21 09-20 09-19 09-17 09-15 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -60,6 +60,17 @@ A:active { color : purple }
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
 <option>Contents</option>
+<option>12-04</option>
+<option>11-30</option>
+<option>11-29</option>
+<option>11-28</option>
+<option>11-26</option>
+<option>11-25</option>
+<option>11-24</option>
+<option>11-22</option>
+<option>11-20</option>
+<option>11-18</option>
+<option>11-17</option>
 <option>10-24</option>
 <option>10-09</option>
 <option>10-08</option>
@@ -144,6 +155,241 @@ A:active { color : purple }
 <br>
 <table>
 <tr><td><a href="whats_new_2018.htm" target="_top">whats_new_2018</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2018</td></tr><tr><td><a href="whats_new_2017.htm" target="_top">whats_new_2017</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2017</td></tr><tr><td><a href="whats_new_2016.htm" target="_top">whats_new_2016</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2016</td></tr><tr><td><a href="whats_new_2015.htm" target="_top">whats_new_2015</a></td><td>Changes&nbsp;and&nbsp;Additions&nbsp;to&nbsp;Dismod_at&nbsp;During&nbsp;2015</td></tr></table><br>
+<b><big><a name="12-04" id="12-04">12-04</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="user_zsum_mulcov_meas.py.htm" target="_top"><span style='white-space: nowrap'>user_zsum_mulcov_meas.py</span></a>
+ example
+which demonstrates using the
+<a href="option_table.htm#zero_sum_mulcov_group" target="_top"><span style='white-space: nowrap'>zero_sum_mulcov_group</span></a>
+
+option with subgroup measurement covariate multipliers.
+</li><li>
+
+Include both
+<a href="db2csv_command.htm#variable.csv.group" target="_top"><span style='white-space: nowrap'>group</span></a>
+ and subgroup
+in the variable.csv file created by the db2csv command.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-30" id="11-30">11-30</a></big></b>
+<br>
+Add the <a href="user_zsum_mulcov_rate.py.htm" target="_top"><span style='white-space: nowrap'>user_zsum_mulcov_rate.py</span></a>
+ example
+which demonstrates using the
+<a href="option_table.htm#zero_sum_mulcov_group" target="_top"><span style='white-space: nowrap'>zero_sum_mulcov_group</span></a>
+
+option with subgroup rate covariate multipliers.
+
+<br>
+<br>
+<b><big><a name="11-29" id="11-29">11-29</a></big></b>
+<br>
+The <code><font color="blue">zero_sum_random</font></code> option was changed to
+<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
+.
+A warning is printed when <code><font color="blue">zero_sum_random</font></code> is used and
+this change is made automatically.
+In addition, the <code><font color="blue">old2new</font></code> command will make this change to the
+<a href="old2new_command.htm#option Table" target="_top"><span style='white-space: nowrap'>option&nbsp;table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="11-28" id="11-28">11-28</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="user_bilevel_random.py.htm" target="_top"><span style='white-space: nowrap'>user_bilevel_random.py</span></a>
+ example demonstrating
+fitting two levels of random effects using
+<a href="model_variables.htm#Random Effects, u.Subgroup Covariate Multipliers" target="_top"><span style='white-space: nowrap'>subgroup&nbsp;covariate&nbsp;multipliers</span></a>
+.
+</li><li>
+
+Fix the coverage check in <a href="user_cascade.py.htm" target="_top"><span style='white-space: nowrap'>user_cascade.py</span></a>
+.
+To be specific, change
+<code><font color="blue">abs( (mean - truth) ) / std</font></code> to
+<code><font color="blue">abs( (fit - truth) ) / std</font></code>.
+</li><li>
+
+Add warnings to create_database when subgroup (group)
+information is missing for the
+<a href="create_database.htm#data_table.subgroup" target="_top"><span style='white-space: nowrap'>data&nbsp;table</span></a>
+ and
+<a href="create_database.htm#avgint_table.subgroup" target="_top"><span style='white-space: nowrap'>avgint&nbsp;table</span></a>
+
+( <a href="create_database.htm#mulcov_table.group" target="_top"><span style='white-space: nowrap'>mulcov&nbsp;table</span></a>
+) tables.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-26" id="11-26">11-26</a></big></b>
+
+<ol type="1"><li>
+The <code><font color="blue">meas_covariate.py</font></code> example was changed to be an example
+using group covariate multipliers; see <a href="user_group_mulcov.py.htm" target="_top"><span style='white-space: nowrap'>user_group_mulcov.py</span></a>
+.
+In addition, a discussion of this example was added.
+</li><li>
+
+The constant weighting function was removed from the <a href="user.htm" target="_top"><span style='white-space: nowrap'>user</span></a>
+ examples
+(it is now the default weighting and hence no longer needed).
+</li><li>
+
+Change <a href="user_fit_meas_noise.py.htm" target="_top"><span style='white-space: nowrap'>user_fit_meas_noise.py</span></a>
+ so that it used groups to identify a
+subset of that data that has extra measurement noise.
+</li><li>
+
+The <code><font color="blue">meas_std_effect</font></code>
+<a href="option_table.htm#Conventions.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
+ was removed.
+It was deprecated (see <a href="whats_new_2019.htm#04-08" target="_top"><span style='white-space: nowrap'>04-08</span></a>
+ below)
+and should have been replaced by
+<a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-25" id="11-25">11-25</a></big></b>
+<br>
+Use <a href="system_command_prc.htm" target="_top"><span style='white-space: nowrap'>system_command_prc</span></a>
+ to simplify the
+<a href="get_started.htm" target="_top"><span style='white-space: nowrap'>get_started</span></a>
+ examples.
+
+<br>
+<br>
+<b><big><a name="11-24" id="11-24">11-24</a></big></b>
+
+<ol type="1"><li>
+An <code><font color="blue">old2new_command</font></code> was added.
+This time it adds the <a href="subgroup_table.htm" target="_top"><span style='white-space: nowrap'>subgroup_table</span></a>
+
+and other related information,
+to the database in a backward compatible fashion; see
+<a href="old2new_command.htm" target="_top"><span style='white-space: nowrap'>old2new_command</span></a>
+ and 11-22 below.
+In addition, directions for obtaining this
+<a href="create_database.htm#subgroup_table.Backward Compatibility" target="_top"><span style='white-space: nowrap'>backward&nbsp;compatibility</span></a>
+
+was added to the <code><font color="blue">create_database</font></code> function.
+</li><li>
+
+The <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ was modified in the following ways:
+The <code><font color="blue">group/sub</font></code> column as added to
+<a href="db2csv_command.htm#variable.csv" target="_top"><span style='white-space: nowrap'>variable.csv</span></a>
+
+(changed to <code><font color="blue">group</font></code> and <code><font color="blue">subgroup</font></code> on
+<a href="whats_new_2019.htm#12-04" target="_top"><span style='white-space: nowrap'>12-04</span></a>
+).
+The <a href="db2csv_command.htm#data.csv.subgroup" target="_top"><span style='white-space: nowrap'>subgroup</span></a>
+ and
+<a href="db2csv_command.htm#data.csv.group" target="_top"><span style='white-space: nowrap'>group</span></a>
+ columns were added to data.csv
+The <a href="db2csv_command.htm#data.csv.subgroup" target="_top"><span style='white-space: nowrap'>subgroup</span></a>
+
+column was added to predict.csv
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-22" id="11-22">11-22</a></big></b>
+<br>
+The following changes below were made to the database input tables:
+<ol type="1"><li>
+The <a href="subgroup_table.htm" target="_top"><span style='white-space: nowrap'>subgroup_table</span></a>
+ was added.
+</li><li>
+
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+ column was added to the
+<a href="avgint_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>data&nbsp;table</span></a>
+ and
+<a href="avgint_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>avgint&nbsp;table</span></a>
+.
+</li><li>
+
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
+ column in the mulcov table was changed to
+<a href="mulcov_table.htm#group_smooth_id" target="_top"><span style='white-space: nowrap'>group_smooth_id</span></a>
+.
+In addition, the 
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_smooth_id</span></font></i></code>
+
+columns were added to the mulcov table.
+</li></ol>
+
+In addition, the <a href="create_database.htm#subgroup_table" target="_top"><span style='white-space: nowrap'>subgroup_table</span></a>
+
+argument was added to the <code><font color="blue">create_database</font></code> routine.
+
+
+<br>
+<br>
+<b><big><a name="11-20" id="11-20">11-20</a></big></b>
+
+<ol type="1"><li>
+The automatic conversion of <code><font color="blue">meas_std</font></code> to
+<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
+ has been removed;
+see <a href="whats_new_2019.htm#04-08" target="_top"><span style='white-space: nowrap'>04-08</span></a>
+ below.
+</li><li>
+
+The <code><font color="blue">old2new</font></code> command that added the
+<a href="var_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+ column to the var table was removed;
+see <a href="whats_new_2019.htm#04-20" target="_top"><span style='white-space: nowrap'>04-20</span></a>
+
+and <a href="whats_new_2019.htm#04-23" target="_top"><span style='white-space: nowrap'>04-23</span></a>
+ below.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="11-18" id="11-18">11-18</a></big></b>
+<br>
+Group all of the sections for the prior of the model variables; see
+<a href="variable_prior.htm" target="_top"><span style='white-space: nowrap'>variable_prior</span></a>
+.
+In addition, simplify the differences using
+<a href="smooth_dage.htm" target="_top"><span style='white-space: nowrap'>smooth_dage</span></a>
+ and <a href="smooth_dtime.htm" target="_top"><span style='white-space: nowrap'>smooth_dtime</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="11-17" id="11-17">11-17</a></big></b>
+<br>
+Fix some out of date statements and simplify the
+documentation for the value prior for the random effects
+<a href="random_value.htm" target="_top"><span style='white-space: nowrap'>random_value</span></a>
+.
+To be specific, the corrections are necessary because we can now have
+different smoothings for different child nodes; see the rate table
+<a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
+.
+
+<br>
+<br>
 <b><big><a name="10-24" id="10-24">10-24</a></big></b>
 <br>
 The order of the variables in the  <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
@@ -170,7 +416,8 @@ This requires running
 <b><big><a name="10-08" id="10-08">10-08</a></big></b>
 
 <ol type="1"><li>
-Fix a bug in the <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+Fix a bug in the
+<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  option.
 This bug caused <a href="user_const_value.py.htm" target="_top"><span style='white-space: nowrap'>user_const_value.py</span></a>
  to fail  when one switched
@@ -202,7 +449,7 @@ does not apply to random effects that have equal lower and upper limits.
 <b><big><a name="10-02" id="10-02">10-02</a></big></b>
 <br>
 Add discussion at the top of the
-<a href="user_zero_sum_random.py.htm" target="_top"><span style='white-space: nowrap'>user_zero_sum_random.py</span></a>
+<a href="user_zsum_child_rate.py.htm" target="_top"><span style='white-space: nowrap'>user_zsum_child_rate.py</span></a>
  example.
 
 <br>
@@ -494,11 +741,11 @@ Advance <code><font color="blue">dock_dismod_at.sh</font></code> to
 <code><font color="blue">20190912</font></code>.
 </li><li>
 
-If <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+If <a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
 
 is chosen for a rate, the simulated prior values for that
 corresponding child rate effects at each grid point now sum to zero; see
-<a href="prior_sim_table.htm#prior_sim_value.zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+<a href="prior_sim_table.htm#prior_sim_value.zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
 
 in the prior_sim table documentation.
 </li><li>
@@ -509,7 +756,7 @@ was added.
 This gives a different choice for optimizing the random effects.
 </li><li>
 
-The <a href="option_table.htm#zero_sum_random" target="_top"><span style='white-space: nowrap'>zero_sum_random</span></a>
+The <a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  value in
 <a href="db2csv_command.htm#option.csv" target="_top"><span style='white-space: nowrap'>option.csv</span></a>
  written by the <code><font color="blue">db2csv</font></code>
@@ -1133,8 +1380,7 @@ when computing the value of an
 For example, attempting to divide by zero.
 </li><li>
 
-The <a href="old2new_command.htm" target="_top"><span style='white-space: nowrap'>old2new_command</span></a>
- was added.
+The <code><font color="blue">old2new_command</font></code> was added.
 </li></ol>
 
 
@@ -1323,9 +1569,7 @@ were added to the avgint table.
 <b><big><a name="04-09" id="04-09">04-09</a></big></b>
 
 <ol type="1"><li>
-In the case where the deprecated name
-<a href="mulcov_table.htm#mulcov_type.meas_std: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
-
+In the case where the deprecated name <code><font color="blue">meas_std</font></code>
 is used, the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
  was
@@ -1368,19 +1612,14 @@ was improved by defining reversed
 <b><big><a name="04-08" id="04-08">04-08</a></big></b>
 
 <ol type="1"><li>
-The covariate multiplier type
-<a href="mulcov_table.htm#mulcov_type.meas_std: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
-
-was deprecated.
+The covariate multiplier type <code><font color="blue">meas_std</font></code> was deprecated
+(and was later removed).
 It should be changed to
 <a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
 .
 </li><li>
 
-The option
-<a href="option_table.htm#meas_noise_effect.meas_std_effect: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std_effect</span></a>
-
-was deprecated.
+The option <code><font color="blue">meas_std_effect</font></code> option was deprecated.
 It should be changed to
 <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
 .
@@ -1489,7 +1728,7 @@ to redirect one to the integrand table.
 <br>
 <b><big><a name="01-10" id="01-10">01-10</a></big></b>
 <br>
-Reduce the change of random failure in <code><font color="blue">test/user/fit_gamma.py</font></code>
+Reduce the change of random failure in <code><font color="blue">test/user/fit_meas_noise.py</font></code>
 during <a href="install_unix.htm#dismod_at.Test" target="_top"><span style='white-space: nowrap'>testing</span></a>
 .
 

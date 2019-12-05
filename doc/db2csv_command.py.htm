@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>init Command: Example and Test</title>
+<title>db2csv Command: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="init Command: Example and Test">
-<meta name="keywords" id="keywords" content=" init command: example test ">
+<meta name="description" id="description" content="db2csv Command: Example and Test">
+<meta name="keywords" id="keywords" content=" db2csv command: example test ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,12 +68,11 @@ A:active { color : purple }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
-<center><b><big><big>init Command: Example and Test</big></big></b></center>
+<center><b><big><big>db2csv Command: Example and Test</big></big></b></center>
 
 <br><pre><tt><b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> copy
-<b><font color="#000080">import</font></b> subprocess
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> csv
 <b><font color="#000080">import</font></b> math
@@ -111,15 +110,8 @@ get_started_db<font color="#990000">.</font><b><font color="#000000">get_started
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 program        <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
 file_name      <font color="#990000">=</font> <font color="#FF0000">'get_started.db'</font>
-<b><font color="#0000FF">for</font></b> command <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'init'</font><font color="#990000">,</font> <font color="#FF0000">'fit'</font> <font color="#990000">]</font> <font color="#990000">:</font>
-     cmd <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> command <font color="#990000">]</font>
-     <b><font color="#0000FF">if</font></b> command <font color="#990000">==</font> <font color="#FF0000">'fit'</font> <font color="#990000">:</font>
-          variables <font color="#990000">=</font> <font color="#FF0000">'both'</font>
-          cmd<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>variables<font color="#990000">)</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
-     flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
-     <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-          sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at '</font> <font color="#990000">+</font> command <font color="#990000">+</font> <font color="#FF0000">' command failed'</font><font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">]</font> <font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font> <font color="#990000">]</font> <font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change into distribution directory to run sandbox version of dismodat.py</font></i>
 <i><font color="#9A1900"># return to test_dir when done.</font></i>
@@ -127,13 +119,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">)</font>
 program        <font color="#990000">=</font> <font color="#FF0000">'bin/dismodat.py'</font>
 file_name      <font color="#990000">=</font> test_dir <font color="#990000">+</font> <font color="#FF0000">'/get_started.db'</font>
-command        <font color="#990000">=</font> <font color="#FF0000">'db2csv'</font>
-cmd            <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> command <font color="#990000">]</font>
-<i><font color="#9A1900">#</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
-flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#FF0000">'The dismod_at db2csv command failed'</font><font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'db2csv'</font><font color="#990000">]</font> <font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font>test_dir<font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># get_table</font></i>
@@ -175,6 +161,10 @@ data_table <font color="#990000">=</font> <b><font color="#000000">get_table</fo
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
 row <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
 <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'c_data_info'</font><font color="#990000">]</font>        <font color="#990000">==</font> <font color="#FF0000">'d1'</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'child'</font><font color="#990000">]</font>              <font color="#990000">==</font> <font color="#FF0000">''</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>               <font color="#990000">==</font> <font color="#FF0000">'world'</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'subgroup'</font><font color="#990000">]</font>           <font color="#990000">==</font> <font color="#FF0000">'world'</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'group'</font><font color="#990000">]</font>              <font color="#990000">==</font> <font color="#FF0000">'world'</font>
 <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>          <font color="#990000">==</font> <font color="#FF0000">'susceptible'</font>
 <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'weight'</font><font color="#990000">]</font>             <font color="#990000">==</font> <font color="#FF0000">'constant_one'</font>
 <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'density'</font><font color="#990000">]</font>            <font color="#990000">==</font> <font color="#FF0000">'gaussian'</font>
@@ -197,28 +187,35 @@ row <font color="#990000">=</font> data_table<font color="#990000">[</font><font
 <i><font color="#9A1900"># variable.csv</font></i>
 variable_table <font color="#990000">=</font> <b><font color="#000000">get_table</font></b><font color="#990000">(</font><font color="#FF0000">'variable'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># empty because: rate covariate, no depend command, no truth table,</font></i>
+<i><font color="#9A1900"># no sample command</font></i>
+always_empty  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integrand'</font><font color="#990000">,</font> <font color="#FF0000">'depend'</font><font color="#990000">,</font> <font color="#FF0000">'truth'</font><font color="#990000">,</font> <font color="#FF0000">'sam_avg'</font><font color="#990000">,</font> <font color="#FF0000">'sam_std'</font> <font color="#990000">]</font>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># res_value is empty because value prior is uniform</font></i>
 <i><font color="#9A1900"># sim_v, sim_a, sim_t are empty because have not run simulate command</font></i>
-always_empty  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integrand'</font><font color="#990000">,</font> <font color="#FF0000">'depend'</font><font color="#990000">,</font> <font color="#FF0000">'truth'</font><font color="#990000">,</font> <font color="#FF0000">'sam_avg'</font><font color="#990000">,</font> <font color="#FF0000">'sam_std'</font> <font color="#990000">]</font>
 always_empty <font color="#990000">+=</font> <font color="#990000">[</font> <font color="#FF0000">'res_value'</font><font color="#990000">,</font> <font color="#FF0000">'res_dage'</font><font color="#990000">,</font> <font color="#FF0000">'res_dtime'</font> <font color="#990000">]</font>
 always_empty <font color="#990000">+=</font> <font color="#990000">[</font> <font color="#FF0000">'std_v'</font><font color="#990000">,</font> <font color="#FF0000">'eta_v'</font><font color="#990000">,</font> <font color="#FF0000">'nu_v'</font> <font color="#990000">]</font>
 always_empty <font color="#990000">+=</font> <font color="#990000">[</font> <font color="#FF0000">'sim_v'</font><font color="#990000">,</font> <font color="#FF0000">'sim_a'</font><font color="#990000">,</font> <font color="#FF0000">'sim_t'</font> <font color="#990000">]</font>
 <b><font color="#0000FF">for</font></b> prefix <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'lower'</font><font color="#990000">,</font> <font color="#FF0000">'upper'</font><font color="#990000">,</font> <font color="#FF0000">'mean'</font><font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">,</font> <font color="#FF0000">'eta'</font><font color="#990000">,</font> <font color="#FF0000">'nu'</font><font color="#990000">,</font> <font color="#FF0000">'density'</font> <font color="#990000">]</font> <font color="#990000">:</font>
      <b><font color="#0000FF">for</font></b> suffix <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#FF0000">'_a'</font><font color="#990000">,</font> <font color="#FF0000">'_t'</font><font color="#990000">]</font> <font color="#990000">:</font>
           always_empty<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> prefix <font color="#990000">+</font> suffix <font color="#990000">)</font>
+always_empty <font color="#990000">+=</font> <font color="#990000">[</font> <font color="#FF0000">'subgroup'</font> <font color="#990000">]</font>
 <b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> variable_table <font color="#990000">:</font>
      empty_field <font color="#990000">=</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font> always_empty <font color="#990000">)</font>
-     <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">!=</font> <font color="#FF0000">'rate'</font> <b><font color="#0000FF">and</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">!=</font> <font color="#FF0000">'mulcov_rate_value'</font> <font color="#990000">:</font>
-          empty_field<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font><font color="#FF0000">'rate'</font><font color="#990000">)</font>
-     <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">].</font><b><font color="#000000">startswith</font></b><font color="#990000">(</font><font color="#FF0000">'mulcov_'</font><font color="#990000">)</font> <font color="#990000">:</font>
-          empty_field<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font><font color="#FF0000">'node'</font><font color="#990000">)</font>
-     <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'rate'</font> <font color="#990000">:</font>
           empty_field<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font><font color="#FF0000">'covariate'</font><font color="#990000">)</font>
           empty_field<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font><font color="#FF0000">'m_id'</font><font color="#990000">)</font>
+          empty_field<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font><font color="#FF0000">'group'</font><font color="#990000">)</font>
+     <b><font color="#0000FF">else</font></b><font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'mulcov_rate_value'</font>
+          empty_field<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font><font color="#FF0000">'node'</font><font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
      <b><font color="#0000FF">for</font></b> field <b><font color="#0000FF">in</font></b> row <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> field <b><font color="#0000FF">in</font></b> empty_field <font color="#990000">:</font>
                <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">''</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+               <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">''</font> <font color="#990000">:</font>
+                    <b><font color="#0000FF">print</font></b><font color="#990000">(</font>field<font color="#990000">,</font> row<font color="#990000">)</font>
                <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#FF0000">''</font>
      <i><font color="#9A1900">#</font></i>
      <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'rate'</font><font color="#990000">]</font>               <font color="#990000">==</font> <font color="#FF0000">'omega'</font>
@@ -238,7 +235,7 @@ always_empty <font color="#990000">+=</font> <font color="#990000">[</font> <fon
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'mulcov_rate_value'</font>
           <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'covariate'</font><font color="#990000">]</font>   <font color="#990000">==</font> <font color="#FF0000">'income'</font>
-          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>        <font color="#990000">==</font> <font color="#FF0000">''</font>
+          <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'group'</font><font color="#990000">]</font>       <font color="#990000">==</font> <font color="#FF0000">'world'</font>
           <b><font color="#0000FF">assert</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'s_id'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font> <i><font color="#9A1900"># smooth_income_multiplier</font></i>
           <b><font color="#0000FF">assert</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'m_id'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font> <i><font color="#9A1900"># mulcov_id</font></i>
           <b><font color="#0000FF">assert</font></b> <b><font color="#000000">near_equal</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'fit_value'</font><font color="#990000">],</font> income_multiplier<font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>

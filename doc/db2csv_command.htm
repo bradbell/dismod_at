@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -90,6 +90,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.integrand" target="_top">integrand</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.covariate" target="_top">covariate</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.node" target="_top">node</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.group" target="_top">group</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.subgroup" target="_top">subgroup</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.fixed" target="_top">fixed</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.depend" target="_top">depend</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.start" target="_top">start</a>
@@ -111,6 +113,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.data_extra_columns" target="_top">data_extra_columns</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.child" target="_top">child</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.node" target="_top">node</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.group" target="_top">group</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.subgroup" target="_top">subgroup</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.integrand" target="_top">integrand</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.weight" target="_top">weight</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.age_lo" target="_top">age_lo</a>
@@ -143,6 +147,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.integrand" target="_top">integrand</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.weight" target="_top">weight</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.node" target="_top">node</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.group" target="_top">group</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.subgroup" target="_top">subgroup</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#predict.csv.Covariates" target="_top">Covariates</a>
 <br><a href="db2csv_command.htm#Example" target="_top">Example</a>
 <br><a href="db2csv_command.htm#ihme_db.sh" target="_top">ihme_db.sh</a>
@@ -366,6 +372,22 @@ is the
 <br>
 is the
 <a href="node_table.htm#node_name" target="_top"><span style='white-space: nowrap'>node_name</span></a>
+.
+
+<br>
+<br>
+<big><a name="variable.csv.group" id="variable.csv.group">group</a></big>
+<br>
+This field is non-empty for
+<a href="model_variables.htm#Fixed Effects, theta.Group Covariate Multipliers" target="_top"><span style='white-space: nowrap'>group&nbsp;covariate&nbsp;multipliers</span></a>
+.
+
+<br>
+<br>
+<big><a name="variable.csv.subgroup" id="variable.csv.subgroup">subgroup</a></big>
+<br>
+This field is non-empty for
+<a href="model_variables.htm#Random Effects, u.Subgroup Covariate Multipliers" target="_top"><span style='white-space: nowrap'>subgroup&nbsp;covariate&nbsp;multipliers</span></a>
 .
 
 <br>
@@ -646,7 +668,26 @@ is the
 This will correspond directly to the data table
 <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
 .
-3
+
+<br>
+<br>
+<big><a name="data.csv.group" id="data.csv.group">group</a></big>
+<br>
+is the <a href="subgroup_table.htm#group_name" target="_top"><span style='white-space: nowrap'>group_name</span></a>
+ corresponding
+to the subgroup for this data row.
+
+<br>
+<br>
+<big><a name="data.csv.subgroup" id="data.csv.subgroup">subgroup</a></big>
+<br>
+is the
+<a href="subgroup_table.htm#subgroup_name" target="_top"><span style='white-space: nowrap'>subgroup_name</span></a>
+ for this data row.
+This will correspond directly to the data table
+<a href="data_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
+.
+
 <br>
 <br>
 <big><a name="data.csv.integrand" id="data.csv.integrand">integrand</a></big>
@@ -991,6 +1032,25 @@ is the
 is the
 <a href="node_table.htm#node_name" target="_top"><span style='white-space: nowrap'>node_name</span></a>
  for this row.
+
+<br>
+<br>
+<big><a name="predict.csv.group" id="predict.csv.group">group</a></big>
+<br>
+is the <a href="subgroup_table.htm#group_name" target="_top"><span style='white-space: nowrap'>group_name</span></a>
+ corresponding
+to the subgroup for this data row.
+
+<br>
+<br>
+<big><a name="predict.csv.subgroup" id="predict.csv.subgroup">subgroup</a></big>
+<br>
+is the
+<a href="subgroup_table.htm#subgroup_name" target="_top"><span style='white-space: nowrap'>subgroup_name</span></a>
+ for this data row.
+This will correspond directly to the avgint table
+<a href="avgint_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
+.
 
 <br>
 <br>

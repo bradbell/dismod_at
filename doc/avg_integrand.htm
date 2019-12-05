@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Model for the Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Model for the Average Integrand">
-<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i s_i t_i covariate difference x_ij w_i n_i rate functions parent q_k child effect u_ik j_k multiplier alpha_jk adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk mulcov measurement value covariates k_i beta_j weight integral wbar_i ">
+<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i c_i d_i s_i g_i covariate difference x_ij w_i n_i rate functions parent q_k child effect u_ik j_k group multiplier alpha_jk subgroup delta adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk mulcov measurement value covariates k_i beta_j weight integral wbar_i ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,8 +71,10 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.i" target="_top">i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.a_i" target="_top">a_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.b_i" target="_top">b_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.c_i" target="_top">c_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.d_i" target="_top">d_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.s_i" target="_top">s_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.t_i" target="_top">t_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.g_i" target="_top">g_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.Covariate Difference, x_ij" target="_top">Covariate&nbsp;Difference,&nbsp;x_ij</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.w_i" target="_top">w_i</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Data or Avgint Table Notation.n_i" target="_top">n_i</a>
@@ -80,7 +82,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.Parent Rate, q_k" target="_top">Parent&nbsp;Rate,&nbsp;q_k</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.Child Rate Effect, u_ik" target="_top">Child&nbsp;Rate&nbsp;Effect,&nbsp;u_ik</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.J_k" target="_top">J_k</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.Rate Covariate Multiplier, alpha_jk" target="_top">Rate&nbsp;Covariate&nbsp;Multiplier,&nbsp;alpha_jk</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.Group Rate Covariate Multiplier, alpha_jk" target="_top">Group&nbsp;Rate&nbsp;Covariate&nbsp;Multiplier,&nbsp;alpha_jk</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.Subgroup Rate Covariate Multiplier, Delta alpha_jk" target="_top">Subgroup&nbsp;Rate&nbsp;Covariate&nbsp;Multiplier,&nbsp;Delta&nbsp;alpha_jk</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.Adjusted Rate, r_ik" target="_top">Adjusted&nbsp;Rate,&nbsp;r_ik</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.pini, p_i0(t)" target="_top">pini,&nbsp;p_i0(t)</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Rate Functions.iota_i(a,t)" target="_top">iota_i(a,t)</a>
@@ -107,7 +110,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Integrand, I_i(a,t).mulcov" target="_top">mulcov</a>
 <br><a href="avg_integrand.htm#Measurement Value Covariates" target="_top">Measurement&nbsp;Value&nbsp;Covariates</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Measurement Value Covariates.K_i" target="_top">K_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Measurement Value Covariates.Multiplier, beta_j" target="_top">Multiplier,&nbsp;beta_j</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Measurement Value Covariates.Group Measurement Covariate Multiplier, beta_j" target="_top">Group&nbsp;Measurement&nbsp;Covariate&nbsp;Multiplier,&nbsp;beta_j</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Measurement Value Covariates.Subgroup Measurement Covariate Multiplier, Delta beta_j" target="_top">Subgroup&nbsp;Measurement&nbsp;Covariate&nbsp;Multiplier,&nbsp;Delta&nbsp;beta_j</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="avg_integrand.htm#Measurement Value Covariates.Measurement Effect" target="_top">Measurement&nbsp;Effect</a>
 <br><a href="avg_integrand.htm#Adjusted Integrand" target="_top">Adjusted&nbsp;Integrand</a>
 <br><a href="avg_integrand.htm#Weight Integral, wbar_i" target="_top">Weight&nbsp;Integral,&nbsp;wbar_i</a>
@@ -176,7 +180,7 @@ a_i
 <big><a name="Data or Avgint Table Notation.b_i" id="Data or Avgint Table Notation.b_i">b_i</a></big>
 <br>
 We use <small>@(@
-a_i
+b_i
 @)@</small> to denote the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i></code>
  in the
@@ -187,10 +191,10 @@ a_i
 
 <br>
 <br>
-<big><a name="Data or Avgint Table Notation.s_i" id="Data or Avgint Table Notation.s_i">s_i</a></big>
+<big><a name="Data or Avgint Table Notation.c_i" id="Data or Avgint Table Notation.c_i">c_i</a></big>
 <br>
 We use <small>@(@
-a_i
+c_i
 @)@</small> to denote the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i></code>
  in the
@@ -201,10 +205,10 @@ a_i
 
 <br>
 <br>
-<big><a name="Data or Avgint Table Notation.t_i" id="Data or Avgint Table Notation.t_i">t_i</a></big>
+<big><a name="Data or Avgint Table Notation.d_i" id="Data or Avgint Table Notation.d_i">d_i</a></big>
 <br>
 We use <small>@(@
-a_i
+d_i
 @)@</small> to denote the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i></code>
  in the
@@ -212,6 +216,32 @@ a_i
  or
 <a href="avgint_table.htm#time_upper" target="_top"><span style='white-space: nowrap'>avgint&nbsp;table</span></a>
 .
+
+<br>
+<br>
+<big><a name="Data or Avgint Table Notation.s_i" id="Data or Avgint Table Notation.s_i">s_i</a></big>
+<br>
+We use <small>@(@
+s_i
+@)@</small> to denote the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+ in the
+<a href="data_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>data&nbsp;table</span></a>
+ or
+<a href="avgint_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>avgint&nbsp;table</span></a>
+.
+
+<br>
+<br>
+<big><a name="Data or Avgint Table Notation.g_i" id="Data or Avgint Table Notation.g_i">g_i</a></big>
+<br>
+We use <small>@(@
+g_i
+@)@</small> to denote the
+<a href="subgroup_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+ that <small>@(@
+s_i
+@)@</small> is part of.
 
 <br>
 <br>
@@ -301,7 +331,7 @@ is defined below.
 If the node for this data point <small>@(@
 n_i
 @)@</small> is a
-<a href="node_table.htm#parent.Child Group" target="_top"><span style='white-space: nowrap'>child</span></a>
+<a href="node_table.htm#parent.Children" target="_top"><span style='white-space: nowrap'>child</span></a>
  node,
 or a descendant of a child node,
 <small>@(@
@@ -335,14 +365,18 @@ such that the corresponding
 <a href="mulcov_table.htm#rate_id" target="_top"><span style='white-space: nowrap'>rate_id</span></a>
  is equal to <small>@(@
 k
-@)@</small> and
+@)@</small>,
 <a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
- is <code><font color="blue">rate_value</font></code>.
-These are the covariates that affect the <code><i>k</i></code>-th rate.
+ is <code><font color="blue">rate_value</font></code>,
+and <a href="mulcov_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+ equal to <small>@(@
+g_i
+@)@</small>.
+These covariates that affect the <code><i>k</i></code>-th rate for this group of measurements.
 
 <br>
 <br>
-<big><a name="Rate Functions.Rate Covariate Multiplier, alpha_jk" id="Rate Functions.Rate Covariate Multiplier, alpha_jk">Rate Covariate Multiplier, alpha_jk</a></big>
+<big><a name="Rate Functions.Group Rate Covariate Multiplier, alpha_jk" id="Rate Functions.Group Rate Covariate Multiplier, alpha_jk">Group Rate Covariate Multiplier, alpha_jk</a></big>
 <br>
 For each rate index <small>@(@
 k
@@ -354,12 +388,31 @@ we use <small>@(@
 \alpha_{j,k} (a, t)
 @)@</small> to denote the
 piecewise linear function corresponding to the
-<a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
+<a href="model_variables.htm#Fixed Effects, theta.Group Covariate Multipliers" target="_top"><span style='white-space: nowrap'>group&nbsp;covariate&nbsp;multiplier</span></a>
 .
 Note that these are
 <a href="mulcov_table.htm#mulcov_type.rate_value" target="_top"><span style='white-space: nowrap'>rate_value</span></a>
  covariate multipliers
 specified by the mulcov table.
+
+<br>
+<br>
+<big><a name="Rate Functions.Subgroup Rate Covariate Multiplier, Delta alpha_jk" id="Rate Functions.Subgroup Rate Covariate Multiplier, Delta alpha_jk">Subgroup Rate Covariate Multiplier, Delta alpha_jk</a></big>
+<br>
+For each rate index <small>@(@
+k
+@)@</small>,
+and each covariate index <small>@(@
+j \in J_k
+@)@</small>,
+we use <small>@(@
+\Delta \alpha_{j,k} (a, t)
+@)@</small> to denote the
+piecewise linear function corresponding to the <small>@(@
+s_i
+@)@</small>
+<a href="model_variables.htm#Random Effects, u.Subgroup Covariate Multipliers" target="_top"><span style='white-space: nowrap'>subgroup&nbsp;covariate&nbsp;multiplier</span></a>
+.
 
 <br>
 <br>
@@ -370,9 +423,10 @@ We define the adjusted <code><i>k</i></code>-th rate for the <code><i>i</i></cod
 
 r_{i,k} (a , t)
 =
-\exp \left[
-	u_{i,k} (a, t) + \sum_{j \in J(k)} x_{i,j} \alpha_{j,k} (a, t)
-\right]
+\exp \left \{
+	u_{i,k} (a, t) + \sum_{j \in J(k)}
+		x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
+\right \}
 q_k ( a, t )
 
 @]@</small>
@@ -721,14 +775,18 @@ such that the corresponding
  corresponds to
 <small>@(@
 I_i (a, t)
-@)@</small> and
+@)@</small>,
 <a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
- is <code><font color="blue">meas_value</font></code>.
+ is <code><font color="blue">meas_value</font></code>,
+and <a href="mulcov_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+ equal to <small>@(@
+g_i
+@)@</small>.
 These are the covariates that affect the <code><i>i</i></code>-th measurement value.
 
 <br>
 <br>
-<big><a name="Measurement Value Covariates.Multiplier, beta_j" id="Measurement Value Covariates.Multiplier, beta_j">Multiplier, beta_j</a></big>
+<big><a name="Measurement Value Covariates.Group Measurement Covariate Multiplier, beta_j" id="Measurement Value Covariates.Group Measurement Covariate Multiplier, beta_j">Group Measurement Covariate Multiplier, beta_j</a></big>
 <br>
 For each covariate index <small>@(@
 j \in K_i
@@ -737,12 +795,28 @@ we use <small>@(@
 \beta_j (a, t)
 @)@</small> to denote the
 piecewise linear function corresponding to the
-<a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
+<a href="model_variables.htm#Fixed Effects, theta.Group Covariate Multipliers" target="_top"><span style='white-space: nowrap'>group&nbsp;covariate&nbsp;multiplier</span></a>
 .
 Note that these are
 <a href="mulcov_table.htm#mulcov_type.meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
  covariate multipliers
 specified by the mulcov table.
+
+<br>
+<br>
+<big><a name="Measurement Value Covariates.Subgroup Measurement Covariate Multiplier, Delta beta_j" id="Measurement Value Covariates.Subgroup Measurement Covariate Multiplier, Delta beta_j">Subgroup Measurement Covariate Multiplier, Delta beta_j</a></big>
+<br>
+For each covariate index <small>@(@
+j \in K_i
+@)@</small>,
+we use <small>@(@
+\Delta \beta_j (a, t)
+@)@</small> to denote the
+piecewise linear function corresponding to the <small>@(@
+s_i
+@)@</small>
+<a href="model_variables.htm#Random Effects, u.Subgroup Covariate Multipliers" target="_top"><span style='white-space: nowrap'>subgroup&nbsp;covariate&nbsp;multiplier</span></a>
+.
 
 <br>
 <br>
@@ -754,7 +828,8 @@ as a function of the fixed effects <small>@(@
 @)@</small>, is
 <small>@[@
 
-	E_i ( a, t ) = \sum_{j \in K_i} x_{i,j} \beta_j (a, t)
+	E_i ( a, t ) = \sum_{j \in K_i}
+		x_{i,j} [ \beta_j (a, t) + \Delta \beta_j (a, t) ]
 
 @]@</small>
 
@@ -787,8 +862,8 @@ We use <small>@(@
 @)@</small> to denote the weight integral defined by
 <small>@[@
 
-\bar{w}_i = \frac{1}{a_i - b_i} \frac{1}{t_i - s_i}
-\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)} w_i (a,t) \; \B{d} t \; \B{d} a
+\bar{w}_i = \frac{1}{b_i - a_i} \frac{1}{d_i - c_i}
+\int_{a(i)}^{b(i)}  \int_{c(i)}^{d(i)} w_i (a,t) \; \B{d} t \; \B{d} a
 
 @]@</small>
 
@@ -811,9 +886,9 @@ not counting integrand effects or measurement noise, is
 
 A_i ( u , \theta )
 =
-\frac{1}{a_i - b_i} \frac{1}{t_i - s_i}
+\frac{1}{b_i - a_i} \frac{1}{d_i - c_i}
 \left[
-\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
+\int_{a(i)}^{b(i)}  \int_{c(i)}^{d(i)}
 \frac{ w_i (a,t) }{ \bar{w}_i }
 I_i (a, t) \; \exp \left[ E_i (a, t) \right]  \; \B{d} t \; \B{d} a
 \right]
@@ -831,7 +906,7 @@ Also note that in the case where
 <small>@(@
 a(i) = b(i)
 @)@</small>, <small>@(@
-s(i) = t(i)
+c(i) = d(i)
 @)@</small>, or both,
 the average is defined as the limiting value.
 

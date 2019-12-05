@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Fitting Measurement Noise Covariate Multipliers, Gamma</title>
+<title>Group Measurement Noise Covariate Multipliers, Gamma</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Fitting Measurement Noise Covariate Multipliers, Gamma">
-<meta name="keywords" id="keywords" content=" fitting measurement noise covariate multipliers gamma random effects iota other rates multiplier data meas_noise_effect scaling source code ">
+<meta name="description" id="description" content="Group Measurement Noise Covariate Multipliers, Gamma">
+<meta name="keywords" id="keywords" content=" group measurement noise covariate multipliers gamma purpose random effects iota other rates subgroup table multiplier data meas_noise_effect scaling source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_fit_gamma.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_fit_meas_noise.py_htm.js'>
 </script>
 </head>
 <body>
@@ -36,7 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>user</option>
-<option>user_fit_gamma.py</option>
+<option>user_fit_meas_noise.py</option>
 </select>
 </td>
 <td>
@@ -49,29 +49,40 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_fit_sim.py.htm" target="_top">Prev</a>
-</td><td><a href="user_age_avg_split.py.htm" target="_top">Next</a>
+<td><a href="user_fit_fixed_both.py.htm" target="_top">Prev</a>
+</td><td><a href="user_fit_random.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
 </td>
-<td>user_fit_gamma.py</td>
+<td>user_fit_meas_noise.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting Measurement Noise Covariate Multipliers, Gamma</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Group Measurement Noise Covariate Multipliers, Gamma</big></big></b></center>
 
-<br><a href="user_fit_gamma.py.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
-<br><a href="user_fit_gamma.py.htm#Iota" target="_top">Iota</a>
-<br><a href="user_fit_gamma.py.htm#Other Rates" target="_top">Other&nbsp;Rates</a>
-<br><a href="user_fit_gamma.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
-<br><a href="user_fit_gamma.py.htm#Data" target="_top">Data</a>
-<br><a href="user_fit_gamma.py.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
-<br><a href="user_fit_gamma.py.htm#Scaling Gamma" target="_top">Scaling&nbsp;Gamma</a>
-<br><a href="user_fit_gamma.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><a href="user_fit_meas_noise.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_fit_meas_noise.py.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
+<br><a href="user_fit_meas_noise.py.htm#Iota" target="_top">Iota</a>
+<br><a href="user_fit_meas_noise.py.htm#Other Rates" target="_top">Other&nbsp;Rates</a>
+<br><a href="user_fit_meas_noise.py.htm#Subgroup Table" target="_top">Subgroup&nbsp;Table</a>
+<br><a href="user_fit_meas_noise.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
+<br><a href="user_fit_meas_noise.py.htm#Data" target="_top">Data</a>
+<br><a href="user_fit_meas_noise.py.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
+<br><a href="user_fit_meas_noise.py.htm#Scaling Gamma" target="_top">Scaling&nbsp;Gamma</a>
+<br><a href="user_fit_meas_noise.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This example demonstrates fitting
+<a href="model_variables.htm#Fixed Effects, theta.Group Covariate Multipliers" target="_top"><span style='white-space: nowrap'>group&nbsp;covariate&nbsp;multipliers</span></a>
+
+that effect the measurement noise.
+
+<br>
+<br>
 <b><big><a name="Random Effects" id="Random Effects">Random Effects</a></big></b>
 <br>
 There are no random effects in this example.
@@ -112,13 +123,21 @@ for the other rates.
 
 <br>
 <br>
+<b><big><a name="Subgroup Table" id="Subgroup Table">Subgroup Table</a></big></b>
+<br>
+The data is divided into two groups.
+The first group is hospital data and the second group is survey data.
+
+<br>
+<br>
 <b><big><a name="Covariate Multiplier" id="Covariate Multiplier">Covariate Multiplier</a></big></b>
 <br>
 There is one covariate multiplier on the covariate column <code><font color="blue">one</font></code>
 and the rate <code><font color="blue">iota</font></code>.
 This is a measurement noise covariate multiplier
 <a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma</span></a>
-.
+
+that only effects the hospital data.
 The prior for this multiplier is a uniform on the interval from zero
 to 
 <code><font color="blue"><span style='white-space: nowrap'>10&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>gamma_true</span></font></i></code>
@@ -141,10 +160,11 @@ hence it is constant in age and time.
 <br>
 There are 
 <code><i><font color="black"><span style='white-space: nowrap'>n_data</span></font></i></code>
- measurements of Sincidence and each has a standard
-deviation 
+ measurements of Sincidence.
+The hospital data has standard deviation 
 <code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
- (before adding the covariate effect).
+.
+The survey data has addition noise determine by the covariate effect.
 
 <br>
 <br>
@@ -171,7 +191,7 @@ depends on the value of
 <pre><tt>
 <i><font color="#9A1900"># You can changed the values below and rerun this program</font></i>
 iota_true          <font color="#990000">=</font> <font color="#993399">0.01</font>
-scale_gamma_true   <font color="#990000">=</font> <font color="#993399">2.0</font>
+scale_gamma_true   <font color="#990000">=</font> <font color="#993399">4.0</font>
 n_data             <font color="#990000">=</font> <font color="#993399">1000</font>
 meas_std           <font color="#990000">=</font> <font color="#993399">0.001</font>
 meas_noise_effect  <font color="#990000">=</font> <font color="#FF0000">'add_std_scale_all'</font>
@@ -193,7 +213,7 @@ meas_noise_effect  <font color="#990000">=</font> <font color="#FF0000">'add_std
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> copy
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/fit_gamma.py'</font>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/fit_meas_noise.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -213,8 +233,6 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Note that the a, t values are not used for this example</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">example_db</font></b> <font color="#990000">(</font>file_name<font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">def</font></b> <b><font color="#000000">weight_fun</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#993399">1.0</font>
      <i><font color="#9A1900"># note that the a, t values are not used for this case</font></i>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota'</font><font color="#990000">,</font> None<font color="#990000">,</font> None<font color="#990000">)</font>
@@ -235,6 +253,12 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># node table:</font></i>
      node_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">''</font> <font color="#990000">}</font> <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># subgroup_table</font></i>
+     subgroup_table <font color="#990000">=</font> <font color="#990000">[</font>
+          <font color="#990000">{</font> <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'hospital'</font><font color="#990000">,</font> <font color="#FF0000">'group'</font><font color="#990000">:</font><font color="#FF0000">'hospital'</font> <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'survey'</font><font color="#990000">,</font>   <font color="#FF0000">'group'</font><font color="#990000">:</font><font color="#FF0000">'survey'</font> <font color="#990000">},</font>
+     <font color="#990000">]</font>
+     <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># weight table:</font></i>
      weight_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <i><font color="#9A1900">#</font></i>
@@ -245,11 +269,14 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># mulcov table:</font></i>
      mulcov_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font>
+          <font color="#990000">{</font>    <i><font color="#9A1900"># covariate multiplier effects Sincidence survey data measurements</font></i>
                <font color="#FF0000">'covariate'</font><font color="#990000">:</font> <font color="#FF0000">'one'</font><font color="#990000">,</font>
                <font color="#FF0000">'type'</font><font color="#990000">:</font>      <font color="#FF0000">'meas_noise'</font><font color="#990000">,</font>
                <font color="#FF0000">'effected'</font><font color="#990000">:</font>  <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font>
-               <font color="#FF0000">'smooth'</font><font color="#990000">:</font>    <font color="#FF0000">'smooth_gamma'</font>
+               <font color="#FF0000">'group'</font><font color="#990000">:</font>     <font color="#FF0000">'world'</font><font color="#990000">,</font>
+               <font color="#FF0000">'group'</font><font color="#990000">:</font>     <font color="#FF0000">'survey'</font><font color="#990000">,</font>
+               <font color="#FF0000">'smooth'</font><font color="#990000">:</font>    <font color="#FF0000">'smooth_gamma'</font><font color="#990000">,</font>
+               <font color="#FF0000">'subsmooth'</font><font color="#990000">:</font> None
           <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
@@ -272,10 +299,16 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font>
           <font color="#FF0000">'meas_std'</font><font color="#990000">:</font>     meas_std<font color="#990000">,</font>
           <font color="#FF0000">'node'</font><font color="#990000">:</font>        <font color="#FF0000">'world'</font><font color="#990000">,</font>
+          <font color="#FF0000">'subgroup'</font><font color="#990000">:</font>    <font color="#FF0000">'world'</font><font color="#990000">,</font>
           <font color="#FF0000">'one'</font><font color="#990000">:</font>          <font color="#993399">1.0</font>
      <font color="#990000">}</font>
      <i><font color="#9A1900"># values that change between rows:</font></i>
      <b><font color="#0000FF">for</font></b> data_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> n_data <font color="#990000">)</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">if</font></b> data_id <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
+               row<font color="#990000">[</font><font color="#FF0000">'subgroup'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'hospital'</font>
+          <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+               row<font color="#990000">[</font><font color="#FF0000">'subgroup'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'survey'</font>
+          <i><font color="#9A1900">#</font></i>
           fraction         <font color="#990000">=</font> data_id <font color="#990000">/</font> <b><font color="#000000">float</font></b><font color="#990000">(</font>n_data<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font>
           age              <font color="#990000">=</font> age_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#990000">(</font>age_list<font color="#990000">[-</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> age_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">])*</font>fraction
           row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font> <font color="#990000">=</font> age
@@ -330,7 +363,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font> <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>             <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                 <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_random'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota'</font>              <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_child_rate'</font><font color="#990000">,</font>    <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota'</font>              <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>             <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'second-order'</font>      <font color="#990000">},</font>
@@ -346,6 +379,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           time_list<font color="#990000">,</font>
           integrand_table<font color="#990000">,</font>
           node_table<font color="#990000">,</font>
+          subgroup_table<font color="#990000">,</font>
           weight_table<font color="#990000">,</font>
           covariate_table<font color="#990000">,</font>
           avgint_table<font color="#990000">,</font>
@@ -438,10 +472,10 @@ max_error    <font color="#990000">=</font> <font color="#993399">0.0</font>
      <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'max_error = '</font><font color="#990000">,</font> max_error<font color="#990000">)</font>
      <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'fit_gamma.py: OK'</font><font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'fit_meas_noise.py: OK'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i></tt></pre>
 
-<hr>Input File: example/user/fit_gamma.py
+<hr>Input File: example/user/fit_meas_noise.py
 
 </body>
 </html>

@@ -17,6 +17,7 @@ document.write('\
 <option>rate_table</option>\
 <option>smooth_grid_table</option>\
 <option>smooth_table</option>\
+<option>subgroup_table</option>\
 <option>time_table</option>\
 <option>weight_grid_table</option>\
 <option>weight_table</option>\
@@ -39,6 +40,7 @@ function input_child(item)
 		'rate_table.htm',
 		'smooth_grid_table.htm',
 		'smooth_table.htm',
+		'subgroup_table.htm',
 		'time_table.htm',
 		'weight_grid_table.htm',
 		'weight_table.htm'

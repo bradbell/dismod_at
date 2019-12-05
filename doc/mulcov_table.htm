@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The mulcov Table: Covariate Multipliers</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The mulcov Table: Covariate Multipliers">
-<meta name="keywords" id="keywords" content=" the mulcov table: covariate multipliers mulcov_id mulcov_type rate_value meas_value meas_noise meas_std: deprecated 2019-04-07 rate_id integrand_id covariate_id smooth_id null pini example ">
+<meta name="keywords" id="keywords" content=" the mulcov table: covariate multipliers mulcov_id mulcov_type rate_value meas_value meas_noise rate_id integrand_id covariate_id group_id group_smooth_id subgroup_smooth_id example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,13 +74,12 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.rate_value" target="_top">rate_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_value" target="_top">meas_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top">meas_noise</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#mulcov_type.meas_std: Deprecated 2019-04-07" target="_top">meas_std:&nbsp;Deprecated&nbsp;2019-04-07</a>
 <br><a href="mulcov_table.htm#rate_id" target="_top">rate_id</a>
 <br><a href="mulcov_table.htm#integrand_id" target="_top">integrand_id</a>
 <br><a href="mulcov_table.htm#covariate_id" target="_top">covariate_id</a>
-<br><a href="mulcov_table.htm#smooth_id" target="_top">smooth_id</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#smooth_id.null" target="_top">null</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#smooth_id.pini" target="_top">pini</a>
+<br><a href="mulcov_table.htm#group_id" target="_top">group_id</a>
+<br><a href="mulcov_table.htm#group_smooth_id" target="_top">group_smooth_id</a>
+<br><a href="mulcov_table.htm#subgroup_smooth_id" target="_top">subgroup_smooth_id</a>
 <br><a href="mulcov_table.htm#Example" target="_top">Example</a>
 <br>This table specifies the covariate multipliers and their priors.
 If this table is empty, there are no covariate multipliers in the model.
@@ -107,7 +106,7 @@ The possible values are:
 <br>
 This covariate multiplier
 adjusts a rate in the average integrand calculation;
-see <a href="avg_integrand.htm#Rate Functions.Rate Covariate Multiplier, alpha_jk" target="_top"><span style='white-space: nowrap'>alpha</span></a>
+see <a href="avg_integrand.htm#Rate Functions.Group Rate Covariate Multiplier, alpha_jk" target="_top"><span style='white-space: nowrap'>alpha</span></a>
 .
 A separate solution of the
 <a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
@@ -128,7 +127,7 @@ rate covariates do not add as much to the computational load.
 This covariate multiplier adjusts the average integrand to match the
 <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>measurement&nbsp;value</span></a>
 ; see
-<a href="avg_integrand.htm#Measurement Value Covariates.Multiplier, beta_j" target="_top"><span style='white-space: nowrap'>beta</span></a>
+<a href="avg_integrand.htm#Measurement Value Covariates.Group Measurement Covariate Multiplier, beta_j" target="_top"><span style='white-space: nowrap'>beta</span></a>
 .
 
 <br>
@@ -138,14 +137,6 @@ This covariate multiplier adjusts the average integrand to match the
 This covariate multiplier adjusts the measurement noise; see
 <a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
 .
-
-<br>
-<br>
-<big><a name="mulcov_type.meas_std: Deprecated 2019-04-07" id="mulcov_type.meas_std: Deprecated 2019-04-07">meas_std: Deprecated 2019-04-07</a></big>
-<br>
-The covariate multiplier type <code><font color="blue">meas_std</font></code>
-is the same as <code><font color="blue">meas_noise</font></code>.
-The type <code><font color="blue">meas_std</font></code> still works but has been deprecated.
 
 <br>
 <br>
@@ -205,44 +196,84 @@ This specifies the covariate column in the
 
 <br>
 <br>
-<b><big><a name="smooth_id" id="smooth_id">smooth_id</a></big></b>
+<b><big><a name="group_id" id="group_id">group_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is a
+<a href="subgroup_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+.
+There is a fixed effect covariate multiplier for all the data
+that has a <a href="data_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
+ that
+corresponds to this group id.
+This covariate only affects the average integrand for when this
+<a href="avg_integrand.htm#Data or Avgint Table Notation.g_i" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+ is specified.
+If this 
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ is null,
+the fixed effect corresponds to all the data.
+
+<br>
+<br>
+<b><big><a name="group_smooth_id" id="group_smooth_id">group_smooth_id</a></big></b>
 <br>
 This column has type <code><font color="blue">integer</font></code> and its value is a
 <a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
 
 in the <code><font color="blue">smooth_grid</font></code> table.
-It specifies the smoothing uses as a prior for this covariate multiplier.
-(Note that all covariate multipliers are fixed effects.)
-
-<br>
-<br>
-<big><a name="smooth_id.null" id="smooth_id.null">null</a></big>
-<br>
+It specifies the smoothing uses as a prior for
+the fixed effects corresponding to this covariate multiplier.
 If the 
-<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
- is <code><font color="blue">null</font></code>, the corresponding
+<code><i><font color="black"><span style='white-space: nowrap'>group_smooth_id</span></font></i></code>
+ is <code><font color="blue">null</font></code>, this
 covariate multiplier is always zero and no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
  are
 allocated for it.
-
-<br>
-<br>
-<big><a name="smooth_id.pini" id="smooth_id.pini">pini</a></big>
-<br>
-Consider the case where 
+Otherwise, if 
 <code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
  is <code><font color="blue">rate_value</font></code>
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i></code>
  corresponds to
 <a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate_name</span></a>
- <code><font color="blue">pini</font></code>.
-In this case, 
-<code><i><font color="black"><span style='white-space: nowrap'>smooth_id</span></font></i></code>
- should correspond to
+ <code><font color="blue">pini</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>group_smooth_id</span></font></i></code>
+ must correspond to
 <a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
- equal to one because
-variation w.r.t. age will have no effect (for this covariate multiplier).
+ equal to one
+(because age will have no effect for this covariate multiplier).
+
+<br>
+<br>
+<b><big><a name="subgroup_smooth_id" id="subgroup_smooth_id">subgroup_smooth_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and its value is a
+<a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
+
+in the <code><font color="blue">smooth_grid</font></code> table.
+It specifies the smoothing uses as a prior for
+the random effects corresponding to these covariate multipliers.
+If the 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_smooth_id</span></font></i></code>
+ is <code><font color="blue">null</font></code>, these
+covariate multipliers are always zero and no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ are
+allocated for them.
+Otherwise, if 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ is <code><font color="blue">rate_value</font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i></code>
+ corresponds to
+<a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate_name</span></a>
+ <code><font color="blue">pini</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>group_smooth_id</span></font></i></code>
+ must correspond to
+<a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
+ equal to one
+(because age will have no effect for these covariate multipliers).
 
 
 <br>

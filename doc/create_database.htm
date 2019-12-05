@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create a Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create a Dismod_at Database">
-<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_table node_table weight_table covariate_table avgint_table weight covariates avgint_extra_columns data_table data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table option_table example ">
+<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_table node_table subgroup_table backward compatibility weight_table covariate_table avgint_table subgroup weight covariates avgint_extra_columns data_table meas_std eta nu data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table effected group subsmooth option_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,13 +74,18 @@ A:active { color : purple }
 <br><a href="create_database.htm#time_list" target="_top">time_list</a>
 <br><a href="create_database.htm#integrand_table" target="_top">integrand_table</a>
 <br><a href="create_database.htm#node_table" target="_top">node_table</a>
+<br><a href="create_database.htm#subgroup_table" target="_top">subgroup_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#subgroup_table.Backward Compatibility" target="_top">Backward&nbsp;Compatibility</a>
 <br><a href="create_database.htm#weight_table" target="_top">weight_table</a>
 <br><a href="create_database.htm#covariate_table" target="_top">covariate_table</a>
 <br><a href="create_database.htm#avgint_table" target="_top">avgint_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#avgint_table.subgroup" target="_top">subgroup</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#avgint_table.weight" target="_top">weight</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#avgint_table.covariates" target="_top">covariates</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#avgint_table.avgint_extra_columns" target="_top">avgint_extra_columns</a>
 <br><a href="create_database.htm#data_table" target="_top">data_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#data_table.meas_std, eta, nu" target="_top">meas_std,&nbsp;eta,&nbsp;nu</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#data_table.subgroup" target="_top">subgroup</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#data_table.data_extra_columns" target="_top">data_extra_columns</a>
 <br><a href="create_database.htm#prior_table" target="_top">prior_table</a>
 <br><a href="create_database.htm#smooth_table" target="_top">smooth_table</a>
@@ -95,6 +100,9 @@ A:active { color : purple }
 <br><a href="create_database.htm#nslist_table" target="_top">nslist_table</a>
 <br><a href="create_database.htm#rate_table" target="_top">rate_table</a>
 <br><a href="create_database.htm#mulcov_table" target="_top">mulcov_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#mulcov_table.effected" target="_top">effected</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#mulcov_table.group" target="_top">group</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="create_database.htm#mulcov_table.subsmooth" target="_top">subsmooth</a>
 <br><a href="create_database.htm#option_table" target="_top">option_table</a>
 <br><a href="create_database.htm#Contents" target="_top">Contents</a>
 <br><a href="create_database.htm#Example" target="_top">Example</a>
@@ -109,6 +117,7 @@ A:active { color : purple }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subgroup_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>avgint_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
@@ -240,6 +249,46 @@ should be used for the parent of that node.
 
 <br>
 <br>
+<b><big><a name="subgroup_table" id="subgroup_table">subgroup_table</a></big></b>
+<br>
+This is a list of <code><font color="blue">dict</font></code>
+that define the rows of the <a href="subgroup_table.htm" target="_top"><span style='white-space: nowrap'>subgroup_table</span></a>
+.
+The dictionary 
+<code><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ has the following:
+<table><tr><td align='left'  valign='top'>
+
+Key      </td><td align='left'  valign='top'>
+ Value Type    <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ Description           </td></tr><tr><td align='left'  valign='top'>
+
+subgroup </td><td align='left'  valign='top'>
+ str           </td><td align='left'  valign='top'>
+ name for the <code><i>i</i></code>-th subgroup  </td></tr><tr><td align='left'  valign='top'>
+
+group    </td><td align='left'  valign='top'>
+ str           </td><td align='left'  valign='top'>
+ name of group that subgroup is in
+</td></tr>
+</table>
+<br>
+<big><a name="subgroup_table.Backward Compatibility" id="subgroup_table.Backward Compatibility">Backward Compatibility</a></big>
+<br>
+To get backward compatibility to before the subgroup information was added,
+add the following table to the <code><font color="blue">create_database</font></code> call
+(just after the 
+<code><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i></code>
+):
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subgroup_table</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;[&nbsp;{&nbsp;'subgroup':'world',&nbsp;'group':'world'&nbsp;}&nbsp;]<br>
+</span></font></code>
+No other changes to the <code><font color="blue">create_database</font></code> call should be necessary
+(for backward compatibility).
+
+<br>
+<br>
 <b><big><a name="weight_table" id="weight_table">weight_table</a></big></b>
 <br>
 This is a list of <code><font color="blue">dict</font></code>
@@ -356,7 +405,11 @@ integrand    </td><td align='left'  valign='top'>
 
 node         </td><td align='left'  valign='top'>
  str         </td><td align='left'  valign='top'>
- node in graph               </td></tr><tr><td align='left'  valign='top'>
+ name of node in graph       </td></tr><tr><td align='left'  valign='top'>
+
+subgroup     </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ name of subgroup            </td></tr><tr><td align='left'  valign='top'>
 
 weight       </td><td align='left'  valign='top'>
  str         </td><td align='left'  valign='top'>
@@ -395,6 +448,15 @@ time_lower   </td><td align='left'  valign='top'>
  value of last covariate
 </td></tr>
 </table>
+<br>
+<big><a name="avgint_table.subgroup" id="avgint_table.subgroup">subgroup</a></big>
+<br>
+If the <code><font color="blue">subgroup</font></code> key is not present, the first subgroup in
+<a href="create_database.htm#subgroup_table" target="_top"><span style='white-space: nowrap'>subgroup_table</span></a>
+ is used
+and a warning is printed.
+
+<br>
 <br>
 <big><a name="avgint_table.weight" id="avgint_table.weight">weight</a></big>
 <br>
@@ -490,9 +552,21 @@ nu           </td><td align='left'  valign='top'>
  Student's-t degrees of freedom
 </td></tr>
 </table>
+<br>
+<big><a name="data_table.meas_std, eta, nu" id="data_table.meas_std, eta, nu">meas_std, eta, nu</a></big>
+<br>
 The columns keys <code><font color="blue">meas_std</font></code>, <code><font color="blue">eta</font></code>, and <code><font color="blue">nu</font></code>
 are optional. If they are not present, the value <code><font color="blue">null</font></code> is used
 for the corresponding row of the data table.
+
+<br>
+<br>
+<big><a name="data_table.subgroup" id="data_table.subgroup">subgroup</a></big>
+<br>
+if the <code><font color="blue">subgroup</font></code> key is not present, the first subgroup in
+<a href="create_database.htm#subgroup_table" target="_top"><span style='white-space: nowrap'>subgroup_table</span></a>
+ is used
+and a warning is printed.
 
 <br>
 <br>
@@ -775,28 +849,62 @@ The dictionary
  has the following:
 <table><tr><td align='left'  valign='top'>
 
-Key       </td><td align='left'  valign='top'>
+Key        </td><td align='left'  valign='top'>
  Value Type  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
  Description       </td></tr><tr><td align='left'  valign='top'>
 
-covariate </td><td align='left'  valign='top'>
+covariate  </td><td align='left'  valign='top'>
  str         </td><td align='left'  valign='top'>
  is the covariate column    </td></tr><tr><td align='left'  valign='top'>
 
-type      </td><td align='left'  valign='top'>
+type       </td><td align='left'  valign='top'>
  str  </td><td align='left'  valign='top'>
 
 <code><font color="blue">rate_value</font></code>, <code><font color="blue">meas_value</font></code>, or <code><font color="blue">meas_noise</font></code> </td></tr><tr><td align='left'  valign='top'>
 
-effected  </td><td align='left'  valign='top'>
+effected   </td><td align='left'  valign='top'>
  str         </td><td align='left'  valign='top'>
- integrand or rate effected </td></tr><tr><td align='left'  valign='top'>
+ integrand or rate affected </td></tr><tr><td align='left'  valign='top'>
 
-smooth    </td><td align='left'  valign='top'>
+group      </td><td align='left'  valign='top'>
  str         </td><td align='left'  valign='top'>
- smoothing name
+ the group that is affected </td></tr><tr><td align='left'  valign='top'>
+
+smooth     </td><td align='left'  valign='top'>
+ str         </td><td align='left'  valign='top'>
+ smoothing at group level  </td></tr><tr><td align='left'  valign='top'>
+
+subsmooth </td><td align='left'  valign='top'>
+ str          </td><td align='left'  valign='top'>
+ smoothing at subgroup level
 </td></tr>
 </table>
+<br>
+<big><a name="mulcov_table.effected" id="mulcov_table.effected">effected</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>type</span></font></i></code>
+ is <code><font color="blue">rate_value</font></code>, 
+<code><i><font color="black"><span style='white-space: nowrap'>effected</span></font></i></code>
+ is a rate.
+Otherwise it is an integrand.
+
+<br>
+<br>
+<big><a name="mulcov_table.group" id="mulcov_table.group">group</a></big>
+<br>
+If the <code><font color="blue">group</font></code> key is not present, the first group in
+<a href="create_database.htm#subgroup_table" target="_top"><span style='white-space: nowrap'>subgroup_table</span></a>
+ is used.
+
+<br>
+<br>
+<big><a name="mulcov_table.subsmooth" id="mulcov_table.subsmooth">subsmooth</a></big>
+<br>
+If the <code><font color="blue">subsmooth</font></code> key is not present, the value null is used for
+the subgroup smoothing in the corresponding row and a warning is printed.
+
+<br>
 <br>
 <b><big><a name="option_table" id="option_table">option_table</a></big></b>
 <br>

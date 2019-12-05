@@ -1,0 +1,236 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Prior Density Function for Smoothing Time Difference</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Prior Density Function for Smoothing Time Difference">
+<meta name="keywords" id="keywords" content=" prior density function smoothing time difference s i j lambda prior_ij d_ij delta_ij mu_ij v_ij t^s ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_smooth_dtime_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>variable_prior</option>
+<option>smooth_dtime</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="smooth_dage.htm" target="_top">Prev</a>
+</td><td><a href="fixed_diff.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_model_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_variable_prior_htm.js'></script>
+</td>
+<td>smooth_dtime</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Prior Density Function for Smoothing Time Difference</big></big></b></center>
+
+<br><a href="smooth_dtime.htm#s" target="_top">s</a>
+<br><a href="smooth_dtime.htm#I" target="_top">I</a>
+<br><a href="smooth_dtime.htm#J" target="_top">J</a>
+<br><a href="smooth_dtime.htm#lambda" target="_top">lambda</a>
+<br><a href="smooth_dtime.htm#prior_ij" target="_top">prior_ij</a>
+<br><a href="smooth_dtime.htm#d_ij" target="_top">d_ij</a>
+<br><a href="smooth_dtime.htm#delta_ij" target="_top">delta_ij</a>
+<br><a href="smooth_dtime.htm#mu_ij" target="_top">mu_ij</a>
+<br><a href="smooth_dtime.htm#v_ij" target="_top">v_ij</a>
+<br><a href="smooth_dtime.htm#T^s" target="_top">T^s</a>
+<br><br>
+<b><big><a name="s" id="s">s</a></big></b>
+<br>
+We are given a smoothing, <small>@(@
+s
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="I" id="I">I</a></big></b>
+<br>
+We use <small>@(@
+I
+@)@</small> to denote
+<a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
+ the number of age points in the smoothing.
+
+<br>
+<br>
+<b><big><a name="J" id="J">J</a></big></b>
+<br>
+We use <small>@(@
+J
+@)@</small> to denote
+<a href="smooth_table.htm#n_time" target="_top"><span style='white-space: nowrap'>n_time</span></a>
+ the number of time points in the smoothing.
+
+<br>
+<br>
+<b><big><a name="lambda" id="lambda">lambda</a></big></b>
+<br>
+We use <small>@(@
+\lambda
+@)@</small> to denote the
+<a href="smooth_table.htm#mulstd_dtime_prior_id" target="_top"><span style='white-space: nowrap'>mulstd_dtime_prior_id</span></a>
+ multiplier
+for the smoothing.
+
+<br>
+<br>
+<b><big><a name="prior_ij" id="prior_ij">prior_ij</a></big></b>
+<br>
+For <small>@(@
+i = 0, \ldots , I-1
+@)@</small>, <small>@(@
+j = 0, \ldots , J-2
+@)@</small>
+we use 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_ij</span></font></i></code>
+ to denote the
+<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior</span></a>
+
+corresponding to age index
+<small>@(@
+i
+@)@</small> and time index <small>@(@
+j
+@)@</small> in the smoothing.
+
+<br>
+<br>
+<b><big><a name="d_ij" id="d_ij">d_ij</a></big></b>
+<br>
+We use <small>@(@
+d_{i,j}
+@)@</small> to denote the
+<a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
+ in 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_ij</span></font></i></code>
+.
+In an abuse of notation, we include the value of
+<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ and
+<a href="prior_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
+ and in <small>@(@
+d_{i,j}
+@)@</small>; see
+<a href="statistic.htm#Notation.d" target="_top"><span style='white-space: nowrap'>d</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="delta_ij" id="delta_ij">delta_ij</a></big></b>
+<br>
+We use <small>@(@
+\delta_{i,j}
+@)@</small> to denote the
+<a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
+ in 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_ij</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="mu_ij" id="mu_ij">mu_ij</a></big></b>
+<br>
+We use <small>@(@
+\mu_{i,j}
+@)@</small> to denote the
+<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
+ in 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_ij</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="v_ij" id="v_ij">v_ij</a></big></b>
+<br>
+We use <small>@(@
+v_{i,j}
+@)@</small> for the value of the model variable
+corresponding to the <code><i>i</i></code>-th age point and <code><i>j</i></code>-th time point
+in the smoothing.
+We include the index <small>@(@
+J-1
+@)@</small> in this notation, but not the
+other notation above.
+
+<br>
+<br>
+<b><big><a name="T^s" id="T^s">T^s</a></big></b>
+<br>
+The time difference density <small>@(@
+T^s (s, v)
+@)@</small> is defined by
+<small>@[@
+
+\log T^s (s, v, theta)
+=
+\sum_{i=0}^{I-1} \sum_{j=0}^{J-2} D \left(
+	v_{i,j} \W{,} v_{i,j+1} \W{,}
+	\mu_{i,j} \W{,} \lambda \delta_{i,j}  \W{,} d_{i,j}
+\right)
+
+@]@</small>
+where <small>@(@
+D
+@)@</small> is the
+<a href="statistic.htm#Log-Density Function, D" target="_top"><span style='white-space: nowrap'>log-density&nbsp;function</span></a>
+.
+Note that we include <small>@(@
+\theta
+@)@</small> as an argument because
+<small>@(@
+lambda
+@)@</small> is a component of <small>@(@
+\theta
+@)@</small>.
+
+
+<hr>Input File: omh/model/smooth_dtime.omh
+
+</body>
+</html>

@@ -49,8 +49,8 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user.htm" target="_top">Prev</a>
-</td><td><a href="user_fit_random.py.htm" target="_top">Next</a>
+<td><a href="user_continue_fit.py.htm" target="_top">Prev</a>
+</td><td><a href="user_data_sim.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
@@ -398,7 +398,6 @@ max_abs_res <font color="#990000">=</font> <font color="#993399">0.0</font>
      <b><font color="#0000FF">if</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'mtall'</font> <font color="#990000">:</font>
           weighted_residual <font color="#990000">=</font> fit_data_subset<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font>
           max_abs_res       <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">,</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>weighted_residual<font color="#990000">)</font> <font color="#990000">)</font>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> max_abs_res <font color="#990000">&gt;</font> <font color="#993399">0.1</font> <font color="#990000">:</font>
      sys<font color="#990000">.</font><b><font color="#000000">msg</font></b><font color="#990000">(</font><font color="#FF0000">'csv2db.py: max_abs_res = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">)</font> <font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>

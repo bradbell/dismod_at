@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Identifying Model Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Identifying Model Variables">
-<meta name="keywords" id="keywords" content=" identifying model variables var_id var_type mulstd_value mulstd_dage mulstd_dtime rate mulcov_rate_value mulcov_meas_value mulcov_meas_noise smooth_id age_id time_id node_id rate_id integrand_id covariate_id mulcov_id example ">
+<meta name="keywords" id="keywords" content=" identifying model variables var_id var_type mulstd_value mulstd_dage mulstd_dtime rate mulcov_rate_value mulcov_meas_value mulcov_meas_noise smooth_id age_id time_id node_id rate_id integrand_id covariate_id mulcov_id group_id otherwise subgroup_id example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -87,6 +87,13 @@ A:active { color : purple }
 <br><a href="var_table.htm#integrand_id" target="_top">integrand_id</a>
 <br><a href="var_table.htm#covariate_id" target="_top">covariate_id</a>
 <br><a href="var_table.htm#mulcov_id" target="_top">mulcov_id</a>
+<br><a href="var_table.htm#group_id" target="_top">group_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#group_id.mulcov_meas_noise" target="_top">mulcov_meas_noise</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#group_id.mulcov_rate_value, mulcov_meas_value" target="_top">mulcov_rate_value,&nbsp;mulcov_meas_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#group_id.Otherwise" target="_top">Otherwise</a>
+<br><a href="var_table.htm#subgroup_id" target="_top">subgroup_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#subgroup_id.mulcov_rate_value, mulcov_meas_value" target="_top">mulcov_rate_value,&nbsp;mulcov_meas_value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="var_table.htm#subgroup_id.Otherwise" target="_top">Otherwise</a>
 <br><a href="var_table.htm#Example" target="_top">Example</a>
 <br>The <code><font color="blue">variable</font></code> table maps the 
 <code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
@@ -185,10 +192,13 @@ Otherwise, it is a
 <br>
 <big><a name="var_type.mulcov_rate_value" id="var_type.mulcov_rate_value">mulcov_rate_value</a></big>
 <br>
-This variable is a
-<a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
+This variable corresponds to a
+<a href="model_variables.htm#Fixed Effects, theta.Group Covariate Multipliers" target="_top"><span style='white-space: nowrap'>group</span></a>
 
-that affects the rate for the corresponding
+or
+<a href="model_variables.htm#Random Effects, u.Subgroup Covariate Multipliers" target="_top"><span style='white-space: nowrap'>subgroup</span></a>
+
+covariate multiplier that affects the rate for the corresponding
 
 <code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
 , 
@@ -204,9 +214,7 @@ that affects the rate for the corresponding
 <br>
 <big><a name="var_type.mulcov_meas_value" id="var_type.mulcov_meas_value">mulcov_meas_value</a></big>
 <br>
-This variable is a
-<a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
-
+This variable corresponds to a group or subgroup covariate multiplier
 that affects the measurement value for the corresponding
 
 <code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
@@ -223,9 +231,7 @@ that affects the measurement value for the corresponding
 <br>
 <big><a name="var_type.mulcov_meas_noise" id="var_type.mulcov_meas_noise">mulcov_meas_noise</a></big>
 <br>
-This variable is a
-<a href="model_variables.htm#Fixed Effects, theta.Covariate Multipliers" target="_top"><span style='white-space: nowrap'>covariate&nbsp;multiplier</span></a>
-
+This variable corresponds to a group covariate multiplier
 that affects the measurement value
 
 <code><i><font color="black"><span style='white-space: nowrap'>age_id</span></font></i></code>
@@ -237,12 +243,7 @@ that affects the measurement value
 , and 
 <code><i><font color="black"><span style='white-space: nowrap'>covariate_id</span></font></i></code>
 .
-If the deprecated name
-<a href="mulcov_table.htm#mulcov_type.meas_std: Deprecated 2019-04-07" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
-
-is found in the mulcov table,
-this variable type is written as <code><font color="blue">mulcov_meas_std</font></code>
-(because that is how it used to be).
+There are no subgroup covariate multipliers of this type.
 
 <br>
 <br>
@@ -357,6 +358,89 @@ this is the <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='whit
 
 that this variable applies to.
 Otherwise, this column is <code><font color="blue">null</font></code>.
+
+<br>
+<br>
+<b><big><a name="group_id" id="group_id">group_id</a></big></b>
+
+
+<br>
+<br>
+<big><a name="group_id.mulcov_meas_noise" id="group_id.mulcov_meas_noise">mulcov_meas_noise</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
+ is <code><font color="blue">mulcov_meas_noise</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ is the mulcov table
+<a href="mulcov_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+
+that this fixed effect variable applies to.
+
+<br>
+<br>
+<big><a name="group_id.mulcov_rate_value, mulcov_meas_value" id="group_id.mulcov_rate_value, mulcov_meas_value">mulcov_rate_value, mulcov_meas_value</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
+ is <code><font color="blue">mulcov_rate_value</font></code> or <code><font color="blue">mulcov_meas_value</font></code>.
+In this case either 
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+
+(but not both) is not null.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ is not null,
+it is the mulcov table
+<a href="mulcov_table.htm#group_id" target="_top"><span style='white-space: nowrap'>group_id</span></a>
+
+that this fixed effect applies to.
+
+<br>
+<br>
+<big><a name="group_id.Otherwise" id="group_id.Otherwise">Otherwise</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ must be null.
+
+<br>
+<br>
+<b><big><a name="subgroup_id" id="subgroup_id">subgroup_id</a></big></b>
+
+
+<br>
+<br>
+<big><a name="subgroup_id.mulcov_rate_value, mulcov_meas_value" id="subgroup_id.mulcov_rate_value, mulcov_meas_value">mulcov_rate_value, mulcov_meas_value</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>var_type</span></font></i></code>
+ is <code><font color="blue">mulcov_rate_value</font></code> or <code><font color="blue">mulcov_meas_value</font></code>.
+In this case either 
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+
+(but not both) is not null.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+ is not null,
+it is the <a href="subgroup_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
+
+that this random effect applies to.
+
+<br>
+<br>
+<big><a name="subgroup_id.Otherwise" id="subgroup_id.Otherwise">Otherwise</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+ must be null.
 
 <br>
 <br>

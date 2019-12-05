@@ -1,0 +1,152 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>The Subgroup Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Subgroup Table">
+<meta name="keywords" id="keywords" content=" the subgroup table purpose subgroup_id subgroup_name group_id group_name discussion example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_subgroup_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>subgroup_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="smooth_table.htm" target="_top">Prev</a>
+</td><td><a href="time_table.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_database_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_input_htm.js'></script>
+</td>
+<td>subgroup_table</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+<center><b><big><big>The Subgroup Table</big></big></b></center>
+
+<br><a href="subgroup_table.htm#Purpose" target="_top">Purpose</a>
+<br><a href="subgroup_table.htm#subgroup_id" target="_top">subgroup_id</a>
+<br><a href="subgroup_table.htm#subgroup_name" target="_top">subgroup_name</a>
+<br><a href="subgroup_table.htm#group_id" target="_top">group_id</a>
+<br><a href="subgroup_table.htm#group_name" target="_top">group_name</a>
+<br><a href="subgroup_table.htm#Discussion" target="_top">Discussion</a>
+<br><a href="subgroup_table.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This table allows one to divide the data into groups and subgroups.
+A groups (subgroup) can corresponding to a fixed effects (random effect)
+corresponding to covariate multipliers; see <a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="subgroup_id" id="subgroup_id">subgroup_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+<br>
+<br>
+<b><big><a name="subgroup_name" id="subgroup_name">subgroup_name</a></big></b>
+<br>
+This column has type <code><font color="blue">text</font></code> and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+<br>
+<br>
+<b><big><a name="group_id" id="group_id">group_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code>.
+Its value in its first row is zero (where 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_id</span></font></i></code>
+ is zero).
+The value in each subsequent row is either the same as the previous row,
+or one greater than the previous row.
+The group corresponding to a group id is the union of all the subgroups
+with the same group_id.
+
+<br>
+<br>
+<b><big><a name="group_name" id="group_name">group_name</a></big></b>
+<br>
+This column has type <code><font color="blue">text</font></code>.
+Rows that have the same (different) 
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ must have the same
+(different) 
+<code><i><font color="black"><span style='white-space: nowrap'>group_name</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+One might think it would be easier to have a separate group table
+and not require 
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+ to be monotone and not have to include
+
+<code><i><font color="black"><span style='white-space: nowrap'>group_name</span></font></i></code>
+ in this table. The problem with this is <code><font color="blue">group</font></code>
+is a keyword in SQL and hence it is hard to work with a table named group.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <code><font color="blue">subgroup_table.py</font></code>
+contains an example subgroup table.
+
+
+<hr>Input File: omh/table/subgroup_table.omh
+
+</body>
+</html>
