@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list multi-threading asymptotic statistics more random effects covariate multipliers data partitions user examples meas_std lagrange censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world example starting point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list multi-threading asymptotic statistics user examples meas_std lagrange multipliers censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world example random starting point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,9 +64,6 @@ A:active { color : purple }
 
 <br><a href="wish_list.htm#Multi-Threading" target="_top">Multi-Threading</a>
 <br><a href="wish_list.htm#Asymptotic Statistics" target="_top">Asymptotic&nbsp;Statistics</a>
-<br><a href="wish_list.htm#More Random Effects" target="_top">More&nbsp;Random&nbsp;Effects</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#More Random Effects.Covariate Multipliers" target="_top">Covariate&nbsp;Multipliers</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#More Random Effects.Data Partitions" target="_top">Data&nbsp;Partitions</a>
 <br><a href="wish_list.htm#User Examples" target="_top">User&nbsp;Examples</a>
 <br><a href="wish_list.htm#meas_std" target="_top">meas_std</a>
 <br><a href="wish_list.htm#Lagrange Multipliers" target="_top">Lagrange&nbsp;Multipliers</a>
@@ -108,36 +105,6 @@ The current version of the
 and is not being used.
 Perhaps we should try this without including the constraint information
 and see how well that works.
-
-<br>
-<br>
-<b><big><a name="More Random Effects" id="More Random Effects">More Random Effects</a></big></b>
-
-
-<br>
-<br>
-<big><a name="More Random Effects.Covariate Multipliers" id="More Random Effects.Covariate Multipliers">Covariate Multipliers</a></big>
-<br>
-It is possible that the inaccuracy in fitting covariate multipliers
-is leading to correlated residuals.
-Perhaps the covariate multipliers in the
-<a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
- should have an option to be
-fixed effects, random effects, or both.
-
-<br>
-<br>
-<big><a name="More Random Effects.Data Partitions" id="More Random Effects.Data Partitions">Data Partitions</a></big>
-<br>
-Perhaps it would be good to allows for partitions of the
-data into subsets.
-Each partition of the data would have a random effect that has a
-different value for each subset of the partition.
-This would model correlation of the noise in the data from
-the same subset.
-It would also allow for another level or random effects,
-where a child node gets divided into subsets
-(if we use the convention that a null subset does not have any random effect).
 
 <br>
 <br>
