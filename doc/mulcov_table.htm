@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The mulcov Table: Covariate Multipliers</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The mulcov Table: Covariate Multipliers">
-<meta name="keywords" id="keywords" content=" the mulcov table: covariate multipliers mulcov_id mulcov_type rate_value meas_value meas_noise rate_id integrand_id covariate_id group_id group_smooth_id subgroup_smooth_id example ">
+<meta name="keywords" id="keywords" content=" the mulcov table: covariate multipliers mulcov_id mulcov_type rate_value meas_value meas_noise rate_id integrand_id covariate_id group_id group_smooth_id pini subgroup_smooth_id example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -79,7 +79,10 @@ A:active { color : purple }
 <br><a href="mulcov_table.htm#covariate_id" target="_top">covariate_id</a>
 <br><a href="mulcov_table.htm#group_id" target="_top">group_id</a>
 <br><a href="mulcov_table.htm#group_smooth_id" target="_top">group_smooth_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#group_smooth_id.pini" target="_top">pini</a>
 <br><a href="mulcov_table.htm#subgroup_smooth_id" target="_top">subgroup_smooth_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#subgroup_smooth_id.meas_noise" target="_top">meas_noise</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="mulcov_table.htm#subgroup_smooth_id.pini" target="_top">pini</a>
 <br><a href="mulcov_table.htm#Example" target="_top">Example</a>
 <br>This table specifies the covariate multipliers and their priors.
 If this table is empty, there are no covariate multipliers in the model.
@@ -220,17 +223,24 @@ This column has type <code><font color="blue">integer</font></code> and its valu
 <a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
 
 in the <code><font color="blue">smooth_grid</font></code> table.
-It specifies the smoothing uses as a prior for
+This smoothing is the prior for
 the fixed effects corresponding to this covariate multiplier.
 If the 
 <code><i><font color="black"><span style='white-space: nowrap'>group_smooth_id</span></font></i></code>
- is <code><font color="blue">null</font></code>, this
-covariate multiplier is always zero and no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
- are
-allocated for it.
-Otherwise, if 
+ is <code><font color="blue">null</font></code>, these fixed effects
+are always zero and no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ are allocated for them.
+
+<br>
+<br>
+<big><a name="group_smooth_id.pini" id="group_smooth_id.pini">pini</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>group_smooth_id</span></font></i></code>
+ is not null,
+
 <code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
- is <code><font color="blue">rate_value</font></code>
+ is <code><font color="blue">rate_value</font></code>,
 and 
 <code><i><font color="black"><span style='white-space: nowrap'>rate_id</span></font></i></code>
  corresponds to
@@ -251,15 +261,33 @@ This column has type <code><font color="blue">integer</font></code> and its valu
 <a href="smooth_grid_table.htm#smooth_id" target="_top"><span style='white-space: nowrap'>smooth_id</span></a>
 
 in the <code><font color="blue">smooth_grid</font></code> table.
-It specifies the smoothing uses as a prior for
-the random effects corresponding to these covariate multipliers.
+This smoothing is the prior for
+the random effects corresponding to this covariate multiplier.
 If the 
 <code><i><font color="black"><span style='white-space: nowrap'>subgroup_smooth_id</span></font></i></code>
- is <code><font color="blue">null</font></code>, these
-covariate multipliers are always zero and no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
- are
-allocated for them.
-Otherwise, if 
+ is <code><font color="blue">null</font></code>, these random effects
+are always zero and no <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ are allocated for them.
+
+<br>
+<br>
+<big><a name="subgroup_smooth_id.meas_noise" id="subgroup_smooth_id.meas_noise">meas_noise</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ is <code><font color="blue">rate_noise</font></code>,
+
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_smooth_id</span></font></i></code>
+ must be null.
+
+<br>
+<br>
+<big><a name="subgroup_smooth_id.pini" id="subgroup_smooth_id.pini">pini</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_smooth_is</span></font></i></code>
+ is not null,
+
 <code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
  is <code><font color="blue">rate_value</font></code>
 and 
@@ -268,7 +296,7 @@ and
 <a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate_name</span></a>
  <code><font color="blue">pini</font></code>,
 
-<code><i><font color="black"><span style='white-space: nowrap'>group_smooth_id</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>subgroup_smooth_id</span></font></i></code>
  must correspond to
 <a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
  equal to one
