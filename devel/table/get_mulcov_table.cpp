@@ -191,6 +191,14 @@ CppAD::vector<mulcov_struct> get_mulcov_table(
 				"group_id is not <= maximum group_id in subgroup table";
 			error_exit(message, table_name, i);
 		}
+		//
+		// check for subgroup meas_noise variables
+		if( mulcov_type[i] == "meas_noise" &&
+			subgroup_smooth_id[i] != DISMOD_AT_NULL_INT )
+		{	string message =
+			"mulcov_type = 'meas_noise' and subgroup_smooth_id is not null.";
+			error_exit(message, table_name, i);
+		}
 	}
 	return mulcov_table;
 }

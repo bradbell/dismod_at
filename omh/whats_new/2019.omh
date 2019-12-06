@@ -69,6 +69,18 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-06$$
+Documentation fact that there are no
+$cref/subgroup covariate multipliers
+	/model_variables
+	/Random Effects, u
+	/Subgroup Covariate Multipliers
+/$$
+that affect the measurement noise; see
+$cref/meas_noise/mulcov_table/subgroup_smooth_id/meas_noise/$$
+under $icode subgroup_smooth_id$$ in the mulcov table.
+In addition, report an error if these multipliers are requested.
+
 $head 12-05$$
 $list number$$
 The mulcov table $cref/group_id/mulcov_table/group_id/$$
@@ -85,7 +97,6 @@ $codei%
 	./dock_dismod_at.sh image dismod_at
 %$$
 $lend
-
 
 $head 12-04$$
 $list number$$

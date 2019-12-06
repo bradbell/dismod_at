@@ -110,12 +110,14 @@ $head group_smooth_id$$
 This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
-It specifies the smoothing uses as a prior for
+This smoothing is the prior for
 the fixed effects corresponding to this covariate multiplier.
-If the $icode group_smooth_id$$ is $code null$$, this
-covariate multiplier is always zero and no $cref model_variables$$ are
-allocated for it.
-Otherwise, if $icode mulcov_type$$ is $code rate_value$$
+If the $icode group_smooth_id$$ is $code null$$, these fixed effects
+are always zero and no $cref model_variables$$ are allocated for them.
+
+$subhead pini$$
+If $icode group_smooth_id$$ is not null,
+$icode mulcov_type$$ is $code rate_value$$,
 and $icode rate_id$$ corresponds to
 $cref/rate_name/rate_table/rate_name/$$ $code pini$$,
 $icode group_smooth_id$$ must correspond to
@@ -126,15 +128,21 @@ $head subgroup_smooth_id$$
 This column has type $code integer$$ and its value is a
 $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
-It specifies the smoothing uses as a prior for
-the random effects corresponding to these covariate multipliers.
-If the $icode subgroup_smooth_id$$ is $code null$$, these
-covariate multipliers are always zero and no $cref model_variables$$ are
-allocated for them.
-Otherwise, if $icode mulcov_type$$ is $code rate_value$$
+This smoothing is the prior for
+the random effects corresponding to this covariate multiplier.
+If the $icode subgroup_smooth_id$$ is $code null$$, these random effects
+are always zero and no $cref model_variables$$ are allocated for them.
+
+$subhead meas_noise$$
+If $icode mulcov_type$$ is $code rate_noise$$,
+$icode subgroup_smooth_id$$ must be null.
+
+$subhead pini$$
+If $icode subgroup_smooth_is$$ is not null,
+$icode mulcov_type$$ is $code rate_value$$
 and $icode rate_id$$ corresponds to
 $cref/rate_name/rate_table/rate_name/$$ $code pini$$,
-$icode group_smooth_id$$ must correspond to
+$icode subgroup_smooth_id$$ must correspond to
 $cref/n_age/smooth_table/n_age/$$ equal to one
 (because age will have no effect for these covariate multipliers).
 
