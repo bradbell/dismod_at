@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Subgroup Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Subgroup Table">
-<meta name="keywords" id="keywords" content=" the subgroup table purpose subgroup_id subgroup_name group_id group_name discussion example ">
+<meta name="keywords" id="keywords" content=" the subgroup table purpose subgroup_id subgroup_name group_id group_name discussion spaces order group example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,9 @@ A:active { color : purple }
 <br><a href="subgroup_table.htm#group_id" target="_top">group_id</a>
 <br><a href="subgroup_table.htm#group_name" target="_top">group_name</a>
 <br><a href="subgroup_table.htm#Discussion" target="_top">Discussion</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="subgroup_table.htm#Discussion.Spaces" target="_top">Spaces</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="subgroup_table.htm#Discussion.Order" target="_top">Order</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="subgroup_table.htm#Discussion.group Table" target="_top">group&nbsp;Table</a>
 <br><a href="subgroup_table.htm#Example" target="_top">Example</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -124,10 +127,44 @@ Rows that have the same (different)
 (different) 
 <code><i><font color="black"><span style='white-space: nowrap'>group_name</span></font></i></code>
 .
+Spaces are not allowed the 
+<code><i><font color="black"><span style='white-space: nowrap'>group_name</span></font></i></code>
+ because they are used by the
+<a href="option_table.htm#zero_sum_mulcov_group" target="_top"><span style='white-space: nowrap'>zero_sum_mulcov_group</span></a>
+
+option to separate group names.
 
 <br>
 <br>
 <b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Discussion.Spaces" id="Discussion.Spaces">Spaces</a></big>
+<br>
+It would be possible to allow spaces in the 
+<code><i><font color="black"><span style='white-space: nowrap'>group_name</span></font></i></code>
+
+if we add another option called 
+<code><i><font color="black"><span style='white-space: nowrap'>separator</span></font></i></code>
+ that was the
+character used to separate lists in the option table
+(the default value for this option would be space).
+
+<br>
+<br>
+<big><a name="Discussion.Order" id="Discussion.Order">Order</a></big>
+<br>
+The order of the rows in the subgroup table is set up so that 
+<code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
+
+is monotone non-decreasing. This requirement could be removed
+(it just make the initial implementation of subgroups easier).
+
+<br>
+<br>
+<big><a name="Discussion.group Table" id="Discussion.group Table">group Table</a></big>
 <br>
 One might think it would be easier to have a separate group table
 and not require 
