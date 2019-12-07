@@ -122,6 +122,11 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 	// check for errors
 	int previous_group_id      = subgroup_table[0].group_id;
 	string previous_group_name = subgroup_table[0].group_name;
+	if( previous_group_name.find(' ') != string::npos )
+	{	msg  = "There is a space in following group name: ";
+		msg += "'" + previous_group_name + "'";
+		error_exit(msg, table_name, subgroup_id);
+	}
 	if( previous_group_id != 0 )
 	{	msg = "first group_id is not zero";
 		size_t subgroup_id = 0;
@@ -155,6 +160,12 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 		}
 		previous_group_id   = this_group_id;
 		previous_group_name = this_group_name;
+		//
+		if( previous_group_name.find(' ') != string::npos )
+		{	msg  = "There is a space in following group name: ";
+			msg += "'" + previous_group_name + "'";
+			error_exit(msg, table_name, subgroup_id);
+		}
 	}
 # endif
 

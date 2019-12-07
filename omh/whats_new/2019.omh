@@ -69,8 +69,12 @@ $childtable%
 	omh/whats_new/2015.omh
 %$$
 
+$head 12-07$$
+Spaces in a $cref/group_name/subgroup_table/group_name/$$ are now forbidden.
+A check was added to make sure there are no such spaces.
+
 $head 12-06$$
-Documentation fact that there are no
+Document the fact that there are no
 $cref/subgroup covariate multipliers
 	/model_variables
 	/Random Effects, u
