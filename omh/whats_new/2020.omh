@@ -29,6 +29,19 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 01-08$$
+$list number$$
+Add documentation for the arguments
+$cref/database/dock_dismod_at.sh/Run New Container/database/$$ and
+$cref/command/dock_dismod_at.sh/Run New Container/command/$$ under
+running a new container.
+$lnext
+Advance $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200108
+of $code dock_dismod_at.sh$$.
+This will require building a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+$lend
+
 $head 01-07$$
 Fix the following compile error when $code NDEBUG$$ is not defined:
 $codei%

@@ -71,8 +71,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20191205'
-	dismod_at_hash='6911b2859dcecf05cfa17522cf2850deaf779d7f'
+	dismod_at_version='20200108'
+	dismod_at_hash='547b37b24013702df8b45a192caaa6cafafc65f8'
 # %$$
 #
 # $subhead dismod_at.base$$
@@ -171,6 +171,17 @@
 # $code release$$.
 # The $code release$$ version should be much faster.
 # The $code debug$$ version will do more extensive error checking.
+#
+# $subhead database$$
+# The second argument $icode database$$ must be a dismod_at database
+# in the current working directory.
+# This the first argument to the corresponding dismod_at command.
+#
+# $subhead command$$
+# The third argument $icode command$$ must be one of the dismod_at commands.
+# This is the second argument in the corresponding dismod_at command.
+# The rest of the arguments $icode ...$$ are
+# the same as the corresponding arguments for the $cref command$$.
 #
 # $subhead Other Arguments$$
 # The other arguments to $code dock_dismod_at.sh$$ are the same as in the
