@@ -1,5 +1,6 @@
 var list_up0 = [
 'dismod_at.htm',
+'release_notes.htm',
 'whats_new_2019.htm'
 ];
 var list_across0 = [
@@ -10,7 +11,6 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
-'whats_new_2019.htm#Contents',
 'whats_new_2019.htm#12-07',
 'whats_new_2019.htm#12-06',
 'whats_new_2019.htm#12-05',
@@ -110,6 +110,12 @@ function choose_across0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
+}
+function choose_down2(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_down2[index-1];
 }
 function choose_down1(item)
 {	var index          = item.selectedIndex;

@@ -1,15 +1,19 @@
-// Child table for section whats_new_2019
+// Child table for section release_notes
 document.write('\
-<select onchange="whats_new_2019_child(this)">\
-<option>whats_new_2019-&gt;</option>\
+<select onchange="release_notes_child(this)">\
+<option>release_notes-&gt;</option>\
+<option>whats_new_2020</option>\
+<option>whats_new_2019</option>\
 <option>whats_new_2018</option>\
 <option>whats_new_2017</option>\
 <option>whats_new_2016</option>\
 <option>whats_new_2015</option>\
 </select>\
 ');
-function whats_new_2019_child(item)
+function release_notes_child(item)
 {	var child_list = [
+		'whats_new_2020.htm',
+		'whats_new_2019.htm',
 		'whats_new_2018.htm',
 		'whats_new_2017.htm',
 		'whats_new_2016.htm',

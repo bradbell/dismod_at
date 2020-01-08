@@ -1,6 +1,6 @@
 var list_up0 = [
 'dismod_at.htm',
-'whats_new_2019.htm',
+'release_notes.htm',
 'whats_new_2017.htm'
 ];
 var list_across0 = [
