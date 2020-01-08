@@ -21,7 +21,7 @@ $childtable%omh/math/abstract.omh
 	%omh/model/model.omh
 	%devel/command.omh
 	%python/dismod_at/__init__.py
-	%omh/whats_new/2019.omh
+	%omh/release_notes.omh
 	%omh/wish_list.omh
 	%devel/devel.omh
 %$$

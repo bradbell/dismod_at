@@ -62,13 +62,6 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2019$$
 
-$childtable%
-	omh/whats_new/2018.omh%
-	omh/whats_new/2017.omh%
-	omh/whats_new/2016.omh%
-	omh/whats_new/2015.omh
-%$$
-
 $head 12-07$$
 Spaces in a $cref/group_name/subgroup_table/group_name/$$ are now forbidden.
 A check was added to make sure there are no such spaces.

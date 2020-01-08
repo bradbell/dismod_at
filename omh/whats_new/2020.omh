@@ -1,0 +1,40 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-19 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin whats_new_2020$$
+$spell
+    Dismod
+    devel
+    cpp
+$$
+$navigate%
+	Up%Location%
+	Across%Search%
+	Prev%Prev%
+	Next%Next%
+	Down_up_4%_up_4%
+	Down_up_3%_up_3%
+	Down_up_2%_up_2%
+	Down_up_1%_up_1%
+	Down_up_0%_up_0%
+	Current%Heading
+%$$
+
+$section Changes and Additions to Dismod_at During 2020$$
+
+$head 01-07$$
+Fix the following compile error when $code NDEBUG$$ is not defined:
+$codei%
+    %...%/devel/table/get_subgroup_table.cpp:128:31: error:
+    'subgroup_id' was not declared in this scope
+%$$
+
+
+$end

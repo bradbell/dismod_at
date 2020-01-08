@@ -125,6 +125,7 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 	if( previous_group_name.find(' ') != string::npos )
 	{	msg  = "There is a space in following group name: ";
 		msg += "'" + previous_group_name + "'";
+		size_t subgroup_id = 0;
 		error_exit(msg, table_name, subgroup_id);
 	}
 	if( previous_group_id != 0 )
