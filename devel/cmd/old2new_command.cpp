@@ -36,7 +36,7 @@ If the original database does not contain a subgroup table,
 it is added with one row and the following values:
 $icode%
 	%subgroup_id% %subgroup_name% %group_id% %group_name%
-	0             world            0          world
+	%%          0 %%        world %%       0 %%     world
 %$$
 
 $head data Table$$
