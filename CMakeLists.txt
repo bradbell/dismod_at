@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -129,7 +129,7 @@ ENDMACRO( set_library_path_list )
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
-SET(dismod_at_version "20200110")
+SET(dismod_at_version "20200116")
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
