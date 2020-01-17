@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,6 +13,7 @@ $spell
     Dismod
     devel
     cpp
+    optimizer
 $$
 $navigate%
 	Up%Location%
@@ -28,6 +29,11 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 01-16$$
+Add an optimizer
+$cref/warm start/wish_list/Warm Starting Optimizer/$$
+wish list item.
 
 $head 01-08$$
 $list number$$

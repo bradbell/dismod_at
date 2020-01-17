@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -36,9 +36,15 @@ $spell
 	mu
 	const
 	smoothings
+    Ipopt
 $$
 
 $section Dismod_at Wish List$$
+
+$head Warm Starting Optimizer$$
+Provide more information, than just the starting primal point,
+when warm starting Ipopt. This would help when continuing
+an optimization that had reached its maximum number of iterations.
 
 $head Multi-Threading$$
 On a shared-memory system,
