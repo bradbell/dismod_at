@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -26,7 +26,7 @@ $head Syntax$$
 $icode%depend% = data_depend(%pack_vec%, %data_object%)%$$
 
 $head Prototype$$
-$srcfile%devel/model/depend.cpp%0
+$srcthisfile%0
 	%// BEGIN DATA_DEPEND PROTOTYPE%// END DATA_DEPEND PROTOTYPE%
 1%$$
 
@@ -135,7 +135,7 @@ $head Syntax$$
 $icode%depend% = prior_depend(%pack_vec%, %prior_object%)%$$
 
 $head Prototype$$
-$srcfile%devel/model/depend.cpp%0
+$srcthisfile%0
 	%// BEGIN PRIOR_DEPEND PROTOTYPE%// END PRIOR_DEPEND PROTOTYPE%
 1%$$
 

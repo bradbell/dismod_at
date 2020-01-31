@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -176,34 +176,34 @@ The file $cref time_line_vec_xam.cpp$$ contains an example and test
 of using this routine.
 
 $head Prototype$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_NEAR_EQUAL_PROTOTYPE%// END_NEAR_EQUAL_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_TIME_LINE_VEC_PROTOTYPE%// END_TIME_LINE_VEC_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_SPECIALIZE_PROTOTYPE%// END_SPECIALIZE_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_ADD_POINT_PROTOTYPE%// END_ADD_POINT_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_EXTEND_GRID_PROTOTYPE%// END_EXTEND_GRID_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_SUB_LOWER_PROTOTYPE%// END_SUB_LOWER_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_SUB_UPPER_PROTOTYPE%// END_SUB_UPPER_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_TIME_LINE_PROTOTYPE%// END_TIME_LINE_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_MAX_TIME_DIFF_PROTOTYPE%// END_MAX_TIME_DIFF_PROTOTYPE%1
 %$$
-$srcfile%devel/utility/time_line_vec.cpp%
+$srcthisfile%
 	0%// BEGIN_AGE_TIME_AVG_PROTOTYPE%// END_AGE_TIME_AVG_PROTOTYPE%1
 %$$
 

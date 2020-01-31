@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -26,7 +26,7 @@
 # to improve the speed and accuracy of estimation of the fixed effects.
 #
 # $head Problem Parameters$$
-# $srcfile%example/user/zsum_mulcov_rate.py%
+# $srcthisfile%
 #	0%# begin problem parameters%# end problem parameters%1
 # %$$
 #

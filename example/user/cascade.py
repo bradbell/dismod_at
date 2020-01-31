@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -90,7 +90,7 @@
 #
 # $head Problem Parameters$$
 # The following parameters, used in this example, can be changed:
-# $srcfile%example/user/cascade.py%
+# $srcthisfile%
 #   0%# begin problem parameters%# end problem parameters%1
 # %$$
 #
@@ -98,7 +98,7 @@
 # The time values do not matter for this problem
 # because all the functions are constant with respect to time.
 # The $cref age_table$$ for this problem is given by
-# $srcfile%example/user/cascade.py%
+# $srcthisfile%
 #	0%# age_table%	# time_table%1
 # %$$
 # We use $icode n_age$$ to denote the length of this table.

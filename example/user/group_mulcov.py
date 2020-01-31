@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -34,7 +34,7 @@
 # $head True Value of Variables$$
 # The values of the unknown variables that is used to
 # simulate the data are
-# $srcfile%example/user/group_mulcov.py%
+# $srcthisfile%
 #	0%# True values used to simulate data%# --------%1
 # %$$
 #

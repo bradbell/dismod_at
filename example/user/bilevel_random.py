@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -32,7 +32,7 @@
 #
 # $head Problem Parameters$$
 # The following parameters, used in this example, can be changed:
-# $srcfile%example/user/bilevel_random.py%
+# $srcthisfile%
 #   0%# begin problem parameters%# end problem parameters%1
 # %$$
 #

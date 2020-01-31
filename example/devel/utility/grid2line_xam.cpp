@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,7 +17,7 @@ $$
 
 $section C++ grid2line: Example and Test$$
 
-$srcfile%example/devel/utility/grid2line_xam.cpp%
+$srcthisfile%
 	0%// BEGIN C++%// END C++%1
 %$$
 

@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -43,7 +43,7 @@ $codei%avg_noise_effect %avg_noise_obj%(
 %$$
 
 $head Prototype$$
-$srcfile%devel/model/avg_noise_effect.cpp%
+$srcthisfile%
 	0%// BEGIN_AVG_NOISE_EFFECT_PROTOTYPE%// END_AVG_NOISE_EFFECT_PROTOTYPE%1
 %$$
 
@@ -155,7 +155,7 @@ $icode%avg% = %avg_noise_obj%.rectangle(
 )%$$
 
 $head Prototype$$
-$srcfile%devel/model/avg_noise_effect.cpp%
+$srcthisfile%
 	0%// BEGIN_RECTANGLE_PROTOTYPE%// END_RECTANGLE_PROTOTYPE%1
 %$$
 

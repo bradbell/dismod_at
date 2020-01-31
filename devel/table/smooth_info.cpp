@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -79,13 +79,13 @@ $icode%s_target% = %s_source%
 %$$
 
 $head Prototype$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_NORMAL_CTOR%// END_NORMAL_CTOR%1
 %$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_DEFAULT_CTOR%// END_DEFAULT_CTOR%1
 %$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_ASSIGNMENT_CTOR%// END_ASSIGNMENT_CTOR%1
 %$$
 
@@ -429,19 +429,19 @@ $icode%all_const_value% = %s_info%.all_const_value()
 %$$
 
 $head Prototype$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_CONST_VALUE%// END_CONST_VALUE%1
 %$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_VALUE_PRIOR_ID%// END_VALUE_PRIOR_ID%1
 %$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_DAGE_PRIOR_ID%// END_DAGE_PRIOR_ID%1
 %$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_DTIME_PRIOR_ID%// END_DTIME_PRIOR_ID%1
 %$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_ALL_CONST_VALUE%// END_ALL_CONST_VALUE%1
 %$$
 
@@ -596,7 +596,7 @@ $codei%smooth_info %s_test%(
 %$$
 
 $head Prototype$$
-$srcfile%devel/table/smooth_info.cpp%
+$srcthisfile%
 	0%// BEGIN_TEST_CTOR%// END_TEST_CTOR%1
 %$$
 

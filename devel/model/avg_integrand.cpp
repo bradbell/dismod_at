@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -43,7 +43,7 @@ $codei%avg_integrand %avgint_obj%(
 %$$
 
 $head Prototype$$
-$srcfile%devel/model/avg_integrand.cpp%
+$srcthisfile%
 	0%// BEGIN_AVG_INTEGRAND_PROTOTYPE%// END_AVG_INTEGRAND_PROTOTYPE%1
 %$$
 
@@ -173,7 +173,7 @@ $icode%avg% = %avgint_obj%.rectangle(
 )%$$
 
 $head Prototype$$
-$srcfile%devel/model/avg_integrand.cpp%
+$srcthisfile%
 	0%// BEGIN_RECTANGLE_PROTOTYPE%// END_RECTANGLE_PROTOTYPE%1
 %$$
 
@@ -556,7 +556,7 @@ $icode%avg% = %avgint_obj%.add_cohort(
 )%$$
 
 $head Prototype$$
-$srcfile%devel/model/avg_integrand.cpp%
+$srcthisfile%
 	0%// BEGIN_ADD_COHORT_PROTOTYPE%// END_ADD_COHORT_PROTOTYPE%1
 %$$
 
