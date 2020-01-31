@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list warm starting optimizer multi-threading asymptotic statistics user examples meas_std lagrange multipliers censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world example random point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list simulating priors warm starting optimizer multi-threading asymptotic statistics user examples meas_std lagrange multipliers censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world example random point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -62,6 +62,7 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
+<br><a href="wish_list.htm#Simulating Priors" target="_top">Simulating&nbsp;Priors</a>
 <br><a href="wish_list.htm#Warm Starting Optimizer" target="_top">Warm&nbsp;Starting&nbsp;Optimizer</a>
 <br><a href="wish_list.htm#Multi-Threading" target="_top">Multi-Threading</a>
 <br><a href="wish_list.htm#Asymptotic Statistics" target="_top">Asymptotic&nbsp;Statistics</a>
@@ -81,6 +82,31 @@ A:active { color : purple }
 <br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
+<b><big><a name="Simulating Priors" id="Simulating Priors">Simulating Priors</a></big></b>
+<br>
+The code for simulating values for the prior distribution
+<a href="prior_sim_table.htm#prior_sim_value" target="_top"><span style='white-space: nowrap'>prior_sim_value</span></a>
+
+currently truncates the simulated values to be within the
+lower and lower limits for the distribution.
+Note that constraining an optimizer to be between lower
+and upper limits corresponds to truncated distribution.
+The mean for a truncated distribution need not lie between
+the lower and upper limits.
+We should remove the truncation in the simulated prior values
+and we should remove the restriction that the prior table
+<a href="prior_table.htm#mean" target="_top"><span style='white-space: nowrap'>mean</span></a>
+ needs to be between the
+lower and upper limits.
+This will require projecting onto the lower and upper limits
+when the prior mean is used in the <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+ or
+<a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
+.
+
+
+<br>
+<br>
 <b><big><a name="Warm Starting Optimizer" id="Warm Starting Optimizer">Warm Starting Optimizer</a></big></b>
 <br>
 Provide more information, than just the starting primal point,
