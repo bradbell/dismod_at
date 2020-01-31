@@ -30,6 +30,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 01-31$$
+A $cref/simulating priors/wish_list/Simulating Priors/$$ entry
+was added to the wish list.
+
 $head 01-16$$
 Add an optimizer
 $cref/warm start/wish_list/Warm Starting Optimizer/$$

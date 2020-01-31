@@ -37,9 +37,28 @@ $spell
 	const
 	smoothings
     Ipopt
+	sim
 $$
 
 $section Dismod_at Wish List$$
+
+$head Simulating Priors$$
+The code for simulating values for the prior distribution
+$cref/prior_sim_value/prior_sim_table/prior_sim_value/$$
+currently truncates the simulated values to be within the
+lower and lower limits for the distribution.
+Note that constraining an optimizer to be between lower
+and upper limits corresponds to truncated distribution.
+The mean for a truncated distribution need not lie between
+the lower and upper limits.
+We should remove the truncation in the simulated prior values
+and we should remove the restriction that the prior table
+$cref/mean/prior_table/mean/$$ needs to be between the
+lower and upper limits.
+This will require projecting onto the lower and upper limits
+when the prior mean is used in the $cref start_var_table$$ or
+$cref scale_var_table$$.
+
 
 $head Warm Starting Optimizer$$
 Provide more information, than just the starting primal point,
