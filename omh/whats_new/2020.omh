@@ -30,6 +30,13 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 02-13$$
+The $cref/age_id/age_table/age_id/$$ and $cref/time_id/time_table/time_id/$$
+values in the $cref smooth_grid_table$$ and $cref weight_grid_table$$ were
+not being checked for validity.
+This has been changed so that the user gets an informative error message
+when they are outside the valid limits.
+
 $head 01-31$$
 A $cref/simulating priors/wish_list/Simulating Priors/$$ entry
 was added to the wish list.

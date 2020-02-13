@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -198,6 +198,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 
 	// weight_grid table
 	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight);
+	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, age_id,    age);
+	DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, time_id, time);
 
 	// smooth table
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth, mulstd_value_prior_id, prior);
@@ -209,6 +211,8 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, value_prior_id, prior);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dage_prior_id,  prior);
 	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, dtime_prior_id, prior);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, age_id,         age);
+	DISMOD_AT_CHECK_PRIMARY_ID(smooth_grid, time_id,        time);
 
 	// mulcov table
 	DISMOD_AT_CHECK_PRIMARY_ID(mulcov, rate_id,             rate);
