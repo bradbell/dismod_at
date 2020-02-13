@@ -31,11 +31,18 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 02-13$$
+$list number$$
 The $cref/age_id/age_table/age_id/$$ and $cref/time_id/time_table/time_id/$$
 values in the $cref smooth_grid_table$$ and $cref weight_grid_table$$ were
 not being checked for validity.
 This has been changed so that the user gets an informative error message
 when they are outside the valid limits.
+$lnext
+Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200213
+of $code dock_dismod_at.sh$$.
+This will require building a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+$lend
 
 $head 01-31$$
 A $cref/simulating priors/wish_list/Simulating Priors/$$ entry

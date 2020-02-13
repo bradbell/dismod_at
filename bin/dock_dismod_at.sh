@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -71,8 +71,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20200108'
-	dismod_at_hash='547b37b24013702df8b45a192caaa6cafafc65f8'
+	dismod_at_version='20200213'
+	dismod_at_hash='0821785a5d1878cd2404f426612e32431fa4b6c5'
 # %$$
 #
 # $subhead dismod_at.base$$
