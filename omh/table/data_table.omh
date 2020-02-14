@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -108,7 +108,13 @@ the constant weighting is used for this data point.
 
 $head hold_out$$
 This column has type $code integer$$ and has value zero or one.
-Only the rows where hold_out is zero are used during a $cref fit_command$$.
+Only the rows where hold_out is zero are included
+in the objective optimized during a $cref fit_command$$.
+After the optimal variable values are found,
+the hold out residuals are computed so one can check the
+predictive validity for hold out data.
+The residuals for hold out data (other data) are computed once (many times)
+for each fit.
 
 $head meas_value$$
 This column has type $code real$$ and is the measured value

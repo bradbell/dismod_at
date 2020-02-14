@@ -30,6 +30,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 02-14$$
+The description of the $cref/hold_out/data_table/hold_out/$$ data
+has been improved.
+
 $head 02-13$$
 $list number$$
 The $cref/age_id/age_table/age_id/$$ and $cref/time_id/time_table/time_id/$$
