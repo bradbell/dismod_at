@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -166,6 +166,7 @@ $end
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/log_message.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -258,7 +259,13 @@ void get_avgint_table(
 	// check for erorr conditions
 	string msg;
 	for(size_t avgint_id = 0; avgint_id < n_avgint; avgint_id++)
-	{	// -------------------------------------------------------------
+	{	// ------------------------------------------------------------
+		int subgroup_id = avgint_table[avgint_id].subgroup_id;
+		if( subgroup_id == DISMOD_AT_NULL_INT )
+		{	msg = "subgroup_id is null";
+			error_exit(msg, table_name, avgint_id);
+		}
+		// -------------------------------------------------------------
 		double age_lower  = avgint_table[avgint_id].age_lower;
 		double age_upper  = avgint_table[avgint_id].age_upper;
 		if( age_lower < age_min )

@@ -14,6 +14,7 @@ $spell
     devel
     cpp
     optimizer
+    avgint
 $$
 $navigate%
 	Up%Location%
@@ -29,6 +30,14 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 02-18$$
+The $code dismod_at$$ program would crash if the
+$icode subgroup_id$$ in the
+$cref/data_table/data_table/subgroup_id/$$ or
+$cref/avgint_table/avgint_table/subgroup_id/$$ as null.
+This has been fixed by detecting this case and printing an error message.
+
 
 $head 02-14$$
 The description of the $cref/hold_out/data_table/hold_out/$$ data
