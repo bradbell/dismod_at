@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -162,8 +162,6 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-switch_build_type='no'
-# -----------------------------------------------------------------------------
 if [ "$0" != 'bin/run_cmake.sh' ]
 then
 	echo 'bin/run_cmake.sh: must be executed from its parent directory'
@@ -176,17 +174,13 @@ do
 		cat << EOF
 usage: bin/run_cmake.sh \\
 	[--help] \\
-	[--verbose] \\
-	[--switch_build_type]
+	[--verbose]
 EOF
 		exit 0
 	fi
 	if [ "$1" == '--verbose' ]
 	then
 		verbose_makefile='yes'
-	elif [ "$1" == '--switch_build_type' ]
-	then
-		switch_build_type='yes'
 	else
 		echo "'$1' is an invalid option"
 		bin/run_cmake.sh --help
@@ -194,16 +188,6 @@ EOF
 	fi
 	shift
 done
-# final build_type
-if [ "$switch_build_type" == 'yes' ]
-then
-	if [ "$build_type" == 'debug' ]
-	then
-		build_type='release'
-	else
-		build_type='debug'
-	fi
-fi
 # --------------------------------------------------------------------------
 export PKG_CONFIG_PATH="$ipopt_prefix/$cmake_libdir/pkgconfig"
 # --------------------------------------------------------------------------

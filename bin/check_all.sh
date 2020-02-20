@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -14,29 +14,23 @@ export PYTHONPATH=''
 # ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_all.sh" ]
 then
-	echo 'bin/check_all.sh '
+	echo 'bin/check_all.sh build_type'
 	echo 'must be executed from its parent directory'
 	exit 1
 fi
+if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
+then
+	echo 'bin/check_all.sh build_type'
+	echo 'build_type is not debug or release'
+	exit 1
+fi
+build_type="$1"
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
 	echo $*
 	eval $*
 }
-# ----------------------------------------------------------------------------
-# run cmake first so know right away if debug or release build
-set +e
-eval random_01="`expr $RANDOM % 2`"
-set -e
-if [ "$random_01" == '0' ]
-then
-	echo 'bin/run_cmake.sh >& cmake.log'
-	bin/run_cmake.sh >& cmake.log
-else
-	echo 'bin/run_cmake.sh -switch_build_type >& cmake.log'
-	bin/run_cmake.sh --switch_build_type >& cmake.log
-fi
 # -----------------------------------------------------------------------------
 # run bin/check_*.sh and ~/bradbell/bin/check_copyright.sh
 list=`ls bin/check_*.sh | sed \
@@ -54,6 +48,12 @@ echo_eval run_omhelp.sh dev
 #
 # build user documentation
 echo_eval run_omhelp.sh doc
+# ----------------------------------------------------------------------------
+# run cmake
+sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|"
+#
+echo 'bin/run_cmake.sh >& cmake.log'
+bin/run_cmake.sh >& cmake.log
 # ----------------------------------------------------------------------------
 #
 echo_eval cd build

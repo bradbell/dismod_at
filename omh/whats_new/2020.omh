@@ -31,6 +31,13 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 02-20$$
+Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200218
+of $code dock_dismod_at.sh$$.
+This will require building a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+
+
 $head 02-18$$
 The $code dismod_at$$ program would crash if the
 $icode subgroup_id$$ in the
