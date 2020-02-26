@@ -42,6 +42,15 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Immunity$$
+It would be possible to include an immunity state $latex I$$ and have
+$latex \rho$$ the rate at which one gets curred from the disease, and does
+not get it again. There would be a switch that one chooses to say that onces
+you are curred you become immune. This would require changing
+the definition of some of the integrands; e.g., prevalence would be
+$latex C / (S + C + I)$$. It would also require changing the ODE, but in
+a way that should be faster because there is no feedback.
+
 $head Simulating Priors$$
 The code for simulating values for the prior distribution
 $cref/prior_sim_value/prior_sim_table/prior_sim_value/$$
@@ -58,7 +67,6 @@ lower and upper limits.
 This will require projecting onto the lower and upper limits
 when the prior mean is used in the $cref start_var_table$$ or
 $cref scale_var_table$$.
-
 
 $head Warm Starting Optimizer$$
 Provide more information, than just the starting primal point,
