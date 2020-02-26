@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -73,6 +73,9 @@ $latex \[
 =
 \log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
 \] $$
+Note that, for priors, $latex \sigma$$ does not depend on the model values
+and $latex y$$ is used for the model variable corresponding to the prior.
+
 If a density is being applied to data
 (its $cref/density_id/data_table/density_id/$$ appears in the data table)
 we define the log-transformed standard deviation by
@@ -81,6 +84,9 @@ $latex \[
 =
 \log ( y + \eta + \delta ) - \log ( y + \eta )
 \] $$
+Note that, for data, $latex \sigma$$ does not depend on the model values
+and $latex mu$$ is used for the mean data value of the data corresponding
+to the model variables.
 
 $head Weighted Residual Function, R$$
 
@@ -109,6 +115,8 @@ $latex \[
 		\sigma( y, \mu , \delta , \eta[d] )
 	}
 \] $$
+Note that, for both the linear and log case,
+$latex \mu$$ has the same units as $latex y$$.
 
 
 $subhead Difference$$
@@ -123,6 +131,8 @@ the weighted residual function for differences is
 $latex \[
 	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 \] $$
+Note that, in the linear case, all the arguments (except $latex d$$)
+have the same units.
 If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 the weighted residual function for differences is
@@ -135,6 +145,8 @@ $latex \[
 		\delta
 	}
 \] $$
+Note that in the log case, $latex z, y$$ and $latex \eta$$ have the same units
+while $latex \mu$$ and $latex \delta$$ are in log space.
 
 $head Log-Density Function, D$$
 In the discussion below,
