@@ -31,6 +31,25 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 02-26$$
+$list number$$
+Add an $cref/immunity/wish_list/Immunity/$$ wish list item.
+$lnext
+Discuss the difference between the weighted residual in the log scaled
+$cref/value/statistic/Weighted Residual Function, R/Value/$$
+and the log scaled
+$cref/difference/statistic/Weighted Residual Function, R/Difference/$$
+cases.
+$lnext
+Discuss the difference in the definition of the
+$cref/log-transformed standard deviation
+	/statistic
+	/Log-Transformed Standard Deviation, sigma
+/$$
+$latex \sigma$$ in the data versus prior cases.
+$lend
+
+
 $head 02-20$$
 Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200218
 of $code dock_dismod_at.sh$$.
