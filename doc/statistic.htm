@@ -217,6 +217,13 @@ we define the log-transformed standard deviation by
 \log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
 
 @]@</small>
+Note that, for priors, <small>@(@
+\sigma
+@)@</small> does not depend on the model values
+and <small>@(@
+y
+@)@</small> is used for the model variable corresponding to the prior.
+
 If a density is being applied to data
 (its <a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
  appears in the data table)
@@ -228,6 +235,13 @@ we define the log-transformed standard deviation by
 \log ( y + \eta + \delta ) - \log ( y + \eta )
 
 @]@</small>
+Note that, for data, <small>@(@
+\sigma
+@)@</small> does not depend on the model values
+and <small>@(@
+mu
+@)@</small> is used for the mean data value of the data corresponding
+to the model variables.
 
 <br>
 <br>
@@ -271,6 +285,12 @@ the weighted residual function for values is
 	}
 
 @]@</small>
+Note that, for both the linear and log case,
+<small>@(@
+\mu
+@)@</small> has the same units as <small>@(@
+y
+@)@</small>.
 
 
 <br>
@@ -293,6 +313,10 @@ the weighted residual function for differences is
 	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 
 @]@</small>
+Note that, in the linear case, all the arguments (except <small>@(@
+d
+@)@</small>)
+have the same units.
 If the density is
 <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
 ,
@@ -308,6 +332,16 @@ the weighted residual function for differences is
 	}
 
 @]@</small>
+Note that in the log case, <small>@(@
+z, y
+@)@</small> and <small>@(@
+\eta
+@)@</small> have the same units
+while <small>@(@
+\mu
+@)@</small> and <small>@(@
+\delta
+@)@</small> are in log space.
 
 <br>
 <br>
