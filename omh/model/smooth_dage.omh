@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -67,10 +67,10 @@ other notation above.
 $head A^s$$
 The age difference density $latex A^s (s, v)$$ is defined by
 $latex \[
-\log A^s (s, v, theta)
+\log A^s (s, v, \theta )
 =
 \sum_{i=0}^{I-2} \sum_{j=0}^{J-1} D \left(
-	v_{i,j} \W{,} v_{i+1,j} \W{,}
+	v_{i+1,j} \W{,} v_{i,j} \W{,}
 	\mu_{i,j} \W{,} \lambda \delta_{i,j}  \W{,} d_{i,j}
 \right)
 \] $$

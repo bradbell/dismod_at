@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -68,10 +68,10 @@ other notation above.
 $head T^s$$
 The time difference density $latex T^s (s, v)$$ is defined by
 $latex \[
-\log T^s (s, v, theta)
+\log T^s (s, v, \theta )
 =
 \sum_{i=0}^{I-1} \sum_{j=0}^{J-2} D \left(
-	v_{i,j} \W{,} v_{i,j+1} \W{,}
+	v_{i,j+1} \W{,} v_{i,j} \W{,}
 	\mu_{i,j} \W{,} \lambda \delta_{i,j}  \W{,} d_{i,j}
 \right)
 \] $$

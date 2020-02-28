@@ -31,6 +31,13 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 02-28$$
+Fix the formula for the age smoothing $cref/A^s/smooth_dage/A^s/$$,
+and the time smoothing $cref/T^s/smooth_dtime/T^s/$$.
+To be specific, the forward index comes before the current index; e.g.,
+$latex D(v_{i,j}, v_{i+1,j} \ldots )$$ was replaced by
+$latex D(v_{i+1,j}, v_{i,j} \ldots )$$.
+
 $head 02-26$$
 $list number$$
 Add an $cref/immunity/wish_list/Immunity/$$ wish list item.

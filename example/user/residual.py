@@ -217,15 +217,15 @@ for data_subset_id in range(n_subset) :
 	relerr = residual / check - 1.0
 	assert abs(relerr) <= eps99
 #
-# check variable residuals
+# check variable value residuals
 n_var = len(var_table)
 assert( n_var == 2)
-omega_id = 4
+omega_id         = 4
+age_id2var_value = n_var * [0.0]
 for var_id in range(n_var) :
 	var_row = var_table[var_id]
 	assert( var_row['var_type'] == 'rate' )
 	assert( var_row['rate_id'] == omega_id )
-	age_id    = var_row['age_id']
 	fit_row   = fit_var_table[var_id]
 	value     = fit_row['fit_var_value']
 	residual  = fit_row['residual_value']
@@ -235,5 +235,23 @@ for var_id in range(n_var) :
 	check     = (math.log(value + eta) - math.log(mu + eta)) / sigma
 	relerr    = residual / check - 1.0
 	assert abs(relerr) <= eps99
+	#
+	# mapping from age_id to fit_var_value
+	age_id = var_row['age_id']
+	age_id2var_value[age_id] = value
+	#
+	# residual_dage
+	if age_id == 0 :
+		residual_dage = fit_row['residual_dage']
+#
+# check dage residual
+z        = age_id2var_value[1]
+y        = age_id2var_value[0]
+mu       = 0.0
+delta    = fun_omega_dage_std()
+check    = (math.log(z + eta) - math.log(y + eta) - mu) / delta
+relerr   = residual_dage / check - 1.0
+assert( abs(relerr) <= eps99 )
+
 # -----------------------------------------------------------------------
 print('residual.py: OK')
