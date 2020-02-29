@@ -8,9 +8,125 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# $begin user_residual.py$$ $newlinech #$$
+# $spell
+#	mtother
+#	std
+#	cv
+#	covariates
+#	var
+#	mulstd
+#	dage
+# $$
+#
+# $section Weighted Residuals$$
+#
+# $head Example Parameters$$
+# The following values are used to simulate the data and define the priors:
+# $srccode%py%
 omega_true      = [ 0.01, 0.02 ]
 omega_mean      = 0.15
 minimum_meas_cv = 0.10
+# %$$
+#
+# $head Model$$
+# The only non-zero for this example is
+# other cause mortality, $latex \omega$$, for the parent area.
+# The parent omega grid has two points,
+# one at age zero and the other at age 100.
+# The corresponding true values for $latex \omega$$ are
+# $code omega_true[0]$$ at age zero and $code omega_true[1]$$ at age 100.
+#
+# $head Data$$
+# The integrand for this data is
+# $cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$; i.e.,
+# a direct measurement of $latex \omega$$.
+# Both ages are included in the data for this example.
+# Both the Gaussian and Log-Gaussian $cref/densities/density_table/$$
+# are included.
+# In addition, both the case where the
+# $cref/meas_std/data_table/meas_std/$$ is above and below the bound specified
+# by $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ are included.
+#
+# $subhead delta$$
+# We use the notation
+# $cref/Delta/data_like/Minimum CV Standard Deviation, Delta_i/$$ for
+# the standard deviation adjusted by the minimum measurement cv.
+# The adjusted standard deviation
+# $cref/delta/data_like/Adjusted Standard Deviation, delta_i/$$
+# is equal to $latex \Delta$$ because there are no measurement
+# standard deviation covariates multipliers for this example.
+#
+# $subhead Gaussian Residuals$$
+# In the Gaussian case, the residual is
+# $latex \[
+#	(y - \mu) / \delta
+# \]$$,
+# where $latex y$$ is the measured value and $latex \mu$$ is the
+# model value for the
+# $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
+#
+# $subhead Log-Gaussian Residuals$$
+# In the Log-Gaussian case, we the
+# $cref/
+#   log-transformed standard deviation/
+#   statistic/
+#   Log-Transformed Standard Deviation, sigma
+# /$$
+# $latex \[
+#	\sigma = \log ( y + \eta + \delta ) - \log( y + \eta )
+# \] $$
+# where $latex y$$ is the measured value
+# and $latex \eta$$ is the offset in the log transform.
+# The residual is
+# $latex \[
+#	\frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
+# \] $$
+# where $latex \mu$$ is the model value for the average integrand.
+#
+#
+# $head Priors$$
+#
+# $subhead Value Residual$$
+# There are two value residuals, one for $latex \omega$$ at age zero
+# and the other at age 100.
+# The density used for the value residuals is Log-Gaussian.
+# The mean value used in the prior for the value residuals $latex \mu$$ is
+# $code omega_mean$$.
+# The standard deviation used for the value residuals in
+# $code omega_mean * 0.1$$
+# The log transformed standard deviation is
+# $latex \[
+#	\sigma = \log ( \mu + \eta + \delta ) - \log( \mu + \eta )
+# \] $$
+# The residual is
+# $latex \[
+#	\frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
+# \] $$
+# where $latex y$$ is the $cref/fit_var_value/fit_var_table/fit_var_value/$$
+# for the model variable.
+#
+# $subhead Difference Residual$$
+# There is one difference residuals for the difference of
+# $latex \omega$$ at age zero and age 100.
+# The density used for the value residuals is Log-Gaussian.
+# The mean value used in the prior for the difference residual
+# $latex \mu = 0$$.
+# The standard deviation used for the difference residual is $code 0.1$$.
+# (This corresponds to a coefficient of variation of $latex e^{0.1} - 1$$.
+# which is approximately equal to $code 0.1$$; i.e., 10 percent.)
+# The age difference smoothing multiplier prior id
+# $cref/mulstd_dage_prior_id/smooth_table/$$ for this example is null,
+# so $latex \delta$$ is equal to the standard deviation $code 0.1$$.
+# The residual is
+# $latex \[
+#	\frac{ \log ( z + \eta ) - \log ( y + \eta ) } { \delta }
+# \] $$
+# where $latex y$$ ($latex z$$)
+# is the $cref/fit_var_value/fit_var_table/fit_var_value/$$
+# at age zero (age 100).
+#
+# $end
 # ---------------------------------------------------------------------------
 import sys
 import os
