@@ -15,6 +15,7 @@ $spell
     cpp
     optimizer
     avgint
+	csv
 $$
 $navigate%
 	Up%Location%
@@ -32,7 +33,13 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 02-29$$
+$list number$$
 Add the $cref user_residual.py$$ example.
+$lnext
+If the user specified the $cref/parent_node_id/option_table/parent_node_id/$$
+in the option table, the corresponding parent node name is placed in the
+$cref/option.csv/db2csv_command/option.csv/$$.
+$lend
 
 $head 02-28$$
 Fix the formula for the age smoothing $cref/A^s/smooth_dage/A^s/$$,

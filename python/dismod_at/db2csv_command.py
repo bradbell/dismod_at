@@ -1,7 +1,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -70,10 +70,16 @@
 #
 # $head option.csv$$
 # The file $icode%dir%/option.csv%$$ is written by this command.
-# It is a CSV file with one row for each option.
-# The columns in this table are
+# It is a CSV file with one row for each possible row in the
+# $cref option_table$$.
+# The columns in $code option.csv$$ are
 # $cref/option_name/option_table/Conventions/option_name/$$ and
 # $cref/option_value/option_table/Conventions/option_value/$$.
+# If a row does not appear in the option table, the corresponding
+# default value is written to $code option.csv$$.
+# If the $cref/parent_node_id/option_table/parent_node_id/$$ appears
+# in the option table, the $icode parent_node_name$$ row of $code option.csv$$
+# is filled in with the corresponding node name.
 #
 # $head log.csv$$
 # The file $icode%dir%/log.csv%$$ is written by this command.
@@ -1025,6 +1031,16 @@ def db2csv_command(database_file_arg) :
 			sys.exit(msg)
 		option_id += 1
 	for row in option_list :
+		if row[0] == 'parent_node_name' :
+			node_table       = table_data['node']
+			parent_node_name = node_table[parent_node_id]['node_name']
+			if row[1] == "" :
+				row[1] = parent_node_name
+			elif row[1] != parent_node_name :
+				msg  = 'Error in option table parent_node_id has name '
+				msg += parent_node_name
+				msg += '\nbut parent_node_name is ' + row[1]
+				sys.exit(msg)
 		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
 		csv_writer.writerow(row_out)
 	csv_file.close()
