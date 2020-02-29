@@ -120,7 +120,7 @@ minimum_meas_cv = 0.10
 # so $latex \delta$$ is equal to the standard deviation $code 0.1$$.
 # The residual is
 # $latex \[
-#	\frac{ \log ( z + \eta ) - \log ( y + \eta ) } { \delta }
+#	\frac{ \log ( z + \eta ) - \log ( y + \eta ) - \mu } { \delta }
 # \] $$
 # where $latex y$$ ($latex z$$)
 # is the $cref/fit_var_value/fit_var_table/fit_var_value/$$
