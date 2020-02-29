@@ -1,0 +1,263 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Weighted Residuals</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Weighted Residuals">
+<meta name="keywords" id="keywords" content=" weighted residuals example parameters model data delta gaussian log-gaussian priors value residual difference ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_residual.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user</option>
+<option>user_residual.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="user_re_scale.py.htm" target="_top">Prev</a>
+</td><td><a href="user_sample_asy.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
+</td>
+<td>user_residual.py</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Weighted Residuals</big></big></b></center>
+
+<br><a href="user_residual.py.htm#Example Parameters" target="_top">Example&nbsp;Parameters</a>
+<br><a href="user_residual.py.htm#Model" target="_top">Model</a>
+<br><a href="user_residual.py.htm#Data" target="_top">Data</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Data.delta" target="_top">delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Data.Gaussian Residuals" target="_top">Gaussian&nbsp;Residuals</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Data.Log-Gaussian Residuals" target="_top">Log-Gaussian&nbsp;Residuals</a>
+<br><a href="user_residual.py.htm#Priors" target="_top">Priors</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Priors.Value Residual" target="_top">Value&nbsp;Residual</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Priors.Difference Residual" target="_top">Difference&nbsp;Residual</a>
+<br><br>
+<b><big><a name="Example Parameters" id="Example Parameters">Example Parameters</a></big></b>
+<br>
+The following values are used to simulate the data and define the priors:
+<pre style='display:inline'><tt>
+omega_true      <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0.01</font><font color="#990000">,</font> <font color="#993399">0.02</font> <font color="#990000">]</font>
+omega_mean      <font color="#990000">=</font> <font color="#993399">0.15</font>
+minimum_meas_cv <font color="#990000">=</font> <font color="#993399">0.10</font>
+</tt></pre>
+<br>
+<b><big><a name="Model" id="Model">Model</a></big></b>
+<br>
+The only non-zero for this example is
+other cause mortality, <small>@(@
+\omega
+@)@</small>, for the parent area.
+The parent omega grid has two points,
+one at age zero and the other at age 100.
+The corresponding true values for <small>@(@
+\omega
+@)@</small> are
+<code><font color="blue">omega_true[0]</font></code> at age zero and <code><font color="blue">omega_true[1]</font></code> at age 100.
+
+<br>
+<br>
+<b><big><a name="Data" id="Data">Data</a></big></b>
+<br>
+The integrand for this data is
+<a href="avg_integrand.htm#Integrand, I_i(a,t).mtother" target="_top"><span style='white-space: nowrap'>mtother</span></a>
+; i.e.,
+a direct measurement of <small>@(@
+\omega
+@)@</small>.
+Both ages are included in the data for this example.
+Both the Gaussian and Log-Gaussian <a href="density_table.htm" target="_top"><span style='white-space: nowrap'>densities</span></a>
+
+are included.
+In addition, both the case where the
+<a href="data_table.htm#meas_std" target="_top"><span style='white-space: nowrap'>meas_std</span></a>
+ is above and below the bound specified
+by <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+ are included.
+
+<br>
+<br>
+<big><a name="Data.delta" id="Data.delta">delta</a></big>
+<br>
+We use the notation
+<a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
+ for
+the standard deviation adjusted by the minimum measurement cv.
+The adjusted standard deviation
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>delta</span></a>
+
+is equal to <small>@(@
+\Delta
+@)@</small> because there are no measurement
+standard deviation covariates multipliers for this example.
+
+<br>
+<br>
+<big><a name="Data.Gaussian Residuals" id="Data.Gaussian Residuals">Gaussian Residuals</a></big>
+<br>
+In the Gaussian case, the residual is
+<small>@[@
+
+	(y - \mu) / \delta
+
+@]@</small>,
+where <small>@(@
+y
+@)@</small> is the measured value and <small>@(@
+\mu
+@)@</small> is the
+model value for the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+.
+
+<br>
+<br>
+<big><a name="Data.Log-Gaussian Residuals" id="Data.Log-Gaussian Residuals">Log-Gaussian Residuals</a></big>
+<br>
+In the Log-Gaussian case, we the
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
+
+<small>@[@
+
+	\sigma = \log ( y + \eta + \delta ) - \log( y + \eta )
+
+@]@</small>
+where <small>@(@
+y
+@)@</small> is the measured value
+and <small>@(@
+\eta
+@)@</small> is the offset in the log transform.
+The residual is
+<small>@[@
+
+	\frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
+
+@]@</small>
+where <small>@(@
+\mu
+@)@</small> is the model value for the average integrand.
+
+
+<br>
+<br>
+<b><big><a name="Priors" id="Priors">Priors</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Priors.Value Residual" id="Priors.Value Residual">Value Residual</a></big>
+<br>
+There are two value residuals, one for <small>@(@
+\omega
+@)@</small> at age zero
+and the other at age 100.
+The density used for the value residuals is Log-Gaussian.
+The mean value used in the prior for the value residuals <small>@(@
+\mu
+@)@</small> is
+<code><font color="blue">omega_mean</font></code>.
+The standard deviation used for the value residuals in
+<code><font color="blue">omega_mean * 0.1</font></code>
+The log transformed standard deviation is
+<small>@[@
+
+	\sigma = \log ( \mu + \eta + \delta ) - \log( \mu + \eta )
+
+@]@</small>
+The residual is
+<small>@[@
+
+	\frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
+
+@]@</small>
+where <small>@(@
+y
+@)@</small> is the <a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+
+for the model variable.
+
+<br>
+<br>
+<big><a name="Priors.Difference Residual" id="Priors.Difference Residual">Difference Residual</a></big>
+<br>
+There is one difference residuals for the difference of
+<small>@(@
+\omega
+@)@</small> at age zero and age 100.
+The density used for the value residuals is Log-Gaussian.
+The mean value used in the prior for the difference residual
+<small>@(@
+\mu = 0
+@)@</small>.
+The standard deviation used for the difference residual is <code><font color="blue">0.1</font></code>.
+(This corresponds to a coefficient of variation of <small>@(@
+e^{0.1} - 1
+@)@</small>.
+which is approximately equal to <code><font color="blue">0.1</font></code>; i.e., 10 percent.)
+The age difference smoothing multiplier prior id
+<a href="smooth_table.htm" target="_top"><span style='white-space: nowrap'>mulstd_dage_prior_id</span></a>
+ for this example is null,
+so <small>@(@
+\delta
+@)@</small> is equal to the standard deviation <code><font color="blue">0.1</font></code>.
+The residual is
+<small>@[@
+
+	\frac{ \log ( z + \eta ) - \log ( y + \eta ) } { \delta }
+
+@]@</small>
+where <small>@(@
+y
+@)@</small> (<small>@(@
+z
+@)@</small>)
+is the <a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+
+at age zero (age 100).
+
+
+<hr>Input File: example/user/residual.py
+
+</body>
+</html>
