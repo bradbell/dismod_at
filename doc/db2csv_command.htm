@@ -237,12 +237,22 @@ Otherwise, zero is used for
 The file 
 <code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/option.csv</span></font></code>
  is written by this command.
-It is a CSV file with one row for each option.
-The columns in this table are
+It is a CSV file with one row for each possible row in the
+<a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+.
+The columns in <code><font color="blue">option.csv</font></code> are
 <a href="option_table.htm#Conventions.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
  and
 <a href="option_table.htm#Conventions.option_value" target="_top"><span style='white-space: nowrap'>option_value</span></a>
 .
+If a row does not appear in the option table, the corresponding
+default value is written to <code><font color="blue">option.csv</font></code>.
+If the <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+ appears
+in the option table, the 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
+ row of <code><font color="blue">option.csv</font></code>
+is filled in with the corresponding node name.
 
 <br>
 <br>
