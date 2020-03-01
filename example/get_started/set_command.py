@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -19,9 +19,7 @@
 # The $cref set_command$$ in this example creates a
 # truth_var table.
 #
-# $srcfile%
-#	example/get_started/set_command.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

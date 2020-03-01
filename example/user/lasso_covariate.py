@@ -129,9 +129,7 @@
 # without shrinkage due to the Laplace prior.
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/lasso_covariate.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

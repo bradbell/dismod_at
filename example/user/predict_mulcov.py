@@ -81,9 +81,7 @@
 # fit is prefect (there is no noise in the data).
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/predict_mulcov.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

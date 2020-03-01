@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -15,7 +15,7 @@
 #
 # $section mulcov_table: Example and Test$$
 #
-# $srcfile%example/table/mulcov_table.py%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # BEGIN PYTHON
 def mulcov_table() :

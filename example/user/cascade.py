@@ -184,9 +184,7 @@
 # each data point.
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/cascade.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 #
 # $end

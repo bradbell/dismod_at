@@ -56,9 +56,7 @@
 # where it is linear with respect to time.
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/zsum_child_rate.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

@@ -105,9 +105,7 @@
 #
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/group_mulcov.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

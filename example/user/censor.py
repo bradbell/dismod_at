@@ -72,9 +72,7 @@
 # and put in the $cref data_sim_table$$.
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/censor.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

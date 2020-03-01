@@ -1,6 +1,6 @@
 #,  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -35,7 +35,7 @@
 # $head rate_true$$
 # The true value for the rates, used to simulate the data,
 # are constant w.r.t age and time and are given by:
-# $srcfile%example/user/csv2db.py%0%# BEGIN RATE_TRUE%# END RATE_TRUE%1%$$
+# $srcthisfile%0%# BEGIN RATE_TRUE%# END RATE_TRUE%1%$$
 #
 # $head P$$
 # The notation $latex P$$ is used for prevalence.
@@ -58,7 +58,7 @@
 # value of
 # $cref/mtall/csv2db_command/integrand/mtall/$$
 # corresponding to the age-time intervals:
-# $srcfile%example/user/csv2db.py%
+# $srcthisfile%
 #	0%# BEGIN INTERVALS%# END INTERVALS%1
 # %$$
 # The non-zero rates (iota, rho, chi) are modeled as unknown and piecewise
@@ -88,9 +88,7 @@
 # As a check, we include the mtall data with hold_out equal to one.
 #
 # $head Source$$
-# $srcfile%
-#   example/user/csv2db.py
-#   %0%# BEGIN PYTHON%# END PYTHON%1
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1
 # %$$
 #
 # $end

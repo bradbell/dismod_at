@@ -106,9 +106,7 @@
 # (when there are two levels of random effects).
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/bilevel_random.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 #
 # $end

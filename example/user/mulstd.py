@@ -81,9 +81,7 @@
 #
 # $head Fitting$$
 # $head Source Code$$
-# $srcfile%
-#	example/user/mulstd.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

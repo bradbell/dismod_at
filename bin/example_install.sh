@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -16,8 +16,7 @@
 # &head Syntax&&
 # &code bin/example_install.sh&&
 #
-# &srcfile%bin/example_install.sh
-#	%0%# BEGIN BASH%# END BASH%1%&&
+# &srcthisfile%0%# BEGIN BASH%# END BASH%1%&&
 # &end
 # ----------------------------------------------------------------------------
 # BEGIN BASH

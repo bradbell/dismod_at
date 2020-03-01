@@ -68,9 +68,7 @@
 # and for proper detection of the outliers.
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/students.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON

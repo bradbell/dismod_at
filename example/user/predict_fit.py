@@ -95,9 +95,7 @@
 # age 50 specified in the $cref avgint_table$$, one for each node.
 #
 # $head Source Code$$
-# $srcfile%
-#	example/user/predict_fit.py
-#	%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
