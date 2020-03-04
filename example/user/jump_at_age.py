@@ -86,6 +86,8 @@ age_table       = [float(age) for age in age_table]
 # On the other hand, its is modeled as if there is a 10% coefficient
 # of variation in the data; i.e., as if there were measurement noise with
 # standard deviation equal to 10% of the measurement value.
+# There is a measured value for each age in the $code age_table$$
+# that is greater than 20.
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -173,7 +175,7 @@ def example_db (file_name) :
 		'time_upper':   time_list[0]
 	}
 	# Sincidence data
-	data_age_list  = [ 0.0, 1.0, 5.0, 10.0, 20.0, 40.0, 80.0, 100.0 ]
+	data_age_list  = [ age for age in age_table if age > 20.0 ]
 	for age in data_age_list :
 		meas_value = iota_true(age)
 		row['age_lower']    = age
