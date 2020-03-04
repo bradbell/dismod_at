@@ -12,6 +12,7 @@
 # $spell
 #	init
 #	Sincidence
+#	pos
 # $$
 #
 # $section Jump in Rate Value at a Known Age$$
@@ -23,14 +24,53 @@
 # If one know the age at which a jump occurs, it is possible to resolve
 # the jump with less data by specifying a prior that has this knowledge.
 #
+# $head Example Parameters$$
+# The following values are used to simulate the data and define the priors:
+# $srccode%py%
+iota_up_to_20   = 1e-10
+iota_after_20   = 1e-1
+age_table       = [ 0.0, 21.0, 20.0, 100.0 ]
+time_table      = [ 2020.0, 2000.0 ]
+# %$$
+#
+# $subhead iota_up_20$$
+# This is the true value of $icode iota$$ up to and including age 20.
+# Note that it is close to zero, but not equal to zero, so that we can
+# use the rate case
+# $cref/iota_pos_rho_zero/option_table/rate_case/iota_pos_rho_zero/$$.
+#
+# $subhead iota_after_20$$
+# This is the true value of $icode iota$$ for ages greater than 20.
+#
+# $subhead age_table$$
+# The $cref age_table$$ does not need to be monotone increasing.
+# For this example, it is the same as the table of ages at which
+# $icode iota$$ is modeled .
+# You can changed the order of $code age_table$$
+# and it will not affect the results.
+#
+# $subhead time_table$$
+# The $cref time_table$$ does not need to be monotone increasing.
+# You can changed the order of $code time_table$$
+# and it will not affect the results.
+#
 # $head Model Variables$$
 # This example's variables are all
 # $cref/parent rates/model_variables/Fixed Effects, theta/Parent Rates/$$
 # for $cref/iota/rate_table/rate_name/iota/$$.
+# The value of $icode iota$$ is modeled at each age in the $code age_table$$.
+# The prior for the value of $icode iota$$ up to age 20 is a constant equal to
+# $code iota_up_to_20$$.
+# After age 20 it is uniform with lower limit $code iota_up_to_20$$,
+# upper limit 1 and mean 0.1.
+# The prior for the forward age differences in $icode iota$$ at age 20
+# is uniform, and above age 20 it is a Log-Gaussian with mean 0 and
+# standard deviation 0.1 (about 10 percent coefficient of variation).
 #
 # $head Truth$$
-# For this example the rate $icode iota$$ is one constant
-# for ages less that 20, and a different constant for ages greater than 20.
+# For this example the rate $icode iota$$ is constant
+# with value $code iota_up_to_20$$ for ages less than or equal 20,
+# and $code iota_after_20$$ for ages greater than 20.
 #
 # $head Simulated Data$$
 # For this example, the simulated data is all
@@ -42,33 +82,11 @@
 # of variation in the data; i.e., as if there were measurement noise with
 # standard deviation equal to 10% of the measurement value.
 #
-# $head Model Ages$$
-# The value of $icode iota$$ is modeled at the following ages:
-# 0, 20, 21, 100. The prior for $icode iota$$ is modeled as being smooth
-# all ages except age 20. This is done using a Log-Gaussian for the differences
-# except the difference from age 20 to age 21 where a uniform prior is used.
-#
-# $head Age Table$$
-# The $cref age_table$$ does not need to be monotone increasing.
-# For this example, it is the same as the table of ages at which
-# $icode iota$$ is modeled and is called $code model_age_list$$ below.
-# You can change the order of this table and the example / test
-# will still run correctly.
-#
-# $head Time Table$$
-# The $cref time_table$$ does not need to be monotone increasing.
-# You can the order of $code time_table$$ below and it will
-# not affect the results.
-#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-iota_before_20  = 1e-4
-iota_after_20   = 1e-1
-model_age_list  = [ 0.0, 100.0, 21.0, 20.0 ]
-time_table      = [ 2015.0, 1995.0 ]
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -94,7 +112,7 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def iota_true(age) :
 	if age <= 20.0 :
-		return iota_before_20
+		return iota_up_to_20
 	else :
 		return iota_after_20
 # ------------------------------------------------------------------------
@@ -102,13 +120,13 @@ def iota_true(age) :
 def example_db (file_name) :
 	#
 	def fun_iota_parent(a, t) :
-		if 19.5 <= a and a <= 20.5 :
-			return ('prior_rate_parent', 'prior_none', 'prior_difference')
+		if a <= 20.5 :
+			return ('prior_up_to_20', 'prior_none', 'prior_difference')
 		else :
-			return ('prior_rate_parent', 'prior_difference', 'prior_difference')
+			return ('prior_after_20', 'prior_difference', 'prior_difference')
 	# ----------------------------------------------------------------------
 	# age table (in age_list above)
-	age_list = model_age_list
+	age_list = age_table
 	#
 	# time table
 	time_list   = time_table
@@ -174,8 +192,14 @@ def example_db (file_name) :
 			'mean':     0.0,
 			'std':      0.1,
 			'eta':      1e-4
-		},{ # prior_rate_parent
-			'name':     'prior_rate_parent',
+		},{ # prior_up_to_20
+			'name':     'prior_up_to_20',
+			'density':  'uniform',
+			'lower':    iota_up_to_20,
+			'upper':    iota_up_to_20,
+			'mean':     iota_up_to_20,
+		},{ # prior_after_20
+			'name':     'prior_after_20',
 			'density':  'uniform',
 			'lower':    1e-5,
 			'upper':    1.0,
@@ -188,7 +212,7 @@ def example_db (file_name) :
 	smooth_table = [
 		{ # smooth_iota_parent
 			'name':                     'smooth_iota_parent',
-			'age_id':                   range( len(model_age_list) ),
+			'age_id':                   range( len(age_table) ),
 			'time_id':                  [0],
 			'fun':                      fun_iota_parent
 		}
@@ -263,22 +287,22 @@ fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 # check rates values
 iota_rate_id      = 1
 max_err           = 0.0
-tolerance         = 1e-3
-age_list          = model_age_list
+eps99             = 99.0 * sys.float_info.epsilon
 for var_id in range( len(var_table) ) :
-	row   = var_table[var_id]
+	row     = var_table[var_id]
+	rate_id = row['rate_id']
 	assert row['var_type'] == 'rate'
 	assert row['node_id']  == 0
-	age    = age_list[ row['age_id'] ]
-	rate_id = row['rate_id']
-	value  = fit_var_table[var_id]['fit_var_value']
 	assert rate_id == iota_rate_id
+	#
+	age        = age_table[ row['age_id'] ]
+	value      = fit_var_table[var_id]['fit_var_value']
 	value_true = iota_true(age)
 	rate       = 'iota'
 	max_err = max(max_err, abs( value / value_true - 1.0 ) )
-	if( abs(value / value_true - 1.0) > tolerance ) :
+	if( abs(value / value_true - 1.0) > eps99 ) :
 		print(rate, age, value / value_true - 1.0 )
-assert max_err <= tolerance
+assert max_err <= eps99
 # -----------------------------------------------------------------------------
 print('jump_at_age.py: OK')
 # -----------------------------------------------------------------------------
