@@ -29,8 +29,10 @@
 # $srccode%py%
 iota_up_to_20   = 1e-10
 iota_after_20   = 1e-1
-age_table       = [ 0.0, 21.0, 20.0, 100.0 ]
+iota_eta        = 1e-5
 time_table      = [ 2020.0, 2000.0 ]
+age_table       = list(range(0, 100, 10)) + [100, 0.2, 0.8, 1, 5]
+age_table       = [float(age) for age in age_table]
 # %$$
 #
 # $subhead iota_up_20$$
@@ -41,6 +43,9 @@ time_table      = [ 2020.0, 2000.0 ]
 #
 # $subhead iota_after_20$$
 # This is the true value of $icode iota$$ for ages greater than 20.
+#
+# $subhead iota_eta$$
+# Offset in log transformation used for values of eta.
 #
 # $subhead age_table$$
 # The $cref age_table$$ does not need to be monotone increasing.
@@ -176,7 +181,7 @@ def example_db (file_name) :
 		row['integrand']    = 'Sincidence'
 		row['meas_value']   = meas_value
 		row['meas_std']     = meas_value * 0.1
-		row['eta']          = 1e-6;
+		row['eta']          = iota_eta
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
@@ -191,7 +196,7 @@ def example_db (file_name) :
 			'density':  'log_gaussian',
 			'mean':     0.0,
 			'std':      0.1,
-			'eta':      1e-4
+			'eta':      iota_eta
 		},{ # prior_up_to_20
 			'name':     'prior_up_to_20',
 			'density':  'uniform',
@@ -201,9 +206,9 @@ def example_db (file_name) :
 		},{ # prior_after_20
 			'name':     'prior_after_20',
 			'density':  'uniform',
-			'lower':    1e-5,
-			'upper':    1.0,
-			'mean':     0.1,
+			'lower':    iota_after_20 * 1e-2,
+			'upper':    iota_after_20 * 1e+2,
+			'mean':     iota_after_20 * 2.0,
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -237,7 +242,7 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'first-order'       },
 		{ 'name':'max_num_iter_fixed',     'value':'200'               },
 		{ 'name':'print_level_fixed',      'value':'0'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-6'              },
+		{ 'name':'tolerance_fixed',        'value':'1e-10'             },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'      },
 		{ 'name':'max_num_iter_random',    'value':'100'               },
@@ -287,7 +292,6 @@ fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 # check rates values
 iota_rate_id      = 1
 max_err           = 0.0
-eps99             = 99.0 * sys.float_info.epsilon
 for var_id in range( len(var_table) ) :
 	row     = var_table[var_id]
 	rate_id = row['rate_id']
@@ -300,9 +304,9 @@ for var_id in range( len(var_table) ) :
 	value_true = iota_true(age)
 	rate       = 'iota'
 	max_err = max(max_err, abs( value / value_true - 1.0 ) )
-	if( abs(value / value_true - 1.0) > eps99 ) :
+	if( abs(value / value_true - 1.0) > 1e-7 ) :
 		print(rate, age, value / value_true - 1.0 )
-assert max_err <= eps99
+assert max_err <= 1e-7
 # -----------------------------------------------------------------------------
 print('jump_at_age.py: OK')
 # -----------------------------------------------------------------------------
