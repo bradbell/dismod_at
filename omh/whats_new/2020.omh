@@ -16,6 +16,7 @@ $spell
     optimizer
     avgint
 	csv
+	py
 $$
 $navigate%
 	Up%Location%
@@ -31,6 +32,11 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 03-06$$
+The $code jump_at_age.py$$ example has been improved
+to include more discussion and the flexibility to change its
+$cref/parameters/user_jump_at_age.py/Parameters/$$.
 
 $head 02-29$$
 $list number$$

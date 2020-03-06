@@ -15,27 +15,27 @@
 #	pos
 # $$
 #
-# $section Jump in Rate Value at a Known Age$$
+# $section Zero Rate Until a Jump at a Known Age$$
 #
 # $head Purpose$$
 # Usually the prior for the rate is smooth.
 # This requires lots of data, at a fine age spacing,
 # to resolve a jump in a rate at an unknown age.
-# If one know the age at which a jump occurs, it is possible to resolve
-# the jump with less data by specifying a prior that has this knowledge.
+# If the age at which a jump occurs is known, it is possible to resolve
+# the jump with much less data by specifying a prior that has this knowledge.
 #
-# $head Example Parameters$$
-# The following values are used to simulate the data and define the priors:
+# $head Parameters$$
+# The following values are used to simulate the data and define the priors
+# and can be changed:
 # $srccode%py%
-iota_up_to_20   = 1e-10
+iota_near_zero  = 1e-10
 iota_after_20   = 1e-1
 iota_eta        = 1e-5
 time_table      = [ 2020.0, 2000.0 ]
-age_table       = list(range(0, 100, 10)) + [100, 0.2, 0.8, 1, 5]
-age_table       = [float(age) for age in age_table]
+age_table       = [ 100.0, 70.0, 40.0, 20.0, 0.0 ]
 # %$$
 #
-# $subhead iota_up_20$$
+# $subhead iota_near_zero$$
 # This is the true value of $icode iota$$ up to and including age 20.
 # Note that it is close to zero, but not equal to zero, so that we can
 # use the rate case
@@ -65,16 +65,17 @@ age_table       = [float(age) for age in age_table]
 # for $cref/iota/rate_table/rate_name/iota/$$.
 # The value of $icode iota$$ is modeled at each age in the $code age_table$$.
 # The prior for the value of $icode iota$$ up to age 20 is a constant equal to
-# $code iota_up_to_20$$.
-# After age 20 it is uniform with lower limit $code iota_up_to_20$$,
-# upper limit 1 and mean 0.1.
+# $code iota_near_zero$$.
+# After age 20 it is uniform with lower limit $code iota_near_zero$$,
+# upper limit 1 and mean $code iota_after_20 / 4.0$$
+# (The mean is only used for the initial value and scaling the optimization.)
 # The prior for the forward age differences in $icode iota$$ at age 20
 # is uniform, and above age 20 it is a Log-Gaussian with mean 0 and
 # standard deviation 0.1 (about 10 percent coefficient of variation).
 #
 # $head Truth$$
 # For this example the rate $icode iota$$ is constant
-# with value $code iota_up_to_20$$ for ages less than or equal 20,
+# with value $code iota_near_zero$$ for ages less than or equal 20,
 # and $code iota_after_20$$ for ages greater than 20.
 #
 # $head Simulated Data$$
@@ -119,7 +120,7 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def iota_true(age) :
 	if age <= 20.0 :
-		return iota_up_to_20
+		return iota_near_zero
 	else :
 		return iota_after_20
 # ------------------------------------------------------------------------
@@ -192,6 +193,8 @@ def example_db (file_name) :
 		{	# prior_none
 			'name':     'prior_none',
 			'density':  'uniform',
+			'lower':    -1.0,
+			'upper':    +1.0,
 			'mean':     0.0,
 		},{ # prior_difference
 			'name':     'prior_difference',
@@ -202,15 +205,19 @@ def example_db (file_name) :
 		},{ # prior_up_to_20
 			'name':     'prior_up_to_20',
 			'density':  'uniform',
-			'lower':    iota_up_to_20,
-			'upper':    iota_up_to_20,
-			'mean':     iota_up_to_20,
+			'lower':    iota_near_zero,
+			'upper':    iota_near_zero,
+			'mean':     iota_near_zero,
 		},{ # prior_after_20
 			'name':     'prior_after_20',
 			'density':  'uniform',
-			'lower':    iota_after_20 * 1e-2,
-			'upper':    iota_after_20 * 1e+2,
-			'mean':     iota_after_20 * 2.0,
+			'lower':    iota_near_zero,
+			'upper':    1.0,
+			'mean':     iota_after_20 / 4.0
+			# There is a bug in the log-scaling of a fixed effects when there
+			# is a bound on the age or time difference for the corresponding
+			# function. Setting eta below demonstrates this bug.
+			# 'eta':      iota_eta
 		}
 	]
 	# ----------------------------------------------------------------------

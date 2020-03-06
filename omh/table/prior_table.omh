@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -129,7 +129,7 @@ If $icode eta$$ is not null, and it is a
 $cref/value prior/smooth_grid_table/value_prior_id/$$ for a
 $cref/fixed effect/model_variables/Fixed Effects, theta/$$,
 the model variable is offset log scaled during the optimization.
-To be specified, if $latex \theta_j$$ is the fixed effect and $latex \eta_j$$
+To be specific, if $latex \theta_j$$ is the fixed effect and $latex \eta_j$$
 is the corresponding offset in the log transformation,
 the optimizer sees the variable
 $latex \log( \theta_j + \eta_j)$$ in place of $latex \theta_j$$.
