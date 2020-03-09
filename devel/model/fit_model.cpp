@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -403,21 +403,6 @@ $end
 	d_vector fixed_lower(n_fixed_), fixed_upper(n_fixed_);
 	scale_fixed_effect(fixed_lower_noscale, fixed_lower);
 	scale_fixed_effect(fixed_upper_noscale, fixed_upper);
-	//
-	// fixed_mean
-	d_vector fixed_mean(n_fixed_);
-	for(size_t i = 0; i < n_var; i++)
-	{	size_t prior_id = var2prior_.value_prior_id(i);
-		double const_value = var2prior_.const_value(i);
-		if( ! std::isnan(const_value) )
-			pack_vec[i] = const_value;
-		else if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			pack_vec[i] = 0.0;
-		else
-			pack_vec[i] = prior_table_[prior_id].mean;
-	}
-	unpack_fixed(pack_object_, pack_vec, fixed_mean);
-	scale_fixed_effect(fixed_mean, fixed_mean);
 
 	// fix_constraint_lower, fix_constraint_upper
 	d_vector fix_constraint_lower, fix_constraint_upper;
