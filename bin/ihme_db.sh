@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -55,7 +55,7 @@
 # (but do not need write permission).
 # The default value for this directory is
 # $codei%
-#      %absolute_dir%=/ihme/epi/at_cascade/prod
+#      %absolute_dir%=/ihme/epi/at_cascade
 # %$$
 #
 # $head --user$$
@@ -109,7 +109,7 @@ then
 	echo 'bin/ihme_db.sh: The directory /ihme does not exist.'
 	exit 1
 fi
-absolute_path='/ihme/epi/at_cascade/prod'
+absolute_path='/ihme/epi/at_cascade'
 if [[ "$1" == --* ]]
 then
 	user=`echo "$1" | sed -e 's|^--||'`
