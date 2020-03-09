@@ -213,11 +213,8 @@ def example_db (file_name) :
 			'density':  'uniform',
 			'lower':    iota_near_zero,
 			'upper':    1.0,
-			'mean':     iota_after_20 / 4.0
-			# There is a bug in the log-scaling of a fixed effects when there
-			# is a bound on the age or time difference for the corresponding
-			# function. Setting eta below demonstrates this bug.
-			# 'eta':      iota_eta
+			'mean':     iota_after_20 / 4.0,
+			'eta':      iota_eta,
 		}
 	]
 	# ----------------------------------------------------------------------

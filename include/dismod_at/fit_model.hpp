@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -131,7 +131,7 @@ namespace dismod_at {
 		);
 		// pass constraint functions to base class
 		virtual a1_vector fix_constraint(
-			const a1_vector& fixed_vec
+			const a1_vector& fixed_vec_scaled
 		);
 		// display error message and terminate program
 		virtual void fatal_error(const std::string& error_message);

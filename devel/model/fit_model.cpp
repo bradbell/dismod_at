@@ -405,6 +405,7 @@ $end
 	scale_fixed_effect(fixed_upper, fixed_upper_scaled);
 
 	// fix_constraint_lower, fix_constraint_upper
+	// fixed effect constraints are in original space, not scaled space.
 	d_vector fix_constraint_lower, fix_constraint_upper;
 	for(size_t k = 0; k < diff_prior_.size(); k++)
 	{	// make sure these variable ids correspond to fixed effects
@@ -1056,16 +1057,23 @@ fit_model::a1_vector fit_model::fix_likelihood(
 }
 // --------------------------------------------------------------------------
 // fix_constraint
-fit_model::a1_vector fit_model::fix_constraint(const a1_vector& fixed_vec)
-{	a1_vector ret_val( diff_prior_.size() );
+// pass the fixed effects constraint function to the cppad_mixed base class
+fit_model::a1_vector fit_model::fix_constraint(
+	const a1_vector& fixed_vec_scaled )
+{	// constraints are in original space (not scaled space)
+	a1_vector fixed_vec(n_fixed_);
+	unscale_fixed_effect(fixed_vec_scaled, fixed_vec);
+	//
+	// compute differences in original space
+	a1_vector result( diff_prior_.size() );
 	for(size_t k = 0; k < diff_prior_.size(); k++)
 	{	size_t plus_var_id    = diff_prior_[k].plus_var_id;
 		size_t minus_var_id   = diff_prior_[k].minus_var_id;
 		size_t plus_fixed_id  = var_id2fixed_[ plus_var_id ];
 		size_t minus_fixed_id = var_id2fixed_[ minus_var_id ];
-		ret_val[k] = fixed_vec[plus_fixed_id] - fixed_vec[minus_fixed_id];
+		result[k] = fixed_vec[plus_fixed_id] - fixed_vec[minus_fixed_id];
 	}
-	return ret_val;
+	return result;
 }
 // ---------------------------------------------------------------------------
 // fatal_error
