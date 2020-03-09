@@ -36,6 +36,7 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 03-09$$
+$list number$$
 There was a bug in the smoothing when there was a
 upper or lower bound in the prior for
 $cref/dage/smooth_grid_table/dage_prior_id/$$ or
@@ -43,6 +44,12 @@ $cref/dtime/smooth_grid_table/dtime_prior_id/$$ prior
 for a fixed effect that was scaled; see
 $cref/scaling fixed effects/prior_table/eta/Scaling Fixed Effects/$$.
 This has been fixed.
+$lnext
+Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200309
+of $code dock_dismod_at.sh$$.
+This will require building a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+$lend
 
 $head 03-06$$
 The $code jump_at_age.py$$ example has been improved
