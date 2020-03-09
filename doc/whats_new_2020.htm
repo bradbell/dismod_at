@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>03-09</option>
 <option>03-06</option>
 <option>02-29</option>
 <option>02-28</option>
@@ -83,6 +84,21 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="03-09" id="03-09">03-09</a></big></b>
+<br>
+There was a bug in the smoothing when there was a
+upper or lower bound in the prior for
+<a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage</span></a>
+ or
+<a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime</span></a>
+ prior
+for a fixed effect that was scaled; see
+<a href="prior_table.htm#eta.Scaling Fixed Effects" target="_top"><span style='white-space: nowrap'>scaling&nbsp;fixed&nbsp;effects</span></a>
+.
+This has been fixed.
+
+<br>
 <br>
 <b><big><a name="03-06" id="03-06">03-06</a></big></b>
 <br>
