@@ -396,13 +396,13 @@ $end
 	get_var_limits(
 		var_lower, var_upper, bound_random, var2prior_, prior_table_
 	);
-	d_vector fixed_lower_noscale(n_fixed_), fixed_upper_noscale(n_fixed_);
-	unpack_fixed(pack_object_, var_lower, fixed_lower_noscale);
-	unpack_fixed(pack_object_, var_upper, fixed_upper_noscale);
-	//
 	d_vector fixed_lower(n_fixed_), fixed_upper(n_fixed_);
-	scale_fixed_effect(fixed_lower_noscale, fixed_lower);
-	scale_fixed_effect(fixed_upper_noscale, fixed_upper);
+	unpack_fixed(pack_object_, var_lower, fixed_lower);
+	unpack_fixed(pack_object_, var_upper, fixed_upper);
+	//
+	d_vector fixed_lower_scaled(n_fixed_), fixed_upper_scaled(n_fixed_);
+	scale_fixed_effect(fixed_lower, fixed_lower_scaled);
+	scale_fixed_effect(fixed_upper, fixed_upper_scaled);
 
 	// fix_constraint_lower, fix_constraint_upper
 	d_vector fix_constraint_lower, fix_constraint_upper;
@@ -495,8 +495,8 @@ $end
 	{	CppAD::mixed::fixed_solution fixed_sol = optimize_fixed(
 			fixed_options,
 			random_options,
-			fixed_lower,
-			fixed_upper,
+			fixed_lower_scaled,
+			fixed_upper_scaled,
 			fix_constraint_lower,
 			fix_constraint_upper,
 			fixed_scale,
@@ -528,10 +528,11 @@ $end
 	}
 	// The optimal solution is scaled, but the Lagrange multilpiers are not
 	unscale_fixed_effect(fixed_opt, fixed_opt);
+	//
 	// make sure round off has not violated bounds
 	for(size_t j = 0; j < n_fixed_; ++j)
-	{	fixed_opt[j] = std::max(fixed_lower_noscale[j], fixed_opt[j]);
-		fixed_opt[j] = std::min(fixed_upper_noscale[j], fixed_opt[j]);
+	{	fixed_opt[j] = std::max(fixed_lower[j], fixed_opt[j]);
+		fixed_opt[j] = std::min(fixed_upper[j], fixed_opt[j]);
 	}
 	//
 	// size store solution_
@@ -785,7 +786,7 @@ $end
 			pack_vec[i] = prior_table_[prior_id].lower;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_lower);
-	scale_fixed_effect(fixed_lower, fixed_lower);
+	assert( no_scaling_ );
 
 	// fixed_upper
 	CppAD::vector<double> fixed_upper(n_fixed_);
@@ -800,7 +801,7 @@ $end
 			pack_vec[i] = prior_table_[prior_id].upper;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
-	scale_fixed_effect(fixed_upper, fixed_upper);
+	assert( no_scaling_ );
 	//
 	// check diagonal of information matrix is positive
 	// (except for bound constrained variables)
