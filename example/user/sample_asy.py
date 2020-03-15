@@ -26,7 +26,7 @@
 #
 # $head Notation$$
 # $table
-# $latex iota_n$$ $cnext model incidence for $code north_america$$ $rnext
+# $latex \iota_n$$ $cnext model incidence for $code north_america$$ $rnext
 # $icode u_m$$ $cnext incidence random effect for $code mexico$$ $rnext
 # $icode u_c$$ $cnext incidence random effect for $code canada$$ $rnext
 # $icode y_n$$ $cnext measured incidence for $code north_america$$ $rnext
@@ -57,22 +57,25 @@
 #	h( u_m, 0, s_r ) + h( u_c , 0 , s_r )
 # \] $$
 #
+# $head Problem Parameters$$
+# $srccode%py%
+measure = {
+	'north_america' : 1.0e-2 , # y_n
+	'mexico'        : 2.0e-2 , # y_m
+	'canada'        : 0.5e-2   # y_c
+}
+standard = {
+	'north_america' : 1.0e-3 , # s_n
+	'mexico'        : 2.0e-3 , # s_m
+	'canada'        : 0.5e-3   # s_c
+}
+standard_random_effect = 1.0   # s_r
+number_sample          = 500   # number of posterior samples to generate
+# %$$
+#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
-# ---------------------------------------------------------------------------
-measure = {
-	'north_america' : 1.0e-2 ,
-	'mexico'        : 2.0e-2 ,
-	'canada'        : 0.5e-2
-}
-standard = {
-	'north_america' : 1.0e-3 ,
-	'mexico'        : 2.0e-3 ,
-	'canada'        : 0.5e-3
-}
-standard_random_effect = 1.0
-number_sample          = 500
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import time
@@ -290,7 +293,9 @@ program   = '../../devel/dismod_at'
 ns_string = str(number_sample)
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
-dismod_at.system_command_prc([ program, file_name, 'sample', 'asymptotic', ns_string ])
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'asymptotic', ns_string ]
+)
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

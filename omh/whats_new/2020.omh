@@ -39,9 +39,9 @@ $head 03-15$$
 $list number$$
 The sample command
 $cref/asymptotic/sample_command/method/asymptotic/$$ method
-so that it ignores all the constraints except for
+was changed to ignore all the constraints except for
 $cref model_variables$$ that have their upper and lower limits equal.
-This speeds up the computation of the asymptotic statics.
+This should speed up the computation of the asymptotic statics.
 It also provides a way to approximation the Hessian of the fixed effect
 objective (as the inverse of the sample covariance).
 Note that the simulated samples may be outside the bounds for the
@@ -53,6 +53,9 @@ $lnext
 Some minor corrections were made to the discussion of the
 $cref user_sample_asy.py$$ example; e.g.
 $latex \iota_c$$ and $latex \iota_m$$ where changed to $latex \iota_n$$.
+In addition, the
+$cref/problem parameters/user_sample_asy.py/Problem Parameters/$$
+were include in the documentation.
 $lend
 
 $head 03-09$$
