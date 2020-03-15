@@ -47,6 +47,8 @@ objective (as the inverse of the sample covariance).
 Note that the simulated samples may be outside the bounds for the
 corresponding variables;
 see $cref/bounds/sample_command/Bounds/$$.
+Also note that the $cref predict_command$$ censors the samples
+to be within their limits before computing its predictions.
 $lnext
 Some minor corrections were made to the discussion of the
 $cref user_sample_asy.py$$ example; e.g.

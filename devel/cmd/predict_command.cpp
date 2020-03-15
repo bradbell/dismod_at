@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -15,7 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_sample_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/create_table.hpp>
-# include <dismod_at/check_var_limit.hpp>
+# include <dismod_at/censor_var_limit.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -49,6 +49,13 @@ the values in the $cref sample_table$$ are used for the predictions.
 In this case there are
 $cref/number_simulate/simulate_command/number_simulate/$$ sets
 of model variables that predictions are computed for.
+If the samples were simulated using the
+$cref/asymptotic/sample_command/method/asymptotic/$$ method,
+they may not be withing the lower and upper limits for the
+corresponding variables.
+The variables are censored to be within their limits before
+the predictions are computed.
+
 
 $subhead fit_var$$
 If $icode source$$ is $code fit_var$$,
@@ -179,16 +186,15 @@ void predict_command(
 	{	// copy the variable values for this sample index into pack_vec
 		for(size_t var_id = 0; var_id < n_var; var_id++)
 			pack_vec[var_id] = variable_value[sample_id++];
-# ifndef NDEBUG
-		size_t offset = sample_id - n_var;
-		check_var_limit(
-			source,
-			offset,
+		//
+		// censor samples to be within limits
+		censor_var_limit(
+			pack_vec,
 			pack_vec,
 			var2prior,
 			db_input.prior_table
 		);
-# endif
+		//
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{
 			int avgint_id  = avgint_subset_obj[subset_id].original_id;
