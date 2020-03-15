@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -83,6 +83,13 @@ The asymptotic statics of the model variables is used to generate
 $icode number_sample$$ samples of the model variables
 The samples with different values of $icode sample_index$$ are independent.
 (Note that the $cref fit_var_table$$ is an additional input in this case.)
+The only constraints that are included in the asymptotic samples is when
+the lower and upper limits for a variable are equal.
+Also note that the L1 terms in the likelihood have been ignored
+(because the L1 likelihood is not differentiable at zero).
+Note that the random effects int the $th i$$ sample
+come from the asymptotic distribution of the random effects given the
+fixed effect in the $th i$$ sample.
 
 $head data_sim_table$$
 If $icode method$$ is $code simulate$$,
@@ -106,9 +113,13 @@ Hence the number of rows in this table is $icode number_sample$$
 times the number of rows in the $cref var_table$$.
 
 $head Bounds$$
-The samples are all within the specified bounds, including the bounds
+If you use the $code simulate$$ method,
+the samples are all within the specified bounds, including the bounds
 on the random effects specified by
 $cref/bound_random/option_table/Random Only/bound_random/$$.
+If you use the $code asymptotic$$ method,
+the only bounds that are enforced are where the upper and lower limits
+are equal.
 
 $children%example/get_started/sample_command.py
 %$$

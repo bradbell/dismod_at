@@ -673,6 +673,10 @@ $head fit_object$$
 This object must have been constructed with
 $cref/no_scaling/fit_model_ctor/no_scaling/$$ equal to $code sample$$.
 
+$head Constants$$
+The model variables that have upper and lower limits equal
+are referred to as constants.
+
 $head sample$$
 This argument is a vector with size equal to the number of samples
 $icode n_sample$$ times the number of $cref model_variables$$ $icode n_var$$.
@@ -687,6 +691,16 @@ is the $th j$$ component of the $th i$$ sample of the model variables.
 These samples are independent for different $icode i$$,
 and for fixed $icode i$$ they have the asymptotic covariance
 for the model variables.
+
+$subhead Constraints$$
+For each sample index $icode i$$, the fixed effects will be sampled
+from the inversion of the information matrix (ignoring the constraints
+except for constants).
+The random effects will be sampled from the inverse of the Hessian
+of the random effects given the sampled value for the fixed effects
+and the optional random effects corresponding to the fixed effects.
+None of the L1 terms in the likelihood will be included
+(because the Hessian is not defined at zero for an L1 penalty).
 
 $head fit_var_value$$
 This vector has size equal to the number of model variables.
@@ -865,12 +879,19 @@ $end
 	unpack_random(pack_object_, start_var_, random_in);
 	//
 	// convert from dismod_at random effects to cppad_mixed random effects
-	d_vector cppad_mixed_random_lower = random_const_.remove( random_lower_ );
-	d_vector cppad_mixed_random_upper = random_const_.remove( random_upper_ );
 	d_vector cppad_mixed_random_in    = random_const_.remove( random_in );
 	//
+	// set lower and upper limits to infinity for cppad_mixed random effects
+	size_t cppad_mixed_n_random = n_random_ - n_random_equal_;
+	d_vector cppad_mixed_random_lower(cppad_mixed_n_random);
+	d_vector cppad_mixed_random_upper(cppad_mixed_n_random);
+	for(size_t i = 0; i < cppad_mixed_n_random; ++i)
+	{	cppad_mixed_random_lower[i] = -inf;
+		cppad_mixed_random_upper[i] = +inf;
+	}
+
 	CppAD::vector<double> one_sample_random(n_random_),
-		cppad_mixed_one_sample_random(n_random_ - n_random_equal_);
+		cppad_mixed_one_sample_random(cppad_mixed_n_random);
 	CppAD::vector<double> one_sample_fixed(n_fixed_);
 	for(size_t i_sample = 0; i_sample < n_sample; i_sample++)
 	{	for(size_t j = 0; j < n_fixed_; j++)

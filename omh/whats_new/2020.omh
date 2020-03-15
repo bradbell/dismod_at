@@ -35,6 +35,24 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 03-15$$
+$list number$$
+The sample command
+$cref/asymptotic/sample_command/method/asymptotic/$$ method
+so that it ignores all the constraints except for
+$cref model_variables$$ that have their upper and lower limits equal.
+This speeds up the computation of the asymptotic statics.
+It also provides a way to approximation the Hessian of the fixed effect
+objective (as the inverse of the sample covariance).
+Note that the simulated samples may be outside the bounds for the
+corresponding variables;
+see $cref/bounds/sample_command/Bounds/$$.
+$lnext
+Some minor corrections were made to the discussion of the
+$cref user_sample_asy.py$$ example; e.g.
+$latex \iota_c$$ and $latex \iota_m$$ where changed to $latex \iota_n$$.
+$lend
+
 $head 03-09$$
 $list number$$
 There was a bug in the smoothing when there was a

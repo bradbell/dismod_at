@@ -26,7 +26,7 @@
 #
 # $head Notation$$
 # $table
-# $icode iota_n$$ $cnext model incidence for $code north_america$$ $rnext
+# $latex iota_n$$ $cnext model incidence for $code north_america$$ $rnext
 # $icode u_m$$ $cnext incidence random effect for $code mexico$$ $rnext
 # $icode u_c$$ $cnext incidence random effect for $code canada$$ $rnext
 # $icode y_n$$ $cnext measured incidence for $code north_america$$ $rnext
@@ -37,6 +37,8 @@
 # $icode s_c$$ $cnext standard deviation for $icode y_c$$   $rnext
 # $icode s_r$$ $cnext standard deviation for random effects $rnext
 # $tend
+# The only fixed effect in this model is $latex \iota_n$$.
+# The random effects are $latex u_m$$ and $latex u_c$$.
 #
 # $head Likelihood$$
 # We define $latex h(y, \mu , \sigma)$$
@@ -50,8 +52,8 @@
 # The total log-likelihood for this example is
 # $latex \[
 #	h[ y_n, \iota_n, s_n ] +
-#	h[ y_m, \exp( u_m ) \iota_m, s_m ] +
-#	h[ y_c, \exp( u_c ) \iota_c, s_c ] +
+#	h[ y_m, \exp( u_m ) \iota_n, s_m ] +
+#	h[ y_c, \exp( u_c ) \iota_n, s_c ] +
 #	h( u_m, 0, s_r ) + h( u_c , 0 , s_r )
 # \] $$
 #
