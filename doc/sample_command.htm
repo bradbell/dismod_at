@@ -180,6 +180,13 @@ The samples with different values of
  are independent.
 (Note that the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
  is an additional input in this case.)
+The only constraints that are included in the asymptotic samples is when
+the lower and upper limits for a variable are equal.
+Also note that the L1 terms in the likelihood have been ignored
+(because the L1 likelihood is not differentiable at zero).
+Note that the random effects int the <code><i>i</i></code>-th sample
+come from the asymptotic distribution of the random effects given the
+fixed effect in the <code><i>i</i></code>-th sample.
 
 <br>
 <br>
@@ -234,10 +241,14 @@ times the number of rows in the <a href="var_table.htm" target="_top"><span styl
 <br>
 <b><big><a name="Bounds" id="Bounds">Bounds</a></big></b>
 <br>
-The samples are all within the specified bounds, including the bounds
+If you use the <code><font color="blue">simulate</font></code> method,
+the samples are all within the specified bounds, including the bounds
 on the random effects specified by
 <a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
 .
+If you use the <code><font color="blue">asymptotic</font></code> method,
+the only bounds that are enforced are where the upper and lower limits
+are equal.
 
 
 <br>

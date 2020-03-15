@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>03-15</option>
 <option>03-09</option>
 <option>03-06</option>
 <option>02-29</option>
@@ -84,6 +85,46 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="03-15" id="03-15">03-15</a></big></b>
+
+<ol type="1"><li>
+The sample command
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ method
+was changed to ignore all the constraints except for
+<a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+ that have their upper and lower limits equal.
+This should speed up the computation of the asymptotic statics.
+It also provides a way to approximation the Hessian of the fixed effect
+objective (as the inverse of the sample covariance).
+Note that the simulated samples may be outside the bounds for the
+corresponding variables;
+see <a href="sample_command.htm#Bounds" target="_top"><span style='white-space: nowrap'>bounds</span></a>
+.
+Also note that the <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+ censors the samples
+to be within their limits before computing its predictions.
+</li><li>
+
+Some minor corrections were made to the discussion of the
+<a href="user_sample_asy.py.htm" target="_top"><span style='white-space: nowrap'>user_sample_asy.py</span></a>
+ example; e.g.
+<small>@(@
+\iota_c
+@)@</small> and <small>@(@
+\iota_m
+@)@</small> where changed to <small>@(@
+\iota_n
+@)@</small>.
+In addition, the
+<a href="user_sample_asy.py.htm#Problem Parameters" target="_top"><span style='white-space: nowrap'>problem&nbsp;parameters</span></a>
+
+were include in the documentation.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="03-09" id="03-09">03-09</a></big></b>
 

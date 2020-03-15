@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Sample from Asymptotic Distribution for Model Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Sample from Asymptotic Distribution for Model Variables">
-<meta name="keywords" id="keywords" content=" sample from asymptotic distribution model variables purpose notation likelihood source code ">
+<meta name="keywords" id="keywords" content=" sample from asymptotic distribution model variables purpose notation likelihood problem parameters source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,6 +69,7 @@ A:active { color : purple }
 <br><a href="user_sample_asy.py.htm#Purpose" target="_top">Purpose</a>
 <br><a href="user_sample_asy.py.htm#Notation" target="_top">Notation</a>
 <br><a href="user_sample_asy.py.htm#Likelihood" target="_top">Likelihood</a>
+<br><a href="user_sample_asy.py.htm#Problem Parameters" target="_top">Problem&nbsp;Parameters</a>
 <br><a href="user_sample_asy.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -88,9 +89,9 @@ of the <a href="model_variables.htm" target="_top"><span style='white-space: now
 
 <table><tr><td align='left'  valign='top'>
 
-
-<code><i><font color="black"><span style='white-space: nowrap'>iota_n</span></font></i></code>
- </td><td align='left'  valign='top'>
+<small>@(@
+\iota_n
+@)@</small> </td><td align='left'  valign='top'>
  model incidence for <code><font color="blue">north_america</font></code> </td></tr><tr><td align='left'  valign='top'>
 
 
@@ -146,6 +147,16 @@ of the <a href="model_variables.htm" target="_top"><span style='white-space: now
 
 </td></tr>
 </table>
+The only fixed effect in this model is <small>@(@
+\iota_n
+@)@</small>.
+The random effects are <small>@(@
+u_m
+@)@</small> and <small>@(@
+u_c
+@)@</small>.
+
+<br>
 <br>
 <b><big><a name="Likelihood" id="Likelihood">Likelihood</a></big></b>
 <br>
@@ -167,13 +178,28 @@ The total log-likelihood for this example is
 <small>@[@
 
 	h[ y_n, \iota_n, s_n ] +
-	h[ y_m, \exp( u_m ) \iota_m, s_m ] +
-	h[ y_c, \exp( u_c ) \iota_c, s_c ] +
+	h[ y_m, \exp( u_m ) \iota_n, s_m ] +
+	h[ y_c, \exp( u_c ) \iota_n, s_c ] +
 	h( u_m, 0, s_r ) + h( u_c , 0 , s_r )
 
 @]@</small>
 
 <br>
+<br>
+<b><big><a name="Problem Parameters" id="Problem Parameters">Problem Parameters</a></big></b>
+
+<pre><tt>measure <font color="#990000">=</font> <font color="#990000">{</font>
+     <font color="#FF0000">'north_america'</font> <font color="#990000">:</font> <font color="#993399">1.0e-2</font> <font color="#990000">,</font> <i><font color="#9A1900"># y_n</font></i>
+     <font color="#FF0000">'mexico'</font>        <font color="#990000">:</font> <font color="#993399">2.0e-2</font> <font color="#990000">,</font> <i><font color="#9A1900"># y_m</font></i>
+     <font color="#FF0000">'canada'</font>        <font color="#990000">:</font> <font color="#993399">0.5e-2</font>   <i><font color="#9A1900"># y_c</font></i>
+<font color="#990000">}</font>
+standard <font color="#990000">=</font> <font color="#990000">{</font>
+     <font color="#FF0000">'north_america'</font> <font color="#990000">:</font> <font color="#993399">1.0e-3</font> <font color="#990000">,</font> <i><font color="#9A1900"># s_n</font></i>
+     <font color="#FF0000">'mexico'</font>        <font color="#990000">:</font> <font color="#993399">2.0e-3</font> <font color="#990000">,</font> <i><font color="#9A1900"># s_m</font></i>
+     <font color="#FF0000">'canada'</font>        <font color="#990000">:</font> <font color="#993399">0.5e-3</font>   <i><font color="#9A1900"># s_c</font></i>
+<font color="#990000">}</font>
+standard_random_effect <font color="#990000">=</font> <font color="#993399">1.0</font>   <i><font color="#9A1900"># s_r</font></i>
+number_sample          <font color="#990000">=</font> <font color="#993399">500</font>   <i><font color="#9A1900"># number of posterior samples to generate</font></i></tt></pre>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
@@ -393,7 +419,9 @@ program   <font color="#990000">=</font> <font color="#FF0000">'../../devel/dism
 ns_string <font color="#990000">=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>number_sample<font color="#990000">)</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font> <font color="#990000">])</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'asymptotic'</font><font color="#990000">,</font> ns_string <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'asymptotic'</font><font color="#990000">,</font> ns_string <font color="#990000">]</font>
+<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># connect to database</font></i>
 new             <font color="#990000">=</font> False
