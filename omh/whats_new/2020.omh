@@ -37,7 +37,6 @@ $section Changes and Additions to Dismod_at During 2020$$
 
 $head 03-15$$
 $list number$$
-$lnext
 Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200315
 of $code dock_dismod_at.sh$$.
 This will require building a new
