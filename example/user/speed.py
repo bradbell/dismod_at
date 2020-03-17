@@ -275,19 +275,22 @@ def example_db (file_name) :
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	age_mid_id     = int( len(age_list) / 2 )
-	time_mid_id    = int( len(time_list) / 2 )
+	name       = 'smooth_mulcov'
+	fun        = fun_mulcov
+	age_grid   = [ 0 ]
+	time_grid  = [ 0 ]
+	smooth_table = [ {
+		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
+	} ]
 	name           = 'smooth_rate_child'
 	fun            = fun_rate_child
-	age_grid       = [ 0 ]
 	if len(age_list) > 1 :
-		age_grid.append( len(age_list)-1 )
-	time_grid       = [ 0 ]
+		age_grid = [ 0 ,  len(age_list)-1 ]
 	if len(time_list) > 1 :
-		time_grid.append( len(time_list)-1 )
-	smooth_table = [
-		{'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun }
-	]
+		time_grid = [ 0 , len(time_list)-1 ]
+	smooth_table.append( {
+		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
+	} )
 	name      = 'smooth_iota_parent'
 	fun       = fun_iota_parent
 	age_grid  = list( range( len(age_list) ) )
@@ -299,11 +302,6 @@ def example_db (file_name) :
 	fun  = fun_rho_parent
 	smooth_table.append( {
 		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
-	} )
-	name = 'smooth_mulcov'
-	fun  = fun_mulcov
-	smooth_table.append( {
-		'name':name, 'age_id':[age_mid_id], 'time_id':[time_mid_id], 'fun':fun
 	} )
 	# no standard deviation multipliers
 	for dictionary in smooth_table :
