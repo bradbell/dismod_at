@@ -10,6 +10,9 @@
 # $spell
 #	py
 #	init
+#	mulcov
+#	covariate
+#	cv
 # $$
 #
 # $section A Simulate Data Speed Test$$
@@ -29,8 +32,6 @@
 # $head n_children$$
 # is a positive integer specifying the number of
 # $cref/children/option_table/parent_node_name/Children/$$.
-# The number of data points (and number random effects) is twice
-# the number of children.
 #
 # $head quasi_fixed$$
 # This argument is $code true$$ or $code false$$ and specifies
@@ -44,16 +45,55 @@
 # The total work for the test increases with proportional to the
 # square of this step size
 #
+# $head Fixed Effects$$
+# $srccode%py%
+iota_parent_true          = 0.05
+rho_parent_true           = 0.2
+mulcov_income_iota_true   = 1.0
+mulcov_sex_rho_true       = -1.0
+# %$$
+#
+# $subhead iota_parent_true$$
+# the value of $cref/iota/rate_table/rate_name/iota/$$ corresponding
+# to the parent node.
+#
+# $subhead rho_parent_true$$
+# the value of $cref/rho/rate_table/rate_name/rho/$$ corresponding
+# to the parent node.
+#
+# $head mulcov_income_iota_true$$
+# value of the multiplier for the income covariate that affects $icode iota$$.
+#
+# $head mulcov_sex_rho_true$$
+# value of the multiplier for the sex covariate that affects $icode rho$$.
+#
+# $head eta$$
+# value of the offset $cref/eta/statistic/Notation/eta/$$ in the
+# log transformation:
+# $srccode%py%
+eta = 1e-6
+# %$$
+#
+# $head measure_cv$$
+# the coefficient of variation for the simulated measurement noise.
+# $srccode%py%
+measure_cv = 0.05
+# %$$
+# If you use a larger $icode measure_cv$$ you will probably need
+# a larger number of data points; see $icode n_data$$ below.
+#
+# $head n_data$$
+# number of simulated data values.
+# $srccode%py%
+n_data = 100
+# %$$
+#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # values used to simulate data
-iota_parent               = 0.05
-rho_parent                = 0.2
-mulcov_income_iota_true   = 1.0
-mulcov_sex_rho_true       = -1.0
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -76,7 +116,6 @@ random_seed_arg  = sys.argv[1]
 n_children       = int( sys.argv[2] )
 quasi_fixed      = sys.argv[3]
 ode_step_size    = sys.argv[4]
-n_data           = 2 * n_children
 #
 if quasi_fixed != 'true' and quasi_fixed != 'false' :
 	msg = 'quasi_fixed = "' + quasi_fixed + '" is not true or false'
@@ -97,9 +136,9 @@ def example_db (file_name) :
 	def fun_rate_child(a, t) :
 		return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 	def fun_iota_parent(a, t) :
-		return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+		return ('prior_iota_parent', 'prior_log_gauss_0', 'prior_log_gauss_0')
 	def fun_rho_parent(a, t) :
-		return ('prior_rho_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+		return ('prior_rho_parent', 'prior_log_gauss_0', 'prior_log_gauss_0')
 	def fun_mulcov(a, t) :
 		return ('prior_mulcov', 'prior_gauss_zero', 'prior_gauss_zero')
 	import copy
@@ -172,9 +211,9 @@ def example_db (file_name) :
 		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
 		row['integrand'] = integrand_table[ data_id % 2 ]['name']
 		if row['integrand'] == 'Sincidence' :
-			row['meas_std']  = 0.01 * iota_parent
+			row['meas_std']  = measure_cv * iota_parent_true
 		elif row['integrand'] == 'prevalence' :
-			row['meas_std']  = 0.01 * (iota_parent / rho_parent)
+			row['meas_std']  = measure_cv * (iota_parent_true/rho_parent_true)
 		else :
 			assert(False)
 		data_table.append( copy.copy(row) )
@@ -187,24 +226,26 @@ def example_db (file_name) :
 			'density':  'gaussian',
 			'mean':     0.0,
 			'std':      0.01,
-		},{ # prior_loggauss_zero
-			'name':     'prior_loggauss_zero',
+		},{ # prior_log_gauss_0
+			'name':     'prior_log_gauss_0',
 			'density':  'log_gaussian',
 			'mean':     0.0,
 			'std':      0.1,
-			'eta':      1e-6
+			'eta':      eta
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
 			'lower':    0.001,
 			'upper':    1.0,
 			'mean':     0.1,
+			'eta':      eta
 		},{ # prior_iota_parent
 			'name':     'prior_rho_parent',
 			'density':  'uniform',
 			'lower':    0.001,
 			'upper':    1.0,
 			'mean':     0.1,
+			'eta':      eta
 		},{ # prior_mulcov
 			'name':     'prior_mulcov',
 			'density':  'uniform',
@@ -224,15 +265,17 @@ def example_db (file_name) :
 	smooth_table = [
 		{'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun }
 	]
-	name = 'smooth_iota_parent'
-	fun  = fun_iota_parent
+	name      = 'smooth_iota_parent'
+	fun       = fun_iota_parent
+	age_grid  = list( range( len(age_list) ) )
+	time_grid = list( range( len(time_list) ) )
 	smooth_table.append( {
-		'name':name, 'age_id':[age_mid_id], 'time_id':[time_mid_id], 'fun':fun
+		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
 	} )
 	name = 'smooth_rho_parent'
 	fun  = fun_rho_parent
 	smooth_table.append( {
-		'name':name, 'age_id':[age_mid_id], 'time_id':[time_mid_id], 'fun':fun
+		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
 	} )
 	name = 'smooth_mulcov'
 	fun  = fun_mulcov
@@ -268,8 +311,9 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'none'             },
 		{ 'name':'max_num_iter_fixed',     'value':'100'              },
 		{ 'name':'print_level_fixed',      'value':'5'                },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'             },
-		{ 'name':'accept_after_max_steps_fixed',  'value':'2'         },
+		{ 'name':'tolerance_fixed',        'value':'1e-4'             },
+		{ 'name':'accept_after_max_steps_fixed',     'value':'10'     },
+		{ 'name':'limited_memory_max_history_fixed', 'value':'30'     },
 
 		{ 'name':'derivative_test_random', 'value':'none'             },
 		{ 'name':'max_num_iter_random',    'value':'100'              },
@@ -353,9 +397,9 @@ for var_id in range( len(var_table) ) :
 		node_id   = var_info['node_id']
 		# node zero is the world
 		if node_id == 0 and rate_name == 'iota' :
-			truth_var_value = iota_parent
+			truth_var_value = iota_parent_true
 		elif node_id == 0 and rate_name == 'rho' :
-			truth_var_value = rho_parent
+			truth_var_value = rho_parent_true
 		else :
 			truth_var_value = 0.0
 	var_id2true.append( truth_var_value )
