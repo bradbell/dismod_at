@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -39,20 +39,25 @@ $head sample_index$$
 This column has type $code integer$$ and specifies the index,
 in the $code data_sim$$ table, that a complete set of $cref model_variables$$,
 in the $code sample$$ table, corresponds to.
+If $icode n_var$$ is the number of rows in the $cref var_table$$,
+$codei%
+	%sample_index% = mod(%sample_id%, %n_var%)
+%$$
+The range of $icode sample_index$$ is form zero to
+$cref/number_simulate/simulate_command/number_simulate/$$ minus one.
 
 $head var_id$$
 This column has type $code integer$$ and specifies the
-$cref/model_variables/model_variables/$$ that $icode var_value$$ corresponds to;
+$cref/model_variables/model_variables/$$
+that $icode var_value$$ corresponds to;
 see $cref/var_id/var_table/var_id/$$.
-If $icode n_var$$ is the number of rows in the variable table,
+If $icode n_var$$ and $icode sample$$ index are as above,
 $codei%
 	%sample_id% = %sample_index% * %n_var% + %var_id%
 %$$
-for $icode sample_index$$ equal zero to the
-$cref/number_simulate/simulate_command/number_simulate/$$ minus one.
 
 $head var_value$$
-This column type $code real$$ and is the optimal variable value
+This column type $code real$$ and is the variable value
 for this $icode var_id$$ and $icode sample_index$$.
 
 $head Example$$

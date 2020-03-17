@@ -95,10 +95,13 @@ n_data = 100
 # BEGIN PYTHON
 # values used to simulate data
 # ------------------------------------------------------------------------
+test_asymptotic = False
+# ------------------------------------------------------------------------
 import sys
 import os
 import time
 import distutils.dir_util
+import numpy
 test_program = 'example/user/speed.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 5 :
 	usage  = 'python3 ' + test_program + '\\\n'
@@ -311,7 +314,7 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'none'             },
 		{ 'name':'max_num_iter_fixed',     'value':'100'              },
 		{ 'name':'print_level_fixed',      'value':'5'                },
-		{ 'name':'tolerance_fixed',        'value':'1e-4'             },
+		{ 'name':'tolerance_fixed',        'value':'1e-6'             },
 		{ 'name':'accept_after_max_steps_fixed',     'value':'10'     },
 		{ 'name':'limited_memory_max_history_fixed', 'value':'30'     },
 
@@ -407,17 +410,25 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
-# Run the simulate and start, and fit commands
-dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
-dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ])
-dismod_at.system_command_prc([ program, file_name, 'set', 'scale_var', 'truth_var' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'both', '0' ])
+# simulate_command
+dismod_at.system_command_prc(
+	[ program, file_name, 'simulate', '1' ]
+)
+# fit_command
+dismod_at.system_command_prc(
+	[ program, file_name, 'fit', 'both', '0' ]
+)
+# sample_command
+if test_asymptotic :
+	dismod_at.system_command_prc(
+		[ program, file_name, 'sample', 'asymptotic', '100' ]
+	)
 # -----------------------------------------------------------------------
-# check simulation results
-new          = False
-connection   = dismod_at.create_connection(file_name, new)
+# result tables
+new           = False
+connection    = dismod_at.create_connection(file_name, new)
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
-log_dict     = dismod_at.get_table_dict(connection, 'log')
+log_dict      = dismod_at.get_table_dict(connection, 'log')
 connection.close()
 # -----------------------------------------------------------------------
 # determine random seed the was used
@@ -430,17 +441,39 @@ if random_seed == 0 :
 				random_seed = int(row['unix_time'])
 	assert random_seed != 0
 # -----------------------------------------------------------------------
-number_variable = len(var_table)
-assert( len(fit_var_table) == number_variable )
+# sample_mean, sample_std
+n_var    = len(var_table)
+if test_asymptotic :
+	sample_table  = dismod_at.get_table_dict(connection, 'sample')
+	n_sample = int( len(sample) / n_var )
+	assert len(sample) == n_sample * n_var
+	sample_array    = numpy.zeros( (n_sample, n_var) , dtype=float )
+	for sample_id in range( len(sample_table) ) :
+		sample_index     = int( sample_id / n_var )
+		var_id           = sample_id % n_var
+		assert sample_id == sample_index * n_var + var_id
+		var_value        = sample_table[sample_id]['var_value']
+		sample_array[sample_index, var_id] = var_value
+	sample_mean = numpy.mean(sample_array, axis=0)
+	sample_std  = numpy.std(sample_array, axis=0, ddof=1)
+#
+# -----------------------------------------------------------------------
+# check fit, sample_mean, and sample_std
+assert( len(fit_var_table) == n_var )
 max_error       = 0.0
-for var_id in range( number_variable ) :
-	row        = fit_var_table[var_id]
-	fit_value  = row['fit_var_value']
-	true_value = var_id2true[var_id]
+for var_id in range( n_var ) :
+	row          = fit_var_table[var_id]
+	fit_value    = row['fit_var_value']
+	true_value   = var_id2true[var_id]
 	if true_value == 0.0 :
-		max_error = max(abs(fit_value) , max_error)
+		max_error = max(abs(fit_value), max_error)
 	else :
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
+	if test_asymptotic :
+		mean_value   = sample_mean[var_id]
+		std_value    = sample_std[var_id]
+		max_error = max(abs(mean_value - fit_value), max_error)
+		max_error = max(std_value, max_error)
 print('random_seed      = ', random_seed)
 print('n_children       = ', n_children)
 print('quasi_fixed      = ', quasi_fixed)

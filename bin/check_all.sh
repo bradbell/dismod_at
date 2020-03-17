@@ -50,10 +50,15 @@ echo_eval run_omhelp.sh dev
 echo_eval run_omhelp.sh doc
 # ----------------------------------------------------------------------------
 # run cmake
-sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|"
+if [ "$build_type" == 'debug' ]
+then
+	flag='--debug'
+else
+	flag=''
+fi
 #
-echo 'bin/run_cmake.sh >& cmake.log'
-bin/run_cmake.sh >& cmake.log
+echo "bin/run_cmake.sh $flag >& cmake.log"
+bin/run_cmake.sh $flag >& cmake.log
 # ----------------------------------------------------------------------------
 #
 echo_eval cd build

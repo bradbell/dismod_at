@@ -174,11 +174,15 @@ do
 		cat << EOF
 usage: bin/run_cmake.sh \\
 	[--help] \\
+	[--debug] \\
 	[--verbose]
 EOF
 		exit 0
 	fi
-	if [ "$1" == '--verbose' ]
+	if [  "$1" == '--debug' ]
+	then
+		build_type='debug'
+	elif [ "$1" == '--verbose' ]
 	then
 		verbose_makefile='yes'
 	else

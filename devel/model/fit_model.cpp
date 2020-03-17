@@ -820,31 +820,26 @@ $end
 	//
 	// check diagonal of information matrix is positive
 	// (except for bound constrained variables)
+	std::string msg = "";
 	CppAD::vector<size_t> pack_index = fixed2var_id(pack_object_);
-	CppAD::vector<bool>   ok(n_fixed_);
-	for(size_t j = 0; j < n_fixed_; j++)
-	{	ok[j]  = fixed_lower[j] == fixed_upper[j];
-		ok[j] |= solution.fixed_lag[j] != 0.0;
-	}
 	size_t K = information_rcv.nnz();
 	for(size_t k = 0; k < K; k++)
 	{	size_t i = information_rcv.row()[k];
 		size_t j = information_rcv.col()[k];
 		double v = information_rcv.val()[k];
-		if( i == j )
-		{	ok[j] |= v > 0.0;
-		}
-	}
-	std::string msg = "";
-	for(size_t j = 0; j < n_fixed_; j++)
-	{	if( ! ok[j] )
-		{	if( msg == "" )
-			{	msg = "Hessian w.r.t following variables not positive\n";
-				msg += "and they are not bound constrained: var_id =";
-				msg += " " + CppAD::to_string( pack_index[j] );
+		if( i == j && fixed_lower[j] != fixed_upper[j] && v <= 0.0)
+		{	size_t var_id = pack_index[j];
+			if( msg == "" )
+			{	msg = "sample asymptotic: Following fixed effects"
+				"upper bound not equal lower bouund\n"
+				"and diagonal of Hessian is not positive\n";
 			}
-			else
-				msg += "," + CppAD::to_string( pack_index[j] );
+			msg += "var_id = " + CppAD::to_string( var_id )
+				+ ", var_value = " + CppAD::to_string(fit_var_value[var_id])
+				+ ", lower = " + CppAD::to_string(fixed_lower[j])
+				+ ", upper = " + CppAD::to_string(fixed_upper[j])
+				+ ", hessian = " + CppAD::to_string( v ) + "\n"
+			;
 		}
 	}
 	if( msg != "" )
