@@ -830,8 +830,8 @@ $end
 		if( i == j && fixed_lower[j] != fixed_upper[j] && v <= 0.0)
 		{	size_t var_id = pack_index[j];
 			if( msg == "" )
-			{	msg = "sample asymptotic: Following fixed effects"
-				"upper bound not equal lower bouund\n"
+			{	msg = "sample asymptotic: Following fixed effect's\n"
+				"upper bound not equal its lower bound "
 				"and diagonal of Hessian is not positive\n";
 			}
 			msg += "var_id = " + CppAD::to_string( var_id )

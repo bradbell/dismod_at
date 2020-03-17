@@ -76,16 +76,34 @@ eta = 1e-6
 #
 # $head measure_cv$$
 # the coefficient of variation for the simulated measurement noise.
+# If you use a larger $icode measure_cv$$ you will probably need
+# a larger number of data points; see $icode n_data$$ below.
 # $srccode%py%
 measure_cv = 0.05
 # %$$
-# If you use a larger $icode measure_cv$$ you will probably need
-# a larger number of data points; see $icode n_data$$ below.
 #
 # $head n_data$$
 # number of simulated data values.
 # $srccode%py%
 n_data = 100
+# %$$
+#
+# $head age_list$$
+# This following is both the $cref age_table$$ and the age
+# grid points for the parent rate smoothing of $icode iota$$ and $icode rho$$.
+# The child rate smoothing has a grid point at the minimum
+# and maximum age below.
+# $srccode%py%
+age_list = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
+# %$$
+#
+# $head time_list$$
+# This following is both the $cref time_table$$ and the time
+# grid points for the parent rate smoothing of $icode iota$$ and $icode rho$$.
+# The child rate smoothing has a grid point at the minimum
+# and maximum time below.
+# $srccode%py%
+time_list = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 # %$$
 #
 # $head Source Code$$
@@ -148,11 +166,9 @@ def example_db (file_name) :
 	import dismod_at
 	import math
 	# ----------------------------------------------------------------------
-	# age table:
-	age_list    = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
+	# age table: uses age_list defined above
 	#
-	# time table:
-	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
+	# time table: uses time_list defined above
 	#
 	# integrand table:
 	integrand_table = [
@@ -263,8 +279,12 @@ def example_db (file_name) :
 	time_mid_id    = int( len(time_list) / 2 )
 	name           = 'smooth_rate_child'
 	fun            = fun_rate_child
-	age_grid       = [ 0, age_mid_id, len(age_list)-1 ]
-	time_grid      = [ 0, time_mid_id, len(time_list)-1 ]
+	age_grid       = [ 0 ]
+	if len(age_list) > 1 :
+		age_grid.append( len(age_list)-1 )
+	time_grid       = [ 0 ]
+	if len(time_list) > 1 :
+		time_grid.append( len(time_list)-1 )
 	smooth_table = [
 		{'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun }
 	]
@@ -314,7 +334,7 @@ def example_db (file_name) :
 		{ 'name':'derivative_test_fixed',  'value':'none'             },
 		{ 'name':'max_num_iter_fixed',     'value':'100'              },
 		{ 'name':'print_level_fixed',      'value':'5'                },
-		{ 'name':'tolerance_fixed',        'value':'1e-6'             },
+		{ 'name':'tolerance_fixed',        'value':'1e-7'             },
 		{ 'name':'accept_after_max_steps_fixed',     'value':'10'     },
 		{ 'name':'limited_memory_max_history_fixed', 'value':'30'     },
 
