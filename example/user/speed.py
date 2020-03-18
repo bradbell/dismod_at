@@ -103,7 +103,7 @@ age_list = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
 # The child rate smoothing has a grid point at the minimum
 # and maximum time below.
 # $srccode%py%
-time_list = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
+time_list = [ 1990.0, 2000.0, 2010.0, 2020.0 ]
 # %$$
 #
 # $head Source Code$$
