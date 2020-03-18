@@ -35,24 +35,11 @@ ode_step_size = '10'
 # $head Fixed Effects$$
 # $srccode%py%
 iota_parent_true          = 0.05
-rho_parent_true           = 0.2
-mulcov_income_iota_true = 0.0
-mulcov_sex_rho_true = 0.0
 # %$$
 #
 # $subhead iota_parent_true$$
 # the value of $cref/iota/rate_table/rate_name/iota/$$ corresponding
 # to the parent node.
-#
-# $subhead rho_parent_true$$
-# the value of $cref/rho/rate_table/rate_name/rho/$$ corresponding
-# to the parent node.
-#
-# $head mulcov_income_iota_true$$
-# value of the multiplier for the income covariate that affects $icode iota$$.
-#
-# $head mulcov_sex_rho_true$$
-# value of the multiplier for the sex covariate that affects $icode rho$$.
 #
 # $head eta$$
 # value of the offset $cref/eta/statistic/Notation/eta/$$ in the
@@ -131,10 +118,6 @@ def example_db (file_name) :
 		return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
 	def fun_iota_parent(a, t) :
 		return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
-	def fun_rho_parent(a, t) :
-		return ('prior_rho_parent', 'prior_gauss_zero', 'prior_gauss_zero')
-	def fun_mulcov(a, t) :
-		return ('prior_mulcov', 'prior_gauss_zero', 'prior_gauss_zero')
 	import copy
 	import dismod_at
 	import math
@@ -191,7 +174,7 @@ def example_db (file_name) :
 		if row['integrand'] == 'Sincidence' :
 			row['meas_std']  = measure_cv * iota_parent_true
 		elif row['integrand'] == 'prevalence' :
-			row['meas_std']  = measure_cv * (iota_parent_true/rho_parent_true)
+			row['meas_std']  = measure_cv * 0.1
 		else :
 			assert(False)
 		data_table.append( copy.copy(row) )
@@ -210,51 +193,17 @@ def example_db (file_name) :
 			'lower':    0.001,
 			'upper':    1.0,
 			'mean':     iota_parent_true / 2.0
-		},{ # prior_iota_parent
-			'name':     'prior_rho_parent',
-			'density':  'uniform',
-			'lower':    0.001,
-			'upper':    1.0,
-			'mean':     0.1,
-		},{ # prior_mulcov
-			'name':     'prior_mulcov',
-			'density':  'uniform',
-			'lower':    -2.0,
-			'upper':    +2.0,
-			'mean':     0.0,
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	name       = 'smooth_mulcov'
-	fun        = fun_mulcov
-	age_grid   = [ 0 ]
-	time_grid  = [ 0 ]
-	smooth_table = [ {
-		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
-	} ]
-	name           = 'smooth_rate_child'
-	fun            = fun_rate_child
-	smooth_table.append( {
-		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
-	} )
 	name      = 'smooth_iota_parent'
 	fun       = fun_iota_parent
 	age_grid  = list( range( len(age_list) ) )
-	smooth_table.append( {
+	time_grid = [0]
+	smooth_table = [ {
 		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
-	} )
-	name = 'smooth_rho_parent'
-	fun  = fun_rho_parent
-	smooth_table.append( {
-		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
-	} )
-	# no standard deviation multipliers
-	for dictionary in smooth_table :
-		for name in [ 'value' , 'dage', 'dtime' ] :
-			key   = 'mulstd_' + name + '_prior_name'
-			value = None
-			dictionary[key] = value
+	} ]
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
@@ -343,32 +292,13 @@ for var_id in range( len(var_table) ) :
 	var_info        = var_table[var_id]
 	truth_var_value = None
 	var_type = var_info['var_type']
-	if var_type == 'mulcov_rate_value' :
-		rate_id   = var_info['rate_id']
-		rate_name = rate_table[rate_id]['rate_name']
-		if rate_name == 'iota' :
-			covariate_id   = var_info['covariate_id']
-			covariate_name = covariate_table[covariate_id]['covariate_name' ]
-			assert( covariate_name == 'income' )
-			truth_var_value = mulcov_income_iota_true
-		else :
-			assert( rate_name == 'rho' )
-			covariate_id   = var_info['covariate_id']
-			covariate_name = covariate_table[covariate_id]['covariate_name' ]
-			assert( covariate_name == 'sex' )
-			truth_var_value = mulcov_sex_rho_true
-	else :
-		assert( var_type == 'rate' )
-		rate_id   = var_info['rate_id']
-		rate_name = rate_table[rate_id]['rate_name']
-		node_id   = var_info['node_id']
-		# node zero is the world
-		if node_id == 0 and rate_name == 'iota' :
-			truth_var_value = iota_parent_true
-		elif node_id == 0 and rate_name == 'rho' :
-			truth_var_value = rho_parent_true
-		else :
-			truth_var_value = 0.0
+	assert( var_type == 'rate' )
+	rate_id   = var_info['rate_id']
+	rate_name = rate_table[rate_id]['rate_name']
+	assert rate_name == 'iota'
+	node_id   = var_info['node_id']
+	assert node_id == 0
+	truth_var_value = iota_parent_true
 	var_id2true.append( truth_var_value )
 	row_list.append( [ truth_var_value ] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
