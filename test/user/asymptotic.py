@@ -86,8 +86,6 @@ time_list = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 # BEGIN PYTHON
 # values used to simulate data
 # ------------------------------------------------------------------------
-test_asymptotic = True
-# ------------------------------------------------------------------------
 import sys
 import os
 import time
@@ -313,16 +311,17 @@ dismod_at.system_command_prc(
 	[ program, file_name, 'fit', 'fixed', '0' ]
 )
 # sample_command
-if test_asymptotic :
-	dismod_at.system_command_prc(
-		[ program, file_name, 'sample', 'asymptotic', '100' ]
-	)
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'asymptotic', '100', '0' ]
+)
 # -----------------------------------------------------------------------
 # result tables
 new           = False
 connection    = dismod_at.create_connection(file_name, new)
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 log_dict      = dismod_at.get_table_dict(connection, 'log')
+sample_table  = dismod_at.get_table_dict(connection, 'sample')
+connection.close()
 # -----------------------------------------------------------------------
 # determine random seed the was used
 if int(random_seed) == 0 :
@@ -335,19 +334,17 @@ if int(random_seed) == 0 :
 # -----------------------------------------------------------------------
 # sample_mean, sample_std
 n_var    = len(var_table)
-if test_asymptotic :
-	sample_table  = dismod_at.get_table_dict(connection, 'sample')
-	n_sample = int( len(sample_table) / n_var )
-	assert len(sample_table) == n_sample * n_var
-	sample_array    = numpy.zeros( (n_sample, n_var) , dtype=float )
-	for sample_id in range( len(sample_table) ) :
-		sample_index     = int( sample_id / n_var )
-		var_id           = sample_id % n_var
-		assert sample_id == sample_index * n_var + var_id
-		var_value        = sample_table[sample_id]['var_value']
-		sample_array[sample_index, var_id] = var_value
-	sample_mean = numpy.mean(sample_array, axis=0)
-	sample_std  = numpy.std(sample_array, axis=0, ddof=1)
+n_sample = int( len(sample_table) / n_var )
+assert len(sample_table) == n_sample * n_var
+sample_array    = numpy.zeros( (n_sample, n_var) , dtype=float )
+for sample_id in range( len(sample_table) ) :
+	sample_index     = int( sample_id / n_var )
+	var_id           = sample_id % n_var
+	assert sample_id == sample_index * n_var + var_id
+	var_value        = sample_table[sample_id]['var_value']
+	sample_array[sample_index, var_id] = var_value
+sample_mean = numpy.mean(sample_array, axis=0)
+sample_std  = numpy.std(sample_array, axis=0, ddof=1)
 #
 # -----------------------------------------------------------------------
 # check fit, sample_mean, and sample_std

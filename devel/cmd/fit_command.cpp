@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -217,7 +217,7 @@ void fit_command(
 		size_t n_simulate = prior_sim_table.size() / n_var;
 		//
 		if( sim_index >= n_simulate )
-		{	string msg = "dismod_at fit command simulate_index = ";
+		{	string msg = "dismod_at fit command: simulate_index = ";
 			msg += simulate_index + "\nis greater than or equal ";
 			msg += "number of samples in the data_sim table.";
 			string table_name = "data_sim";

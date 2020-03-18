@@ -35,6 +35,17 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 03-18$$
+$list number$$
+Add the $cref/simulate_index/sample_command/simulate_index/$$ argument
+to the asymptotic version of the sample command.
+$lnext
+The $cref user_speed.py$$ example was improved.
+More documentation was added,
+it has a realistic parent and child grids, and
+it works with both quasi-Newton and Newton method.
+$lend
+
 $head 03-15$$
 $list number$$
 Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200315

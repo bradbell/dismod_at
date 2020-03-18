@@ -35,7 +35,10 @@ $$
 $section The Sample Command$$
 
 $head Syntax$$
-$codei%dismod_at %database% sample %method% %number_sample%$$
+$codei%dismod_at %database% sample %method% %number_sample%
+%$$
+$codei%dismod_at %database% sample %method% %number_sample% %simulate_index%
+%$$
 
 $head database$$
 Is an
@@ -49,19 +52,26 @@ $cref/simulation/posterior/Simulation/$$ for the posterior distribution.
 
 $head number_sample$$
 Is the number of samples. Each sample contains a complete
-set of model variables. See the different methods below
-for more discussion of $icode number_sample$$.
-
-$head method$$
-The sample command argument $icode method$$ must be one of the following:
-
-$subhead simulate$$
+set of model variables.
 If $icode method$$ is $code simulate$$,
 $icode number_sample$$ must be equal to
-$cref/number_simulate/simulate_command/number_simulate/$$.
-There is a complete set of $cref model_variables$$
-corresponding to each $cref/sample_index/sample_table/sample_index/$$
-the sample table.
+$cref/number_simulate/simulate_command/number_simulate/$$
+in the previous simulate command.
+
+$head simulate_index$$
+If this argument is present, $icode method$$ must be $code asymptotic$$
+and $icode simulate_index$$ must be the same as in the corresponding
+$cref/fit command/fit_command/simulate_index/$$.
+
+
+$head method$$
+The sample command argument $icode method$$ must be
+$code simulate$$ or $code asymptotic$$; see discussion below:
+
+$subhead simulate$$
+A complete set of $cref model_variables$$,
+corresponding to each $cref/sample_index/sample_table/sample_index/$$,
+is written to the sample table.
 They correspond to fitting the data in the data_sim table with
 $cref/simulate_index/data_sim_table/simulate_index/$$ equal to
 $icode sample_index$$.
@@ -79,16 +89,20 @@ posterior distribution of maximum likelihood estimates.
 
 $subhead asymptotic$$
 If $icode method$$ is $code asymptotic$$,
+the $cref fit_var_table$$ is an additional input in this case
+and it assumed to correspond to a
+fit $cref/both/fit_command/variables/both/$$.
+If the previous fit did (did not) have a
+$cref/simulate_index/fit_command/simulate_index/$$ it
+must (must not) be included in the sample_command.
 The asymptotic statics of the model variables is used to generate
 $icode number_sample$$ samples of the model variables
 The samples with different values of $icode sample_index$$ are independent.
-(Note that the $cref fit_var_table$$ is an additional input in this case.)
-The only constraints that are included in the asymptotic samples is when
+All of the Laplace density terms are ignored by the asymptotic statistics.
+The constraints are also ignored, except the constraints were
 the lower and upper limits for a variable are equal.
-Also note that the L1 terms in the likelihood have been ignored
-(because the L1 likelihood is not differentiable at zero).
-Note that the random effects int the $th i$$ sample
-come from the asymptotic distribution of the random effects given the
+The random effects int the $th i$$ sample is simulated
+using the asymptotic distribution of the random effects given the
 fixed effect in the $th i$$ sample.
 
 $head data_sim_table$$
@@ -104,7 +118,9 @@ which was created by the previous $cref simulate_command$$.
 $head fit_var_table$$
 If $icode method$$ is $code asymptotic$$,
 this command has the extra input $cref fit_var_table$$
-which was created by a previous $cref fit_command$$.
+which was created by a previous fit command which
+must have included $cref/both/fit_command/variables/both/$$
+fixed and random effects.
 
 $head sample_table$$
 A new $cref sample_table$$ is created each time this command is run.
@@ -134,6 +150,7 @@ $end
 void sample_command(
 	const std::string&                                 method           ,
 	const std::string&                                 number_sample    ,
+	const std::string&                                 simulate_index   ,
 	sqlite3*                                           db               ,
 	CppAD::vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
 	dismod_at::data_model&                             data_object      ,
@@ -234,9 +251,39 @@ void sample_command(
 	unpack_random(pack_object, var_upper, random_upper);
 	remove_const random_const(random_lower, random_upper);
 	//
+	// data_sim_table, n_subset
+	vector<data_sim_struct> data_sim_table;
+	size_t n_subset = data_sim_table.size();
+	assert( n_subset == 0 );
+	if( method == "simulate" || simulate_index != "" )
+	{	data_sim_table = get_data_sim_table(db);
+		// n_subset
+		n_subset = data_subset_obj.size();
+		//
+		// check n_sample * n_subset == data_sim_table.size()
+		if( n_subset == 0 && data_sim_table.size() != 0  )
+		{	msg  = "dismod_at sample command method = simulate and ";
+			msg += "data_subset table size is zero and ";
+			msg += "data_sim table size is not zero.";
+			dismod_at::error_exit(msg);
+		}
+		if( n_subset != 0 && data_sim_table.size() % n_subset != 0  )
+		{	msg  = "dismod_at sample command method = simulate and ";
+			msg += "data_sim table size modulo data_subset table size not 0.";
+			dismod_at::error_exit(msg);
+		}
+	}
+	//
 	// -----------------------------------------------------------------------
 	if( method == "simulate" )
-	{
+	{	// check n_sample
+		if( n_subset != 0 && n_sample != data_sim_table.size() / n_subset )
+		{	msg  = "dismod_at sample command method = simulate and ";
+			msg += "data_sim table size not equal number_sample times ";
+			msg += "data_subset table size.";
+			dismod_at::error_exit(msg);
+		}
+		//
 		// start_var
 		vector<double> start_var_value;
 		string table_name  = "start_var";
@@ -251,33 +298,8 @@ void sample_command(
 		dismod_at::get_table_column(
 			db, table_name, column_name, scale_var_value
 		);
-		// data_sim_table
-		vector<dismod_at::data_sim_struct> data_sim_table =
-				dismod_at::get_data_sim_table(db);
 		// prior_sim_table
-		vector<dismod_at::prior_sim_struct> prior_sim_table =
-				dismod_at::get_prior_sim_table(db);
-		// n_subset
-		size_t n_subset = data_subset_obj.size();
-		//
-		// check n_sample * n_subset == data_sim_table.size()
-		if( n_subset == 0 && data_sim_table.size() != 0  )
-		{	msg  = "dismod_at sample command method = simulate and ";
-			msg += "data_subset table size is zero and ";
-			msg += "data_sim table size is not zero.";
-			dismod_at::error_exit(msg);
-		}
-		if( n_subset != 0 && data_sim_table.size() % n_subset != 0  )
-		{	msg  = "dismod_at sample command method = simulate and ";
-			msg += "data_sim table size modulo data_subset table size not 0.";
-			dismod_at::error_exit(msg);
-		}
-		if( n_subset != 0 && n_sample != data_sim_table.size() / n_subset )
-		{	msg  = "dismod_at sample command method = simulate and ";
-			msg += "data_sim table size not equal number_sample times ";
-			msg += "data_subset table size.";
-			dismod_at::error_exit(msg);
-		}
+		vector<prior_sim_struct> prior_sim_table = get_prior_sim_table(db);
 		//
 		// n_child
 		size_t n_child = pack_object.child_size();
@@ -387,12 +409,12 @@ void sample_command(
 			prior_object.replace_mean(prior_mean);
 			//
 			// fit both fixed and random effects
-			bool no_scaling      = false;
-			bool   random_only   = false;
-			int    simulate_index = int(sample_index);
+			bool no_scaling    = false;
+			bool random_only   = false;
+			int  sim_index_int = int(sample_index);
 			dismod_at::fit_model fit_object_both(
 				db                   ,
-				simulate_index       ,
+				sim_index_int        ,
 				warn_on_stderr       ,
 				bound_random         ,
 				no_scaling           ,
@@ -453,7 +475,7 @@ void sample_command(
 			random_only = true;
 			dismod_at::fit_model fit_object_random(
 				db                   ,
-				simulate_index       ,
+				sim_index_int        ,
 				warn_on_stderr       ,
 				bound_random         ,
 				no_scaling           ,
@@ -493,6 +515,38 @@ void sample_command(
 	// ----------------------------------------------------------------------
 	assert( method == "asymptotic" );
 	//
+	// simulation_index
+	int sim_index_int = -1; // corresponds to fitting data table values
+	if( simulate_index != "" )
+	{	// corresponds to fitting simulated data table values
+		sim_index_int           = std::atoi( simulate_index.c_str() );
+		size_t sim_index_size_t = size_t( sim_index_int );
+		//
+		// number of simulated data sets
+		assert( data_sim_table.size() % n_subset == 0 );
+		size_t n_simulate = data_sim_table.size() / n_subset;
+		if( sim_index_size_t >= n_simulate )
+		{	msg  = "dismod_at sample command: simulate_index = ";
+			msg += simulate_index + "\nis greater than or equal ";
+			msg += "number of samples in data_sim_table.";
+			string table_name = "data_sim";
+			dismod_at::error_exit(msg, table_name);
+		}
+		//
+		// replace meas_value in data_subset_obj
+		for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
+		{	size_t data_sim_id = n_subset * sim_index_size_t + subset_id;
+			data_subset_obj[subset_id].meas_value =
+				data_sim_table[data_sim_id].data_sim_value;
+			if( log_density( data_subset_obj[subset_id].density ) )
+			{	// simulated data is fit with no minimum_meas_cv
+				// so meas_std is same as meas_stdcv
+				data_subset_obj[subset_id].meas_std =
+					data_sim_table[data_sim_id].data_sim_stdcv;
+			}
+		}
+	}
+	//
 	// replace_like
 	data_object.replace_like(data_subset_obj);
 	//
@@ -527,10 +581,9 @@ void sample_command(
 	//
 	// fit_object
 	bool no_scaling     = true;
-	int  simulate_index = -1; // used actual data in fit
 	dismod_at::fit_model fit_object(
 		db                   ,
-		simulate_index       ,
+		sim_index_int        ,
 		warn_on_stderr       ,
 		bound_random         ,
 		no_scaling           ,

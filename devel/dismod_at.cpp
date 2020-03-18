@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -61,6 +61,7 @@ int main(int n_arg, const char** argv)
 	using std::string;
 	using CppAD::vector;
 	// ---------------- command line arguments ---------------------------
+	// command_info
 	struct { const char* name; int n_arg; } command_info[] = {
 		{"old2new",   3},
 		{"init",      3},
@@ -71,6 +72,7 @@ int main(int n_arg, const char** argv)
 		{"fit",       5},
 		{"simulate",  4},
 		{"sample",    5},
+		{"sample",    6},
 		{"predict",   4}
 	};
 	size_t n_command = sizeof( command_info ) / sizeof( command_info[0] );
@@ -93,6 +95,7 @@ int main(int n_arg, const char** argv)
 		<< "arguments: optional arguments depending on particular command\n";
 		std::exit(1);
 	}
+	// check if comamnd matches one of the cases in command_info
 	const string database_arg  = argv[1];
 	const string command_arg   = argv[2];
 	vector<size_t> command_match;
@@ -542,9 +545,15 @@ int main(int n_arg, const char** argv)
 				);
 			}
 			else if( command_arg == "sample" )
-			{	sample_command(
-					argv[3]              , // const method
-					argv[4]              , // const number_sample
+			{	string method         = argv[3];
+				string number_sample  = argv[4];
+				string simulate_index = "";
+				if( n_arg == 6 )
+					simulate_index = argv[5];
+				sample_command(
+					method               , // const
+					number_sample        , // ..
+					simulate_index       , // ..
 					db                   , // not const
 					data_subset_obj      , // ...
 					data_object          , // ...

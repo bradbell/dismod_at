@@ -106,15 +106,17 @@ age_list = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
 time_list = [ 1990.0, 2000.0, 2010.0, 2020.0 ]
 # %$$
 #
+# $head test_asymptotic$$
+# The asymptotic statistics part of this test does not yet pass:
+# $srccode%py%
+test_asymptotic = False
+# %$$
+#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# values used to simulate data
-# ------------------------------------------------------------------------
-test_asymptotic = False
-# ------------------------------------------------------------------------
 import sys
 import os
 import time
@@ -439,7 +441,7 @@ dismod_at.system_command_prc(
 # sample_command
 if test_asymptotic :
 	dismod_at.system_command_prc(
-		[ program, file_name, 'sample', 'asymptotic', '100' ]
+		[ program, file_name, 'sample', 'asymptotic', '100', '0' ]
 	)
 # -----------------------------------------------------------------------
 # result tables
