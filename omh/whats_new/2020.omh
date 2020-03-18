@@ -19,6 +19,7 @@ $spell
 	py
 	dage
 	dtime
+	sim
 $$
 $navigate%
 	Up%Location%
@@ -39,11 +40,20 @@ $head 03-18$$
 $list number$$
 Add the $cref/simulate_index/sample_command/simulate_index/$$ argument
 to the asymptotic version of the sample command.
+This fixed a bug where the asymptotic statistics for a fit using
+simulated data was using
+$cref/meas_value/data_table/meas_value/$$
+when it should have been using
+$cref/data_sim_value/data_sim_table/data_sim_value/$$.
+$lnext
+Fix a bug in the sampling of the random effect using the
+$cref/asymptotic/sample_command/method/asymptotic/$$ method.
 $lnext
 The $cref user_speed.py$$ example was improved.
 More documentation was added,
 it has a realistic parent and child grids, and
-it works with both quasi-Newton and Newton method.
+it works with both quasi-Newton and Newton method,
+and it includes an example / test of the asymptotic statistics.
 $lend
 
 $head 03-15$$

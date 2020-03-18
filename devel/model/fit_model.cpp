@@ -890,31 +890,30 @@ $end
 	CppAD::vector<double> one_sample_fixed(n_fixed_);
 	for(size_t i_sample = 0; i_sample < n_sample; i_sample++)
 	{	for(size_t j = 0; j < n_fixed_; j++)
-		{	one_sample_fixed[j] = sample_fix[ i_sample * n_fixed_ + j];
-			//
-			if( n_random_ > n_random_equal_ )
-			{	sample_random(
-					cppad_mixed_one_sample_random,
-					random_options,
-					one_sample_fixed,
-					cppad_mixed_random_lower,
-					cppad_mixed_random_upper,
-					cppad_mixed_random_in
-				);
-			}
-			one_sample_random = random_const_.restore(
-				cppad_mixed_one_sample_random
+			one_sample_fixed[j] = sample_fix[ i_sample * n_fixed_ + j];
+		//
+		if( n_random_ > n_random_equal_ )
+		{	sample_random(
+				cppad_mixed_one_sample_random,
+				random_options,
+				one_sample_fixed,
+				cppad_mixed_random_lower,
+				cppad_mixed_random_upper,
+				cppad_mixed_random_in
 			);
-			//
-			// pack_vec
-			unscale_fixed_effect(one_sample_fixed, one_sample_fixed);
-			pack_fixed(pack_object_, pack_vec, one_sample_fixed);
-			pack_random(pack_object_, pack_vec, one_sample_random);
-			//
-			// copy to output vector
-			for(size_t i = 0; i < n_var; i++)
-				sample[ i_sample * n_var + i ] = pack_vec[i];
 		}
+		one_sample_random = random_const_.restore(
+			cppad_mixed_one_sample_random
+		);
+		//
+		// pack_vec
+		unscale_fixed_effect(one_sample_fixed, one_sample_fixed);
+		pack_fixed(pack_object_, pack_vec, one_sample_fixed);
+		pack_random(pack_object_, pack_vec, one_sample_random);
+		//
+		// copy to output vector
+		for(size_t i = 0; i < n_var; i++)
+			sample[ i_sample * n_var + i ] = pack_vec[i];
 	}
 	return;
 }

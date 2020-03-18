@@ -30,7 +30,7 @@
 # the $cref/random_seed/option_table/random_seed/$$ used during the simulation.
 #
 # $head n_children$$
-# is a positive integer specifying the number of
+# is a non-negative positive integer specifying the number of
 # $cref/children/option_table/parent_node_name/Children/$$.
 #
 # $head quasi_fixed$$
@@ -85,7 +85,7 @@ measure_cv = 0.05
 # $head n_data$$
 # number of simulated data values.
 # $srccode%py%
-n_data = 100
+n_data = 200
 # %$$
 #
 # $head age_list$$
@@ -104,12 +104,6 @@ age_list = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
 # and maximum time below.
 # $srccode%py%
 time_list = [ 1990.0, 2000.0, 2010.0, 2020.0 ]
-# %$$
-#
-# $head test_asymptotic$$
-# The asymptotic statistics part of this test does not yet pass:
-# $srccode%py%
-test_asymptotic = False
 # %$$
 #
 # $head Source Code$$
@@ -227,7 +221,10 @@ def example_db (file_name) :
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
-		row['node']      = 'child_' + str( (data_id % n_children) + 1 )
+		if n_children == 0 :
+			row['node'] = 'world'
+		else :
+			row['node']      = 'child_' + str( (data_id % n_children) + 1 )
 		row['income']    = data_id / float(n_data-1)
 		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
 		row['integrand'] = integrand_table[ data_id % 2 ]['name']
@@ -439,16 +436,16 @@ dismod_at.system_command_prc(
 	[ program, file_name, 'fit', 'both', '0' ]
 )
 # sample_command
-if test_asymptotic :
-	dismod_at.system_command_prc(
-		[ program, file_name, 'sample', 'asymptotic', '100', '0' ]
-	)
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'asymptotic', '100', '0' ]
+)
 # -----------------------------------------------------------------------
 # result tables
 new           = False
 connection    = dismod_at.create_connection(file_name, new)
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 log_dict      = dismod_at.get_table_dict(connection, 'log')
+sample_table  = dismod_at.get_table_dict(connection, 'sample')
 # -----------------------------------------------------------------------
 # determine random seed the was used
 random_seed = int(random_seed_arg)
@@ -462,19 +459,17 @@ if random_seed == 0 :
 # -----------------------------------------------------------------------
 # sample_mean, sample_std
 n_var    = len(var_table)
-if test_asymptotic :
-	sample_table  = dismod_at.get_table_dict(connection, 'sample')
-	n_sample = int( len(sample_table) / n_var )
-	assert len(sample_table) == n_sample * n_var
-	sample_array    = numpy.zeros( (n_sample, n_var) , dtype=float )
-	for sample_id in range( len(sample_table) ) :
-		sample_index     = int( sample_id / n_var )
-		var_id           = sample_id % n_var
-		assert sample_id == sample_index * n_var + var_id
-		var_value        = sample_table[sample_id]['var_value']
-		sample_array[sample_index, var_id] = var_value
-	sample_mean = numpy.mean(sample_array, axis=0)
-	sample_std  = numpy.std(sample_array, axis=0, ddof=1)
+n_sample = int( len(sample_table) / n_var )
+assert len(sample_table) == n_sample * n_var
+sample_array    = numpy.zeros( (n_sample, n_var) , dtype=float )
+for sample_id in range( len(sample_table) ) :
+	sample_index     = int( sample_id / n_var )
+	var_id           = sample_id % n_var
+	assert sample_id == sample_index * n_var + var_id
+	var_value        = sample_table[sample_id]['var_value']
+	sample_array[sample_index, var_id] = var_value
+sample_mean = numpy.mean(sample_array, axis=0)
+sample_std  = numpy.std(sample_array, axis=0, ddof=1)
 #
 # -----------------------------------------------------------------------
 # check fit, sample_mean, and sample_std
@@ -488,11 +483,10 @@ for var_id in range( n_var ) :
 		max_error = max(abs(fit_value), max_error)
 	else :
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
-	if test_asymptotic :
-		mean_value   = sample_mean[var_id]
-		std_value    = sample_std[var_id]
-		max_error = max(abs(mean_value - fit_value), max_error)
-		max_error = max(std_value, max_error)
+	mean_value   = sample_mean[var_id]
+	std_value    = sample_std[var_id]
+	max_error = max(abs(mean_value - fit_value), max_error)
+	max_error = max(std_value, max_error)
 print('random_seed      = ', random_seed)
 print('n_children       = ', n_children)
 print('quasi_fixed      = ', quasi_fixed)
