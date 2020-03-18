@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>A Simulate Data Speed Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="A Simulate Data Speed Test">
-<meta name="keywords" id="keywords" content=" simulate data speed test syntax python3 random_seed n_children quasi_fixed ode_step_size source code ">
+<meta name="keywords" id="keywords" content=" simulate data speed test syntax python3 random_seed n_children quasi_fixed ode_step_size fixed effects iota_parent_true rho_parent_true mulcov_income_iota_true mulcov_sex_rho_true eta measure_cv n_data age_list time_list source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,6 +69,16 @@ A:active { color : purple }
 <br><a href="user_speed.py.htm#n_children" target="_top">n_children</a>
 <br><a href="user_speed.py.htm#quasi_fixed" target="_top">quasi_fixed</a>
 <br><a href="user_speed.py.htm#ode_step_size" target="_top">ode_step_size</a>
+<br><a href="user_speed.py.htm#Fixed Effects" target="_top">Fixed&nbsp;Effects</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_speed.py.htm#Fixed Effects.iota_parent_true" target="_top">iota_parent_true</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_speed.py.htm#Fixed Effects.rho_parent_true" target="_top">rho_parent_true</a>
+<br><a href="user_speed.py.htm#mulcov_income_iota_true" target="_top">mulcov_income_iota_true</a>
+<br><a href="user_speed.py.htm#mulcov_sex_rho_true" target="_top">mulcov_sex_rho_true</a>
+<br><a href="user_speed.py.htm#eta" target="_top">eta</a>
+<br><a href="user_speed.py.htm#measure_cv" target="_top">measure_cv</a>
+<br><a href="user_speed.py.htm#n_data" target="_top">n_data</a>
+<br><a href="user_speed.py.htm#age_list" target="_top">age_list</a>
+<br><a href="user_speed.py.htm#time_list" target="_top">time_list</a>
 <br><a href="user_speed.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
@@ -99,11 +109,9 @@ the <a href="option_table.htm#random_seed" target="_top"><span style='white-spac
 <br>
 <b><big><a name="n_children" id="n_children">n_children</a></big></b>
 <br>
-is a positive integer specifying the number of
+is a non-negative positive integer specifying the number of
 <a href="option_table.htm#parent_node_name.Children" target="_top"><span style='white-space: nowrap'>children</span></a>
 .
-The number of data points (and number random effects) is twice
-the number of children.
 
 <br>
 <br>
@@ -127,19 +135,112 @@ square of this step size
 
 <br>
 <br>
+<b><big><a name="Fixed Effects" id="Fixed Effects">Fixed Effects</a></big></b>
+
+<pre><tt>iota_parent_true          <font color="#990000">=</font> <font color="#993399">0.05</font>
+rho_parent_true           <font color="#990000">=</font> <font color="#993399">0.2</font>
+mulcov_income_iota_true   <font color="#990000">=</font> <font color="#993399">1.0</font>
+mulcov_sex_rho_true       <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font></tt></pre>
+<br>
+<big><a name="Fixed Effects.iota_parent_true" id="Fixed Effects.iota_parent_true">iota_parent_true</a></big>
+<br>
+the value of <a href="rate_table.htm#rate_name.iota" target="_top"><span style='white-space: nowrap'>iota</span></a>
+ corresponding
+to the parent node.
+
+<br>
+<br>
+<big><a name="Fixed Effects.rho_parent_true" id="Fixed Effects.rho_parent_true">rho_parent_true</a></big>
+<br>
+the value of <a href="rate_table.htm#rate_name.rho" target="_top"><span style='white-space: nowrap'>rho</span></a>
+ corresponding
+to the parent node.
+
+<br>
+<br>
+<b><big><a name="mulcov_income_iota_true" id="mulcov_income_iota_true">mulcov_income_iota_true</a></big></b>
+<br>
+value of the multiplier for the income covariate that affects 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="mulcov_sex_rho_true" id="mulcov_sex_rho_true">mulcov_sex_rho_true</a></big></b>
+<br>
+value of the multiplier for the sex covariate that affects 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="eta" id="eta">eta</a></big></b>
+<br>
+value of the offset <a href="statistic.htm#Notation.eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ in the
+log transformation:
+<pre style='display:inline'><tt>
+eta <font color="#990000">=</font> <font color="#993399">1e-6</font>
+</tt></pre>
+<br>
+<b><big><a name="measure_cv" id="measure_cv">measure_cv</a></big></b>
+<br>
+the coefficient of variation for the simulated measurement noise.
+If you use a larger 
+<code><i><font color="black"><span style='white-space: nowrap'>measure_cv</span></font></i></code>
+ you will probably need
+a larger number of data points; see 
+<code><i><font color="black"><span style='white-space: nowrap'>n_data</span></font></i></code>
+ below.
+<pre style='display:inline'><tt>
+measure_cv <font color="#990000">=</font> <font color="#993399">0.05</font>
+</tt></pre>
+<br>
+<b><big><a name="n_data" id="n_data">n_data</a></big></b>
+<br>
+number of simulated data values.
+<pre style='display:inline'><tt>
+n_data <font color="#990000">=</font> <font color="#993399">200</font>
+</tt></pre>
+<br>
+<b><big><a name="age_list" id="age_list">age_list</a></big></b>
+<br>
+This following is both the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+ and the age
+grid points for the parent rate smoothing of 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+.
+The child rate smoothing has a grid point at the minimum
+and maximum age below.
+<pre style='display:inline'><tt>
+age_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">5.0</font><font color="#990000">,</font> <font color="#993399">15.0</font><font color="#990000">,</font> <font color="#993399">35.0</font><font color="#990000">,</font> <font color="#993399">50.0</font><font color="#990000">,</font> <font color="#993399">75.0</font><font color="#990000">,</font> <font color="#993399">90.0</font><font color="#990000">,</font> <font color="#993399">100.0</font> <font color="#990000">]</font>
+</tt></pre>
+<br>
+<b><big><a name="time_list" id="time_list">time_list</a></big></b>
+<br>
+This following is both the <a href="time_table.htm" target="_top"><span style='white-space: nowrap'>time_table</span></a>
+ and the time
+grid points for the parent rate smoothing of 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+.
+The child rate smoothing has a grid point at the minimum
+and maximum time below.
+<pre style='display:inline'><tt>
+time_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#993399">2000.0</font><font color="#990000">,</font> <font color="#993399">2010.0</font><font color="#990000">,</font> <font color="#993399">2020.0</font> <font color="#990000">]</font>
+</tt></pre>
+<br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt>
-<i><font color="#9A1900"># values used to simulate data</font></i>
-iota_parent               <font color="#990000">=</font> <font color="#993399">0.05</font>
-rho_parent                <font color="#990000">=</font> <font color="#993399">0.2</font>
-mulcov_income_iota_true   <font color="#990000">=</font> <font color="#993399">1.0</font>
-mulcov_sex_rho_true       <font color="#990000">=</font> <font color="#990000">-</font><font color="#993399">1.0</font>
-<i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> time
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
+<b><font color="#000080">import</font></b> numpy
 test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/speed.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">5</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\\\n'</font>
@@ -157,7 +258,6 @@ random_seed_arg  <font color="#990000">=</font> sys<font color="#990000">.</font
 n_children       <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">)</font>
 quasi_fixed      <font color="#990000">=</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font>
 ode_step_size    <font color="#990000">=</font> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">4</font><font color="#990000">]</font>
-n_data           <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> n_children
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">if</font></b> quasi_fixed <font color="#990000">!=</font> <font color="#FF0000">'true'</font> <b><font color="#0000FF">and</font></b> quasi_fixed <font color="#990000">!=</font> <font color="#FF0000">'false'</font> <font color="#990000">:</font>
      msg <font color="#990000">=</font> <font color="#FF0000">'quasi_fixed = "'</font> <font color="#990000">+</font> quasi_fixed <font color="#990000">+</font> <font color="#FF0000">'" is not true or false'</font>
@@ -178,20 +278,18 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_rate_child</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_iota_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_parent'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_iota_parent'</font><font color="#990000">,</font> <font color="#FF0000">'prior_log_gauss_0'</font><font color="#990000">,</font> <font color="#FF0000">'prior_log_gauss_0'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_rho_parent</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_rho_parent'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">)</font>
+          <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_rho_parent'</font><font color="#990000">,</font> <font color="#FF0000">'prior_log_gauss_0'</font><font color="#990000">,</font> <font color="#FF0000">'prior_log_gauss_0'</font><font color="#990000">)</font>
      <b><font color="#0000FF">def</font></b> <b><font color="#000000">fun_mulcov</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">)</font> <font color="#990000">:</font>
           <b><font color="#0000FF">return</font></b> <font color="#990000">(</font><font color="#FF0000">'prior_mulcov'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font> <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">)</font>
      <b><font color="#000080">import</font></b> copy
      <b><font color="#000080">import</font></b> dismod_at
      <b><font color="#000080">import</font></b> math
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900"># age table:</font></i>
-     age_list    <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">5.0</font><font color="#990000">,</font> <font color="#993399">15.0</font><font color="#990000">,</font> <font color="#993399">35.0</font><font color="#990000">,</font> <font color="#993399">50.0</font><font color="#990000">,</font> <font color="#993399">75.0</font><font color="#990000">,</font> <font color="#993399">90.0</font><font color="#990000">,</font> <font color="#993399">100.0</font> <font color="#990000">]</font>
+     <i><font color="#9A1900"># age table: uses age_list defined above</font></i>
      <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># time table:</font></i>
-     time_list   <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">1990.0</font><font color="#990000">,</font> <font color="#993399">2000.0</font><font color="#990000">,</font> <font color="#993399">2010.0</font><font color="#990000">,</font> <font color="#993399">2200.0</font> <font color="#990000">]</font>
+     <i><font color="#9A1900"># time table: uses time_list defined above</font></i>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># integrand table:</font></i>
      integrand_table <font color="#990000">=</font> <font color="#990000">[</font>
@@ -248,14 +346,17 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <font color="#990000">}</font>
      <i><font color="#9A1900"># values that change between rows:</font></i>
      <b><font color="#0000FF">for</font></b> data_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> n_data <font color="#990000">)</font> <font color="#990000">:</font>
-          row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>      <font color="#990000">=</font> <font color="#FF0000">'child_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> <font color="#990000">(</font>data_id <font color="#990000">%</font> n_children<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">)</font>
+          <b><font color="#0000FF">if</font></b> n_children <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
+               row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#FF0000">'world'</font>
+          <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+               row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>      <font color="#990000">=</font> <font color="#FF0000">'child_'</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font> <font color="#990000">(</font>data_id <font color="#990000">%</font> n_children<font color="#990000">)</font> <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">)</font>
           row<font color="#990000">[</font><font color="#FF0000">'income'</font><font color="#990000">]</font>    <font color="#990000">=</font> data_id <font color="#990000">/</font> <b><font color="#000000">float</font></b><font color="#990000">(</font>n_data<font color="#990000">-</font><font color="#993399">1</font><font color="#990000">)</font>
           row<font color="#990000">[</font><font color="#FF0000">'sex'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#990000">(</font> data_id <font color="#990000">%</font> <font color="#993399">3</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
           row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font> <font color="#990000">=</font> integrand_table<font color="#990000">[</font> data_id <font color="#990000">%</font> <font color="#993399">2</font> <font color="#990000">][</font><font color="#FF0000">'name'</font><font color="#990000">]</font>
           <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'Sincidence'</font> <font color="#990000">:</font>
-               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">0.01</font> <font color="#990000">*</font> iota_parent
+               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>  <font color="#990000">=</font> measure_cv <font color="#990000">*</font> iota_parent_true
           <b><font color="#0000FF">elif</font></b> row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">:</font>
-               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#993399">0.01</font> <font color="#990000">*</font> <font color="#990000">(</font>iota_parent <font color="#990000">/</font> rho_parent<font color="#990000">)</font>
+               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>  <font color="#990000">=</font> measure_cv <font color="#990000">*</font> <font color="#990000">(</font>iota_parent_true<font color="#990000">/</font>rho_parent_true<font color="#990000">)</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
                <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
           data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
@@ -268,24 +369,26 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
                <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.01</font><font color="#990000">,</font>
-          <font color="#990000">},{</font> <i><font color="#9A1900"># prior_loggauss_zero</font></i>
-               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_loggauss_zero'</font><font color="#990000">,</font>
+          <font color="#990000">},{</font> <i><font color="#9A1900"># prior_log_gauss_0</font></i>
+               <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_log_gauss_0'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'log_gaussian'</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.0</font><font color="#990000">,</font>
                <font color="#FF0000">'std'</font><font color="#990000">:</font>      <font color="#993399">0.1</font><font color="#990000">,</font>
-               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      <font color="#993399">1e-6</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      eta
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_iota_parent</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_iota_parent'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">0.001</font><font color="#990000">,</font>
                <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.1</font><font color="#990000">,</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      eta
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_iota_parent</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_rho_parent'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">0.001</font><font color="#990000">,</font>
                <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1.0</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     <font color="#993399">0.1</font><font color="#990000">,</font>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      eta
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_mulcov</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_mulcov'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
@@ -296,29 +399,33 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <font color="#990000">]</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># smooth table</font></i>
-     age_mid_id     <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_list<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
-     time_mid_id    <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>time_list<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2</font> <font color="#990000">)</font>
+     name       <font color="#990000">=</font> <font color="#FF0000">'smooth_mulcov'</font>
+     fun        <font color="#990000">=</font> fun_mulcov
+     age_grid   <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">]</font>
+     time_grid  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">]</font>
+     smooth_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font>
+          <font color="#FF0000">'name'</font><font color="#990000">:</font>name<font color="#990000">,</font> <font color="#FF0000">'age_id'</font><font color="#990000">:</font>age_grid<font color="#990000">,</font> <font color="#FF0000">'time_id'</font><font color="#990000">:</font>time_grid<font color="#990000">,</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun
+     <font color="#990000">}</font> <font color="#990000">]</font>
      name           <font color="#990000">=</font> <font color="#FF0000">'smooth_rate_child'</font>
      fun            <font color="#990000">=</font> fun_rate_child
-     age_grid       <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0</font><font color="#990000">,</font> age_mid_id<font color="#990000">,</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_list<font color="#990000">)-</font><font color="#993399">1</font> <font color="#990000">]</font>
-     time_grid      <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0</font><font color="#990000">,</font> time_mid_id<font color="#990000">,</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>time_list<font color="#990000">)-</font><font color="#993399">1</font> <font color="#990000">]</font>
-     smooth_table <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">{</font><font color="#FF0000">'name'</font><font color="#990000">:</font>name<font color="#990000">,</font> <font color="#FF0000">'age_id'</font><font color="#990000">:</font>age_grid<font color="#990000">,</font> <font color="#FF0000">'time_id'</font><font color="#990000">:</font>time_grid<font color="#990000">,</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun <font color="#990000">}</font>
-     <font color="#990000">]</font>
-     name <font color="#990000">=</font> <font color="#FF0000">'smooth_iota_parent'</font>
-     fun  <font color="#990000">=</font> fun_iota_parent
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_list<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">:</font>
+          age_grid <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">,</font>  <b><font color="#000000">len</font></b><font color="#990000">(</font>age_list<font color="#990000">)-</font><font color="#993399">1</font> <font color="#990000">]</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>time_list<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1</font> <font color="#990000">:</font>
+          time_grid <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">,</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>time_list<font color="#990000">)-</font><font color="#993399">1</font> <font color="#990000">]</font>
      smooth_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">{</font>
-          <font color="#FF0000">'name'</font><font color="#990000">:</font>name<font color="#990000">,</font> <font color="#FF0000">'age_id'</font><font color="#990000">:[</font>age_mid_id<font color="#990000">],</font> <font color="#FF0000">'time_id'</font><font color="#990000">:[</font>time_mid_id<font color="#990000">],</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun
+          <font color="#FF0000">'name'</font><font color="#990000">:</font>name<font color="#990000">,</font> <font color="#FF0000">'age_id'</font><font color="#990000">:</font>age_grid<font color="#990000">,</font> <font color="#FF0000">'time_id'</font><font color="#990000">:</font>time_grid<font color="#990000">,</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun
+     <font color="#990000">}</font> <font color="#990000">)</font>
+     name      <font color="#990000">=</font> <font color="#FF0000">'smooth_iota_parent'</font>
+     fun       <font color="#990000">=</font> fun_iota_parent
+     age_grid  <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>age_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">)</font>
+     time_grid <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>time_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">)</font>
+     smooth_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">{</font>
+          <font color="#FF0000">'name'</font><font color="#990000">:</font>name<font color="#990000">,</font> <font color="#FF0000">'age_id'</font><font color="#990000">:</font>age_grid<font color="#990000">,</font> <font color="#FF0000">'time_id'</font><font color="#990000">:</font>time_grid<font color="#990000">,</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun
      <font color="#990000">}</font> <font color="#990000">)</font>
      name <font color="#990000">=</font> <font color="#FF0000">'smooth_rho_parent'</font>
      fun  <font color="#990000">=</font> fun_rho_parent
      smooth_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">{</font>
-          <font color="#FF0000">'name'</font><font color="#990000">:</font>name<font color="#990000">,</font> <font color="#FF0000">'age_id'</font><font color="#990000">:[</font>age_mid_id<font color="#990000">],</font> <font color="#FF0000">'time_id'</font><font color="#990000">:[</font>time_mid_id<font color="#990000">],</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun
-     <font color="#990000">}</font> <font color="#990000">)</font>
-     name <font color="#990000">=</font> <font color="#FF0000">'smooth_mulcov'</font>
-     fun  <font color="#990000">=</font> fun_mulcov
-     smooth_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">{</font>
-          <font color="#FF0000">'name'</font><font color="#990000">:</font>name<font color="#990000">,</font> <font color="#FF0000">'age_id'</font><font color="#990000">:[</font>age_mid_id<font color="#990000">],</font> <font color="#FF0000">'time_id'</font><font color="#990000">:[</font>time_mid_id<font color="#990000">],</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun
+          <font color="#FF0000">'name'</font><font color="#990000">:</font>name<font color="#990000">,</font> <font color="#FF0000">'age_id'</font><font color="#990000">:</font>age_grid<font color="#990000">,</font> <font color="#FF0000">'time_id'</font><font color="#990000">:</font>time_grid<font color="#990000">,</font> <font color="#FF0000">'fun'</font><font color="#990000">:</font>fun
      <font color="#990000">}</font> <font color="#990000">)</font>
      <i><font color="#9A1900"># no standard deviation multipliers</font></i>
      <b><font color="#0000FF">for</font></b> dictionary <b><font color="#0000FF">in</font></b> smooth_table <font color="#990000">:</font>
@@ -349,8 +456,9 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'none'</font>             <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>              <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'5'</font>                <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-8'</font>             <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'accept_after_max_steps_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'2'</font>         <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-7'</font>             <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'accept_after_max_steps_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'10'</font>     <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'limited_memory_max_history_fixed'</font><font color="#990000">,</font> <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'30'</font>     <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_random'</font><font color="#990000">,</font> <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'none'</font>             <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_random'</font><font color="#990000">,</font>    <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>              <font color="#990000">},</font>
@@ -434,9 +542,9 @@ var_id2true  <font color="#990000">=</font> <b><font color="#000000">list</font>
           node_id   <font color="#990000">=</font> var_info<font color="#990000">[</font><font color="#FF0000">'node_id'</font><font color="#990000">]</font>
           <i><font color="#9A1900"># node zero is the world</font></i>
           <b><font color="#0000FF">if</font></b> node_id <font color="#990000">==</font> <font color="#993399">0</font> <b><font color="#0000FF">and</font></b> rate_name <font color="#990000">==</font> <font color="#FF0000">'iota'</font> <font color="#990000">:</font>
-               truth_var_value <font color="#990000">=</font> iota_parent
+               truth_var_value <font color="#990000">=</font> iota_parent_true
           <b><font color="#0000FF">elif</font></b> node_id <font color="#990000">==</font> <font color="#993399">0</font> <b><font color="#0000FF">and</font></b> rate_name <font color="#990000">==</font> <font color="#FF0000">'rho'</font> <font color="#990000">:</font>
-               truth_var_value <font color="#990000">=</font> rho_parent
+               truth_var_value <font color="#990000">=</font> rho_parent_true
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
                truth_var_value <font color="#990000">=</font> <font color="#993399">0.0</font>
      var_id2true<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> truth_var_value <font color="#990000">)</font>
@@ -444,18 +552,25 @@ var_id2true  <font color="#990000">=</font> <b><font color="#000000">list</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
 connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># Run the simulate and start, and fit commands</font></i>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">])</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">])</font>
+<i><font color="#9A1900"># simulate_command</font></i>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">]</font>
+<font color="#990000">)</font>
+<i><font color="#9A1900"># fit_command</font></i>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">]</font>
+<font color="#990000">)</font>
+<i><font color="#9A1900"># sample_command</font></i>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'asymptotic'</font><font color="#990000">,</font> <font color="#FF0000">'100'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">]</font>
+<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># check simulation results</font></i>
-new          <font color="#990000">=</font> False
-connection   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+<i><font color="#9A1900"># result tables</font></i>
+new           <font color="#990000">=</font> False
+connection    <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
 fit_var_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
-log_dict     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'log'</font><font color="#990000">)</font>
-connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+log_dict      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'log'</font><font color="#990000">)</font>
+sample_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># determine random seed the was used</font></i>
 random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>random_seed_arg<font color="#990000">)</font>
@@ -467,17 +582,36 @@ random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></
                     random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'unix_time'</font><font color="#990000">])</font>
      <b><font color="#0000FF">assert</font></b> random_seed <font color="#990000">!=</font> <font color="#993399">0</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-number_variable <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>fit_var_table<font color="#990000">)</font> <font color="#990000">==</font> number_variable <font color="#990000">)</font>
+<i><font color="#9A1900"># sample_mean, sample_std</font></i>
+n_var    <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font>
+n_sample <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>sample_table<font color="#990000">)</font> <font color="#990000">/</font> n_var <font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sample_table<font color="#990000">)</font> <font color="#990000">==</font> n_sample <font color="#990000">*</font> n_var
+sample_array    <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">zeros</font></b><font color="#990000">(</font> <font color="#990000">(</font>n_sample<font color="#990000">,</font> n_var<font color="#990000">)</font> <font color="#990000">,</font> dtype<font color="#990000">=</font>float <font color="#990000">)</font>
+<b><font color="#0000FF">for</font></b> sample_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>sample_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     sample_index     <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> sample_id <font color="#990000">/</font> n_var <font color="#990000">)</font>
+     var_id           <font color="#990000">=</font> sample_id <font color="#990000">%</font> n_var
+     <b><font color="#0000FF">assert</font></b> sample_id <font color="#990000">==</font> sample_index <font color="#990000">*</font> n_var <font color="#990000">+</font> var_id
+     var_value        <font color="#990000">=</font> sample_table<font color="#990000">[</font>sample_id<font color="#990000">][</font><font color="#FF0000">'var_value'</font><font color="#990000">]</font>
+     sample_array<font color="#990000">[</font>sample_index<font color="#990000">,</font> var_id<font color="#990000">]</font> <font color="#990000">=</font> var_value
+sample_mean <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">mean</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">)</font>
+sample_std  <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">,</font> ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># check fit, sample_mean, and sample_std</font></i>
+<b><font color="#0000FF">assert</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>fit_var_table<font color="#990000">)</font> <font color="#990000">==</font> n_var <font color="#990000">)</font>
 max_error       <font color="#990000">=</font> <font color="#993399">0.0</font>
-<b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> number_variable <font color="#990000">)</font> <font color="#990000">:</font>
-     row        <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
-     fit_value  <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
-     true_value <font color="#990000">=</font> var_id2true<font color="#990000">[</font>var_id<font color="#990000">]</font>
+<b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> n_var <font color="#990000">)</font> <font color="#990000">:</font>
+     row          <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     fit_value    <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
+     true_value   <font color="#990000">=</font> var_id2true<font color="#990000">[</font>var_id<font color="#990000">]</font>
      <b><font color="#0000FF">if</font></b> true_value <font color="#990000">==</font> <font color="#993399">0.0</font> <font color="#990000">:</font>
-          max_error <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>fit_value<font color="#990000">)</font> <font color="#990000">,</font> max_error<font color="#990000">)</font>
+          max_error <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>fit_value<font color="#990000">),</font> max_error<font color="#990000">)</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           max_error <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>fit_value <font color="#990000">/</font> true_value <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">),</font> max_error<font color="#990000">)</font>
+     mean_value   <font color="#990000">=</font> sample_mean<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     std_value    <font color="#990000">=</font> sample_std<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     max_error <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>mean_value <font color="#990000">-</font> fit_value<font color="#990000">),</font> max_error<font color="#990000">)</font>
+     max_error <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font>std_value<font color="#990000">,</font> max_error<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed      = '</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'n_children       = '</font><font color="#990000">,</font> n_children<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'quasi_fixed      = '</font><font color="#990000">,</font> quasi_fixed<font color="#990000">)</font>

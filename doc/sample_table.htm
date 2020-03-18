@@ -121,6 +121,19 @@ This column has type <code><font color="blue">integer</font></code> and specifie
 in the <code><font color="blue">data_sim</font></code> table, that a complete set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 ,
 in the <code><font color="blue">sample</font></code> table, corresponds to.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>n_var</span></font></i></code>
+ is the number of rows in the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;mod(</span></font><i><font color="black"><span style='white-space: nowrap'>sample_id</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_var</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+The range of 
+<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
+ is form zero to
+<a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+ minus one.
 
 <br>
 <br>
@@ -128,29 +141,25 @@ in the <code><font color="blue">sample</font></code> table, corresponds to.
 <br>
 This column has type <code><font color="blue">integer</font></code> and specifies the
 <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
- that 
+
+that 
 <code><i><font color="black"><span style='white-space: nowrap'>var_value</span></font></i></code>
  corresponds to;
 see <a href="var_table.htm#var_id" target="_top"><span style='white-space: nowrap'>var_id</span></a>
 .
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>n_var</span></font></i></code>
- is the number of rows in the variable table,
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>sample</span></font></i></code>
+ index are as above,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sample_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_var</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-for 
-<code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
- equal zero to the
-<a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
- minus one.
-
-<br>
 <br>
 <b><big><a name="var_value" id="var_value">var_value</a></big></b>
 <br>
-This column type <code><font color="blue">real</font></code> and is the optimal variable value
+This column type <code><font color="blue">real</font></code> and is the variable value
 for this 
 <code><i><font color="black"><span style='white-space: nowrap'>var_id</span></font></i></code>
  and 

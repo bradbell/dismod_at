@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Sample Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Sample Command">
-<meta name="keywords" id="keywords" content=" the sample command syntax database purpose number_sample method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table bounds example ">
+<meta name="keywords" id="keywords" content=" the sample command syntax database purpose number_sample simulate_index method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table bounds example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,6 +69,7 @@ A:active { color : purple }
 <br><a href="sample_command.htm#database" target="_top">database</a>
 <br><a href="sample_command.htm#Purpose" target="_top">Purpose</a>
 <br><a href="sample_command.htm#number_sample" target="_top">number_sample</a>
+<br><a href="sample_command.htm#simulate_index" target="_top">simulate_index</a>
 <br><a href="sample_command.htm#method" target="_top">method</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#method.simulate" target="_top">simulate</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#method.asymptotic" target="_top">asymptotic</a>
@@ -83,10 +84,11 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 
-
-<br>
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 <br>
 <b><big><a name="database" id="database">database</a></big></b>
 <br>
@@ -111,23 +113,7 @@ from the posterior distribution; see
 <b><big><a name="number_sample" id="number_sample">number_sample</a></big></b>
 <br>
 Is the number of samples. Each sample contains a complete
-set of model variables. See the different methods below
-for more discussion of 
-<code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
-.
-
-<br>
-<br>
-<b><big><a name="method" id="method">method</a></big></b>
-<br>
-The sample command argument 
-<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
- must be one of the following:
-
-<br>
-<br>
-<big><a name="method.simulate" id="method.simulate">simulate</a></big>
-<br>
+set of model variables.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
  is <code><font color="blue">simulate</font></code>,
@@ -135,12 +121,41 @@ If
 <code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
  must be equal to
 <a href="simulate_command.htm#number_simulate" target="_top"><span style='white-space: nowrap'>number_simulate</span></a>
+
+in the previous simulate command.
+
+<br>
+<br>
+<b><big><a name="simulate_index" id="simulate_index">simulate_index</a></big></b>
+<br>
+If this argument is present, 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ must be <code><font color="blue">asymptotic</font></code>
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ must be the same as in the corresponding
+<a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>fit&nbsp;command</span></a>
 .
-There is a complete set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 
+
+<br>
+<br>
+<b><big><a name="method" id="method">method</a></big></b>
+<br>
+The sample command argument 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ must be
+<code><font color="blue">simulate</font></code> or <code><font color="blue">asymptotic</font></code>; see discussion below:
+
+<br>
+<br>
+<big><a name="method.simulate" id="method.simulate">simulate</a></big>
+<br>
+A complete set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+,
 corresponding to each <a href="sample_table.htm#sample_index" target="_top"><span style='white-space: nowrap'>sample_index</span></a>
-
-the sample table.
+,
+is written to the sample table.
 They correspond to fitting the data in the data_sim table with
 <a href="data_sim_table.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
  equal to
@@ -171,6 +186,15 @@ posterior distribution of maximum likelihood estimates.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
  is <code><font color="blue">asymptotic</font></code>,
+the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+ is an additional input in this case
+and it assumed to correspond to a
+fit <a href="fit_command.htm#variables.both" target="_top"><span style='white-space: nowrap'>both</span></a>
+.
+If the previous fit did (did not) have a
+<a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
+ it
+must (must not) be included in the sample_command.
 The asymptotic statics of the model variables is used to generate
 
 <code><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i></code>
@@ -178,14 +202,11 @@ The asymptotic statics of the model variables is used to generate
 The samples with different values of 
 <code><i><font color="black"><span style='white-space: nowrap'>sample_index</span></font></i></code>
  are independent.
-(Note that the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
- is an additional input in this case.)
-The only constraints that are included in the asymptotic samples is when
+All of the Laplace density terms are ignored by the asymptotic statistics.
+The constraints are also ignored, except the constraints were
 the lower and upper limits for a variable are equal.
-Also note that the L1 terms in the likelihood have been ignored
-(because the L1 likelihood is not differentiable at zero).
-Note that the random effects int the <code><i>i</i></code>-th sample
-come from the asymptotic distribution of the random effects given the
+The random effects int the <code><i>i</i></code>-th sample is simulated
+using the asymptotic distribution of the random effects given the
 fixed effect in the <code><i>i</i></code>-th sample.
 
 <br>
@@ -221,8 +242,10 @@ If
  is <code><font color="blue">asymptotic</font></code>,
 this command has the extra input <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
 
-which was created by a previous <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
-.
+which was created by a previous fit command which
+must have included <a href="fit_command.htm#variables.both" target="_top"><span style='white-space: nowrap'>both</span></a>
+
+fixed and random effects.
 
 <br>
 <br>
