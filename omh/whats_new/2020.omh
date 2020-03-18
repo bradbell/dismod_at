@@ -38,6 +38,11 @@ $section Changes and Additions to Dismod_at During 2020$$
 
 $head 03-18$$
 $list number$$
+Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200318
+of $code dock_dismod_at.sh$$.
+This will require building a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+$lnext
 Add the $cref/simulate_index/sample_command/simulate_index/$$ argument
 to the asymptotic version of the sample command.
 This fixed a bug where the asymptotic statistics for a fit using
