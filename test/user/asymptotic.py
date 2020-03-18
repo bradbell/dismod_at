@@ -358,11 +358,10 @@ for var_id in range( n_var ) :
 		max_error = max(abs(fit_value), max_error)
 	else :
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
-	if test_asymptotic :
-		mean_value   = sample_mean[var_id]
-		std_value    = sample_std[var_id]
-		max_error = max(abs(mean_value - fit_value), max_error)
-		max_error = max(std_value, max_error)
+	mean_value   = sample_mean[var_id]
+	std_value    = sample_std[var_id]
+	max_error = max(abs(mean_value - fit_value), max_error)
+	max_error = max(std_value, max_error)
 print('random_seed      = ', random_seed)
 print('n_children       = ', n_children)
 print('quasi_fixed      = ', quasi_fixed)
