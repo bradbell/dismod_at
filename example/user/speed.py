@@ -447,7 +447,6 @@ new           = False
 connection    = dismod_at.create_connection(file_name, new)
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 log_dict      = dismod_at.get_table_dict(connection, 'log')
-connection.close()
 # -----------------------------------------------------------------------
 # determine random seed the was used
 random_seed = int(random_seed_arg)
@@ -463,8 +462,8 @@ if random_seed == 0 :
 n_var    = len(var_table)
 if test_asymptotic :
 	sample_table  = dismod_at.get_table_dict(connection, 'sample')
-	n_sample = int( len(sample) / n_var )
-	assert len(sample) == n_sample * n_var
+	n_sample = int( len(sample_table) / n_var )
+	assert len(sample_table) == n_sample * n_var
 	sample_array    = numpy.zeros( (n_sample, n_var) , dtype=float )
 	for sample_id in range( len(sample_table) ) :
 		sample_index     = int( sample_id / n_var )
