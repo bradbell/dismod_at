@@ -13,11 +13,6 @@
 # the $cref/random_seed/option_table/random_seed/$$ used during the simulation.
 random_seed = '0'
 #
-# $head n_children$$
-# is a positive integer specifying the number of
-# $cref/children/option_table/parent_node_name/Children/$$.
-n_children = 10
-#
 # $head quasi_fixed$$
 # This argument is $code true$$ or $code false$$ and specifies
 # $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$
@@ -53,7 +48,7 @@ eta = 1e-6
 # If you use a larger $icode measure_cv$$ you will probably need
 # a larger number of data points; see $icode n_data$$ below.
 # $srccode%py%
-measure_cv = 0.005
+measure_cv = 0.001
 # %$$
 #
 # $head n_data$$
@@ -64,7 +59,7 @@ n_data = 2
 #
 # $head age_list$$
 # This following is both the $cref age_table$$ and the age
-# grid points for the parent rate smoothing of $icode iota$$ and $icode rho$$.
+# grid points for the parent rate smoothing of $icode iota$$.
 # The child rate smoothing has a grid point at the minimum
 # and maximum age below.
 # $srccode%py%
@@ -73,7 +68,7 @@ age_list = [ 0.0, 100.0 ]
 #
 # $head time_list$$
 # This following is both the $cref time_table$$ and the time
-# grid points for the parent rate smoothing of $icode iota$$ and $icode rho$$.
+# grid points for the parent rate smoothing of $icode iota$$.
 # The child rate smoothing has a grid point at the minimum
 # and maximum time below.
 # $srccode%py%
@@ -130,9 +125,6 @@ def example_db (file_name) :
 	#
 	# node table:
 	node_table = [ { 'name':'world', 'parent':'' } ]
-	for i in range(n_children) :
-		name = 'child_' + str(i + 1)
-		node_table.append( { 'name':name, 'parent':'world' } )
 	#
 	# weight table:
 	weight_table = list()
@@ -150,29 +142,32 @@ def example_db (file_name) :
 	# data table:
 	data_table = list()
 	# values that are the same for all data rows
+	age = 50.0
 	row = {
-		'meas_value':  0.0,             # not used (will be simulated)
 		'density':     'gaussian',
 		'weight':      '',
 		'hold_out':     False,
-		'age_lower':    50.,
-		'age_upper':    50.,
+		'age_lower':    age,
+		'age_upper':    age,
 		'time_lower':   2000.,
 		'time_upper':   2000.,
+		'node':         'world',
 		'subgroup':     'world',
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
-		row['node']      = 'child_' + str( (data_id % n_children) + 1 )
 		row['income']    = data_id / float(n_data-1)
 		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
 		row['integrand'] = integrand_table[ data_id % 2 ]['name']
 		if row['integrand'] == 'Sincidence' :
-			row['meas_std']  = measure_cv * iota_parent_true
+			# no noise measurement
+			row['meas_value'] = iota_parent_true
 		elif row['integrand'] == 'prevalence' :
-			row['meas_std']  = measure_cv * 0.1
+			# no noise measurement
+			row['meas_value'] = 1.0 - math.exp(- age * iota_parent_true)
 		else :
 			assert(False)
+		row['meas_std']   = measure_cv * row['meas_value']
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
@@ -186,9 +181,9 @@ def example_db (file_name) :
 		},{ # prior_iota_parent
 			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'lower':    0.001,
-			'upper':    1.0,
-			'mean':     iota_parent_true / 2.0
+			'lower':    iota_parent_true / 30.0,
+			'upper':    iota_parent_true * 30.0,
+			'mean':     iota_parent_true / 3.0
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -205,9 +200,6 @@ def example_db (file_name) :
 	rate_table = [
 		{	'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
-			'child_smooth': None,
-		},{	'name':          'rho',
-			'parent_smooth': None,
 			'child_smooth': None,
 		}
 	]
