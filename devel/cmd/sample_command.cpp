@@ -550,33 +550,12 @@ void sample_command(
 	// replace_like
 	data_object.replace_like(data_subset_obj);
 	//
-	// fit_var.fit_var_value
+	// fit_var_value
 	vector<double> fit_var_value;
 	string table_name  = "fit_var";
 	string column_name = "fit_var_value";
 	dismod_at::get_table_column(
 		db, table_name, column_name, fit_var_value
-	);
-	//
-	// fit_var.lagrange_value
-	vector<double> lagrange_value;
-	column_name = "lagrange_value";
-	dismod_at::get_table_column(
-		db, table_name, column_name, lagrange_value
-	);
-	//
-	// fit_var.lagrange_dage
-	vector<double> lagrange_dage;
-	column_name = "lagrange_dage";
-	dismod_at::get_table_column(
-		db, table_name, column_name, lagrange_dage
-	);
-	//
-	// fit_var.lagrange_dtime
-	vector<double> lagrange_dtime;
-	column_name = "lagrange_dtime";
-	dismod_at::get_table_column(
-		db, table_name, column_name, lagrange_dtime
 	);
 	//
 	// fit_object
@@ -605,9 +584,6 @@ void sample_command(
 	fit_object.sample_posterior(
 		sample               ,
 		fit_var_value        ,
-		lagrange_value       ,
-		lagrange_dage        ,
-		lagrange_dtime       ,
 		option_map
 	);
 	//

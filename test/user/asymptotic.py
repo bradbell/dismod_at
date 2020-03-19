@@ -98,8 +98,6 @@ if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage += 'and working directory is the dismod_at distribution directory\n'
 	sys.exit(usage)
 #
-start_time       = time.time();
-#
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
@@ -224,7 +222,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':quasi_fixed        },
 		{ 'name':'derivative_test_fixed',  'value':'none'             },
 		{ 'name':'max_num_iter_fixed',     'value':'100'              },
-		{ 'name':'print_level_fixed',      'value':'5'                },
+		{ 'name':'print_level_fixed',      'value':'0'                },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'             },
 		{ 'name':'accept_after_max_steps_fixed',     'value':'10'     },
 		{ 'name':'limited_memory_max_history_fixed', 'value':'30'     },
@@ -362,16 +360,12 @@ for var_id in range( n_var ) :
 	std_value    = sample_std[var_id]
 	max_error = max(abs(mean_value - fit_value), max_error)
 	max_error = max(std_value, max_error)
-print('random_seed      = ', random_seed)
-print('n_children       = ', n_children)
-print('quasi_fixed      = ', quasi_fixed)
-print('ode_step_size    = ', ode_step_size)
-print('elapsed seconds  =', time.time() - start_time)
-print('max_error        = ', max_error)
 if max_error > 5e-2 :
-	print('simulated.py: Error')
+	print('random_seed      = ', random_seed)
+	print('max_error        = ', max_error)
+	print('asymptotic.py: Error')
 	assert(False)
 # -----------------------------------------------------------------------------
-print('simulated.py: OK')
+print('asymptotic.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

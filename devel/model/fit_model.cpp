@@ -663,9 +663,6 @@ $head Syntax$$
 $icode%fit_object%.sample_posterior(
 	%sample%,
 	%fit_var_value%,
-	%lagrange_value%,
-	%lagrange_dage%,
-	%lagrange_dtime%,
 	%option_map%
 )%$$
 
@@ -707,37 +704,11 @@ This vector has size equal to the number of model variables.
 It is the optimal $cref/variable values/model_variables/$$ in
 $cref pack_info$$ order.
 
-$head lagrange_value$$
-This vector has size equal to the number of model variables.
-It is the Lagrange multipliers for the lower and upper
-limits on the corresponding model variables.
-If there is no limit, or if a limit is not active, the corresponding
-element is zero.
-
-$head lagrange_dage$$
-This vector has size equal to the number of model variables.
-It is the Lagrange multipliers for the lower and upper
-limits on the forward age difference for all the variables.
-If a variable does not have a forward age difference,
-if there is no limit, or if a limit is not active, the corresponding
-element is zero.
-
-$head lagrange_dtime$$
-This vector has size equal to the number of model variables.
-It is the Lagrange multipliers for the lower and upper
-limits on the forward time difference for all the variable.
-If a variable does not have a forward time difference,
-if there is no limit, or if a limit is not active, the corresponding
-element is zero.
-
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
 	CppAD::vector<double>&              sample          ,
 	const CppAD::vector<double>&        fit_var_value   ,
-	const CppAD::vector<double>&        lagrange_value  ,
-	const CppAD::vector<double>&        lagrange_dage   ,
-	const CppAD::vector<double>&        lagrange_dtime  ,
 	std::map<std::string, std::string>& option_map      )
 /* %$$
 $end
@@ -748,9 +719,6 @@ $end
 	size_t n_var = n_fixed_ + n_random_;
 	assert( sample.size() % n_var == 0     );
 	assert( fit_var_value.size() == n_var );
-	assert( lagrange_value.size() == n_var );
-	assert( lagrange_dage.size()  == n_var );
-	assert( lagrange_dtime.size() == n_var );
 
 	// n_sample
 	size_t n_sample = sample.size() / n_var;
@@ -759,21 +727,6 @@ $end
 	CppAD::mixed::fixed_solution solution;
 	solution.fixed_opt.resize(n_fixed_);
 	unpack_fixed(pack_object_, fit_var_value, solution.fixed_opt);
-	//
-	// solution.fixed_lag
-	solution.fixed_lag.resize(n_fixed_);
-	unpack_fixed(pack_object_, lagrange_value, solution.fixed_lag);
-	//
-	// solution.fix_con_lag
-	size_t n_fix_con = diff_prior_.size();
-	solution.fix_con_lag.resize(n_fix_con);
-	for(size_t k = 0; k < n_fix_con; k++)
-	{	size_t minus_var_id   = diff_prior_[k].minus_var_id;
-		if( diff_prior_[k].direction==dismod_at::diff_prior_struct::dage_enum )
-			solution.fix_con_lag[k] = lagrange_dage[minus_var_id];
-		else
-			solution.fix_con_lag[k] = lagrange_dtime[minus_var_id];
-	}
 	//
 	// random_opt
 	CppAD::vector<double> random_opt(n_random_);

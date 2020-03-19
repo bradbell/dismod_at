@@ -176,9 +176,6 @@ namespace dismod_at {
 		void sample_posterior(
 			CppAD::vector<double>&              sample          ,
 			const CppAD::vector<double>&        fit_var_value   ,
-			const CppAD::vector<double>&        lagrange_value  ,
-			const CppAD::vector<double>&        lagrange_dage   ,
-			const CppAD::vector<double>&        lagrange_dtime  ,
 			// effectively const
 			std::map<std::string, std::string>& option_map
 		);
