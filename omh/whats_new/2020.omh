@@ -20,6 +20,7 @@ $spell
 	dage
 	dtime
 	sim
+	cppad
 $$
 $navigate%
 	Up%Location%
@@ -35,6 +36,12 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 03-19$$
+Update to using version cppad_mixed-20200319.
+This fixes some asserts during the
+$cref/asymptotic/sample_command/method/asymptotic/$$ sampling method
+in the debug build.
 
 $head 03-18$$
 $list number$$
