@@ -400,7 +400,7 @@ for row in sample_table :
 #
 # compute statistics
 sim_avg = numpy.average(sample_array, axis=0);
-sim_std = numpy.std(sample_array, axis=0);
+sim_std = numpy.std(sample_array, axis=0, ddof=1);
 # -----------------------------------------------------------------------
 # MCMC results
 print('mcmc')
@@ -411,7 +411,7 @@ scale      = numpy.array( [ y_n, delta, delta] ) * 0.2
 burn_in    = int( 0.1 * number_metropolis )
 c          = c[burn_in :, :]
 mcmc_avg   = numpy.average(c, axis=0)
-mcmc_std   = numpy.std(c, axis=0)
+mcmc_std   = numpy.std(c, axis=0, ddof=1)
 mcmc_order = [ 'north_america', 'mexico', 'canada' ]
 # -----------------------------------------------------------------------
 # now compare values

@@ -327,11 +327,10 @@ n_var    = len(var_table)
 n_sample = int( len(sample_table) / n_var )
 assert len(sample_table) == n_sample * n_var
 sample_array    = numpy.zeros( (n_sample, n_var) , dtype=float )
-for sample_id in range( len(sample_table) ) :
-	sample_index     = int( sample_id / n_var )
-	var_id           = sample_id % n_var
-	assert sample_id == sample_index * n_var + var_id
-	var_value        = sample_table[sample_id]['var_value']
+for row in sample_table :
+	sample_index = row['sample_index']
+	var_id       = row['var_id']
+	var_value    = row['var_value']
 	sample_array[sample_index, var_id] = var_value
 sample_mean = numpy.mean(sample_array, axis=0)
 sample_std  = numpy.std(sample_array, axis=0, ddof=1)
@@ -348,10 +347,10 @@ for var_id in range( n_var ) :
 		max_error = max(abs(fit_value), max_error)
 	else :
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
-	mean_value   = sample_mean[var_id]
-	std_value    = sample_std[var_id]
-	max_error = max(abs(mean_value - fit_value), max_error)
-	max_error = max(std_value, max_error)
+	mean_value    = sample_mean[var_id]
+	std_value     = sample_std[var_id]
+	max_error     = max(abs(mean_value - fit_value), max_error)
+	max_error     = max(std_value, max_error)
 if max_error > 5e-2 :
 	print('random_seed      = ', random_seed)
 	print('max_error        = ', max_error)

@@ -71,6 +71,7 @@ standard = {
 }
 standard_random_effect = 1.0   # s_r
 number_sample          = 500   # number of posterior samples to generate
+number_metropolis      = 10 * number_sample
 # %$$
 #
 # $head Source Code$$
@@ -211,7 +212,7 @@ def example_db (file_name) :
 			'density':  'uniform',
 			'lower':    1e-2 * measure['north_america'],
 			'upper':    1e+2 * measure['north_america'],
-			'mean':     measure['north_america'],
+			'mean':     measure['north_america'] / 3.0,
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -303,9 +304,9 @@ connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
 var_table     = dismod_at.get_table_dict(connection, 'var')
-node_table  = dismod_at.get_table_dict(connection, 'node')
-rate_table  = dismod_at.get_table_dict(connection, 'rate')
-sample_dict  = dismod_at.get_table_dict(connection, 'sample')
+node_table    = dismod_at.get_table_dict(connection, 'node')
+rate_table    = dismod_at.get_table_dict(connection, 'rate')
+sample_table  = dismod_at.get_table_dict(connection, 'sample')
 # -----------------------------------------------------------------------
 # map from node name to variable id
 node_name2var_id = dict()
@@ -319,44 +320,47 @@ for var_id in range(len(var_table) ) :
 #
 # convert samples to a numpy array
 sample_array = numpy.zeros( (number_sample, 3), dtype = float )
-for row in sample_dict :
+for row in sample_table :
 	var_id                              = row['var_id']
 	sample_index                        = row['sample_index']
 	sample_array[sample_index, var_id ] = row['var_value']
 #
 # compute statistics
 var_avg = numpy.average(sample_array, axis=0);
-var_std = numpy.std(sample_array, axis=0);
+var_std = numpy.std(sample_array, axis=0, ddof=1);
 # -----------------------------------------------------------------------
 # now use MCMC to calculate the same values
+print('mcmc')
 numpy.random.seed( seed = random_seed )
-m          = 10 * number_sample
 x0         = numpy.array( [ 1e-2, 0.0, 0.0 ] )
 s          = numpy.array( [ 1e-3, 1e-1, 1e-1] )
-(a, c)     = dismod_at.metropolis(log_f, m, x0, s)
-burn_in    = int( 0.1 * m )
+(a, c)     = dismod_at.metropolis(log_f, number_metropolis, x0, s)
+burn_in    = int( 0.1 * number_metropolis )
 c          = c[burn_in :, :]
 x_avg_mcmc = numpy.average(c, axis=0)
-x_std_mcmc = numpy.std(c, axis=0)
+x_std_mcmc = numpy.std(c, axis=0, ddof=1)
 mcmc_order = [ 'north_america', 'mexico', 'canada' ]
 # -----------------------------------------------------------------------
 # now check values
 for i in range(3) :
 	node_name = mcmc_order[i]
-	value     = var_avg[ node_name2var_id[node_name] ]
-	check     = x_avg_mcmc[i]
-	avg_diff  = check / value - 1.0
-	if abs( avg_diff ) > 0.05 :
-		print('avg_diff = ', avg_diff, ', random_seed = ', random_seed )
+	var_id    = node_name2var_id[node_name]
+	value     = var_avg[var_id]
+	mcmc      = x_avg_mcmc[i]
+	err       = value / mcmc - 1.0
+	if abs( err ) > 0.05 :
+		print(node_name, '_avg (value, mcmc, err) = ', value, mcmc, err)
+		print('random_seed = ', random_seed )
 		assert(False)
-	value     = var_std[ node_name2var_id[node_name] ]
-	check     = x_std_mcmc[i]
-	std_diff  = check / value - 1.0
+	value     = var_std[var_id]
+	mcmc      = x_std_mcmc[i]
+	err       = value / mcmc  - 1.0
 	# This is a small sample case (only three data points)
 	# so we do not expect the asymptotic statistics to be correct.
 	# Note that in this case, the asymptotics are an over estimate.
-	if std_diff >= 0.0 or abs(std_diff) > 0.5 :
-		print('std_diff = ', std_diff, ', random_seed = ', random_seed )
+	if err <= 0.0 or abs(err) > 0.5 :
+		print(node_name, '_std (value, mcmc, err) = ', value, mcmc, err)
+		print('random_seed = ', random_seed )
 		assert(False)
 print('asymptotic.py: OK')
 # END PYTHON
