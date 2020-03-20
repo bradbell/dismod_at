@@ -35,6 +35,7 @@ FOREACH(user_case
 	ill_condition
 	jump_at_age
 	lasso_covariate
+	mathematical
 	metropolis
 	no_children
 	posterior

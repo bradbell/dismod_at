@@ -302,16 +302,16 @@ dismod_at.system_command_prc(
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
-# get variable and fit_var tables
+# get tables
 var_table     = dismod_at.get_table_dict(connection, 'var')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
 sample_table  = dismod_at.get_table_dict(connection, 'sample')
+assert len(var_table) == 3
 # -----------------------------------------------------------------------
 # map from node name to variable id
 node_name2var_id = dict()
 for var_id in range(len(var_table) ) :
-	assert var_id < 3
 	row = var_table[var_id]
 	assert row['var_type'] == 'rate'
 	assert rate_table[row['rate_id']]['rate_name']  == 'iota'
@@ -342,7 +342,7 @@ x_std_mcmc = numpy.std(c, axis=0, ddof=1)
 mcmc_order = [ 'north_america', 'mexico', 'canada' ]
 # -----------------------------------------------------------------------
 # now check values
-for i in range(3) :
+for i in range( len(var_table) ) :
 	node_name = mcmc_order[i]
 	var_id    = node_name2var_id[node_name]
 	value     = var_avg[var_id]
@@ -358,7 +358,7 @@ for i in range(3) :
 	# This is a small sample case (only three data points)
 	# so we do not expect the asymptotic statistics to be correct.
 	# Note that in this case, the asymptotics are an over estimate.
-	if err <= 0.0 or abs(err) > 0.5 :
+	if err <= 0.0 or abs(err) > 0.6 :
 		print(node_name, '_std (value, mcmc, err) = ', value, mcmc, err)
 		print('random_seed = ', random_seed )
 		assert(False)

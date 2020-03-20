@@ -351,6 +351,7 @@ connection  = dismod_at.create_connection(file_name, new)
 var_table   = dismod_at.get_table_dict(connection, 'var')
 rate_table  = dismod_at.get_table_dict(connection, 'rate')
 node_table  = dismod_at.get_table_dict(connection, 'node')
+assert len(var_table) == 3
 #
 tbl_name         = 'truth_var'
 col_name         = [ 'truth_var_value' ]
@@ -381,10 +382,18 @@ connection.close()
 # sample simulate results
 #
 ns_string = str(number_sample)
-dismod_at.system_command_prc([ program, file_name, 'simulate', ns_string ])
-dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ] )
-dismod_at.system_command_prc([ program, file_name, 'set', 'scale_var', 'truth_var' ] )
-dismod_at.system_command_prc([ program, file_name, 'sample', 'simulate', ns_string ])
+dismod_at.system_command_prc(
+	[ program, file_name, 'simulate', ns_string ]
+)
+dismod_at.system_command_prc(
+	[ program, file_name, 'set', 'start_var', 'truth_var' ]
+)
+dismod_at.system_command_prc(
+	[ program, file_name, 'set', 'scale_var', 'truth_var' ]
+)
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'simulate', ns_string ]
+)
 #
 new          = False
 connection   = dismod_at.create_connection(file_name, new)
@@ -394,7 +403,6 @@ sample_table = dismod_at.get_table_dict(connection, 'sample')
 sample_array = numpy.zeros( (number_sample, 3), dtype = float )
 for row in sample_table :
 	var_id                              = row['var_id']
-	assert( var_id < 3 )
 	sample_index                        = row['sample_index']
 	sample_array[sample_index, var_id ] = row['var_value']
 #
@@ -415,7 +423,7 @@ mcmc_std   = numpy.std(c, axis=0, ddof=1)
 mcmc_order = [ 'north_america', 'mexico', 'canada' ]
 # -----------------------------------------------------------------------
 # now compare values
-for i in range(3) :
+for i in range( len(var_table) ) :
 	# node that this model variable corresponds to
 	node_name = mcmc_order[i]
 	var_id    = node_name2var_id[node_name]

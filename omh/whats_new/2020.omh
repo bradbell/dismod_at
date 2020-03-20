@@ -37,6 +37,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 03-20$$
+Add the $cref user_mathematical.py$$ example.
+
 $head 03-19$$
 Update to using version cppad_mixed-20200319.
 This fixes some asserts during the
