@@ -501,7 +501,7 @@ def log_det_random_hessian(fixed_effect, random_effect) :
 	log_det  = numpy.sum( numpy.log(theta * g + 1) / s_sq )
 	return log_det
 # -----------------------------------------------------------------------
-# Some constants
+# Some values
 #
 # s_sq
 s_sq         = standard_dev * standard_dev
@@ -531,7 +531,7 @@ exp_u_minus  = numpy.exp( uhat_minus )
 exp_2u       = numpy.exp( 2.0 * uhat )
 exp_2u_plus  = numpy.exp( 2.0 * uhat_plus )
 exp_2u_minus = numpy.exp( 2.0 * uhat_minus )
-#
+# -
 # check that f_u ( theta , uhat ) = 0
 f_u = ( theta * theta * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
 assert all( abs(f_u) < 1e-13 )
@@ -540,28 +540,28 @@ assert all( abs(f_u) < 1e-13 )
 g            = 2.0 * theta * exp_2u - y * exp_u
 g_plus       = 2.0 * theta_plus * exp_2u_plus - y * exp_u_plus
 g_minus       = 2.0 * theta_minus * exp_2u_minus - y * exp_u_minus
-#
+# ---------------------------------------------------------------------------
 # duhat_dtheta = uhat^{(1)} ( \theta )
 duhat_dtheta = - g / (theta * g + 1)
 #
 # check duhat_dtheta
 check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
 assert all( abs( check / duhat_dtheta - 1.0 ) < 1e-4 )
-#
+# ---------------------------------------------------------------------------
 # dg_dtheta = g^{(1)} ( theta )
 dg_dtheta  = 2.0 * exp_2u + (4.0 * theta * exp_2u - y * exp_u) * duhat_dtheta
 #
 # check dg_dtheta
 check      = (g_plus - g_minus) / (2.0 * delta_theta)
 assert all( abs(check / dg_dtheta - 1.0) < 1e-4 )
-#
+# --------------------------------------------------------------------------
 # d2uhat_dtheta = uhat^{(2)} ( theta )
 d2uhat_d2theta = (g * g - dg_dtheta) / ( (theta * g + 1) * (theta * g + 1) )
 #
 # check d2uhat_d2theta
 check = (uhat_plus - 2.0 * uhat + uhat_minus) / (delta_theta * delta_theta)
 assert all( abs( check / d2uhat_d2theta - 1.0 ) < 1e-4 )
-#
+# --------------------------------------------------------------------------
 # d2f_d2theta = f_{theta,theta} ( theta , uhat )
 d2f_d2theta = numpy.sum( exp_2u ) / s_sq
 #
@@ -585,7 +585,18 @@ F       = random_likelihood(theta, uhat)
 F_minus = random_likelihood(theta - delta_theta, uhat_minus)
 check = (F_plus - 2.0 * F + F_minus) / (delta_theta * delta_theta)
 assert abs( check / d2F_d2theta - 1.0 ) < 1e-4
+# -----------------------------------------------------------------------
+# dh_dtheta = h^{(1)} ( theta )
+dh_dtheta = g + theta * dg_dtheta
 #
+# dG_dtheta = G^{(1)} ( theta )
+dG_dtheta = numpy.sum( dh_dtheta / h ) / 2.0
+#
+# check dG_dtheta
+G_plus  = log_det_random_hessian(theta + delta_theta, uhat_plus) / 2.0
+G_minus = log_det_random_hessian(theta - delta_theta, uhat_minus) / 2.0
+check   = (G_plus - G_minus) / (2.0 * delta_theta)
+assert abs(check / dG_dtheta - 1.0) < 1e-4
 # -----------------------------------------------------------------------
 print('mathematical.py: OK')
 # END PYTHON
