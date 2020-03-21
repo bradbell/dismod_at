@@ -62,7 +62,17 @@ random_seed = int( time.time() )
 #	\right)
 # \] $$
 #
-# $head Gradient W.R.T. Random Effects$$
+# $head Gradient w.r.t. Fixed Effects$$
+# $latex \[
+#	f_\theta ( \theta, u )
+#	=
+#	\frac{1}{s^2} [
+#		\theta \exp( 2 u_0 ) - y_0 \exp( u_0 ) +
+#		\theta \exp( 2 u_1 ) - y_1 \exp( u_1 )
+#	]
+# \] $$
+#
+# $head Gradient w.r.t. Random Effects$$
 # $latex \[
 #	f_u ( \theta, u )
 #	=
@@ -75,7 +85,14 @@ random_seed = int( time.time() )
 #	\right)
 # \] $$
 #
-# $head Hessian W.R.T. Random Effects$$
+# $head Hessian w.r.t. Fixed Effects$$
+# $latex \[
+#	f_{\theta,\theta} ( \theta, u )
+#	=
+#	\frac{1}{s^2} [ \exp( 2 u_0 ) + \exp( 2 u_1 ) ]
+# \] $$
+#
+# $head Hessian w.r.t. Random Effects$$
 # $latex \[
 #	f_{u,u} ( \theta, u )
 #	=
@@ -125,12 +142,13 @@ random_seed = int( time.time() )
 #		{ 2 \theta^2 \exp( 2 u_i ) - y_i \theta \exp( u_i ) + 1}
 # \] $$
 # evaluated at $latex u_i = \hat{u}_i ( \theta )$$.
-# Defining $latex g_i ( \theta )$$ by
+# Defining $latex g_i ( \theta )$$ by the first equation,
+# and computing its derivatives in the next two we have
 # $latex \[
 #	g_i ( \theta ) = 2 \theta \exp[ 2 \hat{u}_i ( \theta) ]
 #	            - y_i \exp[ \hat{u}_i ( \theta ) ]
 # \] $$
-# we can rewrite the derivative above as
+# we can write the derivative $latex \hat{u}_i ( \theta )$$ as
 # $latex \[
 #	\hat{u}_i^{(1)} ( \theta ) = -
 #		\frac{ g_i ( \theta ) }{ \theta g_i ( \theta ) + 1}
@@ -153,13 +171,90 @@ random_seed = int( time.time() )
 #	\frac{ g_i ( \theta )^2 - g_i ^{(1)}( \theta )}
 #	{ [ \theta g_i ( \theta ) + 1 ]^2 }
 # \] $$
+# $latex \[
+#	g_i^{(2)} ( \theta ) =
+#	8 \exp[ 2 \hat{u}_i ( \theta) ] \hat{u}_i^{(1)} ( \theta )  +
+#	8 \theta \exp [ 2 \hat{u}_i ( \theta ) ] \hat{u}_i^{(1)} ( \theta )^2 -
+#	y_i \exp [ \hat{u}_i ( \theta ) ] \hat{u}_i^{(1)} ( \theta )^2 -
+#	y_i \exp [ \hat{u}_i ( \theta ) ] \hat{u}_i^{(2)} ( \theta )
+# \] $$
 #
 # $head Laplace Approximation$$
 # The Laplace approximation (up to a constant), as a function of the
 # fixed effects, is:
 # $latex \[
-#	L ( \theta ) = f[ \theta , \hat{u} ( \theta ) ] +
-#	\frac{1}{2} \log \det f_{u,u} [ \theta , \hat{u} ( \theta ) ]
+#	L ( \theta ) = F( \theta ) + G( \theta )
+# \] $$
+# where $latex F( \theta )$$ and $latex G( theta )$$ are defined by
+# $latex \[
+#	F( \theta ) = f[ \theta , \hat{u} ( \theta ) ]
+# \] $$
+# $latex \[
+#	G( \theta ) =\frac{1}{2} \log \det f_{u,u} [ \theta , \hat{u} ( \theta ) ]
+# \] $$
+# The first and second derivative of $latex F( \theta )$$ are given by
+# $latex \[
+#	F^{(1)} ( \theta ) =
+#	f_\theta [ \theta , \hat{u} ( \theta ) ] +
+#	f_u [ \theta , \hat{u} ( \theta ) ]  \hat{u}^{(1)} ( \theta )
+# \] $$
+# $latex \[
+#	F^{(2)} ( \theta ) =
+#	f_{\theta,\theta} [ \theta , \hat{u} ( \theta ) ] +
+#	2 f_{\theta,u} [ \theta , \hat{u} ( \theta ) ] \hat{u}^{(1)} ( \theta ) +
+#	\hat{u}^{(1)} (\theta)^\R{T}
+#		f_{u,u} [ \theta , \hat{u} ( \theta ) ]  \hat{u}^{(1)} ( \theta )
+# \] $$
+# Combining the definition of $latex G( \theta )$$, $latex g_i ( \theta )$$
+# and the formula for $latex f_{u,u} ( \theta , u )$$ we have
+# $latex \[
+#	G( \theta )
+#	=
+#	\frac{1}{s^2} \log \det \left(
+#	\begin{array}{cc}
+#		\theta g_0 ( \theta ) + 1 & 0
+#		\\
+#		0   & 2 \theta g_1 ( \theta ) + 1
+#	\end{array}
+#	\right)
+# \] $$
+# Defining $latex h_i ( \theta )$$ by
+# $latex \[
+#	h_i ( \theta ) = \theta g_i ( \theta ) + 1
+# \]$$
+# we obtain the representation
+# $latex \[
+#	G ( \theta ) =
+#	+ \frac{1}{2} \left(
+#	\log [ h_0 ( \theta ) ] + \log [ h_1 ( \theta ) ] - \log ( s^4 )
+#	\right)
+# \] $$
+# The first and second derivative of $latex h_i ( \theta )$$
+# and $latex G( \theta )$$ are given by
+# $latex \[
+#	h_i^{(1)} ( \theta ) = g_i ( \theta ) + \theta g_i^{(1)} ( \theta )
+# \] $$
+# $latex \[
+# G^{(1)} ( \theta ) =
+#	\frac{1}{2} \left(
+#		\frac{ h_0^{(1)} ( \theta ) }{ h_0 ( \theta ) }
+#		+
+#		\frac{ h_1^{(1)} ( \theta ) }{ h_1 ( \theta ) }
+#	\right)
+# \] $$
+# $latex \[
+#	h_i^{(2)} ( \theta ) = 2 g_i^{(1)} ( \theta ) + \theta g_i^{(2)} ( \theta )
+# \] $$
+# $latex \[
+# G^{(2)} ( \theta ) =
+#	\frac{1}{2} \left(
+#		\frac{ h_0 ( \theta ) h_0^{(2)} ( \theta ) - h_0^{(1)} ( \theta )^2 }
+#		{ h_0 ( \theta )^2 }
+#		+
+#		\frac{ h_1 ( \theta ) h_1^{(2)} ( \theta ) - h_1^{(1)} ( \theta )^2 }
+#		{ h_1 ( \theta )^2 }
+#		+
+#	\right)
 # \] $$
 #
 # $head Source Code$$
@@ -384,6 +479,15 @@ def optimal_random_effect(fixed_effect) :
 	#
 	uhat          = numpy.array( [ uhat_0, uhat_1 ] )
 	return uhat
+# ------------------------------------------------------------------------
+def random_likelihood(fixed_effect, random_effect) :
+	theta    = fixed_effect
+	u        = random_effect
+	y        = numpy.array( [y_0, y_1] )
+	residual = y - theta * numpy.exp(u)
+	residual = numpy.append(residual, u)
+	sum_sq   = numpy.sum( residual * residual )
+	return sum_sq / (2.0 * standard_dev * standard_dev)
 # -----------------------------------------------------------------------
 # Some constants
 #
@@ -415,7 +519,7 @@ assert all( abs(f_u) < 1e-13 )
 # g(theta)
 g = 2.0 * theta * exp_2u - y * exp_u
 #
-# duhat_dtheta
+# duhat_dtheta = uhat^{(1)} ( \theta )
 duhat_dtheta = - g / (theta * g + 1)
 #
 # delta_theta
@@ -427,15 +531,39 @@ uhat_minus = optimal_random_effect(theta - delta_theta)
 check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
 assert all( abs( check / duhat_dtheta - 1.0 ) < 1e-4 )
 #
-# dg_dtheta
+# dg_dtheta = g^{(1)} ( theta )
 dg_dtheta  = 2.0 * exp_2u + (4.0 * theta * exp_2u - y * exp_u) * duhat_dtheta
 #
-# d2uhat_dtheta
+# d2uhat_dtheta = uhat^{(2)} ( theta )
 d2uhat_d2theta = (g * g - dg_dtheta) / ( (theta * g + 1) * (theta * g + 1) )
 #
 # check d2uhat_d2theta
 check = (uhat_plus - 2.0 * uhat + uhat_minus) / (delta_theta * delta_theta)
 assert all( abs( check / d2uhat_d2theta - 1.0 ) < 1e-3 )
+#
+# d2f_d2theta = f_{theta,theta} ( theta , uhat )
+d2f_d2theta = numpy.sum( exp_2u ) / s_sq
+#
+# d2f_dtheta_du = f_{theta, u} ( theta , uhat )
+d2f_dtheta_du = ( 2 * theta * exp_2u - y * exp_u ) / s_sq
+#
+# h(theta)
+h = theta * g + 1
+#
+# d2f_d2u = diagonal of f_{u,u} ( theta , uhat )
+d2f_d2u   = numpy.array( h )
+#
+# d2F_d2theta = F^{(2)} ( theta )
+d2F_d2theta  = d2f_d2theta
+d2F_d2theta += 2.0 * numpy.dot( d2f_dtheta_du, duhat_dtheta )
+d2F_d2theta += numpy.sum(duhat_dtheta * d2f_d2u * duhat_dtheta )
+#
+# check d2F_d2theta
+F_plus  = random_likelihood(theta + delta_theta, uhat_plus)
+F       = random_likelihood(theta, uhat)
+F_minus = random_likelihood(theta - delta_theta, uhat_minus)
+check = (F_plus - 2.0 * F + F_minus) / (delta_theta * delta_theta)
+assert abs( check / d2F_d2theta - 1.0 ) < 1e-3
 #
 # -----------------------------------------------------------------------
 print('mathematical.py: OK')
