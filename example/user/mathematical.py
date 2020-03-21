@@ -451,7 +451,7 @@ for var_id in range(len(var_table) ) :
 	node_name = node_table[row['node_id']]['node_name']
 	node_name2var_id[node_name] = var_id
 # -----------------------------------------------------------------------
-# optimal_random_effect(fixed_effect)
+# uhat(theta)
 def optimal_random_effect(fixed_effect) :
 	#
 	# set start_var value for the fixed effects
@@ -480,6 +480,7 @@ def optimal_random_effect(fixed_effect) :
 	uhat          = numpy.array( [ uhat_0, uhat_1 ] )
 	return uhat
 # ------------------------------------------------------------------------
+# f(theta, u)
 def random_likelihood(fixed_effect, random_effect) :
 	theta    = fixed_effect
 	u        = random_effect
@@ -489,57 +490,77 @@ def random_likelihood(fixed_effect, random_effect) :
 	sum_sq   = numpy.sum( residual * residual )
 	return sum_sq / (2.0 * standard_dev * standard_dev)
 # -----------------------------------------------------------------------
+# log det f_{u,u} ( theta , u )
+def log_det_random_hessian(fixed_effect, random_effect) :
+	theta    = fixed_effect
+	u        = random_effect
+	exp_u    = numpy.exp( u )
+	exp_2u   = numpy.exp( 2.0 * u )
+	g        = 2.0 * theta * exp_2u - y * exp_u
+	s_sq     = standard_dev * standard_dev
+	log_det  = numpy.sum( numpy.log(theta * g + 1) / s_sq )
+	return log_det
+# -----------------------------------------------------------------------
 # Some constants
 #
 # s_sq
-s_sq      = standard_dev * standard_dev
+s_sq         = standard_dev * standard_dev
 #
 # y
-y         = numpy.array( [ y_0, y_1 ] )
+y            = numpy.array( [ y_0, y_1 ] )
+#
+# delta_theta
+delta_theta  = theta_true / 500.0
 #
 # theta
-theta = theta_true
+theta        = theta_true
+theta_plus   = theta + delta_theta
+theta_minus  = theta - delta_theta
 #
 # uhat
-uhat = optimal_random_effect(theta)
-#
-# theta_sq
-theta_sq = theta * theta
+uhat         = optimal_random_effect(theta)
+uhat_plus    = optimal_random_effect(theta_plus)
+uhat_minus   = optimal_random_effect(theta_minus)
 #
 # exp_u
-exp_u = numpy.exp( uhat )
+exp_u        = numpy.exp( uhat )
+exp_u_plus   = numpy.exp( uhat_plus )
+exp_u_minus  = numpy.exp( uhat_minus )
 #
 # exp_2u
-exp_2u = numpy.exp( 2.0 * uhat )
+exp_2u       = numpy.exp( 2.0 * uhat )
+exp_2u_plus  = numpy.exp( 2.0 * uhat_plus )
+exp_2u_minus = numpy.exp( 2.0 * uhat_minus )
 #
 # check that f_u ( theta , uhat ) = 0
-f_u = ( theta_sq * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
+f_u = ( theta * theta * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
 assert all( abs(f_u) < 1e-13 )
 #
 # g(theta)
-g = 2.0 * theta * exp_2u - y * exp_u
+g            = 2.0 * theta * exp_2u - y * exp_u
+g_plus       = 2.0 * theta_plus * exp_2u_plus - y * exp_u_plus
+g_minus       = 2.0 * theta_minus * exp_2u_minus - y * exp_u_minus
 #
 # duhat_dtheta = uhat^{(1)} ( \theta )
 duhat_dtheta = - g / (theta * g + 1)
 #
-# delta_theta
-delta_theta = theta_true / 100.0
-#
 # check duhat_dtheta
-uhat_plus  = optimal_random_effect(theta + delta_theta)
-uhat_minus = optimal_random_effect(theta - delta_theta)
 check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
 assert all( abs( check / duhat_dtheta - 1.0 ) < 1e-4 )
 #
 # dg_dtheta = g^{(1)} ( theta )
 dg_dtheta  = 2.0 * exp_2u + (4.0 * theta * exp_2u - y * exp_u) * duhat_dtheta
 #
+# check dg_dtheta
+check      = (g_plus - g_minus) / (2.0 * delta_theta)
+assert all( abs(check / dg_dtheta - 1.0) < 1e-4 )
+#
 # d2uhat_dtheta = uhat^{(2)} ( theta )
 d2uhat_d2theta = (g * g - dg_dtheta) / ( (theta * g + 1) * (theta * g + 1) )
 #
 # check d2uhat_d2theta
 check = (uhat_plus - 2.0 * uhat + uhat_minus) / (delta_theta * delta_theta)
-assert all( abs( check / d2uhat_d2theta - 1.0 ) < 1e-3 )
+assert all( abs( check / d2uhat_d2theta - 1.0 ) < 1e-4 )
 #
 # d2f_d2theta = f_{theta,theta} ( theta , uhat )
 d2f_d2theta = numpy.sum( exp_2u ) / s_sq
@@ -563,7 +584,7 @@ F_plus  = random_likelihood(theta + delta_theta, uhat_plus)
 F       = random_likelihood(theta, uhat)
 F_minus = random_likelihood(theta - delta_theta, uhat_minus)
 check = (F_plus - 2.0 * F + F_minus) / (delta_theta * delta_theta)
-assert abs( check / d2F_d2theta - 1.0 ) < 1e-3
+assert abs( check / d2F_d2theta - 1.0 ) < 1e-4
 #
 # -----------------------------------------------------------------------
 print('mathematical.py: OK')
