@@ -156,8 +156,10 @@ random_seed = int( time.time() )
 # $latex \[
 #	g_i^{(1)} ( \theta ) =
 #	2 \exp[ 2 \hat{u}_i ( \theta) ]  +
-#	4 \theta \exp [ 2 \hat{u}_i ( \theta ) ] \hat{u}_i^{(1)} ( \theta ) -
-#	y_i \exp [ \hat{u}_i ( \theta ) ] \hat{u}_i^{(1)} ( \theta )
+#	\left(
+#		4 \theta \exp [ 2 \hat{u}_i ( \theta ) ] -
+#		y_i \exp [ \hat{u}_i ( \theta ) ]
+#	\right) \hat{u}_i^{(1)} ( \theta )
 # \] $$
 # $latex \[
 #	\hat{u}_i^{(2)} ( \theta ) =
@@ -172,11 +174,20 @@ random_seed = int( time.time() )
 #	{ [ \theta g_i ( \theta ) + 1 ]^2 }
 # \] $$
 # $latex \[
-#	g_i^{(2)} ( \theta ) =
-#	8 \exp[ 2 \hat{u}_i ( \theta) ] \hat{u}_i^{(1)} ( \theta )  +
-#	8 \theta \exp [ 2 \hat{u}_i ( \theta ) ] \hat{u}_i^{(1)} ( \theta )^2 -
-#	y_i \exp [ \hat{u}_i ( \theta ) ] \hat{u}_i^{(1)} ( \theta )^2 -
-#	y_i \exp [ \hat{u}_i ( \theta ) ] \hat{u}_i^{(2)} ( \theta )
+#	\begin{array}{rcl}
+#	g_i^{(2)} ( \theta ) & = &
+#	8 \exp[ 2 \hat{u}_i ( \theta) ] \hat{u}_i^{(1)} ( \theta )
+#	\\ & + &
+#	\left(
+#		8 \theta \exp [ 2 \hat{u}_i ( \theta ) ]  -
+#		y_i \exp [ \hat{u}_i ( \theta ) ]
+#	\right) \hat{u}_i^{(1)} ( \theta )^2
+#	\\ & + &
+#	\left(
+#		4 \theta \exp [ 2 \hat{u}_i ( \theta ) ] -
+#		y_i \exp [ \hat{u}_i ( \theta ) ]
+#	\right) \hat{u}_i^{(2)} ( \theta )
+#	\end{array}
 # \] $$
 #
 # $head Laplace Approximation$$
@@ -557,7 +568,7 @@ assert all( abs(f_u_minus) < 1e-13 )
 # g(theta)
 g            = 2.0 * theta * exp_2u - y * exp_u
 g_plus       = 2.0 * theta_plus * exp_2u_plus - y * exp_u_plus
-g_minus       = 2.0 * theta_minus * exp_2u_minus - y * exp_u_minus
+g_minus      = 2.0 * theta_minus * exp_2u_minus - y * exp_u_minus
 # ---------------------------------------------------------------------------
 # duhat_dtheta = uhat^{(1)} ( \theta )
 duhat_dtheta = - g / (theta * g + 1)
@@ -615,5 +626,13 @@ G_minus = log_det_random_hessian(theta_minus, uhat_minus) / 2.0
 check   = (G_plus - G_minus) / (2.0 * delta_theta)
 check_rel_error(check, dG_dtheta, 1e-6)
 # -----------------------------------------------------------------------
+# d2g_d2theta = g^{(2)} ( theta )
+duhat_dtheta_sq = duhat_dtheta * duhat_dtheta
+d2g_d2theta     = 8.0 * exp_2u * duhat_dtheta
+d2g_d2theta    += (8.0 * theta * exp_2u - y * exp_u) * duhat_dtheta_sq
+d2g_d2theta    += (4.0 * theta * exp_2u - y * exp_u) * d2uhat_d2theta
+check        = (g_plus - 2.0 * g + g_minus) / (delta_theta * delta_theta)
+check_rel_error(check, d2g_d2theta, 1e-6)
+#
 print('mathematical.py: OK')
 # END PYTHON
