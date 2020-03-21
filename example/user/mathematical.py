@@ -10,15 +10,18 @@
 # ---------------------------------------------------------------------------
 # $begin user_mathematical.py$$ $newlinech #$$
 # $spell
-#	init
-#	dismod
+#	cppad
 # $$
 #
-# $section An Example With Mathematical Explanation$$
+# $section A Simple Example With Detailed Mathematical Explanation$$
 #
 # $head Purpose$$
-# This is a very simple example for which we check many of the
-# dismod_at calculations with analytic formulas
+# This is a detailed mathematical explanation of a very simple example.
+#
+# $head Reference$$
+# See the
+# $href%https://bradbell.github.io/cppad_mixed/doc/theory.htm%theory%$$
+# section of the $code cppad_mixed$$ documentation.
 #
 # $head Notation$$
 # $table
@@ -46,7 +49,7 @@ standard_dev = theta_true # the standard deviation s
 random_seed = int( time.time() )
 # %$$
 #
-# $head Negative Log-Likelihood$$
+# $head Random Likelihood$$
 # The negative log-likelihood for this example, ignoring the constant
 # of integration, is
 # $latex \[
@@ -59,27 +62,105 @@ random_seed = int( time.time() )
 #	\right)
 # \] $$
 #
-# $head Random Effect Gradient$$
+# $head Gradient W.R.T. Random Effects$$
 # $latex \[
 #	f_u ( \theta, u )
 #	=
 #	\frac{1}{s^2} \left(
 #	\begin{array}{c}
-#		\theta^2 \exp( 2 u_0 ) - \theta \exp( u_0 ) y_0  + u_0
+#		\theta^2 \exp( 2 u_0 ) - y_0 \theta \exp( u_0 )  + u_0
 #		\\
-#		\theta^2 \exp( 2 u_1 ) - \theta \exp( u_1 ) y_1  + u_1
+#		\theta^2 \exp( 2 u_1 ) - y_1 \theta \exp( u_1 )  + u_1
+#	\end{array}
+#	\right)
+# \] $$
+#
+# $head Hessian W.R.T. Random Effects$$
+# $latex \[
+#	f_{u,u} ( \theta, u )
+#	=
+#	\frac{1}{s^2} \left(
+#	\begin{array}{cc}
+#		2 \theta^2 \exp( 2 u_0 ) - y_0 \theta \exp( u_0 ) + 1   & 0
+#		\\
+#		0   & 2 \theta^2 \exp( 2 u_1 ) - y_1 \theta \exp( u_1 ) + 1
+#	\end{array}
+#	\right)
+# \] $$
+#
+# $head Hessian Cross Term$$
+# $latex \[
+#	f_{u,\theta} ( \theta, u )
+#	=
+#	\frac{1}{s^2} \left(
+#	\begin{array}{c}
+#		2 \theta \exp( 2 u_0 ) - y_0 \exp( u_0 )
+#		\\
+#		2 \theta \exp( 2 u_1 ) - y_1 \exp( u_1 )
 #	\end{array}
 #	\right)
 # \] $$
 #
 # $head Optimal Random Effects$$
+#
+# $subhead Implicit Function Definition$$
 # The optimal random effects $latex \hat{u} ( \theta )$$
 # solve the equation
 # $latex \[
 #	f_u [ \theta , \hat{u} ( \theta ) ] = 0
 # \] $$
 #
-# $end
+# $subhead  Derivatives of Optimal Random Effects$$
+# Using the implicit function theorem we have
+# $latex \[
+#	\hat{u}^{(1)} ( \theta )= -
+#		f_{u,u} [ \theta , \hat{u} ( \theta) ]^{-1}
+#			f_{u,\theta} [ \theta , \hat{u} ( \theta) ]
+# \] $$
+# Substituting in the formulas above for the Hessian terms on the
+# right hand side we obtain:
+# $latex \[
+#	\hat{u}_i^{(1)} ( \theta ) = -
+#		\frac{ 2 \theta \exp( 2 u_i ) - y_i \exp( u_i )}
+#		{ 2 \theta^2 \exp( 2 u_i ) - y_i \theta \exp( u_i ) + 1}
+# \] $$
+# evaluated at $latex u_i = \hat{u}_i ( \theta )$$.
+# Defining $latex g_i ( \theta )$$ by
+# $latex \[
+#	g_i ( \theta ) = 2 \theta \exp[ 2 \hat{u}_i ( \theta) ]
+#	            - y_i \exp[ \hat{u}_i ( \theta ) ]
+# \] $$
+# we can rewrite the derivative above as
+# $latex \[
+#	\hat{u}_i^{(1)} ( \theta ) = -
+#		\frac{ g_i ( \theta ) }{ \theta g_i ( \theta ) + 1}
+# \] $$
+# $latex \[
+#	g_i^{(1)} ( \theta ) =
+#	2 \exp[ 2 \hat{u}_i ( \theta) ]  +
+#	4 \theta \exp [ 2 \hat{u}_i ( \theta ) ] \hat{u}_i^{(1)} ( \theta ) -
+#	y_i \exp [ \hat{u}_i ( \theta ) ] \hat{u}_i^{(1)} ( \theta )
+# \] $$
+# $latex \[
+#	\hat{u}_i^{(2)} ( \theta ) =
+#	\frac{ g_i ( \theta ) [ g_i ( \theta ) + \theta g_i ^{(1)} ( \theta ) ] }
+#	{ [ \theta g_i ( \theta ) + 1 ]^2 }
+#	-
+#	\frac{ g_i ^{(1)}( \theta ) }{ \theta g_i ( \theta ) + 1}
+# \] $$
+# $latex \[
+#	\hat{u}_i^{(2)} ( \theta ) =
+#	\frac{ g_i ( \theta ) g_i ( \theta ) - g_i ^{(1)}( \theta )}
+#	{ [ \theta g_i ( \theta ) + 1 ]^2 }
+# \] $$
+#
+# $head Laplace Approximation$$
+# The Laplace approximation (up to a constant), as a function of the
+# fixed effects, is:
+# $latex \[
+#	L ( \theta ) = f[ \theta , \hat{u} ( \theta ) ] +
+#	\frac{1}{2} \log \det f_{u,u} [ \theta , \hat{u} ( \theta ) ]
+# \] $$
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -255,7 +336,6 @@ example_db(file_name)
 #
 program   = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'random' ])
 # -----------------------------------------------------------------------
 # get tables
 new           = False
@@ -263,11 +343,10 @@ connection    = dismod_at.create_connection(file_name, new)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
-fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 connection.close()
 dismod_at.db2csv_command(file_name)
 # -----------------------------------------------------------------------
-# map from node name to variable id
+# node_name2var_id
 node_name2var_id = dict()
 for var_id in range(len(var_table) ) :
 	assert var_id < 3
@@ -277,41 +356,77 @@ for var_id in range(len(var_table) ) :
 	node_name = node_table[row['node_id']]['node_name']
 	node_name2var_id[node_name] = var_id
 # -----------------------------------------------------------------------
-# Some valuse related to the fit
-#
-# theta
-var_id    = node_name2var_id['world']
-theta     = fit_var_table[var_id]['fit_var_value']
-#
-# u
-var_id    = node_name2var_id['child_0']
-u_0       = fit_var_table[var_id]['fit_var_value']
-var_id    = node_name2var_id['child_1']
-u_1       = fit_var_table[var_id]['fit_var_value']
-u         = [ u_0, u_1 ]
-#
-# theta_sq
-theta_sq  = theta * theta
-#
-# exp_u
-exp_u     = [ math.exp( u[0] ), math.exp( u[1] ) ]
-#
-# exp_2u
-exp_2u    = [ math.exp( 2.0 * u[0] ), math.exp( 2.0 * u[1] ) ]
+# optimal_random_effect(fixed_effect)
+def optimal_random_effect(fixed_effect) :
+	#
+	# set start_var value for the fixed effects
+	var_id = node_name2var_id['world']
+	sql_cmd  = 'UPDATE start_var SET start_var_value = ' + str(fixed_effect)
+	sql_cmd += ' WHERE start_var_id == ' + str(var_id)
+	new           = False
+	connection    = dismod_at.create_connection(file_name, new)
+	dismod_at.sql_command(connection, sql_cmd)
+	connection.close()
+	#
+	# optimize the random effects
+	dismod_at.system_command_prc([ program, file_name, 'fit', 'random' ])
+	#
+	# retrieve the optimal random effects
+	new           = False
+	connection    = dismod_at.create_connection(file_name, new)
+	fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+	#
+	var_id        = node_name2var_id['child_0']
+	uhat_0        = fit_var_table[var_id]['fit_var_value']
+	#
+	var_id        = node_name2var_id['child_1']
+	uhat_1        = fit_var_table[var_id]['fit_var_value']
+	#
+	uhat          = numpy.array( [ uhat_0, uhat_1 ] )
+	return uhat
+# -----------------------------------------------------------------------
+# Some constants
 #
 # s_sq
 s_sq      = standard_dev * standard_dev
 #
 # y
-y         = [ y_0, y_1 ]
+y         = numpy.array( [ y_0, y_1 ] )
 #
-# tolerance
-tolerance = 1e-12
-# -----------------------------------------------------------------------
-# check optimal random effects u
-for i in range( len(u) ) :
-	f_u_i = ( theta_sq * exp_2u[i] - theta * exp_u[i] * y[i] + u[i] ) / s_sq
-	assert abs( f_u_i ) < tolerance
+# theta
+theta = theta_true
+#
+# uhat
+uhat = optimal_random_effect(theta)
+#
+# theta_sq
+theta_sq = theta * theta
+#
+# exp_u
+exp_u = numpy.exp( uhat )
+#
+# exp_2u
+exp_2u = numpy.exp( 2.0 * uhat )
+#
+# check that f_u ( theta , uhat ) = 0
+f_u = ( theta_sq * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
+assert all( abs(f_u) < 1e-13 )
+#
+# g(theta)
+g = 2.0 * theta * exp_2u - y * exp_u
+#
+# d_uhat_d_theta
+d_uhat_d_theta = - g / (theta * g + 1)
+#
+# delta_theta
+delta_theta = theta_true / 100.0
+#
+# check d_uhat_d_theta
+uhat_plus  = optimal_random_effect(theta + delta_theta)
+uhat_minus = optimal_random_effect(theta - delta_theta)
+check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
+assert all( abs( check / d_uhat_d_theta - 1.0 ) < 1e-4 )
+#
 # -----------------------------------------------------------------------
 print('mathematical.py: OK')
 # END PYTHON
