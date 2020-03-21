@@ -41,7 +41,7 @@
 # $srccode%py%
 import math
 import time
-theta_true   = 1.0
+theta_true   = 0.5
 u_true       = [ 0.5, -0.5 ]
 y_0          = theta_true * math.exp( u_true[0] )
 y_1          = theta_true * math.exp( u_true[1] )
@@ -192,29 +192,33 @@ random_seed = int( time.time() )
 # $latex \[
 #	G( \theta ) =\frac{1}{2} \log \det f_{u,u} [ \theta , \hat{u} ( \theta ) ]
 # \] $$
-# The first and second derivative of $latex F( \theta )$$ are given by
+# The derivative of $latex F( \theta )$$ is given by
 # $latex \[
 #	F^{(1)} ( \theta ) =
 #	f_\theta [ \theta , \hat{u} ( \theta ) ] +
 #	f_u [ \theta , \hat{u} ( \theta ) ]  \hat{u}^{(1)} ( \theta )
 # \] $$
+# It follows from the definition of $latex \hat{u} ( \theta )$$ that
+# $latex f_u [ \theta , \hat{u} ( \theta ) ] = 0$$ and
+# $latex \[
+#	F^{(1)} ( \theta ) = f_\theta [ \theta , \hat{u} ( \theta ) ]
+# \] $$
+# Taking the derivative of the equation above we obtain
 # $latex \[
 #	F^{(2)} ( \theta ) =
 #	f_{\theta,\theta} [ \theta , \hat{u} ( \theta ) ] +
-#	2 f_{\theta,u} [ \theta , \hat{u} ( \theta ) ] \hat{u}^{(1)} ( \theta ) +
-#	\hat{u}^{(1)} (\theta)^\R{T}
-#		f_{u,u} [ \theta , \hat{u} ( \theta ) ]  \hat{u}^{(1)} ( \theta )
+#	f_{\theta,u} [ \theta , \hat{u} ( \theta ) ] \hat{u}^{(1)} ( \theta )
 # \] $$
 # Combining the definition of $latex G( \theta )$$, $latex g_i ( \theta )$$
 # and the formula for $latex f_{u,u} ( \theta , u )$$ we have
 # $latex \[
 #	G( \theta )
 #	=
-#	\frac{1}{s^2} \log \det \left(
+#	\frac{1}{2} \log \det \left(
 #	\begin{array}{cc}
-#		\theta g_0 ( \theta ) + 1 & 0
+#		[ \theta g_0 ( \theta ) + 1 ] / s^2 & 0
 #		\\
-#		0   & 2 \theta g_1 ( \theta ) + 1
+#		0   & [ \theta g_1 ( \theta ) + 1 ] / s^2
 #	\end{array}
 #	\right)
 # \] $$
@@ -497,9 +501,18 @@ def log_det_random_hessian(fixed_effect, random_effect) :
 	exp_u    = numpy.exp( u )
 	exp_2u   = numpy.exp( 2.0 * u )
 	g        = 2.0 * theta * exp_2u - y * exp_u
+	h        = theta * g + 1.0
 	s_sq     = standard_dev * standard_dev
-	log_det  = numpy.sum( numpy.log(theta * g + 1) / s_sq )
+	log_det  = numpy.sum( numpy.log(h / s_sq) )
 	return log_det
+# -----------------------------------------------------------------------
+def check_rel_error(check, value, tolerance) :
+	rel_error = abs( check / value - 1.0 )
+	print(rel_error, tolerance)
+	if numpy.isscalar( rel_error ) :
+		assert rel_error < tolerance
+	else :
+		assert all( rel_error < tolerance )
 # -----------------------------------------------------------------------
 # Some values
 #
@@ -510,7 +523,7 @@ s_sq         = standard_dev * standard_dev
 y            = numpy.array( [ y_0, y_1 ] )
 #
 # delta_theta
-delta_theta  = theta_true / 500.0
+delta_theta  = theta_true / 1000.0
 #
 # theta
 theta        = theta_true
@@ -535,7 +548,12 @@ exp_2u_minus = numpy.exp( 2.0 * uhat_minus )
 # check that f_u ( theta , uhat ) = 0
 f_u = ( theta * theta * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
 assert all( abs(f_u) < 1e-13 )
-#
+f_u_plus = (theta_plus * theta_plus * exp_2u_plus
+         - theta_plus * y  * exp_u_plus  + uhat_plus ) / s_sq
+assert all( abs(f_u_plus) < 1e-13 )
+f_u_minus = (theta_minus * theta_minus * exp_2u_minus
+         - theta_minus * y  * exp_u_minus  + uhat_minus ) / s_sq
+assert all( abs(f_u_minus) < 1e-13 )
 # g(theta)
 g            = 2.0 * theta * exp_2u - y * exp_u
 g_plus       = 2.0 * theta_plus * exp_2u_plus - y * exp_u_plus
@@ -546,21 +564,21 @@ duhat_dtheta = - g / (theta * g + 1)
 #
 # check duhat_dtheta
 check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
-assert all( abs( check / duhat_dtheta - 1.0 ) < 1e-4 )
+check_rel_error(check, duhat_dtheta, 1e-5)
 # ---------------------------------------------------------------------------
 # dg_dtheta = g^{(1)} ( theta )
 dg_dtheta  = 2.0 * exp_2u + (4.0 * theta * exp_2u - y * exp_u) * duhat_dtheta
 #
 # check dg_dtheta
 check      = (g_plus - g_minus) / (2.0 * delta_theta)
-assert all( abs(check / dg_dtheta - 1.0) < 1e-4 )
+check_rel_error(check, dg_dtheta, 1e-6)
 # --------------------------------------------------------------------------
 # d2uhat_dtheta = uhat^{(2)} ( theta )
 d2uhat_d2theta = (g * g - dg_dtheta) / ( (theta * g + 1) * (theta * g + 1) )
 #
 # check d2uhat_d2theta
 check = (uhat_plus - 2.0 * uhat + uhat_minus) / (delta_theta * delta_theta)
-assert all( abs( check / d2uhat_d2theta - 1.0 ) < 1e-4 )
+check_rel_error(check, d2uhat_d2theta, 1e-6)
 # --------------------------------------------------------------------------
 # d2f_d2theta = f_{theta,theta} ( theta , uhat )
 d2f_d2theta = numpy.sum( exp_2u ) / s_sq
@@ -576,15 +594,14 @@ d2f_d2u   = numpy.array( h )
 #
 # d2F_d2theta = F^{(2)} ( theta )
 d2F_d2theta  = d2f_d2theta
-d2F_d2theta += 2.0 * numpy.dot( d2f_dtheta_du, duhat_dtheta )
-d2F_d2theta += numpy.sum(duhat_dtheta * d2f_d2u * duhat_dtheta )
+d2F_d2theta += numpy.dot( d2f_dtheta_du, duhat_dtheta )
 #
 # check d2F_d2theta
-F_plus  = random_likelihood(theta + delta_theta, uhat_plus)
+F_plus  = random_likelihood(theta_plus, uhat_plus)
 F       = random_likelihood(theta, uhat)
-F_minus = random_likelihood(theta - delta_theta, uhat_minus)
+F_minus = random_likelihood(theta_minus, uhat_minus)
 check = (F_plus - 2.0 * F + F_minus) / (delta_theta * delta_theta)
-assert abs( check / d2F_d2theta - 1.0 ) < 1e-4
+check_rel_error(check, d2F_d2theta, 1e-6)
 # -----------------------------------------------------------------------
 # dh_dtheta = h^{(1)} ( theta )
 dh_dtheta = g + theta * dg_dtheta
@@ -593,10 +610,10 @@ dh_dtheta = g + theta * dg_dtheta
 dG_dtheta = numpy.sum( dh_dtheta / h ) / 2.0
 #
 # check dG_dtheta
-G_plus  = log_det_random_hessian(theta + delta_theta, uhat_plus) / 2.0
-G_minus = log_det_random_hessian(theta - delta_theta, uhat_minus) / 2.0
+G_plus  = log_det_random_hessian(theta_plus, uhat_plus) / 2.0
+G_minus = log_det_random_hessian(theta_minus, uhat_minus) / 2.0
 check   = (G_plus - G_minus) / (2.0 * delta_theta)
-assert abs(check / dG_dtheta - 1.0) < 1e-4
+check_rel_error(check, dG_dtheta, 1e-6)
 # -----------------------------------------------------------------------
 print('mathematical.py: OK')
 # END PYTHON
