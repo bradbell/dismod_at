@@ -150,7 +150,7 @@ random_seed = int( time.time() )
 # \] $$
 # $latex \[
 #	\hat{u}_i^{(2)} ( \theta ) =
-#	\frac{ g_i ( \theta ) g_i ( \theta ) - g_i ^{(1)}( \theta )}
+#	\frac{ g_i ( \theta )^2 - g_i ^{(1)}( \theta )}
 #	{ [ \theta g_i ( \theta ) + 1 ]^2 }
 # \] $$
 #
@@ -415,17 +415,27 @@ assert all( abs(f_u) < 1e-13 )
 # g(theta)
 g = 2.0 * theta * exp_2u - y * exp_u
 #
-# d_uhat_d_theta
-d_uhat_d_theta = - g / (theta * g + 1)
+# duhat_dtheta
+duhat_dtheta = - g / (theta * g + 1)
 #
 # delta_theta
 delta_theta = theta_true / 100.0
 #
-# check d_uhat_d_theta
+# check duhat_dtheta
 uhat_plus  = optimal_random_effect(theta + delta_theta)
 uhat_minus = optimal_random_effect(theta - delta_theta)
 check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
-assert all( abs( check / d_uhat_d_theta - 1.0 ) < 1e-4 )
+assert all( abs( check / duhat_dtheta - 1.0 ) < 1e-4 )
+#
+# dg_dtheta
+dg_dtheta  = 2.0 * exp_2u + (4.0 * theta * exp_2u - y * exp_u) * duhat_dtheta
+#
+# d2uhat_dtheta
+d2uhat_d2theta = (g * g - dg_dtheta) / ( (theta * g + 1) * (theta * g + 1) )
+#
+# check d2uhat_d2theta
+check = (uhat_plus - 2.0 * uhat + uhat_minus) / (delta_theta * delta_theta)
+assert all( abs( check / d2uhat_d2theta - 1.0 ) < 1e-3 )
 #
 # -----------------------------------------------------------------------
 print('mathematical.py: OK')
