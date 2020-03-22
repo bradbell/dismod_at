@@ -268,7 +268,6 @@ random_seed = int( time.time() )
 #		+
 #		\frac{ h_1 ( \theta ) h_1^{(2)} ( \theta ) - h_1^{(1)} ( \theta )^2 }
 #		{ h_1 ( \theta )^2 }
-#		+
 #	\right)
 # \] $$
 #
@@ -519,7 +518,7 @@ def log_det_random_hessian(fixed_effect, random_effect) :
 # -----------------------------------------------------------------------
 def check_rel_error(check, value, tolerance) :
 	rel_error = abs( check / value - 1.0 )
-	print(rel_error, tolerance)
+	# print(rel_error, tolerance)
 	if numpy.isscalar( rel_error ) :
 		assert rel_error < tolerance
 	else :
@@ -633,6 +632,18 @@ d2g_d2theta    += (8.0 * theta * exp_2u - y * exp_u) * duhat_dtheta_sq
 d2g_d2theta    += (4.0 * theta * exp_2u - y * exp_u) * d2uhat_d2theta
 check        = (g_plus - 2.0 * g + g_minus) / (delta_theta * delta_theta)
 check_rel_error(check, d2g_d2theta, 1e-6)
+# -----------------------------------------------------------------------
+# dh2_d2theta = h^{(2)} ( theta )
+d2h_d2theta = 2.0 * dg_dtheta + theta * d2g_d2theta
+#
+# d2G_d2theta = G^{(2)} ( theta )
+d2G_d2theta = (h * d2h_d2theta - dh_dtheta * dh_dtheta) / (2.0 * h * h)
+d2G_d2theta = numpy.sum( d2G_d2theta )
+#
+# check d2g_d2theta
+G     = log_det_random_hessian(theta, uhat) / 2.0
+check = (G_plus - 2.0 * G + G_minus) / (delta_theta * delta_theta)
+check_rel_error(check, d2G_d2theta, 1e-5)
 #
 print('mathematical.py: OK')
 # END PYTHON
