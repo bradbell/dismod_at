@@ -16,27 +16,22 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	example/user/zero_sum_rate.py
-#	example/user/zero_sum_group.py
+#	example/user/mathematical.py
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#	s|zero_sum_rate.py|zsum_child_rate.py|
-#	s|zero_sum_group.py|zsum_mulcov_rate.py|
+#	s|mathematical.py|asymptotic_math.py|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#	omh/table/option_table.omh
-#	omh/whats_new/2016.omh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#	s|@dspell|&@n\tzsum|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|zero_sum_rate.py|zsum_child_rate.py|g
-s|zero_sum_group.py|zsum_mulcov_rate.py|g
+s|mathematical.py|asymptotic_math.py|g
+s|^\tmathematical$|\tasymptotic_math|

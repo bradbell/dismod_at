@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_mathematical.py$$ $newlinech #$$
+# $begin user_asymptotic_math.py$$ $newlinech #$$
 # $spell
 #	cppad
 # $$
@@ -290,7 +290,7 @@ import sys
 import os
 import copy
 import distutils.dir_util
-test_program = 'example/user/mathematical.py'
+test_program = 'example/user/asymptotic_math.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -679,5 +679,5 @@ variance   = 1.0 / (d2F_d2theta + d2G_d2theta)
 check_rel_error(theta,   sample_avg,  1e-1)
 check_rel_error(variance, sample_var, 1e-1)
 #
-print('mathematical.py: OK')
+print('asymptotic_math.py: OK')
 # END PYTHON
