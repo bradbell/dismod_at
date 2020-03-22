@@ -1,0 +1,52 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-20 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin hessian_table$$
+$spell
+	var
+$$
+
+$section Hessian of The Fixed Effect Objective Function$$
+
+$head Creation$$
+A new version of this table is created each time the
+$cref/asymptotic/sample_command/method/asymptotic/$$
+sample command is executed.
+It is the Hessian of the objective w.r.t the fixed effects.
+Only the lower triangle of the Hessian is included
+(because the Hessian is symmetric).
+The $cref/Laplace/density_table/density_name/laplace/$$ densities
+are not included in the Hessian
+because the Laplace density is not differentiable at zero.
+None of the constraints are included in the calculation of this Hessian.
+
+$head hessian_id$$
+This column has type $code integer$$ and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+$head row_var_id$$
+This is the $cref/var_id/var_table/var_id/$$
+for the row of the Hessian that this element corresponds to.
+
+$head col_var_id$$
+This is the $cref/var_id/var_table/var_id/$$
+for the column of the Hessian that this element corresponds to.
+
+$head hessian_value$$
+This column has type $code real$$ and is the value of the second derivative
+of the objective w.r.t. the two
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$
+specified by the row and column indices above.
+Note that the row and column indices are equal for the diagonal
+elements of the Hessian.
+
+
+$end

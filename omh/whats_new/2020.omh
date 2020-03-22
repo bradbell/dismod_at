@@ -38,9 +38,14 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 03-22$$
+$list number$$
+Add the $cref/hessian table/sample_command/hessian_table/$$
+as an extra output when computing asymptotic samples.
+$lnext
 Add a connecting sentence about computation before the equations
 for the derivatives of
 $latex \hat{u}_i ( \theta )$$ and $latex g_i ( \theta )$$.
+$lend
 
 $head 03-21$$
 Add the $cref user_asymptotic_math.py$$ example.

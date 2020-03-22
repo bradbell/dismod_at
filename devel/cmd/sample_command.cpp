@@ -128,6 +128,14 @@ It contains samples of the model variables.
 Hence the number of rows in this table is $icode number_sample$$
 times the number of rows in the $cref var_table$$.
 
+$head hessian_table$$
+A new $cref hessian_table$$ is created each time this command is run
+with $icode method$$ equal to $code asymptotic$$.
+The Hessian of the objective is written in this table.
+If $icode simulate_index$$ is present (is not present) the object corresponds
+to the simulated measurements in the $cref data_sim_table$$
+(measurements in the $cref data_table$$).
+
 $head Bounds$$
 If you use the $code simulate$$ method,
 the samples are all within the specified bounds, including the bounds
@@ -579,9 +587,9 @@ void sample_command(
 		data_object
 	);
 	//
-	// sample_out
-	vector<double> sample_out(n_sample * n_var);
+	// informaiton_out, sample_out
 	CppAD::mixed::d_sparse_rcv information_out;
+	vector<double> sample_out(n_sample * n_var);
 	fit_object.sample_posterior(
 		information_out      ,
 		sample_out           ,
@@ -603,6 +611,42 @@ void sample_command(
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
+	// ----------------------------------------------------------------------
+	// create hessian table
+	sql_cmd = "drop table if exists hessian";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	n_col         = 3;
+	n_row         = information_out.nnz();
+	col_name.resize(n_col);
+	col_type.resize(n_col);
+	row_value.resize(n_col * n_row);
+	//
+	col_name[0]   = "row_var_id";
+	col_type[0]   = "integer";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "col_var_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "hessian_value";
+	col_type[2]   = "integer";
+	col_unique[2] = false;
+	//
+	for(size_t k = 0; k < n_row; ++k)
+	{	size_t row_var_id    = information_out.row()[k];
+		size_t col_var_id    = information_out.col()[k];
+		double hessian_value = information_out.val()[k];
+		row_value[n_col * k + 0] = to_string(row_var_id);
+		row_value[n_col * k + 1] = to_string(col_var_id);
+		row_value[n_col * k + 2] = to_string(hessian_value);
+	}
+	table_name = "hessian";
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	//
 	return;
 }
 } // END_DISMOD_AT_NAMESPACE
