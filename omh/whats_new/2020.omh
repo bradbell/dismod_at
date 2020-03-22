@@ -41,6 +41,9 @@ $head 03-22$$
 $list number$$
 Add the $cref/hessian table/sample_command/hessian_table/$$
 as an extra output when computing asymptotic samples.
+In addition, the $code user_asymptotic_math.py$$ example
+was renamed $cref user_hessian_math.py$$ because it checks
+the $cref hessian_table$$.
 $lnext
 Add a connecting sentence about computation before the equations
 for the derivatives of
@@ -48,7 +51,7 @@ $latex \hat{u}_i ( \theta )$$ and $latex g_i ( \theta )$$.
 $lend
 
 $head 03-21$$
-Add the $cref user_asymptotic_math.py$$ example.
+Add the $cref user_hessian_math.py$$ example.
 
 $head 03-19$$
 Update to using version cppad_mixed-20200319.

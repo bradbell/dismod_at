@@ -16,12 +16,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	example/user/mathematical.py
+#	example/user/asymptotic_math.py
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#	s|mathematical.py|asymptotic_math.py|
+#	s|asymptotic_math.py|hessian_math.py|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,5 +33,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|mathematical.py|asymptotic_math.py|g
-s|^\tmathematical$|\tasymptotic_math|
+s|asymptotic_math.py|hessian_math.py|g
+s|\tasymptotic_math$|\thessian_math|

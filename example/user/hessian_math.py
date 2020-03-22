@@ -8,17 +8,17 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_asymptotic_math.py$$ $newlinech #$$
+# $begin user_hessian_math.py$$ $newlinech #$$
 # $spell
 #	cppad
 # $$
 #
-# $section A Simple Case With Derivation of Asymptotic Statistics$$
+# $section Check the Hessian of the Fixed Effects Objective$$
 #
 # $head Purpose$$
-# This is a detailed mathematical explanation of computing and testing
-# the $cref/asymptotic/sample_command/method/asymptotic/$$ statistics
-# for a very simple case.
+# This is a detailed mathematical explanation of computing Hessian of the
+# fixed effects objective used by the
+# $cref/asymptotic/sample_command/method/asymptotic/$$ sampling method.
 #
 # $head Reference$$
 # See the
@@ -49,7 +49,7 @@ y_0            = theta_true * math.exp( u_true[0] )
 y_1            = theta_true * math.exp( u_true[1] )
 standard_dev   = theta_true # the standard deviation s
 random_seed    = int( time.time() )
-number_sample  = 4000
+number_sample  = 1000
 # %$$
 #
 # $head Random Likelihood$$
@@ -302,7 +302,7 @@ import sys
 import os
 import copy
 import distutils.dir_util
-test_program = 'example/user/asymptotic_math.py'
+test_program = 'example/user/hessian_math.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -479,6 +479,7 @@ node_table    = dismod_at.get_table_dict(connection, 'node')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 sample_table  = dismod_at.get_table_dict(connection, 'sample')
+hessian_table = dismod_at.get_table_dict(connection, 'hessian')
 connection.close()
 dismod_at.db2csv_command(file_name)
 # -----------------------------------------------------------------------
@@ -674,22 +675,31 @@ G     = log_det_random_hessian(theta, uhat) / 2.0
 check = (G_plus - 2.0 * G + G_minus) / (delta_theta * delta_theta)
 check_rel_error(check, d2G_d2theta, 1e-5)
 # ============================================================================
-# check the sample average and sample variance
+# check the Hessian of the objective w.r.t the fixed effects
+#
+# The world rate for incicdnce is the only fixed effect
+world_var_id = node_name2var_id['world']
+assert len(hessian_table) == 1
+for row in hessian_table :
+	assert row['row_var_id'] == world_var_id
+	assert row['col_var_id'] == world_var_id
+	hessian_value = row['hessian_value']
+	check         = d2F_d2theta + d2G_d2theta
+	check_rel_error(check, hessian_value, 1e-14)
+#
+# compute sample statistics
 assert  len(sample_table) == number_sample * len(var_table)
 sample_array  = numpy.zeros(number_sample, dtype = float)
-var_id        = node_name2var_id['world']
 for row in sample_table :
 	if row['var_id'] == var_id :
 		sample_index = row['sample_index']
 		sample_array[sample_index] = row['var_value']
-# compute sample statistics
 sample_avg = numpy.average(sample_array)
 sample_var = numpy.var(sample_array, ddof=1)
-# variance is inverse of the Hessian of the objective
-variance   = 1.0 / (d2F_d2theta + d2G_d2theta)
 #
+# check sample statistics
 check_rel_error(theta,   sample_avg,  1e-1)
-check_rel_error(variance, sample_var, 1e-1)
+check_rel_error(1.0 / hessian_value, sample_var, 1e-1)
 #
-print('asymptotic_math.py: OK')
+print('hessian_math.py: OK')
 # END PYTHON

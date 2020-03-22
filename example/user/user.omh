@@ -76,7 +76,7 @@ $children%
 	example/user/ill_condition.py%
 	example/user/jump_at_age.py%
 	example/user/lasso_covariate.py%
-	example/user/asymptotic_math.py%
+	example/user/hessian_math.py%
 	example/user/mulstd.py%
 	example/user/no_children.py%
 	example/user/posterior.py%
@@ -125,7 +125,7 @@ $rref user_zsum_child_rate.py$$
 $rref user_zsum_mulcov_rate.py$$
 $rref user_zsum_mulcov_meas.py$$
 $rref user_bilevel_random.py$$
-$rref user_asymptotic_math.py$$
+$rref user_hessian_math.py$$
 $tend
 
 $head More Examples$$
