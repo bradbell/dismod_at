@@ -355,10 +355,7 @@ for i in range( len(var_table) ) :
 	value     = var_std[var_id]
 	mcmc      = x_std_mcmc[i]
 	err       = value / mcmc  - 1.0
-	# This is a small sample case (only three data points)
-	# so we do not expect the asymptotic statistics to be correct.
-	# Note that in this case, the asymptotics are an over estimate.
-	if err <= 0.0 or abs(err) > 0.6 :
+	if abs(err) > 0.6 :
 		print(node_name, '_std (value, mcmc, err) = ', value, mcmc, err)
 		print('random_seed = ', random_seed )
 		assert(False)

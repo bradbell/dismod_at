@@ -718,6 +718,10 @@ This vector has size equal to the number of model variables.
 It is the optimal $cref/variable values/model_variables/$$ in
 $cref pack_info$$ order.
 
+$head no_scaling_$$
+This routine assumes that $cref/no_scaling_/fit_model_ctor/no_scaling/$$
+is true.
+
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
@@ -843,7 +847,6 @@ $end
 	}
 	//
 	// sample_fix
-
 	CppAD::vector<double> sample_fix(n_sample * n_fixed_);
 	try {
 		sample_fixed(
@@ -891,29 +894,44 @@ $end
 		cppad_mixed_random_upper[i] = +inf;
 	}
 
-	CppAD::vector<double> one_sample_random(n_random_),
-		cppad_mixed_one_sample_random(cppad_mixed_n_random);
-	CppAD::vector<double> one_sample_fixed(n_fixed_);
-	for(size_t i_sample = 0; i_sample < n_sample; i_sample++)
-	{	for(size_t j = 0; j < n_fixed_; j++)
-			one_sample_fixed[j] = sample_fix[ i_sample * n_fixed_ + j];
-		//
-		if( n_random_ > n_random_equal_ )
-		{	sample_random(
-				cppad_mixed_one_sample_random,
+	// sample_random
+	CppAD::vector<double>
+		cppad_mixed_sample_random(n_sample * cppad_mixed_n_random);
+	if( cppad_mixed_n_random > 0 )
+	{	assert(n_random_ > n_random_equal_ );
+		try {
+			sample_random(
+				cppad_mixed_sample_random,
 				random_options,
-				one_sample_fixed,
+				solution.fixed_opt,
 				cppad_mixed_random_lower,
 				cppad_mixed_random_upper,
 				cppad_mixed_random_in
 			);
+		}
+		catch(const CppAD::mixed::exception& e)
+		{	std::string catcher("sample_command");
+			msg = e.message(catcher);
+			log_message(db_, &std::cerr, "warning", msg);
+			return;
+		}
+	}
+	CppAD::vector<double> cppad_mixed_one_sample_random(cppad_mixed_n_random);
+	CppAD::vector<double> one_sample_random(n_random_);
+	CppAD::vector<double> one_sample_fixed(n_fixed_);
+	for(size_t i_sample = 0; i_sample < n_sample; i_sample++)
+	{	for(size_t j = 0; j < n_fixed_; ++j)
+			one_sample_fixed[j] = sample_fix[ i_sample * n_fixed_ + j];
+		for(size_t j = 0; j < cppad_mixed_n_random; ++j)
+		{	cppad_mixed_one_sample_random[j] =
+				cppad_mixed_sample_random[ i_sample * cppad_mixed_n_random + j];
 		}
 		one_sample_random = random_const_.restore(
 			cppad_mixed_one_sample_random
 		);
 		//
 		// pack_vec
-		unscale_fixed_effect(one_sample_fixed, one_sample_fixed);
+		assert( no_scaling_ );
 		pack_fixed(pack_object_, pack_vec, one_sample_fixed);
 		pack_random(pack_object_, pack_vec, one_sample_random);
 		//
