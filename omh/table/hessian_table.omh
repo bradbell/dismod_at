@@ -22,6 +22,8 @@ sample command is executed.
 It is the Hessian of the objective w.r.t the fixed effects.
 Only the lower triangle of the Hessian is included
 (because the Hessian is symmetric).
+In addition, it is a sparse representation; i.e.,
+row and column indices in the lower triangle that are not present are zero.
 The $cref/Laplace/density_table/density_name/laplace/$$ densities
 are not included in the Hessian
 because the Laplace density is not differentiable at zero.

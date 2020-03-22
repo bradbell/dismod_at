@@ -7,6 +7,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
+# include <cppad/mixed/exception.hpp>
 # include <dismod_at/a1_double.hpp>
 # include <dismod_at/fit_model.hpp>
 # include <dismod_at/error_exit.hpp>
@@ -701,6 +702,8 @@ is the $th j$$ component of the $th i$$ sample of the model variables.
 These samples are independent for different $icode i$$,
 and for fixed $icode i$$ they have the asymptotic covariance
 for the model variables; i.e., the inverse $icode information_out$$.
+If the information matrix is not positive definite,
+all of the samples are set to $code nan$$.
 
 $subhead Constraints$$
 For each sample index $icode i$$, the fixed effects will be sampled
@@ -726,6 +729,7 @@ void fit_model::sample_posterior(
 $end
 */
 {	double inf = std::numeric_limits<double>::infinity();
+	double nan = std::numeric_limits<double>::quiet_NaN();
 	assert( no_scaling_ );
 	//
 	size_t n_var = n_fixed_ + n_random_;
@@ -734,6 +738,10 @@ $end
 
 	// n_sample
 	size_t n_sample = sample_out.size() / n_var;
+
+	// initialize the samples as nan
+	for(size_t k = 0; k < sample_out.size(); ++k)
+		sample_out[k] = nan;
 
 	// solution.fixed_opt
 	CppAD::mixed::fixed_solution solution;
@@ -804,38 +812,55 @@ $end
 	std::string msg = "";
 	CppAD::vector<size_t> pack_index = fixed2var_id(pack_object_);
 	size_t K = information_rcv.nnz();
+	CppAD::vector<double> hessian_diagonal(n_fixed_);
+	for(size_t j = 0; j < n_fixed_; ++j)
+		hessian_diagonal[j] = 0.0;
 	for(size_t k = 0; k < K; k++)
 	{	size_t i = information_rcv.row()[k];
 		size_t j = information_rcv.col()[k];
 		double v = information_rcv.val()[k];
-		if( i == j && fixed_lower[j] != fixed_upper[j] && v <= 0.0)
-		{	size_t var_id = pack_index[j];
-			if( msg == "" )
-			{	msg = "sample asymptotic: Following fixed effect's\n"
-				"upper bound not equal its lower bound "
-				"and diagonal of Hessian is not positive\n";
-			}
-			msg += "var_id = " + CppAD::to_string( var_id )
-				+ ", var_value = " + CppAD::to_string(fit_var_value[var_id])
-				+ ", lower = " + CppAD::to_string(fixed_lower[j])
-				+ ", upper = " + CppAD::to_string(fixed_upper[j])
-				+ ", hessian = " + CppAD::to_string( v ) + "\n"
-			;
+		if( i == j )
+			hessian_diagonal[j] = v;
+	}
+	for(size_t j = 0; j < n_fixed_; ++j)
+	if( fixed_lower[j] != fixed_upper[j] && hessian_diagonal[j] <= 0.0 )
+	{	size_t var_id = pack_index[j];
+		if( msg == "" )
+		{	msg = "sample asymptotic: Following fixed effect's\n"
+			"upper bound not equal its lower bound "
+			"and diagonal of Hessian is not positive\n";
 		}
+		msg += "var_id = " + CppAD::to_string( var_id )
+			+ ", var_value = " + CppAD::to_string(fit_var_value[var_id])
+			+ ", lower = " + CppAD::to_string(fixed_lower[j])
+			+ ", upper = " + CppAD::to_string(fixed_upper[j])
+			+ ", hessian = " + CppAD::to_string( hessian_diagonal[j] ) + "\n"
+		;
 	}
 	if( msg != "" )
-		error_exit(msg);
+	{	log_message(db_, &std::cerr, "warning", msg);
+		return;
+	}
 	//
 	// sample_fix
+
 	CppAD::vector<double> sample_fix(n_sample * n_fixed_);
-	sample_fixed(
-		sample_fix,
-		information_rcv,
-		solution,
-		fixed_lower,
-		fixed_upper,
-		cppad_mixed_random_opt
-	);
+	try {
+		sample_fixed(
+			sample_fix,
+			information_rcv,
+			solution,
+			fixed_lower,
+			fixed_upper,
+			cppad_mixed_random_opt
+		);
+	}
+	catch(const CppAD::mixed::exception& e)
+	{	std::string catcher("sample_command");
+		msg = e.message(catcher);
+		log_message(db_, &std::cerr, "warning", msg);
+		return;
+	}
 	//
 	// random_options
 	// (same as in run_fit)

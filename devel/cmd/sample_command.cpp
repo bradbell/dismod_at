@@ -127,6 +127,10 @@ A new $cref sample_table$$ is created each time this command is run.
 It contains samples of the model variables.
 Hence the number of rows in this table is $icode number_sample$$
 times the number of rows in the $cref var_table$$.
+If the $code asymptotic$$ command fails because the
+Hessian (see hessian_table below) is not positive definite,
+all of the $cref/var_value/sample_table/var_value/$$ entries
+in the sample table will be null.
 
 $head hessian_table$$
 A new $cref hessian_table$$ is created each time this command is run
@@ -603,8 +607,11 @@ void sample_command(
 		{	size_t sample_id = sample_index * n_var + var_id;
 			row_value[n_col * sample_id + 0] = sample_index_str;
 			row_value[n_col * sample_id + 1] = to_string( var_id );
-			row_value[n_col * sample_id + 2] =
-					to_string( sample_out[ sample_index * n_var + var_id] );
+			double var_value = sample_out[ sample_index * n_var + var_id];
+			if( CppAD::isnan( var_value ) )
+				row_value[n_col * sample_id + 2] = "null";
+			else
+				row_value[n_col * sample_id + 2] = to_string(var_value);
 		}
 	}
 	table_name = "sample";
