@@ -140,22 +140,30 @@ number_sample  = 4000
 # Substituting in the formulas above for the Hessian terms on the
 # right hand side we obtain:
 # $latex \[
-#	\hat{u}_i^{(1)} ( \theta ) = -
-#		\frac{ 2 \theta \exp( 2 u_i ) - y_i \exp( u_i )}
-#		{ 2 \theta^2 \exp( 2 u_i ) - y_i \theta \exp( u_i ) + 1}
+#	\hat{u}_i^{(1)} ( \theta ) = - \frac{
+#		2 \theta \exp[ 2 \hat{u}_i ( \theta) ] -
+#		y_i \exp[ \hat{u}_i ( \theta) ]
+#	}{
+#		2 \theta^2 \exp[ 2 \hat{u}_i ( \theta) ] -
+#		y_i \theta \exp[ \hat{u}_i ( \theta) ] + 1
+#	}
 # \] $$
-# evaluated at $latex u_i = \hat{u}_i ( \theta )$$.
-# Defining $latex g_i ( \theta )$$ by the first equation,
-# and computing its derivatives in the next two we have
+# We can compute $latex \hat{u}_i ( \theta )$$ by optimizing the
+# random effects corresponding to the fixed effects being $latex \theta$$.
+# We define $latex g_i ( \theta )$$ by the equation
 # $latex \[
 #	g_i ( \theta ) = 2 \theta \exp[ 2 \hat{u}_i ( \theta) ]
 #	            - y_i \exp[ \hat{u}_i ( \theta ) ]
 # \] $$
-# we can write the derivative $latex \hat{u}_i ( \theta )$$ as
+# Give $latex \hat{u}_i ( \theta )$$ we can compute $latex g_i ( \theta )$$.
+# Given $latex g_i ( \theta )$$, we can compute
+# the derivative $latex \hat{u}_i^{(1)} ( \theta )$$ using
 # $latex \[
 #	\hat{u}_i^{(1)} ( \theta ) = -
 #		\frac{ g_i ( \theta ) }{ \theta g_i ( \theta ) + 1}
 # \] $$
+# Given $latex \hat{u}^{(1)} ( \theta )$$, we can compute
+# the derivative $latex g_i^{(1)} ( \theta )$$ using
 # $latex \[
 #	g_i^{(1)} ( \theta ) =
 #	2 \exp[ 2 \hat{u}_i ( \theta) ]  +
@@ -164,6 +172,8 @@ number_sample  = 4000
 #		y_i \exp [ \hat{u}_i ( \theta ) ]
 #	\right) \hat{u}_i^{(1)} ( \theta )
 # \] $$
+# Given $latex g_i^{(1)} ( \theta )$$, we can compute
+# the second derivative $latex \hat{u}_i^{(2)} ( \theta )$$ using
 # $latex \[
 #	\hat{u}_i^{(2)} ( \theta ) =
 #	\frac{ g_i ( \theta ) [ g_i ( \theta ) + \theta g_i ^{(1)} ( \theta ) ] }
@@ -176,6 +186,8 @@ number_sample  = 4000
 #	\frac{ g_i ( \theta )^2 - g_i ^{(1)}( \theta )}
 #	{ [ \theta g_i ( \theta ) + 1 ]^2 }
 # \] $$
+# Given $latex \hat{u}^{(2)} ( \theta )$$, we can compute
+# the second derivative $latex g_i^{(2)} ( \theta )$$ using
 # $latex \[
 #	\begin{array}{rcl}
 #	g_i^{(2)} ( \theta ) & = &
@@ -276,7 +288,7 @@ number_sample  = 4000
 #
 # $head Asymptotic Statistics$$
 # The asymptotic posterior distribution for the optimal estimate of
-# $latex \theta$$ give the data # $latex y$$
+# $latex \theta$$ give the data $latex y$$
 # is a normal with variance equal to the inverse of
 # $latex F^{(2)} ( \theta ) + G^{(2)} ( \theta )$$.
 #

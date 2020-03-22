@@ -579,10 +579,10 @@ void sample_command(
 		data_object
 	);
 	//
-	// sample
-	vector<double> sample(n_sample * n_var);
+	// sample_out
+	vector<double> sample_out(n_sample * n_var);
 	fit_object.sample_posterior(
-		sample               ,
+		sample_out           ,
 		fit_var_value        ,
 		option_map
 	);
@@ -594,7 +594,7 @@ void sample_command(
 			row_value[n_col * sample_id + 0] = sample_index_str;
 			row_value[n_col * sample_id + 1] = to_string( var_id );
 			row_value[n_col * sample_id + 2] =
-					to_string( sample[ sample_index * n_var + var_id] );
+					to_string( sample_out[ sample_index * n_var + var_id] );
 		}
 	}
 	table_name = "sample";

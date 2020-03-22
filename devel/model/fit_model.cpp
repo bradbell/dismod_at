@@ -661,7 +661,7 @@ $section Sample From Posterior Distribution for a Fit$$
 
 $head Syntax$$
 $icode%fit_object%.sample_posterior(
-	%sample%,
+	%sample_out%,
 	%fit_var_value%,
 	%option_map%
 )%$$
@@ -674,7 +674,7 @@ $head Constants$$
 The model variables that have upper and lower limits equal
 are referred to as constants.
 
-$head sample$$
+$head sample_out$$
 This argument is a vector with size equal to the number of samples
 $icode n_sample$$ times the number of $cref model_variables$$ $icode n_var$$.
 The input value of its elements does not matter.
@@ -682,7 +682,7 @@ Upon return, for
 $icode%i% = 0 , %...% , %n_sample%-1%$$,
 $icode%j% = 0 , %...% , %n_var%-1%$$,
 $codei%
-	%sample%[ %i% * %n_sample% + %j% ]
+	%sample_out%[ %i% * %n_sample% + %j% ]
 %$$
 is the $th j$$ component of the $th i$$ sample of the model variables.
 These samples are independent for different $icode i$$,
@@ -707,7 +707,7 @@ $cref pack_info$$ order.
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
-	CppAD::vector<double>&              sample          ,
+	CppAD::vector<double>&              sample_out      ,
 	const CppAD::vector<double>&        fit_var_value   ,
 	std::map<std::string, std::string>& option_map      )
 /* %$$
@@ -717,11 +717,11 @@ $end
 	assert( no_scaling_ );
 	//
 	size_t n_var = n_fixed_ + n_random_;
-	assert( sample.size() % n_var == 0     );
+	assert( sample_out.size() % n_var == 0 );
 	assert( fit_var_value.size() == n_var );
 
 	// n_sample
-	size_t n_sample = sample.size() / n_var;
+	size_t n_sample = sample_out.size() / n_var;
 
 	// solution.fixed_opt
 	CppAD::mixed::fixed_solution solution;
@@ -866,7 +866,7 @@ $end
 		//
 		// copy to output vector
 		for(size_t i = 0; i < n_var; i++)
-			sample[ i_sample * n_var + i ] = pack_vec[i];
+			sample_out[ i_sample * n_var + i ] = pack_vec[i];
 	}
 	return;
 }

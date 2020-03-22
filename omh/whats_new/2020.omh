@@ -37,6 +37,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 03-22$$
+Add a connecting sentence about computation before the equatison
+for the derivatives of
+$latex \hat{u}_i ( \theta )$$ and $latex g_i ( \theta )$$.
+
 $head 03-21$$
 Add the $cref user_asymptotic_math.py$$ example.
 
