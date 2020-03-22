@@ -13,10 +13,12 @@
 #	cppad
 # $$
 #
-# $section A Simple Example With Detailed Mathematical Explanation$$
+# $section A Simple Case With Derivation of Asymptotic Statistics$$
 #
 # $head Purpose$$
-# This is a detailed mathematical explanation of a very simple example.
+# This is a detailed mathematical explanation of computing and testing
+# the $cref/asymptotic/sample_command/method/asymptotic/$$ statistics
+# for a very simple case.
 #
 # $head Reference$$
 # See the
@@ -41,12 +43,13 @@
 # $srccode%py%
 import math
 import time
-theta_true   = 0.5
-u_true       = [ 0.5, -0.5 ]
-y_0          = theta_true * math.exp( u_true[0] )
-y_1          = theta_true * math.exp( u_true[1] )
-standard_dev = theta_true # the standard deviation s
-random_seed = int( time.time() )
+theta_true     = 0.5
+u_true         = [ 0.5, -0.5 ]
+y_0            = theta_true * math.exp( u_true[0] )
+y_1            = theta_true * math.exp( u_true[1] )
+standard_dev   = theta_true # the standard deviation s
+random_seed    = int( time.time() )
+number_sample  = 4000
 # %$$
 #
 # $head Random Likelihood$$
@@ -271,6 +274,12 @@ random_seed = int( time.time() )
 #	\right)
 # \] $$
 #
+# $head Asymptotic Statistics$$
+# The asymptotic posterior distribution for the optimal estimate of
+# $latex \theta$$ give the data # $latex y$$
+# is a normal with variance equal to the inverse of
+# $latex F^{(2)} ( \theta ) + G^{(2)} ( \theta )$$.
+#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
@@ -408,7 +417,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'true'               },
 		{ 'name':'derivative_test_fixed',  'value':'none'               },
 		{ 'name':'max_num_iter_fixed',     'value':'100'                },
-		{ 'name':'print_level_fixed',      'value':'5'                  },
+		{ 'name':'print_level_fixed',      'value':'0'                  },
 		{ 'name':'tolerance_fixed',        'value':'1e-12'              },
 
 		{ 'name':'derivative_test_random', 'value':'none'               },
@@ -445,6 +454,10 @@ example_db(file_name)
 #
 program   = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'asymptotic', str(number_sample) ]
+)
 # -----------------------------------------------------------------------
 # get tables
 new           = False
@@ -452,11 +465,14 @@ connection    = dismod_at.create_connection(file_name, new)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
+fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+sample_table  = dismod_at.get_table_dict(connection, 'sample')
 connection.close()
 dismod_at.db2csv_command(file_name)
 # -----------------------------------------------------------------------
 # node_name2var_id
 node_name2var_id = dict()
+assert len(var_table) == 3
 for var_id in range(len(var_table) ) :
 	assert var_id < 3
 	row = var_table[var_id]
@@ -532,11 +548,12 @@ s_sq         = standard_dev * standard_dev
 # y
 y            = numpy.array( [ y_0, y_1 ] )
 #
-# delta_theta
-delta_theta  = theta_true / 1000.0
+# optimal theta (from the fit_var table)
+var_id       = node_name2var_id['world']
+theta        = fit_var_table[var_id]['fit_var_value']
 #
-# theta
-theta        = theta_true
+# delta_theta
+delta_theta  = theta / 1000.0
 theta_plus   = theta + delta_theta
 theta_minus  = theta - delta_theta
 #
@@ -644,6 +661,23 @@ d2G_d2theta = numpy.sum( d2G_d2theta )
 G     = log_det_random_hessian(theta, uhat) / 2.0
 check = (G_plus - 2.0 * G + G_minus) / (delta_theta * delta_theta)
 check_rel_error(check, d2G_d2theta, 1e-5)
+# ============================================================================
+# check the sample average and sample variance
+assert  len(sample_table) == number_sample * len(var_table)
+sample_array  = numpy.zeros(number_sample, dtype = float)
+var_id        = node_name2var_id['world']
+for row in sample_table :
+	if row['var_id'] == var_id :
+		sample_index = row['sample_index']
+		sample_array[sample_index] = row['var_value']
+# compute sample statistics
+sample_avg = numpy.average(sample_array)
+sample_var = numpy.var(sample_array, ddof=1)
+# variance is inverse of the Hessian of the objective
+variance   = 1.0 / (d2F_d2theta + d2G_d2theta)
+#
+check_rel_error(theta,   sample_avg,  1e-1)
+check_rel_error(variance, sample_var, 1e-1)
 #
 print('mathematical.py: OK')
 # END PYTHON
