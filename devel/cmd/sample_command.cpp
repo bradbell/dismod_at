@@ -581,7 +581,9 @@ void sample_command(
 	//
 	// sample_out
 	vector<double> sample_out(n_sample * n_var);
+	CppAD::mixed::d_sparse_rcv information_out;
 	fit_object.sample_posterior(
+		information_out      ,
 		sample_out           ,
 		fit_var_value        ,
 		option_map

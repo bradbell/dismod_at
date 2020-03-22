@@ -174,7 +174,8 @@ namespace dismod_at {
 		);
 		// sample from asympotitic approximation for posterior distribution
 		void sample_posterior(
-			CppAD::vector<double>&              sample          ,
+			CppAD::mixed::d_sparse_rcv&         information_out ,
+			CppAD::vector<double>&              sample_out      ,
 			const CppAD::vector<double>&        fit_var_value   ,
 			// effectively const
 			std::map<std::string, std::string>& option_map

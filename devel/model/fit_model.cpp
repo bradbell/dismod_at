@@ -661,6 +661,7 @@ $section Sample From Posterior Distribution for a Fit$$
 
 $head Syntax$$
 $icode%fit_object%.sample_posterior(
+	%information_out%,
 	%sample_out%,
 	%fit_var_value%,
 	%option_map%
@@ -673,6 +674,18 @@ $cref/no_scaling/fit_model_ctor/no_scaling/$$ equal to $code sample$$.
 $head Constants$$
 The model variables that have upper and lower limits equal
 are referred to as constants.
+
+$head information_out$$
+This a sparse matrix representation of the approximation for the
+information matrix.
+To be specific, it is the value of the Hessian of the objective
+at the fixed effects specified by $icode fit_var_value$$.
+The row and column indices in this matrix are in
+$cref pack_info$$ order.
+Only the lower triangle is returned (column indices are less than or equal
+row indices) because the Hessian is symmetric.
+The Laplace density terms in the likelihood function are not included
+because the Hessian is not defined at zero for an Laplace density.
 
 $head sample_out$$
 This argument is a vector with size equal to the number of samples
@@ -687,7 +700,7 @@ $codei%
 is the $th j$$ component of the $th i$$ sample of the model variables.
 These samples are independent for different $icode i$$,
 and for fixed $icode i$$ they have the asymptotic covariance
-for the model variables.
+for the model variables; i.e., the inverse $icode information_out$$.
 
 $subhead Constraints$$
 For each sample index $icode i$$, the fixed effects will be sampled
@@ -696,8 +709,6 @@ except for constants).
 The random effects will be sampled from the inverse of the Hessian
 of the random effects given the sampled value for the fixed effects
 and the optional random effects corresponding to the fixed effects.
-None of the L1 terms in the likelihood will be included
-(because the Hessian is not defined at zero for an L1 penalty).
 
 $head fit_var_value$$
 This vector has size equal to the number of model variables.
@@ -707,6 +718,7 @@ $cref pack_info$$ order.
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
+	CppAD::mixed::d_sparse_rcv&         information_out ,
 	CppAD::vector<double>&              sample_out      ,
 	const CppAD::vector<double>&        fit_var_value   ,
 	std::map<std::string, std::string>& option_map      )
@@ -739,6 +751,22 @@ $end
 	CppAD::mixed::d_sparse_rcv information_rcv = information_mat(
 		solution, cppad_mixed_random_opt
 	);
+	//
+	// set information_out
+	{	CppAD::vector<size_t> var_id = fixed2var_id(pack_object_);
+		size_t nnz = information_rcv.nnz();
+		CppAD::mixed::sparse_rc pattern(n_var, n_var, information_rcv.nnz() );
+		for(size_t k = 0; k < nnz; ++k)
+		{	size_t r = information_rcv.row()[k];
+			size_t c = information_rcv.col()[k];
+			pattern.set(k, var_id[r], var_id[c]);
+		}
+		CppAD::mixed::d_sparse_rcv info( pattern );
+		for(size_t k = 0; k < nnz; ++k)
+			info.set(k, information_rcv.val()[k] );
+		//
+		information_out = info;
+	}
 	//
 	// fixed_lower
 	CppAD::vector<double> pack_vec( n_var );
