@@ -199,7 +199,8 @@ standard <font color="#990000">=</font> <font color="#990000">{</font>
      <font color="#FF0000">'canada'</font>        <font color="#990000">:</font> <font color="#993399">0.5e-3</font>   <i><font color="#9A1900"># s_c</font></i>
 <font color="#990000">}</font>
 standard_random_effect <font color="#990000">=</font> <font color="#993399">1.0</font>   <i><font color="#9A1900"># s_r</font></i>
-number_sample          <font color="#990000">=</font> <font color="#993399">500</font>   <i><font color="#9A1900"># number of posterior samples to generate</font></i></tt></pre>
+number_sample          <font color="#990000">=</font> <font color="#993399">500</font>   <i><font color="#9A1900"># number of posterior samples to generate</font></i>
+number_metropolis      <font color="#990000">=</font> <font color="#993399">10</font> <font color="#990000">*</font> number_sample</tt></pre>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
@@ -337,7 +338,7 @@ random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">1e-2</font> <font color="#990000">*</font> measure<font color="#990000">[</font><font color="#FF0000">'north_america'</font><font color="#990000">],</font>
                <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1e+2</font> <font color="#990000">*</font> measure<font color="#990000">[</font><font color="#FF0000">'north_america'</font><font color="#990000">],</font>
-               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     measure<font color="#990000">[</font><font color="#FF0000">'north_america'</font><font color="#990000">],</font>
+               <font color="#FF0000">'mean'</font><font color="#990000">:</font>     measure<font color="#990000">[</font><font color="#FF0000">'north_america'</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">3.0</font><font color="#990000">,</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_gauss_zero</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
@@ -427,16 +428,16 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_p
 new             <font color="#990000">=</font> False
 connection      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># get variable and fit_var tables</font></i>
+<i><font color="#9A1900"># get tables</font></i>
 var_table     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
-node_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
-rate_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'rate'</font><font color="#990000">)</font>
-sample_dict  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">)</font>
+node_table    <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
+rate_table    <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'rate'</font><font color="#990000">)</font>
+sample_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># map from node name to variable id</font></i>
 node_name2var_id <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">assert</font></b> var_id <font color="#990000">&lt;</font> <font color="#993399">3</font>
      row <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
      <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'rate'</font>
      <b><font color="#0000FF">assert</font></b> rate_table<font color="#990000">[</font>row<font color="#990000">[</font><font color="#FF0000">'rate_id'</font><font color="#990000">]][</font><font color="#FF0000">'rate_name'</font><font color="#990000">]</font>  <font color="#990000">==</font> <font color="#FF0000">'iota'</font>
@@ -445,44 +446,47 @@ node_name2var_id <font color="#990000">=</font> <b><font color="#000000">dict</f
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># convert samples to a numpy array</font></i>
 sample_array <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">zeros</font></b><font color="#990000">(</font> <font color="#990000">(</font>number_sample<font color="#990000">,</font> <font color="#993399">3</font><font color="#990000">),</font> dtype <font color="#990000">=</font> float <font color="#990000">)</font>
-<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> sample_dict <font color="#990000">:</font>
+<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> sample_table <font color="#990000">:</font>
      var_id                              <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'var_id'</font><font color="#990000">]</font>
      sample_index                        <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'sample_index'</font><font color="#990000">]</font>
      sample_array<font color="#990000">[</font>sample_index<font color="#990000">,</font> var_id <font color="#990000">]</font> <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'var_value'</font><font color="#990000">]</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># compute statistics</font></i>
 var_avg <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">average</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">);</font>
-var_std <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">);</font>
+var_std <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">,</font> ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">);</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># now use MCMC to calculate the same values</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'mcmc'</font><font color="#990000">)</font>
 numpy<font color="#990000">.</font>random<font color="#990000">.</font><b><font color="#000000">seed</font></b><font color="#990000">(</font> seed <font color="#990000">=</font> random_seed <font color="#990000">)</font>
-m          <font color="#990000">=</font> <font color="#993399">10</font> <font color="#990000">*</font> number_sample
 x0         <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> <font color="#990000">[</font> <font color="#993399">1e-2</font><font color="#990000">,</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#993399">0.0</font> <font color="#990000">]</font> <font color="#990000">)</font>
 s          <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> <font color="#990000">[</font> <font color="#993399">1e-3</font><font color="#990000">,</font> <font color="#993399">1e-1</font><font color="#990000">,</font> <font color="#993399">1e-1</font><font color="#990000">]</font> <font color="#990000">)</font>
-<font color="#990000">(</font>a<font color="#990000">,</font> c<font color="#990000">)</font>     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">metropolis</font></b><font color="#990000">(</font>log_f<font color="#990000">,</font> m<font color="#990000">,</font> x0<font color="#990000">,</font> s<font color="#990000">)</font>
-burn_in    <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> <font color="#993399">0.1</font> <font color="#990000">*</font> m <font color="#990000">)</font>
+<font color="#990000">(</font>a<font color="#990000">,</font> c<font color="#990000">)</font>     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">metropolis</font></b><font color="#990000">(</font>log_f<font color="#990000">,</font> number_metropolis<font color="#990000">,</font> x0<font color="#990000">,</font> s<font color="#990000">)</font>
+burn_in    <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> <font color="#993399">0.1</font> <font color="#990000">*</font> number_metropolis <font color="#990000">)</font>
 c          <font color="#990000">=</font> c<font color="#990000">[</font>burn_in <font color="#990000">:,</font> <font color="#990000">:]</font>
 x_avg_mcmc <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">average</font></b><font color="#990000">(</font>c<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">)</font>
-x_std_mcmc <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>c<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">)</font>
+x_std_mcmc <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>c<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">,</font> ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">)</font>
 mcmc_order <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'north_america'</font><font color="#990000">,</font> <font color="#FF0000">'mexico'</font><font color="#990000">,</font> <font color="#FF0000">'canada'</font> <font color="#990000">]</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># now check values</font></i>
-<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">)</font> <font color="#990000">:</font>
+<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
      node_name <font color="#990000">=</font> mcmc_order<font color="#990000">[</font>i<font color="#990000">]</font>
-     value     <font color="#990000">=</font> var_avg<font color="#990000">[</font> node_name2var_id<font color="#990000">[</font>node_name<font color="#990000">]</font> <font color="#990000">]</font>
-     check     <font color="#990000">=</font> x_avg_mcmc<font color="#990000">[</font>i<font color="#990000">]</font>
-     avg_diff  <font color="#990000">=</font> check <font color="#990000">/</font> value <font color="#990000">-</font> <font color="#993399">1.0</font>
-     <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> avg_diff <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.05</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'avg_diff = '</font><font color="#990000">,</font> avg_diff<font color="#990000">,</font> <font color="#FF0000">', random_seed = '</font><font color="#990000">,</font> random_seed <font color="#990000">)</font>
+     var_id    <font color="#990000">=</font> node_name2var_id<font color="#990000">[</font>node_name<font color="#990000">]</font>
+     value     <font color="#990000">=</font> var_avg<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     mcmc      <font color="#990000">=</font> x_avg_mcmc<font color="#990000">[</font>i<font color="#990000">]</font>
+     err       <font color="#990000">=</font> value <font color="#990000">/</font> mcmc <font color="#990000">-</font> <font color="#993399">1.0</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> err <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.05</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font>node_name<font color="#990000">,</font> <font color="#FF0000">'_avg (value, mcmc, err) = '</font><font color="#990000">,</font> value<font color="#990000">,</font> mcmc<font color="#990000">,</font> err<font color="#990000">)</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed = '</font><font color="#990000">,</font> random_seed <font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
-     value     <font color="#990000">=</font> var_std<font color="#990000">[</font> node_name2var_id<font color="#990000">[</font>node_name<font color="#990000">]</font> <font color="#990000">]</font>
-     check     <font color="#990000">=</font> x_std_mcmc<font color="#990000">[</font>i<font color="#990000">]</font>
-     std_diff  <font color="#990000">=</font> check <font color="#990000">/</font> value <font color="#990000">-</font> <font color="#993399">1.0</font>
+     value     <font color="#990000">=</font> var_std<font color="#990000">[</font>var_id<font color="#990000">]</font>
+     mcmc      <font color="#990000">=</font> x_std_mcmc<font color="#990000">[</font>i<font color="#990000">]</font>
+     err       <font color="#990000">=</font> value <font color="#990000">/</font> mcmc  <font color="#990000">-</font> <font color="#993399">1.0</font>
      <i><font color="#9A1900"># This is a small sample case (only three data points)</font></i>
      <i><font color="#9A1900"># so we do not expect the asymptotic statistics to be correct.</font></i>
      <i><font color="#9A1900"># Note that in this case, the asymptotics are an over estimate.</font></i>
-     <b><font color="#0000FF">if</font></b> std_diff <font color="#990000">&gt;=</font> <font color="#993399">0.0</font> <b><font color="#0000FF">or</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>std_diff<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.5</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'std_diff = '</font><font color="#990000">,</font> std_diff<font color="#990000">,</font> <font color="#FF0000">', random_seed = '</font><font color="#990000">,</font> random_seed <font color="#990000">)</font>
+     <b><font color="#0000FF">if</font></b> err <font color="#990000">&lt;=</font> <font color="#993399">0.0</font> <b><font color="#0000FF">or</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.6</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font>node_name<font color="#990000">,</font> <font color="#FF0000">'_std (value, mcmc, err) = '</font><font color="#990000">,</font> value<font color="#990000">,</font> mcmc<font color="#990000">,</font> err<font color="#990000">)</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed = '</font><font color="#990000">,</font> random_seed <font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'asymptotic.py: OK'</font><font color="#990000">)</font></tt></pre>
 

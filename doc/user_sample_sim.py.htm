@@ -483,6 +483,7 @@ connection  <font color="#990000">=</font> dismod_at<font color="#990000">.</fon
 var_table   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
 rate_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'rate'</font><font color="#990000">)</font>
 node_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font>
 <i><font color="#9A1900">#</font></i>
 tbl_name         <font color="#990000">=</font> <font color="#FF0000">'truth_var'</font>
 col_name         <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'truth_var_value'</font> <font color="#990000">]</font>
@@ -513,10 +514,18 @@ connection<font color="#990000">.</font><b><font color="#000000">close</font></b
 <i><font color="#9A1900"># sample simulate results</font></i>
 <i><font color="#9A1900">#</font></i>
 ns_string <font color="#990000">=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>number_sample<font color="#990000">)</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> ns_string <font color="#990000">])</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">]</font> <font color="#990000">)</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">]</font> <font color="#990000">)</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> ns_string <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> ns_string <font color="#990000">]</font>
+<font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">]</font>
+<font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'scale_var'</font><font color="#990000">,</font> <font color="#FF0000">'truth_var'</font> <font color="#990000">]</font>
+<font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> ns_string <font color="#990000">]</font>
+<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 new          <font color="#990000">=</font> False
 connection   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
@@ -526,13 +535,12 @@ sample_table <font color="#990000">=</font> dismod_at<font color="#990000">.</fo
 sample_array <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">zeros</font></b><font color="#990000">(</font> <font color="#990000">(</font>number_sample<font color="#990000">,</font> <font color="#993399">3</font><font color="#990000">),</font> dtype <font color="#990000">=</font> float <font color="#990000">)</font>
 <b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> sample_table <font color="#990000">:</font>
      var_id                              <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'var_id'</font><font color="#990000">]</font>
-     <b><font color="#0000FF">assert</font></b><font color="#990000">(</font> var_id <font color="#990000">&lt;</font> <font color="#993399">3</font> <font color="#990000">)</font>
      sample_index                        <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'sample_index'</font><font color="#990000">]</font>
      sample_array<font color="#990000">[</font>sample_index<font color="#990000">,</font> var_id <font color="#990000">]</font> <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'var_value'</font><font color="#990000">]</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># compute statistics</font></i>
 sim_avg <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">average</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">);</font>
-sim_std <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">);</font>
+sim_std <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">,</font> ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">);</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># MCMC results</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'mcmc'</font><font color="#990000">)</font>
@@ -543,11 +551,11 @@ scale      <font color="#990000">=</font> numpy<font color="#990000">.</font><b>
 burn_in    <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> <font color="#993399">0.1</font> <font color="#990000">*</font> number_metropolis <font color="#990000">)</font>
 c          <font color="#990000">=</font> c<font color="#990000">[</font>burn_in <font color="#990000">:,</font> <font color="#990000">:]</font>
 mcmc_avg   <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">average</font></b><font color="#990000">(</font>c<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">)</font>
-mcmc_std   <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>c<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">)</font>
+mcmc_std   <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>c<font color="#990000">,</font> axis<font color="#990000">=</font><font color="#993399">0</font><font color="#990000">,</font> ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">)</font>
 mcmc_order <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'north_america'</font><font color="#990000">,</font> <font color="#FF0000">'mexico'</font><font color="#990000">,</font> <font color="#FF0000">'canada'</font> <font color="#990000">]</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># now compare values</font></i>
-<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">3</font><font color="#990000">)</font> <font color="#990000">:</font>
+<b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
      <i><font color="#9A1900"># node that this model variable corresponds to</font></i>
      node_name <font color="#990000">=</font> mcmc_order<font color="#990000">[</font>i<font color="#990000">]</font>
      var_id    <font color="#990000">=</font> node_name2var_id<font color="#990000">[</font>node_name<font color="#990000">]</font>
