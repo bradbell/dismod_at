@@ -656,13 +656,15 @@ $spell
 	dage
 	dtime
 	var
+	hes
+	obj
 $$
 
 $section Sample From Posterior Distribution for a Fit$$
 
 $head Syntax$$
 $icode%fit_object%.sample_posterior(
-	%information_out%,
+	%hes_fixed_obj_out%,
 	%sample_out%,
 	%fit_var_value%,
 	%option_map%
@@ -676,13 +678,13 @@ $head Constants$$
 The model variables that have upper and lower limits equal
 are referred to as constants.
 
-$head information_out$$
+$head hes_fixed_obj_out$$
 This a sparse matrix representation of the approximation for the
-information matrix.
-To be specific, it is the value of the Hessian of the objective
+Hessian of the fixed effects objective.
+To be specific, it is evaluated
 at the fixed effects specified by $icode fit_var_value$$.
-The row and column indices in this matrix are in
-$cref pack_info$$ order.
+The row and column indices in this matrix are relative to the
+$cref pack_info$$ vector.
 Only the lower triangle is returned (column indices are less than or equal
 row indices) because the Hessian is symmetric.
 The Laplace density terms in the likelihood function are not included
@@ -701,17 +703,17 @@ $codei%
 is the $th j$$ component of the $th i$$ sample of the model variables.
 These samples are independent for different $icode i$$,
 and for fixed $icode i$$ they have the asymptotic covariance
-for the model variables; i.e., the inverse $icode information_out$$.
-If the information matrix is not positive definite,
+for the model variables; i.e., the inverse $icode hes_fixed_obj_out$$.
+If the Hessian is not positive definite,
 all of the samples are set to $code nan$$.
 
 $subhead Constraints$$
-For each sample index $icode i$$, the fixed effects will be sampled
-from the inversion of the information matrix (ignoring the constraints
-except for constants).
-The random effects will be sampled from the inverse of the Hessian
-of the random effects given the sampled value for the fixed effects
-and the optional random effects corresponding to the fixed effects.
+The fixed effects are samples with covariance equal to the
+inverse of the Hessian of the fixed effects objective.
+This ignores constraints except for constants.
+The random effects are sampled from the inverse of the Hessian
+of the random effects objective given the fixed effects
+are equal to the value in $icode fit_var_value$$.
 
 $head fit_var_value$$
 This vector has size equal to the number of model variables.
@@ -725,7 +727,7 @@ is true.
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
-	CppAD::mixed::d_sparse_rcv&         information_out ,
+	CppAD::mixed::d_sparse_rcv&         hes_fixed_obj_out ,
 	CppAD::vector<double>&              sample_out      ,
 	const CppAD::vector<double>&        fit_var_value   ,
 	std::map<std::string, std::string>& option_map      )
@@ -747,37 +749,38 @@ $end
 	for(size_t k = 0; k < sample_out.size(); ++k)
 		sample_out[k] = nan;
 
+	//
+	// fixed_vec, random_opt
+	CppAD::vector<double> fixed_vec(n_fixed_), random_opt(n_random_);
+	unpack_random(pack_object_, fit_var_value, random_opt);
+	unpack_fixed(pack_object_,   fit_var_value, fixed_vec);
+	//
 	// solution.fixed_opt
 	CppAD::mixed::fixed_solution solution;
-	solution.fixed_opt.resize(n_fixed_);
-	unpack_fixed(pack_object_, fit_var_value, solution.fixed_opt);
-	//
-	// random_opt
-	CppAD::vector<double> random_opt(n_random_);
-	unpack_random(pack_object_, fit_var_value, random_opt);
+	solution.fixed_opt = fixed_vec;
 	//
 	// convert dismod_at random effects to cppad_mixed random effects
 	d_vector cppad_mixed_random_opt = random_const_.remove( random_opt );
 	//
-	// information_rcv
-	CppAD::mixed::d_sparse_rcv information_rcv = information_mat(
-		solution, cppad_mixed_random_opt
+	// hes_fixed_obj_rcv
+	CppAD::mixed::d_sparse_rcv hes_fixed_obj_rcv = hes_fixed_obj(
+		fixed_vec, cppad_mixed_random_opt
 	);
 	//
-	// set information_out
+	// set hes_fixed_obj_out
 	{	CppAD::vector<size_t> var_id = fixed2var_id(pack_object_);
-		size_t nnz = information_rcv.nnz();
-		CppAD::mixed::sparse_rc pattern(n_var, n_var, information_rcv.nnz() );
+		size_t nnz = hes_fixed_obj_rcv.nnz();
+		CppAD::mixed::sparse_rc pattern(n_var, n_var, nnz);
 		for(size_t k = 0; k < nnz; ++k)
-		{	size_t r = information_rcv.row()[k];
-			size_t c = information_rcv.col()[k];
+		{	size_t r = hes_fixed_obj_rcv.row()[k];
+			size_t c = hes_fixed_obj_rcv.col()[k];
 			pattern.set(k, var_id[r], var_id[c]);
 		}
 		CppAD::mixed::d_sparse_rcv info( pattern );
 		for(size_t k = 0; k < nnz; ++k)
-			info.set(k, information_rcv.val()[k] );
+			info.set(k, hes_fixed_obj_rcv.val()[k] );
 		//
-		information_out = info;
+		hes_fixed_obj_out = info;
 	}
 	//
 	// fixed_lower
@@ -815,14 +818,14 @@ $end
 	// (except for bound constrained variables)
 	std::string msg = "";
 	CppAD::vector<size_t> pack_index = fixed2var_id(pack_object_);
-	size_t K = information_rcv.nnz();
+	size_t K = hes_fixed_obj_rcv.nnz();
 	CppAD::vector<double> hessian_diagonal(n_fixed_);
 	for(size_t j = 0; j < n_fixed_; ++j)
 		hessian_diagonal[j] = 0.0;
 	for(size_t k = 0; k < K; k++)
-	{	size_t i = information_rcv.row()[k];
-		size_t j = information_rcv.col()[k];
-		double v = information_rcv.val()[k];
+	{	size_t i = hes_fixed_obj_rcv.row()[k];
+		size_t j = hes_fixed_obj_rcv.col()[k];
+		double v = hes_fixed_obj_rcv.val()[k];
 		if( i == j )
 			hessian_diagonal[j] = v;
 	}
@@ -849,9 +852,10 @@ $end
 	// sample_fix
 	CppAD::vector<double> sample_fix(n_sample * n_fixed_);
 	try {
+		// sample fixed effects
 		sample_fixed(
 			sample_fix,
-			information_rcv,
+			hes_fixed_obj_rcv,
 			solution,
 			fixed_lower,
 			fixed_upper,

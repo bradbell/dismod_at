@@ -592,11 +592,11 @@ void sample_command(
 		data_object
 	);
 	//
-	// informaiton_out, sample_out
-	CppAD::mixed::d_sparse_rcv information_out;
+	// hes_fixed_obj_out, sample_out
+	CppAD::mixed::d_sparse_rcv hes_fixed_obj_out;
 	vector<double> sample_out(n_sample * n_var);
 	fit_object.sample_posterior(
-		information_out      ,
+		hes_fixed_obj_out    ,
 		sample_out           ,
 		fit_var_value        ,
 		option_map
@@ -625,7 +625,7 @@ void sample_command(
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	n_col         = 3;
-	n_row         = information_out.nnz();
+	n_row         = hes_fixed_obj_out.nnz();
 	col_name.resize(n_col);
 	col_type.resize(n_col);
 	row_value.resize(n_col * n_row);
@@ -643,9 +643,9 @@ void sample_command(
 	col_unique[2] = false;
 	//
 	for(size_t k = 0; k < n_row; ++k)
-	{	size_t row_var_id    = information_out.row()[k];
-		size_t col_var_id    = information_out.col()[k];
-		double hes_fixed_value = information_out.val()[k];
+	{	size_t row_var_id      = hes_fixed_obj_out.row()[k];
+		size_t col_var_id      = hes_fixed_obj_out.col()[k];
+		double hes_fixed_value = hes_fixed_obj_out.val()[k];
 		row_value[n_col * k + 0] = to_string(row_var_id);
 		row_value[n_col * k + 1] = to_string(col_var_id);
 		row_value[n_col * k + 2] = to_string(hes_fixed_value);
