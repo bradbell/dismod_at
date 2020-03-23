@@ -42,7 +42,7 @@ $children%omh/table/log_table.omh
 	%omh/table/prior_sim_table.omh
 	%omh/table/data_sim_table.omh
 	%omh/table/sample_table.omh
-	%omh/table/hessian_table.omh
+	%omh/table/hes_fixed_table.omh
 	%omh/table/predict_table.omh
 %$$
 $head Output Tables$$
@@ -105,7 +105,7 @@ $cref/sample/sample_table/$$ $cnext
 $cref/sample/sample_command/$$ $cnext
 yes
 $rnext
-$cref/hessian/hessian_table/$$ $cnext
+$cref/hessian/hes_fixed_table/$$ $cnext
 $cref/sample/sample_command/$$ $cnext
 yes
 $rnext

@@ -8,7 +8,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_hessian_math.py$$ $newlinech #$$
+# $begin user_hes_fixed_math.py$$ $newlinech #$$
 # $spell
 #	cppad
 # $$
@@ -302,7 +302,7 @@ import sys
 import os
 import copy
 import distutils.dir_util
-test_program = 'example/user/hessian_math.py'
+test_program = 'example/user/hes_fixed_math.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -479,7 +479,7 @@ node_table    = dismod_at.get_table_dict(connection, 'node')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 sample_table  = dismod_at.get_table_dict(connection, 'sample')
-hessian_table = dismod_at.get_table_dict(connection, 'hessian')
+hes_fixed_table = dismod_at.get_table_dict(connection, 'hes_fixed')
 connection.close()
 dismod_at.db2csv_command(file_name)
 # -----------------------------------------------------------------------
@@ -679,13 +679,13 @@ check_rel_error(check, d2G_d2theta, 1e-5)
 #
 # The world rate for incicdnce is the only fixed effect
 world_var_id = node_name2var_id['world']
-assert len(hessian_table) == 1
-for row in hessian_table :
+assert len(hes_fixed_table) == 1
+for row in hes_fixed_table :
 	assert row['row_var_id'] == world_var_id
 	assert row['col_var_id'] == world_var_id
-	hessian_value = row['hessian_value']
+	hes_fixed_value = row['hes_fixed_value']
 	check         = d2F_d2theta + d2G_d2theta
-	check_rel_error(check, hessian_value, 1e-14)
+	check_rel_error(check, hes_fixed_value, 1e-14)
 #
 # compute sample statistics
 assert  len(sample_table) == number_sample * len(var_table)
@@ -699,7 +699,7 @@ sample_var = numpy.var(sample_array, ddof=1)
 #
 # check sample statistics
 check_rel_error(theta,   sample_avg,  1e-1)
-check_rel_error(1.0 / hessian_value, sample_var, 1e-1)
+check_rel_error(1.0 / hes_fixed_value, sample_var, 1e-1)
 #
-print('hessian_math.py: OK')
+print('hes_fixed_math.py: OK')
 # END PYTHON

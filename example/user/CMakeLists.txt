@@ -35,7 +35,7 @@ FOREACH(user_case
 	ill_condition
 	jump_at_age
 	lasso_covariate
-	hessian_math
+	hes_fixed_math
 	metropolis
 	no_children
 	posterior

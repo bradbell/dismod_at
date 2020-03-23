@@ -8,8 +8,9 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin hessian_table$$
+$begin hes_fixed_table$$
 $spell
+	hes
 	var
 $$
 
@@ -29,7 +30,7 @@ are not included in the Hessian
 because the Laplace density is not differentiable at zero.
 None of the constraints are included in the calculation of this Hessian.
 
-$head hessian_id$$
+$head hes_fixed_id$$
 This column has type $code integer$$ and is the primary key for
 the this table.
 Its initial value is zero, and it increments by one for each row.
@@ -42,7 +43,7 @@ $head col_var_id$$
 This is the $cref/var_id/var_table/var_id/$$
 for the column of the Hessian that this element corresponds to.
 
-$head hessian_value$$
+$head hes_fixed_value$$
 This column has type $code real$$ and is the value of the second derivative
 of the objective w.r.t. the two
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$

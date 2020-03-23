@@ -25,6 +25,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 -------------------------------------------------------------------------------
 $begin sample_command$$
 $spell
+	hes
 	sim
 	avgint
 	dismod
@@ -128,12 +129,12 @@ It contains samples of the model variables.
 Hence the number of rows in this table is $icode number_sample$$
 times the number of rows in the $cref var_table$$.
 If the $code asymptotic$$ command fails because the
-Hessian (see hessian_table below) is not positive definite,
+Hessian (see hes_fixed_table below) is not positive definite,
 all of the $cref/var_value/sample_table/var_value/$$ entries
 in the sample table will be null.
 
-$head hessian_table$$
-A new $cref hessian_table$$ is created each time this command is run
+$head hes_fixed_table$$
+A new $cref hes_fixed_table$$ is created each time this command is run
 with $icode method$$ equal to $code asymptotic$$.
 The Hessian of the objective is written in this table.
 If $icode simulate_index$$ is present (is not present) the object corresponds
@@ -637,19 +638,19 @@ void sample_command(
 	col_type[1]   = "integer";
 	col_unique[1] = false;
 	//
-	col_name[2]   = "hessian_value";
+	col_name[2]   = "hes_fixed_value";
 	col_type[2]   = "integer";
 	col_unique[2] = false;
 	//
 	for(size_t k = 0; k < n_row; ++k)
 	{	size_t row_var_id    = information_out.row()[k];
 		size_t col_var_id    = information_out.col()[k];
-		double hessian_value = information_out.val()[k];
+		double hes_fixed_value = information_out.val()[k];
 		row_value[n_col * k + 0] = to_string(row_var_id);
 		row_value[n_col * k + 1] = to_string(col_var_id);
-		row_value[n_col * k + 2] = to_string(hessian_value);
+		row_value[n_col * k + 2] = to_string(hes_fixed_value);
 	}
-	table_name = "hessian";
+	table_name = "hes_fixed";
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
