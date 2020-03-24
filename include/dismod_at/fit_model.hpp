@@ -92,33 +92,16 @@ namespace dismod_at {
 		// scaling
 		template <class Float>
 		void scale_fixed_effect(
-			const CppAD::vector<Float>& fixed_in  ,
-			CppAD::vector<Float>&       fixed_out
-		)
-		{	assert( fixed_in.size()  == n_fixed_ );
-			assert( fixed_out.size() == n_fixed_ );
-			for(size_t j = 0; j < n_fixed_; j++)
-			{	if( fixed_is_scaled_[j] )
-					fixed_out[j] = log( fixed_in[j] + fixed_scale_eta_[j] );
-				else
-					fixed_out[j] = fixed_in[j];
-			}
-		}
+			const CppAD::vector<Float>& fixed_before  ,
+			CppAD::vector<Float>&       fixed_after
+		) const;
+		//
 		// unscaling
 		template <class Float>
 		void unscale_fixed_effect(
-			const CppAD::vector<Float>& fixed_in  ,
-			CppAD::vector<Float>&       fixed_out
-		)
-		{	assert( fixed_in.size()  == n_fixed_ );
-			assert( fixed_out.size() == n_fixed_ );
-			for(size_t j = 0; j < n_fixed_; j++)
-			{	if( fixed_is_scaled_[j] )
-					fixed_out[j] = exp( fixed_in[j] ) - fixed_scale_eta_[j];
-				else
-					fixed_out[j] = fixed_in[j];
-			}
-		}
+			const CppAD::vector<Float>& fixed_after  ,
+			CppAD::vector<Float>&       fixed_before
+		) const;
 		// -------------------------------------------------------------------
 		// virtual functions used by cppad_mixed base class
 		virtual a1_vector ran_likelihood(
@@ -183,5 +166,7 @@ namespace dismod_at {
 		);
 	};
 }
+// implementation of template functions
+# include <dismod_at/fit_model_scale.hpp>
 
 # endif
