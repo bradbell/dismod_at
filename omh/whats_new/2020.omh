@@ -50,7 +50,7 @@ $lend
 
 $head 03-22$$
 $list number$$
-Add the $cref/hessian table/sample_command/hes_fixed_table/$$
+Add the $cref/hes_fixed table/sample_command/hes_fixed_table/$$
 as an extra output when computing asymptotic samples.
 $lnext
 The $code user_asymptotic_math.py$$ example
