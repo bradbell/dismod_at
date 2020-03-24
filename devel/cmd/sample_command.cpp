@@ -651,10 +651,12 @@ void sample_command(
 	col_type[2]   = "integer";
 	col_unique[2] = false;
 	//
+	CppAD::mixed::s_vector row_major = hes_fixed_obj_out.row_major();
 	for(size_t k = 0; k < n_row; ++k)
-	{	size_t row_var_id      = hes_fixed_obj_out.row()[k];
-		size_t col_var_id      = hes_fixed_obj_out.col()[k];
-		double hes_fixed_value = hes_fixed_obj_out.val()[k];
+	{	size_t ell             = row_major[k];
+		size_t row_var_id      = hes_fixed_obj_out.row()[ell];
+		size_t col_var_id      = hes_fixed_obj_out.col()[ell];
+		double hes_fixed_value = hes_fixed_obj_out.val()[ell];
 		row_value[n_col * k + 0] = to_string(row_var_id);
 		row_value[n_col * k + 1] = to_string(col_var_id);
 		row_value[n_col * k + 2] = to_string(hes_fixed_value);
@@ -686,10 +688,14 @@ void sample_command(
 	col_type[2]   = "integer";
 	col_unique[2] = false;
 	//
+	// re-size to zero to avoid error on assignment
+	row_major.resize(0);
+	row_major = hes_random_obj_out.row_major();
 	for(size_t k = 0; k < n_row; ++k)
-	{	size_t row_var_id       = hes_random_obj_out.row()[k];
-		size_t col_var_id       = hes_random_obj_out.col()[k];
-		double hes_random_value = hes_random_obj_out.val()[k];
+	{	size_t ell              = row_major[k];
+		size_t row_var_id       = hes_random_obj_out.row()[ell];
+		size_t col_var_id       = hes_random_obj_out.col()[ell];
+		double hes_random_value = hes_random_obj_out.val()[ell];
 		row_value[n_col * k + 0] = to_string(row_var_id);
 		row_value[n_col * k + 1] = to_string(col_var_id);
 		row_value[n_col * k + 2] = to_string(hes_random_value);

@@ -20,13 +20,6 @@ $head Creation$$
 A new version of this table is created each time the
 $cref/asymptotic/sample_command/method/asymptotic/$$
 sample command is executed.
-
-$head Representation$$
-Only the lower triangle of the Hessian is included
-(because the Hessian is symmetric).
-In addition, this is a sparse representation; i.e.,
-if a pair of row and column indices in the lower triangle
-are not present, the Hessian is zero for that row and column pair.
 There are no $cref/Laplace/density_table/density_name/laplace/$$ densities
 in the random effects objective.
 None of the constraints are included in the calculation of this Hessian.
@@ -51,6 +44,16 @@ $cref/random effects/model_variables/Random Effects, u/$$
 specified by the row and column indices above.
 Note that the row and column indices are equal for the diagonal
 elements of the Hessian.
+
+$head Representation$$
+Only the lower triangle of the Hessian is included
+(because the Hessian is symmetric).
+The matrix is in row major order; i.e. $icode row_var_id$$
+is monotone non-decreasing and for each value of $icode row_var_id$$
+the $icode col_var_id$$ is monotone increasing.
+This is a sparse representation; i.e.,
+if a pair of row and column indices in the lower triangle
+are not present, the Hessian is zero for that row and column pair.
 
 
 $end

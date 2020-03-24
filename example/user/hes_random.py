@@ -40,6 +40,7 @@
 #
 # $head Problem Parameters$$
 # $srccode%py%
+import csv
 import math
 import time
 theta_true     = 0.5
@@ -361,5 +362,31 @@ for i in range(2) :
 			rel_error = sample_cov[i,j] / scale
 	assert abs(rel_error) < 1e-1
 #
+# check db2csv output of hes_random.csv
+# (assumes database is in current working directory)
+file_ptr  = open('hes_random.csv', 'r')
+hes_random_csv = list()
+reader    = csv.DictReader(file_ptr)
+for row in reader :
+	hes_random_csv.append(row)
+file_ptr.close()
+#
+for hes_random_id in range( len(hes_random_table) ) :
+	row_table    = hes_random_table[hes_random_id]
+	row_csv      = hes_random_csv[hes_random_id]
+	#
+	value_table  = row_table['row_var_id']
+	value_csv    = int( row_csv['row_var_id'] )
+	assert value_table == value_csv
+	#
+	value_table  = row_table['col_var_id']
+	value_csv    = int( row_csv['col_var_id'] )
+	assert value_table == value_csv
+	#
+	value_table  = row_table['hes_random_value']
+	value_csv    = float( row_csv['hes_random_value'] )
+	rel_error    = value_csv / value_table - 1.0
+	eps9         = 9.0 * numpy.finfo(float).eps
+	assert abs(rel_error) < eps9
 print('hes_random.py: OK')
 # END PYTHON
