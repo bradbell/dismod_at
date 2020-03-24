@@ -77,6 +77,7 @@ $children%
 	example/user/jump_at_age.py%
 	example/user/lasso_covariate.py%
 	example/user/hes_fixed_math.py%
+	example/user/hes_random.py%
 	example/user/mulstd.py%
 	example/user/no_children.py%
 	example/user/posterior.py%
@@ -126,6 +127,7 @@ $rref user_zsum_mulcov_rate.py$$
 $rref user_zsum_mulcov_meas.py$$
 $rref user_bilevel_random.py$$
 $rref user_hes_fixed_math.py$$
+$rref user_hes_random.py$$
 $tend
 
 $head More Examples$$

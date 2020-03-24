@@ -658,6 +658,7 @@ $spell
 	var
 	hes
 	obj
+	uhat
 $$
 
 $section Sample From Posterior Distribution for a Fit$$
@@ -665,6 +666,7 @@ $section Sample From Posterior Distribution for a Fit$$
 $head Syntax$$
 $icode%fit_object%.sample_posterior(
 	%hes_fixed_obj_out%,
+	%hes_random_obj_out%,
 	%sample_out%,
 	%fit_var_value%,
 	%option_map%
@@ -678,17 +680,41 @@ $head Constants$$
 The model variables that have upper and lower limits equal
 are referred to as constants.
 
+$head fit_var_value$$
+This vector has size equal to the number of model variables.
+It is the optimal $cref/variable values/model_variables/$$ in
+$cref pack_info$$ order.
+
+$subhead theta$$
+We use $latex \theta$$ to denote the fixed effects vector
+corresponding to the values in $icode fit_var_value$$.
+
+$subhead uhat$$
+We use $latex \hat{u}$$ to denote the random effects vector
+corresponding to the values in $icode fit_var_value$$.
+It is assumed that $latex \hat{u}$$ minimizes the random effects objective
+$latex f( \theta , \cdot )$$.
+
 $head hes_fixed_obj_out$$
-This a sparse matrix representation of the approximation for the
-Hessian of the fixed effects objective.
-To be specific, it is evaluated
-at the fixed effects specified by $icode fit_var_value$$.
+This a sparse matrix representation of the
+Hessian of the fixed effects objective evaluated at $latex \theta$$.
 The row and column indices in this matrix are relative to the
 $cref pack_info$$ vector.
 Only the lower triangle is returned (column indices are less than or equal
 row indices) because the Hessian is symmetric.
 The Laplace density terms in the likelihood function are not included
 because the Hessian is not defined at zero for an Laplace density.
+
+$head hes_random_obj_out$$
+This a sparse matrix representation of the
+Hessian of the random effects objective evaluated
+$latex ( \theta , \hat{u} )$$.
+The row and column indices in this matrix are relative to the
+$cref pack_info$$ vector.
+Only the lower triangle is returned (column indices are less than or equal
+row indices) because the Hessian is symmetric.
+Note that the random effects objective does not have any
+Laplace density terms.
 
 $head sample_out$$
 This argument is a vector with size equal to the number of samples
@@ -701,24 +727,24 @@ $codei%
 	%sample_out%[ %i% * %n_sample% + %j% ]
 %$$
 is the $th j$$ component of the $th i$$ sample of the model variables.
-These samples are independent for different $icode i$$,
-and for fixed $icode i$$ they have the asymptotic covariance
-for the model variables; i.e., the inverse $icode hes_fixed_obj_out$$.
-If the Hessian is not positive definite,
+These samples are independent for different $icode i$$.
+
+$subhead fixed effects$$
+The fixed effect samples are normal with mean $latex \theta$$ and covariance
+equal to the inverse of $icode hes_fixed_obj_out$$.
+If this Hessian is not positive definite,
+all of the samples are set to $code nan$$.
+
+$subhead random_effects$$
+The random effect samples are normal with mean $latex \hat{u}$$ and covariance
+equal to the inverse of $icode hes_random_obj_out$$.
+If this Hessian is not positive definite,
 all of the samples are set to $code nan$$.
 
 $subhead Constraints$$
-The fixed effects are samples with covariance equal to the
-inverse of the Hessian of the fixed effects objective.
-This ignores constraints except for constants.
-The random effects are sampled from the inverse of the Hessian
-of the random effects objective given the fixed effects
-are equal to the value in $icode fit_var_value$$.
-
-$head fit_var_value$$
-This vector has size equal to the number of model variables.
-It is the optimal $cref/variable values/model_variables/$$ in
-$cref pack_info$$ order.
+The Hessians of the fixed and random effects objectives
+ignore all constraints except for constants
+(lower and upper limits equal).
 
 $head no_scaling_$$
 This routine assumes that $cref/no_scaling_/fit_model_ctor/no_scaling/$$
@@ -727,10 +753,11 @@ is true.
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
-	CppAD::mixed::d_sparse_rcv&         hes_fixed_obj_out ,
-	CppAD::vector<double>&              sample_out      ,
-	const CppAD::vector<double>&        fit_var_value   ,
-	std::map<std::string, std::string>& option_map      )
+	CppAD::mixed::d_sparse_rcv&         hes_fixed_obj_out  ,
+	CppAD::mixed::d_sparse_rcv&         hes_random_obj_out ,
+	CppAD::vector<double>&              sample_out         ,
+	const CppAD::vector<double>&        fit_var_value      ,
+	std::map<std::string, std::string>& option_map         )
 /* %$$
 $end
 */
@@ -766,8 +793,12 @@ $end
 	CppAD::mixed::d_sparse_rcv hes_fixed_obj_rcv = hes_fixed_obj(
 		fixed_vec, cppad_mixed_random_opt
 	);
+	// hes_random_obj_rcv
+	CppAD::mixed::d_sparse_rcv hes_random_obj_rcv = hes_random_obj(
+		fixed_vec, cppad_mixed_random_opt
+	);
 	//
-	// set hes_fixed_obj_out
+	// hes_fixed_obj_out
 	{	CppAD::vector<size_t> var_id = fixed2var_id(pack_object_);
 		size_t nnz = hes_fixed_obj_rcv.nnz();
 		CppAD::mixed::sparse_rc pattern(n_var, n_var, nnz);
@@ -781,6 +812,21 @@ $end
 			info.set(k, hes_fixed_obj_rcv.val()[k] );
 		//
 		hes_fixed_obj_out = info;
+	}
+	// hes_random_obj_out
+	{	CppAD::vector<size_t> var_id = random2var_id(pack_object_);
+		size_t nnz = hes_random_obj_rcv.nnz();
+		CppAD::mixed::sparse_rc pattern(n_var, n_var, nnz);
+		for(size_t k = 0; k < nnz; ++k)
+		{	size_t r = hes_random_obj_rcv.row()[k];
+			size_t c = hes_random_obj_rcv.col()[k];
+			pattern.set(k, var_id[r], var_id[c]);
+		}
+		CppAD::mixed::d_sparse_rcv info( pattern );
+		for(size_t k = 0; k < nnz; ++k)
+			info.set(k, hes_random_obj_rcv.val()[k] );
+		//
+		hes_random_obj_out = info;
 	}
 	//
 	// fixed_lower

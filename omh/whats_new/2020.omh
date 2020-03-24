@@ -21,6 +21,7 @@ $spell
 	dtime
 	sim
 	cppad
+	hes
 $$
 $navigate%
 	Up%Location%
@@ -38,8 +39,14 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 03-23$$
+$list number$$
 Update to using version cppad_mixed-20200319.
 This enables computation of the Hessian of the random effects objective.
+$lnext
+Add the $cref hes_random_table$$ as an output during an
+$cref/asymptotic/sample_command/method/asymptotic/$$ sample command.
+Add the $cref user_hes_random.py$$ example use of the hes_random table.
+$lend
 
 $head 03-22$$
 $list number$$

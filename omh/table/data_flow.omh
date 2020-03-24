@@ -43,6 +43,7 @@ $children%omh/table/log_table.omh
 	%omh/table/data_sim_table.omh
 	%omh/table/sample_table.omh
 	%omh/table/hes_fixed_table.omh
+	%omh/table/hes_random_table.omh
 	%omh/table/predict_table.omh
 %$$
 $head Output Tables$$
@@ -107,7 +108,11 @@ yes
 $rnext
 $cref/hessian/hes_fixed_table/$$ $cnext
 $cref/sample/sample_command/$$ $cnext
-yes
+no
+$rnext
+$cref/hessian/hes_random_table/$$ $cnext
+$cref/sample/sample_command/$$ $cnext
+no
 $rnext
 $cref/predict/predict_table/$$ $cnext
 $cref/predict/predict_command/$$ $cnext
@@ -146,8 +151,10 @@ $cref/simulate/simulate_command/$$ $cnext
 	$cref data_sim_table$$, $cref age_avg_table$$
 $rnext
 $cref/sample/sample_command/$$ $cnext
-$cref fit_var_table$$, $cref data_sim_table$$, $cref prior_sim_table$$ $cnext
-$cref sample_table$$, $cref age_avg_table$$
+$cref fit_var_table$$, $cref data_sim_table$$, $cref prior_sim_table$$
+$cnext
+$cref sample_table$$, $cref hes_fixed_table$$, $cref hes_random_table$$
+$cref age_avg_table$$
 $rnext
 $cref/predict/predict_command/$$ $cnext
 	$cref sample_table$$, $cref fit_var_table$$, $cref truth_var_table$$ $cnext

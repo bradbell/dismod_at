@@ -35,9 +35,8 @@
 # $latex s$$      $cnext standard deviation for data and random effects $rnext
 # $tend
 # The only fixed effect in this model is $latex \theta$$
-# (sometimes written $icode theta$$)
-# the incidence level for north_america.
-#  The random effects are $latex u_0$$ and $latex u_1$$.
+# (sometimes written $icode theta$$) the incidence level for the world.
+# The random effects are $latex u_0$$ and $latex u_1$$.
 #
 # $head Problem Parameters$$
 # $srccode%py%
@@ -675,7 +674,7 @@ G     = log_det_random_hessian(theta, uhat) / 2.0
 check = (G_plus - 2.0 * G + G_minus) / (delta_theta * delta_theta)
 check_rel_error(check, d2G_d2theta, 1e-5)
 # ============================================================================
-# check the Hessian of the objective w.r.t the fixed effects
+# check the Hessian of the fixed effects objective
 #
 # The world rate for incicdnce is the only fixed effect
 world_var_id = node_name2var_id['world']

@@ -136,8 +136,16 @@ in the sample table will be null.
 $head hes_fixed_table$$
 A new $cref hes_fixed_table$$ is created each time this command is run
 with $icode method$$ equal to $code asymptotic$$.
-The Hessian of the objective is written in this table.
-If $icode simulate_index$$ is present (is not present) the object corresponds
+The Hessian of the fixed effects objective is written in this table.
+If $icode simulate_index$$ is present (is not present) the Hessian corresponds
+to the simulated measurements in the $cref data_sim_table$$
+(measurements in the $cref data_table$$).
+
+$head hes_random_table$$
+A new $cref hes_random_table$$ is created each time this command is run
+with $icode method$$ equal to $code asymptotic$$.
+The Hessian of the random effects objective is written in this table.
+If $icode simulate_index$$ is present (is not present) the Hessian corresponds
 to the simulated measurements in the $cref data_sim_table$$
 (measurements in the $cref data_table$$).
 
@@ -592,11 +600,12 @@ void sample_command(
 		data_object
 	);
 	//
-	// hes_fixed_obj_out, sample_out
-	CppAD::mixed::d_sparse_rcv hes_fixed_obj_out;
+	// hes_fixed_obj_out, hes_random_obj_out, sample_out
+	CppAD::mixed::d_sparse_rcv hes_fixed_obj_out, hes_random_obj_out;
 	vector<double> sample_out(n_sample * n_var);
 	fit_object.sample_posterior(
 		hes_fixed_obj_out    ,
+		hes_random_obj_out   ,
 		sample_out           ,
 		fit_var_value        ,
 		option_map
@@ -620,8 +629,8 @@ void sample_command(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
 	// ----------------------------------------------------------------------
-	// create hessian table
-	sql_cmd = "drop table if exists hessian";
+	// create hes_fixed table
+	sql_cmd = "drop table if exists hes_fixed";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
 	n_col         = 3;
@@ -651,6 +660,41 @@ void sample_command(
 		row_value[n_col * k + 2] = to_string(hes_fixed_value);
 	}
 	table_name = "hes_fixed";
+	dismod_at::create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	// ----------------------------------------------------------------------
+	// create hes_random table
+	sql_cmd = "drop table if exists hes_random";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	n_col         = 3;
+	n_row         = hes_random_obj_out.nnz();
+	col_name.resize(n_col);
+	col_type.resize(n_col);
+	row_value.resize(n_col * n_row);
+	//
+	col_name[0]   = "row_var_id";
+	col_type[0]   = "integer";
+	col_unique[0] = false;
+	//
+	col_name[1]   = "col_var_id";
+	col_type[1]   = "integer";
+	col_unique[1] = false;
+	//
+	col_name[2]   = "hes_random_value";
+	col_type[2]   = "integer";
+	col_unique[2] = false;
+	//
+	for(size_t k = 0; k < n_row; ++k)
+	{	size_t row_var_id       = hes_random_obj_out.row()[k];
+		size_t col_var_id       = hes_random_obj_out.col()[k];
+		double hes_random_value = hes_random_obj_out.val()[k];
+		row_value[n_col * k + 0] = to_string(row_var_id);
+		row_value[n_col * k + 1] = to_string(col_var_id);
+		row_value[n_col * k + 2] = to_string(hes_random_value);
+	}
+	table_name = "hes_random";
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
