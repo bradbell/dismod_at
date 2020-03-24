@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -117,7 +117,8 @@ from the $cref option_table$$
 and the argument $cref/simulate_index/fit_command/simulate_index/$$
 was added to the simulate command.
 $lnext
-Improve the discussion of the $cref/output tables/data_flow/Output Tables/$$.
+Improve the discussion of the
+$cref/output tables/data_flow/Output Tables by Table Name/$$.
 $lnext
 Fix some compiler warnings.
 $lend

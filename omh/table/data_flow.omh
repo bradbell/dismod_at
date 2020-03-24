@@ -45,8 +45,9 @@ $children%omh/table/log_table.omh
 	%omh/table/hes_random_table.omh
 	%omh/table/predict_table.omh
 %$$
-$head Output Tables$$
-Here is a list of the $code dismod_at$$ output tables.
+
+$head Output Tables by Table Name$$
+Below is a list of the $code dismod_at$$ output tables by table name:
 The ones that can be created directly by the user have
 yes under By User.
 $table
@@ -121,46 +122,74 @@ $cref/predict/predict_command/$$ $cnext
 no
 $tend
 
-$head Input and Output by Command$$
-An extra input table is one that is not in the $cref input$$ list
-and is not created by the $cref init_command$$.
-The tables created by the init command are the
-$cref/age_avg/init_command/age_avg_table/$$,
-$cref/var/init_command/var_table/$$,
-$cref/data_subset/init_command/data_subset_table/$$,
-$cref/start_var/init_command/start_var_table/$$,
-$cref/scale_var/init_command/scale_var_table/$$, tables.
+$head Command Output Tables$$
+Below is a list commands and their corresponding output tables:
 
 $table
-Command     $cnext
-Extra Input $cnext
-Output      $cnext
+Command       $cnext
+Output Tables $cnext
 $rnext
 $cref/depend/depend_command/$$   $cnext
-$cnext
 $cref depend_var_table$$, $cref age_avg_table$$
 $rnext
 $cref/set/set_command/$$                     $cnext
-$cref fit_var_table$$, $cref sample_table$$  $cnext
 $cref start_var_table$$, $cref scale_var_table$$, $cref truth_var_table$$
 $rnext
 $cref/fit/fit_command/$$     $cnext
-	$cref data_sim_table$$  $cnext
-	$cref fit_var_table$$, $cref fit_data_subset_table$$, $cref age_avg_table$$
+$cref fit_var_table$$, $cref fit_data_subset_table$$, $cref age_avg_table$$
 $rnext
 $cref/simulate/simulate_command/$$ $cnext
-	$cref truth_var_table$$        $cnext
-	$cref data_sim_table$$, $cref age_avg_table$$
+$cref data_sim_table$$, $cref age_avg_table$$
 $rnext
 $cref/sample/sample_command/$$ $cnext
-$cref fit_var_table$$, $cref data_sim_table$$, $cref prior_sim_table$$
-$cnext
-$cref sample_table$$, $cref hes_fixed_table$$, $cref hes_random_table$$
+$cref sample_table$$,
+$cref hes_fixed_table$$,
+$cref hes_random_table$$
 $cref age_avg_table$$
 $rnext
 $cref/predict/predict_command/$$ $cnext
-	$cref sample_table$$, $cref fit_var_table$$, $cref truth_var_table$$ $cnext
-	$cref predict_table$$, $cref age_avg_table$$
+$cref predict_table$$, $cref age_avg_table$$
+$tend
+
+$subhead init$$
+The init command (which is not included in the list above)
+has the following output tables:
+$pre
+$$
+$cref/age_avg/init_command/age_avg_table/$$,
+$cref/var/init_command/var_table/$$,
+$cref/data_subset/init_command/data_subset_table/$$,
+$cref/start_var/init_command/start_var_table/$$, and
+$cref/scale_var/init_command/scale_var_table/$$.
+
+
+$head Command Extra Input Tables$$
+An extra input table is one that is not in the
+$cref input$$ table list
+and is not output by the $cref init_command$$ (see list above).
+Below is a list commands and their corresponding extra input tables:
+
+$table
+Command            $cnext
+Extra Input Tables $cnext
+$rnext
+$cref/depend/depend_command/$$   $cnext
+none
+$rnext
+$cref/set/set_command/$$                     $cnext
+$cref fit_var_table$$, $cref sample_table$$
+$rnext
+$cref/fit/fit_command/$$     $cnext
+$cref data_sim_table$$
+$rnext
+$cref/simulate/simulate_command/$$ $cnext
+$cref truth_var_table$$
+$rnext
+$cref/sample/sample_command/$$ $cnext
+$cref fit_var_table$$, $cref data_sim_table$$, $cref prior_sim_table$$
+$rnext
+$cref/predict/predict_command/$$ $cnext
+$cref sample_table$$, $cref fit_var_table$$, $cref truth_var_table$$
 $tend
 
 $end

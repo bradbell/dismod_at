@@ -38,6 +38,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 03-24$$
+Create separate tables, in the data flow section, for the
+$cref/command output tables/data_flow/Command Output Tables/$$ and
+$cref/command extra input tables/data_flow/Command Extra Input Tables/$$.
+
 $head 03-23$$
 $list number$$
 Update to using version cppad_mixed-20200319.

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -50,7 +50,8 @@ $head Conventions$$
 
 $subhead Changing Values$$
 This table is special in that you can change almost all its values
-without invalidating the $cref/output tables/data_flow/Output Tables/$$.
+without invalidating the
+$cref/output tables/data_flow/Command Output Tables/$$.
 There is one exception; see
 $cref/parent_node_id/option_table/parent_node_id/$$ below.
 

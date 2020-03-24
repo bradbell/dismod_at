@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -35,7 +35,7 @@ $codei%dismod_at %database% init%$$
 $head Purpose$$
 This command initializes the data flow.
 To be specific, it begins by deleting any existing
-$cref/output tables/data_flow/Output Tables/$$,
+$cref/output tables/data_flow/Output Tables by Table Name/$$,
 except for the $cref log_table$$,
 and then creates new versions of the following tables:
 $table

@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -338,7 +338,8 @@ the input to the $cref predict_command$$.
 $lnext
 One may now make changes the
 $cref/option_table/option_table/Conventions/Changing Values/$$,
-without invalidating all of the $cref/output tables/data_flow/Output Tables/$$.
+without invalidating all of the
+$cref/output tables/data_flow/Output Tables by Table Name/$$.
 $lnext
 There was a bug in the solution of the differential equation.
 The $code iota_pos_rho_zero$$ and $code iota_zero_rho_pos$$
@@ -584,8 +585,8 @@ $lend
 
 $head 10-14$$
 Use full numerical precision when converting double precision values to strings
-for writing to $cref/output tables/data_flow/Output Tables/$$ (it used to be that only about six
-digits of precision were preserved).
+for writing to $cref/output tables/data_flow/Output Tables by Table Name/$$
+(it used to be that only about six digits of precision were preserved).
 
 $head 09-18$$
 There was an error in the $cref user_no_children.py$$ example
@@ -960,7 +961,7 @@ $lnext
 The $cref init_command$$ no longer deletes the current
 fit, fit_data_subset, truth_var, simulate, sample and predict tables.
 These table get overwritten when the corresponding command is executed;
-see $cref/output tables/data_flow/Output Tables/$$.
+see $cref/output tables/data_flow/Output Tables by Table Name/$$.
 $lend
 
 $head 07-14$$
@@ -1014,7 +1015,7 @@ $list number$$
 First version of $cref predict_command$$ that passes its
 example / test $cref predict_command.py$$.
 $lnext
-List addition input and output tables in $cref/output tables/data_flow/Output Tables/$$ section.
+List addition input and output tables in $cref data_flow$$ section.
 $lend
 
 $head 07-09$$

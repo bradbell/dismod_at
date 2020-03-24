@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,11 +17,9 @@ $$
 $section The dismod_at Commands$$
 
 $head Data Flow$$
-Each command as a set of extra input tables and output tables; see
-$cref/input and output by command
-	/data_flow
-	/Input and Output by Command
-/$$.
+Each command as a set of
+$cref/extra input tables/data_flow/Command Extra Input Tables/$$ and
+$cref/output tables/data_flow/Command Output Tables/$$.
 
 $head Log Messages$$
 Each command also has two messages with message_type

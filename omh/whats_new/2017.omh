@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -210,8 +210,8 @@ The $cref depend_command$$ was added and the
 $cref/depend/db2csv_command/variable.csv/depend/$$ column was
 added to the $code variable.csv$$ file.
 $lnext
-The $cref/input and output by command/data_flow/Input and Output by Command/$$
-in the data flow page was corrected.
+The Input and Output by Command paragraph
+in the $cref data_flow$$ page was corrected.
 To be specific $cref fit_data_subset_table$$, not $cref data_subset_table$$,
 is output by the $cref fit_command$$.
 $lend
@@ -707,7 +707,7 @@ $cref fit_command$$.
 $head 04-22$$
 $list number$$
 The $cref init_command$$ now deletes any existing
-$cref/output tables/data_flow/Output Tables/$$.
+$cref/output tables/data_flow/Output Tables by Table Name/$$.
 $lnext
 The version number in the dismod_at python package
 was stuck at $code 20160516$$; i.e., not being updated.
