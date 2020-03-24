@@ -20,11 +20,13 @@ $head Creation$$
 A new version of this table is created each time the
 $cref/asymptotic/sample_command/method/asymptotic/$$
 sample command is executed.
-It is the Hessian of the fixed effects objective.
+
+$head Representation$$
 Only the lower triangle of the Hessian is included
 (because the Hessian is symmetric).
-In addition, it is a sparse representation; i.e.,
-row and column indices in the lower triangle that are not present are zero.
+In addition, this is a sparse representation; i.e.,
+if a pair of row and column indices in the lower triangle
+are not present, the Hessian is zero for that row and column pair.
 The $cref/Laplace/density_table/density_name/laplace/$$ densities
 are not included in the Hessian
 because the Laplace density is not differentiable at zero.
