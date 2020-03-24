@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # $begin db2csv_command$$ $newlinech #$$
 # $spell
+#	hes
 #	ihme
 #	const
 #	ij
@@ -93,13 +94,36 @@
 #
 # $head age_avg.csv$$
 # The file $icode%dir%/age_avg.csv%$$ is written by this command.
-# It is a CSV file with the contents of the $cref age_avg_table$$.
+# It is a CSV file with the contents of the age_avg table.
+# The only column in this table is $cref/age/age_avg_table/age/$$.
 # Note that a $cref set_command$$ may change the value of
 # $cref/ode_step_size/option_table/ode_step_size/$$ or
 # $cref/age_avg_split/option_table/age_avg_split/$$ but it will not
 # write out the new age_avg table.
 #
+# $head hes_fixed.csv$$
+# If the $cref/asymptotic/sample_command/method/asymptotic/$$
+# sample command was executed,
+# the contents of the $cref hes_fixed_table$$ are written to
+# the CSV file $icode%dir%/hes_fixed.csv%$$.
+# The columns in this table are
+# $cref/row_var_id/hes_fixed_table/row_var_id/$$,
+# $cref/col_var_id/hes_fixed_table/col_var_id/$$,
+# $cref/hes_fixed_value/hes_fixed_table/hes_fixed_value/$$.
+#
+# $head hes_random.csv$$
+# If the $cref/asymptotic/sample_command/method/asymptotic/$$
+# sample command was executed,
+# the contents of the $cref hes_random_table$$ are written to
+# the CSV file $icode%dir%/hes_random.csv%$$.
+# The columns in this table are
+# $cref/row_var_id/hes_random_table/row_var_id/$$,
+# $cref/col_var_id/hes_random_table/col_var_id/$$,
+# $cref/hes_random_value/hes_random_table/hes_random_value/$$.
+#
+# $comment ------------------------------------------------------------$$
 # $head variable.csv$$
+# $comment ------------------------------------------------------------$$
 # The file $icode%dir%/variable.csv%$$ is written by this command.
 # It is a CSV file with one row for each of the $cref model_variables$$
 # and has the following columns:
@@ -284,7 +308,9 @@
 # $cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ affect.
 # $lend
 #
+# $comment ------------------------------------------------------------$$
 # $head data.csv$$
+# $comment ------------------------------------------------------------$$
 # The file $icode%dir%/data.csv%$$ is written by this command.
 # It is a CSV file with one row for each row in the $cref data_subset_table$$
 # and has the following columns:
@@ -432,9 +458,11 @@
 # /$$
 # in the model for the average integrand.
 #
+# $comment ------------------------------------------------------------$$
 # $head predict.csv$$
+# $comment ------------------------------------------------------------$$
 # If the $cref predict_command$$ has was executed,
-# the CSV file $code predict.csv$$ is written.
+# the CSV file $icode%dir%/predict.csv%$$ is written.
 # For each row of the $cref predict_table$$
 # there is a corresponding row in $code predict.csv$$.
 #
@@ -520,6 +548,7 @@
 #	/Covariate Difference, x_ij
 # /$$
 # in the model for the average integrand.
+# $comment ------------------------------------------------------------$$
 #
 # $children%
 #	example/get_started/db2csv_command.py
@@ -712,15 +741,25 @@ def db2csv_command(database_file_arg) :
 	have_table['fit_var']         = check4table(cursor, 'fit_var')
 	have_table['fit_data_subset'] = check4table(cursor, 'fit_data_subset')
 	have_table['predict']         = check4table(cursor, 'predict')
-	if have_table['fit_var'] != have_table['fit_data_subset'] :
-		msg = 'db2csv_command: '
-		for table in [ 'fit_var', 'fit_data_subset' ] :
-			if have_table[table] :
-				msg  += 'have ' + table + ' = true\n'
-			else :
-				msg  += 'have ' + table + ' = false\n'
-		msg += 'in ' + file_name + '\n'
-		sys.exit(msg)
+	have_table['hes_fixed']       = check4table(cursor, 'hes_fixed')
+	have_table['hes_random']      = check4table(cursor, 'hes_random')
+	# ----------------------------------------------------------------------
+	# check pairs of tables that should come togeather
+	table_pair_list = [
+		( 'fit_var',    'fit_data_subset' ),
+		( 'data_sim',   'prior_sim'),
+		( 'hes_fixed',  'hes_random'),
+	]
+	for pair in table_pair_list :
+		if have_table[pair[0]] != have_table[pair[1]] :
+			msg = 'db2csv_command: '
+			for table in pair :
+				if have_table[table] :
+					msg  += 'have ' + table + ' = true\n'
+				else :
+					msg  += 'have ' + table + ' = false\n'
+			msg += 'in ' + file_name + '\n'
+			sys.exit(msg)
 	#
 	table_list  = copy.copy( required_table_list )
 	for key in have_table :
@@ -1480,4 +1519,30 @@ def db2csv_command(database_file_arg) :
 				covariate_id += 1
 			#
 			csv_writer.writerow(row_out)
+		csv_file.close()
+	# =========================================================================
+	# hes_fixed.csv
+	# =========================================================================
+	if have_table['hes_fixed'] :
+		file_name = os.path.join(database_dir, 'hes_fixed.csv')
+		csv_file  = open(file_name, 'w')
+		#
+		header = ['row_var_id', 'col_var_id', 'hes_fixed_value']
+		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+		csv_writer.writeheader()
+		for row in table_data['hes_fixed'] :
+			csv_writer.writerow(row)
+		csv_file.close()
+	# =========================================================================
+	# hes_random.csv
+	# =========================================================================
+	if have_table['hes_random'] :
+		file_name = os.path.join(database_dir, 'hes_random.csv')
+		csv_file  = open(file_name, 'w')
+		#
+		header = ['row_var_id', 'col_var_id', 'hes_random_value']
+		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+		csv_writer.writeheader()
+		for row in table_data['hes_random'] :
+			csv_writer.writerow(row)
 		csv_file.close()
