@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Sample Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Sample Command">
-<meta name="keywords" id="keywords" content=" the sample command syntax database purpose number_sample simulate_index method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table bounds example ">
+<meta name="keywords" id="keywords" content=" the sample command syntax database purpose number_sample simulate_index method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table hes_fixed_table hes_random_table bounds example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,8 @@ A:active { color : purple }
 <br><a href="sample_command.htm#prior_sim_table" target="_top">prior_sim_table</a>
 <br><a href="sample_command.htm#fit_var_table" target="_top">fit_var_table</a>
 <br><a href="sample_command.htm#sample_table" target="_top">sample_table</a>
+<br><a href="sample_command.htm#hes_fixed_table" target="_top">hes_fixed_table</a>
+<br><a href="sample_command.htm#hes_random_table" target="_top">hes_random_table</a>
 <br><a href="sample_command.htm#Bounds" target="_top">Bounds</a>
 <br><a href="sample_command.htm#Example" target="_top">Example</a>
 <br><br>
@@ -259,6 +261,47 @@ Hence the number of rows in this table is
 
 times the number of rows in the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
 .
+If the <code><font color="blue">asymptotic</font></code> command fails because the
+Hessian (see hes_fixed_table below) is not positive definite,
+all of the <a href="sample_table.htm#var_value" target="_top"><span style='white-space: nowrap'>var_value</span></a>
+ entries
+in the sample table will be null.
+
+<br>
+<br>
+<b><big><a name="hes_fixed_table" id="hes_fixed_table">hes_fixed_table</a></big></b>
+<br>
+A new <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+ is created each time this command is run
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ equal to <code><font color="blue">asymptotic</font></code>.
+The Hessian of the fixed effects objective is written in this table.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ is present (is not present) the Hessian corresponds
+to the simulated measurements in the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+
+(measurements in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+).
+
+<br>
+<br>
+<b><big><a name="hes_random_table" id="hes_random_table">hes_random_table</a></big></b>
+<br>
+A new <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
+ is created each time this command is run
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ equal to <code><font color="blue">asymptotic</font></code>.
+The Hessian of the random effects objective is written in this table.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ is present (is not present) the Hessian corresponds
+to the simulated measurements in the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+
+(measurements in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+).
 
 <br>
 <br>

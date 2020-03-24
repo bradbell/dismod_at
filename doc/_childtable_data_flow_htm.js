@@ -15,6 +15,8 @@ document.write('\
 <option>prior_sim_table</option>\
 <option>data_sim_table</option>\
 <option>sample_table</option>\
+<option>hes_fixed_table</option>\
+<option>hes_random_table</option>\
 <option>predict_table</option>\
 </select>\
 ');
@@ -33,6 +35,8 @@ function data_flow_child(item)
 		'prior_sim_table.htm',
 		'data_sim_table.htm',
 		'sample_table.htm',
+		'hes_fixed_table.htm',
+		'hes_random_table.htm',
 		'predict_table.htm'
 	];
 	var index = item.selectedIndex;

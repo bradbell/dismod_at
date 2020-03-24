@@ -481,10 +481,7 @@ mcmc_order <font color="#990000">=</font> <font color="#990000">[</font> <font c
      value     <font color="#990000">=</font> var_std<font color="#990000">[</font>var_id<font color="#990000">]</font>
      mcmc      <font color="#990000">=</font> x_std_mcmc<font color="#990000">[</font>i<font color="#990000">]</font>
      err       <font color="#990000">=</font> value <font color="#990000">/</font> mcmc  <font color="#990000">-</font> <font color="#993399">1.0</font>
-     <i><font color="#9A1900"># This is a small sample case (only three data points)</font></i>
-     <i><font color="#9A1900"># so we do not expect the asymptotic statistics to be correct.</font></i>
-     <i><font color="#9A1900"># Note that in this case, the asymptotics are an over estimate.</font></i>
-     <b><font color="#0000FF">if</font></b> err <font color="#990000">&lt;=</font> <font color="#993399">0.0</font> <b><font color="#0000FF">or</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.6</font> <font color="#990000">:</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.6</font> <font color="#990000">:</font>
           <b><font color="#0000FF">print</font></b><font color="#990000">(</font>node_name<font color="#990000">,</font> <font color="#FF0000">'_std (value, mcmc, err) = '</font><font color="#990000">,</font> value<font color="#990000">,</font> mcmc<font color="#990000">,</font> err<font color="#990000">)</font>
           <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed = '</font><font color="#990000">,</font> random_seed <font color="#990000">)</font>
           <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>03-23</option>
+<option>03-22</option>
 <option>03-21</option>
 <option>03-19</option>
 <option>03-18</option>
@@ -89,9 +91,60 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
 <br>
+<b><big><a name="03-23" id="03-23">03-23</a></big></b>
+
+<ol type="1"><li>
+Update to using version cppad_mixed-20200319.
+This enables computation of the Hessian of the random effects objective.
+</li><li>
+
+Add the <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
+ as an output during an
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ sample command.
+Add the <a href="user_hes_random.py.htm" target="_top"><span style='white-space: nowrap'>user_hes_random.py</span></a>
+ example use of the hes_random table.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="03-22" id="03-22">03-22</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="sample_command.htm#hes_fixed_table" target="_top"><span style='white-space: nowrap'>hes_fixed&nbsp;table</span></a>
+
+as an extra output when computing asymptotic samples.
+</li><li>
+
+The <code><font color="blue">user_asymptotic_math.py</font></code> example
+was renamed to <a href="user_hes_fixed_math.py.htm" target="_top"><span style='white-space: nowrap'>user_hes_fixed_math.py</span></a>
+ because it checks
+the <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+.
+</li><li>
+
+Add a connecting sentence about computation before the equations
+for the derivatives of
+<small>@(@
+\hat{u}_i ( \theta )
+@)@</small> and <small>@(@
+g_i ( \theta )
+@)@</small>.
+</li><li>
+
+The asymptotic sampling of the random effects was changed to use the
+a fixed Hessian w.r.t the random effects for all the samples.
+Trying to optimize the random effects given the simulated fixed effects,
+without changing the data, often fails and does not make sense.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="03-21" id="03-21">03-21</a></big></b>
 <br>
-Add the <a href="user_asymptotic_math.py.htm" target="_top"><span style='white-space: nowrap'>user_asymptotic_math.py</span></a>
+Add the <a href="user_hes_fixed_math.py.htm" target="_top"><span style='white-space: nowrap'>user_hes_fixed_math.py</span></a>
  example.
 
 <br>
