@@ -10,34 +10,25 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin wish_list$$
 $spell
-	dev
-	Dismod
-	eigen
-	optimizer
-	cppad
-	CppAD
-	checkpointing
-	pos
-	Jacobian
-	std
-	avgint
-	dage
-	dtime
-	var
-	cv
-	integrands
-	nans
-	csv
-	mtother
-	Covariate
-	def
 	args
+	checkpointing
+	cpp
+	cv
+	dage
+	def
+	dev
+	dismod
+	dtime
+	eigen
+	integrands
+	ipopt
 	kwargs
 	mu
-	const
-	smoothings
-    Ipopt
+	optimizer
+	pos
 	sim
+	std
+	var
 $$
 
 $section Dismod_at Wish List$$
@@ -86,13 +77,6 @@ as well as for the function and derivative evaluation during optimization.
 The execution time for problems with large amounts of data
 should be divided by a number close to the number of cores
 available on the system.
-
-$head Asymptotic Statistics$$
-The current version of the
-$cref/asymptotic/sample_command/method/asymptotic/$$ statistics is very slow
-and is not being used.
-Perhaps we should try this without including the constraint information
-and see how well that works.
 
 $head User Examples$$
 The $cref user$$ examples below

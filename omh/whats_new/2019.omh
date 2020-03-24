@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -390,10 +390,9 @@ $list number$$
 The sampling random effects items was removed from the with list
 because the $cref user_sample_sim.py$$ method seems to work well.
 $lnext
-The
-$cref/asymptotic statistics/wish_list/Asymptotic Statistics/$$ and
-null prior_id items
-was added to the wish list
+An asymptotic statistics item and
+null prior_id item
+were added to the wish list
 $lend
 
 
