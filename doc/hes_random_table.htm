@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Hessian of The Random Effect Objective Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Hessian of The Random Effect Objective Function">
-<meta name="keywords" id="keywords" content=" hessian the random effect objective function creation hes_random_id row_var_id col_var_id hes_random_value ">
+<meta name="keywords" id="keywords" content=" hessian the random effect objective function creation hes_random_id row_var_id col_var_id hes_random_value representation ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,7 @@ A:active { color : purple }
 <br><a href="hes_random_table.htm#row_var_id" target="_top">row_var_id</a>
 <br><a href="hes_random_table.htm#col_var_id" target="_top">col_var_id</a>
 <br><a href="hes_random_table.htm#hes_random_value" target="_top">hes_random_value</a>
+<br><a href="hes_random_table.htm#Representation" target="_top">Representation</a>
 <br><br>
 <b><big><a name="Creation" id="Creation">Creation</a></big></b>
 <br>
@@ -82,11 +83,6 @@ A new version of this table is created each time the
 <a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
 
 sample command is executed.
-It is the Hessian of the random effects objective.
-Only the lower triangle of the Hessian is included
-(because the Hessian is symmetric).
-In addition, it is a sparse representation; i.e.,
-row and column indices in the lower triangle that are not present are zero.
 There are no <a href="density_table.htm#density_name.laplace" target="_top"><span style='white-space: nowrap'>Laplace</span></a>
  densities
 in the random effects objective.
@@ -127,6 +123,25 @@ of the random effects objective w.r.t. the two
 specified by the row and column indices above.
 Note that the row and column indices are equal for the diagonal
 elements of the Hessian.
+
+<br>
+<br>
+<b><big><a name="Representation" id="Representation">Representation</a></big></b>
+<br>
+Only the lower triangle of the Hessian is included
+(because the Hessian is symmetric).
+The matrix is in row major order; i.e. 
+<code><i><font color="black"><span style='white-space: nowrap'>row_var_id</span></font></i></code>
+
+is monotone non-decreasing and for each value of 
+<code><i><font color="black"><span style='white-space: nowrap'>row_var_id</span></font></i></code>
+
+the 
+<code><i><font color="black"><span style='white-space: nowrap'>col_var_id</span></font></i></code>
+ is monotone increasing.
+This is a sparse representation; i.e.,
+if a pair of row and column indices in the lower triangle
+are not present, the Hessian is zero for that row and column pair.
 
 
 

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Dismod_at Data Flow</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Dismod_at Data Flow">
-<meta name="keywords" id="keywords" content=" the dismod_at data flow output tables input command ">
+<meta name="keywords" id="keywords" content=" the dismod_at data flow output tables table name command init extra input ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,8 +68,10 @@ A:active { color : purple }
 
 <center><b><big><big>The Dismod_at Data Flow</big></big></b></center>
 
-<br><a href="data_flow.htm#Output Tables" target="_top">Output&nbsp;Tables</a>
-<br><a href="data_flow.htm#Input and Output by Command" target="_top">Input&nbsp;and&nbsp;Output&nbsp;by&nbsp;Command</a>
+<br><a href="data_flow.htm#Output Tables by Table Name" target="_top">Output&nbsp;Tables&nbsp;by&nbsp;Table&nbsp;Name</a>
+<br><a href="data_flow.htm#Command Output Tables" target="_top">Command&nbsp;Output&nbsp;Tables</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_flow.htm#Command Output Tables.init" target="_top">init</a>
+<br><a href="data_flow.htm#Command Extra Input Tables" target="_top">Command&nbsp;Extra&nbsp;Input&nbsp;Tables</a>
 <br>Tables are used to transfer information from one command to another.
 Each of the output tables
 below is created by a <a href="command.htm" target="_top"><span style='white-space: nowrap'>command</span></a>
@@ -83,11 +85,12 @@ In addition, the log table is cumulative; i.e.,
 it is never erased and restarted.
 
 
+
 <br>
 <br>
-<b><big><a name="Output Tables" id="Output Tables">Output Tables</a></big></b>
+<b><big><a name="Output Tables by Table Name" id="Output Tables by Table Name">Output Tables by Table Name</a></big></b>
 <br>
-Here is a list of the <code><font color="blue">dismod_at</font></code> output tables.
+Below is a list of the <code><font color="blue">dismod_at</font></code> output tables by table name:
 The ones that can be created directly by the user have
 yes under By User.
 <table><tr><td align='left'  valign='top'>
@@ -192,9 +195,16 @@ yes
 no
 </td></tr><tr><td align='left'  valign='top'>
 
-<a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim</span></a>
-,
 <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
+ </td><td align='left'  valign='top'>
+
+no
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim</span></a>
  </td><td align='left'  valign='top'>
 
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
@@ -212,7 +222,7 @@ no
 yes
 </td></tr><tr><td align='left'  valign='top'>
 
-<a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hessian</span></a>
+<a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed</span></a>
  </td><td align='left'  valign='top'>
 
 <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
@@ -221,7 +231,7 @@ yes
 no
 </td></tr><tr><td align='left'  valign='top'>
 
-<a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hessian</span></a>
+<a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random</span></a>
  </td><td align='left'  valign='top'>
 
 <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
@@ -240,38 +250,20 @@ no
 </td></tr>
 </table>
 <br>
-<b><big><a name="Input and Output by Command" id="Input and Output by Command">Input and Output by Command</a></big></b>
+<b><big><a name="Command Output Tables" id="Command Output Tables">Command Output Tables</a></big></b>
 <br>
-An extra input table is one that is not in the <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
- list
-and is not created by the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
-.
-The tables created by the init command are the
-<a href="init_command.htm#age_avg_table" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
-,
-<a href="init_command.htm#var_table" target="_top"><span style='white-space: nowrap'>var</span></a>
-,
-<a href="init_command.htm#data_subset_table" target="_top"><span style='white-space: nowrap'>data_subset</span></a>
-,
-<a href="init_command.htm#start_var_table" target="_top"><span style='white-space: nowrap'>start_var</span></a>
-,
-<a href="init_command.htm#scale_var_table" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
-, tables.
+Below is a list commands and their corresponding output tables:
 
 <table><tr><td align='left'  valign='top'>
 
-Command     </td><td align='left'  valign='top'>
+Command       </td><td align='left'  valign='top'>
 
-Extra Input </td><td align='left'  valign='top'>
-
-Output      </td><td align='left'  valign='top'>
+Output Tables </td><td align='left'  valign='top'>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="depend_command.htm" target="_top"><span style='white-space: nowrap'>depend</span></a>
    </td><td align='left'  valign='top'>
-
-</td><td align='left'  valign='top'>
 
 <a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var_table</span></a>
 , <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
@@ -280,10 +272,6 @@ Output      </td><td align='left'  valign='top'>
 
 <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set</span></a>
                      </td><td align='left'  valign='top'>
-
-<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
-, <a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
-  </td><td align='left'  valign='top'>
 
 <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
 , <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
@@ -294,10 +282,7 @@ Output      </td><td align='left'  valign='top'>
 <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit</span></a>
      </td><td align='left'  valign='top'>
 
-	<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
-  </td><td align='left'  valign='top'>
-
-	<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
 , <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
 , <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
 
@@ -306,11 +291,94 @@ Output      </td><td align='left'  valign='top'>
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
  </td><td align='left'  valign='top'>
 
-	<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
-        </td><td align='left'  valign='top'>
-
-	<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
 , <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+,
+<a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+,
+<a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
+
+<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict_table</span></a>
+, <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+
+</td></tr>
+</table>
+<br>
+<big><a name="Command Output Tables.init" id="Command Output Tables.init">init</a></big>
+<br>
+The init command (which is not included in the list above)
+has the following output tables:
+<code><span style='white-space: nowrap'><br>
+</span></code><a href="init_command.htm#age_avg_table" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
+,
+<a href="init_command.htm#var_table" target="_top"><span style='white-space: nowrap'>var</span></a>
+,
+<a href="init_command.htm#data_subset_table" target="_top"><span style='white-space: nowrap'>data_subset</span></a>
+,
+<a href="init_command.htm#start_var_table" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+, and
+<a href="init_command.htm#scale_var_table" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Command Extra Input Tables" id="Command Extra Input Tables">Command Extra Input Tables</a></big></b>
+<br>
+An extra input table is one that is not in the
+<a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ table list
+and is not output by the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+ (see list above).
+Below is a list commands and their corresponding extra input tables:
+
+<table><tr><td align='left'  valign='top'>
+
+Command            </td><td align='left'  valign='top'>
+
+Extra Input Tables </td><td align='left'  valign='top'>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="depend_command.htm" target="_top"><span style='white-space: nowrap'>depend</span></a>
+   </td><td align='left'  valign='top'>
+
+none
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set</span></a>
+                     </td><td align='left'  valign='top'>
+
+<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+, <a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit</span></a>
+     </td><td align='left'  valign='top'>
+
+<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
@@ -321,26 +389,14 @@ Output      </td><td align='left'  valign='top'>
 , <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
 , <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
 
-</td><td align='left'  valign='top'>
-
-<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
-, <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
-, <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
-
-<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
-
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
  </td><td align='left'  valign='top'>
 
-	<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
 , <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
 , <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
- </td><td align='left'  valign='top'>
-
-	<a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict_table</span></a>
-, <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
 
 </td></tr>
 </table>

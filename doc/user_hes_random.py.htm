@@ -143,7 +143,8 @@ u_1
 <br>
 <b><big><a name="Problem Parameters" id="Problem Parameters">Problem Parameters</a></big></b>
 
-<pre><tt><b><font color="#000080">import</font></b> math
+<pre><tt><b><font color="#000080">import</font></b> csv
+<b><font color="#000080">import</font></b> math
 <b><font color="#000080">import</font></b> time
 theta_true     <font color="#990000">=</font> <font color="#993399">0.5</font>
 u_true         <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">0.5</font><font color="#990000">,</font> <font color="#990000">-</font><font color="#993399">0.5</font> <font color="#990000">]</font>
@@ -483,6 +484,32 @@ scale <font color="#990000">=</font> math<font color="#990000">.</font><b><font 
                rel_error <font color="#990000">=</font> sample_cov<font color="#990000">[</font>i<font color="#990000">,</font>j<font color="#990000">]</font> <font color="#990000">/</font> scale
      <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_error<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-1</font>
 <i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check db2csv output of hes_random.csv</font></i>
+<i><font color="#9A1900"># (assumes database is in current working directory)</font></i>
+file_ptr  <font color="#990000">=</font> <b><font color="#000000">open</font></b><font color="#990000">(</font><font color="#FF0000">'hes_random.csv'</font><font color="#990000">,</font> <font color="#FF0000">'r'</font><font color="#990000">)</font>
+hes_random_csv <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+reader    <font color="#990000">=</font> csv<font color="#990000">.</font><b><font color="#000000">DictReader</font></b><font color="#990000">(</font>file_ptr<font color="#990000">)</font>
+<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> reader <font color="#990000">:</font>
+     hes_random_csv<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
+file_ptr<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+<i><font color="#9A1900">#</font></i>
+<b><font color="#0000FF">for</font></b> hes_random_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>hes_random_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     row_table    <font color="#990000">=</font> hes_random_table<font color="#990000">[</font>hes_random_id<font color="#990000">]</font>
+     row_csv      <font color="#990000">=</font> hes_random_csv<font color="#990000">[</font>hes_random_id<font color="#990000">]</font>
+     <i><font color="#9A1900">#</font></i>
+     value_table  <font color="#990000">=</font> row_table<font color="#990000">[</font><font color="#FF0000">'row_var_id'</font><font color="#990000">]</font>
+     value_csv    <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> row_csv<font color="#990000">[</font><font color="#FF0000">'row_var_id'</font><font color="#990000">]</font> <font color="#990000">)</font>
+     <b><font color="#0000FF">assert</font></b> value_table <font color="#990000">==</font> value_csv
+     <i><font color="#9A1900">#</font></i>
+     value_table  <font color="#990000">=</font> row_table<font color="#990000">[</font><font color="#FF0000">'col_var_id'</font><font color="#990000">]</font>
+     value_csv    <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> row_csv<font color="#990000">[</font><font color="#FF0000">'col_var_id'</font><font color="#990000">]</font> <font color="#990000">)</font>
+     <b><font color="#0000FF">assert</font></b> value_table <font color="#990000">==</font> value_csv
+     <i><font color="#9A1900">#</font></i>
+     value_table  <font color="#990000">=</font> row_table<font color="#990000">[</font><font color="#FF0000">'hes_random_value'</font><font color="#990000">]</font>
+     value_csv    <font color="#990000">=</font> <b><font color="#000000">float</font></b><font color="#990000">(</font> row_csv<font color="#990000">[</font><font color="#FF0000">'hes_random_value'</font><font color="#990000">]</font> <font color="#990000">)</font>
+     rel_error    <font color="#990000">=</font> value_csv <font color="#990000">/</font> value_table <font color="#990000">-</font> <font color="#993399">1.0</font>
+     eps9         <font color="#990000">=</font> <font color="#993399">9.0</font> <font color="#990000">*</font> numpy<font color="#990000">.</font><b><font color="#000000">finfo</font></b><font color="#990000">(</font>float<font color="#990000">).</font>eps
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_error<font color="#990000">)</font> <font color="#990000">&lt;</font> eps9
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'hes_random.py: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/user/hes_random.py

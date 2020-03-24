@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>03-24</option>
 <option>03-23</option>
 <option>03-22</option>
 <option>03-21</option>
@@ -90,6 +91,39 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="03-24" id="03-24">03-24</a></big></b>
+
+<ol type="1"><li>
+The Hessian tables are now guaranteed to be in row major order; see
+representation for the
+<a href="hes_fixed_table.htm#Representation" target="_top"><span style='white-space: nowrap'>hes_fixed</span></a>
+ and
+<a href="hes_random_table.htm#Representation" target="_top"><span style='white-space: nowrap'>hes_random</span></a>
+ tables.
+</li><li>
+
+Create separate tables, in the data flow section, for the
+<a href="data_flow.htm#Command Output Tables" target="_top"><span style='white-space: nowrap'>command&nbsp;output&nbsp;tables</span></a>
+ and
+<a href="data_flow.htm#Command Extra Input Tables" target="_top"><span style='white-space: nowrap'>command&nbsp;extra&nbsp;input&nbsp;tables</span></a>
+.
+</li><li>
+
+Add the <a href="db2csv_command.htm#hes_fixed.csv" target="_top"><span style='white-space: nowrap'>hes_fixed.csv</span></a>
+ and
+<a href="db2csv_command.htm#hes_random.csv" target="_top"><span style='white-space: nowrap'>hes_random.csv</span></a>
+ output files
+to the db2csv command.
+</li><li>
+
+Check the <code><font color="blue">hes_random.csv</font></code> file at the end of the
+<a href="user_hes_random.py.htm" target="_top"><span style='white-space: nowrap'>user_hes_random.py</span></a>
+ example.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="03-23" id="03-23">03-23</a></big></b>
 

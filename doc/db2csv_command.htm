@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value sim_stdcv sim_delta covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -79,6 +79,8 @@ A:active { color : purple }
 <br><a href="db2csv_command.htm#option.csv" target="_top">option.csv</a>
 <br><a href="db2csv_command.htm#log.csv" target="_top">log.csv</a>
 <br><a href="db2csv_command.htm#age_avg.csv" target="_top">age_avg.csv</a>
+<br><a href="db2csv_command.htm#hes_fixed.csv" target="_top">hes_fixed.csv</a>
+<br><a href="db2csv_command.htm#hes_random.csv" target="_top">hes_random.csv</a>
 <br><a href="db2csv_command.htm#variable.csv" target="_top">variable.csv</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_id" target="_top">var_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_type" target="_top">var_type</a>
@@ -282,7 +284,8 @@ The columns in this table are
 The file 
 <code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/age_avg.csv</span></font></code>
  is written by this command.
-It is a CSV file with the contents of the <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+It is a CSV file with the contents of the age_avg table.
+The only column in this table is <a href="age_avg_table.htm#age" target="_top"><span style='white-space: nowrap'>age</span></a>
 .
 Note that a <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set_command</span></a>
  may change the value of
@@ -294,7 +297,49 @@ write out the new age_avg table.
 
 <br>
 <br>
+<b><big><a name="hes_fixed.csv" id="hes_fixed.csv">hes_fixed.csv</a></big></b>
+<br>
+If the <a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+
+sample command was executed,
+the contents of the <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+ are written to
+the CSV file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/hes_fixed.csv</span></font></code>
+.
+The columns in this table are
+<a href="hes_fixed_table.htm#row_var_id" target="_top"><span style='white-space: nowrap'>row_var_id</span></a>
+,
+<a href="hes_fixed_table.htm#col_var_id" target="_top"><span style='white-space: nowrap'>col_var_id</span></a>
+,
+<a href="hes_fixed_table.htm#hes_fixed_value" target="_top"><span style='white-space: nowrap'>hes_fixed_value</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="hes_random.csv" id="hes_random.csv">hes_random.csv</a></big></b>
+<br>
+If the <a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+
+sample command was executed,
+the contents of the <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
+ are written to
+the CSV file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/hes_random.csv</span></font></code>
+.
+The columns in this table are
+<a href="hes_random_table.htm#row_var_id" target="_top"><span style='white-space: nowrap'>row_var_id</span></a>
+,
+<a href="hes_random_table.htm#col_var_id" target="_top"><span style='white-space: nowrap'>col_var_id</span></a>
+,
+<a href="hes_random_table.htm#hes_random_value" target="_top"><span style='white-space: nowrap'>hes_random_value</span></a>
+.
+
+
+<br>
+<br>
 <b><big><a name="variable.csv" id="variable.csv">variable.csv</a></big></b>
+
 <br>
 The file 
 <code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/variable.csv</span></font></code>
@@ -631,9 +676,11 @@ effects because they have a
 </li></ol>
 
 
+
 <br>
 <br>
 <b><big><a name="data.csv" id="data.csv">data.csv</a></big></b>
+
 <br>
 The file 
 <code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/data.csv</span></font></code>
@@ -908,13 +955,17 @@ covariate difference
 
 in the model for the average integrand.
 
+
 <br>
 <br>
 <b><big><a name="predict.csv" id="predict.csv">predict.csv</a></big></b>
+
 <br>
 If the <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
  has was executed,
-the CSV file <code><font color="blue">predict.csv</font></code> is written.
+the CSV file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/predict.csv</span></font></code>
+ is written.
 For each row of the <a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict_table</span></a>
 
 there is a corresponding row in <code><font color="blue">predict.csv</font></code>.
@@ -1079,6 +1130,7 @@ covariate difference
 <a href="avg_integrand.htm#Data or Avgint Table Notation.Covariate Difference, x_ij" target="_top"><span style='white-space: nowrap'>x_ij</span></a>
 
 in the model for the average integrand.
+
 
 
 <br>
