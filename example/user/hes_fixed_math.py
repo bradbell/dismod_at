@@ -49,6 +49,7 @@ y_1            = theta_true * math.exp( u_true[1] )
 standard_dev   = theta_true # the standard deviation s
 random_seed    = int( time.time() )
 number_sample  = 1000
+eta_in_prior   = None # if None, the fixed effects are not scaled
 # %$$
 #
 # $head Random Likelihood$$
@@ -205,12 +206,12 @@ number_sample  = 1000
 # \] $$
 #
 # $head Laplace Approximation$$
-# The Laplace approximation (up to a constant), as a function of the
-# fixed effects, is:
+# Up to a constant, the Laplace approximation (fixed effects objective),
+# as a function of the fixed effects, is:
 # $latex \[
 #	L ( \theta ) = F( \theta ) + G( \theta )
 # \] $$
-# where $latex F( \theta )$$ and $latex G( theta )$$ are defined by
+# where $latex F( \theta )$$ and $latex G( \theta )$$ are defined by
 # $latex \[
 #	F( \theta ) = f[ \theta , \hat{u} ( \theta ) ]
 # \] $$
@@ -290,6 +291,35 @@ number_sample  = 1000
 # $latex \theta$$ give the data $latex y$$
 # is a normal with variance equal to the inverse of
 # $latex F^{(2)} ( \theta ) + G^{(2)} ( \theta )$$.
+#
+# $head Scaling Fixed Effects$$
+# If $cref/eta/prior_table/eta/$$ is not null,
+# the Hessian is with respect to $latex \alpha = \log( \theta + \eta )$$.
+# Inverting this relation we define
+# $latex \theta ( \alpha ) = \exp( \alpha ) - \eta$$.
+# The fixed effects objective as a function of $latex \alpha$$ is
+# $latex \[
+#	H( \alpha ) =
+#	L[ \theta ( \alpha ) ] =
+#	F[ \theta( \alpha ) ] + G[ \theta( \alpha ) ]
+# \] $$
+# Taking the first and second derivatives, we have
+# $latex \[
+#	H^{(1)}( \alpha ) =  \left(
+#		F^{(1)}[ \theta( \alpha ) ] + G^{(1)}[ \theta( \alpha ) ]
+#	\right) \exp( \alpha )
+# \] $$
+# $latex \[
+#	\begin{array}{rcl}
+#	H^{(2)}( \alpha ) & = & \left(
+#		F^{(1)}[ \theta( \alpha ) ] + G^{(1)}[ \theta( \alpha ) ]
+#	\right) \exp( \alpha )
+#	\\ & + &
+#	\left(
+#		F^{(2)}[ \theta( \alpha ) ] + G^{(2)}[ \theta( \alpha ) ]
+#	\right) \exp( 2 \alpha )
+#	\end{array}
+# \] $$
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -386,6 +416,7 @@ def example_db (file_name) :
 			'lower':    1e-2 * theta_true,
 			'upper':    1e+2 * theta_true,
 			'mean':     theta_true / 3.0, # only used for start and scale
+			'eta':      eta_in_prior,
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -672,22 +703,23 @@ d2h_d2theta = 2.0 * dg_dtheta + theta * d2g_d2theta
 d2G_d2theta = (h * d2h_d2theta - dh_dtheta * dh_dtheta) / (2.0 * h * h)
 d2G_d2theta = numpy.sum( d2G_d2theta )
 #
-# check d2g_d2theta
+# check d2G_d2theta
 G     = log_det_random_hessian(theta, uhat) / 2.0
 check = (G_plus - 2.0 * G + G_minus) / (delta_theta * delta_theta)
 check_rel_error(check, d2G_d2theta, 1e-5)
+
 # ============================================================================
 # check the Hessian of the fixed effects objective
 #
-# The world rate for incicdnce is the only fixed effect
+# The world rate for incidence is the only fixed effect
 world_var_id = node_name2var_id['world']
 assert len(hes_fixed_table) == 1
-for row in hes_fixed_table :
-	assert row['row_var_id'] == world_var_id
-	assert row['col_var_id'] == world_var_id
-	hes_fixed_value = row['hes_fixed_value']
-	check         = d2F_d2theta + d2G_d2theta
-	check_rel_error(check, hes_fixed_value, 1e-14)
+row = hes_fixed_table[0]
+assert row['row_var_id'] == world_var_id
+assert row['col_var_id'] == world_var_id
+hes_fixed_value = row['hes_fixed_value']
+check           = d2F_d2theta + d2G_d2theta
+check_rel_error(check, hes_fixed_value, 1e-14)
 #
 # compute sample statistics
 assert  len(sample_table) == number_sample * len(var_table)
