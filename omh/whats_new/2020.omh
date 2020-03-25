@@ -39,10 +39,18 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 03-25$$
+$list number$$
 Advance to $code cppad_mixed-20200325$$.
 This fixed assert in the debug version during
-$cref/asymptotic/sample_command/method/asymptotoic/$$ sampling
+$cref/asymptotic/sample_command/method/asymptotic/$$ sampling
 when there are no random effects.
+$lnext
+If during asymptotic sampling the Hessian of the fixed or random
+effects object is not positive definite, print a warning and do not
+create a sample table (instead of filling the sample table with nulls);
+see $cref/no sample table/sample_command/sample_table/No Sample Table/$$.
+This fixed a bug where the $cref db2csv_command$$ tried to average null values.
+$lend
 
 $head 03-24$$
 $list number$$

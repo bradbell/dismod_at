@@ -18,6 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/get_var_limits.hpp>
 # include <dismod_at/remove_const.hpp>
+# include <dismod_at/log_message.hpp>
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -132,6 +133,12 @@ If the $code asymptotic$$ command fails because the
 Hessian (see hes_fixed_table below) is not positive definite,
 all of the $cref/var_value/sample_table/var_value/$$ entries
 in the sample table will be null.
+
+$subhead No Sample Table$$
+In the special case where $icode method$$ is $code asymptotic$$
+and the Hessian of the fixed or random objective is not positive definite,
+the sample table is not created; i.e.,
+there is be no sample table in the database after this command.
 
 $head hes_fixed_table$$
 A new $cref hes_fixed_table$$ is created each time this command is run
@@ -602,32 +609,37 @@ void sample_command(
 	//
 	// hes_fixed_obj_out, hes_random_obj_out, sample_out
 	CppAD::mixed::d_sparse_rcv hes_fixed_obj_out, hes_random_obj_out;
-	vector<double> sample_out(n_sample * n_var);
+	vector<double> sample_out;
 	fit_object.sample_posterior(
 		hes_fixed_obj_out    ,
 		hes_random_obj_out   ,
+		n_sample             ,
 		sample_out           ,
 		fit_var_value        ,
 		option_map
 	);
-	//
-	for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
-	{	string sample_index_str = to_string( sample_index );
-		for(size_t var_id = 0; var_id < n_var; var_id++)
-		{	size_t sample_id = sample_index * n_var + var_id;
-			row_value[n_col * sample_id + 0] = sample_index_str;
-			row_value[n_col * sample_id + 1] = to_string( var_id );
-			double var_value = sample_out[ sample_index * n_var + var_id];
-			if( CppAD::isnan( var_value ) )
-				row_value[n_col * sample_id + 2] = "null";
-			else
-				row_value[n_col * sample_id + 2] = to_string(var_value);
-		}
+	if( sample_out.size() == 0 )
+	{	msg = "sample_commad: sample table was not created";
+		log_message(db, &std::cerr, "warning", msg);
 	}
-	table_name = "sample";
-	dismod_at::create_table(
-		db, table_name, col_name, col_type, col_unique, row_value
-	);
+	else
+	{	assert( sample_out.size() == n_sample * n_var );
+		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
+		{	string sample_index_str = to_string( sample_index );
+			for(size_t var_id = 0; var_id < n_var; var_id++)
+			{	size_t sample_id = sample_index * n_var + var_id;
+				row_value[n_col * sample_id + 0] = sample_index_str;
+				row_value[n_col * sample_id + 1] = to_string( var_id );
+				//
+				double var_value = sample_out[ sample_index * n_var + var_id];
+				row_value[n_col * sample_id + 2] = to_string(var_value);
+			}
+		}
+		table_name = "sample";
+		dismod_at::create_table(
+			db, table_name, col_name, col_type, col_unique, row_value
+		);
+	}
 	// ----------------------------------------------------------------------
 	// create hes_fixed table
 	sql_cmd = "drop table if exists hes_fixed";

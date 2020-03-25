@@ -667,6 +667,7 @@ $head Syntax$$
 $icode%fit_object%.sample_posterior(
 	%hes_fixed_obj_out%,
 	%hes_random_obj_out%,
+	%n_sample%,
 	%sample_out%,
 	%fit_var_value%,
 	%option_map%
@@ -696,7 +697,8 @@ It is assumed that $latex \hat{u}$$ minimizes the random effects objective
 $latex f( \theta , \cdot )$$.
 
 $head hes_fixed_obj_out$$
-This a sparse matrix representation of the
+The input value of this argument does not matter.
+Upon return it is a sparse matrix representation of the
 Hessian of the fixed effects objective evaluated at $latex \theta$$.
 The row and column indices in this matrix are relative to the
 $cref pack_info$$ vector.
@@ -706,7 +708,8 @@ The Laplace density terms in the likelihood function are not included
 because the Hessian is not defined at zero for an Laplace density.
 
 $head hes_random_obj_out$$
-This a sparse matrix representation of the
+The input value of this argument does not matter.
+Upon return it is a sparse matrix representation of the
 Hessian of the random effects objective evaluated
 $latex ( \theta , \hat{u} )$$.
 The row and column indices in this matrix are relative to the
@@ -716,11 +719,17 @@ row indices) because the Hessian is symmetric.
 Note that the random effects objective does not have any
 Laplace density terms.
 
+$head n_sample$$
+Is the number of independent samples to generate.
+Each sample contains the entire set of $cref model_variables$$.
+
 $head sample_out$$
-This argument is a vector with size equal to the number of samples
-$icode n_sample$$ times the number of $cref model_variables$$ $icode n_var$$.
-The input value of its elements does not matter.
-Upon return, for
+The input value of this argument does not matter.
+If an error occurs (the samples cannot be calculated)
+$icode sample_out.size()$$ is zero upon return.
+Otherwise upon return $icode sample_out.size()$$ is
+equal to the number of samples $icode n_sample$$ times the number of
+$cref model_variables$$ $icode n_var$$.
 $icode%i% = 0 , %...% , %n_sample%-1%$$,
 $icode%j% = 0 , %...% , %n_var%-1%$$,
 $codei%
@@ -751,6 +760,7 @@ $srccode%cpp% */
 void fit_model::sample_posterior(
 	CppAD::mixed::d_sparse_rcv&         hes_fixed_obj_out  ,
 	CppAD::mixed::d_sparse_rcv&         hes_random_obj_out ,
+	size_t                              n_sample           ,
 	CppAD::vector<double>&              sample_out         ,
 	const CppAD::vector<double>&        fit_var_value      ,
 	std::map<std::string, std::string>& option_map         )
@@ -758,18 +768,12 @@ void fit_model::sample_posterior(
 $end
 */
 {	double inf = std::numeric_limits<double>::infinity();
-	double nan = std::numeric_limits<double>::quiet_NaN();
 	//
 	size_t n_var = n_fixed_ + n_random_;
-	assert( sample_out.size() % n_var == 0 );
 	assert( fit_var_value.size() == n_var );
 
-	// n_sample
-	size_t n_sample = sample_out.size() / n_var;
-
-	// initialize the samples as nan
-	for(size_t k = 0; k < sample_out.size(); ++k)
-		sample_out[k] = nan;
+	// initialize sample_out as empty
+	sample_out.resize(0);
 
 	//
 	// fixed_vec, random_opt
@@ -967,6 +971,9 @@ $end
 			return;
 		}
 	}
+	// ----------------------------------------------------------------------
+	// sample_out
+	sample_out.resize( n_sample * n_var );
 	CppAD::vector<double> cppad_mixed_one_sample_random(cppad_mixed_n_random);
 	CppAD::vector<double> cppad_mixed_one_sample_fixed(n_fixed_);
 	CppAD::vector<double> one_sample_random(n_random_);

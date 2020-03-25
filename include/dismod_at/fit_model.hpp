@@ -159,6 +159,7 @@ namespace dismod_at {
 		void sample_posterior(
 			CppAD::mixed::d_sparse_rcv&         hes_fixed_obj_out  ,
 			CppAD::mixed::d_sparse_rcv&         hes_random_obj_out ,
+			size_t                              n_sample           ,
 			CppAD::vector<double>&              sample_out         ,
 			const CppAD::vector<double>&        fit_var_value      ,
 			// effectively const
