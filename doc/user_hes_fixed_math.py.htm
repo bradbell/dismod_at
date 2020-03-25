@@ -790,9 +790,12 @@ node_name2var_id <font color="#990000">=</font> <b><font color="#000000">dict</f
      rel_error <font color="#990000">=</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> check <font color="#990000">/</font> value <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
      <i><font color="#9A1900"># print(rel_error, tolerance)</font></i>
      <b><font color="#0000FF">if</font></b> numpy<font color="#990000">.</font><b><font color="#000000">isscalar</font></b><font color="#990000">(</font> rel_error <font color="#990000">)</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">assert</font></b> rel_error <font color="#990000">&lt;</font> tolerance
+          ok <font color="#990000">=</font> rel_error <font color="#990000">&lt;</font> tolerance
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">all</font></b><font color="#990000">(</font> rel_error <font color="#990000">&lt;</font> tolerance <font color="#990000">)</font>
+          ok <font color="#990000">=</font> <b><font color="#000000">all</font></b><font color="#990000">(</font> rel_error <font color="#990000">&lt;</font> tolerance <font color="#990000">)</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> ok <font color="#990000">:</font>
+          <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">"random_seed ="</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
+     <b><font color="#0000FF">assert</font></b> ok
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Some values</font></i>
 <i><font color="#9A1900">#</font></i>

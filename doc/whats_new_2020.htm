@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>03-25</option>
 <option>03-24</option>
 <option>03-23</option>
 <option>03-22</option>
@@ -92,6 +93,28 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
 <br>
+<b><big><a name="03-25" id="03-25">03-25</a></big></b>
+
+<ol type="1"><li>
+Advance to <code><font color="blue">cppad_mixed-20200325</font></code>.
+This fixed assert in the debug version during
+<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+ sampling
+when there are no random effects.
+</li><li>
+
+If during asymptotic sampling the Hessian of the fixed or random
+effects object is not positive definite, print a warning and do not
+create a sample table (instead of filling the sample table with nulls);
+see <a href="sample_command.htm#sample_table.No Sample Table" target="_top"><span style='white-space: nowrap'>no&nbsp;sample&nbsp;table</span></a>
+.
+This fixed a bug where the <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ tried to average null values.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="03-24" id="03-24">03-24</a></big></b>
 
 <ol type="1"><li>
@@ -101,6 +124,12 @@ representation for the
  and
 <a href="hes_random_table.htm#Representation" target="_top"><span style='white-space: nowrap'>hes_random</span></a>
  tables.
+</li><li>
+
+The values in <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+ are now in scaled space; see
+<a href="prior_table.htm#eta.Scaling Fixed Effects" target="_top"><span style='white-space: nowrap'>scaling&nbsp;fixed&nbsp;effects</span></a>
+.
 </li><li>
 
 Create separate tables, in the data flow section, for the

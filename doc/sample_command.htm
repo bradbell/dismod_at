@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Sample Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Sample Command">
-<meta name="keywords" id="keywords" content=" the sample command syntax database purpose number_sample simulate_index method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table hes_fixed_table hes_random_table bounds example ">
+<meta name="keywords" id="keywords" content=" the sample command syntax database purpose number_sample simulate_index method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table no table hes_fixed_table hes_random_table bounds example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -77,6 +77,7 @@ A:active { color : purple }
 <br><a href="sample_command.htm#prior_sim_table" target="_top">prior_sim_table</a>
 <br><a href="sample_command.htm#fit_var_table" target="_top">fit_var_table</a>
 <br><a href="sample_command.htm#sample_table" target="_top">sample_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#sample_table.No Sample Table" target="_top">No&nbsp;Sample&nbsp;Table</a>
 <br><a href="sample_command.htm#hes_fixed_table" target="_top">hes_fixed_table</a>
 <br><a href="sample_command.htm#hes_random_table" target="_top">hes_random_table</a>
 <br><a href="sample_command.htm#Bounds" target="_top">Bounds</a>
@@ -266,6 +267,17 @@ Hessian (see hes_fixed_table below) is not positive definite,
 all of the <a href="sample_table.htm#var_value" target="_top"><span style='white-space: nowrap'>var_value</span></a>
  entries
 in the sample table will be null.
+
+<br>
+<br>
+<big><a name="sample_table.No Sample Table" id="sample_table.No Sample Table">No Sample Table</a></big>
+<br>
+In the special case where 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ is <code><font color="blue">asymptotic</font></code>
+and the Hessian of the fixed or random objective is not positive definite,
+the sample table is not created; i.e.,
+there is be no sample table in the database after this command.
 
 <br>
 <br>
