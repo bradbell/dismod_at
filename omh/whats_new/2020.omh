@@ -38,6 +38,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 03-25$$
+Advance to $code cppad_mixed-20200325$$.
+This fixed assert in the debug version during
+$cref/asymptotic/sample_command/method/asymptotoic/$$ sampling
+when there are no random effects.
+
 $head 03-24$$
 $list number$$
 The Hessian tables are now guaranteed to be in row major order; see
