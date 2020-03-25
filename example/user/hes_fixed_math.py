@@ -548,9 +548,12 @@ def check_rel_error(check, value, tolerance) :
 	rel_error = abs( check / value - 1.0 )
 	# print(rel_error, tolerance)
 	if numpy.isscalar( rel_error ) :
-		assert rel_error < tolerance
+		ok = rel_error < tolerance
 	else :
-		assert all( rel_error < tolerance )
+		ok = all( rel_error < tolerance )
+	if not ok :
+		print("random_seed =", random_seed)
+	assert ok
 # -----------------------------------------------------------------------
 # Some values
 #

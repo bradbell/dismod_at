@@ -746,10 +746,6 @@ The Hessians of the fixed and random effects objectives
 ignore all constraints except for constants
 (lower and upper limits equal).
 
-$head no_scaling_$$
-This routine assumes that $cref/no_scaling_/fit_model_ctor/no_scaling/$$
-is true.
-
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
@@ -763,7 +759,6 @@ $end
 */
 {	double inf = std::numeric_limits<double>::infinity();
 	double nan = std::numeric_limits<double>::quiet_NaN();
-	assert( no_scaling_ );
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( sample_out.size() % n_var == 0 );
@@ -782,20 +777,24 @@ $end
 	unpack_random(pack_object_, fit_var_value, random_opt);
 	unpack_fixed(pack_object_,   fit_var_value, fixed_vec);
 	//
-	// solution.fixed_opt
-	CppAD::mixed::fixed_solution solution;
-	solution.fixed_opt = fixed_vec;
-	//
 	// convert dismod_at random effects to cppad_mixed random effects
 	d_vector cppad_mixed_random_opt = random_const_.remove( random_opt );
 	//
+	// convert dismod_at fixed effect to cppad_mixed fixed effects
+	d_vector cppad_mixed_fixed_vec(n_fixed_);
+	scale_fixed_effect(fixed_vec, cppad_mixed_fixed_vec);
+	//
+	// solution.fixed_opt
+	CppAD::mixed::fixed_solution solution;
+	solution.fixed_opt = cppad_mixed_fixed_vec;
+	//
 	// hes_fixed_obj_rcv
 	CppAD::mixed::d_sparse_rcv hes_fixed_obj_rcv = hes_fixed_obj(
-		fixed_vec, cppad_mixed_random_opt
+		cppad_mixed_fixed_vec, cppad_mixed_random_opt
 	);
 	// hes_random_obj_rcv
 	CppAD::mixed::d_sparse_rcv hes_random_obj_rcv = hes_random_obj(
-		fixed_vec, cppad_mixed_random_opt
+		cppad_mixed_fixed_vec, cppad_mixed_random_opt
 	);
 	//
 	// hes_fixed_obj_out
@@ -829,7 +828,7 @@ $end
 		hes_random_obj_out = info;
 	}
 	//
-	// fixed_lower
+	// cppad_mixed_fixed_lower
 	CppAD::vector<double> pack_vec( n_var );
 	CppAD::vector<double> fixed_lower(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
@@ -843,9 +842,10 @@ $end
 			pack_vec[i] = prior_table_[prior_id].lower;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_lower);
-	assert( no_scaling_ );
+	CppAD::vector<double> cppad_mixed_fixed_lower(n_fixed_);
+	scale_fixed_effect(fixed_lower, cppad_mixed_fixed_lower);
 
-	// fixed_upper
+	// cppad_mixed_fixed_upper
 	CppAD::vector<double> fixed_upper(n_fixed_);
 	for(size_t i = 0; i < n_var; i++)
 	{	size_t prior_id    = var2prior_.value_prior_id(i);
@@ -858,7 +858,8 @@ $end
 			pack_vec[i] = prior_table_[prior_id].upper;
 	}
 	unpack_fixed(pack_object_, pack_vec, fixed_upper);
-	assert( no_scaling_ );
+	CppAD::vector<double> cppad_mixed_fixed_upper(n_fixed_);
+	scale_fixed_effect(fixed_upper, cppad_mixed_fixed_upper);
 	//
 	// check diagonal of information matrix is positive
 	// (except for bound constrained variables)
@@ -903,8 +904,8 @@ $end
 			sample_fix,
 			hes_fixed_obj_rcv,
 			solution,
-			fixed_lower,
-			fixed_upper,
+			cppad_mixed_fixed_lower,
+			cppad_mixed_fixed_upper,
 			cppad_mixed_random_opt
 		);
 	}
@@ -953,7 +954,7 @@ $end
 			sample_random(
 				cppad_mixed_sample_random,
 				random_options,
-				solution.fixed_opt,
+				cppad_mixed_fixed_vec,
 				cppad_mixed_random_lower,
 				cppad_mixed_random_upper,
 				cppad_mixed_random_in
@@ -967,21 +968,24 @@ $end
 		}
 	}
 	CppAD::vector<double> cppad_mixed_one_sample_random(cppad_mixed_n_random);
+	CppAD::vector<double> cppad_mixed_one_sample_fixed(n_fixed_);
 	CppAD::vector<double> one_sample_random(n_random_);
 	CppAD::vector<double> one_sample_fixed(n_fixed_);
 	for(size_t i_sample = 0; i_sample < n_sample; i_sample++)
 	{	for(size_t j = 0; j < n_fixed_; ++j)
-			one_sample_fixed[j] = sample_fix[ i_sample * n_fixed_ + j];
+		{	cppad_mixed_one_sample_fixed[j] =
+			sample_fix[ i_sample * n_fixed_ + j];
+		}
 		for(size_t j = 0; j < cppad_mixed_n_random; ++j)
 		{	cppad_mixed_one_sample_random[j] =
-				cppad_mixed_sample_random[ i_sample * cppad_mixed_n_random + j];
+			cppad_mixed_sample_random[ i_sample * cppad_mixed_n_random + j];
 		}
 		one_sample_random = random_const_.restore(
 			cppad_mixed_one_sample_random
 		);
+		unscale_fixed_effect(cppad_mixed_one_sample_fixed, one_sample_fixed);
 		//
 		// pack_vec
-		assert( no_scaling_ );
 		pack_fixed(pack_object_, pack_vec, one_sample_fixed);
 		pack_random(pack_object_, pack_vec, one_sample_random);
 		//

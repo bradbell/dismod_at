@@ -45,6 +45,9 @@ representation for the
 $cref/hes_fixed/hes_fixed_table/Representation/$$ and
 $cref/hes_random/hes_random_table/Representation/$$ tables.
 $lnext
+The values in $cref hes_fixed_table$$ are now in scaled space; see
+$cref/scaling fixed effects/prior_table/eta/Scaling Fixed Effects/$$.
+$lnext
 Create separate tables, in the data flow section, for the
 $cref/command output tables/data_flow/Command Output Tables/$$ and
 $cref/command extra input tables/data_flow/Command Extra Input Tables/$$.

@@ -580,7 +580,7 @@ void sample_command(
 	);
 	//
 	// fit_object
-	bool no_scaling     = true;
+	bool no_scaling     = false;
 	dismod_at::fit_model fit_object(
 		db                   ,
 		sim_index_int        ,

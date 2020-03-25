@@ -25,6 +25,10 @@ are not included in the Hessian
 because the Laplace density is not differentiable at zero.
 None of the constraints are included in the calculation of this Hessian.
 
+$head Scaling$$
+The Hessian is in the scaled space for the fixed effects; see
+$cref/scaling fixed effects/prior_table/eta/Scaling Fixed Effects/$$.
+
 $head hes_fixed_id$$
 This column has type $code integer$$ and is the primary key for
 the this table.
