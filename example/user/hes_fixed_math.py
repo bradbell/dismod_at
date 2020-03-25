@@ -617,97 +617,100 @@ exp_u_minus  = numpy.exp( uhat_minus )
 exp_2u       = numpy.exp( 2.0 * uhat )
 exp_2u_plus  = numpy.exp( 2.0 * uhat_plus )
 exp_2u_minus = numpy.exp( 2.0 * uhat_minus )
-# -
-# check that f_u ( theta , uhat ) = 0
-f_u = ( theta * theta * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
-assert all( abs(f_u) < 1e-13 )
-f_u_plus = (theta_plus * theta_plus * exp_2u_plus
-         - theta_plus * y  * exp_u_plus  + uhat_plus ) / s_sq
-assert all( abs(f_u_plus) < 1e-13 )
-f_u_minus = (theta_minus * theta_minus * exp_2u_minus
-         - theta_minus * y  * exp_u_minus  + uhat_minus ) / s_sq
-assert all( abs(f_u_minus) < 1e-13 )
+#
 # g(theta)
 g            = 2.0 * theta * exp_2u - y * exp_u
 g_plus       = 2.0 * theta_plus * exp_2u_plus - y * exp_u_plus
 g_minus      = 2.0 * theta_minus * exp_2u_minus - y * exp_u_minus
-# ---------------------------------------------------------------------------
-# duhat_dtheta = uhat^{(1)} ( \theta )
-duhat_dtheta = - g / (theta * g + 1)
-#
-# check duhat_dtheta
-check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
-check_rel_error(check, duhat_dtheta, 1e-5)
-# ---------------------------------------------------------------------------
-# dg_dtheta = g^{(1)} ( theta )
-dg_dtheta  = 2.0 * exp_2u + (4.0 * theta * exp_2u - y * exp_u) * duhat_dtheta
-#
-# check dg_dtheta
-check      = (g_plus - g_minus) / (2.0 * delta_theta)
-check_rel_error(check, dg_dtheta, 1e-6)
-# --------------------------------------------------------------------------
-# d2uhat_dtheta = uhat^{(2)} ( theta )
-d2uhat_d2theta = (g * g - dg_dtheta) / ( (theta * g + 1) * (theta * g + 1) )
-#
-# check d2uhat_d2theta
-check = (uhat_plus - 2.0 * uhat + uhat_minus) / (delta_theta * delta_theta)
-check_rel_error(check, d2uhat_d2theta, 1e-6)
-# --------------------------------------------------------------------------
-# d2f_d2theta = f_{theta,theta} ( theta , uhat )
-d2f_d2theta = numpy.sum( exp_2u ) / s_sq
-#
-# d2f_dtheta_du = f_{theta, u} ( theta , uhat )
-d2f_dtheta_du = ( 2 * theta * exp_2u - y * exp_u ) / s_sq
 #
 # h(theta)
 h = theta * g + 1
 #
-# d2f_d2u = diagonal of f_{u,u} ( theta , uhat )
-d2f_d2u   = numpy.array( h )
+# F(theta)
+F       = random_likelihood(theta, uhat)
+F_plus  = random_likelihood(theta_plus, uhat_plus)
+F_minus = random_likelihood(theta_minus, uhat_minus)
+#
+# G(theta)
+G       = log_det_random_hessian(theta, uhat) / 2.0
+G_plus  = log_det_random_hessian(theta_plus, uhat_plus) / 2.0
+G_minus = log_det_random_hessian(theta_minus, uhat_minus) / 2.0
+#
+# L(theta)
+L       = F + G
+L_plus  = F_plus + G_plus
+L_minus = F_minus + G_minus
+#
+# f_u [ theta, uhat(theta) ]
+f_u      = ( theta * theta * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
+#
+# f_{theta,theta} ( theta , uhat )
+f_theta_theta = numpy.sum( exp_2u ) / s_sq
+#
+# f_{theta, u} ( theta , uhat )
+f_theta_u = ( 2 * theta * exp_2u - y * exp_u ) / s_sq
+#
+# duhat_dtheta = uhat^{(1)} ( theta )
+duhat_dtheta = - g / (theta * g + 1)
+#
+# dg_dtheta = g^{(1)} ( theta )
+dg_dtheta  = 2.0 * exp_2u + (4.0 * theta * exp_2u - y * exp_u) * duhat_dtheta
+#
+# d2uhat_dtheta = uhat^{(2)} ( theta )
+d2uhat_d2theta = (g * g - dg_dtheta) / ( (theta * g + 1) * (theta * g + 1) )
 #
 # d2F_d2theta = F^{(2)} ( theta )
-d2F_d2theta  = d2f_d2theta
-d2F_d2theta += numpy.dot( d2f_dtheta_du, duhat_dtheta )
+d2F_d2theta  = f_theta_theta
+d2F_d2theta += numpy.dot( f_theta_u, duhat_dtheta )
 #
-# check d2F_d2theta
-F_plus  = random_likelihood(theta_plus, uhat_plus)
-F       = random_likelihood(theta, uhat)
-F_minus = random_likelihood(theta_minus, uhat_minus)
-check = (F_plus - 2.0 * F + F_minus) / (delta_theta * delta_theta)
-check_rel_error(check, d2F_d2theta, 1e-6)
-# -----------------------------------------------------------------------
 # dh_dtheta = h^{(1)} ( theta )
 dh_dtheta = g + theta * dg_dtheta
 #
 # dG_dtheta = G^{(1)} ( theta )
 dG_dtheta = numpy.sum( dh_dtheta / h ) / 2.0
 #
-# check dG_dtheta
-G_plus  = log_det_random_hessian(theta_plus, uhat_plus) / 2.0
-G_minus = log_det_random_hessian(theta_minus, uhat_minus) / 2.0
-check   = (G_plus - G_minus) / (2.0 * delta_theta)
-check_rel_error(check, dG_dtheta, 1e-6)
-# -----------------------------------------------------------------------
 # d2g_d2theta = g^{(2)} ( theta )
 duhat_dtheta_sq = duhat_dtheta * duhat_dtheta
 d2g_d2theta     = 8.0 * exp_2u * duhat_dtheta
 d2g_d2theta    += (8.0 * theta * exp_2u - y * exp_u) * duhat_dtheta_sq
 d2g_d2theta    += (4.0 * theta * exp_2u - y * exp_u) * d2uhat_d2theta
-check        = (g_plus - 2.0 * g + g_minus) / (delta_theta * delta_theta)
-check_rel_error(check, d2g_d2theta, 1e-6)
-# -----------------------------------------------------------------------
+#
 # dh2_d2theta = h^{(2)} ( theta )
 d2h_d2theta = 2.0 * dg_dtheta + theta * d2g_d2theta
 #
 # d2G_d2theta = G^{(2)} ( theta )
 d2G_d2theta = (h * d2h_d2theta - dh_dtheta * dh_dtheta) / (2.0 * h * h)
 d2G_d2theta = numpy.sum( d2G_d2theta )
+# ----------------------------------------------------------------------------
+# check that f_u ( theta , uhat ) = 0
+assert all( abs(f_u) < 1e-13 )
+#
+# check duhat_dtheta
+check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
+check_rel_error(check, duhat_dtheta, 1e-5)
+#
+# check dg_dtheta
+check      = (g_plus - g_minus) / (2.0 * delta_theta)
+check_rel_error(check, dg_dtheta, 1e-6)
+#
+# check d2uhat_d2theta
+check = (uhat_plus - 2.0 * uhat + uhat_minus) / (delta_theta * delta_theta)
+check_rel_error(check, d2uhat_d2theta, 1e-6)
+#
+# check d2F_d2theta
+check = (F_plus - 2.0 * F + F_minus) / (delta_theta * delta_theta)
+check_rel_error(check, d2F_d2theta, 1e-6)
+#
+# check dG_dtheta
+check   = (G_plus - G_minus) / (2.0 * delta_theta)
+check_rel_error(check, dG_dtheta, 1e-6)
+#
+check        = (g_plus - 2.0 * g + g_minus) / (delta_theta * delta_theta)
+check_rel_error(check, d2g_d2theta, 1e-6)
 #
 # check d2G_d2theta
-G     = log_det_random_hessian(theta, uhat) / 2.0
 check = (G_plus - 2.0 * G + G_minus) / (delta_theta * delta_theta)
 check_rel_error(check, d2G_d2theta, 1e-5)
-
 # ============================================================================
 # check the Hessian of the fixed effects objective
 #
