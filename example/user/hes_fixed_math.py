@@ -49,7 +49,7 @@ y_1            = theta_true * math.exp( u_true[1] )
 standard_dev   = theta_true # the standard deviation s
 random_seed    = int( time.time() )
 number_sample  = 1000
-eta_in_prior   = None # if None, the fixed effects are not scaled
+eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 # %$$
 #
 # $head Random Likelihood$$
@@ -641,14 +641,20 @@ L       = F + G
 L_plus  = F_plus + G_plus
 L_minus = F_minus + G_minus
 #
-# f_u [ theta, uhat(theta) ]
-f_u      = ( theta * theta * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
+# f_u (theta, uhat)
+f_u     = ( theta * theta * exp_2u - theta * y  * exp_u  + uhat ) / s_sq
+#
+# f_theta (theta, uhat)
+f_theta = numpy.sum(theta * exp_2u - y * exp_u) / s_sq
 #
 # f_{theta,theta} ( theta , uhat )
 f_theta_theta = numpy.sum( exp_2u ) / s_sq
 #
 # f_{theta, u} ( theta , uhat )
 f_theta_u = ( 2 * theta * exp_2u - y * exp_u ) / s_sq
+#
+# dF_dtheta = F^{(1)} ( theta )
+dF_dtheta = f_theta
 #
 # duhat_dtheta = uhat^{(1)} ( theta )
 duhat_dtheta = - g / (theta * g + 1)
@@ -684,6 +690,9 @@ d2G_d2theta = numpy.sum( d2G_d2theta )
 # ----------------------------------------------------------------------------
 # check that f_u ( theta , uhat ) = 0
 assert all( abs(f_u) < 1e-13 )
+#
+# check that dF_dtheta + dG_dtheta = 0
+assert abs( dF_dtheta + dG_dtheta ) < 1e-11
 #
 # check duhat_dtheta
 check      = (uhat_plus - uhat_minus) / (2.0 * delta_theta)
@@ -721,8 +730,17 @@ row = hes_fixed_table[0]
 assert row['row_var_id'] == world_var_id
 assert row['col_var_id'] == world_var_id
 hes_fixed_value = row['hes_fixed_value']
-check           = d2F_d2theta + d2G_d2theta
-check_rel_error(check, hes_fixed_value, 1e-14)
+if eta_in_prior == None :
+	dL2_d2theta     = d2F_d2theta + d2G_d2theta
+	check_rel_error(dL2_d2theta, hes_fixed_value, 1e-14)
+else :
+	alpha        = math.log(theta + eta_in_prior)
+	exp_alpha    = math.exp(alpha)
+	exp_2alpha   = math.exp( 2.0 * alpha )
+	dL_dtheta    = dF_dtheta + dG_dtheta
+	d2L_d2theta  = d2F_d2theta + d2G_d2theta
+	d2H_d2alpha  = dL_dtheta * exp_alpha + d2L_d2theta * exp_2alpha
+	check_rel_error(d2H_d2alpha, hes_fixed_value, 1e-14)
 #
 # compute sample statistics
 assert  len(sample_table) == number_sample * len(var_table)
@@ -730,12 +748,19 @@ sample_array  = numpy.zeros(number_sample, dtype = float)
 for row in sample_table :
 	if row['var_id'] == var_id :
 		sample_index = row['sample_index']
-		sample_array[sample_index] = row['var_value']
+		if eta_in_prior == None :
+			sample_value = row['var_value']
+		else :
+			sample_value = math.log( row['var_value'] + eta_in_prior )
+		sample_array[sample_index] = sample_value
 sample_avg = numpy.average(sample_array)
 sample_var = numpy.var(sample_array, ddof=1)
 #
 # check sample statistics
-check_rel_error(theta,   sample_avg,  1e-1)
+if eta_in_prior == None :
+	check_rel_error(theta,   sample_avg,  1e-1)
+else :
+	check_rel_error(math.log(theta + eta_in_prior),   sample_avg,  1e-1)
 check_rel_error(1.0 / hes_fixed_value, sample_var, 1e-1)
 #
 print('hes_fixed_math.py: OK')
