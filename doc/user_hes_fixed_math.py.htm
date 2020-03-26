@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Check the Hessian of the Fixed Effects Objective</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Check the Hessian of the Fixed Effects Objective">
-<meta name="keywords" id="keywords" content=" check the hessian fixed effects objective purpose reference notation problem parameters random likelihood gradient w.r.t. cross term optimal implicit function definition derivatives laplace approximation asymptotic statistics source code ">
+<meta name="keywords" id="keywords" content=" check the hessian fixed effects objective purpose reference notation problem parameters random likelihood gradient w.r.t. cross term optimal implicit function definition derivatives laplace approximation asymptotic statistics scaling source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,13 +78,14 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_hes_fixed_math.py.htm#Optimal Random Effects.Derivatives of Optimal Random Effects" target="_top">Derivatives&nbsp;of&nbsp;Optimal&nbsp;Random&nbsp;Effects</a>
 <br><a href="user_hes_fixed_math.py.htm#Laplace Approximation" target="_top">Laplace&nbsp;Approximation</a>
 <br><a href="user_hes_fixed_math.py.htm#Asymptotic Statistics" target="_top">Asymptotic&nbsp;Statistics</a>
+<br><a href="user_hes_fixed_math.py.htm#Scaling Fixed Effects" target="_top">Scaling&nbsp;Fixed&nbsp;Effects</a>
 <br><a href="user_hes_fixed_math.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 This is a detailed mathematical explanation of computing Hessian of the
 fixed effects objective used by the
-<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
  sampling method.
 
 <br>
@@ -158,7 +159,8 @@ y_0            <font color="#990000">=</font> theta_true <font color="#990000">*
 y_1            <font color="#990000">=</font> theta_true <font color="#990000">*</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> u_true<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">)</font>
 standard_dev   <font color="#990000">=</font> theta_true <i><font color="#9A1900"># the standard deviation s</font></i>
 random_seed    <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
-number_sample  <font color="#990000">=</font> <font color="#993399">1000</font></tt></pre>
+number_sample  <font color="#990000">=</font> <font color="#993399">1000</font>
+eta_in_prior   <font color="#990000">=</font> <font color="#993399">1e-6</font> <i><font color="#9A1900"># if None, the fixed effects are not scaled</font></i></tt></pre>
 <br>
 <b><big><a name="Random Likelihood" id="Random Likelihood">Random Likelihood</a></big></b>
 <br>
@@ -390,8 +392,8 @@ g_i^{(2)} ( \theta )
 <br>
 <b><big><a name="Laplace Approximation" id="Laplace Approximation">Laplace Approximation</a></big></b>
 <br>
-The Laplace approximation (up to a constant), as a function of the
-fixed effects, is:
+Up to a constant, the Laplace approximation (fixed effects objective),
+as a function of the fixed effects, is:
 <small>@[@
 
 	L ( \theta ) = F( \theta ) + G( \theta )
@@ -400,7 +402,7 @@ fixed effects, is:
 where <small>@(@
 F( \theta )
 @)@</small> and <small>@(@
-G( theta )
+G( \theta )
 @)@</small> are defined by
 <small>@[@
 
@@ -535,6 +537,51 @@ F^{(2)} ( \theta ) + G^{(2)} ( \theta )
 
 <br>
 <br>
+<b><big><a name="Scaling Fixed Effects" id="Scaling Fixed Effects">Scaling Fixed Effects</a></big></b>
+<br>
+If <a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ is not null,
+the Hessian is with respect to <small>@(@
+\alpha = \log( \theta + \eta )
+@)@</small>.
+Inverting this relation we define
+<small>@(@
+\theta ( \alpha ) = \exp( \alpha ) - \eta
+@)@</small>.
+The fixed effects objective as a function of <small>@(@
+\alpha
+@)@</small> is
+<small>@[@
+
+	H( \alpha ) =
+	L[ \theta ( \alpha ) ] =
+	F[ \theta( \alpha ) ] + G[ \theta( \alpha ) ]
+
+@]@</small>
+Taking the first and second derivatives, we have
+<small>@[@
+
+	H^{(1)}( \alpha ) =  \left(
+		F^{(1)}[ \theta( \alpha ) ] + G^{(1)}[ \theta( \alpha ) ]
+	\right) \exp( \alpha )
+
+@]@</small>
+<small>@[@
+
+	\begin{array}{rcl}
+	H^{(2)}( \alpha ) & = & \left(
+		F^{(1)}[ \theta( \alpha ) ] + G^{(1)}[ \theta( \alpha ) ]
+	\right) \exp( \alpha )
+	\\ & + &
+	\left(
+		F^{(2)}[ \theta( \alpha ) ] + G^{(2)}[ \theta( \alpha ) ]
+	\right) \exp( 2 \alpha )
+	\end{array}
+
+@]@</small>
+
+<br>
+<br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt>
@@ -628,6 +675,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
                <font color="#FF0000">'lower'</font><font color="#990000">:</font>    <font color="#993399">1e-2</font> <font color="#990000">*</font> theta_true<font color="#990000">,</font>
                <font color="#FF0000">'upper'</font><font color="#990000">:</font>    <font color="#993399">1e+2</font> <font color="#990000">*</font> theta_true<font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     theta_true <font color="#990000">/</font> <font color="#993399">3.0</font><font color="#990000">,</font> <i><font color="#9A1900"># only used for start and scale</font></i>
+               <font color="#FF0000">'eta'</font><font color="#990000">:</font>      eta_in_prior<font color="#990000">,</font>
           <font color="#990000">},{</font> <i><font color="#9A1900"># prior_gauss_zero</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_gauss_zero'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'gaussian'</font><font color="#990000">,</font>
@@ -828,108 +876,130 @@ exp_u_minus  <font color="#990000">=</font> numpy<font color="#990000">.</font><
 exp_2u       <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#993399">2.0</font> <font color="#990000">*</font> uhat <font color="#990000">)</font>
 exp_2u_plus  <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#993399">2.0</font> <font color="#990000">*</font> uhat_plus <font color="#990000">)</font>
 exp_2u_minus <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#993399">2.0</font> <font color="#990000">*</font> uhat_minus <font color="#990000">)</font>
-<i><font color="#9A1900"># -</font></i>
-<i><font color="#9A1900"># check that f_u ( theta , uhat ) = 0</font></i>
-f_u <font color="#990000">=</font> <font color="#990000">(</font> theta <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> theta <font color="#990000">*</font> y  <font color="#990000">*</font> exp_u  <font color="#990000">+</font> uhat <font color="#990000">)</font> <font color="#990000">/</font> s_sq
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">all</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>f_u<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-13</font> <font color="#990000">)</font>
-f_u_plus <font color="#990000">=</font> <font color="#990000">(</font>theta_plus <font color="#990000">*</font> theta_plus <font color="#990000">*</font> exp_2u_plus
-         <font color="#990000">-</font> theta_plus <font color="#990000">*</font> y  <font color="#990000">*</font> exp_u_plus  <font color="#990000">+</font> uhat_plus <font color="#990000">)</font> <font color="#990000">/</font> s_sq
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">all</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>f_u_plus<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-13</font> <font color="#990000">)</font>
-f_u_minus <font color="#990000">=</font> <font color="#990000">(</font>theta_minus <font color="#990000">*</font> theta_minus <font color="#990000">*</font> exp_2u_minus
-         <font color="#990000">-</font> theta_minus <font color="#990000">*</font> y  <font color="#990000">*</font> exp_u_minus  <font color="#990000">+</font> uhat_minus <font color="#990000">)</font> <font color="#990000">/</font> s_sq
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">all</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>f_u_minus<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-13</font> <font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># g(theta)</font></i>
 g            <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> y <font color="#990000">*</font> exp_u
 g_plus       <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> theta_plus <font color="#990000">*</font> exp_2u_plus <font color="#990000">-</font> y <font color="#990000">*</font> exp_u_plus
 g_minus      <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> theta_minus <font color="#990000">*</font> exp_2u_minus <font color="#990000">-</font> y <font color="#990000">*</font> exp_u_minus
-<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># duhat_dtheta = uhat^{(1)} ( \theta )</font></i>
-duhat_dtheta <font color="#990000">=</font> <font color="#990000">-</font> g <font color="#990000">/</font> <font color="#990000">(</font>theta <font color="#990000">*</font> g <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font>
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check duhat_dtheta</font></i>
-check      <font color="#990000">=</font> <font color="#990000">(</font>uhat_plus <font color="#990000">-</font> uhat_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
-<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> duhat_dtheta<font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>
-<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># dg_dtheta = g^{(1)} ( theta )</font></i>
-dg_dtheta  <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> exp_2u <font color="#990000">+</font> <font color="#990000">(</font><font color="#993399">4.0</font> <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> y <font color="#990000">*</font> exp_u<font color="#990000">)</font> <font color="#990000">*</font> duhat_dtheta
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check dg_dtheta</font></i>
-check      <font color="#990000">=</font> <font color="#990000">(</font>g_plus <font color="#990000">-</font> g_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
-<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> dg_dtheta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
-<i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># d2uhat_dtheta = uhat^{(2)} ( theta )</font></i>
-d2uhat_d2theta <font color="#990000">=</font> <font color="#990000">(</font>g <font color="#990000">*</font> g <font color="#990000">-</font> dg_dtheta<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font> <font color="#990000">(</font>theta <font color="#990000">*</font> g <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>theta <font color="#990000">*</font> g <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">)</font>
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check d2uhat_d2theta</font></i>
-check <font color="#990000">=</font> <font color="#990000">(</font>uhat_plus <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> uhat <font color="#990000">+</font> uhat_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>delta_theta <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
-<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> d2uhat_d2theta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
-<i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># d2f_d2theta = f_{theta,theta} ( theta , uhat )</font></i>
-d2f_d2theta <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">sum</font></b><font color="#990000">(</font> exp_2u <font color="#990000">)</font> <font color="#990000">/</font> s_sq
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># d2f_dtheta_du = f_{theta, u} ( theta , uhat )</font></i>
-d2f_dtheta_du <font color="#990000">=</font> <font color="#990000">(</font> <font color="#993399">2</font> <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> y <font color="#990000">*</font> exp_u <font color="#990000">)</font> <font color="#990000">/</font> s_sq
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># h(theta)</font></i>
 h <font color="#990000">=</font> theta <font color="#990000">*</font> g <font color="#990000">+</font> <font color="#993399">1</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># d2f_d2u = diagonal of f_{u,u} ( theta , uhat )</font></i>
-d2f_d2u   <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> h <font color="#990000">)</font>
+<i><font color="#9A1900"># F(theta)</font></i>
+F       <font color="#990000">=</font> <b><font color="#000000">random_likelihood</font></b><font color="#990000">(</font>theta<font color="#990000">,</font> uhat<font color="#990000">)</font>
+F_plus  <font color="#990000">=</font> <b><font color="#000000">random_likelihood</font></b><font color="#990000">(</font>theta_plus<font color="#990000">,</font> uhat_plus<font color="#990000">)</font>
+F_minus <font color="#990000">=</font> <b><font color="#000000">random_likelihood</font></b><font color="#990000">(</font>theta_minus<font color="#990000">,</font> uhat_minus<font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># G(theta)</font></i>
+G       <font color="#990000">=</font> <b><font color="#000000">log_det_random_hessian</font></b><font color="#990000">(</font>theta<font color="#990000">,</font> uhat<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
+G_plus  <font color="#990000">=</font> <b><font color="#000000">log_det_random_hessian</font></b><font color="#990000">(</font>theta_plus<font color="#990000">,</font> uhat_plus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
+G_minus <font color="#990000">=</font> <b><font color="#000000">log_det_random_hessian</font></b><font color="#990000">(</font>theta_minus<font color="#990000">,</font> uhat_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># L(theta)</font></i>
+L       <font color="#990000">=</font> F <font color="#990000">+</font> G
+L_plus  <font color="#990000">=</font> F_plus <font color="#990000">+</font> G_plus
+L_minus <font color="#990000">=</font> F_minus <font color="#990000">+</font> G_minus
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># f_u (theta, uhat)</font></i>
+f_u     <font color="#990000">=</font> <font color="#990000">(</font> theta <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> theta <font color="#990000">*</font> y  <font color="#990000">*</font> exp_u  <font color="#990000">+</font> uhat <font color="#990000">)</font> <font color="#990000">/</font> s_sq
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># f_theta (theta, uhat)</font></i>
+f_theta <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">sum</font></b><font color="#990000">(</font>theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> y <font color="#990000">*</font> exp_u<font color="#990000">)</font> <font color="#990000">/</font> s_sq
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># f_{theta,theta} ( theta , uhat )</font></i>
+f_theta_theta <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">sum</font></b><font color="#990000">(</font> exp_2u <font color="#990000">)</font> <font color="#990000">/</font> s_sq
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># f_{theta, u} ( theta , uhat )</font></i>
+f_theta_u <font color="#990000">=</font> <font color="#990000">(</font> <font color="#993399">2</font> <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> y <font color="#990000">*</font> exp_u <font color="#990000">)</font> <font color="#990000">/</font> s_sq
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># dF_dtheta = F^{(1)} ( theta )</font></i>
+dF_dtheta <font color="#990000">=</font> f_theta
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># duhat_dtheta = uhat^{(1)} ( theta )</font></i>
+duhat_dtheta <font color="#990000">=</font> <font color="#990000">-</font> g <font color="#990000">/</font> <font color="#990000">(</font>theta <font color="#990000">*</font> g <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># dg_dtheta = g^{(1)} ( theta )</font></i>
+dg_dtheta  <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> exp_2u <font color="#990000">+</font> <font color="#990000">(</font><font color="#993399">4.0</font> <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> y <font color="#990000">*</font> exp_u<font color="#990000">)</font> <font color="#990000">*</font> duhat_dtheta
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># d2uhat_dtheta = uhat^{(2)} ( theta )</font></i>
+d2uhat_d2theta <font color="#990000">=</font> <font color="#990000">(</font>g <font color="#990000">*</font> g <font color="#990000">-</font> dg_dtheta<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font> <font color="#990000">(</font>theta <font color="#990000">*</font> g <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font>theta <font color="#990000">*</font> g <font color="#990000">+</font> <font color="#993399">1</font><font color="#990000">)</font> <font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># d2F_d2theta = F^{(2)} ( theta )</font></i>
-d2F_d2theta  <font color="#990000">=</font> d2f_d2theta
-d2F_d2theta <font color="#990000">+=</font> numpy<font color="#990000">.</font><b><font color="#000000">dot</font></b><font color="#990000">(</font> d2f_dtheta_du<font color="#990000">,</font> duhat_dtheta <font color="#990000">)</font>
+d2F_d2theta  <font color="#990000">=</font> f_theta_theta
+d2F_d2theta <font color="#990000">+=</font> numpy<font color="#990000">.</font><b><font color="#000000">dot</font></b><font color="#990000">(</font> f_theta_u<font color="#990000">,</font> duhat_dtheta <font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check d2F_d2theta</font></i>
-F_plus  <font color="#990000">=</font> <b><font color="#000000">random_likelihood</font></b><font color="#990000">(</font>theta_plus<font color="#990000">,</font> uhat_plus<font color="#990000">)</font>
-F       <font color="#990000">=</font> <b><font color="#000000">random_likelihood</font></b><font color="#990000">(</font>theta<font color="#990000">,</font> uhat<font color="#990000">)</font>
-F_minus <font color="#990000">=</font> <b><font color="#000000">random_likelihood</font></b><font color="#990000">(</font>theta_minus<font color="#990000">,</font> uhat_minus<font color="#990000">)</font>
-check <font color="#990000">=</font> <font color="#990000">(</font>F_plus <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> F <font color="#990000">+</font> F_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>delta_theta <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
-<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> d2F_d2theta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
-<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># dh_dtheta = h^{(1)} ( theta )</font></i>
 dh_dtheta <font color="#990000">=</font> g <font color="#990000">+</font> theta <font color="#990000">*</font> dg_dtheta
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># dG_dtheta = G^{(1)} ( theta )</font></i>
 dG_dtheta <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">sum</font></b><font color="#990000">(</font> dh_dtheta <font color="#990000">/</font> h <font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check dG_dtheta</font></i>
-G_plus  <font color="#990000">=</font> <b><font color="#000000">log_det_random_hessian</font></b><font color="#990000">(</font>theta_plus<font color="#990000">,</font> uhat_plus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
-G_minus <font color="#990000">=</font> <b><font color="#000000">log_det_random_hessian</font></b><font color="#990000">(</font>theta_minus<font color="#990000">,</font> uhat_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
-check   <font color="#990000">=</font> <font color="#990000">(</font>G_plus <font color="#990000">-</font> G_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
-<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> dG_dtheta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
-<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># d2g_d2theta = g^{(2)} ( theta )</font></i>
 duhat_dtheta_sq <font color="#990000">=</font> duhat_dtheta <font color="#990000">*</font> duhat_dtheta
 d2g_d2theta     <font color="#990000">=</font> <font color="#993399">8.0</font> <font color="#990000">*</font> exp_2u <font color="#990000">*</font> duhat_dtheta
 d2g_d2theta    <font color="#990000">+=</font> <font color="#990000">(</font><font color="#993399">8.0</font> <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> y <font color="#990000">*</font> exp_u<font color="#990000">)</font> <font color="#990000">*</font> duhat_dtheta_sq
 d2g_d2theta    <font color="#990000">+=</font> <font color="#990000">(</font><font color="#993399">4.0</font> <font color="#990000">*</font> theta <font color="#990000">*</font> exp_2u <font color="#990000">-</font> y <font color="#990000">*</font> exp_u<font color="#990000">)</font> <font color="#990000">*</font> d2uhat_d2theta
-check        <font color="#990000">=</font> <font color="#990000">(</font>g_plus <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> g <font color="#990000">+</font> g_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>delta_theta <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
-<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> d2g_d2theta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
-<i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># dh2_d2theta = h^{(2)} ( theta )</font></i>
 d2h_d2theta <font color="#990000">=</font> <font color="#993399">2.0</font> <font color="#990000">*</font> dg_dtheta <font color="#990000">+</font> theta <font color="#990000">*</font> d2g_d2theta
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># d2G_d2theta = G^{(2)} ( theta )</font></i>
 d2G_d2theta <font color="#990000">=</font> <font color="#990000">(</font>h <font color="#990000">*</font> d2h_d2theta <font color="#990000">-</font> dh_dtheta <font color="#990000">*</font> dh_dtheta<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> h <font color="#990000">*</font> h<font color="#990000">)</font>
 d2G_d2theta <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">sum</font></b><font color="#990000">(</font> d2G_d2theta <font color="#990000">)</font>
+<i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># check that f_u ( theta , uhat ) = 0</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">all</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>f_u<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-13</font> <font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check d2g_d2theta</font></i>
-G     <font color="#990000">=</font> <b><font color="#000000">log_det_random_hessian</font></b><font color="#990000">(</font>theta<font color="#990000">,</font> uhat<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
+<i><font color="#9A1900"># check that dF_dtheta + dG_dtheta = 0</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> dF_dtheta <font color="#990000">+</font> dG_dtheta <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-11</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check duhat_dtheta</font></i>
+check      <font color="#990000">=</font> <font color="#990000">(</font>uhat_plus <font color="#990000">-</font> uhat_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
+<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> duhat_dtheta<font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check dg_dtheta</font></i>
+check      <font color="#990000">=</font> <font color="#990000">(</font>g_plus <font color="#990000">-</font> g_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
+<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> dg_dtheta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check d2uhat_d2theta</font></i>
+check <font color="#990000">=</font> <font color="#990000">(</font>uhat_plus <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> uhat <font color="#990000">+</font> uhat_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>delta_theta <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
+<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> d2uhat_d2theta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check d2F_d2theta</font></i>
+check <font color="#990000">=</font> <font color="#990000">(</font>F_plus <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> F <font color="#990000">+</font> F_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>delta_theta <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
+<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> d2F_d2theta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check dG_dtheta</font></i>
+check   <font color="#990000">=</font> <font color="#990000">(</font>G_plus <font color="#990000">-</font> G_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font><font color="#993399">2.0</font> <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
+<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> dG_dtheta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+check        <font color="#990000">=</font> <font color="#990000">(</font>g_plus <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> g <font color="#990000">+</font> g_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>delta_theta <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
+<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> d2g_d2theta<font color="#990000">,</font> <font color="#993399">1e-6</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check d2G_d2theta</font></i>
 check <font color="#990000">=</font> <font color="#990000">(</font>G_plus <font color="#990000">-</font> <font color="#993399">2.0</font> <font color="#990000">*</font> G <font color="#990000">+</font> G_minus<font color="#990000">)</font> <font color="#990000">/</font> <font color="#990000">(</font>delta_theta <font color="#990000">*</font> delta_theta<font color="#990000">)</font>
 <b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> d2G_d2theta<font color="#990000">,</font> <font color="#993399">1e-5</font><font color="#990000">)</font>
 <i><font color="#9A1900"># ============================================================================</font></i>
 <i><font color="#9A1900"># check the Hessian of the fixed effects objective</font></i>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># The world rate for incicdnce is the only fixed effect</font></i>
+<i><font color="#9A1900"># The world rate for incidence is the only fixed effect</font></i>
 world_var_id <font color="#990000">=</font> node_name2var_id<font color="#990000">[</font><font color="#FF0000">'world'</font><font color="#990000">]</font>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>hes_fixed_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
-<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> hes_fixed_table <font color="#990000">:</font>
-     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'row_var_id'</font><font color="#990000">]</font> <font color="#990000">==</font> world_var_id
-     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'col_var_id'</font><font color="#990000">]</font> <font color="#990000">==</font> world_var_id
-     hes_fixed_value <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'hes_fixed_value'</font><font color="#990000">]</font>
-     check         <font color="#990000">=</font> d2F_d2theta <font color="#990000">+</font> d2G_d2theta
-     <b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>check<font color="#990000">,</font> hes_fixed_value<font color="#990000">,</font> <font color="#993399">1e-14</font><font color="#990000">)</font>
+row <font color="#990000">=</font> hes_fixed_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'row_var_id'</font><font color="#990000">]</font> <font color="#990000">==</font> world_var_id
+<b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'col_var_id'</font><font color="#990000">]</font> <font color="#990000">==</font> world_var_id
+hes_fixed_value <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'hes_fixed_value'</font><font color="#990000">]</font>
+<b><font color="#0000FF">if</font></b> eta_in_prior <font color="#990000">==</font> None <font color="#990000">:</font>
+     dL2_d2theta     <font color="#990000">=</font> d2F_d2theta <font color="#990000">+</font> d2G_d2theta
+     <b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>dL2_d2theta<font color="#990000">,</font> hes_fixed_value<font color="#990000">,</font> <font color="#993399">1e-14</font><font color="#990000">)</font>
+<b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+     alpha        <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>theta <font color="#990000">+</font> eta_in_prior<font color="#990000">)</font>
+     exp_alpha    <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font>alpha<font color="#990000">)</font>
+     exp_2alpha   <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#993399">2.0</font> <font color="#990000">*</font> alpha <font color="#990000">)</font>
+     dL_dtheta    <font color="#990000">=</font> dF_dtheta <font color="#990000">+</font> dG_dtheta
+     d2L_d2theta  <font color="#990000">=</font> d2F_d2theta <font color="#990000">+</font> d2G_d2theta
+     d2H_d2alpha  <font color="#990000">=</font> dL_dtheta <font color="#990000">*</font> exp_alpha <font color="#990000">+</font> d2L_d2theta <font color="#990000">*</font> exp_2alpha
+     <b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>d2H_d2alpha<font color="#990000">,</font> hes_fixed_value<font color="#990000">,</font> <font color="#993399">1e-14</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># compute sample statistics</font></i>
 <b><font color="#0000FF">assert</font></b>  <b><font color="#000000">len</font></b><font color="#990000">(</font>sample_table<font color="#990000">)</font> <font color="#990000">==</font> number_sample <font color="#990000">*</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font>
@@ -937,12 +1007,19 @@ sample_array  <font color="#990000">=</font> numpy<font color="#990000">.</font>
 <b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> sample_table <font color="#990000">:</font>
      <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_id'</font><font color="#990000">]</font> <font color="#990000">==</font> var_id <font color="#990000">:</font>
           sample_index <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'sample_index'</font><font color="#990000">]</font>
-          sample_array<font color="#990000">[</font>sample_index<font color="#990000">]</font> <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'var_value'</font><font color="#990000">]</font>
+          <b><font color="#0000FF">if</font></b> eta_in_prior <font color="#990000">==</font> None <font color="#990000">:</font>
+               sample_value <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'var_value'</font><font color="#990000">]</font>
+          <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+               sample_value <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'var_value'</font><font color="#990000">]</font> <font color="#990000">+</font> eta_in_prior <font color="#990000">)</font>
+          sample_array<font color="#990000">[</font>sample_index<font color="#990000">]</font> <font color="#990000">=</font> sample_value
 sample_avg <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">average</font></b><font color="#990000">(</font>sample_array<font color="#990000">)</font>
 sample_var <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">var</font></b><font color="#990000">(</font>sample_array<font color="#990000">,</font> ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check sample statistics</font></i>
-<b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>theta<font color="#990000">,</font>   sample_avg<font color="#990000">,</font>  <font color="#993399">1e-1</font><font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> eta_in_prior <font color="#990000">==</font> None <font color="#990000">:</font>
+     <b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>theta<font color="#990000">,</font>   sample_avg<font color="#990000">,</font>  <font color="#993399">1e-1</font><font color="#990000">)</font>
+<b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+     <b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>theta <font color="#990000">+</font> eta_in_prior<font color="#990000">),</font>   sample_avg<font color="#990000">,</font>  <font color="#993399">1e-1</font><font color="#990000">)</font>
 <b><font color="#000000">check_rel_error</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">/</font> hes_fixed_value<font color="#990000">,</font> sample_var<font color="#990000">,</font> <font color="#993399">1e-1</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'hes_fixed_math.py: OK'</font><font color="#990000">)</font></tt></pre>

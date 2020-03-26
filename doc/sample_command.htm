@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Sample Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Sample Command">
-<meta name="keywords" id="keywords" content=" the sample command syntax database purpose number_sample simulate_index method simulate asymptotic data_sim_table prior_sim_table fit_var_table sample_table no table hes_fixed_table hes_random_table bounds example ">
+<meta name="keywords" id="keywords" content=" the sample command syntax database purpose method number_sample simulate_index simulate asymptotic fixed effects distribution random extra input tables data_sim_table prior_sim_table fit_var_table output sample_table no table hes_fixed_table hes_random_table bounds example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,18 +68,22 @@ A:active { color : purple }
 <br><a href="sample_command.htm#Syntax" target="_top">Syntax</a>
 <br><a href="sample_command.htm#database" target="_top">database</a>
 <br><a href="sample_command.htm#Purpose" target="_top">Purpose</a>
+<br><a href="sample_command.htm#method" target="_top">method</a>
 <br><a href="sample_command.htm#number_sample" target="_top">number_sample</a>
 <br><a href="sample_command.htm#simulate_index" target="_top">simulate_index</a>
-<br><a href="sample_command.htm#method" target="_top">method</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#method.simulate" target="_top">simulate</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#method.asymptotic" target="_top">asymptotic</a>
-<br><a href="sample_command.htm#data_sim_table" target="_top">data_sim_table</a>
-<br><a href="sample_command.htm#prior_sim_table" target="_top">prior_sim_table</a>
-<br><a href="sample_command.htm#fit_var_table" target="_top">fit_var_table</a>
-<br><a href="sample_command.htm#sample_table" target="_top">sample_table</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#sample_table.No Sample Table" target="_top">No&nbsp;Sample&nbsp;Table</a>
-<br><a href="sample_command.htm#hes_fixed_table" target="_top">hes_fixed_table</a>
-<br><a href="sample_command.htm#hes_random_table" target="_top">hes_random_table</a>
+<br><a href="sample_command.htm#simulate" target="_top">simulate</a>
+<br><a href="sample_command.htm#asymptotic" target="_top">asymptotic</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#asymptotic.Fixed Effects Distribution" target="_top">Fixed&nbsp;Effects&nbsp;Distribution</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#asymptotic.Random Effects Distribution" target="_top">Random&nbsp;Effects&nbsp;Distribution</a>
+<br><a href="sample_command.htm#Extra Input Tables" target="_top">Extra&nbsp;Input&nbsp;Tables</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#Extra Input Tables.data_sim_table" target="_top">data_sim_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#Extra Input Tables.prior_sim_table" target="_top">prior_sim_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#Extra Input Tables.fit_var_table" target="_top">fit_var_table</a>
+<br><a href="sample_command.htm#Output Tables" target="_top">Output&nbsp;Tables</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#Output Tables.sample_table" target="_top">sample_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#Output Tables.No Sample Table" target="_top">No&nbsp;Sample&nbsp;Table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#Output Tables.hes_fixed_table" target="_top">hes_fixed_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="sample_command.htm#Output Tables.hes_random_table" target="_top">hes_random_table</a>
 <br><a href="sample_command.htm#Bounds" target="_top">Bounds</a>
 <br><a href="sample_command.htm#Example" target="_top">Example</a>
 <br><br>
@@ -113,6 +117,15 @@ from the posterior distribution; see
 
 <br>
 <br>
+<b><big><a name="method" id="method">method</a></big></b>
+<br>
+The sample command argument 
+<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
+ must be
+<code><font color="blue">simulate</font></code> or <code><font color="blue">asymptotic</font></code>; see discussion below:
+
+<br>
+<br>
 <b><big><a name="number_sample" id="number_sample">number_sample</a></big></b>
 <br>
 Is the number of samples. Each sample contains a complete
@@ -140,19 +153,9 @@ and
 <a href="fit_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>fit&nbsp;command</span></a>
 .
 
-
 <br>
 <br>
-<b><big><a name="method" id="method">method</a></big></b>
-<br>
-The sample command argument 
-<code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
- must be
-<code><font color="blue">simulate</font></code> or <code><font color="blue">asymptotic</font></code>; see discussion below:
-
-<br>
-<br>
-<big><a name="method.simulate" id="method.simulate">simulate</a></big>
+<b><big><a name="simulate" id="simulate">simulate</a></big></b>
 <br>
 A complete set of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 ,
@@ -184,7 +187,7 @@ posterior distribution of maximum likelihood estimates.
 
 <br>
 <br>
-<big><a name="method.asymptotic" id="method.asymptotic">asymptotic</a></big>
+<b><big><a name="asymptotic" id="asymptotic">asymptotic</a></big></b>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
@@ -214,7 +217,48 @@ fixed effect in the <code><i>i</i></code>-th sample.
 
 <br>
 <br>
-<b><big><a name="data_sim_table" id="data_sim_table">data_sim_table</a></big></b>
+<big><a name="asymptotic.Fixed Effects Distribution" id="asymptotic.Fixed Effects Distribution">Fixed Effects Distribution</a></big>
+<br>
+The asymptotic distribution used to simulate the fixed effects is a normal
+with mean equal to the value of the fixed effects in the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+
+and covariance equal to the inverse of the
+Hessian of the fixed effect objective
+<a href="sample_command.htm#Output Tables.hes_fixed_table" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+.
+If a fixed effect is scaled
+(see <a href="prior_table.htm#eta.Scaling Fixed Effects" target="_top"><span style='white-space: nowrap'>scaling&nbsp;fixed&nbsp;effects</span></a>
+)
+the scaled version of the fixed effect has the asymptotic distribution.
+If the lower and upper limits are equal, the corresponding variable
+is simulated as having that constant value.
+
+<br>
+<br>
+<big><a name="asymptotic.Random Effects Distribution" id="asymptotic.Random Effects Distribution">Random Effects Distribution</a></big>
+<br>
+The asymptotic distribution used to simulate the random effects is a normal
+with mean equal to the value of the random effects in the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+
+This should be the optimal value of the random effects given the fixed effects;
+see
+<a href="sample_command.htm#Extra Input Tables.fit_var_table" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+ below.
+The covariance of the random effects is equal to the inverse of the
+Hessian of the random effect objective
+<a href="sample_command.htm#Output Tables.hes_fixed_table" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+.
+If the lower and upper limits are equal, the corresponding variable
+is simulated as having that constant value.
+
+<br>
+<br>
+<b><big><a name="Extra Input Tables" id="Extra Input Tables">Extra Input Tables</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Extra Input Tables.data_sim_table" id="Extra Input Tables.data_sim_table">data_sim_table</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
@@ -226,7 +270,7 @@ which was created by the previous <a href="simulate_command.htm" target="_top"><
 
 <br>
 <br>
-<b><big><a name="prior_sim_table" id="prior_sim_table">prior_sim_table</a></big></b>
+<big><a name="Extra Input Tables.prior_sim_table" id="Extra Input Tables.prior_sim_table">prior_sim_table</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
@@ -238,7 +282,7 @@ which was created by the previous <a href="simulate_command.htm" target="_top"><
 
 <br>
 <br>
-<b><big><a name="fit_var_table" id="fit_var_table">fit_var_table</a></big></b>
+<big><a name="Extra Input Tables.fit_var_table" id="Extra Input Tables.fit_var_table">fit_var_table</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
@@ -252,7 +296,12 @@ fixed and random effects.
 
 <br>
 <br>
-<b><big><a name="sample_table" id="sample_table">sample_table</a></big></b>
+<b><big><a name="Output Tables" id="Output Tables">Output Tables</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Output Tables.sample_table" id="Output Tables.sample_table">sample_table</a></big>
 <br>
 A new <a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
  is created each time this command is run.
@@ -270,7 +319,7 @@ in the sample table will be null.
 
 <br>
 <br>
-<big><a name="sample_table.No Sample Table" id="sample_table.No Sample Table">No Sample Table</a></big>
+<big><a name="Output Tables.No Sample Table" id="Output Tables.No Sample Table">No Sample Table</a></big>
 <br>
 In the special case where 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
@@ -281,7 +330,7 @@ there is be no sample table in the database after this command.
 
 <br>
 <br>
-<b><big><a name="hes_fixed_table" id="hes_fixed_table">hes_fixed_table</a></big></b>
+<big><a name="Output Tables.hes_fixed_table" id="Output Tables.hes_fixed_table">hes_fixed_table</a></big>
 <br>
 A new <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
  is created each time this command is run
@@ -299,7 +348,7 @@ to the simulated measurements in the <a href="data_sim_table.htm" target="_top">
 
 <br>
 <br>
-<b><big><a name="hes_random_table" id="hes_random_table">hes_random_table</a></big></b>
+<big><a name="Output Tables.hes_random_table" id="Output Tables.hes_random_table">hes_random_table</a></big>
 <br>
 A new <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
  is created each time this command is run
@@ -335,7 +384,7 @@ are equal.
 <br>
 The files
 <a href="sample_command.py.htm" target="_top"><span style='white-space: nowrap'>sample_command.py</span></a>
- and <a href="user_sample_asy.py.htm" target="_top"><span style='white-space: nowrap'>user_sample_asy.py</span></a>
+, <a href="user_sample_asy.py.htm" target="_top"><span style='white-space: nowrap'>user_sample_asy.py</span></a>
 
 contain examples and tests using this command.
 

@@ -98,7 +98,7 @@ A:active { color : purple }
 <ol type="1"><li>
 Advance to <code><font color="blue">cppad_mixed-20200325</font></code>.
 This fixed assert in the debug version during
-<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
  sampling
 when there are no random effects.
 </li><li>
@@ -106,10 +106,30 @@ when there are no random effects.
 If during asymptotic sampling the Hessian of the fixed or random
 effects object is not positive definite, print a warning and do not
 create a sample table (instead of filling the sample table with nulls);
-see <a href="sample_command.htm#sample_table.No Sample Table" target="_top"><span style='white-space: nowrap'>no&nbsp;sample&nbsp;table</span></a>
+see <a href="sample_command.htm#Output Tables.No Sample Table" target="_top"><span style='white-space: nowrap'>no&nbsp;sample&nbsp;table</span></a>
 .
 This fixed a bug where the <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
  tried to average null values.
+</li><li>
+
+The sample command asymptotic method uses a normal distribution,
+but the scaled fixed effects variables are normal in the scaled space; see
+<a href="sample_command.htm#asymptotic.Fixed Effects Distribution" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effects&nbsp;distribution</span></a>
+
+</li><li>
+
+Add a test of
+<a href="user_hes_fixed_math.py.htm#Scaling Fixed Effects" target="_top"><span style='white-space: nowrap'>scaling&nbsp;fixed&nbsp;effects</span></a>
+
+to the <code><font color="blue">hes_fixed_math.py</font></code> example.
+</li><li>
+
+Advance to <a href="dock_dismod_at.sh.htm#Building Images.Version" target="_top"><span style='white-space: nowrap'>version</span></a>
+ 20200325
+of <code><font color="blue">dock_dismod_at.sh</font></code>.
+This will require building a new
+<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.image" target="_top"><span style='white-space: nowrap'>dismod_at.image</span></a>
+.
 </li></ol>
 
 
@@ -163,7 +183,7 @@ This enables computation of the Hessian of the random effects objective.
 
 Add the <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
  as an output during an
-<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
  sample command.
 Add the <a href="user_hes_random.py.htm" target="_top"><span style='white-space: nowrap'>user_hes_random.py</span></a>
  example use of the hes_random table.
@@ -175,7 +195,7 @@ Add the <a href="user_hes_random.py.htm" target="_top"><span style='white-space:
 <b><big><a name="03-22" id="03-22">03-22</a></big></b>
 
 <ol type="1"><li>
-Add the <a href="sample_command.htm#hes_fixed_table" target="_top"><span style='white-space: nowrap'>hes_fixed&nbsp;table</span></a>
+Add the <a href="sample_command.htm#Output Tables.hes_fixed_table" target="_top"><span style='white-space: nowrap'>hes_fixed&nbsp;table</span></a>
 
 as an extra output when computing asymptotic samples.
 </li><li>
@@ -216,7 +236,7 @@ Add the <a href="user_hes_fixed_math.py.htm" target="_top"><span style='white-sp
 <br>
 Update to using version cppad_mixed-20200319.
 This fixes some asserts during the
-<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
  sampling method
 in the debug build.
 
@@ -246,7 +266,7 @@ when it should have been using
 </li><li>
 
 Fix a bug in the sampling of the random effect using the
-<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
  method.
 </li><li>
 
@@ -273,7 +293,7 @@ This will require building a new
 </li><li>
 
 The sample command
-<a href="sample_command.htm#method.asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
+<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
  method
 was changed to ignore all the constraints except for
 <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
