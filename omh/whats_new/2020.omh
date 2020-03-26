@@ -62,6 +62,11 @@ $lnext
 Add a test of
 $cref/scaling fixed effects/user_hes_fixed_math.py/Scaling Fixed Effects/$$
 to the $code hes_fixed_math.py$$ example.
+$lnext
+Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200325
+of $code dock_dismod_at.sh$$.
+This will require building a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
 
 $head 03-24$$
