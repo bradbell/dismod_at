@@ -26,13 +26,13 @@ document.write('\
 <option>user_hes_random.py</option>\
 <option>user_mulstd.py</option>\
 <option>user_no_children.py</option>\
-<option>user_posterior.py</option>\
 <option>user_predict_fit.py</option>\
 <option>user_predict_mulcov.py</option>\
 <option>user_re_scale.py</option>\
 <option>user_residual.py</option>\
-<option>user_sample_asy.py</option>\
+<option>user_sample_simple.py</option>\
 <option>user_sample_sim.py</option>\
+<option>user_sample_asy.py</option>\
 <option>user_speed.py</option>\
 <option>user_students.py</option>\
 <option>user_zsum_child_rate.py</option>\
@@ -66,13 +66,13 @@ function user_child(item)
 		'user_hes_random.py.htm',
 		'user_mulstd.py.htm',
 		'user_no_children.py.htm',
-		'user_posterior.py.htm',
 		'user_predict_fit.py.htm',
 		'user_predict_mulcov.py.htm',
 		'user_re_scale.py.htm',
 		'user_residual.py.htm',
-		'user_sample_asy.py.htm',
+		'user_sample_simple.py.htm',
 		'user_sample_sim.py.htm',
+		'user_sample_asy.py.htm',
 		'user_speed.py.htm',
 		'user_students.py.htm',
 		'user_zsum_child_rate.py.htm',
