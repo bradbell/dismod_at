@@ -338,5 +338,5 @@ for row in hes_fixed_table :
 		rel_error = hes_fixed_value / hessian[0,1] - 1.0
 	assert abs(rel_error) < 1e-16
 # -----------------------------------------------------------------------
-print('posterior: OK')
+print('sample_simple: OK')
 # END PYTHON

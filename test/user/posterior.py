@@ -17,7 +17,7 @@ import subprocess
 import copy
 import csv
 from math import exp
-test_program = 'test/user/sample_simple.py'
+test_program = 'test/user/posterior.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'

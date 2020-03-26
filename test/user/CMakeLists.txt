@@ -27,7 +27,7 @@ FOREACH(user_case
 	neg_iteration
 	no_data
 	not_ordered
-	sample_simple
+	posterior
 	relrisk
 	scale_zero
 	set_command
