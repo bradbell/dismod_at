@@ -50,6 +50,18 @@ effects object is not positive definite, print a warning and do not
 create a sample table (instead of filling the sample table with nulls);
 see $cref/no sample table/sample_command/Output Tables/No Sample Table/$$.
 This fixed a bug where the $cref db2csv_command$$ tried to average null values.
+$lnext
+The sample command asymptotic method uses a normal distribution,
+but the scaled fixed effects variables are normal in the scaled space; see
+$cref/fixed effects distribution
+	/sample_command
+	/asymptotic
+	/Fixed Effects Distribution
+/$$
+$lnext
+Add a test of
+$cref/scaling fixed effects/user_hes_fixed_math.py/Scaling Fixed Effects/$$
+to the $code hes_fixed_math.py$$ example.
 $lend
 
 $head 03-24$$
