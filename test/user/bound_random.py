@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -295,5 +295,5 @@ for var_id in range( n_var ) :
 		relerr = fit_value / bound_random + 1.0
 		assert abs(relerr) < 1e-7
 # -----------------------------------------------------------------------
-print('bound_random: OK')
+print('bound_random.py: OK')
 # END PYTHON

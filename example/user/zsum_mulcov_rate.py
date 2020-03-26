@@ -396,5 +396,5 @@ for rate in [ 'iota', 'rho' ] :
 			assert False
 #
 # -----------------------------------------------------------------------
-print('zsum_mulcov_rate: OK')
+print('zsum_mulcov_rate.py: OK')
 # END PYTHON

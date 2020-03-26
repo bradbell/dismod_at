@@ -311,5 +311,5 @@ if not ok :
 	print('random_seed = ', random_seed)
 assert ok
 # -----------------------------------------------------------------------
-print('students: OK')
+print('students.py: OK')
 # END PYTHON

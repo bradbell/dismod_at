@@ -325,5 +325,5 @@ for var_id in range( n_var ) :
 		relerr = ( value - check ) / united_states_random_effect
 		assert abs(relerr) < 1e-5
 # -----------------------------------------------------------------------
-print('fit_random: OK')
+print('fit_random.py: OK')
 # END PYTHON

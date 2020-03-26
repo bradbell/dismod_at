@@ -359,5 +359,5 @@ for i in range( len(var_table) ) :
 		print(node_name, '_std (value, mcmc, err) = ', value, mcmc, err)
 		print('random_seed = ', random_seed )
 		assert(False)
-print('asymptotic.py: OK')
+print('sample_asy.py: OK')
 # END PYTHON

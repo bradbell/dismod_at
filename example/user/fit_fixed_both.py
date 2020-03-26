@@ -358,5 +358,5 @@ for var_id in range( n_var ) :
 		err = value / child_optimal - 1.0
 		assert( abs(err) < 1e-4 )
 # -----------------------------------------------------------------------
-print('fit_fixed_both: OK')
+print('fit_fixed_both.py: OK')
 # END PYTHON

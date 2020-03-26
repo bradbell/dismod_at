@@ -403,5 +403,5 @@ for integrand_name in [ 'Sincidence', 'remission' ] :
 			assert False
 #
 # -----------------------------------------------------------------------
-print('zsum_mulcov_meas: OK')
+print('zsum_mulcov_meas.py: OK')
 # END PYTHON

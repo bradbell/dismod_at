@@ -356,5 +356,5 @@ for rate in [ 'iota', 'rho' ] :
 			assert False
 #
 # -----------------------------------------------------------------------
-print('zsum_child_rate: OK')
+print('zsum_child_rate.py: OK')
 # END PYTHON

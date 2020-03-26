@@ -259,5 +259,5 @@ for var_id in range( number_var ) :
 	sim_t            = variable_table[var_id]['sim_t']
 	compare(prior_sim_value, sim_v)
 # -----------------------------------------------------------------------
-print('posterior: OK')
+print('posterior.py: OK')
 # END PYTHON

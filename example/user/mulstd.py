@@ -309,5 +309,5 @@ for var_id in range( len(var_table  ) ):
 		print('random_seed = ', random_seed)
 		assert(false)
 # -----------------------------------------------------------------------
-print('mulstd: OK')
+print('mulstd.py: OK')
 # END PYTHON
