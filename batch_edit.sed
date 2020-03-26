@@ -16,10 +16,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#	example/user/posterior.py
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#	s|posterior.py|sample_simple.py|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,8 +33,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|cref/no sample table/sample_command/sample_table/No Sample Table/|cref/no sample table/sample_command/Output Tables/No Sample Table/|
-s|cref/fit_var_table/sample_command/fit_var_table/|cref/fit_var_table/sample_command/Extra Input Tables/fit_var_table/|
-s|cref/hes_fixed table/sample_command/hes_fixed_table/|cref/hes_fixed table/sample_command/Output Tables/hes_fixed_table/|
-s|/sample_command/method/asymptotic/|/sample_command/asymptotic/|
-s|/sample_command/method/simulate/|/sample_command/simulate/|
+s|posterior.py|sample_simple.py|
+s|^\tposterior$|\tsample_simple|

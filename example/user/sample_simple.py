@@ -7,7 +7,7 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_posterior.py$$ $newlinech #$$
+# $begin user_sample_simple.py$$ $newlinech #$$
 # $spell
 #	init
 #	dismod
@@ -100,7 +100,7 @@ import os
 import distutils.dir_util
 import copy
 from math import exp
-test_program = 'example/user/posterior.py'
+test_program = 'example/user/sample_simple.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'

@@ -39,7 +39,7 @@ FOREACH(user_case
 	hes_random
 	metropolis
 	no_children
-	posterior
+	sample_simple
 	predict_fit
 	predict_mulcov
 	zsum_child_rate

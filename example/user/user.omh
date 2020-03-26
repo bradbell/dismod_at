@@ -80,13 +80,13 @@ $children%
 	example/user/hes_random.py%
 	example/user/mulstd.py%
 	example/user/no_children.py%
-	example/user/posterior.py%
 	example/user/predict_fit.py%
 	example/user/predict_mulcov.py%
 	example/user/re_scale.py%
 	example/user/residual.py%
-	example/user/sample_asy.py%
+	example/user/sample_simple.py%
 	example/user/sample_sim.py%
+	example/user/sample_asy.py%
 	example/user/speed.py%
 	example/user/students.py%
 	example/user/zsum_child_rate.py%
@@ -100,7 +100,6 @@ $table
 $rref user_residual.py$$
 $rref user_fit_random.py$$
 $rref user_fit_fixed_both.py$$
-$rref user_posterior.py$$
 $rref user_fit_sim.py$$
 $rref user_fit_meas_noise.py$$
 $rref user_age_avg_split.py$$
@@ -115,6 +114,7 @@ $rref user_cascade.py$$
 $rref user_predict_fit.py$$
 $rref user_predict_mulcov.py$$
 $rref user_data_sim.py$$
+$rref user_sample_simple.py$$
 $rref user_sample_sim.py$$
 $rref user_sample_asy.py$$
 $rref user_speed.py$$

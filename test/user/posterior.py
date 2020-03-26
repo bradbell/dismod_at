@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -17,7 +17,7 @@ import subprocess
 import copy
 import csv
 from math import exp
-test_program = 'test/user/posterior.py'
+test_program = 'test/user/sample_simple.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
