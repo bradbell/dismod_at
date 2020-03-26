@@ -38,6 +38,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 03-26$$
+The $code user_posterior.py$$ example was moved to
+$cref user_sample_simple.py$$ and it was extended to include the
+asymptotic sampling method.
+
 $head 03-25$$
 $list number$$
 Advance to $code cppad_mixed-20200325$$.

@@ -15,7 +15,7 @@
 #	exp
 # $$
 #
-# $section Sampling From Then Posterior Distribution$$
+# $section Simple Sampling From The Posterior Distribution$$
 #
 # $head Purpose$$
 # This example demonstrates using the commands
@@ -23,9 +23,12 @@
 #	dismod_at %database% set truth_var prior_mean
 #	dismod_at %database% simulate %number_sample%
 #	dismod_at %database% sample simulate %number_sample%
+#	dismod_at %database% sample asymptotic %number_sample%
 # %$$
-# This obtains the specified number of samples from the posterior distribution;
+# To obtain the specified number of samples from the posterior distribution;
 # see $cref/simulation/posterior/Simulation/$$.
+# This is very simple case because it has only one rate, no random effects,
+# and no data.
 #
 # $head Discussion$$
 # We use $latex \bar{\omega}$$ to denote the prior mean for omega.
@@ -93,8 +96,9 @@
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
 omega_world_mean  = 1e-2
-number_sample     = 30
+number_sample     = 50
 # ------------------------------------------------------------------------
+import numpy
 import sys
 import os
 import distutils.dir_util
@@ -239,61 +243,100 @@ program   = '../../devel/dismod_at'
 # init
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 #
-# set truth_var prior_mean
-dismod_at.system_command_prc([ program, file_name, 'set', 'truth_var', 'prior_mean' ])
+# set
+dismod_at.system_command_prc(
+	[ program, file_name, 'set', 'truth_var', 'prior_mean' ]
+)
 #
-# simulate number_sample
-dismod_at.system_command_prc([ program, file_name, 'simulate', str(number_sample) ])
+# simulate
+dismod_at.system_command_prc(
+	[ program, file_name, 'simulate', str(number_sample) ]
+)
 #
-# sample simulate number_sample
-ns_str = str(number_sample)
-dismod_at.system_command_prc([ program, file_name, 'sample', 'simulate', ns_str ])
+# sample simulate
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'simulate', str(number_sample) ]
+)
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# check the zero random effects solution
 #
 # read tables
 var_table     = dismod_at.get_table_dict(connection, 'var')
 sample_table  = dismod_at.get_table_dict(connection, 'sample')
+connection.close()
 #
-# check omega_0 and omega_1 are only variables
-number_var = len(var_table)
-assert number_var == 2
+# check that there are only two variables (omega_0 and omega_1)
+n_var = len(var_table)
+assert n_var == 2
 #
 # check have proper number of rows in sample table
-assert len(sample_table) == number_sample * number_var
+assert len(sample_table) == number_sample * n_var
 #
-# compute and check sample means
-sample_mean = [ 0.0 , 0.0 ]
+# true hessian
+hessian = numpy.array( [ [2., -1.], [-1., 2.] ] )
+hessian = hessian / (omega_world_mean * omega_world_mean)
+#
+# true variance of estimate
+variance = numpy.linalg.inv(hessian)
+# -----------------------------------------------------------------------
+# check the sample simulate
+#
+# compute sample mean and covariance
+sample_array = numpy.zeros( (n_var, number_sample), dtype = float)
 for row in sample_table :
-	var_id     = row['var_id']
-	var_value  = row['var_value']
-	sample_mean[var_id] = sample_mean[var_id] + var_value
-for var_id in range( number_var ) :
-	sample_mean[var_id] = sample_mean[var_id] / number_sample
-	assert abs ( sample_mean[var_id] / omega_world_mean - 1.0) < 0.5
+	var_id       = row['var_id']
+	sample_index = row['sample_index']
+	var_value    = row['var_value']
+	sample_array[var_id, sample_index] = var_value
+sample_avg = numpy.average(sample_array, axis=1)
+sample_cov = numpy.cov(sample_array)
 #
-# compute and check sample variance divided by omega_world_mean^2
-variance_00 = 0.0
-variance_01 = 0.0
-variance_11 = 0.0
-for sample_index in range(number_sample) :
-	omega_0  = sample_table[ sample_index * number_var + 0 ]['var_value']
-	omega_1  = sample_table[ sample_index * number_var + 1 ]['var_value']
-	res_0    = ( omega_0 - omega_world_mean ) / omega_world_mean
-	res_1    = ( omega_1 - omega_world_mean ) / omega_world_mean
-	variance_00 += res_0 * res_0
-	variance_01 += res_0 * res_1
-	variance_11 += res_1 * res_1
-variance_00 = variance_00 / number_sample
-variance_01 = variance_01 / number_sample
-variance_11 = variance_11 / number_sample
-abs( variance_00 * 3.0 / 2.0 - 1.0 ) < 0.5
-abs( variance_11 * 3.0 / 2.0 - 1.0 ) < 0.5
-abs( variance_01 * 3.0 / 1.0 - 1.0 ) < 0.5
+rel_error = sample_avg / omega_world_mean - 1.0
+assert all( abs(rel_error) < 0.5 )
+#
+rel_error = sample_cov / variance - 1.0
+assert numpy.all( abs(rel_error) < 0.5 )
+# -----------------------------------------------------------------------
+# fit
+dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
+#
+# sample asymptotic
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'asymptotic', str(number_sample) ]
+)
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
+sample_table    = dismod_at.get_table_dict(connection, 'sample')
+hes_fixed_table = dismod_at.get_table_dict(connection, 'hes_fixed')
+# -----------------------------------------------------------------------
+# check the asymptotic version of the sample table
+#
+# compute sample mean and covariance
+for row in sample_table :
+	var_id       = row['var_id']
+	sample_index = row['sample_index']
+	var_value    = row['var_value']
+	sample_array[var_id, sample_index] = var_value
+sample_avg = numpy.average(sample_array, axis=1)
+sample_cov = numpy.cov(sample_array)
+#
+rel_error = sample_avg / omega_world_mean - 1.0
+assert all( abs(rel_error) < 0.5 )
+#
+rel_error = sample_cov / variance - 1.0
+assert numpy.all( abs(rel_error) < 0.5 )
+# -------------------------------------------------------------------------
+# check the hessian of the fixed effects objective
+#
+for row in hes_fixed_table :
+	hes_fixed_value = row['hes_fixed_value']
+	if row['row_var_id'] == row['col_var_id'] :
+		rel_error = hes_fixed_value / hessian[0,0] - 1.0
+	else :
+		rel_error = hes_fixed_value / hessian[0,1] - 1.0
+	assert abs(rel_error) < 1e-16
 # -----------------------------------------------------------------------
 print('posterior: OK')
 # END PYTHON
