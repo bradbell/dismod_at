@@ -18,7 +18,7 @@ $section Hessian of The Random Effect Objective Function$$
 
 $head Creation$$
 A new version of this table is created each time the
-$cref/asymptotic/sample_command/method/asymptotic/$$
+$cref/asymptotic/sample_command/asymptotic/$$
 sample command is executed.
 There are no $cref/Laplace/density_table/density_name/laplace/$$ densities
 in the random effects objective.

@@ -150,7 +150,7 @@ If $cref/bound_random/option_table/Random Only/bound_random/$$ was zero,
 the $cref sample_command$$ would terminate with a $code cppad_mixed$$
 error message. This has been fixed. In addition, the random bound documentation
 now includes mention that is not accounted for in the
-$cref/asymptotic/sample_command/method/asymptotic/$$.
+$cref/asymptotic/sample_command/asymptotic/$$.
 $lnext
 Advance to $code cppad_mixed-20161018$$.
 This fixed a bug in $code cppad_mixed$$
@@ -287,7 +287,7 @@ $lnext
 Advance to eigen-3.2.9 and cppad-20160929.
 $lnext
 There was a bug in the sampling of the random effects during the
-$cref/sample asymptotic/sample_command/method/asymptotic/$$ command
+$cref/sample asymptotic/sample_command/asymptotic/$$ command
 (found by a gcc-6.2.1 $code -Wmisleading-indentation$$ warning).
 This has been fixed.
 $lnext
@@ -365,7 +365,7 @@ $cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$.
 $head 07-14$$
 Advance to $code cppad_mixed-20150711$$.
 This should increase the speed of the
-$cref/asymptotic/sample_command/method/asymptotic/$$ version
+$cref/asymptotic/sample_command/asymptotic/$$ version
 of the $code sample_command$$.
 It also includes a change to optimizing the random effects
 that should eventually improve the speed of $cref fit_command$$.
@@ -383,7 +383,7 @@ fixed effects.
 $head 06-13$$
 Advance to $code cppad_mixed-20150613$$.
 This fixes a bug in the
-$cref/asymptotic/sample_command/method/asymptotic/$$ version
+$cref/asymptotic/sample_command/asymptotic/$$ version
 of the sample command.
 
 $head 06-12$$
@@ -472,7 +472,7 @@ $lnext
 The error detection for non-positive Hessian (added yesterday) was
 working properly when variables were bound constrained.
 $lnext
-The $cref/sample asymptotic/sample_command/method/asymptotic/$$
+The $cref/sample asymptotic/sample_command/asymptotic/$$
 command was using the $cref/scaled/prior_table/eta/Scaling Fixed Effects/$$
 information matrix. This has been fixed.
 $lnext
@@ -483,7 +483,7 @@ $head 05-08$$
 $list number$$
 Advance to $code cppad_mixed-20160508$$.
 This enables one to use
-$cref/asymptotic/sample_command/method/asymptotic/$$ statistics
+$cref/asymptotic/sample_command/asymptotic/$$ statistics
 when the information matrix is singular,
 by setting the $cref/lower/prior_table/lower/$$ and upper limits
 equal for variables that have non-positive Hessian.
@@ -510,7 +510,7 @@ $lend
 
 $head 05-06$$
 Advance to $code cppad_mixed-20160506$$ to fix a bug in
-$cref/sample asymptotic/sample_command/method/asymptotic/$$ when
+$cref/sample asymptotic/sample_command/asymptotic/$$ when
 there are no random effects.
 
 $head 05-05$$
@@ -670,7 +670,7 @@ Using $icode%method% = simulate%$$ does the same as the
 sample command before this change.
 The new feature is $icode%method% = fit_var%$$.
 The
-$cref/asymptotic/sample_command/method/asymptotic/$$ method
+$cref/asymptotic/sample_command/asymptotic/$$ method
 is not yet implemented.
 
 $head 04-20$$

@@ -18,7 +18,7 @@
 # $head Purpose$$
 # This example checks the computation of the Hessian of the
 # random effects objective used by the
-# $cref/asymptotic/sample_command/method/asymptotic/$$ sampling method.
+# $cref/asymptotic/sample_command/asymptotic/$$ sampling method.
 #
 # $head Reference$$
 # See the

@@ -555,7 +555,7 @@ $cref model_variables$$.
 
 $lnext
 Note that the theory used to compute
-$cref/asymptotic/sample_command/method/asymptotic/$$ samples of the fixed
+$cref/asymptotic/sample_command/asymptotic/$$ samples of the fixed
 effects, does not take $icode bound_random$$ into account.
 On the other hand; the samples of the random effects are withing the
 limits specified by $icode bound_random$$.

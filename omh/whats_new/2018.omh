@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -551,7 +551,7 @@ An error message that specifies which variable's starting value
 violates the constraints is printed.
 (The fit used to terminate with no message when this occurred.)
 $lnext
-The $cref/sample simulate/sample_command/method/simulate/$$
+The $cref/sample simulate/sample_command/simulate/$$
 used to start its fits at the $cref truth_var_table$$ values.
 This has been changed to use the $cref start_var_table$$ values.
 $lend
@@ -610,7 +610,7 @@ Change the simulate command to also output the
 $cref/prior_sim_table/simulate_command/prior_sim_table/$$.
 Use this table to include variation of the prior means when using the
 $code sample$$ command with the
-$cref/simulate/sample_command/method/simulate/$$ method;
+$cref/simulate/sample_command/simulate/$$ method;
 see $cref/simulation/posterior/Simulation/$$ in the discussion
 of the posterior distribution for maximum likelihood estimates.
 
@@ -656,7 +656,7 @@ $lend
 $head 04-12$$
 $list number$$
 There is a problem with using the sample command
-$cref/simulate/sample_command/method/simulate/$$ method.
+$cref/simulate/sample_command/simulate/$$ method.
 The new $cref posterior$$ model section discusses the problem.
 $lnext
 The requirements for the
@@ -669,7 +669,7 @@ $cref user_change_grid.py$$ so that it removes the
 last age (instead of one in the middle of the grid)
 without having to change any $icode dage_prior_id$$ values.
 There is a problem with using the sample command
-$cref/simulate/sample_command/method/simulate/$$ method.
+$cref/simulate/sample_command/simulate/$$ method.
 The model section $cref posterior$$ discusses the problem.
 $lend
 

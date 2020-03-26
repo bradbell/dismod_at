@@ -42,13 +42,13 @@ $head 03-25$$
 $list number$$
 Advance to $code cppad_mixed-20200325$$.
 This fixed assert in the debug version during
-$cref/asymptotic/sample_command/method/asymptotic/$$ sampling
+$cref/asymptotic/sample_command/asymptotic/$$ sampling
 when there are no random effects.
 $lnext
 If during asymptotic sampling the Hessian of the fixed or random
 effects object is not positive definite, print a warning and do not
 create a sample table (instead of filling the sample table with nulls);
-see $cref/no sample table/sample_command/sample_table/No Sample Table/$$.
+see $cref/no sample table/sample_command/Output Tables/No Sample Table/$$.
 This fixed a bug where the $cref db2csv_command$$ tried to average null values.
 $lend
 
@@ -80,13 +80,13 @@ Update to using version cppad_mixed-20200319.
 This enables computation of the Hessian of the random effects objective.
 $lnext
 Add the $cref hes_random_table$$ as an output during an
-$cref/asymptotic/sample_command/method/asymptotic/$$ sample command.
+$cref/asymptotic/sample_command/asymptotic/$$ sample command.
 Add the $cref user_hes_random.py$$ example use of the hes_random table.
 $lend
 
 $head 03-22$$
 $list number$$
-Add the $cref/hes_fixed table/sample_command/hes_fixed_table/$$
+Add the $cref/hes_fixed table/sample_command/Output Tables/hes_fixed_table/$$
 as an extra output when computing asymptotic samples.
 $lnext
 The $code user_asymptotic_math.py$$ example
@@ -109,7 +109,7 @@ Add the $cref user_hes_fixed_math.py$$ example.
 $head 03-19$$
 Update to using version cppad_mixed-20200319.
 This fixes some asserts during the
-$cref/asymptotic/sample_command/method/asymptotic/$$ sampling method
+$cref/asymptotic/sample_command/asymptotic/$$ sampling method
 in the debug build.
 
 $head 03-18$$
@@ -128,7 +128,7 @@ when it should have been using
 $cref/data_sim_value/data_sim_table/data_sim_value/$$.
 $lnext
 Fix a bug in the sampling of the random effect using the
-$cref/asymptotic/sample_command/method/asymptotic/$$ method.
+$cref/asymptotic/sample_command/asymptotic/$$ method.
 $lnext
 The $cref user_speed.py$$ example was improved.
 More documentation was added,
@@ -145,7 +145,7 @@ This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lnext
 The sample command
-$cref/asymptotic/sample_command/method/asymptotic/$$ method
+$cref/asymptotic/sample_command/asymptotic/$$ method
 was changed to ignore all the constraints except for
 $cref model_variables$$ that have their upper and lower limits equal.
 This should speed up the computation of the asymptotic statics.

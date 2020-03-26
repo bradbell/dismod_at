@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -18,7 +18,7 @@ $section Simulating Posterior Distribution for Model Variables$$
 
 $head Purpose$$
 The $code sample$$ command with method equal to
-$cref/simulate/sample_command/method/simulate/$$
+$cref/simulate/sample_command/simulate/$$
 fits simulated random measurements $cref data_sim_table$$
 and simulated random priors $cref prior_sim_table$$.
 The Lemmas on this page prove that, in the linear Gaussian case,

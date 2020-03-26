@@ -58,7 +58,7 @@
 #
 # $subhead Step 4: Sample Posterior$$
 # Use the sample command with the
-# $cref/simulate/sample_command/method/simulate/$$ method
+# $cref/simulate/sample_command/simulate/$$ method
 # to create $icode N$$ samples of the model variables.
 # Call these samples $icode s1_1, ... , s1_N$$.
 # This is done using database $code fit_n1.db$$

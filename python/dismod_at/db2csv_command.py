@@ -102,7 +102,7 @@
 # write out the new age_avg table.
 #
 # $head hes_fixed.csv$$
-# If the $cref/asymptotic/sample_command/method/asymptotic/$$
+# If the $cref/asymptotic/sample_command/asymptotic/$$
 # sample command was executed,
 # the contents of the $cref hes_fixed_table$$ are written to
 # the CSV file $icode%dir%/hes_fixed.csv%$$.
@@ -112,7 +112,7 @@
 # $cref/hes_fixed_value/hes_fixed_table/hes_fixed_value/$$.
 #
 # $head hes_random.csv$$
-# If the $cref/asymptotic/sample_command/method/asymptotic/$$
+# If the $cref/asymptotic/sample_command/asymptotic/$$
 # sample command was executed,
 # the contents of the $cref hes_random_table$$ are written to
 # the CSV file $icode%dir%/hes_random.csv%$$.

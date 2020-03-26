@@ -18,7 +18,7 @@ $section Hessian of The Fixed Effect Objective Function$$
 
 $head Creation$$
 A new version of this table is created each time the
-$cref/asymptotic/sample_command/method/asymptotic/$$
+$cref/asymptotic/sample_command/asymptotic/$$
 sample command is executed.
 The $cref/Laplace/density_table/density_name/laplace/$$ densities
 are not included in the Hessian

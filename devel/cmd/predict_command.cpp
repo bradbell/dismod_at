@@ -50,7 +50,7 @@ In this case there are
 $cref/number_simulate/simulate_command/number_simulate/$$ sets
 of model variables that predictions are computed for.
 If the samples were simulated using the
-$cref/asymptotic/sample_command/method/asymptotic/$$ method,
+$cref/asymptotic/sample_command/asymptotic/$$ method,
 they may not be withing the lower and upper limits for the
 corresponding variables.
 The variables are censored to be within their limits before

@@ -52,6 +52,10 @@ This command simulates samples of the $cref model_variables$$
 from the posterior distribution; see
 $cref/simulation/posterior/Simulation/$$ for the posterior distribution.
 
+$head method$$
+The sample command argument $icode method$$ must be
+$code simulate$$ or $code asymptotic$$; see discussion below:
+
 $head number_sample$$
 Is the number of samples. Each sample contains a complete
 set of model variables.
@@ -65,12 +69,7 @@ If this argument is present, $icode method$$ must be $code asymptotic$$
 and $icode simulate_index$$ must be the same as in the corresponding
 $cref/fit command/fit_command/simulate_index/$$.
 
-
-$head method$$
-The sample command argument $icode method$$ must be
-$code simulate$$ or $code asymptotic$$; see discussion below:
-
-$subhead simulate$$
+$head simulate$$
 A complete set of $cref model_variables$$,
 corresponding to each $cref/sample_index/sample_table/sample_index/$$,
 is written to the sample table.
@@ -89,7 +88,7 @@ This requires running $icode number_sample$$ fits of the model variables
 See $cref/simulation/posterior/Simulation/$$ in the discussion of the
 posterior distribution of maximum likelihood estimates.
 
-$subhead asymptotic$$
+$head asymptotic$$
 If $icode method$$ is $code asymptotic$$,
 the $cref fit_var_table$$ is an additional input in this case
 and it assumed to correspond to a
@@ -107,24 +106,52 @@ The random effects int the $th i$$ sample is simulated
 using the asymptotic distribution of the random effects given the
 fixed effect in the $th i$$ sample.
 
-$head data_sim_table$$
+$subhead Fixed Effects Distribution$$
+The asymptotic distribution used to simulate the fixed effects is a normal
+with mean equal to the value of the fixed effects in the $cref fit_var_table$$
+and covariance equal to the inverse of the
+Hessian of the fixed effect objective
+$cref/hes_fixed_table/sample_command/Output Tables/hes_fixed_table/$$.
+If a fixed effect is scaled
+(see $cref/scaling fixed effects/prior_table/eta/Scaling Fixed Effects/$$)
+the scaled version of the fixed effect has the asymptotic distribution.
+If the lower and upper limits are equal, the corresponding variable
+is simulated as having that constant value.
+
+$subhead Random Effects Distribution$$
+The asymptotic distribution used to simulate the random effects is a normal
+with mean equal to the value of the random effects in the $cref fit_var_table$$
+This should be the optimal value of the random effects given the fixed effects;
+see
+$cref/fit_var_table/sample_command/Extra Input Tables/fit_var_table/$$ below.
+The covariance of the random effects is equal to the inverse of the
+Hessian of the random effect objective
+$cref/hes_fixed_table/sample_command/Output Tables/hes_fixed_table/$$.
+If the lower and upper limits are equal, the corresponding variable
+is simulated as having that constant value.
+
+$head Extra Input Tables$$
+
+$subhead data_sim_table$$
 If $icode method$$ is $code simulate$$,
 this command has the extra input $cref data_sim_table$$
 which was created by the previous $cref simulate_command$$.
 
-$head prior_sim_table$$
+$subhead prior_sim_table$$
 If $icode method$$ is $code simulate$$,
 this command has the extra input $cref prior_sim_table$$
 which was created by the previous $cref simulate_command$$.
 
-$head fit_var_table$$
+$subhead fit_var_table$$
 If $icode method$$ is $code asymptotic$$,
 this command has the extra input $cref fit_var_table$$
 which was created by a previous fit command which
 must have included $cref/both/fit_command/variables/both/$$
 fixed and random effects.
 
-$head sample_table$$
+$head Output Tables$$
+
+$subhead sample_table$$
 A new $cref sample_table$$ is created each time this command is run.
 It contains samples of the model variables.
 Hence the number of rows in this table is $icode number_sample$$
@@ -140,7 +167,7 @@ and the Hessian of the fixed or random objective is not positive definite,
 the sample table is not created; i.e.,
 there is be no sample table in the database after this command.
 
-$head hes_fixed_table$$
+$subhead hes_fixed_table$$
 A new $cref hes_fixed_table$$ is created each time this command is run
 with $icode method$$ equal to $code asymptotic$$.
 The Hessian of the fixed effects objective is written in this table.
@@ -148,7 +175,7 @@ If $icode simulate_index$$ is present (is not present) the Hessian corresponds
 to the simulated measurements in the $cref data_sim_table$$
 (measurements in the $cref data_table$$).
 
-$head hes_random_table$$
+$subhead hes_random_table$$
 A new $cref hes_random_table$$ is created each time this command is run
 with $icode method$$ equal to $code asymptotic$$.
 The Hessian of the random effects objective is written in this table.
@@ -169,7 +196,7 @@ $children%example/get_started/sample_command.py
 %$$
 $head Example$$
 The files
-$cref sample_command.py$$ and $cref user_sample_asy.py$$
+$cref sample_command.py$$, $cref user_sample_asy.py$$
 contain examples and tests using this command.
 
 $end
