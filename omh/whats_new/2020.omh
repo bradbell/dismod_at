@@ -38,6 +38,23 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 03-27$$
+$list number$$
+The $cref/log scaling/prior_table/std/Log Scaling/$$ discussion
+for standard deviations in the prior table was edited to make it clearer
+that difference standard deviations are not transformed.
+$lnext
+The discussion of log transformed standard deviations
+$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
+was edited to make it clearer why it is different for data
+than it is for priors.
+$lnext
+Remove incorrect sentence about the simulated random effects depending
+on the simualted fixed effects in the
+$cref/asymptotic/sample_command/asymptotic/$$ method.
+$lend
+
+
 $head 03-26$$
 The $code user_posterior.py$$ example was moved to
 $cref user_sample_simple.py$$ and it was extended to include the

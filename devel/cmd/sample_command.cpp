@@ -96,15 +96,12 @@ fit $cref/both/fit_command/variables/both/$$.
 If the previous fit did (did not) have a
 $cref/simulate_index/fit_command/simulate_index/$$ it
 must (must not) be included in the sample_command.
-The asymptotic statics of the model variables is used to generate
+The asymptotic statistics of the model variables is used to generate
 $icode number_sample$$ samples of the model variables
 The samples with different values of $icode sample_index$$ are independent.
 All of the Laplace density terms are ignored by the asymptotic statistics.
 The constraints are also ignored, except the constraints were
 the lower and upper limits for a variable are equal.
-The random effects int the $th i$$ sample is simulated
-using the asymptotic distribution of the random effects given the
-fixed effect in the $th i$$ sample.
 
 $subhead Fixed Effects Distribution$$
 The asymptotic distribution used to simulate the fixed effects is a normal

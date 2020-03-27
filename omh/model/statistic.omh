@@ -73,8 +73,9 @@ $latex \[
 =
 \log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
 \] $$
-Note that, for priors, $latex \sigma$$ does not depend on the model values
-and $latex y$$ is used for the model variable corresponding to the prior.
+Note that for priors, $latex \sigma$$ does not depend on the $cref model_variables$$,
+$latex \mu$$ is the mean of a model variable,
+and $latex y$$ is the value of the model variable.
 
 If a density is being applied to data
 (its $cref/density_id/data_table/density_id/$$ appears in the data table)
@@ -84,9 +85,9 @@ $latex \[
 =
 \log ( y + \eta + \delta ) - \log ( y + \eta )
 \] $$
-Note that, for data, $latex \sigma$$ does not depend on the model values
-and $latex mu$$ is used for the mean data value of the data corresponding
-to the model variables.
+Note that for data, $latex \sigma$$ does not depend on the model variables,
+$latex \mu$$ is the model for the data given the value of the model variables,
+and $icode y$$ is the data.
 
 $head Weighted Residual Function, R$$
 
