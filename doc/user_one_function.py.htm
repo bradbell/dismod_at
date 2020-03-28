@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting One Function of Two Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting One Function of Two Variables">
-<meta name="keywords" id="keywords" content=" fitting one function two variables purpose rho data node table covariates simulated true prevalence solving delta prior seed random number generators ">
+<meta name="keywords" id="keywords" content=" fitting one function two variables purpose rho random effects covariates simulated data density true prevalence computing delta prior seed number generators ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,12 +65,12 @@ A:active { color : purple }
 
 <br><a href="user_one_function.py.htm#Purpose" target="_top">Purpose</a>
 <br><a href="user_one_function.py.htm#rho" target="_top">rho</a>
-<br><a href="user_one_function.py.htm#Data" target="_top">Data</a>
-<br><a href="user_one_function.py.htm#Node Table" target="_top">Node&nbsp;Table</a>
+<br><a href="user_one_function.py.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
 <br><a href="user_one_function.py.htm#Covariates" target="_top">Covariates</a>
 <br><a href="user_one_function.py.htm#Simulated Data" target="_top">Simulated&nbsp;Data</a>
-<br><a href="user_one_function.py.htm#True Prevalence" target="_top">True&nbsp;Prevalence</a>
-<br><a href="user_one_function.py.htm#Solving for delta" target="_top">Solving&nbsp;for&nbsp;delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_one_function.py.htm#Simulated Data.Data Density" target="_top">Data&nbsp;Density</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_one_function.py.htm#Simulated Data.True Prevalence" target="_top">True&nbsp;Prevalence</a>
+<br><a href="user_one_function.py.htm#Computing delta" target="_top">Computing&nbsp;delta</a>
 <br><a href="user_one_function.py.htm#Prevalence Prior" target="_top">Prevalence&nbsp;Prior</a>
 <br><a href="user_one_function.py.htm#Seed Random Number Generators" target="_top">Seed&nbsp;Random&nbsp;Number&nbsp;Generators</a>
 <br><br>
@@ -89,30 +89,23 @@ We use
 <code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
 
 as a surrogate for prevalence because our model for prevalence
-does not user 
+does not use 
 <code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
  (we could have used any other rate
 and its corresponding integrand).
 
-<br>
-<br>
-<b><big><a name="Data" id="Data">Data</a></big></b>
-<br>
-A direct measurement of 
-<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
 
-(which we are using to represent prevalence) corresponds to the
-<a href="avg_integrand.htm#Integrand, I_i(a,t).remission" target="_top"><span style='white-space: nowrap'>remission&nbsp;integrand</span></a>
-.
-<pre style='display:inline'><tt>
-prevalence_sigma  <font color="#990000">=</font> <font color="#993399">0.1</font>
-prevalence_eta    <font color="#990000">=</font> <font color="#993399">1e-6</font>
-</tt></pre>
 <br>
-<b><big><a name="Node Table" id="Node Table">Node Table</a></big></b>
+<br>
+<b><big><a name="Random Effects" id="Random Effects">Random Effects</a></big></b>
 <br>
 To keep this example simple, there is only one node <code><font color="blue">world</font></code>
-in the node table (hence on random effects).
+in the <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node_table</span></a>
+, and the
+<a href="mulcov_table.htm#subgroup_smooth_id" target="_top"><span style='white-space: nowrap'>subgroup_smooth_id</span></a>
+
+is null in the mulcov_table.
+Hence, there are not random effects in this example.
 
 <br>
 <br>
@@ -126,13 +119,17 @@ data.
 income_reference  <font color="#990000">=</font>   <font color="#993399">0.5</font>
 income_multiplier <font color="#990000">=</font> <font color="#990000">-</font> <font color="#993399">0.2</font>
 </tt></pre>
-It should not make a difference if the covariate multiplier has
-<a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
- <code><font color="blue">meas_value</font></code> or
-<code><font color="blue">rate_value</font></code> when
-<a href="option_table.htm#rate_case.no_ode" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
+It should not make a difference in the results of a <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+
+if a covariate multiplier has <a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
+
+<code><font color="blue">meas_value</font></code> or <code><font color="blue">rate_value</font></code>, there is only one rate
+(one function) being fit, and the
+<a href="integrand_table.htm#integrand_name.ODE" target="_top"><span style='white-space: nowrap'>ode</span></a>
+ is not needed to compute
+the integrand.
+It will however make a difference in the resulting <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 .
-is <code><font color="blue">no_ode</font></code>.
 
 <br>
 <br>
@@ -141,12 +138,30 @@ is <code><font color="blue">no_ode</font></code>.
 
 <br>
 <br>
-<b><big><a name="True Prevalence" id="True Prevalence">True Prevalence</a></big></b>
+<big><a name="Simulated Data.Data Density" id="Simulated Data.Data Density">Data Density</a></big>
+<br>
+A direct measurement of 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+
+(which we are using to represent prevalence) corresponds to the
+<a href="avg_integrand.htm#Integrand, I_i(a,t).remission" target="_top"><span style='white-space: nowrap'>remission&nbsp;integrand</span></a>
+.
+We use a <a href="density_table.htm#density_name.log_gaussian" target="_top"><span style='white-space: nowrap'>log_gaussian</span></a>
+
+model with the following parameters:
+<pre style='display:inline'><tt>
+prevalence_sigma  <font color="#990000">=</font> <font color="#993399">0.1</font>
+prevalence_eta    <font color="#990000">=</font> <font color="#993399">1e-6</font>
+</tt></pre>
+<br>
+<big><a name="Simulated Data.True Prevalence" id="Simulated Data.True Prevalence">True Prevalence</a></big>
 <br>
 For simulating our prevalence data we consider the case where
 all the rates are constant and 
 <code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
- is zero; i.e.,
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>chi</span></font></i></code>
+ are zero; i.e.,
 the differential equation is
 <small>@[@
 
@@ -215,12 +230,14 @@ It follows that
      C         <font color="#990000">=</font> exp_omega <font color="#990000">-</font> exp_sum
      <b><font color="#0000FF">return</font></b> C <font color="#990000">/</font> <font color="#990000">(</font>S <font color="#990000">+</font> C<font color="#990000">)</font></tt></pre>
 <br>
-<b><big><a name="Solving for delta" id="Solving for delta">Solving for delta</a></big></b>
+<b><big><a name="Computing delta" id="Computing delta">Computing delta</a></big></b>
 <br>
-Once we have simulated a measurement value, we have to put the right
-<small>@(@
+Once we have simulated a measurement value,
+we can solve for <small>@(@
 \delta
-@)@</small> in so that
+@)@</small> are follows; see
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+:
 <small>@[@
 
 	\sigma = \log( y + \eta + \delta ) - \log(y + \eta )
@@ -254,7 +271,10 @@ for the rate would be negative in that case.
 <br>
 <br>
 <b><big><a name="Seed Random Number Generators" id="Seed Random Number Generators">Seed Random Number Generators</a></big></b>
-
+<br>
+We use the clock to choose a seed for the random number generator.
+If an error occurs, the seed will be printed so that the error can be
+reproduced.
 <pre style='display:inline'><tt>
 <b><font color="#000080">import</font></b> time
 random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
