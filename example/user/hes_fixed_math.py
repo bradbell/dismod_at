@@ -290,7 +290,9 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 # The asymptotic posterior distribution for the optimal estimate of
 # $latex \theta$$ give the data $latex y$$
 # is a normal with variance equal to the inverse of
-# $latex F^{(2)} ( \theta ) + G^{(2)} ( \theta )$$.
+# $latex \[
+#	L^{(2)} ( \theta ) = F^{(2)} ( \theta ) + G^{(2)} ( \theta )
+# \] $$
 #
 # $head Scaling Fixed Effects$$
 # If $cref/eta/prior_table/eta/$$ is not null,
@@ -320,6 +322,23 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #	\right) \exp( 2 \alpha )
 #	\end{array}
 # \] $$
+#
+# $subhead Optimal Fixed Effects$$
+# The first order necessary conditions for
+# $latex \hat{\alpha}$$
+# to be a minimizer of the fixed effects object is
+# $latex H^{(1)} ( \hat{\alpha} ) = 0$$.
+# In this case we can simplify the Hessian scaling as follows:
+# $latex \[
+#	\begin{array}{rcl}
+#	H^{(2)}( \hat{\alpha} ) & = & \left(
+#		F^{(2 }( \hat{\theta} ) + G^{(2)}( \hat{\theta} )
+#	\right) \exp( 2 \hat{\alpha} )
+#	\\ & = &
+#	L^{(2)} ( \hat{\theta} ) \exp( 2 \hat{\alpha} )
+#	\end{array}
+# \] $$
+# where $latex \hat{\theta} = \theta( \hat{\alpha} )$$.
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$

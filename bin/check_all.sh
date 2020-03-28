@@ -32,9 +32,16 @@ echo_eval() {
 	eval $*
 }
 # -----------------------------------------------------------------------------
-# run bin/check_*.sh and ~/bradbell/bin/check_copyright.sh
+# check build_type in run_cmake.sh
+if ! grep "^build_type='release'" bin/run_cmake.sh > /dev/null
+then
+	echo 'bin/check_all.sh: build_type in bin/run_cmake.sh is not release'
+	exit 1
+fi
+#
+# run bin/check_*.sh with exception of this file and bin/check_install.sh
 list=`ls bin/check_*.sh | sed \
-	-e '/check_all.sh/d' -e '/check_install.sh/d' -e '/junk.sh/d' `
+	-e '/check_all.sh/d' -e '/check_install.sh/d'`
 for script in $list
 do
 	$script
