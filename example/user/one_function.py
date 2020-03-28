@@ -42,16 +42,20 @@
 # no effect. The income multiplier is the true value used to simulate the
 # data.
 # $srccode%py%
-income_reference  =   0.5
-income_multiplier = - 0.2
+income_reference   =   0.5
+income_multiplier  = - 0.2
+income_mulcov_type = "meas_value"
 # %$$
-# It should not make a difference in the results of a $cref predict_command$$
-# if a covariate multiplier has $cref/mulcov_type/mulcov_table/mulcov_type/$$
-# $code meas_value$$ or $code rate_value$$, there is only one rate
-# (one function) being fit, and the
+# The $icode income_mulcov_type$$ can be either $code "meas_value"$$ or
+# $code "rate_value"$$.
+# It should not make a difference in the results which
+# $cref/mulcov_type/mulcov_table/mulcov_type/$$ is used because
+# there is only one rate (one function) being fit, and the
 # $cref/ode/integrand_table/integrand_name/ODE/$$ is not needed to compute
 # the integrand.
-# It will however make a difference in the resulting $cref model_variables$$.
+# You can test this by changing $icode income_mulcov_type$$ to
+# $code "rate_value"$$
+# and uses the same $cref/random_seed/user_one_function.py/random_seed/$$.
 #
 # $head Simulated Data$$
 #
@@ -136,10 +140,11 @@ def Prevalence(age) :
 # Some functions might allow for negative values and the lower limit
 # for the rate would be negative in that case.
 #
-# $head Seed Random Number Generators$$
+# $head random_seed$$
 # We use the clock to choose a seed for the random number generator.
 # If an error occurs, the seed will be printed so that the error can be
-# reproduced.
+# reproduced. You can also use a fixed value for the random seed to see
+# how changing other parameters changes the results.
 # $srccode%py%
 import time
 random_seed = int( time.time() )
@@ -198,11 +203,16 @@ def example_db (file_name) :
 	covariate_table = [ {'name':'income', 'reference':income_reference} ]
 	#
 	# mulcov table:
+	if income_mulcov_type == 'rate_value' :
+		effected = 'rho'
+	else :
+		assert income_mulcov_type == 'meas_value'
+		effected = 'remission'
 	mulcov_table = [
 		{
 			'covariate': 'income',
-			'type':      'meas_value',
-			'effected':  'remission',
+			'type':      income_mulcov_type,
+			'effected':  effected,
 			'group':     'world',
 			'smooth':    'smooth_mulcov'
 		}
@@ -367,7 +377,7 @@ for var_id in range( len(var_table) ) :
 	fit_var_value = fit_var_table[var_id]['fit_var_value']
 	var_type      = var_table[var_id]['var_type']
 	true_value    = None
-	if var_type == 'mulcov_meas_value' :
+	if var_type == 'mulcov_' + income_mulcov_type :
 		true_value = income_multiplier
 	else :
 		assert var_type == 'rate'
