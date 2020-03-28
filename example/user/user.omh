@@ -80,6 +80,7 @@ $children%
 	example/user/hes_random.py%
 	example/user/mulstd.py%
 	example/user/no_children.py%
+	example/user/one_function.py%
 	example/user/predict_fit.py%
 	example/user/predict_mulcov.py%
 	example/user/re_scale.py%
@@ -97,6 +98,7 @@ $comment END_SORT_THIS_LINE_MINUS_3$$
 
 $head Examples With Explanation$$
 $table
+$rref user_one_function.py$$
 $rref user_residual.py$$
 $rref user_fit_random.py$$
 $rref user_fit_fixed_both.py$$

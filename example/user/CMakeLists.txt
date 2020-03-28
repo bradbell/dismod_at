@@ -39,6 +39,7 @@ FOREACH(user_case
 	hes_random
 	metropolis
 	no_children
+	one_function
 	sample_simple
 	predict_fit
 	predict_mulcov

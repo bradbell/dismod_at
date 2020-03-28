@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -200,6 +200,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		}
 		if( name_vec[match] == "rate_case" )
 		{	bool ok = false;
+			ok     |= option_value[option_id] == "no_ode";
 			ok     |= option_value[option_id] == "iota_pos_rho_zero";
 			ok     |= option_value[option_id] == "iota_zero_rho_pos";
 			ok     |= option_value[option_id] == "iota_zero_rho_zero";

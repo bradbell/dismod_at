@@ -45,7 +45,8 @@ points along this cohort at which the approximate solution is returned.
 
 $head rate_case$$
 This is the value of
-$cref/rate_case/option_table/rate_case/$$ in the option table.
+$cref/rate_case/option_table/rate_case/$$ in the option table
+and cannot be $code no_ode$$.
 
 $head age$$
 This vector has size $icode n_cohort$$ and
@@ -118,6 +119,7 @@ void cohort_ode(
 	assert( n_cohort == omega.size() );
 	assert( n_cohort == s_out.size() );
 	assert( n_cohort == c_out.size() );
+	assert( rate_case != "no_ode" );
 	/*
 	-------------------------------------------------------------------------
 	case_number

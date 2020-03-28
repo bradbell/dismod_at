@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,6 +14,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>
 # include <dismod_at/get_mulcov_table.hpp>
+# include <dismod_at/get_option_table.hpp>
 
 namespace dismod_at {
 	enum integrand_enum {
@@ -40,7 +41,8 @@ namespace dismod_at {
 	};
 	extern CppAD::vector<integrand_struct> get_integrand_table(
 		sqlite3*                            db           ,
-		const CppAD::vector<mulcov_struct>& mulcov_table
+		const CppAD::vector<mulcov_struct>& mulcov_table ,
+		const CppAD::vector<option_struct>& option_table
 	);
 	extern const char* integrand_enum2name[];
 }

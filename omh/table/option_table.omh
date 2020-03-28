@@ -321,13 +321,19 @@ The default value for this option is $code 0$$.
 
 $head rate_case$$
 The $icode rate_case$$ value does not matter for the following integrands:
+
+$subhead no_ode$$
+The $icode rate_case$$ value does not matter for the following integrands:
 $code Sincidence$$,
 $code remission$$,
 $code mtexcess$$,
+$code mtother$$,
 $code mtwith$$,
-$code relrisk$$.
-If $icode%option_name% = rate_case%$$,
-the corresponding option value must be one of the following:
+$code relrisk$$,
+$codei%mulcov_%mulcov_id%$$.
+If all of your integrands are in the set above, you can use
+$code no_ode$$ as the rate case and avoid having to worry about
+constraining certain rates to be positive or zero.
 
 $subhead iota_zero_rho_zero$$
 If $icode%option_name% = rate_case%$$ and

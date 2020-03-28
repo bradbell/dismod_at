@@ -164,9 +164,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
 		db, db_input.density_table, db_input.prior_table
 	);
 	//
-	// get_integrand_table uses mulcov_table
+	// get_integrand_table uses mulcov_table and option_table
 	// to check for errors
-	db_input.integrand_table  = get_integrand_table(db, db_input.mulcov_table);
+	db_input.integrand_table  = get_integrand_table(
+		db, db_input.mulcov_table, db_input.option_table
+	);
 	//
 	// get_data_table and get_avgint_table use this information
 	// to check for errors

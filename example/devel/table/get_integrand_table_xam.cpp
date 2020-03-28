@@ -54,11 +54,24 @@ bool get_integrand_table_xam(void)
 	for(size_t i = 0; i < n_command; i++)
 		dismod_at::exec_sql_cmd(db, sql_cmd[i]);
 
+	// A mulcov table with two entries
+	vector<dismod_at::mulcov_struct> mulcov_table(2);
+	for(size_t j = 0; j < 2; ++j)
+	{	mulcov_table[j].mulcov_type = dismod_at::rate_value_enum;
+		mulcov_table[j].rate_id = int(j);
+		mulcov_table[j].integrand_id = 0;
+		mulcov_table[j].covariate_id = 0;
+		mulcov_table[j].group_smooth_id = 0;
+		mulcov_table[j].subgroup_smooth_id = 0;
+	}
+
+	// An empty option table
+	vector<dismod_at::option_struct> option_table(0);
 
 	// get the integrand table
-	size_t n_mulcov = 2;
 	vector<dismod_at::integrand_struct> integrand_table =
-		dismod_at::get_integrand_table(db, n_mulcov);
+		dismod_at::get_integrand_table(db, mulcov_table, option_table);
+	//
 	ok  &= integrand_table.size() == 7;
 	//
 	ok  &= integrand_table[0].integrand == dismod_at::mtall_enum;

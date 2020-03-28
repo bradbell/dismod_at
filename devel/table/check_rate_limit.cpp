@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -84,7 +84,11 @@ void check_rate_limit(
 	using CppAD::to_string;
 	//
 	CppAD::vector<bool> rate_zero(number_rate_enum);
-	if( rate_case == "iota_zero_rho_zero" )
+	if( rate_case == "no_ode" )
+	{	// no restrictions on the rates
+		return;
+	}
+	else if( rate_case == "iota_zero_rho_zero" )
 	{	rate_zero[iota_enum] = true;
 		rate_zero[rho_enum]  = true;
 	}
@@ -99,6 +103,9 @@ void check_rate_limit(
 	else if( rate_case == "iota_pos_rho_pos" )
 	{	rate_zero[iota_enum] = false;
 		rate_zero[rho_enum]  = false;
+	}
+	else
+	{	assert(false);
 	}
 	size_t n_grid = smooth_grid.size();
 	size_t error_rate_id     = number_rate_enum;

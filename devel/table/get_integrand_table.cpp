@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -28,35 +28,36 @@ $spell
 	mulcov
 	const
 	covariate
+	integrands
 $$
 
 $section C++: Get the Integrand Table Information$$
 
 $head Syntax$$
-$icode%integrand_table% = get_integrand_table(%db%, %mulcov_table%)%$$
+$icode%integrand_table% = get_integrand_table(
+	%db%, %mulcov_table%, %option_table%
+)%$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
 $head Purpose$$
 To read the $cref integrand_table$$ and return it as a C++ data structure.
 
 $head db$$
 The argument $icode db$$ has prototype
-$codei%
-	sqlite3* %db%
-%$$
-and is an open connection to the database.
+is an open connection to the database.
 
 $head mulcov_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<mulcov_struct>& %mulcov_table%
-%$$
-and is the $cref/mulcov_table/get_mulcov_table/$$.
+is the $cref/mulcov_table/get_mulcov_table/$$
+(used to check integrands that are covariate multipliers).
+
+$head option_table$$
+is the $cref/option_table/get_option_table/$$
+(used to determine if $cref/rate_case/option_table/rate_case/no_ode/$$
+is $code no_ode$$).
 
 $head integrand_table$$
-The return value $icode integrand_table$$ has prototype
-$codei%
-	CppAD::vector<integrand_struct>  %integrand_table%
-%$$
 For each $cref/integrand_id/integrand_table/integrand_id/$$,
 $codei%
 	%integrand_table%[%integrand_id%]
@@ -151,11 +152,22 @@ const char* integrand_enum2name[] = {
 	"relrisk",
 	"mulcov"
 };
+// BEGIN_PROTOTYPE
 CppAD::vector<integrand_struct> get_integrand_table(
 	sqlite3*                            db           ,
-	const CppAD::vector<mulcov_struct>& mulcov_table
+	const CppAD::vector<mulcov_struct>& mulcov_table ,
+	const CppAD::vector<option_struct>& option_table
 )
+// END_PROTOTYPE
 {	using std::string;
+
+	// determine if rate_case is no_ode
+	bool no_ode = false;
+	for(size_t option_id = 0; option_id < option_table.size(); ++option_id)
+	{	if( option_table[option_id].option_name == "rate_case" )
+		{	no_ode = option_table[option_id].option_value == "no_ode";
+		}
+	}
 
 	// check for minimum_cv column
 	string sql_cmd = "pragma table_info(integrand)";
@@ -189,6 +201,7 @@ CppAD::vector<integrand_struct> get_integrand_table(
 		for(size_t j = 0; j < number_integrand_enum; j++)
 		{	if( name == integrand_enum2name[j] )
 				integrand = integrand_enum(j);
+			// mulcov without _# is not a valid integrand name
 			if( name == "mulcov" )
 				integrand = number_integrand_enum;
 		}
@@ -197,6 +210,27 @@ CppAD::vector<integrand_struct> get_integrand_table(
 			msg       += " is not a valid choice for integrand_name.";
 			error_exit(msg, table_name, integrand_id);
 		}
+		switch( integrand )
+		{	// valid no_ode cases
+			case Sincidence_enum:
+			case Tincidence_enum:
+			case remission_enum:
+			case mtexcess_enum:
+			case mtother_enum:
+			case mtwith_enum:
+			case relrisk_enum:
+			case mulcov_enum:
+			break;
+
+			default:
+			if( no_ode )
+			{	string msg = name + " is not a valid integrand because";
+				msg += " rate_case in the option table is no_ode";
+				error_exit(msg, table_name, integrand_id);
+			}
+			break;
+		}
+		//
 		integrand_table[integrand_id].integrand = integrand;
 		//
 		// minumum_meas_cv
@@ -219,7 +253,7 @@ CppAD::vector<integrand_struct> get_integrand_table(
 			if( mulcov_table.size() <= size_t(mulcov_id) )
 			{	string msg = name;
 				msg       += " mulcov_id is greater or equal number of ";
-				msg       += "entriies  in mulcov table";
+				msg       += "entries  in mulcov table";
 				error_exit(msg, table_name, integrand_id);
 			}
 			//
