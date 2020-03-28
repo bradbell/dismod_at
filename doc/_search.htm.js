@@ -39,7 +39,7 @@ Keyword =
 { tag: 'user_hes_random.py', title:'Check the Hessian of the Fixed Effects Objective', other:' purpose reference notation problem parameters likelihood gradient w.r.t. asymptotic statistics source code' },
 { tag: 'user_mulstd.py', title:'Estimating Smoothing Standard Deviation Multiplies', other:' purpose problem parameters age time values variables parent children data table rate prior fitting source code' },
 { tag: 'user_no_children.py', title:'Case with no Children; i.e., no Random Effects', other:' source code' },
-{ tag: 'user_one_function.py', title:'Fitting One Function of Two Variables', other:' purpose rho random effects covariates simulated data density true prevalence computing delta prior seed number generators' },
+{ tag: 'user_one_function.py', title:'Fitting One Function of Two Variables', other:' purpose rho random effects covariates simulated data density true prevalence computing delta prior random_seed' },
 { tag: 'user_predict_fit.py', title:'Predict Average Integrand Using Results of a Fit', other:' purpose note table problem parameters time values rate variables data avgint source code' },
 { tag: 'user_predict_mulcov.py', title:'Predict Covariate Multiplier Values', other:' purpose problem parameters age time rate table variables integrand data avgint source code' },
 { tag: 'user_re_scale.py', title:'Case Where Re-Scaling is Useful', other:' source code' },

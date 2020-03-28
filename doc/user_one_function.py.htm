@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Fitting One Function of Two Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Fitting One Function of Two Variables">
-<meta name="keywords" id="keywords" content=" fitting one function two variables purpose rho random effects covariates simulated data density true prevalence computing delta prior seed number generators ">
+<meta name="keywords" id="keywords" content=" fitting one function two variables purpose rho random effects covariates simulated data density true prevalence computing delta prior random_seed ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,7 +72,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_one_function.py.htm#Simulated Data.True Prevalence" target="_top">True&nbsp;Prevalence</a>
 <br><a href="user_one_function.py.htm#Computing delta" target="_top">Computing&nbsp;delta</a>
 <br><a href="user_one_function.py.htm#Prevalence Prior" target="_top">Prevalence&nbsp;Prior</a>
-<br><a href="user_one_function.py.htm#Seed Random Number Generators" target="_top">Seed&nbsp;Random&nbsp;Number&nbsp;Generators</a>
+<br><a href="user_one_function.py.htm#random_seed" target="_top">random_seed</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -116,19 +116,26 @@ to be between zero and one.  The income reference value corresponds to
 no effect. The income multiplier is the true value used to simulate the
 data.
 <pre style='display:inline'><tt>
-income_reference  <font color="#990000">=</font>   <font color="#993399">0.5</font>
-income_multiplier <font color="#990000">=</font> <font color="#990000">-</font> <font color="#993399">0.2</font>
+income_reference   <font color="#990000">=</font>   <font color="#993399">0.5</font>
+income_multiplier  <font color="#990000">=</font> <font color="#990000">-</font> <font color="#993399">0.2</font>
+income_mulcov_type <font color="#990000">=</font> <font color="#FF0000">"meas_value"</font>
 </tt></pre>
-It should not make a difference in the results of a <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
-
-if a covariate multiplier has <a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
-
-<code><font color="blue">meas_value</font></code> or <code><font color="blue">rate_value</font></code>, there is only one rate
-(one function) being fit, and the
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>income_mulcov_type</span></font></i></code>
+ can be either <code><font color="blue">&quot;meas_value&quot;</font></code> or
+<code><font color="blue">&quot;rate_value&quot;</font></code>.
+It should not make a difference in the results which
+<a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
+ is used because
+there is only one rate (one function) being fit, and the
 <a href="integrand_table.htm#integrand_name.ODE" target="_top"><span style='white-space: nowrap'>ode</span></a>
  is not needed to compute
 the integrand.
-It will however make a difference in the resulting <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+You can test this by changing 
+<code><i><font color="black"><span style='white-space: nowrap'>income_mulcov_type</span></font></i></code>
+ to
+<code><font color="blue">&quot;rate_value&quot;</font></code>
+and uses the same <a href="user_one_function.py.htm#random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
 .
 
 <br>
@@ -270,11 +277,12 @@ for the rate would be negative in that case.
 
 <br>
 <br>
-<b><big><a name="Seed Random Number Generators" id="Seed Random Number Generators">Seed Random Number Generators</a></big></b>
+<b><big><a name="random_seed" id="random_seed">random_seed</a></big></b>
 <br>
 We use the clock to choose a seed for the random number generator.
 If an error occurs, the seed will be printed so that the error can be
-reproduced.
+reproduced. You can also use a fixed value for the random seed to see
+how changing other parameters changes the results.
 <pre style='display:inline'><tt>
 <b><font color="#000080">import</font></b> time
 random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
