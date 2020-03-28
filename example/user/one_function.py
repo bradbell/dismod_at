@@ -25,21 +25,16 @@
 # $head rho$$
 # We use $icode rho$$
 # as a surrogate for prevalence because our model for prevalence
-# does not user $icode rho$$ (we could have used any other rate
+# does not use $icode rho$$ (we could have used any other rate
 # and its corresponding integrand).
 #
-# $head Data$$
-# A direct measurement of $icode rho$$
-# (which we are using to represent prevalence) corresponds to the
-# $cref/remission integrand/avg_integrand/Integrand, I_i(a,t)/remission/$$.
-# $srccode%py%
-prevalence_sigma  = 0.1
-prevalence_eta    = 1e-6
-# %$$
 #
-# $head Node Table$$
+# $head Random Effects$$
 # To keep this example simple, there is only one node $code world$$
-# in the node table (hence on random effects).
+# in the $cref node_table$$, and the
+# $cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$
+# is null in the mulcov_table.
+# Hence, there are not random effects in this example.
 #
 # $head Covariates$$
 # Income is the only covariate for this example and it has been normalized
@@ -50,17 +45,30 @@ prevalence_eta    = 1e-6
 income_reference  =   0.5
 income_multiplier = - 0.2
 # %$$
-# It should not make a difference if the covariate multiplier has
-# $cref/mulcov_type/mulcov_table/mulcov_type/$$ $code meas_value$$ or
-# $code rate_value$$ when
-# $cref/rate_case/option_table/rate_case/no_ode/$$.
-# is $code no_ode$$.
+# It should not make a difference in the results of a $cref predict_command$$
+# if a covariate multiplier has $cref/mulcov_type/mulcov_table/mulcov_type/$$
+# $code meas_value$$ or $code rate_value$$, there is only one rate
+# (one function) being fit, and the
+# $cref/ode/integrand_table/integrand_name/ODE/$$ is not needed to compute
+# the integrand.
+# It will however make a difference in the resulting $cref model_variables$$.
 #
 # $head Simulated Data$$
 #
-# $head True Prevalence$$
+# $subhead Data Density$$
+# A direct measurement of $icode rho$$
+# (which we are using to represent prevalence) corresponds to the
+# $cref/remission integrand/avg_integrand/Integrand, I_i(a,t)/remission/$$.
+# We use a $cref/log_gaussian/density_table/density_name/log_gaussian/$$
+# model with the following parameters:
+# $srccode%py%
+prevalence_sigma  = 0.1
+prevalence_eta    = 1e-6
+# %$$
+#
+# $subhead True Prevalence$$
 # For simulating our prevalence data we consider the case where
-# all the rates are constant and $icode rho$$ is zero; i.e.,
+# all the rates are constant and $icode rho$$, $icode chi$$ are zero; i.e.,
 # the differential equation is
 # $latex \[
 #	\begin{array}{rcl}
@@ -105,9 +113,10 @@ def Prevalence(age) :
 	return C / (S + C)
 # %$$
 #
-# $head Solving for delta$$
-# Once we have simulated a measurement value, we have to put the right
-# $latex \delta$$ in so that
+# $head Computing delta$$
+# Once we have simulated a measurement value,
+# we can solve for $latex \delta$$ are follows; see
+# $cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$:
 # $latex \[
 #	\sigma = \log( y + \eta + \delta ) - \log(y + \eta )
 # \] $$
@@ -128,6 +137,9 @@ def Prevalence(age) :
 # for the rate would be negative in that case.
 #
 # $head Seed Random Number Generators$$
+# We use the clock to choose a seed for the random number generator.
+# If an error occurs, the seed will be printed so that the error can be
+# reproduced.
 # $srccode%py%
 import time
 random_seed = int( time.time() )
