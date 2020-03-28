@@ -79,6 +79,7 @@ A:active { color : purple }
 <br><a href="user_hes_fixed_math.py.htm#Laplace Approximation" target="_top">Laplace&nbsp;Approximation</a>
 <br><a href="user_hes_fixed_math.py.htm#Asymptotic Statistics" target="_top">Asymptotic&nbsp;Statistics</a>
 <br><a href="user_hes_fixed_math.py.htm#Scaling Fixed Effects" target="_top">Scaling&nbsp;Fixed&nbsp;Effects</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_hes_fixed_math.py.htm#Scaling Fixed Effects.Optimal Fixed Effects" target="_top">Optimal&nbsp;Fixed&nbsp;Effects</a>
 <br><a href="user_hes_fixed_math.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -531,9 +532,11 @@ The asymptotic posterior distribution for the optimal estimate of
 y
 @)@</small>
 is a normal with variance equal to the inverse of
-<small>@(@
-F^{(2)} ( \theta ) + G^{(2)} ( \theta )
-@)@</small>.
+<small>@[@
+
+	L^{(2)} ( \theta ) = F^{(2)} ( \theta ) + G^{(2)} ( \theta )
+
+@]@</small>
 
 <br>
 <br>
@@ -579,6 +582,34 @@ Taking the first and second derivatives, we have
 	\end{array}
 
 @]@</small>
+
+<br>
+<br>
+<big><a name="Scaling Fixed Effects.Optimal Fixed Effects" id="Scaling Fixed Effects.Optimal Fixed Effects">Optimal Fixed Effects</a></big>
+<br>
+The first order necessary conditions for
+<small>@(@
+\hat{\alpha}
+@)@</small>
+to be a minimizer of the fixed effects object is
+<small>@(@
+H^{(1)} ( \hat{\alpha} ) = 0
+@)@</small>.
+In this case we can simplify the Hessian scaling as follows:
+<small>@[@
+
+	\begin{array}{rcl}
+	H^{(2)}( \hat{\alpha} ) & = & \left(
+		F^{(2 }( \hat{\theta} ) + G^{(2)}( \hat{\theta} )
+	\right) \exp( 2 \hat{\alpha} )
+	\\ & = &
+	L^{(2)} ( \hat{\theta} ) \exp( 2 \hat{\alpha} )
+	\end{array}
+
+@]@</small>
+where <small>@(@
+\hat{\theta} = \theta( \hat{\alpha} )
+@)@</small>.
 
 <br>
 <br>
