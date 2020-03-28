@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect zero_sum_child_rate zero_sum_mulcov_group data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect zero_sum_child_rate zero_sum_mulcov_group data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -104,6 +104,7 @@ A:active { color : purple }
 <br><a href="option_table.htm#random_seed" target="_top">random_seed</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#random_seed.Default" target="_top">Default</a>
 <br><a href="option_table.htm#rate_case" target="_top">rate_case</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.no_ode" target="_top">no_ode</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_zero_rho_zero" target="_top">iota_zero_rho_zero</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_pos_rho_zero" target="_top">iota_pos_rho_zero</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_zero_rho_pos" target="_top">iota_zero_rho_pos</a>
@@ -614,15 +615,26 @@ The default value for this option is <code><font color="blue">0</font></code>.
 The 
 <code><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i></code>
  value does not matter for the following integrands:
+
+<br>
+<br>
+<big><a name="rate_case.no_ode" id="rate_case.no_ode">no_ode</a></big>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i></code>
+ value does not matter for the following integrands:
 <code><font color="blue">Sincidence</font></code>,
 <code><font color="blue">remission</font></code>,
 <code><font color="blue">mtexcess</font></code>,
+<code><font color="blue">mtother</font></code>,
 <code><font color="blue">mtwith</font></code>,
-<code><font color="blue">relrisk</font></code>.
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
-,
-the corresponding option value must be one of the following:
+<code><font color="blue">relrisk</font></code>,
+
+<code><font color="blue"><span style='white-space: nowrap'>mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i></code>
+.
+If all of your integrands are in the set above, you can use
+<code><font color="blue">no_ode</font></code> as the rate case and avoid having to worry about
+constraining certain rates to be positive or zero.
 
 <br>
 <br>

@@ -196,6 +196,8 @@ In the case where
  is <code><font color="blue">uniform</font></code>,
 this value is not used and can be <code><font color="blue">null</font></code>.
 Otherwise, this value must be a positive number.
+These standard deviations are
+before truncation by the lower and upper limits.
 
 <br>
 <br>
@@ -212,6 +214,8 @@ If the density is <a href="density_table.htm#Notation.Linear" target="_top"><spa
 <big><a name="std.Log Scaling" id="std.Log Scaling">Log Scaling</a></big>
 <br>
 If the density is <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+ and for a
+<a href="statistic.htm#Weighted Residual Function, R.Value" target="_top"><span style='white-space: nowrap'>value</span></a>
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
@@ -220,11 +224,9 @@ If the density is <a href="density_table.htm#Notation.Log Scaled" target="_top">
 is the standard deviation for the
 log of the random variable plus 
 <code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
-.
-These standard deviations are
-before truncation by the lower and upper limits; see
+; see
 <a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
-
+.
 Using the notation <code><font color="blue">~=</font></code> for approximately equal,
 and taking the derivative of the log at the midpoint for the difference,
 we get
@@ -232,6 +234,14 @@ we get
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;~=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>/2&nbsp;)<br>
 </span></font></code>
+If the density for a
+<a href="statistic.htm#Weighted Residual Function, R.Difference" target="_top"><span style='white-space: nowrap'>difference</span></a>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
+ is the standard deviation for the density (even if it is log scaled).
+
+<br>
 <br>
 <big><a name="std.Discussion" id="std.Discussion">Discussion</a></big>
 <br>

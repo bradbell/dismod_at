@@ -1,0 +1,266 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Fitting One Function of Two Variables</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Fitting One Function of Two Variables">
+<meta name="keywords" id="keywords" content=" fitting one function two variables purpose rho data node table covariates simulated true prevalence solving delta prior seed random number generators ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_one_function.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user</option>
+<option>user_one_function.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="user_no_children.py.htm" target="_top">Prev</a>
+</td><td><a href="user_predict_fit.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
+</td>
+<td>user_one_function.py</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fitting One Function of Two Variables</big></big></b></center>
+
+<br><a href="user_one_function.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_one_function.py.htm#rho" target="_top">rho</a>
+<br><a href="user_one_function.py.htm#Data" target="_top">Data</a>
+<br><a href="user_one_function.py.htm#Node Table" target="_top">Node&nbsp;Table</a>
+<br><a href="user_one_function.py.htm#Covariates" target="_top">Covariates</a>
+<br><a href="user_one_function.py.htm#Simulated Data" target="_top">Simulated&nbsp;Data</a>
+<br><a href="user_one_function.py.htm#True Prevalence" target="_top">True&nbsp;Prevalence</a>
+<br><a href="user_one_function.py.htm#Solving for delta" target="_top">Solving&nbsp;for&nbsp;delta</a>
+<br><a href="user_one_function.py.htm#Prevalence Prior" target="_top">Prevalence&nbsp;Prior</a>
+<br><a href="user_one_function.py.htm#Seed Random Number Generators" target="_top">Seed&nbsp;Random&nbsp;Number&nbsp;Generators</a>
+<br><br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This example shows how to fit one function of two variables given
+direct measurements of the function.
+For our example, we are give measurements of prevalence,
+as a function of age and time, and fit a function to the measurements.
+
+<br>
+<br>
+<b><big><a name="rho" id="rho">rho</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+
+as a surrogate for prevalence because our model for prevalence
+does not user 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+ (we could have used any other rate
+and its corresponding integrand).
+
+<br>
+<br>
+<b><big><a name="Data" id="Data">Data</a></big></b>
+<br>
+A direct measurement of 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+
+(which we are using to represent prevalence) corresponds to the
+<a href="avg_integrand.htm#Integrand, I_i(a,t).remission" target="_top"><span style='white-space: nowrap'>remission&nbsp;integrand</span></a>
+.
+<pre style='display:inline'><tt>
+prevalence_sigma  <font color="#990000">=</font> <font color="#993399">0.1</font>
+prevalence_eta    <font color="#990000">=</font> <font color="#993399">1e-6</font>
+</tt></pre>
+<br>
+<b><big><a name="Node Table" id="Node Table">Node Table</a></big></b>
+<br>
+To keep this example simple, there is only one node <code><font color="blue">world</font></code>
+in the node table (hence on random effects).
+
+<br>
+<br>
+<b><big><a name="Covariates" id="Covariates">Covariates</a></big></b>
+<br>
+Income is the only covariate for this example and it has been normalized
+to be between zero and one.  The income reference value corresponds to
+no effect. The income multiplier is the true value used to simulate the
+data.
+<pre style='display:inline'><tt>
+income_reference  <font color="#990000">=</font>   <font color="#993399">0.5</font>
+income_multiplier <font color="#990000">=</font> <font color="#990000">-</font> <font color="#993399">0.2</font>
+</tt></pre>
+It should not make a difference if the covariate multiplier has
+<a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
+ <code><font color="blue">meas_value</font></code> or
+<code><font color="blue">rate_value</font></code> when
+<a href="option_table.htm#rate_case.no_ode" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
+.
+is <code><font color="blue">no_ode</font></code>.
+
+<br>
+<br>
+<b><big><a name="Simulated Data" id="Simulated Data">Simulated Data</a></big></b>
+
+
+<br>
+<br>
+<b><big><a name="True Prevalence" id="True Prevalence">True Prevalence</a></big></b>
+<br>
+For simulating our prevalence data we consider the case where
+all the rates are constant and 
+<code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
+ is zero; i.e.,
+the differential equation is
+<small>@[@
+
+	\begin{array}{rcl}
+	S'(a) = -( \iota + \omega ) S(a)
+	\\
+	C'(a) = + \iota S(a) - \omega C(a)
+	\end{array}
+
+@]@</small>
+where <small>@(@
+S(0) = 1
+@)@</small> and <small>@(@
+C(0) = 0
+@)@</small>.
+It follows that
+<small>@[@
+
+	S(a) = \exp[ - ( \iota + \omega ) a ]
+
+@]@</small>
+<small>@[@
+
+	C(a)
+	= \int_0^a \exp[ \omega (s - a) ] \iota S(s) ds
+
+@]@</small>
+You can check the formula for <small>@(@
+C(a)
+@)@</small> as follows:
+differentiating w.r.t. <small>@(@
+a
+@)@</small> inside the integral yields
+<small>@(@
+- \omega C(a)
+@)@</small> and differentiating the upper limit
+w.r.t. <small>@(@
+a
+@)@</small> yields <small>@(@
+\iota S(a)
+@)@</small>.
+It follows that
+<small>@[@
+
+	C(a) = \iota \int_0^a \exp[ \omega (s - a) - ( \iota + \omega) s ] ds
+
+@]@</small>
+<small>@[@
+
+	C(a) = \iota \exp( - \omega a) \int_0^a \exp( - \iota s ) ds
+
+@]@</small>
+<small>@[@
+
+	C(a) = \exp( - \omega a) - \exp[ - ( \iota + \omega) a ]
+
+@]@</small>
+
+<pre><tt><b><font color="#0000FF">def</font></b> <b><font color="#000000">Prevalence</font></b><font color="#990000">(</font>age<font color="#990000">)</font> <font color="#990000">:</font>
+     <i><font color="#9A1900"># rho and chi are zero for this simulation of prevalence data</font></i>
+     iota      <font color="#990000">=</font> <font color="#993399">1e-4</font> <i><font color="#9A1900"># incidence used to simulate prevalence data</font></i>
+     omega     <font color="#990000">=</font> <font color="#993399">1e-2</font> <i><font color="#9A1900"># other cause mortality used to simulate prevalence data</font></i>
+     exp_omega <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(-</font>omega <font color="#990000">*</font> age<font color="#990000">)</font>
+     exp_sum   <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(-(</font>iota <font color="#990000">+</font> omega<font color="#990000">)</font> <font color="#990000">*</font> age<font color="#990000">)</font>
+     S         <font color="#990000">=</font> exp_sum
+     C         <font color="#990000">=</font> exp_omega <font color="#990000">-</font> exp_sum
+     <b><font color="#0000FF">return</font></b> C <font color="#990000">/</font> <font color="#990000">(</font>S <font color="#990000">+</font> C<font color="#990000">)</font></tt></pre>
+<br>
+<b><big><a name="Solving for delta" id="Solving for delta">Solving for delta</a></big></b>
+<br>
+Once we have simulated a measurement value, we have to put the right
+<small>@(@
+\delta
+@)@</small> in so that
+<small>@[@
+
+	\sigma = \log( y + \eta + \delta ) - \log(y + \eta )
+
+@]@</small>
+<small>@[@
+
+	\exp ( \sigma ) = \frac{ y + \eta + \delta }{ y + \eta }
+
+@]@</small>
+<small>@[@
+
+	\exp ( \sigma ) ( y + \eta ) = y + \eta + \delta
+
+@]@</small>
+<small>@[@
+
+	\delta = [ \exp ( \sigma ) - 1 ] ( y + \eta )
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Prevalence Prior" id="Prevalence Prior">Prevalence Prior</a></big></b>
+<br>
+Prevalence must always be between zero and one so this limits are used
+in the prior for prevalence.
+Some functions might allow for negative values and the lower limit
+for the rate would be negative in that case.
+
+<br>
+<br>
+<b><big><a name="Seed Random Number Generators" id="Seed Random Number Generators">Seed Random Number Generators</a></big></b>
+
+<pre style='display:inline'><tt>
+<b><font color="#000080">import</font></b> time
+random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
+</tt></pre>
+
+<hr>Input File: example/user/one_function.py
+
+</body>
+</html>

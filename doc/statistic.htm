@@ -217,12 +217,16 @@ we define the log-transformed standard deviation by
 \log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
 
 @]@</small>
-Note that, for priors, <small>@(@
+Note that for priors, <small>@(@
 \sigma
-@)@</small> does not depend on the model values
+@)@</small> does not depend on the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+,
+<small>@(@
+\mu
+@)@</small> is the mean of a model variable,
 and <small>@(@
 y
-@)@</small> is used for the model variable corresponding to the prior.
+@)@</small> is the value of the model variable.
 
 If a density is being applied to data
 (its <a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
@@ -235,13 +239,15 @@ we define the log-transformed standard deviation by
 \log ( y + \eta + \delta ) - \log ( y + \eta )
 
 @]@</small>
-Note that, for data, <small>@(@
+Note that for data, <small>@(@
 \sigma
-@)@</small> does not depend on the model values
-and <small>@(@
-mu
-@)@</small> is used for the mean data value of the data corresponding
-to the model variables.
+@)@</small> does not depend on the model variables,
+<small>@(@
+\mu
+@)@</small> is the model for the data given the value of the model variables,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+ is the data.
 
 <br>
 <br>

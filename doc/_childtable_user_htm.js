@@ -26,6 +26,7 @@ document.write('\
 <option>user_hes_random.py</option>\
 <option>user_mulstd.py</option>\
 <option>user_no_children.py</option>\
+<option>user_one_function.py</option>\
 <option>user_predict_fit.py</option>\
 <option>user_predict_mulcov.py</option>\
 <option>user_re_scale.py</option>\
@@ -66,6 +67,7 @@ function user_child(item)
 		'user_hes_random.py.htm',
 		'user_mulstd.py.htm',
 		'user_no_children.py.htm',
+		'user_one_function.py.htm',
 		'user_predict_fit.py.htm',
 		'user_predict_mulcov.py.htm',
 		'user_re_scale.py.htm',
