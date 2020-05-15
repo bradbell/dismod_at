@@ -42,6 +42,8 @@ $head 05-15$$
 Add another restriction on the $cref/group_name/subgroup_table/group_name/$$.
 To be specific, the only case were a group name can also be a subgroup name
 is when the group has only one subgroup and the same name is used for both.
+In addition, more subgroup table error checking (that used to be only
+in the debug version) is done in the release version of dismod_at.
 
 
 $head 03-28$$

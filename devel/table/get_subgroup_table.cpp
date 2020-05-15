@@ -118,7 +118,7 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 		subgroup_table[subgroup_id].group_name    = group_name[subgroup_id];
 	}
 
-# ifndef NDEBUG
+	// ------------------------------------------------------------------------
 	// check for errors
 	int previous_group_id      = subgroup_table[0].group_id;
 	string previous_group_name = subgroup_table[0].group_name;
@@ -196,7 +196,6 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 		previous_group_id   = this_group_id;
 		previous_group_name = this_group_name;
 	}
-# endif
 
 	return subgroup_table;
 }
