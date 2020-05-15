@@ -134,12 +134,43 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 		error_exit(msg, table_name, subgroup_id);
 	}
 	for(size_t subgroup_id = 1; subgroup_id < n_subgroup; ++subgroup_id)
-	{	int    this_group_id   = subgroup_table[subgroup_id].group_id;
-		string this_group_name = subgroup_table[subgroup_id].group_name;
+	{	int    this_group_id      = subgroup_table[subgroup_id].group_id;
+		string this_group_name    = subgroup_table[subgroup_id].group_name;
+		string this_subgroup_name = subgroup_table[subgroup_id].subgroup_name;
+		// cannot have a space in a group name
+		if(this_group_name.find(' ') != string::npos )
+		{	msg  = "There is a space in following group name: ";
+			msg += "'" + previous_group_name + "'";
+			error_exit(msg, table_name, subgroup_id);
+		}
+		// special case where group can also be a subgroup
+		if( this_group_name == this_subgroup_name )
+		{	bool ok = true;
+			if( 0 < subgroup_id )
+				ok &= this_group_id != previous_group_id;
+			if( subgroup_id + 1 < n_subgroup )
+				ok &= this_group_id != subgroup_table[subgroup_id+1].group_id;
+			if( ! ok )
+			{	msg  = "This group and subgroup name are the same ";
+				msg += "and this group has multipler subgroups";
+				error_exit(msg, table_name, subgroup_id);
+			}
+		}
+		// Otherwise a group name cannot be a subgroup name
+		for(size_t i = 0; i < n_subgroup; ++i) if( i != subgroup_id )
+		{	if( subgroup_table[i].subgroup_name == this_group_name )
+			{	msg  = "This group name is also a subgroup name ";
+				msg += "in a different row of the subgroup table";
+				error_exit(msg, table_name, subgroup_id);
+			}
+		}
+		// -------------------------------------------------------------------
+		// group_id is monotone non-decreasing
 		if( this_group_id < previous_group_id )
 		{	msg = "group_id < previous group_id";
 			error_exit(msg, table_name, subgroup_id);
 		}
+		// group name must be the same for entire group
 		else if( this_group_id == previous_group_id )
 		{	if( this_group_name != previous_group_name )
 			{	msg = "group_id equals previous group_id but the group names ";
@@ -147,6 +178,7 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 				error_exit(msg, table_name, subgroup_id);
 			}
 		}
+		// two groups cannot have the same name
 		else if( this_group_id == previous_group_id + 1 )
 		{	for(size_t i = 0; i < subgroup_id; ++i)
 			{	if( this_group_name == subgroup_table[i].group_name )
@@ -155,18 +187,14 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
 				}
 			}
 		}
+		// cannot skip a group_id
 		else
 		{	msg = "group_id != (previous group_id) or (previous group_id+1)";
 			error_exit(msg, table_name, subgroup_id);
 		}
+		// -------------------------------------------------------------------
 		previous_group_id   = this_group_id;
 		previous_group_name = this_group_name;
-		//
-		if( previous_group_name.find(' ') != string::npos )
-		{	msg  = "There is a space in following group name: ";
-			msg += "'" + previous_group_name + "'";
-			error_exit(msg, table_name, subgroup_id);
-		}
 	}
 # endif
 

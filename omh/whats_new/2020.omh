@@ -38,6 +38,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 05-15$$
+Add another restriction on the $cref/group_name/subgroup_table/group_name/$$.
+To be specific, the only case were a group name can also be a subgroup name
+is when the group has only one subgroup and the same name is used for both.
+
+
 $head 03-28$$
 $list number$$
 Add simplification to the scaling of the asymptotic statistics

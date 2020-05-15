@@ -13,6 +13,7 @@ image_link='https://bradbell.github.io/dismod_at'
 # version number (can be empty).
 version_files='
 	omh/dismod_at.omh
+	bin/setup.py.in
 '
 #
 # List of special files, for this repository, that the devel tools ignore.

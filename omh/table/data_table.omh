@@ -87,8 +87,9 @@ $cref/subgroup_id/subgroup_table/subgroup_id/$$
 that this data point corresponds to.
 
 $subhead group_id$$
-There is $cref/group_id/subgroup_table/group_id/$$ corresponding
-to this $icode subgroup_id$$.
+The automatically is a $cref/group_id/subgroup_table/group_id/$$ corresponding
+to the $icode subgroup_id$$ even though the $icode group_id$$ does not
+appear in the data file (if it does appear, it will not be used).
 
 $subhead Nonsmooth$$
 If the density is

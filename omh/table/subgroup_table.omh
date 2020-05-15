@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -46,6 +46,10 @@ Rows that have the same (different) $icode group_id$$ must have the same
 Spaces are not allowed the $icode group_name$$ because they are used by the
 $cref/zero_sum_mulcov_group/option_table/zero_sum_mulcov_group/$$
 option to separate group names.
+The $icode group_name$$ must be different for different $icode group_id$$
+values. In addition, it should note be equal to any $icode subgroup_name$$
+values, except in the special case where it is the only subgroup for the
+group.
 
 $head Discussion$$
 

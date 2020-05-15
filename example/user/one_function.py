@@ -150,8 +150,13 @@ import time
 random_seed = int( time.time() )
 # %$$
 #
+# $head Source Code$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $end
+#
 # $end
 # ------------------------------------------------------------------------
+# BEGIN PYTHON
 import random
 from math import exp
 import sys
