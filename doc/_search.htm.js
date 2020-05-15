@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-{ tag: 'dismod_at', title:'dismod_at-20200328: User Documentation and API', other:' purpose links' },
+{ tag: 'dismod_at', title:'dismod_at-20200515: User Documentation and API', other:' purpose links' },
 { tag: 'math_abstract', title:'An Introduction To The Mathematics of Dismod_at', other:'' },
 { tag: 'math_ode', title:'The Dismod_at Ordinary Differential Equation', other:' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t)' },
 { tag: 'censor_density', title:'The Censored Gaussian and Laplace Densities', other:' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac)' },
@@ -39,7 +39,7 @@ Keyword =
 { tag: 'user_hes_random.py', title:'Check the Hessian of the Fixed Effects Objective', other:' purpose reference notation problem parameters likelihood gradient w.r.t. asymptotic statistics source code' },
 { tag: 'user_mulstd.py', title:'Estimating Smoothing Standard Deviation Multiplies', other:' purpose problem parameters age time values variables parent children data table rate prior fitting source code' },
 { tag: 'user_no_children.py', title:'Case with no Children; i.e., no Random Effects', other:' source code' },
-{ tag: 'user_one_function.py', title:'Fitting One Function of Two Variables', other:' purpose rho random effects covariates simulated data density true prevalence computing delta prior random_seed' },
+{ tag: 'user_one_function.py', title:'Fitting One Function of Two Variables', other:' purpose rho random effects covariates simulated data density true prevalence computing delta prior random_seed source code' },
 { tag: 'user_predict_fit.py', title:'Predict Average Integrand Using Results of a Fit', other:' purpose note table problem parameters time values rate variables data avgint source code' },
 { tag: 'user_predict_mulcov.py', title:'Predict Covariate Multiplier Values', other:' purpose problem parameters age time rate table variables integrand data avgint source code' },
 { tag: 'user_re_scale.py', title:'Case Where Re-Scaling is Useful', other:' source code' },
@@ -166,7 +166,7 @@ Keyword =
 { tag: 'unicode_tuple', title:'Convert an Iterable Object to a Unicode String', other:' syntax quote_string none infinity u_tuple example' },
 { tag: 'unicode_tuple.py', title:'unicode_tuple: Example and Test', other:'' },
 { tag: 'release_notes', title:'Changes and Additions to Dismod_at', other:' introduction this year previous years' },
-{ tag: 'whats_new_2020', title:'Changes and Additions to Dismod_at During 2020', other:' 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07' },
+{ tag: 'whats_new_2020', title:'Changes and Additions to Dismod_at During 2020', other:' 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07' },
 { tag: 'whats_new_2019', title:'Changes and Additions to Dismod_at During 2019', other:' 12-07 12-06 12-05 12-04 11-30 11-29 11-28 11-26 11-25 11-24 11-22 11-20 11-18 11-17 10-24 10-09 10-08 10-06 10-02 10-01 09-30 09-24 09-23 09-22 09-21 09-20 09-19 09-17 09-15 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10' },
 { tag: 'whats_new_2018', title:'Changes and Additions to Dismod_at During 2018', other:' 12-19 12-15 12-14 10-30 10-22 10-21 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09' },
 { tag: 'whats_new_2017', title:'Changes and Additions to Dismod_at During 2017', other:' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15' },
