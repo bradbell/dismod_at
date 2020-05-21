@@ -1,0 +1,406 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Model The Covid-19 Epidemic</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Model The Covid-19 Epidemic">
+<meta name="keywords" id="keywords" content=" model the covid-19 epidemic goal data file sir ode discussion dismod variables rates covariates predictions display fit ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_covid_19.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user</option>
+<option>user_covid_19.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="user_continue_fit.py.htm" target="_top">Prev</a>
+</td><td><a href="user_csv2db.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
+</td>
+<td>user_covid_19.py</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Model The Covid-19 Epidemic</big></big></b></center>
+
+<br><a href="user_covid_19.py.htm#Goal" target="_top">Goal</a>
+<br><a href="user_covid_19.py.htm#Data File" target="_top">Data&nbsp;File</a>
+<br><a href="user_covid_19.py.htm#SIR Model" target="_top">SIR&nbsp;Model</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_covid_19.py.htm#SIR Model.ODE" target="_top">ODE</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_covid_19.py.htm#SIR Model.Data Model" target="_top">Data&nbsp;Model</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_covid_19.py.htm#SIR Model.Discussion" target="_top">Discussion</a>
+<br><a href="user_covid_19.py.htm#Dismod Model" target="_top">Dismod&nbsp;Model</a>
+<br><a href="user_covid_19.py.htm#Data" target="_top">Data</a>
+<br><a href="user_covid_19.py.htm#Model Variables" target="_top">Model&nbsp;Variables</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_covid_19.py.htm#Model Variables.Rates" target="_top">Rates</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_covid_19.py.htm#Model Variables.Covariates" target="_top">Covariates</a>
+<br><a href="user_covid_19.py.htm#Predictions" target="_top">Predictions</a>
+<br><a href="user_covid_19.py.htm#Display Fit" target="_top">Display&nbsp;Fit</a>
+<br><br>
+<b><big><a name="Goal" id="Goal">Goal</a></big></b>
+<br>
+Use previous cumulative death data for a location to predict future
+cumulative deaths.
+
+<br>
+<br>
+<b><big><a name="Data File" id="Data File">Data File</a></big></b>
+<br>
+The cumulative death data is the most reliable data available for the
+Covid-19 epidemic. It is also the statistic we are most interested in predicting.
+Our example data has the following columns:
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>day</span></font></i></code>
+      </td><td align='left'  valign='top'>
+ day that this row of data corresponds to             </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>death</span></font></i></code>
+    </td><td align='left'  valign='top'>
+ cumulative covid_19 death as fraction of population  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>mobility</span></font></i></code>
+ </td><td align='left'  valign='top'>
+ mobility shifted and scaled to be in [-1, 0.]        </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>testing</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ testing shifted and scaled to be in [0., 1]
+</td></tr>
+</table>
+We assume that difference in the cumulative death data are independent; i.e.,
+the amount added to the cumulative death is the actual measurement recorded
+at the end of a time interval.
+For the purpose of this example, we mimic a csv file with a string that
+has this information.
+
+<br>
+<br>
+<b><big><a name="SIR Model" id="SIR Model">SIR Model</a></big></b>
+
+
+<br>
+<br>
+<big><a name="SIR Model.ODE" id="SIR Model.ODE">ODE</a></big>
+<br>
+We use <small>@(@
+Q
+@)@</small> in place of <small>@(@
+S
+@)@</small> in the SIR Model
+to avoid confusion with the dismod meaning of <small>@(@
+S
+@)@</small>.
+The SIR Model for an epidemic is the following differential equations:
+<small>@[@
+
+\begin{array}{rcll}
+	\dot{Q} & = & - \beta Q I \\
+	\dot{I} & = & + \beta Q I & - ( \gamma + \chi ) I \\
+	\dot{R} & = & + \gamma I
+\end{array}
+
+@]@</small>
+<table><tr><td align='left'  valign='top'>
+
+<small>@(@
+Q(t)
+@)@</small>       </td><td align='left'  valign='top'>
+ susceptible fraction of the population   </td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+I(t)
+@)@</small>       </td><td align='left'  valign='top'>
+ infectious fraction of the population    </td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+R(t)
+@)@</small>       </td><td align='left'  valign='top'>
+ recovered fraction of the population     </td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\beta(t)
+@)@</small>   </td><td align='left'  valign='top'>
+ infectious rate                          </td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\gamma(t)
+@)@</small>  </td><td align='left'  valign='top'>
+ recovery rate                            </td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+\chi(t)
+@)@</small>    </td><td align='left'  valign='top'>
+ excess mortality rate (for this disease)
+</td></tr>
+</table>
+<br>
+<big><a name="SIR Model.Data Model" id="SIR Model.Data Model">Data Model</a></big>
+<br>
+The model for a measurement of the i-th difference in cumulative death is
+<small>@[@
+
+	d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) I (t) dt
+
+@]@</small>
+<table><tr><td align='left'  valign='top'>
+
+<small>@(@
+d_i
+@)@</small> </td><td align='left'  valign='top'>
+ the i-th difference in cumulative death            </td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+e_i
+@)@</small> </td><td align='left'  valign='top'>
+ noise in the i-th difference in cumulative death   </td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+a_i
+@)@</small> </td><td align='left'  valign='top'>
+ start time for i-th difference in cumulative death </td></tr><tr><td align='left'  valign='top'>
+
+<small>@(@
+b_i
+@)@</small> </td><td align='left'  valign='top'>
+ end time for i-th difference in cumulative death
+</td></tr>
+</table>
+<br>
+<big><a name="SIR Model.Discussion" id="SIR Model.Discussion">Discussion</a></big>
+<br>
+The model does not include births and deaths due to other causes, but this
+would introduce even more unknowns.
+Another problem with the model above is that it is not identifiable given just
+measurements of cumulative death; i.e., there are two many unknown functions.
+One approach to this problem is to assume we know
+the rates <small>@(@
+\gamma(t)
+@)@</small>, <small>@(@
+\chi(t)
+@)@</small> and
+only estimate <small>@(@
+\beta(t)
+@)@</small> and the initial conditions
+<small>@(@
+Q(0)
+@)@</small>, <small>@(@
+I(0)
+@)@</small>, <small>@(@
+R(0)
+@)@</small>.
+Another problem is that deaths are often under reported; e.g., they might only
+be the deaths in the hospitals or for people who have been confirmed to have the
+disease.
+
+<br>
+<br>
+<b><big><a name="Dismod Model" id="Dismod Model">Dismod Model</a></big></b>
+<br>
+The Dismod model for an epidemic is the following ODE:
+<small>@[@
+
+\begin{array}{rcll}
+	\dot{S} & = & - \iota S & + \rho            C    \\
+	\dot{C} & = & + \iota S & - ( \rho + \chi ) C
+\end{array}
+
+@]@</small>
+together with the following cumulative death model
+<small>@[@
+
+	d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) \frac{C(t)}{S(t) + C(t)} dt
+
+@]@</small>
+Remission <small>@(@
+\rho
+@)@</small> is <small>@(@
+\gamma
+@)@</small> in the SIR model.
+Prevalence <small>@(@
+C(t) / [ S(t) + C(t) ]
+@)@</small>
+is to <small>@(@
+I(t)
+@)@</small> in the SIR model.
+Susceptible <small>@(@
+S(t)
+@)@</small> is <small>@(@
+Q(t) + R(t)
+@)@</small> in the SIR model.
+Not all the members of S are susceptible to the disease; i.e., the members of R.
+It would be nice to complete the <a href="wish_list.htm#Immunity" target="_top"><span style='white-space: nowrap'>immunity</span></a>
+
+wish list item so this would not be necessary.
+However, because of under reporting of deaths, <small>@(@
+Q(t)
+@)@</small> in the SIR model
+also has members that are not susceptible to the disease.
+
+<br>
+<br>
+<b><big><a name="Data" id="Data">Data</a></big></b>
+<br>
+For this example, we get the cumulative death data and covariates from a
+text string version of a CSV file with the following columns:
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>day</span></font></i></code>
+       </td><td align='left'  valign='top'>
+ days since the first cumulative death value </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>death</span></font></i></code>
+     </td><td align='left'  valign='top'>
+ cumulative death value for this day         </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>mobility</span></font></i></code>
+  </td><td align='left'  valign='top'>
+ a social mobility covariate                 </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>testing</span></font></i></code>
+   </td><td align='left'  valign='top'>
+ level of testing for the disease covariate
+</td></tr>
+</table>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>mobility</span></font></i></code>
+ covariate has been shifted and scaled to be in the
+interval [-1, 0] with zero corresponding to normal mobility.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>testing</span></font></i></code>
+ covariate has been scaled to the interval [0, 1]
+with zero corresponding to no testing.
+
+<br>
+<br>
+<b><big><a name="Model Variables" id="Model Variables">Model Variables</a></big></b>
+<br>
+There is only one location for this example, so there are no random effects.
+If you had data from multiple locations you could use random effects to improve
+the estimation.
+
+<br>
+<br>
+<big><a name="Model Variables.Rates" id="Model Variables.Rates">Rates</a></big>
+<br>
+The prior for the value of <small>@(@
+\iota(t)
+@)@</small> is uniform with
+lower limit 1e-6, upper limit 1.0, and mean 1e-3.
+The mean is only used as a starting point and scaling point for the optimization.
+The prior for the forward difference of <small>@(@
+\iota(t)
+@)@</small> between grid points is
+log Gaussian with mean zero, standard deviation 0.1 and the offset in the
+log transformation is 1e-5. The corresponds to a difference of 10 percent between
+days being a weighted residual of one.
+The other rates are modeled as the following known constants:
+<small>@(@
+\rho = 0.1
+@)@</small> and <small>@(@
+\chi = 0.01
+@)@</small>.
+
+<br>
+<br>
+<big><a name="Model Variables.Covariates" id="Model Variables.Covariates">Covariates</a></big>
+<br>
+There are two covariate multipliers for this example, one for mobility
+and the other for testing. These affect the rate <small>@(@
+\iota(t)
+@)@</small>.
+They are both have one grid point (are constant in time) and
+have a uniform prior with lower limit -1, upper limit +1, and mean zero.
+It appears that the bounds on the covariate multipliers are active at the
+solution; i.e., more effect would improve the objective; see the file
+<a href="db2csv_command.htm#variable.csv" target="_top"><span style='white-space: nowrap'>variable.csv</span></a>
+ generated by the
+<code><font color="blue">db2csv</font></code> command after the fit was done.
+
+<br>
+<br>
+<b><big><a name="Predictions" id="Predictions">Predictions</a></big></b>
+<br>
+To do predictions for the next week, we could fit a function to the previous
+weeks baseline value of <small>@(@
+\iota(t)
+@)@</small> (value without the covariates effects).
+This gives us a prediction for the baseline value of <small>@(@
+\iota(t)
+@)@</small>
+for the next week. We would then include some assumed covariate values for the next
+and predict the differences in cumulative death for each day during the next week.
+The subtitle point here is that the prior for <small>@(@
+\iota(t)
+@)@</small> is a constant,
+but the posterior is not. Actually <small>@(@
+\beta(t)
+@)@</small> in the SIR model
+is more likely to be constant and it might be better to fit the <small>@(@
+\beta(t)
+@)@</small>
+that corresponds to the previous fit for <small>@(@
+I(t) = C(t) / [ S(t) + C(t) ]
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Display Fit" id="Display Fit">Display Fit</a></big></b>
+<br>
+If this variable is true, some of the fit results will be printed and plotted:
+<pre style='display:inline'><tt>
+display_fit <font color="#990000">=</font> False
+</tt></pre>
+
+<hr>Input File: example/user/covid_19.py
+
+</body>
+</html>
