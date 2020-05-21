@@ -64,6 +64,7 @@ $children%
 	example/user/const_random.py%
 	example/user/const_value.py%
 	example/user/continue_fit.py%
+	example/user/covid_19.py%
 	example/user/csv2db.py%
 	example/user/data_sim.py%
 	example/user/diabetes.py%
@@ -98,6 +99,7 @@ $comment END_SORT_THIS_LINE_MINUS_3$$
 
 $head Examples With Explanation$$
 $table
+$rref user_covid_19.py$$
 $rref user_one_function.py$$
 $rref user_residual.py$$
 $rref user_fit_random.py$$

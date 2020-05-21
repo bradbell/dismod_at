@@ -8,28 +8,172 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # $begin user_covid_19.py$$ $newlinech #$$
+# $spell
+#	Covid
+#	csv
+#	dismod
+#	covariates
+#	covariate
+# $$
 #
 # $section Model The Covid-19 Epidemic$$
 #
-# $head csv_file_data$$
-# This example simulates reading a CSV file with the following columns:
+# $head Goal$$
+# Use previous cumulative death data for a location to predict future
+# cumulative deaths.
+#
+# $head Data File$$
+# The cumulative death data is the most reliable data available for the
+# Covid-19 epidemic. It is also the statistic we are most interested in predicting.
+# Our example data has the following columns:
 # $table
-# $icode day$$      $cnext day that this row of data corresponds to $rnext
-# $icode death$$    $cnext cummulative covid_19 death as fraction of population $rnext
-# $icode mobility$$ $cnext mobility shifted and scaled to be in [-1, 0.]   $rnext
+# $icode day$$      $cnext day that this row of data corresponds to             $rnext
+# $icode death$$    $cnext cumulative covid_19 death as fraction of population  $rnext
+# $icode mobility$$ $cnext mobility shifted and scaled to be in [-1, 0.]        $rnext
 # $icode testing$$  $cnext testing shifted and scaled to be in [0., 1]
-# $icode
+# $tend
+# We assume that difference in the cumulative death data are independent; i.e.,
+# the amount added to the cumulative death is the actual measurement recorded
+# at the end of a time interval.
+# For the purpose of this example, we mimic a csv file with a string that
+# has this information.
 #
+# $head SIR Model$$
 #
+# $subhead ODE$$
+# We use $latex Q$$ in place of $latex S$$ in the SIR Model
+# to avoid confusion with the dismod meaning of $latex S$$.
+# The SIR Model for an epidemic is the following differential equations:
+# $latex \[
+# \begin{array}{rcll}
+#	\dot{Q} & = & - \beta Q I \\
+#	\dot{I} & = & + \beta Q I & - ( \gamma + \chi ) I \\
+#	\dot{R} & = & + \gamma I
+# \end{array}
+# \] $$
+# $table
+# $latex Q(t)$$       $cnext susceptible fraction of the population   $rnext
+# $latex I(t)$$       $cnext infectious fraction of the population    $rnext
+# $latex R(t)$$       $cnext recovered fraction of the population     $rnext
+# $latex \beta(t)$$   $cnext infectious rate                          $rnext
+# $latex \gamma(t)$$  $cnext recovery rate                            $rnext
+# $latex \chi(t)$$    $cnext excess mortality rate (for this disease)
+# $tend
+#
+# $subhead Data Model$$
+# The model for a measurement of the i-th difference in cumulative death is
+# $latex \[
+#	d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) I (t) dt
+# \] $$
+# $table
+# $latex d_i$$ $cnext the i-th difference in cumulative death            $rnext
+# $latex e_i$$ $cnext noise in the i-th difference in cumulative death   $rnext
+# $latex a_i$$ $cnext start time for i-th difference in cumulative death $rnext
+# $latex b_i$$ $cnext end time for i-th difference in cumulative death
+# $tend
+#
+# $subhead Discussion$$
+# The model does not include births and deaths due to other causes, but this
+# would introduce even more unknowns.
+# Another problem with the model above is that it is not identifiable given just
+# measurements of cumulative death; i.e., there are two many unknown functions.
+# One approach to this problem is to assume we know
+# the rates $latex \gamma(t)$$, $latex \chi(t)$$ and
+# only estimate $latex \beta(t)$$ and the initial conditions
+# $latex Q(0)$$, $latex I(0)$$, $latex R(0)$$.
+# Another problem is that deaths are often under reported; e.g., they might only
+# be the deaths in the hospitals or for people who have been confirmed to have the
+# disease.
+#
+# $head Dismod Model$$
+# The Dismod model for an epidemic is the following ODE:
+# $latex \[
+# \begin{array}{rcll}
+#	\dot{S} & = & - \iota S & + \rho            C    \\
+#	\dot{C} & = & + \iota S & - ( \rho + \chi ) C
+# \end{array}
+# \] $$
+# together with the following cumulative death model
+# $latex \[
+#	d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) \frac{C(t)}{S(t) + C(t)} dt
+# \] $$
+# Remission $latex \rho$$ is $latex \gamma$$ in the SIR model.
+# Prevalence $latex C(t) / [ S(t) + C(t) ]$$
+# is to $latex I(t)$$ in the SIR model.
+# Susceptible $latex S(t)$$ is $latex Q(t) + R(t)$$ in the SIR model.
+# Not all the members of S are susceptible to the disease; i.e., the members of R.
+# It would be nice to complete the $cref/immunity/wish_list/Immunity/$$
+# wish list item so this would not be necessary.
+# However, because of under reporting of deaths, $latex Q(t)$$ in the SIR model
+# also has members that are not susceptible to the disease.
+#
+# $head Data$$
+# For this example, we get the cumulative death data and covariates from a
+# text string version of a CSV file with the following columns:
+# $table
+# $icode day$$       $cnext days since the first cumulative death value $rnext
+# $icode death$$     $cnext cumulative death value for this day         $rnext
+# $icode mobility$$  $cnext a social mobility covariate                 $rnext
+# $icode testing$$   $cnext level of testing for the disease covariate
+# $tend
+# The $icode mobility$$ covariate has been shifted and scaled to be in the
+# interval [-1, 0] with zero corresponding to normal mobility.
+# The $icode testing$$ covariate has been scaled to the interval [0, 1]
+# with zero corresponding to no testing.
+#
+# $head Model Variables$$
+# There is only one location for this example, so there are no random effects.
+# If you had data from multiple locations you could use random effects to improve
+# the estimation.
+#
+# $subhead Rates$$
+# The prior for the value of $latex \iota(t)$$ is uniform with
+# lower limit 1e-6, upper limit 1.0, and mean 1e-3.
+# The mean is only used as a starting point and scaling point for the optimization.
+# The prior for the forward difference of $latex \iota(t)$$ between grid points is
+# log Gaussian with mean zero, standard deviation 0.1 and the offset in the
+# log transformation is 1e-5. The corresponds to a difference of 10 percent between
+# days being a weighted residual of one.
+# The other rates are modeled as the following known constants:
+# $latex \rho = 0.1$$ and $latex \chi = 0.01$$.
+#
+# $subhead Covariates$$
+# There are two covariate multipliers for this example, one for mobility
+# and the other for testing. These affect the rate $latex \iota(t)$$.
+# They are both have one grid point (are constant in time) and
+# have a uniform prior with lower limit -1, upper limit +1, and mean zero.
+# It appears that the bounds on the covariate multipliers are active at the
+# solution; i.e., more effect would improve the objective; see the file
+# $cref/variable.csv/db2csv_command/variable.csv/$$ generated by the
+# $code db2csv$$ command after the fit was done.
+#
+# $head Predictions$$
+# To do predictions for the next week, we could fit a function to the previous
+# weeks baseline value of $latex \iota(t)$$ (value without the covariates effects).
+# This gives us a prediction for the baseline value of $latex \iota(t)$$
+# for the next week. We would then include some assumed covariate values for the next
+# and predict the differences in cumulative death for each day during the next week.
+# The subtitle point here is that the prior for $latex \iota(t)$$ is a constant,
+# but the posterior is not. Actually $latex \beta(t)$$ in the SIR model
+# is more likely to be constant and it might be better to fit the $latex \beta(t)$$
+# that corresponds to the previous fit for $latex I(t) = C(t) / [ S(t) + C(t) ]$$.
+#
+# $head Display Fit$$
+# If this variable is true, some of the fit results will be printed and plotted:
+# $srccode%py%
+display_fit = False
+# %$$
 # $end
 # ------------------------------------------------------------------------------------
 # BEGIN_PYTHON
 import sys
 import os
 import csv
-import distutils.dir_util
 import copy
+import numpy
+import distutils.dir_util
 import matplotlib.pyplot
+import matplotlib.gridspec
 test_program = 'example/user/covid_19.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -291,12 +435,17 @@ def example_db(file_name) :
 		'smooth':     'smooth_covariate',
 	} ]
 	#
-	# option_tabel
+	# option_table
+	if display_fit :
+		print_level = '5'
+	else :
+		print_level = '0'
 	option_table = [
 		{ 'name'  : 'parent_node_name',   'value' : 'world'            },
 		{ 'name'  : 'rate_case',          'value' : 'iota_pos_rho_pos' },
-		{ 'name'  : 'print_level_fixed',  'value' : '5'                },
+		{ 'name'  : 'print_level_fixed',  'value' : print_level        },
 		{ 'name'  : 'quasi_fixed',        'value' : 'false'            },
+		{ 'name'  : 'tolerance_fixed',    'value' : '1e-11'            },
 	]
 	# ----------------------------------------------------------------------
 	# create database
@@ -331,24 +480,61 @@ dismod_at.system_command_prc([ program_cpp, file_name, 'init' ])
 dismod_at.system_command_prc([ program_cpp, file_name, 'fit', 'fixed' ])
 dismod_at.system_command_prc([ program_py,  file_name, 'db2csv' ])
 #
-# plot result
-file_in = 'variable.csv'
-file_in = open(file_in, 'r')
-reader  = csv.DictReader(file_in)
-time    = list()
-iota    = list()
+# weighted residuals
+file_in  = 'data.csv'
+file_in  = open(file_in, 'r')
+reader   = csv.DictReader(file_in)
+time_r   = list()
+residual = list()
 for row in reader :
-	if row['var_type'] == 'rate' and row['rate'] == 'iota' :
-		time.append( float(row['time']) )
-		iota.append( float(row['fit_value']) )
+	assert row['integrand'] == 'mtspecific'
+	assert row['time_lo']   == row['time_up']
+	time_r.append( float( row['time_lo'] ) )
+	residual.append( float( row['residual'] ) )
+residual_max  = numpy.max(residual)
+residual_min  = numpy.min(residual)
+residual_avg  = numpy.mean(residual)
 #
-fig, ax = matplotlib.pyplot.subplots()
-ax.plot(time, iota)
-ax.set(xlabel = 'day')
-ax.set(ylabel = 'iota(t)' )
-ax.set(title = 'beta(t) / I(t)' )
-matplotlib.pyplot.show()
-
+if display_fit :
+	# print residual statistics
+	print( 'residual_max = ', residual_max )
+	print( 'residual_max = ', residual_max )
+	print( 'residual_avg = ', residual_avg )
+	#
+	# plot setup
+	fig     = matplotlib.pyplot.figure(tight_layout = True)
+	gs      = matplotlib.gridspec.GridSpec(2,1)
+	ax1     = fig.add_subplot(gs[0,0])
+	ax2     = fig.add_subplot(gs[1,0])
+	#
+	# plot death data weighted residuals
+	ax2.plot(time_r, residual, 'k+')
+	ax2.plot( [time_r[0], time_r[-1]], [0.0, 0.0], 'k-')
+	ax2.set_xlabel('time')
+	ax2.set_ylabel('weighted residuals')
+	#
+	# plot iota(t)
+	file_in = 'variable.csv'
+	file_in = open(file_in, 'r')
+	reader  = csv.DictReader(file_in)
+	time_i  = list()
+	iota    = list()
+	for row in reader :
+		if row['var_type'] == 'rate' and row['rate'] == 'iota' :
+			time_i.append( float(row['time']) )
+			iota.append( float(row['fit_value']) )
+	ax1.plot(time_i, iota, 'k-')
+	ax1.set(xlabel = 'day')
+	ax1.set(ylabel = 'iota' )
+	file_in.close()
+	#
+	# display plot
+	matplotlib.pyplot.show()
+#
+# check residuals
+assert residual_max < 4.0
+assert -4.0 < residual_min
+assert abs( residual_avg ) < 0.5
 #
 print('covid_19.py: OK')
 sys.exit(0)

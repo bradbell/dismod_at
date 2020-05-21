@@ -38,6 +38,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 05-21$$
+The $cref user_covid_19.py$$ example was added.
+
 $head 05-15$$
 Add another restriction on the $cref/group_name/subgroup_table/group_name/$$.
 To be specific, the only case were a group name can also be a subgroup name
