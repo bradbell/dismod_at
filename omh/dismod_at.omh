@@ -43,7 +43,7 @@ $spell
 	integrands
 	covariate
 $$
-$section dismod_at-20200521: User Documentation and API$$
+$section dismod_at-20200527: User Documentation and API$$
 
 $head Purpose$$
 Estimating disease rates as functions of age and time.
