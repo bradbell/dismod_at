@@ -161,7 +161,7 @@
 # $head Display Fit$$
 # If this variable is true, some of the fit results will be printed and plotted:
 # $srccode%py%
-display_fit = False
+display_fit = True
 # %$$
 # $end
 # ------------------------------------------------------------------------------------
