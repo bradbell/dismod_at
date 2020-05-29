@@ -40,6 +40,9 @@ $section Changes and Additions to Dismod_at During 2020$$
 
 $head 05-29$$
 $list number$$
+A check was added for the case where there are more constraints on the random
+effects than there are random effects.
+$lnext
 Add the $cref user_subgroup_mulcov.py$$ example.
 This combines fixed and random effects for both parent/child and
 group/subgroup and for the same rate.

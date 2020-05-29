@@ -66,6 +66,7 @@ $end
 # include <dismod_at/ran_con_rcv.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/random_effect.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // BEGIN_RAN_CON_RCV
@@ -188,6 +189,12 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
 	//
 	// number of columns in random constraint equations
 	size_t A_nc = random_const.n_var();
+	//
+	// check for more constraints than random effects
+	if( A_nr > A_nc )
+	{	std::string msg = "More random constraints than random effects";
+		error_exit(msg);
+	}
 	//
 	// sparsity pattern for random constraints
 	CppAD::mixed::sparse_rc A_rc(A_nr, A_nc, A_nnz);
