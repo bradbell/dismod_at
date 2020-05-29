@@ -41,6 +41,7 @@ FOREACH(user_case
 	no_children
 	one_function
 	sample_simple
+	subgroup_mulcov
 	predict_fit
 	predict_mulcov
 	zsum_child_rate

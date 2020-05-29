@@ -91,6 +91,7 @@ $children%
 	example/user/sample_asy.py%
 	example/user/speed.py%
 	example/user/students.py%
+	example/user/subgroup_mulcov.py%
 	example/user/zsum_child_rate.py%
 	example/user/zsum_mulcov_meas.py%
 	example/user/zsum_mulcov_rate.py
@@ -130,6 +131,7 @@ $rref user_zsum_child_rate.py$$
 $rref user_zsum_mulcov_rate.py$$
 $rref user_zsum_mulcov_meas.py$$
 $rref user_bilevel_random.py$$
+$rref user_subgroup_mulcov.py$$
 $rref user_hes_fixed_math.py$$
 $rref user_hes_random.py$$
 $tend

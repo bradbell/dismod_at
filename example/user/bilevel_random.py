@@ -240,17 +240,14 @@ def example_db (file_name) :
 			'lower':   iota_n1(0)   / 100.0,
 			'upper':   iota_n1(100) * 100.0,
 			'mean':    iota_n1(50) / 2.0,
-			'std':     iota_n1(50)
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
 			'density': 'uniform',
 			'mean':     0.0,
-			'std':      100.0,
 		},{ # prior_iota_subgroup
 			'name':    'prior_iota_subgroup',
 			'density': 'uniform',
 			'mean':     0.0,
-			'std':      100.0,
 		}
 	]
 	# smooth_table
