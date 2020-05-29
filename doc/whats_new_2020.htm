@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>05-29</option>
 <option>05-27</option>
 <option>05-21</option>
 <option>05-15</option>
@@ -98,6 +99,31 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="05-29" id="05-29">05-29</a></big></b>
+
+<ol type="1"><li>
+Add the <a href="user_subgroup_mulcov.py.htm" target="_top"><span style='white-space: nowrap'>user_subgroup_mulcov.py</span></a>
+ example.
+This combines fixed and random effects for both parent/child and
+group/subgroup and for the same rate.
+</li><li>
+
+The standard deviation was removed from the prior for some
+uniform priors in <a href="user_bilevel_random.py.htm" target="_top"><span style='white-space: nowrap'>user_bilevel_random.py</span></a>
+
+(it was not being used).
+</li><li>
+
+Advance to <code><font color="blue">cppad_mixed-20200529</font></code>.
+This adds a missing error report when the Hessian w.r.t. the random
+effects is not positive definite at the starting variable values and
+<a href="option_table.htm#Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+ is false.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="05-27" id="05-27">05-27</a></big></b>
 <br>

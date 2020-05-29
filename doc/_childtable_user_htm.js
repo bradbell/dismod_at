@@ -37,6 +37,7 @@ document.write('\
 <option>user_sample_asy.py</option>\
 <option>user_speed.py</option>\
 <option>user_students.py</option>\
+<option>user_subgroup_mulcov.py</option>\
 <option>user_zsum_child_rate.py</option>\
 <option>user_zsum_mulcov_meas.py</option>\
 <option>user_zsum_mulcov_rate.py</option>\
@@ -79,6 +80,7 @@ function user_child(item)
 		'user_sample_asy.py.htm',
 		'user_speed.py.htm',
 		'user_students.py.htm',
+		'user_subgroup_mulcov.py.htm',
 		'user_zsum_child_rate.py.htm',
 		'user_zsum_mulcov_meas.py.htm',
 		'user_zsum_mulcov_rate.py.htm'
