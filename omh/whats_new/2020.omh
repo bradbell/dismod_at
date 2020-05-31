@@ -38,7 +38,7 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
-$head 05-20$$
+$head 05-30$$
 Advance to $code cppad_mixed-20200530$$
 (more work on the adaptive derivative checker).
 
