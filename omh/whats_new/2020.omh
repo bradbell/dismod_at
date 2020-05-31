@@ -38,6 +38,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 05-20$$
+Advance to $code cppad_mixed-20200530$$
+(more work on the adaptive derivative checker).
+
 $head 05-29$$
 $list number$$
 A check was added for the case where there are more constraints on the random

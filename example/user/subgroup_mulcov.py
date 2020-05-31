@@ -257,7 +257,7 @@ def example_db (file_name) :
 		{ 'name':'max_num_iter_fixed',    'value':'100'},
 		{ 'name':'print_level_fixed',     'value':'0'},
 		{ 'name':'tolerance_fixed',       'value':'1e-12'},
-		# { 'name':'derivative_test_fixed', 'value':'trace-adaptive'},
+		{ 'name':'derivative_test_fixed', 'value':'adaptive'},
 	]
 	# integrand_table
 	integrand_table = [ {'name':'Sincidence'} ]
