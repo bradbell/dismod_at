@@ -205,10 +205,6 @@ then
 	echo_eval mkdir build
 fi
 echo_eval cd build
-if [ -e 'CMakeFiles' ]
-then
-	rm -r CMakeFiles
-fi
 if [ -e 'CMakeCache.txt' ]
 then
 	rm CMakeCache.txt
