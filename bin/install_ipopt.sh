@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-17 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -21,9 +21,8 @@ echo_eval() {
 	eval $*
 }
 # --------------------------------------------------------------------------
-version="Ipopt-3.12.6"
-third_party="Mumps Metis"
-web_page="http://www.coin-or.org/download/source/Ipopt"
+version="3.13.2"
+coinbrew='https://raw.githubusercontent.com/coin-or/coinbrew/master/coinbrew'
 # ---------------------------------------------------------------------------
 # Get user configuration options from run_cmake.sh
 #
@@ -43,8 +42,7 @@ eval $cmd
 cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
 eval $cmd
 # --------------------------------------------------------------------------
-export PKG_CONFIG_PATH=$ipopt_prefix/$cmake_libdir/pkgconfig
-# --------------------------------------------------------------------------
+# set links for this build type
 if echo "$ipopt_prefix" | grep '/dismod_at$' > /dev/null
 then
 	bin/build_type.sh install_ipopt $ipopt_prefix $build_type
@@ -55,65 +53,41 @@ then
 	mkdir -p build/external
 fi
 cd build/external
-# --------------------------------------------------------------------------
-if [ ! -e $version.tgz ]
+# -----------------------------------------------------------------------------
+if [ ! -e coinbrew ]
 then
-	echo_eval wget "$web_page/$version.tgz"
+    echo_eval wget $coinbrew
+    echo_eval chmod +x coinbrew
 fi
-if [ -e $version ]
+if [ ! -e Ipoot ]
 then
-	echo_eval rm -rf $version
+    ./coinbrew fetch Ipopt@$version --no-prompt
 fi
-echo_eval tar -xzf $version.tgz
-# --------------------------------------------------------------------------
-echo_eval cd $version
-if [ -e ThirdParty/HSL ]
-then
-	echo_eval rm -rf ThirdParty/HSL
-fi
-#
-for package in $third_party
-do
-	echo_eval cd ThirdParty/$package
-	echo_eval ./get.$package
-	echo_eval cd ../..
-done
-# ----------------------------------------------------------------------------
-if [ ! -e build ]
-then
-	echo_eval mkdir build
-fi
-cd build
-if [ "$build_type" == 'debug' ]
-then
-	debug_flag='--enable-debug'
-else
-	debug_flag=''
-fi
-if [ "$cmake_cxx_compiler" == '' ]
-then
-	comipler=''
-	skip_warn=''
-else
-	compiler="CXX=$cmake_cxx_compiler"
-	if [ "$cmake_cxx_compiler" == 'clang' ]
-	then
-		skip_warn='coin_skip_warn_cxxflags=yes'
-	fi
-fi
-cat << EOF > config.sh
-../configure \\
-	$debug_flag \\
-	$compiler \\
-	$skip_warn \\
-	--enable-static \\
-	--prefix=$ipopt_prefix \\
-	--libdir=$ipopt_prefix/$cmake_libdir \\
-	--with-blas-lib="-lblas" \\
-	--with-lapack-lib="-llapack"
+# -----------------------------------------------------------------------------
+# klugde necessary until coin or mumps fixes this problem
+cat << EOF > junk.f
+      program junk
+      print*, "Hello World"
+      end
 EOF
-echo_eval cat config.sh
-echo_eval sh config.sh
-echo_eval make install | tee make.log
+if gfortran -c -fallow-argument-mismatch junk.f >& /dev/null
+then
+    echo 'Adding -fallow-argument-mismatch to Mumps fortran compiler flags'
+    ADD_FCFLAGS='ADD_FCFLAGS=-fallow-argument-mismatch'
+else
+    ADD_FCFLAGS=''
+fi
+# -----------------------------------------------------------------------------
+echo_eval ./coinbrew build Ipopt@$version \
+	--test \
+	--no-prompt \
+	--verbosity=3 \
+    --prefix=$ipopt_prefix \
+	--libdir=$ipopt_prefix/$cmake_libdir \
+	$ADD_FCFLAGS
+#
+echo_eval ./coinbrew install Ipopt@$version \
+    --no-prompt
 # ----------------------------------------------------------------------------
 echo 'install_ipopt.sh: OK'
+exit 0

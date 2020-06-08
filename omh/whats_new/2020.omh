@@ -22,6 +22,7 @@ $spell
 	sim
 	cppad
 	hes
+	ipopt
 $$
 $navigate%
 	Up%Location%
@@ -37,6 +38,9 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 06-07$$
+Advance to ipopt-3.13.2, cppad-20200606, cppad_mixed-20200607.
 
 $head 05-30$$
 Advance to $code cppad_mixed-20200530$$
