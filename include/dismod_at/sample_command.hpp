@@ -22,6 +22,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void sample_command(
 	const std::string&                                 method           ,
+	const std::string&                                 variables        ,
 	const std::string&                                 number_sample    ,
 	const std::string&                                 sample_index     ,
 	sqlite3*                                           db               ,

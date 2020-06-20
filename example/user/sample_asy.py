@@ -19,7 +19,8 @@
 # $head Purpose$$
 # The command
 # $codei%
-#	dismod_at %database% sample asymptotic
+#	dismod_at %database% sample asymptotic both  %number_sample%
+#	dismod_at %database% sample asymptotic fixed %number_sample%
 # %$$
 # samples form an asymptotic approximation for the posterior distribution
 # of the $cref model_variables$$.
@@ -49,7 +50,15 @@
 #		- \frac{ ( y - \mu )^2 }{ \sigma^2 }
 #		- \log \left( \sigma \sqrt{ 2 \pi } \right)
 # \] $$
-# The total log-likelihood for this example is
+# The total log-likelihood for
+# $cref/fit fixed/fit_command/variables/fixed/$$ is
+# $latex \[
+#	h[ y_n, \iota_n, s_n ] +
+#	h[ y_m, \iota_n, s_m ] +
+#	h[ y_c, \iota_n, s_c ]
+# \] $$
+# The total log-likelihood for
+# $cref/fit both/fit_command/variables/both/$$ is
 # $latex \[
 #	h[ y_n, \iota_n, s_n ] +
 #	h[ y_m, \exp( u_m ) \iota_n, s_m ] +
@@ -114,7 +123,23 @@ def h(y, mu, sigma ) :
 	res = (y - mu ) / sigma
 	return - res * res - math.log( sigma )
 #
-def log_f(x) :
+def log_f_fixed(x) :
+	iota_n = x[0]
+	#
+	y_n    = measure['north_america']
+	y_m    = measure['mexico']
+	y_c    = measure['canada']
+	#
+	s_n    = standard['north_america']
+	s_m    = standard['mexico']
+	s_c    = standard['canada']
+	#
+	ret    = h(y_n, iota_n, s_n)
+	ret   += h(y_m, iota_n, s_m )
+	ret   += h(y_c, iota_n, s_c )
+	return ret
+#
+def log_f_both(x) :
 	iota_n = x[0]
 	u_m    = x[1]
 	u_c    = x[2]
@@ -293,22 +318,16 @@ example_db(file_name)
 program   = '../../devel/dismod_at'
 ns_string = str(number_sample)
 dismod_at.system_command_prc([ program, file_name, 'init' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
-dismod_at.system_command_prc(
-	[ program, file_name, 'sample', 'asymptotic', ns_string ]
-)
-# -----------------------------------------------------------------------
-# connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-# -----------------------------------------------------------------------
-# get tables
+#
+# Tables that are the same for both types of sampling
+new           = False
+connection    = dismod_at.create_connection(file_name, new)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
-sample_table  = dismod_at.get_table_dict(connection, 'sample')
+connection.close()
 assert len(var_table) == 3
-# -----------------------------------------------------------------------
+#
 # map from node name to variable id
 node_name2var_id = dict()
 for var_id in range(len(var_table) ) :
@@ -318,46 +337,73 @@ for var_id in range(len(var_table) ) :
 	node_name = node_table[row['node_id']]['node_name']
 	node_name2var_id[node_name] = var_id
 #
-# convert samples to a numpy array
-sample_array = numpy.zeros( (number_sample, 3), dtype = float )
-for row in sample_table :
-	var_id                              = row['var_id']
-	sample_index                        = row['sample_index']
-	sample_array[sample_index, var_id ] = row['var_value']
-#
-# compute statistics
-var_avg = numpy.average(sample_array, axis=0);
-var_std = numpy.std(sample_array, axis=0, ddof=1);
-# -----------------------------------------------------------------------
-# now use MCMC to calculate the same values
-print('mcmc')
-numpy.random.seed( seed = random_seed )
-x0         = numpy.array( [ 1e-2, 0.0, 0.0 ] )
-s          = numpy.array( [ 1e-3, 1e-1, 1e-1] )
-(a, c)     = dismod_at.metropolis(log_f, number_metropolis, x0, s)
-burn_in    = int( 0.1 * number_metropolis )
-c          = c[burn_in :, :]
-x_avg_mcmc = numpy.average(c, axis=0)
-x_std_mcmc = numpy.std(c, axis=0, ddof=1)
-mcmc_order = [ 'north_america', 'mexico', 'canada' ]
-# -----------------------------------------------------------------------
-# now check values
-for i in range( len(var_table) ) :
-	node_name = mcmc_order[i]
-	var_id    = node_name2var_id[node_name]
-	value     = var_avg[var_id]
-	mcmc      = x_avg_mcmc[i]
-	err       = value / mcmc - 1.0
-	if abs( err ) > 0.05 :
-		print(node_name, '_avg (value, mcmc, err) = ', value, mcmc, err)
-		print('random_seed = ', random_seed )
-		assert(False)
-	value     = var_std[var_id]
-	mcmc      = x_std_mcmc[i]
-	err       = value / mcmc  - 1.0
-	if abs(err) > 0.6 :
-		print(node_name, '_std (value, mcmc, err) = ', value, mcmc, err)
-		print('random_seed = ', random_seed )
-		assert(False)
+for variables in [ 'fixed' , 'both' ] :
+	dismod_at.system_command_prc([ program, file_name, 'fit', variables ])
+	dismod_at.system_command_prc(
+		[ program, file_name, 'sample', 'asymptotic', variables, ns_string ]
+	)
+	# -----------------------------------------------------------------------
+	# sample_table
+	new             = False
+	connection      = dismod_at.create_connection(file_name, new)
+	sample_table  = dismod_at.get_table_dict(connection, 'sample')
+	#
+	# var_avg, var_std
+	sample_array = numpy.zeros( (number_sample, 3), dtype = float )
+	for row in sample_table :
+		var_id                              = row['var_id']
+		sample_index                        = row['sample_index']
+		sample_array[sample_index, var_id ] = row['var_value']
+	#
+	# compute statistics
+	var_avg = numpy.average(sample_array, axis=0);
+	var_std = numpy.std(sample_array, axis=0, ddof=1);
+	# -----------------------------------------------------------------------
+	# now use MCMC to calculate the same values
+	print('mcmc')
+	numpy.random.seed( seed = random_seed )
+	if variables == 'fixed' :
+		x0         = numpy.array( [ 1e-2 ] )
+		s          = numpy.array( [ 1e-3] )
+		log_f      = log_f_fixed
+	else :
+		x0         = numpy.array( [ 1e-2, 0.0, 0.0 ] )
+		s          = numpy.array( [ 1e-3, 1e-1, 1e-1] )
+		log_f      = log_f_both
+	mcmc_order = [ 'north_america', 'mexico', 'canada' ]
+	(a, c)     = dismod_at.metropolis(log_f, number_metropolis, x0, s)
+	burn_in    = int( 0.1 * number_metropolis )
+	c          = c[burn_in :, :]
+	x_avg_mcmc = numpy.average(c, axis=0)
+	x_std_mcmc = numpy.std(c, axis=0, ddof=1)
+	# -----------------------------------------------------------------------
+	# now check values
+	for i in range( len(var_table) ) :
+		node_name = mcmc_order[i]
+		var_id    = node_name2var_id[node_name]
+		value     = var_avg[var_id]
+		if node_name == 'north_america' or variables == 'both' :
+			mcmc      = x_avg_mcmc[i]
+			err   = value / mcmc - 1.0
+		else :
+			err   = value
+		if abs( err ) > 0.05 :
+			print(node_name, '_avg (value, mcmc, err) = ',
+				value, mcmc, err
+			)
+			print('random_seed = ', random_seed )
+			assert(False)
+		value     = var_std[var_id]
+		if node_name == 'north_america' or variables == 'both' :
+			mcmc = x_std_mcmc[i]
+			err  = value / mcmc  - 1.0
+		else :
+			err  = value
+		if abs(err) > 0.6 :
+			print(node_name, '_std (value, mcmc, err) = ',
+				value, mcmc, err
+			)
+			print('random_seed = ', random_seed )
+			assert(False)
 print('sample_asy.py: OK')
 # END PYTHON

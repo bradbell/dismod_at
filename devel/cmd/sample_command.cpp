@@ -37,9 +37,9 @@ $$
 $section The Sample Command$$
 
 $head Syntax$$
-$codei%dismod_at %database% sample %method% %number_sample%
+$codei%dismod_at %database% sample %method% %variables% %number_sample%
 %$$
-$codei%dismod_at %database% sample %method% %number_sample% %simulate_index%
+$codei%dismod_at %database% sample %method% %variables% %number_sample% %simulate_index%
 %$$
 
 $head database$$
@@ -55,6 +55,13 @@ $cref/simulation/posterior/Simulation/$$ for the posterior distribution.
 $head method$$
 The sample command argument $icode method$$ must be
 $code simulate$$ or $code asymptotic$$; see discussion below:
+
+$head variables$$
+The sample command argument $icode variables$$ must be
+$code fixed$$ or $code both$$.
+This corresponds to the asymptotic statistics for
+$cref/fit fixed/fit_command/variables/fixed/$$ and
+$cref/fit both/fit_command/variables/both/$$ respectively.
 
 $head number_sample$$
 Is the number of samples. Each sample contains a complete
@@ -116,16 +123,19 @@ If the lower and upper limits are equal, the corresponding variable
 is simulated as having that constant value.
 
 $subhead Random Effects Distribution$$
-The asymptotic distribution used to simulate the random effects is a normal
-with mean equal to the value of the random effects in the $cref fit_var_table$$
-This should be the optimal value of the random effects given the fixed effects;
-see
+If the lower and upper limits for a random effect are equal,
+the random effect is simulated as having that constant value.
+If the lower and upper limits are not equal and
+$icode variables$$ is $code fixed$$,
+the random effect is simulated with value zero.
+Otherwise,
+the asymptotic distribution used to simulate a random effect is a normal
+with mean equal to the value of the random effect in the $cref fit_var_table$$
+This is the optimal value given the fixed effects; see
 $cref/fit_var_table/sample_command/Extra Input Tables/fit_var_table/$$ below.
 The covariance of the random effects is equal to the inverse of the
 Hessian of the random effect objective
 $cref/hes_fixed_table/sample_command/Output Tables/hes_fixed_table/$$.
-If the lower and upper limits are equal, the corresponding variable
-is simulated as having that constant value.
 
 $head Extra Input Tables$$
 
@@ -160,9 +170,12 @@ in the sample table will be null.
 
 $subhead No Sample Table$$
 In the special case where $icode method$$ is $code asymptotic$$
-and the Hessian of the fixed or random objective is not positive definite,
+and the Hessian of the fixed objective is not positive definite,
 the sample table is not created; i.e.,
 there is be no sample table in the database after this command.
+In addition, if $icode variables$$ is $code both$$ and the Hessian
+of the random effects objective is not positive definite,
+the sample table is not created.
 
 $subhead hes_fixed_table$$
 A new $cref hes_fixed_table$$ is created each time this command is run
@@ -174,7 +187,8 @@ to the simulated measurements in the $cref data_sim_table$$
 
 $subhead hes_random_table$$
 A new $cref hes_random_table$$ is created each time this command is run
-with $icode method$$ equal to $code asymptotic$$.
+with $icode method$$ equal to $code asymptotic$$ and
+$icode variables$$ equal to $code both$$.
 The Hessian of the random effects objective is written in this table.
 If $icode simulate_index$$ is present (is not present) the Hessian corresponds
 to the simulated measurements in the $cref data_sim_table$$
@@ -201,6 +215,7 @@ $end
 // ----------------------------------------------------------------------------
 void sample_command(
 	const std::string&                                 method           ,
+	const std::string&                                 variables        ,
 	const std::string&                                 number_sample    ,
 	const std::string&                                 simulate_index   ,
 	sqlite3*                                           db               ,
@@ -223,6 +238,12 @@ void sample_command(
 	{	msg  = "dismod_at sample command method = ";
 		msg += method + " is not one of the following: ";
 		msg += "simulate, asymptotic";
+		dismod_at::error_exit(msg);
+	}
+	if( variables != "fixed" && variables != "both" )
+	{	msg  = "dismod_at sample command variables = ";
+		msg += variables + " is not one of the following: ";
+		msg += "fixed, both";
 		dismod_at::error_exit(msg);
 	}
 	int tmp = std::atoi( number_sample.c_str() );
@@ -286,10 +307,15 @@ void sample_command(
 	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
 	//
 	// bound_random, null corresponds to infinity
-	std::string tmp_str = option_map["bound_random"];
-	double bound_random = std::numeric_limits<double>::infinity();
-	if( tmp_str != "" )
-		bound_random = std::atof( tmp_str.c_str() );
+	double bound_random = 0.0;
+	if( variables != "fixed" )
+	{	// null corresponds to infinity
+		std::string tmp_str = option_map["bound_random"];
+		if( tmp_str == "" )
+			bound_random = std::numeric_limits<double>::infinity();
+		else
+			bound_random = std::atof( tmp_str.c_str() );
+	}
 	//
 	// random_const
 	size_t n_random = pack_object.random_size();

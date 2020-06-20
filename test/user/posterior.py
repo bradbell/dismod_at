@@ -175,7 +175,7 @@ if flag != 0 :
 	sys.exit('The dismod_at simulate command failed')
 #
 # sample simulate number_sample
-cmd       = [ program, file_name, 'sample', 'simulate', str(number_sample) ]
+cmd = [ program, file_name, 'sample', 'simulate', 'both', str(number_sample) ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :

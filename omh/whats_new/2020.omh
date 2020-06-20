@@ -39,6 +39,14 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 06-20$$
+The $cref/variables/sample_command/variables/$$ argument was added
+to the sample command.
+This enables one to get statistics for fitting just the fixed effects.
+It is not backward compatible because you will have to include the
+$icode variables$$ argument in your sample commands.
+To get the old behavior, set $icode variables$$ to $code both$$.
+
 $head 06-08$$
 Advance to ipopt-3.13.2, cppad-20200606, cppad_mixed-20200608.
 

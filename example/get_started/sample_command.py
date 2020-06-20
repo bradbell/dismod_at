@@ -103,8 +103,9 @@ option_table  = dismod_at.get_table_dict(connection, 'option')
 program       = '../../devel/dismod_at'
 command       = 'sample'
 method        = 'simulate'
+variables     = 'both'
 number_sample = '1'
-cmd = [ program, file_name, command, method , number_sample  ]
+cmd = [ program, file_name, command, method , variables, number_sample  ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :

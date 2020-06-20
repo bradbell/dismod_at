@@ -407,7 +407,7 @@ connection.close()
 n_str = str(number_sample)
 dismod_at.system_command_prc( [program, file_name, 'simulate', n_str] )
 dismod_at.system_command_prc(
-	[program, file_name, 'sample',  'simulate', n_str]
+	[program, file_name, 'sample',  'simulate', 'both', n_str]
 )
 #
 # compute sample standard deviation and check for coverate

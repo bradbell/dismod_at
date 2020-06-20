@@ -63,7 +63,7 @@ $head data_object$$
 This is the $code data_model$$ object being constructed.
 
 $head fit_simulated_data$$
-If this is true, we are fitting simulated that comes from the
+If this is true, we are fitting simulated data that comes from the
 $cref data_sim_table$$.
 
 $head meas_noise_effect$$

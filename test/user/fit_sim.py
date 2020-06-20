@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -366,7 +366,7 @@ if max_error > 5e-2 :
 	assert(False)
 # -----------------------------------------------------------------------------
 # set start_var so it corresponds to second set of model variables
-cmd = [ program, file_name, 'sample', 'simulate', '2' ]
+cmd = [ program, file_name, 'sample', 'simulate', 'both', '2' ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :

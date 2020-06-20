@@ -71,8 +71,8 @@ int main(int n_arg, const char** argv)
 		{"fit",       4},
 		{"fit",       5},
 		{"simulate",  4},
-		{"sample",    5},
 		{"sample",    6},
+		{"sample",    7},
 		{"predict",   4}
 	};
 	size_t n_command = sizeof( command_info ) / sizeof( command_info[0] );
@@ -342,7 +342,11 @@ int main(int n_arg, const char** argv)
 	//
 	// bound_random
 	double bound_random = 0.0;
-	if( command_arg != "fit" || std::strcmp(argv[3], "fixed") != 0 )
+	bool only_fixed =
+		command_arg == "fit" && std::strcmp(argv[3], "fixed") == 0;
+	only_fixed  |=
+		command_arg == "sample" && std::strcmp(argv[4], "fixed") == 0;
+	if( ! only_fixed  )
 	{	// null corresponds to infinity
 		std::string tmp_str = option_map["bound_random"];
 		if( tmp_str == "" )
@@ -354,7 +358,7 @@ int main(int n_arg, const char** argv)
 	bool fit_simulated_data = false;
 	if( command_arg == "fit" && n_arg >= 5 )
 		fit_simulated_data = true;
-	if( command_arg == "sample" )
+	if( command_arg == "sample" &&  std::strcmp(argv[4], "simulate") == 0 )
 		fit_simulated_data = true;
 	// =======================================================================
 # ifdef NDEBUG
@@ -546,12 +550,14 @@ int main(int n_arg, const char** argv)
 			}
 			else if( command_arg == "sample" )
 			{	string method         = argv[3];
-				string number_sample  = argv[4];
+				string variables      = argv[4];
+				string number_sample  = argv[5];
 				string simulate_index = "";
-				if( n_arg == 6 )
-					simulate_index = argv[5];
+				if( n_arg == 7 )
+					simulate_index = argv[6];
 				sample_command(
 					method               , // const
+					variables            , // ..
 					number_sample        , // ..
 					simulate_index       , // ..
 					db                   , // not const

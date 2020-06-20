@@ -392,7 +392,7 @@ dismod_at.system_command_prc(
 	[ program, file_name, 'set', 'scale_var', 'truth_var' ]
 )
 dismod_at.system_command_prc(
-	[ program, file_name, 'sample', 'simulate', ns_string ]
+	[ program, file_name, 'sample', 'simulate', 'both', ns_string ]
 )
 #
 new          = False

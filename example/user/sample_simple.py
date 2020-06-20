@@ -255,7 +255,7 @@ dismod_at.system_command_prc(
 #
 # sample simulate
 dismod_at.system_command_prc(
-	[ program, file_name, 'sample', 'simulate', str(number_sample) ]
+	[ program, file_name, 'sample', 'simulate', 'both', str(number_sample) ]
 )
 # -----------------------------------------------------------------------
 # connect to database
@@ -304,7 +304,7 @@ dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 #
 # sample asymptotic
 dismod_at.system_command_prc(
-	[ program, file_name, 'sample', 'asymptotic', str(number_sample) ]
+	[ program, file_name, 'sample', 'asymptotic', 'both', str(number_sample) ]
 )
 new             = False
 connection      = dismod_at.create_connection(file_name, new)

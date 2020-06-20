@@ -517,7 +517,7 @@ program   = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 dismod_at.system_command_prc(
-	[ program, file_name, 'sample', 'asymptotic', str(number_sample) ]
+	[ program, file_name, 'sample', 'asymptotic', 'both', str(number_sample) ]
 )
 # -----------------------------------------------------------------------
 # get tables

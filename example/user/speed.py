@@ -437,7 +437,7 @@ dismod_at.system_command_prc(
 )
 # sample_command
 dismod_at.system_command_prc(
-	[ program, file_name, 'sample', 'asymptotic', '100', '0' ]
+	[ program, file_name, 'sample', 'asymptotic', 'both', '100', '0' ]
 )
 # -----------------------------------------------------------------------
 # result tables

@@ -538,11 +538,19 @@ for var_id in range(n_var) :
 # -----------------------------------------------------------------------------
 # obtain s1_1, ... , s1_N
 N_str = str(number_sample)
-dismod_at.system_command_prc([ program, file_name, 'set', 'truth_var', 'fit_var' ])
-dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'fit_var' ])
-dismod_at.system_command_prc([ program, file_name, 'set', 'scale_var', 'fit_var' ])
+dismod_at.system_command_prc(
+	[ program, file_name, 'set', 'truth_var', 'fit_var' ]
+)
+dismod_at.system_command_prc(
+	[ program, file_name, 'set', 'start_var', 'fit_var' ]
+)
+dismod_at.system_command_prc(
+	[ program, file_name, 'set', 'scale_var', 'fit_var' ]
+)
 dismod_at.system_command_prc([ program, file_name, 'simulate', N_str ])
-dismod_at.system_command_prc([ program, file_name, 'sample', 'simulate', N_str ])
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'simulate', 'both', N_str ]
+)
 #
 # check coverage of true values by posterior samples standard deviation
 connection.close()
