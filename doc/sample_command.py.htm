@@ -154,8 +154,9 @@ option_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</f
 program       <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
 command       <font color="#990000">=</font> <font color="#FF0000">'sample'</font>
 method        <font color="#990000">=</font> <font color="#FF0000">'simulate'</font>
+variables     <font color="#990000">=</font> <font color="#FF0000">'both'</font>
 number_sample <font color="#990000">=</font> <font color="#FF0000">'1'</font>
-cmd <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> command<font color="#990000">,</font> method <font color="#990000">,</font> number_sample  <font color="#990000">]</font>
+cmd <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> command<font color="#990000">,</font> method <font color="#990000">,</font> variables<font color="#990000">,</font> number_sample  <font color="#990000">]</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">' '</font><font color="#990000">.</font><b><font color="#000000">join</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">)</font>
 flag <font color="#990000">=</font> subprocess<font color="#990000">.</font><b><font color="#000000">call</font></b><font color="#990000">(</font> cmd <font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> flag <font color="#990000">!=</font> <font color="#993399">0</font> <font color="#990000">:</font>

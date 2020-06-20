@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Sample Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Sample Command">
-<meta name="keywords" id="keywords" content=" the sample command syntax database purpose method number_sample simulate_index simulate asymptotic fixed effects distribution random extra input tables data_sim_table prior_sim_table fit_var_table output sample_table no table hes_fixed_table hes_random_table bounds example ">
+<meta name="keywords" id="keywords" content=" the sample command syntax database purpose method variables number_sample simulate_index simulate asymptotic fixed effects distribution random extra input tables data_sim_table prior_sim_table fit_var_table output sample_table no table hes_fixed_table hes_random_table bounds example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,6 +69,7 @@ A:active { color : purple }
 <br><a href="sample_command.htm#database" target="_top">database</a>
 <br><a href="sample_command.htm#Purpose" target="_top">Purpose</a>
 <br><a href="sample_command.htm#method" target="_top">method</a>
+<br><a href="sample_command.htm#variables" target="_top">variables</a>
 <br><a href="sample_command.htm#number_sample" target="_top">number_sample</a>
 <br><a href="sample_command.htm#simulate_index" target="_top">simulate_index</a>
 <br><a href="sample_command.htm#simulate" target="_top">simulate</a>
@@ -91,10 +92,10 @@ A:active { color : purple }
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>method</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="database" id="database">database</a></big></b>
@@ -123,6 +124,20 @@ The sample command argument
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
  must be
 <code><font color="blue">simulate</font></code> or <code><font color="blue">asymptotic</font></code>; see discussion below:
+
+<br>
+<br>
+<b><big><a name="variables" id="variables">variables</a></big></b>
+<br>
+The sample command argument 
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ must be
+<code><font color="blue">fixed</font></code> or <code><font color="blue">both</font></code>.
+This corresponds to the asymptotic statistics for
+<a href="fit_command.htm#variables.fixed" target="_top"><span style='white-space: nowrap'>fit&nbsp;fixed</span></a>
+ and
+<a href="fit_command.htm#variables.both" target="_top"><span style='white-space: nowrap'>fit&nbsp;both</span></a>
+ respectively.
 
 <br>
 <br>
@@ -234,19 +249,24 @@ is simulated as having that constant value.
 <br>
 <big><a name="asymptotic.Random Effects Distribution" id="asymptotic.Random Effects Distribution">Random Effects Distribution</a></big>
 <br>
-The asymptotic distribution used to simulate the random effects is a normal
-with mean equal to the value of the random effects in the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+If the lower and upper limits for a random effect are equal,
+the random effect is simulated as having that constant value.
+If the lower and upper limits are not equal and
 
-This should be the optimal value of the random effects given the fixed effects;
-see
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ is <code><font color="blue">fixed</font></code>,
+the random effect is simulated with value zero.
+Otherwise,
+the asymptotic distribution used to simulate a random effect is a normal
+with mean equal to the value of the random effect in the <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+
+This is the optimal value given the fixed effects; see
 <a href="sample_command.htm#Extra Input Tables.fit_var_table" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
  below.
 The covariance of the random effects is equal to the inverse of the
 Hessian of the random effect objective
 <a href="sample_command.htm#Output Tables.hes_fixed_table" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
 .
-If the lower and upper limits are equal, the corresponding variable
-is simulated as having that constant value.
 
 <br>
 <br>
@@ -321,9 +341,14 @@ in the sample table will be null.
 In the special case where 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
  is <code><font color="blue">asymptotic</font></code>
-and the Hessian of the fixed or random objective is not positive definite,
+and the Hessian of the fixed objective is not positive definite,
 the sample table is not created; i.e.,
 there is be no sample table in the database after this command.
+In addition, if 
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ is <code><font color="blue">both</font></code> and the Hessian
+of the random effects objective is not positive definite,
+the sample table is not created.
 
 <br>
 <br>
@@ -351,7 +376,10 @@ A new <a href="hes_random_table.htm" target="_top"><span style='white-space: now
  is created each time this command is run
 with 
 <code><i><font color="black"><span style='white-space: nowrap'>method</span></font></i></code>
- equal to <code><font color="blue">asymptotic</font></code>.
+ equal to <code><font color="blue">asymptotic</font></code> and
+
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ equal to <code><font color="blue">both</font></code>.
 The Hessian of the random effects objective is written in this table.
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>

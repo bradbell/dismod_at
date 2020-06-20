@@ -349,7 +349,7 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_p
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># sample simulate</font></i>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>number_sample<font color="#990000">)</font> <font color="#990000">]</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>number_sample<font color="#990000">)</font> <font color="#990000">]</font>
 <font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># connect to database</font></i>
@@ -398,7 +398,7 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_p
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># sample asymptotic</font></i>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'asymptotic'</font><font color="#990000">,</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>number_sample<font color="#990000">)</font> <font color="#990000">]</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'asymptotic'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>number_sample<font color="#990000">)</font> <font color="#990000">]</font>
 <font color="#990000">)</font>
 new             <font color="#990000">=</font> False
 connection      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
