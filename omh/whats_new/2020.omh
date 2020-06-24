@@ -39,6 +39,14 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 06-24$$
+Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200620
+of $code dock_dismod_at.sh$$.
+This will require building a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.base/$$
+and then
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+
 $head 06-20$$
 The $cref/variables/sample_command/variables/$$ argument was added
 to the sample command.
