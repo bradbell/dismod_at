@@ -164,9 +164,10 @@ It contains samples of the model variables.
 Hence the number of rows in this table is $icode number_sample$$
 times the number of rows in the $cref var_table$$.
 If the $code asymptotic$$ command fails because the
-Hessian (see hes_fixed_table below) is not positive definite,
-all of the $cref/var_value/sample_table/var_value/$$ entries
-in the sample table will be null.
+fixed effects information matrix is not positive definite,
+this command will terminate with an error and the sample table will not exist.
+The corresponding fixed effects information matrix will be in the
+$cref/hes_fixed_table/sample_command/Output Tables/hes_fixed_table/$$.
 
 $subhead No Sample Table$$
 In the special case where $icode method$$ is $code asymptotic$$
@@ -593,6 +594,12 @@ void sample_command(
 	// ----------------------------------------------------------------------
 	assert( method == "asymptotic" );
 	//
+	sql_cmd = "drop table if exists hes_fixed";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
+	sql_cmd = "drop table if exists hes_random";
+	dismod_at::exec_sql_cmd(db, sql_cmd);
+	//
 	// simulation_index
 	int sim_index_int = -1; // corresponds to fitting data table values
 	if( simulate_index != "" )
@@ -668,11 +675,10 @@ void sample_command(
 		fit_var_value        ,
 		option_map
 	);
-	if( sample_out.size() == 0 )
-	{	msg = "sample_commad: sample table was not created";
-		log_message(db, &std::cerr, "warning", msg);
-	}
-	else
+	// ----------------------------------------------------------------------
+	// Create sample table first so we can use create_table settings above.
+	// If sample_out.size() is zero, we will report the error at the end.
+	if( sample_out.size() != 0 )
 	{	assert( sample_out.size() == n_sample * n_var );
 		for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
 		{	string sample_index_str = to_string( sample_index );
@@ -692,9 +698,6 @@ void sample_command(
 	}
 	// ----------------------------------------------------------------------
 	// create hes_fixed table
-	sql_cmd = "drop table if exists hes_fixed";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
 	n_col         = 3;
 	n_row         = hes_fixed_obj_out.nnz();
 	col_name.resize(n_col);
@@ -729,9 +732,6 @@ void sample_command(
 	);
 	// ----------------------------------------------------------------------
 	// create hes_random table
-	sql_cmd = "drop table if exists hes_random";
-	dismod_at::exec_sql_cmd(db, sql_cmd);
-	//
 	n_col         = 3;
 	n_row         = hes_random_obj_out.nnz();
 	col_name.resize(n_col);
@@ -766,7 +766,11 @@ void sample_command(
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
-	//
+	// ----------------------------------------------------------------------
+	if( sample_out.size() == 0 )
+	{	msg = "sample_commad: sample table was not created";
+		dismod_at::error_exit(msg);
+	}
 	return;
 }
 } // END_DISMOD_AT_NAMESPACE

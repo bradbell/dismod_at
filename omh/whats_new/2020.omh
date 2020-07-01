@@ -39,15 +39,22 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 07-01$$
+Dismod_at will exit with an error when the
+$cref/sample_table/sample_command/Output Tables/sample_table/$$
+is not created by the
+$cref/sample asymptotic/sample_command/asymptotic/$$ command.
+If this is because the fixed effects information matrix is not
+positive definite,
+the $cref hes_fixed_table$$ will contain the information matrix
+
 $head 06-30$$
 Advance to cppad_mixed-20200630.
 This fixes a problem where the $cref sample_table$$ was invalid after the
-$cref/asymptotic/sample_command/asymptotic/$$ sample command
+$cref/sample asymptotic/sample_command/asymptotic/$$ command
 when an information matrix that is not positive definite.
 Now, in addition to the warning about the information matrix,
 the sample table does not exist after the command when this happens.
-The $cref hes_fixed_table$$ contains the information matrix
-even if it is not positive definite.
 
 $head 06-24$$
 Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200620
