@@ -724,7 +724,7 @@ Is the number of independent samples to generate.
 Each sample contains the entire set of $cref model_variables$$.
 
 $head sample_out$$
-The input value of this argument does not matter.
+The input size value of this argument does not matter.
 If an error occurs (the samples cannot be calculated)
 $icode sample_out.size()$$ is zero upon return.
 Otherwise upon return $icode sample_out.size()$$ is
@@ -897,6 +897,7 @@ $end
 	}
 	if( msg != "" )
 	{	log_message(db_, &std::cerr, "warning", msg);
+		assert( sample_out.size() == 0 );
 		return;
 	}
 	//
@@ -909,14 +910,14 @@ $end
 			hes_fixed_obj_rcv,
 			solution,
 			cppad_mixed_fixed_lower,
-			cppad_mixed_fixed_upper,
-			cppad_mixed_random_opt
+			cppad_mixed_fixed_upper
 		);
 	}
 	catch(const CppAD::mixed::exception& e)
 	{	std::string catcher("sample_command");
 		msg = e.message(catcher);
 		log_message(db_, &std::cerr, "warning", msg);
+		assert( sample_out.size() == 0 );
 		return;
 	}
 	//
