@@ -329,10 +329,11 @@ Hence the number of rows in this table is
 times the number of rows in the <a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
 .
 If the <code><font color="blue">asymptotic</font></code> command fails because the
-Hessian (see hes_fixed_table below) is not positive definite,
-all of the <a href="sample_table.htm#var_value" target="_top"><span style='white-space: nowrap'>var_value</span></a>
- entries
-in the sample table will be null.
+fixed effects information matrix is not positive definite,
+this command will terminate with an error and the sample table will not exist.
+The corresponding fixed effects information matrix will be in the
+<a href="sample_command.htm#Output Tables.hes_fixed_table" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+.
 
 <br>
 <br>

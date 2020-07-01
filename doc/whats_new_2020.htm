@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>07-01</option>
 <option>06-30</option>
 <option>06-24</option>
 <option>06-20</option>
@@ -105,19 +106,31 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
 <br>
+<b><big><a name="07-01" id="07-01">07-01</a></big></b>
+<br>
+Dismod_at will exit with an error when the
+<a href="sample_command.htm#Output Tables.sample_table" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+
+is not created by the
+<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>sample&nbsp;asymptotic</span></a>
+ command.
+If this is because the fixed effects information matrix is not
+positive definite,
+the <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+ will contain the information matrix
+
+<br>
+<br>
 <b><big><a name="06-30" id="06-30">06-30</a></big></b>
 <br>
 Advance to cppad_mixed-20200630.
 This fixes a problem where the <a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
  was invalid after the
-<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>asymptotic</span></a>
- sample command
+<a href="sample_command.htm#asymptotic" target="_top"><span style='white-space: nowrap'>sample&nbsp;asymptotic</span></a>
+ command
 when an information matrix that is not positive definite.
 Now, in addition to the warning about the information matrix,
 the sample table does not exist after the command when this happens.
-The <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
- contains the information matrix
-even if it is not positive definite.
 
 <br>
 <br>
