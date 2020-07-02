@@ -40,11 +40,18 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 07-02$$
+$list number$$
 Fix a problem with the change on the previous day (see 07-01 below).
 To be specific, the tables for the Hessian with respect to the fixed
 and random effect were not being created in some error cases that
 should create them (to help diagnose the problem).
 This required advancing to cppad_mixed-20200702.
+$lnext
+Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200702
+of $code dock_dismod_at.sh$$.
+This will require building a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+$lend
 
 
 $head 07-01$$
