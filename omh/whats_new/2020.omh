@@ -39,6 +39,14 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 07-02$$
+Fix a problem with the change on the previous day (see 07-01 below).
+To be specific, the tables for the Hessian with respect to the fixed
+and random effect were not being created in some error cases that
+should create them (to help diagnose the problem).
+This required advancing to cppad_mixed-20200702.
+
+
 $head 07-01$$
 Dismod_at will exit with an error when the
 $cref/sample_table/sample_command/Output Tables/sample_table/$$

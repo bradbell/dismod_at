@@ -903,9 +903,10 @@ $end
 	//
 	// sample_fix
 	CppAD::vector<double> sample_fix(n_sample * n_fixed_);
+	msg = "";
 	try {
 		// sample fixed effects
-		sample_fixed(
+		msg = sample_fixed(
 			sample_fix,
 			hes_fixed_obj_rcv,
 			solution,
@@ -917,6 +918,13 @@ $end
 	{	std::string catcher("sample_command");
 		msg = e.message(catcher);
 		log_message(db_, &std::cerr, "warning", msg);
+		// this case becomes a fatal error after Hessians are stored
+		assert( sample_out.size() == 0 );
+		return;
+	}
+	if( msg != "" )
+	{	log_message(db_, &std::cerr, "warning", msg);
+		// this case becomes a fatal error after Hessians are stored
 		assert( sample_out.size() == 0 );
 		return;
 	}
@@ -953,10 +961,11 @@ $end
 	// sample_random
 	CppAD::vector<double>
 		cppad_mixed_sample_random(n_sample * cppad_mixed_n_random);
+	msg = "";
 	if( cppad_mixed_n_random > 0 )
 	{	assert(n_random_ > n_random_equal_ );
 		try {
-			sample_random(
+			msg = sample_random(
 				cppad_mixed_sample_random,
 				random_options,
 				cppad_mixed_fixed_vec,
@@ -969,6 +978,14 @@ $end
 		{	std::string catcher("sample_command");
 			msg = e.message(catcher);
 			log_message(db_, &std::cerr, "warning", msg);
+			// this case becomes a fatal error after Hessians are stored
+			assert( sample_out.size() == 0 );
+			return;
+		}
+		if( msg != "" )
+		{	log_message(db_, &std::cerr, "warning", msg);
+			// this case becomes a fatal error after Hessians are stored
+			assert( sample_out.size() == 0 );
 			return;
 		}
 	}
