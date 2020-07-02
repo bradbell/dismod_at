@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>07-02</option>
 <option>07-01</option>
 <option>06-30</option>
 <option>06-24</option>
@@ -105,6 +106,17 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="07-02" id="07-02">07-02</a></big></b>
+<br>
+Fix a problem with the change on the previous day (see 07-01 below).
+To be specific, the tables for the Hessian with respect to the fixed
+and random effect were not being created in some error cases that
+should create them (to help diagnose the problem).
+This required advancing to cppad_mixed-20200702.
+
+
+<br>
 <br>
 <b><big><a name="07-01" id="07-01">07-01</a></big></b>
 <br>
