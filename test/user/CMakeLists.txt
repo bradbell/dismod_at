@@ -11,6 +11,7 @@
 # Build test / user
 SET(depends "")
 FOREACH(user_case
+	asymptotic
 	avgint
 	bound_frac
 	bound_random
