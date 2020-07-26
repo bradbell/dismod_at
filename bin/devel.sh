@@ -24,6 +24,7 @@ ignore_files='
 	.gitignore
 	batch_edit.sed
 	bin/devel.sh
+	2DO
 '
 # ----------------------------------------------------------------------------
 echo "copyright_owner=$copyright_owner"
