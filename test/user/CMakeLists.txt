@@ -27,8 +27,10 @@ FOREACH(user_case
 	neg_iteration
 	no_data
 	not_ordered
+	parent_node_id
 	posterior
 	relrisk
+	scale_gamma
 	scale_zero
 	set_command
 	zero_random_1
