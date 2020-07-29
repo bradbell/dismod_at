@@ -2,4 +2,4 @@
 
 2. In asymptotic statistics, automatically detect which inequality constraint are active and treat like equality constraints.
 
-3. Detect when there are random effects with no corresponding fixed effect and print error message. In addition, why does the depend command not detect this.
+3. Add a maximum cv for the simulated data. 
