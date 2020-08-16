@@ -54,15 +54,12 @@ then
 fi
 cd build/external
 # -----------------------------------------------------------------------------
-if [ ! -e coinbrew ]
+if [ -e coinbrew ]
 then
-    echo_eval wget $coinbrew
-    echo_eval chmod +x coinbrew
+	rm coinbrew
 fi
-if [ ! -e Ipoot ]
-then
-    ./coinbrew fetch Ipopt@$version --no-prompt
-fi
+echo_eval wget $coinbrew
+echo_eval chmod +x coinbrew
 # -----------------------------------------------------------------------------
 # klugde necessary until coin or mumps fixes this problem
 cat << EOF > junk.f
@@ -72,22 +69,27 @@ cat << EOF > junk.f
 EOF
 if gfortran -c -fallow-argument-mismatch junk.f >& /dev/null
 then
-    echo 'Adding -fallow-argument-mismatch to Mumps fortran compiler flags'
-    ADD_FCFLAGS='ADD_FCFLAGS=-fallow-argument-mismatch'
+	echo 'Adding -fallow-argument-mismatch to Mumps fortran compiler flags'
+	ADD_FCFLAGS='ADD_FCFLAGS=-fallow-argument-mismatch'
 else
-    ADD_FCFLAGS=''
+	ADD_FCFLAGS=''
+fi
+# -----------------------------------------------------------------------------
+if [ "$build_type" == 'debug' ]
+then
+	debug_flags='--enable-debug --disable-shared'
+else
+	debug_flags=''
 fi
 # -----------------------------------------------------------------------------
 echo_eval ./coinbrew build Ipopt@$version \
 	--test \
 	--no-prompt \
-	--verbosity=3 \
+	--verbosity=4 \
+	$debug_flags \
     --prefix=$ipopt_prefix \
 	--libdir=$ipopt_prefix/$cmake_libdir \
 	$ADD_FCFLAGS
-#
-echo_eval ./coinbrew install Ipopt@$version \
-    --no-prompt
 # ----------------------------------------------------------------------------
 echo 'install_ipopt.sh: OK'
 exit 0
