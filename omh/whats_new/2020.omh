@@ -39,6 +39,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 08-16$$
+Improve the debug $cref/build_type/run_cmake.sh/build_type/$$
+so that ipopt and all its libraries also get built for debugging.
+
 $head 07-02$$
 $list number$$
 Fix a problem with the change on the previous day (see 07-01 below).
