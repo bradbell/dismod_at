@@ -23,6 +23,7 @@ $spell
 	cppad
 	hes
 	ipopt
+	coinbrew
 $$
 $navigate%
 	Up%Location%
@@ -38,6 +39,10 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 08-20$$
+Change $code bin/install_ipopt.sh$$ to directly download and configure the
+necessary third party software (not use coinbrew).
 
 $head 08-16$$
 Improve the debug $cref/build_type/run_cmake.sh/build_type/$$
