@@ -56,6 +56,7 @@ then
 	bin/build_type.sh install_ipopt $ipopt_prefix $build_type
 fi
 # --------------------------------------------------------------------------
+# do work in build/external
 if [ ! -e build/external ]
 then
 	mkdir -p build/external
@@ -92,6 +93,33 @@ do
 		touch ./get.$name.done
 	fi
 	echo_eval git checkout --quiet $version
+	if [ "$name" == 'Ipopt' ]
+	then
+		patch='IpIpoptApplication'
+		if [ ! -e "$patch.sed" ]
+			then
+cat << EOF > $patch.sed
+# -----------------------------------------------------------------------
+# Kluge: Add reference counter for argument to SetJournalist
+/^static.*dbg_verbosity *= /! b one
+s|\$|\\
+static SmartPtr<Journalist> smart_jnlst(NULL);|
+b end
+# -----------------------------------------------------------------------
+: one
+# Kludge: If this is the first time SetJournalList gets called
+# then the raw pointer gets saved and used. You have to read SetJourlist
+# and know this is the only call to SetJournalist to know this works.
+/DebugJournalistWrapper::SetJournalist(/! b end
+s|$|\\
+        if( GetRawPtr(smart_jnlst) == NULL )\\
+            smart_jnlst = jnlst_;|
+# -----------------------------------------------------------------------
+: end
+EOF
+			echo_eval sed -i src/Interfaces/$patch.cpp -f $patch.sed
+		fi
+	fi
 	if [ ! -e build ]
 	then
 		echo_eval mkdir build
@@ -121,6 +149,9 @@ do
 		$debug_flags \
 		$add_fcflags
 	echo_eval make install
+    #
+    # back to build/external
+    echo_eval cd ../..
 done
 # ----------------------------------------------------------------------------
 echo 'install_ipopt.sh: OK'

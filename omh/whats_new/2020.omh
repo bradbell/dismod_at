@@ -24,6 +24,8 @@ $spell
 	hes
 	ipopt
 	coinbrew
+	eigen
+	Ip
 $$
 $navigate%
 	Up%Location%
@@ -39,6 +41,15 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 08-23$$
+$list number$$
+Fix location of upstream source in
+$code bin/install_eigen$$.
+$lnext
+Patch Ipopt's source file $code IpIpoptApplication.cpp$$; see
+$href%https://github.com/coin-or/Ipopt/issues/393%ipopt issue 393%$$.
+$lend
 
 $head 08-20$$
 Change $code bin/install_ipopt.sh$$ to directly download and configure the
