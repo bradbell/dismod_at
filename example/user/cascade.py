@@ -230,7 +230,7 @@ import time
 if random_seed == 0 :
 	random_seed = int( time.time() )
 # ----------------------------------------------------------------------------
-# run in build/exampe/user using local (not installed) version of dismod_at
+# run in build/example/user using local (not installed) version of dismod_at
 test_program = 'example/user/cascade.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
