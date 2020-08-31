@@ -34,6 +34,7 @@ FOREACH(user_case
 	scale_gamma
 	scale_zero
 	set_command
+	subgroup_mulcov
 	zero_random_1
 	zero_random_2
 )

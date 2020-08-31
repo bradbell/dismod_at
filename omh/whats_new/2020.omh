@@ -26,6 +26,7 @@ $spell
 	coinbrew
 	eigen
 	Ip
+	ldlt_cholmod
 $$
 $navigate%
 	Up%Location%
@@ -41,6 +42,15 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 08-31$$
+Advance to cppad_mixed-20200831.
+This fixes a bug in the calculation of the first derivative of
+the fixed effects objective.
+This bug only occurred when $code ldlt_cholmod$$ was $code yes$$ in
+$code bin/install_cppad_mixed.sh$$ and
+the factorization of the random effects Hessian had a permutation
+that did not act as its own inverse.
 
 $head 08-23$$
 $list number$$
