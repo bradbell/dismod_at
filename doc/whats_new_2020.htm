@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>08-31</option>
+<option>08-23</option>
+<option>08-20</option>
+<option>08-16</option>
 <option>07-02</option>
 <option>07-01</option>
 <option>06-30</option>
@@ -106,6 +110,53 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="08-31" id="08-31">08-31</a></big></b>
+<br>
+Advance to cppad_mixed and <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+ version 20200831.
+This fixes a bug in the calculation of the first derivative of
+the fixed effects objective.
+This bug only occurred when <code><font color="blue">ldlt_cholmod</font></code> was <code><font color="blue">yes</font></code> in
+<code><font color="blue">bin/install_cppad_mixed.sh</font></code> and
+the factorization of the random effects Hessian had a permutation
+that did not act as its own inverse.
+To use the new dock_dismod_at.sh you will have to build a new
+<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.image" target="_top"><span style='white-space: nowrap'>dismod_at.image</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="08-23" id="08-23">08-23</a></big></b>
+
+<ol type="1"><li>
+Fix location of upstream source in
+<code><font color="blue">bin/install_eigen</font></code>.
+</li><li>
+
+Patch Ipopt's source file <code><font color="blue">IpIpoptApplication.cpp</font></code>; see
+<a href="https://github.com/coin-or/Ipopt/issues/393" target="_top"><span style='white-space: nowrap'>ipopt&nbsp;issue&nbsp;393</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="08-20" id="08-20">08-20</a></big></b>
+<br>
+Change <code><font color="blue">bin/install_ipopt.sh</font></code> to directly download and configure the
+necessary third party software (not use coinbrew).
+
+<br>
+<br>
+<b><big><a name="08-16" id="08-16">08-16</a></big></b>
+<br>
+Improve the debug <a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+
+so that ipopt and all its libraries also get built for debugging.
+
+<br>
 <br>
 <b><big><a name="07-02" id="07-02">07-02</a></big></b>
 
