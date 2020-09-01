@@ -44,13 +44,16 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 08-31$$
-Advance to cppad_mixed-20200831.
+Advance to cppad_mixed and $cref dock_dismod_at.sh$$ version 20200831.
 This fixes a bug in the calculation of the first derivative of
 the fixed effects objective.
 This bug only occurred when $code ldlt_cholmod$$ was $code yes$$ in
 $code bin/install_cppad_mixed.sh$$ and
 the factorization of the random effects Hessian had a permutation
 that did not act as its own inverse.
+To use the new dock_dismod_at.sh you will have to build a new
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+
 
 $head 08-23$$
 $list number$$
