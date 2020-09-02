@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list immunity simulating priors warm starting optimizer multi-threading user examples meas_std lagrange multipliers censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world example random point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list random effect immunity simulating priors warm starting optimizer multi-threading user examples meas_std lagrange multipliers censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world example point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -62,6 +62,7 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
+<br><a href="wish_list.htm#Random Effect" target="_top">Random&nbsp;Effect</a>
 <br><a href="wish_list.htm#Immunity" target="_top">Immunity</a>
 <br><a href="wish_list.htm#Simulating Priors" target="_top">Simulating&nbsp;Priors</a>
 <br><a href="wish_list.htm#Warm Starting Optimizer" target="_top">Warm&nbsp;Starting&nbsp;Optimizer</a>
@@ -82,6 +83,20 @@ A:active { color : purple }
 <br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
+<b><big><a name="Random Effect" id="Random Effect">Random Effect</a></big></b>
+<br>
+The marginal likelihood for Laplace random effects is smooth,
+because the model for the data that depends on random effects is
+smooth w.r.t. the random effects.
+Hence, it is possible to extend dismod_at to include Laplace random effect.
+In addition, the random effects in dismod_at are not correlated.
+It follows that, the integral of Gaussian random effects
+(Laplace random effects) can be evaluated using the error function
+(exponential function).
+Thus, we could include bounds on the random effect.
+
+<br>
+<br>
 <b><big><a name="Immunity" id="Immunity">Immunity</a></big></b>
 <br>
 It would be possible to include an immunity state <small>@(@

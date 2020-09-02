@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-{ tag: 'dismod_at', title:'dismod_at-20200831: User Documentation and API', other:' purpose links' },
+{ tag: 'dismod_at', title:'dismod_at-20200902: User Documentation and API', other:' purpose links' },
 { tag: 'math_abstract', title:'An Introduction To The Mathematics of Dismod_at', other:'' },
 { tag: 'math_ode', title:'The Dismod_at Ordinary Differential Equation', other:' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t)' },
 { tag: 'censor_density', title:'The Censored Gaussian and Laplace Densities', other:' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac)' },
@@ -174,7 +174,7 @@ Keyword =
 { tag: 'whats_new_2017', title:'Changes and Additions to Dismod_at During 2017', other:' 12-30 12-22 12-21 12-20 12-16 12-13 12-10 11-12 11-08 10-25 10-24 10-22 10-21 10-20 10-18 10-17 10-14 10-13 10-09 10-06 10-05 10-04 10-02 10-01 09-30 09-29 09-28 09-27 09-26 09-25 09-23 09-21 09-20 09-19 09-18 09-17 09-16 09-02 09-01 08-30 08-07 05-23 05-05 05-02 05-01 04-29 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-16 04-15 04-09 04-07 04-05 04-04 04-03 04-01 03-30 03-29 03-17 03-06 03-04 03-03 01-27 01-26 01-24 01-14 01-15' },
 { tag: 'whats_new_2016', title:'Changes and Additions to Dismod_at During 2016', other:' 12-03 10-31 10-20 10-19 10-18 10-17 10-16 10-15 10-14 10-13 10-12 10-11 09-30 09-29 09-21 08-28 07-29 07-28 07-15 07-14 07-11 06-13 06-12 06-06 06-05 05-16 05-15 05-11 05-10 05-09 05-08 05-07 05-06 05-05 05-04 05-03 05-01 04-28 04-27 04-24 04-23 04-22 04-21 04-20 04-19 04-18 04-17 04-11 04-09 04-07 03-29 02-26 02-06 01-26 01-16 01-15 01-10 01-06 01-05' },
 { tag: 'whats_new_2015', title:'Changes and Additions to Dismod_at During 2015', other:' 12-29 12-24 12-15 12-14 12-10 12-09 11-23 11-22 11-21 11-20 11-17 11-16 11-15 11-14 11-12 11-10 11-09 11-07 11-06 11-05 11-04 11-03 11-02 11-01 10-30 10-29 10-28 10-27 10-26 10-25 10-24 10-20 10-19 10-16 10-15 10-14 09-18 09-03 08-31 08-27 08-21 08-18 08-15 08-14 08-13 08-12 08-09 08-08 08-04 08-03 08-02 08-01 07-29 07-28 07-27 07-25 07-24 07-23 07-22 07-21 07-20 07-19 07-17 07-16 07-15 07-14 07-13 07-11 07-10 07-09 07-08 07-07 07-05 07-04 07-03 07-01 06-30 06-29 06-27 06-26 06-25 06-24 06-23 06-22' },
-{ tag: 'wish_list', title:'Dismod_at Wish List', other:' immunity simulating priors warm starting optimizer multi-threading user examples meas_std lagrange multipliers censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world random tracing optimization windows install' }
+{ tag: 'wish_list', title:'Dismod_at Wish List', other:' random effect immunity simulating priors warm starting optimizer multi-threading user examples meas_std lagrange multipliers censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world tracing optimization windows install' }
 ]
 
 var MaxList = 100;
