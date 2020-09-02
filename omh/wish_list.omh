@@ -33,6 +33,17 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Random Effect$$
+The marginal likelihood for Laplace random effects is smooth,
+because the model for the data that depends on random effects is
+smooth w.r.t. the random effects.
+Hence, it is possible to extend dismod_at to include Laplace random effect.
+In addition, the random effects in dismod_at are not correlated.
+It follows that, the integral of Gaussian random effects
+(Laplace random effects) can be evaluated using the error function
+(exponential function).
+Thus, we could include bounds on the random effect.
+
 $head Immunity$$
 It would be possible to include an immunity state $latex I$$ and have
 $latex \rho$$ the rate at which one gets curred from the disease, and does
