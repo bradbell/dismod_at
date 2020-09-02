@@ -33,10 +33,17 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Bound Constraints$$
+Currently the user must convert active bound constraints to equality
+constraints to get asymptotic statistics for the fixed effects,
+because the Hessian of the objective is often not positive definite.
+Automatically detect when these bound constraints
+are active at the solution and treat the corresponding variables as
+equality constraints during the asymptotic statistics calculation.
+
 $head Random Effect$$
 The marginal likelihood for Laplace random effects is smooth,
-because the model for the data that depends on random effects is
-smooth w.r.t. the random effects.
+because the model for the data is smooth w.r.t. the random effects.
 Hence, it is possible to extend dismod_at to include Laplace random effect.
 In addition, the random effects in dismod_at are not correlated.
 It follows that, the integral of Gaussian random effects
