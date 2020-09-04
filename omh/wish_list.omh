@@ -34,12 +34,20 @@ $$
 $section Dismod_at Wish List$$
 
 $head Bound Constraints$$
+$list number$$
 Currently the user must convert active bound constraints to equality
 constraints to get asymptotic statistics for the fixed effects,
 because the Hessian of the objective is often not positive definite.
 Automatically detect when these bound constraints
 are active at the solution and treat the corresponding variables as
 equality constraints during the asymptotic statistics calculation.
+$lnext
+Document how the bounds affect the priors and posterior distributions
+during the fit, simulate, and sample commands.
+Note that there is some discussion of bounds in the
+$cref/simulating priors/wish_list/Simulating Priors/$$ wish list item below.
+$lend
+
 
 $head Random Effect$$
 The marginal likelihood for Laplace random effects is smooth,
