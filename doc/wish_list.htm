@@ -85,13 +85,24 @@ A:active { color : purple }
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
 <b><big><a name="Bound Constraints" id="Bound Constraints">Bound Constraints</a></big></b>
-<br>
+
+<ol type="1"><li>
 Currently the user must convert active bound constraints to equality
 constraints to get asymptotic statistics for the fixed effects,
 because the Hessian of the objective is often not positive definite.
 Automatically detect when these bound constraints
 are active at the solution and treat the corresponding variables as
 equality constraints during the asymptotic statistics calculation.
+</li><li>
+
+Document how the bounds affect the priors and posterior distributions
+during the fit, simulate, and sample commands.
+Note that there is some discussion of bounds in the
+<a href="wish_list.htm#Simulating Priors" target="_top"><span style='white-space: nowrap'>simulating&nbsp;priors</span></a>
+ wish list item below.
+</li></ol>
+
+
 
 <br>
 <br>
