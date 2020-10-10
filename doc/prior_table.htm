@@ -207,7 +207,7 @@ If the density is <a href="density_table.htm#Notation.Linear" target="_top"><spa
 ,
 
 <code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
- is the standard deviation for the prior.
+ is the standard deviation for the corresponding random variable.
 
 <br>
 <br>
@@ -234,12 +234,18 @@ we get
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;~=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>/2&nbsp;)<br>
 </span></font></code>
-If the density for a
+If this density is used for a
 <a href="statistic.htm#Weighted Residual Function, R.Difference" target="_top"><span style='white-space: nowrap'>difference</span></a>
 ,
 
 <code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
- is the standard deviation for the density (even if it is log scaled).
+ is the standard deviation for the difference of the
+corresponding random variables.
+If the density is also log scaled,
+
+<code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
+ is the standard deviation for the difference of the
+log of the corresponding random variables.
 
 <br>
 <br>
@@ -249,11 +255,12 @@ For example,
 <code><i><font color="black"><span style='white-space: nowrap'>std</span></font></i></code>
  is 
 <code><i><font color="black"><span style='white-space: nowrap'>delta_j</span></font></i></code>
- for the
+
+in the prior for the value of the
 <a href="fixed_value.htm#delta_j" target="_top"><span style='white-space: nowrap'>fixed</span></a>
  and
 <a href="random_value.htm#delta_j" target="_top"><span style='white-space: nowrap'>random</span></a>
-.
+ effects.
 
 <br>
 <br>
