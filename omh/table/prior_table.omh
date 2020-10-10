@@ -87,7 +87,7 @@ before truncation by the lower and upper limits.
 
 $subhead Linear Scaling$$
 If the density is $cref/linear/density_table/Notation/Linear/$$,
-$icode std$$ is the standard deviation for the prior.
+$icode std$$ is the standard deviation for the corresponding random variable.
 
 $subhead Log Scaling$$
 If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$ and for a
@@ -107,14 +107,19 @@ we get
 $codei%
 	%sigma% ~= %std% / ( %mean% + %eta% + %std%/2 )
 %$$
-If the density for a
+If this density is used for a
 $cref/difference/statistic/Weighted Residual Function, R/Difference/$$,
-$icode std$$ is the standard deviation for the density (even if it is log scaled).
+$icode std$$ is the standard deviation for the difference of the
+corresponding random variables.
+If the density is also log scaled,
+$icode std$$ is the standard deviation for the difference of the
+log of the corresponding random variables.
 
 $subhead Discussion$$
-For example,  $icode std$$ is $icode delta_j$$ for the
+For example,  $icode std$$ is $icode delta_j$$
+in the prior for the value of the
 $cref/fixed/fixed_value/delta_j/$$ and
-$cref/random/random_value/delta_j/$$.
+$cref/random/random_value/delta_j/$$ effects.
 
 $head eta$$
 This column has type $code real$$ and only affects the prior
