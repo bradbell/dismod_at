@@ -25,8 +25,8 @@
 cmd=`grep '^build_type=' bin/run_cmake.sh`
 eval $cmd
 #
-# set ipopt_prefix to value in run_cmake.sh
-cmd=`grep '^ipopt_prefix=' bin/run_cmake.sh`
+# set cppad_prefix to value in run_cmake.sh
+cmd=`grep '^cppad_prefix=' bin/run_cmake.sh`
 eval $cmd
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -45,32 +45,21 @@ do
 done
 # --------------------------------------------------------------------------
 # set build link to build.debug or build.release depending on build_type
-if echo "$ipopt_prefix" | grep '/dismod_at$' > /dev/null
+if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
 then
-	bin/build_type.sh example_install.sh $ipopt_prefix $build_type
+	bin/build_type.sh example_install.sh $cppad_prefix $build_type
 fi
 # -----------------------------------------------------------------------------
 # install the special requirements
-list="
-	eigen
-	ipopt
-	cppad
-	cppad_mixed
-"
-for package in $list
-do
-	program="bin/install_$package.sh"
-	echo "install_$package.sh 1>> example_install.log 2>> example_install.err"
-	$program 1>> example_install.log 2>> example_install.err
-done
+echo_eval bin/get_cppad_mixed.sh
 # ----------------------------------------------------------------------------
 # dismod_at
 # -----------------------------------------------------------------------------
 # Check we can find ipopt.pc, echo PKG_CONFIG_PATH to help user set this value
-dir=`find -L $ipopt_prefix -name 'ipopt.pc' | sed -e 's|/ipopt.pc||'`
+dir=`find -L $cppad_prefix -name 'ipopt.pc' | sed -e 's|/ipopt.pc||'`
 if [ "$dir" == '' ]
 then
-	echo "Cannot find ipopt.pc in $ipopt_prefix directory"
+	echo "Cannot find ipopt.pc in $cppad_prefix directory"
 	exit 1
 else
 	echo 'pkg-config setting for ipopt'
