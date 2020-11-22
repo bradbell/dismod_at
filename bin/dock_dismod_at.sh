@@ -24,6 +24,8 @@
 # $head Syntax$$
 # $codei%./dock_dismod_at.sh image base
 # %$$
+# $codei%./dock_dismod_at.sh image cppad_mixed
+# %$$
 # $codei%./dock_dismod_at.sh image dismod_at
 # %$$
 # $codei%./dock_dismod_at.sh %build_type% %database% %command% %...%
@@ -71,28 +73,39 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20200831'
-	dismod_at_hash='d242ebab681bfa41bc710de4ac1661ca076bbbfe'
+	dismod_at_version='20201122'
+	dismod_at_hash='8d8b4bb44139d0c5cba8035fd594be4d6cddf2c9'
 # %$$
+#
+# The image commands will not execute if the corresponding docker image
+# alreadyh exists.
+# You must remove containers that use an image and the remove the image,
+# before you can execute the image command successfully.
 #
 # $subhead dismod_at.base$$
 # The $code image base$$ syntax creates a new docker image with the name
 # $code dismod_at.base$$.
-# This command will not execute if such an image already exists.
-# You must remove containers that use an image before removing the image.
-# This image must be created before $code dismod_at.image$$ can be created.
+# The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
+# you need to re-execute this command.
+#
+# $subhead dismod_at.mixed$$
+# The $code image mixed$$ syntax creates a new docker image with the name
+# $code dismod_at.mixed$$.
+# The $code dismod_at.base$$ image must exist before the
+# $code dismod_at.mixed$$ image can be created.
 # The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
 # you need to re-execute this command.
 #
 # $subhead dismod_at.image$$
 # The $code image dismod_at$$ syntax creates a new docker image with the name
 # $code dismod_at.image$$.
-# This command will not execute if such an image already exists.
+# The $code dismod_at.mixed$$ image must exist before the
+# $code dismod_at.image$$ image can be created.
 # The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
 # you need to re-execute this command.
 #
 # $subhead Removing Containers$$
-# If an existing container uses $code dismod_at.image$$
+# If an existing container uses an image that is being created,
 # you will be prompted with the corresponding $icode container_id$$.
 # The command
 # $codei%
@@ -105,16 +118,19 @@
 # %$$
 #
 # $subhead Removing Images$$
-# You can remove and old $code dismod_at.image$$ using the command
+# You can remove an old image using the command
 # $codei%
-#	docker rmi dismod_at.image
+#	docker rmi %name%
 # %$$
+# For example, $icode name$$ could be
+# $code dismod_at.base$$,
+# $code dismod_at.mixed$$, or
+# $code dismod_at.image$$.
 # You can keep the old image, under a different name, using the commands
 # $codei%
-#	docker tag dismod_at.image %different_name%
-#	docker rmi dismod_at.image
+#	docker tag %name% %different_name%
+#	docker rmi %name%
 # %$$
-# Similar commands can be used for the $code dismod_at.base$$ image.
 #
 # $subhead Dockerfile$$
 # The $code build$$ syntax will create the file
@@ -221,9 +237,10 @@
 # ---------------------------------------------------------------------------
 if [ "$1" == 'image' ]
 then
-	if [ "$2" != 'base' ] && [ "$2" != 'dismod_at' ]
+	if [ "$2" != 'base' ] && [ "$2" != 'mixed' ] && [ "$2" != 'dismod_at' ]
 	then
 		echo 'usage: dock_dismod_at.sh image base'
+		echo 'usage: dock_dismod_at.sh image mixed'
 		echo 'usage: dock_dismod_at.sh image dismod_at'
 		echo 'usage: dock_dismod_at.sh debug database command ...'
 		echo 'usage: dock_dismod_at.sh release database command ...'
@@ -233,6 +250,7 @@ else
 	if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
 	then
 		echo 'usage: dock_dismod_at.sh image base'
+		echo 'usage: dock_dismod_at.sh image mixed'
 		echo 'usage: dock_dismod_at.sh image dismod_at'
 		echo 'usage: dock_dismod_at.sh debug   database command ...'
 		echo 'usage: dock_dismod_at.sh release database command ...'
@@ -262,9 +280,16 @@ then
 	if [ "$2" == 'base' ]
 	then
 		image_name='dismod_at.base'
-	else
+	elif [ "$2" == 'mixed' ]
+    then
+		image_name='dismod_at.mixed'
+	elif [ "$2" == 'dismod_at' ]
+    then
 		image_name='dismod_at.image'
-	fi
+	else
+        'dock_dismod_at.sh: program error'
+        exit 1
+    fi
 	if [ -e 'Dockerfile' ]
 	then
 		echo 'dock_dismod_at.sh Error'
@@ -320,12 +345,20 @@ libsqlite3-dev \
 vim \
 wget
 
+# 1. Get dismod git repository as /home/dismod_at.git
+WORKDIR /home
+RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
+EOF
+elif [ "$image_name" == 'dismod_at.mixed' ]
+then
+cat << EOF > Dockerfile
+FROM dismod_at.base
+WORKDIR /home/dismod_at.git
+
 # 1. Get source corresponding to dismod_at-$dismod_at_version
 # 2. Check that the corresponding hash is $dismod_at_hash
 # 3. Change install prefix to /home/prefix/dismod_at
-WORKDIR /home
-RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
-WORKDIR   /home/dismod_at.git
+# 4. Get cppad_mixed library and dependencies
 
 RUN git pull && \
 git checkout --quiet $dismod_at_hash  && \
@@ -335,25 +368,19 @@ sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
 
 # debug install debug version of eigen and ipopt
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
-bin/install_eigen.sh && \
-bin/install_ipopt.sh
+bin/get_cppad_mixed.sh
 
 # release install release version of eigen and ipopt
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
-bin/install_eigen.sh && \
-bin/install_ipopt.sh
+bin/get_cppad_mixed.sh
 
 # Restore run_cmake.sh to its original state
 Run git checkout bin/run_cmake.sh
-
 EOF
 else
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
-# dismod_at.base with dismod_at requirements that are installed locally in
-# /home/prefix
-# -----------------------------------------------------------------------------
-FROM dismod_at.base
+FROM dismod_at.mixed
 WORKDIR /home/dismod_at.git
 
 # 1. Get source corresponding to dismod_at-$dismod_at_version
@@ -365,20 +392,16 @@ git checkout --quiet $dismod_at_hash  && \
 sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g' && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null
 
-# Install debug version of cppad, cppad_mixed, and dismod_at
+# Install debug version of dismod_at
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
-bin/install_cppad.sh && \
-bin/install_cppad_mixed.sh && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
 make install && \
 cd ..
 
-# Install release version of cppad, cppad_mixed, and dismod_at
+# Install release version of dismod_at
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
-bin/install_cppad.sh && \
-bin/install_cppad_mixed.sh && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
