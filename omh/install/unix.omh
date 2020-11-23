@@ -222,27 +222,23 @@ You must first change
 these settings to the appropriate values for your system before
 running the install scripts below:
 
-$subhead install_eigen.sh$$
+$subhead eigen$$
 The $href%http://eigen.tuxfamily.org%eigen%$$
 linear algebra package.
-Starting in the $code dismod_at.git$$ directory, the command
-$codei%
-	bin/install_eigen.sh
-%$$
-can be used to install this package.
-This script also serves as an example of how to install eigen.
+The script $code bin/get_cppad_mixed.sh$$ (see below)
+includes an install of eigen.
 
 $subhead ipopt$$
 The $href%https://projects.coin-or.org/Ipopt%Ipopt%$$
 optimization package.
 The script $code bin/get_cppad_mixed.sh$$ (see below)
-will install this package.
+includes an install of ipopt.
 
 $subhead cppad$$
 The $href%http://www.coin-or.org/CppAD/%cppad%$$
 C++ algorithmic differentiation package.
 The script $code bin/get_cppad_mixed.sh$$ (see below)
-will install this package.
+includes an install of cppad.
 
 $subhead cppad_mixed$$
 The $href%https://bradbell.github.io/cppad_mixed%cppad_mixed%$$

@@ -647,7 +647,7 @@ $lend
 $head 08-18$$
 $list number$$
 There was a problem with the
-$cref/install_eigen.sh/install_unix/Special Requirements/install_eigen.sh/$$
+$cref/eigen/install_unix/Special Requirements/eigen/$$
 install script and its use of the $code -i$$ flag on Mac systems.
 This has been fixed.
 $lnext

@@ -63,20 +63,11 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 #
 # &head eigen_prefix&&
 # Prefix where
-# &cref/eigen/install_unix/Special Requirements/install_eigen.sh/&&
+# &cref/eigen/install_unix/Special Requirements/eigen/&&
 # is installed:
 # &codep
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
 # &&
-# If this prefix ends in &code /dismod_at/eigen&&,
-# &code bin/install_eigen.sh&& will use a soft link from
-# &codei%../%eigen_prefix%&& to
-# &codei%../%eigen_prefix%.debug%&& or
-# &codei%../%eigen_prefix%.release%&&
-# depending on the choice for &icode build_type&&.
-# The default &icode eigen_prefix&& is different from the other prefixes
-# because compiler warning for this directory are suppress and we want
-# compiler warnings for the rest of the source code.
 #
 # &head ipopt_prefix&&
 # The prefix where
