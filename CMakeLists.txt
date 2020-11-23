@@ -193,21 +193,25 @@ set_library_path_list(
 )
 INCLUDE_DIRECTORIES( ${ipopt_INCLUDE_DIRS} )
 # ----------------------------------------------------------------------------
-# gsl_library_path_list and include directories
-#
-pkg_check_modules(gsl REQUIRED gsl)
-set_library_path_list(
-	gsl_library_path_list "${gsl_LIBRARY_DIRS}" "${gsl_LIBRARIES}"
-)
-INCLUDE_DIRECTORIES( ${gsl_INCLUDE_DIRS} )
-# ----------------------------------------------------------------------------
-# sqlite3_library_path_list and include directories
-#
-pkg_check_modules(sqlite3 REQUIRED sqlite3)
-set_library_path_list(
-	sqlite3_library_path_list "${sqlite3_LIBRARY_DIRS}" "${sqlite3_LIBRARIES}"
-)
-INCLUDE_DIRECTORIES( ${sqlite3_INCLUDE_DIRS} )
+# set pkg-config information about sqlite3, gsl
+FIND_PACKAGE(PkgConfig)
+FOREACH(pkg sqlite3 gsl)
+	pkg_check_modules( ${pkg} QUIET ${pkg} )
+	IF( ${pkg}_FOUND )
+		MESSAGE(STATUS "Found ${pkg}.pc file")
+	ELSE( ${pkg}_FOUND )
+		MESSAGE(STATUS "Cannot find ${pkg}.pc file")
+		MESSAGE(FATAL_ERROR  "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}")
+	ENDIF( ${pkg}_FOUND )
+	# INLCUDE_DIRECTORIES
+	IF( ${pkg} STREQUAL "eigen3" )
+		INCLUDE_DIRECTORIES( SYSTEM ${eigen3_INCLUDE_DIRS} )
+	ELSE( ${pkg} STREQUAL "eigen3" )
+		INCLUDE_DIRECTORIES( ${${pkg}_INCLUDE_DIRS} )
+	ENDIF( ${pkg} STREQUAL "eigen3" )
+	# LINK_DIRECTORIES
+	LINK_DIRECTORIES( ${${pkg}_LIBRARY_DIRS} )
+ENDFOREACH(pkg)
 # ----------------------------------------------------------------------------
 # suitesparse_path_list
 #

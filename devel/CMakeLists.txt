@@ -101,9 +101,9 @@ TARGET_LINK_LIBRARIES(dismod_at
 	devel
 	${cppad_mixed_library_path_list}
 	${suitesparse_library_path_list}
+	${gsl_LIBRARIES}
+	${sqlite3_LIBRARIES}
 	${ipopt_library_path_list}
-	${gsl_library_path_list}
-	${sqlite3_library_path_list}
 	${system_specific_library_list}
 )
 # ---------------------------------------------------------------------------

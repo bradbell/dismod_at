@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -27,10 +27,10 @@ SET_TARGET_PROPERTIES(
 TARGET_LINK_LIBRARIES(test_devel
 	devel
 	${cppad_mixed_library_path_list}
+	${gsl_LIBRARIES}
+	${sqlite3_LIBRARIES}
 	${suitesparse_library_path_list}
 	${ipopt_library_path_list}
-	${sqlite3_library_path_list}
-	${gsl_library_path_list}
 	${system_specific_library_list}
 )
 ADD_CUSTOM_TARGET(check_test_devel test_devel DEPENDS test_devel )
