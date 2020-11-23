@@ -69,14 +69,6 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 eigen_prefix="$HOME/prefix/dismod_at/eigen"
 # &&
 #
-# &head ipopt_prefix&&
-# The prefix where
-# &cref/ipopt/install_unix/Special Requirements/ipopt/&&
-# is installed:
-# &codep
-ipopt_prefix="$HOME/prefix/dismod_at"
-# &&
-#
 # &head cppad_prefix&&
 # The prefix where
 # &cref/cppad/install_unix/Special Requirements/cppad/&&
@@ -176,7 +168,7 @@ EOF
 	shift
 done
 # --------------------------------------------------------------------------
-export PKG_CONFIG_PATH="$ipopt_prefix/$cmake_libdir/pkgconfig"
+export PKG_CONFIG_PATH="$cppad_prefix/$cmake_libdir/pkgconfig"
 # --------------------------------------------------------------------------
 if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -209,7 +201,6 @@ cmake \
 	-D cmake_libdir="$cmake_libdir" \
 	\
 	-D dismod_at_prefix="$dismod_at_prefix" \
-	-D ipopt_prefix="$ipopt_prefix" \
 	-D eigen_prefix="$eigen_prefix" \
 	-D cppad_prefix="$cppad_prefix" \
 	-D system_specific_library_list="$system_specific_library_list" \

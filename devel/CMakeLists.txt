@@ -103,7 +103,7 @@ TARGET_LINK_LIBRARIES(dismod_at
 	${suitesparse_library_path_list}
 	${gsl_LIBRARIES}
 	${sqlite3_LIBRARIES}
-	${ipopt_library_path_list}
+	${ipopt_LIBRARIES}
 	${system_specific_library_list}
 )
 # ---------------------------------------------------------------------------

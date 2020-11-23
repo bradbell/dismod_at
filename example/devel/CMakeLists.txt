@@ -81,7 +81,7 @@ TARGET_LINK_LIBRARIES(example_devel
 	${suitesparse_library_path_list}
 	${gsl_LIBRARIES}
 	${sqlite3_LIBRARIES}
-	${ipopt_library_path_list}
+	${ipopt_LIBRARIES}
 	${system_specific_library_list}
 )
 ADD_CUSTOM_TARGET(check_example_devel example_devel DEPENDS example_devel )

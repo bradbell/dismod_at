@@ -30,7 +30,7 @@ TARGET_LINK_LIBRARIES(test_devel
 	${gsl_LIBRARIES}
 	${sqlite3_LIBRARIES}
 	${suitesparse_library_path_list}
-	${ipopt_library_path_list}
+	${ipopt_LIBRARIES}
 	${system_specific_library_list}
 )
 ADD_CUSTOM_TARGET(check_test_devel test_devel DEPENDS test_devel )

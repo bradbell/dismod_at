@@ -17,7 +17,6 @@
 #                        -D dismod_at_prefix=value \
 #                        -D cppad_prefix=value \
 #                        -D eigen_prefix=value \
-#                        -D ipopt_prefix=value \
 # optional
 # standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
 #                        -D CMAKE_BUILD_TYPE=value \
@@ -170,9 +169,8 @@ ENDIF( "${system_specific_library_list}" STREQUAL "NOTFOUND"  )
 # get required package prefixes
 get_prefix(cppad)
 get_prefix(eigen)
-get_prefix(ipopt)
 # ----------------------------------------------------------------------------
-FOREACH( var cppad_mixed_set_sparsity )
+FOREACH( var cppad_mixed_set_sparsity ipopt_prefix)
 IF( ${var} )
 	MESSAGE(FATAL_ERROR "${var} is no longer used in dismod_at cmake command")
 ENDIF( ${var} )
@@ -184,18 +182,9 @@ ENDIF( NOT "${log_fatal_error}" STREQUAL ""  )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
-# ipopt_library_path_list and include directories
-#
-FIND_PACKAGE(PkgConfig)
-pkg_check_modules(ipopt REQUIRED ipopt)
-set_library_path_list(
-	ipopt_library_path_list "${ipopt_LIBRARY_DIRS}" "${ipopt_LIBRARIES}"
-)
-INCLUDE_DIRECTORIES( ${ipopt_INCLUDE_DIRS} )
-# ----------------------------------------------------------------------------
 # set pkg-config information about sqlite3, gsl
 FIND_PACKAGE(PkgConfig)
-FOREACH(pkg sqlite3 gsl)
+FOREACH(pkg sqlite3 gsl ipopt)
 	pkg_check_modules( ${pkg} QUIET ${pkg} )
 	IF( ${pkg}_FOUND )
 		MESSAGE(STATUS "Found ${pkg}.pc file")
