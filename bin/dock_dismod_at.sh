@@ -24,7 +24,7 @@
 # $head Syntax$$
 # $codei%./dock_dismod_at.sh image base
 # %$$
-# $codei%./dock_dismod_at.sh image cppad_mixed
+# $codei%./dock_dismod_at.sh image mixed
 # %$$
 # $codei%./dock_dismod_at.sh image dismod_at
 # %$$
@@ -74,12 +74,12 @@
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
 	dismod_at_version='20201122'
-	dismod_at_hash='8d8b4bb44139d0c5cba8035fd594be4d6cddf2c9'
+	dismod_at_hash='545d5eb2a9acd81aa2097b3b1b6cc9f220b16691'
 # %$$
 #
 # The image commands will not execute if the corresponding docker image
-# alreadyh exists.
-# You must remove containers that use an image and the remove the image,
+# already exists.
+# You must remove containers that use an image and then remove the image,
 # before you can execute the image command successfully.
 #
 # $subhead dismod_at.base$$
@@ -383,6 +383,9 @@ cat << EOF > Dockerfile
 FROM dismod_at.mixed
 WORKDIR /home/dismod_at.git
 
+# LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH='/home/prefix/dismod_at/lib64'
+
 # 1. Get source corresponding to dismod_at-$dismod_at_version
 # 2. Check that the corresponding hash is $dismod_at_hash
 # 3. Change install prefix to /home/prefix/dismod_at
@@ -501,10 +504,6 @@ PATH="\$prefix/bin:\$PATH"
 #
 # Add to python path
 export PYTHONPATH=\`find -L \$prefix -name site-packages\`
-#
-# Add to load library path
-export LD_LIBRARY_PATH=\`find -L /home/prefix/dismod_at -name 'libipopt.*' | \
-	head -1 | sed -e 's|/[^/]*\$||'\`
 #
 # Set debug or release
 if [ -e \$prefix ]

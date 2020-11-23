@@ -44,6 +44,22 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 11-23$$
+$list number$$
+Advance to cppad_mixed and $cref dock_dismod_at.sh$$ version 20201122.
+This simplifies the build process because the script for building
+and installing cppad_mixed, and its dependencies, come from cppad_mixed.
+In addition, it speed up the build process when multiple processors
+are available.
+$lnext
+$bold API change$$ for $cref dock_dismod_at.sh$$.
+To be specific, there are now three dismod_at docker images:
+$cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$,
+$cref/dismod_at.mixed/dock_dismod_at.sh/Building Images/dismod_at.mixed/$$,
+$cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
+You must rebuild all of these images.
+$lend
+
 $head 10-10$$
 Improve the wording in the documentation of
 $cref/std/prior_table/std/$$ in the prior table.
