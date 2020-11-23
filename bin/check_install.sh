@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -15,6 +15,18 @@ if [ "$0" != "bin/check_install.sh" ]
 then
 	echo "bin/check_install.sh: must be executed from its parent directory"
 	exit 1
+fi
+if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
+then
+	echo 'bin/check_all.sh build_type'
+	echo 'build_type is not debug or release'
+	exit 1
+fi
+if [ "$1" == debug ]
+then
+	bin/run_cmake.sh --debug
+else
+	bin/run_cmake.sh
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
