@@ -44,7 +44,7 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='112cd06a794fd8b214a801b1adf1dcbe84f4e9af'
+hash_key='33582ae215e0e0886b6d169fd9d820e3b0ed9fcc'
 version='20201122'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
@@ -99,7 +99,7 @@ then
     echo_eval git clone $web_page cppad_mixed.git
 fi
 cd cppad_mixed.git
-git reset --hard
+echo_eval git reset --hard
 echo_eval git checkout master
 echo_eval git pull
 echo_eval git checkout --quiet $hash_key
