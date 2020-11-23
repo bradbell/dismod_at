@@ -685,7 +685,7 @@ on 05-21 below.
 $head 05-21$$
 There was a problem with the
 $cref/cppad/install_unix/Special Requirements/install_cppad.sh/$$ and
-$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$ install
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$ install
 scripts.
 They sometimes failed because the corresponding repository was out of date.
 This has been fixed by adding a $code git pull$$ to the corresponding scripts.

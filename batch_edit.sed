@@ -8,6 +8,8 @@
 # '
 # list of files that are deleted by batch_edit.sh
 # delete_files='
+#	bin/compare_atomic.sh
+#	bin/compare_checkpoint.sh
 # '
 # List of files that are not edited by the sed commands in this file
 # (with the possible exception of the extra_seds commands).
@@ -33,5 +35,3 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|posterior.py|sample_simple.py|
-s|^\tposterior$|\tsample_simple|

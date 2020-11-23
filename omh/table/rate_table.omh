@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -182,7 +182,7 @@ is used for the lower and upper limits of during the optimization
 of the random effects.
 On the other hand,
 plus and minus infinity is used for the lower and upper limit when
-$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 approximates the integrals with respect to the
 $cref/random effects/model_variables/Random Effects, u/$$.
 $lend

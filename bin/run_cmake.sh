@@ -100,9 +100,7 @@ ipopt_prefix="$HOME/prefix/dismod_at"
 cppad_prefix="$HOME/prefix/dismod_at"
 # &&
 # If this prefix end in &code /dismod_at&&,
-# &code bin/install_cppad.sh&&, and
-# &code bin/install_cppad_mixed.sh&&
-# will use a soft link from &icode cppad_prefix&& to
+# a soft link is used from &icode cppad_prefix&& to
 # &icode%cppad_prefix%.debug%&& or
 # &icode%cppad_prefix%.release%&&
 # depending on the choice for &icode build_type&&.

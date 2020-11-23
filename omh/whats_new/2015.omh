@@ -101,7 +101,7 @@ Advance to a newer version of $code cppad_mixed$$
 
 $head 12-09$$
 First version of $code dismod_at$$ that has
-$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 split out as a separate package.
 The following definitions are no longer used by the
 $cref/dismod_at cmake command/install_unix/dismod_at/Cmake Command/$$:

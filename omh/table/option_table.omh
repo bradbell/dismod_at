@@ -527,7 +527,7 @@ $cref/constant child value priors/rate_table/Child Value Priors/Constant/$$.
 
 $list number$$
 The theory for
-$cref/cppad_mixed/install_unix/Special Requirements/install_cppad_mixed.sh/$$
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 does not include bounds for the random effects.
 
 $lnext

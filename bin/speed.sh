@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # cppad_mixed: C++ Laplace Approximation of Mixed Effects Models
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-20 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -31,8 +31,7 @@ branch2=''
 # Assume that at beginning, installs correspond to master branch.
 # If true, re-install release version corresponding to each version and
 # at the end ensure installs correspond to master version.
-install_cppad='false'
-install_cppad_mixed='false'
+get_cppad_mixed='false'
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/speed.sh' ]
 then
@@ -107,19 +106,10 @@ do
 		# ------------------------------------------------------------------
 		# run installs for this version
 		# ------------------------------------------------------------------
-		#
-		# install cppad
-		if [ "$install_cppad" == 'true' ]
+		if [ "$get_cppad_mixed" == 'true' ]
 		then
-			echo "bin/install_cppad.sh >> build.release/$name.log"
-			bin/install_cppad.sh >> build/$name.log
-		fi
-		#
-		# install cppad_mixed
-		if [ "$install_cppad_mixed" == 'true' ]
-		then
-			echo "bin/install_cppad_mixed.sh >> build.release/$name.log"
-			bin/install_cppad_mixed.sh >> build/$name.log
+			echo "bin/get_cppad_mixed.sh >> build.release/$name.log"
+			bin/get_cppad_mixed.sh >> build/$name.log
 		fi
 	fi
 	# ------------------------------------------------------------------------
@@ -167,19 +157,10 @@ done
 git checkout master
 if [ "$name" != 'master' ]
 then
-	#
-	# install cppad
-	if [ "$install_cppad" == 'true' ]
+	if [ "$get_cppad_mixed" == 'true' ]
 	then
-		echo "bin/install_cppad.sh >> build.release/$name.log"
-		bin/install_cppad.sh >> build/$name.log
-	fi
-	#
-	# install cppad_mixed
-	if [ "$install_cppad_mixed" == 'true' ]
-	then
-		echo "bin/install_cppad_mixed.sh >> build.release/$name.log"
-		bin/install_cppad_mixed.sh >> build/$name.log
+		echo "bin/get_cppad_mixed.sh >> build.release/$name.log"
+		bin/get_cppad_mixed.sh >> build/$name.log
 	fi
 fi
 # ---------------------------------------------------------------------------

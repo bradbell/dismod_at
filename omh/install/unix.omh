@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -252,14 +252,14 @@ $codei%
 can be used to install this package.
 This script also serves as an example of how to install cppad.
 
-$subhead install_cppad_mixed.sh$$
+$subhead cppad_mixed$$
 The $href%https://bradbell.github.io/cppad_mixed%cppad_mixed%$$
 C++ random effects modeling package.
 Starting in the $code dismod_at.git$$ directory, the command
 $codei%
-	bin/install_cppad_mixed.sh
+	bin/get_cppad_mixed.sh
 %$$
-can be used to install this package.
+can be used to install eigen, ipopt, and cppad_mixed.sh.
 This script also serves as an example of how to install cppad_mixed.
 
 $head dismod_at$$
