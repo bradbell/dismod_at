@@ -94,7 +94,7 @@ ipopt_prefix="$HOME/prefix/dismod_at"
 #
 # &head cppad_prefix&&
 # The prefix where
-# &cref/cppad/install_unix/Special Requirements/install_cppad.sh/&&
+# &cref/cppad/install_unix/Special Requirements/cppad/&&
 # is installed:
 # &codep
 cppad_prefix="$HOME/prefix/dismod_at"

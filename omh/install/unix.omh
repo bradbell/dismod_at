@@ -242,15 +242,11 @@ $codei%
 can be used to install this package.
 This script also serves as an example of how to install ipopt.
 
-$subhead install_cppad.sh$$
+$subhead cppad$$
 The $href%http://www.coin-or.org/CppAD/%cppad%$$
 C++ algorithmic differentiation package.
-Starting in the $code dismod_at.git$$ directory, the command
-$codei%
-	bin/install_cppad.sh
-%$$
-can be used to install this package.
-This script also serves as an example of how to install cppad.
+The script $code bin/get_cppad_mixed.sh$$ (see below)
+will include this package.
 
 $subhead cppad_mixed$$
 The $href%https://bradbell.github.io/cppad_mixed%cppad_mixed%$$

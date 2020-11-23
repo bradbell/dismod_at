@@ -870,13 +870,13 @@ but no change from the $code dismod_at$$ user's perspective.
 
 $head 03-06$$
 Advance to
-$cref/cppad-20170306/install_unix/Special Requirements/install_cppad.sh/$$.
+$cref/cppad-20170306/install_unix/Special Requirements/cppad/$$.
 This fixes another bug in Cppad.
 
 
 $head 03-04$$
 Advance to
-$cref/cppad-20170304/install_unix/Special Requirements/install_cppad.sh/$$.
+$cref/cppad-20170304/install_unix/Special Requirements/cppad/$$.
 This fixes a bug in Cppad.
 Advance to
 $cref/cppad_mixed-20170304/install_unix/Special Requirements/cppad_mixed/$$.
