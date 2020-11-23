@@ -200,13 +200,6 @@ FOREACH(pkg sqlite3 gsl eigen3 ipopt)
 	LINK_DIRECTORIES( ${${pkg}_LIBRARY_DIRS} )
 ENDFOREACH(pkg)
 # ----------------------------------------------------------------------------
-# suitesparse_path_list
-#
-# no pkg-config for SuiteSparse so explicitly set corresponding values
-SET(suitesparse_library_path_list
-	"cholmod;amd;camd;colamd;ccolamd;suitesparseconfig"
-)
-# ----------------------------------------------------------------------------
 # cppad_mixed_library_path_list
 #
 # no pkg-config for cppad_mixed so explicitly set corresponding values
