@@ -322,7 +322,7 @@ There was a problem with the install process where by the include
 directories for
 $cref/sqlite3/install_unix/System Requirements/sqlite3/$$,
 $cref/gsl/install_unix/System Requirements/gsl/$$, or
-$cref/ipopt/install_unix/Special Requirements/install_ipopt.sh/$$,
+$cref/ipopt/install_unix/Special Requirements/ipopt/$$,
 might not be set correctly.
 This has been fixed.
 $lend

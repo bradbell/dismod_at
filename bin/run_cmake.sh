@@ -80,17 +80,11 @@ eigen_prefix="$HOME/prefix/dismod_at/eigen"
 #
 # &head ipopt_prefix&&
 # The prefix where
-# &cref/ipopt/install_unix/Special Requirements/install_ipopt.sh/&&
+# &cref/ipopt/install_unix/Special Requirements/ipopt/&&
 # is installed:
 # &codep
 ipopt_prefix="$HOME/prefix/dismod_at"
 # &&
-# If this prefix end in &code /dismod_at&&,
-# &code bin/install_ipopt.sh&&,
-# will use a soft link from &icode ipopt_prefix&& to
-# &icode%ipopt_prefix%.debug%&& or
-# &icode%ipopt_prefix%.release%&&
-# depending on the choice for &icode build_type&&.
 #
 # &head cppad_prefix&&
 # The prefix where
