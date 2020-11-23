@@ -26,10 +26,10 @@ SET_TARGET_PROPERTIES(
 )
 TARGET_LINK_LIBRARIES(test_devel
 	devel
-	${cppad_mixed_library_path_list}
+	${cppad_mixed_LIBRARIES}
 	${gsl_LIBRARIES}
 	${sqlite3_LIBRARIES}
-	${suitesparse_library_path_list}
+	${suitesparse_LIBRARIES}
 	${ipopt_LIBRARIES}
 	${system_specific_library_list}
 )

@@ -161,10 +161,10 @@ $codep%
 If it fails,
 the command
 $codei%
-	find -L %cppad_prefix% -name cppad_mixed.pc 2> /dev/null
+	find -L %dismod_at_prefix% -name cppad_mixed.pc 2> /dev/null
 %$$
 should find the directory where $code cppad_mixed.pc$$ is located;
-see $cref/cppad_prefix/run_cmake.sh/cppad_prefix/$$.
+see $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$.
 
 $subhead LD_LIBRARY_PATH$$
 After $code ipopt$$ is installed,
@@ -173,9 +173,9 @@ $code LD_LIBRARY_PATH$$.
 If you get an error finding loading the shared library corresponding; e.g.,
 %libname%, use the following command to find it:
 $codei%
-	find -L %cppad_prefix% -name '%libname%.*' 2> /dev/null
+	find -L %dismod_at_prefix% -name '%libname%.*' 2> /dev/null
 %$$
-see $cref/cppad_prefix/run_cmake.sh/cppad_prefix/$$.
+see $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$.
 
 $subhead PATH$$
 After you install dismod_at (see below)

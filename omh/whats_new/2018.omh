@@ -352,8 +352,8 @@ Add mention that, during a $code db2csv$$ command,
 the age-time grid for rates is the same as the user's choice of
 grid for $cref/mtother/csv2db_command/integrand/mtother/$$.
 $lnext
-Add discussion of why the default
-$cref/eigen_prefix/run_cmake.sh/eigen_prefix/$$ is different
+Add discussion of why the default the prefix for
+$cref/eigen/install_unix/Special Requirements/eigen/$$ is different
 from the other prefixes.
 $lnext
 Change the default value of

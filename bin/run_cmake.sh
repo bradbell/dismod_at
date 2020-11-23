@@ -61,14 +61,6 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 # &icode%dismod_at_prefix%.release%&&
 # depending on the choice for &icode build_type&&.
 #
-# &head eigen_prefix&&
-# Prefix where
-# &cref/eigen/install_unix/Special Requirements/eigen/&&
-# is installed:
-# &codep
-eigen_prefix="$HOME/prefix/dismod_at/eigen"
-# &&
-#
 # &head cppad_prefix&&
 # The prefix where
 # &cref/cppad/install_unix/Special Requirements/cppad/&&
@@ -201,7 +193,6 @@ cmake \
 	-D cmake_libdir="$cmake_libdir" \
 	\
 	-D dismod_at_prefix="$dismod_at_prefix" \
-	-D eigen_prefix="$eigen_prefix" \
 	-D cppad_prefix="$cppad_prefix" \
 	-D system_specific_library_list="$system_specific_library_list" \
 	..

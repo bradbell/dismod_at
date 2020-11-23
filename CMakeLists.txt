@@ -16,7 +16,6 @@
 #                        -D cmake_libdir=value \
 #                        -D dismod_at_prefix=value \
 #                        -D cppad_prefix=value \
-#                        -D eigen_prefix=value \
 # optional
 # standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
 #                        -D CMAKE_BUILD_TYPE=value \
@@ -168,7 +167,6 @@ ENDIF( "${system_specific_library_list}" STREQUAL "NOTFOUND"  )
 # ----------------------------------------------------------------------------
 # get required package prefixes
 get_prefix(cppad)
-get_prefix(eigen)
 # ----------------------------------------------------------------------------
 FOREACH( var cppad_mixed_set_sparsity ipopt_prefix)
 IF( ${var} )
@@ -182,9 +180,9 @@ ENDIF( NOT "${log_fatal_error}" STREQUAL ""  )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
-# set pkg-config information about sqlite3, gsl
+# set pkg-config information about sqlite3, gsl, eigen, ipopt
 FIND_PACKAGE(PkgConfig)
-FOREACH(pkg sqlite3 gsl ipopt)
+FOREACH(pkg sqlite3 gsl eigen3 ipopt)
 	pkg_check_modules( ${pkg} QUIET ${pkg} )
 	IF( ${pkg}_FOUND )
 		MESSAGE(STATUS "Found ${pkg}.pc file")
@@ -214,9 +212,7 @@ SET(suitesparse_library_path_list
 # no pkg-config for cppad_mixed so explicitly set corresponding values
 SET(cppad_mixed_LIBRARY_DIRS ${cppad_prefix}/${cmake_libdir} )
 SET(cppad_mixed_LIBRARIES "cppad_mixed" )
-set_library_path_list( cppad_mixed_library_path_list
-	"${cppad_mixed_LIBRARY_DIRS}" "${cppad_mixed_LIBRARIES}"
-)
+LINK_DIRECTORIES( cppad_mixed_LIBRARY_DIRS} )
 # ----------------------------------------------------------------------------
 # check compiler flags
 #

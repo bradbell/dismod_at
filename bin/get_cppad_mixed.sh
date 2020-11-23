@@ -68,22 +68,22 @@ eval $cmd
 cmd=`grep '^extra_cxx_flags=' bin/run_cmake.sh`
 eval $cmd
 #
-# cppad_prefix
-cmd=`grep '^cppad_prefix=' bin/run_cmake.sh`
+# dismod_at_prefix
+cmd=`grep '^dismod_at_prefix=' bin/run_cmake.sh`
 eval $cmd
 #
 # cmake_libdir
 cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
 eval $cmd
 # ---------------------------------------------------------------------------
-export LD_LIBRARY_PATH="$cppad_prefix/$cmake_libdir"
+export LD_LIBRARY_PATH="$dismod_at_prefix/$cmake_libdir"
 export DYLD_LIBRARY_PATH="$LD_LIBRARY_PATH"
 export PKG_CONFIG_PATH="$LD_LIBRARY_PATH/pkgconfig"
 # ---------------------------------------------------------------------------
 # set build link to build.debug or build.release depending on build_type
-if echo "$cppad_prefix" | grep '/dismod_at$' > /dev/null
+if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
-	bin/build_type.sh example_install.sh $cppad_prefix $build_type
+	bin/build_type.sh example_install.sh $dismod_at_prefix $build_type
 fi
 # ---------------------------------------------------------------------------
 # cd into build/external
@@ -121,7 +121,7 @@ echo 'edit build/external/cppad_mixed.git/bin/run_cmake.sh.sh'
 sed \
     -e "s|^verbose_makefile=.*|verbose_makefile='no'|" \
     -e "s|^build_type=.*|build_type='$build_type'|" \
-    -e "s|^cmake_install_prefix=.*|cmake_install_prefix='$cppad_prefix'|" \
+    -e "s|^cmake_install_prefix=.*|cmake_install_prefix='$dismod_at_prefix'|" \
     -e "s|^extra_cxx_flags=.*|extra_cxx_flags='$extra_cxx_flags'|" \
     -e "s|^cmake_libdir=.*|cmake_libdir='$cmake_libdir'|" \
     -e "s|^ldlt_cholmod=.*|ldlt_cholmod='yes'|" \

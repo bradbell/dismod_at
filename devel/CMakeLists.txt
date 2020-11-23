@@ -99,8 +99,8 @@ SET_TARGET_PROPERTIES(dismod_at PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}" )
 ADD_DEPENDENCIES(dismod_at devel )
 TARGET_LINK_LIBRARIES(dismod_at
 	devel
-	${cppad_mixed_library_path_list}
-	${suitesparse_library_path_list}
+	${cppad_mixed_LIBRARIES}
+	${suitesparse_LIBRARIES}
 	${gsl_LIBRARIES}
 	${sqlite3_LIBRARIES}
 	${ipopt_LIBRARIES}
