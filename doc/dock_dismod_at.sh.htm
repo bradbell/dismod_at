@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Install and Run dismod_at in a Docker Image</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Install and Run dismod_at in a Docker Image">
-<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax logging output purpose requirements building images version dismod_at.base dismod_at.image removing containers dockerfile errors new container build_type database command other arguments debugging determine id start stop ">
+<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax logging output purpose requirements building images version dismod_at.base dismod_at.mixed dismod_at.image removing containers dockerfile errors new container build_type database command other arguments debugging determine id start stop ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,6 +70,7 @@ A:active { color : purple }
 <br><a href="dock_dismod_at.sh.htm#Building Images" target="_top">Building&nbsp;Images</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Version" target="_top">Version</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.base" target="_top">dismod_at.base</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.mixed" target="_top">dismod_at.mixed</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.image" target="_top">dismod_at.image</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Removing Containers" target="_top">Removing&nbsp;Containers</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Removing Images" target="_top">Removing&nbsp;Images</a>
@@ -92,6 +93,9 @@ A:active { color : purple }
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;image&nbsp;base<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;image&nbsp;mixed<br>
 </span></font></code>
 
 <code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;image&nbsp;dismod_at<br>
@@ -159,17 +163,32 @@ You can test this on your system by trying to execute the following command:
 <br>
 This script will build the following version of dismod_at image:
 <pre style='display:inline'><tt>
-     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20200831'</font>
-     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'d242ebab681bfa41bc710de4ac1661ca076bbbfe'</font>
+     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20201124'</font>
+     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'1cfc6d2d5b8be42226fda7fa5a2af0938cb6f0f6'</font>
 </tt></pre>
+The image commands will not execute if the corresponding docker image
+already exists.
+You must remove containers that use an image and then remove the image,
+before you can execute the image command successfully.
+
+<br>
 <br>
 <big><a name="Building Images.dismod_at.base" id="Building Images.dismod_at.base">dismod_at.base</a></big>
 <br>
 The <code><font color="blue">image base</font></code> syntax creates a new docker image with the name
 <code><font color="blue">dismod_at.base</font></code>.
-This command will not execute if such an image already exists.
-You must remove containers that use an image before removing the image.
-This image must be created before <code><font color="blue">dismod_at.image</font></code> can be created.
+The <a href="whats_new_2019.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
+ instructions will tell you if
+you need to re-execute this command.
+
+<br>
+<br>
+<big><a name="Building Images.dismod_at.mixed" id="Building Images.dismod_at.mixed">dismod_at.mixed</a></big>
+<br>
+The <code><font color="blue">image mixed</font></code> syntax creates a new docker image with the name
+<code><font color="blue">dismod_at.mixed</font></code>.
+The <code><font color="blue">dismod_at.base</font></code> image must exist before the
+<code><font color="blue">dismod_at.mixed</font></code> image can be created.
 The <a href="whats_new_2019.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
  instructions will tell you if
 you need to re-execute this command.
@@ -180,7 +199,8 @@ you need to re-execute this command.
 <br>
 The <code><font color="blue">image dismod_at</font></code> syntax creates a new docker image with the name
 <code><font color="blue">dismod_at.image</font></code>.
-This command will not execute if such an image already exists.
+The <code><font color="blue">dismod_at.mixed</font></code> image must exist before the
+<code><font color="blue">dismod_at.image</font></code> image can be created.
 The <a href="whats_new_2019.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
  instructions will tell you if
 you need to re-execute this command.
@@ -189,7 +209,7 @@ you need to re-execute this command.
 <br>
 <big><a name="Building Images.Removing Containers" id="Building Images.Removing Containers">Removing Containers</a></big>
 <br>
-If an existing container uses <code><font color="blue">dismod_at.image</font></code>
+If an existing container uses an image that is being created,
 you will be prompted with the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i></code>
 .
@@ -207,20 +227,23 @@ If the container is still running, you will need to use
 <br>
 <big><a name="Building Images.Removing Images" id="Building Images.Removing Images">Removing Images</a></big>
 <br>
-You can remove and old <code><font color="blue">dismod_at.image</font></code> using the command
+You can remove an old image using the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;dismod_at.image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+For example, 
+<code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
+ could be
+<code><font color="blue">dismod_at.base</font></code>,
+<code><font color="blue">dismod_at.mixed</font></code>, or
+<code><font color="blue">dismod_at.image</font></code>.
 You can keep the old image, under a different name, using the commands
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;tag&nbsp;dismod_at.image&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;dismod_at.image<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;tag&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-Similar commands can be used for the <code><font color="blue">dismod_at.base</font></code> image.
-
-<br>
 <br>
 <big><a name="Building Images.Dockerfile" id="Building Images.Dockerfile">Dockerfile</a></big>
 <br>

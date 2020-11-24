@@ -79,8 +79,8 @@ bin/example_install.sh</font></code>
 <font color="#009900">cmd</font><font color="#990000">=</font>`grep <font color="#FF0000">'^build_type='</font> bin/run_cmake<font color="#990000">.</font>sh`
 <b><font color="#0000FF">eval</font></b> <font color="#009900">$cmd</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># set ipopt_prefix to value in run_cmake.sh</font></i>
-<font color="#009900">cmd</font><font color="#990000">=</font>`grep <font color="#FF0000">'^ipopt_prefix='</font> bin/run_cmake<font color="#990000">.</font>sh`
+<i><font color="#9A1900"># set dismod_at_prefix to value in run_cmake.sh</font></i>
+<font color="#009900">cmd</font><font color="#990000">=</font>`grep <font color="#FF0000">'^dismod_at_prefix='</font> bin/run_cmake<font color="#990000">.</font>sh`
 <b><font color="#0000FF">eval</font></b> <font color="#009900">$cmd</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># bash function that echos and executes a command</font></i>
@@ -99,32 +99,21 @@ bin/example_install.sh</font></code>
 <b><font color="#0000FF">done</font></b>
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># set build link to build.debug or build.release depending on build_type</font></i>
-<b><font color="#0000FF">if</font></b> echo <font color="#FF0000">"$ipopt_prefix"</font> <font color="#990000">|</font> grep <font color="#FF0000">'/dismod_at$'</font> <font color="#990000">&gt;</font> /dev/null
+<b><font color="#0000FF">if</font></b> echo <font color="#FF0000">"$dismod_at_prefix"</font> <font color="#990000">|</font> grep <font color="#FF0000">'/dismod_at$'</font> <font color="#990000">&gt;</font> /dev/null
 <b><font color="#0000FF">then</font></b>
-     bin/build_type<font color="#990000">.</font>sh example_install<font color="#990000">.</font>sh <font color="#009900">$ipopt_prefix</font> <font color="#009900">$build_type</font>
+     bin/build_type<font color="#990000">.</font>sh example_install<font color="#990000">.</font>sh <font color="#009900">$dismod_at_prefix</font> <font color="#009900">$build_type</font>
 <b><font color="#0000FF">fi</font></b>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># install the special requirements</font></i>
-<font color="#009900">list</font><font color="#990000">=</font><font color="#FF0000">"</font>
-<font color="#FF0000">     eigen</font>
-<font color="#FF0000">     ipopt</font>
-<font color="#FF0000">     cppad</font>
-<font color="#FF0000">     cppad_mixed</font>
-<font color="#FF0000">"</font>
-<b><font color="#0000FF">for</font></b> package <b><font color="#0000FF">in</font></b> <font color="#009900">$list</font>
-<b><font color="#0000FF">do</font></b>
-     <font color="#009900">program</font><font color="#990000">=</font><font color="#FF0000">"bin/install_$package.sh"</font>
-     echo <font color="#FF0000">"install_$package.sh 1&gt;&gt; example_install.log 2&gt;&gt; example_install.err"</font>
-     <font color="#009900">$program</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> example_install<font color="#990000">.</font>err
-<b><font color="#0000FF">done</font></b>
+echo_eval bin/get_cppad_mixed<font color="#990000">.</font>sh
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># dismod_at</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Check we can find ipopt.pc, echo PKG_CONFIG_PATH to help user set this value</font></i>
-<font color="#009900">dir</font><font color="#990000">=</font>`find -L <font color="#009900">$ipopt_prefix</font> -name <font color="#FF0000">'ipopt.pc'</font> <font color="#990000">|</font> sed -e <font color="#FF0000">'s|/ipopt.pc||'</font>`
+<font color="#009900">dir</font><font color="#990000">=</font>`find -L <font color="#009900">$dismod_at_prefix</font> -name <font color="#FF0000">'ipopt.pc'</font> <font color="#990000">|</font> sed -e <font color="#FF0000">'s|/ipopt.pc||'</font>`
 <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> <font color="#FF0000">"$dir"</font> <font color="#990000">==</font> <font color="#FF0000">''</font> <font color="#990000">]</font>
 <b><font color="#0000FF">then</font></b>
-     echo <font color="#FF0000">"Cannot find ipopt.pc in $ipopt_prefix directory"</font>
+     echo <font color="#FF0000">"Cannot find ipopt.pc in $dismod_at_prefix directory"</font>
      <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
 <b><font color="#0000FF">else</font></b>
      echo <font color="#FF0000">'pkg-config setting for ipopt'</font>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 11-24 11-22 11-23 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>11-24</option>
+<option>11-22</option>
+<option>11-23</option>
 <option>10-10</option>
 <option>08-31</option>
 <option>08-23</option>
@@ -111,6 +114,53 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="11-24" id="11-24">11-24</a></big></b>
+<br>
+Advance <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+ version 20201122.
+This should speed up the build process.
+It requires one to re-build dismod_at.mixed and dismod_at.image.
+
+
+<br>
+<br>
+<b><big><a name="11-22" id="11-22">11-22</a></big></b>
+<br>
+Advance to cppad_mixed-20201124.
+This speeds up the build process when multiple processors are available.
+It also fixes a problem in <code><font color="blue">cppad_mixed.pc</font></code> and thereby removes the need
+to specify a prefix for each of the
+<a href="install_unix.htm#Special Requirements" target="_top"><span style='white-space: nowrap'>special&nbsp;requirements</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="11-23" id="11-23">11-23</a></big></b>
+
+<ol type="1"><li>
+Advance to cppad_mixed and <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+ version 20201122.
+This simplifies the build process because the script for building
+and installing cppad_mixed, and its dependencies, come from cppad_mixed.
+In addition, it speed up the build process when multiple processors
+are available.
+</li><li>
+
+<b>API change</b> for <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+.
+To be specific, there are now three dismod_at docker images:
+<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.base" target="_top"><span style='white-space: nowrap'>dismod_at.base</span></a>
+,
+<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.mixed" target="_top"><span style='white-space: nowrap'>dismod_at.mixed</span></a>
+,
+<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.image" target="_top"><span style='white-space: nowrap'>dismod_at.image</span></a>
+.
+You must rebuild all of these images.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="10-10" id="10-10">10-10</a></big></b>
 <br>

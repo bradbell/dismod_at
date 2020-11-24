@@ -393,9 +393,9 @@ Fix a warning (that appeared on some systems) about missing braces in
 </li><li>
 
 Add option so that user can specify the C++ compiler during the install of
-<a href="install_unix.htm#Special Requirements.install_ipopt.sh" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+<a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
  and
-<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 
 </li><li>
 
@@ -453,7 +453,7 @@ For example, <code><font color="blue">data_dict</font></code> was changed to
 </li><li>
 
 There was a problem with the
-<a href="install_unix.htm#Special Requirements.install_cppad.sh" target="_top"><span style='white-space: nowrap'>cppad</span></a>
+<a href="install_unix.htm#Special Requirements.cppad" target="_top"><span style='white-space: nowrap'>cppad</span></a>
  install script
 <code><font color="blue">bin/install_cppad.sh</font></code> that caused a compiler error in
 <code><font color="blue">forward2sweep.hpp</font></code> when CppAD was not using c++11 features.
@@ -590,13 +590,13 @@ Change <code><font color="blue">DEBUG</font></code> and <code><font color="blue"
 in
 <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>run_cmake.sh</span></a>
  and the install for
-<a href="install_unix.htm#Special Requirements.install_eigen.sh" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+<a href="install_unix.htm#Special Requirements.eigen" target="_top"><span style='white-space: nowrap'>eigen</span></a>
 ,
 <a href="install_unix.htm#System Requirements.suitesparse" target="_top"><span style='white-space: nowrap'>suitesparse</span></a>
 ,
-<a href="install_unix.htm#Special Requirements.install_ipopt.sh" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+<a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
 ,
-<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 .
 </li></ol>
 
@@ -607,14 +607,14 @@ in
 <br>
 In <code><font color="blue">bin/install_cppad_mixed.sh</font></code>
 change <code><font color="blue">cmake_build_type</font></code> to <code><font color="blue">build_type</font></code>; see
-<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 .
 In addition, add this parameter to the install for
-<a href="install_unix.htm#Special Requirements.install_eigen.sh" target="_top"><span style='white-space: nowrap'>eigen</span></a>
+<a href="install_unix.htm#Special Requirements.eigen" target="_top"><span style='white-space: nowrap'>eigen</span></a>
 ,
 <a href="install_unix.htm#System Requirements.suitesparse" target="_top"><span style='white-space: nowrap'>suitesparse</span></a>
 , and
-<a href="install_unix.htm#Special Requirements.install_ipopt.sh" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+<a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
 .
 CppAD does not need this choice as it adapter to the choice of
 the systems that use it.
@@ -622,7 +622,7 @@ Note that the install for <code><font color="blue">dismod_at</font></code>
 must have the same <a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
 
 as
-<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 .
 (This is no longer an issue.)
 
@@ -893,7 +893,7 @@ option.
 <b><big><a name="05-04" id="05-04">05-04</a></big></b>
 
 <ol type="1"><li>
-Print the <a href="install_unix.htm#Special Requirements.install_ipopt.sh" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
+Print the <a href="install_unix.htm#Special Requirements.ipopt" target="_top"><span style='white-space: nowrap'>ipopt</span></a>
 
 library directories during the
 <a href="install_unix.htm#dismod_at.Cmake Command" target="_top"><span style='white-space: nowrap'>cmake&nbsp;command</span></a>
@@ -910,7 +910,7 @@ to <a href="db2csv_command.htm#variable.csv.res_value" target="_top"><span style
 
 Put <code><font color="blue">cppad_mixed:</font></code> at the beginning of warnings and error messages
 that come from the
-<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
  package.
 </li><li>
 
@@ -1178,7 +1178,7 @@ Fix some errors and warnings when
  was
 <code><font color="blue">RELEASE</font></code>. Note that release version is about twice as fast
 as the debug version (when using the debug version of
-<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 .
 
 <br>
@@ -1249,7 +1249,7 @@ The <a href="install_unix.htm#System Requirements.suitesparse" target="_top"><sp
 package is now required.
 This is because one now has the option to use it for Cholesky factorization;
 see the <code><font color="blue">cholmod_cholesky</font></code> setting for installing
-<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 .
 </li></ol>
 

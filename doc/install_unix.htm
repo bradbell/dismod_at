@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Installing dismod_at in Unix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Installing dismod_at in Unix">
-<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to path pkg_config_path ld_library_path pythonpath special run_cmake.sh install_eigen.sh install_ipopt.sh install_cppad.sh install_cppad_mixed.sh setup command build test install example ">
+<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to path pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test install example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -84,10 +84,10 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Paths.PYTHONPATH" target="_top">PYTHONPATH</a>
 <br><a href="install_unix.htm#Special Requirements" target="_top">Special&nbsp;Requirements</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.run_cmake.sh" target="_top">run_cmake.sh</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.install_eigen.sh" target="_top">install_eigen.sh</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.install_ipopt.sh" target="_top">install_ipopt.sh</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.install_cppad.sh" target="_top">install_cppad.sh</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.install_cppad_mixed.sh" target="_top">install_cppad_mixed.sh</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.eigen" target="_top">eigen</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.ipopt" target="_top">ipopt</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.cppad" target="_top">cppad</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top">cppad_mixed</a>
 <br><a href="install_unix.htm#dismod_at" target="_top">dismod_at</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#dismod_at.Setup" target="_top">Setup</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="install_unix.htm#dismod_at.Cmake Command" target="_top">Cmake&nbsp;Command</a>
@@ -257,8 +257,8 @@ to add
 After <code><font color="blue">sqlite3</font></code> and <code><font color="blue">gsl</font></code> are installed
 the following commands should work:
 <code><font color='blue'><pre style='display:inline'> 
-     pkg-config sqlite3 --libs
-     pkg-config gsl     --libs
+     pkg-config sqlite3 --version
+     pkg-config gsl     --version
 </pre></font></code>
 If one of them fails, a corresponding directory is missing
 from the <code><font color="blue">PKG_CONFIG_PATH</font></code> environment variable.
@@ -271,19 +271,33 @@ the command
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;gsl.pc&nbsp;2&gt;&nbsp;/dev/null<br>
 </span></font></code>
 should find the directory where <code><font color="blue">gsl.pc</font></code> is located.
-After <code><font color="blue">ipopt</font></code> is installed (see below),
+After <a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+
+is installed (see below),
 the following command should work:
-<code><font color='blue'><pre style='display:inline'> 
-     pkg-config ipopt --libs
-</pre></font></code>
-If it fails,
-the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;ipopt.pc&nbsp;2&gt;&nbsp;/dev/null<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;--version<br>
 </span></font></code>
-should find the directory where <code><font color="blue">ipopt.pc</font></code> is located;
-see <a href="run_cmake.sh.htm#ipopt_prefix" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+where 
+<code><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i></code>
+ is any of the
+<a href="install_unix.htm#Special Requirements" target="_top"><span style='white-space: nowrap'>special&nbsp;requirements</span></a>
+
+below.
+(There is one exception, the eigen package uses <code><font color="blue">eigen3</font></code> for
+
+<code><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i></code>
+ above.)
+If one of these commands fails,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>.pc&nbsp;2&gt;&nbsp;/dev/null<br>
+</span></font></code>
+should find the directory where 
+<code><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>.pc</span></font></code>
+ is located;
+see <a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white-space: nowrap'>dismod_at_prefix</span></a>
 .
 
 <br>
@@ -293,13 +307,13 @@ see <a href="run_cmake.sh.htm#ipopt_prefix" target="_top"><span style='white-spa
 After <code><font color="blue">ipopt</font></code> is installed,
 the directory where it's libraries are installed should be in your
 <code><font color="blue">LD_LIBRARY_PATH</font></code>.
-If you get an error finding loading the shared library corresponding
-to ipopt, use the following command to find it:
+If you get an error finding loading the shared library corresponding; e.g.,
+%libname%, use the following command to find it:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ipopt_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;'libipopt.*'&nbsp;2&gt;&nbsp;/dev/null<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;'</span></font><i><font color="black"><span style='white-space: nowrap'>libname</span></font></i><font color="blue"><span style='white-space: nowrap'>.*'&nbsp;2&gt;&nbsp;/dev/null<br>
 </span></font></code>
-see <a href="run_cmake.sh.htm#ipopt_prefix" target="_top"><span style='white-space: nowrap'>ipopt_prefix</span></a>
+see <a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white-space: nowrap'>dismod_at_prefix</span></a>
 .
 
 <br>
@@ -368,52 +382,37 @@ running the install scripts below:
 
 <br>
 <br>
-<big><a name="Special Requirements.install_eigen.sh" id="Special Requirements.install_eigen.sh">install_eigen.sh</a></big>
+<big><a name="Special Requirements.eigen" id="Special Requirements.eigen">eigen</a></big>
 <br>
 The <a href="http://eigen.tuxfamily.org" target="_top"><span style='white-space: nowrap'>eigen</span></a>
 
 linear algebra package.
-Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_eigen.sh<br>
-</span></font></code>
-can be used to install this package.
-This script also serves as an example of how to install eigen.
+The script <code><font color="blue">bin/get_cppad_mixed.sh</font></code> (see below)
+includes an install of eigen.
 
 <br>
 <br>
-<big><a name="Special Requirements.install_ipopt.sh" id="Special Requirements.install_ipopt.sh">install_ipopt.sh</a></big>
+<big><a name="Special Requirements.ipopt" id="Special Requirements.ipopt">ipopt</a></big>
 <br>
 The <a href="https://projects.coin-or.org/Ipopt" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
 
 optimization package.
-Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_ipopt.sh<br>
-</span></font></code>
-can be used to install this package.
-This script also serves as an example of how to install ipopt.
+The script <code><font color="blue">bin/get_cppad_mixed.sh</font></code> (see below)
+includes an install of ipopt.
 
 <br>
 <br>
-<big><a name="Special Requirements.install_cppad.sh" id="Special Requirements.install_cppad.sh">install_cppad.sh</a></big>
+<big><a name="Special Requirements.cppad" id="Special Requirements.cppad">cppad</a></big>
 <br>
 The <a href="http://www.coin-or.org/CppAD/" target="_top"><span style='white-space: nowrap'>cppad</span></a>
 
 C++ algorithmic differentiation package.
-Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_cppad.sh<br>
-</span></font></code>
-can be used to install this package.
-This script also serves as an example of how to install cppad.
+The script <code><font color="blue">bin/get_cppad_mixed.sh</font></code> (see below)
+includes an install of cppad.
 
 <br>
 <br>
-<big><a name="Special Requirements.install_cppad_mixed.sh" id="Special Requirements.install_cppad_mixed.sh">install_cppad_mixed.sh</a></big>
+<big><a name="Special Requirements.cppad_mixed" id="Special Requirements.cppad_mixed">cppad_mixed</a></big>
 <br>
 The <a href="https://bradbell.github.io/cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
 
@@ -421,9 +420,9 @@ C++ random effects modeling package.
 Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/install_cppad_mixed.sh<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/get_cppad_mixed.sh<br>
 </span></font></code>
-can be used to install this package.
+can be used to install eigen, ipopt, and cppad_mixed.
 This script also serves as an example of how to install cppad_mixed.
 
 <br>
