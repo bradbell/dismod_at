@@ -44,6 +44,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 11-24$$
+Advance $cref dock_dismod_at.sh$$ version 20201122.
+This should speed up the build process.
+It requires one to re-build dismod_at.mixed and dismod_at.image.
+
+
 $head 11-22$$
 Advance to cppad_mixed-20201124.
 This speeds up the build process when multiple processors are available.
