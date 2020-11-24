@@ -46,9 +46,9 @@ $section Changes and Additions to Dismod_at During 2020$$
 
 $head 11-22$$
 Advance to cppad_mixed-20201124.
-This speeds up the build process.
-It also fixes a problem in cppad_mixed.pc and thereby enables us to use the
-cppad_mixed scripts to install the
+This speeds up the build process when multiple processors are available.
+It also fixes a problem in $code cppad_mixed.pc$$ and thereby removes the need
+to specify a prefix for each of the
 $cref/special requirements/install_unix/Special Requirements/$$.
 
 $head 11-23$$

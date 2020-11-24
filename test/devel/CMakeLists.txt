@@ -29,7 +29,6 @@ TARGET_LINK_LIBRARIES(test_devel
 	${cppad_mixed_LIBRARIES}
 	${gsl_LIBRARIES}
 	${sqlite3_LIBRARIES}
-	${suitesparse_LIBRARIES}
 	${ipopt_LIBRARIES}
 	${system_specific_library_list}
 )

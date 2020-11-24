@@ -15,7 +15,6 @@
 #                        -D extra_cxx_flags=value \
 #                        -D cmake_libdir=value \
 #                        -D dismod_at_prefix=value \
-#                        -D cppad_prefix=value \
 # optional
 # standard variables:    -D CMAKE_VERBOSE_MAKEFILE=value \
 #                        -D CMAKE_BUILD_TYPE=value \
@@ -25,30 +24,6 @@
 # ============================================================================
 # Macro definitions
 # ============================================================================
-# get_prefix(package)
-#
-# ${package}_prefix: (out)
-# set to its value (as a path) on the cmake command line.
-# If it is not present a fatal error message is generated.
-#
-# ${${package}_prefix}/include:
-# is added to the set of include directories.
-#
-MACRO(get_prefix package)
-	SET( ${package}_prefix NOTFOUND CACHE PATH
-		"prefix used during the installation of ${package}"
-	)
-	IF( NOT ${package}_prefix )
-		MESSAGE(FATAL_ERROR "${package}_prefix not set by cmake command")
-	ENDIF( NOT ${package}_prefix )
-	MESSAGE(STATUS "${package}_prefix = ${${package}_prefix}")
-	IF( ${package} STREQUAL "eigen" )
-		INCLUDE_DIRECTORIES( SYSTEM ${${package}_prefix}/include )
-	ELSE( ${package} STREQUAL "eigen" )
-		INCLUDE_DIRECTORIES( ${${package}_prefix}/include )
-	ENDIF( ${package} STREQUAL "eigen" )
-ENDMACRO(get_prefix)
-# ----------------------------------------------------------------------------
 # required_definition( variable type docstring )
 #
 # variable
@@ -165,13 +140,10 @@ ELSEIF( "${system_specific_library_list}" STREQUAL "NOTFOUND"  )
 	)
 ENDIF( "${system_specific_library_list}" STREQUAL "NOTFOUND"  )
 # ----------------------------------------------------------------------------
-# get required package prefixes
-get_prefix(cppad)
-# ----------------------------------------------------------------------------
-FOREACH( var cppad_mixed_set_sparsity ipopt_prefix)
-IF( ${var} )
+FOREACH( var cppad_mixed_set_sparsity eigen_prefix ipopt_prefix cppad_prefix)
+	IF( ${var} )
 	MESSAGE(FATAL_ERROR "${var} is no longer used in dismod_at cmake command")
-ENDIF( ${var} )
+	ENDIF( ${var} )
 ENDFOREACH( var )
 # ----------------------------------------------------------------------------
 IF( NOT "${log_fatal_error}" STREQUAL ""  )
@@ -180,9 +152,9 @@ ENDIF( NOT "${log_fatal_error}" STREQUAL ""  )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
-# set pkg-config information about sqlite3, gsl, eigen, ipopt
+# pkg-config information for: sqlite3, gsl, eigen, ipopt, cppad_mixed, cppad
 FIND_PACKAGE(PkgConfig)
-FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed)
+FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed cppad)
 	pkg_check_modules( ${pkg} QUIET ${pkg} )
 	IF( ${pkg}_FOUND )
 		MESSAGE(STATUS "Found ${pkg}.pc file")

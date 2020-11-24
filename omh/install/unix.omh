@@ -142,8 +142,8 @@ $subhead PKG_CONFIG_PATH$$
 After $code sqlite3$$ and $code gsl$$ are installed
 the following commands should work:
 $codep%
-	pkg-config sqlite3 --libs
-	pkg-config gsl     --libs
+	pkg-config sqlite3 --version
+	pkg-config gsl     --version
 %$$
 If one of them fails, a corresponding directory is missing
 from the $code PKG_CONFIG_PATH$$ environment variable.
@@ -153,17 +153,22 @@ $codei%
 	find -L %prefix% -name gsl.pc 2> /dev/null
 %$$
 should find the directory where $code gsl.pc$$ is located.
-After $code ipopt$$ is installed (see below),
+After $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+is installed (see below),
 the following command should work:
-$codep%
-	pkg-config cppad_mixed --libs
-%$$
-If it fails,
-the command
 $codei%
-	find -L %dismod_at_prefix% -name cppad_mixed.pc 2> /dev/null
+	pkg-config %pkg% --version
 %$$
-should find the directory where $code cppad_mixed.pc$$ is located;
+where $icode pkg$$ is any of the
+$cref/special requirements/install_unix/Special Requirements/$$
+below.
+(There is one exception, the eigen package uses $code eigen3$$ for
+$icode pkg$$ above.)
+If one of these commands fails,
+$codei%
+	find -L %dismod_at_prefix% -name %pkg%.pc 2> /dev/null
+%$$
+should find the directory where $icode%pkg%.pc%$$ is located;
 see $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$.
 
 $subhead LD_LIBRARY_PATH$$
@@ -247,7 +252,7 @@ Starting in the $code dismod_at.git$$ directory, the command
 $codei%
 	bin/get_cppad_mixed.sh
 %$$
-can be used to install eigen, ipopt, and cppad_mixed.sh.
+can be used to install eigen, ipopt, and cppad_mixed.
 This script also serves as an example of how to install cppad_mixed.
 
 $head dismod_at$$

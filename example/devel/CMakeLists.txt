@@ -78,7 +78,6 @@ SET_TARGET_PROPERTIES(
 TARGET_LINK_LIBRARIES(example_devel
 	devel
 	${cppad_mixed_LIBRARIES}
-	${suitesparse_LIBRARIES}
 	${gsl_LIBRARIES}
 	${sqlite3_LIBRARIES}
 	${ipopt_LIBRARIES}

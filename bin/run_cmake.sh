@@ -61,19 +61,6 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 # &icode%dismod_at_prefix%.release%&&
 # depending on the choice for &icode build_type&&.
 #
-# &head cppad_prefix&&
-# The prefix where
-# &cref/cppad/install_unix/Special Requirements/cppad/&&
-# is installed:
-# &codep
-cppad_prefix="$HOME/prefix/dismod_at"
-# &&
-# If this prefix end in &code /dismod_at&&,
-# a soft link is used from &icode cppad_prefix&& to
-# &icode%cppad_prefix%.debug%&& or
-# &icode%cppad_prefix%.release%&&
-# depending on the choice for &icode build_type&&.
-#
 # &head Debug and Release&&
 # If a soft link is used for the install,
 # the same technique will be used to map the &code build&&
@@ -160,7 +147,7 @@ EOF
 	shift
 done
 # --------------------------------------------------------------------------
-export PKG_CONFIG_PATH="$cppad_prefix/$cmake_libdir/pkgconfig"
+export PKG_CONFIG_PATH="$dismod_at_prefix/$cmake_libdir/pkgconfig"
 # --------------------------------------------------------------------------
 if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
@@ -193,7 +180,6 @@ cmake \
 	-D cmake_libdir="$cmake_libdir" \
 	\
 	-D dismod_at_prefix="$dismod_at_prefix" \
-	-D cppad_prefix="$cppad_prefix" \
 	-D system_specific_library_list="$system_specific_library_list" \
 	..
 # --------------------------------------------------------------------------
