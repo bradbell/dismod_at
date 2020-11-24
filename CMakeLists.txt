@@ -182,7 +182,7 @@ MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
 # set pkg-config information about sqlite3, gsl, eigen, ipopt
 FIND_PACKAGE(PkgConfig)
-FOREACH(pkg sqlite3 gsl eigen3 ipopt)
+FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed)
 	pkg_check_modules( ${pkg} QUIET ${pkg} )
 	IF( ${pkg}_FOUND )
 		MESSAGE(STATUS "Found ${pkg}.pc file")
@@ -199,13 +199,6 @@ FOREACH(pkg sqlite3 gsl eigen3 ipopt)
 	# LINK_DIRECTORIES
 	LINK_DIRECTORIES( ${${pkg}_LIBRARY_DIRS} )
 ENDFOREACH(pkg)
-# ----------------------------------------------------------------------------
-# cppad_mixed_library_path_list
-#
-# no pkg-config for cppad_mixed so explicitly set corresponding values
-SET(cppad_mixed_LIBRARY_DIRS ${cppad_prefix}/${cmake_libdir} )
-SET(cppad_mixed_LIBRARIES "cppad_mixed" )
-LINK_DIRECTORIES( cppad_mixed_LIBRARY_DIRS} )
 # ----------------------------------------------------------------------------
 # check compiler flags
 #
