@@ -14,66 +14,66 @@ import sys
 #
 # directory
 if len(sys.argv) != 2 :
-    usage  = 'bin/csv_summary.py directory\n'
-    usage += 'where directory contains the db2csv output files'
-    sys.exit(usage)
+	usage  = 'bin/csv_summary.py directory\n'
+	usage += 'where directory contains the db2csv output files'
+	sys.exit(usage)
 directory = sys.argv[1]
 #
 # print_variable
 def print_variable(name, value) :
-    print( '{:25} = {}'.format( name , value) )
+	print( '{:25} = {}'.format( name , value) )
 #
 # read_file
 def read_file(file_name) :
-    file_path = directory + '/' + file_name
-    file_ptr  = open(file_path)
-    reader    = csv.DictReader(file_ptr)
-    table     = list()
-    for row in reader :
-        table.append(row)
-    return table
+	file_path = directory + '/' + file_name
+	file_ptr  = open(file_path)
+	reader    = csv.DictReader(file_ptr)
+	table     = list()
+	for row in reader :
+		table.append(row)
+	return table
 #
 # avgerage
 def average(table, variable_column, value_column) :
-    avg  = dict()
-    count = dict()
-    for row in table :
-        variable = row[variable_column]
-        value    = row[value_column]
-        if value != '' :
-            if variable not in avg :
-                avg[variable]   = 0.0
-                count[variable] = 0
-            avg[variable]   += float( value )
-            count[variable] += 1
-    for key in avg :
-        avg[key]   = avg[key] / count[key]
-    return (avg, count)
+	avg  = dict()
+	count = dict()
+	for row in table :
+		variable = row[variable_column]
+		value    = row[value_column]
+		if value != '' :
+			if variable not in avg :
+				avg[variable]   = 0.0
+				count[variable] = 0
+			avg[variable]   += float( value )
+			count[variable] += 1
+	for key in avg :
+		avg[key]   = avg[key] / count[key]
+	return (avg, count)
 #
 # subsample
 def subsample(table, column_name, column_value) :
-    result = list()
-    for row in table :
-        if row[column_name] == column_value :
-            result.append(row)
-    return result
+	result = list()
+	for row in table :
+		if row[column_name] == column_value :
+			result.append(row)
+	return result
 #
 # file_list
 file_list = [
-    'age_avg',
-    'data',
-    'hes_fixed',
-    'hes_random',
-    'log',
-    'option',
-    'predict',
-    'variable',
+	'age_avg',
+	'data',
+	'hes_fixed',
+	'hes_random',
+	'log',
+	'option',
+	'predict',
+	'variable',
 ]
 #
 # file_data
 table_dict = dict()
 for name in file_list :
-    table_dict[name] = read_file(name + '.csv')
+	table_dict[name] = read_file(name + '.csv')
 #
 #
 table = table_dict['data']
