@@ -89,6 +89,13 @@ print_variable( 'avg_integrand_meas_value', avg )
 print_variable( 'count_integrand_meas_value', count )
 print()
 #
+# integrand_avgint
+table = table_dict['data']
+(avg, count) = average(table, 'integrand', 'avgint')
+print_variable( 'avg_integrand_avgint', avg )
+print_variable( 'count_integrand_avgint', count )
+print()
+#
 # integrand_residual
 table = table_dict['data']
 (avg, count) = average(table, 'integrand', 'residual')
