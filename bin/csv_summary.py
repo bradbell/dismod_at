@@ -75,19 +75,36 @@ table_dict = dict()
 for name in file_list :
 	table_dict[name] = read_file(name + '.csv')
 #
-#
-table = table_dict['data']
-(avg, count) = average(table, 'integrand', 'residual')
-print_variable( 'avg_integrand_residual', avg )
-print_variable( 'count_integrand_residual', count )
-print()
-#
+# integrand_x0
 table = table_dict['data']
 (avg, count) = average(table, 'integrand', 'x_0')
 print_variable( 'avg_integrand_x_0', avg )
 print_variable( 'count_integrand_x_0', count )
 print()
 #
+# integrand_meas_value
+table = table_dict['data']
+(avg, count) = average(table, 'integrand', 'meas_value')
+print_variable( 'avg_integrand_meas_value', avg )
+print_variable( 'count_integrand_meas_value', count )
+print()
+#
+# integrand_residual
+table = table_dict['data']
+(avg, count) = average(table, 'integrand', 'residual')
+print_variable( 'avg_integrand_residual', avg )
+print_variable( 'count_integrand_residual', count )
+print()
+#
+# rate_fit_value
+table = table_dict['variable']
+table = subsample(table, 'var_type', 'rate')
+(avg, count) = average(table, 'rate', 'fit_value')
+print_variable( 'avg_rate_fit_value', avg )
+print_variable( 'count_rate_fit_value', count )
+print()
+#
+# rate_residual
 table = table_dict['variable']
 table = subsample(table, 'var_type', 'rate')
 (avg, count) = average(table, 'rate', 'res_value')
