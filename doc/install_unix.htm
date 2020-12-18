@@ -257,8 +257,8 @@ to add
 After <code><font color="blue">sqlite3</font></code> and <code><font color="blue">gsl</font></code> are installed
 the following commands should work:
 <code><font color='blue'><pre style='display:inline'> 
-     pkg-config sqlite3 --version
-     pkg-config gsl     --version
+     pkg-config sqlite3 --modversion
+     pkg-config gsl     --modversion
 </pre></font></code>
 If one of them fails, a corresponding directory is missing
 from the <code><font color="blue">PKG_CONFIG_PATH</font></code> environment variable.
@@ -277,7 +277,7 @@ is installed (see below),
 the following command should work:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;--version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;--modversion<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i></code>

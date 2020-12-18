@@ -1,0 +1,196 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Sum of Residuals at Optimal Estimate</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Sum of Residuals at Optimal Estimate">
+<meta name="keywords" id="keywords" content=" sum residuals optimal estimate problem solution weighted cv standard deviations average ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_sum_residual.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user</option>
+<option>user_sum_residual.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="user_subgroup_mulcov.py.htm" target="_top">Prev</a>
+</td><td><a href="user_zsum_child_rate.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
+</td>
+<td>user_sum_residual.py</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Sum of Residuals at Optimal Estimate</big></big></b></center>
+
+<br><a href="user_sum_residual.py.htm#Problem" target="_top">Problem</a>
+<br><a href="user_sum_residual.py.htm#Optimal Solution" target="_top">Optimal&nbsp;Solution</a>
+<br><a href="user_sum_residual.py.htm#Weighted Residuals" target="_top">Weighted&nbsp;Residuals</a>
+<br><a href="user_sum_residual.py.htm#CV Standard Deviations" target="_top">CV&nbsp;Standard&nbsp;Deviations</a>
+<br><a href="user_sum_residual.py.htm#Weighted Average of Weighted Residuals" target="_top">Weighted&nbsp;Average&nbsp;of&nbsp;Weighted&nbsp;Residuals</a>
+<br><br>
+<b><big><a name="Problem" id="Problem">Problem</a></big></b>
+<br>
+For this case the only data is we a sequence of  positive measurements of
+<a href="avg_integrand.htm#Integrand, I_i(a,t).Sincidence" target="_top"><span style='white-space: nowrap'>Sincidence</span></a>
+
+which we denote by <small>@(@
+y_i1
+@)@</small> for <small>@(@
+i = 0 , \ldots , N-1
+@)@</small>.
+We model <small>@(@
+y_i
+@)@</small> as independent and Gaussian with mean equal
+to the true value of iota <small>@(@
+\iota
+@)@</small>,
+and standard deviation <small>@(@
+\sigma_i
+@)@</small>.
+The negative log likelihood, up to a constant w.r.t <small>@(@
+\iota
+@)@</small>, is
+<small>@[@
+
+	f( \iota ) =
+	\frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota}{\sigma_i} \right)^2
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Optimal Solution" id="Optimal Solution">Optimal Solution</a></big></b>
+<br>
+The optimal estimator for <small>@(@
+\iota
+@)@</small> satisfies the equation
+<small>@[@
+
+	0 = f'( \hat{\iota} ) =
+		- \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\sigma_i^2}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Weighted Residuals" id="Weighted Residuals">Weighted Residuals</a></big></b>
+<br>
+We use the notation <small>@(@
+r_i
+@)@</small> for the weighted residuals
+<small>@[@
+
+	r_i = \frac{y_i - \hat{\iota}}{\sigma_i}
+
+@]@</small>
+If <small>@(@
+\hat{\iota}
+@)@</small> were the true value for <small>@(@
+\iota
+@)@</small>,
+the weighted residuals would be mean zero and variance one.
+But <small>@(@
+\hat{\iota}
+@)@</small> is instead the maximum likelihood estimator and
+<small>@[@
+
+	0 = \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\sigma_i^2}
+
+@]@</small>
+<small>@[@
+
+	0 = \sum_{i=1}^{N-1} \frac{r_i}{\sigma_i}
+
+@]@</small>
+Note that if <small>@(@
+\sigma_i
+@)@</small> were the same for all <small>@(@
+i
+@)@</small>,
+the sum of the weighted residuals <small>@(@
+\sum_i r_i
+@)@</small> would be zero.
+
+<br>
+<br>
+<b><big><a name="CV Standard Deviations" id="CV Standard Deviations">CV Standard Deviations</a></big></b>
+<br>
+We consider the case were we a coefficient of variation <small>@(@
+\lambda
+@)@</small>
+is used to model the measurement noise; <small>@(@
+\sigma_i = \lambda y_i
+@)@</small>.
+In this case
+<small>@[@
+
+	0 = \sum_{i=1}^{N-1} \frac{r_i}{y_i}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Weighted Average of Weighted Residuals" id="Weighted Average of Weighted Residuals">Weighted Average of Weighted Residuals</a></big></b>
+<br>
+We define the weight <small>@(@
+w_i
+@)@</small> by
+<small>@[@
+
+	w_i = \sigma_i^{-1} / \sum_{i=0}^{N-1} \sigma_i^{-1}
+
+@]@</small>
+The corresponding weighted average of the weighted residuals is zero; i.e,
+<small>@[@
+
+	0 = \sum_{i=1}^{N-1} w_i r_i
+
+@]@</small>
+
+
+
+<hr>Input File: example/user/sum_residual.py
+
+</body>
+</html>
