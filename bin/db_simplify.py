@@ -8,6 +8,10 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
+# 2DO: Allow for covariate access by ovariate_name.
+# 2DO: Correct weight sum of weighted residuals in log case.
+# 2DO: Envforce a minimum for all the standard deviations for one integrand.
+# --------------------------------------------------------------------------
 # copy of /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db
 original_database  = 'ihme_db/dismod-iota-decimated.db'
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
@@ -322,43 +326,64 @@ system_command( [
 	'dismod_at',  database, 'set', 'option', 'max_num_iter_fixed', '30'
 ] )
 # ----------------------------------------------------------------------
+# Example simplifications
+# ----------------------------------------------------------------------
 # subset data
-subset_data()
+# subset_data()
 #
 # hold out mtexcess data
-integrand_name = 'mtexcess'
-hold_out_data(integrand_name)
+# integrand_name = 'mtexcess'
+# hold_out_data(integrand_name)
 #
 # remove mtexcess data
-integrand_name = 'mtexcess'
-remove_integrand_data(integrand_name)
+# integrand_name = 'mtexcess'
+# remove_integrand_data(integrand_name)
 #
 # remove omega and chi variables
-for rate_name in [ 'omega', 'chi' ] :
-	remove_rate(rate_name)
+# for rate_name in [ 'omega', 'chi' ] :
+#	remove_rate(rate_name)
 #
-# remove all mulcov variables
+# remove all covariate multipliers
+# for covariate_id in range( len(covariate_table) ) :
+#	remove_mulcov(covariate_id)
+#
+# set Sincendence and prevalence density to gaussian
+# density_name = 'gaussian'
+# for integrand_name in [ 'Sincidence', 'prevalence' ] :
+#	set_data_density(integrand_name, density_name)
+#
+# subsample Sincedence and prevalence
+# stride = 1000
+# for integrand_name in [ 'Sincidence', 'prevalence' ] :
+#	subsample_data(integrand_name, stride)
+#
+# remove Mexico data
+# node_name = 'Mexico'
+# remove_node_data(node_name)
+#
+# set iota to a constant rate
+# rate_name = 'iota'
+# constant_rate(rate_name)
+# ----------------------------------------------------------------------
+# subset to only data in the fit
+subset_data()
+#
+# subsample mtexcess data
+stride         = 10
+integrand_name = 'mtexcess'
+subsample_data(integrand_name, stride)
+#
+# remove all covariate multipliers
 for covariate_id in range( len(covariate_table) ) :
 	remove_mulcov(covariate_id)
 #
-# set Sincendence and prevalence density to gaussian
+# set all data density to gaussian
 density_name = 'gaussian'
-for integrand_name in [ 'Sincidence', 'prevalence' ] :
+for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 	set_data_density(integrand_name, density_name)
 #
-# subsample Sincedence and prevalence
-stride = 1000
-for integrand_name in [ 'Sincidence', 'prevalence' ] :
-	subsample_data(integrand_name, stride)
-#
-# remove Mexico data
-node_name = 'Mexico'
-remove_node_data(node_name)
-#
-# set iota to a constant rate
-rate_name = 'iota'
-constant_rate(rate_name)
-# ----------------------------------------------------------------------
+# run fit and summary
 run_fit()
+# ----------------------------------------------------------------------
 print('db_simplify.py: OK')
 sys.exit(0)
