@@ -23,7 +23,7 @@
 # The negative log likelihood, up to a constant w.r.t $latex \iota$$, is
 # $latex \[
 #	f( \iota ) =
-#	\frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota){\sigma_i} \right)^2
+#	\frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota}{\sigma_i} \right)^2
 # \] $$
 #
 # $head Optimal Solution$$
