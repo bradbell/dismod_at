@@ -53,6 +53,10 @@ $lnext
 Under the heading
 $cref/PKG_CONFIG_PATH/install_unix/Paths/PKG_CONFIG_PATH/$$
 the command option $code --version$$ was corrected to $code --modversion$$.
+$lnext
+The scripts $code bin/csv_summary.py$$ and $code bin/db_simplify.py$$
+were added. These are undocumented and untested and only meant as examples
+to help diagnose problems.
 $lend
 
 
