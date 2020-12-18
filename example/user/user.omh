@@ -92,6 +92,7 @@ $children%
 	example/user/speed.py%
 	example/user/students.py%
 	example/user/subgroup_mulcov.py%
+	example/user/sum_residual.py%
 	example/user/zsum_child_rate.py%
 	example/user/zsum_mulcov_meas.py%
 	example/user/zsum_mulcov_rate.py
@@ -134,6 +135,7 @@ $rref user_bilevel_random.py$$
 $rref user_subgroup_mulcov.py$$
 $rref user_hes_fixed_math.py$$
 $rref user_hes_random.py$$
+$rref user_sum_residual.py$$
 $tend
 
 $head More Examples$$

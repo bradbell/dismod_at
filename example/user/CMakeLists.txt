@@ -42,6 +42,7 @@ FOREACH(user_case
 	one_function
 	sample_simple
 	subgroup_mulcov
+	sum_residual
 	predict_fit
 	predict_mulcov
 	zsum_child_rate

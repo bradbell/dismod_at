@@ -28,6 +28,7 @@ $spell
 	Ip
 	ldlt_cholmod
     std
+	modversion
 $$
 $navigate%
 	Up%Location%
@@ -43,6 +44,17 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 12-17$$
+$list number$$
+The example $cref user_sum_residual.py$$ discusses why the sum
+of the weighted residuals is not expected to be zero.
+$lnext
+Under the heading
+$cref/PKG_CONFIG_PATH/install_unix/Paths/PKG_CONFIG_PATH/$$
+the command option $code --version$$ was corrected to $code --modversion$$.
+$lend
+
 
 $head 11-24$$
 Advance $cref dock_dismod_at.sh$$ version 20201122.

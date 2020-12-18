@@ -36,6 +36,7 @@ $spell
 	txt
 	dev
 	libname
+	modversion
 $$
 
 $section Installing dismod_at in Unix$$
@@ -142,8 +143,8 @@ $subhead PKG_CONFIG_PATH$$
 After $code sqlite3$$ and $code gsl$$ are installed
 the following commands should work:
 $codep%
-	pkg-config sqlite3 --version
-	pkg-config gsl     --version
+	pkg-config sqlite3 --modversion
+	pkg-config gsl     --modversion
 %$$
 If one of them fails, a corresponding directory is missing
 from the $code PKG_CONFIG_PATH$$ environment variable.
@@ -157,7 +158,7 @@ After $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 is installed (see below),
 the following command should work:
 $codei%
-	pkg-config %pkg% --version
+	pkg-config %pkg% --modversion
 %$$
 where $icode pkg$$ is any of the
 $cref/special requirements/install_unix/Special Requirements/$$

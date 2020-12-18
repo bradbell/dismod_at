@@ -58,15 +58,31 @@ def subsample(table, column_name, column_value) :
 			result.append(row)
 	return result
 #
-# file_list
+# weighted average of weighted residuals
+def weighted_average_residual(data_table) :
+	avg_res    = dict()
+	sum_weight = dict()
+	count      = dict()
+	for row in data_table :
+		integrand = row['integrand']
+		residual  = row['residual']
+		if residual != '' :
+			delta = row['meas_delta']
+			weight = 1.0 / float( delta )
+			if integrand not in avg_res :
+				avg_res[integrand]    = 0.0
+				sum_weight[integrand] = 0.0
+				count[integrand]      = 0
+			avg_res[integrand]    += float( residual ) * weight
+			sum_weight[integrand] += weight
+			count[integrand]      += 1
+	for key in avg_res :
+		avg_res[key] = avg_res[key] / sum_weight[key]
+	return(avg_res, count)
+#
+# db2csv output files that are used so fare (without .csv extension)
 file_list = [
-	'age_avg',
 	'data',
-	'hes_fixed',
-	'hes_random',
-	'log',
-	'option',
-	'predict',
 	'variable',
 ]
 #
@@ -75,46 +91,52 @@ table_dict = dict()
 for name in file_list :
 	table_dict[name] = read_file(name + '.csv')
 #
-# integrand_x0
+# covariate values
 table = table_dict['data']
-(avg, count) = average(table, 'integrand', 'x_0')
-print_variable( 'avg_integrand_x_0', avg )
-print_variable( 'count_integrand_x_0', count )
-print()
-#
-# integrand_meas_value
+for key in table[0] :
+	if key.startswith('x_') :
+		(avg, count) = average(table, 'integrand', key)
+		print_variable( 'avg_integrand_' + key, avg )
+		print_variable( 'count_integrand_' + key, count )
+		print()
+# --------------------------------------------------------------------------
+# integrand_meas_value, integrand_avgint, integrand_residual
 table = table_dict['data']
 (avg, count) = average(table, 'integrand', 'meas_value')
 print_variable( 'avg_integrand_meas_value', avg )
-print_variable( 'count_integrand_meas_value', count )
-print()
+count_integrand_meas_value = count
 #
-# integrand_avgint
-table = table_dict['data']
 (avg, count) = average(table, 'integrand', 'avgint')
 print_variable( 'avg_integrand_avgint', avg )
-print_variable( 'count_integrand_avgint', count )
-print()
+assert count_integrand_meas_value == count
 #
-# integrand_residual
-table = table_dict['data']
 (avg, count) = average(table, 'integrand', 'residual')
 print_variable( 'avg_integrand_residual', avg )
-print_variable( 'count_integrand_residual', count )
-print()
+assert count_integrand_meas_value == count
 #
-# rate_fit_value
+(avg, count) = weighted_average_residual(table)
+print_variable( 'wavg_integrand_residual' , avg )
+#
+print_variable( 'count', count )
+print()
+# --------------------------------------------------------------------------
+# rate_fit_valeu, rate_mean_value, rate_residual
 table = table_dict['variable']
 table = subsample(table, 'var_type', 'rate')
 (avg, count) = average(table, 'rate', 'fit_value')
 print_variable( 'avg_rate_fit_value', avg )
-print_variable( 'count_rate_fit_value', count )
+count_rate_file_value = count
+#
+(avg, count) = average(table, 'rate', 'mean_v')
+print_variable( 'avg_rate_mean_value', avg )
+assert count_rate_file_value == count
+print_variable( 'count', count )
 print()
 #
-# rate_residual
-table = table_dict['variable']
-table = subsample(table, 'var_type', 'rate')
 (avg, count) = average(table, 'rate', 'res_value')
 print_variable( 'avg_rate_residual', avg )
-print_variable( 'count_rate_residual', count )
+print_variable( 'count', count )
 print()
+# --------------------------------------------------------------------------
+print('csv_summary.py: OK')
+sys.exit(0)
