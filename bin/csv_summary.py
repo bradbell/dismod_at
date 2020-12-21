@@ -12,13 +12,18 @@
 import csv
 import sys
 #
-# directory
+if sys.argv[0] != 'bin/csv_summary.py' :
+	msg = 'bin/csv_simmary.py must be executed from its parent directory'
+#
 if len(sys.argv) != 2 :
 	usage  = 'bin/csv_summary.py directory\n'
 	usage += 'where directory contains the db2csv output files'
 	sys.exit(usage)
-directory = sys.argv[1]
+	sys.exit(msg)
 #
+# directory
+directory = sys.argv[1]
+# ---------------------------------------------------------------------------
 # print_variable
 def print_variable(name, value) :
 	print( '{:25} = {}'.format( name , value) )

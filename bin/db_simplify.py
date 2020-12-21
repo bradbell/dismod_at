@@ -12,11 +12,11 @@
 # 2DO: Correct weight sum of weighted residuals in log case.
 # 2DO: Envforce a minimum for all the standard deviations for one integrand.
 # --------------------------------------------------------------------------
-# copy of /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db
 original_database  = 'ihme_db/dismod-iota-decimated.db'
+# copy of /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
-# path to file that well be used for testing changes to database
-database   = 'ihme_db/temp.db'
+# path to file that contains the simplified database
+database           = 'ihme_db/temp.db'
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -26,11 +26,15 @@ import shutil
 import subprocess
 import copy
 #
+if sys.argv[0] != 'bin/db_simplify.py' :
+	msg = 'bin/db_simplify.py must be executed from its parent directory'
+	sys.exit(msg)
+#
 # import dismod_at
 sandbox = 'python/dismod_at'
 if os.path.isdir(sandbox) :
-    print('using ' + sandbox)
-    sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
+	print('using ' + sandbox)
+	sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 #
 # database
@@ -109,9 +113,17 @@ table_name = 'covariate'
 table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
 # =============================================================================
-# subset_data
+# Utility functions
+# =============================================================================
+# -----------------------------------------------------------------------------
+# change data table
+# -----------------------------------------------------------------------------
+#
+# subset_data:
+# remove rows that are held out or have covariates out of bounds
 def subset_data() :
 	print('remove hold out and covariate out of bounds data')
+    #
 	table_name = 'data'
 	(table_in, col_name, col_type) = get_table(table_name)
 	table_out     = list()
@@ -138,9 +150,11 @@ def subset_data() :
 			table_out.append(row)
 	put_table(table_name, table_out, col_name, col_type)
 #
-# subsample_data
+# subsample_data:
+# for a specified integrand, only sample one row in stride
 def subsample_data(integrand_name, stride) :
 	print( "subsample_data {} stride = {}".format(integrand_name, stride) )
+    #
 	counter        = 0
 	subsample_integrand_id = None
 	for integrand_id in range( len(integrand_table) ) :
@@ -160,9 +174,11 @@ def subsample_data(integrand_name, stride) :
 				table_out.append(row)
 	put_table(table_name, table_out, col_name, col_type)
 #
-# hold out data
+# hold_out_data:
+# for a specified integrand, hold out all its data
 def hold_out_data(integrand_name) :
 	print( "hold_out {}".format(integrand_name) )
+    #
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
@@ -172,9 +188,11 @@ def hold_out_data(integrand_name) :
 			row['hold_out'] = 1
 	put_table(table_name, table, col_name, col_type)
 #
-# remove_integrand_data
+# remove_integrand_data:
+# for a specified integrand, remove all its data
 def remove_integrand_data(integrand_name) :
 	print( "remove_integrand_data {}".format(integrand_name) )
+    #
 	remove_integrand_id = None
 	for integrand_id in range( len(integrand_table) ) :
 		row = integrand_table[integrand_id]
@@ -189,9 +207,11 @@ def remove_integrand_data(integrand_name) :
 			table_out.append(row)
 	put_table(table_name, table_out, col_name, col_type)
 #
-# remove_node_data
+# remove_node_data:
+# for a specified node, remove all its data
 def remove_node_data(node_name) :
 	print( "remove_node_data {}".format(node_name) )
+    #
 	remove_node_id = None
 	for node_id in range( len(node_table) ) :
 		row = node_table[node_id]
@@ -206,30 +226,8 @@ def remove_node_data(node_name) :
 			table_out.append(row)
 	put_table(table_name, table_out, col_name, col_type)
 #
-# remove rate
-def remove_rate(rate_name) :
-	print( 'remove_rate {}'.format(rate_name) )
-	table_name = 'rate'
-	(table, col_name, col_type) = get_table(table_name)
-	for row in table :
-		if row['rate_name'] == rate_name :
-			row['parent_smooth_id'] = None
-			row['child_smooth_id']  = None
-			row['child_nslist_id']  = None
-	put_table(table_name, table, col_name, col_type)
-#
-# remove mulcov
-def remove_mulcov(covariate_id) :
-	print( 'remove_mulcov x_{}'.format(covariate_id) )
-	table_name = 'mulcov'
-	(table, col_name, col_type) = get_table(table_name)
-	for row  in  table :
-		if row['covariate_id'] == covariate_id :
-			row['group_smooth_id']    = None
-			row['subgroup_smooth_id'] = None
-	put_table(table_name, table, col_name, col_type)
-#
-# set data_density
+# set_data_dentity:
+# for a specified intergrand, set its data density to a specified value
 def set_data_density(integrand_name, density_name) :
 	print('set_density {} {}'.format(integrand_name, density_name) )
 	#
@@ -257,12 +255,43 @@ def set_data_density(integrand_name, density_name) :
 		if row['integrand_id'] == this_integrand_id :
 			row['density_id'] = this_density_id
 	put_table(table_name, table, col_name, col_type)
+# ----------------------------------------------------------------------------
+# other utilities
+# ----------------------------------------------------------------------------
 #
-# constant_rate
+# remove_rate;
+# remove both the parent and child variables for a rate
+def remove_rate(rate_name) :
+	print( 'remove_rate {}'.format(rate_name) )
+    #
+	table_name = 'rate'
+	(table, col_name, col_type) = get_table(table_name)
+	for row in table :
+		if row['rate_name'] == rate_name :
+			row['parent_smooth_id'] = None
+			row['child_smooth_id']  = None
+			row['child_nslist_id']  = None
+	put_table(table_name, table, col_name, col_type)
+#
+# remove_mulcov:
+# remove a specified covariate multiplier
+def remove_mulcov(covariate_id) :
+	print( 'remove_mulcov x_{}'.format(covariate_id) )
+	table_name = 'mulcov'
+	(table, col_name, col_type) = get_table(table_name)
+	for row  in  table :
+		if row['covariate_id'] == covariate_id :
+			row['group_smooth_id']    = None
+			row['subgroup_smooth_id'] = None
+	put_table(table_name, table, col_name, col_type)
+#
+# constant_rate:
+# Set a specified rate to be constant by using one of its parent priors
 def constant_rate(rate_name) :
+	print( 'constant_rate {}'.format(rate_name) )
+    #
 	table_name = 'rate'
 	(rate_table, col_name, col_type) = get_table(table_name)
-	print( 'constant_rate {}'.format(rate_name) )
 	#
 	# add a one point smoothing to smooth_table
 	table_name = 'smooth'
@@ -317,61 +346,85 @@ def constant_rate(rate_name) :
 			row['child_smooth_id']  = None
 			row['child_nslist_id']  = None
 	put_table(table_name, table, col_name, col_type)
+#
+# set_option:
+# set a specified option to a specified value
+def set_option(name, value) :
+	system_command( [
+		'dismod_at',  database, 'set', 'option', name , value
+	] )
+#
+# set_minimum_meas_cv:
+# set the minimum cv for a specified integrand
+def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
+	print( 'set {} minimum_meas_cv {}'.format(integrand_name, minimum_meas_cv) )
+	#
+	table_name = 'integrand'
+	(table, col_name, col_type) = get_table(table_name)
+	for row in table :
+		if row['integrand_name'] == integrand_name :
+			row['minimum_meas_cv'] = minimum_meas_cv
+	put_table(table_name, table, col_name, col_type)
 # ==========================================================================
-print('set tolerance_fixed = 1e-6, max_num_iter_fixed = 30')
-system_command( [
-	'dismod_at',  database, 'set', 'option', 'tolerance_fixed', '1e-6'
-] )
-system_command( [
-	'dismod_at',  database, 'set', 'option', 'max_num_iter_fixed', '30'
-] )
-# ----------------------------------------------------------------------
 # Example simplifications
-# ----------------------------------------------------------------------
-# subset data
+# ==========================================================================
+#
+# set_option:
+# set_option('tolerance_fixed',    '1e-6')
+#
+# subset_data:
 # subset_data()
 #
-# hold out mtexcess data
+# hold_out_data:
 # integrand_name = 'mtexcess'
 # hold_out_data(integrand_name)
 #
-# remove mtexcess data
+# remove_integrand_data:
 # integrand_name = 'mtexcess'
 # remove_integrand_data(integrand_name)
 #
-# remove omega and chi variables
+# remove_rage:
 # for rate_name in [ 'omega', 'chi' ] :
 #	remove_rate(rate_name)
 #
-# remove all covariate multipliers
+# remove_mulcov:
 # for covariate_id in range( len(covariate_table) ) :
 #	remove_mulcov(covariate_id)
 #
-# set Sincendence and prevalence density to gaussian
+# set_data_density:
 # density_name = 'gaussian'
 # for integrand_name in [ 'Sincidence', 'prevalence' ] :
 #	set_data_density(integrand_name, density_name)
 #
-# subsample Sincedence and prevalence
+# subsample_data:
 # stride = 1000
 # for integrand_name in [ 'Sincidence', 'prevalence' ] :
 #	subsample_data(integrand_name, stride)
 #
-# remove Mexico data
+# remove_node_data:
 # node_name = 'Mexico'
 # remove_node_data(node_name)
 #
-# set iota to a constant rate
+# constant_rate:
 # rate_name = 'iota'
 # constant_rate(rate_name)
 # ----------------------------------------------------------------------
+# set options
+set_option('tolerance_fixed',    '1e-6')
+set_option('max_num_iter_fixed', '30')
+#
 # subset to only data in the fit
 subset_data()
 #
-# subsample mtexcess data
+# subsample so mtexcess data is about the same as other integrands
 stride         = 10
 integrand_name = 'mtexcess'
 subsample_data(integrand_name, stride)
+#
+# subsample all the data to speed up fit
+stride = 5
+for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
+	subsample_data(integrand_name, stride)
 #
 # remove all covariate multipliers
 for covariate_id in range( len(covariate_table) ) :
@@ -381,6 +434,12 @@ for covariate_id in range( len(covariate_table) ) :
 density_name = 'gaussian'
 for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 	set_data_density(integrand_name, density_name)
+#
+# set the minimum_meas_cv for all the data
+minimum_meas_cv = 0.5
+for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
+	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
+#
 #
 # run fit and summary
 run_fit()
