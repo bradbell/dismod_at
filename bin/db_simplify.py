@@ -255,6 +255,29 @@ def set_data_density(integrand_name, density_name) :
 		if row['integrand_id'] == this_integrand_id :
 			row['density_id'] = this_density_id
 	put_table(table_name, table, col_name, col_type)
+#
+# set_minimum_meas_std:
+# for a specified integrand, set the minimm measurement standard deviation
+def set_minimum_meas_std(integrand_name, minimum_meas_std) :
+	msg ='set {} minimum_meas_std {}'.format(integrand_name, minimum_meas_std)
+	print(msg)
+	#
+	# this_integrand_id
+	this_integrand_id = None
+	for integrand_id in range( len( integrand_table ) ) :
+		if integrand_table[integrand_id]['integrand_name'] == integrand_name :
+			this_integrand_id = integrand_id
+	if this_integrand_id is None :
+		msg = 'set_minimum_meas_std: invalid intgrand_name = '+ integrand_name
+		sys.exit( msg )
+	#
+	table_name = 'data'
+	(table, col_name, col_type) = get_table(table_name)
+	for row in table :
+		if row['integrand_id'] == this_integrand_id :
+			if row['meas_std'] < minimum_meas_std :
+				row['meas_std'] = minimum_meas_std
+	put_table(table_name, table, col_name, col_type)
 # ----------------------------------------------------------------------------
 # other utilities
 # ----------------------------------------------------------------------------
@@ -408,6 +431,11 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # constant_rate:
 # rate_name = 'iota'
 # constant_rate(rate_name)
+#
+# set_minumum_meas_cv
+# minimum_meas_cv = 0.5
+# for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
+#	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 # ----------------------------------------------------------------------
 # set options
 set_option('tolerance_fixed',    '1e-6')
@@ -422,7 +450,7 @@ integrand_name = 'mtexcess'
 subsample_data(integrand_name, stride)
 #
 # subsample all the data to speed up fit
-stride = 5
+stride = 10
 for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 	subsample_data(integrand_name, stride)
 #
@@ -435,10 +463,16 @@ density_name = 'gaussian'
 for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 	set_data_density(integrand_name, density_name)
 #
-# set the minimum_meas_cv for all the data
-minimum_meas_cv = 0.5
-for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
-	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
+# set the minimum meas_std for all the data
+avg_Sincidence   = 7e-05
+minimum_meas_std = avg_Sincidence / 10.
+set_minimum_meas_std( 'Sincidence' , minimum_meas_std)
+avg_prevalence   = 8e-04
+minimum_meas_std = avg_prevalence / 10.
+set_minimum_meas_std( 'prevalence' , minimum_meas_std)
+avg_mtexcess   = 1e-2
+minimum_meas_std = avg_mtexcess / 10.
+set_minimum_meas_std( 'mtexcess' , minimum_meas_std)
 #
 #
 # run fit and summary
