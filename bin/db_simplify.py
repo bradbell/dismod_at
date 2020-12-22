@@ -40,6 +40,9 @@ import dismod_at
 # database
 shutil.copyfile(original_database, database)
 # ===========================================================================
+# General Purpose Utilities
+# ===========================================================================
+#
 # get_table
 def get_table(table_name) :
 	new                  = False
@@ -79,22 +82,6 @@ def system_command(command_list) :
 	if run.returncode != 0 :
 		sys.exit('db_simplify.py: system command failed')
 #
-# run_fit
-def run_fit() :
-	# ------------------------------------------------------------------------
-	# fit fixed
-	system_command( [ 'dismod_at',  database, 'init' ] )
-	system_command( [ 'dismod_at',  database, 'fit', 'fixed' ] )
-	# ----------------------------------------------------------------------
-	# csv files and summary
-	index = database.rfind('/')
-	if index < 0 :
-		directory = '.'
-	else :
-		directory = database[0 : index]
-	system_command( [ 'dismodat.py',  database, 'db2csv' ] )
-	system_command( [ 'bin/csv_summary.py',  directory ] )
-#
 def table_name2id(table, table_name, row_name) :
 	result = None
 	column_name = table_name + '_name'
@@ -103,8 +90,8 @@ def table_name2id(table, table_name, row_name) :
 		if row[column_name] == row_name :
 			result = table_id
 	if result is None :
-		msg = 'table_name2id: cannot find row_name {} in table {}'
-		msg = msg.frormat(row_anme, table_name)
+		msg = 'table_name2id: cannot find {} row in {} table'
+		msg = msg.format(row_name, table_name)
 		sys.exit(msg)
 	return result
 # ============================================================================
@@ -125,12 +112,134 @@ table_name = 'covariate'
 # node_table
 table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
+# ============================================================================
+# Routines that fit and display results
+# ============================================================================
+#
+# (data_subset_table, fit_var_table, fit_data_subset_table) = run_fit()
+data_subset_table     = None
+fit_var_table         = None
+fit_data_subset_table = None
+def run_fit() :
+	# ------------------------------------------------------------------------
+	# fit fixed
+	system_command( [ 'dismod_at',  database, 'init' ] )
+	system_command( [ 'dismod_at',  database, 'fit', 'fixed' ] )
+	#
+	# csv files and summary
+	index = database.rfind('/')
+	if index < 0 :
+		directory = '.'
+	else :
+		directory = database[0 : index]
+	system_command( [ 'dismodat.py',  database, 'db2csv' ] )
+	system_command( [ 'bin/csv_summary.py',  directory ] )
+	#
+	table_name = 'data_subset'
+	(data_subset_table, col_name, col_type) = get_table(table_name)
+	#
+	table_name = 'fit_var'
+	(fit_var_table, col_name, col_type) = get_table(table_name)
+	#
+	table_name = 'fit_data_subset'
+	(fit_data_subset_table, col_name, col_type) = get_table(table_name)
+	#
+	return (data_subset_table, fit_var_table, fit_data_subset_table)
+#
+# plot_integrand
+def plot_integrand(
+	integrand_name = None,
+	x_name         = None,
+	model_line     = None
+) :
+	x_name_list = [ 'index', 'age', 'time' ]
+	if x_name not in x_name_list :
+		msg = 'plot_integrand: x_name  not in {}'.format(x_name_list)
+		sys.exit(msg)
+	#
+	# this_integrand_id
+	this_integrand_id = table_name2id(
+		integrand_table, 'integrand', integrand_name
+	)
+	#
+	table_name = 'data'
+	(data_table, col_name, col_type) = get_table(table_name)
+	#
+	n_list                  = len(data_subset_table)
+	index_list              = range(n_list)
+	avg_integrand_list      = list()
+	weighted_residual_list  = list()
+	meas_value_list         = list()
+	age_list                = list()
+	time_list               = list()
+	for data_subset_id in index_list :
+		data_id        = data_subset_table[data_subset_id]['data_id']
+		row            = data_table[data_id]
+		integrand_id   = row['integrand_id']
+		#
+		if integrand_id == this_integrand_id :
+			meas_value  = row['meas_value']
+			meas_value_list.append( meas_value )
+			#
+			age  = ( row['age_lower'] + row['age_upper'] ) / 2.0
+			age_list.append( age )
+			#
+			time = ( row['time_lower'] + row['time_upper'] ) / 2.0
+			time_list.append(time)
+			#
+			row  = fit_data_subset_table[data_subset_id]
+			#
+			avg_integrand = row['avg_integrand']
+			avg_integrand_list.append( avg_integrand )
+			#
+			weighted_residual = row['weighted_residual']
+			weighted_residual_list.append( weighted_residual )
+	#
+	from matplotlib import pyplot
+	import numpy
+	#
+	logscale   = True
+	x          = eval( x_name + '_list' )
+	# ------------------------------------------------------------------------
+	fig, axs = pyplot.subplots(2, 1, sharex=True)
+	fig.subplots_adjust(hspace=0)
+	pyplot.subplot(2, 1, 1)
+	if model_line :
+		order = sorted( index_list, key=x.__getitem__ )
+		order = numpy.array(order)
+		x     = numpy.array(x)[order]
+		y     = numpy.array(meas_value_list)[order]
+		pyplot.scatter(x, y, marker='.')
+		#
+		y = numpy.array( avg_integrand_list) [order]
+		pyplot.plot(x, y, linestyle='-')
+	else :
+		y =  meas_value_list
+		pyplot.scatter(x, y, marker='+')
+		#
+		y = avg_integrand_list
+		pyplot.scatter(x, y, marker='x')
+	if logscale :
+		pyplot.yscale("log")
+	pyplot.xlabel(x_name)
+	pyplot.ylabel(integrand_name)
+	#
+	# -----------------------------------------------------------------------
+	pyplot.subplot(2, 1, 2)
+	if model_line :
+		y = numpy.array(weighted_residual_list) [order]
+	else :
+		y = weighted_residual_list
+	pyplot.scatter(x, y, marker='.')
+	x_zero = [x[0], x[-1]]
+	y_zero = [0.0, 0.0]
+	pyplot.plot(x_zero, y_zero, linestyle='-')
+	pyplot.ylabel('weighted_residual')
+	#
+	pyplot.show()
 # =============================================================================
-# Change Tables
+# Routines that Change Data Table
 # =============================================================================
-# -----------------------------------------------------------------------------
-# Change Data Tables
-# -----------------------------------------------------------------------------
 # subset_data:
 # remove rows that are held out or have covariates out of bounds
 def subset_data() :
@@ -272,9 +381,9 @@ def set_minimum_meas_std(integrand_name, minimum_meas_std) :
 			if row['meas_std'] < minimum_meas_std :
 				row['meas_std'] = minimum_meas_std
 	put_table(table_name, table, col_name, col_type)
-# ----------------------------------------------------------------------------
-# Change Other Tables
-# ----------------------------------------------------------------------------
+# ============================================================================
+# Routines that Change Other Tables
+# ============================================================================
 # remove_rate;
 # remove both the parent and child variables for a rate
 def remove_rate(rate_name) :
@@ -439,7 +548,7 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # ----------------------------------------------------------------------
 # set options
 set_option('tolerance_fixed',    '1e-6')
-set_option('max_num_iter_fixed', '50')
+set_option('max_num_iter_fixed', '30')
 #
 # subset to only data in the fit
 subset_data()
@@ -452,17 +561,24 @@ for integrand_name in [ 'prevalence', 'mtexcess' ] :
 for rate_name in [ 'rho', 'chi' ]  :
 	remove_rate(rate_name)
 #
-#
 density_name   = 'gaussian'
 integrand_name = 'Sincidence'
 set_data_density(integrand_name, density_name)
 #
-avg_Sincidence   = 7e-05
-minimum_meas_std = avg_Sincidence / 10.
-set_minimum_meas_std( 'Sincidence' , minimum_meas_std)
+# subsample_data:
+stride = 10
+integrand_name = 'Sincidence'
+subsample_data(integrand_name, stride)
+#
 # ------------------------------------------------------------------------
-# run fit and summary
-run_fit()
+# run fit
+(data_subset_table, fit_var_table, fit_data_subset_table) = run_fit()
+# plot Sincidence
+plot_integrand(
+	integrand_name = 'Sincidence',
+	x_name         = 'index'       ,
+	model_line     = False
+)
 # ----------------------------------------------------------------------
 print('db_simplify.py: OK')
 sys.exit(0)
