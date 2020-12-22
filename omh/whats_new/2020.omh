@@ -29,6 +29,7 @@ $spell
 	ldlt_cholmod
     std
 	modversion
+	messaging
 $$
 $navigate%
 	Up%Location%
@@ -44,6 +45,14 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
+
+$head 12-22$$
+Advance to cppad_mixed-20201222.
+This improves the error messaging during the install of
+$cref/cppad_mixed.sh/install_unix/Special Requirements/cppad_mixed/$$.
+In addition, this new version avoids ipopt creating of the file
+$code debug.out$$ (when $cref/build_type/run_cmake.sh/build_type/$$ is debug).
+
 
 $head 12-17$$
 $list number$$

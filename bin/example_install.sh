@@ -73,11 +73,32 @@ bin/run_cmake.sh 1>> ../example_install.log 2>> ../example_install.err
 # change into build directory
 echo_eval cd build
 #
+if which nproc >& /dev/null
+then
+    n_job=$(nproc)
+else
+    n_job=$(sysctl -n hw.ncpu)
+fi
+#
+# build dismod_at using n_jobs
+if ! make -j $n_job 1>> ../example_install.log 2>> ../example_install.err
+then
+	echo "Try running the follow command in $(pwd)"
+	echo "    make -j $n_job"
+	echo 'to see wy the build of dismod_at failed.'
+	exit 1
+fi
+#
 # make check, speed, and install
 for cmd in check speed install
 do
 	echo "make $cmd 1>> example_install.log 2>> example_install.err"
-	make $cmd 1>> ../example_install.log 2>> ../example_install.err
+	if ! make $cmd 1>> ../example_install.log 2>> ../example_install.err
+	then
+		echo "Try running the follow command in $(pwd)"
+		echo "    make $cmd"
+		echo 'to see wy the check of dismod_at failed.'
+	fi
 done
 cd ..
 # -----------------------------------------------------------------------------

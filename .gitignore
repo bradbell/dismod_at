@@ -26,6 +26,9 @@
 # directory where developer documentation is built
 /dev/
 #
+# Directory where externals are downloaded and built
+/external/
+#
 # directory where ihme databases are copied
 /ihme_db/
 #

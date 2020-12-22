@@ -44,8 +44,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='5f47f45c2e63e894c60a6397e30b458f78ae9986'
-version='20201123'
+hash_key='b60addfe7c8172c4b5bf12fe03353c5aca9b6c82'
+version='20201222'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -86,12 +86,12 @@ then
 	bin/build_type.sh example_install.sh $dismod_at_prefix $build_type
 fi
 # ---------------------------------------------------------------------------
-# cd into build/external
-if [ ! -e build/external ]
+# cd into external
+if [ ! -e external ]
 then
-    mkdir build/external
+    mkdir external
 fi
-echo_eval cd build/external
+echo_eval cd external
 # --------------------------------------------------------------------------
 # clone cppad_mixed.git
 if [ ! -e cppad_mixed.git ]
@@ -101,7 +101,7 @@ fi
 cd cppad_mixed.git
 echo_eval git reset --hard
 echo_eval git checkout master
-echo_eval git pull
+echo_eval git pull --ff-only
 echo_eval git checkout --quiet $hash_key
 check=`grep '^SET(cppad_mixed_version' CMakeLists.txt | \
     sed -e 's|^[^"]*"\([^"]*\).*|\1|'`
