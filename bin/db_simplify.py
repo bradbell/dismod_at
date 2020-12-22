@@ -188,10 +188,10 @@ def hold_out_data(integrand_name) :
 			row['hold_out'] = 1
 	put_table(table_name, table, col_name, col_type)
 #
-# remove_integrand_data:
+# remove_data:
 # for a specified integrand, remove all its data
-def remove_integrand_data(integrand_name) :
-	print( "remove_integrand_data {}".format(integrand_name) )
+def remove_data(integrand_name) :
+	print( "remove_data {}".format(integrand_name) )
     #
 	remove_integrand_id = None
 	for integrand_id in range( len(integrand_table) ) :
@@ -279,7 +279,7 @@ def set_minimum_meas_std(integrand_name, minimum_meas_std) :
 				row['meas_std'] = minimum_meas_std
 	put_table(table_name, table, col_name, col_type)
 # ----------------------------------------------------------------------------
-# other utilities
+# change other tables
 # ----------------------------------------------------------------------------
 #
 # remove_rate;
@@ -402,9 +402,9 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # integrand_name = 'mtexcess'
 # hold_out_data(integrand_name)
 #
-# remove_integrand_data:
+# remove_data:
 # integrand_name = 'mtexcess'
-# remove_integrand_data(integrand_name)
+# remove_data(integrand_name)
 #
 # remove_rage:
 # for rate_name in [ 'omega', 'chi' ] :
@@ -420,7 +420,7 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 #	set_data_density(integrand_name, density_name)
 #
 # subsample_data:
-# stride = 1000
+# stride = 10
 # for integrand_name in [ 'Sincidence', 'prevalence' ] :
 #	subsample_data(integrand_name, stride)
 #
@@ -436,44 +436,35 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # minimum_meas_cv = 0.5
 # for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
+#
+# set the minimum meas_std for all the data
+# avg_Sincidence   = 7e-05
+# minimum_meas_std = avg_Sincidence / 10.
+# set_minimum_meas_std( 'Sincidence' , minimum_meas_std)
 # ----------------------------------------------------------------------
 # set options
 set_option('tolerance_fixed',    '1e-6')
-set_option('max_num_iter_fixed', '30')
+set_option('max_num_iter_fixed', '50')
 #
 # subset to only data in the fit
 subset_data()
 #
-# subsample so mtexcess data is about the same as other integrands
-stride         = 10
-integrand_name = 'mtexcess'
-subsample_data(integrand_name, stride)
+# remove all inegrands but Sincidence
+for integrand_name in [ 'prevalence', 'mtexcess' ] :
+    remove_data(integrand_name)
 #
-# subsample all the data to speed up fit
-stride = 10
-for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
-	subsample_data(integrand_name, stride)
+# remove reates but iota and omega
+for rate_name in [ 'rho', 'chi' ]  :
+    remove_rate(rate_name)
 #
-# remove all covariate multipliers
-for covariate_id in range( len(covariate_table) ) :
-	remove_mulcov(covariate_id)
 #
-# set all data density to gaussian
-density_name = 'gaussian'
-for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
-	set_data_density(integrand_name, density_name)
+density_name   = 'gaussian'
+integrand_name = 'Sincidence'
+set_data_density(integrand_name, density_name)
 #
-# set the minimum meas_std for all the data
 avg_Sincidence   = 7e-05
 minimum_meas_std = avg_Sincidence / 10.
 set_minimum_meas_std( 'Sincidence' , minimum_meas_std)
-avg_prevalence   = 8e-04
-minimum_meas_std = avg_prevalence / 10.
-set_minimum_meas_std( 'prevalence' , minimum_meas_std)
-avg_mtexcess   = 1e-2
-minimum_meas_std = avg_mtexcess / 10.
-set_minimum_meas_std( 'mtexcess' , minimum_meas_std)
-#
 #
 # run fit and summary
 run_fit()
