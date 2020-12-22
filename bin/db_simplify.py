@@ -94,6 +94,19 @@ def run_fit() :
 		directory = database[0 : index]
 	system_command( [ 'dismodat.py',  database, 'db2csv' ] )
 	system_command( [ 'bin/csv_summary.py',  directory ] )
+#
+def table_name2id(table, table_name, row_name) :
+	result = None
+	column_name = table_name + '_name'
+	for table_id in range( len(table) ) :
+		row = table[table_id]
+		if row[column_name] == row_name :
+			result = table_id
+	if result is None :
+		msg = 'table_name2id: cannot find row_name {} in table {}'
+		msg = msg.frormat(row_anme, table_name)
+		sys.exit(msg)
+	return result
 # ============================================================================
 # Tables that do not change
 # ============================================================================
@@ -113,17 +126,16 @@ table_name = 'covariate'
 table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
 # =============================================================================
-# Utility functions
+# Change Tables
 # =============================================================================
 # -----------------------------------------------------------------------------
-# change data table
+# Change Data Tables
 # -----------------------------------------------------------------------------
-#
 # subset_data:
 # remove rows that are held out or have covariates out of bounds
 def subset_data() :
 	print('remove hold out and covariate out of bounds data')
-    #
+	#
 	table_name = 'data'
 	(table_in, col_name, col_type) = get_table(table_name)
 	table_out     = list()
@@ -154,7 +166,7 @@ def subset_data() :
 # for a specified integrand, only sample one row in stride
 def subsample_data(integrand_name, stride) :
 	print( "subsample_data {} stride = {}".format(integrand_name, stride) )
-    #
+	#
 	counter        = 0
 	subsample_integrand_id = None
 	for integrand_id in range( len(integrand_table) ) :
@@ -178,7 +190,7 @@ def subsample_data(integrand_name, stride) :
 # for a specified integrand, hold out all its data
 def hold_out_data(integrand_name) :
 	print( "hold_out {}".format(integrand_name) )
-    #
+	#
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
@@ -192,7 +204,7 @@ def hold_out_data(integrand_name) :
 # for a specified integrand, remove all its data
 def remove_data(integrand_name) :
 	print( "remove_data {}".format(integrand_name) )
-    #
+	#
 	remove_integrand_id = None
 	for integrand_id in range( len(integrand_table) ) :
 		row = integrand_table[integrand_id]
@@ -211,7 +223,7 @@ def remove_data(integrand_name) :
 # for a specified node, remove all its data
 def remove_node_data(node_name) :
 	print( "remove_node_data {}".format(node_name) )
-    #
+	#
 	remove_node_id = None
 	for node_id in range( len(node_table) ) :
 		row = node_table[node_id]
@@ -231,29 +243,17 @@ def remove_node_data(node_name) :
 def set_data_density(integrand_name, density_name) :
 	print('set_density {} {}'.format(integrand_name, density_name) )
 	#
-	# change_integrand_id
-	this_integrand_id = None
-	for integrand_id in range( len( integrand_table ) ) :
-		if integrand_table[integrand_id]['integrand_name'] == integrand_name :
-			this_integrand_id = integrand_id
-	if this_integrand_id is None :
-		msg = 'set_data_density: invalid intgrand_name = '+ integrand_name
-		sys.exit( msg )
+	# integrand_id
+	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
 	#
-	# this_density_id
-	this_density_id = None
-	for density_id in range( len( density_table ) ) :
-		if density_table[density_id]['density_name'] == density_name :
-			this_density_id = density_id
-	if this_density_id is None :
-		msg = 'set_data_density: invalid density_name = ' + density_name
-		sys.exit( msg )
+	# density_id
+	density_id = table_name2id(density_table, 'density', density_name)
 	#
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
-		if row['integrand_id'] == this_integrand_id :
-			row['density_id'] = this_density_id
+		if row['integrand_id'] == integrand_id :
+			row['density_id'] = density_id
 	put_table(table_name, table, col_name, col_type)
 #
 # set_minimum_meas_std:
@@ -262,31 +262,24 @@ def set_minimum_meas_std(integrand_name, minimum_meas_std) :
 	msg ='set {} minimum_meas_std {}'.format(integrand_name, minimum_meas_std)
 	print(msg)
 	#
-	# this_integrand_id
-	this_integrand_id = None
-	for integrand_id in range( len( integrand_table ) ) :
-		if integrand_table[integrand_id]['integrand_name'] == integrand_name :
-			this_integrand_id = integrand_id
-	if this_integrand_id is None :
-		msg = 'set_minimum_meas_std: invalid intgrand_name = '+ integrand_name
-		sys.exit( msg )
+	# integrand_id
+	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
 	#
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
-		if row['integrand_id'] == this_integrand_id :
+		if row['integrand_id'] == integrand_id :
 			if row['meas_std'] < minimum_meas_std :
 				row['meas_std'] = minimum_meas_std
 	put_table(table_name, table, col_name, col_type)
 # ----------------------------------------------------------------------------
-# change other tables
+# Change Other Tables
 # ----------------------------------------------------------------------------
-#
 # remove_rate;
 # remove both the parent and child variables for a rate
 def remove_rate(rate_name) :
 	print( 'remove_rate {}'.format(rate_name) )
-    #
+	#
 	table_name = 'rate'
 	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
@@ -312,7 +305,7 @@ def remove_mulcov(covariate_id) :
 # Set a specified rate to be constant by using one of its parent priors
 def constant_rate(rate_name) :
 	print( 'constant_rate {}'.format(rate_name) )
-    #
+	#
 	table_name = 'rate'
 	(rate_table, col_name, col_type) = get_table(table_name)
 	#
@@ -389,7 +382,7 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 			row['minimum_meas_cv'] = minimum_meas_cv
 	put_table(table_name, table, col_name, col_type)
 # ==========================================================================
-# Example simplifications
+# Example Changes
 # ==========================================================================
 #
 # set_option:
@@ -442,6 +435,8 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # minimum_meas_std = avg_Sincidence / 10.
 # set_minimum_meas_std( 'Sincidence' , minimum_meas_std)
 # ----------------------------------------------------------------------
+# Actual Changes
+# ----------------------------------------------------------------------
 # set options
 set_option('tolerance_fixed',    '1e-6')
 set_option('max_num_iter_fixed', '50')
@@ -451,11 +446,11 @@ subset_data()
 #
 # remove all inegrands but Sincidence
 for integrand_name in [ 'prevalence', 'mtexcess' ] :
-    remove_data(integrand_name)
+	remove_data(integrand_name)
 #
 # remove reates but iota and omega
 for rate_name in [ 'rho', 'chi' ]  :
-    remove_rate(rate_name)
+	remove_rate(rate_name)
 #
 #
 density_name   = 'gaussian'
@@ -465,7 +460,7 @@ set_data_density(integrand_name, density_name)
 avg_Sincidence   = 7e-05
 minimum_meas_std = avg_Sincidence / 10.
 set_minimum_meas_std( 'Sincidence' , minimum_meas_std)
-#
+# ------------------------------------------------------------------------
 # run fit and summary
 run_fit()
 # ----------------------------------------------------------------------
