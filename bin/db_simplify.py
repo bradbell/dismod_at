@@ -17,6 +17,8 @@ original_database  = 'ihme_db/dismod-iota-decimated.db'
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
+# create new smplified database and fit it (otheriwse just run plotitng)
+new_fit       = True
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -38,7 +40,8 @@ if os.path.isdir(sandbox) :
 import dismod_at
 #
 # database
-shutil.copyfile(original_database, database)
+if new_fit :
+	shutil.copyfile(original_database, database)
 # ===========================================================================
 # General Purpose Utilities
 # ===========================================================================
@@ -116,7 +119,7 @@ table_name = 'node'
 # Routines that fit and display results
 # ============================================================================
 #
-# (data_subset_table, fit_var_table, fit_data_subset_table) = run_fit()
+# run_fit()
 data_subset_table     = None
 fit_var_table         = None
 fit_data_subset_table = None
@@ -124,7 +127,7 @@ def run_fit() :
 	# ------------------------------------------------------------------------
 	# fit fixed
 	system_command( [ 'dismod_at',  database, 'init' ] )
-	system_command( [ 'dismod_at',  database, 'fit', 'fixed' ] )
+	system_command( [ 'dismod_at',  database, 'fit', 'both' ] )
 	#
 	# csv files and summary
 	index = database.rfind('/')
@@ -134,6 +137,9 @@ def run_fit() :
 		directory = database[0 : index]
 	system_command( [ 'dismodat.py',  database, 'db2csv' ] )
 	system_command( [ 'bin/csv_summary.py',  directory ] )
+#
+# plot_integrand
+def plot_integrand(integrand_name) :
 	#
 	table_name = 'data_subset'
 	(data_subset_table, col_name, col_type) = get_table(table_name)
@@ -144,26 +150,14 @@ def run_fit() :
 	table_name = 'fit_data_subset'
 	(fit_data_subset_table, col_name, col_type) = get_table(table_name)
 	#
-	return (data_subset_table, fit_var_table, fit_data_subset_table)
-#
-# plot_integrand
-def plot_integrand(
-	integrand_name = None,
-	x_name         = None,
-	model_line     = None
-) :
-	x_name_list = [ 'index', 'age', 'time' ]
-	if x_name not in x_name_list :
-		msg = 'plot_integrand: x_name  not in {}'.format(x_name_list)
-		sys.exit(msg)
+	table_name = 'data'
+	(data_table, col_name, col_type) = get_table(table_name)
 	#
 	# this_integrand_id
 	this_integrand_id = table_name2id(
 		integrand_table, 'integrand', integrand_name
 	)
 	#
-	table_name = 'data'
-	(data_table, col_name, col_type) = get_table(table_name)
 	#
 	n_list                  = len(data_subset_table)
 	index_list              = range(n_list)
@@ -195,46 +189,67 @@ def plot_integrand(
 			weighted_residual = row['weighted_residual']
 			weighted_residual_list.append( weighted_residual )
 	#
-	from matplotlib import pyplot
 	import numpy
+	avg_integrand     = numpy.array( avg_integrand_list )
+	meas_value        = numpy.array( meas_value_list )
+	weighted_residual = numpy.array( weighted_residual_list )
 	#
-	logscale   = True
-	x          = eval( x_name + '_list' )
-	# ------------------------------------------------------------------------
-	fig, axs = pyplot.subplots(2, 1, sharex=True)
-	fig.subplots_adjust(hspace=0)
-	pyplot.subplot(2, 1, 1)
-	if model_line :
-		order = sorted( index_list, key=x.__getitem__ )
-		order = numpy.array(order)
-		x     = numpy.array(x)[order]
-		y     = numpy.array(meas_value_list)[order]
-		pyplot.scatter(x, y, marker='.')
+	y_median    = numpy.median( meas_value)
+	y_max       = y_median * 1e2
+	y_min       = y_median * 1e-3
+	r_max       = 19.0
+	r_min       = -19.0
+	#
+	avg_integrand = numpy.maximum( avg_integrand, y_min )
+	avg_integrand = numpy.minimum( avg_integrand, y_max )
+	#
+	meas_value = numpy.maximum( meas_value, y_min )
+	meas_value = numpy.minimum( meas_value, y_max )
+	#
+	weighted_residual = numpy.maximum( weighted_residual, r_min )
+	weighted_residual = numpy.minimum( weighted_residual, r_max )
+	#
+	y_max_two  = [y_max, y_max]
+	y_min_two  = [y_min, y_min]
+	#
+	r_max_two  = [r_max, r_max]
+	r_zero_two = [ 0.0, 0.0   ]
+	r_min_two  = [r_min, r_min]
+	#
+	from matplotlib import pyplot
+	#
+	for x_name in [ 'index', 'age', 'time' ] :
+		x          = eval( x_name + '_list' )
+		x_two      = [min(x), max(x)]
 		#
-		y = numpy.array( avg_integrand_list) [order]
-		pyplot.plot(x, y, linestyle='-')
-	else :
-		y =  meas_value_list
-		pyplot.scatter(x, y, marker='+')
+		fig, axes = pyplot.subplots(3, 1, sharex=True)
+		fig.subplots_adjust(hspace=0)
 		#
-		y = avg_integrand_list
-		pyplot.scatter(x, y, marker='x')
-	if logscale :
+		pyplot.subplot(3, 1, 1)
+		y =  meas_value
+		pyplot.scatter(x, y, marker='.', color='k')
+		pyplot.ylabel(integrand_name)
 		pyplot.yscale("log")
-	pyplot.xlabel(x_name)
-	pyplot.ylabel(integrand_name)
-	#
-	# -----------------------------------------------------------------------
-	pyplot.subplot(2, 1, 2)
-	if model_line :
-		y = numpy.array(weighted_residual_list) [order]
-	else :
-		y = weighted_residual_list
-	pyplot.scatter(x, y, marker='.')
-	x_zero = [x[0], x[-1]]
-	y_zero = [0.0, 0.0]
-	pyplot.plot(x_zero, y_zero, linestyle='-')
-	pyplot.ylabel('weighted_residual')
+		pyplot.plot(x_two, y_max_two, linestyle='-', color='k')
+		pyplot.plot(x_two, y_min_two, linestyle='-', color='k')
+		#
+		pyplot.subplot(3, 1, 2)
+		y = avg_integrand
+		pyplot.scatter(x, y, marker='.', color='k')
+		pyplot.ylabel('model')
+		pyplot.yscale("log")
+		pyplot.plot(x_two, y_max_two, linestyle='-', color='k')
+		pyplot.plot(x_two, y_min_two, linestyle='-', color='k')
+		#
+		pyplot.subplot(3, 1, 3)
+		y = weighted_residual
+		pyplot.scatter(x, y, marker='.', color='k')
+		pyplot.plot(x_two, r_max_two,  linestyle='-', color='k')
+		pyplot.plot(x_two, r_zero_two, linestyle='-', color='k')
+		pyplot.plot(x_two, r_min_two,  linestyle='-', color='k')
+		pyplot.ylabel('residual')
+		#
+		pyplot.xlabel(x_name)
 	#
 	pyplot.show()
 # =============================================================================
@@ -496,6 +511,7 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 #
 # set_option:
 # set_option('tolerance_fixed',    '1e-6')
+# set_option('max_num_iter_fixed', '30')
 #
 # subset_data:
 # subset_data()
@@ -546,39 +562,41 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
-# set options
-set_option('tolerance_fixed',    '1e-6')
-set_option('max_num_iter_fixed', '30')
+if new_fit :
+	# set options
+	set_option('tolerance_fixed',    '1e-6')
+	set_option('max_num_iter_fixed', '100')
+	#
+	# subset to only data in the fit
+	subset_data()
+	#
+	# remove all integrands but Sincidence
+	for integrand_name in [ 'prevalence', 'mtexcess' ] :
+		remove_data(integrand_name)
+	#
+	# remove reates but iota and omega
+	for rate_name in [ 'rho', 'chi' ]  :
+		remove_rate(rate_name)
+	#
+	# remove x_2 covariate multiplier
+	for covariate_id in range( len(covariate_table) ) :
+		remove_mulcov(covariate_id)
+	#
+	density_name   = 'gaussian'
+	integrand_name = 'Sincidence'
+	set_data_density(integrand_name, density_name)
+	#
+	# subsample_data:
+	stride = 10
+	integrand_name = 'Sincidence'
+	subsample_data(integrand_name, stride)
+	#
+	# run fit
+	run_fit()
 #
-# subset to only data in the fit
-subset_data()
-#
-# remove all inegrands but Sincidence
-for integrand_name in [ 'prevalence', 'mtexcess' ] :
-	remove_data(integrand_name)
-#
-# remove reates but iota and omega
-for rate_name in [ 'rho', 'chi' ]  :
-	remove_rate(rate_name)
-#
-density_name   = 'gaussian'
-integrand_name = 'Sincidence'
-set_data_density(integrand_name, density_name)
-#
-# subsample_data:
-stride = 10
-integrand_name = 'Sincidence'
-subsample_data(integrand_name, stride)
-#
-# ------------------------------------------------------------------------
-# run fit
-(data_subset_table, fit_var_table, fit_data_subset_table) = run_fit()
 # plot Sincidence
-plot_integrand(
-	integrand_name = 'Sincidence',
-	x_name         = 'index'       ,
-	model_line     = False
-)
+integrand_name = 'Sincidence'
+plot_integrand(integrand_name)
 # ----------------------------------------------------------------------
 print('db_simplify.py: OK')
 sys.exit(0)
