@@ -171,6 +171,7 @@ def plot_integrand(integrand_name) :
 	meas_value_list         = list()
 	age_list                = list()
 	time_list               = list()
+	node_id_list            = list()
 	for data_subset_id in range( len(data_subset_table) ) :
 		data_id        = data_subset_table[data_subset_id]['data_id']
 		row            = data_table[data_id]
@@ -188,6 +189,9 @@ def plot_integrand(integrand_name) :
 			time = ( row['time_lower'] + row['time_upper'] ) / 2.0
 			time_list.append(time)
 			#
+			node_id    = row['node_id']
+			node_id_list.append( node_id )
+			#
 			row  = fit_data_subset_table[data_subset_id]
 			#
 			avg_integrand = row['avg_integrand']
@@ -195,12 +199,15 @@ def plot_integrand(integrand_name) :
 			#
 			weighted_residual = row['weighted_residual']
 			weighted_residual_list.append( weighted_residual )
-	index_list = range( n_list )
 	#
 	import numpy
 	avg_integrand     = numpy.array( avg_integrand_list )
 	meas_value        = numpy.array( meas_value_list )
 	weighted_residual = numpy.array( weighted_residual_list )
+	age               = numpy.array( age_list )
+	time              = numpy.array( time_list )
+	node_id           = numpy.array( node_id_list )
+	index             = numpy.array( range(n_list) )
 	#
 	y_median    = numpy.median( meas_value)
 	y_max       = y_median * 1e2
@@ -231,8 +238,8 @@ def plot_integrand(integrand_name) :
 	file_name = directory + '/' + integrand_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
-	for x_name in [ 'index', 'age', 'time' ] :
-		x          = eval( x_name + '_list' )
+	for x_name in [ 'index', 'node_id', 'age', 'time' ] :
+		x          = eval( x_name )
 		x_two      = [min(x), max(x)]
 		#
 		fig, axes = pyplot.subplots(3, 1, sharex=True)
@@ -263,7 +270,6 @@ def plot_integrand(integrand_name) :
 		pyplot.ylabel('residual')
 		#
 		pyplot.xlabel(x_name)
-		#
 		pdf.savefig( fig )
 	#
 	pdf.close()
