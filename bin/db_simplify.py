@@ -18,7 +18,7 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new smplified database and fit it (otheriwse just run plotitng)
-new_fit       = False
+new_fit            = True
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -119,24 +119,6 @@ table_name = 'node'
 # Routines that fit and display results
 # ============================================================================
 #
-# run_fit()
-data_subset_table     = None
-fit_var_table         = None
-fit_data_subset_table = None
-def run_fit() :
-	# ------------------------------------------------------------------------
-	# fit fixed
-	system_command( [ 'dismod_at',  database, 'init' ] )
-	system_command( [ 'dismod_at',  database, 'fit', 'both' ] )
-	#
-	# csv files and summary
-	index = database.rfind('/')
-	if index < 0 :
-		directory = '.'
-	else :
-		directory = database[0 : index]
-	system_command( [ 'dismodat.py',  database, 'db2csv' ] )
-	system_command( [ 'bin/csv_summary.py',  directory ] )
 #
 # plot_integrand
 def plot_integrand(integrand_name) :
@@ -171,7 +153,7 @@ def plot_integrand(integrand_name) :
 	meas_value_list         = list()
 	age_list                = list()
 	time_list               = list()
-	node_id_list            = list()
+	node_list               = list()
 	for data_subset_id in range( len(data_subset_table) ) :
 		data_id        = data_subset_table[data_subset_id]['data_id']
 		row            = data_table[data_id]
@@ -190,7 +172,7 @@ def plot_integrand(integrand_name) :
 			time_list.append(time)
 			#
 			node_id    = row['node_id']
-			node_id_list.append( node_id )
+			node_list.append( node_id )
 			#
 			row  = fit_data_subset_table[data_subset_id]
 			#
@@ -199,6 +181,13 @@ def plot_integrand(integrand_name) :
 			#
 			weighted_residual = row['weighted_residual']
 			weighted_residual_list.append( weighted_residual )
+	index_list = range(n_list)
+	#
+	# map node id to index in set of node_id's
+	node_set   = list( set( node_list ) )
+	for index in index_list :
+		node_id = node_list[index]
+		node_list[index] = node_set.index( node_id )
 	#
 	import numpy
 	avg_integrand     = numpy.array( avg_integrand_list )
@@ -206,8 +195,8 @@ def plot_integrand(integrand_name) :
 	weighted_residual = numpy.array( weighted_residual_list )
 	age               = numpy.array( age_list )
 	time              = numpy.array( time_list )
-	node_id           = numpy.array( node_id_list )
-	index             = numpy.array( range(n_list) )
+	node              = numpy.array( node_list )
+	index             = numpy.array( index_list )
 	#
 	y_median    = numpy.median( meas_value)
 	y_max       = y_median * 1e2
@@ -238,7 +227,7 @@ def plot_integrand(integrand_name) :
 	file_name = directory + '/' + integrand_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
-	for x_name in [ 'index', 'node_id', 'age', 'time' ] :
+	for x_name in [ 'index', 'node', 'age', 'time' ] :
 		x          = eval( x_name )
 		x_two      = [min(x), max(x)]
 		#
@@ -332,37 +321,21 @@ def subsample_data(integrand_name, stride) :
 	put_table(table_name, table_out, col_name, col_type)
 #
 # hold_out_data:
-# for a specified integrand, hold out all its data
-def hold_out_data(integrand_name) :
-	print( "hold_out {}".format(integrand_name) )
+# for a specified integrand, set the hold_out to 0 or 1
+def hold_out_data(integrand_name, hold_out) :
+	print( "{} hold_out = {}".format(integrand_name, hold_out) )
+	#
+	if hold_out not in [ 0, 1] :
+		msg = 'hold_out_data: hold_out is not zero or one'
+		sys.exit(msg)
 	#
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
-		integrand_id    = row['integrand_id']
-		integrand_name  = integrand_table[integrand_id]['integrand_name']
-		if integrand_name == 'mtexcess' :
-			row['hold_out'] = 1
+		integrand_id  = row['integrand_id']
+		if integrand_name  == integrand_table[integrand_id]['integrand_name'] :
+			row['hold_out'] = hold_out
 	put_table(table_name, table, col_name, col_type)
-#
-# remove_integrand:
-# for a specified integrand, remove all its data
-def remove_integrand(integrand_name) :
-	print( "remove_integrand {}".format(integrand_name) )
-	#
-	remove_integrand_id = None
-	for integrand_id in range( len(integrand_table) ) :
-		row = integrand_table[integrand_id]
-		if row['integrand_name'] == integrand_name :
-			remove_integrand_id = integrand_id
-	table_name = 'data'
-	(table_in, col_name, col_type) = get_table(table_name)
-	table_out = list()
-	for row in table_in :
-		integrand_id    = row['integrand_id']
-		if integrand_id != remove_integrand_id :
-			table_out.append(row)
-	put_table(table_name, table_out, col_name, col_type)
 #
 # remove_node_data:
 # for a specified node, remove all its data
@@ -515,6 +488,21 @@ def set_option(name, value) :
 		'dismod_at',  database, 'set', 'option', name , value
 	] )
 #
+# set_start_var:
+def set_start_var(table_name) :
+	if table_name != 'fit_var' :
+		msg = 'set_start_var: table name is not fit_var'
+		sys.exit(msg)
+	(fit_var_table, col_name, col_type)   = get_table(table_name)
+	table_name = 'start_var'
+	#
+	(start_var_table, col_name, col_type) = get_table(table_name)
+	for var_id in range( len(start_var_table) ) :
+		row_start = start_var_table[var_id]
+		row_fit   = fit_var_table[var_id]
+		row_start['start_var_value'] = row_fit['fit_var_value']
+	put_table(table_name, start_var_table, col_name, col_type)
+#
 # set_minimum_meas_cv:
 # set the minimum cv for a specified integrand
 def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
@@ -536,14 +524,6 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 #
 # subset_data:
 # subset_data()
-#
-# hold_out_data:
-# integrand_name = 'mtexcess'
-# hold_out_data(integrand_name)
-#
-# remove_integrand:
-# integrand_name = 'mtexcess'
-# remove_integrand(integrand_name)
 #
 # remove_rage:
 # for rate_name in [ 'omega', 'chi' ] :
@@ -576,24 +556,27 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 #
-# remove all integrands but mtexcess
-# for integrand_name in [ 'prevalence', 'Sincidence' ] :
-#	remove_integrand(integrand_name)
-#
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
+integrand_list = [ 'Sincidence', 'mtexcess', 'prevalence' ]
 if new_fit :
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
-	set_option('max_num_iter_fixed', '100')
+	set_option('max_num_iter_fixed', '30')
 	#
-	# subset to only data in the fit
+	# remove all hold hout data and data past covriate limits
 	subset_data()
 	#
-	# remove prevalence
-	integrand_name = 'prevalence'
-	remove_integrand(integrand_name)
+	# subsample mtexcess (because there is way more than other data)
+	stride = 10
+	integrand_name = 'mtexcess'
+	subsample_data(integrand_name, stride)
+	#
+	# now further subasmple all data (for speed of testing)
+	stride = 10
+	for integrand_name in integrand_list :
+		subsample_data(integrand_name, stride)
 	#
 	# remove all covariate multipliers
 	for covariate_id in range( len(covariate_table) ) :
@@ -604,17 +587,41 @@ if new_fit :
 	for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
 		set_data_density(integrand_name, density_name)
 	#
-	# subsample mtexcess:
-	stride = 10
-	integrand_name = 'mtexcess'
-	subsample_data(integrand_name, stride)
+	# take prevalence out of fit
+	hold_out       = 1
+	integrand_name = 'prevalence'
+	hold_out_data(integrand_name, hold_out)
 	#
-	# run fit
-	run_fit()
+	# init
+	system_command([ 'dismod_at', database, 'init'])
+	#
+	# fit both
+	system_command([ 'dismod_at', database, 'fit', 'both'])
+	#
+	# start_var = fit_var
+	table_name = 'fit_var'
+	set_start_var(table_name)
+	#
+	# put prevalence back in fit
+	hold_out       = 0
+	integrand_name = 'prevalence'
+	hold_out_data(integrand_name, hold_out)
+	#
+	# fit both
+	system_command([ 'dismod_at', database, 'fit', 'both'])
 #
 # plot mtexcess
-for integrand_name in [ 'Sincidence', 'mtexcess' ] :
+for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
 	plot_integrand(integrand_name)
+#
+# csv files and summary
+index = database.rfind('/')
+if index < 0 :
+	directory = '.'
+else :
+	directory = database[0 : index]
+system_command( [ 'dismodat.py',  database, 'db2csv' ] )
+system_command( [ 'bin/csv_summary.py',  directory ] )
 # ----------------------------------------------------------------------
 print('db_simplify.py: OK')
 sys.exit(0)
