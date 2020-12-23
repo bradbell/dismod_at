@@ -18,7 +18,7 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new smplified database and fit it (otheriwse just run plotitng)
-new_fit       = True
+new_fit       = False
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -140,6 +140,12 @@ def run_fit() :
 #
 # plot_integrand
 def plot_integrand(integrand_name) :
+	# directory where plots will be stored
+	index = database.rfind('/')
+	if index < 0 :
+		directory = '.'
+	else :
+		directory = database[0 : index]
 	#
 	table_name = 'data_subset'
 	(data_subset_table, col_name, col_type) = get_table(table_name)
@@ -159,19 +165,20 @@ def plot_integrand(integrand_name) :
 	)
 	#
 	#
-	n_list                  = len(data_subset_table)
-	index_list              = range(n_list)
+	n_list                  = 0
 	avg_integrand_list      = list()
 	weighted_residual_list  = list()
 	meas_value_list         = list()
 	age_list                = list()
 	time_list               = list()
-	for data_subset_id in index_list :
+	for data_subset_id in range( len(data_subset_table) ) :
 		data_id        = data_subset_table[data_subset_id]['data_id']
 		row            = data_table[data_id]
 		integrand_id   = row['integrand_id']
 		#
 		if integrand_id == this_integrand_id :
+			n_list += 1
+			#
 			meas_value  = row['meas_value']
 			meas_value_list.append( meas_value )
 			#
@@ -188,6 +195,7 @@ def plot_integrand(integrand_name) :
 			#
 			weighted_residual = row['weighted_residual']
 			weighted_residual_list.append( weighted_residual )
+	index_list = range( n_list )
 	#
 	import numpy
 	avg_integrand     = numpy.array( avg_integrand_list )
@@ -216,7 +224,12 @@ def plot_integrand(integrand_name) :
 	r_zero_two = [ 0.0, 0.0   ]
 	r_min_two  = [r_min, r_min]
 	#
+	markersize = n_list * [ 1 ]
+	#
 	from matplotlib import pyplot
+	import matplotlib.backends.backend_pdf
+	file_name = directory + '/' + integrand_name + '.pdf'
+	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	for x_name in [ 'index', 'age', 'time' ] :
 		x          = eval( x_name + '_list' )
@@ -227,7 +240,7 @@ def plot_integrand(integrand_name) :
 		#
 		pyplot.subplot(3, 1, 1)
 		y =  meas_value
-		pyplot.scatter(x, y, marker='.', color='k')
+		pyplot.scatter(x, y, marker='.', color='k', s = markersize)
 		pyplot.ylabel(integrand_name)
 		pyplot.yscale("log")
 		pyplot.plot(x_two, y_max_two, linestyle='-', color='k')
@@ -235,7 +248,7 @@ def plot_integrand(integrand_name) :
 		#
 		pyplot.subplot(3, 1, 2)
 		y = avg_integrand
-		pyplot.scatter(x, y, marker='.', color='k')
+		pyplot.scatter(x, y, marker='.', color='k', s = markersize)
 		pyplot.ylabel('model')
 		pyplot.yscale("log")
 		pyplot.plot(x_two, y_max_two, linestyle='-', color='k')
@@ -243,15 +256,17 @@ def plot_integrand(integrand_name) :
 		#
 		pyplot.subplot(3, 1, 3)
 		y = weighted_residual
-		pyplot.scatter(x, y, marker='.', color='k')
+		pyplot.scatter(x, y, marker='.', color='k', s = markersize)
 		pyplot.plot(x_two, r_max_two,  linestyle='-', color='k')
 		pyplot.plot(x_two, r_zero_two, linestyle='-', color='k')
 		pyplot.plot(x_two, r_min_two,  linestyle='-', color='k')
 		pyplot.ylabel('residual')
 		#
 		pyplot.xlabel(x_name)
+		#
+		pdf.savefig( fig )
 	#
-	pyplot.show()
+	pdf.close()
 # =============================================================================
 # Routines that Change Data Table
 # =============================================================================
@@ -324,10 +339,10 @@ def hold_out_data(integrand_name) :
 			row['hold_out'] = 1
 	put_table(table_name, table, col_name, col_type)
 #
-# remove_data:
+# remove_integrand:
 # for a specified integrand, remove all its data
-def remove_data(integrand_name) :
-	print( "remove_data {}".format(integrand_name) )
+def remove_integrand(integrand_name) :
+	print( "remove_integrand {}".format(integrand_name) )
 	#
 	remove_integrand_id = None
 	for integrand_id in range( len(integrand_table) ) :
@@ -520,9 +535,9 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # integrand_name = 'mtexcess'
 # hold_out_data(integrand_name)
 #
-# remove_data:
+# remove_integrand:
 # integrand_name = 'mtexcess'
-# remove_data(integrand_name)
+# remove_integrand(integrand_name)
 #
 # remove_rage:
 # for rate_name in [ 'omega', 'chi' ] :
@@ -555,10 +570,10 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 #
-# set the minimum meas_std for all the data
-# avg_Sincidence   = 7e-05
-# minimum_meas_std = avg_Sincidence / 10.
-# set_minimum_meas_std( 'Sincidence' , minimum_meas_std)
+# remove all integrands but mtexcess
+# for integrand_name in [ 'prevalence', 'Sincidence' ] :
+#	remove_integrand(integrand_name)
+#
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
@@ -570,33 +585,30 @@ if new_fit :
 	# subset to only data in the fit
 	subset_data()
 	#
-	# remove all integrands but Sincidence
-	for integrand_name in [ 'prevalence', 'mtexcess' ] :
-		remove_data(integrand_name)
+	# remove prevalence
+	integrand_name = 'prevalence'
+	remove_integrand(integrand_name)
 	#
-	# remove reates but iota and omega
-	for rate_name in [ 'rho', 'chi' ]  :
-		remove_rate(rate_name)
-	#
-	# remove x_2 covariate multiplier
+	# remove all covariate multipliers
 	for covariate_id in range( len(covariate_table) ) :
 		remove_mulcov(covariate_id)
 	#
+	# change density to gaussian
 	density_name   = 'gaussian'
-	integrand_name = 'Sincidence'
-	set_data_density(integrand_name, density_name)
+	for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
+		set_data_density(integrand_name, density_name)
 	#
-	# subsample_data:
+	# subsample mtexcess:
 	stride = 10
-	integrand_name = 'Sincidence'
+	integrand_name = 'mtexcess'
 	subsample_data(integrand_name, stride)
 	#
 	# run fit
 	run_fit()
 #
-# plot Sincidence
-integrand_name = 'Sincidence'
-plot_integrand(integrand_name)
+# plot mtexcess
+for integrand_name in [ 'Sincidence', 'mtexcess' ] :
+	plot_integrand(integrand_name)
 # ----------------------------------------------------------------------
 print('db_simplify.py: OK')
 sys.exit(0)
