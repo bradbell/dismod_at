@@ -506,17 +506,51 @@ def remove_rate(rate_name) :
 			row['child_nslist_id']  = None
 	put_table(table_name, table, col_name, col_type)
 #
-# remove_mulcov:
-# remove a specified covariate multiplier
-def remove_mulcov(covariate_id) :
-	print( 'remove_mulcov x_{}'.format(covariate_id) )
+# set_mulcov_zero:
+# set all of the multipliers for a specified covariate to zero without
+# changing the order or size of the var table
+def set_mulcov_zero(covariate_id) :
+	print( 'set_mulcov_zero x_{}'.format(covariate_id) )
+	#
 	table_name = 'mulcov'
-	(table, col_name, col_type) = get_table(table_name)
-	for row  in  table :
+	(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
+	#
+	table_name = 'smooth'
+	(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
+	#
+	table_name = 'smooth_grid'
+	(grid_table, grid_col_name, grid_col_type) = get_table(table_name)
+	#
+	def new_zero_smooth_id(smooth_id) :
+		if smooth_id is None :
+			return None
+		#
+		new_smooth_id   = len(smooth_table)
+		new_row         = copy.copy( smooth_table[smooth_id] )
+		new_row['smooth_name'] = 'zero_smoothing #' + str( new_smooth_id )
+		smooth_table.append( new_row )
+		#
+		for old_row in grid_table :
+			if old_row['smooth_id'] == smooth_id :
+				new_row = copy.copy( old_row )
+				new_row['smooth_id']      = new_smooth_id
+				new_row['value_prior_id'] = None
+				new_row['dage_prior_id']  = None
+				new_row['dtime_prior_id'] = None
+				new_row['const_value']    = 0.0
+				grid_table.append( new_row )
+		return new_smooth_id
+	#
+	for row  in  mulcov_table :
 		if row['covariate_id'] == covariate_id :
-			row['group_smooth_id']    = None
-			row['subgroup_smooth_id'] = None
-	put_table(table_name, table, col_name, col_type)
+			smooth_id                 = row['group_smooth_id']
+			row['group_smooth_id']    = new_zero_smooth_id(smooth_id)
+			smooth_id                 = row['subgroup_smooth_id']
+			row['subgroup_smooth_id'] = new_zero_smooth_id(smooth_id)
+	#
+	put_table('mulcov',      mulcov_table, mulcov_col_name, mulcov_col_type)
+	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
+	put_table('smooth_grid', grid_table,   grid_col_name,   grid_col_type)
 #
 # constant_rate:
 # Set a specified rate to be constant by using one of its parent priors
@@ -689,13 +723,9 @@ def avgint_from_data(data_integrand_name, integrand_name_list) :
 # subset_data:
 # subset_data()
 #
-# remove_rage:
+# remove_rate:
 # for rate_name in [ 'omega', 'chi' ] :
 #	remove_rate(rate_name)
-#
-# remove_mulcov:
-# for covariate_id in range( len(covariate_table) ) :
-#	remove_mulcov(covariate_id)
 #
 # set_data_density:
 # density_name = 'gaussian'
@@ -752,19 +782,21 @@ if new_database :
 	for integrand_name in integrand_list :
 		subsample_data(integrand_name, stride)
 	#
-	# remove all covariate multipliers
+	# constrain all covariate multipliers to be zero
 	for covariate_id in range( len(covariate_table) ) :
-		remove_mulcov(covariate_id)
+		set_mulcov_zero(covariate_id)
 	#
 	# change density to gaussian
 	density_name   = 'gaussian'
 	for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
 		set_data_density(integrand_name, density_name)
 	#
-	# set the minimum measurement standard deviation
+	# set the minimum measurement standard deviation and cv
 	median_meas_value_cv = 1e-1
+	minimum_meas_cv      = 1e-1
 	for integrand_name in [ 'Sincidence', 'prevalence' ] :
 		set_minimum_meas_std(integrand_name, median_meas_value_cv)
+		set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 	#
 	# take prevalence out of fit
 	hold_out       = 1
