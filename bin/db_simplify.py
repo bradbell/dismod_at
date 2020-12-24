@@ -17,8 +17,8 @@ original_database  = 'ihme_db/dismod-iota-decimated.db'
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
-# create new smplified database including fit (otheriwse just run plotitng)
-new_database       = False
+# create new smplified database including fit results (otheriwse just plot)
+new_database       = True
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -27,6 +27,7 @@ import sys
 import shutil
 import subprocess
 import copy
+import numpy
 #
 if sys.argv[0] != 'bin/db_simplify.py' :
 	msg = 'bin/db_simplify.py must be executed from its parent directory'
@@ -187,7 +188,6 @@ def plot_data(integrand_name) :
 		node_id = node_list[index]
 		node_list[index] = node_set.index( node_id )
 	#
-	import numpy
 	avg_integrand     = numpy.array( avg_integrand_list )
 	meas_value        = numpy.array( meas_value_list )
 	weighted_residual = numpy.array( weighted_residual_list )
@@ -198,7 +198,7 @@ def plot_data(integrand_name) :
 	#
 	y_median    = numpy.median( meas_value)
 	y_max       = y_median * 1e2
-	y_min       = y_median * 1e-3
+	y_min       = y_median * 1.5e-4
 	r_max       = 19.0
 	r_min       = -19.0
 	#
@@ -464,19 +464,30 @@ def set_data_density(integrand_name, density_name) :
 #
 # set_minimum_meas_std:
 # for a specified integrand, set the minimm measurement standard deviation
-def set_minimum_meas_std(integrand_name, minimum_meas_std) :
-	msg ='set {} minimum_meas_std {}'.format(integrand_name, minimum_meas_std)
+# median_meas_value_cv is a multiplier for the median value for the integrand
+def set_minimum_meas_std(integrand_name, median_meas_value_cv) :
+	msg ='set {} median_meas_value_cv {}'
+	msg = msg.format(integrand_name, median_meas_value_cv)
 	print(msg)
+	#
+	table_name = 'data'
+	(table, col_name, col_type) = get_table(table_name)
 	#
 	# integrand_id
 	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
 	#
-	table_name = 'data'
-	(table, col_name, col_type) = get_table(table_name)
+	sub_table   = list()
+	meas_value  = list()
 	for row in table :
 		if row['integrand_id'] == integrand_id :
-			if row['meas_std'] < minimum_meas_std :
-				row['meas_std'] = minimum_meas_std
+			sub_table.append(row)
+			meas_value.append( row['meas_value'] )
+	median          = numpy.median(meas_value)
+	minimum_meas_std = median * median_meas_value_cv
+	#
+	for row in sub_table :
+		if row['meas_std'] < minimum_meas_std :
+			row['meas_std'] = minimum_meas_std
 	put_table(table_name, table, col_name, col_type)
 # ============================================================================
 # Routines that Change Other Tables
@@ -708,7 +719,7 @@ def avgint_from_data(data_integrand_name, integrand_name_list) :
 # minimum_meas_cv = 0.5
 # for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
-# #
+#
 # set_start_var:
 # table_name = 'fit_var'
 # set_start_var(table_name)
@@ -717,11 +728,6 @@ def avgint_from_data(data_integrand_name, integrand_name_list) :
 # hold_out       = 0
 # integrand_name = 'prevalence'
 # hold_out_data(integrand_name, hold_out)
-#
-# set_minimum_std:
-# integrand_name   = 'prevalence'
-# minimum_meas_std = 1e-5
-# set_minimum_meas_std(integrand_name, minimum_meas_std)
 #
 # ----------------------------------------------------------------------
 # Actual Changes
@@ -755,6 +761,11 @@ if new_database :
 	for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
 		set_data_density(integrand_name, density_name)
 	#
+	# set the minimum measurement standard deviation
+	median_meas_value_cv = 1e-1
+	for integrand_name in [ 'Sincidence', 'prevalence' ] :
+		set_minimum_meas_std(integrand_name, median_meas_value_cv)
+	#
 	# take prevalence out of fit
 	hold_out       = 1
 	integrand_name = 'prevalence'
@@ -771,7 +782,19 @@ if new_database :
 	# fit both
 	system_command([ 'dismod_at', database, 'fit', 'both'])
 	#
-	# predict fit_var
+	# set_start_var = fit_var
+	table_name = 'fit_var'
+	set_start_var(table_name)
+	#
+	# put prevalence data back in the fit
+	hold_out       = 1
+	integrand_name = 'prevalence'
+	hold_out_data(integrand_name, hold_out)
+	#
+	# fit both
+	system_command([ 'dismod_at', database, 'fit', 'both'])
+	#
+	# predict fit_var (for plot_predict)
 	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
 #
 for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
