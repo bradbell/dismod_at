@@ -17,8 +17,8 @@ original_database  = 'ihme_db/dismod-iota-decimated.db'
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
-# create new smplified database and fit it (otheriwse just run plotitng)
-new_fit            = True
+# create new smplified database including fit (otheriwse just run plotitng)
+new_database       = False
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -40,7 +40,7 @@ if os.path.isdir(sandbox) :
 import dismod_at
 #
 # database
-if new_fit :
+if new_database :
 	shutil.copyfile(original_database, database)
 # ===========================================================================
 # General Purpose Utilities
@@ -116,12 +116,11 @@ table_name = 'covariate'
 table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
 # ============================================================================
-# Routines that fit and display results
+# Ploting Routines
 # ============================================================================
-#
-#
-# plot_integrand
-def plot_integrand(integrand_name) :
+# ----------------------------------------------------------------------------
+# plot_data
+def plot_data(integrand_name) :
 	# directory where plots will be stored
 	index = database.rfind('/')
 	if index < 0 :
@@ -145,7 +144,6 @@ def plot_integrand(integrand_name) :
 	this_integrand_id = table_name2id(
 		integrand_table, 'integrand', integrand_name
 	)
-	#
 	#
 	n_list                  = 0
 	avg_integrand_list      = list()
@@ -220,7 +218,8 @@ def plot_integrand(integrand_name) :
 	r_zero_two = [ 0.0, 0.0   ]
 	r_min_two  = [r_min, r_min]
 	#
-	markersize = n_list * [ 1 ]
+	point_size  = numpy.array( n_list * [ 1 ] )
+	marker_size = numpy.array( n_list * [ 5 ] )
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
@@ -236,28 +235,117 @@ def plot_integrand(integrand_name) :
 		#
 		pyplot.subplot(3, 1, 1)
 		y =  meas_value
-		pyplot.scatter(x, y, marker='.', color='k', s = markersize)
+		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
 		pyplot.ylabel(integrand_name)
 		pyplot.yscale("log")
-		pyplot.plot(x_two, y_max_two, linestyle='-', color='k')
-		pyplot.plot(x_two, y_min_two, linestyle='-', color='k')
+		for limit in [ y_max, y_min ] :
+			flag = y == limit
+			size = marker_size[flag]
+			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
 		#
 		pyplot.subplot(3, 1, 2)
 		y = avg_integrand
-		pyplot.scatter(x, y, marker='.', color='k', s = markersize)
+		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
 		pyplot.ylabel('model')
 		pyplot.yscale("log")
-		pyplot.plot(x_two, y_max_two, linestyle='-', color='k')
-		pyplot.plot(x_two, y_min_two, linestyle='-', color='k')
+		for limit in [ y_max, y_min ] :
+			flag = y == limit
+			size = marker_size[flag]
+			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
 		#
 		pyplot.subplot(3, 1, 3)
 		y = weighted_residual
-		pyplot.scatter(x, y, marker='.', color='k', s = markersize)
-		pyplot.plot(x_two, r_max_two,  linestyle='-', color='k')
+		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
 		pyplot.plot(x_two, r_zero_two, linestyle='-', color='k')
-		pyplot.plot(x_two, r_min_two,  linestyle='-', color='k')
 		pyplot.ylabel('residual')
+		for limit in [ r_max, r_min ] :
+			flag = y == limit
+			size = marker_size[flag]
+			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
 		#
+		pyplot.xlabel(x_name)
+		pdf.savefig( fig )
+	#
+	pdf.close()
+# ----------------------------------------------------------------------------
+# plot_predict
+def plot_predict() :
+	# directory where plots will be stored
+	index = database.rfind('/')
+	if index < 0 :
+		directory = '.'
+	else :
+		directory = database[0 : index]
+	#
+	table_name = 'avgint'
+	(avgint_table, col_name, col_type) = get_table(table_name)
+	#
+	table_name = 'predict'
+	(predict_table, col_name, col_type) = get_table(table_name)
+	#
+	integrand_id_info = dict()
+	for predict_row in predict_table :
+		avgint_id      = predict_row['avgint_id']
+		avg_integrand  = predict_row['avg_integrand']
+		#
+		row = avgint_table[avgint_id]
+		#
+		integrand_id   = row['integrand_id']
+		if integrand_id not in integrand_id_info :
+			info = dict()
+			info['age']           = list()
+			info['time']          = list()
+			info['node']          = list()
+			info['index']         = list()
+			info['avg_integrand'] = list()
+		else :
+			info = integrand_id_info[integrand_id]
+		#
+		age  = ( row['age_lower'] + row['age_upper'] ) / 2.0
+		info['age'].append( age )
+		#
+		time = ( row['time_lower'] + row['time_upper'] ) / 2.0
+		info['time'].append(time)
+		#
+		node_id    = row['node_id']
+		info['node'].append( node_id )
+		#
+		index         = len( info['index'] )
+		info['index'].append( index )
+		#
+		info['avg_integrand'].append( avg_integrand )
+		#
+		integrand_id_info[integrand_id] = info
+	#
+	integrand_id_list  = integrand_id_info.keys()
+	n_predict          = len( predict_table )
+	n_integrand        = len( integrand_id_list )
+	n_per_integrand    = int( n_predict / n_integrand )
+	#
+	point_size  =  n_per_integrand * [ 1 ]
+	#
+	from matplotlib import pyplot
+	import matplotlib.backends.backend_pdf
+	file_name = directory + '/predict.pdf'
+	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
+	#
+	for x_name in [ 'index', 'node', 'age', 'time' ] :
+		#
+		fig, axes = pyplot.subplots(n_integrand, 1, sharex=True)
+		fig.subplots_adjust(hspace=0)
+		#
+		plot_index = 0
+		for integrand_id in integrand_id_list :
+			plot_index += 1
+			pyplot.subplot(n_integrand, 1, plot_index)
+			info = integrand_id_info[integrand_id]
+			integrand_name = integrand_table[integrand_id]['integrand_name']
+			#
+			y  = info['avg_integrand']
+			x  = info[x_name]
+			pyplot.scatter(x, y, marker='.', color='k', s=point_size )
+			pyplot.yscale("log")
+			pyplot.ylabel( integrand_name )
 		pyplot.xlabel(x_name)
 		pdf.savefig( fig )
 	#
@@ -514,6 +602,71 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 		if row['integrand_name'] == integrand_name :
 			row['minimum_meas_cv'] = minimum_meas_cv
 	put_table(table_name, table, col_name, col_type)
+#
+# avgint_table:
+# create avgint table corresponding to an integrand
+# (copies columns in data table that are not necessary in avgint table)
+def avgint_from_data(data_integrand_name, integrand_name_list) :
+	msg = 'avgint_table: data integrand = {}, integrand_name_list = {}'
+	msg = msg.format(data_integrand_name, integrand_name_list)
+	#
+	# data_integrand_id
+	table_name   = 'integrand'
+	data_integrand_id = table_name2id(
+		integrand_table, table_name, data_integrand_name
+	)
+	# integrand_id_list
+	integrand_id_list = list()
+	for integrand_name in integrand_name_list :
+		integrand_id = table_name2id(
+			integrand_table, table_name, integrand_name
+		)
+		integrand_id_list.append(integrand_id)
+	#
+	# data_table
+	table_name = 'data'
+	(data_table, data_col_name, data_col_type) = get_table(table_name)
+	#
+	# data_subset_table
+	table_name = 'data_subset'
+	(subset_table, subset_col_name, subset_col_type) = get_table(table_name)
+	#
+	# data table columns that are not in avgint table
+	exclude_list = [
+		'data_name',
+		'density_id',
+		'hold_out',
+		'meas_value',
+		'meas_std',
+		'eta',
+		'nu',
+	]
+	#
+	# avgint_col_name, avgint_col_type
+	avgint_col_name = list()
+	avgint_col_type = list()
+	for i in range( len( data_col_name ) ) :
+		if data_col_name[i] not in exclude_list :
+			avgint_col_name.append( data_col_name[i] )
+			avgint_col_type.append( data_col_type[i] )
+	#
+	# avgint_table
+	avgint_table = list()
+	for row_subset in subset_table :
+		row_in  = data_table[ row_subset['data_id'] ]
+		if data_integrand_id == row_in['integrand_id'] :
+			row_out = dict()
+			for col in avgint_col_name :
+				row_out[col] = row_in[col]
+			#
+			for integrand_id in integrand_id_list :
+				row = copy.copy(row_out)
+				row['integrand_id'] = integrand_id
+				avgint_table.append( row )
+	#
+	table_name = 'avgint'
+	put_table(table_name, avgint_table, avgint_col_name, avgint_col_type)
+
 # ==========================================================================
 # Example Changes
 # ==========================================================================
@@ -551,19 +704,34 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # rate_name = 'iota'
 # constant_rate(rate_name)
 #
-# set_minumum_meas_cv
+# set_minumum_meas_cv:
 # minimum_meas_cv = 0.5
 # for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
+# #
+# set_start_var:
+# table_name = 'fit_var'
+# set_start_var(table_name)
+#
+# hold_out_data:
+# hold_out       = 0
+# integrand_name = 'prevalence'
+# hold_out_data(integrand_name, hold_out)
+#
+# set_minimum_std:
+# integrand_name   = 'prevalence'
+# minimum_meas_std = 1e-5
+# set_minimum_meas_std(integrand_name, minimum_meas_std)
 #
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
 integrand_list = [ 'Sincidence', 'mtexcess', 'prevalence' ]
-if new_fit :
+if new_database :
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
-	set_option('max_num_iter_fixed', '30')
+	set_option('max_num_iter_fixed', '100')
+	set_option('zero_sum_child_rate', 'iota chi')
 	#
 	# remove all hold hout data and data past covriate limits
 	subset_data()
@@ -595,24 +763,20 @@ if new_fit :
 	# init
 	system_command([ 'dismod_at', database, 'init'])
 	#
-	# fit both
-	system_command([ 'dismod_at', database, 'fit', 'both'])
-	#
-	# start_var = fit_var
-	table_name = 'fit_var'
-	set_start_var(table_name)
-	#
-	# put prevalence back in fit
-	hold_out       = 0
-	integrand_name = 'prevalence'
-	hold_out_data(integrand_name, hold_out)
+	# avgint_table
+	data_integrand_name = 'prevalence'
+	integrand_name_list = [ 'susceptible', 'withC', 'mtother' ]
+	avgint_from_data(data_integrand_name, integrand_name_list)
 	#
 	# fit both
 	system_command([ 'dismod_at', database, 'fit', 'both'])
+	#
+	# predict fit_var
+	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
 #
-# plot mtexcess
 for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
-	plot_integrand(integrand_name)
+	plot_data(integrand_name)
+plot_predict()
 #
 # csv files and summary
 index = database.rfind('/')
