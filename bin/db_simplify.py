@@ -8,16 +8,14 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# 2DO: Allow for covariate access by ovariate_name.
-# 2DO: Correct weight sum of weighted residuals in log case.
-# 2DO: Envforce a minimum for all the standard deviations for one integrand.
+# 2DO: Allow for covariate access by covariate_name.
 # --------------------------------------------------------------------------
 original_database  = 'ihme_db/dismod-iota-decimated.db'
 # copy of /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
-# create new smplified database including fit results (otheriwse just plot)
+# create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # If creating a new database, run fit both without and then with prevalence.
 # Should have the same value as the previous run when new_database was True.
@@ -120,7 +118,7 @@ table_name = 'covariate'
 table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
 # ============================================================================
-# Ploting Routines
+# Plotting Routines
 # ============================================================================
 # ----------------------------------------------------------------------------
 # plot_data
@@ -455,7 +453,7 @@ def remove_node_data(node_name) :
 	put_table(table_name, table_out, col_name, col_type)
 #
 # set_data_dentity:
-# for a specified intergrand, set its data density to a specified value
+# for a specified integrand, set its data density to a specified value
 def set_data_density(integrand_name, density_name) :
 	print('set_density {} {}'.format(integrand_name, density_name) )
 	#
@@ -473,7 +471,7 @@ def set_data_density(integrand_name, density_name) :
 	put_table(table_name, table, col_name, col_type)
 #
 # set_minimum_meas_std:
-# for a specified integrand, set the minimm measurement standard deviation
+# for a specified integrand, set the minimum measurement standard deviation
 # median_meas_value_cv is a multiplier for the median value for the integrand
 def set_minimum_meas_std(integrand_name, median_meas_value_cv) :
 	msg ='set {} median_meas_value_cv {}'
@@ -790,7 +788,7 @@ def avgint_from_data(data_integrand_name, integrand_name_list) :
 # rate_name = 'iota'
 # constant_rate(rate_name)
 #
-# set_minumum_meas_cv:
+# set_minimum_meas_cv:
 # minimum_meas_cv = 0.5
 # for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
@@ -816,7 +814,7 @@ if new_database :
 	reference_name  = 'median'
 	set_covariate_reference(covariate_id, reference_name)
 	#
-	# remove all hold hout data and data past covariate limits
+	# remove all hold out data and data past covariate limits
 	subset_data()
 	#
 	# subsample mtexcess (because there is way more than other data)
@@ -824,7 +822,7 @@ if new_database :
 	integrand_name = 'mtexcess'
 	subsample_data(integrand_name, stride)
 	#
-	# now further subasmple all data (for speed of testing)
+	# now further subsample all data (for speed of testing)
 	stride = 1
 	for integrand_name in integrand_list :
 		subsample_data(integrand_name, stride)
@@ -863,7 +861,7 @@ if new_database :
 	system_command([ 'dismod_at', database, 'fit', 'both'])
 	#
 	if fit_twice :
-		# save fit_var table becasue we will re-run init
+		# save fit_var table because we will re-run init
 		table_name = 'fit_var'
 		(fit_var_table, col_name, col_type) = get_table(table_name)
 		#
@@ -876,7 +874,7 @@ if new_database :
 		covariate_id = 0
 		set_mulcov_zero(covariate_id, restore_mulcov_x_0)
 		#
-		# re-run init becasue set_mul_cov_zero is lazy and does not make
+		# re-run init because set_mul_cov_zero is lazy and does not make
 		# the necessary changes to smooth_id in var table
 		system_command([ 'dismod_at', database, 'init'])
 		#
