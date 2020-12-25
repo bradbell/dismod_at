@@ -19,8 +19,8 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 database           = 'ihme_db/temp.db'
 # create new smplified database including fit results (otheriwse just plot)
 new_database       = True
-# if creating a new database, run fit both without and then with prevalence
-# Should have the same value as the previous run when new_database was true
+# If creating a new database, run fit both without and then with prevalence.
+# Should have the same value as the previous run when new_database was True.
 fit_twice          = True
 # ----------------------------------------------------------------------
 # import dismod_at
@@ -202,8 +202,8 @@ def plot_data(integrand_name) :
 	y_median    = numpy.median( meas_value)
 	y_max       = y_median * 1.5e2
 	y_min       = y_median * 1.5e-4
-	r_max       = 19.0
-	r_min       = -19.0
+	r_max       = 20.0
+	r_min       = -20.0
 	#
 	avg_integrand = numpy.maximum( avg_integrand, y_min )
 	avg_integrand = numpy.minimum( avg_integrand, y_max )
@@ -222,7 +222,7 @@ def plot_data(integrand_name) :
 	r_min_two  = [r_min, r_min]
 	#
 	point_size  = numpy.array( n_list * [ 1 ] )
-	marker_size = numpy.array( n_list * [ 5 ] )
+	marker_size = numpy.array( n_list * [ 7 ] )
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
@@ -245,6 +245,8 @@ def plot_data(integrand_name) :
 			flag = y == limit
 			size = marker_size[flag]
 			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
+		limits     = [min(x), max(x), y_min, y_max]
+		pyplot.axis(limits)
 		#
 		pyplot.subplot(3, 1, 2)
 		y = avg_integrand
@@ -255,6 +257,8 @@ def plot_data(integrand_name) :
 			flag = y == limit
 			size = marker_size[flag]
 			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
+		limits     = [min(x), max(x), y_min, y_max]
+		pyplot.axis(limits)
 		#
 		pyplot.subplot(3, 1, 3)
 		y = weighted_residual
@@ -265,6 +269,8 @@ def plot_data(integrand_name) :
 			flag = y == limit
 			size = marker_size[flag]
 			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
+		limits     = [min(x), max(x), r_min, r_max]
+		pyplot.axis(limits)
 		#
 		pyplot.xlabel(x_name)
 		pdf.savefig( fig )
@@ -810,7 +816,7 @@ if new_database :
 	reference_name  = 'median'
 	set_covariate_reference(covariate_id, reference_name)
 	#
-	# remove all hold hout data and data past covriate limits
+	# remove all hold hout data and data past covariate limits
 	subset_data()
 	#
 	# subsample mtexcess (because there is way more than other data)
@@ -819,7 +825,7 @@ if new_database :
 	subsample_data(integrand_name, stride)
 	#
 	# now further subasmple all data (for speed of testing)
-	stride = 4
+	stride = 1
 	for integrand_name in integrand_list :
 		subsample_data(integrand_name, stride)
 	#
@@ -827,13 +833,13 @@ if new_database :
 	covariate_id = 0
 	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
 	#
-	# change density to gaussian
-	density_name   = 'gaussian'
+	# change density to log_gaussian
+	density_name   = 'log_gaussian'
 	for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
 		set_data_density(integrand_name, density_name)
 	#
 	# set the minimum measurement standard deviation and cv
-	median_meas_value_cv = 1e-1
+	median_meas_value_cv = 1e-2
 	minimum_meas_cv      = 1e-1
 	for integrand_name in [ 'Sincidence', 'prevalence' ] :
 		set_minimum_meas_std(integrand_name, median_meas_value_cv)
@@ -848,6 +854,7 @@ if new_database :
 	system_command([ 'dismod_at', database, 'init'])
 	#
 	# avgint_table
+	# (must do init before this operation so data_subset table is correct)
 	data_integrand_name = 'prevalence'
 	integrand_name_list = [ 'susceptible', 'withC', 'mtother' ]
 	avgint_from_data(data_integrand_name, integrand_name_list)
@@ -869,7 +876,7 @@ if new_database :
 		covariate_id = 0
 		set_mulcov_zero(covariate_id, restore_mulcov_x_0)
 		#
-		# re-run init becasue set_mul_cov_zero is lazy and did not make
+		# re-run init becasue set_mul_cov_zero is lazy and does not make
 		# the necessary changes to smooth_id in var table
 		system_command([ 'dismod_at', database, 'init'])
 		#
@@ -890,14 +897,13 @@ for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
 	plot_data(integrand_name)
 plot_predict()
 #
-# csv files and summary
+# db2cvs
 index = database.rfind('/')
 if index < 0 :
 	directory = '.'
 else :
 	directory = database[0 : index]
 system_command( [ 'dismodat.py',  database, 'db2csv' ] )
-system_command( [ 'bin/csv_summary.py',  directory ] )
 # ----------------------------------------------------------------------
 print('db_simplify.py: OK')
 sys.exit(0)
