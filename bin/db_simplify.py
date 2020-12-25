@@ -18,9 +18,10 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new smplified database including fit results (otheriwse just plot)
-new_database = True
+new_database       = True
 # if creating a new database, run fit both without and then with prevalence
-fit_twice = False
+# Should have the same value as the previous run when new_database was true
+fit_twice          = True
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -549,7 +550,7 @@ def set_covariate_reference(covariate_id, reference_name) :
 # set_mulcov_zero:
 # set all of the multipliers for a specified covariate to zero without
 # changing the order or size of the var table
-def set_mulcov_zero(covariate_id) :
+def set_mulcov_zero(covariate_id, restore= None) :
 	print( 'set_mulcov_zero x_{}'.format(covariate_id) )
 	#
 	table_name = 'mulcov'
@@ -560,7 +561,17 @@ def set_mulcov_zero(covariate_id) :
 	#
 	table_name = 'smooth_grid'
 	(grid_table, grid_col_name, grid_col_type) = get_table(table_name)
-	#
+	# -------------------------------------------------------------------------
+	if restore is not None :
+		for (mulcov_id, group_smooth_id, subgroup_smooth_id) in restore :
+			row = mulcov_table[ mulcov_id ]
+			assert row['covariate_id'] == covariate_id
+			row['group_smooth_id']     = group_smooth_id
+			row['subgroup_smooth_id']  = subgroup_smooth_id
+		#
+		put_table('mulcov',  mulcov_table, mulcov_col_name, mulcov_col_type)
+		return None
+	# -------------------------------------------------------------------------
 	def new_zero_smooth_id(smooth_id) :
 		if smooth_id is None :
 			return None
@@ -580,17 +591,20 @@ def set_mulcov_zero(covariate_id) :
 				new_row['const_value']    = 0.0
 				grid_table.append( new_row )
 		return new_smooth_id
-	#
-	for row  in  mulcov_table :
+	# -------------------------------------------------------------------------
+	restore = list()
+	for (mulcov_id, row)  in  enumerate( mulcov_table ) :
 		if row['covariate_id'] == covariate_id :
-			smooth_id                 = row['group_smooth_id']
-			row['group_smooth_id']    = new_zero_smooth_id(smooth_id)
-			smooth_id                 = row['subgroup_smooth_id']
-			row['subgroup_smooth_id'] = new_zero_smooth_id(smooth_id)
+			group_smooth_id           = row['group_smooth_id']
+			row['group_smooth_id']    = new_zero_smooth_id(group_smooth_id)
+			subgroup_smooth_id        = row['subgroup_smooth_id']
+			row['subgroup_smooth_id'] = new_zero_smooth_id(subgroup_smooth_id)
+			restore.append( (mulcov_id, group_smooth_id, subgroup_smooth_id) )
 	#
 	put_table('mulcov',      mulcov_table, mulcov_col_name, mulcov_col_type)
 	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
 	put_table('smooth_grid', grid_table,   grid_col_name,   grid_col_type)
+	return restore
 #
 # constant_rate:
 # Set a specified rate to be constant by using one of its parent priors
@@ -660,21 +674,6 @@ def set_option(name, value) :
 	system_command( [
 		'dismod_at',  database, 'set', 'option', name , value
 	] )
-#
-# set_start_var:
-def set_start_var(table_name) :
-	if table_name != 'fit_var' :
-		msg = 'set_start_var: table name is not fit_var'
-		sys.exit(msg)
-	(fit_var_table, col_name, col_type)   = get_table(table_name)
-	table_name = 'start_var'
-	#
-	(start_var_table, col_name, col_type) = get_table(table_name)
-	for var_id in range( len(start_var_table) ) :
-		row_start = start_var_table[var_id]
-		row_fit   = fit_var_table[var_id]
-		row_start['start_var_value'] = row_fit['fit_var_value']
-	put_table(table_name, start_var_table, col_name, col_type)
 #
 # set_minimum_meas_cv:
 # set the minimum cv for a specified integrand
@@ -790,10 +789,6 @@ def avgint_from_data(data_integrand_name, integrand_name_list) :
 # for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 #
-# set_start_var:
-# table_name = 'fit_var'
-# set_start_var(table_name)
-#
 # hold_out_data:
 # hold_out       = 0
 # integrand_name = 'prevalence'
@@ -824,13 +819,13 @@ if new_database :
 	subsample_data(integrand_name, stride)
 	#
 	# now further subasmple all data (for speed of testing)
-	stride = 10
+	stride = 4
 	for integrand_name in integrand_list :
 		subsample_data(integrand_name, stride)
 	#
-	# constrain all covariate multipliers to be zero
-	for covariate_id in range( len(covariate_table) ) :
-		set_mulcov_zero(covariate_id)
+	# constrain all x_0 covariate multipliers to be zero
+	covariate_id = 0
+	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
 	#
 	# change density to gaussian
 	density_name   = 'gaussian'
@@ -861,15 +856,29 @@ if new_database :
 	system_command([ 'dismod_at', database, 'fit', 'both'])
 	#
 	if fit_twice :
-		#
-		# set_start_var = fit_var
+		# save fit_var table becasue we will re-run init
 		table_name = 'fit_var'
-		set_start_var(table_name)
+		(fit_var_table, col_name, col_type) = get_table(table_name)
 		#
 		# put prevalence data back in the fit
 		hold_out       = 1
 		integrand_name = 'prevalence'
 		hold_out_data(integrand_name, hold_out)
+		#
+		# remove constraint on x_0 covariate multipliers
+		covariate_id = 0
+		set_mulcov_zero(covariate_id, restore_mulcov_x_0)
+		#
+		# re-run init becasue set_mul_cov_zero is lazy and did not make
+		# the necessary changes to smooth_id in var table
+		system_command([ 'dismod_at', database, 'init'])
+		#
+		# set_start_var equal to fit_var from previous fit
+		table_name = 'start_var'
+		(start_var_table, col_name, col_type) = get_table(table_name)
+		for (var_id, row) in enumerate(start_var_table) :
+			row['start_var_value'] = fit_var_table[var_id]['fit_var_value']
+		put_table(table_name, start_var_table, col_name, col_type)
 		#
 		# fit both
 		system_command([ 'dismod_at', database, 'fit', 'both'])
