@@ -10,8 +10,7 @@
 # ---------------------------------------------------------------------------
 # 2DO: Allow for covariate access by covariate_name.
 # --------------------------------------------------------------------------
-original_database  = 'ihme_db/dismod-iota-decimated.db'
-# copy of /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db
+# Chron's disease: /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
