@@ -18,7 +18,9 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new smplified database including fit results (otheriwse just plot)
-new_database       = True
+new_database = True
+# if creating a new database, run fit both without and then with prevalence
+fit_twice = False
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -197,7 +199,7 @@ def plot_data(integrand_name) :
 	index             = numpy.array( index_list )
 	#
 	y_median    = numpy.median( meas_value)
-	y_max       = y_median * 1e2
+	y_max       = y_median * 1.5e2
 	y_min       = y_median * 1.5e-4
 	r_max       = 19.0
 	r_min       = -19.0
@@ -387,26 +389,27 @@ def subset_data() :
 # subsample_data:
 # for a specified integrand, only sample one row in stride
 def subsample_data(integrand_name, stride) :
-	print( "subsample_data {} stride = {}".format(integrand_name, stride) )
 	#
-	counter        = 0
-	subsample_integrand_id = None
-	for integrand_id in range( len(integrand_table) ) :
-		row = integrand_table[integrand_id]
-		if row['integrand_name'] == integrand_name :
-			subsample_integrand_id = integrand_id
+	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
+	#
 	table_name = 'data'
 	(table_in, col_name, col_type) = get_table(table_name)
+	#
+	count_in  = 0;
+	count_out = 0;
 	table_out = list()
 	for row in table_in :
-		integrand_id    = row['integrand_id']
-		if integrand_id != subsample_integrand_id :
+		if row['integrand_id'] != integrand_id :
 			table_out.append(row)
 		else :
-			counter += 1
-			if counter % stride == 1 :
+			if count_in % stride == 0 :
 				table_out.append(row)
+				count_out += 1
+			count_in += 1
 	put_table(table_name, table_out, col_name, col_type)
+	#
+	msg = "subsample_data {} stride = {} count_in = {} count_out = {}"
+	print( msg.format(integrand_name, stride, count_in, count_out) )
 #
 # hold_out_data:
 # for a specified integrand, set the hold_out to 0 or 1
@@ -504,6 +507,43 @@ def remove_rate(rate_name) :
 			row['parent_smooth_id'] = None
 			row['child_smooth_id']  = None
 			row['child_nslist_id']  = None
+	put_table(table_name, table, col_name, col_type)
+#
+# set_covariate_reference:
+def set_covariate_reference(covariate_id, reference_name) :
+	msg = 'set_covariate_reference: x_{} to {}'
+	print( msg.format(covariate_id, reference_name) )
+	#
+	reference_list = [ 'median', 'mean' ]
+	if reference_name not in reference_list :
+		msg = 'reference_name not one of following'
+		for r in reference_list :
+			msg += ', ' + r
+		sys.exit(msg)
+
+	#
+	table_name  = 'data'
+	(table, col_name, col_type) = get_table(table_name)
+	#
+	# covariate_value
+	key             = 'x_' + str(covariate_id)
+	covariate_value = list()
+	for row in table :
+		if row[key] is not None :
+			covariate_value = row[key]
+	#
+	if reference_name == 'median' :
+		reference = numpy.median(covariate_value)
+	elif reference_name == 'mean' :
+		reference = numpy.mean(covariate_value)
+	else :
+		assert False
+	#
+	table_name  = 'covariate'
+	(table, col_name, col_type) = get_table(table_name)
+	#
+	table[covariate_id]['reference'] = reference
+	#
 	put_table(table_name, table, col_name, col_type)
 #
 # set_mulcov_zero:
@@ -769,6 +809,12 @@ if new_database :
 	set_option('max_num_iter_fixed', '100')
 	set_option('zero_sum_child_rate', 'iota chi')
 	#
+	# set reference value for covariates to median
+	# (must do this before subset_data)
+	covariate_id    = 0
+	reference_name  = 'median'
+	set_covariate_reference(covariate_id, reference_name)
+	#
 	# remove all hold hout data and data past covriate limits
 	subset_data()
 	#
@@ -814,17 +860,19 @@ if new_database :
 	# fit both
 	system_command([ 'dismod_at', database, 'fit', 'both'])
 	#
-	# set_start_var = fit_var
-	table_name = 'fit_var'
-	set_start_var(table_name)
-	#
-	# put prevalence data back in the fit
-	hold_out       = 1
-	integrand_name = 'prevalence'
-	hold_out_data(integrand_name, hold_out)
-	#
-	# fit both
-	system_command([ 'dismod_at', database, 'fit', 'both'])
+	if fit_twice :
+		#
+		# set_start_var = fit_var
+		table_name = 'fit_var'
+		set_start_var(table_name)
+		#
+		# put prevalence data back in the fit
+		hold_out       = 1
+		integrand_name = 'prevalence'
+		hold_out_data(integrand_name, hold_out)
+		#
+		# fit both
+		system_command([ 'dismod_at', database, 'fit', 'both'])
 	#
 	# predict fit_var (for plot_predict)
 	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
