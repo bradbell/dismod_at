@@ -30,6 +30,8 @@ $spell
     std
 	modversion
 	messaging
+	Chron's
+	checkpointing
 $$
 $navigate%
 	Up%Location%
@@ -47,7 +49,15 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2020$$
 
 $head 12-26$$
+$list number$$
 Change $code bin/db_simplify.py$$ from a Chron's Disease to a Diabetes case.
+$lnext
+Add a $cref/log density/wish_list/Log Density/$$ item and a
+$cref/speed/wish_list/Speed/$$ item to the wish list.
+Remove the checkpointing item
+,and change the conditional item heading to
+$cref/rate_case/wish_list/ODE Solution/rate_case/$$.
+$lend
 
 $head 12-22$$
 Advance to cppad_mixed-20201222.

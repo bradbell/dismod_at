@@ -367,8 +367,7 @@ $lend
 $head 09-21$$
 $list number$$
 The
-$cref/conditionals/wish_list/ODE Solution/Conditionals/$$ and
-$cref/checkpointing/wish_list/ODE Solution/Checkpointing/$$
+$cref/rate_case/wish_list/ODE Solution/rate_case/$$ and checkpointing
 wish list items were under the csv2db Command heading.
 This was a mistake and they have been moved to be under the
 ODE Solution heading.

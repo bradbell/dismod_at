@@ -33,6 +33,26 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Speed$$
+The CppADCodeGen package compiles CppAD code.
+While the compilation takes time, the resulting derivative evaluations
+are much faster; see
+$href%https://coin-or.github.io/CppAD/doc/speed_cppadcg.htm%speed-cppadcg%$$.
+Perhaps it is possible to make certain calculations; e.g.,
+the ODE solution an CppAD atomic function that is evaluated using
+CppADCodeGen code.
+
+$head Log Density$$
+Currently the log densities transform the standard deviation to log space; see
+$cref/
+	log-transformed standard deviation/
+	statistic/
+	Log-Transformed Standard Deviation, sigma
+/$$.
+It would be much simpler, and provide more control, to have a separate
+standard deviation that is used for log densities; e.g.,
+in the $cref data_table$$ table it could be called $icode log_std$$.
+
 $head Bound Constraints$$
 $list number$$
 Currently the user must convert active bound constraints to equality
@@ -48,8 +68,7 @@ Note that there is some discussion of bounds in the
 $cref/simulating priors/wish_list/Simulating Priors/$$ wish list item below.
 $lend
 
-
-$head Random Effect$$
+$head Laplace Random Effect$$
 The marginal likelihood for Laplace random effects is smooth,
 because the model for the data is smooth w.r.t. the random effects.
 Hence, it is possible to extend dismod_at to include Laplace random effect.
@@ -214,21 +233,13 @@ this can result in exponential overflow and infinity or nan.
 It is possible to redo the calculations in case three to properly
 handle this condition.
 
-$subhead Conditionals$$
+$subhead rate_case$$
 It is now possible to use conditional expressions in the ODE solution
 (CppAD this will now work properly these conditionals
 and two levels of AD and revere mode).
 This change would remove the need for the
 $cref/rate_case/option_table/rate_case/$$ option.
 Note that this will also work with checkpointing.
-
-$subhead Checkpointing$$
-It should greatly reduce memory if we use
-CppAD checkpointing of an ODE that has been
-extended to include derivatives with respect to parameters; see
-$href%http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm
-	%checkpoint_extended_ode
-%$$.
 
 $head Command Diagrams$$
 It would be good to give a data flow diagram for each command
