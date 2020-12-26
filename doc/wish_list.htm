@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list bound constraints random effect immunity simulating priors warm starting optimizer multi-threading user examples meas_std lagrange multipliers censored laplace create_database ode solution prevalence large excess mortality conditionals checkpointing command diagrams real world example point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list speed log density bound constraints laplace random effect immunity simulating priors warm starting optimizer multi-threading user examples meas_std lagrange multipliers censored create_database ode solution prevalence large excess mortality rate_case command diagrams real world example point tracing optimization windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -62,8 +62,10 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
+<br><a href="wish_list.htm#Speed" target="_top">Speed</a>
+<br><a href="wish_list.htm#Log Density" target="_top">Log&nbsp;Density</a>
 <br><a href="wish_list.htm#Bound Constraints" target="_top">Bound&nbsp;Constraints</a>
-<br><a href="wish_list.htm#Random Effect" target="_top">Random&nbsp;Effect</a>
+<br><a href="wish_list.htm#Laplace Random Effect" target="_top">Laplace&nbsp;Random&nbsp;Effect</a>
 <br><a href="wish_list.htm#Immunity" target="_top">Immunity</a>
 <br><a href="wish_list.htm#Simulating Priors" target="_top">Simulating&nbsp;Priors</a>
 <br><a href="wish_list.htm#Warm Starting Optimizer" target="_top">Warm&nbsp;Starting&nbsp;Optimizer</a>
@@ -76,14 +78,40 @@ A:active { color : purple }
 <br><a href="wish_list.htm#ODE Solution" target="_top">ODE&nbsp;Solution</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Prevalence ODE" target="_top">Prevalence&nbsp;ODE</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Large Excess Mortality" target="_top">Large&nbsp;Excess&nbsp;Mortality</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Conditionals" target="_top">Conditionals</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.Checkpointing" target="_top">Checkpointing</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="wish_list.htm#ODE Solution.rate_case" target="_top">rate_case</a>
 <br><a href="wish_list.htm#Command Diagrams" target="_top">Command&nbsp;Diagrams</a>
 <br><a href="wish_list.htm#Real World Example" target="_top">Real&nbsp;World&nbsp;Example</a>
 <br><a href="wish_list.htm#Random Starting Point" target="_top">Random&nbsp;Starting&nbsp;Point</a>
 <br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
+<b><big><a name="Speed" id="Speed">Speed</a></big></b>
+<br>
+The CppADCodeGen package compiles CppAD code.
+While the compilation takes time, the resulting derivative evaluations
+are much faster; see
+<a href="https://coin-or.github.io/CppAD/doc/speed_cppadcg.htm" target="_top"><span style='white-space: nowrap'>speed-cppadcg</span></a>
+.
+Perhaps it is possible to make certain calculations; e.g.,
+the ODE solution an CppAD atomic function that is evaluated using
+CppADCodeGen code.
+
+<br>
+<br>
+<b><big><a name="Log Density" id="Log Density">Log Density</a></big></b>
+<br>
+Currently the log densities transform the standard deviation to log space; see
+<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
+.
+It would be much simpler, and provide more control, to have a separate
+standard deviation that is used for log densities; e.g.,
+in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+ table it could be called 
+<code><i><font color="black"><span style='white-space: nowrap'>log_std</span></font></i></code>
+.
+
+<br>
+<br>
 <b><big><a name="Bound Constraints" id="Bound Constraints">Bound Constraints</a></big></b>
 
 <ol type="1"><li>
@@ -103,10 +131,9 @@ Note that there is some discussion of bounds in the
 </li></ol>
 
 
-
 <br>
 <br>
-<b><big><a name="Random Effect" id="Random Effect">Random Effect</a></big></b>
+<b><big><a name="Laplace Random Effect" id="Laplace Random Effect">Laplace Random Effect</a></big></b>
 <br>
 The marginal likelihood for Laplace random effects is smooth,
 because the model for the data is smooth w.r.t. the random effects.
@@ -387,7 +414,7 @@ handle this condition.
 
 <br>
 <br>
-<big><a name="ODE Solution.Conditionals" id="ODE Solution.Conditionals">Conditionals</a></big>
+<big><a name="ODE Solution.rate_case" id="ODE Solution.rate_case">rate_case</a></big>
 <br>
 It is now possible to use conditional expressions in the ODE solution
 (CppAD this will now work properly these conditionals
@@ -396,16 +423,6 @@ This change would remove the need for the
 <a href="option_table.htm#rate_case" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
  option.
 Note that this will also work with checkpointing.
-
-<br>
-<br>
-<big><a name="ODE Solution.Checkpointing" id="ODE Solution.Checkpointing">Checkpointing</a></big>
-<br>
-It should greatly reduce memory if we use
-CppAD checkpointing of an ODE that has been
-extended to include derivatives with respect to parameters; see
-<a href="http://www.coin-or.org/CppAD/Doc/checkpoint_extended_ode.cpp.htm" target="_top"><span style='white-space: nowrap'>checkpoint_extended_ode</span></a>
-.
 
 <br>
 <br>

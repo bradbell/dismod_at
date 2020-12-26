@@ -127,11 +127,32 @@ bin/run_cmake<font color="#990000">.</font>sh <font color="#993399">1</font><fon
 <i><font color="#9A1900"># change into build directory</font></i>
 echo_eval cd build
 <i><font color="#9A1900">#</font></i>
+<b><font color="#0000FF">if</font></b> which nproc <font color="#990000">&gt;&amp;</font> /dev/null
+<b><font color="#0000FF">then</font></b>
+    <font color="#009900">n_job</font><font color="#990000">=</font><font color="#009900">$(nproc)</font>
+<b><font color="#0000FF">else</font></b>
+    <font color="#009900">n_job</font><font color="#990000">=</font><font color="#009900">$(</font>sysctl -n hw<font color="#990000">.</font>ncpu<font color="#990000">)</font>
+<b><font color="#0000FF">fi</font></b>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># build dismod_at using n_jobs</font></i>
+<b><font color="#0000FF">if</font></b> <font color="#990000">!</font> make -j <font color="#009900">$n_job</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
+<b><font color="#0000FF">then</font></b>
+     echo <font color="#FF0000">"Try running the follow command in $(pwd)"</font>
+     echo <font color="#FF0000">"    make -j $n_job"</font>
+     echo <font color="#FF0000">'to see wy the build of dismod_at failed.'</font>
+     <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
+<b><font color="#0000FF">fi</font></b>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># make check, speed, and install</font></i>
 <b><font color="#0000FF">for</font></b> cmd <b><font color="#0000FF">in</font></b> check speed install
 <b><font color="#0000FF">do</font></b>
      echo <font color="#FF0000">"make $cmd 1&gt;&gt; example_install.log 2&gt;&gt; example_install.err"</font>
-     make <font color="#009900">$cmd</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
+     <b><font color="#0000FF">if</font></b> <font color="#990000">!</font> make <font color="#009900">$cmd</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
+     <b><font color="#0000FF">then</font></b>
+          echo <font color="#FF0000">"Try running the follow command in $(pwd)"</font>
+          echo <font color="#FF0000">"    make $cmd"</font>
+          echo <font color="#FF0000">'to see wy the check of dismod_at failed.'</font>
+     <b><font color="#0000FF">fi</font></b>
 <b><font color="#0000FF">done</font></b>
 cd <font color="#990000">..</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>

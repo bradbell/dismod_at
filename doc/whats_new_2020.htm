@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 12-17 11-24 11-22 11-23 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 12-26 12-22 12-17 11-24 11-22 11-23 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>12-26</option>
+<option>12-22</option>
 <option>12-17</option>
 <option>11-24</option>
 <option>11-22</option>
@@ -115,6 +117,37 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="12-26" id="12-26">12-26</a></big></b>
+
+<ol type="1"><li>
+Change <code><font color="blue">bin/db_simplify.py</font></code> from a Chron's Disease to a Diabetes case.
+</li><li>
+
+Add a <a href="wish_list.htm#Log Density" target="_top"><span style='white-space: nowrap'>log&nbsp;density</span></a>
+ item and a
+<a href="wish_list.htm#Speed" target="_top"><span style='white-space: nowrap'>speed</span></a>
+ item to the wish list.
+Remove the checkpointing item
+,and change the conditional item heading to
+<a href="wish_list.htm#ODE Solution.rate_case" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="12-22" id="12-22">12-22</a></big></b>
+<br>
+Advance to cppad_mixed-20201222.
+This improves the error messaging during the install of
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed.sh</span></a>
+.
+In addition, this new version avoids ipopt creating of the file
+<code><font color="blue">debug.out</font></code> (when <a href="run_cmake.sh.htm#build_type" target="_top"><span style='white-space: nowrap'>build_type</span></a>
+ is debug).
+
+<br>
 <br>
 <b><big><a name="12-17" id="12-17">12-17</a></big></b>
 
