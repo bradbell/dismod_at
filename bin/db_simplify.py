@@ -10,15 +10,15 @@
 # ---------------------------------------------------------------------------
 # 2DO: Allow for covariate access by covariate_name.
 # --------------------------------------------------------------------------
-# Chron's disease: /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db
+# Diabetes: /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
-# If creating a new database, run fit both without and then with prevalence.
+# If creating a new database, run fit both without and then with ode data.
 # Should have the same value as the previous run when new_database was True.
-fit_twice          = True
+fit_ode            = True
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -28,6 +28,7 @@ import shutil
 import subprocess
 import copy
 import numpy
+import random
 #
 if sys.argv[0] != 'bin/db_simplify.py' :
 	msg = 'bin/db_simplify.py must be executed from its parent directory'
@@ -117,8 +118,20 @@ table_name = 'covariate'
 table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
 # ============================================================================
-# Plotting Routines
+# Utilities that depend on data tables
 # ============================================================================
+# ----------------------------------------------------------------------------
+def get_integrand_list() :
+	table_name = 'data'
+	(table, col_name, col_type) = get_table(table_name)
+	integrand_set = set()
+	for row in table :
+		integrand_set.add( row['integrand_id'] )
+	integrand_list = list()
+	for integrand_id in integrand_set :
+		integrand_name = integrand_table[integrand_id]['integrand_name']
+		integrand_list.append( integrand_name )
+	return integrand_list
 # ----------------------------------------------------------------------------
 # plot_data
 def plot_data(integrand_name) :
@@ -197,8 +210,8 @@ def plot_data(integrand_name) :
 	index             = numpy.array( index_list )
 	#
 	y_median    = numpy.median( meas_value)
-	y_max       = y_median * 1.5e2
-	y_min       = y_median * 1.5e-4
+	y_max       = y_median * 1e+3
+	y_min       = y_median * 1e-3
 	r_max       = 20.0
 	r_min       = -20.0
 	#
@@ -392,6 +405,8 @@ def subset_data() :
 #
 # subsample_data:
 # for a specified integrand, only sample one row in stride
+# This does random sampling that can be seeded by calling random.seed.
+# The origianl order of the data is preserved by sorting the subsample.
 def subsample_data(integrand_name, stride) :
 	#
 	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
@@ -399,21 +414,43 @@ def subsample_data(integrand_name, stride) :
 	table_name = 'data'
 	(table_in, col_name, col_type) = get_table(table_name)
 	#
-	count_in  = 0;
-	count_out = 0;
+	# indices for this integrand
+	count_list = list()
+	count      = 0
+	for row in table_in :
+		if row['integrand_id'] == integrand_id :
+			count_list.append(count)
+			count += 1
+	n_sample_in = count
+	#
+	# subsample of indices for this integrand
+	if stride == 1 :
+		n_sample_out = n_sample_in
+	else :
+		n_sample_out = int( n_sample_in / stride + 1.0 )
+		count_list = random.sample(count_list,  n_sample_out)
+		count_list = sorted( count_list )
+	#
+	# sample the integrand
+	index  = 0
+	count  = 0
 	table_out = list()
 	for row in table_in :
 		if row['integrand_id'] != integrand_id :
 			table_out.append(row)
 		else :
-			if count_in % stride == 0 :
-				table_out.append(row)
-				count_out += 1
-			count_in += 1
+			if index < n_sample_out :
+				if count_list[index] == count :
+					table_out.append(row)
+					index += 1
+			count += 1
+	assert index == n_sample_out
+	assert count == n_sample_in
+	#
 	put_table(table_name, table_out, col_name, col_type)
 	#
-	msg = "subsample_data {} stride = {} count_in = {} count_out = {}"
-	print( msg.format(integrand_name, stride, count_in, count_out) )
+	msg = "subsample_data {} stride = {} n_sample in = {} out = {}"
+	print( msg.format(integrand_name, stride, n_sample_in, n_sample_out) )
 #
 # hold_out_data:
 # for a specified integrand, set the hold_out to 0 or 1
@@ -454,7 +491,7 @@ def remove_node_data(node_name) :
 # set_data_dentity:
 # for a specified integrand, set its data density to a specified value
 def set_data_density(integrand_name, density_name) :
-	print('set_density {} {}'.format(integrand_name, density_name) )
+	msg = 'set_data_density {} {}'.format(integrand_name, density_name)
 	#
 	# integrand_id
 	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
@@ -462,16 +499,19 @@ def set_data_density(integrand_name, density_name) :
 	# density_id
 	density_id = table_name2id(density_table, 'density', density_name)
 	#
+	# table
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
+	#
 	for row in table :
 		if row['integrand_id'] == integrand_id :
 			row['density_id'] = density_id
+	#
 	put_table(table_name, table, col_name, col_type)
 #
 # set_minimum_meas_std:
-# for a specified integrand, set the minimum measurement standard deviation
-# median_meas_value_cv is a multiplier for the median value for the integrand
+# Set the minimum measurement standard deviation or an integrand using
+# median_meas_value_cv, a multiplier for the median value for the integrand.
 def set_minimum_meas_std(integrand_name, median_meas_value_cv) :
 	msg ='set {} median_meas_value_cv {}'
 	msg = msg.format(integrand_name, median_meas_value_cv)
@@ -495,6 +535,7 @@ def set_minimum_meas_std(integrand_name, median_meas_value_cv) :
 	for row in sub_table :
 		if row['meas_std'] < minimum_meas_std :
 			row['meas_std'] = minimum_meas_std
+	#
 	put_table(table_name, table, col_name, col_type)
 # ============================================================================
 # Routines that Change Other Tables
@@ -762,21 +803,23 @@ def avgint_from_data(data_integrand_name, integrand_name_list) :
 # set_option('tolerance_fixed',    '1e-6')
 # set_option('max_num_iter_fixed', '30')
 #
+# set reference value for covariates to median
+# (must do this before subset_data)
+# covariate_id    = 0
+# reference_name  = 'median'
+# set_covariate_reference(covariate_id, reference_name)
+#
 # subset_data:
 # subset_data()
 #
-# remove_rate:
-# for rate_name in [ 'omega', 'chi' ] :
-#	remove_rate(rate_name)
+# subsample mtexcess (because there is way more than other data)
+# stride         = 10
+# integrand_name = 'mtexcess'
+# subsample_data(integrand_name, stride)
 #
-# set_data_density:
-# density_name = 'gaussian'
-# for integrand_name in [ 'Sincidence', 'prevalence' ] :
-#	set_data_density(integrand_name, density_name)
-#
-# subsample_data:
-# stride = 10
-# for integrand_name in [ 'Sincidence', 'prevalence' ] :
+# now further subsample all data (for speed of testing)
+# stride = 5
+# for integrand_name in integrand_list :
 #	subsample_data(integrand_name, stride)
 #
 # remove_node_data:
@@ -787,65 +830,87 @@ def avgint_from_data(data_integrand_name, integrand_name_list) :
 # rate_name = 'iota'
 # constant_rate(rate_name)
 #
-# set_minimum_meas_cv:
-# minimum_meas_cv = 0.5
-# for integrand_name in [ 'Sincidence', 'prevalence', 'mtexcess' ] :
+# constrain all x_0 covariate multipliers to be zero
+# covariate_id = 0
+# restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
+#
+# remove_rate:
+# for rate_name in [ 'omega', 'chi' ] :
+#	remove_rate(rate_name)
+#
+# set_data_density:
+# density_name = 'gaussian'
+# for integrand_name in [ 'Sincidence', 'prevalence' ] :
+#	set_data_density(integrand_name, density_name)
+#
+# set the minimum measurement standard deviation and cv
+# median_meas_value_cv = 1e-2
+# minimum_meas_cv      = 1e-1
+# for integrand_name in [ 'Sincidence', 'prevalence' ] :
+#	set_minimum_meas_std(integrand_name, median_meas_value_cv)
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 #
 # hold_out_data:
-# hold_out       = 0
+# hold_out       = 1
 # integrand_name = 'prevalence'
 # hold_out_data(integrand_name, hold_out)
+#
+# avgint_table
+# (must do init before this operation so data_subset table is correct)
+# data_integrand_name = 'prevalence'
+# integrand_name_list = [ 'susceptible', 'withC', 'mtother' ]
+# avgint_from_data(data_integrand_name, integrand_name_list)
 #
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
-integrand_list = [ 'Sincidence', 'mtexcess', 'prevalence' ]
+# ode_integrand_list
+ode_integrand_list = [
+	'prevalence', 'Tincidence', 'mtspecific', 'mtall', 'mtstandard'
+]
+# seed used by subsample_data (None means use system clock)
+seed  = None
+random.seed(seed)
 if new_database :
+	#
+	# remove all hold out data and data past covariate limits
+	subset_data()
+	#
+	# integrand_list
+	integrand_list = get_integrand_list()
+	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
 	set_option('max_num_iter_fixed', '100')
 	set_option('zero_sum_child_rate', 'iota chi')
 	#
-	# set reference value for covariates to median
-	# (must do this before subset_data)
-	covariate_id    = 0
-	reference_name  = 'median'
-	set_covariate_reference(covariate_id, reference_name)
-	#
-	# remove all hold out data and data past covariate limits
-	subset_data()
-	#
 	# subsample mtexcess (because there is way more than other data)
-	stride = 10
-	integrand_name = 'mtexcess'
-	subsample_data(integrand_name, stride)
+	if 'mtexcess' in integrand_list :
+		stride         = 10
+		integrand_name = 'mtexcess'
+		subsample_data(integrand_name, stride)
 	#
 	# now further subsample all data (for speed of testing)
-	stride = 1
+	stride = 20
 	for integrand_name in integrand_list :
 		subsample_data(integrand_name, stride)
+	#
+	# set the minimum measurement standard deviation and cv
+	median_meas_value_cv = 1e-2
+	minimum_meas_cv      = 1e-1
+	for integrand_name in integrand_list :
+		set_minimum_meas_std(integrand_name, median_meas_value_cv)
+		set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 	#
 	# constrain all x_0 covariate multipliers to be zero
 	covariate_id = 0
 	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
 	#
-	# change density to log_gaussian
-	density_name   = 'log_gaussian'
-	for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
-		set_data_density(integrand_name, density_name)
-	#
-	# set the minimum measurement standard deviation and cv
-	median_meas_value_cv = 1e-2
-	minimum_meas_cv      = 1e-1
-	for integrand_name in [ 'Sincidence', 'prevalence' ] :
-		set_minimum_meas_std(integrand_name, median_meas_value_cv)
-		set_minimum_meas_cv(integrand_name, minimum_meas_cv)
-	#
-	# take prevalence out of fit
-	hold_out       = 1
-	integrand_name = 'prevalence'
-	hold_out_data(integrand_name, hold_out)
+	# take ode integrands out of fit
+	for integrand_name in integrand_list :
+		if integrand_name in ode_integrand_list :
+			hold_out       = 1
+			hold_out_data(integrand_name, hold_out)
 	#
 	# init
 	system_command([ 'dismod_at', database, 'init'])
@@ -859,15 +924,16 @@ if new_database :
 	# fit both
 	system_command([ 'dismod_at', database, 'fit', 'both'])
 	#
-	if fit_twice :
+	if fit_ode :
 		# save fit_var table because we will re-run init
 		table_name = 'fit_var'
 		(fit_var_table, col_name, col_type) = get_table(table_name)
 		#
-		# put prevalence data back in the fit
-		hold_out       = 1
-		integrand_name = 'prevalence'
-		hold_out_data(integrand_name, hold_out)
+		# put ode integrands data back in the fit
+		hold_out       = 0
+		for integrand_name in integrand_list :
+			if integrand_name in ode_integrand_list :
+				hold_out_data(integrand_name, hold_out)
 		#
 		# remove constraint on x_0 covariate multipliers
 		covariate_id = 0
@@ -890,7 +956,7 @@ if new_database :
 	# predict fit_var (for plot_predict)
 	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
 #
-for integrand_name in [ 'Sincidence', 'mtexcess', 'prevalence' ] :
+for integrand_name in integrand_list :
 	plot_data(integrand_name)
 plot_predict()
 #
@@ -901,6 +967,7 @@ if index < 0 :
 else :
 	directory = database[0 : index]
 system_command( [ 'dismodat.py',  database, 'db2csv' ] )
+print('integrand_list = ', integrand_list)
 # ----------------------------------------------------------------------
 print('db_simplify.py: OK')
 sys.exit(0)
