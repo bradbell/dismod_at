@@ -53,9 +53,10 @@ It would be much simpler, and provide more control, to have a separate
 standard deviation that is used for log densities; e.g.,
 in the $cref data_table$$ table it could be called $icode log_std$$.
 The new column in the data and other tables
-would be optional, for backward compatibility.
+would be optional.
 If it is not present,
-the current method would be used for log-densities.
+the current method would be used for log-densities
+(for backward compatibility).
 
 $head Bound Constraints$$
 $list number$$
