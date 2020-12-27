@@ -15,10 +15,9 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = True
+new_database       = False
 # If creating a new database, run fit both without and then with ode data.
-# Should have the same value as the previous run when new_database was True.
-fit_ode            = True
+fit_ode            = False
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -288,7 +287,76 @@ def plot_data(integrand_name) :
 	pdf.close()
 # ----------------------------------------------------------------------------
 # plot_predict
-def plot_predict() :
+def plot_predict(covariate_integrand_name, predict_integrand_list) :
+	#-----------------------------------------------------------------------
+	# create avgint table
+	# For row in data table corresponding to covariate_integrand_name
+	#	For each integrand in the predict_integrand_list
+	#		write a row in avgint table with covariates and integrand
+	#-----------------------------------------------------------------------
+	# covariate_integrand_id
+	table_name   = 'integrand'
+	covariate_integrand_id = table_name2id(
+		integrand_table, table_name, covariate_integrand_name
+	)
+	# integrand_id_list
+	integrand_id_list = list()
+	for integrand_name in predict_integrand_list :
+		integrand_id = table_name2id(
+			integrand_table, table_name, integrand_name
+		)
+		integrand_id_list.append(integrand_id)
+	#
+	# data_table
+	table_name = 'data'
+	(data_table, data_col_name, data_col_type) = get_table(table_name)
+	#
+	# data_subset_table
+	table_name = 'data_subset'
+	(subset_table, subset_col_name, subset_col_type) = get_table(table_name)
+	#
+	# data table columns that are not in avgint table
+	exclude_list = [
+		'data_name',
+		'density_id',
+		'hold_out',
+		'meas_value',
+		'meas_std',
+		'eta',
+		'nu',
+	]
+	#
+	# avgint_col_name, avgint_col_type
+	avgint_col_name = list()
+	avgint_col_type = list()
+	for i in range( len( data_col_name ) ) :
+		if data_col_name[i] not in exclude_list :
+			avgint_col_name.append( data_col_name[i] )
+			avgint_col_type.append( data_col_type[i] )
+	#
+	# avgint_table
+	avgint_table = list()
+	for row_subset in subset_table :
+		row_in  = data_table[ row_subset['data_id'] ]
+		if covariate_integrand_id == row_in['integrand_id'] :
+			row_out = dict()
+			for col in avgint_col_name :
+				row_out[col] = row_in[col]
+			#
+			for integrand_id in integrand_id_list :
+				row = copy.copy(row_out)
+				row['integrand_id'] = integrand_id
+				avgint_table.append( row )
+	#
+	table_name = 'avgint'
+	put_table(table_name, avgint_table, avgint_col_name, avgint_col_type)
+	# ------------------------------------------------------------------------
+	# Predict for this avgint table
+	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
+	#
+	table_name = 'predict'
+	(predict_table, col_name, col_type) = get_table(table_name)
+	# ------------------------------------------------------------------------
 	# directory where plots will be stored
 	index = database.rfind('/')
 	if index < 0 :
@@ -296,18 +364,16 @@ def plot_predict() :
 	else :
 		directory = database[0 : index]
 	#
-	table_name = 'avgint'
-	(avgint_table, col_name, col_type) = get_table(table_name)
-	#
-	table_name = 'predict'
-	(predict_table, col_name, col_type) = get_table(table_name)
+	n_predict          = len( predict_table )
+	n_integrand        = len( predict_integrand_list )
+	n_per_integrand    = int( n_predict / n_integrand )
 	#
 	integrand_id_info = dict()
-	for predict_row in predict_table :
-		avgint_id      = predict_row['avgint_id']
-		avg_integrand  = predict_row['avg_integrand']
+	for (predict_id, predict_row) in enumerate(predict_table) :
+		avg_integrand = predict_row['avg_integrand']
 		#
-		row = avgint_table[avgint_id]
+		assert predict_id == predict_row['avgint_id']
+		row = avgint_table[predict_id]
 		#
 		integrand_id   = row['integrand_id']
 		if integrand_id not in integrand_id_info :
@@ -336,11 +402,6 @@ def plot_predict() :
 		#
 		integrand_id_info[integrand_id] = info
 	#
-	integrand_id_list  = integrand_id_info.keys()
-	n_predict          = len( predict_table )
-	n_integrand        = len( integrand_id_list )
-	n_per_integrand    = int( n_predict / n_integrand )
-	#
 	point_size  =  n_per_integrand * [ 1 ]
 	#
 	from matplotlib import pyplot
@@ -354,7 +415,12 @@ def plot_predict() :
 		fig.subplots_adjust(hspace=0)
 		#
 		plot_index = 0
-		for integrand_id in integrand_id_list :
+		for integrand_name in predict_integrand_list :
+			table_name = 'integrand'
+			integrand_id = table_name2id(
+				integrand_table, table_name, integrand_name
+			)
+			#
 			plot_index += 1
 			pyplot.subplot(n_integrand, 1, plot_index)
 			info = integrand_id_info[integrand_id]
@@ -730,70 +796,6 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 		if row['integrand_name'] == integrand_name :
 			row['minimum_meas_cv'] = minimum_meas_cv
 	put_table(table_name, table, col_name, col_type)
-#
-# avgint_table:
-# create avgint table corresponding to an integrand
-# (copies columns in data table that are not necessary in avgint table)
-def avgint_from_data(data_integrand_name, integrand_name_list) :
-	msg = 'avgint_table: data integrand = {}, integrand_name_list = {}'
-	msg = msg.format(data_integrand_name, integrand_name_list)
-	#
-	# data_integrand_id
-	table_name   = 'integrand'
-	data_integrand_id = table_name2id(
-		integrand_table, table_name, data_integrand_name
-	)
-	# integrand_id_list
-	integrand_id_list = list()
-	for integrand_name in integrand_name_list :
-		integrand_id = table_name2id(
-			integrand_table, table_name, integrand_name
-		)
-		integrand_id_list.append(integrand_id)
-	#
-	# data_table
-	table_name = 'data'
-	(data_table, data_col_name, data_col_type) = get_table(table_name)
-	#
-	# data_subset_table
-	table_name = 'data_subset'
-	(subset_table, subset_col_name, subset_col_type) = get_table(table_name)
-	#
-	# data table columns that are not in avgint table
-	exclude_list = [
-		'data_name',
-		'density_id',
-		'hold_out',
-		'meas_value',
-		'meas_std',
-		'eta',
-		'nu',
-	]
-	#
-	# avgint_col_name, avgint_col_type
-	avgint_col_name = list()
-	avgint_col_type = list()
-	for i in range( len( data_col_name ) ) :
-		if data_col_name[i] not in exclude_list :
-			avgint_col_name.append( data_col_name[i] )
-			avgint_col_type.append( data_col_type[i] )
-	#
-	# avgint_table
-	avgint_table = list()
-	for row_subset in subset_table :
-		row_in  = data_table[ row_subset['data_id'] ]
-		if data_integrand_id == row_in['integrand_id'] :
-			row_out = dict()
-			for col in avgint_col_name :
-				row_out[col] = row_in[col]
-			#
-			for integrand_id in integrand_id_list :
-				row = copy.copy(row_out)
-				row['integrand_id'] = integrand_id
-				avgint_table.append( row )
-	#
-	table_name = 'avgint'
-	put_table(table_name, avgint_table, avgint_col_name, avgint_col_type)
 
 # ==========================================================================
 # Example Changes
@@ -855,19 +857,16 @@ def avgint_from_data(data_integrand_name, integrand_name_list) :
 # integrand_name = 'prevalence'
 # hold_out_data(integrand_name, hold_out)
 #
-# avgint_table
-# (must do init before this operation so data_subset table is correct)
-# data_integrand_name = 'prevalence'
-# integrand_name_list = [ 'susceptible', 'withC', 'mtother' ]
-# avgint_from_data(data_integrand_name, integrand_name_list)
-#
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
-# ode_integrand_list
+# list of integrand that require ode
 ode_integrand_list = [
 	'prevalence', 'Tincidence', 'mtspecific', 'mtall', 'mtstandard'
 ]
+# list of integrands that are present in this database
+integrand_list = get_integrand_list()
+#
 # seed used by subsample_data (None means use system clock)
 seed  = None
 random.seed(seed)
@@ -876,8 +875,6 @@ if new_database :
 	# remove all hold out data and data past covariate limits
 	subset_data()
 	#
-	# integrand_list
-	integrand_list = get_integrand_list()
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
@@ -915,12 +912,6 @@ if new_database :
 	# init
 	system_command([ 'dismod_at', database, 'init'])
 	#
-	# avgint_table
-	# (must do init before this operation so data_subset table is correct)
-	data_integrand_name = 'prevalence'
-	integrand_name_list = [ 'susceptible', 'withC', 'mtother' ]
-	avgint_from_data(data_integrand_name, integrand_name_list)
-	#
 	# fit both
 	system_command([ 'dismod_at', database, 'fit', 'both'])
 	#
@@ -956,9 +947,14 @@ if new_database :
 	# predict fit_var (for plot_predict)
 	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
 #
+# plot data
 for integrand_name in integrand_list :
 	plot_data(integrand_name)
-plot_predict()
+#
+# plot prediction
+covariate_integrand_name = 'prevalence'
+predict_integrand_list   = [ 'susceptible', 'withC', 'mtother' ]
+plot_predict(covariate_integrand_name, predict_integrand_list)
 #
 # db2cvs
 index = database.rfind('/')
