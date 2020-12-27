@@ -43,6 +43,13 @@ import dismod_at
 # database
 if new_database :
 	shutil.copyfile(original_database, database)
+#
+# directory where plots are stored
+index = database.rfind('/')
+if index < 0 :
+	plot_directory = '.'
+else :
+	plot_directory = database[0 : index]
 # ===========================================================================
 # General Purpose Utilities
 # ===========================================================================
@@ -116,6 +123,18 @@ table_name = 'covariate'
 # node_table
 table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
+#
+# age_table
+table_name = 'age'
+(age_table, col_name, col_type) = get_table(table_name)
+#
+# time_table
+table_name = 'time'
+(time_table, col_name, col_type) = get_table(table_name)
+#
+# option_table
+table_name = 'option'
+(option_table, col_name, col_type) = get_table(table_name)
 # ============================================================================
 # Utilities that depend on data tables
 # ============================================================================
@@ -132,14 +151,140 @@ def get_integrand_list() :
 		integrand_list.append( integrand_name )
 	return integrand_list
 # ----------------------------------------------------------------------------
+# plot_rate
+def plot_rate(rate_name) :
+	# rate_table
+	table_name = 'rate'
+	(rate_table, col_name, col_type) = get_table(table_name)
+	#
+	# smooth_table
+	table_name = 'smooth'
+	(smooth_table, col_name, col_type) = get_table(table_name)
+	#
+	# var_table
+	table_name = 'var'
+	(var_table, col_name, col_type) = get_table(table_name)
+	#
+	# fit_var
+	table_name = 'fit_var'
+	(fit_var_table, col_name, col_type) = get_table(table_name)
+	#
+	# rate_id
+	table_name   = 'rate'
+	rate_id      = table_name2id(rate_table, table_name, rate_name)
+	#
+	#
+	# parent_node_id
+	parent_node_id = None
+	for row in option_table :
+		if row['option_name'] == 'parent_node_id' :
+			parent_node_id = row['option_value']
+		if row['option_name'] == 'parent_node_name' :
+			table_name = 'node'
+			node_name  = row['option_value']
+			parent_note_id = table_name2id(table_name, node_table, node_name)
+	if parent_node_id is None :
+		msg = 'Cannot find parent_node_id or parent_node_name in option table'
+		sys.exit(msg)
+	parent_node_id = int( parent_node_id )
+	#
+	# class for compariing an (age_id, time_id) pairs
+	class pair:
+		def __init__(self, age_id, time_id) :
+			self.age_id  = age_id
+			self.time_id = time_id
+		def __lt__(self, other) :
+			if self.age_id != other.age_id :
+				self_age   = age_table[ self.age_id ]['age']
+				other_age  = age_table[ other.age_id ]['age']
+				return self_age < other_age
+			self_time  = time_table[ self.time_id ]['time']
+			other_time = time_table[ other.time_id ]['time']
+			return self_time < other_time
+		def _eq_(self, other) :
+			equal = self.age_id == other.age_id
+			equal = equal and (self.time_id == other.time_id)
+			return equla
+		def __gt__(self, other) :
+			return __lt__(other, self)
+		def __le__(self, other) :
+			return __lt__(self, other) or __eq__(self, other)
+		def __ge__(self, other) :
+			return __lt__(other, self) or __eq__(other, self)
+		def __ne__(self, other) :
+			return not __eq__(self, other)
+	#
+	# triple_list
+	triple_list  = list()
+	smooth_id    = None
+	for (var_id, row) in enumerate(var_table) :
+		if row['var_type'] == 'rate' :
+			if row['rate_id'] == rate_id :
+				if  row['node_id'] == parent_node_id :
+					age_id  = row['age_id']
+					time_id = row['time_id']
+					triple_list.append( (age_id, time_id, var_id)  )
+					if smooth_id is None :
+						smooth_id = row['smooth_id']
+					else :
+						assert smooth_id == row['smooth_id']
+	#
+	# n_age, n_time
+	n_age  = smooth_table[smooth_id]['n_age']
+	n_time = smooth_table[smooth_id]['n_time']
+	assert len(triple_list) == n_age * n_time
+	#
+	# sort triple_list first by age and then by time
+	key = lambda triple : pair( triple[0], triple[1] )
+	triple_list = sorted(triple_list, key = key )
+	#
+	# creaate the mesghgird
+	x = numpy.zeros( (n_age, n_time), dtype = float)
+	y = numpy.zeros( (n_age, n_time), dtype = float)
+	z = numpy.zeros( (n_age, n_time), dtype = float)
+	#
+	for i in range(n_age) :
+		for j in range(n_time) :
+			k       = i * n_time + j
+			triple  = triple_list[k]
+			#
+			age_id  = triple[0]
+			time_id = triple[1]
+			var_id  = triple[2]
+			#
+			x[i, j] = age_table[age_id]['age']
+			y[i, j] = time_table[time_id]['time']
+			z[i, j] = math.log10( fit_var_table[var_id]['fit_var_value'] )
+	#
+	#
+	from matplotlib import pyplot
+	fig = pyplot.figure()
+	ax = fig.gca(projection='3d')
+	#
+	# x is age, y is time, z is the rate
+	ax.plot_wireframe(x, y, z)
+	#
+	# axis labels
+	ax.set_xlabel( 'age' )
+	ax.yaxis.labelpad=10
+	ax.set_ylabel( 'year' )
+	ax.zaxis.labelpad=10
+	ax.set_zlabel( 'log10 ' + rate_name )
+	#
+	# set z limits
+	z_mean = numpy.mean(z)
+	z_max  = round( z_mean + 2 )
+	z_min  = round( z_mean - 2 )
+	ax.axes.set_zlim3d(bottom=z_min, top=z_max)
+	#
+	import matplotlib.backends.backend_pdf
+	file_name = plot_directory + '/' + rate_name + '.pdf'
+	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
+	pdf.savefig( fig )
+	pdf.close()
+# ----------------------------------------------------------------------------
 # plot_data
 def plot_data(integrand_name) :
-	# directory where plots will be stored
-	index = database.rfind('/')
-	if index < 0 :
-		directory = '.'
-	else :
-		directory = database[0 : index]
 	#
 	table_name = 'data_subset'
 	(data_subset_table, col_name, col_type) = get_table(table_name)
@@ -235,7 +380,7 @@ def plot_data(integrand_name) :
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
-	file_name = directory + '/' + integrand_name + '.pdf'
+	file_name = plot_directory + '/' + integrand_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	for x_name in [ 'index', 'node', 'age', 'time' ] :
@@ -249,7 +394,7 @@ def plot_data(integrand_name) :
 		y =  meas_value
 		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
 		pyplot.ylabel(integrand_name)
-		pyplot.yscale("log")
+		pyplot.yscale('log')
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
@@ -261,7 +406,7 @@ def plot_data(integrand_name) :
 		y = avg_integrand
 		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
 		pyplot.ylabel('model')
-		pyplot.yscale("log")
+		pyplot.yscale('log')
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
@@ -357,13 +502,6 @@ def plot_predict(covariate_integrand_name, predict_integrand_list) :
 	table_name = 'predict'
 	(predict_table, col_name, col_type) = get_table(table_name)
 	# ------------------------------------------------------------------------
-	# directory where plots will be stored
-	index = database.rfind('/')
-	if index < 0 :
-		directory = '.'
-	else :
-		directory = database[0 : index]
-	#
 	n_predict          = len( predict_table )
 	n_integrand        = len( predict_integrand_list )
 	n_per_integrand    = int( n_predict / n_integrand )
@@ -406,7 +544,7 @@ def plot_predict(covariate_integrand_name, predict_integrand_list) :
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
-	file_name = directory + '/predict.pdf'
+	file_name = plot_directory + '/predict.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	for x_name in [ 'index', 'node', 'age', 'time' ] :
@@ -429,7 +567,7 @@ def plot_predict(covariate_integrand_name, predict_integrand_list) :
 			y  = info['avg_integrand']
 			x  = info[x_name]
 			pyplot.scatter(x, y, marker='.', color='k', s=point_size )
-			pyplot.yscale("log")
+			pyplot.yscale('log')
 			pyplot.ylabel( integrand_name )
 		pyplot.xlabel(x_name)
 		pdf.savefig( fig )
@@ -947,6 +1085,10 @@ if new_database :
 	# predict fit_var (for plot_predict)
 	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
 #
+# plot rate
+for rate_name in [ 'iota', 'chi' ] :
+	plot_rate(rate_name)
+#
 # plot data
 for integrand_name in integrand_list :
 	plot_data(integrand_name)
@@ -957,11 +1099,6 @@ predict_integrand_list   = [ 'susceptible', 'withC', 'mtother' ]
 plot_predict(covariate_integrand_name, predict_integrand_list)
 #
 # db2cvs
-index = database.rfind('/')
-if index < 0 :
-	directory = '.'
-else :
-	directory = database[0 : index]
 system_command( [ 'dismodat.py',  database, 'db2csv' ] )
 print('integrand_list = ', integrand_list)
 # ----------------------------------------------------------------------
