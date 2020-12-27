@@ -15,9 +15,9 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = False
-# If creating a new database, run fit both without and then with ode data.
-fit_ode            = False
+new_database       = True
+# If new_database is true, run fit both first without and then with ode data.
+fit_ode            = True
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -1012,7 +1012,7 @@ if new_database :
 	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
-	#
+	integrand_list = get_integrand_list()
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
