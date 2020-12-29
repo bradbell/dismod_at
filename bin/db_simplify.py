@@ -608,10 +608,10 @@ def subset_data() :
 	put_table(table_name, table_out, col_name, col_type)
 #
 # subsample_data:
-# for a specified integrand, only sample one row in stride
+# for a specified integrand, sample at most max_sample entries.
 # This does random sampling that can be seeded by calling random.seed.
 # The origianl order of the data is preserved by sorting the subsample.
-def subsample_data(integrand_name, stride) :
+def subsample_data(integrand_name, max_sample) :
 	#
 	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
 	#
@@ -628,14 +628,12 @@ def subsample_data(integrand_name, stride) :
 	n_sample_in = count
 	#
 	# subsample of indices for this integrand
-	if stride == 1 :
-		n_sample_out = n_sample_in
-	else :
-		n_sample_out = int( n_sample_in / stride + 1.0 )
+	n_sample_out = min(max_sample, n_sample_in)
+	if n_sample_out < n_sample_in :
 		count_list = random.sample(count_list,  n_sample_out)
 		count_list = sorted( count_list )
 	#
-	# sample the integrand
+	# subsample the integrand
 	index  = 0
 	count  = 0
 	table_out = list()
@@ -653,8 +651,8 @@ def subsample_data(integrand_name, stride) :
 	#
 	put_table(table_name, table_out, col_name, col_type)
 	#
-	msg = "subsample_data {} stride = {} n_sample in = {} out = {}"
-	print( msg.format(integrand_name, stride, n_sample_in, n_sample_out) )
+	msg = "subsample_data {} sample in = {} out = {}"
+	print( msg.format(integrand_name, n_sample_in, n_sample_out) )
 #
 # hold_out_data:
 # for a specified integrand, set the hold_out to 0 or 1
@@ -799,7 +797,10 @@ def set_covariate_reference(covariate_id, reference_name) :
 # set all of the multipliers for a specified covariate to zero without
 # changing the order or size of the var table
 def set_mulcov_zero(covariate_id, restore= None) :
-	print( 'set_mulcov_zero x_{}'.format(covariate_id) )
+	if restore is None :
+		print( 'set_mulcov_zero x_{}'.format(covariate_id) )
+	else :
+		print( 'restore mulcov x_{}'.format(covariate_id) )
 	#
 	table_name = 'mulcov'
 	(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
@@ -952,15 +953,10 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # subset_data:
 # subset_data()
 #
-# subsample mtexcess (because there is way more than other data)
-# stride         = 10
-# integrand_name = 'mtexcess'
-# subsample_data(integrand_name, stride)
-#
-# now further subsample all data (for speed of testing)
-# stride = 5
+# subsample all data (for speed of testing)
+# max_sample = 100
 # for integrand_name in integrand_list :
-#	subsample_data(integrand_name, stride)
+#	subsample_data(integrand_name, max_sample)
 #
 # remove_node_data:
 # node_name = 'Mexico'
@@ -1008,27 +1004,28 @@ integrand_list = get_integrand_list()
 # seed used by subsample_data (None means use system clock)
 seed  = None
 random.seed(seed)
+#
 if new_database :
 	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
+	#
+	# subsetting the data can remove some integrands
 	integrand_list = get_integrand_list()
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
 	set_option('max_num_iter_fixed', '100')
 	set_option('zero_sum_child_rate', 'iota chi')
+	set_option('bound_random',        '3')
 	#
-	# subsample mtexcess (because there is way more than other data)
-	if 'mtexcess' in integrand_list :
-		stride         = 10
-		integrand_name = 'mtexcess'
-		subsample_data(integrand_name, stride)
-	#
-	# now further subsample all data (for speed of testing)
-	stride = 20
+	# subsample all data for speed of testing
 	for integrand_name in integrand_list :
-		subsample_data(integrand_name, stride)
+		if integrand_name in ode_integrand_list :
+			max_sample = 100
+		else :
+			max_sample = 500
+		subsample_data(integrand_name, max_sample)
 	#
 	# set the minimum measurement standard deviation and cv
 	median_meas_value_cv = 1e-2
