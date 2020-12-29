@@ -139,16 +139,25 @@ table_name = 'option'
 # Utilities that depend on data tables
 # ============================================================================
 # ----------------------------------------------------------------------------
-def get_integrand_list() :
+def get_integrand_list(ode) :
+	integrand_model_uses_ode = [
+		'prevalence', 'Tincidence', 'mtspecific', 'mtall', 'mtstandard'
+	]
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
+	#
 	integrand_set = set()
 	for row in table :
-		integrand_set.add( row['integrand_id'] )
-	integrand_list = list()
-	for integrand_id in integrand_set :
+		integrand_id   = row['integrand_id']
 		integrand_name = integrand_table[integrand_id]['integrand_name']
-		integrand_list.append( integrand_name )
+		if ode :
+			if integrand_name in integrand_model_uses_ode :
+				integrand_set.add(integrand_name)
+		else :
+			if integrand_name not in integrand_model_uses_ode :
+				integrand_set.add(integrand_name)
+	integrand_list = list(integrand_set)
+	#
 	return integrand_list
 # ----------------------------------------------------------------------------
 # plot_rate
@@ -994,24 +1003,24 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
-# list of integrand that require ode
-ode_integrand_list = [
-	'prevalence', 'Tincidence', 'mtspecific', 'mtall', 'mtstandard'
-]
-# list of integrands that are present in this database
-integrand_list = get_integrand_list()
-#
 # seed used by subsample_data (None means use system clock)
 seed  = None
 random.seed(seed)
 #
+if not new_database :
+	# list of integrands in database
+	integrand_list_yes_ode = get_integrand_list(True)
+	integrand_list_no_ode  = get_integrand_list(False)
+	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 if new_database :
 	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
 	#
 	# subsetting the data can remove some integrands
-	integrand_list = get_integrand_list()
+	integrand_list_yes_ode = get_integrand_list(True)
+	integrand_list_no_ode  = get_integrand_list(False)
+	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
@@ -1020,17 +1029,17 @@ if new_database :
 	set_option('bound_random',        '3')
 	#
 	# subsample all data for speed of testing
-	for integrand_name in integrand_list :
-		if integrand_name in ode_integrand_list :
-			max_sample = 100
-		else :
-			max_sample = 500
+	max_sample = 100
+	for integrand_name in integrand_list_yes_ode :
+		subsample_data(integrand_name, max_sample)
+	max_sample = 500
+	for integrand_name in integrand_list_no_ode :
 		subsample_data(integrand_name, max_sample)
 	#
 	# set the minimum measurement standard deviation and cv
 	median_meas_value_cv = 1e-2
 	minimum_meas_cv      = 1e-1
-	for integrand_name in integrand_list :
+	for integrand_name in integrand_list_all :
 		set_minimum_meas_std(integrand_name, median_meas_value_cv)
 		set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 	#
@@ -1039,10 +1048,9 @@ if new_database :
 	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
 	#
 	# take ode integrands out of fit
-	for integrand_name in integrand_list :
-		if integrand_name in ode_integrand_list :
-			hold_out       = 1
-			hold_out_data(integrand_name, hold_out)
+	hold_out = 1
+	for integrand_name in integrand_list_yes_ode :
+		hold_out_data(integrand_name, hold_out)
 	#
 	# init
 	system_command([ 'dismod_at', database, 'init'])
@@ -1056,10 +1064,9 @@ if new_database :
 		(fit_var_table, col_name, col_type) = get_table(table_name)
 		#
 		# put ode integrands data back in the fit
-		hold_out       = 0
-		for integrand_name in integrand_list :
-			if integrand_name in ode_integrand_list :
-				hold_out_data(integrand_name, hold_out)
+		hold_out = 0
+		for integrand_name in integrand_list_yes_ode :
+			hold_out_data(integrand_name, hold_out)
 		#
 		# remove constraint on x_0 covariate multipliers
 		covariate_id = 0
@@ -1087,7 +1094,7 @@ for rate_name in [ 'iota', 'chi' ] :
 	plot_rate(rate_name)
 #
 # plot data
-for integrand_name in integrand_list :
+for integrand_name in integrand_list_all :
 	plot_data(integrand_name)
 #
 # plot prediction
@@ -1097,7 +1104,7 @@ plot_predict(covariate_integrand_name, predict_integrand_list)
 #
 # db2cvs
 system_command( [ 'dismodat.py',  database, 'db2csv' ] )
-print('integrand_list = ', integrand_list)
+print('integrands = ', integrand_list_all )
 # ----------------------------------------------------------------------
 print('db_simplify.py: OK')
 sys.exit(0)
