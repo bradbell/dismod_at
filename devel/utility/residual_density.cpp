@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -271,6 +271,7 @@ residual_struct<Float> residual_density(
 		print_forward_if_not_positive("delta", delta);
 		print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
 		assert( delta > 0.0 );
+		assert( mu + d_eta + tiny > 0.0 );
 		if( diff )
 		{	assert(prior);
 			sigma = delta;
