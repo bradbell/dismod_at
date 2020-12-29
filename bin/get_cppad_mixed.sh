@@ -86,12 +86,12 @@ then
 	bin/build_type.sh example_install.sh $dismod_at_prefix $build_type
 fi
 # ---------------------------------------------------------------------------
-# cd into external
-if [ ! -e external ]
+# cd into external/$build_type
+if [ ! -e external/$build_type ]
 then
-    mkdir external
+    mkdir -p external/$build_type
 fi
-echo_eval cd external
+echo_eval cd external/$build_type
 # --------------------------------------------------------------------------
 # clone cppad_mixed.git
 if [ ! -e cppad_mixed.git ]

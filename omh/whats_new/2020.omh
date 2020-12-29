@@ -48,6 +48,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 12-29$$
+Fix a problem when creating both debug and release builds.
+(This was not a problem before 12-22 when build/external moved to external).
+
 $head 12-26$$
 $list number$$
 Change $code bin/db_simplify.py$$ from a Chron's Disease to a Diabetes case.
