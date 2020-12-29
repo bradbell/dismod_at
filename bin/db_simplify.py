@@ -17,7 +17,7 @@ database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # If new_database is true, run fit both first without and then with ode data.
-fit_ode            = True
+fit_ode            = False
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -105,6 +105,26 @@ def table_name2id(table, table_name, row_name) :
 		msg = msg.format(row_name, table_name)
 		sys.exit(msg)
 	return result
+#
+def new_zero_smooth_id(smooth_id, smooth_table, smooth_grid_table) :
+	if smooth_id is None :
+		return None
+	#
+	new_smooth_id          = len(smooth_table)
+	new_row                = copy.copy( smooth_table[smooth_id] )
+	new_row['smooth_name'] = 'zero_smoothing #' + str( new_smooth_id )
+	smooth_table.append( new_row )
+	#
+	for old_row in smooth_grid_table :
+		if old_row['smooth_id'] == smooth_id :
+			new_row = copy.copy( old_row )
+			new_row['smooth_id']      = new_smooth_id
+			new_row['value_prior_id'] = None
+			new_row['dage_prior_id']  = None
+			new_row['dtime_prior_id'] = None
+			new_row['const_value']    = 0.0
+			smooth_grid_table.append( new_row )
+	return new_smooth_id
 # ============================================================================
 # Tables that do not change
 # ============================================================================
@@ -830,33 +850,17 @@ def set_mulcov_zero(covariate_id, restore= None) :
 		put_table('mulcov',  mulcov_table, mulcov_col_name, mulcov_col_type)
 		return None
 	# -------------------------------------------------------------------------
-	def new_zero_smooth_id(smooth_id) :
-		if smooth_id is None :
-			return None
-		#
-		new_smooth_id   = len(smooth_table)
-		new_row         = copy.copy( smooth_table[smooth_id] )
-		new_row['smooth_name'] = 'zero_smoothing #' + str( new_smooth_id )
-		smooth_table.append( new_row )
-		#
-		for old_row in grid_table :
-			if old_row['smooth_id'] == smooth_id :
-				new_row = copy.copy( old_row )
-				new_row['smooth_id']      = new_smooth_id
-				new_row['value_prior_id'] = None
-				new_row['dage_prior_id']  = None
-				new_row['dtime_prior_id'] = None
-				new_row['const_value']    = 0.0
-				grid_table.append( new_row )
-		return new_smooth_id
-	# -------------------------------------------------------------------------
 	restore = list()
 	for (mulcov_id, row)  in  enumerate( mulcov_table ) :
 		if row['covariate_id'] == covariate_id :
 			group_smooth_id           = row['group_smooth_id']
-			row['group_smooth_id']    = new_zero_smooth_id(group_smooth_id)
+			row['group_smooth_id']    = new_zero_smooth_id(
+				group_smooth_id, smooth_table, grid_table
+			)
 			subgroup_smooth_id        = row['subgroup_smooth_id']
-			row['subgroup_smooth_id'] = new_zero_smooth_id(subgroup_smooth_id)
+			row['subgroup_smooth_id'] = new_zero_smooth_id(
+				subgroup_smooth_id, smooth_table, grid_table
+			)
 			restore.append( (mulcov_id, group_smooth_id, subgroup_smooth_id) )
 	#
 	put_table('mulcov',      mulcov_table, mulcov_col_name, mulcov_col_type)
@@ -1004,8 +1008,7 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # Actual Changes
 # ----------------------------------------------------------------------
 # seed used by subsample_data (None means use system clock)
-seed  = None
-random.seed(seed)
+random.seed(None)
 #
 if not new_database :
 	# list of integrands in database
