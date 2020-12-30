@@ -11,13 +11,14 @@
 # 2DO: Allow for covariate access by covariate_name.
 # --------------------------------------------------------------------------
 # Diabetes: /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db
-original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
+# Chrons:   /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'
+original_database  = 'ihme_db/data/475588/dbs/100/3/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # If new_database is true, run fit both first without and then with ode data.
-fit_ode            = True
+fit_ode            = False
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -346,6 +347,9 @@ def plot_rate(rate_name) :
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	pdf.savefig( fig_1 )
 	pdf.savefig( fig_2 )
+	#
+	pyplot.close( fig_1 )
+	pyplot.close( fig_2 )
 	pdf.close()
 # ----------------------------------------------------------------------------
 # plot_data
@@ -492,7 +496,9 @@ def plot_data(integrand_name) :
 		pyplot.axis(limits)
 		#
 		pyplot.xlabel(x_name)
+		#
 		pdf.savefig( fig )
+		pyplot.close(fig)
 	#
 	pdf.close()
 # ----------------------------------------------------------------------------
@@ -638,7 +644,9 @@ def plot_predict(covariate_integrand_list, predict_integrand_list) :
 		covariate_name = \
 			integrand_table[covariate_integrand_id]['integrand_name']
 		pyplot.suptitle('Covariate Integrand = ' + covariate_name )
+		#
 		pdf.savefig( fig )
+		pyplot.close( fig )
 	assert predict_id == len(predict_table)
 	#
 	pdf.close()
@@ -724,40 +732,37 @@ def subsample_data(integrand_name, max_sample) :
 	print( msg.format(integrand_name, n_sample_in, n_sample_out) )
 #
 # hold_out_data:
-# for a specified integrand, set the hold_out to 0 or 1
-def hold_out_data(integrand_name, hold_out) :
-	print( "{} hold_out = {}".format(integrand_name, hold_out) )
+# for a specified integrand or node, set the hold_out to 0 or 1
+def hold_out_data(integrand_name=None, node_name= None, hold_out=None) :
+	msg = 'integrand={}, node={}, hold_out={}'
+	print( msg.format(integrand_name, node_name, hold_out) )
+	if integrand_name is None and node_name is None :
+		sys.exit('hold_out_data: both integrand_name and node_name are None')
+	if integrand_name is not None and node_name is not None :
+		sys.exit('hold_out_data: both integrand_name and node_name not None')
 	#
 	if hold_out not in [ 0, 1] :
 		msg = 'hold_out_data: hold_out is not zero or one'
 		sys.exit(msg)
+	if integrand_name is not None :
+		node_id      = None
+		integrand_id = table_name2id(
+			integrand_table, 'integrand', integrand_name
+		)
+	else :
+		node_name is not None
+		integrand_id = None
+		node_id      = table_name2id(
+			node_table, 'node', node_name
+		)
+	#
 	#
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
-		integrand_id  = row['integrand_id']
-		if integrand_name  == integrand_table[integrand_id]['integrand_name'] :
+		if integrand_id == row['integrand_id'] or node_id == row['node_id'] :
 			row['hold_out'] = hold_out
 	put_table(table_name, table, col_name, col_type)
-#
-# remove_node_data:
-# for a specified node, remove all its data
-def remove_node_data(node_name) :
-	print( "remove_node_data {}".format(node_name) )
-	#
-	remove_node_id = None
-	for node_id in range( len(node_table) ) :
-		row = node_table[node_id]
-		if row['node_name'] == node_name :
-			remove_node_id = node_id
-	table_name = 'data'
-	(table_in, col_name, col_type) = get_table(table_name)
-	table_out = list()
-	for row in table_in :
-		node_id    = row['node_id']
-		if node_id != remove_node_id :
-			table_out.append(row)
-	put_table(table_name, table_out, col_name, col_type)
 #
 # set_data_dentity:
 # for a specified integrand, set its data density to a specified value
@@ -1001,11 +1006,6 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # max_sample = 100
 # for integrand_name in integrand_list :
 #	subsample_data(integrand_name, max_sample)
-#
-# remove_node_data:
-# node_name = 'Mexico'
-# remove_node_data(node_name)
-#
 # constrain all x_0 covariate multipliers to be zero
 # covariate_id = 0
 # restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
@@ -1043,11 +1043,9 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 #	set_minimum_meas_std(integrand_name, median_meas_value_cv)
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 #
-# hold_out_data:
-# hold_out       = 1
-# integrand_name = 'prevalence'
-# hold_out_data(integrand_name, hold_out)
-#
+# hold out Korea before subset_data() do it gets removed
+#	hold_out_data(node_name = 'Republic of Korea', hold_out = 1)
+#	hold_out_data(node_name = 'Japan', hold_out = 1)
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
@@ -1080,15 +1078,15 @@ if new_database :
 	integrand_count = get_integrand_count()
 	#
 	integrand_name = 'mtexcess'
-	max_sample     = int( integrand_count[integrand_name] / 100 )
+	max_sample     = int( integrand_count[integrand_name] / 1 )
 	subsample_data(integrand_name, max_sample)
 	#
 	integrand_name = 'Sincidence'
-	max_sample     = int( integrand_count[integrand_name] / 10 )
+	max_sample     = int( integrand_count[integrand_name] / 1 )
 	subsample_data(integrand_name, max_sample)
 	#
 	integrand_name = 'prevalence'
-	max_sample     = int( integrand_count[integrand_name] / 10 )
+	max_sample     = int( integrand_count[integrand_name] / 1 )
 	subsample_data(integrand_name, max_sample)
 	#
 	# set the minimum measurement standard deviation and cv
@@ -1103,9 +1101,8 @@ if new_database :
 	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
 	#
 	# take ode integrands out of fit
-	hold_out = 1
 	for integrand_name in integrand_list_yes_ode :
-		hold_out_data(integrand_name, hold_out)
+		hold_out_data(integrand_name = integrand_name, hold_out = 1)
 	#
 	# init
 	system_command([ 'dismod_at', database, 'init'])
@@ -1119,9 +1116,8 @@ if new_database :
 		(fit_var_table, col_name, col_type) = get_table(table_name)
 		#
 		# put ode integrands data back in the fit
-		hold_out = 0
 		for integrand_name in integrand_list_yes_ode :
-			hold_out_data(integrand_name, hold_out)
+			hold_out_data(integrand_name = integrand_name, hold_out = 0)
 		#
 		# remove constraint on x_0 covariate multipliers
 		covariate_id = 0

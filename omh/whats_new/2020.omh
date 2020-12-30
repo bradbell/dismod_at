@@ -48,6 +48,15 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
+$head 12-30$$
+The
+$cref prior_sim_table$$,
+$cref hes_fixed_table$$,
+and $cref hes_random_table$$
+$cref/output tables/data_flow/Output Tables by Table Name/$$
+were not being dropped (if they existed) during the $cref init_command$$.
+This has been fixed.
+
 $head 12-29$$
 Fix a problem when creating both debug and release builds.
 (This was not a problem before 12-22 when build/external moved to external).

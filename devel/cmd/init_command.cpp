@@ -62,7 +62,6 @@ A new $cref age_avg_table$$ is created when this command is run.
 In fact, this table is recreated when any command is run except for the
 python commands and the $cref set_command$$.
 
-
 $head var_table$$
 A new $cref var_table$$ is created with the information
 that maps a $cref/var_id/var_table/var_id/$$
@@ -117,19 +116,22 @@ void init_command(
 
 	// -----------------------------------------------------------------------
 	const char* drop_list[] = {
+		// All the output tables in Data flow section except for age_avg table
+		// which is created by dismod_at.cpp before calling this routine.
 		"var",
+		"data_subset",
+		"start_var",
+		"scale_var",
 		"depend_var",
 		"fit_var",
-		"scale_var",
-		"start_var",
 		"truth_var",
-		//
-		"data_subset",
 		"fit_data_subset",
-		//
 		"data_sim",
+		"prior_sim",
 		"sample",
-		"predict"
+		"hes_fixed",
+		"hes_random",
+		"predict",
 	};
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
