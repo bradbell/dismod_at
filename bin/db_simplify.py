@@ -15,7 +15,7 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = True
+new_database       = False
 # If new_database is true, run fit both first without and then with ode data.
 fit_ode            = True
 # ----------------------------------------------------------------------
@@ -270,10 +270,10 @@ def plot_rate(rate_name) :
 	key = lambda triple : pair( triple[0], triple[1] )
 	triple_list = sorted(triple_list, key = key )
 	#
-	# creaate the mesghgird
-	x = numpy.zeros( (n_age, n_time), dtype = float)
-	y = numpy.zeros( (n_age, n_time), dtype = float)
-	z = numpy.zeros( (n_age, n_time), dtype = float)
+	# creaate the mesghgird (age, time, rate)
+	age  = numpy.zeros( (n_age, n_time), dtype = float)
+	time = numpy.zeros( (n_age, n_time), dtype = float)
+	rate = numpy.zeros( (n_age, n_time), dtype = float)
 	#
 	for i in range(n_age) :
 		for j in range(n_time) :
@@ -284,44 +284,53 @@ def plot_rate(rate_name) :
 			time_id = triple[1]
 			var_id  = triple[2]
 			#
-			x[i, j] = age_table[age_id]['age']
-			y[i, j] = time_table[time_id]['time']
-			z[i, j] = fit_var_table[var_id]['fit_var_value']
+			age[i, j]  = age_table[age_id]['age']
+			time[i, j] = time_table[time_id]['time']
+			rate[i, j] = fit_var_table[var_id]['fit_var_value']
 	#
-	# z limits
-	z_max  = numpy.max(z)
-	z_min  = numpy.min(z)
-	if z_max <= 0.0 :
+	# rate limits
+	rate_max  = numpy.max(rate)
+	rate_min  = numpy.min(rate)
+	if rate_max <= 0.0 :
 		print( 'plot_rate: max({}) <= 0'.format(rate_name) )
 		return
-	z_min  = max(z_min, 1e-10 * z_max)
-	#
-	# log transform z
-	z      = numpy.log10(z)
-	z_max  = numpy.log10(z_max)
-	z_min  = numpy.log10(z_min)
+	rate_min  = max(rate_min, 1e-10 * rate_max)
 	#
 	from matplotlib import pyplot
-	fig = pyplot.figure()
-	ax = fig.gca(projection='3d')
 	#
-	# x is age, y is time, z is the rate
-	ax.plot_wireframe(x, y, z)
+	# for each time, plot rate as a function of age
+	fig_1 = pyplot.figure()
+	for j in range(n_time) :
+		x     = age[:,j]
+		y     = rate[:,j]
+		label = str( time[0,j] )
+		pyplot.plot(x, y, label=label)
+		#
+		# axis labels
+		pyplot.xlabel('age')
+		pyplot.ylabel(rate_name)
+		pyplot.yscale('log')
+	pyplot.legend(title = 'time')
 	#
-	# axis labels
-	ax.set_xlabel( 'age' )
-	ax.yaxis.labelpad=10
-	ax.set_ylabel( 'year' )
-	ax.zaxis.labelpad=10
-	ax.set_zlabel( 'log10 ' + rate_name )
-	#
-	# set z limits
-	ax.axes.set_zlim3d(bottom=z_min, top=z_max)
+	# for each age, plot rate as a function of time
+	fig_2 = pyplot.figure()
+	for i in range(n_age) :
+		x     = time[i,:]
+		y     = rate[i,:]
+		label = str( age[i,0] )
+		pyplot.plot(x, y, label=label)
+		#
+		# axis labels
+		pyplot.xlabel('time')
+		pyplot.ylabel(rate_name)
+		pyplot.yscale('log')
+	pyplot.legend(title = 'age')
 	#
 	import matplotlib.backends.backend_pdf
 	file_name = plot_directory + '/' + rate_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
-	pdf.savefig( fig )
+	pdf.savefig( fig_1 )
+	pdf.savefig( fig_2 )
 	pdf.close()
 # ----------------------------------------------------------------------------
 # plot_data
