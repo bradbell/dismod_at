@@ -497,25 +497,33 @@ def plot_data(integrand_name) :
 	pdf.close()
 # ----------------------------------------------------------------------------
 # plot_predict
-def plot_predict(covariate_integrand_name, predict_integrand_list) :
+def plot_predict(covariate_integrand_list, predict_integrand_list) :
 	#-----------------------------------------------------------------------
 	# create avgint table
-	# For row in data table corresponding to covariate_integrand_name
-	#	For each integrand in the predict_integrand_list
-	#		write a row in avgint table with covariates and integrand
+	#
+	# For each covariate_integrand
+	#	For data row corresponding to this covariate_integrand
+	#		For each predict_intgrand
+	#			write a row with specified covariates for predict_integrand
 	#-----------------------------------------------------------------------
-	# covariate_integrand_id
-	table_name   = 'integrand'
-	covariate_integrand_id = table_name2id(
-		integrand_table, table_name, covariate_integrand_name
-	)
-	# integrand_id_list
-	integrand_id_list = list()
-	for integrand_name in predict_integrand_list :
-		integrand_id = table_name2id(
+	#
+	# covariate_id_list
+	table_name        = 'integrand'
+	covariate_id_list = list()
+	for integrand_name in covariate_integrand_list :
+		covariate_id = table_name2id(
 			integrand_table, table_name, integrand_name
 		)
-		integrand_id_list.append(integrand_id)
+		covariate_id_list.append( covariate_id )
+	#
+	# predict_id_list
+	table_name      = 'integrand'
+	predict_id_list = list()
+	for integrand_name in predict_integrand_list :
+		predict_id = table_name2id(
+			integrand_table, table_name, integrand_name
+		)
+		predict_id_list.append( predict_id )
 	#
 	# data_table
 	table_name = 'data'
@@ -525,7 +533,8 @@ def plot_predict(covariate_integrand_name, predict_integrand_list) :
 	table_name = 'data_subset'
 	(subset_table, subset_col_name, subset_col_type) = get_table(table_name)
 	#
-	# data table columns that are not in avgint table
+	# exclude_list
+	# columns that are in data table and not in avgint table
 	exclude_list = [
 		'data_name',
 		'density_id',
@@ -544,19 +553,25 @@ def plot_predict(covariate_integrand_name, predict_integrand_list) :
 			avgint_col_name.append( data_col_name[i] )
 			avgint_col_type.append( data_col_type[i] )
 	#
-	# avgint_table
+	# initialize
 	avgint_table = list()
-	for row_subset in subset_table :
-		row_in  = data_table[ row_subset['data_id'] ]
-		if covariate_integrand_id == row_in['integrand_id'] :
-			row_out = dict()
-			for col in avgint_col_name :
-				row_out[col] = row_in[col]
-			#
-			for integrand_id in integrand_id_list :
-				row = copy.copy(row_out)
-				row['integrand_id'] = integrand_id
-				avgint_table.append( row )
+	data_rows    = dict()
+	#
+	for covariate_integrand_id in covariate_id_list :
+		count = 0
+		for row_subset in subset_table :
+			row_in  = data_table[ row_subset['data_id'] ]
+			if covariate_integrand_id == row_in['integrand_id'] :
+				count += 1
+				row_out = dict()
+				for col in avgint_col_name :
+					row_out[col] = row_in[col]
+				#
+				for integrand_id in predict_id_list :
+					row = copy.copy(row_out)
+					row['integrand_id'] = integrand_id
+					avgint_table.append( row )
+		data_rows[covariate_integrand_id] = count
 	#
 	table_name = 'avgint'
 	put_table(table_name, avgint_table, avgint_col_name, avgint_col_type)
@@ -567,75 +582,64 @@ def plot_predict(covariate_integrand_name, predict_integrand_list) :
 	table_name = 'predict'
 	(predict_table, col_name, col_type) = get_table(table_name)
 	# ------------------------------------------------------------------------
-	n_predict          = len( predict_table )
-	n_integrand        = len( predict_integrand_list )
-	n_per_integrand    = int( n_predict / n_integrand )
-	#
-	integrand_id_info = dict()
-	for (predict_id, predict_row) in enumerate(predict_table) :
-		avg_integrand = predict_row['avg_integrand']
-		#
-		assert predict_id == predict_row['avgint_id']
-		row = avgint_table[predict_id]
-		#
-		integrand_id   = row['integrand_id']
-		if integrand_id not in integrand_id_info :
-			info = dict()
-			info['age']           = list()
-			info['time']          = list()
-			info['node']          = list()
-			info['index']         = list()
-			info['avg_integrand'] = list()
-		else :
-			info = integrand_id_info[integrand_id]
-		#
-		age  = ( row['age_lower'] + row['age_upper'] ) / 2.0
-		info['age'].append( age )
-		#
-		time = ( row['time_lower'] + row['time_upper'] ) / 2.0
-		info['time'].append(time)
-		#
-		node_id    = row['node_id']
-		info['node'].append( node_id )
-		#
-		index         = len( info['index'] )
-		info['index'].append( index )
-		#
-		info['avg_integrand'].append( avg_integrand )
-		#
-		integrand_id_info[integrand_id] = info
-	#
-	point_size  =  n_per_integrand * [ 1 ]
-	#
+	# initialize
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
 	file_name = plot_directory + '/predict.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
-	for x_name in [ 'index', 'node', 'age', 'time' ] :
+	predict_id = 0
+	for covariate_integrand_id in covariate_id_list :
+		n_data_rows        = data_rows[covariate_integrand_id]
+		avg_integrand_list = dict()
+		age_list           = list()
+		for integrand_id in predict_id_list :
+			avg_integrand_list[integrand_id] = list()
+		for i in range(n_data_rows) :
+			first = True
+			for integrand_id in predict_id_list :
+				#
+				# predict_row
+				predict_row = predict_table[predict_id]
+				assert predict_id == predict_row['avgint_id']
+				#
+				avg_integrand = predict_row['avg_integrand']
+				avg_integrand_list[integrand_id].append( avg_integrand )
+				#
+				row  = avgint_table[predict_id]
+				assert integrand_id == row['integrand_id']
+				#
+				if first :
+					age  = ( row['age_lower'] + row['age_upper'] ) / 2.0
+					age_list.append( age )
+				first = False
+				#
+				# for next row
+				predict_id += 1
 		#
-		fig, axes = pyplot.subplots(n_integrand, 1, sharex=True)
+		point_size            =  n_data_rows * [ 1 ]
+		n_predict_integrand   = len(predict_integrand_list)
+		#
+		fig, axes = pyplot.subplots(n_predict_integrand, 1, sharex=True)
 		fig.subplots_adjust(hspace=0)
 		#
 		plot_index = 0
-		for integrand_name in predict_integrand_list :
-			table_name = 'integrand'
-			integrand_id = table_name2id(
-				integrand_table, table_name, integrand_name
-			)
-			#
-			plot_index += 1
-			pyplot.subplot(n_integrand, 1, plot_index)
-			info = integrand_id_info[integrand_id]
+		for integrand_id in predict_id_list :
 			integrand_name = integrand_table[integrand_id]['integrand_name']
 			#
-			y  = info['avg_integrand']
-			x  = info[x_name]
+			plot_index += 1
+			pyplot.subplot(n_predict_integrand, 1, plot_index)
+			y  = avg_integrand_list[integrand_id]
+			x  = age_list
 			pyplot.scatter(x, y, marker='.', color='k', s=point_size )
 			pyplot.yscale('log')
 			pyplot.ylabel( integrand_name )
-		pyplot.xlabel(x_name)
+		pyplot.xlabel('age')
+		covariate_name = \
+			integrand_table[covariate_integrand_id]['integrand_name']
+		pyplot.suptitle('Covariate Integrand = ' + covariate_name )
 		pdf.savefig( fig )
+	assert predict_id == len(predict_table)
 	#
 	pdf.close()
 # =============================================================================
@@ -1136,9 +1140,6 @@ if new_database :
 		#
 		# fit both
 		system_command([ 'dismod_at', database, 'fit', 'both'])
-	#
-	# predict fit_var (for plot_predict)
-	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
 #
 # plot rate
 for rate_name in [ 'iota', 'chi' ] :
@@ -1150,8 +1151,9 @@ for integrand_name in integrand_list_all :
 #
 # plot prediction
 covariate_integrand_name = 'prevalence'
-predict_integrand_list   = [ 'susceptible', 'withC', 'mtother' ]
-plot_predict(covariate_integrand_name, predict_integrand_list)
+predict_integrand_list   = [ 'susceptible', 'withC' ]
+covariate_integrand_list = integrand_list_yes_ode
+plot_predict(covariate_integrand_list, predict_integrand_list)
 #
 # db2cvs
 system_command( [ 'dismodat.py',  database, 'db2csv' ] )
