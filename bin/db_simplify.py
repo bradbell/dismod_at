@@ -28,6 +28,7 @@ import subprocess
 import copy
 import numpy
 import random
+import time
 #
 if sys.argv[0] != 'bin/db_simplify.py' :
 	msg = 'bin/db_simplify.py must be executed from its parent directory'
@@ -91,6 +92,8 @@ def system_command(command_list) :
 	print(command_str)
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
+		if new_database :
+			print('random_seed = ', random_seed )
 		sys.exit('db_simplify.py: system command failed')
 #
 def table_name2id(table, table_name, row_name) :
@@ -1020,8 +1023,6 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
-# seed used by subsample_data (None means use system clock)
-random.seed(None)
 #
 if not new_database :
 	# list of integrands in database
@@ -1029,6 +1030,9 @@ if not new_database :
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 if new_database :
+	# seed used by subsample_data
+	random_seed = int( time.time() )
+	random.seed(random_seed)
 	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
@@ -1120,7 +1124,9 @@ plot_predict(covariate_integrand_name, predict_integrand_list)
 #
 # db2cvs
 system_command( [ 'dismodat.py',  database, 'db2csv' ] )
-print('integrands = ', integrand_list_all )
 # ----------------------------------------------------------------------
+print('integrands  = ', integrand_list_all )
+if new_database :
+	print('random_seed = ', random_seed )
 print('db_simplify.py: OK')
 sys.exit(0)
