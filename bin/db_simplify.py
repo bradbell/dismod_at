@@ -283,8 +283,20 @@ def plot_rate(rate_name) :
 			#
 			x[i, j] = age_table[age_id]['age']
 			y[i, j] = time_table[time_id]['time']
-			z[i, j] = math.log10( fit_var_table[var_id]['fit_var_value'] )
+			z[i, j] = fit_var_table[var_id]['fit_var_value']
 	#
+	# z limits
+	z_max  = numpy.max(z)
+	z_min  = numpy.min(z)
+	if z_max <= 0.0 :
+		print( 'plot_rate: max({}) <= 0'.format(rate_name) )
+		return
+	z_min  = max(z_min, 1e-10 * z_max)
+	#
+	# log transform z
+	z      = numpy.log10(z)
+	z_max  = numpy.log10(z_max)
+	z_min  = numpy.log10(z_min)
 	#
 	from matplotlib import pyplot
 	fig = pyplot.figure()
@@ -301,9 +313,6 @@ def plot_rate(rate_name) :
 	ax.set_zlabel( 'log10 ' + rate_name )
 	#
 	# set z limits
-	z_mean = numpy.mean(z)
-	z_max  = int( numpy.max(z) + 1 )
-	z_min  = int( numpy.min(z) )
 	ax.axes.set_zlim3d(bottom=z_min, top=z_max)
 	#
 	import matplotlib.backends.backend_pdf
@@ -974,6 +983,23 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # for rate_name in [ 'omega', 'chi' ] :
 #	remove_rate(rate_name)
 #
+# constant_rate:
+# table_name   = 'density'
+# density_name = 'log_gaussian'
+# density_id   = table_name2id(density_table, table_name, density_name)
+# prior = {
+#	'prior_name' : 'constant_pini' ,
+#	'density_id' : density_id      ,
+#	'lower'      : 0               ,
+#	'upper'      : 1e-5            ,
+#	'mean'       : 0               ,
+#	'std'        : 1e-10           ,
+#	'eta'        : 1e-10           ,
+#	'nu'         : None            ,
+#}
+#rate_name  = 'pini'
+#constant_rate(rate_name, prior)
+#
 # set_data_density:
 # density_name = 'gaussian'
 # for integrand_name in [ 'Sincidence', 'prevalence' ] :
@@ -1036,23 +1062,6 @@ if new_database :
 	# constrain all x_0 covariate multipliers to be zero
 	covariate_id = 0
 	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
-	#
-	# constant pini
-	table_name   = 'density'
-	density_name = 'log_gaussian'
-	density_id   = table_name2id(density_table, table_name, density_name)
-	prior = {
-		'prior_name' : 'constant_pini' ,
-		'density_id' : density_id      ,
-		'lower'      : 0               ,
-		'upper'      : 1e-5            ,
-		'mean'       : 0               ,
-		'std'        : 1e-9            ,
-		'eta'        : 1e-10           ,
-		'nu'         : None            ,
-	}
-	rate_name  = 'pini'
-	constant_rate(rate_name, prior)
 	#
 	# take ode integrands out of fit
 	hold_out = 1
