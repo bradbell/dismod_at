@@ -15,7 +15,7 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = False
+new_database       = True
 # If new_database is true, run fit both first without and then with ode data.
 fit_ode            = True
 # ----------------------------------------------------------------------
@@ -159,7 +159,7 @@ table_name = 'time'
 table_name = 'option'
 (option_table, col_name, col_type) = get_table(table_name)
 # ============================================================================
-# Utilities that depend on data tables
+# Utilities that depend on data table or fit results
 # ============================================================================
 # ----------------------------------------------------------------------------
 def get_integrand_list(ode) :
@@ -182,6 +182,21 @@ def get_integrand_list(ode) :
 	integrand_list = list(integrand_set)
 	#
 	return integrand_list
+# ----------------------------------------------------------------------------
+def get_integrand_count() :
+	#
+	table_name = 'data'
+	(table, col_name, col_type) = get_table(table_name)
+	#
+	integrand_count = dict()
+	for row in table :
+		integrand_id   = row['integrand_id']
+		integrand_name = integrand_table[integrand_id]['integrand_name']
+		if integrand_name not in integrand_count :
+			integrand_count[integrand_name] = 0
+		integrand_count[integrand_name] += 1
+	#
+	return integrand_count
 # ----------------------------------------------------------------------------
 # plot_rate
 def plot_rate(rate_name) :
@@ -1057,13 +1072,20 @@ if new_database :
 	set_option('zero_sum_child_rate', 'iota chi')
 	set_option('bound_random',        '3')
 	#
-	# subsample all data for speed of testing
-	max_sample = 100
-	for integrand_name in integrand_list_yes_ode :
-		subsample_data(integrand_name, max_sample)
-	max_sample = 500
-	for integrand_name in integrand_list_no_ode :
-		subsample_data(integrand_name, max_sample)
+	# subsample data for speed of testing
+	integrand_count = get_integrand_count()
+	#
+	integrand_name = 'mtexcess'
+	max_sample     = int( integrand_count[integrand_name] / 100 )
+	subsample_data(integrand_name, max_sample)
+	#
+	integrand_name = 'Sincidence'
+	max_sample     = int( integrand_count[integrand_name] / 10 )
+	subsample_data(integrand_name, max_sample)
+	#
+	integrand_name = 'prevalence'
+	max_sample     = int( integrand_count[integrand_name] / 10 )
+	subsample_data(integrand_name, max_sample)
 	#
 	# set the minimum measurement standard deviation and cv
 	median_meas_value_cv = 1e-2
