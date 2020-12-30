@@ -17,7 +17,7 @@ database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # If new_database is true, run fit both first without and then with ode data.
-fit_ode            = False
+fit_ode            = True
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -302,8 +302,8 @@ def plot_rate(rate_name) :
 	#
 	# set z limits
 	z_mean = numpy.mean(z)
-	z_max  = round( z_mean + 2 )
-	z_min  = round( z_mean - 2 )
+	z_max  = int( numpy.max(z) + 1 )
+	z_min  = int( numpy.min(z) )
 	ax.axes.set_zlim3d(bottom=z_min, top=z_max)
 	#
 	import matplotlib.backends.backend_pdf
@@ -869,63 +869,54 @@ def set_mulcov_zero(covariate_id, restore= None) :
 	return restore
 #
 # constant_rate:
-# Set a specified rate to be constant by using one of its parent priors
-def constant_rate(rate_name) :
+# Set a rate to be constant in age and time specified prior
+def constant_rate(rate_name, prior) :
 	print( 'constant_rate {}'.format(rate_name) )
 	#
-	table_name = 'rate'
-	(rate_table, col_name, col_type) = get_table(table_name)
+	# add row to prior_table
+	table_name = 'prior'
+	(table, col_name, col_type) = get_table(table_name)
+	new_prior_id = len(table)
+	table.append( copy.copy( prior ) )
+	put_table(table_name, table, col_name, col_type)
 	#
-	# add a one point smoothing to smooth_table
+	# add row to smooth_table
 	table_name = 'smooth'
 	(table, col_name, col_type) = get_table(table_name)
-	one_point_smooth_id         = len( table )
+	new_smooth_id  = len( table )
+	smooth_name    = prior['prior_name'] + '_smooth'
 	row =  {
-		'smooth_name'           : 'my_constant' ,
+		'smooth_name'           : smooth_name   ,
 		'n_age'                 : 1             ,
 		'n_time'                : 1             ,
 		'mulstd_value_prior_id' : None          ,
 		'mulstd_dage_prior_id'  : None          ,
-		'mulstd_dtime_prior_id' : None
+		'mulstd_dtime_prior_id' : None          ,
 	}
 	table.append(row)
 	put_table(table_name, table, col_name, col_type)
 	#
-	# get parent_smooth_id for the rate
-	rate_smooth_id = None
-	for row in rate_table :
-		if row['rate_name'] == rate_name :
-			rate_smooth_id = row['parent_smooth_id']
-	if rate_smooth_id is None :
-		msg = 'constant_rate: The is no parent_smooth_id for ' + rate_name
-		sys.exit(msg)
-	#
-	# get any entry in smooth_grid_table for smoothing iota
+	# add row to smooth_grid_table
 	table_name = 'smooth_grid'
 	(table, col_name, col_type) = get_table(table_name)
-	rate_smooth_grid_id = None
-	for smooth_grid_id in range( len(table) ) :
-		row = table[smooth_grid_id]
-		if row['smooth_id'] == rate_smooth_id :
-			rate_smooth_grid_id = smooth_grid_id
-	assert rate_smooth_grid_id is not None
-	#
-	# make a copy of the smooth_grid table entry
-	row = copy.copy( table[rate_smooth_grid_id] )
-	#
-	# change to smooth_id to the row added to smoothing above
-	row['smooth_id'] = one_point_smooth_id
-	#
-	# add this entry to the smooth grid table
+	row = {
+		'smooth_id'      : new_smooth_id ,
+		'age_id'         : 0             ,
+		'time_id'        : 0             ,
+		'value_prior_id' : new_prior_id  ,
+		'dage_prior_id'  : None          ,
+		'dtime_prior_id' : None          ,
+		'const_value'    : None          ,
+	}
 	table.append(row)
 	put_table(table_name, table, col_name, col_type)
 	#
-	# change the rate table to use this entry
+	# change rate_table
 	table_name = 'rate'
 	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
 		if row['rate_name'] == rate_name :
-			row['parent_smooth_id'] = one_point_smooth_id
+			row['parent_smooth_id'] = new_smooth_id
 			row['child_smooth_id']  = None
 			row['child_nslist_id']  = None
 	put_table(table_name, table, col_name, col_type)
@@ -974,10 +965,6 @@ def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
 # remove_node_data:
 # node_name = 'Mexico'
 # remove_node_data(node_name)
-#
-# constant_rate:
-# rate_name = 'iota'
-# constant_rate(rate_name)
 #
 # constrain all x_0 covariate multipliers to be zero
 # covariate_id = 0
@@ -1049,6 +1036,23 @@ if new_database :
 	# constrain all x_0 covariate multipliers to be zero
 	covariate_id = 0
 	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
+	#
+	# constant pini
+	table_name   = 'density'
+	density_name = 'log_gaussian'
+	density_id   = table_name2id(density_table, table_name, density_name)
+	prior = {
+		'prior_name' : 'constant_pini' ,
+		'density_id' : density_id      ,
+		'lower'      : 0               ,
+		'upper'      : 1e-5            ,
+		'mean'       : 0               ,
+		'std'        : 1e-9            ,
+		'eta'        : 1e-10           ,
+		'nu'         : None            ,
+	}
+	rate_name  = 'pini'
+	constant_rate(rate_name, prior)
 	#
 	# take ode integrands out of fit
 	hold_out = 1
