@@ -31,10 +31,6 @@ import numpy
 import random
 import time
 #
-if sys.argv[0] != 'bin/db_simplify.py' :
-	msg = 'bin/db_simplify.py must be executed from its parent directory'
-	sys.exit(msg)
-#
 # import dismod_at
 sandbox = 'python/dismod_at'
 if os.path.isdir(sandbox) :
@@ -345,11 +341,13 @@ def plot_rate(rate_name) :
 	import matplotlib.backends.backend_pdf
 	file_name = plot_directory + '/' + rate_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
+	#
 	pdf.savefig( fig_1 )
 	pdf.savefig( fig_2 )
 	#
 	pyplot.close( fig_1 )
 	pyplot.close( fig_2 )
+	#
 	pdf.close()
 # ----------------------------------------------------------------------------
 # plot_data
@@ -459,7 +457,8 @@ def plot_data(integrand_name) :
 		fig, axes = pyplot.subplots(3, 1, sharex=True)
 		fig.subplots_adjust(hspace=0)
 		#
-		pyplot.subplot(3, 1, 1)
+		sp = pyplot.subplot(3, 1, 1)
+		sp.set_xticklabels( [] )
 		y =  meas_value
 		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
 		pyplot.ylabel(integrand_name)
@@ -471,7 +470,8 @@ def plot_data(integrand_name) :
 		limits     = [min(x), max(x), y_min, y_max]
 		pyplot.axis(limits)
 		#
-		pyplot.subplot(3, 1, 2)
+		sp = pyplot.subplot(3, 1, 2)
+		sp.set_xticklabels( [] )
 		y = avg_integrand
 		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
 		pyplot.ylabel('model')
@@ -483,6 +483,7 @@ def plot_data(integrand_name) :
 		limits     = [min(x), max(x), y_min, y_max]
 		pyplot.axis(limits)
 		#
+		# this plot at the bottom of the figure has its x tick labels
 		pyplot.subplot(3, 1, 3)
 		y = weighted_residual
 		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
@@ -498,7 +499,7 @@ def plot_data(integrand_name) :
 		pyplot.xlabel(x_name)
 		#
 		pdf.savefig( fig )
-		pyplot.close(fig)
+		pyplot.close( fig )
 	#
 	pdf.close()
 # ----------------------------------------------------------------------------
@@ -633,8 +634,11 @@ def plot_predict(covariate_integrand_list, predict_integrand_list) :
 		for integrand_id in predict_id_list :
 			integrand_name = integrand_table[integrand_id]['integrand_name']
 			#
+			# Last plot at the bottom of the figure has its x tick labels
 			plot_index += 1
-			pyplot.subplot(n_predict_integrand, 1, plot_index)
+			sp = pyplot.subplot(n_predict_integrand, 1, plot_index)
+			if plot_index < n_predict_integrand :
+				sp.set_xticklabels( [] )
 			y  = avg_integrand_list[integrand_id]
 			x  = age_list
 			pyplot.scatter(x, y, marker='.', color='k', s=point_size )
