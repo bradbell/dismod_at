@@ -418,7 +418,8 @@ def plot_data(integrand_name) :
 	age               = numpy.array( age_list )
 	time              = numpy.array( time_list )
 	node              = numpy.array( node_list )
-	index             = numpy.array( index_list )
+	# add 1 to index so index zero not hidden by y-axis
+	index             = numpy.array( index_list ) + 1
 	#
 	y_median    = numpy.median( meas_value)
 	y_max       = y_median * 1e+3
