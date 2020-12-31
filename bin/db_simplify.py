@@ -133,18 +133,13 @@ def system_command (command_list) :
 			print('random_seed = ', random_seed )
 		sys.exit('db_simplify.py: system command failed')
 # ----------------------------------------------------------------------------
-def table_name2id (table, table_name, row_name) :
-	# map a table row name to the table_id
-	result = None
-	column_name = table_name + '_name'
-	for table_id in range( len(table) ) :
-		row = table[table_id]
-		if row[column_name] == row_name :
-			result = table_id
-	if result is None :
-		msg = 'table_name2id: cannot find {} row in {} table'
-		msg = msg.format(row_name, table_name)
-		sys.exit(msg)
+def table_name2id(table, table_name) :
+	# Return dictionary that maps a value in the name column to corresponding
+	# row index; i.e. table id value.
+	result = dict()
+	name_column = table_name + '_name'
+	for (row_id, row) in enumerate(table) :
+		result[ row[name_column] ] = row_id
 	return result
 # ----------------------------------------------------------------------------
 def new_zero_smooth_id (smooth_id, smooth_table, smooth_grid_table) :
@@ -211,17 +206,21 @@ def new_one_point_smooth_id(smooth_table, smooth_grid_table, prior_table, prior)
 # ============================================================================
 # Tables that do not change
 # ============================================================================
-# integrand_table
+#
+# integrand_table, integrand_name2id
 table_name = 'integrand'
 (integrand_table, col_name, col_type) = get_table(table_name)
+integrand_name2id = table_name2id(integrand_table, table_name)
 #
-# density_table
+# density_table, density_name2id
 table_name = 'density'
 (density_table, col_name, col_type) = get_table(table_name)
+density_name2id = table_name2id(density_table, table_name)
 #
-# node_table
+# node_table, node_name2id
 table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
+node_name2id = table_name2id(node_table, table_name)
 #
 # age_table
 table_name = 'age'
@@ -234,6 +233,11 @@ table_name = 'time'
 # option_table
 table_name = 'option'
 (option_table, col_name, col_type) = get_table(table_name)
+#
+# rate_name2id
+table_name = 'rate'
+(table, col_name, col_type) = get_table(table_name)
+rate_name2id = table_name2id(table, table_name)
 # ============================================================================
 # Utilities that depend on data table or fit results
 # ============================================================================
@@ -295,9 +299,7 @@ def plot_rate (rate_name) :
 	(fit_var_table, col_name, col_type) = get_table(table_name)
 	#
 	# rate_id
-	table_name   = 'rate'
-	rate_id      = table_name2id(rate_table, table_name, rate_name)
-	#
+	rate_id = rate_name2id[rate_name]
 	#
 	# parent_node_id
 	parent_node_id = None
@@ -307,7 +309,7 @@ def plot_rate (rate_name) :
 		if row['option_name'] == 'parent_node_name' :
 			table_name = 'node'
 			node_name  = row['option_value']
-			parent_note_id = table_name2id(table_name, node_table, node_name)
+			parent_note_id = node_name2id[node_name]
 	if parent_node_id is None :
 		msg = 'Cannot find parent_node_id or parent_node_name in option table'
 		sys.exit(msg)
@@ -455,9 +457,7 @@ def plot_data (integrand_name) :
 	(data_table, col_name, col_type) = get_table(table_name)
 	#
 	# this_integrand_id
-	this_integrand_id = table_name2id(
-		integrand_table, 'integrand', integrand_name
-	)
+	this_integrand_id = integrand_name2id[integrand_name]
 	#
 	n_list                  = 0
 	avg_integrand_list      = list()
@@ -611,21 +611,15 @@ def plot_predict (covariate_integrand_list, predict_integrand_list) :
 	#-----------------------------------------------------------------------
 	#
 	# covariate_id_list
-	table_name        = 'integrand'
 	covariate_id_list = list()
 	for integrand_name in covariate_integrand_list :
-		covariate_id = table_name2id(
-			integrand_table, table_name, integrand_name
-		)
+		covariate_id = integrand_name2id[integrand_name]
 		covariate_id_list.append( covariate_id )
 	#
 	# predict_id_list
-	table_name      = 'integrand'
 	predict_id_list = list()
 	for integrand_name in predict_integrand_list :
-		predict_id = table_name2id(
-			integrand_table, table_name, integrand_name
-		)
+		predict_id = integrand_name2id[integrand_name]
 		predict_id_list.append( predict_id )
 	#
 	# data_table
@@ -795,7 +789,7 @@ def subsample_data (integrand_name, max_sample) :
 	# The origianl order of the data is preserved (in index plots)
 	# by sorting the subsample.
 	#
-	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
+	integrand_id =integrand_name2id[integrand_name]
 	#
 	table_name = 'data'
 	(table_in, col_name, col_type) = get_table(table_name)
@@ -850,15 +844,11 @@ def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 		sys.exit(msg)
 	if integrand_name is not None :
 		node_id      = None
-		integrand_id = table_name2id(
-			integrand_table, 'integrand', integrand_name
-		)
+		integrand_id = integrand_name2id[integrand_name]
 	else :
 		node_name is not None
 		integrand_id = None
-		node_id      = table_name2id(
-			node_table, 'node', node_name
-		)
+		node_id      = node_name2id[node_name]
 	#
 	#
 	table_name = 'data'
@@ -873,10 +863,10 @@ def set_data_density (integrand_name, density_name) :
 	msg = 'set_data_density {} {}'.format(integrand_name, density_name)
 	#
 	# integrand_id
-	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
+	integrand_id =integrand_name2id[integrand_name]
 	#
 	# density_id
-	density_id = table_name2id(density_table, 'density', density_name)
+	density_id = density_name2id[density_name]
 	#
 	# table
 	table_name = 'data'
@@ -899,7 +889,7 @@ def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 	(table, col_name, col_type) = get_table(table_name)
 	#
 	# integrand_id
-	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
+	integrand_id =integrand_name2id[integrand_name]
 	#
 	sub_table   = list()
 	meas_value  = list()
@@ -1160,9 +1150,8 @@ def set_minimum_meas_cv (integrand_name, minimum_meas_cv) :
 #	remove_rate(rate_name)
 #
 # constant_rate:
-# table_name   = 'density'
 # density_name = 'log_gaussian'
-# density_id   = table_name2id(density_table, table_name, density_name)
+# density_id   = density_name2id[density_name]
 # prior = {
 #	'prior_name' : 'constant_pini' ,
 #	'density_id' : density_id      ,
@@ -1224,6 +1213,9 @@ if new_database :
 	for integrand_name in integrand_list_all :
 		if integrand_name != 'Sincidence' :
 			subsample_data(integrand_name, max_sample)
+	integrand_list_yes_ode = list()
+	integrand_list_no_ode  = [ 'Sincidence']
+	integrand_list_all     = [ 'Sincidence']
 	#
 	# remove all rates except iota
 	for rate_name in [ 'pini', 'rho', 'chi', 'omega' ] :
@@ -1232,7 +1224,7 @@ if new_database :
 	# make iota constanst in age and time
 	table_name   = 'density'
 	density_name = 'uniform'
-	density_id   = table_name2id(density_table, table_name, density_name)
+	density_id   = density_name2id[density_name]
 	prior = {
 		'prior_name' : 'constant_iota' ,
 		'density_id' : density_id      ,
