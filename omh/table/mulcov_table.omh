@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-20 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -102,8 +102,9 @@ $cref/group_id/subgroup_table/group_id/$$.
 There is a fixed effect covariate multiplier for all the data
 that has a $cref/subgroup_id/data_table/subgroup_id/$$ that
 corresponds to this group id.
-This covariate only affects the average integrand for when this
-$cref/group_id/avg_integrand/Data or Avgint Table Notation/g_i/$$ is specified.
+This covariate only affects the average integrand for for data points in
+this group; see
+$cref/group_id/avg_integrand/Data or Avgint Table Notation/g_i/$$.
 The $icode group_id$$ cannot be null.
 
 $head group_smooth_id$$
@@ -134,7 +135,7 @@ If the $icode subgroup_smooth_id$$ is $code null$$, these random effects
 are always zero and no $cref model_variables$$ are allocated for them.
 
 $subhead meas_noise$$
-If $icode mulcov_type$$ is $code rate_noise$$,
+If $icode mulcov_type$$ is $code meas_noise$$,
 $icode subgroup_smooth_id$$ must be null.
 
 $subhead pini$$

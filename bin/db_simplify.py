@@ -149,7 +149,8 @@ def table_name2id (table, table_name, row_name) :
 # ----------------------------------------------------------------------------
 def new_zero_smooth_id (smooth_id, smooth_table, smooth_grid_table) :
 	# add a new smoothing that has the same grid as smooth_id smoothing
-	# and that constrains to zero
+	# and that constrains to zero. Tables in argument list are both
+	# inputs and outputs.
 	if smooth_id is None :
 		return None
 	#
@@ -167,6 +168,45 @@ def new_zero_smooth_id (smooth_id, smooth_table, smooth_grid_table) :
 			new_row['dtime_prior_id'] = None
 			new_row['const_value']    = 0.0
 			smooth_grid_table.append( new_row )
+	return new_smooth_id
+# ----------------------------------------------------------------------------
+def new_one_point_smooth_id(smooth_table, smooth_grid_table, prior_table, prior):
+	# Add a new smoothing that has one grid point and a the specified prior
+	# and return it's smooth_id.  The tables in the argument list are
+	# both inputs and outputs.
+	#
+	dummy_variable_used_to_end_doc_string = None
+	#
+	# add row to prior_table
+	new_prior_id = len(prior_table)
+	prior_table.append( copy.copy( prior ) )
+	#
+	# add row to smooth_table
+	new_smooth_id  = len( smooth_table )
+	smooth_name    = prior['prior_name'] + '_smooth'
+	row =  {
+		'smooth_name'           : smooth_name   ,
+		'n_age'                 : 1             ,
+		'n_time'                : 1             ,
+		'mulstd_value_prior_id' : None          ,
+		'mulstd_dage_prior_id'  : None          ,
+		'mulstd_dtime_prior_id' : None          ,
+	}
+	smooth_table.append(row)
+	#
+	# add row to smooth_grid_table
+	row = {
+		'smooth_id'      : new_smooth_id ,
+		'age_id'         : 0             ,
+		'time_id'        : 0             ,
+		'value_prior_id' : new_prior_id  ,
+		'dage_prior_id'  : None          ,
+		'dtime_prior_id' : None          ,
+		'const_value'    : None          ,
+	}
+	smooth_grid_table.append(row)
+	#
+	# return the new smoothing
 	return new_smooth_id
 # ============================================================================
 # Tables that do not change
@@ -313,11 +353,17 @@ def plot_rate (rate_name) :
 						smooth_id = row['smooth_id']
 					else :
 						assert smooth_id == row['smooth_id']
+	if smooth_id == None :
+		print('plot_rate: ' + rate_name + ' is identically zero')
+		return
 	#
 	# n_age, n_time
 	n_age  = smooth_table[smooth_id]['n_age']
 	n_time = smooth_table[smooth_id]['n_time']
 	assert len(triple_list) == n_age * n_time
+	if n_age * n_time == 1 :
+		print('plot_rate: ' + rate_name + ' is identically constant')
+		return
 	#
 	# sort triple_list first by age and then by time
 	key = lambda triple : pair( triple[0], triple[1] )
@@ -351,43 +397,43 @@ def plot_rate (rate_name) :
 	#
 	from matplotlib import pyplot
 	#
-	# for each time, plot rate as a function of age
-	fig_1 = pyplot.figure()
-	for j in range(n_time) :
-		x     = age[:,j]
-		y     = rate[:,j]
-		label = str( time[0,j] )
-		pyplot.plot(x, y, label=label)
-		#
-		# axis labels
-		pyplot.xlabel('age')
-		pyplot.ylabel(rate_name)
-		pyplot.yscale('log')
-	pyplot.legend(title = 'time')
-	#
-	# for each age, plot rate as a function of time
-	fig_2 = pyplot.figure()
-	for i in range(n_age) :
-		x     = time[i,:]
-		y     = rate[i,:]
-		label = str( age[i,0] )
-		pyplot.plot(x, y, label=label)
-		#
-		# axis labels
-		pyplot.xlabel('time')
-		pyplot.ylabel(rate_name)
-		pyplot.yscale('log')
-	pyplot.legend(title = 'age')
-	#
 	import matplotlib.backends.backend_pdf
 	file_name = plot_directory + '/' + rate_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
-	pdf.savefig( fig_1 )
-	pdf.savefig( fig_2 )
+	# for each time, plot rate as a function of age
+	if n_age > 1 :
+		fig = pyplot.figure()
+		for j in range(n_time) :
+			x     = age[:,j]
+			y     = rate[:,j]
+			label = str( time[0,j] )
+			pyplot.plot(x, y, label=label)
+			#
+			# axis labels
+			pyplot.xlabel('age')
+			pyplot.ylabel(rate_name)
+			pyplot.yscale('log')
+		pyplot.legend(title = 'time')
+		pdf.savefig( fig )
+		pyplot.close( fig )
 	#
-	pyplot.close( fig_1 )
-	pyplot.close( fig_2 )
+	# for each age, plot rate as a function of time
+	if n_time > 1 :
+		fig = pyplot.figure()
+		for i in range(n_age) :
+			x     = time[i,:]
+			y     = rate[i,:]
+			label = str( age[i,0] )
+			pyplot.plot(x, y, label=label)
+			#
+			# axis labels
+			pyplot.xlabel('time')
+			pyplot.ylabel(rate_name)
+			pyplot.yscale('log')
+		pyplot.legend(title = 'age')
+		pdf.savefig( fig )
+		pyplot.close( fig )
 	#
 	pdf.close()
 # ----------------------------------------------------------------------------
@@ -448,6 +494,9 @@ def plot_data (integrand_name) :
 			weighted_residual = row['weighted_residual']
 			weighted_residual_list.append( weighted_residual )
 	index_list = range(n_list)
+	if n_list < 2 :
+		print('plot_integrand: ' + integrand_name + ' has less than 2 points')
+		return
 	#
 	# map node id to index in set of node_id's
 	node_set   = list( set( node_list ) )
@@ -867,9 +916,9 @@ def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 	#
 	put_table(table_name, table, col_name, col_type)
 # -----------------------------------------------------------------------------
-def identically_one_covariate() :
+def identically_one_covariate () :
 	# Return the covariate_id for a covariate that is one for every data point,
-		# has refefence value is zero, and max_difference value is null.
+	# has refefence value is zero, and max_difference value is null.
 	# (If no such covariate exists, one is created.)
 	#
 	table_name = 'data'
@@ -1032,53 +1081,37 @@ def constant_rate (rate_name, prior) :
 	# Set a rate to be constant in age and time specified prior
 	print( 'constant_rate {}'.format(rate_name) )
 	#
-	# add row to prior_table
+	# prior_table
 	table_name = 'prior'
-	(table, col_name, col_type) = get_table(table_name)
-	new_prior_id = len(table)
-	table.append( copy.copy( prior ) )
-	put_table(table_name, table, col_name, col_type)
+	(prior_table, prior_col_name, prior_col_type) = get_table(table_name)
 	#
-	# add row to smooth_table
+	# smooth_table
 	table_name = 'smooth'
-	(table, col_name, col_type) = get_table(table_name)
-	new_smooth_id  = len( table )
-	smooth_name    = prior['prior_name'] + '_smooth'
-	row =  {
-		'smooth_name'           : smooth_name   ,
-		'n_age'                 : 1             ,
-		'n_time'                : 1             ,
-		'mulstd_value_prior_id' : None          ,
-		'mulstd_dage_prior_id'  : None          ,
-		'mulstd_dtime_prior_id' : None          ,
-	}
-	table.append(row)
-	put_table(table_name, table, col_name, col_type)
+	(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
 	#
-	# add row to smooth_grid_table
+	# smooth_grid_table
 	table_name = 'smooth_grid'
-	(table, col_name, col_type) = get_table(table_name)
-	row = {
-		'smooth_id'      : new_smooth_id ,
-		'age_id'         : 0             ,
-		'time_id'        : 0             ,
-		'value_prior_id' : new_prior_id  ,
-		'dage_prior_id'  : None          ,
-		'dtime_prior_id' : None          ,
-		'const_value'    : None          ,
-	}
-	table.append(row)
-	put_table(table_name, table, col_name, col_type)
+	(smooth_grid_table, grid_col_name, grid_col_type) = get_table(table_name)
+	#
+	# add the smothing
+	smooth_id = new_one_point_smooth_id(
+		smooth_table, smooth_grid_table, prior_table, prior
+	)
 	#
 	# change rate_table
 	table_name = 'rate'
-	(table, col_name, col_type) = get_table(table_name)
-	for row in table :
+	(rate_table, rate_col_name, rate_col_type) = get_table(table_name)
+	for row in rate_table :
 		if row['rate_name'] == rate_name :
-			row['parent_smooth_id'] = new_smooth_id
+			row['parent_smooth_id'] = smooth_id
 			row['child_smooth_id']  = None
 			row['child_nslist_id']  = None
-	put_table(table_name, table, col_name, col_type)
+	#
+	# write out the tables that changed
+	put_table('prior',       prior_table, prior_col_name, prior_col_type)
+	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
+	put_table('smooth_grid', smooth_grid_table, grid_col_name, grid_col_type)
+	put_table('rate',        rate_table,  rate_col_name, rate_col_type)
 # -----------------------------------------------------------------------------
 def set_option (name, value) :
 	# set a specified option table name to a specified option table value
@@ -1186,20 +1219,32 @@ if new_database :
 	set_option('zero_sum_child_rate', 'iota chi')
 	set_option('bound_random',        '3')
 	#
-	# subsample data for speed of testing
-	integrand_count = get_integrand_count()
+	# remove all data except Sincidence
+	max_sample     = 0
+	for integrand_name in integrand_list_all :
+		if integrand_name != 'Sincidence' :
+			subsample_data(integrand_name, max_sample)
 	#
-	integrand_name = 'mtexcess'
-	max_sample     = int( integrand_count[integrand_name] / 1 )
-	subsample_data(integrand_name, max_sample)
+	# remove all rates except iota
+	for rate_name in [ 'pini', 'rho', 'chi', 'omega' ] :
+		remove_rate(rate_name)
 	#
-	integrand_name = 'Sincidence'
-	max_sample     = int( integrand_count[integrand_name] / 1 )
-	subsample_data(integrand_name, max_sample)
-	#
-	integrand_name = 'prevalence'
-	max_sample     = int( integrand_count[integrand_name] / 1 )
-	subsample_data(integrand_name, max_sample)
+	# make iota constanst in age and time
+	table_name   = 'density'
+	density_name = 'uniform'
+	density_id   = table_name2id(density_table, table_name, density_name)
+	prior = {
+		'prior_name' : 'constant_iota' ,
+		'density_id' : density_id      ,
+		'lower'      : 1e-9            ,
+		'upper'      : 1               ,
+		'mean'       : 1e-9            ,
+		'std'        : None            ,
+		'eta'        : None            ,
+		'nu'         : None            ,
+	}
+	rate_name  = 'iota'
+	constant_rate(rate_name, prior)
 	#
 	# set the minimum measurement standard deviation and cv
 	median_meas_value_cv = 1e-2
