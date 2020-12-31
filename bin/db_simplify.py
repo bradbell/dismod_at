@@ -18,9 +18,9 @@ database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # if new_database is true, run fit both first without and then with ode data.
-fit_ode            = False
+fit_ode            = True
 # print the help message for all the db_simplify routines and then exit
-print_help         = True
+print_help         = False
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -170,10 +170,6 @@ table_name = 'integrand'
 # density_table
 table_name = 'density'
 (density_table, col_name, col_type) = get_table(table_name)
-#
-# covariate_table
-table_name = 'covariate'
-(covariate_table, col_name, col_type) = get_table(table_name)
 #
 # node_table
 table_name = 'node'
@@ -706,6 +702,9 @@ def subset_data () :
 	# remove datat table rows that are held out or have covariates
 	# that are out of bounds
 	print('remove hold out and covariate out of bounds data')
+	#
+	table_name = 'covariate'
+	(covariate_table, col_name, col_type) = get_table(table_name)
 	#
 	table_name = 'data'
 	(table_in, col_name, col_type) = get_table(table_name)
