@@ -18,7 +18,7 @@ database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # if new_database is true, run fit both first without and then with ode data.
-fit_ode            = True
+fit_ode            = False
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -83,7 +83,6 @@ if print_help :
 # General Purpose Utilities
 # ===========================================================================
 # ----------------------------------------------------------------------------
-# ----------------------------------------------------------------------------
 def get_table (table_name) :
 	# read a dismod_at table
 	new                  = False
@@ -113,6 +112,15 @@ def put_table (table_name, table, col_name, col_type) :
 		row_list.append( this_row )
 	#
 	dismod_at.create_table(connection,table_name,col_name,col_type,row_list)
+	connection.close()
+# ----------------------------------------------------------------------------
+def sql_command(command) :
+	# execute an sql command on this database
+	print(command)
+	new          = False
+	connection   = dismod_at.create_connection(database, new)
+	cursor       = connection.cursor()
+	cursor.execute(command)
 	connection.close()
 # ----------------------------------------------------------------------------
 def system_command (command_list) :
@@ -858,6 +866,69 @@ def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 			row['meas_std'] = minimum_meas_std
 	#
 	put_table(table_name, table, col_name, col_type)
+# -----------------------------------------------------------------------------
+def identically_one_covariate() :
+	# Return the covariate_id for a covariate that is one for every data point,
+		# has refefence value is zero, and max_difference value is null.
+	# (If no such covariate exists, one is created.)
+	#
+	table_name = 'data'
+	(data_table, data_col_name, data_col_type) = get_table(table_name)
+	#
+	table_name = 'avgint'
+	(avgint_table, avgint_col_name, avgint_col_type) = get_table(table_name)
+	#
+	table_name = 'covariate'
+	(covariate_table, cov_col_name, cov_col_type) = get_table(table_name)
+	n_covariate = len(covariate_table)
+	#
+	# is_one
+	is_one = list()
+	for row in covariate_table :
+		reference      = row['reference']
+		max_difference = row['max_difference']
+		is_one.append( reference == 0.0 and max_difference is None)
+	for row in data_table :
+		for covariate_id in range(n_covariate) :
+			key = 'x_' + str(covariate_id)
+			is_one[covariate_id] &= row[key] == 1.0
+	#
+	# check for existing column in data
+	for covariate_id in range(n_covariate) :
+		if is_one[covariate_id] :
+			return covariate_id
+	#
+	# add row to covariate table
+	row = dict()
+	for key in cov_col_name :
+		row[key] = None
+	row['covariate_name'] = 'ones'
+	row['reference']      = 0.0
+	#
+	covariate_id = len(covariate_table)
+	table_name    = 'covariate'
+	covariate_table.append(row)
+	put_table(table_name, covariate_table, cov_col_name, cov_col_type)
+	#
+	# add column to data_table
+	key = 'x_' + str(covariate_id)
+	data_col_name.append(key)
+	data_col_type.append('real')
+	for row in data_table :
+		row[key] = 1.0
+	table_name    = 'data'
+	put_table(table_name, data_table, data_col_name, data_col_type)
+	#
+	# add same column to avgint table
+	avgint_col_name.append(key)
+	avgint_col_type.append('real')
+	for row in avgint_table :
+		row[key] = 1.0
+	table_name    = 'avgint'
+	put_table(table_name, avgint_table, avgint_col_name, avgint_col_type)
+	#
+	#
+	return covariate_id
 # ============================================================================
 # Routines that Change Other Tables
 # ============================================================================
@@ -1140,6 +1211,10 @@ if new_database :
 	# constrain all x_0 covariate multipliers to be zero
 	covariate_id = 0
 	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
+	#
+	# ones column covariate_id (not yet used)
+	one_covariate_id = identically_one_covariate()
+	print('one_covariate_id = ', one_covariate_id)
 	#
 	# take ode integrands out of fit
 	for integrand_name in integrand_list_yes_ode :
