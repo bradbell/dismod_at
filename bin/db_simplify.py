@@ -17,8 +17,10 @@ original_database  = 'ihme_db/data/475588/dbs/100/3/dismod.db'
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
-# If new_database is true, run fit both first without and then with ode data.
+# if new_database is true, run fit both first without and then with ode data.
 fit_ode            = False
+# print the help message for all the db_simplify routines and then exit
+print_help         = True
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -48,12 +50,42 @@ if index < 0 :
 	plot_directory = '.'
 else :
 	plot_directory = database[0 : index]
+#
+if print_help :
+	# print the help message for each db_simplify routine
+	file_name = sys.argv[0]
+	fp        = open(file_name, 'r')
+	fp_data   = fp.read()
+	print()
+	#
+	def more(index) :
+		while fp_data[index] in ' \t' :
+			index += 1
+		if fp_data[index] == '#' :
+			return index
+		return -1
+	#
+	start  = 0
+	index  = fp_data.find('\ndef ', start)
+	while 0 <= index :
+		start  = index + 5
+		stop   = fp_data.find('\n', start) + 1
+		output = fp_data[start : stop]
+		while 0 <= more(stop) :
+			start   = more(stop) + 2
+			stop    = fp_data.find('\n', stop) + 1
+			output += fp_data[start : stop]
+		print( output )
+		start = stop
+		index  = fp_data.find('\ndef ', start)
+	sys.exit(0)
 # ===========================================================================
 # General Purpose Utilities
 # ===========================================================================
-#
-# get_table
-def get_table(table_name) :
+# ----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+def get_table (table_name) :
+	# read a dismod_at table
 	new                  = False
 	connection           = dismod_at.create_connection(database, new)
 	(col_name, col_type) = dismod_at.get_name_type(connection, table_name)
@@ -64,9 +96,9 @@ def get_table(table_name) :
 	del col_name[0]
 	del col_type[0]
 	return (table, col_name, col_type)
-#
-# put_table
-def put_table(table_name, table, col_name, col_type) :
+# ----------------------------------------------------------------------------
+def put_table (table_name, table, col_name, col_type) :
+	# write a dismod_at table
 	new          = False
 	connection   = dismod_at.create_connection(database, new)
 	cursor       = connection.cursor()
@@ -82,9 +114,9 @@ def put_table(table_name, table, col_name, col_type) :
 	#
 	dismod_at.create_table(connection,table_name,col_name,col_type,row_list)
 	connection.close()
-#
-# system_command
-def system_command(command_list) :
+# ----------------------------------------------------------------------------
+def system_command (command_list) :
+	# execute a command at the system level
 	command_str = " ".join(command_list)
 	print(command_str)
 	run = subprocess.run(command_list)
@@ -92,8 +124,9 @@ def system_command(command_list) :
 		if new_database :
 			print('random_seed = ', random_seed )
 		sys.exit('db_simplify.py: system command failed')
-#
-def table_name2id(table, table_name, row_name) :
+# ----------------------------------------------------------------------------
+def table_name2id (table, table_name, row_name) :
+	# map a table row name to the table_id
 	result = None
 	column_name = table_name + '_name'
 	for table_id in range( len(table) ) :
@@ -105,8 +138,10 @@ def table_name2id(table, table_name, row_name) :
 		msg = msg.format(row_name, table_name)
 		sys.exit(msg)
 	return result
-#
-def new_zero_smooth_id(smooth_id, smooth_table, smooth_grid_table) :
+# ----------------------------------------------------------------------------
+def new_zero_smooth_id (smooth_id, smooth_table, smooth_grid_table) :
+	# add a new smoothing that has the same grid as smooth_id smoothing
+	# and that constrains to zero
 	if smooth_id is None :
 		return None
 	#
@@ -159,7 +194,9 @@ table_name = 'option'
 # Utilities that depend on data table or fit results
 # ============================================================================
 # ----------------------------------------------------------------------------
-def get_integrand_list(ode) :
+def get_integrand_list (ode) :
+	# If ode is true (false) get list of integrands that require
+	# (do not require) the ode to model.
 	integrand_model_uses_ode = [
 		'prevalence', 'Tincidence', 'mtspecific', 'mtall', 'mtstandard'
 	]
@@ -180,8 +217,9 @@ def get_integrand_list(ode) :
 	#
 	return integrand_list
 # ----------------------------------------------------------------------------
-def get_integrand_count() :
-	#
+def get_integrand_count () :
+	# return a dictionary that contains the number of data points for each
+	# integrand name
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
 	#
@@ -195,9 +233,8 @@ def get_integrand_count() :
 	#
 	return integrand_count
 # ----------------------------------------------------------------------------
-# plot_rate
-def plot_rate(rate_name) :
-	# rate_table
+def plot_rate (rate_name) :
+	# plot the fit_var grid values for a specified rate.
 	table_name = 'rate'
 	(rate_table, col_name, col_type) = get_table(table_name)
 	#
@@ -351,8 +388,10 @@ def plot_rate(rate_name) :
 	pdf.close()
 # ----------------------------------------------------------------------------
 # plot_data
-def plot_data(integrand_name) :
-	#
+def plot_data (integrand_name) :
+	# Plot the data, model, and residual values for a specified integrand.
+	# Covariate values used for each model point are determined by
+	# correspondign data point.
 	table_name = 'data_subset'
 	(data_subset_table, col_name, col_type) = get_table(table_name)
 	#
@@ -505,10 +544,13 @@ def plot_data(integrand_name) :
 	pdf.close()
 # ----------------------------------------------------------------------------
 # plot_predict
-def plot_predict(covariate_integrand_list, predict_integrand_list) :
-	#-----------------------------------------------------------------------
+def plot_predict (covariate_integrand_list, predict_integrand_list) :
+	# Plot the model predictions for each integrand in the predict integrand
+	# list. The is one such plot for each integrand in the covariate integrand
+	# list (which determines the covariate values used for the predictions).
+	dummy_variable_used_to_end_doc_string = None
+	# -----------------------------------------------------------------------
 	# create avgint table
-	#
 	# For each covariate_integrand
 	#	For data row corresponding to this covariate_integrand
 	#		For each predict_intgrand
@@ -658,9 +700,11 @@ def plot_predict(covariate_integrand_list, predict_integrand_list) :
 # =============================================================================
 # Routines that Change Data Table
 # =============================================================================
+# -----------------------------------------------------------------------------
 # subset_data:
-# remove rows that are held out or have covariates out of bounds
-def subset_data() :
+def subset_data () :
+	# remove datat table rows that are held out or have covariates
+	# that are out of bounds
 	print('remove hold out and covariate out of bounds data')
 	#
 	table_name = 'data'
@@ -688,12 +732,12 @@ def subset_data() :
 		if keep :
 			table_out.append(row)
 	put_table(table_name, table_out, col_name, col_type)
-#
-# subsample_data:
-# for a specified integrand, sample at most max_sample entries.
-# This does random sampling that can be seeded by calling random.seed.
-# The origianl order of the data is preserved by sorting the subsample.
-def subsample_data(integrand_name, max_sample) :
+# -----------------------------------------------------------------------------
+def subsample_data (integrand_name, max_sample) :
+	# for a specified integrand, sample at most max_sample entries.
+	# This does random sampling that can be seeded by calling random.seed.
+	# The origianl order of the data is preserved (in index plots)
+	# by sorting the subsample.
 	#
 	integrand_id = table_name2id(integrand_table, 'integrand', integrand_name)
 	#
@@ -735,10 +779,9 @@ def subsample_data(integrand_name, max_sample) :
 	#
 	msg = "subsample_data {} sample in = {} out = {}"
 	print( msg.format(integrand_name, n_sample_in, n_sample_out) )
-#
-# hold_out_data:
-# for a specified integrand or node, set the hold_out to 0 or 1
-def hold_out_data(integrand_name=None, node_name= None, hold_out=None) :
+# -----------------------------------------------------------------------------
+def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
+	# for a specified integrand or node, set the hold_out to 0 or 1
 	msg = 'integrand={}, node={}, hold_out={}'
 	print( msg.format(integrand_name, node_name, hold_out) )
 	if integrand_name is None and node_name is None :
@@ -768,10 +811,9 @@ def hold_out_data(integrand_name=None, node_name= None, hold_out=None) :
 		if integrand_id == row['integrand_id'] or node_id == row['node_id'] :
 			row['hold_out'] = hold_out
 	put_table(table_name, table, col_name, col_type)
-#
-# set_data_dentity:
-# for a specified integrand, set its data density to a specified value
-def set_data_density(integrand_name, density_name) :
+# -----------------------------------------------------------------------------
+def set_data_density (integrand_name, density_name) :
+	# for a specified integrand, set its data density to a specified value
 	msg = 'set_data_density {} {}'.format(integrand_name, density_name)
 	#
 	# integrand_id
@@ -789,11 +831,10 @@ def set_data_density(integrand_name, density_name) :
 			row['density_id'] = density_id
 	#
 	put_table(table_name, table, col_name, col_type)
-#
-# set_minimum_meas_std:
-# Set the minimum measurement standard deviation or an integrand using
-# median_meas_value_cv, a multiplier for the median value for the integrand.
-def set_minimum_meas_std(integrand_name, median_meas_value_cv) :
+# -----------------------------------------------------------------------------
+def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
+	# Set the minimum measurement standard deviation or an integrand using
+	# median_meas_value_cv, a multiplier for the median value for the integrand.
 	msg ='set {} median_meas_value_cv {}'
 	msg = msg.format(integrand_name, median_meas_value_cv)
 	print(msg)
@@ -821,9 +862,9 @@ def set_minimum_meas_std(integrand_name, median_meas_value_cv) :
 # ============================================================================
 # Routines that Change Other Tables
 # ============================================================================
-# remove_rate;
-# remove both the parent and child variables for a rate
-def remove_rate(rate_name) :
+# -----------------------------------------------------------------------------
+def remove_rate (rate_name) :
+	# remove both the parent and child variables for a rate
 	print( 'remove_rate {}'.format(rate_name) )
 	#
 	table_name = 'rate'
@@ -834,9 +875,9 @@ def remove_rate(rate_name) :
 			row['child_smooth_id']  = None
 			row['child_nslist_id']  = None
 	put_table(table_name, table, col_name, col_type)
-#
-# set_covariate_reference:
-def set_covariate_reference(covariate_id, reference_name) :
+# -----------------------------------------------------------------------------
+def set_covariate_reference (covariate_id, reference_name) :
+	# set the reference value for a specified covariate
 	msg = 'set_covariate_reference: x_{} to {}'
 	print( msg.format(covariate_id, reference_name) )
 	#
@@ -871,11 +912,10 @@ def set_covariate_reference(covariate_id, reference_name) :
 	table[covariate_id]['reference'] = reference
 	#
 	put_table(table_name, table, col_name, col_type)
-#
-# set_mulcov_zero:
-# set all of the multipliers for a specified covariate to zero without
-# changing the order or size of the var table
-def set_mulcov_zero(covariate_id, restore= None) :
+# -----------------------------------------------------------------------------
+def set_mulcov_zero (covariate_id, restore= None) :
+	# set all of the multipliers for a specified covariate to zero without
+	# changing the order or size of the var table
 	if restore is None :
 		print( 'set_mulcov_zero x_{}'.format(covariate_id) )
 	else :
@@ -917,10 +957,9 @@ def set_mulcov_zero(covariate_id, restore= None) :
 	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
 	put_table('smooth_grid', grid_table,   grid_col_name,   grid_col_type)
 	return restore
-#
-# constant_rate:
-# Set a rate to be constant in age and time specified prior
-def constant_rate(rate_name, prior) :
+# -----------------------------------------------------------------------------
+def constant_rate (rate_name, prior) :
+	# Set a rate to be constant in age and time specified prior
 	print( 'constant_rate {}'.format(rate_name) )
 	#
 	# add row to prior_table
@@ -970,17 +1009,15 @@ def constant_rate(rate_name, prior) :
 			row['child_smooth_id']  = None
 			row['child_nslist_id']  = None
 	put_table(table_name, table, col_name, col_type)
-#
-# set_option:
-# set a specified option to a specified value
-def set_option(name, value) :
+# -----------------------------------------------------------------------------
+def set_option (name, value) :
+	# set a specified option table name to a specified option table value
 	system_command( [
 		'dismod_at',  database, 'set', 'option', name , value
 	] )
-#
-# set_minimum_meas_cv:
-# set the minimum cv for a specified integrand
-def set_minimum_meas_cv(integrand_name, minimum_meas_cv) :
+# -----------------------------------------------------------------------------
+def set_minimum_meas_cv (integrand_name, minimum_meas_cv) :
+	# set the minimum cv for a specified integrand
 	print( 'set {} minimum_meas_cv {}'.format(integrand_name, minimum_meas_cv) )
 	#
 	table_name = 'integrand'
