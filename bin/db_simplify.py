@@ -18,7 +18,7 @@ database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # if new_database is true, run fit both first without and then with ode data.
-fit_ode            = False
+fit_ode            = True
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -389,15 +389,6 @@ def plot_rate (rate_name) :
 			time[i, j] = time_table[time_id]['time']
 			rate[i, j] = fit_var_table[var_id]['fit_var_value']
 	#
-	# rate limits
-	rate_max  = numpy.max(rate)
-	rate_min  = numpy.min(rate)
-	if rate_max <= 0.0 :
-		print( 'plot_rate: max({}) <= 0'.format(rate_name) )
-		return
-	rate_min    = max(rate_min, 1e-10 * rate_max)
-	rate_limits = [rate_min, rate_max]
-	#
 	from matplotlib import pyplot
 	#
 	import matplotlib.backends.backend_pdf
@@ -418,9 +409,8 @@ def plot_rate (rate_name) :
 			pyplot.ylabel(rate_name)
 			pyplot.yscale('log')
 		for i in range(n_age) :
-			x = [ age[i, 0], age[i, 0] ]
-			y = rate_limits
-			pyplot.plot(x, y, color='black', linestyle='dotted', alpha=0.25)
+			x = age[i, 0]
+			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.25)
 		pyplot.legend(title = 'time')
 		pdf.savefig( fig )
 		pyplot.close( fig )
@@ -439,9 +429,8 @@ def plot_rate (rate_name) :
 			pyplot.ylabel(rate_name)
 			pyplot.yscale('log')
 		for j in range(n_time) :
-			x = [ time[0, j], time[0, j] ]
-			y = rate_limits
-			pyplot.plot(x, y, color='black', linestyle='dotted', alpha=0.25)
+			x = time[0, j]
+			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.25)
 		pyplot.legend(title = 'age')
 		pdf.savefig( fig )
 		pyplot.close( fig )
@@ -524,8 +513,9 @@ def plot_integrand (integrand_name) :
 	y_median    = numpy.median( meas_value)
 	y_max       = y_median * 1e+3
 	y_min       = y_median * 1e-3
-	r_max       = 10.0
-	r_min       = -10.0
+	r_median    = numpy.mean( numpy.abs( weighted_residual ) )
+	r_max       = 5.0 * r_median
+	r_min       = - r_max
 	#
 	avg_integrand = numpy.maximum( avg_integrand, y_min )
 	avg_integrand = numpy.minimum( avg_integrand, y_max )
@@ -546,7 +536,6 @@ def plot_integrand (integrand_name) :
 	#
 	for x_name in [ 'index', 'node', 'age', 'time' ] :
 		x          = eval( x_name )
-		x_limits   = [min(x), max(x)]
 		#
 		fig, axes = pyplot.subplots(3, 1, sharex=True)
 		fig.subplots_adjust(hspace=0)
@@ -561,8 +550,7 @@ def plot_integrand (integrand_name) :
 			flag = y == limit
 			size = marker_size[flag]
 			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
-		limits     = [min(x), max(x), y_min, y_max]
-		pyplot.axis(limits)
+		pyplot.ylim(y_min, y_max)
 		#
 		sp = pyplot.subplot(3, 1, 2)
 		sp.set_xticklabels( [] )
@@ -574,21 +562,20 @@ def plot_integrand (integrand_name) :
 			flag = y == limit
 			size = marker_size[flag]
 			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
-		limits     = [min(x), max(x), y_min, y_max]
-		pyplot.axis(limits)
+		pyplot.ylim(y_min, y_max)
 		#
 		# this plot at the bottom of the figure has its x tick labels
 		pyplot.subplot(3, 1, 3)
 		y = weighted_residual
 		pyplot.scatter(x, y, marker='.', color='black', s = point_size)
-		pyplot.plot(x_limits, [0, 0], linestyle='-', color='black')
 		pyplot.ylabel('residual')
 		for limit in [ r_max, r_min ] :
 			flag = y == limit
 			size = marker_size[flag]
 			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
-		limits     = [min(x), max(x), r_min, r_max]
-		pyplot.axis(limits)
+		pyplot.ylim(r_min, r_max)
+		y = 0.0
+		pyplot.axhline(y, linestyle='solid', color='black', alpha=0.25 )
 		#
 		pyplot.xlabel(x_name)
 		#
@@ -1154,7 +1141,7 @@ def add_meas_noise_mulcov(integrand_name, group_id, mulcov_value) :
 	# prior used in one point smoothing
 	density_id = density_name2id['uniform']
 	prior = {
-		'prior_name' : 'meas_noise'    ,
+		'prior_name' : integrand_name + 'meas_noise'    ,
 		'density_id' : density_id      ,
 		'lower'      : mulcov_value    ,
 		'upper'      : mulcov_value    ,
@@ -1271,28 +1258,35 @@ if new_database :
 	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
-	#
 	# subsetting the data can remove some integrands
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
+	# subsample the ode data for speed of testing
+	max_sample = 200
+	for integrand_name in integrand_list_yes_ode :
+			subsample_data(integrand_name, max_sample)
+	#
 	# set options
-	set_option('tolerance_fixed',    '1e-8')
-	set_option('max_num_iter_fixed', '50')
+	set_option('tolerance_fixed',    '1e-6')
+	set_option('max_num_iter_fixed', '100')
 	set_option('zero_sum_child_rate', 'iota chi')
 	set_option('bound_random',        '3')
 	#
-	# add a Sincidence meas_nose covariate
-	integrand_name = 'Sincidence'
+	# add measurement noise covariates and change densities to gaussian
+	mulcov_value = {
+		'prevalence' : 1e-7,
+		'mtspecific' : 1e-6,
+		'mtexcess'   : 1e-7,
+		'Sincidence' : 1e-9,
+	}
 	group_id       = 0
-	mulcov_value   = 1e-8
-	add_meas_noise_mulcov(integrand_name, group_id, mulcov_value)
-	#
-	# change Sindicence density to gaussian
-	integrand_name = 'Sincidence'
 	density_name   = 'gaussian'
-	set_data_density(integrand_name, density_name)
+	for integrand_name in mulcov_value :
+		value = mulcov_value[integrand_name]
+		add_meas_noise_mulcov(integrand_name, group_id, value)
+		set_data_density(integrand_name, density_name)
 	#
 	# constrain all x_0 covariate multipliers to be zero
 	covariate_id = 0
