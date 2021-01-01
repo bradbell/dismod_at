@@ -1266,9 +1266,9 @@ if new_database :
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
 	# subsample the ode data for speed of testing
-	max_sample = 400
-	for integrand_name in integrand_list_yes_ode :
-			subsample_data(integrand_name, max_sample)
+	# max_sample = 1000
+	# for integrand_name in integrand_list_yes_ode :
+	#		subsample_data(integrand_name, max_sample)
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
