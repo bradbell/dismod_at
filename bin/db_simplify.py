@@ -513,8 +513,9 @@ def plot_integrand (integrand_name) :
 	y_median    = numpy.median( meas_value)
 	y_max       = y_median * 1e+3
 	y_min       = y_median * 1e-3
-	r_median    = numpy.mean( numpy.abs( weighted_residual ) )
-	r_max       = 5.0 * r_median
+	r_norm      = numpy.linalg.norm( weighted_residual )
+	r_avg_sq    = r_norm * r_norm / len( weighted_residual )
+	r_max       = 5.0 * numpy.sqrt( r_avg_sq )
 	r_min       = - r_max
 	#
 	avg_integrand = numpy.maximum( avg_integrand, y_min )
@@ -1189,10 +1190,11 @@ def add_meas_noise_mulcov(integrand_name, group_id, mulcov_value) :
 # subset_data:
 # subset_data()
 #
-# subsample all data (for speed of testing)
-# max_sample = 100
-# for integrand_name in integrand_list :
-#	subsample_data(integrand_name, max_sample)
+# subsample mtexcess
+# integrand_count = get_integrand_count()
+# max_sample      = int( integrand_count['mtexcess'] / 10 )
+# subsample_data(integrand_name, max_sample)
+#
 # constrain all x_0 covariate multipliers to be zero
 # covariate_id = 0
 # restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
@@ -1264,7 +1266,7 @@ if new_database :
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
 	# subsample the ode data for speed of testing
-	max_sample = 200
+	max_sample = 400
 	for integrand_name in integrand_list_yes_ode :
 			subsample_data(integrand_name, max_sample)
 	#
@@ -1278,7 +1280,7 @@ if new_database :
 	mulcov_value = {
 		'prevalence' : 1e-7,
 		'mtspecific' : 1e-6,
-		'mtexcess'   : 1e-7,
+		'mtexcess'   : 1e-5,
 		'Sincidence' : 1e-9,
 	}
 	group_id       = 0
