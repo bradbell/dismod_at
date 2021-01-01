@@ -516,8 +516,8 @@ def plot_data (integrand_name) :
 	y_median    = numpy.median( meas_value)
 	y_max       = y_median * 1e+3
 	y_min       = y_median * 1e-3
-	r_max       = 20.0
-	r_min       = -20.0
+	r_max       = 10.0
+	r_min       = -10.0
 	#
 	avg_integrand = numpy.maximum( avg_integrand, y_min )
 	avg_integrand = numpy.minimum( avg_integrand, y_max )
@@ -1119,7 +1119,71 @@ def set_minimum_meas_cv (integrand_name, minimum_meas_cv) :
 		if row['integrand_name'] == integrand_name :
 			row['minimum_meas_cv'] = minimum_meas_cv
 	put_table(table_name, table, col_name, col_type)
-
+# -----------------------------------------------------------------------------
+def add_meas_noise_mulcov(integrand_name, group_id, mulcov_value) :
+	# Add a meas_noise covariate multiplier with a specified integrand,
+	# group_id, and value. Note that meas_noise multipliers can't have
+	# ramdom effect (so the subgroup id is null in the mulcov table).
+	dummy_variable_used_to_end_doc_string = None
+	#
+	# prior_table
+	table_name = 'prior'
+	(prior_table, prior_col_name, prior_col_type) = get_table(table_name)
+	#
+	# smooth_table
+	table_name = 'smooth'
+	(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
+	#
+	# smooth_grid_table
+	table_name = 'smooth_grid'
+	(smooth_grid_table, grid_col_name, grid_col_type) = get_table(table_name)
+	#
+	table_name = 'mulcov'
+	(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
+	#
+	# integrand_id
+	integrand_id = integrand_name2id[integrand_name]
+	#
+	# covariate_id
+	covariate_id = identically_one_covariate()
+	#
+	# mulcov_id
+	mulcov_id = len(mulcov_table)
+	#
+	# prior used in one point smoothing
+	density_id = density_name2id['uniform']
+	prior = {
+		'prior_name' : 'meas_noise'    ,
+		'density_id' : density_id      ,
+		'lower'      : mulcov_value    ,
+		'upper'      : mulcov_value    ,
+		'mean'       : mulcov_value    ,
+		'std'        : None            ,
+		'eta'        : None            ,
+		'nu'         : None            ,
+	}
+	#
+	# new one point smoothing
+	smooth_id = new_one_point_smooth_id(
+		smooth_table, smooth_grid_table, prior_table, prior
+	)
+	#
+	# new row in mulcov_table
+	row = dict()
+	for col in mulcov_col_name :
+		row[col] = None
+	row['mulcov_type']      = 'meas_noise'
+	row['covariate_id']     = covariate_id
+	row['integrand_id']     = integrand_id
+	row['group_id']         = group_id
+	row['group_smooth_id']  = smooth_id
+	mulcov_table.append( row )
+	#
+	# write out the tables that changed
+	put_table('prior',       prior_table, prior_col_name, prior_col_type)
+	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
+	put_table('smooth_grid', smooth_grid_table, grid_col_name, grid_col_type)
+	put_table('mulcov',      mulcov_table,  mulcov_col_name, mulcov_col_type)
 # ==========================================================================
 # Example Changes
 # ==========================================================================
@@ -1145,25 +1209,34 @@ def set_minimum_meas_cv (integrand_name, minimum_meas_cv) :
 # covariate_id = 0
 # restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
 #
-# remove_rate:
-# for rate_name in [ 'omega', 'chi' ] :
+# remove all data except Sincidence
+# max_sample     = 0
+# for integrand_name in integrand_list_all :
+#	if integrand_name != 'Sincidence' :
+#		subsample_data(integrand_name, max_sample)
+# integrand_list_yes_ode = list()
+# integrand_list_no_ode  = [ 'Sincidence']
+# integrand_list_all     = [ 'Sincidence']
+#
+# remove all rates except iota
+# for rate_name in [ 'pini', 'rho', 'chi', 'omega' ] :
 #	remove_rate(rate_name)
 #
 # constant_rate:
-# density_name = 'log_gaussian'
+# density_name = 'uniform'
 # density_id   = density_name2id[density_name]
 # prior = {
-#	'prior_name' : 'constant_pini' ,
+#	'prior_name' : 'constant_iota' ,
 #	'density_id' : density_id      ,
-#	'lower'      : 0               ,
-#	'upper'      : 1e-5            ,
-#	'mean'       : 0               ,
-#	'std'        : 1e-10           ,
-#	'eta'        : 1e-10           ,
+#	'lower'      : 1e-9            ,
+#	'upper'      : 1.0             ,
+#	'mean'       : 1e-7            ,
+#	'std'        : None            ,
+#	'eta'        : None            ,
 #	'nu'         : None            ,
-#}
-#rate_name  = 'pini'
-#constant_rate(rate_name, prior)
+# }
+# rate_name  = 'iota'
+# constant_rate(rate_name, prior)
 #
 # set_data_density:
 # density_name = 'gaussian'
@@ -1173,7 +1246,7 @@ def set_minimum_meas_cv (integrand_name, minimum_meas_cv) :
 # set the minimum measurement standard deviation and cv
 # median_meas_value_cv = 1e-2
 # minimum_meas_cv      = 1e-1
-# for integrand_name in [ 'Sincidence', 'prevalence' ] :
+# for integrand_name in integrand_list_all:
 #	set_minimum_meas_std(integrand_name, median_meas_value_cv)
 #	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
 #
@@ -1189,6 +1262,7 @@ if not new_database :
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
+#
 if new_database :
 	# seed used by subsample_data
 	random_seed = int( time.time() )
@@ -1203,47 +1277,21 @@ if new_database :
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
 	# set options
-	set_option('tolerance_fixed',    '1e-6')
-	set_option('max_num_iter_fixed', '100')
+	set_option('tolerance_fixed',    '1e-8')
+	set_option('max_num_iter_fixed', '50')
 	set_option('zero_sum_child_rate', 'iota chi')
 	set_option('bound_random',        '3')
 	#
-	# remove all data except Sincidence
-	max_sample     = 0
-	for integrand_name in integrand_list_all :
-		if integrand_name != 'Sincidence' :
-			subsample_data(integrand_name, max_sample)
-	integrand_list_yes_ode = list()
-	integrand_list_no_ode  = [ 'Sincidence']
-	integrand_list_all     = [ 'Sincidence']
+	# add a Sincidence meas_nose covariate
+	integrand_name = 'Sincidence'
+	group_id       = 0
+	mulcov_value   = 1e-8
+	add_meas_noise_mulcov(integrand_name, group_id, mulcov_value)
 	#
-	# remove all rates except iota
-	for rate_name in [ 'pini', 'rho', 'chi', 'omega' ] :
-		remove_rate(rate_name)
-	#
-	# make iota constanst in age and time
-	table_name   = 'density'
-	density_name = 'uniform'
-	density_id   = density_name2id[density_name]
-	prior = {
-		'prior_name' : 'constant_iota' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-9            ,
-		'upper'      : 1               ,
-		'mean'       : 1e-9            ,
-		'std'        : None            ,
-		'eta'        : None            ,
-		'nu'         : None            ,
-	}
-	rate_name  = 'iota'
-	constant_rate(rate_name, prior)
-	#
-	# set the minimum measurement standard deviation and cv
-	median_meas_value_cv = 1e-2
-	minimum_meas_cv      = 1e-1
-	for integrand_name in integrand_list_all :
-		set_minimum_meas_std(integrand_name, median_meas_value_cv)
-		set_minimum_meas_cv(integrand_name, minimum_meas_cv)
+	# change Sindicence density to gaussian
+	integrand_name = 'Sincidence'
+	density_name   = 'gaussian'
+	set_data_density(integrand_name, density_name)
 	#
 	# constrain all x_0 covariate multipliers to be zero
 	covariate_id = 0
