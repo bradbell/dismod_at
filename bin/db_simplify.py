@@ -439,8 +439,7 @@ def plot_rate (rate_name) :
 	#
 	pdf.close()
 # ----------------------------------------------------------------------------
-# plot_data
-def plot_data (integrand_name) :
+def plot_integrand (integrand_name) :
 	# Plot the data, model, and residual values for a specified integrand.
 	# Covariate values used for each model point are determined by
 	# correspondign data point.
@@ -528,13 +527,6 @@ def plot_data (integrand_name) :
 	weighted_residual = numpy.maximum( weighted_residual, r_min )
 	weighted_residual = numpy.minimum( weighted_residual, r_max )
 	#
-	y_max_two  = [y_max, y_max]
-	y_min_two  = [y_min, y_min]
-	#
-	r_max_two  = [r_max, r_max]
-	r_zero_two = [ 0.0, 0.0   ]
-	r_min_two  = [r_min, r_min]
-	#
 	point_size  = numpy.array( n_list * [ 1 ] )
 	marker_size = numpy.array( n_list * [ 7 ] )
 	#
@@ -545,7 +537,7 @@ def plot_data (integrand_name) :
 	#
 	for x_name in [ 'index', 'node', 'age', 'time' ] :
 		x          = eval( x_name )
-		x_two      = [min(x), max(x)]
+		x_limits   = [min(x), max(x)]
 		#
 		fig, axes = pyplot.subplots(3, 1, sharex=True)
 		fig.subplots_adjust(hspace=0)
@@ -580,7 +572,7 @@ def plot_data (integrand_name) :
 		pyplot.subplot(3, 1, 3)
 		y = weighted_residual
 		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
-		pyplot.plot(x_two, r_zero_two, linestyle='-', color='k')
+		pyplot.plot(x_limits, [0, 0], linestyle='-', color='k')
 		pyplot.ylabel('residual')
 		for limit in [ r_max, r_min ] :
 			flag = y == limit
@@ -1344,7 +1336,7 @@ for rate_name in [ 'iota', 'chi' ] :
 #
 # plot data
 for integrand_name in integrand_list_all :
-	plot_data(integrand_name)
+	plot_integrand(integrand_name)
 #
 # plot prediction
 covariate_integrand_name = 'prevalence'
