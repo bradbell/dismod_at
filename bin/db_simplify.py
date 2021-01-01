@@ -395,7 +395,8 @@ def plot_rate (rate_name) :
 	if rate_max <= 0.0 :
 		print( 'plot_rate: max({}) <= 0'.format(rate_name) )
 		return
-	rate_min  = max(rate_min, 1e-10 * rate_max)
+	rate_min    = max(rate_min, 1e-10 * rate_max)
+	rate_limits = [rate_min, rate_max]
 	#
 	from matplotlib import pyplot
 	#
@@ -416,6 +417,10 @@ def plot_rate (rate_name) :
 			pyplot.xlabel('age')
 			pyplot.ylabel(rate_name)
 			pyplot.yscale('log')
+		for i in range(n_age) :
+			x = [ age[i, 0], age[i, 0] ]
+			y = rate_limits
+			pyplot.plot(x, y, color='black', linestyle='dotted', alpha=0.25)
 		pyplot.legend(title = 'time')
 		pdf.savefig( fig )
 		pyplot.close( fig )
@@ -433,6 +438,10 @@ def plot_rate (rate_name) :
 			pyplot.xlabel('time')
 			pyplot.ylabel(rate_name)
 			pyplot.yscale('log')
+		for j in range(n_time) :
+			x = [ time[0, j], time[0, j] ]
+			y = rate_limits
+			pyplot.plot(x, y, color='black', linestyle='dotted', alpha=0.25)
 		pyplot.legend(title = 'age')
 		pdf.savefig( fig )
 		pyplot.close( fig )
@@ -545,39 +554,39 @@ def plot_integrand (integrand_name) :
 		sp = pyplot.subplot(3, 1, 1)
 		sp.set_xticklabels( [] )
 		y =  meas_value
-		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
+		pyplot.scatter(x, y, marker='.', color='black', s = point_size)
 		pyplot.ylabel(integrand_name)
 		pyplot.yscale('log')
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
 		limits     = [min(x), max(x), y_min, y_max]
 		pyplot.axis(limits)
 		#
 		sp = pyplot.subplot(3, 1, 2)
 		sp.set_xticklabels( [] )
 		y = avg_integrand
-		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
+		pyplot.scatter(x, y, marker='.', color='black', s = point_size)
 		pyplot.ylabel('model')
 		pyplot.yscale('log')
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
 		limits     = [min(x), max(x), y_min, y_max]
 		pyplot.axis(limits)
 		#
 		# this plot at the bottom of the figure has its x tick labels
 		pyplot.subplot(3, 1, 3)
 		y = weighted_residual
-		pyplot.scatter(x, y, marker='.', color='k', s = point_size)
-		pyplot.plot(x_limits, [0, 0], linestyle='-', color='k')
+		pyplot.scatter(x, y, marker='.', color='black', s = point_size)
+		pyplot.plot(x_limits, [0, 0], linestyle='-', color='black')
 		pyplot.ylabel('residual')
 		for limit in [ r_max, r_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='x', color='k', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
 		limits     = [min(x), max(x), r_min, r_max]
 		pyplot.axis(limits)
 		#
@@ -723,7 +732,7 @@ def plot_predict (covariate_integrand_list, predict_integrand_list) :
 				sp.set_xticklabels( [] )
 			y  = avg_integrand_list[integrand_id]
 			x  = age_list
-			pyplot.scatter(x, y, marker='.', color='k', s=point_size )
+			pyplot.scatter(x, y, marker='.', color='black', s=point_size )
 			pyplot.yscale('log')
 			pyplot.ylabel( integrand_name )
 		pyplot.xlabel('age')
