@@ -16,7 +16,7 @@ original_database  = 'ihme_db/data/475588/dbs/100/3/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = True
+new_database       = False
 # if new_database is true, run fit both first without and then with ode data.
 fit_ode            = True
 # print the help message for all the db_simplify routines and then exit
@@ -282,6 +282,28 @@ def get_integrand_count () :
 	return integrand_count
 # ----------------------------------------------------------------------------
 def plot_rate (rate_name) :
+	#
+	def color_style(line_count) :
+		pair_list = [
+			('blue',       'dashed'),  ('lightblue',  'solid'),
+			('red',        'dashed'),  ('pink',       'solid'),
+			('green',      'dashed'),  ('lightgreen', 'solid'),
+			('black',      'dashed'),  ('gray',       'solid'),
+			('brown',      'dashed'),  ('sandybrown', 'solid'),
+			('darkorange', 'dashed'),  ('gold',       'solid'),
+			('purple',     'dashed'),  ('violet',     'solid'),
+			#
+			('blue',       'solid'),   ('lightblue',  'dashed'),
+			('red',        'solid'),   ('pink',       'dashed'),
+			('green',      'solid'),   ('lightgreen', 'dashed'),
+			('black',      'solid'),   ('gray',       'dashed'),
+			('brown',      'solid'),   ('sandybrown', 'dashed'),
+			('darkorange', 'solid'),   ('gold',       'dashed'),
+			('purple',     'solid'),   ('violet',     'dashed'),
+		]
+		assert line_count < len(pair_list)
+		return pair_list[line_count]
+	#
 	# plot the fit_var grid values for a specified rate.
 	table_name = 'rate'
 	(rate_table, col_name, col_type) = get_table(table_name)
@@ -397,12 +419,14 @@ def plot_rate (rate_name) :
 	#
 	# for each time, plot rate as a function of age
 	if n_age > 1 :
-		fig = pyplot.figure()
+		fig  = pyplot.figure()
+		axis = pyplot.subplot(1,1,1)
 		for j in range(n_time) :
-			x     = age[:,j]
-			y     = rate[:,j]
-			label = str( time[0,j] )
-			pyplot.plot(x, y, label=label)
+			(color, style,) = color_style(j)
+			x               = age[:,j]
+			y               = rate[:,j]
+			label          = str( time[0,j] )
+			pyplot.plot(x, y, label=label, color=color, linestyle=style)
 			#
 			# axis labels
 			pyplot.xlabel('age')
@@ -411,18 +435,25 @@ def plot_rate (rate_name) :
 		for i in range(n_age) :
 			x = age[i, 0]
 			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.25)
-		pyplot.legend(title = 'time')
+		# Shrink current axis by 15% and place legend to right
+		box = axis.get_position()
+		axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+		axis.legend(
+			title = 'time', loc='center left', bbox_to_anchor=(1, 0.5)
+		)
 		pdf.savefig( fig )
 		pyplot.close( fig )
 	#
 	# for each age, plot rate as a function of time
 	if n_time > 1 :
-		fig = pyplot.figure()
+		fig  = pyplot.figure()
+		axis = pyplot.subplot(1,1,1)
 		for i in range(n_age) :
-			x     = time[i,:]
-			y     = rate[i,:]
-			label = str( age[i,0] )
-			pyplot.plot(x, y, label=label)
+			(color, style) = color_style(i)
+			x              = time[i,:]
+			y              = rate[i,:]
+			label          = str( age[i,0] )
+			pyplot.plot(x, y, label=label, color=color, linestyle=style)
 			#
 			# axis labels
 			pyplot.xlabel('time')
@@ -431,7 +462,12 @@ def plot_rate (rate_name) :
 		for j in range(n_time) :
 			x = time[0, j]
 			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.25)
-		pyplot.legend(title = 'age')
+		# Shrink current axis by 15% and place legend to right
+		box = axis.get_position()
+		axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+		axis.legend(
+			title = 'age', loc='center left', bbox_to_anchor=(1, 0.5)
+		)
 		pdf.savefig( fig )
 		pyplot.close( fig )
 	#
