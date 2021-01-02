@@ -411,15 +411,21 @@ def plot_rate (rate_name) :
 	#
 	# for each time, plot rate as a function of age
 	if n_age > 1 :
-		n_fig      = math.ceil( n_time / n_color_style )
-		n_per_fig  = math.ceil( n_time / n_fig )
+		n_fig       = math.ceil( n_time / ( n_color_style - 1) )
+		n_per_fig   = math.ceil( n_time / n_fig )
+		color_index = -1
+		assert n_per_fig < n_color_style
 		for i_fig in range( n_fig ) :
 			fig    = pyplot.figure()
 			axis   = pyplot.subplot(1,1,1)
 			start  = i_fig * n_per_fig
+			if i_fig > 0 :
+				start        = start - 1
+				color_index -= 1
 			stop   = min(n_time, start + n_per_fig )
 			for j in range(start, stop) :
-				(color, style,) = color_style_list[j - start]
+				color_index    = (color_index + 1) % n_color_style
+				(color, style,) = color_style_list[color_index]
 				x               = age[:,j]
 				y               = rate[:,j]
 				label          = str( time[0,j] )
@@ -444,15 +450,21 @@ def plot_rate (rate_name) :
 	#
 	# for each age, plot rate as a function of time
 	if n_time > 1 :
-		n_fig      = math.ceil( n_age / n_color_style )
-		n_per_fig  = math.ceil( n_age / n_fig )
+		n_fig       = math.ceil( n_age / (n_color_style - 1) )
+		n_per_fig   = math.ceil( n_age / n_fig )
+		color_index = -1
+		assert n_per_fig < n_color_style
 		for i_fig in range( n_fig ) :
 			fig    = pyplot.figure()
 			axis   = pyplot.subplot(1,1,1)
 			start  = i_fig * n_per_fig
+			if i_fig > 0 :
+				start        = start - 1
+				color_index -= 1
 			stop   = min(n_age, start + n_per_fig )
 			for i in range(start, stop) :
-				(color, style) = color_style_list[i - start]
+				color_index    = (color_index + 1) % n_color_style
+				(color, style) = color_style_list[color_index]
 				x              = time[i,:]
 				y              = rate[i,:]
 				label          = str( age[i,0] )
