@@ -282,27 +282,16 @@ def get_integrand_count () :
 	return integrand_count
 # ----------------------------------------------------------------------------
 def plot_rate (rate_name) :
-	#
-	def color_style(line_count) :
-		pair_list = [
-			('blue',       'dashed'),  ('lightblue',  'solid'),
-			('red',        'dashed'),  ('pink',       'solid'),
-			('green',      'dashed'),  ('lightgreen', 'solid'),
-			('black',      'dashed'),  ('gray',       'solid'),
-			('brown',      'dashed'),  ('sandybrown', 'solid'),
-			('darkorange', 'dashed'),  ('gold',       'solid'),
-			('purple',     'dashed'),  ('violet',     'solid'),
-			#
-			('blue',       'solid'),   ('lightblue',  'dashed'),
-			('red',        'solid'),   ('pink',       'dashed'),
-			('green',      'solid'),   ('lightgreen', 'dashed'),
-			('black',      'solid'),   ('gray',       'dashed'),
-			('brown',      'solid'),   ('sandybrown', 'dashed'),
-			('darkorange', 'solid'),   ('gold',       'dashed'),
-			('purple',     'solid'),   ('violet',     'dashed'),
-		]
-		assert line_count < len(pair_list)
-		return pair_list[line_count]
+	color_style_list = [
+		('blue',       'dashed'),  ('lightblue',  'solid'),
+		('red',        'dashed'),  ('pink',       'solid'),
+		('green',      'dashed'),  ('lightgreen', 'solid'),
+		('black',      'dashed'),  ('gray',       'solid'),
+		('brown',      'dashed'),  ('sandybrown', 'solid'),
+		('darkorange', 'dashed'),  ('gold',       'solid'),
+		('purple',     'dashed'),  ('violet',     'solid'),
+	]
+	n_color_style = len( color_style_list )
 	#
 	# plot the fit_var grid values for a specified rate.
 	table_name = 'rate'
@@ -411,6 +400,9 @@ def plot_rate (rate_name) :
 			time[i, j] = time_table[time_id]['time']
 			rate[i, j] = fit_var_table[var_id]['fit_var_value']
 	#
+	rate_min = numpy.min(rate)
+	rate_max = numpy.max(rate)
+	#
 	from matplotlib import pyplot
 	#
 	import matplotlib.backends.backend_pdf
@@ -419,57 +411,69 @@ def plot_rate (rate_name) :
 	#
 	# for each time, plot rate as a function of age
 	if n_age > 1 :
-		fig  = pyplot.figure()
-		axis = pyplot.subplot(1,1,1)
-		for j in range(n_time) :
-			(color, style,) = color_style(j)
-			x               = age[:,j]
-			y               = rate[:,j]
-			label          = str( time[0,j] )
-			pyplot.plot(x, y, label=label, color=color, linestyle=style)
-			#
-			# axis labels
-			pyplot.xlabel('age')
-			pyplot.ylabel(rate_name)
-			pyplot.yscale('log')
-		for i in range(n_age) :
-			x = age[i, 0]
-			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.25)
-		# Shrink current axis by 15% and place legend to right
-		box = axis.get_position()
-		axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
-		axis.legend(
-			title = 'time', loc='center left', bbox_to_anchor=(1, 0.5)
-		)
-		pdf.savefig( fig )
-		pyplot.close( fig )
+		n_fig      = math.ceil( n_time / n_color_style )
+		n_per_fig  = math.ceil( n_time / n_fig )
+		for i_fig in range( n_fig ) :
+			fig    = pyplot.figure()
+			axis   = pyplot.subplot(1,1,1)
+			start  = i_fig * n_per_fig
+			stop   = min(n_time, start + n_per_fig )
+			for j in range(start, stop) :
+				(color, style,) = color_style_list[j - start]
+				x               = age[:,j]
+				y               = rate[:,j]
+				label          = str( time[0,j] )
+				pyplot.plot(x, y, label=label, color=color, linestyle=style)
+				#
+				# axis labels
+				pyplot.xlabel('age')
+				pyplot.ylabel(rate_name)
+				pyplot.yscale('log')
+				pyplot.ylim(rate_min, rate_max)
+			for i in range(n_age) :
+				x = age[i, 0]
+				pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
+			# Shrink current axis by 15% and place legend to right
+			box = axis.get_position()
+			axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+			axis.legend(
+				title = 'time', loc='center left', bbox_to_anchor=(1, 0.5)
+			)
+			pdf.savefig( fig )
+			pyplot.close( fig )
 	#
 	# for each age, plot rate as a function of time
 	if n_time > 1 :
-		fig  = pyplot.figure()
-		axis = pyplot.subplot(1,1,1)
-		for i in range(n_age) :
-			(color, style) = color_style(i)
-			x              = time[i,:]
-			y              = rate[i,:]
-			label          = str( age[i,0] )
-			pyplot.plot(x, y, label=label, color=color, linestyle=style)
-			#
-			# axis labels
-			pyplot.xlabel('time')
-			pyplot.ylabel(rate_name)
-			pyplot.yscale('log')
-		for j in range(n_time) :
-			x = time[0, j]
-			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.25)
-		# Shrink current axis by 15% and place legend to right
-		box = axis.get_position()
-		axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
-		axis.legend(
-			title = 'age', loc='center left', bbox_to_anchor=(1, 0.5)
-		)
-		pdf.savefig( fig )
-		pyplot.close( fig )
+		n_fig      = math.ceil( n_age / n_color_style )
+		n_per_fig  = math.ceil( n_age / n_fig )
+		for i_fig in range( n_fig ) :
+			fig    = pyplot.figure()
+			axis   = pyplot.subplot(1,1,1)
+			start  = i_fig * n_per_fig
+			stop   = min(n_age, start + n_per_fig )
+			for i in range(start, stop) :
+				(color, style) = color_style_list[i - start]
+				x              = time[i,:]
+				y              = rate[i,:]
+				label          = str( age[i,0] )
+				pyplot.plot(x, y, label=label, color=color, linestyle=style)
+				#
+				# axis labels
+				pyplot.xlabel('time')
+				pyplot.ylabel(rate_name)
+				pyplot.yscale('log')
+				pyplot.ylim(rate_min, rate_max)
+			for j in range(n_time) :
+				x = time[0, j]
+				pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
+			# Shrink current axis by 15% and place legend to right
+			box = axis.get_position()
+			axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+			axis.legend(
+				title = 'age', loc='center left', bbox_to_anchor=(1, 0.5)
+			)
+			pdf.savefig( fig )
+			pyplot.close( fig )
 	#
 	pdf.close()
 # ----------------------------------------------------------------------------
@@ -612,7 +616,7 @@ def plot_integrand (integrand_name) :
 			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
 		pyplot.ylim(r_min, r_max)
 		y = 0.0
-		pyplot.axhline(y, linestyle='solid', color='black', alpha=0.25 )
+		pyplot.axhline(y, linestyle='solid', color='black', alpha=0.3 )
 		#
 		pyplot.xlabel(x_name)
 		#
