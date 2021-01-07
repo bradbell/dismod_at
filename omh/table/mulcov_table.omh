@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -102,7 +102,7 @@ $cref/group_id/subgroup_table/group_id/$$.
 There is a fixed effect covariate multiplier for all the data
 that has a $cref/subgroup_id/data_table/subgroup_id/$$ that
 corresponds to this group id.
-This covariate only affects the average integrand for for data points in
+This covariate only affects the average integrand for data points in
 this group; see
 $cref/group_id/avg_integrand/Data or Avgint Table Notation/g_i/$$.
 The $icode group_id$$ cannot be null.
