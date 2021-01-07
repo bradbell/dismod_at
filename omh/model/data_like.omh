@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -29,10 +29,6 @@ We use $latex i$$ to
 denote the $cref/data_id/data_table/data_id/$$
 for a row in the data table.
 
-$subhead y_i$$
-We use $latex y_i$$ to denote the corresponding
-$cref/meas_value/data_table/meas_value/$$ value.
-
 $subhead a_i$$
 We use $latex a_i$$ to denote the corresponding
 $cref/age_lower/data_table/age_lower/$$ value.
@@ -40,14 +36,6 @@ $cref/age_lower/data_table/age_lower/$$ value.
 $subhead b_i$$
 We use $latex b_i$$ to denote the corresponding
 $cref/age_upper/data_table/age_upper/$$ value.
-
-$subhead s_i$$
-We use $latex s_i$$ to denote the corresponding
-$cref/time_lower/data_table/time_lower/$$ value.
-
-$subhead t_i$$
-We use $latex t_i$$ to denote the corresponding
-$cref/time_upper/data_table/time_upper/$$ value.
 
 $subhead d_i$$
 We use $latex d_i$$ to denote the
@@ -58,6 +46,19 @@ $subhead I_i$$
 We use $latex I_i$$ to denote the corresponding
 $cref/integrand_id/data_table/integrand_id/$$ value.
 
+$subhead s_i$$
+We use $latex s_i$$ to denote the corresponding
+$cref/time_lower/data_table/time_lower/$$ value.
+
+$subhead t_i$$
+We use $latex t_i$$ to denote the corresponding
+$cref/time_upper/data_table/time_upper/$$ value.
+
+$subhead w_i$$
+We use $latex w_i (a, t)$$ for the weighting as a function of age and time
+that corresponds to the
+$cref/weight_id/data_table/weight_id/$$ for this $icode data_id$$.
+
 $subhead x_ij$$
 We use $latex x_{i,j}$$ to denote the corresponding
 $cref/covariate/data_table/Covariates/$$ values where $latex j$$
@@ -66,10 +67,9 @@ Note that the covariate
 $cref/reference/covariate_table/reference/$$ has already
 been subtracted from these values.
 
-$subhead w_i$$
-We use $latex w_i (a, t)$$ for the weighting as a function of age and time
-that corresponds to the
-$cref/weight_id/data_table/weight_id/$$ for this $icode data_id$$.
+$subhead y_i$$
+We use $latex y_i$$ to denote the corresponding
+$cref/meas_value/data_table/meas_value/$$ value.
 
 $head Minimum CV Standard Deviation, Delta_i$$
 Let $icode minimum_meas_cv$$ be the integrand table
