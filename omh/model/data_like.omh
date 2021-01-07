@@ -98,18 +98,22 @@ Note that there are no random effects for
 $cref/parent data/data_table/node_id/Parent Data/$$.
 This corresponds to $latex u = 0$$.
 
+$subhead Average Integrand, A_i(u, theta)$$
+Let $latex A_i ( u , \theta )$$ denote the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ for this
+$icode data_id$$.
+
 $head Measurement Noise Covariates$$
 
 $subhead K_i$$
 There is a set of rows in the mulcov table such that
-$cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$.
-and
+$cref/integrand_id/mulcov_table/integrand_id/$$ is equal to $latex I_i$$ and
 $cref/mulcov_type/mulcov_table/mulcov_type/$$ is equal to $code meas_noise$$.
 We use $latex K_i$$ to denote the corresponding set of
 $cref/covariate_id/mulcov_table/covariate_id/$$ values for
 which this is the case.
 
-$subhead gamma_j$$
+$subhead gamma_j (a, t)$$
 For each covariate index $latex j \in K_i$$ ,
 we use $latex \gamma_j (a, t) $$ to denote the
 piecewise linear function corresponding to the
@@ -123,12 +127,7 @@ $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 Note that these are only
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers.
 
-$head Average Integrand$$
-Let $latex A_i ( u , \theta )$$ denote the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$ for this
-$icode data_id$$.
-
-$head Average Noise Effect$$
+$subhead Average Noise Effect, E_i (theta)$$
 We define the average noise effect by
 $latex \[
 E_i ( \theta )

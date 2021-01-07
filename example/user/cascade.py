@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -137,7 +137,7 @@
 # One multiplier multiples the constant one and models the unknown variation
 # in the data (sometimes referred to as model misspecification).
 # We call this covariate multiplier
-# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$.
+# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$.
 # We use a uniform prior on this multiplier so that it absorbs
 # all the noise due to model misspecification.
 # When checking for coverage by the samples $icode s1_1$$, ... , $icode s1_N$$,

@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -54,7 +54,7 @@
 # There is one covariate multiplier on the covariate column $code one$$
 # and the rate $code iota$$.
 # This is a measurement noise covariate multiplier
-# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$
+# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$
 # that only effects the hospital data.
 # The prior for this multiplier is a uniform on the interval from zero
 # to $codei%10 * %gamma_true%$$.

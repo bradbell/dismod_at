@@ -154,9 +154,9 @@ $cref/beta_j
 /$$
 and the
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers
-$cref/gamma_j
+$cref/gamma_j (a, t)
 	/data_like
-	/Measurement Noise Covariates/gamma_j
+	/Measurement Noise Covariates/gamma_j (a, t)
 /$$.
 They used to be $latex \beta_{i,j}$$ and $latex \gamma_{i,j}$$
 but they do not depend on the data index $latex i$$.

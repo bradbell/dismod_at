@@ -66,7 +66,7 @@ $cref/beta
 
 $subhead meas_noise$$
 This covariate multiplier adjusts the measurement noise; see
-$cref/gamma_j/data_like/Measurement Noise Covariates/gamma_j/$$.
+$cref/gamma_j/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$.
 
 $head rate_id$$
 This column has type $code integer$$.

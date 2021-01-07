@@ -78,10 +78,10 @@ $cref/add_var_scale_log
 	/add_var_scale_log
 /$$ would sometimes fail to converge
 when the initial value of corresponding covariate multiplier
-$cref/gamma_j
+$cref/gamma_j (a, t)
 	/data_like
 	/Measurement Noise Covariates
-	/gamma_j
+	/gamma_j (a, t)
 /$$ was zero.
 This was because the derivative of the object w.r.t. this
 multiplier was zero even though zero is not the solution.
@@ -112,7 +112,7 @@ the added standard deviations for non-log densities.
 
 $head 12-14$$
 Add $cref user_fit_meas_noise.py$$, an example that fits
-$cref/gamma/data_like/Measurement Noise Covariates/gamma_j/$$
+$cref/gamma/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$
 using simulated data.
 
 $head 10-30$$

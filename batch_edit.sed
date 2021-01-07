@@ -32,9 +32,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/random effects/data_like/Effects, u, theta/|/random_effects/data_like/Notation/Random Effects, u/|
-s|f/t_i/data_like/Data Table Notation/t_i/|f/t_i/data_like/Notation/t_i/|
-s|f/b_i/data_like/Data Table Notation/b_i/|f/b_i/data_like/Notation/b_i/|
-s|/Delta/data_like/Minimum CV Standard Deviation, Delta_i/|/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/|
-s|/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/|/Delta/data_like/Notation/Minimum CV Standard Deviaiton, Delta_i/|
-s|/Minimum CV Standard Deviation, Delta_i$|/Notation\n\t/Minimum CV Standard Deviation, Delta_i|
+s|/Average Noise Effect$|/Average Noise Effect, E_i (theta)|

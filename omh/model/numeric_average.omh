@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -20,7 +20,8 @@ $head Average Noise Effect$$
 This technique is also used to compute the
 $cref/average noise effect
 	/data_like
-	/Average Noise Effect
+	/Measurement Noise Covariates
+	/Average Noise Effect, E_i (theta)
 /$$.
 
 
