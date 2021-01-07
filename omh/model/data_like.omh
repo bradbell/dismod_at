@@ -183,11 +183,10 @@ $code add_std_scale_log$$
 (add standard deviations and only scale log density cases)
 the adjusted standard deviation is
 $latex \[
-\delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
-\] $$
-for the log density cases. Otherwise it is
-$latex \[
-\delta_i ( \theta ) = \Delta_i + E_i (\theta)
+\delta_i ( \theta ) = \left\{ \begin{array}{ll}
+	\Delta_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
+	\Delta_i + E_i (\theta)       & \R{otherwise}
+\end{array} \right.
 \] $$
 
 $subhead add_var_scale_all$$
@@ -204,11 +203,10 @@ $code add_var_scale_log$$
 (add variances and only scale log density cases)
 the adjusted standard deviation is
 $latex \[
-\delta_i ( \theta ) = \Delta_i \sqrt{ 1 + E_i (\theta) }
-\] $$
-for the log density cases. Otherwise it is
-$latex \[
-\delta_i ( \theta ) = \sqrt{ \Delta_i^2 + E_i (\theta) }
+\delta_i ( \theta ) = \left\{ \begin{array}{ll}
+	\Delta_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
+	\sqrt{ \Delta_i^2 + E_i (\theta) } & \R{otherwise}
+\end{array} \right.
 \] $$
 
 
