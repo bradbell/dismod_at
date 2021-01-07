@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -731,6 +731,7 @@ $lnext
 The value $icode Delta$$, is now referred to as the
 $cref/minimum cv standard deviation
 	/data_like
+	/Notation
 	/Minimum CV Standard Deviation, Delta_i
 /$$.
 $lnext

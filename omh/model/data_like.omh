@@ -22,7 +22,7 @@ $$
 
 $section Data Likelihood and Weighted Residuals$$
 
-$head Data Table Notation$$
+$head Notation$$
 
 $subhead i$$
 We use $latex i$$ to
@@ -71,7 +71,7 @@ $subhead y_i$$
 We use $latex y_i$$ to denote the corresponding
 $cref/meas_value/data_table/meas_value/$$ value.
 
-$head Minimum CV Standard Deviation, Delta_i$$
+$subhead Minimum CV Standard Deviation, Delta_i$$
 Let $icode minimum_meas_cv$$ be the integrand table
 $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ corresponding to
 this integrand $latex I_i$$.
@@ -79,11 +79,24 @@ Let $cref/meas_std/data_table/meas_std/$$
 and $cref/meas_value/data_table/meas_value/$$
 correspond to this data table
 $cref/data_id/data_table/data_id/$$.
-We use the notation $latex \Delta_i$$
-for the minimum cv standard deviation for this data
-$codei%
-	%Delta_i% = max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )
-%$$
+The minimum cv standard deviation is defined by
+$pre
+	$$ $latex \Delta_i = $$
+$codei%max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )%$$
+
+$subhead Fixed Effects, theta$$
+We use $latex \theta$$ to denote the vector of
+$cref/fixed effects/model_variables/Fixed Effects, theta/$$.
+
+$subhead Random Effects, u$$
+We use $latex u$$ to denote the vector of
+$cref/random effects/model_variables/Random Effects, u/$$.
+There is a different random effects vector $latex u$$ for each child.
+The $icode node_id$$ for each data point determines the random effects for
+$cref/child data/data_table/node_id/Child Data/$$.
+Note that there are no random effects for
+$cref/parent data/data_table/node_id/Parent Data/$$.
+This corresponds to $latex u = 0$$.
 
 $head Measurement Noise Covariates$$
 
@@ -109,17 +122,6 @@ variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 Note that these are only
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers.
-
-$head Effects, u, theta$$
-We use $latex u$$ and $latex \theta$$ to denote the vector of
-$cref/random effects/model_variables/Random Effects, u/$$ and
-$cref/fixed effects/model_variables/Fixed Effects, theta/$$ respectively.
-There is a different random effects vector $latex u$$ for each child.
-The $icode node_id$$ for each data point determines the random effects for
-$cref/child data/data_table/node_id/Child Data/$$.
-Note that there are no random effects for
-$cref/parent data/data_table/node_id/Parent Data/$$.
-This corresponds to $latex u = 0$$.
 
 $head Average Integrand$$
 Let $latex A_i ( u , \theta )$$ denote the
@@ -148,7 +150,7 @@ defined below:
 
 $subhead Scaling$$
 For some cases below, $latex E_i ( \theta )$$ multiplies
-$cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$
+$cref/Delta_i/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$
 instead of multiplying $latex y_i$$.
 This avoids have no effect when $latex y_i$$ is zero.
 It is also possible to scale $latex E_i ( \theta )$$

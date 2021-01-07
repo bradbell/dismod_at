@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -66,7 +66,7 @@ $code double$$ $cnext $code data_sim_value$$ $cnext
 $rnext
 $code double$$ $cnext $code data_sim_stdcv$$ $cnext
 	The minimum CV standard deviation
-	$cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$.
+	$cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$.
 $code double$$ $cnext $code data_sim_delta$$ $cnext
 	The $cref/adjusted standard deviation
 	/data_like

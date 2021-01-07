@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -51,7 +51,7 @@ the minimum cv measurement standard deviation is
 $codei%
 	%Delta% = max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )
 %$$
-see $cref/Delta/data_like/Minimum CV Standard Deviation, Delta_i/$$
+see $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$
 in the data likelihood section.
 
 $head integrand_name$$

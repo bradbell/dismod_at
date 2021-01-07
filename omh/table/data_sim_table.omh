@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -64,7 +64,7 @@ This is the value $icode y$$ below.
 $head data_sim_stdcv$$
 The column has type $code real$$ and is the
 minimum cv standard deviation
-$cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$,
+$cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$,
 for use when fitting this simulated data.
 
 $head data_sim_delta$$
@@ -89,6 +89,7 @@ $subhead Delta$$
 We use $latex \Delta$$ to denote the
 $cref/minimum cv standard deviation
 	/data_like
+	/Notation
 	/Minimum CV Standard Deviation, Delta_i
 /$$
 corresponding to the data table and this $icode data_id$$.
@@ -151,6 +152,7 @@ $subhead sim_stdcv$$
 Given $latex \hat{\delta}$$ we can compute a
 $cref/minimum cv standard deviation
 	/data_like
+	/Notation
 	/Minimum CV Standard Deviation, Delta_i
 /$$
 $latex \hat{\Delta}$$ such that,

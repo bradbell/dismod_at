@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -166,8 +166,8 @@ $lend
 $head 11-08$$
 Change the title of the $cref data_like$$ section and
 fix minor typos in the notation for the
-age upper limit $cref/b_i/data_like/Data Table Notation/b_i/$$ and
-time upper limit $cref/t_i/data_like/Data Table Notation/t_i/$$.
+age upper limit $cref/b_i/data_like/Notation/b_i/$$ and
+time upper limit $cref/t_i/data_like/Notation/t_i/$$.
 
 $head 10-25$$
 $list number$$
@@ -272,7 +272,7 @@ $cref/laplace/density_table/density_name/laplace/$$ or
 $cref/log_laplace/density_table/density_name/log_laplace/$$ densities.
 $lnext
 In addition, the discussion of
-$cref/random effects/data_like/Effects, u, theta/$$ vector $latex u$$
+$cref/random_effects/data_like/Notation/Random Effects, u/$$ vector $latex u$$
 in the data likelihood model was improved.
 $lend
 

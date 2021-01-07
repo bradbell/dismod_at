@@ -1,7 +1,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -391,7 +391,7 @@
 #
 # $subhead meas_stdcv$$
 # is the minimum cv standard deviation used to define the likelihood; see
-# $cref/Delta_i/data_like/Minimum CV Standard Deviation, Delta_i/$$.
+# $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$.
 #
 # $subhead meas_delta$$
 # If the previous fit command had a
@@ -433,7 +433,7 @@
 #
 # $subhead sim_stdcv$$
 # This is the minimum cv standard deviation
-# $cref/Delta/data_like/Minimum CV Standard Deviation, Delta_i/$$
+# $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$
 # that should be used when fitting the simulated data for this
 # $cref/data_id/db2csv_command/data.csv/data_id/$$ the
 # $icode simulate_index$$ (see $icode sim_value$$ above).
