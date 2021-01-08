@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -278,8 +278,7 @@ The $cref/log scaling/prior_table/std/Log Scaling/$$ discussion
 for standard deviations in the prior table was edited to make it clearer
 that difference standard deviations are not transformed.
 $lnext
-The discussion of log transformed standard deviations
-$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$
+The discussion of log transformed standard deviations $icode sigma$$
 was edited to make it clearer why it is different for data
 than it is for priors.
 $lnext
@@ -486,10 +485,6 @@ $cref/difference/statistic/Weighted Residual Function, R/Difference/$$
 cases.
 $lnext
 Discuss the difference in the definition of the
-$cref/log-transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
-/$$
 $latex \sigma$$ in the data versus prior cases.
 $lend
 

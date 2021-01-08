@@ -401,7 +401,7 @@
 # this is the
 # $cref/adjusted standard deviation
 #	/data_like
-#	/Adjusted Standard Deviation, delta_i
+#	/Adjusted Standard Deviation, delta_i(theta)
 # /$$ for this row.
 # This value is computed for this command by dividing by the residual
 # and is not valid when the residual is zero.

@@ -32,4 +32,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/Average Noise Effect$|/Average Noise Effect, E_i (theta)|
+s|/sigma/statistic/Log-Transformed Standard Deviation, sigma/|/sigma/data_like/Transformed Standard Deviation, sigma_i(theta)/|
+

@@ -145,7 +145,7 @@ $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
 covariate multipliers for this integrand, the
 $cref/adjusted standard deviation
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 /$$
 is given by
 $codei%
@@ -162,9 +162,9 @@ $codei%
 	%sigma% = log(%meas_value% + %eta% + %delta%) - log(%meas_value% + %eta%)
 %$$
 is the standard deviation for the log of $icode%meas_value% + %eta%$$; see
-$cref/log-transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
+$cref/transformed standard deviation
+	/data_like
+	/Transformed Standard Deviation, sigma_i(theta)
 /$$.
 Using the notation $code ~=$$ for approximately equal,
 and taking the derivative of the log at the midpoint for the difference,

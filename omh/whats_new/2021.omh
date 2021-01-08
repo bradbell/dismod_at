@@ -1,0 +1,47 @@
+$Id:$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-21 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin whats_new_2021$$
+$spell
+	Dismod
+	dage
+	dtime
+$$
+$navigate%
+	Up%Location%
+	Across%Search%
+	Prev%Prev%
+	Next%Next%
+	Down_up_4%_up_4%
+	Down_up_3%_up_3%
+	Down_up_2%_up_2%
+	Down_up_1%_up_1%
+	Down_up_0%_up_0%
+	Current%Heading
+%$$
+
+$section Changes and Additions to Dismod_at During 2021$$
+
+$head 01-08$$
+The definition of the transformed standard deviation $icode sigma$$
+was extended to apply to all densities, not just
+$cref/log scaled/density_table/Notation/Log Scaled/$$ densities.
+In addition, the definition was move from the $cref statistic$$ section
+to a place where the different cases are easier to understand; see
+$icode sigma$$ in
+$cref/data_like/data_like/Transformed Standard Deviation, sigma_i(theta)/$$,
+$cref/fixed_value/fixed_value/sigma_j/$$,
+$cref/random_value/random_value/sigma_j/$$,
+$cref/smooth_dage/smooth_dage/sigma_ij/$$,
+$cref/smooth_dtime/smooth_dtime/sigma_ij/$$.
+
+
+
+$end

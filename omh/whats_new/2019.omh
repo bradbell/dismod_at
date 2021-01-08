@@ -726,7 +726,7 @@ This corrects a bug in fitting simulated
 $cref/log scaled/density_table/Notation/Log Scaled/$$ data that has
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariates which
 adjust the measurement standard deviation; see
-$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$.
+$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i(theta)/$$.
 $lnext
 The value $icode Delta$$, is now referred to as the
 $cref/minimum cv standard deviation
@@ -824,11 +824,7 @@ $list number$$
 Add the $cref/cen_gaussian/density_table/density_name/cen_gaussian/$$
 density; see the example $cref user_censor.py$$.
 $lnext
-Change the definition of the
-$cref/log-transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
-/$$
+Change the definition of the log-transformed standard deviation $icode sigma$$
 so that it is different for data than for priors.
 This avoids the need for reversed residuals.
 $lnext

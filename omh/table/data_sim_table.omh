@@ -71,7 +71,7 @@ $head data_sim_delta$$
 The column has type $code real$$ and is
 the adjusted standard deviation used in the simulation; i.e.,
 the standard deviation of the simulation measurement after adjustment; see
-$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$.
+$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i(theta)/$$.
 
 $head Method$$
 
@@ -115,7 +115,7 @@ $subhead delta$$
 We use $latex \delta$$ to denote the
 $cref/adjusted standard deviation
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 /$$
 corresponding to the truth_var table
 value for the model variables,
@@ -123,9 +123,9 @@ the values in the data table, and this $icode data_id$$.
 
 $subhead sigma$$
 We use $latex \sigma$$ to denote the
-$cref/log-transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
+$cref/transformed standard deviation
+	/data_like
+	/Transformed Standard Deviation, sigma_i(theta)
 /$$
 corresponding to the data table and this $icode data_id$$; i.e.,
 $latex \[
@@ -160,7 +160,7 @@ using the $cref truth_var_table$$ values for the model variables,
 the corresponding
 $cref/adjusted standard deviation
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 /$$
 is equal to $latex \hat{\delta}$$.
 The value $latex \hat{\Delta}$$ is written as $icode data_sim_stdcv$$

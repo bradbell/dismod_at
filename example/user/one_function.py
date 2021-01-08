@@ -1,6 +1,6 @@
 # --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -120,7 +120,7 @@ def Prevalence(age) :
 # $head Computing delta$$
 # Once we have simulated a measurement value,
 # we can solve for $latex \delta$$ are follows; see
-# $cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$:
+# $cref/sigma/data_like/Transformed Standard Deviation, sigma_i(theta)/$$:
 # $latex \[
 #	\sigma = \log( y + \eta + \delta ) - \log(y + \eta )
 # \] $$

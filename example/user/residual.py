@@ -53,7 +53,7 @@ minimum_meas_cv = 0.10
 # $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$ for
 # the standard deviation adjusted by the minimum measurement cv.
 # The adjusted standard deviation
-# $cref/delta/data_like/Adjusted Standard Deviation, delta_i/$$
+# $cref/delta/data_like/Adjusted Standard Deviation, delta_i(theta)/$$
 # is equal to $latex \Delta$$ because there are no measurement
 # standard deviation covariates multipliers for this example.
 #
@@ -69,9 +69,9 @@ minimum_meas_cv = 0.10
 # $subhead Log-Gaussian Residuals$$
 # In the Log-Gaussian case, we the
 # $cref/
-#   log-transformed standard deviation/
-#   statistic/
-#   Log-Transformed Standard Deviation, sigma
+#   transformed standard deviation/
+#   data_like/
+#   Transformed Standard Deviation, sigma_i(theta)
 # /$$
 # $latex \[
 #	\sigma = \log ( y + \eta + \delta ) - \log( y + \eta )

@@ -140,7 +140,7 @@ E_i ( \theta )
 	w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
 
-$head Adjusted Standard Deviation, delta_i$$
+$head Adjusted Standard Deviation, delta_i(theta)$$
 For $latex j \in K_i$$ it should hold that
 $latex 0 \leq x_{i,j}$$, and
 $latex 0 \leq \gamma_j (a, t)$$
@@ -209,6 +209,18 @@ $latex \[
 \end{array} \right.
 \] $$
 
+$head Transformed Standard Deviation, sigma_i(theta)$$
+The transformed standard deviation is
+$latex \[
+\begin{array}{ll}
+	\log[ y_i + \eta_i + \delta_i ( \theta ) ] - \log( y_i + \eta_i )
+		& \R{if \; log \; density}
+	\\
+	\delta_i ( \theta )
+		& \R{otherwise}
+\end{array}
+\] $$
+
 
 $head Weighted Residual and Likelihood$$
 The $cref/weighted residual/statistic/Weighted Residual Function, R/$$
@@ -218,15 +230,10 @@ $latex \[
  R [
 	y_i                  \W{,}
 	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
+	\sigma_i ( \theta )  \W{,}
 	d_i
 ]
 \] $$
-Note that $latex y_i$$, not $latex A_i ( u , \theta )$$,
-is used in the corresponding definition of
-$cref/sigma/statistic/Log-Transformed Standard Deviation, sigma/$$.
-This is so that, in the log scaled case,
-$icode sigma$$ does not depend on the $cref model_variables$$.
 The likelihood is
 $latex \[
 \B{p}( y_i | u , \theta )
@@ -234,7 +241,7 @@ $latex \[
 \exp \left( D [
 	y_i                  \W{,}
 	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
+	\sigma_i ( \theta )  \W{,}
 	d_i
 ] \right)
 \] $$

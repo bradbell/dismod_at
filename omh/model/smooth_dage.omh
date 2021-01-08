@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -49,8 +49,8 @@ $cref/eta/prior_table/eta/$$ and
 $cref/nu/prior_table/nu/$$ and in $latex d_{i,j}$$; see
 $cref/d/statistic/Notation/d/$$.
 
-$head delta_ij$$
-We use $latex \delta_{i,j}$$ to denote the
+$head sigma_ij$$
+We use $latex \sigma_{i,j}$$ to denote the
 $cref/std/prior_table/std/$$ in $icode prior_ij$$.
 
 $head mu_ij$$
@@ -71,7 +71,7 @@ $latex \[
 =
 \sum_{i=0}^{I-2} \sum_{j=0}^{J-1} D \left(
 	v_{i+1,j} \W{,} v_{i,j} \W{,}
-	\mu_{i,j} \W{,} \lambda \delta_{i,j}  \W{,} d_{i,j}
+	\mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
 \right)
 \] $$
 where $latex D$$ is the

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -90,17 +90,16 @@ If the density is $cref/linear/density_table/Notation/Linear/$$,
 $icode std$$ is the standard deviation for the corresponding random variable.
 
 $subhead Log Scaling$$
-If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$ and for a
+If the density is
+$cref/log scaled/density_table/Notation/Log Scaled/$$ and for a
 $cref/value/statistic/Weighted Residual Function, R/Value/$$,
 $codei%
 	%sigma% = log(%mean% + %eta% + %std%) - log(%mean% + %eta%)
 %$$
 is the standard deviation for the
 log of the random variable plus $icode eta$$; see
-$cref/log-transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
-/$$.
+$cref/fixed_value/fixed_value/sigma_j/$$ and
+$cref/random_value/random_value/sigma_j/$$  definitions of $icode sigma$$.
 Using the notation $code ~=$$ for approximately equal,
 and taking the derivative of the log at the midpoint for the difference,
 we get
@@ -114,12 +113,6 @@ corresponding random variables.
 If the density is also log scaled,
 $icode std$$ is the standard deviation for the difference of the
 log of the corresponding random variables.
-
-$subhead Discussion$$
-For example,  $icode std$$ is $icode delta_j$$
-in the prior for the value of the
-$cref/fixed/fixed_value/delta_j/$$ and
-$cref/random/random_value/delta_j/$$ effects.
 
 $head eta$$
 This column has type $code real$$ and only affects the prior

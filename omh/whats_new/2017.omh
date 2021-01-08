@@ -140,7 +140,7 @@ $list number$$
 Fix the definition of the
 $cref/adjusted standard deviation
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 /$$
 for the measurement values
 (the definition for log an linear cases is the same).
@@ -589,7 +589,7 @@ used to scale the measurement standard deviation.
 Now it is directly added to the measurement standard deviation; see
 $cref/adjusted standard deviation
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 /$$.
 This makes the $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
 covariate multipliers more difficult to use because they have units.
@@ -755,7 +755,7 @@ $head 04-18$$
 Change the definition of adjusted standard deviation for data in the
 $cref/Gaussian and Laplace
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 /$$
 case (it is now different from the Log-Gaussian and Log-Laplace case).
 (This has since been changed back.)

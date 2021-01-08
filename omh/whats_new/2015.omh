@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -417,9 +417,9 @@ of Gaussian density for the measured values.
 $lnext
 A large reduction in memory, and an increase in speed,
 was accomplished by making the
-$cref/log-transformed standard deviation
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
+$cref/transformed standard deviation
+	/data_like
+	/Transformed Standard Deviation, sigma_i(theta)
 /$$
 depend the data and not on the $cref model_variables$$.
 To be specific, $code valgrind --tool=massif$$ reported the following

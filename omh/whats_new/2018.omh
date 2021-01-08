@@ -74,7 +74,7 @@ $head 12-19$$
 The
 $cref/add_var_scale_log
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 	/add_var_scale_log
 /$$ would sometimes fail to converge
 when the initial value of corresponding covariate multiplier
@@ -97,13 +97,13 @@ $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is defined.
 The gives the choice of
 $cref/adding variances or standard deviations
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 	/Add Variance or Standard Deviation
 /$$.
 It also gives the choice to
 $cref/scale
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 	/Scaling
 /$$
 the added standard deviations for non-log densities.
@@ -744,7 +744,7 @@ $lend
 
 $head 03-21$$
 In the definition of
-$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i/$$,
+$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i(theta)/$$,
 The text
 $latex delta_i ( \theta )$$ was changed to $latex \delta_i ( \theta )$$.
 
@@ -1035,7 +1035,7 @@ $lnext
 The definition of the
 $cref/adjusted standard deviation
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 /$$
 for the log transformed densities was changed so that the standard deviation
 effect multiplies
@@ -1110,8 +1110,8 @@ The method used by the $cref simulate_command$$ was simplified and documented.
 To be specific, the average integrand, instead of the simulated
 data value, was used to compute the transformed standard deviation
 $cref/sigma
-	/statistic
-	/Log-Transformed Standard Deviation, sigma
+	/data_like
+	/Transformed Standard Deviation, sigma_i(theta)
 /$$.
 $lnext
 The fields $icode meas_value$$ and $icode meas_std$$

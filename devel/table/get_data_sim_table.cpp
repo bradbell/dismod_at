@@ -70,7 +70,7 @@ $code double$$ $cnext $code data_sim_stdcv$$ $cnext
 $code double$$ $cnext $code data_sim_delta$$ $cnext
 	The $cref/adjusted standard deviation
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 	/$$
 	for this simulated measurement.
 $rnext

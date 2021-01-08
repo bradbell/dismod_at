@@ -147,22 +147,22 @@ changes the measurement noise.
 The possible options are
 $cref/add_std_scale_all
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 	/add_std_scale_all
 /$$,
 $cref/add_std_scale_log
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 	/add_std_scale_log
 /$$,
 $cref/add_var_scale_all
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 	/add_var_scale_all
 /$$,
 $cref/add_var_scale_log
 	/data_like
-	/Adjusted Standard Deviation, delta_i
+	/Adjusted Standard Deviation, delta_i(theta)
 	/add_var_scale_log
 /$$.
 

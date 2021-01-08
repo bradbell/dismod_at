@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -695,7 +695,7 @@ One must call $cref/replace_like/data_model_replace_like/$$
 before calling this function.
 
 $head Log-likelihood$$
-We use $cref/y_i/data_like/Data Table Notation/y_i/$$ to denote the
+We use $cref/y_i/data_like/Notation/y_i/$$ to denote the
 $cref/meas_value/data_table/meas_value/$$ corresponding
 to this $cref/subset_id/data_subset/data_subset_obj/subset_id/$$.
 The log-likelihood computed by $code like_one$$ is the mapping
@@ -764,7 +764,7 @@ This can be calculated using $cref data_model_average$$.
 $head delta_out$$
 The input value of $icode delta_out$$ does not matter.
 Upon return it is the adjusted standard deviation
-$cref/delta/data_like/Adjusted Standard Deviation, delta_i/$$
+$cref/delta/data_like/Adjusted Standard Deviation, delta_i(theta)/$$
 for this data point.
 
 $head residual$$
