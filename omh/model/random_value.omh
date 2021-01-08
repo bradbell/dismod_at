@@ -75,7 +75,7 @@ $latex \[
 V_j^u ( u | \theta )
 =
 \exp \left[ D \left(
-	\theta_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
+	u_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
 \right) \right]
 \] $$
 where $latex D$$ is the

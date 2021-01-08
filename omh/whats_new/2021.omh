@@ -30,7 +30,8 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 01-08$$
-The definition of the transformed standard deviation $icode sigma$$
+$list number$$
+The definition of the transformed standard deviation $latex \sigma$$
 was extended to apply to all densities, not just
 $cref/log scaled/density_table/Notation/Log Scaled/$$ densities.
 In addition, the definition was move from the $cref statistic$$ section
@@ -41,6 +42,17 @@ $cref/fixed_value/fixed_value/sigma_j/$$,
 $cref/random_value/random_value/sigma_j/$$,
 $cref/smooth_dage/smooth_dage/sigma_ij/$$,
 $cref/smooth_dtime/smooth_dtime/sigma_ij/$$.
+$lnext
+In the definition of the value prior for the random effects
+$cref/V_j^u/random_value/V_j^u/$$ the term
+$latex \[
+D \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j \right)
+\] $$
+was corrected to be
+$latex \[
+D \left( u_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j \right)
+\] $$
+$lend
 
 
 

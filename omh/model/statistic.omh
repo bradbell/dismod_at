@@ -14,6 +14,7 @@ $spell
 	nu
 	mu
 	cen
+	ij
 $$
 
 $section Some Statistical Function Definitions$$
@@ -28,7 +29,7 @@ or $latex \log( y + \eta )$$.
 $subhead z$$
 If $latex z$$ is present,
 we are computing the residual and statistical density for $latex z - y$$
-or $latex \log( y + \eta ) - \log ( z + \eta )$$.
+or $latex \log( z + \eta ) - \log ( y + \eta )$$.
 This is used for smoothing difference of $cref model_variables$$
 with respect to age and time.
 
@@ -44,11 +45,21 @@ the log of $latex z$$.
 $subhead sigma$$
 If the density is
 $cref/linear/density_table/Notation/Linear/$$,
-this is the standard deviation for $latex y$$ or $latex y - z$$,
+this is the standard deviation for $latex y$$ or $latex z - y$$,
 If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 this is the standard deviation for $latex \log( y + \eta )$$
-or $latex \log( y + \eta )  - \log ( z + \eta )$$.
+or $latex \log( z + \eta )  - \log ( y + \eta )$$.
+Note that $latex \sigma$$ has a different definition for different cases;
+see
+$cref/sigma_i(theta)/data_like
+	/Transformed Standard Deviation, sigma_i(theta)
+/$$,
+$cref/sigma_j/fixed_value/sigma_j/$$,
+$cref/sigma_j/random_value/sigma_j/$$,
+$cref/sigma_ij/smooth_dage/sigma_ij/$$,
+$cref/sigma_ij/smooth_dtime/sigma_ij/$$.
+
 
 $subhead eta$$
 We use $latex \eta$$ to denote the offset in log transform
