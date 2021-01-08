@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Random Effects Value Density Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Random Effects Value Density Function">
-<meta name="keywords" id="keywords" content=" the random effects value density function u_j prior_id lambda_j mu_j delta_j d_j v_j^u v^u ">
+<meta name="keywords" id="keywords" content=" the random effects value density function u_j prior_id lambda_j mu_j epsilon_j eta_j d_j sigma_j v_j^u v^u ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,8 +74,10 @@ A:active { color : purple }
 <br><a href="random_value.htm#prior_id" target="_top">prior_id</a>
 <br><a href="random_value.htm#lambda_j" target="_top">lambda_j</a>
 <br><a href="random_value.htm#mu_j" target="_top">mu_j</a>
-<br><a href="random_value.htm#delta_j" target="_top">delta_j</a>
+<br><a href="random_value.htm#epsilon_j" target="_top">epsilon_j</a>
+<br><a href="random_value.htm#eta_j" target="_top">eta_j</a>
 <br><a href="random_value.htm#d_j" target="_top">d_j</a>
+<br><a href="random_value.htm#sigma_j" target="_top">sigma_j</a>
 <br><a href="random_value.htm#V_j^u" target="_top">V_j^u</a>
 <br><a href="random_value.htm#V^u" target="_top">V^u</a>
 <br><br>
@@ -130,13 +132,27 @@ corresponding to
 
 <br>
 <br>
-<b><big><a name="delta_j" id="delta_j">delta_j</a></big></b>
+<b><big><a name="epsilon_j" id="epsilon_j">epsilon_j</a></big></b>
 <br>
 We use <small>@(@
-\delta_j
-@)@</small> to denote the standard deviation
+\varepsilon_j
+@)@</small> to denote the
 <a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
- corresponding to 
+
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_id</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="eta_j" id="eta_j">eta_j</a></big></b>
+<br>
+We use <small>@(@
+\eta_j
+@)@</small> to denote the
+<a href="prior_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+
+corresponding to 
 <code><i><font color="black"><span style='white-space: nowrap'>prior_id</span></font></i></code>
 .
 
@@ -163,6 +179,27 @@ In an abuse of notation, we include
 
 <br>
 <br>
+<b><big><a name="sigma_j" id="sigma_j">sigma_j</a></big></b>
+<br>
+We use <small>@(@
+\sigma_j
+@)@</small> to denote the transformed standard deviation
+corresponding to 
+<code><i><font color="black"><span style='white-space: nowrap'>prior_id</span></font></i></code>
+
+<small>@[@
+
+\sigma_j = \left\{ \begin{array}{ll}
+	\log ( \mu_j + \eta_j + \varepsilon_j ) - \log( \mu_j + \eta_j )
+		& \R{if \; log \; density}
+	\\
+	\varepsilon_j & \R{otherwise}
+\end{array} \right.
+
+@]@</small>
+
+<br>
+<br>
 <b><big><a name="V_j^u" id="V_j^u">V_j^u</a></big></b>
 <br>
 The value density for the <code><i>j</i></code>-th component of <small>@(@
@@ -173,7 +210,7 @@ u
 V_j^u ( u | \theta )
 =
 \exp \left[ D \left(
-	\theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} d_j
+	u_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
 \right) \right]
 
 @]@</small>

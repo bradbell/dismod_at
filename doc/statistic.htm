@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Some Statistical Function Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Some Statistical Function Definitions">
-<meta name="keywords" id="keywords" content=" some statistical function definitions notation z y mu delta eta nu d log-transformed standard deviation sigma weighted residual r value difference log-density uniform gaussian censored log-gaussian laplace log-laplace student's-t log-student's-t ">
+<meta name="keywords" id="keywords" content=" some statistical function definitions notation y z mu sigma eta nu d weighted residual r value difference log-density uniform gaussian censored log-gaussian laplace log-laplace student's-t log-student's-t ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,14 +67,13 @@ A:active { color : purple }
 <center><b><big><big>Some Statistical Function Definitions</big></big></b></center>
 
 <br><a href="statistic.htm#Notation" target="_top">Notation</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.z" target="_top">z</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.y" target="_top">y</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.z" target="_top">z</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.mu" target="_top">mu</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.delta" target="_top">delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.sigma" target="_top">sigma</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.nu" target="_top">nu</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.d" target="_top">d</a>
-<br><a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top">Log-Transformed&nbsp;Standard&nbsp;Deviation,&nbsp;sigma</a>
 <br><a href="statistic.htm#Weighted Residual Function, R" target="_top">Weighted&nbsp;Residual&nbsp;Function,&nbsp;R</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Value" target="_top">Value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Weighted Residual Function, R.Difference" target="_top">Difference</a>
@@ -96,20 +95,6 @@ A:active { color : purple }
 
 <br>
 <br>
-<big><a name="Notation.z" id="Notation.z">z</a></big>
-<br>
-If <small>@(@
-z
-@)@</small> is present,
-we are computing residual and statistical density for <small>@(@
-z - y
-@)@</small>.
-This is used for smoothing difference of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
-
-with respect to age and time.
-
-<br>
-<br>
 <big><a name="Notation.y" id="Notation.y">y</a></big>
 <br>
 If <small>@(@
@@ -117,7 +102,27 @@ z
 @)@</small> is not present,
 we are computing residual and statistical density for <small>@(@
 y
+@)@</small>
+or <small>@(@
+\log( y + \eta )
 @)@</small>.
+
+<br>
+<br>
+<big><a name="Notation.z" id="Notation.z">z</a></big>
+<br>
+If <small>@(@
+z
+@)@</small> is present,
+we are computing the residual and statistical density for <small>@(@
+z - y
+@)@</small>
+or <small>@(@
+\log( z + \eta ) - \log ( y + \eta )
+@)@</small>.
+This is used for smoothing difference of <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+
+with respect to age and time.
 
 <br>
 <br>
@@ -147,11 +152,40 @@ z
 
 <br>
 <br>
-<big><a name="Notation.delta" id="Notation.delta">delta</a></big>
+<big><a name="Notation.sigma" id="Notation.sigma">sigma</a></big>
 <br>
-The standard deviation for <small>@(@
+If the density is
+<a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+,
+this is the standard deviation for <small>@(@
 y
-@)@</small>, difference, or difference of logs.
+@)@</small> or <small>@(@
+z - y
+@)@</small>,
+If the density is
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
+this is the standard deviation for <small>@(@
+\log( y + \eta )
+@)@</small>
+or <small>@(@
+\log( z + \eta )  - \log ( y + \eta )
+@)@</small>.
+Note that <small>@(@
+\sigma
+@)@</small> has a different definition for different cases;
+see
+<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>sigma_i(theta)</span></a>
+,
+<a href="fixed_value.htm#sigma_j" target="_top"><span style='white-space: nowrap'>sigma_j</span></a>
+,
+<a href="random_value.htm#sigma_j" target="_top"><span style='white-space: nowrap'>sigma_j</span></a>
+,
+<a href="smooth_dage.htm#sigma_ij" target="_top"><span style='white-space: nowrap'>sigma_ij</span></a>
+,
+<a href="smooth_dtime.htm#sigma_ij" target="_top"><span style='white-space: nowrap'>sigma_ij</span></a>
+.
+
 
 <br>
 <br>
@@ -204,53 +238,6 @@ data or prior table.
 
 <br>
 <br>
-<b><big><a name="Log-Transformed Standard Deviation, sigma" id="Log-Transformed Standard Deviation, sigma">Log-Transformed Standard Deviation, sigma</a></big></b>
-<br>
-If a density is being applied to a prior
-(its <a href="prior_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
- appears in the prior table)
-we define the log-transformed standard deviation by
-<small>@[@
-
-\sigma( y, \mu, \delta , \eta )
-=
-\log ( \mu + \eta + \delta ) - \log ( \mu + \eta )
-
-@]@</small>
-Note that for priors, <small>@(@
-\sigma
-@)@</small> does not depend on the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
-,
-<small>@(@
-\mu
-@)@</small> is the mean of a model variable,
-and <small>@(@
-y
-@)@</small> is the value of the model variable.
-
-If a density is being applied to data
-(its <a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
- appears in the data table)
-we define the log-transformed standard deviation by
-<small>@[@
-
-\sigma( y, \mu, \delta , \eta )
-=
-\log ( y + \eta + \delta ) - \log ( y + \eta )
-
-@]@</small>
-Note that for data, <small>@(@
-\sigma
-@)@</small> does not depend on the model variables,
-<small>@(@
-\mu
-@)@</small> is the model for the data given the value of the model variables,
-and 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
- is the data.
-
-<br>
-<br>
 <b><big><a name="Weighted Residual Function, R" id="Weighted Residual Function, R">Weighted Residual Function, R</a></big></b>
 
 
@@ -264,7 +251,7 @@ If the density is
 the weighted residual function for values is
 <small>@[@
 
-	R(y, \mu, \delta, d) = 0
+	R(y, \mu, \sigma, d) = 0
 
 @]@</small>
 If the density is
@@ -273,7 +260,7 @@ If the density is
 the weighted residual function for values is
 <small>@[@
 
-	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
+	R(y, \mu, \sigma, d) = \frac{y - \mu}{\sigma}
 
 @]@</small>
 If the density is
@@ -282,12 +269,12 @@ If the density is
 the weighted residual function for values is
 <small>@[@
 
-	R(y, \mu, \delta, d)
+	R(y, \mu, \sigma, d)
 	=
 	\frac{
 		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
 	}{
-		\sigma( y, \mu , \delta , \eta[d] )
+		\sigma
 	}
 
 @]@</small>
@@ -307,7 +294,7 @@ If the density is uniform,
 the weighted residual function for differences is
 <small>@[@
 
-	R(z, y, \mu, \delta, d) = 0
+	R(z, y, \mu, \sigma, d) = 0
 
 @]@</small>
 If the density is
@@ -316,7 +303,7 @@ If the density is
 the weighted residual function for differences is
 <small>@[@
 
-	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
+	R(z, y, \mu, \sigma, d) = \frac{z - y - \mu}{\sigma}
 
 @]@</small>
 Note that, in the linear case, all the arguments (except <small>@(@
@@ -329,12 +316,12 @@ If the density is
 the weighted residual function for differences is
 <small>@[@
 
-	R(z, y, \mu, \delta, d)
+	R(z, y, \mu, \sigma, d)
 	=
 	\frac{
 		\log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
 	}{
-		\delta
+		\sigma
 	}
 
 @]@</small>
@@ -346,7 +333,7 @@ z, y
 while <small>@(@
 \mu
 @)@</small> and <small>@(@
-\delta
+\sigma
 @)@</small> are in log space.
 
 <br>
@@ -364,10 +351,10 @@ density function.
 <br>
 If the density is <code><font color="blue">uniform</font></code>,
 the log-density function for values <small>@(@
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \delta, d)
+D(z, y, \mu, \sigma, d)
 @)@</small>,
 are both defined by <small>@(@
 D = 0
@@ -379,17 +366,17 @@ D = 0
 <br>
 If the density name is <code><font color="blue">gaussian</font></code>,
 the log-density functions for values <small>@(@
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \delta, d)
+D(z, y, \mu, \sigma, d)
 @)@</small>,
 are defined by
 <small>@[@
 
 D
 =
-- \log \left( \delta \sqrt{2 \pi} \right) - \frac{1}{2} R^2
+- \log \left( \sigma \sqrt{2 \pi} \right) - \frac{1}{2} R^2
 
 @]@</small>
 where <small>@(@
@@ -416,9 +403,9 @@ y \leq 0
 is defined by
 <small>@[@
 
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 =
-\log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
+\log ( \R{erfc}[ \mu / ( \sigma \sqrt{2} ) ] ) - \log(2)
 
 @]@</small>
 where <small>@(@
@@ -439,22 +426,19 @@ If the density name is <code><font color="blue">log_gaussian</font></code>,
 the log-density function for values is
 <small>@[@
 
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 =
-- \log \left[ \sigma( \mu , \delta , \eta[d] ) \sqrt{2 \pi} \right]
-- \frac{1}{2} R(y, \mu, \delta, d)^2
+- \log \left[ \sigma \sqrt{2 \pi} \right]
+- \frac{1}{2} R(y, \mu, \sigma, d)^2
 
 @]@</small>
-see the definition of
-<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
- above.
 The log-density function for differences is
 <small>@[@
 
-D(z, y, \mu, \delta, d)
+D(z, y, \mu, \sigma, d)
 =
-- \log \left( \delta \sqrt{2 \pi} \right)
-- \frac{1}{2} R(z, y, \mu, \delta, d)^2
+- \log \left( \sigma \sqrt{2 \pi} \right)
+- \frac{1}{2} R(z, y, \mu, \sigma, d)^2
 
 @]@</small>
 
@@ -474,7 +458,7 @@ y \leq 0
 is defined by
 <small>@[@
 
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 =
 \log ( \R{erfc}[ ( \mu - \eta ) / ( \sigma \sqrt{2} ) ] ) - \log(2)
 
@@ -499,17 +483,17 @@ c = \eta
 <br>
 If the density name is <code><font color="blue">laplace</font></code>,
 the log-density functions for values <small>@(@
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \delta, d)
+D(z, y, \mu, \sigma, d)
 @)@</small>,
 are defined by
 <small>@[@
 
 D
 =
-- \log \left( \delta \sqrt{2} \right) - \sqrt{2} | R |
+- \log \left( \sigma \sqrt{2} \right) - \sqrt{2} | R |
 
 @]@</small>
 where <small>@(@
@@ -534,9 +518,9 @@ y \leq 0
 is defined by
 <small>@[@
 
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 =
-- \mu \sqrt{2} / \delta - \log(2)
+- \mu \sqrt{2} / \sigma - \log(2)
 
 @]@</small>
 where <small>@(@
@@ -557,22 +541,19 @@ If the density name is <code><font color="blue">log_laplace</font></code>,
 the log-density function for values is
 <small>@[@
 
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 =
-- \log \left[ \sigma( \mu , \delta , \eta[d] ) \sqrt{2} \right]
-- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
+- \log \left[ \sigma \sqrt{2} \right]
+- \sqrt{2} \left| R(y, \mu, \sigma, d) \right|
 
 @]@</small>
-see the definition of
-<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
- above.
 The log-density function for differences is
 <small>@[@
 
-D(z, y, \mu, \delta, d)
+D(z, y, \mu, \sigma, d)
 =
-- \log \left( \delta \sqrt{2} \right)
-- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
+- \log \left( \sigma \sqrt{2} \right)
+- \sqrt{2} \left| R(z, y, \mu, \sigma, d) \right|
 
 @]@</small>
 
@@ -592,7 +573,7 @@ y \leq 0
 is defined by
 <small>@[@
 
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 =
 - ( \mu - \eta ) \sqrt{2} / \sigma - \log(2)
 
@@ -614,10 +595,10 @@ c = \eta
 <br>
 If the density name is <code><font color="blue">students</font></code>,
 the log-density functions for values <small>@(@
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \delta, d)
+D(z, y, \mu, \sigma, d)
 @)@</small>,
 are defined by
 <small>@[@
@@ -648,10 +629,10 @@ and we have abbreviated <small>@(@
 <br>
 If the density name is <code><font color="blue">log_students</font></code>,
 the log-density functions for values <small>@(@
-D(y, \mu, \delta, d)
+D(y, \mu, \sigma, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \delta, d)
+D(z, y, \mu, \sigma, d)
 @)@</small>,
 are defined by
 <small>@[@

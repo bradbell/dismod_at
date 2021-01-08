@@ -1,0 +1,126 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Changes and Additions to Dismod_at During 2021</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 01-08 ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_whats_new_2021_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>release_notes</option>
+<option>whats_new_2021</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="release_notes.htm" target="_top">Prev</a>
+</td><td><a href="whats_new_2020.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_release_notes_htm.js'></script>
+</td>
+<td>whats_new_2021</td>
+<td>
+<select onchange='choose_current0(this)'>
+<option>Heading-&gt;</option>
+<option>01-08</option>
+</select>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+
+<center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="01-08" id="01-08">01-08</a></big></b>
+
+<ol type="1"><li>
+The definition of the transformed standard deviation <small>@(@
+\sigma
+@)@</small>
+was extended to apply to all densities, not just
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+ densities.
+In addition, the definition was move from the <a href="statistic.htm" target="_top"><span style='white-space: nowrap'>statistic</span></a>
+ section
+to a place where the different cases are easier to understand; see
+
+<code><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
+ in
+<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>data_like</span></a>
+,
+<a href="fixed_value.htm#sigma_j" target="_top"><span style='white-space: nowrap'>fixed_value</span></a>
+,
+<a href="random_value.htm#sigma_j" target="_top"><span style='white-space: nowrap'>random_value</span></a>
+,
+<a href="smooth_dage.htm#sigma_ij" target="_top"><span style='white-space: nowrap'>smooth_dage</span></a>
+,
+<a href="smooth_dtime.htm#sigma_ij" target="_top"><span style='white-space: nowrap'>smooth_dtime</span></a>
+.
+</li><li>
+
+In the definition of the value prior for the random effects
+<a href="random_value.htm#V_j^u" target="_top"><span style='white-space: nowrap'>V_j^u</span></a>
+ the term
+<small>@[@
+
+D \left( \theta_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j \right)
+
+@]@</small>
+was corrected to be
+<small>@[@
+
+D \left( u_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j \right)
+
+@]@</small>
+</li></ol>
+
+
+
+
+
+<hr>Input File: omh/whats_new/2021.omh
+
+</body>
+</html>

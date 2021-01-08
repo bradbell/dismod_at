@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2020</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2020">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 12-26 12-22 12-17 11-24 11-22 11-23 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2020 12-30 12-29 12-26 12-22 12-17 11-24 11-22 11-23 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="release_notes.htm" target="_top">Prev</a>
+<td><a href="whats_new_2021.htm" target="_top">Prev</a>
 </td><td><a href="whats_new_2019.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>12-30</option>
+<option>12-29</option>
 <option>12-26</option>
 <option>12-22</option>
 <option>12-17</option>
@@ -117,6 +119,30 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2020</big></big></b></center>
+<br>
+<b><big><a name="12-30" id="12-30">12-30</a></big></b>
+<br>
+The
+<a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+,
+<a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+,
+and <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
+
+<a href="data_flow.htm#Output Tables by Table Name" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
+
+were not being dropped (if they existed) during the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+.
+This has been fixed.
+
+<br>
+<br>
+<b><big><a name="12-29" id="12-29">12-29</a></big></b>
+<br>
+Fix a problem when creating both debug and release builds.
+(This was not a problem before 12-22 when build/external moved to external).
+
+<br>
 <br>
 <b><big><a name="12-26" id="12-26">12-26</a></big></b>
 
@@ -467,8 +493,8 @@ for standard deviations in the prior table was edited to make it clearer
 that difference standard deviations are not transformed.
 </li><li>
 
-The discussion of log transformed standard deviations
-<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+The discussion of log transformed standard deviations 
+<code><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
 
 was edited to make it clearer why it is different for data
 than it is for priors.
@@ -814,8 +840,6 @@ cases.
 </li><li>
 
 Discuss the difference in the definition of the
-<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>log-transformed&nbsp;standard&nbsp;deviation</span></a>
-
 <small>@(@
 \sigma
 @)@</small> in the data versus prior cases.

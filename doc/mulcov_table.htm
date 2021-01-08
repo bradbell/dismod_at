@@ -138,7 +138,7 @@ This covariate multiplier adjusts the average integrand to match the
 <big><a name="mulcov_type.meas_noise" id="mulcov_type.meas_noise">meas_noise</a></big>
 <br>
 This covariate multiplier adjusts the measurement noise; see
-<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
+<a href="data_like.htm#Measurement Noise Covariates.gamma_j (a, t)" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
 .
 
 <br>
@@ -208,9 +208,10 @@ There is a fixed effect covariate multiplier for all the data
 that has a <a href="data_table.htm#subgroup_id" target="_top"><span style='white-space: nowrap'>subgroup_id</span></a>
  that
 corresponds to this group id.
-This covariate only affects the average integrand for when this
+This covariate only affects the average integrand for data points in
+this group; see
 <a href="avg_integrand.htm#Data or Avgint Table Notation.g_i" target="_top"><span style='white-space: nowrap'>group_id</span></a>
- is specified.
+.
 The 
 <code><i><font color="black"><span style='white-space: nowrap'>group_id</span></font></i></code>
  cannot be null.
@@ -275,7 +276,7 @@ are always zero and no <a href="model_variables.htm" target="_top"><span style='
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
- is <code><font color="blue">rate_noise</font></code>,
+ is <code><font color="blue">meas_noise</font></code>,
 
 <code><i><font color="black"><span style='white-space: nowrap'>subgroup_smooth_id</span></font></i></code>
  must be null.

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Prior Density Function for Smoothing Age Difference</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Prior Density Function for Smoothing Age Difference">
-<meta name="keywords" id="keywords" content=" prior density function smoothing age difference s i j lambda prior_ij d_ij delta_ij mu_ij v_ij a^s ">
+<meta name="keywords" id="keywords" content=" prior density function smoothing age difference s i j lambda prior_ij d_ij sigma_ij mu_ij v_ij a^s ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,7 +76,7 @@ A:active { color : purple }
 <br><a href="smooth_dage.htm#lambda" target="_top">lambda</a>
 <br><a href="smooth_dage.htm#prior_ij" target="_top">prior_ij</a>
 <br><a href="smooth_dage.htm#d_ij" target="_top">d_ij</a>
-<br><a href="smooth_dage.htm#delta_ij" target="_top">delta_ij</a>
+<br><a href="smooth_dage.htm#sigma_ij" target="_top">sigma_ij</a>
 <br><a href="smooth_dage.htm#mu_ij" target="_top">mu_ij</a>
 <br><a href="smooth_dage.htm#v_ij" target="_top">v_ij</a>
 <br><a href="smooth_dage.htm#A^s" target="_top">A^s</a>
@@ -161,10 +161,10 @@ d_{i,j}
 
 <br>
 <br>
-<b><big><a name="delta_ij" id="delta_ij">delta_ij</a></big></b>
+<b><big><a name="sigma_ij" id="sigma_ij">sigma_ij</a></big></b>
 <br>
 We use <small>@(@
-\delta_{i,j}
+\sigma_{i,j}
 @)@</small> to denote the
 <a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
  in 
@@ -210,7 +210,7 @@ A^s (s, v)
 =
 \sum_{i=0}^{I-2} \sum_{j=0}^{J-1} D \left(
 	v_{i+1,j} \W{,} v_{i,j} \W{,}
-	\mu_{i,j} \W{,} \lambda \delta_{i,j}  \W{,} d_{i,j}
+	\mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
 \right)
 
 @]@</small>

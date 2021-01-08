@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Likelihood and Weighted Residuals</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Likelihood and Weighted Residuals">
-<meta name="keywords" id="keywords" content=" data likelihood weighted residuals table notation i y_i a_i b_i s_i t_i d_i i_i x_ij w_i minimum cv standard deviation delta_i measurement noise covariates k_i gamma_j effects u theta average integrand effect adjusted scaling add variance add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log residual ">
+<meta name="keywords" id="keywords" content=" data likelihood weighted residuals notation i a_i b_i d_i i_i s_i t_i w_i x_ij y_i minimum cv standard deviation delta_i fixed effects theta random u average integrand a_i(u theta) measurement noise covariates k_i gamma_j (a t) effect e_i (theta) adjusted delta_i(theta) scaling add variance add_std_scale_all add_std_scale_log add_var_scale_all add_var_scale_log transformed sigma_i(theta) residual ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -66,39 +66,41 @@ A:active { color : purple }
 
 <center><b><big><big>Data Likelihood and Weighted Residuals</big></big></b></center>
 
-<br><a href="data_like.htm#Data Table Notation" target="_top">Data&nbsp;Table&nbsp;Notation</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.i" target="_top">i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.y_i" target="_top">y_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.a_i" target="_top">a_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.b_i" target="_top">b_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.s_i" target="_top">s_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.t_i" target="_top">t_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.d_i" target="_top">d_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.I_i" target="_top">I_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.x_ij" target="_top">x_ij</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Data Table Notation.w_i" target="_top">w_i</a>
-<br><a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top">Minimum&nbsp;CV&nbsp;Standard&nbsp;Deviation,&nbsp;Delta_i</a>
+<br><a href="data_like.htm#Notation" target="_top">Notation</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.i" target="_top">i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.a_i" target="_top">a_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.b_i" target="_top">b_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.d_i" target="_top">d_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.I_i" target="_top">I_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.s_i" target="_top">s_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.t_i" target="_top">t_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.w_i" target="_top">w_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.x_ij" target="_top">x_ij</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.y_i" target="_top">y_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top">Minimum&nbsp;CV&nbsp;Standard&nbsp;Deviation,&nbsp;Delta_i</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.Fixed Effects, theta" target="_top">Fixed&nbsp;Effects,&nbsp;theta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.Random Effects, u" target="_top">Random&nbsp;Effects,&nbsp;u</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Notation.Average Integrand, A_i(u, theta)" target="_top">Average&nbsp;Integrand,&nbsp;A_i(u,&nbsp;theta)</a>
 <br><a href="data_like.htm#Measurement Noise Covariates" target="_top">Measurement&nbsp;Noise&nbsp;Covariates</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Noise Covariates.K_i" target="_top">K_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top">gamma_j</a>
-<br><a href="data_like.htm#Effects, u, theta" target="_top">Effects,&nbsp;u,&nbsp;theta</a>
-<br><a href="data_like.htm#Average Integrand" target="_top">Average&nbsp;Integrand</a>
-<br><a href="data_like.htm#Average Noise Effect" target="_top">Average&nbsp;Noise&nbsp;Effect</a>
-<br><a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top">Adjusted&nbsp;Standard&nbsp;Deviation,&nbsp;delta_i</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.Scaling" target="_top">Scaling</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.Add Variance or Standard Deviation" target="_top">Add&nbsp;Variance&nbsp;or&nbsp;Standard&nbsp;Deviation</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_std_scale_all" target="_top">add_std_scale_all</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_std_scale_log" target="_top">add_std_scale_log</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var_scale_all" target="_top">add_var_scale_all</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var_scale_log" target="_top">add_var_scale_log</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Noise Covariates.gamma_j (a, t)" target="_top">gamma_j&nbsp;(a,&nbsp;t)</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Measurement Noise Covariates.Average Noise Effect, E_i (theta)" target="_top">Average&nbsp;Noise&nbsp;Effect,&nbsp;E_i&nbsp;(theta)</a>
+<br><a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top">Adjusted&nbsp;Standard&nbsp;Deviation,&nbsp;delta_i(theta)</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).Scaling" target="_top">Scaling</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).Add Variance or Standard Deviation" target="_top">Add&nbsp;Variance&nbsp;or&nbsp;Standard&nbsp;Deviation</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_all" target="_top">add_std_scale_all</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_log" target="_top">add_std_scale_log</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_all" target="_top">add_var_scale_all</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_log" target="_top">add_var_scale_log</a>
+<br><a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top">Transformed&nbsp;Standard&nbsp;Deviation,&nbsp;sigma_i(theta)</a>
 <br><a href="data_like.htm#Weighted Residual and Likelihood" target="_top">Weighted&nbsp;Residual&nbsp;and&nbsp;Likelihood</a>
 <br><br>
-<b><big><a name="Data Table Notation" id="Data Table Notation">Data Table Notation</a></big></b>
+<b><big><a name="Notation" id="Notation">Notation</a></big></b>
 
 
 <br>
 <br>
-<big><a name="Data Table Notation.i" id="Data Table Notation.i">i</a></big>
+<big><a name="Notation.i" id="Notation.i">i</a></big>
 <br>
 We use <small>@(@
 i
@@ -109,17 +111,7 @@ for a row in the data table.
 
 <br>
 <br>
-<big><a name="Data Table Notation.y_i" id="Data Table Notation.y_i">y_i</a></big>
-<br>
-We use <small>@(@
-y_i
-@)@</small> to denote the corresponding
-<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- value.
-
-<br>
-<br>
-<big><a name="Data Table Notation.a_i" id="Data Table Notation.a_i">a_i</a></big>
+<big><a name="Notation.a_i" id="Notation.a_i">a_i</a></big>
 <br>
 We use <small>@(@
 a_i
@@ -129,7 +121,7 @@ a_i
 
 <br>
 <br>
-<big><a name="Data Table Notation.b_i" id="Data Table Notation.b_i">b_i</a></big>
+<big><a name="Notation.b_i" id="Notation.b_i">b_i</a></big>
 <br>
 We use <small>@(@
 b_i
@@ -139,27 +131,7 @@ b_i
 
 <br>
 <br>
-<big><a name="Data Table Notation.s_i" id="Data Table Notation.s_i">s_i</a></big>
-<br>
-We use <small>@(@
-s_i
-@)@</small> to denote the corresponding
-<a href="data_table.htm#time_lower" target="_top"><span style='white-space: nowrap'>time_lower</span></a>
- value.
-
-<br>
-<br>
-<big><a name="Data Table Notation.t_i" id="Data Table Notation.t_i">t_i</a></big>
-<br>
-We use <small>@(@
-t_i
-@)@</small> to denote the corresponding
-<a href="data_table.htm#time_upper" target="_top"><span style='white-space: nowrap'>time_upper</span></a>
- value.
-
-<br>
-<br>
-<big><a name="Data Table Notation.d_i" id="Data Table Notation.d_i">d_i</a></big>
+<big><a name="Notation.d_i" id="Notation.d_i">d_i</a></big>
 <br>
 We use <small>@(@
 d_i
@@ -173,7 +145,7 @@ i
 
 <br>
 <br>
-<big><a name="Data Table Notation.I_i" id="Data Table Notation.I_i">I_i</a></big>
+<big><a name="Notation.I_i" id="Notation.I_i">I_i</a></big>
 <br>
 We use <small>@(@
 I_i
@@ -183,7 +155,40 @@ I_i
 
 <br>
 <br>
-<big><a name="Data Table Notation.x_ij" id="Data Table Notation.x_ij">x_ij</a></big>
+<big><a name="Notation.s_i" id="Notation.s_i">s_i</a></big>
+<br>
+We use <small>@(@
+s_i
+@)@</small> to denote the corresponding
+<a href="data_table.htm#time_lower" target="_top"><span style='white-space: nowrap'>time_lower</span></a>
+ value.
+
+<br>
+<br>
+<big><a name="Notation.t_i" id="Notation.t_i">t_i</a></big>
+<br>
+We use <small>@(@
+t_i
+@)@</small> to denote the corresponding
+<a href="data_table.htm#time_upper" target="_top"><span style='white-space: nowrap'>time_upper</span></a>
+ value.
+
+<br>
+<br>
+<big><a name="Notation.w_i" id="Notation.w_i">w_i</a></big>
+<br>
+We use <small>@(@
+w_i (a, t)
+@)@</small> for the weighting as a function of age and time
+that corresponds to the
+<a href="data_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
+ for this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Notation.x_ij" id="Notation.x_ij">x_ij</a></big>
 <br>
 We use <small>@(@
 x_{i,j}
@@ -201,20 +206,17 @@ been subtracted from these values.
 
 <br>
 <br>
-<big><a name="Data Table Notation.w_i" id="Data Table Notation.w_i">w_i</a></big>
+<big><a name="Notation.y_i" id="Notation.y_i">y_i</a></big>
 <br>
 We use <small>@(@
-w_i (a, t)
-@)@</small> for the weighting as a function of age and time
-that corresponds to the
-<a href="data_table.htm#weight_id" target="_top"><span style='white-space: nowrap'>weight_id</span></a>
- for this 
-<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-.
+y_i
+@)@</small> to denote the corresponding
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ value.
 
 <br>
 <br>
-<b><big><a name="Minimum CV Standard Deviation, Delta_i" id="Minimum CV Standard Deviation, Delta_i">Minimum CV Standard Deviation, Delta_i</a></big></b>
+<big><a name="Notation.Minimum CV Standard Deviation, Delta_i" id="Notation.Minimum CV Standard Deviation, Delta_i">Minimum CV Standard Deviation, Delta_i</a></big>
 <br>
 Let 
 <code><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i></code>
@@ -231,14 +233,63 @@ and <a href="data_table.htm#meas_value" target="_top"><span style='white-space: 
 correspond to this data table
 <a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
 .
-We use the notation <small>@(@
-\Delta_i
+The minimum cv standard deviation is defined by
+<code><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+\Delta_i =
 @)@</small>
-for the minimum cv standard deviation for this data
 
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta_i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
-</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)</span></font></code>
+
+
+<br>
+<br>
+<big><a name="Notation.Fixed Effects, theta" id="Notation.Fixed Effects, theta">Fixed Effects, theta</a></big>
+<br>
+We use <small>@(@
+\theta
+@)@</small> to denote the vector of
+<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effects</span></a>
+.
+
+<br>
+<br>
+<big><a name="Notation.Random Effects, u" id="Notation.Random Effects, u">Random Effects, u</a></big>
+<br>
+We use <small>@(@
+u
+@)@</small> to denote the vector of
+<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
+.
+There is a different random effects vector <small>@(@
+u
+@)@</small> for each child.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
+ for each data point determines the random effects for
+<a href="data_table.htm#node_id.Child Data" target="_top"><span style='white-space: nowrap'>child&nbsp;data</span></a>
+.
+Note that there are no random effects for
+<a href="data_table.htm#node_id.Parent Data" target="_top"><span style='white-space: nowrap'>parent&nbsp;data</span></a>
+.
+This corresponds to <small>@(@
+u = 0
+@)@</small>.
+
+<br>
+<br>
+<big><a name="Notation.Average Integrand, A_i(u, theta)" id="Notation.Average Integrand, A_i(u, theta)">Average Integrand, A_i(u, theta)</a></big>
+<br>
+Let <small>@(@
+A_i ( u , \theta )
+@)@</small> denote the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+ for this
+
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
 <br>
 <b><big><a name="Measurement Noise Covariates" id="Measurement Noise Covariates">Measurement Noise Covariates</a></big></b>
 
@@ -251,8 +302,7 @@ There is a set of rows in the mulcov table such that
 <a href="mulcov_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
  is equal to <small>@(@
 I_i
-@)@</small>.
-and
+@)@</small> and
 <a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
  is equal to <code><font color="blue">meas_noise</font></code>.
 We use <small>@(@
@@ -264,7 +314,7 @@ which this is the case.
 
 <br>
 <br>
-<big><a name="Measurement Noise Covariates.gamma_j" id="Measurement Noise Covariates.gamma_j">gamma_j</a></big>
+<big><a name="Measurement Noise Covariates.gamma_j (a, t)" id="Measurement Noise Covariates.gamma_j (a, t)">gamma_j (a, t)</a></big>
 <br>
 For each covariate index <small>@(@
 j \in K_i
@@ -284,48 +334,7 @@ Note that these are only
 
 <br>
 <br>
-<b><big><a name="Effects, u, theta" id="Effects, u, theta">Effects, u, theta</a></big></b>
-<br>
-We use <small>@(@
-u
-@)@</small> and <small>@(@
-\theta
-@)@</small> to denote the vector of
-<a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
- and
-<a href="model_variables.htm#Fixed Effects, theta" target="_top"><span style='white-space: nowrap'>fixed&nbsp;effects</span></a>
- respectively.
-There is a different random effects vector <small>@(@
-u
-@)@</small> for each child.
-The 
-<code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
- for each data point determines the random effects for
-<a href="data_table.htm#node_id.Child Data" target="_top"><span style='white-space: nowrap'>child&nbsp;data</span></a>
-.
-Note that there are no random effects for
-<a href="data_table.htm#node_id.Parent Data" target="_top"><span style='white-space: nowrap'>parent&nbsp;data</span></a>
-.
-This corresponds to <small>@(@
-u = 0
-@)@</small>.
-
-<br>
-<br>
-<b><big><a name="Average Integrand" id="Average Integrand">Average Integrand</a></big></b>
-<br>
-Let <small>@(@
-A_i ( u , \theta )
-@)@</small> denote the
-<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
- for this
-
-<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-.
-
-<br>
-<br>
-<b><big><a name="Average Noise Effect" id="Average Noise Effect">Average Noise Effect</a></big></b>
+<big><a name="Measurement Noise Covariates.Average Noise Effect, E_i (theta)" id="Measurement Noise Covariates.Average Noise Effect, E_i (theta)">Average Noise Effect, E_i (theta)</a></big>
 <br>
 We define the average noise effect by
 <small>@[@
@@ -343,7 +352,7 @@ E_i ( \theta )
 
 <br>
 <br>
-<b><big><a name="Adjusted Standard Deviation, delta_i" id="Adjusted Standard Deviation, delta_i">Adjusted Standard Deviation, delta_i</a></big></b>
+<b><big><a name="Adjusted Standard Deviation, delta_i(theta)" id="Adjusted Standard Deviation, delta_i(theta)">Adjusted Standard Deviation, delta_i(theta)</a></big></b>
 <br>
 For <small>@(@
 j \in K_i
@@ -363,12 +372,12 @@ defined below:
 
 <br>
 <br>
-<big><a name="Adjusted Standard Deviation, delta_i.Scaling" id="Adjusted Standard Deviation, delta_i.Scaling">Scaling</a></big>
+<big><a name="Adjusted Standard Deviation, delta_i(theta).Scaling" id="Adjusted Standard Deviation, delta_i(theta).Scaling">Scaling</a></big>
 <br>
 For some cases below, <small>@(@
 E_i ( \theta )
 @)@</small> multiplies
-<a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
+<a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
 
 instead of multiplying <small>@(@
 y_i
@@ -388,7 +397,7 @@ E_i ( \theta )
 
 <br>
 <br>
-<big><a name="Adjusted Standard Deviation, delta_i.Add Variance or Standard Deviation" id="Adjusted Standard Deviation, delta_i.Add Variance or Standard Deviation">Add Variance or Standard Deviation</a></big>
+<big><a name="Adjusted Standard Deviation, delta_i(theta).Add Variance or Standard Deviation" id="Adjusted Standard Deviation, delta_i(theta).Add Variance or Standard Deviation">Add Variance or Standard Deviation</a></big>
 <br>
 Adding standard deviations requires fewer
 floating point operations (for every data point)
@@ -404,7 +413,7 @@ have data squared units.
 
 <br>
 <br>
-<big><a name="Adjusted Standard Deviation, delta_i.add_std_scale_all" id="Adjusted Standard Deviation, delta_i.add_std_scale_all">add_std_scale_all</a></big>
+<big><a name="Adjusted Standard Deviation, delta_i(theta).add_std_scale_all" id="Adjusted Standard Deviation, delta_i(theta).add_std_scale_all">add_std_scale_all</a></big>
 <br>
 If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is
@@ -418,7 +427,7 @@ the adjusted standard deviation is
 
 <br>
 <br>
-<big><a name="Adjusted Standard Deviation, delta_i.add_std_scale_log" id="Adjusted Standard Deviation, delta_i.add_std_scale_log">add_std_scale_log</a></big>
+<big><a name="Adjusted Standard Deviation, delta_i(theta).add_std_scale_log" id="Adjusted Standard Deviation, delta_i(theta).add_std_scale_log">add_std_scale_log</a></big>
 <br>
 If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is
@@ -427,19 +436,16 @@ If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white
 the adjusted standard deviation is
 <small>@[@
 
-\delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
-
-@]@</small>
-for the log density cases. Otherwise it is
-<small>@[@
-
-\delta_i ( \theta ) = \Delta_i + E_i (\theta)
+\delta_i ( \theta ) = \left\{ \begin{array}{ll}
+	\Delta_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
+	\Delta_i + E_i (\theta)       & \R{otherwise}
+\end{array} \right.
 
 @]@</small>
 
 <br>
 <br>
-<big><a name="Adjusted Standard Deviation, delta_i.add_var_scale_all" id="Adjusted Standard Deviation, delta_i.add_var_scale_all">add_var_scale_all</a></big>
+<big><a name="Adjusted Standard Deviation, delta_i(theta).add_var_scale_all" id="Adjusted Standard Deviation, delta_i(theta).add_var_scale_all">add_var_scale_all</a></big>
 <br>
 If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is
@@ -453,7 +459,7 @@ the adjusted standard deviation is
 
 <br>
 <br>
-<big><a name="Adjusted Standard Deviation, delta_i.add_var_scale_log" id="Adjusted Standard Deviation, delta_i.add_var_scale_log">add_var_scale_log</a></big>
+<big><a name="Adjusted Standard Deviation, delta_i(theta).add_var_scale_log" id="Adjusted Standard Deviation, delta_i(theta).add_var_scale_log">add_var_scale_log</a></big>
 <br>
 If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is
@@ -462,13 +468,27 @@ If <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white
 the adjusted standard deviation is
 <small>@[@
 
-\delta_i ( \theta ) = \Delta_i \sqrt{ 1 + E_i (\theta) }
+\delta_i ( \theta ) = \left\{ \begin{array}{ll}
+	\Delta_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
+	\sqrt{ \Delta_i^2 + E_i (\theta) } & \R{otherwise}
+\end{array} \right.
 
 @]@</small>
-for the log density cases. Otherwise it is
+
+<br>
+<br>
+<b><big><a name="Transformed Standard Deviation, sigma_i(theta)" id="Transformed Standard Deviation, sigma_i(theta)">Transformed Standard Deviation, sigma_i(theta)</a></big></b>
+<br>
+The transformed standard deviation is
 <small>@[@
 
-\delta_i ( \theta ) = \sqrt{ \Delta_i^2 + E_i (\theta) }
+\begin{array}{ll}
+	\log[ y_i + \eta_i + \delta_i ( \theta ) ] - \log( y_i + \eta_i )
+		& \R{if \; log \; density}
+	\\
+	\delta_i ( \theta )
+		& \R{otherwise}
+\end{array}
 
 @]@</small>
 
@@ -490,24 +510,11 @@ and the fixed effects <small>@(@
  R [
 	y_i                  \W{,}
 	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
+	\sigma_i ( \theta )  \W{,}
 	d_i
 ]
 
 @]@</small>
-Note that <small>@(@
-y_i
-@)@</small>, not <small>@(@
-A_i ( u , \theta )
-@)@</small>,
-is used in the corresponding definition of
-<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
-.
-This is so that, in the log scaled case,
-
-<code><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
- does not depend on the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
-.
 The likelihood is
 <small>@[@
 
@@ -516,7 +523,7 @@ The likelihood is
 \exp \left( D [
 	y_i                  \W{,}
 	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
+	\sigma_i ( \theta )  \W{,}
 	d_i
 ] \right)
 

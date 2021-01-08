@@ -171,10 +171,10 @@ A:active { color : purple }
 <b><big><a name="12-19" id="12-19">12-19</a></big></b>
 <br>
 The
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i.add_var_scale_log" target="_top"><span style='white-space: nowrap'>add_var_scale_log</span></a>
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_log" target="_top"><span style='white-space: nowrap'>add_var_scale_log</span></a>
  would sometimes fail to converge
 when the initial value of corresponding covariate multiplier
-<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma_j</span></a>
+<a href="data_like.htm#Measurement Noise Covariates.gamma_j (a, t)" target="_top"><span style='white-space: nowrap'>gamma_j&nbsp;(a,&nbsp;t)</span></a>
  was zero.
 This was because the derivative of the object w.r.t. this
 multiplier was zero even though zero is not the solution.
@@ -196,10 +196,10 @@ Add options for how the measurement noise effect
 <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is defined.
 The gives the choice of
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i.Add Variance or Standard Deviation" target="_top"><span style='white-space: nowrap'>adding&nbsp;variances&nbsp;or&nbsp;standard&nbsp;deviations</span></a>
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).Add Variance or Standard Deviation" target="_top"><span style='white-space: nowrap'>adding&nbsp;variances&nbsp;or&nbsp;standard&nbsp;deviations</span></a>
 .
 It also gives the choice to
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i.Scaling" target="_top"><span style='white-space: nowrap'>scale</span></a>
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).Scaling" target="_top"><span style='white-space: nowrap'>scale</span></a>
 
 the added standard deviations for non-log densities.
 
@@ -211,7 +211,7 @@ the added standard deviations for non-log densities.
 <br>
 Add <a href="user_fit_meas_noise.py.htm" target="_top"><span style='white-space: nowrap'>user_fit_meas_noise.py</span></a>
 , an example that fits
-<a href="data_like.htm#Measurement Noise Covariates.gamma_j" target="_top"><span style='white-space: nowrap'>gamma</span></a>
+<a href="data_like.htm#Measurement Noise Covariates.gamma_j (a, t)" target="_top"><span style='white-space: nowrap'>gamma</span></a>
 
 using simulated data.
 
@@ -1294,7 +1294,7 @@ This allows for testing some new ideas, but does not yet have any effect on
 <b><big><a name="03-21" id="03-21">03-21</a></big></b>
 <br>
 In the definition of
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>delta_i</span></a>
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>delta_i</span></a>
 ,
 The text
 <small>@(@
@@ -1762,11 +1762,11 @@ the corresponding <a href="smooth_table.htm#n_age" target="_top"><span style='wh
 </li><li>
 
 The definition of the
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
 
 for the log transformed densities was changed so that the standard deviation
 effect multiplies
-<a href="data_like.htm#Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta_i</span></a>
+<a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
 .
 </li><li>
 
@@ -1884,7 +1884,7 @@ The method used by the <a href="simulate_command.htm" target="_top"><span style=
  was simplified and documented.
 To be specific, the average integrand, instead of the simulated
 data value, was used to compute the transformed standard deviation
-<a href="statistic.htm#Log-Transformed Standard Deviation, sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>sigma</span></a>
 .
 </li><li>
 

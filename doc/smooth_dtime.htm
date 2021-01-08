@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Prior Density Function for Smoothing Time Difference</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Prior Density Function for Smoothing Time Difference">
-<meta name="keywords" id="keywords" content=" prior density function smoothing time difference s i j lambda prior_ij d_ij delta_ij mu_ij v_ij t^s ">
+<meta name="keywords" id="keywords" content=" prior density function smoothing time difference s i j lambda prior_ij d_ij sigma_ij mu_ij v_ij t^s ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,7 +76,7 @@ A:active { color : purple }
 <br><a href="smooth_dtime.htm#lambda" target="_top">lambda</a>
 <br><a href="smooth_dtime.htm#prior_ij" target="_top">prior_ij</a>
 <br><a href="smooth_dtime.htm#d_ij" target="_top">d_ij</a>
-<br><a href="smooth_dtime.htm#delta_ij" target="_top">delta_ij</a>
+<br><a href="smooth_dtime.htm#sigma_ij" target="_top">sigma_ij</a>
 <br><a href="smooth_dtime.htm#mu_ij" target="_top">mu_ij</a>
 <br><a href="smooth_dtime.htm#v_ij" target="_top">v_ij</a>
 <br><a href="smooth_dtime.htm#T^s" target="_top">T^s</a>
@@ -162,10 +162,10 @@ d_{i,j}
 
 <br>
 <br>
-<b><big><a name="delta_ij" id="delta_ij">delta_ij</a></big></b>
+<b><big><a name="sigma_ij" id="sigma_ij">sigma_ij</a></big></b>
 <br>
 We use <small>@(@
-\delta_{i,j}
+\sigma_{i,j}
 @)@</small> to denote the
 <a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
  in 
@@ -211,7 +211,7 @@ T^s (s, v)
 =
 \sum_{i=0}^{I-1} \sum_{j=0}^{J-2} D \left(
 	v_{i,j+1} \W{,} v_{i,j} \W{,}
-	\mu_{i,j} \W{,} \lambda \delta_{i,j}  \W{,} d_{i,j}
+	\mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
 \right)
 
 @]@</small>
