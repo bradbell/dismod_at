@@ -29,6 +29,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 01-09$$
+The documentation for the $cref data_sim_table$$ was improved.
+
 $head 01-08$$
 $list number$$
 The definition of the transformed standard deviation $latex \sigma$$

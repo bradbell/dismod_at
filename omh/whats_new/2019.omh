@@ -1037,8 +1037,8 @@ $cref/09-13/whats_new_2019/09-13/$$).
 $lnext
 The $cref user_ill_condition.py$$ example was added.
 $lnext
-The documentation formula for
-$cref/log scaled/data_sim_table/Method/y, Log Scaled/$$
+The $cref data_sim_table$$ documentation formula for
+$cref/log scaled/density_table/Notation/Log Scaled/$$
 data was
 $latex \[
     y = \exp(e) * ( A + \eta )

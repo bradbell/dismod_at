@@ -59,19 +59,21 @@ This column has type $code real$$ and is
 the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 $cref/meas_value/data_table/meas_value/$$ in the data table.
-This is the value $icode y$$ below.
+If the density for this $icode data_id$$ is censored (not censored)
+$icode data_sim_value$$ has value $codei%max(%z%, 0)%$$, ($icode z$$);
+see $cref/z/data_sim_table/Method/z/$$ below.
+
+$head data_sim_delta$$
+The column has type $code real$$ and is
+the adjusted standard deviation corresponding to this simulated measurement;
+see $cref/delta_hat/data_sim_table/Method/delta_hat/$$ below.
 
 $head data_sim_stdcv$$
 The column has type $code real$$ and is the
 minimum cv standard deviation
 $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$,
-for use when fitting this simulated data.
-
-$head data_sim_delta$$
-The column has type $code real$$ and is
-the adjusted standard deviation used in the simulation; i.e.,
-the standard deviation of the simulation measurement after adjustment; see
-$cref/delta_i/data_like/Adjusted Standard Deviation, delta_i(theta)/$$.
+for use when fitting this simulated data;
+see $cref/Delta_hat/data_sim_table/Method/Delta_hat/$$ below.
 
 $head Method$$
 
@@ -129,89 +131,87 @@ $cref/transformed standard deviation
 /$$
 corresponding to the data table and this $icode data_id$$; i.e.,
 $latex \[
-	\sigma = \log( y + \eta + \delta ) - \log(y + \eta)
+\sigma = \left\{ \begin{array}{ll}
+	\log( y + \eta + \delta ) - \log(y + \eta) & \R{if \; log \; density}
+	\\
+	\delta                                     & \R{otherwise}
+\end{array} \right.
 \] $$
+Note that $latex \sigma$$ does not depend on simulated noise
+$latex e$$ defined below.
+
+$subhead e$$
+We use $latex e$$ to denote the noise simulated with mean zero,
+standard deviation $latex \sigma$$, and density corresponding to
+this $icode data_id$$ without log qualification.
+For example, if the data density for this $icode data_id$$ is
+$code log_gaussian$$, the $latex e$$ is simulate using a Gaussian
+distribution.
 
 $subhead z$$
 We use $latex z$$ to denote the simulated data value
 $icode data_sim_value$$ corresponding to this $icode data_sim_id$$.
+It the density is $cref/linear/density_table/Notation/Linear/$$,
+$latex \[
+	z = A + e
+\]$$
+It the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
+$latex \[
+\begin{array}{rcl}
+	e        & = & \log( z + \eta ) - \log( A + \eta )
+	\\
+	\exp (e) & = & ( z + \eta ) / ( A + \eta )
+	\\
+	z        & = & \exp(e) ( A + \eta ) - \eta
+\end{array}
+\] $$
 
-$subhead data_sim_delta$$
+$subhead delta_hat$$
 Given $latex z$$, we can solve the equation
 $latex \[
 	\sigma = \log( z + \eta + \hat{\delta} ) - \log( z + \eta )
 \] $$
 to obtain the value
 $latex \[
-	\hat{\delta} = [ exp(\sigma) - 1 ] ( z + \eta )
+\hat{\delta} = \left\{ \begin{array}{ll}
+	[ exp(\sigma) - 1 ] ( z + \eta )  & \R{if \; log \; density}
+	\\
+	\sigma                            & \R{otherwise}
+\end{array} \right.
 \] $$
-The value $latex \hat{\delta}$$ is written as $icode data_sim_delta$$
-in the data_sim table.
+The value $latex \hat{\delta}$$ is the
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+/$$
+that corresponds to measurement error $latex \sigma$$.
 
-$subhead sim_stdcv$$
+
+$subhead Delta_hat$$
 Given $latex \hat{\delta}$$ we can compute a
 $cref/minimum cv standard deviation
 	/data_like
 	/Notation
 	/Minimum CV Standard Deviation, Delta_i
 /$$
-$latex \hat{\Delta}$$ such that,
-using the $cref truth_var_table$$ values for the model variables,
-the corresponding
-$cref/adjusted standard deviation
+given the adjusted standard deviation $latex \hat{\delta}$$.
+For example, in the
+$cref/add_std_scale_all
 	/data_like
 	/Adjusted Standard Deviation, delta_i(theta)
+	/add_std_scale_all
 /$$
-is equal to $latex \hat{\delta}$$.
-The value $latex \hat{\Delta}$$ is written as $icode data_sim_stdcv$$
-in the data_sim table.
-
-$subhead y, Linear$$
-If $latex d$$ is $cref/linear/density_table/Notation/Linear/$$,
+case
 $latex \[
-	z = A + e
-\]$$
-where $latex e$$ is simulated using density $icode d$$
-with mean zero and standard deviation $latex \delta$$.
-The corresponding
-$cref/weighted residual
-	/statistic
-	/Weighted Residual Function, R
-	/Value
-/$$ is
-$latex \[
-	R = e / \delta
-\]$$
-
-$subhead y, Log Scaled$$
-If $latex d$$ is $cref/log scaled/density_table/Notation/Log Scaled/$$,
-$latex e$$ is simulated using the density $icode d$$
-with mean zero and standard deviation $latex \sigma$$.
-The simulated data value $icode sim_data_value$$ is given by
-$latex \[
-	z = \exp(e) * ( A + \eta ) - \eta
+\begin{array}{rcl}
+	\hat{\delta} & = & \hat{\Delta} [ 1  + E_i ( \theta ) ]
+	\\
+	\hat{\Delta} & = &  \hat{\delta} / [ 1 + E_i ( \theta ) ]
+\end{array}
 \] $$
-The corresponding
-$cref/weighted residual
-	/statistic
-	/Weighted Residual Function, R
-	/Value
-/$$ is
-$latex \[
-	R = e / \sigma
-\]$$
-It follows, from the formula for $latex z$$ above, that
-$latex \[
-	e = \log( z + \eta ) - \log( A + \eta )
-\]$$
-Furthermore, if we use $latex \hat{\Delta}$$ as the
-minimum cv standard deviation,
-and the truth_var table value for the model variables,
-$latex \hat{\delta}$$ is the corresponding
-adjusted standard deviation and
-$latex \[
-	\sigma = \log( z + \eta + \hat{\delta} ) - \log(z + \eta )
-\] $$
+where $latex \theta$$ is the value of the of the fixed effects
+used to simulate the data.
+
 
 
 $head Example$$

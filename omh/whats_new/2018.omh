@@ -1094,7 +1094,7 @@ $lnext
 The calculation of the
 $cref/data_sim_value/data_sim_table/data_sim_value/$$
 was corrected to allow for negative values in
-$cref/linear/data_sim_table/Method/y, Linear/$$ cases.
+$cref/linear/density_table/Notation/Linear/$$ cases.
 (The mistake fixed here was made during the changes on
 $cref/01-20/whats_new_2018/01-20/$$; see below.)
 $lnext
