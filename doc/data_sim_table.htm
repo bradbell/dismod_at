@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Measurements and Adjusted Standard Deviations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Measurements and Adjusted Standard Deviations">
-<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_stdcv data_sim_delta method data_id y delta d eta sigma z sim_stdcv linear log scaled example ">
+<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_delta data_sim_stdcv method data_id y delta d eta sigma e z delta_hat example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,8 +74,8 @@ A:active { color : purple }
 <br><a href="data_sim_table.htm#simulate_index" target="_top">simulate_index</a>
 <br><a href="data_sim_table.htm#data_subset_id" target="_top">data_subset_id</a>
 <br><a href="data_sim_table.htm#data_sim_value" target="_top">data_sim_value</a>
-<br><a href="data_sim_table.htm#data_sim_stdcv" target="_top">data_sim_stdcv</a>
 <br><a href="data_sim_table.htm#data_sim_delta" target="_top">data_sim_delta</a>
+<br><a href="data_sim_table.htm#data_sim_stdcv" target="_top">data_sim_stdcv</a>
 <br><a href="data_sim_table.htm#Method" target="_top">Method</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.data_id" target="_top">data_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y" target="_top">y</a>
@@ -85,11 +85,10 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.A" target="_top">A</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta" target="_top">delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.sigma" target="_top">sigma</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.e" target="_top">e</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.z" target="_top">z</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.data_sim_delta" target="_top">data_sim_delta</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.sim_stdcv" target="_top">sim_stdcv</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y, Linear" target="_top">y,&nbsp;Linear</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y, Log Scaled" target="_top">y,&nbsp;Log&nbsp;Scaled</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta_hat" target="_top">delta_hat</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.Delta_hat" target="_top">Delta_hat</a>
 <br><a href="data_sim_table.htm#Example" target="_top">Example</a>
 <br>The <code><font color="blue">data_sim</font></code> table is created during a
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
@@ -167,8 +166,26 @@ the simulated measurement value that for the specified row of the data table;
 i.e., it can act as a replacement for the value
 <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
  in the data table.
-This is the value 
-<code><i><font color="black"><span style='white-space: nowrap'>y</span></font></i></code>
+If the density for this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+ is censored (not censored)
+
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_value</span></font></i></code>
+ has value 
+<code><font color="blue"><span style='white-space: nowrap'>max(</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;0)</span></font></code>
+, (
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+);
+see <a href="data_sim_table.htm#Method.z" target="_top"><span style='white-space: nowrap'>z</span></a>
+ below.
+
+<br>
+<br>
+<b><big><a name="data_sim_delta" id="data_sim_delta">data_sim_delta</a></big></b>
+<br>
+The column has type <code><font color="blue">real</font></code> and is
+the adjusted standard deviation corresponding to this simulated measurement;
+see <a href="data_sim_table.htm#Method.delta_hat" target="_top"><span style='white-space: nowrap'>delta_hat</span></a>
  below.
 
 <br>
@@ -179,17 +196,9 @@ The column has type <code><font color="blue">real</font></code> and is the
 minimum cv standard deviation
 <a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
 ,
-for use when fitting this simulated data.
-
-<br>
-<br>
-<b><big><a name="data_sim_delta" id="data_sim_delta">data_sim_delta</a></big></b>
-<br>
-The column has type <code><font color="blue">real</font></code> and is
-the adjusted standard deviation used in the simulation; i.e.,
-the standard deviation of the simulation measurement after adjustment; see
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>delta_i</span></a>
-.
+for use when fitting this simulated data;
+see <a href="data_sim_table.htm#Method.Delta_hat" target="_top"><span style='white-space: nowrap'>Delta_hat</span></a>
+ below.
 
 <br>
 <br>
@@ -307,9 +316,40 @@ corresponding to the data table and this
 ; i.e.,
 <small>@[@
 
-	\sigma = \log( y + \eta + \delta ) - \log(y + \eta)
+\sigma = \left\{ \begin{array}{ll}
+	\log( y + \eta + \delta ) - \log(y + \eta) & \R{if \; log \; density}
+	\\
+	\delta                                     & \R{otherwise}
+\end{array} \right.
 
 @]@</small>
+Note that <small>@(@
+\sigma
+@)@</small> does not depend on simulated noise
+<small>@(@
+e
+@)@</small> defined below.
+
+<br>
+<br>
+<big><a name="Method.e" id="Method.e">e</a></big>
+<br>
+We use <small>@(@
+e
+@)@</small> to denote the noise simulated with mean zero,
+standard deviation <small>@(@
+\sigma
+@)@</small>, and density corresponding to
+this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+ without log qualification.
+For example, if the data density for this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+ is
+<code><font color="blue">log_gaussian</font></code>, the <small>@(@
+e
+@)@</small> is simulate using a Gaussian
+distribution.
 
 <br>
 <br>
@@ -323,10 +363,30 @@ z
  corresponding to this 
 <code><i><font color="black"><span style='white-space: nowrap'>data_sim_id</span></font></i></code>
 .
+It the density is <a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+,
+<small>@[@
+
+	z = A + e
+
+@]@</small>
+It the density is <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
+<small>@[@
+
+\begin{array}{rcl}
+	e        & = & \log( z + \eta ) - \log( A + \eta )
+	\\
+	\exp (e) & = & ( z + \eta ) / ( A + \eta )
+	\\
+	z        & = & \exp(e) ( A + \eta ) - \eta
+\end{array}
+
+@]@</small>
 
 <br>
 <br>
-<big><a name="Method.data_sim_delta" id="Method.data_sim_delta">data_sim_delta</a></big>
+<big><a name="Method.delta_hat" id="Method.delta_hat">delta_hat</a></big>
 <br>
 Given <small>@(@
 z
@@ -339,127 +399,53 @@ z
 to obtain the value
 <small>@[@
 
-	\hat{\delta} = [ exp(\sigma) - 1 ] ( z + \eta )
+\hat{\delta} = \left\{ \begin{array}{ll}
+	[ exp(\sigma) - 1 ] ( z + \eta )  & \R{if \; log \; density}
+	\\
+	\sigma                            & \R{otherwise}
+\end{array} \right.
 
 @]@</small>
 The value <small>@(@
 \hat{\delta}
-@)@</small> is written as 
-<code><i><font color="black"><span style='white-space: nowrap'>data_sim_delta</span></font></i></code>
+@)@</small> is the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
 
-in the data_sim table.
+that corresponds to measurement error <small>@(@
+\sigma
+@)@</small>.
+
 
 <br>
 <br>
-<big><a name="Method.sim_stdcv" id="Method.sim_stdcv">sim_stdcv</a></big>
+<big><a name="Method.Delta_hat" id="Method.Delta_hat">Delta_hat</a></big>
 <br>
 Given <small>@(@
 \hat{\delta}
 @)@</small> we can compute a
 <a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>minimum&nbsp;cv&nbsp;standard&nbsp;deviation</span></a>
 
-<small>@(@
-\hat{\Delta}
-@)@</small> such that,
-using the <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
- values for the model variables,
-the corresponding
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
-
-is equal to <small>@(@
+given the adjusted standard deviation <small>@(@
 \hat{\delta}
 @)@</small>.
-The value <small>@(@
-\hat{\Delta}
-@)@</small> is written as 
-<code><i><font color="black"><span style='white-space: nowrap'>data_sim_stdcv</span></font></i></code>
+For example, in the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_all" target="_top"><span style='white-space: nowrap'>add_std_scale_all</span></a>
 
-in the data_sim table.
-
-<br>
-<br>
-<big><a name="Method.y, Linear" id="Method.y, Linear">y, Linear</a></big>
-<br>
-If <small>@(@
-d
-@)@</small> is <a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
-,
+case
 <small>@[@
 
-	z = A + e
+\begin{array}{rcl}
+	\hat{\delta} & = & \hat{\Delta} [ 1  + E_i ( \theta ) ]
+	\\
+	\hat{\Delta} & = &  \hat{\delta} / [ 1 + E_i ( \theta ) ]
+\end{array}
 
 @]@</small>
 where <small>@(@
-e
-@)@</small> is simulated using density 
-<code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i></code>
+\theta
+@)@</small> is the value of the of the fixed effects
+used to simulate the data.
 
-with mean zero and standard deviation <small>@(@
-\delta
-@)@</small>.
-The corresponding
-<a href="statistic.htm#Weighted Residual Function, R.Value" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
- is
-<small>@[@
-
-	R = e / \delta
-
-@]@</small>
-
-<br>
-<br>
-<big><a name="Method.y, Log Scaled" id="Method.y, Log Scaled">y, Log Scaled</a></big>
-<br>
-If <small>@(@
-d
-@)@</small> is <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
-,
-<small>@(@
-e
-@)@</small> is simulated using the density 
-<code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i></code>
-
-with mean zero and standard deviation <small>@(@
-\sigma
-@)@</small>.
-The simulated data value 
-<code><i><font color="black"><span style='white-space: nowrap'>sim_data_value</span></font></i></code>
- is given by
-<small>@[@
-
-	z = \exp(e) * ( A + \eta ) - \eta
-
-@]@</small>
-The corresponding
-<a href="statistic.htm#Weighted Residual Function, R.Value" target="_top"><span style='white-space: nowrap'>weighted&nbsp;residual</span></a>
- is
-<small>@[@
-
-	R = e / \sigma
-
-@]@</small>
-It follows, from the formula for <small>@(@
-z
-@)@</small> above, that
-<small>@[@
-
-	e = \log( z + \eta ) - \log( A + \eta )
-
-@]@</small>
-Furthermore, if we use <small>@(@
-\hat{\Delta}
-@)@</small> as the
-minimum cv standard deviation,
-and the truth_var table value for the model variables,
-<small>@(@
-\hat{\delta}
-@)@</small> is the corresponding
-adjusted standard deviation and
-<small>@[@
-
-	\sigma = \log( z + \eta + \hat{\delta} ) - \log(z + \eta )
-
-@]@</small>
 
 
 <br>
