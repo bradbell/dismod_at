@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -260,7 +260,9 @@ void simulate_command(
 				if( log_density(density) )
 					sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
 				else
-					sim_stdcv = sim_delta * sim_delta - effect * effect;
+					sim_stdcv = std::sqrt(
+						sim_delta * sim_delta - effect * effect
+					);
 				break;
 
 				default:

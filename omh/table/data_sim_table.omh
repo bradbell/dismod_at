@@ -184,7 +184,10 @@ $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i(theta)
 /$$
-that corresponds to measurement error $latex \sigma$$.
+that corresponds to measurement error $latex \sigma$$
+and measurement value $latex z$$.
+Note that if $latex z$$ happened to be equal to $latex y$$,
+then $latex \hat{\delta}$$ would be equal to $latex \delta$$.
 
 
 $subhead Delta_hat$$
@@ -194,24 +197,54 @@ $cref/minimum cv standard deviation
 	/Notation
 	/Minimum CV Standard Deviation, Delta_i
 /$$
-given the adjusted standard deviation $latex \hat{\delta}$$.
-For example, in the
-$cref/add_std_scale_all
+$latex \hat{\Delta}$$; see
+$cref/adjusted standard deviations
 	/data_like
 	/Adjusted Standard Deviation, delta_i(theta)
-	/add_std_scale_all
-/$$
-case
+/$$.
+$list number$$
+Adding standard deviations and no scaling:
+In this case
 $latex \[
 \begin{array}{rcl}
-	\hat{\delta} & = & \hat{\Delta} [ 1  + E_i ( \theta ) ]
+	\hat{\delta} & = & \hat{\Delta} + E_i ( \theta )
 	\\
-	\hat{\Delta} & = &  \hat{\delta} / [ 1 + E_i ( \theta ) ]
+	\hat{\Delta} & = & \hat{\delta} -  E_i ( \theta )
 \end{array}
 \] $$
-where $latex \theta$$ is the value of the of the fixed effects
-used to simulate the data.
-
+$lnext
+Adding standard deviations with scaling:
+In this case
+$latex \[
+\begin{array}{rcl}
+	\hat{\delta} & = & \hat{\Delta} [ 1 + E_i ( \theta ) ]
+	\\
+	\hat{\Delta} & = & \hat{\delta} / [ 1 + E_i ( \theta ) ]
+\end{array}
+\] $$
+$lnext
+Adding variances and no scaling:
+In this case
+$latex \[
+\begin{array}{rcl}
+	\hat{\delta} & = & \sqrt{ \hat{\Delta}^2 + E_i ( \theta ) }
+	\\
+	\hat{\Delta} & = & \sqrt{ \hat{\delta}^2 -  E_i ( \theta ) }
+\end{array}
+\] $$
+$lnext
+Adding variances with scaling:
+In this case
+$latex \[
+\begin{array}{rcl}
+	\hat{\delta} & = & \hat{\Delta} \sqrt{ 1 + E_i ( \theta ) }
+	\\
+	\hat{\Delta} & = & \hat{\delta} / \sqrt{ 1 + E_i ( \theta ) }
+\end{array}
+\] $$
+$lend
+Note that if $latex z$$ happened to be equal to $latex y$$,
+then $latex \hat{\Delta}$$ would be equal to $latex \Delta$$.
 
 
 $head Example$$

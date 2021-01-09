@@ -13,6 +13,8 @@ $spell
 	Dismod
 	dage
 	dtime
+	sim_stdcv
+	var
 $$
 $navigate%
 	Up%Location%
@@ -30,7 +32,16 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 01-09$$
+$list number$$
 The documentation for the $cref data_sim_table$$ was improved.
+$lnext
+Fix a bug in the value of
+$cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$
+when $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
+$code add_var_scale_log$$ and the density is
+$cref/linear/density_table/Notation/Linear/$$.
+$lend
+
 
 $head 01-08$$
 $list number$$
