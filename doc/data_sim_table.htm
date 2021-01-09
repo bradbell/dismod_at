@@ -413,6 +413,19 @@ The value <small>@(@
 
 that corresponds to measurement error <small>@(@
 \sigma
+@)@</small>
+and measurement value <small>@(@
+z
+@)@</small>.
+Note that if <small>@(@
+z
+@)@</small> happened to be equal to <small>@(@
+y
+@)@</small>,
+then <small>@(@
+\hat{\delta}
+@)@</small> would be equal to <small>@(@
+\delta
 @)@</small>.
 
 
@@ -425,27 +438,74 @@ Given <small>@(@
 @)@</small> we can compute a
 <a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>minimum&nbsp;cv&nbsp;standard&nbsp;deviation</span></a>
 
-given the adjusted standard deviation <small>@(@
-\hat{\delta}
-@)@</small>.
-For example, in the
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_all" target="_top"><span style='white-space: nowrap'>add_std_scale_all</span></a>
-
-case
+<small>@(@
+\hat{\Delta}
+@)@</small>; see
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviations</span></a>
+.
+<ol type="1"><li>
+Adding standard deviations and no scaling:
+In this case
 <small>@[@
 
 \begin{array}{rcl}
-	\hat{\delta} & = & \hat{\Delta} [ 1  + E_i ( \theta ) ]
+	\hat{\delta} & = & \hat{\Delta} + E_i ( \theta )
 	\\
-	\hat{\Delta} & = &  \hat{\delta} / [ 1 + E_i ( \theta ) ]
+	\hat{\Delta} & = & \hat{\delta} -  E_i ( \theta )
 \end{array}
 
 @]@</small>
-where <small>@(@
-\theta
-@)@</small> is the value of the of the fixed effects
-used to simulate the data.
+</li><li>
 
+Adding standard deviations with scaling:
+In this case
+<small>@[@
+
+\begin{array}{rcl}
+	\hat{\delta} & = & \hat{\Delta} [ 1 + E_i ( \theta ) ]
+	\\
+	\hat{\Delta} & = & \hat{\delta} / [ 1 + E_i ( \theta ) ]
+\end{array}
+
+@]@</small>
+</li><li>
+
+Adding variances and no scaling:
+In this case
+<small>@[@
+
+\begin{array}{rcl}
+	\hat{\delta} & = & \sqrt{ \hat{\Delta}^2 + E_i ( \theta ) }
+	\\
+	\hat{\Delta} & = & \sqrt{ \hat{\delta}^2 -  E_i ( \theta ) }
+\end{array}
+
+@]@</small>
+</li><li>
+
+Adding variances with scaling:
+In this case
+<small>@[@
+
+\begin{array}{rcl}
+	\hat{\delta} & = & \hat{\Delta} \sqrt{ 1 + E_i ( \theta ) }
+	\\
+	\hat{\Delta} & = & \hat{\delta} / \sqrt{ 1 + E_i ( \theta ) }
+\end{array}
+
+@]@</small>
+</li></ol>
+
+Note that if <small>@(@
+z
+@)@</small> happened to be equal to <small>@(@
+y
+@)@</small>,
+then <small>@(@
+\hat{\Delta}
+@)@</small> would be equal to <small>@(@
+\Delta
+@)@</small>.
 
 
 <br>
