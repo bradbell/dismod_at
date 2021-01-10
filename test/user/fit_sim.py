@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -22,6 +22,7 @@ import os
 import distutils.dir_util
 import subprocess
 import copy
+import time
 test_program = 'test/user/fit_sim.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -39,13 +40,18 @@ import dismod_at
 # change into the build/test/user directory
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
+#
+# random_seed_str
+random_seed_str = str( int( time.time() ) )
 # ----------------------------------------------------------------------------
 # run a system command
 def system_command(command) :
 	print( ' '.join(command) )
 	flag = subprocess.call( command )
 	if flag != 0 :
-		sys.exit('command failed: flag = ' + str(flag))
+		msg  = 'command failed: flag = ' + str(flag)
+		msg += ', random_seed = ', random_seed_str
+		sys.exit(msg)
 	return
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
@@ -244,22 +250,22 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':'world'        },
-		{ 'name':'ode_step_size',          'value':'10.0'         },
-		{ 'name':'random_seed',            'value':'0'            },
-		{ 'name':'zero_sum_child_rate',    'value':'iota'         },
+		{ 'name':'parent_node_name',       'value':'world'             },
+		{ 'name':'ode_step_size',          'value':'10.0'              },
+		{ 'name':'random_seed',            'value':random_seed_str     },
+		{ 'name':'zero_sum_child_rate',    'value':'iota'              },
 
-		{ 'name':'quasi_fixed',            'value':'true'         },
-		{ 'name':'derivative_test_fixed',  'value':'none'         },
-		{ 'name':'max_num_iter_fixed',     'value':'100'          },
-		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-6'         },
+		{ 'name':'quasi_fixed',            'value':'true'              },
+		{ 'name':'derivative_test_fixed',  'value':'none'              },
+		{ 'name':'max_num_iter_fixed',     'value':'100'               },
+		{ 'name':'print_level_fixed',      'value':'0'                 },
+		{ 'name':'tolerance_fixed',        'value':'1e-6'              },
 
-		{ 'name':'derivative_test_random', 'value':'none'         },
-		{ 'name':'max_num_iter_random',    'value':'100'          },
-		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-8'         },
-		{ 'name':'method_random',          'value':'ipopt_random'  }
+		{ 'name':'derivative_test_random', 'value':'none'              },
+		{ 'name':'max_num_iter_random',    'value':'100'               },
+		{ 'name':'print_level_random',     'value':'0'                 },
+		{ 'name':'tolerance_random',       'value':'1e-8'              },
+		{ 'name':'method_random',          'value':'ipopt_random'      }
 	]
 	# ----------------------------------------------------------------------
 	# avgint table: empty
@@ -367,15 +373,9 @@ if max_error > 5e-2 :
 # -----------------------------------------------------------------------------
 # set start_var so it corresponds to second set of model variables
 cmd = [ program, file_name, 'sample', 'simulate', 'both', '2' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at sample command failed')
+system_command(cmd)
 cmd = [ program, file_name, 'set', 'start_var', 'sample', '1' ]
-print( ' '.join(cmd) )
-flag = subprocess.call( cmd )
-if flag != 0 :
-	sys.exit('The dismod_at set command failed')
+system_command(cmd)
 start_var_table = dismod_at.get_table_dict(connection, 'start_var')
 sample_table    = dismod_at.get_table_dict(connection, 'sample')
 sample_index    = 1

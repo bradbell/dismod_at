@@ -254,7 +254,7 @@ def example_db (file_name) :
 		'time_upper':   2000.,
 		'integrand':   'Sincidence',
 		'meas_std':     meas_std,
-		'eta':          iota_true / 10.0,
+		'eta':          meas_std,
 		'nu':           10
 	}
 	# The censored densities are not included becasue one cannot recover
