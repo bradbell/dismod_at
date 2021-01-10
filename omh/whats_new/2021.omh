@@ -15,6 +15,7 @@ $spell
 	dtime
 	sim_stdcv
 	var
+	std
 $$
 $navigate%
 	Up%Location%
@@ -39,6 +40,18 @@ $cref data_sim_table$$ documentation and tests more cases.
 $lnext
 The bug fix of the value of $icode data_sim_stdcv$$ on 01-09
 was corrected (better testing show it was incorrect).
+$lnext
+Add following $cref/meas_noise_effect/option_table/meas_noise_effect/$$ cases:
+$cref/add_std_scale_none
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_std_scale_none
+/$$,
+$cref/add_var_scale_none
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_var_scale_none
+/$$.
 $lend
 
 
