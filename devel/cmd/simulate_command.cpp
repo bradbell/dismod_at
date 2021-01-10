@@ -116,12 +116,18 @@ void simulate_command(
 	// -----------------------------------------------------------------------
 	// meas_noise_effect
 	meas_noise_effect_enum type_effect = number_meas_noise_effect_enum;
+	// add_std
 	if( meas_noise_effect == "add_std_scale_all" )
 		type_effect = add_std_scale_all_enum;
+	else if( meas_noise_effect == "add_std_scale_none" )
+		type_effect = add_std_scale_none_enum;
 	else if( meas_noise_effect == "add_std_scale_log" )
 		type_effect = add_std_scale_log_enum;
+	// add_var
 	else if( meas_noise_effect == "add_var_scale_all" )
 		type_effect = add_var_scale_all_enum;
+	else if( meas_noise_effect == "add_var_scale_none" )
+		type_effect = add_var_scale_none_enum;
 	else if( meas_noise_effect == "add_var_scale_log" )
 		type_effect = add_var_scale_log_enum;
 	else
@@ -193,36 +199,45 @@ void simulate_command(
 		// effect
 		double effect = nan;
 		switch( type_effect )
-		{
+		{	// ---------------------------------------------------------------
+			// add_std
 			case add_std_scale_all_enum:
 			effect = delta / Delta - 1.0;
 			break;
-
-			case add_var_scale_all_enum:
-			effect = (delta * delta) / (Delta * Delta) - 1.0;
+			case add_std_scale_none_enum:
+			effect = delta - Delta;
 			break;
-
 			case add_std_scale_log_enum:
 			if( log_density(density) )
 				effect = delta / Delta - 1.0;
 			else
 				effect = delta - Delta;
 			break;
-
+			// ---------------------------------------------------------------
+			// add_var
+			case add_var_scale_all_enum:
+			effect = (delta * delta) / (Delta * Delta) - 1.0;
+			break;
+			case add_var_scale_none_enum:
+			effect = (delta * delta) - (Delta * Delta);
+			break;
 			case add_var_scale_log_enum:
 			if( log_density(density) )
 				effect = (delta * delta) / (Delta * Delta) - 1.0;
 			else
 				effect = (delta * delta) - (Delta * Delta);
 			break;
-
+			// ---------------------------------------------------------------
 			default:
 			assert(false);
 		}
 		//
 		// data table sigma
-		double sigma = std::log(meas_value + delta + eta);
-		sigma       -= std::log(meas_value + eta);
+		double sigma = delta;
+		if( log_density(density) )
+		{	sigma  = std::log(meas_value + delta + eta);
+			sigma -= std::log(meas_value + eta);
+		}
 		//
 		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 		{	// for each simulate_index
@@ -233,36 +248,40 @@ void simulate_command(
 			);
 			//
 			// sim_delta
-			double sim_delta = delta;
+			double sim_delta = sigma;
 			if( log_density(density) )
 				sim_delta = (std::exp(sigma) - 1.0) * (sim_value + eta);
 			//
 			// sim_stdcv
 			double sim_stdcv = nan;
 			switch( type_effect )
-			{
+			{	// -----------------------------------------------------------
+				// add_std
 				case add_std_scale_all_enum:
 				sim_stdcv = sim_delta / (1.0 + effect);
 				break;
-
-				case add_var_scale_all_enum:
-				sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
+				case add_std_scale_none_enum:
+				sim_stdcv = sim_delta - effect;
 				break;
-
 				case add_std_scale_log_enum:
 				if( log_density(density) )
 					sim_stdcv = sim_delta / (1.0 + effect);
 				else
 					sim_stdcv = sim_delta - effect;
 				break;
-
+				// ------------------------------------------------------------
+				// add_var
+				case add_var_scale_all_enum:
+				sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
+				break;
+				case add_var_scale_none_enum:
+				sim_stdcv = std::sqrt(sim_delta * sim_delta - effect);
+				break;
 				case add_var_scale_log_enum:
 				if( log_density(density) )
 					sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
 				else
-					sim_stdcv = std::sqrt(
-						sim_delta * sim_delta - effect
-					);
+					sim_stdcv = std::sqrt(sim_delta * sim_delta - effect);
 				break;
 
 				default:

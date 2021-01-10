@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,9 +13,13 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	enum meas_noise_effect_enum {
 		add_std_scale_all_enum,
+		add_std_scale_none_enum,
 		add_std_scale_log_enum,
+		//
 		add_var_scale_all_enum,
+		add_var_scale_none_enum,
 		add_var_scale_log_enum,
+		//
 		number_meas_noise_effect_enum
 	};
 }

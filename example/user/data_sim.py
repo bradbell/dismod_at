@@ -53,8 +53,8 @@
 # and the rate $code iota$$.
 # This is a measurement noise covariate multiplier
 # $cref/gamma/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$.
-# The true value for this multiplier, used to simulate data, is
-# called $icode gamma_true$$.
+# The true value for this multiplier, used to simulate data, is returned by
+# $codei%gamma_true(%meas_noise_effect%)%$$.
 # There is only one grid point in the covariate multiplier,
 # hence it is constant in age and time.  It follows that
 # $cref/average noise effect
@@ -126,7 +126,6 @@
 # You can changed the values below and rerun this program
 iota_true          = 0.01
 meas_std           = 0.001
-gamma_true         = 2.0
 n_data             = 10
 # You can changed the values above and rerun this program
 # ----------------------------------------------------------------------------
@@ -153,10 +152,22 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
+# log_density
 def log_density(density) :
 	assert not density.startswith('cen_')
 	return density.startswith('log_')
 # ---------------------------------------------------------------------------
+# gamma_true
+def gamma_true(meas_noise_effect) :
+	if meas_noise_effect.startswith('add_std_') :
+		result = 2.0 * meas_std
+	elif meas_noise_effect.startswith('add_var_') :
+		result = 2.0 * meas_std * meas_std
+	else :
+		assert False
+	return result
+# ---------------------------------------------------------------------------
+# delta_effect
 def delta_effect(meas_noise_effect, Delta, E) :
 	if meas_noise_effect == 'add_std_scale_all' :
 		delta = Delta * (1.0 + E)
@@ -270,8 +281,8 @@ def example_db (file_name) :
 			'name':     'prior_gamma',
 			'density':  'uniform',
 			'lower':    0.0,
-			'upper':    10.0 * gamma_true,
-			'mean':     gamma_true / 10.0
+			'upper':    10.0,
+			'mean':     0.01
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -349,39 +360,6 @@ covariate_table = dismod_at.get_table_dict(connection, 'covariate')
 node_table      = dismod_at.get_table_dict(connection, 'node')
 # -----------------------------------------------------------------------
 # truth table:
-tbl_name     = 'truth_var'
-col_name     = [ 'truth_var_value' ]
-col_type     = [ 'real' ]
-row_list     = list()
-var_id2true  = list()
-for var_id in range( len(var_table) ) :
-	var_info        = var_table[var_id]
-	truth_var_value = None
-	var_type        = var_info['var_type']
-	if var_type == 'mulcov_meas_noise' :
-		integrand_id  = var_info['integrand_id']
-		integrand_name = integrand_table[integrand_id]['integrand_name']
-		assert integrand_name == 'Sincidence'
-		#
-		covariate_id   = var_info['covariate_id']
-		covariate_name = covariate_table[covariate_id]['covariate_name' ]
-		assert( covariate_name == 'one' )
-		#
-		truth_var_value = gamma_true
-	else :
-		assert( var_type == 'rate' )
-		rate_id   = var_info['rate_id']
-		rate_name = rate_table[rate_id]['rate_name']
-		node_id   = var_info['node_id']
-		node_name = node_table[node_id]['node_name']
-		assert node_name == 'world'
-		#
-		truth_var_value = iota_true
-	#
-	var_id2true.append( truth_var_value )
-	row_list.append( [ truth_var_value ] )
-dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-connection.close()
 # -----------------------------------------------------------------------
 meas_noise_effect_list = [
 	'add_std_scale_all', 'add_std_scale_log',
@@ -391,6 +369,42 @@ for meas_noise_effect in meas_noise_effect_list :
 	dismod_at.system_command_prc([ program, file_name,
 		'set', 'option', 'meas_noise_effect', meas_noise_effect
 	])
+	# ------------------------------------------------------------------------
+	# truth_var table
+	tbl_name     = 'truth_var'
+	col_name     = [ 'truth_var_value' ]
+	col_type     = [ 'real' ]
+	row_list     = list()
+	var_id2true  = list()
+	for var_id in range( len(var_table) ) :
+		var_info        = var_table[var_id]
+		truth_var_value = None
+		var_type        = var_info['var_type']
+		if var_type == 'mulcov_meas_noise' :
+			integrand_id  = var_info['integrand_id']
+			integrand_name = integrand_table[integrand_id]['integrand_name']
+			assert integrand_name == 'Sincidence'
+			#
+			covariate_id   = var_info['covariate_id']
+			covariate_name = covariate_table[covariate_id]['covariate_name' ]
+			assert( covariate_name == 'one' )
+			#
+			truth_var_value = gamma_true(meas_noise_effect)
+		else :
+			assert( var_type == 'rate' )
+			rate_id   = var_info['rate_id']
+			rate_name = rate_table[rate_id]['rate_name']
+			node_id   = var_info['node_id']
+			node_name = node_table[node_id]['node_name']
+			assert node_name == 'world'
+			#
+			truth_var_value = iota_true
+		#
+		var_id2true.append( truth_var_value )
+		row_list.append( [ truth_var_value ] )
+	dismod_at.sql_command(connection, 'DROP TABLE IF EXISTS truth_var')
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	# -------------------------------------------------------------------------
 	# create and check the data_sim table
 	dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
 	#
@@ -432,7 +446,7 @@ for meas_noise_effect in meas_noise_effect_list :
 		#
 		# Values that do not depend on simulated data
 		y         = meas_value
-		E         = gamma_true
+		E         = gamma_true(meas_noise_effect)
 		delta     = delta_effect(meas_noise_effect, meas_std, E)
 		if log_density(density) :
 			sigma  = math.log(y + eta + delta) - math.log(y + eta)
@@ -452,6 +466,7 @@ for meas_noise_effect in meas_noise_effect_list :
 		#
 		assert abs( 1.0 - sigma / sigma_hat ) < eps99
 	#
+connection.close()
 # -----------------------------------------------------------------------------
 print('data_sim.py: OK')
 # -----------------------------------------------------------------------------
