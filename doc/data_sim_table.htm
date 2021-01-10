@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Measurements and Adjusted Standard Deviations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Measurements and Adjusted Standard Deviations">
-<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_delta data_sim_stdcv method data_id y delta d eta sigma e z delta_hat example ">
+<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_delta data_sim_stdcv method data_id y delta d eta e sigma z delta_hat example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -83,6 +83,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.d" target="_top">d</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.A" target="_top">A</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.E" target="_top">E</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta" target="_top">delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.sigma" target="_top">sigma</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.e" target="_top">e</a>
@@ -178,6 +179,16 @@ If the density for this
 );
 see <a href="data_sim_table.htm#Method.z" target="_top"><span style='white-space: nowrap'>z</span></a>
  below.
+Note that for censored
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+ densities,
+if <small>@(@
+z
+@)@</small> is not equal 
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_value</span></font></i></code>
+,
+the transformed standard deviation for the simulated data is not the
+same for the simulated and original data.
 
 <br>
 <br>
@@ -280,6 +291,21 @@ We use <small>@(@
 A
 @)@</small> denote the
 <a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+
+corresponding to the truth_var table
+value for the model variables, the values in the data table,
+and this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="Method.E" id="Method.E">E</a></big>
+<br>
+We use <small>@(@
+E
+@)@</small> for the
+<a href="data_like.htm#Measurement Noise Covariates.Average Noise Effect, E_i(theta)" target="_top"><span style='white-space: nowrap'>average&nbsp;noise&nbsp;effect</span></a>
 
 corresponding to the truth_var table
 value for the model variables, the values in the data table,
