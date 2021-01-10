@@ -32,9 +32,15 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 01-10$$
+$list number$$
 The $cref user_data_sim.py$$ example was changed so that it uses
 the same notation as the new version of the
-$cref data_sim_table$$ documentation.
+$cref data_sim_table$$ documentation and tests more cases.
+$lnext
+The bug fix of the value of $icode data_sim_stdcv$$ on 01-09
+was corrected (better testing show it was incorrect).
+$lend
+
 
 $head 01-09$$
 $list number$$

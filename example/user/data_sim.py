@@ -128,8 +128,6 @@ iota_true          = 0.01
 meas_std           = 0.001
 gamma_true         = 2.0
 n_data             = 10
-meas_noise_effect  = 'add_var_scale_log'
-data_density       = 'log_gaussian'
 # You can changed the values above and rerun this program
 # ----------------------------------------------------------------------------
 import math
@@ -156,13 +154,14 @@ distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
 def log_density(density) :
-	return density.startswith('log_') or density.startswith('cen_log_')
+	assert not density.startswith('cen_')
+	return density.startswith('log_')
 # ---------------------------------------------------------------------------
-def delta_effect(Delta, E) :
+def delta_effect(meas_noise_effect, Delta, E) :
 	if meas_noise_effect == 'add_std_scale_all' :
 		delta = Delta * (1.0 + E)
 	elif meas_noise_effect == 'add_std_scale_log' :
-		if log_density(data_density) :
+		if log_density(density) :
 			delta = Delta * (1.0 + E)
 		else :
 			delta = Delta + E
@@ -170,7 +169,7 @@ def delta_effect(Delta, E) :
 		delta = Delta * math.sqrt(1.0 + E)
 	else :
 		assert meas_noise_effect == 'add_var_scale_log'
-		if log_density(data_density) :
+		if log_density(density) :
 			delta = Delta * math.sqrt(1.0 + E)
 		else :
 			delta = math.sqrt( Delta * Delta + E )
@@ -237,17 +236,25 @@ def example_db (file_name) :
 		'time_lower':   2000.,
 		'time_upper':   2000.,
 		'integrand':   'Sincidence',
-		'density':      data_density,
 		'meas_std':     meas_std,
 		'eta':          iota_true / 100.0,
 		'nu':           10
 	}
+	# The censored densities are not included becasue one cannot recover
+	# sigma when censoring occurs.
+	density_list = [
+		'gaussian', 'log_gaussian',
+		'laplace',  'log_laplace',
+		'students', 'log_students',
+	]
 	# values that change between rows:
 	for data_id in range( n_data ) :
 		if data_id % 2 == 0 :
 			row['meas_value'] = 0.9 * iota_true
 		else :
 			row['meas_value'] = 1.1 * iota_true
+		density = density_list[ data_id % len(density_list) ]
+		row['density'] = density
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
@@ -294,7 +301,6 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'meas_noise_effect',      'value':meas_noise_effect   },
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'random_seed',            'value':'0'                 },
@@ -329,8 +335,8 @@ def example_db (file_name) :
 # Run the init command to create the var table
 file_name = 'example.db'
 example_db(file_name)
-#
 program = '../../devel/dismod_at'
+#
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
@@ -377,64 +383,75 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
-# create and check the data_sim table
-dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
-#
-# check results in data_sim table
-new               = False
-connection        = dismod_at.create_connection(file_name, new)
-data_table        = dismod_at.get_table_dict(connection, 'data')
-data_subset_table = dismod_at.get_table_dict(connection, 'data_subset')
-data_sim_table    = dismod_at.get_table_dict(connection, 'data_sim')
-#
-# check that all the data_id appear in the data_subset table
-for data_subset_id in range(len(data_subset_table)) :
-	data_id = data_subset_table[data_subset_id]['data_id']
-	assert data_id == data_subset_id
-#
-# check the values in the data_sim table
-eps99 = 99.0 * sys.float_info.epsilon
-for data_sim_id in range( len(data_sim_table) ) :
+meas_noise_effect_list = [
+	'add_std_scale_all', 'add_std_scale_log',
+	'add_std_scale_all', 'add_std_scale_log',
+]
+for meas_noise_effect in meas_noise_effect_list :
+	dismod_at.system_command_prc([ program, file_name,
+		'set', 'option', 'meas_noise_effect', meas_noise_effect
+	])
+	# create and check the data_sim table
+	dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
 	#
-	# data_sim table valeus
-	row = data_sim_table[data_sim_id]
-	simulate_index = row['simulate_index']
-	data_subset_id = row['data_subset_id']
-	data_sim_value = row['data_sim_value']
-	data_sim_stdcv = row['data_sim_stdcv']
-	data_sim_delta = row['data_sim_delta']
+	# check results in data_sim table
+	new               = False
+	connection        = dismod_at.create_connection(file_name, new)
+	density_table     = dismod_at.get_table_dict(connection, 'density')
+	data_table        = dismod_at.get_table_dict(connection, 'data')
+	data_subset_table = dismod_at.get_table_dict(connection, 'data_subset')
+	data_sim_table    = dismod_at.get_table_dict(connection, 'data_sim')
 	#
-	# only one set of data is simulated
-	assert simulate_index == 0
-	assert data_subset_id == data_sim_id
+	# check that all the data_id appear in the data_subset table
+	for data_subset_id in range(len(data_subset_table)) :
+		data_id = data_subset_table[data_subset_id]['data_id']
+		assert data_id == data_subset_id
 	#
-	# data table values
-	data_id        = data_subset_table[data_subset_id]['data_id']
-	meas_value     = data_table[data_id]['meas_value']
-	eta            = data_table[data_id]['eta']
+	# check the values in the data_sim table
+	eps99 = 99.0 * sys.float_info.epsilon
+	for data_sim_id in range( len(data_sim_table) ) :
+		#
+		# data_sim table valeus
+		row = data_sim_table[data_sim_id]
+		simulate_index = row['simulate_index']
+		data_subset_id = row['data_subset_id']
+		data_sim_value = row['data_sim_value']
+		data_sim_stdcv = row['data_sim_stdcv']
+		data_sim_delta = row['data_sim_delta']
+		#
+		# only one set of data is simulated
+		assert simulate_index == 0
+		assert data_subset_id == data_sim_id
+		#
+		# data table values
+		data_id        = data_subset_table[data_subset_id]['data_id']
+		meas_value     = data_table[data_id]['meas_value']
+		eta            = data_table[data_id]['eta']
+		density_id     = data_table[data_id]['density_id']
+		density        = density_table[density_id]['density_name']
+		#
+		# Values that do not depend on simulated data
+		y         = meas_value
+		E         = gamma_true
+		delta     = delta_effect(meas_noise_effect, meas_std, E)
+		if log_density(density) :
+			sigma  = math.log(y + eta + delta) - math.log(y + eta)
+		else :
+			sigma  = delta
+		#
+		# Notation for values in the sim_data table
+		z         = data_sim_value  # no censoring
+		Delta_hat = data_sim_stdcv
+		delta_hat = data_sim_delta
+		#
+		# check tha the transformed standard deviation is the same for z and y
+		if log_density(density) :
+			sigma_hat = math.log(z + eta + delta_hat) - math.log(z + eta)
+		else :
+			sigma_hat = delta_hat
+		#
+		assert abs( 1.0 - sigma / sigma_hat ) < eps99
 	#
-	# Values that do not depend on simulated data
-	y         = meas_value
-	E         = gamma_true
-	delta     = delta_effect(meas_std, E)
-	if log_density(data_density) :
-		sigma  = math.log(y + eta + delta) - math.log(y + eta)
-	else :
-		sigma  = delta
-	#
-	# Notation for values in the sim_data table
-	z         = data_sim_value  # no censoring
-	Delta_hat = data_sim_stdcv
-	delta_hat = data_sim_delta
-	#
-	# check tha the transformed standard deviation is the same for z and y
-	if log_density(data_density) :
-		sigma_hat = math.log(z + eta + delta_hat) - math.log(z + eta)
-	else :
-		sigma_hat = delta_hat
-	#
-	assert abs( 1.0 - sigma / sigma_hat ) < eps99
-#
 # -----------------------------------------------------------------------------
 print('data_sim.py: OK')
 # -----------------------------------------------------------------------------

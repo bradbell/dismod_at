@@ -261,13 +261,16 @@ void simulate_command(
 					sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
 				else
 					sim_stdcv = std::sqrt(
-						sim_delta * sim_delta - effect * effect
+						sim_delta * sim_delta - effect
 					);
 				break;
 
 				default:
 				assert(false);
 			}
+			assert( ! std::isnan( sim_value ) );
+			assert( ! std::isnan( sim_stdcv ) );
+			assert( ! std::isnan( sim_delta ) );
 			//
 			size_t data_sim_id = sim_index * n_subset + subset_id;
 			row_value[data_sim_id * n_col + 0] = to_string( sim_index );
