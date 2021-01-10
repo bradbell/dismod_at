@@ -287,8 +287,16 @@ void simulate_command(
 				default:
 				assert(false);
 			}
+			if( std::isnan( sim_stdcv ) || sim_stdcv < 0.0 )
+			{	msg  = "dismod_at: simulate_command ";
+				msg += "sim_stdcv is nan or less than zero\n";
+				msg += "Either meas_std is too small or measurment noise ";
+				msg += "effect is too large\n";
+				size_t data_id = data_subset_obj[subset_id].original_id;
+				msg += "data_id = " + to_string(data_id);
+				error_exit(msg);
+			}
 			assert( ! std::isnan( sim_value ) );
-			assert( ! std::isnan( sim_stdcv ) );
 			assert( ! std::isnan( sim_delta ) );
 			//
 			size_t data_sim_id = sim_index * n_subset + subset_id;

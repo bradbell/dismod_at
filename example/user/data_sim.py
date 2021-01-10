@@ -160,24 +160,30 @@ def log_density(density) :
 # gamma_true
 def gamma_true(meas_noise_effect) :
 	if meas_noise_effect.startswith('add_std_') :
-		result = 2.0 * meas_std
+		result = meas_std
 	elif meas_noise_effect.startswith('add_var_') :
-		result = 2.0 * meas_std * meas_std
+		result = meas_std * meas_std
 	else :
 		assert False
 	return result
 # ---------------------------------------------------------------------------
 # delta_effect
 def delta_effect(meas_noise_effect, Delta, E) :
+	# add_std
 	if meas_noise_effect == 'add_std_scale_all' :
 		delta = Delta * (1.0 + E)
+	elif meas_noise_effect == 'add_std_scale_none' :
+		delta = Delta + E
 	elif meas_noise_effect == 'add_std_scale_log' :
 		if log_density(density) :
 			delta = Delta * (1.0 + E)
 		else :
 			delta = Delta + E
+	# add var
 	elif meas_noise_effect == 'add_var_scale_all' :
 		delta = Delta * math.sqrt(1.0 + E)
+	elif meas_noise_effect == 'add_var_scale_none' :
+		delta = math.sqrt( Delta * Delta + E )
 	else :
 		assert meas_noise_effect == 'add_var_scale_log'
 		if log_density(density) :
@@ -248,7 +254,7 @@ def example_db (file_name) :
 		'time_upper':   2000.,
 		'integrand':   'Sincidence',
 		'meas_std':     meas_std,
-		'eta':          iota_true / 100.0,
+		'eta':          iota_true / 10.0,
 		'nu':           10
 	}
 	# The censored densities are not included becasue one cannot recover
@@ -362,8 +368,8 @@ node_table      = dismod_at.get_table_dict(connection, 'node')
 # truth table:
 # -----------------------------------------------------------------------
 meas_noise_effect_list = [
-	'add_std_scale_all', 'add_std_scale_log',
-	'add_std_scale_all', 'add_std_scale_log',
+	'add_std_scale_all', 'add_std_scale_none', 'add_std_scale_log',
+	'add_var_scale_all', 'add_var_scale_none', 'add_var_scale_log',
 ]
 for meas_noise_effect in meas_noise_effect_list :
 	dismod_at.system_command_prc([ program, file_name,
