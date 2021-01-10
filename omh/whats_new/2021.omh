@@ -31,6 +31,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 01-10$$
+The $cref user_data_sim.py$$ example was changed so that it uses
+the same notation as the new version of the
+$cref data_sim_table$$ documentation.
+
 $head 01-09$$
 $list number$$
 The documentation for the $cref data_sim_table$$ was improved.
@@ -41,7 +46,6 @@ when $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
 $code add_var_scale_log$$ and the density is
 $cref/linear/density_table/Notation/Linear/$$.
 $lend
-
 
 $head 01-08$$
 $list number$$

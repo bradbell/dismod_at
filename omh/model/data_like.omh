@@ -127,7 +127,7 @@ $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 Note that these are only
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers.
 
-$subhead Average Noise Effect, E_i (theta)$$
+$subhead Average Noise Effect, E_i(theta)$$
 We define the average noise effect by
 $latex \[
 E_i ( \theta )

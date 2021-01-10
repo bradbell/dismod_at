@@ -62,6 +62,11 @@ $cref/meas_value/data_table/meas_value/$$ in the data table.
 If the density for this $icode data_id$$ is censored (not censored)
 $icode data_sim_value$$ has value $codei%max(%z%, 0)%$$, ($icode z$$);
 see $cref/z/data_sim_table/Method/z/$$ below.
+Note that for censored
+$cref/log scaled/density_table/Notation/Log Scaled/$$ densities,
+if $latex z$$ is not equal $icode data_sim_value$$,
+the transformed standard deviation for the simulated data is not the
+same for the simulated and original data.
 
 $head data_sim_delta$$
 The column has type $code real$$ and is
@@ -109,6 +114,17 @@ corresponding to the data table and this $icode data_id$$.
 $subhead A$$
 We use $latex A$$ denote the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+corresponding to the truth_var table
+value for the model variables, the values in the data table,
+and this $icode data_id$$.
+
+$subhead E$$
+We use $latex E$$ for the
+$cref/average noise effect
+	/data_like
+	/Measurement Noise Covariates
+	/Average Noise Effect, E_i(theta)
+/$$
 corresponding to the truth_var table
 value for the model variables, the values in the data table,
 and this $icode data_id$$.

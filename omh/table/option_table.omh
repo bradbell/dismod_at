@@ -141,7 +141,7 @@ There are four options for how the
 $cref/average noise effect
 	/data_like
 	/Measurement Noise Covariates
-	/Average Noise Effect, E_i (theta)
+	/Average Noise Effect, E_i(theta)
 /$$
 changes the measurement noise.
 The possible options are

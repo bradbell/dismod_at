@@ -14,9 +14,18 @@
 #	Sincidence
 #	std
 #	sim
+#	cv
 # $$
 #
 # $section Explanation of Simulated Data Table, data_sim$$
+#
+# $head Purpose$$
+# This example explains the $cref data_sim_table$$ by showing that the
+# $cref/transformed standard deviation
+#	/data_like
+#	/Transformed Standard Deviation, sigma_i(theta)
+# /$$
+# for the simulated data is the same as for the original data.
 #
 # $head Random Effects$$
 # There are no random effects in this example.
@@ -47,7 +56,13 @@
 # The true value for this multiplier, used to simulate data, is
 # called $icode gamma_true$$.
 # There is only one grid point in the covariate multiplier,
-# hence it is constant in age and time.
+# hence it is constant in age and time.  It follows that
+# $cref/average noise effect
+#	/data_like
+#	/Measurement Noise Covariates
+#	/Average Noise Effect, E_i(theta)
+# /$$
+# $latex E_i ( \theta )$$ is constant and equal to $icode gamma_true$$.
 #
 # $head Data$$
 # There are $icode n_data$$ measurements of Sincidence and each has a standard
@@ -68,9 +83,40 @@
 # $head meas_noise_effect$$
 # see $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
 #
-# $head Scaling Gamma$$
-# The function $code gamma_true()$$ shows on the scaling of $icode gamma$$
-# depends on the value of $icode meas_noise_effect$$.
+# $head Notation Before Simulation$$
+# The following values do not depend on the simulated data:
+#
+# $subhead y$$
+# This is the measured value; see
+# $cref/y/data_sim_table/Method/y/$$.
+#
+# $subhead Delta$$
+# This is the minimum cv standard deviation corresponding to $latex y$$; see
+# $cref/Delta/data_sim_table/Method/Delta/$$.
+#
+# $subhead E$$
+# This is the average noise effect corresponding to $latex y$$; see
+# $cref/E/data_sim_table/Method/E/$$.
+#
+# $subhead delta$$
+# This is the adjusted standard deviation corresponding to $latex y$$; see
+# $cref/delta/data_sim_table/Method/delta/$$.
+#
+# $subhead sigma$$
+# This is the transformed standard deviation corresponding to $latex y$$; see
+# $cref/sigma/data_sim_table/Method/sigma/$$.
+#
+# $head Simulation Notation$$
+#
+# $subhead z$$
+# This is the simulated measurement value, before censoring,
+# in the data_sim table; see $cref/z/data_sim_table/Method/z/$$.
+#
+# $subhead delta_hat$$
+# This is adjusted standard deviation corresponding to $latex z$$.
+#
+# $subhead Delta_hat$$
+# This is the minimum cv standard deviation corresponding to $latex z$$.
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -80,23 +126,11 @@
 # You can changed the values below and rerun this program
 iota_true          = 0.01
 meas_std           = 0.001
-scale_gamma_true   = 2.0
+gamma_true         = 2.0
 n_data             = 10
 meas_noise_effect  = 'add_var_scale_log'
 data_density       = 'log_gaussian'
 # You can changed the values above and rerun this program
-# ---------------------------------------------------------------------------
-def gamma_true() :
-	if meas_noise_effect == 'add_std_scale_all' :
-		result = scale_gamma_true
-	elif meas_noise_effect == 'add_std_scale_log' :
-		result = scale_gamma_true * meas_std
-	elif meas_noise_effect == 'add_var_scale_all' :
-		result = scale_gamma_true
-	else :
-		assert meas_noise_effect == 'add_var_scale_log'
-		result = scale_gamma_true * meas_std * meas_std
-	return result
 # ----------------------------------------------------------------------------
 import math
 import sys
@@ -124,22 +158,22 @@ os.chdir('build/example/user')
 def log_density(density) :
 	return density.startswith('log_') or density.startswith('cen_log_')
 # ---------------------------------------------------------------------------
-def delta_effect(Delta, effect) :
+def delta_effect(Delta, E) :
 	if meas_noise_effect == 'add_std_scale_all' :
-		delta = Delta * (1.0 + effect)
+		delta = Delta * (1.0 + E)
 	elif meas_noise_effect == 'add_std_scale_log' :
 		if log_density(data_density) :
-			delta = Delta * (1.0 + effect)
+			delta = Delta * (1.0 + E)
 		else :
-			delta = Delta + effect
+			delta = Delta + E
 	elif meas_noise_effect == 'add_var_scale_all' :
-		delta = Delta * math.sqrt(1.0 + effect)
+		delta = Delta * math.sqrt(1.0 + E)
 	else :
 		assert meas_noise_effect == 'add_var_scale_log'
 		if log_density(data_density) :
-			delta = Delta * math.sqrt(1.0 + effect)
+			delta = Delta * math.sqrt(1.0 + E)
 		else :
-			delta = math.sqrt( Delta * Delta + effect )
+			delta = math.sqrt( Delta * Delta + E )
 	return delta
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
@@ -229,8 +263,8 @@ def example_db (file_name) :
 			'name':     'prior_gamma',
 			'density':  'uniform',
 			'lower':    0.0,
-			'upper':    10.0 * gamma_true(),
-			'mean':     gamma_true() / 10.0
+			'upper':    10.0 * gamma_true,
+			'mean':     gamma_true / 10.0
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -327,7 +361,7 @@ for var_id in range( len(var_table) ) :
 		covariate_name = covariate_table[covariate_id]['covariate_name' ]
 		assert( covariate_name == 'one' )
 		#
-		truth_var_value = gamma_true()
+		truth_var_value = gamma_true
 	else :
 		assert( var_type == 'rate' )
 		rate_id   = var_info['rate_id']
@@ -361,36 +395,45 @@ for data_subset_id in range(len(data_subset_table)) :
 # check the values in the data_sim table
 eps99 = 99.0 * sys.float_info.epsilon
 for data_sim_id in range( len(data_sim_table) ) :
+	#
+	# data_sim table valeus
 	row = data_sim_table[data_sim_id]
 	simulate_index = row['simulate_index']
 	data_subset_id = row['data_subset_id']
-	sim_value      = row['data_sim_value']
-	sim_stdcv      = row['data_sim_stdcv']
-	sim_delta      = row['data_sim_delta']
+	data_sim_value = row['data_sim_value']
+	data_sim_stdcv = row['data_sim_stdcv']
+	data_sim_delta = row['data_sim_delta']
 	#
 	# only one set of data is simulated
 	assert simulate_index == 0
 	assert data_subset_id == data_sim_id
 	#
+	# data table values
 	data_id        = data_subset_table[data_subset_id]['data_id']
 	meas_value     = data_table[data_id]['meas_value']
 	eta            = data_table[data_id]['eta']
-	effect         = gamma_true()
-	data_delta     = delta_effect(meas_std, effect)
 	#
-	if not log_density(data_density) :
-		assert sim_stdcv == meas_std
-		assert abs( 1.0 - sim_delta / data_delta ) < eps99
+	# Values that do not depend on simulated data
+	y         = meas_value
+	E         = gamma_true
+	delta     = delta_effect(meas_std, E)
+	if log_density(data_density) :
+		sigma  = math.log(y + eta + delta) - math.log(y + eta)
 	else :
-		# check calculation of sim_delta from sim_stdcv
-		check = delta_effect(sim_stdcv, effect)
-		assert abs( 1.0 - sim_delta / check ) < eps99
-		# check calculation of sigma
-		sigma  = math.log(meas_value + eta + data_delta)
-		sigma -= math.log(meas_value + eta)
-		check  = math.log(sim_value + eta + sim_delta)
-		check -= math.log(sim_value + eta)
-		assert abs( 1.0 - sigma / check ) < eps99
+		sigma  = delta
+	#
+	# Notation for values in the sim_data table
+	z         = data_sim_value  # no censoring
+	Delta_hat = data_sim_stdcv
+	delta_hat = data_sim_delta
+	#
+	# check tha the transformed standard deviation is the same for z and y
+	if log_density(data_density) :
+		sigma_hat = math.log(z + eta + delta_hat) - math.log(z + eta)
+	else :
+		sigma_hat = delta_hat
+	#
+	assert abs( 1.0 - sigma / sigma_hat ) < eps99
 #
 # -----------------------------------------------------------------------------
 print('data_sim.py: OK')
