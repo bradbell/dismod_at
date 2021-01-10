@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -71,6 +71,14 @@ export PATH="$bin_dir:$PATH"
 python_dir=`find -L $HOME/prefix/dismod_at -name site-packages`
 export PYTHONPATH="$python_dir"
 echo "PYTHONPATH=$PYTHONPATH"
+#
+# LD_LIBRARY_PATH
+cppad_mixed_dir=$( \
+	find -L $HOME/prefix/dismod_at -name 'libcppad_mixed.*' | \
+	sed -e 's|/[^/]*$||' \
+)
+export LD_LIBRARY_PATH="$cppad_mixed_dir"
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 #
 # create check_install and change into it
 if [ -e 'build/check_install' ]
