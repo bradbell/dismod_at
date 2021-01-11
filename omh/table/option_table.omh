@@ -150,6 +150,11 @@ $cref/add_std_scale_all
 	/Adjusted Standard Deviation, delta_i(theta)
 	/add_std_scale_all
 /$$,
+$cref/add_std_scale_none
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_std_scale_none
+/$$,
 $cref/add_std_scale_log
 	/data_like
 	/Adjusted Standard Deviation, delta_i(theta)
@@ -159,6 +164,11 @@ $cref/add_var_scale_all
 	/data_like
 	/Adjusted Standard Deviation, delta_i(theta)
 	/add_var_scale_all
+/$$,
+$cref/add_var_scale_none
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_var_scale_none
 /$$,
 $cref/add_var_scale_log
 	/data_like
