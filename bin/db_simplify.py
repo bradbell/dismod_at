@@ -266,21 +266,20 @@ def get_integrand_list (ode) :
 	#
 	return integrand_list
 # ----------------------------------------------------------------------------
-def get_integrand_count () :
-	# return a dictionary that contains the number of data points for each
-	# integrand name
+def get_integrand_data () :
+	# return a dictionary that contains the data for each integrand name
 	table_name = 'data'
 	(table, col_name, col_type) = get_table(table_name)
 	#
-	integrand_count = dict()
+	integrand_data = dict()
 	for row in table :
 		integrand_id   = row['integrand_id']
 		integrand_name = integrand_table[integrand_id]['integrand_name']
-		if integrand_name not in integrand_count :
-			integrand_count[integrand_name] = 0
-		integrand_count[integrand_name] += 1
+		if integrand_name not in integrand_data :
+			integrand_data[integrand_name] = list()
+		integrand_data[integrand_name].append( row['meas_value'] )
 	#
-	return integrand_count
+	return integrand_data
 # ----------------------------------------------------------------------------
 def plot_rate (rate_name) :
 	color_style_list = [
@@ -568,7 +567,7 @@ def plot_integrand (integrand_name) :
 	y_min       = y_median * 1e-3
 	r_norm      = numpy.linalg.norm( weighted_residual )
 	r_avg_sq    = r_norm * r_norm / len( weighted_residual )
-	r_max       = 5.0 * numpy.sqrt( r_avg_sq )
+	r_max       = 4.0 * numpy.sqrt( r_avg_sq )
 	r_min       = - r_max
 	#
 	avg_integrand = numpy.maximum( avg_integrand, y_min )
@@ -581,7 +580,7 @@ def plot_integrand (integrand_name) :
 	weighted_residual = numpy.minimum( weighted_residual, r_max )
 	#
 	point_size  = numpy.array( n_list * [ 1 ] )
-	marker_size = numpy.array( n_list * [ 7 ] )
+	marker_size = numpy.array( n_list * [ 9 ] )
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
@@ -603,7 +602,7 @@ def plot_integrand (integrand_name) :
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='|', color='red', s=size )
 		pyplot.ylim(y_min, y_max)
 		#
 		sp = pyplot.subplot(3, 1, 2)
@@ -615,7 +614,7 @@ def plot_integrand (integrand_name) :
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='|', color='red', s=size )
 		pyplot.ylim(y_min, y_max)
 		#
 		# this plot at the bottom of the figure has its x tick labels
@@ -626,7 +625,7 @@ def plot_integrand (integrand_name) :
 		for limit in [ r_max, r_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='x', color='black', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='|', color='red', s=size )
 		pyplot.ylim(r_min, r_max)
 		y = 0.0
 		pyplot.axhline(y, linestyle='solid', color='black', alpha=0.3 )
@@ -1162,9 +1161,10 @@ def set_minimum_meas_cv (integrand_name, minimum_meas_cv) :
 			row['minimum_meas_cv'] = minimum_meas_cv
 	put_table(table_name, table, col_name, col_type)
 # -----------------------------------------------------------------------------
-def add_meas_noise_mulcov(integrand_name, group_id, mulcov_value) :
+def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	# Add a meas_noise covariate multiplier with a specified integrand,
-	# group_id, and value. Note that meas_noise multipliers can't have
+	# group_id, initial value, lower, and upper limit.
+	# Note that meas_noise multipliers can't have
 	# ramdom effect (so the subgroup id is null in the mulcov table).
 	dummy_variable_used_to_end_doc_string = None
 	#
@@ -1196,13 +1196,13 @@ def add_meas_noise_mulcov(integrand_name, group_id, mulcov_value) :
 	density_id = density_name2id['uniform']
 	prior = {
 		'prior_name' : integrand_name + 'meas_noise'    ,
-		'density_id' : density_id      ,
-		'lower'      : mulcov_value    ,
-		'upper'      : mulcov_value    ,
-		'mean'       : mulcov_value    ,
-		'std'        : None            ,
-		'eta'        : None            ,
-		'nu'         : None            ,
+		'density_id' : density_id     ,
+		'lower'      : lower          ,
+		'upper'      : upper          ,
+		'mean'       : value          ,
+		'std'        : None           ,
+		'eta'        : None           ,
+		'nu'         : None           ,
 	}
 	#
 	# new one point smoothing
@@ -1244,8 +1244,8 @@ def add_meas_noise_mulcov(integrand_name, group_id, mulcov_value) :
 # subset_data()
 #
 # subsample mtexcess
-# integrand_count = get_integrand_count()
-# max_sample      = int( integrand_count['mtexcess'] / 10 )
+# integrand_data  = get_integrand_data()
+# max_sample      = int( len( integrand_data['mtexcess'] ) / 10 )
 # subsample_data(integrand_name, max_sample)
 #
 # constrain all x_0 covariate multipliers to be zero
@@ -1321,8 +1321,11 @@ if new_database :
 	#
 	# subsample mtexcess
 	for integrand_name in integrand_list_all :
-		max_sample = 200
+		max_sample = 300
 		subsample_data(integrand_name, max_sample)
+	#
+	# integrand_data
+	integrand_data = get_integrand_data()
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
@@ -1331,17 +1334,14 @@ if new_database :
 	set_option('bound_random',        '3')
 	set_option('meas_noise_effect',   'add_std_scale_none')
 	#
-	# add measurement noise covariates and change densities to gaussian
-	mulcov_value = {
-		'prevalence' : 1e-4,
-		'mtspecific' : 0.0,
-		'mtexcess'   : 0.0,
-		'Sincidence' : 0.0,
-	}
+	# add measurement noise covariates
 	group_id       = 0
-	for integrand_name in mulcov_value :
-		value = mulcov_value[integrand_name]
-		add_meas_noise_mulcov(integrand_name, group_id, value)
+	for integrand_name in integrand_list_all :
+		median = numpy.median( integrand_data[integrand_name] )
+		value  = median * 1e-2
+		lower  = value
+		upper  = value
+		add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper)
 	#
 	# constrain all x_0 covariate multipliers to be zero
 	covariate_id = 0

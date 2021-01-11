@@ -16,6 +16,7 @@ $spell
 	sim_stdcv
 	var
 	std
+	csv
 $$
 $navigate%
 	Up%Location%
@@ -31,6 +32,13 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 01-11$$
+Change the order of the columns in the file
+$cref/variable.csv/db2csv_command/variable.csv/$$ so that
+the fit results
+$cref/fit_value/db2csv_command/variable.csv/fit_value/$$
+are next to the corresponding lower and upper limits.
 
 $head 01-10$$
 $list number$$

@@ -1155,20 +1155,20 @@ def db2csv_command(database_file_arg) :
 		'subgroup',
 		'fixed',
 		'depend',
-		'start',
-		'scale',
-		'fit_value',
-		'truth',
-		'sam_avg',
-		'sam_std',
 		'res_value',
 		'res_dage',
 		'res_dtime',
 		'lag_value',
 		'lag_dage',
 		'lag_dtime',
+		'sam_std',
+		'sam_avg',
+		'truth',
+		'start',
+		'scale',
+		'fit_value',
 	]
-	root_list = 'sim,mean,lower,upper,std,eta,nu,density'.split(',')
+	root_list = 'lower,upper,mean,sim,std,eta,nu,density'.split(',')
 	for extension in ['_v', '_a', '_t' ] :
 		for root in root_list :
 			header.append( root + extension )
