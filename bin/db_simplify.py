@@ -17,9 +17,9 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = False
+new_database       = True
 # if new_database is true, run fit both first without and then with ode data.
-fit_ode            = True
+fit_ode            = False
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -1171,7 +1171,7 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	# ramdom effect (so the subgroup id is null in the mulcov table).
 	msg  = 'add_meas_noice_mulcov:'
 	msg += 'for {} group {}: lower=(), upper={}, value={}'
-	print( msg.format(intgrand_name, groupt_id, lower, upper, value) )
+	print( msg.format(integrand_name, group_id, lower, upper, value) )
 	#
 	# prior_table
 	table_name = 'prior'
@@ -1343,6 +1343,7 @@ if new_database :
 	group_id       = 0
 	for integrand_name in integrand_list_all :
 		median = numpy.median( integrand_data[integrand_name] )
+		# value  = 0.0
 		value  = median * 1e-2
 		lower  = value
 		upper  = value
