@@ -17,7 +17,7 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = True
+new_database       = False
 # if new_database is true, run fit both first without and then with ode data.
 fit_ode            = True
 # print the help message for all the db_simplify routines and then exit
@@ -602,8 +602,8 @@ def plot_integrand (integrand_name) :
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='|', color='red', s=size )
-		pyplot.ylim(y_min, y_max)
+			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
+		pyplot.ylim(y_min * 0.95, y_max * 1.05 )
 		#
 		sp = pyplot.subplot(3, 1, 2)
 		sp.set_xticklabels( [] )
@@ -614,8 +614,8 @@ def plot_integrand (integrand_name) :
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='|', color='red', s=size )
-		pyplot.ylim(y_min, y_max)
+			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
+		pyplot.ylim(y_min * 0.95, y_max * 1.05 )
 		#
 		# this plot at the bottom of the figure has its x tick labels
 		pyplot.subplot(3, 1, 3)
@@ -625,8 +625,8 @@ def plot_integrand (integrand_name) :
 		for limit in [ r_max, r_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='|', color='red', s=size )
-		pyplot.ylim(r_min, r_max)
+			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
+		pyplot.ylim(r_min * 0.95, r_max * 1.05 )
 		y = 0.0
 		pyplot.axhline(y, linestyle='solid', color='black', alpha=0.3 )
 		#
@@ -1169,7 +1169,9 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	# group_id, initial value, lower, and upper limit.
 	# Note that meas_noise multipliers can't have
 	# ramdom effect (so the subgroup id is null in the mulcov table).
-	dummy_variable_used_to_end_doc_string = None
+	msg  = 'add_meas_noice_mulcov:'
+	msg += 'for {} group {}: lower=(), upper={}, value={}'
+	print( msg.format(intgrand_name, groupt_id, lower, upper, value) )
 	#
 	# prior_table
 	table_name = 'prior'
@@ -1297,6 +1299,7 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 # Actual Changes
 # ----------------------------------------------------------------------
 #
+start_time = time.time()
 if not new_database :
 	# list of integrands in database
 	integrand_list_yes_ode = get_integrand_list(True)
@@ -1323,7 +1326,7 @@ if new_database :
 	#
 	# subsample mtexcess
 	for integrand_name in integrand_list_all :
-		max_sample = 300
+		max_sample = 500
 		subsample_data(integrand_name, max_sample)
 	#
 	# integrand_data
@@ -1410,5 +1413,6 @@ system_command( [ 'dismodat.py',  database, 'db2csv' ] )
 print('integrands  = ', integrand_list_all )
 if new_database :
 	print('random_seed = ', random_seed )
+print( 'Execution time = ', round(time.time() - start_time), ' seconds')
 print('db_simplify.py: OK')
 sys.exit(0)
