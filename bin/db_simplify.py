@@ -1,7 +1,7 @@
 #! /bin/python3
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -12,11 +12,12 @@
 # --------------------------------------------------------------------------
 # Diabetes: /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db
 # Chrons:   /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'
-original_database  = 'ihme_db/data/475588/dbs/100/3/dismod.db'
+#
+original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = False
+new_database       = True
 # if new_database is true, run fit both first without and then with ode data.
 fit_ode            = True
 # print the help message for all the db_simplify routines and then exit
@@ -400,8 +401,8 @@ def plot_rate (rate_name) :
 			time[i, j] = time_table[time_id]['time']
 			rate[i, j] = fit_var_table[var_id]['fit_var_value']
 	#
-	rate_min = numpy.min(rate)
-	rate_max = numpy.max(rate)
+	rate_min = numpy.min(rate) * 0.95
+	rate_max = numpy.max(rate) * 1.05
 	#
 	from matplotlib import pyplot
 	#
@@ -1312,35 +1313,35 @@ if new_database :
 	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
+	#
 	# subsetting the data can remove some integrands
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
-	# subsample the ode data for speed of testing
-	# max_sample = 1000
-	# for integrand_name in integrand_list_yes_ode :
-	#		subsample_data(integrand_name, max_sample)
+	# subsample mtexcess
+	for integrand_name in integrand_list_all :
+		max_sample = 200
+		subsample_data(integrand_name, max_sample)
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
 	set_option('max_num_iter_fixed', '100')
 	set_option('zero_sum_child_rate', 'iota chi')
 	set_option('bound_random',        '3')
+	set_option('meas_noise_effect',   'add_std_scale_none')
 	#
 	# add measurement noise covariates and change densities to gaussian
 	mulcov_value = {
-		'prevalence' : 1e-7,
-		'mtspecific' : 1e-6,
-		'mtexcess'   : 1e-5,
-		'Sincidence' : 1e-9,
+		'prevalence' : 1e-4,
+		'mtspecific' : 0.0,
+		'mtexcess'   : 0.0,
+		'Sincidence' : 0.0,
 	}
 	group_id       = 0
-	density_name   = 'gaussian'
 	for integrand_name in mulcov_value :
 		value = mulcov_value[integrand_name]
 		add_meas_noise_mulcov(integrand_name, group_id, value)
-		set_data_density(integrand_name, density_name)
 	#
 	# constrain all x_0 covariate multipliers to be zero
 	covariate_id = 0
