@@ -1027,9 +1027,8 @@ def remove_rate (rate_name) :
 	put_table(table_name, table, col_name, col_type)
 # -----------------------------------------------------------------------------
 def set_covariate_reference (covariate_id, reference_name) :
-	# set the reference value for a specified covariate
-	msg = 'set_covariate_reference: x_{} to {}'
-	print( msg.format(covariate_id, reference_name) )
+	# set the reference value for a specified covariate where reference_name
+	# is 'mean' or 'median'
 	#
 	reference_list = [ 'median', 'mean' ]
 	if reference_name not in reference_list :
@@ -1047,19 +1046,23 @@ def set_covariate_reference (covariate_id, reference_name) :
 	covariate_value = list()
 	for row in table :
 		if row[key] is not None :
-			covariate_value = row[key]
+			covariate_value.append( row[key] )
 	#
 	if reference_name == 'median' :
-		reference = numpy.median(covariate_value)
+		new_reference = numpy.median(covariate_value)
 	elif reference_name == 'mean' :
-		reference = numpy.mean(covariate_value)
+		new_reference = numpy.mean(covariate_value)
 	else :
 		assert False
 	#
 	table_name  = 'covariate'
 	(table, col_name, col_type) = get_table(table_name)
 	#
-	table[covariate_id]['reference'] = reference
+	old_reference = table[covariate_id]['reference']
+	table[covariate_id]['reference'] = new_reference
+	#
+	msg = 'set_covariate_reference for x_{} from {} to {}'
+	print( msg.format(covariate_id, old_reference, new_reference) )
 	#
 	put_table(table_name, table, col_name, col_type)
 # -----------------------------------------------------------------------------
@@ -1234,12 +1237,6 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 # set_option('tolerance_fixed',    '1e-6')
 # set_option('max_num_iter_fixed', '30')
 #
-# set reference value for covariates to median
-# (must do this before subset_data)
-# covariate_id    = 0
-# reference_name  = 'median'
-# set_covariate_reference(covariate_id, reference_name)
-#
 # subset_data:
 # subset_data()
 #
@@ -1313,6 +1310,11 @@ if new_database :
 	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
+	#
+	# set reference value for x_0 to its median
+	covariate_id    = 0
+	reference_name  = 'median'
+	set_covariate_reference(covariate_id, reference_name)
 	#
 	# subsetting the data can remove some integrands
 	integrand_list_yes_ode = get_integrand_list(True)
