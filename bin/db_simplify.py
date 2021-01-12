@@ -17,9 +17,11 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = False
+new_database       = True
 # if new_database is true, run fit both first without and then with ode data.
 fit_ode            = False
+# random seed to use when subseting data, if 0 use the clock choose seed
+random_seed        = 1610453908
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -1311,7 +1313,8 @@ if not new_database :
 #
 if new_database :
 	# seed used by subsample_data
-	random_seed = int( time.time() )
+	if random_seed == 0 :
+		random_seed = int( time.time() )
 	random.seed(random_seed)
 	#
 	# remove all hold out data and data past covariate limits
