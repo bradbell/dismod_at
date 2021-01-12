@@ -252,6 +252,11 @@ table_name = 'prior'
 # smooth_table
 table_name = 'smooth'
 (smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
+#
+# smooth_grid_table
+table_name = 'smooth_grid'
+(smooth_grid_table, grid_col_name, grid_col_type) = get_table(table_name)
+#
 # ============================================================================
 # Utilities that depend on data table or fit results
 # ============================================================================
@@ -1089,8 +1094,6 @@ def set_mulcov_zero (covariate_id, restore= None) :
 	table_name = 'mulcov'
 	(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
 	#
-	table_name = 'smooth_grid'
-	(grid_table, grid_col_name, grid_col_type) = get_table(table_name)
 	# -------------------------------------------------------------------------
 	if restore is not None :
 		for (mulcov_id, group_smooth_id, subgroup_smooth_id) in restore :
@@ -1107,26 +1110,22 @@ def set_mulcov_zero (covariate_id, restore= None) :
 		if row['covariate_id'] == covariate_id :
 			group_smooth_id           = row['group_smooth_id']
 			row['group_smooth_id']    = new_zero_smooth_id(
-				group_smooth_id, smooth_table, grid_table
+				group_smooth_id, smooth_table, smooth_grid_table
 			)
 			subgroup_smooth_id        = row['subgroup_smooth_id']
 			row['subgroup_smooth_id'] = new_zero_smooth_id(
-				subgroup_smooth_id, smooth_table, grid_table
+				subgroup_smooth_id, smooth_table, smooth_grid_table
 			)
 			restore.append( (mulcov_id, group_smooth_id, subgroup_smooth_id) )
 	#
 	put_table('mulcov',      mulcov_table, mulcov_col_name, mulcov_col_type)
 	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
-	put_table('smooth_grid', grid_table,   grid_col_name,   grid_col_type)
+	put_table('smooth_grid', smooth_grid_table,   grid_col_name,   grid_col_type)
 	return restore
 # -----------------------------------------------------------------------------
 def constant_rate (rate_name, prior) :
 	# Set a rate to be constant in age and time specified prior
 	print( 'constant_rate {}'.format(rate_name) )
-	#
-	# smooth_grid_table
-	table_name = 'smooth_grid'
-	(smooth_grid_table, grid_col_name, grid_col_type) = get_table(table_name)
 	#
 	# add the smothing
 	smooth_id = new_one_point_smooth_id(
@@ -1173,10 +1172,6 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	msg  = 'add_meas_noice_mulcov:'
 	msg += 'for {} group {}: lower=(), upper={}, value={}'
 	print( msg.format(integrand_name, group_id, lower, upper, value) )
-	#
-	# smooth_grid_table
-	table_name = 'smooth_grid'
-	(smooth_grid_table, grid_col_name, grid_col_type) = get_table(table_name)
 	#
 	table_name = 'mulcov'
 	(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
