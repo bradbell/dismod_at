@@ -248,6 +248,10 @@ rate_name2id = table_name2id(table, table_name)
 # prior_table
 table_name = 'prior'
 (prior_table, prior_col_name, prior_col_type) = get_table(table_name)
+#
+# smooth_table
+table_name = 'smooth'
+(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
 # ============================================================================
 # Utilities that depend on data table or fit results
 # ============================================================================
@@ -305,10 +309,6 @@ def plot_rate (rate_name) :
 	# plot the fit_var grid values for a specified rate.
 	table_name = 'rate'
 	(rate_table, col_name, col_type) = get_table(table_name)
-	#
-	# smooth_table
-	table_name = 'smooth'
-	(smooth_table, col_name, col_type) = get_table(table_name)
 	#
 	# var_table
 	table_name = 'var'
@@ -1089,9 +1089,6 @@ def set_mulcov_zero (covariate_id, restore= None) :
 	table_name = 'mulcov'
 	(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
 	#
-	table_name = 'smooth'
-	(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
-	#
 	table_name = 'smooth_grid'
 	(grid_table, grid_col_name, grid_col_type) = get_table(table_name)
 	# -------------------------------------------------------------------------
@@ -1126,10 +1123,6 @@ def set_mulcov_zero (covariate_id, restore= None) :
 def constant_rate (rate_name, prior) :
 	# Set a rate to be constant in age and time specified prior
 	print( 'constant_rate {}'.format(rate_name) )
-	#
-	# smooth_table
-	table_name = 'smooth'
-	(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
 	#
 	# smooth_grid_table
 	table_name = 'smooth_grid'
@@ -1180,10 +1173,6 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	msg  = 'add_meas_noice_mulcov:'
 	msg += 'for {} group {}: lower=(), upper={}, value={}'
 	print( msg.format(integrand_name, group_id, lower, upper, value) )
-	#
-	# smooth_table
-	table_name = 'smooth'
-	(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
 	#
 	# smooth_grid_table
 	table_name = 'smooth_grid'
