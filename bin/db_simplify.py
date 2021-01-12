@@ -19,7 +19,7 @@ database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # if new_database is true, run fit both first without and then with ode data.
-fit_ode            = True
+fit_ode            = False
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 1610455705
 # print the help message for all the db_simplify routines and then exit
@@ -168,7 +168,7 @@ def new_zero_smooth_id (smooth_id, smooth_table, smooth_grid_table) :
 			smooth_grid_table.append( new_row )
 	return new_smooth_id
 # ----------------------------------------------------------------------------
-def new_one_point_smooth_id(smooth_table, smooth_grid_table, prior_table, prior):
+def new_one_point_smooth_id(smooth_table, smooth_grid_table, prior):
 	# Add a new smoothing that has one grid point and a the specified prior
 	# and return it's smooth_id.  The tables in the argument list are
 	# both inputs and outputs.
@@ -212,7 +212,7 @@ def new_one_point_smooth_id(smooth_table, smooth_grid_table, prior_table, prior)
 #
 # integrand_table, integrand_name2id
 table_name = 'integrand'
-(integrand_table, col_name, col_type) = get_table(table_name)
+(integrand_table, integrand_col_name, col_type) = get_table(table_name)
 integrand_name2id = table_name2id(integrand_table, table_name)
 #
 # density_table, density_name2id
@@ -241,6 +241,13 @@ table_name = 'option'
 table_name = 'rate'
 (table, col_name, col_type) = get_table(table_name)
 rate_name2id = table_name2id(table, table_name)
+# ============================================================================
+# Tables that change
+# ============================================================================
+#
+# prior_table
+table_name = 'prior'
+(prior_table, prior_col_name, prior_col_type) = get_table(table_name)
 # ============================================================================
 # Utilities that depend on data table or fit results
 # ============================================================================
@@ -1120,10 +1127,6 @@ def constant_rate (rate_name, prior) :
 	# Set a rate to be constant in age and time specified prior
 	print( 'constant_rate {}'.format(rate_name) )
 	#
-	# prior_table
-	table_name = 'prior'
-	(prior_table, prior_col_name, prior_col_type) = get_table(table_name)
-	#
 	# smooth_table
 	table_name = 'smooth'
 	(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
@@ -1134,7 +1137,7 @@ def constant_rate (rate_name, prior) :
 	#
 	# add the smothing
 	smooth_id = new_one_point_smooth_id(
-		smooth_table, smooth_grid_table, prior_table, prior
+		smooth_table, smooth_grid_table, prior
 	)
 	#
 	# change rate_table
@@ -1178,10 +1181,6 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	msg += 'for {} group {}: lower=(), upper={}, value={}'
 	print( msg.format(integrand_name, group_id, lower, upper, value) )
 	#
-	# prior_table
-	table_name = 'prior'
-	(prior_table, prior_col_name, prior_col_type) = get_table(table_name)
-	#
 	# smooth_table
 	table_name = 'smooth'
 	(smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
@@ -1217,7 +1216,7 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	#
 	# new one point smoothing
 	smooth_id = new_one_point_smooth_id(
-		smooth_table, smooth_grid_table, prior_table, prior
+		smooth_table, smooth_grid_table, prior
 	)
 	#
 	# new row in mulcov_table
