@@ -19,9 +19,9 @@ database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
 new_database       = True
 # if new_database is true, run fit both first without and then with ode data.
-fit_ode            = False
+fit_ode            = True
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 1610453908
+random_seed        = 1610455705
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -585,7 +585,7 @@ def plot_integrand (integrand_name) :
 	r_limit = [ 1.1 * r_min, 1.1 * r_max ]
 	#
 	point_size  = numpy.array( n_list * [ 1 ] )
-	marker_size = numpy.array( n_list * [ 1 ] )
+	marker_size = numpy.array( n_list * [ 10 ] )
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
@@ -607,7 +607,7 @@ def plot_integrand (integrand_name) :
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='.', color='red', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
 		pyplot.ylim(y_limit[0], y_limit[1])
 		#
 		sp = pyplot.subplot(3, 1, 2)
@@ -619,7 +619,7 @@ def plot_integrand (integrand_name) :
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='.', color='red', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
 		pyplot.ylim(y_limit[0], y_limit[1])
 		#
 		# this plot at the bottom of the figure has its x tick labels
@@ -630,7 +630,7 @@ def plot_integrand (integrand_name) :
 		for limit in [ r_max, r_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='.', color='red', s=size )
+			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
 		pyplot.ylim(r_limit[0], r_limit[1])
 		y = 0.0
 		pyplot.axhline(y, linestyle='solid', color='black', alpha=0.3 )
