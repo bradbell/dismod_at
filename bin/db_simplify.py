@@ -17,7 +17,7 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new simplified database including fit results (otherwise just plot)
-new_database       = True
+new_database       = False
 # if new_database is true, run fit both first without and then with ode data.
 fit_ode            = False
 # print the help message for all the db_simplify routines and then exit
@@ -579,8 +579,11 @@ def plot_integrand (integrand_name) :
 	weighted_residual = numpy.maximum( weighted_residual, r_min )
 	weighted_residual = numpy.minimum( weighted_residual, r_max )
 	#
+	y_limit = [ 0.9 * y_min, 1.1 * y_max ]
+	r_limit = [ 1.1 * r_min, 1.1 * r_max ]
+	#
 	point_size  = numpy.array( n_list * [ 1 ] )
-	marker_size = numpy.array( n_list * [ 9 ] )
+	marker_size = numpy.array( n_list * [ 1 ] )
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
@@ -602,8 +605,8 @@ def plot_integrand (integrand_name) :
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
-		pyplot.ylim(y_min * 0.95, y_max * 1.05 )
+			pyplot.scatter(x[flag], y[flag], marker='.', color='red', s=size )
+		pyplot.ylim(y_limit[0], y_limit[1])
 		#
 		sp = pyplot.subplot(3, 1, 2)
 		sp.set_xticklabels( [] )
@@ -614,8 +617,8 @@ def plot_integrand (integrand_name) :
 		for limit in [ y_max, y_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
-		pyplot.ylim(y_min * 0.95, y_max * 1.05 )
+			pyplot.scatter(x[flag], y[flag], marker='.', color='red', s=size )
+		pyplot.ylim(y_limit[0], y_limit[1])
 		#
 		# this plot at the bottom of the figure has its x tick labels
 		pyplot.subplot(3, 1, 3)
@@ -625,8 +628,8 @@ def plot_integrand (integrand_name) :
 		for limit in [ r_max, r_min ] :
 			flag = y == limit
 			size = marker_size[flag]
-			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
-		pyplot.ylim(r_min * 0.95, r_max * 1.05 )
+			pyplot.scatter(x[flag], y[flag], marker='.', color='red', s=size )
+		pyplot.ylim(r_limit[0], r_limit[1])
 		y = 0.0
 		pyplot.axhline(y, linestyle='solid', color='black', alpha=0.3 )
 		#
