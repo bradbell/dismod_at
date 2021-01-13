@@ -19,7 +19,7 @@ database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = True
+fit_without_ode    = False
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
