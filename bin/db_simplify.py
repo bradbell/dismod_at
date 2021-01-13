@@ -19,7 +19,7 @@ database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = False
+fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
@@ -174,14 +174,6 @@ table_name = 'node'
 (node_table, col_name, col_type) = get_table(table_name)
 node_name2id = table_name2id(node_table, table_name)
 #
-# age_table
-table_name = 'age'
-(age_table, col_name, col_type) = get_table(table_name)
-#
-# time_table
-table_name = 'time'
-(time_table, col_name, col_type) = get_table(table_name)
-#
 # option_table
 table_name = 'option'
 (option_table, col_name, col_type) = get_table(table_name)
@@ -193,6 +185,14 @@ rate_name2id = table_name2id(table, table_name)
 # ============================================================================
 # Tables that change
 # ============================================================================
+#
+# age_table
+table_name = 'age'
+(age_table, age_col_name, age_col_type) = get_table(table_name)
+#
+# time_table
+table_name = 'time'
+(time_table, time_col_name, time_col_type) = get_table(table_name)
 #
 # prior_table
 table_name = 'prior'
@@ -230,33 +230,48 @@ def new_smoothing(age_grid, time_grid, value_prior):
 				table.append(row)
 			result.append(match)
 		return result
-	#
-	age_id_list    = table_value2id(age_table,  'age',  age_grid)
-	time_id_list   = table_value2id(time_table, 'time', time_grid)
-	#
-	new_value_prior_id  = len(prior_table)
-	new_smooth_id       = len( smooth_table )
-	density_id          = density_name2id['log_gaussian']
-	prior_tmp = {
-		'prior_name' : 'smoothing_{}_prior'.format(new_smooth_id) ,
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : 1e-10          ,
-		'nu'         : None           ,
-	}
-	#
-	# add rows to prior_table
-	prior_table.append( copy.copy( value_prior ) )
-	prior_table.append( copy.copy( prior_tmp   ) )
-	#
-	# add row to smooth_table
-	new_smooth_id  = len( smooth_table )
 	n_age          = len(age_grid)
 	n_time         = len(time_grid)
-	smooth_name    = 'smoothing_{}'.format(new_smooth_id)
+	age_id_list    = table_value2id(age_table,  'age',  age_grid)
+	time_id_list   = table_value2id(time_table, 'time', time_grid)
+	new_smooth_id  = len( smooth_table )
+	#
+	# add value_prior to prior_table
+	new_value_prior_id  = len(prior_table)
+	prior_table.append( copy.copy( value_prior ) )
+	#
+	# add dage_prior to prior table
+	new_dage_prior_id  = len(prior_table)
+	density_id     = density_name2id['log_gaussian']
+	dage_prior = {
+		'prior_name' : 'smoothing_{}_dage_prior'.format(new_smooth_id) ,
+		'density_id' : density_id     ,
+		'lower'      : -1.0           ,
+		'upper'      : +1.0           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	prior_table.append( copy.copy( dage_prior   ) )
+	#
+	# add dtime_prior to prior table
+	new_dtime_prior_id  = len(prior_table)
+	density_id     = density_name2id['log_gaussian']
+	dtime_prior = {
+		'prior_name' : 'smoothing_{}_dtime_prior'.format(new_smooth_id) ,
+		'density_id' : density_id     ,
+		'lower'      : -1.0           ,
+		'upper'      : +1.0           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.02           ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	prior_table.append( copy.copy( dtime_prior   ) )
+	#
+	# add row to smooth_table
+	smooth_name    = 'smoothing_{}_dtime_prior'.format(new_smooth_id)
 	row =  {
 		'smooth_name'           : smooth_name    ,
 		'n_age'                 : n_age          ,
@@ -275,8 +290,8 @@ def new_smoothing(age_grid, time_grid, value_prior):
 				'age_id'         : age_id_list[i]                  ,
 				'time_id'        : time_id_list[j]                 ,
 				'value_prior_id' : new_value_prior_id              ,
-				'dage_prior_id'  : new_value_prior_id + 1          ,
-				'dtime_prior_id' : new_value_prior_id + 1          ,
+				'dage_prior_id'  : new_dage_prior_id               ,
+				'dtime_prior_id' : new_dtime_prior_id              ,
 				'const_value'    : None                            ,
 			}
 			smooth_grid_table.append(row)
@@ -1169,14 +1184,14 @@ def set_mulcov_zero (covariate_id, restore= None) :
 	put_table('smooth_grid', smooth_grid_table,   grid_col_name,   grid_col_type)
 	return restore
 # -----------------------------------------------------------------------------
-def constant_rate (rate_name, prior) :
-	# Set a rate to be constant in age and time specified prior
-	print( 'constant_rate {}'.format(rate_name) )
+def parent_rate_smoothing(rate_name, age_grid, time_grid, value_prior) :
+	# Set a smoothing for a parent rate
+	msg = 'parent_rate_smoothing: {}\nage_grid = {}\ntime_grid = {}'
+	msg = msg.format(rate_name, age_grid, time_grid)
+	print( msg )
 	#
 	# add the smothing
-	age_grid  = [ age_table[0]['age'] ]
-	time_grid = [ time_table[0]['time'] ]
-	smooth_id = new_smoothing(age_grid, time_grid, prior)
+	smooth_id = new_smoothing(age_grid, time_grid, value_prior)
 	#
 	# change rate_table
 	table_name = 'rate'
@@ -1184,10 +1199,11 @@ def constant_rate (rate_name, prior) :
 	for row in rate_table :
 		if row['rate_name'] == rate_name :
 			row['parent_smooth_id'] = smooth_id
-			row['child_smooth_id']  = None
-			row['child_nslist_id']  = None
 	#
 	# write out the tables that changed
+	for row in prior_table :
+		if row['prior_name'].startswith('smoothing_') :
+			print( row['prior_name'] )
 	put_table('age',         age_table,   age_col_name,   age_col_type)
 	put_table('time',        time_table,  time_col_name,  time_col_type)
 	put_table('prior',       prior_table, prior_col_name, prior_col_type)
@@ -1300,22 +1316,6 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 # for rate_name in [ 'pini', 'rho', 'chi', 'omega' ] :
 #	remove_rate(rate_name)
 #
-# constant_rate:
-# density_name = 'uniform'
-# density_id   = density_name2id[density_name]
-# prior = {
-#	'prior_name' : 'constant_iota' ,
-#	'density_id' : density_id      ,
-#	'lower'      : 1e-9            ,
-#	'upper'      : 1.0             ,
-#	'mean'       : 1e-7            ,
-#	'std'        : None            ,
-#	'eta'        : None            ,
-#	'nu'         : None            ,
-# }
-# rate_name  = 'iota'
-# constant_rate(rate_name, prior)
-#
 # set_data_density:
 # density_name = 'gaussian'
 # for integrand_name in [ 'Sincidence', 'prevalence' ] :
@@ -1370,6 +1370,24 @@ if new_database :
 	#
 	# integrand_data
 	integrand_data = get_integrand_data()
+	#
+	# set smoothing grid for iota
+	age_grid  = [ 5.0, 10.0, 20.0, 30.0, 40.0, 60.0, 80.0, 100.0 ]
+	time_grid = [ float(time) for time in range(1990, 2020, 5) ]
+	density_name = 'log_gaussian'
+	density_id   = density_name2id[density_name]
+	value_prior = {
+		'prior_name' : 'parent_smoothing_iota_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 1e-19           ,
+		'upper'      : 0.1             ,
+		'mean'       : 1e-5            ,
+		'std'        : 1.0             ,
+		'eta'        : 1e-6            ,
+		'nu'         : None            ,
+	}
+	rate_name = 'iota'
+	parent_rate_smoothing(rate_name, age_grid, time_grid, value_prior)
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
