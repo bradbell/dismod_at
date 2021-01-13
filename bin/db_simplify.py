@@ -19,7 +19,7 @@ database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = False
+fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
@@ -126,7 +126,16 @@ def sql_command(command) :
 	connection   = dismod_at.create_connection(database, new)
 	cursor       = connection.cursor()
 	cursor.execute(command)
+	connection.commit()
+	result       = cursor.fetchall()
 	connection.close()
+	return result
+# ----------------------------------------------------------------------------
+def check_for_table(table_name) :
+	command  = 'SELECT name FROM sqlite_master WHERE '
+	command += "type = 'table' and name = '{}'".format(table_name)
+	result   = sql_command(command)
+	return len(result) > 0
 # ----------------------------------------------------------------------------
 def system_command (command_list) :
 	# execute a command at the system level
@@ -1390,7 +1399,7 @@ if new_database :
 			#
 			# fit both
 			system_command([ 'dismod_at', database, 'fit', 'both'])
-if fit_without_ode :
+if check_for_table('fit_var') :
 	#
 	# plot rate
 	for rate_name in [ 'iota', 'chi' ] :
