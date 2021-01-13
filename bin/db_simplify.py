@@ -21,11 +21,20 @@ new_database       = True
 # fit without integrands that require the ode (new_database must be true)
 fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = False
+fit_with_ode       = True
+# Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
+fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 0
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
+# ----------------------------------------------------------------------
+if not new_database :
+	assert not fit_without_ide
+if not fit_without_ode :
+	assert not fit_with_ode
+if not fit_with_ode :
+	assert not fit_students
 # ----------------------------------------------------------------------
 # import dismod_at
 import math
@@ -964,9 +973,10 @@ def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 			row['hold_out'] = hold_out
 	put_table(table_name, table, col_name, col_type)
 # -----------------------------------------------------------------------------
-def set_data_density (integrand_name, density_name) :
-	# for a specified integrand, set its data density to a specified value
-	msg = 'set_data_density {} {}'.format(integrand_name, density_name)
+def set_data_likelihood (integrand_name, density_name, eta, nu) :
+	# For a specified integrand, set its density, eta, and nu
+	msg = 'set_data_likelihood: for {} to {}, eta = {}, nu = {}'
+	print( msg.format(integrand_name, density_name, eta, nu) )
 	#
 	# integrand_id
 	integrand_id =integrand_name2id[integrand_name]
@@ -981,6 +991,8 @@ def set_data_density (integrand_name, density_name) :
 	for row in table :
 		if row['integrand_id'] == integrand_id :
 			row['density_id'] = density_id
+			row['eta']        = eta
+			row['nu']        = nu
 	#
 	put_table(table_name, table, col_name, col_type)
 # -----------------------------------------------------------------------------
@@ -1313,11 +1325,6 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 # for rate_name in [ 'pini', 'rho', 'chi', 'omega' ] :
 #	remove_rate(rate_name)
 #
-# set_data_density:
-# density_name = 'gaussian'
-# for integrand_name in [ 'Sincidence', 'prevalence' ] :
-#	set_data_density(integrand_name, density_name)
-#
 # set the minimum measurement standard deviation and cv
 # median_meas_value_cv = 1e-2
 # minimum_meas_cv      = 1e-1
@@ -1334,14 +1341,11 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 #
 start_time = time.time()
 if not new_database :
-	assert not fit_without_ode
-	assert not fit_with_ode
 	# list of integrands in database
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
-#
-if new_database :
+else :
 	# seed used by subsample_data
 	if random_seed == 0 :
 		random_seed = int( time.time() )
@@ -1481,9 +1485,7 @@ if new_database :
 	# init
 	system_command([ 'dismod_at', database, 'init'])
 	#
-	if not fit_without_ode :
-		assert not fit_with_ode
-	else :
+	if fit_without_ode :
 		#
 		# fit both
 		system_command([ 'dismod_at', database, 'fit', 'both'])
@@ -1514,6 +1516,25 @@ if new_database :
 			#
 			# fit both
 			system_command([ 'dismod_at', database, 'fit', 'both'])
+			#
+			if fit_students :
+				#
+				# change data likelihood to use students-t
+				density_name = 'log_students'
+				nu           = 5
+				for integrand_name in integrand_list_all :
+					median = numpy.median( integrand_data[integrand_name] )
+					eta    = median * 1e-2
+					set_data_likelihood(integrand_name, density_name, eta, nu)
+				#
+				# use previous fit as starting point
+				system_command([
+					'dismod_at', database, 'set', 'start_var', 'fit_var'
+				])
+				#
+				# fit both
+				system_command([ 'dismod_at', database, 'fit', 'both'])
+#
 if check_for_table('fit_var') :
 	#
 	# plot rate
