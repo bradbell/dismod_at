@@ -21,11 +21,11 @@ new_database       = True
 # fit without integrands that require the ode (new_database must be true)
 fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = True
+fit_with_ode       = False
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = True
+fit_students       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 0
+random_seed        = 1610557208
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -1488,7 +1488,9 @@ else :
 	if fit_without_ode :
 		#
 		# fit both
+		t0 = time.time()
 		system_command([ 'dismod_at', database, 'fit', 'both'])
+		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
 		#
 		if fit_with_ode :
 			# save fit_var table because we will re-run init
@@ -1515,7 +1517,9 @@ else :
 			put_table(table_name, start_var_table, col_name, col_type)
 			#
 			# fit both
+			t0 = time.time()
 			system_command([ 'dismod_at', database, 'fit', 'both'])
+			print( 'fit_with_ode time = ', round(time.time() - t0), ' seconds')
 			#
 			if fit_students :
 				#
@@ -1533,7 +1537,10 @@ else :
 				])
 				#
 				# fit both
+				t0 = time.time()
 				system_command([ 'dismod_at', database, 'fit', 'both'])
+				t1 = time.time()
+				print( 'fit_students time = ', round(t1- t0), ' seconds')
 #
 if check_for_table('fit_var') :
 	#
@@ -1557,6 +1564,6 @@ system_command( [ 'dismodat.py',  database, 'db2csv' ] )
 print('integrands  = ', integrand_list_all )
 if new_database :
 	print('random_seed = ', random_seed )
-print( 'Execution time = ', round(time.time() - start_time), ' seconds')
+print( 'Total time = ', round(time.time() - start_time), ' seconds')
 print('db_simplify.py: OK')
 sys.exit(0)
