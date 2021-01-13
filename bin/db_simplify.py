@@ -19,7 +19,7 @@ database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = True
+fit_without_ode    = False
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
@@ -210,41 +210,76 @@ table_name = 'smooth_grid'
 # Utilities that depend on data table or fit results
 # ============================================================================
 # ----------------------------------------------------------------------------
-def new_one_point_smooth_id(prior):
-	# Add a new smoothing that has one grid point and a the specified prior
-	# and return it's smooth_id.  The tables in the argument list are
-	# both inputs and outputs.
+def new_smoothing(age_grid, time_grid, value_prior):
+	# Add a new smoothing that has one prior that is used for all age and
+	# time grid points. The smooth, smooth_grid, age, and time tables are
+	# modified, but the new versions are not written by this routine.
+	# The argument value_prior contains value prior used in the smmothing.
 	#
-	dummy_variable_used_to_end_doc_string = None
+	def table_value2id(table, col_name, value_list) :
+		result = list()
+		for value in value_list :
+			match = None
+			for (table_id, row) in enumerate(table) :
+				if row[col_name] == value :
+					match = table_id
+			if match is None :
+				match = len(table)
+				row   = copy.copy( row )
+				row[col_name] = value
+				table.append(row)
+			result.append(match)
+		return result
 	#
-	# add row to prior_table
-	new_prior_id = len(prior_table)
-	prior_table.append( copy.copy( prior ) )
+	age_id_list    = table_value2id(age_table,  'age',  age_grid)
+	time_id_list   = table_value2id(time_table, 'time', time_grid)
+	#
+	new_value_prior_id  = len(prior_table)
+	new_smooth_id       = len( smooth_table )
+	density_id          = density_name2id['log_gaussian']
+	prior_tmp = {
+		'prior_name' : 'smoothing_{}_prior'.format(new_smooth_id) ,
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : 1e-10          ,
+		'nu'         : None           ,
+	}
+	#
+	# add rows to prior_table
+	prior_table.append( copy.copy( value_prior ) )
+	prior_table.append( copy.copy( prior_tmp   ) )
 	#
 	# add row to smooth_table
 	new_smooth_id  = len( smooth_table )
-	smooth_name    = prior['prior_name'] + '_smooth'
+	n_age          = len(age_grid)
+	n_time         = len(time_grid)
+	smooth_name    = 'smoothing_{}'.format(new_smooth_id)
 	row =  {
-		'smooth_name'           : smooth_name   ,
-		'n_age'                 : 1             ,
-		'n_time'                : 1             ,
-		'mulstd_value_prior_id' : None          ,
-		'mulstd_dage_prior_id'  : None          ,
-		'mulstd_dtime_prior_id' : None          ,
+		'smooth_name'           : smooth_name    ,
+		'n_age'                 : n_age          ,
+		'n_time'                : n_time         ,
+		'mulstd_value_prior_id' : None           ,
+		'mulstd_dage_prior_id'  : None           ,
+		'mulstd_dtime_prior_id' : None           ,
 	}
 	smooth_table.append(row)
 	#
-	# add row to smooth_grid_table
-	row = {
-		'smooth_id'      : new_smooth_id ,
-		'age_id'         : 0             ,
-		'time_id'        : 0             ,
-		'value_prior_id' : new_prior_id  ,
-		'dage_prior_id'  : None          ,
-		'dtime_prior_id' : None          ,
-		'const_value'    : None          ,
-	}
-	smooth_grid_table.append(row)
+	# add rows to smooth_grid_table
+	for i in range(n_age) :
+		for j in range(n_time) :
+			row = {
+				'smooth_id'      : new_smooth_id                   ,
+				'age_id'         : age_id_list[i]                  ,
+				'time_id'        : time_id_list[j]                 ,
+				'value_prior_id' : new_value_prior_id              ,
+				'dage_prior_id'  : new_value_prior_id + 1          ,
+				'dtime_prior_id' : new_value_prior_id + 1          ,
+				'const_value'    : None                            ,
+			}
+			smooth_grid_table.append(row)
 	#
 	# return the new smoothing
 	return new_smooth_id
@@ -1139,9 +1174,9 @@ def constant_rate (rate_name, prior) :
 	print( 'constant_rate {}'.format(rate_name) )
 	#
 	# add the smothing
-	smooth_id = new_one_point_smooth_id(
-		prior
-	)
+	age_grid  = [ age_table[0]['age'] ]
+	time_grid = [ time_table[0]['time'] ]
+	smooth_id = new_smoothing(age_grid, time_grid, prior)
 	#
 	# change rate_table
 	table_name = 'rate'
@@ -1153,6 +1188,8 @@ def constant_rate (rate_name, prior) :
 			row['child_nslist_id']  = None
 	#
 	# write out the tables that changed
+	put_table('age',         age_table,   age_col_name,   age_col_type)
+	put_table('time',        time_table,  time_col_name,  time_col_type)
 	put_table('prior',       prior_table, prior_col_name, prior_col_type)
 	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
 	put_table('smooth_grid', smooth_grid_table, grid_col_name, grid_col_type)
@@ -1210,9 +1247,9 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	}
 	#
 	# new one point smoothing
-	smooth_id = new_one_point_smooth_id(
-		prior
-	)
+	age_grid  = [ age_table[0]['age'] ]
+	time_grid = [ time_table[0]['time'] ]
+	smooth_id = new_smoothing(age_grid, time_grid, prior)
 	#
 	# new row in mulcov_table
 	row = dict()
