@@ -249,7 +249,7 @@ def new_smoothing(age_grid, time_grid, value_prior):
 		'lower'      : -1.0           ,
 		'upper'      : +1.0           ,
 		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
+		'std'        : 0.1            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1372,7 +1372,7 @@ if new_database :
 	integrand_data = get_integrand_data()
 	#
 	# set smoothing grid for iota
-	age_grid  = [ 5.0, 10.0, 20.0, 30.0, 40.0, 60.0, 80.0, 100.0 ]
+	age_grid  = [ float(age)  for age in range(10, 110, 10) ]
 	time_grid = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
 	density_id   = density_name2id[density_name]
