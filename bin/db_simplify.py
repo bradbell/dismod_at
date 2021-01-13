@@ -16,10 +16,12 @@
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
-# create new simplified database including fit results (otherwise just plot)
+# create new database including
 new_database       = True
-# if new_database is true, run fit both first without and then with ode data.
-fit_ode            = False
+# fit without integrands that require the ode (new_database must be true)
+fit_without_ode    = False
+# fit with integrands that require the ode (fit_without_ode must be true)
+fit_with_ode       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 1610455705
 # print the help message for all the db_simplify routines and then exit
@@ -1289,6 +1291,8 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 #
 start_time = time.time()
 if not new_database :
+	assert not fit_without_ode
+	assert not fit_with_ode
 	# list of integrands in database
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
@@ -1353,49 +1357,54 @@ if new_database :
 	# init
 	system_command([ 'dismod_at', database, 'init'])
 	#
-	# fit both
-	system_command([ 'dismod_at', database, 'fit', 'both'])
-	#
-	if fit_ode :
-		# save fit_var table because we will re-run init
-		table_name = 'fit_var'
-		(fit_var_table, col_name, col_type) = get_table(table_name)
-		#
-		# put ode integrands data back in the fit
-		for integrand_name in integrand_list_yes_ode :
-			hold_out_data(integrand_name = integrand_name, hold_out = 0)
-		#
-		# remove constraint on x_0 covariate multipliers
-		covariate_id = 0
-		set_mulcov_zero(covariate_id, restore_mulcov_x_0)
-		#
-		# re-run init because set_mul_cov_zero is lazy and does not make
-		# the necessary changes to smooth_id in var table
-		system_command([ 'dismod_at', database, 'init'])
-		#
-		# set_start_var equal to fit_var from previous fit
-		table_name = 'start_var'
-		(start_var_table, col_name, col_type) = get_table(table_name)
-		for (var_id, row) in enumerate(start_var_table) :
-			row['start_var_value'] = fit_var_table[var_id]['fit_var_value']
-		put_table(table_name, start_var_table, col_name, col_type)
+	if not fit_without_ode :
+		assert not fit_with_ode
+	else :
 		#
 		# fit both
 		system_command([ 'dismod_at', database, 'fit', 'both'])
-#
-# plot rate
-for rate_name in [ 'iota', 'chi' ] :
-	plot_rate(rate_name)
-#
-# plot data
-for integrand_name in integrand_list_all :
-	plot_integrand(integrand_name)
-#
-# plot prediction
-covariate_integrand_name = 'prevalence'
-predict_integrand_list   = [ 'susceptible', 'withC' ]
-covariate_integrand_list = integrand_list_yes_ode
-plot_predict(covariate_integrand_list, predict_integrand_list)
+		#
+		if fit_with_ode :
+			# save fit_var table because we will re-run init
+			table_name = 'fit_var'
+			(fit_var_table, col_name, col_type) = get_table(table_name)
+			#
+			# put ode integrands data back in the fit
+			for integrand_name in integrand_list_yes_ode :
+				hold_out_data(integrand_name = integrand_name, hold_out = 0)
+			#
+			# remove constraint on x_0 covariate multipliers
+			covariate_id = 0
+			set_mulcov_zero(covariate_id, restore_mulcov_x_0)
+			#
+			# re-run init because set_mul_cov_zero is lazy and does not make
+			# the necessary changes to smooth_id in var table
+			system_command([ 'dismod_at', database, 'init'])
+			#
+			# set_start_var equal to fit_var from previous fit
+			table_name = 'start_var'
+			(start_var_table, col_name, col_type) = get_table(table_name)
+			for (var_id, row) in enumerate(start_var_table) :
+				row['start_var_value'] = fit_var_table[var_id]['fit_var_value']
+			put_table(table_name, start_var_table, col_name, col_type)
+			#
+			# fit both
+			system_command([ 'dismod_at', database, 'fit', 'both'])
+if fit_without_ode :
+	#
+	# plot rate
+	for rate_name in [ 'iota', 'chi' ] :
+		plot_rate(rate_name)
+	#
+	# plot data
+	for integrand_name in integrand_list_all :
+		plot_integrand(integrand_name)
+	#
+	# plot prediction
+	covariate_integrand_name = 'prevalence'
+	predict_integrand_list   = [ 'susceptible', 'withC' ]
+	covariate_integrand_list = integrand_list_yes_ode
+	plot_predict(covariate_integrand_list, predict_integrand_list)
 #
 # db2cvs
 system_command( [ 'dismodat.py',  database, 'db2csv' ] )
