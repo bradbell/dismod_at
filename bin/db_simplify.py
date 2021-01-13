@@ -17,9 +17,9 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new database including
-new_database       = True
+new_database       = False
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = True
+fit_without_ode    = False
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
@@ -401,6 +401,13 @@ def plot_rate (rate_name) :
 		sys.exit(msg)
 	parent_node_id = int( parent_node_id )
 	#
+	# age and time limits in plots
+	age_min = min( [ row['age'] for row in age_table ] )
+	age_max = max( [ row['age'] for row in age_table ] )
+	#
+	time_min = min( [ row['time'] for row in time_table ] )
+	time_max = max( [ row['time'] for row in time_table ] )
+	#
 	# class for compariing an (age_id, time_id) pairs
 	class pair:
 		def __init__(self, age_id, time_id) :
@@ -449,9 +456,6 @@ def plot_rate (rate_name) :
 	n_age  = smooth_table[smooth_id]['n_age']
 	n_time = smooth_table[smooth_id]['n_time']
 	assert len(triple_list) == n_age * n_time
-	if n_age * n_time == 1 :
-		print('plot_rate: ' + rate_name + ' is identically constant')
-		return
 	#
 	# sort triple_list first by age and then by time
 	key = lambda triple : pair( triple[0], triple[1] )
@@ -501,9 +505,11 @@ def plot_rate (rate_name) :
 			for j in range(start, stop) :
 				color_index    = (color_index + 1) % n_color_style
 				(color, style,) = color_style_list[color_index]
-				x               = age[:,j]
-				y               = rate[:,j]
-				label          = str( time[0,j] )
+				x     = age[:,j]
+				y     = rate[:,j]
+				x     = [age_min] + x.tolist() + [age_max]
+				y     = [y[0]]    + y.tolist() + [y[-1]]
+				label = str( time[0,j] )
 				pyplot.plot(x, y, label=label, color=color, linestyle=style)
 				#
 				# axis labels
@@ -542,6 +548,8 @@ def plot_rate (rate_name) :
 				(color, style) = color_style_list[color_index]
 				x              = time[i,:]
 				y              = rate[i,:]
+				x              = [time_min] + x.tolist() + [time_max]
+				y              = [y[0]]     + y.tolist() + [y[-1]]
 				label          = str( age[i,0] )
 				pyplot.plot(x, y, label=label, color=color, linestyle=style)
 				#
