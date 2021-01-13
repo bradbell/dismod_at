@@ -17,9 +17,9 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new database including
-new_database       = False
+new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = False
+fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
@@ -210,11 +210,12 @@ table_name = 'smooth_grid'
 # Utilities that depend on data table or fit results
 # ============================================================================
 # ----------------------------------------------------------------------------
-def new_smoothing(age_grid, time_grid, value_prior):
+def new_smoothing(age_grid, time_grid, value_prior, dage_prior, dtime_prior):
 	# Add a new smoothing that has one prior that is used for all age and
 	# time grid points. The smooth, smooth_grid, age, and time tables are
 	# modified, but the new versions are not written by this routine.
-	# The argument value_prior contains value prior used in the smmothing.
+	# The arguments value_prior, dage_prior, dtime_prior,
+	# contain the priors used in the smmothing.
 	#
 	def table_value2id(table, col_name, value_list) :
 		result = list()
@@ -242,32 +243,10 @@ def new_smoothing(age_grid, time_grid, value_prior):
 	#
 	# add dage_prior to prior table
 	new_dage_prior_id  = len(prior_table)
-	density_id     = density_name2id['log_gaussian']
-	dage_prior = {
-		'prior_name' : 'smoothing_{}_dage_prior'.format(new_smooth_id) ,
-		'density_id' : density_id     ,
-		'lower'      : -1.0           ,
-		'upper'      : +1.0           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
 	prior_table.append( copy.copy( dage_prior   ) )
 	#
 	# add dtime_prior to prior table
 	new_dtime_prior_id  = len(prior_table)
-	density_id     = density_name2id['log_gaussian']
-	dtime_prior = {
-		'prior_name' : 'smoothing_{}_dtime_prior'.format(new_smooth_id) ,
-		'density_id' : density_id     ,
-		'lower'      : -1.0           ,
-		'upper'      : +1.0           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
 	prior_table.append( copy.copy( dtime_prior   ) )
 	#
 	# add row to smooth_table
@@ -1192,14 +1171,18 @@ def set_mulcov_zero (covariate_id, restore= None) :
 	put_table('smooth_grid', smooth_grid_table,   grid_col_name,   grid_col_type)
 	return restore
 # -----------------------------------------------------------------------------
-def parent_rate_smoothing(rate_name, age_grid, time_grid, value_prior) :
+def parent_rate_smoothing(
+	rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+) :
 	# Set a smoothing for a parent rate
 	msg = 'parent_rate_smoothing: {}\nage_grid = {}\ntime_grid = {}'
 	msg = msg.format(rate_name, age_grid, time_grid)
 	print( msg )
 	#
 	# add the smothing
-	smooth_id = new_smoothing(age_grid, time_grid, value_prior)
+	smooth_id = new_smoothing(
+		age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
 	#
 	# change rate_table
 	table_name = 'rate'
@@ -1259,8 +1242,8 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	#
 	# prior used in one point smoothing
 	density_id = density_name2id['uniform']
-	prior = {
-		'prior_name' : integrand_name + 'meas_noise'    ,
+	value_prior = {
+		'prior_name' : integrand_name + '_meas_noise_value_prior'    ,
 		'density_id' : density_id     ,
 		'lower'      : lower          ,
 		'upper'      : upper          ,
@@ -1269,11 +1252,17 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 		'eta'        : None           ,
 		'nu'         : None           ,
 	}
+	dage_prior  = copy.copy( value_prior )
+	dtime_prior = copy.copy( value_prior )
+	dage_prior['prior_name']  =  integrand_name + '_meas_noise_dage_prior'
+	dtime_prior['prior_name'] =  integrand_name + '_meas_noise_dtime_prior'
 	#
 	# new one point smoothing
 	age_grid  = [ age_table[0]['age'] ]
 	time_grid = [ time_table[0]['time'] ]
-	smooth_id = new_smoothing(age_grid, time_grid, prior)
+	smooth_id = new_smoothing(
+		age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
 	#
 	# new row in mulcov_table
 	row = dict()
@@ -1378,10 +1367,11 @@ if new_database :
 	#
 	# integrand_data
 	integrand_data = get_integrand_data()
-	#
+	# ------------------------------------------------------------------------
 	# set smoothing grid for iota
-	age_grid  = [ float(age)  for age in range(10, 110, 10) ]
-	time_grid = [ float(time) for time in range(1990, 2020, 5) ]
+	rate_name    = 'iota'
+	age_grid     = [ float(age)  for age in range(10, 110, 10) ]
+	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
 	density_id   = density_name2id[density_name]
 	value_prior = {
@@ -1394,9 +1384,30 @@ if new_database :
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,
 	}
-	rate_name = 'iota'
-	parent_rate_smoothing(rate_name, age_grid, time_grid, value_prior)
-	#
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_iota_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : -1.0           ,
+		'upper'      : +1.0           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.1            ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_iota_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : -1.0           ,
+		'upper'      : +1.0           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.02           ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+	# ------------------------------------------------------------------------
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
 	set_option('max_num_iter_fixed', '100')
