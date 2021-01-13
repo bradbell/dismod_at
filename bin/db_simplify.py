@@ -23,7 +23,7 @@ fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 1610455705
+random_seed        = 0
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -1368,9 +1368,10 @@ if new_database :
 	# integrand_data
 	integrand_data = get_integrand_data()
 	# ------------------------------------------------------------------------
-	# set smoothing grid for iota
+	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(10, 110, 10) ]
+	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
+	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
 	density_id   = density_name2id[density_name]
@@ -1380,25 +1381,65 @@ if new_database :
 		'lower'      : 1e-19           ,
 		'upper'      : 0.1             ,
 		'mean'       : 1e-5            ,
-		'std'        : 1.0             ,
+		'std'        : 5.0             ,
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,
 	}
 	dage_prior = {
 		'prior_name' : 'parent_smoothing_iota_dage_prior',
 		'density_id' : density_id     ,
-		'lower'      : -1.0           ,
-		'upper'      : +1.0           ,
+		'lower'      : None           ,
+		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 0.05           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
 	dtime_prior = {
 		'prior_name' : 'parent_smooting_iota_dtime_prior',
 		'density_id' : density_id     ,
-		'lower'      : -1.0           ,
-		'upper'      : +1.0           ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.02           ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+	# ------------------------------------------------------------------------
+	# set smoothing for chi
+	rate_name    = 'chi'
+	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
+	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
+	density_name = 'log_gaussian'
+	density_id   = density_name2id[density_name]
+	value_prior = {
+		'prior_name' : 'parent_smoothing_chi_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 1e-19           ,
+		'upper'      : 1.0             ,
+		'mean'       : 1e-3            ,
+		'std'        : 5.0             ,
+		'eta'        : 1e-6            ,
+		'nu'         : None            ,
+	}
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_chi_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.1            ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_chi_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
 		'mean'       : 0.0            ,
 		'std'        : 0.02           ,
 		'eta'        : 1e-8           ,
