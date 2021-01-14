@@ -202,6 +202,10 @@ table_name = 'time'
 table_name = 'prior'
 (prior_table, prior_col_name, prior_col_type) = get_table(table_name)
 #
+# mulcov_table
+table_name = 'mulcov'
+(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
+#
 # smooth_table
 table_name = 'smooth'
 (smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
@@ -1152,9 +1156,6 @@ def set_mulcov_zero (covariate_id, restore= None) :
 	else :
 		print( 'restore mulcov x_{}'.format(covariate_id) )
 	#
-	table_name = 'mulcov'
-	(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
-	#
 	# -------------------------------------------------------------------------
 	if restore is not None :
 		for (mulcov_id, group_smooth_id, subgroup_smooth_id) in restore :
@@ -1244,9 +1245,6 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	msg  = 'add_meas_noice_mulcov:'
 	msg += 'for {} group {}: lower=(), upper={}, value={}'
 	print( msg.format(integrand_name, group_id, lower, upper, value) )
-	#
-	table_name = 'mulcov'
-	(mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
 	#
 	# integrand_id
 	integrand_id = integrand_name2id[integrand_name]
