@@ -207,6 +207,10 @@ table_name = 'mulcov'
 table_name = 'prior'
 (prior_table, prior_col_name, prior_col_type) = get_table(table_name)
 #
+# rate_table
+table_name = 'rate'
+(rate_table, rate_col_name, rate_col_type) = get_table(table_name)
+#
 # smooth_table
 table_name = 'smooth'
 (smooth_table, smooth_col_name, smooth_col_type) = get_table(table_name)
@@ -369,8 +373,6 @@ def plot_rate (rate_name) :
 	n_color_style = len( color_style_list )
 	#
 	# plot the fit_var grid values for a specified rate.
-	table_name = 'rate'
-	(rate_table, col_name, col_type) = get_table(table_name)
 	#
 	# var_table
 	table_name = 'var'
@@ -1102,14 +1104,12 @@ def remove_rate (rate_name) :
 	# remove both the parent and child variables for a rate
 	print( 'remove_rate {}'.format(rate_name) )
 	#
-	table_name = 'rate'
-	(table, col_name, col_type) = get_table(table_name)
-	for row in table :
+	for row in rate_table :
 		if row['rate_name'] == rate_name :
 			row['parent_smooth_id'] = None
 			row['child_smooth_id']  = None
 			row['child_nslist_id']  = None
-	put_table(table_name, table, col_name, col_type)
+	put_table(table_name, rate_table, rate_col_name, rate_col_type)
 # -----------------------------------------------------------------------------
 def set_covariate_reference (covariate_id, reference_name) :
 	# set the reference value for a specified covariate where reference_name
@@ -1204,8 +1204,6 @@ def parent_rate_smoothing(
 	)
 	#
 	# change rate_table
-	table_name = 'rate'
-	(rate_table, rate_col_name, rate_col_type) = get_table(table_name)
 	for row in rate_table :
 		if row['rate_name'] == rate_name :
 			row['parent_smooth_id'] = smooth_id
