@@ -19,11 +19,11 @@ database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = False
+fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = False
+fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = False
+fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 1610591440
 # print the help message for all the db_simplify routines and then exit
@@ -165,7 +165,7 @@ def table_name2id(table, table_name) :
 		result[ row[name_column] ] = row_id
 	return result
 # ============================================================================
-# Tables that do not change
+# API input tables that do not change
 # ============================================================================
 #
 # density_table, density_name2id
@@ -187,7 +187,8 @@ table_name = 'rate'
 (table, col_name, col_type) = get_table(table_name)
 rate_name2id = table_name2id(table, table_name)
 # ============================================================================
-# Tables that change
+# API input tables that change
+# (these tables are not affected by any dismod_at command).
 # ============================================================================
 #
 # age_table
@@ -202,6 +203,10 @@ table_name = 'avgint'
 table_name = 'covariate'
 (covariate_table, covariate_col_name, covariate_col_type) = \
 	get_table(table_name)
+#
+# data_table
+table_name = 'data'
+(data_table, data_col_name, data_col_type) = get_table(table_name)
 #
 # integrand_table, integrand_name2id
 table_name = 'integrand'
@@ -334,11 +339,8 @@ def get_integrand_list (ode) :
 	integrand_model_uses_ode = [
 		'prevalence', 'Tincidence', 'mtspecific', 'mtall', 'mtstandard'
 	]
-	table_name = 'data'
-	(table, col_name, col_type) = get_table(table_name)
-	#
 	integrand_set = set()
-	for row in table :
+	for row in data_table :
 		integrand_id   = row['integrand_id']
 		integrand_name = integrand_table[integrand_id]['integrand_name']
 		if ode :
@@ -356,11 +358,9 @@ def get_integrand_list (ode) :
 # ----------------------------------------------------------------------------
 def get_integrand_data () :
 	# return a dictionary that contains the data for each integrand name
-	table_name = 'data'
-	(table, col_name, col_type) = get_table(table_name)
 	#
 	integrand_data = dict()
-	for row in table :
+	for row in data_table :
 		integrand_id   = row['integrand_id']
 		integrand_name = integrand_table[integrand_id]['integrand_name']
 		if integrand_name not in integrand_data :
@@ -592,9 +592,6 @@ def plot_integrand (integrand_name) :
 	table_name = 'fit_data_subset'
 	(fit_data_subset_table, col_name, col_type) = get_table(table_name)
 	#
-	table_name = 'data'
-	(data_table, col_name, col_type) = get_table(table_name)
-	#
 	# this_integrand_id
 	this_integrand_id = integrand_name2id[integrand_name]
 	#
@@ -756,10 +753,6 @@ def plot_predict (covariate_integrand_list, predict_integrand_list) :
 		predict_id = integrand_name2id[integrand_name]
 		predict_id_list.append( predict_id )
 	#
-	# data_table
-	table_name = 'data'
-	(data_table, data_col_name, data_col_type) = get_table(table_name)
-	#
 	# data_subset_table
 	table_name = 'data_subset'
 	(subset_table, subset_col_name, subset_col_type) = get_table(table_name)
@@ -888,8 +881,10 @@ def subset_data () :
 	# that are out of bounds
 	print('remove hold out and covariate out of bounds data')
 	#
-	table_name = 'data'
-	(table_in, col_name, col_type) = get_table(table_name)
+	# Need global becasue we will use an assingnment to data_table
+	global data_table
+	#
+	table_in      = data_table
 	table_out     = list()
 	col_key       = list()
 	reference     = list()
@@ -912,7 +907,9 @@ def subset_data () :
 				keep       = keep and abs(difference) <= max_diff[covariate_id]
 		if keep :
 			table_out.append(row)
-	put_table(table_name, table_out, col_name, col_type)
+	data_table = table_out
+	table_name = 'data'
+	put_table(table_name, data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
 def subsample_data (integrand_name, max_sample) :
 	# for a specified integrand, sample at most max_sample entries.
@@ -922,10 +919,11 @@ def subsample_data (integrand_name, max_sample) :
 	#
 	integrand_id =integrand_name2id[integrand_name]
 	#
-	table_name = 'data'
-	(table_in, col_name, col_type) = get_table(table_name)
+	# Need global becasue we will use an assingnment to data_table
+	global data_table
 	#
 	# indices for this integrand
+	table_in   = data_table
 	count_list = list()
 	count      = 0
 	for row in table_in :
@@ -956,7 +954,9 @@ def subsample_data (integrand_name, max_sample) :
 	assert index == n_sample_out
 	assert count == n_sample_in
 	#
-	put_table(table_name, table_out, col_name, col_type)
+	data_table = table_out
+	table_name = 'data'
+	put_table(table_name, data_table, data_col_name, data_col_type)
 	#
 	msg = "subsample_data {} sample in = {} out = {}"
 	print( msg.format(integrand_name, n_sample_in, n_sample_out) )
@@ -982,12 +982,12 @@ def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 		node_id      = node_name2id[node_name]
 	#
 	#
-	table_name = 'data'
-	(table, col_name, col_type) = get_table(table_name)
-	for row in table :
+	for row in data_table :
 		if integrand_id == row['integrand_id'] or node_id == row['node_id'] :
 			row['hold_out'] = hold_out
-	put_table(table_name, table, col_name, col_type)
+	#
+	table_name = 'data'
+	put_table(table_name, data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
 def set_data_likelihood (integrand_name, density_name, eta, nu) :
 	# For a specified integrand, set its density, eta, and nu
@@ -1000,17 +1000,14 @@ def set_data_likelihood (integrand_name, density_name, eta, nu) :
 	# density_id
 	density_id = density_name2id[density_name]
 	#
-	# table
-	table_name = 'data'
-	(table, col_name, col_type) = get_table(table_name)
-	#
-	for row in table :
+	for row in data_table :
 		if row['integrand_id'] == integrand_id :
 			row['density_id'] = density_id
 			row['eta']        = eta
 			row['nu']        = nu
 	#
-	put_table(table_name, table, col_name, col_type)
+	table_name = 'data'
+	put_table(table_name, data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
 def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 	# Set the minimum measurement standard deviation or an integrand using
@@ -1019,15 +1016,12 @@ def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 	msg = msg.format(integrand_name, median_meas_value_cv)
 	print(msg)
 	#
-	table_name = 'data'
-	(table, col_name, col_type) = get_table(table_name)
-	#
 	# integrand_id
 	integrand_id =integrand_name2id[integrand_name]
 	#
 	sub_table   = list()
 	meas_value  = list()
-	for row in table :
+	for row in data_table :
 		if row['integrand_id'] == integrand_id :
 			sub_table.append(row)
 			meas_value.append( row['meas_value'] )
@@ -1038,15 +1032,13 @@ def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 		if row['meas_std'] < minimum_meas_std :
 			row['meas_std'] = minimum_meas_std
 	#
-	put_table(table_name, table, col_name, col_type)
+	table_name = 'data'
+	put_table(table_name, data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
 def identically_one_covariate () :
 	# Return the covariate_id for a covariate that is one for every data point,
 	# has refefence value is zero, and max_difference value is null.
 	# (If no such covariate exists, one is created.)
-	#
-	table_name = 'data'
-	(data_table, data_col_name, data_col_type) = get_table(table_name)
 	#
 	# is_one
 	n_covariate = len(covariate_table)
@@ -1126,13 +1118,10 @@ def set_covariate_reference (covariate_id, reference_name) :
 		sys.exit(msg)
 
 	#
-	table_name  = 'data'
-	(table, col_name, col_type) = get_table(table_name)
-	#
 	# covariate_value
 	key             = 'x_' + str(covariate_id)
 	covariate_value = list()
-	for row in table :
+	for row in data_table :
 		if row[key] is not None :
 			covariate_value.append( row[key] )
 	#
@@ -1499,9 +1488,12 @@ else :
 		upper  = value
 		add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper)
 	#
-	# constrain all x_0 covariate multipliers to be zero
-	covariate_id = 0
-	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
+	# constrain all covariate multipliers to be zero
+	restore_mulcov_x  = list()
+	n_covariate = len( covariate_table )
+	for covariate_id in range( n_covariate ) :
+		restore_mulcov = set_mulcov_zero(covariate_id)
+		restore_mulcov_x.append( restore_mulcov )
 	#
 	# hold out all ode integrand data
 	for integrand_name in integrand_list_yes_ode :
@@ -1532,9 +1524,9 @@ else :
 			for integrand_name in integrand_list_yes_ode :
 				hold_out_data(integrand_name = integrand_name, hold_out = 0)
 			#
-			# remove constraint on x_0 covariate multipliers
-			covariate_id = 0
-			set_mulcov_zero(covariate_id, restore_mulcov_x_0)
+			# remove constraint on all covariate multipliers
+			for covariate_id in range( n_covariate ) :
+				set_mulcov_zero(covariate_id, restore_mulcov_x[covariate_id] )
 			#
 			# re-run init because set_mul_cov_zero is lazy and does not make
 			# the necessary changes to smooth_id in var table
