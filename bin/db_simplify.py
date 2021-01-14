@@ -19,18 +19,18 @@ database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = True
+fit_without_ode    = False
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = True
+fit_with_ode       = False
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = True
+fit_students       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 1610591440
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
 if not new_database :
-	assert not fit_without_ide
+	assert not fit_without_ode
 if not fit_without_ode :
 	assert not fit_with_ode
 if not fit_with_ode :
@@ -213,7 +213,8 @@ table_name = 'smooth'
 #
 # smooth_grid_table
 table_name = 'smooth_grid'
-(smooth_grid_table, grid_col_name, grid_col_type) = get_table(table_name)
+(smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type) =  \
+	get_table(table_name)
 #
 # ============================================================================
 # Utilities that depend on data table or fit results
@@ -1180,7 +1181,9 @@ def set_mulcov_zero (covariate_id, restore= None) :
 	#
 	put_table('mulcov',      mulcov_table, mulcov_col_name, mulcov_col_type)
 	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
-	put_table('smooth_grid', smooth_grid_table,   grid_col_name,   grid_col_type)
+	put_table('smooth_grid',
+		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
+	)
 	return restore
 # -----------------------------------------------------------------------------
 def parent_rate_smoothing(
@@ -1211,8 +1214,10 @@ def parent_rate_smoothing(
 	put_table('time',        time_table,  time_col_name,  time_col_type)
 	put_table('prior',       prior_table, prior_col_name, prior_col_type)
 	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
-	put_table('smooth_grid', smooth_grid_table, grid_col_name, grid_col_type)
 	put_table('rate',        rate_table,  rate_col_name, rate_col_type)
+	put_table('smooth_grid',
+		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
+	)
 # -----------------------------------------------------------------------------
 def set_option (name, value) :
 	# set a specified option table name to a specified option table value
@@ -1290,8 +1295,10 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	# write out the tables that changed
 	put_table('prior',       prior_table, prior_col_name, prior_col_type)
 	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
-	put_table('smooth_grid', smooth_grid_table, grid_col_name, grid_col_type)
 	put_table('mulcov',      mulcov_table,  mulcov_col_name, mulcov_col_type)
+	put_table('smooth_grid',
+		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
+	)
 # ==========================================================================
 # Example Changes Note Currently Used
 # ==========================================================================
