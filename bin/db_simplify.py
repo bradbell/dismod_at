@@ -194,6 +194,11 @@ rate_name2id = table_name2id(table, table_name)
 table_name = 'age'
 (age_table, age_col_name, age_col_type) = get_table(table_name)
 #
+# covariate_table
+table_name = 'covariate'
+(covariate_table, covariate_col_name, covariate_col_type) = \
+	get_table(table_name)
+#
 # integrand_table, integrand_name2id
 table_name = 'integrand'
 (integrand_table, integrand_col_name, col_type) = get_table(table_name)
@@ -879,9 +884,6 @@ def subset_data () :
 	# that are out of bounds
 	print('remove hold out and covariate out of bounds data')
 	#
-	table_name = 'covariate'
-	(covariate_table, col_name, col_type) = get_table(table_name)
-	#
 	table_name = 'data'
 	(table_in, col_name, col_type) = get_table(table_name)
 	table_out     = list()
@@ -1045,12 +1047,9 @@ def identically_one_covariate () :
 	table_name = 'avgint'
 	(avgint_table, avgint_col_name, avgint_col_type) = get_table(table_name)
 	#
-	table_name = 'covariate'
-	(covariate_table, cov_col_name, cov_col_type) = get_table(table_name)
-	n_covariate = len(covariate_table)
-	#
 	# is_one
-	is_one = list()
+	n_covariate = len(covariate_table)
+	is_one      = list()
 	for row in covariate_table :
 		reference      = row['reference']
 		max_difference = row['max_difference']
@@ -1067,15 +1066,18 @@ def identically_one_covariate () :
 	#
 	# add row to covariate table
 	row = dict()
-	for key in cov_col_name :
+	for key in covariate_col_name :
 		row[key] = None
 	row['covariate_name'] = 'ones'
 	row['reference']      = 0.0
 	#
 	covariate_id = len(covariate_table)
-	table_name    = 'covariate'
 	covariate_table.append(row)
-	put_table(table_name, covariate_table, cov_col_name, cov_col_type)
+	#
+	table_name    = 'covariate'
+	put_table(
+		table_name, covariate_table, covariate_col_name, covariate_col_type
+	)
 	#
 	# add column to data_table
 	key = 'x_' + str(covariate_id)
@@ -1140,16 +1142,16 @@ def set_covariate_reference (covariate_id, reference_name) :
 	else :
 		assert False
 	#
-	table_name  = 'covariate'
-	(table, col_name, col_type) = get_table(table_name)
-	#
-	old_reference = table[covariate_id]['reference']
-	table[covariate_id]['reference'] = new_reference
+	old_reference = covariate_table[covariate_id]['reference']
+	covariate_table[covariate_id]['reference'] = new_reference
 	#
 	msg = 'set_covariate_reference for x_{} from {} to {}'
 	print( msg.format(covariate_id, old_reference, new_reference) )
 	#
-	put_table(table_name, table, col_name, col_type)
+	table_name = 'covariate'
+	put_table(
+		table_name, covariate_table, covariate_col_name, covariate_col_type
+	)
 # -----------------------------------------------------------------------------
 def set_mulcov_zero (covariate_id, restore= None) :
 	# set all of the multipliers for a specified covariate to zero without
