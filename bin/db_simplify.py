@@ -194,17 +194,18 @@ rate_name2id = table_name2id(table, table_name)
 table_name = 'age'
 (age_table, age_col_name, age_col_type) = get_table(table_name)
 #
-# time_table
-table_name = 'time'
-(time_table, time_col_name, time_col_type) = get_table(table_name)
-#
-# prior_table
-table_name = 'prior'
-(prior_table, prior_col_name, prior_col_type) = get_table(table_name)
+# integrand_table, integrand_name2id
+table_name = 'integrand'
+(integrand_table, integrand_col_name, col_type) = get_table(table_name)
+integrand_name2id = table_name2id(integrand_table, table_name)
 #
 # mulcov_table
 table_name = 'mulcov'
 (mulcov_table, mulcov_col_name, mulcov_col_type) = get_table(table_name)
+#
+# prior_table
+table_name = 'prior'
+(prior_table, prior_col_name, prior_col_type) = get_table(table_name)
 #
 # smooth_table
 table_name = 'smooth'
@@ -215,10 +216,9 @@ table_name = 'smooth_grid'
 (smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type) =  \
 	get_table(table_name)
 #
-# integrand_table, integrand_name2id
-table_name = 'integrand'
-(integrand_table, integrand_col_name, col_type) = get_table(table_name)
-integrand_name2id = table_name2id(integrand_table, table_name)
+# time_table
+table_name = 'time'
+(time_table, time_col_name, time_col_type) = get_table(table_name)
 #
 # ============================================================================
 # Utilities that depend on data table or fit results
