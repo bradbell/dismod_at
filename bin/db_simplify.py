@@ -13,7 +13,7 @@
 # Diabetes: /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db
 # Chrons:   /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'
 #
-original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
+original_database  = 'ihme_db/data/475588/dbs/100/3/dismod.db'
 # path to file that contains the simplified database
 database           = 'ihme_db/temp.db'
 # create new database including
@@ -25,7 +25,7 @@ fit_with_ode       = False
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
 fit_students       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 1610557208
+random_seed        = 1610591440
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -1372,6 +1372,47 @@ else :
 	# integrand_data
 	integrand_data = get_integrand_data()
 	# ------------------------------------------------------------------------
+	# set smoothing for pini
+	rate_name    = 'pini'
+	age_grid     = [ 0.0 ]
+	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
+	median       = numpy.median( integrand_data['prevalence'] )
+	density_name = 'gaussian'
+	density_id   = density_name2id[density_name]
+	value_prior = {
+		'prior_name' : 'parent_smoothing_pini_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 0.0             ,
+		'upper'      : 1.0             ,
+		'mean'       : 0.0             ,
+		'std'        : 1.0             ,
+		'eta'        : None            ,
+		'nu'         : None            ,
+	}
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_pini_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_pini_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+	# ------------------------------------------------------------------------
 	# set smoothing for iota
 	rate_name    = 'iota'
 	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
@@ -1415,7 +1456,8 @@ else :
 	# ------------------------------------------------------------------------
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
+	age_grid     = [0.0, 5.0, 10.0, 15.0, 20.0 ]
+	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
 	density_id   = density_name2id[density_name]
@@ -1493,6 +1535,10 @@ else :
 		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
 		#
 		if fit_with_ode :
+			# do not include mtexcess data in this fit
+			# (there is much more mtspecific data)
+			hold_out_data(integrand_name = 'mtexcess', hold_out = 1)
+			#
 			# save fit_var table because we will re-run init
 			table_name = 'fit_var'
 			(fit_var_table, col_name, col_type) = get_table(table_name)
