@@ -13,19 +13,21 @@
 # Diabetes: /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db
 # Chrons:   /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'
 #
+# Which epviz database are we starting with
 original_database  = 'ihme_db/data/475588/dbs/100/3/dismod.db'
 # path to file that contains the simplified database
+# The plots will be placed in the same directory
 database           = 'ihme_db/temp.db'
 # create new database including
-new_database       = True
+new_database       = False
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = True
+fit_without_ode    = False
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = True
+fit_with_ode       = False
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = True
+fit_students       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 1610591440
+random_seed        = 0
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -57,13 +59,6 @@ import dismod_at
 # database
 if new_database :
 	shutil.copyfile(original_database, database)
-#
-# directory where plots are stored
-index = database.rfind('/')
-if index < 0 :
-	plot_directory = '.'
-else :
-	plot_directory = database[0 : index]
 # ----------------------------------------------------------------------------
 if print_help :
 	# print the help message for each db_simplify routine
@@ -96,6 +91,23 @@ if print_help :
 # ===========================================================================
 # General Purpose Utilities
 # ===========================================================================
+# ----------------------------------------------------------------------------
+def plot_directory() :
+	# directory where plots are stored
+	index = database.rfind('/')
+	if index < 0 :
+		result = '.'
+	else :
+		result = database[0 : index]
+	return result
+# ----------------------------------------------------------------------------
+def plot_title( variable ) :
+	index_1 = original_database.find('/data/')
+	index_2 = original_database.rfind('/')
+	assert 0 <= index_1
+	assert index_1 + 6 < index_2
+	result = original_database[index_1 + 6 : index_2] + ': ' + variable
+	return result
 # ----------------------------------------------------------------------------
 def get_table (table_name) :
 	# read a dismod_at table
@@ -492,7 +504,7 @@ def plot_rate (rate_name) :
 	from matplotlib import pyplot
 	#
 	import matplotlib.backends.backend_pdf
-	file_name = plot_directory + '/' + rate_name + '.pdf'
+	file_name = plot_directory() + '/' + rate_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	# for each time, plot rate as a function of age
@@ -504,6 +516,7 @@ def plot_rate (rate_name) :
 		for i_fig in range( n_fig ) :
 			fig    = pyplot.figure()
 			axis   = pyplot.subplot(1,1,1)
+			axis.set_title( plot_title(rate_name) )
 			start  = i_fig * n_per_fig
 			if i_fig > 0 :
 				start        = start - 1
@@ -674,7 +687,7 @@ def plot_integrand (integrand_name) :
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
-	file_name = plot_directory + '/' + integrand_name + '.pdf'
+	file_name = plot_directory() + '/' + integrand_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	for x_name in [ 'index', 'node', 'age', 'time' ] :
@@ -682,6 +695,7 @@ def plot_integrand (integrand_name) :
 		#
 		fig, axes = pyplot.subplots(3, 1, sharex=True)
 		fig.subplots_adjust(hspace=0)
+		#
 		#
 		sp = pyplot.subplot(3, 1, 1)
 		sp.set_xticklabels( [] )
@@ -694,6 +708,9 @@ def plot_integrand (integrand_name) :
 			size = marker_size[flag]
 			pyplot.scatter(x[flag], y[flag], marker='+', color='red', s=size )
 		pyplot.ylim(y_limit[0], y_limit[1])
+		#
+		if x_name == 'index' :
+			pyplot.title( plot_title(integrand_name) )
 		#
 		sp = pyplot.subplot(3, 1, 2)
 		sp.set_xticklabels( [] )
@@ -809,7 +826,7 @@ def plot_predict (covariate_integrand_list, predict_integrand_list) :
 	# initialize
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
-	file_name = plot_directory + '/predict.pdf'
+	file_name = plot_directory() + '/predict.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	predict_id = 0
