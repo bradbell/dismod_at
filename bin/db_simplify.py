@@ -21,9 +21,9 @@ new_database       = True
 # fit without integrands that require the ode (new_database must be true)
 fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = False
+fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = False
+fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 1610591440
 # print the help message for all the db_simplify routines and then exit
@@ -1293,33 +1293,8 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	put_table('smooth_grid', smooth_grid_table, grid_col_name, grid_col_type)
 	put_table('mulcov',      mulcov_table,  mulcov_col_name, mulcov_col_type)
 # ==========================================================================
-# Example Changes
+# Example Changes Note Currently Used
 # ==========================================================================
-#
-# set_option:
-# set_option('tolerance_fixed',    '1e-6')
-# set_option('max_num_iter_fixed', '30')
-#
-# subset_data:
-# subset_data()
-#
-# subsample mtexcess
-# integrand_data  = get_integrand_data()
-# max_sample      = int( len( integrand_data['mtexcess'] ) / 10 )
-# subsample_data(integrand_name, max_sample)
-#
-# constrain all x_0 covariate multipliers to be zero
-# covariate_id = 0
-# restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
-#
-# remove all data except Sincidence
-# max_sample     = 0
-# for integrand_name in integrand_list_all :
-#	if integrand_name != 'Sincidence' :
-#		subsample_data(integrand_name, max_sample)
-# integrand_list_yes_ode = list()
-# integrand_list_no_ode  = [ 'Sincidence']
-# integrand_list_all     = [ 'Sincidence']
 #
 # remove all rates except iota
 # for rate_name in [ 'pini', 'rho', 'chi', 'omega' ] :
@@ -1339,6 +1314,7 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 # Actual Changes
 # ----------------------------------------------------------------------
 #
+# start_time
 start_time = time.time()
 if not new_database :
 	# list of integrands in database
@@ -1346,7 +1322,7 @@ if not new_database :
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 else :
-	# seed used by subsample_data
+	# seed used to subsample_data
 	if random_seed == 0 :
 		random_seed = int( time.time() )
 	random.seed(random_seed)
@@ -1372,6 +1348,7 @@ else :
 	# integrand_data
 	integrand_data = get_integrand_data()
 	# ------------------------------------------------------------------------
+	#
 	# set smoothing for pini
 	rate_name    = 'pini'
 	age_grid     = [ 0.0 ]
@@ -1412,7 +1389,7 @@ else :
 	parent_rate_smoothing(
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
-	# ------------------------------------------------------------------------
+	#
 	# set smoothing for iota
 	rate_name    = 'iota'
 	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
@@ -1453,10 +1430,10 @@ else :
 	parent_rate_smoothing(
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
-	# ------------------------------------------------------------------------
+	#
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [0.0, 5.0, 10.0, 15.0, 20.0 ]
+	age_grid     = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0 ]
 	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
@@ -1477,7 +1454,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 0.2            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1495,6 +1472,7 @@ else :
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
 	# ------------------------------------------------------------------------
+	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
 	set_option('max_num_iter_fixed', '100')
@@ -1516,11 +1494,7 @@ else :
 	covariate_id = 0
 	restore_mulcov_x_0 = set_mulcov_zero(covariate_id)
 	#
-	# ones column covariate_id (not yet used)
-	one_covariate_id = identically_one_covariate()
-	print('one_covariate_id = ', one_covariate_id)
-	#
-	# take ode integrands out of fit
+	# hold out all ode integrand data
 	for integrand_name in integrand_list_yes_ode :
 		hold_out_data(integrand_name = integrand_name, hold_out = 1)
 	#
@@ -1535,8 +1509,10 @@ else :
 		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
 		#
 		if fit_with_ode :
-			# do not include mtexcess data in this fit
-			# (there is much more mtspecific data)
+			#
+			# Do not include mtexcess data in this fit.
+			# It was used to initialize chi, but the fit is done using
+			# the mtspecific data.
 			hold_out_data(integrand_name = 'mtexcess', hold_out = 1)
 			#
 			# save fit_var table because we will re-run init
