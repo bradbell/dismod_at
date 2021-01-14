@@ -194,6 +194,10 @@ rate_name2id = table_name2id(table, table_name)
 table_name = 'age'
 (age_table, age_col_name, age_col_type) = get_table(table_name)
 #
+# avgint_table
+table_name = 'avgint'
+(avgint_table, avgint_col_name, avgint_col_type) = get_table(table_name)
+#
 # covariate_table
 table_name = 'covariate'
 (covariate_table, covariate_col_name, covariate_col_type) = \
@@ -1043,9 +1047,6 @@ def identically_one_covariate () :
 	#
 	table_name = 'data'
 	(data_table, data_col_name, data_col_type) = get_table(table_name)
-	#
-	table_name = 'avgint'
-	(avgint_table, avgint_col_name, avgint_col_type) = get_table(table_name)
 	#
 	# is_one
 	n_covariate = len(covariate_table)
