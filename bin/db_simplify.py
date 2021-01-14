@@ -336,7 +336,10 @@ def get_integrand_list (ode) :
 				integrand_set.add(integrand_name)
 	integrand_list = list(integrand_set)
 	#
-	return integrand_list
+	# Sort so that order of integrands is always the same.
+	# This is especially helpful when using variable.csv to se that
+	# refactoring program has not introduced a bug.
+	return sorted( integrand_list )
 # ----------------------------------------------------------------------------
 def get_integrand_data () :
 	# return a dictionary that contains the data for each integrand name
