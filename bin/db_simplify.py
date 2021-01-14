@@ -168,11 +168,6 @@ def table_name2id(table, table_name) :
 # Tables that do not change
 # ============================================================================
 #
-# integrand_table, integrand_name2id
-table_name = 'integrand'
-(integrand_table, integrand_col_name, col_type) = get_table(table_name)
-integrand_name2id = table_name2id(integrand_table, table_name)
-#
 # density_table, density_name2id
 table_name = 'density'
 (density_table, col_name, col_type) = get_table(table_name)
@@ -215,6 +210,11 @@ table_name = 'smooth'
 table_name = 'smooth_grid'
 (smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type) =  \
 	get_table(table_name)
+#
+# integrand_table, integrand_name2id
+table_name = 'integrand'
+(integrand_table, integrand_col_name, col_type) = get_table(table_name)
+integrand_name2id = table_name2id(integrand_table, table_name)
 #
 # ============================================================================
 # Utilities that depend on data table or fit results
@@ -1229,12 +1229,12 @@ def set_minimum_meas_cv (integrand_name, minimum_meas_cv) :
 	# set the minimum cv for a specified integrand
 	print( 'set {} minimum_meas_cv {}'.format(integrand_name, minimum_meas_cv) )
 	#
-	table_name = 'integrand'
-	(table, col_name, col_type) = get_table(table_name)
 	for row in table :
 		if row['integrand_name'] == integrand_name :
 			row['minimum_meas_cv'] = minimum_meas_cv
-	put_table(table_name, table, col_name, col_type)
+	put_table(
+		table_name, integrand_table, integrand_col_name, integrand_col_type
+	)
 # -----------------------------------------------------------------------------
 def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 	# Add a meas_noise covariate multiplier with a specified integrand,
