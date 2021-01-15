@@ -13,10 +13,11 @@
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
 # Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   b573b6d2
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'    master
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'    97382ccd
+# Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    master
 #
 # Which epviz database are we starting with
-original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
+original_database  = 'ihme_db/data/475648/dbs/70/1/dismod.db'
 # path to file that contains the simplified database
 # The plots will be placed in the same directory
 database           = 'ihme_db/temp.db'
@@ -510,87 +511,85 @@ def plot_rate (rate_name) :
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	# for each time, plot rate as a function of age
-	if n_age > 1 :
-		n_fig       = math.ceil( n_time / ( n_color_style - 1) )
-		n_per_fig   = math.ceil( n_time / n_fig )
-		color_index = -1
-		assert n_per_fig < n_color_style
-		for i_fig in range( n_fig ) :
-			fig    = pyplot.figure()
-			axis   = pyplot.subplot(1,1,1)
-			axis.set_title( plot_title(parent_node_name) )
-			start  = i_fig * n_per_fig
-			if i_fig > 0 :
-				start        = start - 1
-				color_index -= 1
-			stop   = min(n_time, start + n_per_fig )
-			for j in range(start, stop) :
-				color_index    = (color_index + 1) % n_color_style
-				(color, style,) = color_style_list[color_index]
-				x     = age[:,j]
-				y     = rate[:,j]
-				x     = [age_min] + x.tolist() + [age_max]
-				y     = [y[0]]    + y.tolist() + [y[-1]]
-				label = str( time[0,j] )
-				pyplot.plot(x, y, label=label, color=color, linestyle=style)
-				#
-				# axis labels
-				pyplot.xlabel('age')
-				pyplot.ylabel(rate_name)
-				pyplot.yscale('log')
-				pyplot.ylim(rate_min, rate_max)
-			for i in range(n_age) :
-				x = age[i, 0]
-				pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
-			# Shrink current axis by 15% and place legend to right
-			box = axis.get_position()
-			axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
-			axis.legend(
-				title = 'time', loc='center left', bbox_to_anchor=(1, 0.5)
-			)
-			pdf.savefig( fig )
-			pyplot.close( fig )
-	#
+	n_fig       = math.ceil( n_time / ( n_color_style - 1) )
+	n_per_fig   = math.ceil( n_time / n_fig )
+	color_index = -1
+	assert n_per_fig < n_color_style
+	for i_fig in range( n_fig ) :
+		fig    = pyplot.figure()
+		axis   = pyplot.subplot(1,1,1)
+		axis.set_title( plot_title(parent_node_name) )
+		start  = i_fig * n_per_fig
+		if i_fig > 0 :
+			start        = start - 1
+			color_index -= 1
+		stop   = min(n_time, start + n_per_fig )
+		for j in range(start, stop) :
+			color_index    = (color_index + 1) % n_color_style
+			(color, style,) = color_style_list[color_index]
+			x     = age[:,j]
+			y     = rate[:,j]
+			x     = [age_min] + x.tolist() + [age_max]
+			y     = [y[0]]    + y.tolist() + [y[-1]]
+			label = str( time[0,j] )
+			pyplot.plot(x, y, label=label, color=color, linestyle=style)
+			#
+			# axis labels
+			pyplot.xlabel('age')
+			pyplot.ylabel(rate_name)
+			pyplot.yscale('log')
+			pyplot.ylim(rate_min, rate_max)
+		for i in range(n_age) :
+			x = age[i, 0]
+			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
+		# Shrink current axis by 15% and place legend to right
+		box = axis.get_position()
+		axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+		axis.legend(
+			title = 'time', loc='center left', bbox_to_anchor=(1, 0.5)
+		)
+		pdf.savefig( fig )
+		pyplot.close( fig )
+
 	# for each age, plot rate as a function of time
-	if n_time > 1 :
-		n_fig       = math.ceil( n_age / (n_color_style - 1) )
-		n_per_fig   = math.ceil( n_age / n_fig )
-		color_index = -1
-		assert n_per_fig < n_color_style
-		for i_fig in range( n_fig ) :
-			fig    = pyplot.figure()
-			axis   = pyplot.subplot(1,1,1)
-			start  = i_fig * n_per_fig
-			if i_fig > 0 :
-				start        = start - 1
-				color_index -= 1
-			stop   = min(n_age, start + n_per_fig )
-			for i in range(start, stop) :
-				color_index    = (color_index + 1) % n_color_style
-				(color, style) = color_style_list[color_index]
-				x              = time[i,:]
-				y              = rate[i,:]
-				x              = [time_min] + x.tolist() + [time_max]
-				y              = [y[0]]     + y.tolist() + [y[-1]]
-				label          = str( age[i,0] )
-				pyplot.plot(x, y, label=label, color=color, linestyle=style)
-				#
-				# axis labels
-				pyplot.xlabel('time')
-				pyplot.ylabel(rate_name)
-				pyplot.yscale('log')
-				pyplot.ylim(rate_min, rate_max)
-			for j in range(n_time) :
-				x = time[0, j]
-				pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
-			# Shrink current axis by 15% and place legend to right
-			box = axis.get_position()
-			axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
-			axis.legend(
-				title = 'age', loc='center left', bbox_to_anchor=(1, 0.5)
-			)
-			pdf.savefig( fig )
-			pyplot.close( fig )
+	n_fig       = math.ceil( n_age / (n_color_style - 1) )
+	n_per_fig   = math.ceil( n_age / n_fig )
+	color_index = -1
+	assert n_per_fig < n_color_style
+	for i_fig in range( n_fig ) :
+		fig    = pyplot.figure()
+		axis   = pyplot.subplot(1,1,1)
+		start  = i_fig * n_per_fig
+		if i_fig > 0 :
+			start        = start - 1
+			color_index -= 1
+		stop   = min(n_age, start + n_per_fig )
+		for i in range(start, stop) :
+			color_index    = (color_index + 1) % n_color_style
+			(color, style) = color_style_list[color_index]
+			x              = time[i,:]
+			y              = rate[i,:]
+			x              = [time_min] + x.tolist() + [time_max]
+			y              = [y[0]]     + y.tolist() + [y[-1]]
+			label          = str( age[i,0] )
+			pyplot.plot(x, y, label=label, color=color, linestyle=style)
+			#
+			# axis labels
+			pyplot.xlabel('time')
+			pyplot.ylabel(rate_name)
+			pyplot.yscale('log')
+			pyplot.ylim(rate_min, rate_max)
+		for j in range(n_time) :
+			x = time[0, j]
+			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
+		# Shrink current axis by 15% and place legend to right
+		box = axis.get_position()
+		axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+		axis.legend(
+			title = 'age', loc='center left', bbox_to_anchor=(1, 0.5)
+		)
+		pdf.savefig( fig )
+		pyplot.close( fig )
 	#
 	pdf.close()
 # ----------------------------------------------------------------------------
@@ -1154,15 +1153,18 @@ def identically_one_covariate () :
 	#
 	return covariate_id
 # -----------------------------------------------------------------------------
-def remove_rate (rate_name) :
-	# remove both the parent and child variables for a rate
-	print( 'remove_rate {}'.format(rate_name) )
+def zero_rate (rate_name, zero_parent, zero_children) :
+	# zero as rate's parent (fixed efffects) or children (random effects)
+	msg = 'zero {} parent={} children={}'
+	print( msg.format(rate_name, zero_parent, zero_children) )
 	#
 	for row in rate_table :
 		if row['rate_name'] == rate_name :
-			row['parent_smooth_id'] = None
-			row['child_smooth_id']  = None
-			row['child_nslist_id']  = None
+			if zero_parent :
+				row['parent_smooth_id'] = None
+			if zero_children :
+				row['child_smooth_id']  = None
+				row['child_nslist_id']  = None
 	put_table(table_name, rate_table, rate_col_name, rate_col_type)
 # -----------------------------------------------------------------------------
 def set_covariate_reference (covariate_id, reference_name) :
@@ -1353,10 +1355,6 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 # Example Changes Note Currently Used
 # ==========================================================================
 #
-# remove all rates except iota
-# for rate_name in [ 'pini', 'rho', 'chi', 'omega' ] :
-#	remove_rate(rate_name)
-#
 # set the minimum measurement standard deviation and cv
 # median_meas_value_cv = 1e-2
 # minimum_meas_cv      = 1e-1
@@ -1379,6 +1377,13 @@ if not new_database :
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 else :
+	#
+	# Not much informtion about chi
+	rate_name     = 'chi'
+	zero_parent   = False
+	zero_children = True
+	zero_rate(rate_name, zero_parent, zero_children)
+	#
 	# seed used to subsample_data
 	if random_seed == 0 :
 		random_seed = int( time.time() )
@@ -1406,19 +1411,19 @@ else :
 	integrand_data = get_integrand_data()
 	# ------------------------------------------------------------------------
 	#
-	# set smoothing for pini: (set to zero for this case)
+	# set smoothing for pini:
 	rate_name    = 'pini'
 	age_grid     = [ age_table[0]['age'] ]
-	time_grid    = [ time_table[0]['time'] ]
+	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	median       = numpy.median( integrand_data['prevalence'] )
 	density_name = 'gaussian'
 	density_id   = density_name2id[density_name]
 	value_prior = {
 		'prior_name' : 'parent_smoothing_pini_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 0.0             ,
-		'upper'      : 0.0             ,
-		'mean'       : 0.0             ,
+		'lower'      : 1e-5            ,
+		'upper'      : 1e-5            ,
+		'mean'       : 1e-5            ,
 		'std'        : 1.0             ,
 		'eta'        : None            ,
 		'nu'         : None            ,
@@ -1449,8 +1454,7 @@ else :
 	#
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
-	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
+	age_grid     = [ float(age)  for age in range(10, 90, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
 	density_id   = density_name2id[density_name]
@@ -1470,7 +1474,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.05           ,
+		'std'        : 0.1            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1480,7 +1484,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
+		'std'        : 0.01           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1490,17 +1494,17 @@ else :
 	#
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
+	age_grid     = [ float(age)  for age in range(0, 90, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
 	density_id   = density_name2id[density_name]
 	value_prior = {
 		'prior_name' : 'parent_smoothing_chi_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 1e-19           ,
+		'lower'      : 1e-6           ,
 		'upper'      : 1.0             ,
 		'mean'       : 1e-3            ,
-		'std'        : 5.0             ,
+		'std'        : 0.1             ,
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,
 	}
@@ -1520,7 +1524,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
+		'std'        : 0.01           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1541,7 +1545,7 @@ else :
 	for integrand_name in integrand_list_all :
 		median = numpy.median( integrand_data[integrand_name] )
 		# value  = 0.0
-		value  = median * 1e-2
+		value  = median * 1e-1
 		lower  = value
 		upper  = value
 		add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper)
