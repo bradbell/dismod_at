@@ -10,24 +10,26 @@
 # ---------------------------------------------------------------------------
 # 2DO: Allow for covariate access by covariate_name.
 # --------------------------------------------------------------------------
-# Diabetes: /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db
-# Chrons:   /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'
+# Disease   File on IHME cluster                                   Git hash
+# --------  --------------------                                   --------
+# Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   b573b6d2
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'    0336f39c
 #
 # Which epviz database are we starting with
-original_database  = 'ihme_db/data/475588/dbs/100/3/dismod.db'
+original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 # The plots will be placed in the same directory
 database           = 'ihme_db/temp.db'
 # create new database including
-new_database       = False
+new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = False
+fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = False
+fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = False
+fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 0
+random_seed        = 1610714619
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -901,7 +903,7 @@ def plot_predict (covariate_integrand_list, predict_integrand_list) :
 	#
 	pdf.close()
 # =============================================================================
-# Routines that Change Data Table
+# Routines that Only Change Data Table
 # =============================================================================
 # -----------------------------------------------------------------------------
 # subset_data:
@@ -1063,6 +1065,37 @@ def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 	#
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
+# ---------------------------------------------------------------------------
+def compress_age_time_interval(integrand_name, age_size, time_size) :
+	# For the specified integrand, compress age and time intervalces that are
+	# less than the specified size to a single point.
+	msg ='{} compress age_size {} time_size'
+	msg = msg.format(integrand_name, age_size, time_size)
+	print(msg)
+	#
+	# integrand_id
+	integrand_id =integrand_name2id[integrand_name]
+	#
+	for row in data_table :
+		if row['integrand_id'] == integrand_id :
+			age_lower  = row['age_lower']
+			age_upper  = row['age_upper']
+			time_lower = row['time_lower']
+			time_upper = row['time_upper']
+			if age_upper - age_lower <= age_size :
+				avg              = (age_upper + age_lower) / 2.0
+				row['age_lower'] = avg
+				row['age_upper'] = avg
+			if time_upper - time_lower <= time_size :
+				avg               = (time_upper + time_lower) / 2.0
+				row['time_lower'] = avg
+				row['time_upper'] = avg
+	#
+	table_name = 'data'
+	put_table(table_name, data_table, data_col_name, data_col_type)
+# ============================================================================
+# Routines that Change Other Tables
+# ============================================================================
 # -----------------------------------------------------------------------------
 def identically_one_covariate () :
 	# Return the covariate_id for a covariate that is one for every data point,
@@ -1120,9 +1153,6 @@ def identically_one_covariate () :
 	#
 	#
 	return covariate_id
-# ============================================================================
-# Routines that Change Other Tables
-# ============================================================================
 # -----------------------------------------------------------------------------
 def remove_rate (rate_name) :
 	# remove both the parent and child variables for a rate
@@ -1369,57 +1399,15 @@ else :
 	#
 	# subsample mtexcess
 	for integrand_name in integrand_list_all :
-		max_sample = 500
+		max_sample = 1000
 		subsample_data(integrand_name, max_sample)
 	#
 	# integrand_data
 	integrand_data = get_integrand_data()
 	# ------------------------------------------------------------------------
-	#
-	# set smoothing for pini
-	rate_name    = 'pini'
-	age_grid     = [ 0.0 ]
-	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
-	median       = numpy.median( integrand_data['prevalence'] )
-	density_name = 'gaussian'
-	density_id   = density_name2id[density_name]
-	value_prior = {
-		'prior_name' : 'parent_smoothing_pini_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 0.0             ,
-		'upper'      : 1.0             ,
-		'mean'       : 0.0             ,
-		'std'        : 1.0             ,
-		'eta'        : None            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_pini_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : None           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_pini_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : None           ,
-		'nu'         : None           ,
-	}
-	parent_rate_smoothing(
-		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
-	#
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
+	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
 	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
@@ -1460,8 +1448,7 @@ else :
 	#
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0 ]
-	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
+	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_name = 'log_gaussian'
 	density_id   = density_name2id[density_name]
@@ -1481,7 +1468,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.2            ,
+		'std'        : 0.1            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1502,7 +1489,7 @@ else :
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
-	set_option('max_num_iter_fixed', '100')
+	set_option('max_num_iter_fixed', '50')
 	set_option('zero_sum_child_rate', 'iota chi')
 	set_option('bound_random',        '3')
 	set_option('meas_noise_effect',   'add_std_scale_none')
@@ -1516,6 +1503,12 @@ else :
 		lower  = value
 		upper  = value
 		add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper)
+	#
+	# compress age and time intervals
+	age_size  = 10.0
+	time_size = 10.0
+	for integrand_name in integrand_list_all :
+		compress_age_time_interval(integrand_name, age_size, time_size)
 	#
 	# constrain all covariate multipliers to be zero
 	restore_mulcov_x  = list()
@@ -1539,11 +1532,6 @@ else :
 		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
 		#
 		if fit_with_ode :
-			#
-			# Do not include mtexcess data in this fit.
-			# It was used to initialize chi, but the fit is done using
-			# the mtspecific data.
-			hold_out_data(integrand_name = 'mtexcess', hold_out = 1)
 			#
 			# save fit_var table because we will re-run init
 			table_name = 'fit_var'
