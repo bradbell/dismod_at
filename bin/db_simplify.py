@@ -13,7 +13,7 @@
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
 # Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   b573b6d2
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'    0336f39c
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'    master
 #
 # Which epviz database are we starting with
 original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
@@ -29,7 +29,7 @@ fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
 fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 1610714619
+random_seed        = 0
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -1405,6 +1405,48 @@ else :
 	# integrand_data
 	integrand_data = get_integrand_data()
 	# ------------------------------------------------------------------------
+	#
+	# set smoothing for pini: (set to zero for this case)
+	rate_name    = 'pini'
+	age_grid     = [ age_table[0]['age'] ]
+	time_grid    = [ time_table[0]['time'] ]
+	median       = numpy.median( integrand_data['prevalence'] )
+	density_name = 'gaussian'
+	density_id   = density_name2id[density_name]
+	value_prior = {
+		'prior_name' : 'parent_smoothing_pini_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 0.0             ,
+		'upper'      : 0.0             ,
+		'mean'       : 0.0             ,
+		'std'        : 1.0             ,
+		'eta'        : None            ,
+		'nu'         : None            ,
+	}
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_pini_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_pini_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+	#
 	# set smoothing for iota
 	rate_name    = 'iota'
 	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
@@ -1489,7 +1531,7 @@ else :
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
-	set_option('max_num_iter_fixed', '50')
+	set_option('max_num_iter_fixed', '10')
 	set_option('zero_sum_child_rate', 'iota chi')
 	set_option('bound_random',        '3')
 	set_option('meas_noise_effect',   'add_std_scale_none')
