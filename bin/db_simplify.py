@@ -12,8 +12,8 @@
 # --------------------------------------------------------------------------
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
-# Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   b573b6d2
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     master
+# Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   master
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     eec79ccc
 # Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    bf268519
 #
 # Which epviz database are we starting with
@@ -22,13 +22,13 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # The plots will be placed in the same directory
 database           = 'ihme_db/temp.db'
 # create new database including
-new_database       = True
+new_database       = False
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = True
+fit_without_ode    = False
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = True
+fit_with_ode       = False
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = True
+fit_students       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 0
 # print the help message for all the db_simplify routines and then exit
@@ -1621,9 +1621,8 @@ else :
 if check_for_table('fit_var') :
 	#
 	# plot rate
-	for row in rate_table :
-		if row['parent_smooth_id'] is not None :
-			plot_rate(rate_name)
+	for rate_name in [ 'iota', 'chi' ] :
+		plot_rate(rate_name)
 	#
 	# plot data
 	for integrand_name in integrand_list_all :
