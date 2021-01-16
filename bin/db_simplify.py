@@ -8,7 +8,10 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# 2DO: Allow for covariate access by covariate_name.
+# 2DO: IHME database uses x_0, x_1, ... for covariate names and hides the
+#      real covariate name in c_covariate_name. While db_simlify.py can be
+#      changed to account for this, db2csv does not assume any IHME
+#      specific information.
 # --------------------------------------------------------------------------
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
@@ -24,11 +27,11 @@ database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = False
+fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = False
+fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = False
+fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 0
 # print the help message for all the db_simplify routines and then exit
@@ -949,7 +952,7 @@ def subset_data () :
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
-def subsample_data (integrand_name, max_sample) :
+def random_subsample_data(integrand_name, max_sample) :
 	# for a specified integrand, sample at most max_sample entries.
 	# This does random sampling that can be seeded by calling random.seed.
 	# The origianl order of the data is preserved (in index plots)
@@ -996,7 +999,7 @@ def subsample_data (integrand_name, max_sample) :
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
 	#
-	msg  = '\nsubsample_data\n'
+	msg  = '\nrandom_subsample_data\n'
 	msg += 'number of {} samples: in = {} out = {}'
 	print( msg.format(integrand_name, n_sample_in, n_sample_out) )
 # -----------------------------------------------------------------------------
@@ -1435,7 +1438,7 @@ if not new_database :
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 else :
-	# seed used to subsample_data
+	# seed used to randomly subsample data
 	if random_seed == 0 :
 		random_seed = int( time.time() )
 	random.seed(random_seed)
@@ -1453,10 +1456,10 @@ else :
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
-	# subsample mtexcess
+	# randomly subsample
 	for integrand_name in integrand_list_all :
 		max_sample = 1000
-		subsample_data(integrand_name, max_sample)
+		random_subsample_data(integrand_name, max_sample)
 	#
 	# integrand_data
 	integrand_data = get_integrand_data()
@@ -1624,7 +1627,9 @@ else :
 		#
 		if fit_with_ode :
 			#
-			# save fit_var table because we will re-run init
+			print('\nfit_var_table\n')
+			print('Save fit_var table because the one in the database')
+			print('will be over written by init command below.')
 			table_name = 'fit_var'
 			(fit_var_table, col_name, col_type) = get_table(table_name)
 			#
@@ -1636,11 +1641,13 @@ else :
 			for covariate_id in range( n_covariate ) :
 				set_mulcov_zero(covariate_id, restore_mulcov_x[covariate_id] )
 			#
+			# 2DO: fix set_mulcov_zero so do not have to do this.
 			# re-run init because set_mul_cov_zero is lazy and does not make
 			# the necessary changes to smooth_id in var table
 			system_command([ 'dismod_at', database, 'init'])
 			#
-			# set_start_var equal to fit_var from previous fit
+			print('\nstart_var_table\n')
+			print('Set start_var table equal to previous fit_var table')
 			table_name = 'start_var'
 			(start_var_table, col_name, col_type) = get_table(table_name)
 			for (var_id, row) in enumerate(start_var_table) :
@@ -1692,7 +1699,7 @@ if check_for_table('fit_var') :
 # db2cvs
 system_command( [ 'dismodat.py',  database, 'db2csv' ] )
 # ----------------------------------------------------------------------
-print('integrands  = ', integrand_list_all )
+print('\nintegrands  = ', integrand_list_all )
 if new_database :
 	print('random_seed = ', random_seed )
 print( 'Total time = ', round(time.time() - start_time), ' seconds')
