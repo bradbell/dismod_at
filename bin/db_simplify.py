@@ -22,13 +22,13 @@ original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # The plots will be placed in the same directory
 database           = 'ihme_db/temp.db'
 # create new database including
-new_database       = False
+new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = False
+fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = False
+fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = False
+fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 0
 # print the help message for all the db_simplify routines and then exit
@@ -55,7 +55,7 @@ import time
 # import dismod_at
 sandbox = 'python/dismod_at'
 if os.path.isdir(sandbox) :
-	print('using ' + sandbox)
+	print('using sandbox version of dismod_at')
 	sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 #
@@ -162,9 +162,13 @@ def check_for_table(table_name) :
 	return len(result) > 0
 # ----------------------------------------------------------------------------
 def system_command (command_list) :
-	# execute a command at the system level
-	command_str = " ".join(command_list)
-	print(command_str)
+	# Execute a command at the system level
+	# This routine is a a step in the processing, not a utility,
+	# and hence prints a summary message.
+	msg  = '\nsystem_command\n'
+	msg += " ".join(command_list)
+	print(msg)
+	#
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
 		if new_database :
@@ -201,6 +205,10 @@ table_name = 'option'
 table_name = 'rate'
 (table, col_name, col_type) = get_table(table_name)
 rate_name2id = table_name2id(table, table_name)
+#
+# subgropup_table
+table_name = 'subgroup'
+(subgroup_table, subgroup_col_name, subgroup_col_type) = get_table(table_name)
 # ============================================================================
 # API input tables that change
 # (these tables are not affected by any dismod_at command).
@@ -909,7 +917,9 @@ def plot_predict (covariate_integrand_list, predict_integrand_list) :
 def subset_data () :
 	# remove datat table rows that are held out or have covariates
 	# that are out of bounds
-	print('remove hold out and covariate out of bounds data')
+	msg  = '\nsubset_data\n'
+	msg += 'removing hold out and covariate out of bounds data'
+	print(msg)
 	#
 	# Need global becasue we will use an assingnment to data_table
 	global data_table
@@ -988,13 +998,12 @@ def subsample_data (integrand_name, max_sample) :
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
 	#
-	msg = "subsample_data {} sample in = {} out = {}"
+	msg  = '\nsubsample_data\n'
+	msg += 'number of {} samples: in = {} out = {}'
 	print( msg.format(integrand_name, n_sample_in, n_sample_out) )
 # -----------------------------------------------------------------------------
 def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 	# for a specified integrand or node, set the hold_out to 0 or 1
-	msg = 'integrand={}, node={}, hold_out={}'
-	print( msg.format(integrand_name, node_name, hold_out) )
 	if integrand_name is None and node_name is None :
 		sys.exit('hold_out_data: both integrand_name and node_name are None')
 	if integrand_name is not None and node_name is not None :
@@ -1003,6 +1012,15 @@ def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 	if hold_out not in [ 0, 1] :
 		msg = 'hold_out_data: hold_out is not zero or one'
 		sys.exit(msg)
+	#
+	msg  = '\nhold_out_data\n'
+	if integrand_name is not None :
+		msg += 'integrand = {}'.format(integrand_name)
+	if node_name is not None :
+		msg += 'node = {}'.format(node_name)
+	msg += ', hold_out = {}'.format(hold_out)
+	print(msg)
+	#
 	if integrand_name is not None :
 		node_id      = None
 		integrand_id = integrand_name2id[integrand_name]
@@ -1019,10 +1037,17 @@ def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
-def set_data_likelihood (integrand_name, density_name, eta, nu) :
+def set_data_likelihood (integrand_name, density_name, eta=None, nu=None) :
 	# For a specified integrand, set its density, eta, and nu
-	msg = 'set_data_likelihood: for {} to {}, eta = {}, nu = {}'
-	print( msg.format(integrand_name, density_name, eta, nu) )
+	# The default value for eta and nu is None.
+	msg  = '\nset_data_likelihood\n'
+	msg += 'integrand = {}'.format(integrand_name)
+	msg += ', density = {}'.format(density_name)
+	if eta is not None :
+		msg += ', eta = {}'.format(eta)
+	if nu is not None :
+		msg += ', nu = {}'.format(nu)
+	print( msg )
 	#
 	# integrand_id
 	integrand_id =integrand_name2id[integrand_name]
@@ -1039,6 +1064,7 @@ def set_data_likelihood (integrand_name, density_name, eta, nu) :
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
+# 2DO: remove this routine
 def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 	# Set the minimum measurement standard deviation or an integrand using
 	# median_meas_value_cv, a multiplier for the median value for the integrand.
@@ -1068,8 +1094,11 @@ def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
 def compress_age_time_interval(integrand_name, age_size, time_size) :
 	# For the specified integrand, compress age and time intervalces that are
 	# less than the specified size to a single point.
-	msg ='{} compress age_size {} time_size'
-	msg = msg.format(integrand_name, age_size, time_size)
+	msg  = '\ncompress_age_time_interval\n'
+	msg += 'Use midpoint for intervals less than or equal specified size\n'
+	msg += 'integrand = {}'.format(integrand_name)
+	msg += ', age_size= {}'.format(age_size)
+	msg += ', time_size= {}'.format(time_size)
 	print(msg)
 	#
 	# integrand_id
@@ -1100,6 +1129,8 @@ def identically_one_covariate () :
 	# Return the covariate_id for a covariate that is one for every data point,
 	# has refefence value is zero, and max_difference value is null.
 	# (If no such covariate exists, one is created.)
+	# This routine is a utility, not a step in the processing,
+	# and hence does not print a summary message.
 	#
 	# is_one
 	n_covariate = len(covariate_table)
@@ -1153,10 +1184,15 @@ def identically_one_covariate () :
 	#
 	return covariate_id
 # -----------------------------------------------------------------------------
-def zero_rate (rate_name, zero_parent, zero_children) :
+def zero_rate(rate_name, zero_parent, zero_children) :
 	# zero as rate's parent (fixed efffects) or children (random effects)
-	msg = 'zero {} parent={} children={}'
-	print( msg.format(rate_name, zero_parent, zero_children) )
+	assert zero_parent or zero_children
+	#
+	msg = '\nzero_rate\n'
+	msg += 'rate = {}'.format(rate_name)
+	msg += ', zero_parent = {}'.format(zero_parent)
+	msg += ', zero_children = {}'.format(zero_children)
+	print( msg)
 	#
 	for row in rate_table :
 		if row['rate_name'] == rate_name :
@@ -1193,11 +1229,18 @@ def set_covariate_reference (covariate_id, reference_name) :
 	else :
 		assert False
 	#
-	old_reference = covariate_table[covariate_id]['reference']
+	covariate_name = covariate_table[covariate_id]['covariate_name']
+	old_reference  = covariate_table[covariate_id]['reference']
+	#
 	covariate_table[covariate_id]['reference'] = new_reference
 	#
-	msg = 'set_covariate_reference for x_{} from {} to {}'
-	print( msg.format(covariate_id, old_reference, new_reference) )
+	msg  = '\nset_covariate_reference\n'
+	msg += 'for covariate = {}'.format(covariate_name)
+	msg += ', covariate_id = {}'.format(covariate_id)
+	msg += ', reference_name = {}'.format(reference_name)
+	msg += '\nold_reference = {:.5g}'.format(old_reference)
+	msg += ', new_reference = {:.5g}'.format(new_reference)
+	print( msg )
 	#
 	table_name = 'covariate'
 	put_table(
@@ -1207,10 +1250,14 @@ def set_covariate_reference (covariate_id, reference_name) :
 def set_mulcov_zero (covariate_id, restore= None) :
 	# set all of the multipliers for a specified covariate to zero without
 	# changing the order or size of the var table
+	covariate_name = covariate_table[covariate_id]['covariate_name']
+	msg            = 'covariate = {}'.format(covariate_name)
+	msg           += ', covariate_id = {}'.format(covariate_id)
 	if restore is None :
-		print( 'set_mulcov_zero x_{}'.format(covariate_id) )
+		msg  = '\nset_mulcov_zero\n' + msg
 	else :
-		print( 'restore mulcov x_{}'.format(covariate_id) )
+		msg  = '\nrestore_mulcov\n' + msg
+	print( msg )
 	#
 	# -------------------------------------------------------------------------
 	if restore is not None :
@@ -1247,8 +1294,22 @@ def parent_rate_smoothing(
 	rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 ) :
 	# Set a smoothing for a parent rate
-	msg = 'parent_rate_smoothing: {}\nage_grid = {}\ntime_grid = {}'
-	msg = msg.format(rate_name, age_grid, time_grid)
+	msg  = '\nparent_rate_smoothing\n'
+	msg += '{:11} = {} '.format('rate',  rate_name)
+	msg += '\n{:11} = {}'.format('age_grid',  age_grid)
+	msg += '\n{:11} = {}'.format('time_grid', time_grid)
+	def msg_prior(name, prior) :
+		label        = name + '_prior'
+		result       = '\n{:11} = '.format(label)
+		density_name = density_table[ prior['density_id'] ]['density_name']
+		result      += density_name
+		for key in [ 'lower', 'upper', 'mean', 'std', 'eta', 'nu' ] :
+			if prior[key] is not None :
+				result += ', {}:{}'.format(key, prior[key])
+		return result
+	msg += msg_prior('value', value_prior)
+	msg += msg_prior('dage',  dage_prior)
+	msg += msg_prior('dtime', dtime_prior)
 	print( msg )
 	#
 	# add the smothing
@@ -1275,30 +1336,32 @@ def parent_rate_smoothing(
 	)
 # -----------------------------------------------------------------------------
 def set_option (name, value) :
-	# set a specified option table name to a specified option table value
+	# Set option specified by name to its value where name and value are
+	# strings. The routine system_command to prints the processing message
+	# for this operation.
 	system_command( [
 		'dismod_at',  database, 'set', 'option', name , value
 	] )
 # -----------------------------------------------------------------------------
-def set_minimum_meas_cv (integrand_name, minimum_meas_cv) :
-	# set the minimum cv for a specified integrand
-	print( 'set {} minimum_meas_cv {}'.format(integrand_name, minimum_meas_cv) )
-	#
-	for row in table :
-		if row['integrand_name'] == integrand_name :
-			row['minimum_meas_cv'] = minimum_meas_cv
-	put_table(
-		table_name, integrand_table, integrand_col_name, integrand_col_type
-	)
-# -----------------------------------------------------------------------------
-def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
+def add_meas_noise_mulcov(integrand_name, group_id, lower, upper, mean) :
 	# Add a meas_noise covariate multiplier with a specified integrand,
 	# group_id, initial value, lower, and upper limit.
 	# Note that meas_noise multipliers can't have
 	# ramdom effect (so the subgroup id is null in the mulcov table).
-	msg  = 'add_meas_noice_mulcov:'
-	msg += 'for {} group {}: lower=(), upper={}, value={}'
-	print( msg.format(integrand_name, group_id, lower, upper, value) )
+	#
+	group_name = None
+	for row in subgroup_table :
+		if row['group_id'] == group_id :
+			group_name = row['group_name']
+	assert group_name is not None
+	#
+	msg  = '\nadd_meas_noise_mulcov\n'
+	msg += 'integrand = {}'.format(integrand_name)
+	msg += ', group = {}'.format(group_name)
+	msg += '\nvalue_prior = uniform, lower:{:.5g}'.format(lower)
+	msg += ', upper:{:.5g}'.format(upper)
+	msg += ', mean:{:.5g}'.format(mean)
+	print( msg )
 	#
 	# integrand_id
 	integrand_id = integrand_name2id[integrand_name]
@@ -1316,7 +1379,7 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 		'density_id' : density_id     ,
 		'lower'      : lower          ,
 		'upper'      : upper          ,
-		'mean'       : value          ,
+		'mean'       : mean           ,
 		'std'        : None           ,
 		'eta'        : None           ,
 		'nu'         : None           ,
@@ -1355,12 +1418,11 @@ def add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper) :
 # Example Changes Note Currently Used
 # ==========================================================================
 #
-# set the minimum measurement standard deviation and cv
-# median_meas_value_cv = 1e-2
-# minimum_meas_cv      = 1e-1
-# for integrand_name in integrand_list_all:
-#	set_minimum_meas_std(integrand_name, median_meas_value_cv)
-#	set_minimum_meas_cv(integrand_name, minimum_meas_cv)
+# remove child randome effecst for chi
+#	rate_name     = 'chi'
+#	zero_parent   = False
+#	zero_children = True
+#	zero_rate(rate_name, zero_parent, zero_children)
 #
 # hold out Korea before subset_data() do it gets removed
 #	hold_out_data(node_name = 'Republic of Korea', hold_out = 1)
@@ -1408,17 +1470,18 @@ else :
 	rate_name    = 'pini'
 	age_grid     = [ age_table[0]['age'] ]
 	time_grid    = [ time_table[0]['time'] ]
-	density_id   = density_name2id['gaussian']
+	density_id   = density_name2id['uniform']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_pini_value_prior' ,
 		'density_id' : density_id      ,
 		'lower'      : 0.0             ,
 		'upper'      : 0.0             ,
 		'mean'       : 0.0             ,
-		'std'        : 1.0             ,
+		'std'        : None            ,
 		'eta'        : None            ,
 		'nu'         : None            ,
 	}
+	density_id   = density_name2id['gaussian']
 	dage_prior = {
 		'prior_name' : 'parent_smoothing_pini_dage_prior',
 		'density_id' : density_id     ,
@@ -1535,10 +1598,10 @@ else :
 	for integrand_name in integrand_list_all :
 		median = numpy.median( integrand_data[integrand_name] )
 		# value  = 0.0
-		value  = median * 1e-2
-		lower  = value
-		upper  = value
-		add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper)
+		mean   = median * 1e-2
+		lower  = mean
+		upper  = mean
+		add_meas_noise_mulcov(integrand_name, group_id, lower, upper, mean)
 	#
 	# compress age and time intervals
 	age_size  = 10.0
