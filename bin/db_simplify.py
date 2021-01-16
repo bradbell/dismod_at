@@ -81,7 +81,7 @@ if print_help :
 	index  = fp_data.find('\ndef ', start)
 	while 0 <= index :
 		start  = index + 5
-		stop   = fp_data.find('\n', start) + 1
+		stop   = fp_data.find(':', start) + 2
 		output = fp_data[start : stop]
 		while 0 <= more(stop) :
 			start   = more(stop) + 2
