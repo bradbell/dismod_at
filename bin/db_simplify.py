@@ -172,6 +172,10 @@ def system_command (command_list) :
 	msg += " ".join(command_list)
 	print(msg)
 	#
+	# flush python's pending standard output in case this command
+	# generates more standard output
+	sys.stdout.flush()
+	#
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
 		if new_database :
@@ -1045,9 +1049,9 @@ def set_data_likelihood (integrand_name, density_name, eta=None, nu=None) :
 	msg += 'integrand = {}'.format(integrand_name)
 	msg += ', density = {}'.format(density_name)
 	if eta is not None :
-		msg += ', eta = {}'.format(eta)
+		msg += ', eta = {:.5g}'.format(eta)
 	if nu is not None :
-		msg += ', nu = {}'.format(nu)
+		msg += ', nu = {:.5g}'.format(nu)
 	print( msg )
 	#
 	# integrand_id
@@ -1627,7 +1631,7 @@ else :
 		#
 		if fit_with_ode :
 			#
-			print('\nfit_var_table\n')
+			print('\nfit_var_table')
 			print('Save fit_var table because the one in the database')
 			print('will be over written by init command below.')
 			table_name = 'fit_var'
@@ -1646,7 +1650,7 @@ else :
 			# the necessary changes to smooth_id in var table
 			system_command([ 'dismod_at', database, 'init'])
 			#
-			print('\nstart_var_table\n')
+			print('\nstart_var_table')
 			print('Set start_var table equal to previous fit_var table')
 			table_name = 'start_var'
 			(start_var_table, col_name, col_type) = get_table(table_name)
