@@ -24,11 +24,11 @@ database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
-fit_without_ode    = True
+fit_without_ode    = False
 # fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = True
+fit_with_ode       = False
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = True
+fit_students       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 0
 # print the help message for all the db_simplify routines and then exit
@@ -104,7 +104,7 @@ def plot_directory() :
 		result = database[0 : index]
 	return result
 # ----------------------------------------------------------------------------
-def plot_title(location) :
+def data_case_title(location) :
 	text       = original_database.split('/')
 	data_index = text.index('data')
 	model_id   = text[data_index + 1]
@@ -392,6 +392,20 @@ def get_integrand_data () :
 	#
 	return integrand_data
 # ----------------------------------------------------------------------------
+def get_parent_node_id() :
+	parent_node_id = None
+	for row in option_table :
+		if row['option_name'] == 'parent_node_id' :
+			parent_node_id = int( row['option_value'] )
+		if row['option_name'] == 'parent_node_name' :
+			table_name = 'node'
+			node_name  = row['option_value']
+			parent_note_id = node_name2id[node_name]
+	if parent_node_id is None :
+		msg = 'Cannot find parent_node_id or parent_node_name in option table'
+		sys.exit(msg)
+	return parent_node_id
+# ----------------------------------------------------------------------------
 def plot_rate (rate_name) :
 	color_style_list = [
 		('blue',       'dashed'),  ('lightblue',  'solid'),
@@ -418,17 +432,9 @@ def plot_rate (rate_name) :
 	rate_id = rate_name2id[rate_name]
 	#
 	# parent_node_id
-	parent_node_id = None
-	for row in option_table :
-		if row['option_name'] == 'parent_node_id' :
-			parent_node_id = int( row['option_value'] )
-		if row['option_name'] == 'parent_node_name' :
-			table_name = 'node'
-			node_name  = row['option_value']
-			parent_note_id = node_name2id[node_name]
-	if parent_node_id is None :
-		msg = 'Cannot find parent_node_id or parent_node_name in option table'
-		sys.exit(msg)
+	parent_node_id   = get_parent_node_id()
+	#
+	# parent_node_name
 	parent_node_name = node_table[parent_node_id]['node_name']
 	#
 	# age and time limits in plots
@@ -526,7 +532,7 @@ def plot_rate (rate_name) :
 	for i_fig in range( n_fig ) :
 		fig    = pyplot.figure()
 		axis   = pyplot.subplot(1,1,1)
-		axis.set_title( plot_title(parent_node_name) )
+		axis.set_title( data_case_title(parent_node_name) )
 		start  = i_fig * n_per_fig
 		if i_fig > 0 :
 			start        = start - 1
@@ -618,16 +624,8 @@ def plot_integrand (integrand_name) :
 	this_integrand_id = integrand_name2id[integrand_name]
 	#
 	# parent_node_name
-	parent_node_name = None
-	for row in option_table :
-		if row['option_name'] == 'parent_node_id' :
-			parent_node_id   = int( row['option_value'] )
-			parent_node_name = node_table[parent_node_id]['node_name']
-		if row['option_name'] == 'parent_node_name' :
-			parent_node_name  = row['option_value']
-	if parent_node_name is None :
-		msg = 'Cannot find parent_node_id or parent_node_name in option table'
-		sys.exit(msg)
+	parent_node_id   = get_parent_node_id()
+	parent_node_name = node_table[parent_node_id]['node_name']
 	#
 	n_list                  = 0
 	avg_integrand_list      = list()
@@ -731,7 +729,7 @@ def plot_integrand (integrand_name) :
 		pyplot.ylim(y_limit[0], y_limit[1])
 		#
 		if x_name == 'index' :
-			pyplot.title( plot_title(parent_node_name) )
+			pyplot.title( data_case_title(parent_node_name) )
 		#
 		sp = pyplot.subplot(3, 1, 2)
 		sp.set_xticklabels( [] )
@@ -1421,6 +1419,13 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
+#
+# print data_case_title
+parent_node_id   = get_parent_node_id()
+parent_node_name = node_table[parent_node_id]['node_name']
+title            = data_case_title(parent_node_name)
+line             = len(title) * '-'
+print( '\n' + line + '\n' + title + '\n' + line + '\n' )
 #
 # start_time
 start_time = time.time()
