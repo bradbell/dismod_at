@@ -1316,11 +1316,21 @@ def set_option (name, value) :
 		'dismod_at',  database, 'set', 'option', name , value
 	] )
 # -----------------------------------------------------------------------------
-def add_meas_noise_mulcov(integrand_name, group_id, lower, upper, mean) :
-	# Add a meas_noise covariate multiplier with a specified integrand,
-	# group_id, initial value, lower, and upper limit.
+def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
+	# Add a meas_noise covariate multiplier for a specified integrand.
+	# integrand_data: is the current result of get_integrand_data.
+	# group_id: specifies the group for the covariate multiplier.
+	#
+	# factor: is a dictionary with following keys: mean, lower, upper.
+	# For each key the factor multipliers the median of the data for this
+	# integrand to get the corresponding value in the uniform prior for the
+	# covariate multiplier.
+	#
 	# Note that meas_noise multipliers can't have
 	# ramdom effect (so the subgroup id is null in the mulcov table).
+	assert 0.0             <= factor['lower']
+	assert factor['lower'] <= factor['mean']
+	assert factor['mean']  <= factor['upper']
 	#
 	group_name = None
 	for row in subgroup_table :
@@ -1329,12 +1339,20 @@ def add_meas_noise_mulcov(integrand_name, group_id, lower, upper, mean) :
 	assert group_name is not None
 	#
 	msg  = '\nadd_meas_noise_mulcov\n'
-	msg += 'integrand = {}'.format(integrand_name)
+	msg += 'integrand   = {}'.format(integrand_name)
 	msg += ', group = {}'.format(group_name)
-	msg += '\nvalue_prior = uniform, lower:{:.5g}'.format(lower)
-	msg += ', upper:{:.5g}'.format(upper)
-	msg += ', mean:{:.5g}'.format(mean)
+	msg += '\nvalue_prior = uniform'
+	msg += ', lower:m*{}'.format(factor['lower'])
+	msg += ', mean:m*{}'.format(factor['mean'])
+	msg += ', upper:m*{}'.format(factor['upper'])
+	msg += '\n              where m is the median of the'
+	msg += ' {} data'.format(integrand_name)
 	print( msg )
+	#
+	median = numpy.median( integrand_data[integrand_name] )
+	lower  = median * factor['lower']
+	mean   = median * factor['mean']
+	upper  = median * factor['upper']
 	#
 	# integrand_id
 	integrand_id = integrand_name2id[integrand_name]
@@ -1567,14 +1585,10 @@ else :
 	set_option('meas_noise_effect',   'add_std_scale_none')
 	#
 	# add measurement noise covariates
-	group_id       = 0
+	group_id = 0
+	factor   = { 'lower':1e-2, 'mean':1e-2, 'upper':1e-2 }
 	for integrand_name in integrand_list_all :
-		median = numpy.median( integrand_data[integrand_name] )
-		# value  = 0.0
-		mean   = median * 1e-2
-		lower  = mean
-		upper  = mean
-		add_meas_noise_mulcov(integrand_name, group_id, lower, upper, mean)
+		add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor)
 	#
 	# compress age and time intervals
 	age_size  = 10.0
