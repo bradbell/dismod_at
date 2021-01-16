@@ -13,11 +13,11 @@
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
 # Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   b573b6d2
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db'    97382ccd
-# Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    master
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     master
+# Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    bf268519
 #
 # Which epviz database are we starting with
-original_database  = 'ihme_db/data/475648/dbs/70/1/dismod.db'
+original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
 # path to file that contains the simplified database
 # The plots will be placed in the same directory
 database           = 'ihme_db/temp.db'
@@ -1377,13 +1377,6 @@ if not new_database :
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 else :
-	#
-	# Not much informtion about chi
-	rate_name     = 'chi'
-	zero_parent   = False
-	zero_children = True
-	zero_rate(rate_name, zero_parent, zero_children)
-	#
 	# seed used to subsample_data
 	if random_seed == 0 :
 		random_seed = int( time.time() )
@@ -1414,16 +1407,14 @@ else :
 	# set smoothing for pini:
 	rate_name    = 'pini'
 	age_grid     = [ age_table[0]['age'] ]
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	median       = numpy.median( integrand_data['prevalence'] )
-	density_name = 'gaussian'
-	density_id   = density_name2id[density_name]
+	time_grid    = [ time_table[0]['time'] ]
+	density_id   = density_name2id['gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_pini_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 1e-5            ,
-		'upper'      : 1e-5            ,
-		'mean'       : 1e-5            ,
+		'lower'      : 0.0             ,
+		'upper'      : 0.0             ,
+		'mean'       : 0.0             ,
 		'std'        : 1.0             ,
 		'eta'        : None            ,
 		'nu'         : None            ,
@@ -1454,10 +1445,10 @@ else :
 	#
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(10, 90, 10) ]
+	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
+	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_name = 'log_gaussian'
-	density_id   = density_name2id[density_name]
+	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_iota_value_prior' ,
 		'density_id' : density_id      ,
@@ -1474,7 +1465,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 0.05           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1484,7 +1475,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.01           ,
+		'std'        : 0.02           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1494,17 +1485,16 @@ else :
 	#
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 90, 10) ]
+	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_name = 'log_gaussian'
-	density_id   = density_name2id[density_name]
+	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_chi_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 1e-6           ,
+		'lower'      : 1e-19           ,
 		'upper'      : 1.0             ,
 		'mean'       : 1e-3            ,
-		'std'        : 0.1             ,
+		'std'        : 5.0             ,
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,
 	}
@@ -1524,7 +1514,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.01           ,
+		'std'        : 0.02           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1535,7 +1525,7 @@ else :
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
-	set_option('max_num_iter_fixed', '10')
+	set_option('max_num_iter_fixed', '50')
 	set_option('zero_sum_child_rate', 'iota chi')
 	set_option('bound_random',        '3')
 	set_option('meas_noise_effect',   'add_std_scale_none')
@@ -1545,7 +1535,7 @@ else :
 	for integrand_name in integrand_list_all :
 		median = numpy.median( integrand_data[integrand_name] )
 		# value  = 0.0
-		value  = median * 1e-1
+		value  = median * 1e-2
 		lower  = value
 		upper  = value
 		add_meas_noise_mulcov(integrand_name, group_id, value, lower, upper)
@@ -1631,8 +1621,9 @@ else :
 if check_for_table('fit_var') :
 	#
 	# plot rate
-	for rate_name in [ 'iota', 'chi' ] :
-		plot_rate(rate_name)
+	for row in rate_table :
+		if row['parent_smooth_id'] is not None :
+			plot_rate(rate_name)
 	#
 	# plot data
 	for integrand_name in integrand_list_all :
