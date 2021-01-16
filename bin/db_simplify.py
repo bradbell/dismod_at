@@ -1063,33 +1063,6 @@ def set_data_likelihood (integrand_name, density_name, eta=None, nu=None) :
 	#
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
-# -----------------------------------------------------------------------------
-# 2DO: remove this routine
-def set_minimum_meas_std (integrand_name, median_meas_value_cv) :
-	# Set the minimum measurement standard deviation or an integrand using
-	# median_meas_value_cv, a multiplier for the median value for the integrand.
-	msg ='set {} median_meas_value_cv {}'
-	msg = msg.format(integrand_name, median_meas_value_cv)
-	print(msg)
-	#
-	# integrand_id
-	integrand_id =integrand_name2id[integrand_name]
-	#
-	sub_table   = list()
-	meas_value  = list()
-	for row in data_table :
-		if row['integrand_id'] == integrand_id :
-			sub_table.append(row)
-			meas_value.append( row['meas_value'] )
-	median          = numpy.median(meas_value)
-	minimum_meas_std = median * median_meas_value_cv
-	#
-	for row in sub_table :
-		if row['meas_std'] < minimum_meas_std :
-			row['meas_std'] = minimum_meas_std
-	#
-	table_name = 'data'
-	put_table(table_name, data_table, data_col_name, data_col_type)
 # ---------------------------------------------------------------------------
 def compress_age_time_interval(integrand_name, age_size, time_size) :
 	# For the specified integrand, compress age and time intervalces that are
