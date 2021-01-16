@@ -1042,16 +1042,25 @@ def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
-def set_data_likelihood (integrand_name, density_name, eta=None, nu=None) :
-	# For a specified integrand, set its density, eta, and nu
+def set_data_likelihood (
+		integrand_data, integrand_name, density_name, factor_eta=None, nu=None
+) :
+	# For a specified integrand, set its density, eta, and nu.
 	# The default value for eta and nu is None.
+	# If factor_eta is not None, eta is set to the factor times the median
+	# value for the integrand.
+	assert (factor_eta is None) or 0.0 <= factor_eta
+	#
 	msg  = '\nset_data_likelihood\n'
 	msg += 'integrand = {}'.format(integrand_name)
 	msg += ', density = {}'.format(density_name)
-	if eta is not None :
-		msg += ', eta = {:.5g}'.format(eta)
+	if factor_eta is not None :
+		msg += ', eta = m*{}'.format(factor_eta)
 	if nu is not None :
-		msg += ', nu = {:.5g}'.format(nu)
+		msg += ', nu = {}'.format(nu)
+	if factor_eta is not None :
+		msg += '\n' + 12 * ' ' + 'where m is the meadian of the'
+		msg += ' {} data'.format(integrand_name)
 	print( msg )
 	#
 	# integrand_id
@@ -1060,11 +1069,16 @@ def set_data_likelihood (integrand_name, density_name, eta=None, nu=None) :
 	# density_id
 	density_id = density_name2id[density_name]
 	#
+	if factor_eta is None :
+		eta = None
+	else :
+		median = numpy.median( integrand_data[integrand_name] )
+		eta = factor_eta * median
 	for row in data_table :
 		if row['integrand_id'] == integrand_id :
 			row['density_id'] = density_id
 			row['eta']        = eta
-			row['nu']        = nu
+			row['nu']         = nu
 	#
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
@@ -1667,11 +1681,12 @@ else :
 				#
 				# change data likelihood to use students-t
 				density_name = 'log_students'
+				factor_eta   = 1e-2
 				nu           = 5
 				for integrand_name in integrand_list_all :
-					median = numpy.median( integrand_data[integrand_name] )
-					eta    = median * 1e-2
-					set_data_likelihood(integrand_name, density_name, eta, nu)
+					set_data_likelihood(integrand_data,
+						integrand_name, density_name, factor_eta, nu
+					)
 				#
 				# use previous fit as starting point
 				system_command([
