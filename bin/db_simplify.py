@@ -36,8 +36,9 @@ fit_students       = True
 random_seed        = 1610853118
 #
 # Location where IHME cluster file is stored on local machine. The file
-# temp.db will be written in the same directory. In addition, The db2csv
-# files (*.csv) and plots (*.pdf) will be stored in that directory.
+# temp.db will be written in the same directory. In addition, the
+# sub-directories no_ode, yes_ode, and students will contain the db2csv
+# files (*.csv) and plots (*.pdf) for the corresponding fits.
 disease_specific_database  =  'ihme_db/data/475588/dbs/100/3/dismod.db'
 #
 # list of integrand that are in fitting without ode but not with ode
@@ -248,12 +249,53 @@ setup()
 # Utilities that do not use global data tables
 # ===========================================================================
 # ----------------------------------------------------------------------------
-def data_case_title(location) :
+def output_results(which_fit) :
+	# output plot files (*.pdf) and db2csv files (*.csv) in sub-directory
+	# of the disease_specific_directory.
+	#
+	assert which_fit in [ 'no_ode', 'yes_ode', 'students' ]
+	directory = disease_specific_directory + '/' + which_fit
+	#
+	if os.path.exists(directory) :
+		for name in os.listdir(directory) :
+			os.remove(directory + '/' + name)
+		os.rmdir(directory)
+	os.mkdir(directory)
+	#
+	integrand_list_yes_ode = get_integrand_list(True)
+	integrand_list_no_ode  = get_integrand_list(False)
+	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
+	#
+	# plot rate
+	for (rate_id, row) in enumerate(rate_table) :
+		if row['parent_smooth_id'] is not None :
+			rate_name = row['rate_name']
+			plot_rate(row['rate_name'], directory, which_fit)
+	#
+	# plot data
+	for integrand_name in integrand_list_all :
+		plot_integrand(integrand_name, directory, which_fit)
+	#
+	# plot prediction
+	predict_integrand_list   = [ 'susceptible', 'withC' ]
+	covariate_integrand_list = integrand_list_yes_ode
+	plot_predict(
+		covariate_integrand_list, predict_integrand_list, directory, which_fit
+	)
+	#
+	# db2csv
+	copy_database = directory + '/temp.db'
+	shutil.copyfile(temp_database, copy_database )
+	system_command( [ 'dismodat.py',  copy_database, 'db2csv' ] )
+# ----------------------------------------------------------------------------
+def data_case_title(location, which_fit = None) :
 	text       = disease_specific_database.split('/')
 	data_index = text.index('data')
 	model_id   = text[data_index + 1]
 	sex        = text[data_index + 4]
 	result     = location + ' sex=' + sex + ' model_id=' + model_id
+	if which_fit is not None :
+		result = which_fit + ' ' + result
 	return result
 # ----------------------------------------------------------------------------
 def get_table (table_name) :
@@ -463,7 +505,7 @@ def get_parent_node_id() :
 		sys.exit(msg)
 	return parent_node_id
 # ----------------------------------------------------------------------------
-def plot_rate (rate_name) :
+def plot_rate(rate_name, directory, which_fit) :
 	color_style_list = [
 		('blue',       'dashed'),  ('lightblue',  'solid'),
 		('red',        'dashed'),  ('pink',       'solid'),
@@ -578,7 +620,7 @@ def plot_rate (rate_name) :
 	from matplotlib import pyplot
 	#
 	import matplotlib.backends.backend_pdf
-	file_name = disease_specific_directory + '/' + rate_name + '.pdf'
+	file_name = directory + '/' + rate_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	# for each time, plot rate as a function of age
@@ -589,7 +631,7 @@ def plot_rate (rate_name) :
 	for i_fig in range( n_fig ) :
 		fig    = pyplot.figure()
 		axis   = pyplot.subplot(1,1,1)
-		axis.set_title( data_case_title(parent_node_name) )
+		axis.set_title( data_case_title(parent_node_name, which_fit) )
 		start  = i_fig * n_per_fig
 		if i_fig > 0 :
 			start        = start - 1
@@ -664,7 +706,7 @@ def plot_rate (rate_name) :
 	#
 	pdf.close()
 # ----------------------------------------------------------------------------
-def plot_integrand (integrand_name) :
+def plot_integrand(integrand_name, directory, which_fit) :
 	# Plot the data, model, and residual values for a specified integrand.
 	# Covariate values used for each model point are determined by
 	# correspondign data point.
@@ -763,7 +805,7 @@ def plot_integrand (integrand_name) :
 	#
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
-	file_name = disease_specific_directory + '/' + integrand_name + '.pdf'
+	file_name = directory + '/' + integrand_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	for x_name in [ 'index', 'node', 'age', 'time' ] :
@@ -786,7 +828,7 @@ def plot_integrand (integrand_name) :
 		pyplot.ylim(y_limit[0], y_limit[1])
 		#
 		if x_name == 'index' :
-			pyplot.title( data_case_title(parent_node_name) )
+			pyplot.title( data_case_title(parent_node_name, which_fit) )
 		#
 		sp = pyplot.subplot(3, 1, 2)
 		sp.set_xticklabels( [] )
@@ -1023,7 +1065,9 @@ def compress_age_time_interval(integrand_name, age_size, time_size) :
 # ============================================================================
 # ----------------------------------------------------------------------------
 # plot_predict
-def plot_predict (covariate_integrand_list, predict_integrand_list) :
+def plot_predict(
+		covariate_integrand_list, predict_integrand_list, directory, which_fit
+	) :
 	# Plot the model predictions for each integrand in the predict integrand
 	# list. The is one such plot for each integrand in the covariate integrand
 	# list (which determines the covariate values used for the predictions).
@@ -1105,7 +1149,7 @@ def plot_predict (covariate_integrand_list, predict_integrand_list) :
 	# initialize
 	from matplotlib import pyplot
 	import matplotlib.backends.backend_pdf
-	file_name = disease_specific_directory + '/predict.pdf'
+	file_name = directory + '/predict.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
 	predict_id = 0
@@ -1666,6 +1710,9 @@ else :
 		system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
 		#
+		which_fit = 'no_ode'
+		output_results(which_fit)
+		#
 		if fit_with_ode :
 			#
 			for integrand_name in disease_specific_fit_with_ode_hold_out_list :
@@ -1703,6 +1750,9 @@ else :
 			system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 			print( 'fit_with_ode time = ', round(time.time() - t0), ' seconds')
 			#
+			which_fit = 'yes_ode'
+			output_results(which_fit)
+			#
 			if fit_students :
 				#
 				# change data likelihood to use students-t
@@ -1724,26 +1774,9 @@ else :
 				system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 				t1 = time.time()
 				print( 'fit_students time = ', round(t1- t0), ' seconds')
-#
-if check_for_table('fit_var') :
-	#
-	# plot rate
-	for (rate_id, row) in enumerate(rate_table) :
-		if row['parent_smooth_id'] is not None :
-			plot_rate(row['rate_name'])
-	#
-	# plot data
-	for integrand_name in integrand_list_all :
-		plot_integrand(integrand_name)
-	#
-	# plot prediction
-	covariate_integrand_name = 'prevalence'
-	predict_integrand_list   = [ 'susceptible', 'withC' ]
-	covariate_integrand_list = integrand_list_yes_ode
-	plot_predict(covariate_integrand_list, predict_integrand_list)
-#
-# db2cvs
-system_command( [ 'dismodat.py',  temp_database, 'db2csv' ] )
+				#
+				which_fit = 'students'
+				output_results(which_fit)
 # ----------------------------------------------------------------------
 print('\nintegrands  = ', integrand_list_all )
 if new_database :
