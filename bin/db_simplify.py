@@ -37,6 +37,135 @@ random_seed        = 1610853118
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
+def disease_specific_rate_priors() :
+	# ---------------------------------------------------------------------
+	# set smoothing for pini:
+	rate_name    = 'pini'
+	age_grid     = [ age_table[0]['age'] ]
+	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
+	median       = numpy.median( integrand_data['prevalence'] )
+	density_name = 'gaussian'
+	density_id   = density_name2id[density_name]
+	value_prior = {
+		'prior_name' : 'parent_smoothing_pini_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 1e-5            ,
+		'upper'      : 1e-5            ,
+		'mean'       : 1e-5            ,
+		'std'        : 1.0             ,
+		'eta'        : None            ,
+		'nu'         : None            ,
+	}
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_pini_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_pini_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+	# ---------------------------------------------------------------------
+	# set smoothing for iota
+	rate_name    = 'iota'
+	age_grid     = [ float(age)  for age in range(10, 90, 10) ]
+	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
+	density_name = 'log_gaussian'
+	density_id   = density_name2id[density_name]
+	value_prior = {
+		'prior_name' : 'parent_smoothing_iota_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 1e-19           ,
+		'upper'      : 0.1             ,
+		'mean'       : 1e-5            ,
+		'std'        : 5.0             ,
+		'eta'        : 1e-6            ,
+		'nu'         : None            ,
+	}
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_iota_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.1            ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_iota_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.01           ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+	# ---------------------------------------------------------------------
+	# remove chi random effects
+	rate_name     = 'chi'
+	zero_parent   = False
+	zero_children = True
+	zero_rate(rate_name, zero_parent, zero_children)
+	# ---------------------------------------------------------------------
+	# set smoothing for chi
+	rate_name    = 'chi'
+	age_grid     = [ float(age)  for age in range(0, 90, 10) ]
+	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
+	density_name = 'log_gaussian'
+	density_id   = density_name2id[density_name]
+	value_prior = {
+		'prior_name' : 'parent_smoothing_chi_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 1e-6           ,
+		'upper'      : 1.0             ,
+		'mean'       : 1e-3            ,
+		'std'        : 0.1             ,
+		'eta'        : 1e-6            ,
+		'nu'         : None            ,
+	}
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_chi_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.1            ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_chi_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 0.01           ,
+		'eta'        : 1e-8           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+# ===========================================================================
 if not new_database :
 	assert not fit_without_ode
 if not fit_without_ode :
@@ -95,7 +224,7 @@ if print_help :
 		index  = fp_data.find('\ndef ', start)
 	sys.exit(0)
 # ===========================================================================
-# General Purpose Utilities
+# Utilities that do not use global data tables
 # ===========================================================================
 # ----------------------------------------------------------------------------
 def plot_directory() :
@@ -269,99 +398,8 @@ table_name = 'time'
 (time_table, time_col_name, time_col_type) = get_table(table_name)
 #
 # ============================================================================
-# Utilities that depend on data table or fit results
+# Utilities that use global data tables but do not modify them
 # ============================================================================
-# ----------------------------------------------------------------------------
-def new_smoothing(age_grid, time_grid, value_prior, dage_prior, dtime_prior):
-	# Add a new smoothing that has one prior that is used for all age and
-	# time grid points. The smooth, smooth_grid, age, and time tables are
-	# modified, but the new versions are not written by this routine.
-	# The arguments value_prior, dage_prior, dtime_prior,
-	# contain the priors used in the smmothing.
-	#
-	def table_value2id(table, col_name, value_list) :
-		result = list()
-		for value in value_list :
-			match = None
-			for (table_id, row) in enumerate(table) :
-				if row[col_name] == value :
-					match = table_id
-			if match is None :
-				match = len(table)
-				row   = copy.copy( row )
-				row[col_name] = value
-				table.append(row)
-			result.append(match)
-		return result
-	n_age          = len(age_grid)
-	n_time         = len(time_grid)
-	age_id_list    = table_value2id(age_table,  'age',  age_grid)
-	time_id_list   = table_value2id(time_table, 'time', time_grid)
-	new_smooth_id  = len( smooth_table )
-	#
-	# add value_prior to prior_table
-	new_value_prior_id  = len(prior_table)
-	prior_table.append( copy.copy( value_prior ) )
-	#
-	# add dage_prior to prior table
-	new_dage_prior_id  = len(prior_table)
-	prior_table.append( copy.copy( dage_prior   ) )
-	#
-	# add dtime_prior to prior table
-	new_dtime_prior_id  = len(prior_table)
-	prior_table.append( copy.copy( dtime_prior   ) )
-	#
-	# add row to smooth_table
-	smooth_name    = 'smoothing_{}_dtime_prior'.format(new_smooth_id)
-	row =  {
-		'smooth_name'           : smooth_name    ,
-		'n_age'                 : n_age          ,
-		'n_time'                : n_time         ,
-		'mulstd_value_prior_id' : None           ,
-		'mulstd_dage_prior_id'  : None           ,
-		'mulstd_dtime_prior_id' : None           ,
-	}
-	smooth_table.append(row)
-	#
-	# add rows to smooth_grid_table
-	for i in range(n_age) :
-		for j in range(n_time) :
-			row = {
-				'smooth_id'      : new_smooth_id                   ,
-				'age_id'         : age_id_list[i]                  ,
-				'time_id'        : time_id_list[j]                 ,
-				'value_prior_id' : new_value_prior_id              ,
-				'dage_prior_id'  : new_dage_prior_id               ,
-				'dtime_prior_id' : new_dtime_prior_id              ,
-				'const_value'    : None                            ,
-			}
-			smooth_grid_table.append(row)
-	#
-	# return the new smoothing
-	return new_smooth_id
-# ----------------------------------------------------------------------------
-def new_zero_smooth_id (smooth_id) :
-	# add a new smoothing that has the same grid as smooth_id smoothing
-	# and that constrains to zero. Tables in argument list are both
-	# inputs and outputs.
-	if smooth_id is None :
-		return None
-	#
-	new_smooth_id          = len(smooth_table)
-	new_row                = copy.copy( smooth_table[smooth_id] )
-	new_row['smooth_name'] = 'zero_smoothing #' + str( new_smooth_id )
-	smooth_table.append( new_row )
-	#
-	for old_row in smooth_grid_table :
-		if old_row['smooth_id'] == smooth_id :
-			new_row = copy.copy( old_row )
-			new_row['smooth_id']      = new_smooth_id
-			new_row['value_prior_id'] = None
-			new_row['dage_prior_id']  = None
-			new_row['dtime_prior_id'] = None
-			new_row['const_value']    = 0.0
-			smooth_grid_table.append( new_row )
-	return new_smooth_id
 # ----------------------------------------------------------------------------
 def get_integrand_list (ode) :
 	# If ode is true (false) get list of integrands that require
@@ -1116,6 +1154,96 @@ def compress_age_time_interval(integrand_name, age_size, time_size) :
 # ============================================================================
 # Routines that Change Other Tables
 # ============================================================================
+def new_smoothing(age_grid, time_grid, value_prior, dage_prior, dtime_prior):
+	# Add a new smoothing that has one prior that is used for all age and
+	# time grid points. The smooth, smooth_grid, age, and time tables are
+	# modified, but the new versions are not written by this routine.
+	# The arguments value_prior, dage_prior, dtime_prior,
+	# contain the priors used in the smmothing.
+	#
+	def table_value2id(table, col_name, value_list) :
+		result = list()
+		for value in value_list :
+			match = None
+			for (table_id, row) in enumerate(table) :
+				if row[col_name] == value :
+					match = table_id
+			if match is None :
+				match = len(table)
+				row   = copy.copy( row )
+				row[col_name] = value
+				table.append(row)
+			result.append(match)
+		return result
+	n_age          = len(age_grid)
+	n_time         = len(time_grid)
+	age_id_list    = table_value2id(age_table,  'age',  age_grid)
+	time_id_list   = table_value2id(time_table, 'time', time_grid)
+	new_smooth_id  = len( smooth_table )
+	#
+	# add value_prior to prior_table
+	new_value_prior_id  = len(prior_table)
+	prior_table.append( copy.copy( value_prior ) )
+	#
+	# add dage_prior to prior table
+	new_dage_prior_id  = len(prior_table)
+	prior_table.append( copy.copy( dage_prior   ) )
+	#
+	# add dtime_prior to prior table
+	new_dtime_prior_id  = len(prior_table)
+	prior_table.append( copy.copy( dtime_prior   ) )
+	#
+	# add row to smooth_table
+	smooth_name    = 'smoothing_{}_dtime_prior'.format(new_smooth_id)
+	row =  {
+		'smooth_name'           : smooth_name    ,
+		'n_age'                 : n_age          ,
+		'n_time'                : n_time         ,
+		'mulstd_value_prior_id' : None           ,
+		'mulstd_dage_prior_id'  : None           ,
+		'mulstd_dtime_prior_id' : None           ,
+	}
+	smooth_table.append(row)
+	#
+	# add rows to smooth_grid_table
+	for i in range(n_age) :
+		for j in range(n_time) :
+			row = {
+				'smooth_id'      : new_smooth_id                   ,
+				'age_id'         : age_id_list[i]                  ,
+				'time_id'        : time_id_list[j]                 ,
+				'value_prior_id' : new_value_prior_id              ,
+				'dage_prior_id'  : new_dage_prior_id               ,
+				'dtime_prior_id' : new_dtime_prior_id              ,
+				'const_value'    : None                            ,
+			}
+			smooth_grid_table.append(row)
+	#
+	# return the new smoothing
+	return new_smooth_id
+# ----------------------------------------------------------------------------
+def new_zero_smooth_id (smooth_id) :
+	# add a new smoothing that has the same grid as smooth_id smoothing
+	# and that constrains to zero. The smooth and smooth_grid tables are
+	# modified by this routine but they are not written out.
+	if smooth_id is None :
+		return None
+	#
+	new_smooth_id          = len(smooth_table)
+	new_row                = copy.copy( smooth_table[smooth_id] )
+	new_row['smooth_name'] = 'zero_smoothing #' + str( new_smooth_id )
+	smooth_table.append( new_row )
+	#
+	for old_row in smooth_grid_table :
+		if old_row['smooth_id'] == smooth_id :
+			new_row = copy.copy( old_row )
+			new_row['smooth_id']      = new_smooth_id
+			new_row['value_prior_id'] = None
+			new_row['dage_prior_id']  = None
+			new_row['dtime_prior_id'] = None
+			new_row['const_value']    = 0.0
+			smooth_grid_table.append( new_row )
+	return new_smooth_id
 # -----------------------------------------------------------------------------
 def identically_one_covariate () :
 	# Return the covariate_id for a covariate that is one for every data point,
@@ -1172,7 +1300,6 @@ def identically_one_covariate () :
 		row[key] = 1.0
 	table_name    = 'avgint'
 	put_table(table_name, avgint_table, avgint_col_name, avgint_col_type)
-	#
 	#
 	return covariate_id
 # -----------------------------------------------------------------------------
@@ -1481,135 +1608,9 @@ else :
 	#
 	# integrand_data
 	integrand_data = get_integrand_data()
-	# ------------------------------------------------------------------------
 	#
-	# set smoothing for pini:
-	rate_name    = 'pini'
-	age_grid     = [ age_table[0]['age'] ]
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	median       = numpy.median( integrand_data['prevalence'] )
-	density_name = 'gaussian'
-	density_id   = density_name2id[density_name]
-	value_prior = {
-		'prior_name' : 'parent_smoothing_pini_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-5            ,
-		'upper'      : 1e-5            ,
-		'mean'       : 1e-5            ,
-		'std'        : 1.0             ,
-		'eta'        : None            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_pini_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : None           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_pini_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : None           ,
-		'nu'         : None           ,
-	}
-	parent_rate_smoothing(
-		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
-	#
-	# set smoothing for iota
-	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(10, 90, 10) ]
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_name = 'log_gaussian'
-	density_id   = density_name2id[density_name]
-	value_prior = {
-		'prior_name' : 'parent_smoothing_iota_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-19           ,
-		'upper'      : 0.1             ,
-		'mean'       : 1e-5            ,
-		'std'        : 5.0             ,
-		'eta'        : 1e-6            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_iota_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_iota_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.01           ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	parent_rate_smoothing(
-		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
-	#
-	# remove chi random effects
-	rate_name     = 'chi'
-	zero_parent   = False
-	zero_children = True
-	zero_rate(rate_name, zero_parent, zero_children)
-	#
-	# set smoothing for chi
-	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 90, 10) ]
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_name = 'log_gaussian'
-	density_id   = density_name2id[density_name]
-	value_prior = {
-		'prior_name' : 'parent_smoothing_chi_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-6           ,
-		'upper'      : 1.0             ,
-		'mean'       : 1e-3            ,
-		'std'        : 0.1             ,
-		'eta'        : 1e-6            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_chi_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_chi_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.01           ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	parent_rate_smoothing(
-		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
-	# ------------------------------------------------------------------------
+	# routine that is difference for each disease
+	disease_specific_rate_priors()
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
