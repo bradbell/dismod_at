@@ -16,11 +16,11 @@
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
 # Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   master
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     eec79ccc
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     54898f20
 # Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    bf268519
 #
 # Which epviz database are we starting with
-original_database  = 'ihme_db/data/475533/dbs/1/2/dismod.db'
+original_database  =  'ihme_db/data/475588/dbs/100/3/dismod.db'
 # path to file that contains the simplified database
 # The plots will be placed in the same directory
 database           = 'ihme_db/temp.db'
@@ -1482,23 +1482,23 @@ else :
 	# integrand_data
 	integrand_data = get_integrand_data()
 	# ------------------------------------------------------------------------
-	#
-	# set smoothing for pini:
+	# set smoothing for pini
 	rate_name    = 'pini'
-	age_grid     = [ age_table[0]['age'] ]
-	time_grid    = [ time_table[0]['time'] ]
+	age_grid     = [ 0.0 ]
+	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
+	median       = numpy.median( integrand_data['prevalence'] )
 	density_id   = density_name2id['uniform']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_pini_value_prior' ,
 		'density_id' : density_id      ,
 		'lower'      : 0.0             ,
-		'upper'      : 0.0             ,
+		'upper'      : 1.0             ,
 		'mean'       : 0.0             ,
 		'std'        : None            ,
 		'eta'        : None            ,
 		'nu'         : None            ,
 	}
-	density_id   = density_name2id['gaussian']
+	density_id   = density_name2id['log_gaussian']
 	dage_prior = {
 		'prior_name' : 'parent_smoothing_pini_dage_prior',
 		'density_id' : density_id     ,
@@ -1506,7 +1506,7 @@ else :
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
 		'std'        : 1.0            ,
-		'eta'        : None           ,
+		'eta'        : 1e-9           ,
 		'nu'         : None           ,
 	}
 	dtime_prior = {
@@ -1516,7 +1516,7 @@ else :
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
 		'std'        : 1.0            ,
-		'eta'        : None           ,
+		'eta'        : 1e-9           ,
 		'nu'         : None           ,
 	}
 	parent_rate_smoothing(
@@ -1525,7 +1525,7 @@ else :
 	#
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
+	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
 	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
@@ -1565,7 +1565,8 @@ else :
 	#
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
+	age_grid     = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0 ]
+	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
 	value_prior = {
@@ -1584,7 +1585,7 @@ else :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 0.2            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -1644,6 +1645,10 @@ else :
 		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
 		#
 		if fit_with_ode :
+			#
+			# Do not include mtexcess in ode fits becasue it does not agree
+			# with mtspecific and prevalence (it was used to initializer chi).
+			hold_out_data(integrand_name = 'mtexcess', hold_out = 1)
 			#
 			print('\nfit_var_table')
 			print('Save fit_var table because the one in the database')
