@@ -12,18 +12,21 @@
 #      real covariate name in c_covariate_name. While db_simlify.py can be
 #      changed to account for this, db2csv does not assume any IHME
 #      specific information.
-# --------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
+# print the help message for all the db_simplify routines and then exit
+print_help         = False
+# ----------------------------------------------------------------------------
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
-# Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   2c4f65a9
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     master
+# Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   master
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     91c15b32
 # Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    754e5369
 #
 # Which epviz database are we starting with
-original_database  =  'ihme_db/data/475533/dbs/1/2/dismod.db'
+original_database  =  'ihme_db/data/475588/dbs/100/3/dismod.db'
 # path to file that contains the simplified database
 # The plots will be placed in the same directory
-temp_database           = 'ihme_db/temp.db'
+temp_database      = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
@@ -31,30 +34,31 @@ fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = True
+fit_students       = False
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 1610853118
-# print the help message for all the db_simplify routines and then exit
-print_help         = False
+# list of integrand that are in fitting without ode but not with ode
+fit_with_ode_hold_out_integrand_list = ['mtexcess']
 # ----------------------------------------------------------------------
 def disease_specific_rate_priors() :
 	# ------------------------------------------------------------------------
-	# set smoothing for pini:
+	# set smoothing for pini
 	rate_name    = 'pini'
-	age_grid     = [ age_table[0]['age'] ]
-	time_grid    = [ time_table[0]['time'] ]
+	age_grid     = [ 0.0 ]
+	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
+	median       = numpy.median( integrand_data['prevalence'] )
 	density_id   = density_name2id['uniform']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_pini_value_prior' ,
 		'density_id' : density_id      ,
 		'lower'      : 0.0             ,
-		'upper'      : 0.0             ,
+		'upper'      : 1.0             ,
 		'mean'       : 0.0             ,
 		'std'        : None            ,
 		'eta'        : None            ,
 		'nu'         : None            ,
 	}
-	density_id   = density_name2id['gaussian']
+	density_id   = density_name2id['log_gaussian']
 	dage_prior = {
 		'prior_name' : 'parent_smoothing_pini_dage_prior',
 		'density_id' : density_id     ,
@@ -62,7 +66,7 @@ def disease_specific_rate_priors() :
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
 		'std'        : 1.0            ,
-		'eta'        : None           ,
+		'eta'        : 1e-9           ,
 		'nu'         : None           ,
 	}
 	dtime_prior = {
@@ -72,7 +76,7 @@ def disease_specific_rate_priors() :
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
 		'std'        : 1.0            ,
-		'eta'        : None           ,
+		'eta'        : 1e-9           ,
 		'nu'         : None           ,
 	}
 	parent_rate_smoothing(
@@ -81,7 +85,7 @@ def disease_specific_rate_priors() :
 	# -----------------------------------------------------------------------
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
+	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
 	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
@@ -121,7 +125,8 @@ def disease_specific_rate_priors() :
 	# -----------------------------------------------------------------------
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
+	age_grid     = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0 ]
+	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
 	value_prior = {
@@ -140,7 +145,7 @@ def disease_specific_rate_priors() :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 0.2            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -157,6 +162,7 @@ def disease_specific_rate_priors() :
 	parent_rate_smoothing(
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
+	# ------------------------------------------------------------------------
 # ===========================================================================
 if not new_database :
 	assert not fit_without_ode
@@ -1645,6 +1651,9 @@ else :
 		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
 		#
 		if fit_with_ode :
+			#
+			for integrand_name in fit_with_ode_hold_out_integrand_list :
+				hold_out_data(integrand_name = integrand_name, hold_out = 1)
 			#
 			print('\nfit_var_table')
 			print('Save fit_var table because the one in the database')
