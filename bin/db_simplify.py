@@ -15,8 +15,8 @@
 # ---------------------------------------------------------------------------
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
-# Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   master
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     91c15b32
+# Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   adee40d3
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     master
 # Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    754e5369
 # ============================================================================
 # BEGIN: Settings that User Can Change
@@ -33,63 +33,28 @@ fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
 fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 1610853118
+random_seed        = 0
 #
 # Location where IHME cluster file is stored on local machine. The file
 # temp.db will be written in the same directory. In addition, the
 # sub-directories no_ode, yes_ode, and students will contain the db2csv
 # files (*.csv) and plots (*.pdf) for the corresponding fits.
-disease_specific_database  =  'ihme_db/data/475588/dbs/100/3/dismod.db'
+disease_specific_database  =  'ihme_db/data/475533/dbs/1/2/dismod.db'
 #
 # list of integrand that are in fitting without ode but not with ode
-disease_specific_fit_with_ode_hold_out_list = ['mtexcess']
+disease_specific_fit_with_ode_hold_out_list = []
 #
 def disease_specific_rate_priors(density_name2id, integrand_data) :
 	# ------------------------------------------------------------------------
-	# set smoothing for pini
-	rate_name    = 'pini'
-	age_grid     = [ 0.0 ]
-	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
-	median       = numpy.median( integrand_data['prevalence'] )
-	density_id   = density_name2id['uniform']
-	value_prior = {
-		'prior_name' : 'parent_smoothing_pini_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 0.0             ,
-		'upper'      : 1.0             ,
-		'mean'       : 0.0             ,
-		'std'        : None            ,
-		'eta'        : None            ,
-		'nu'         : None            ,
-	}
-	density_id   = density_name2id['log_gaussian']
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_pini_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : 1e-9           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_pini_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : 1e-9           ,
-		'nu'         : None           ,
-	}
-	parent_rate_smoothing(
-		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
+	# set smoothing for pini:
+	rate_name     = 'pini'
+	zero_parent   = True
+	zero_children = True
+	zero_rate(rate_name, zero_parent, zero_children)
 	# -----------------------------------------------------------------------
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
+	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
 	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
@@ -129,8 +94,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 	# -----------------------------------------------------------------------
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0 ]
-	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
+	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
 	value_prior = {
@@ -149,7 +113,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.2            ,
+		'std'        : 0.1            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -166,7 +130,6 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 	parent_rate_smoothing(
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
-	# ------------------------------------------------------------------------
 # ============================================================================
 # END: Settings that User Can Change
 # ============================================================================
