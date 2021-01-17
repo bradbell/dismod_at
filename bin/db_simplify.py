@@ -23,7 +23,7 @@
 original_database  =  'ihme_db/data/475648/dbs/70/1/dismod.db'
 # path to file that contains the simplified database
 # The plots will be placed in the same directory
-database           = 'ihme_db/temp.db'
+temp_database           = 'ihme_db/temp.db'
 # create new database including
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
@@ -33,7 +33,7 @@ fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
 fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 0
+random_seed        = 1610853118
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 # ----------------------------------------------------------------------
@@ -62,9 +62,9 @@ if os.path.isdir(sandbox) :
 	sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 #
-# database
+# temp_database
 if new_database :
-	shutil.copyfile(original_database, database)
+	shutil.copyfile(original_database, temp_database)
 # ----------------------------------------------------------------------------
 if print_help :
 	# print the help message for each db_simplify routine
@@ -100,11 +100,11 @@ if print_help :
 # ----------------------------------------------------------------------------
 def plot_directory() :
 	# directory where plots are stored
-	index = database.rfind('/')
+	index = temp_database.rfind('/')
 	if index < 0 :
 		result = '.'
 	else :
-		result = database[0 : index]
+		result = temp_database[0 : index]
 	return result
 # ----------------------------------------------------------------------------
 def data_case_title(location) :
@@ -118,7 +118,7 @@ def data_case_title(location) :
 def get_table (table_name) :
 	# read a dismod_at table
 	new                  = False
-	connection           = dismod_at.create_connection(database, new)
+	connection           = dismod_at.create_connection(temp_database, new)
 	(col_name, col_type) = dismod_at.get_name_type(connection, table_name)
 	table                = dismod_at.get_table_dict(connection, table_name)
 	connection.close()
@@ -131,7 +131,7 @@ def get_table (table_name) :
 def put_table (table_name, table, col_name, col_type) :
 	# write a dismod_at table
 	new          = False
-	connection   = dismod_at.create_connection(database, new)
+	connection   = dismod_at.create_connection(temp_database, new)
 	cursor       = connection.cursor()
 	cmd          = 'DROP TABLE ' + table_name
 	cursor.execute(cmd)
@@ -147,10 +147,10 @@ def put_table (table_name, table, col_name, col_type) :
 	connection.close()
 # ----------------------------------------------------------------------------
 def sql_command(command) :
-	# execute an sql command on this database
+	# execute an sql command on this temp_database
 	print(command)
 	new          = False
-	connection   = dismod_at.create_connection(database, new)
+	connection   = dismod_at.create_connection(temp_database, new)
 	cursor       = connection.cursor()
 	cursor.execute(command)
 	connection.commit()
@@ -844,7 +844,7 @@ def plot_predict (covariate_integrand_list, predict_integrand_list) :
 	put_table(table_name, avgint_table, avgint_col_name, avgint_col_type)
 	# ------------------------------------------------------------------------
 	# Predict for this avgint table
-	system_command([ 'dismod_at', database, 'predict', 'fit_var' ])
+	system_command([ 'dismod_at', temp_database, 'predict', 'fit_var' ])
 	#
 	table_name = 'predict'
 	(predict_table, col_name, col_type) = get_table(table_name)
@@ -1332,7 +1332,7 @@ def set_option (name, value) :
 	# strings. The routine system_command to prints the processing message
 	# for this operation.
 	system_command( [
-		'dismod_at',  database, 'set', 'option', name , value
+		'dismod_at',  temp_database, 'set', 'option', name , value
 	] )
 # -----------------------------------------------------------------------------
 def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
@@ -1451,7 +1451,7 @@ print( '\n' + line + '\n' + title + '\n' + line + '\n' )
 # start_time
 start_time = time.time()
 if not new_database :
-	# list of integrands in database
+	# list of integrands in temp_database
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
@@ -1642,13 +1642,13 @@ else :
 		hold_out_data(integrand_name = integrand_name, hold_out = 1)
 	#
 	# init
-	system_command([ 'dismod_at', database, 'init'])
+	system_command([ 'dismod_at', temp_database, 'init'])
 	#
 	if fit_without_ode :
 		#
 		# fit both
 		t0 = time.time()
-		system_command([ 'dismod_at', database, 'fit', 'both'])
+		system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
 		#
 		if fit_with_ode :
@@ -1670,7 +1670,7 @@ else :
 			# 2DO: fix set_mulcov_zero so do not have to do this.
 			# re-run init because set_mul_cov_zero is lazy and does not make
 			# the necessary changes to smooth_id in var table
-			system_command([ 'dismod_at', database, 'init'])
+			system_command([ 'dismod_at', temp_database, 'init'])
 			#
 			print('\nstart_var_table')
 			print('Set start_var table equal to previous fit_var table')
@@ -1682,7 +1682,7 @@ else :
 			#
 			# fit both
 			t0 = time.time()
-			system_command([ 'dismod_at', database, 'fit', 'both'])
+			system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 			print( 'fit_with_ode time = ', round(time.time() - t0), ' seconds')
 			#
 			if fit_students :
@@ -1698,12 +1698,12 @@ else :
 				#
 				# use previous fit as starting point
 				system_command([
-					'dismod_at', database, 'set', 'start_var', 'fit_var'
+					'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
 				])
 				#
 				# fit both
 				t0 = time.time()
-				system_command([ 'dismod_at', database, 'fit', 'both'])
+				system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 				t1 = time.time()
 				print( 'fit_students time = ', round(t1- t0), ' seconds')
 #
@@ -1724,7 +1724,7 @@ if check_for_table('fit_var') :
 	plot_predict(covariate_integrand_list, predict_integrand_list)
 #
 # db2cvs
-system_command( [ 'dismodat.py',  database, 'db2csv' ] )
+system_command( [ 'dismodat.py',  temp_database, 'db2csv' ] )
 # ----------------------------------------------------------------------
 print('\nintegrands  = ', integrand_list_all )
 if new_database :
