@@ -12,18 +12,18 @@
 #      real covariate name in c_covariate_name. While db_simlify.py can be
 #      changed to account for this, db2csv does not assume any IHME
 #      specific information.
-# ----------------------------------------------------------------------------
-# print the help message for all the db_simplify routines and then exit
-print_help         = False
-# ----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
 # Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   master
 # Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     91c15b32
 # Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    754e5369
+# ============================================================================
+# BEGIN: Settings that User Can Change
+# ============================================================================
+# print the help message for all the db_simplify routines and then exit
+print_help         = False
 #
-# Which epviz database are we starting with
-original_database  =  'ihme_db/data/475588/dbs/100/3/dismod.db'
 # path to file that contains the simplified database
 # The plots will be placed in the same directory
 temp_database      = 'ihme_db/temp.db'
@@ -34,13 +34,17 @@ fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = True
 # Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = False
+fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 1610853118
+#
+# Location where IHME cluster file is stored on local machine
+disease_specific_database  =  'ihme_db/data/475588/dbs/100/3/dismod.db'
+#
 # list of integrand that are in fitting without ode but not with ode
-fit_with_ode_hold_out_integrand_list = ['mtexcess']
-# ----------------------------------------------------------------------
-def disease_specific_rate_priors() :
+disease_specific_fit_with_ode_hold_out_list = ['mtexcess']
+#
+def disease_specific_rate_priors(density_name2id, integrand_data) :
 	# ------------------------------------------------------------------------
 	# set smoothing for pini
 	rate_name    = 'pini'
@@ -163,7 +167,9 @@ def disease_specific_rate_priors() :
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
 	# ------------------------------------------------------------------------
-# ===========================================================================
+# ============================================================================
+# END: Settings that User Can Change
+# ============================================================================
 if not new_database :
 	assert not fit_without_ode
 if not fit_without_ode :
@@ -191,7 +197,7 @@ import dismod_at
 #
 # temp_database
 if new_database :
-	shutil.copyfile(original_database, temp_database)
+	shutil.copyfile(disease_specific_database, temp_database)
 # ----------------------------------------------------------------------------
 if print_help :
 	# print the help message for each db_simplify routine
@@ -235,7 +241,7 @@ def plot_directory() :
 	return result
 # ----------------------------------------------------------------------------
 def data_case_title(location) :
-	text       = original_database.split('/')
+	text       = disease_specific_database.split('/')
 	data_index = text.index('data')
 	model_id   = text[data_index + 1]
 	sex        = text[data_index + 4]
@@ -1607,8 +1613,8 @@ else :
 	# integrand_data
 	integrand_data = get_integrand_data()
 	#
-	# routine that is difference for each disease
-	disease_specific_rate_priors()
+	# Set the rate priros for this disease
+	disease_specific_rate_priors(density_name2id, integrand_data)
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
@@ -1652,7 +1658,7 @@ else :
 		#
 		if fit_with_ode :
 			#
-			for integrand_name in fit_with_ode_hold_out_integrand_list :
+			for integrand_name in disease_specific_fit_with_ode_hold_out_list :
 				hold_out_data(integrand_name = integrand_name, hold_out = 1)
 			#
 			print('\nfit_var_table')
