@@ -16,8 +16,8 @@
 # Disease   File on IHME cluster                                   Git hash
 # --------  --------------------                                   --------
 # Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   adee40d3
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     master
-# Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    754e5369
+# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     fe4f2962
+# Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    master
 # ============================================================================
 # BEGIN: Settings that User Can Change
 # ============================================================================
@@ -39,23 +39,56 @@ random_seed        = 0
 # temp.db will be written in the same directory. In addition, the
 # sub-directories no_ode, yes_ode, and students will contain the db2csv
 # files (*.csv) and plots (*.pdf) for the corresponding fits.
-disease_specific_database  =  'ihme_db/data/475533/dbs/1/2/dismod.db'
+disease_specific_database  =  'ihme_db/data/475648/dbs/70/1/dismod.db'
 #
 # list of integrand that are in fitting without ode but not with ode
 disease_specific_fit_with_ode_hold_out_list = []
 #
 def disease_specific_rate_priors(density_name2id, integrand_data) :
-	# ------------------------------------------------------------------------
+	# ---------------------------------------------------------------------
 	# set smoothing for pini:
-	rate_name     = 'pini'
-	zero_parent   = True
-	zero_children = True
-	zero_rate(rate_name, zero_parent, zero_children)
-	# -----------------------------------------------------------------------
+	rate_name    = 'pini'
+	age_grid     = [ age_table[0]['age'] ]
+	time_grid    = [ time_table[0]['time'] ]
+	median       = numpy.median( integrand_data['prevalence'] )
+	density_id   = density_name2id['gaussian']
+	value_prior = {
+		'prior_name' : 'parent_smoothing_pini_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 1e-5            ,
+		'upper'      : 1e-5            ,
+		'mean'       : 1e-5            ,
+		'std'        : 1.0             ,
+		'eta'        : None            ,
+		'nu'         : None            ,
+	}
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_pini_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_pini_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+	# ---------------------------------------------------------------------
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
-	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
+	age_grid     = [ float(age)  for age in range(10, 90, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
 	value_prior = {
@@ -74,7 +107,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.05           ,
+		'std'        : 0.1            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -84,26 +117,32 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
+		'std'        : 0.01           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
 	parent_rate_smoothing(
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
-	# -----------------------------------------------------------------------
+	# ---------------------------------------------------------------------
+	# remove chi random effects
+	rate_name     = 'chi'
+	zero_parent   = False
+	zero_children = True
+	zero_rate(rate_name, zero_parent, zero_children)
+	# ---------------------------------------------------------------------
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
+	age_grid     = [ float(age)  for age in range(0, 90, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_chi_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 1e-19           ,
+		'lower'      : 1e-6           ,
 		'upper'      : 1.0             ,
 		'mean'       : 1e-3            ,
-		'std'        : 5.0             ,
+		'std'        : 0.1             ,
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,
 	}
@@ -123,7 +162,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
+		'std'        : 0.01           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -207,12 +246,29 @@ def setup() :
 	# temp_database
 	if new_database :
 		shutil.copyfile(disease_specific_database, temp_database)
+	#
 setup()
 # ===========================================================================
 # Utilities that do not use global data tables
 # ===========================================================================
+fp_log_file = None
+def print_and_log(message = None, operation = None) :
+	global fp_log_file
+	if operation is None :
+		assert message is not None
+		print(message)
+		fp_log_file.write(message + '\n')
+		return
+	assert message is None
+	if operation == 'start' :
+		log_file    = disease_specific_directory + '/db_simplify.log'
+		fp_log_file = open(log_file, 'w')
+		return
+	assert operation == 'stop'
+	fp_log_file.close()
+	return
 # ----------------------------------------------------------------------------
-def output_results(which_fit) :
+def plot_fit(which_fit) :
 	# output plot files (*.pdf) and db2csv files (*.csv) in sub-directory
 	# of the disease_specific_directory.
 	#
@@ -294,7 +350,7 @@ def put_table (table_name, table, col_name, col_type) :
 # ----------------------------------------------------------------------------
 def sql_command(command) :
 	# execute an sql command on this temp_database
-	print(command)
+	print_and_log(command)
 	new          = False
 	connection   = dismod_at.create_connection(temp_database, new)
 	cursor       = connection.cursor()
@@ -316,7 +372,7 @@ def system_command (command_list) :
 	# and hence prints a summary message.
 	msg  = '\nsystem_command\n'
 	msg += " ".join(command_list)
-	print(msg)
+	print_and_log(msg)
 	#
 	# flush python's pending standard output in case this command
 	# generates more standard output
@@ -325,7 +381,7 @@ def system_command (command_list) :
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
 		if new_database :
-			print('random_seed = ', random_seed )
+			print_and_log('random_seed = ', random_seed )
 		sys.exit('db_simplify.py: system command failed')
 # ----------------------------------------------------------------------------
 def table_name2id(table, table_name) :
@@ -547,7 +603,7 @@ def plot_rate(rate_name, directory, which_fit) :
 					else :
 						assert smooth_id == row['smooth_id']
 	if smooth_id == None :
-		print('plot_rate: ' + rate_name + ' is identically zero')
+		print_and_log('plot_rate: ' + rate_name + ' is identically zero')
 		return
 	#
 	# n_age, n_time
@@ -725,7 +781,8 @@ def plot_integrand(integrand_name, directory, which_fit) :
 			weighted_residual_list.append( weighted_residual )
 	index_list = range(n_list)
 	if n_list < 2 :
-		print('plot_integrand: ' + integrand_name + ' has less than 2 points')
+		msg = 'plot_integrand: ' + integrand_name + ' has less than 2 points'
+		print_and_log(msg)
 		return
 	#
 	# map node id to index in set of node_id's
@@ -834,7 +891,7 @@ def subset_data () :
 	# that are out of bounds
 	msg  = '\nsubset_data\n'
 	msg += 'removing hold out and covariate out of bounds data'
-	print(msg)
+	print_and_log(msg)
 	#
 	# Need global becasue we will use an assingnment to data_table
 	global data_table
@@ -915,7 +972,7 @@ def random_subsample_data(integrand_name, max_sample) :
 	#
 	msg  = '\nrandom_subsample_data\n'
 	msg += 'number of {} samples: in = {} out = {}'
-	print( msg.format(integrand_name, n_sample_in, n_sample_out) )
+	print_and_log( msg.format(integrand_name, n_sample_in, n_sample_out) )
 # -----------------------------------------------------------------------------
 def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 	# for a specified integrand or node, set the hold_out to 0 or 1
@@ -934,7 +991,7 @@ def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 	if node_name is not None :
 		msg += 'node = {}'.format(node_name)
 	msg += ', hold_out = {}'.format(hold_out)
-	print(msg)
+	print_and_log(msg)
 	#
 	if integrand_name is not None :
 		node_id      = None
@@ -971,7 +1028,7 @@ def set_data_likelihood (
 	if factor_eta is not None :
 		msg += '\n' + 12 * ' ' + 'where m is the meadian of the'
 		msg += ' {} data'.format(integrand_name)
-	print( msg )
+	print_and_log( msg )
 	#
 	# integrand_id
 	integrand_id =integrand_name2id[integrand_name]
@@ -1001,7 +1058,7 @@ def compress_age_time_interval(integrand_name, age_size, time_size) :
 	msg += 'integrand = {}'.format(integrand_name)
 	msg += ', age_size= {}'.format(age_size)
 	msg += ', time_size= {}'.format(time_size)
-	print(msg)
+	print_and_log(msg)
 	#
 	# integrand_id
 	integrand_id =integrand_name2id[integrand_name]
@@ -1332,7 +1389,7 @@ def zero_rate(rate_name, zero_parent, zero_children) :
 	msg += 'rate = {}'.format(rate_name)
 	msg += ', zero_parent = {}'.format(zero_parent)
 	msg += ', zero_children = {}'.format(zero_children)
-	print( msg)
+	print_and_log( msg)
 	#
 	for row in rate_table :
 		if row['rate_name'] == rate_name :
@@ -1380,7 +1437,7 @@ def set_covariate_reference (covariate_id, reference_name) :
 	msg += ', reference_name = {}'.format(reference_name)
 	msg += '\nold_reference = {:.5g}'.format(old_reference)
 	msg += ', new_reference = {:.5g}'.format(new_reference)
-	print( msg )
+	print_and_log( msg )
 	#
 	table_name = 'covariate'
 	put_table(
@@ -1397,7 +1454,7 @@ def set_mulcov_zero (covariate_id, restore= None) :
 		msg  = '\nset_mulcov_zero\n' + msg
 	else :
 		msg  = '\nrestore_mulcov\n' + msg
-	print( msg )
+	print_and_log( msg )
 	#
 	# -------------------------------------------------------------------------
 	if restore is not None :
@@ -1450,7 +1507,7 @@ def parent_rate_smoothing(
 	msg += msg_prior('value', value_prior)
 	msg += msg_prior('dage',  dage_prior)
 	msg += msg_prior('dtime', dtime_prior)
-	print( msg )
+	print_and_log( msg )
 	#
 	# add the smothing
 	smooth_id = new_smoothing(
@@ -1465,7 +1522,7 @@ def parent_rate_smoothing(
 	# write out the tables that changed
 	for row in prior_table :
 		if row['prior_name'].startswith('smoothing_') :
-			print( row['prior_name'] )
+			print_and_log( row['prior_name'] )
 	put_table('age',         age_table,   age_col_name,   age_col_type)
 	put_table('time',        time_table,  time_col_name,  time_col_type)
 	put_table('prior',       prior_table, prior_col_name, prior_col_type)
@@ -1514,7 +1571,7 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	msg += ', upper:m*{}'.format(factor['upper'])
 	msg += '\n              where m is the median of the'
 	msg += ' {} data'.format(integrand_name)
-	print( msg )
+	print_and_log( msg )
 	#
 	median = numpy.median( integrand_data[integrand_name] )
 	lower  = median * factor['lower']
@@ -1588,13 +1645,14 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
+print_and_log(operation = 'start')
 #
 # print data_case_title
 parent_node_id   = get_parent_node_id()
 parent_node_name = node_table[parent_node_id]['node_name']
 title            = data_case_title(parent_node_name)
 line             = len(title) * '-'
-print( '\n' + line + '\n' + title + '\n' + line + '\n' )
+print_and_log( '\n' + line + '\n' + title + '\n' + line + '\n' )
 #
 # start_time
 start_time = time.time()
@@ -1671,19 +1729,21 @@ else :
 		# fit both
 		t0 = time.time()
 		system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-		print( 'fit_without_ode time = ', round(time.time() - t0), ' seconds')
+		msg  = 'fit_with_ode time = '
+		msg += str( round( time.time() - t0 ) ) + ' seconds'
+		print_and_log(msg)
 		#
 		which_fit = 'no_ode'
-		output_results(which_fit)
+		plot_fit(which_fit)
 		#
 		if fit_with_ode :
 			#
 			for integrand_name in disease_specific_fit_with_ode_hold_out_list :
 				hold_out_data(integrand_name = integrand_name, hold_out = 1)
 			#
-			print('\nfit_var_table')
-			print('Save fit_var table because the one in the database')
-			print('will be over written by init command below.')
+			print_and_log('\nfit_var_table')
+			print_and_log('Save fit_var table because the one in the database')
+			print_and_log('will be over written by init command below.')
 			table_name = 'fit_var'
 			(fit_var_table, col_name, col_type) = get_table(table_name)
 			#
@@ -1700,8 +1760,8 @@ else :
 			# the necessary changes to smooth_id in var table
 			system_command([ 'dismod_at', temp_database, 'init'])
 			#
-			print('\nstart_var_table')
-			print('Set start_var table equal to previous fit_var table')
+			print_and_log('\nstart_var_table')
+			print_and_log('Set start_var table equal to previous fit_var table')
 			table_name = 'start_var'
 			(start_var_table, col_name, col_type) = get_table(table_name)
 			for (var_id, row) in enumerate(start_var_table) :
@@ -1711,10 +1771,12 @@ else :
 			# fit both
 			t0 = time.time()
 			system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-			print( 'fit_with_ode time = ', round(time.time() - t0), ' seconds')
+			msg  = 'fit_with_ode time = '
+			msg += str( round( time.time() - t0 ) ) + ' seconds'
+			print_and_log(msg)
 			#
 			which_fit = 'yes_ode'
-			output_results(which_fit)
+			plot_fit(which_fit)
 			#
 			if fit_students :
 				#
@@ -1736,14 +1798,19 @@ else :
 				t0 = time.time()
 				system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 				t1 = time.time()
-				print( 'fit_students time = ', round(t1- t0), ' seconds')
+				msg  = 'fit_with_ode time = '
+				msg += str( round( time.time() - t0 ) ) + ' seconds'
+				print_and_log(msg)
 				#
 				which_fit = 'students'
-				output_results(which_fit)
+				plot_fit(which_fit)
 # ----------------------------------------------------------------------
-print('\nintegrands  = ', integrand_list_all )
+print_and_log('\nintegrands  = ' + str( integrand_list_all ) )
 if new_database :
-	print('random_seed = ', random_seed )
-print( 'Total time = ', round(time.time() - start_time), ' seconds')
-print('db_simplify.py: OK')
+	print_and_log('random_seed = ' + str( random_seed ) )
+msg  = 'fit_with_ode time = '
+msg += str( round( time.time() - start_time ) ) + ' seconds'
+print_and_log( msg )
+print_and_log('db_simplify.py: OK')
+print_and_log('stop')
 sys.exit(0)
