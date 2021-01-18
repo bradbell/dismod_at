@@ -13,13 +13,13 @@
 #      changed to account for this. For now, db_simplify only references
 #      covariates by their covariate_id.
 # ---------------------------------------------------------------------------
-# The files on the IHME cluster are relative to /ihme/epi/at_cascade/data
+# The files on the IHME cluster are relative to /ihme/epi/at_cascade
 ihme_case_study_dict = {
-# Disease      Relative path to database      Git Hash
-# -------      -------------------------      ---------
-'Diabetes' : ( '475588/dbs/100/3/dismod.db',  '9d57d3dc' ),
-'Chrons'   : ( '475533/dbs/1/2/dismod.db',    '92073222' ),
-'Kidney'   : ( '475648/dbs/70/1/dismod.db',   '485c57eb' ),
+# Disease      Relative path to database           Git Hash
+# -------      -------------------------           ---------
+'Diabetes' : ( 'data/475588/dbs/100/3/dismod.db',  '9d57d3dc' ),
+'Chrons'   : ( 'data/475533/dbs/1/2/dismod.db',    'master' ),
+'Kidney'   : ( 'data/475648/dbs/70/1/dismod.db',   '485c57eb' ),
 }
 # ============================================================================
 # BEGIN: Settings that User Can Change
@@ -28,10 +28,14 @@ ihme_case_study_dict = {
 print_help         = False
 #
 # Directory on the local machine that file locations are realtive to.
-# The file temp.db will be written in the directory where dismod.db is located.
+root_on_local_machine = 'ihme_db'
+# A copy of the IHME database has same path relative to this directory.
+# The subdirectory root_to_local_machine/disease_specific_name is called
+# the disease directory. The file db_simplify.log, in the disese directory,
+# is the log for the most recent fits for a disease.
+# The temporary database temp.db is also located in the disease directory.
 # The sub-directories no_ode, yes_ode, and students will contain the db2csv
 # files (*.csv) and plots (*.pdf) for the corresponding fits.
-root_on_local_machine = 'ihme_db/data'
 #
 # create new database
 new_database       = True
@@ -202,20 +206,19 @@ if print_help :
 	# use a function to avoid defining global variables
 	execute_print_help()
 #
-disease_specific_directory = None
+disease_directory = None
 temp_database              = None
 def setup() :
-	global disease_specific_directory
+	global disease_directory
 	global temp_database
 	# directory where plots are stored
 	(relative_path, git_hash) = ihme_case_study_dict[disease_specific_name]
 	original_database = root_on_local_machine + '/' + relative_path
-	index = original_database.rfind('/')
-	if index < 0 :
-		disease_specific_directory = '.'
-	else :
-		disease_specific_directory = original_database[0 : index]
-	temp_database = disease_specific_directory + '/temp.db'
+	disease_directory = root_on_local_machine + '/' + disease_specific_name
+	temp_database     = disease_directory + '/temp.db'
+	#
+	if not os.path.exists(disease_directory) :
+		os.mkdir(disease_directory)
 	#
 	# temp_database
 	if new_database :
@@ -235,7 +238,7 @@ def print_and_log(message = None, operation = None) :
 		return
 	assert message is None
 	if operation == 'start' :
-		log_file    = disease_specific_directory + '/db_simplify.log'
+		log_file    = disease_directory + '/db_simplify.log'
 		fp_log_file = open(log_file, 'w')
 		return
 	assert operation == 'stop'
@@ -244,10 +247,10 @@ def print_and_log(message = None, operation = None) :
 # ----------------------------------------------------------------------------
 def plot_fit(which_fit) :
 	# output plot files (*.pdf) and db2csv files (*.csv) in sub-directory
-	# of the disease_specific_directory.
+	# of the disease_directory.
 	#
 	assert which_fit in [ 'no_ode', 'yes_ode', 'students' ]
-	directory = disease_specific_directory + '/' + which_fit
+	directory = disease_directory + '/' + which_fit
 	#
 	if os.path.exists(directory) :
 		for name in os.listdir(directory) :
@@ -284,8 +287,8 @@ def plot_fit(which_fit) :
 def data_case_title(location, which_fit = None) :
 	(relative_path, git_hash) = ihme_case_study_dict[disease_specific_name]
 	text       = relative_path.split('/')
-	model_id   = text[0]
-	sex        = text[3]
+	model_id   = text[1]
+	sex        = text[4]
 	result     = location + ' sex=' + sex + ' model_id=' + model_id
 	if which_fit is not None :
 		result = which_fit + ' ' + result
