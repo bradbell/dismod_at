@@ -284,14 +284,16 @@ def plot_fit(which_fit) :
 	shutil.copyfile(temp_database, copy_database )
 	system_command( [ 'dismodat.py',  copy_database, 'db2csv' ] )
 # ----------------------------------------------------------------------------
-def data_case_title(location, which_fit = None) :
+def case_study_title(location, which_fit = None) :
 	(relative_path, git_hash) = ihme_case_study_dict[disease_specific_name]
 	text       = relative_path.split('/')
 	model_id   = text[1]
 	sex        = text[4]
-	result     = location + ' sex=' + sex + ' model_id=' + model_id
+	disease    = disease_specific_name
+	result     = location + ': ' + disease
 	if which_fit is not None :
-		result = which_fit + ' ' + result
+		result += '\n' + which_fit
+	result += ': sex=' + sex + ' model_id=' + model_id
 	return result
 # ----------------------------------------------------------------------------
 def get_table (table_name) :
@@ -637,7 +639,7 @@ def plot_rate(rate_name, directory, which_fit) :
 	for i_fig in range( n_fig ) :
 		fig    = pyplot.figure()
 		axis   = pyplot.subplot(1,1,1)
-		axis.set_title( data_case_title(parent_node_name, which_fit) )
+		axis.set_title( case_study_title(parent_node_name, which_fit) )
 		start  = i_fig * n_per_fig
 		if i_fig > 0 :
 			start        = start - 1
@@ -835,7 +837,7 @@ def plot_integrand(integrand_name, directory, which_fit) :
 		pyplot.ylim(y_limit[0], y_limit[1])
 		#
 		if x_name == 'index' :
-			pyplot.title( data_case_title(parent_node_name, which_fit) )
+			pyplot.title( case_study_title(parent_node_name, which_fit) )
 		#
 		sp = pyplot.subplot(3, 1, 2)
 		sp.set_xticklabels( [] )
@@ -1749,10 +1751,10 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 # ----------------------------------------------------------------------
 print_and_log(operation = 'start')
 #
-# print data_case_title
+# print case_study_title
 parent_node_id   = get_parent_node_id()
 parent_node_name = node_table[parent_node_id]['node_name']
-title            = data_case_title(parent_node_name)
+title            = case_study_title(parent_node_name)
 line             = len(title) * '-'
 print_and_log( '\n' + line + '\n' + title + '\n' + line + '\n' )
 #
