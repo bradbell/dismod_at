@@ -13,18 +13,29 @@
 #      changed to account for this, db2csv does not assume any IHME
 #      specific information.
 # ---------------------------------------------------------------------------
-# Disease   File on IHME cluster                                   Git hash
-# --------  --------------------                                   --------
-# Diabetes  /ihme/epi/at_cascade/data/475588/dbs/100/3/dismod.db   adee40d3
-# Chrons    /ihme/epi/at_cascade/data/475533/dbs/1/2/dismod.db     fe4f2962
-# Kidney    /ihme/epi/at_cascade/data/475648/dbs/70/1/dismod.db    master
+# The files on the IHME cluster are relative to /ihme/epi/at_cascade/data
+ihme_case_study_dict = {
+# Disease      Relative File Location         Git Hash
+# -------      ----------------------         ---------
+'Diabetes' : ( '475588/dbs/100/3/dismod.db',  'adee40d3' ),
+'Chrons'   : ( '475533/dbs/1/2/dismod.db',    'fe4f2962' ),
+'Kidney'   : ( '475648/dbs/70/1/dismod.db',   'master'   ),
+}
 # ============================================================================
 # BEGIN: Settings that User Can Change
 # ============================================================================
 # print the help message for all the db_simplify routines and then exit
 print_help         = False
 #
-# create new database including
+# Directory on the local machine that file locations are realtive to.
+# The file temp.db will be written in the directory where dismod.db is located.
+# The sub-directories no_ode, yes_ode, and students will contain the db2csv
+# files (*.csv) and plots (*.pdf) for the corresponding fits.
+root_on_local_machine = 'ihme_db/data'
+#
+# disease that this analaysis is for
+case_study_disease = 'Kidney'
+# create new database
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
 fit_without_ode    = True
@@ -34,12 +45,6 @@ fit_with_ode       = True
 fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 0
-#
-# Location where IHME cluster file is stored on local machine. The file
-# temp.db will be written in the same directory. In addition, the
-# sub-directories no_ode, yes_ode, and students will contain the db2csv
-# files (*.csv) and plots (*.pdf) for the corresponding fits.
-disease_specific_database  =  'ihme_db/data/475648/dbs/70/1/dismod.db'
 #
 # list of integrand that are in fitting without ode but not with ode
 disease_specific_fit_with_ode_hold_out_list = []
@@ -236,16 +241,18 @@ def setup() :
 	global disease_specific_directory
 	global temp_database
 	# directory where plots are stored
-	index = disease_specific_database.rfind('/')
+	(relative_path, git_hash) = ihme_case_study_dict[case_study_disease]
+	original_database = root_on_local_machine + '/' + relative_path
+	index = original_database.rfind('/')
 	if index < 0 :
 		disease_specific_directory = '.'
 	else :
-		disease_specific_directory = disease_specific_database[0 : index]
+		disease_specific_directory = original_database[0 : index]
 	temp_database = disease_specific_directory + '/temp.db'
 	#
 	# temp_database
 	if new_database :
-		shutil.copyfile(disease_specific_database, temp_database)
+		shutil.copyfile(original_database, temp_database)
 	#
 setup()
 # ===========================================================================
@@ -308,10 +315,10 @@ def plot_fit(which_fit) :
 	system_command( [ 'dismodat.py',  copy_database, 'db2csv' ] )
 # ----------------------------------------------------------------------------
 def data_case_title(location, which_fit = None) :
-	text       = disease_specific_database.split('/')
-	data_index = text.index('data')
-	model_id   = text[data_index + 1]
-	sex        = text[data_index + 4]
+	(relative_path, git_hash) = ihme_case_study_dict[case_study_disease]
+	text       = relative_path.split('/')
+	model_id   = text[0]
+	sex        = text[3]
 	result     = location + ' sex=' + sex + ' model_id=' + model_id
 	if which_fit is not None :
 		result = which_fit + ' ' + result
