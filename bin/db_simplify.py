@@ -9,14 +9,14 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # 2DO: IHME database uses x_0, x_1, ... for covariate names and hides the
-#      real covariate name in c_covariate_name. While db_simlify.py can be
-#      changed to account for this, db2csv does not assume any IHME
-#      specific information.
+#      real covariate name in c_covariate_name. db_simlify.py could be
+#      changed to account for this. For now, db_simplify only references
+#      covariates by their covariate_id.
 # ---------------------------------------------------------------------------
 # The files on the IHME cluster are relative to /ihme/epi/at_cascade/data
 ihme_case_study_dict = {
-# Disease      Relative File Location         Git Hash
-# -------      ----------------------         ---------
+# Disease      Relative path to database      Git Hash
+# -------      -------------------------      ---------
 'Diabetes' : ( '475588/dbs/100/3/dismod.db',  'master' ),
 'Chrons'   : ( '475533/dbs/1/2/dismod.db',    '92073222' ),
 'Kidney'   : ( '475648/dbs/70/1/dismod.db',   '485c57eb' ),
@@ -33,8 +33,6 @@ print_help         = False
 # files (*.csv) and plots (*.pdf) for the corresponding fits.
 root_on_local_machine = 'ihme_db/data'
 #
-# disease that this analaysis is for
-case_study_disease = 'Diabetes'
 # create new database
 new_database       = True
 # fit without integrands that require the ode (new_database must be true)
@@ -46,8 +44,16 @@ fit_students       = True
 # random seed to use when subseting data, if 0 use the clock choose seed
 random_seed        = 0
 #
+# disease that this analaysis is for (must be in ihme_case_study_dict)
+disease_specific_name = 'Diabetes'
+#
 # list of integrand that are in fitting without ode but not with ode
 disease_specific_fit_with_ode_hold_out_list = ['mtexcess']
+#
+# Maximum absolute covariate effect = multiplier * (covariate - referece).
+# Note that exp(effect) multiplies a model value to get the model value for
+# this covariate value. (Noise covariate multipliers are not included.)
+disease_specific_max_covariate_effect = 2.0
 #
 def disease_specific_rate_priors(density_name2id, integrand_data) :
 	# ------------------------------------------------------------------------
@@ -238,7 +244,7 @@ def setup() :
 	global disease_specific_directory
 	global temp_database
 	# directory where plots are stored
-	(relative_path, git_hash) = ihme_case_study_dict[case_study_disease]
+	(relative_path, git_hash) = ihme_case_study_dict[disease_specific_name]
 	original_database = root_on_local_machine + '/' + relative_path
 	index = original_database.rfind('/')
 	if index < 0 :
@@ -312,7 +318,7 @@ def plot_fit(which_fit) :
 	system_command( [ 'dismodat.py',  copy_database, 'db2csv' ] )
 # ----------------------------------------------------------------------------
 def data_case_title(location, which_fit = None) :
-	(relative_path, git_hash) = ihme_case_study_dict[case_study_disease]
+	(relative_path, git_hash) = ihme_case_study_dict[disease_specific_name]
 	text       = relative_path.split('/')
 	model_id   = text[0]
 	sex        = text[3]
@@ -1314,6 +1320,7 @@ def new_smoothing(age_grid, time_grid, value_prior, dage_prior, dtime_prior):
 	# return the new smoothing
 	return new_smooth_id
 # ----------------------------------------------------------------------------
+# 2DO: Remove this when bounds on mulcov work
 def new_zero_smooth_id (smooth_id) :
 	# add a new smoothing that has the same grid as smooth_id smoothing
 	# and that constrains to zero. The smooth and smooth_grid tables are
@@ -1334,6 +1341,61 @@ def new_zero_smooth_id (smooth_id) :
 			new_row['dage_prior_id']  = None
 			new_row['dtime_prior_id'] = None
 			new_row['const_value']    = 0.0
+			smooth_grid_table.append( new_row )
+	return new_smooth_id
+# ----------------------------------------------------------------------------
+def new_bounded_smooth_id (smooth_id, lower, upper) :
+	# add a new smoothing that has the same grid as smooth_id smoothing
+	# and that constrains value to be within the specified lower and upper
+	# bounds.The prior, smooth and smooth_grid tables are modified but
+	# they are not written out. The lower and upper bounds can be None.
+	if smooth_id is None :
+		return None
+	#
+	if lower is None and upper is None :
+		mean = 0.0
+	elif lower is not None and upper is not None :
+		mean = (lower + upper) / 2.0
+	elif lower is None :
+		if upper >= 0.0 :
+			mean = 0.0
+		else :
+			mean = upper
+	else :
+		assert upper is None
+		if lower <= 0.0 :
+			mean = 0.0
+		else :
+			mean = lower
+	#
+	# smooth_table
+	new_smooth_id = len(smooth_table)
+	new_row                = copy.copy( smooth_table[smooth_id] )
+	new_row['smooth_name'] = 'bound_smoothing #' + str( new_smooth_id )
+	smooth_table.append( new_row )
+	#
+	new_prior_id  = len(prior_table)
+	density_id    = density_name2id['uniform']
+	value_prior  = {
+		'prior_name' : 'smoothing_{}_centerd_prior'.format(new_smooth_id),
+		'density_id' : density_id,
+		'lower'      : lower,
+		'upper'      : upper,
+		'mean'       : mean,
+		'std'        : None,
+		'eta'        : None,
+		'nu'         : None,
+	}
+	prior_table.append( value_prior )
+	#
+	for old_row in smooth_grid_table :
+		if old_row['smooth_id'] == smooth_id :
+			new_row = copy.copy( old_row )
+			new_row['smooth_id']      = new_smooth_id
+			new_row['value_prior_id'] = new_prior_id
+			new_row['dage_prior_id']  = None
+			new_row['dtime_prior_id'] = None
+			new_row['const_value']    = None
 			smooth_grid_table.append( new_row )
 	return new_smooth_id
 # -----------------------------------------------------------------------------
@@ -1458,6 +1520,7 @@ def set_covariate_reference (covariate_id, reference_name) :
 		table_name, covariate_table, covariate_col_name, covariate_col_type
 	)
 # -----------------------------------------------------------------------------
+# 2DO: remvoe this when bounds on mulcov work
 def set_mulcov_zero (covariate_id, restore= None) :
 	# set all of the multipliers for a specified covariate to zero without
 	# changing the order or size of the var table
@@ -1500,6 +1563,64 @@ def set_mulcov_zero (covariate_id, restore= None) :
 		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
 	)
 	return restore
+# -----------------------------------------------------------------------------
+def set_mulcov_bound(covariate_id) :
+	# Set bounds for all of the multipliers for a specified covariate so
+	# corresponding effect is bounded by disease_specific_max_covariate_effect.
+	# Noise covariate multipliers are not included.
+	#
+	msg  = '\nset_mulcov_bound\n'
+	msg += 'covariate = x_{}'.format(covariate_id)
+	print_and_log( msg )
+	#
+	# reference for this covariate
+	reference = covariate_table[covariate_id]['reference']
+	#
+	# covariate minus reference
+	difference  = list()
+	column_name = 'x_{}'.format(covariate_id)
+	for row in data_table :
+		if data_table :
+			value = row[column_name]
+			if value is not None :
+				difference.append( value - reference )
+	#
+	# maximum and minimum difference
+	min_difference = min(difference)
+	max_difference = max(difference)
+	#
+	# bounds on covariate multiplier
+	if max_difference == 0.0 :
+		upper = None
+	else :
+		upper = disease_specific_max_covariate_effect / max_difference
+	if min_difference == 0.0 :
+		lower = None
+	else :
+		lower = disease_specific_max_covariate_effect / min_difference
+	#
+	for row in mulcov_table :
+		if row['covariate_id'] == covariate_id :
+			if row['mulcov_type'] != 'meas_noise' :
+				group_smooth_id = row['group_smooth_id']
+				group_smooth_id = new_bounded_smooth_id(
+					group_smooth_id, lower, upper
+				)
+				row['group_smooth_id'] = group_smooth_id
+				#
+				subgroup_smooth_id = row['subgroup_smooth_id']
+				subgroup_smooth_id = new_bounded_smooth_id(
+					subgroup_smooth_id, lower, upper
+				)
+				row['subgroup_smooth_id'] = subgroup_smooth_id
+	#
+	put_table('prior',   prior_table,  prior_col_name,  prior_col_type)
+	put_table('mulcov',  mulcov_table, mulcov_col_name, mulcov_col_type)
+	put_table('smooth',  smooth_table, smooth_col_name, smooth_col_type)
+	put_table('smooth_grid',
+		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
+	)
+	return
 # -----------------------------------------------------------------------------
 def parent_rate_smoothing(
 	rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
@@ -1725,12 +1846,10 @@ else :
 	for integrand_name in integrand_list_all :
 		compress_age_time_interval(integrand_name, age_size, time_size)
 	#
-	# constrain all covariate multipliers to be zero
-	restore_mulcov_x  = list()
+	# set bounds for all the covariates
 	n_covariate = len( covariate_table )
 	for covariate_id in range( n_covariate ) :
-		restore_mulcov = set_mulcov_zero(covariate_id)
-		restore_mulcov_x.append( restore_mulcov )
+		set_mulcov_bound(covariate_id)
 	#
 	# hold out all ode integrand data
 	for integrand_name in integrand_list_yes_ode :
@@ -1753,35 +1872,18 @@ else :
 		#
 		if fit_with_ode :
 			#
-			for integrand_name in disease_specific_fit_with_ode_hold_out_list :
-				hold_out_data(integrand_name = integrand_name, hold_out = 1)
-			#
-			print_and_log('\nfit_var_table')
-			print_and_log('Save fit_var table because the one in the database')
-			print_and_log('will be over written by init command below.')
-			table_name = 'fit_var'
-			(fit_var_table, col_name, col_type) = get_table(table_name)
+			# use previous fit as starting point
+			system_command([
+				'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
+			])
 			#
 			# put ode integrands data back in the fit
 			for integrand_name in integrand_list_yes_ode :
 				hold_out_data(integrand_name = integrand_name, hold_out = 0)
 			#
-			# remove constraint on all covariate multipliers
-			for covariate_id in range( n_covariate ) :
-				set_mulcov_zero(covariate_id, restore_mulcov_x[covariate_id] )
-			#
-			# 2DO: fix set_mulcov_zero so do not have to do this.
-			# re-run init because set_mul_cov_zero is lazy and does not make
-			# the necessary changes to smooth_id in var table
-			system_command([ 'dismod_at', temp_database, 'init'])
-			#
-			print_and_log('\nstart_var_table')
-			print_and_log('Set start_var table equal to previous fit_var table')
-			table_name = 'start_var'
-			(start_var_table, col_name, col_type) = get_table(table_name)
-			for (var_id, row) in enumerate(start_var_table) :
-				row['start_var_value'] = fit_var_table[var_id]['fit_var_value']
-			put_table(table_name, start_var_table, col_name, col_type)
+			# exclude integerands that are just used to get starting value
+			for integrand_name in disease_specific_fit_with_ode_hold_out_list :
+				hold_out_data(integrand_name = integrand_name, hold_out = 1)
 			#
 			# fit both
 			t0 = time.time()
