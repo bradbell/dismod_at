@@ -19,7 +19,7 @@ ihme_case_study_dict = {
 # -------    -------------------------
 'Diabetes' : 'data/475588/dbs/100/3/dismod.db',
 'Chrons'   : 'data/475533/dbs/1/2/dismod.db',
-'Kidney'   : 'data/475648/dbs/70/1/dismod.db',
+'Kidney'   : 'data/475718/dbs/70/1/dismod.db',
 }
 # ============================================================================
 # BEGIN: Settings that User Can Change
@@ -49,10 +49,10 @@ fit_students       = True
 random_seed        = 0
 #
 # disease that this analaysis is for (must be in ihme_case_study_dict)
-disease_specific_name = 'Diabetes'
+disease_specific_name = 'Kidney'
 #
 # list of integrand that are in fitting without ode but not with ode
-disease_specific_fit_with_ode_hold_out_list = ['mtexcess']
+disease_specific_fit_with_ode_hold_out_list = []
 #
 # Maximum absolute covariate effect = multiplier * (covariate - referece).
 # Note that exp(effect) multiplies a model value to get the model value for
@@ -60,24 +60,24 @@ disease_specific_fit_with_ode_hold_out_list = ['mtexcess']
 disease_specific_max_covariate_effect = 2.0
 #
 def disease_specific_rate_priors(density_name2id, integrand_data) :
-	# ------------------------------------------------------------------------
-	# set smoothing for pini
+	# -----------------------------------------------------------------------
+	# set smoothing for pini:
 	rate_name    = 'pini'
-	age_grid     = [ 0.0 ]
-	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
+	age_grid     = [ age_table[0]['age'] ]
+	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	median       = numpy.median( integrand_data['prevalence'] )
-	density_id   = density_name2id['uniform']
+	density_name = 'gaussian'
+	density_id   = density_name2id[density_name]
 	value_prior = {
 		'prior_name' : 'parent_smoothing_pini_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 0.0             ,
-		'upper'      : 1.0             ,
-		'mean'       : 0.0             ,
-		'std'        : None            ,
+		'lower'      : 1e-5            ,
+		'upper'      : 1e-5            ,
+		'mean'       : 1e-5            ,
+		'std'        : 1.0             ,
 		'eta'        : None            ,
 		'nu'         : None            ,
 	}
-	density_id   = density_name2id['log_gaussian']
 	dage_prior = {
 		'prior_name' : 'parent_smoothing_pini_dage_prior',
 		'density_id' : density_id     ,
@@ -85,7 +85,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
 		'std'        : 1.0            ,
-		'eta'        : 1e-9           ,
+		'eta'        : None           ,
 		'nu'         : None           ,
 	}
 	dtime_prior = {
@@ -95,7 +95,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
 		'std'        : 1.0            ,
-		'eta'        : 1e-9           ,
+		'eta'        : None           ,
 		'nu'         : None           ,
 	}
 	parent_rate_smoothing(
@@ -104,10 +104,10 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 	# -----------------------------------------------------------------------
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
-	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
+	age_grid     = [ float(age)  for age in range(10, 90, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_id   = density_name2id['log_gaussian']
+	density_name = 'log_gaussian'
+	density_id   = density_name2id[density_name]
 	value_prior = {
 		'prior_name' : 'parent_smoothing_iota_value_prior' ,
 		'density_id' : density_id      ,
@@ -124,7 +124,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.05           ,
+		'std'        : 0.1            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -134,7 +134,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
+		'std'        : 0.01           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -142,19 +142,25 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
 	# -----------------------------------------------------------------------
+	# remove chi random effects
+	rate_name     = 'chi'
+	zero_parent   = False
+	zero_children = True
+	zero_rate(rate_name, zero_parent, zero_children)
+	#
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0 ]
-	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
+	age_grid     = [ float(age)  for age in range(0, 90, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_id   = density_name2id['log_gaussian']
+	density_name = 'log_gaussian'
+	density_id   = density_name2id[density_name]
 	value_prior = {
 		'prior_name' : 'parent_smoothing_chi_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 1e-19           ,
+		'lower'      : 1e-6           ,
 		'upper'      : 1.0             ,
 		'mean'       : 1e-3            ,
-		'std'        : 5.0             ,
+		'std'        : 0.1             ,
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,
 	}
@@ -164,7 +170,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.2            ,
+		'std'        : 0.1            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -174,13 +180,14 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
+		'std'        : 0.01           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
 	parent_rate_smoothing(
 		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
+
 # ============================================================================
 # END: Settings that User Can Change
 # ============================================================================
