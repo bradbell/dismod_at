@@ -478,6 +478,16 @@ table_name = 'time'
 # Utilities that use global data tables but do not modify them
 # ============================================================================
 # ----------------------------------------------------------------------------
+def relative_covariate(covariate_id) :
+	value_set  = set()
+	column_name = 'x_{}'.format(covariate_id)
+	for row in data_table :
+		value = row[column_name]
+		if value is not None :
+			value_set.add( value )
+	# sex is an aboslute covariate and has 3 values, -0.5, 0.0, +0.5
+	return len( value_set ) > 3
+# ----------------------------------------------------------------------------
 def get_integrand_list (ode) :
 	# If ode is true (false) get list of integrands that require
 	# (do not require) the ode to model.
@@ -1675,9 +1685,10 @@ else :
 	subset_data()
 	#
 	# set reference value for x_0 to its median
-	covariate_id    = 0
 	reference_name  = 'median'
-	set_covariate_reference(covariate_id, reference_name)
+	for covariate_id in range( len(covariate_table) ) :
+		if relative_covariate(covariate_id) :
+			set_covariate_reference(covariate_id, reference_name)
 	#
 	# subsetting the data can remove some integrands
 	integrand_list_yes_ode = get_integrand_list(True)
