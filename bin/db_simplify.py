@@ -15,11 +15,11 @@
 # ---------------------------------------------------------------------------
 # The files on the IHME cluster are relative to /ihme/epi/at_cascade
 ihme_case_study_dict = {
-# Disease      Relative path to database           Git Hash
-# -------      -------------------------           ---------
-'Diabetes' : ( 'data/475588/dbs/100/3/dismod.db',  '9d57d3dc' ),
-'Chrons'   : ( 'data/475533/dbs/1/2/dismod.db',    'master' ),
-'Kidney'   : ( 'data/475648/dbs/70/1/dismod.db',   '485c57eb' ),
+# Disease    Relative path to database
+# -------    -------------------------
+'Diabetes' : 'data/475588/dbs/100/3/dismod.db',
+'Chrons'   : 'data/475533/dbs/1/2/dismod.db',
+'Kidney'   : 'data/475648/dbs/70/1/dismod.db',
 }
 # ============================================================================
 # BEGIN: Settings that User Can Change
@@ -32,7 +32,7 @@ root_on_local_machine = 'ihme_db'
 # A copy of the IHME database has same path relative to this directory.
 # The subdirectory root_to_local_machine/disease_specific_name is called
 # the disease directory. The file db_simplify.log, in the disese directory,
-# is the log for the most recent fits for a disease.
+# is the log for the most recent fits for this disease.
 # The temporary database temp.db is also located in the disease directory.
 # The sub-directories no_ode, yes_ode, and students will contain the db2csv
 # files (*.csv) and plots (*.pdf) for the corresponding fits.
@@ -49,10 +49,10 @@ fit_students       = True
 random_seed        = 0
 #
 # disease that this analaysis is for (must be in ihme_case_study_dict)
-disease_specific_name = 'Chrons'
+disease_specific_name = 'Diabetes'
 #
 # list of integrand that are in fitting without ode but not with ode
-disease_specific_fit_with_ode_hold_out_list = []
+disease_specific_fit_with_ode_hold_out_list = ['mtexcess']
 #
 # Maximum absolute covariate effect = multiplier * (covariate - referece).
 # Note that exp(effect) multiplies a model value to get the model value for
@@ -61,15 +61,50 @@ disease_specific_max_covariate_effect = 2.0
 #
 def disease_specific_rate_priors(density_name2id, integrand_data) :
 	# ------------------------------------------------------------------------
-	# set smoothing for pini:
-	rate_name     = 'pini'
-	zero_parent   = True
-	zero_children = True
-	zero_rate(rate_name, zero_parent, zero_children)
+	# set smoothing for pini
+	rate_name    = 'pini'
+	age_grid     = [ 0.0 ]
+	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
+	median       = numpy.median( integrand_data['prevalence'] )
+	density_id   = density_name2id['uniform']
+	value_prior = {
+		'prior_name' : 'parent_smoothing_pini_value_prior' ,
+		'density_id' : density_id      ,
+		'lower'      : 0.0             ,
+		'upper'      : 1.0             ,
+		'mean'       : 0.0             ,
+		'std'        : None            ,
+		'eta'        : None            ,
+		'nu'         : None            ,
+	}
+	density_id   = density_name2id['log_gaussian']
+	dage_prior = {
+		'prior_name' : 'parent_smoothing_pini_dage_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : 1e-9           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'parent_smooting_pini_dtime_prior',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 1.0            ,
+		'eta'        : 1e-9           ,
+		'nu'         : None           ,
+	}
+	parent_rate_smoothing(
+		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
 	# -----------------------------------------------------------------------
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 110, 10) ]
+	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
 	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
@@ -109,7 +144,8 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 	# -----------------------------------------------------------------------
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
+	age_grid     = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0 ]
+	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
 	value_prior = {
@@ -128,7 +164,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 0.2            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -212,7 +248,7 @@ def setup() :
 	global disease_directory
 	global temp_database
 	# directory where plots are stored
-	(relative_path, git_hash) = ihme_case_study_dict[disease_specific_name]
+	relative_path     = ihme_case_study_dict[disease_specific_name]
 	original_database = root_on_local_machine + '/' + relative_path
 	disease_directory = root_on_local_machine + '/' + disease_specific_name
 	temp_database     = disease_directory + '/temp.db'
@@ -285,12 +321,12 @@ def plot_fit(which_fit) :
 	system_command( [ 'dismodat.py',  copy_database, 'db2csv' ] )
 # ----------------------------------------------------------------------------
 def case_study_title(location, which_fit = None) :
-	(relative_path, git_hash) = ihme_case_study_dict[disease_specific_name]
-	text       = relative_path.split('/')
-	model_id   = text[1]
-	sex        = text[4]
-	disease    = disease_specific_name
-	result     = location + ': ' + disease
+	relative_path =  ihme_case_study_dict[disease_specific_name]
+	text          = relative_path.split('/')
+	model_id      = text[1]
+	sex           = text[4]
+	disease       = disease_specific_name
+	result        = location + ': ' + disease
 	if which_fit is not None :
 		result += '\n' + which_fit
 	result += ': sex=' + sex + ' model_id=' + model_id
