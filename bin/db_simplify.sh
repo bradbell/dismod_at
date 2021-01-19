@@ -13,20 +13,69 @@ then
 	echo "bin/db_simplify.sh: must be executed from its parent directory"
 	exit 1
 fi
-if [ "$1" != 'Diabetes' ] && [ "$1" != 'Crohns' ] && [ "$1" != 'Kidney' ]
+list='
+	Crohns
+	Diabetes
+	Kidney
+'
+list=$(echo $list | sed -e 's|[\t\n]| |g')
+ok='no'
+for disease in $list
+do
+	if [ "$1" == "$disease" ]
+	then
+		ok='yes'
+	fi
+done
+if [ "$ok" == 'no' ]
 then
-	echo 'usage: bin/db_simplify.sh: disease'
-	echo 'Changes db_simplify.py to the specified disease'
-	echo 'where disease is Diabetes, Chrons, or Kidney'
+cat << EOF
+usage: bin/db_simplify.sh: disease [new_name]
+
+If new_name is not present, changes db_simplify.py to the specified disease
+where disease is in the following list:
+	$list
+If new_name is presnet, the current diesase must as specified and its name
+will be changed to new_name.
+EOF
 	exit 1
 fi
-if [ "$(git status -s)" != '' ]
-then
-	echo 'db_simplify: "git stauts -s" is not empty'
-	exit 1
-fi
+for ext in py sh
+do
+	if ! git diff --exit-code bin/db_simplify.$ext
+	then
+		echo "bin/db_simplify $disease $new_name"
+		echo "db_simplify.$ext has changes that need to be checked in"
+		exit 1
+	fi
+done
 disease="$1"
+new_name="$2"
 file='bin/db_simplify.py'
+#
+if [ "$new_name" != '' ]
+then
+	if ! grep "'$disease'" bin/db_simplify.py
+	then
+		echo "bin/db_simplify $disease $new_name"
+		echo "'$disease' is not in bin/db_simplify.py"
+		exit 1
+	fi
+	echo sed -i bin/db_simplify.py -e "s|'$disease'|'$new_name'|g"
+	sed -i bin/db_simplify.py -e "s|'$disease'|'$new_name'|g"
+	#
+	echo sed -i bin/db_simplify.sh -e "s|\(^[ \t]*\)$disease|\1$new_name|"
+	sed -i bin/db_simplify.sh -e "s|^\([ \t]*\)$disease|\1$new_name|"
+	#
+	if [ -e "ihme_db/$disease" ]
+	then
+		echo "mv ihme_db/$disease ihme_db/$new_name"
+		echo_eval mv ihme_db/$disease ihme_db/$new_name
+	fi
+	echo 'Check changes to bin/db_simplify.py and bin/db_simplify.sh.'
+	echo 'Then commit the changes.'
+	exit 0
+fi
 #
 found='no'
 count=0
