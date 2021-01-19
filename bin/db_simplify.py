@@ -251,6 +251,7 @@ if print_help :
 disease_directory = None
 temp_database              = None
 def setup() :
+	# set up some globals
 	global disease_directory
 	global temp_database
 	# directory where plots are stored
@@ -272,6 +273,7 @@ setup()
 # ===========================================================================
 fp_log_file = None
 def trace(message = None, operation = None) :
+	# Print output and manage log file
 	global fp_log_file
 	# start
 	if operation == 'start' :
@@ -337,6 +339,7 @@ def plot_fit(which_fit) :
 	system_command( [ 'dismodat.py',  copy_database, 'db2csv' ] )
 # ----------------------------------------------------------------------------
 def case_study_title(location, which_fit = None) :
+	# return the title for this study and fit
 	relative_path =  ihme_case_study_dict[disease_specific_name]
 	text          = relative_path.split('/')
 	model_id      = text[1]
@@ -392,6 +395,7 @@ def sql_command(command) :
 	return result
 # ----------------------------------------------------------------------------
 def check_for_table(table_name) :
+	# check if a table is in th database
 	command  = 'SELECT name FROM sqlite_master WHERE '
 	command += "type = 'table' and name = '{}'".format(table_name)
 	result   = sql_command(command)
@@ -423,6 +427,44 @@ def table_name2id(table, table_name) :
 	for (row_id, row) in enumerate(table) :
 		result[ row[name_column] ] = row_id
 	return result
+# ----------------------------------------------------------------------------
+def check_last_fit() :
+	table_name = 'log'
+	(table, col_name, col_type) = get_table(table_name);
+	#
+	# search for end of log entry for last fit
+	log_id   = len(table)
+	end_fit  = False
+	while not end_fit :
+		assert log_id > 0
+		log_id -= 1
+		row     = table[log_id]
+		if row['message_type'] == 'command' :
+			message = row['message']
+			end_fit = message.startswith('end fit')
+	#
+	begin_fit = False
+	msg       = ''
+	while not begin_fit :
+		assert log_id > 0
+		log_id      -= 1
+		row          = table[log_id]
+		message_type = row['message_type']
+		if message_type == 'command' :
+			message = row['message']
+			assert message.startswith('begin fit')
+			begin_fit = True
+		elif message_type in [ 'warning', 'error' ] :
+			msg += message_type + ' ' + row['message'] + '\n'
+	#
+	if msg == '' :
+		msg = '\nFit OK\n'
+		trace(msg)
+	else :
+		msg = '\nFit Messages:\n' + msg
+		trace(msg)
+	return
+# ----------------------------------------------------------------------------
 # ============================================================================
 # API input tables that do not change
 # ============================================================================
@@ -1891,6 +1933,7 @@ else :
 		msg  = 'fit_with_ode time = '
 		msg += str( round( time.time() - t0 ) ) + ' seconds'
 		trace(msg)
+		check_last_fit()
 		#
 		which_fit = 'no_ode'
 		plot_fit(which_fit)
@@ -1916,6 +1959,7 @@ else :
 			msg  = 'fit_with_ode time = '
 			msg += str( round( time.time() - t0 ) ) + ' seconds'
 			trace(msg)
+			check_last_fit()
 			#
 			which_fit = 'yes_ode'
 			plot_fit(which_fit)
@@ -1943,6 +1987,7 @@ else :
 				msg  = 'fit_with_ode time = '
 				msg += str( round( time.time() - t0 ) ) + ' seconds'
 				trace(msg)
+				check_last_fit()
 				#
 				which_fit = 'students'
 				plot_fit(which_fit)
