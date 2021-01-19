@@ -464,7 +464,7 @@ def check_last_fit() :
 		msg = '\nFit OK\n'
 		trace(msg)
 	else :
-		msg = '\nFit Messages:\n' + msg
+		msg = '\nFit Errors and or Warnings::\n' + msg
 		trace(msg)
 	return
 # ----------------------------------------------------------------------------
@@ -1933,7 +1933,7 @@ else :
 		# fit both
 		t0 = time.time()
 		system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-		msg  = 'fit_with_ode time = '
+		msg  = 'fit_without time = '
 		msg += str( round( time.time() - t0 ) ) + ' seconds'
 		trace(msg)
 		check_last_fit()
@@ -1987,7 +1987,7 @@ else :
 				t0 = time.time()
 				system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 				t1 = time.time()
-				msg  = 'fit_with_ode time = '
+				msg  = 'fit_students time = '
 				msg += str( round( time.time() - t0 ) ) + ' seconds'
 				trace(msg)
 				check_last_fit()
@@ -1998,7 +1998,7 @@ else :
 trace('\nintegrands  = ' + str( integrand_list_all ) )
 if new_database :
 	trace('random_seed = ' + str( random_seed ) )
-msg  = 'fit_with_ode time = '
+msg  = 'Total time = '
 msg += str( round( time.time() - start_time ) ) + ' seconds'
 trace( msg )
 trace('db_simplify.py: OK')
