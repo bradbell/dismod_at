@@ -288,11 +288,13 @@ def plot_fit(which_fit) :
 	assert which_fit in [ 'no_ode', 'yes_ode', 'students' ]
 	directory = disease_directory + '/' + which_fit
 	#
+	# if necessary, create the plot sub-directory for this fit
 	if os.path.exists(directory) :
+		# erase previous contentes of this plot directory
 		for name in os.listdir(directory) :
 			os.remove(directory + '/' + name)
-		os.rmdir(directory)
-	os.mkdir(directory)
+	if not os.path.exists(directory) :
+		os.mkdir(directory)
 	#
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
