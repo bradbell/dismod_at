@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin wish_list$$
 $spell
+	cppad
 	args
 	checkpointing
 	cpp
@@ -32,6 +33,15 @@ $spell
 $$
 
 $section Dismod_at Wish List$$
+
+$head Tracing Optimization$$
+Add options to specify the file name for the optimizer trace
+at both the fixed and random effects levels; see
+$href%https://list.coin-or.org/pipermail/ipopt/2015-October/004160.html%
+	output file options
+%$$.
+This would require making the same change to $code cppad_mixed$$
+and adding output file names to the option table.
 
 $head Speed$$
 The CppADCodeGen package compiles CppAD code.
@@ -261,10 +271,6 @@ $head Random Starting Point$$
 Have an option to start at a random point from the prior for the fixed effects
 (instead of the mean of the fixed effects).
 This would better detect local minima and represent solution uncertainty.
-
-$head Tracing Optimization$$
-Add options to specify the file name for the optimizer trace
-at both the fixed and random effects levels.
 
 $head Windows Install$$
 Make and test a set of Windows install instructions for $code dismod_at$$.
