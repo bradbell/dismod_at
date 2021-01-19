@@ -13,7 +13,7 @@ then
 	echo "bin/db_simplify.sh: must be executed from its parent directory"
 	exit 1
 fi
-if [ "$1" != 'Diabetes' ] && [ "$1" != 'Chrons' ] && [ "$1" != 'Kidney' ]
+if [ "$1" != 'Diabetes' ] && [ "$1" != 'Crohns' ] && [ "$1" != 'Kidney' ]
 then
 	echo 'usage: bin/db_simplify.sh: disease'
 	echo 'Changes db_simplify.py to the specified disease'
