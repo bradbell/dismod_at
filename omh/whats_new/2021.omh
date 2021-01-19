@@ -17,6 +17,7 @@ $spell
 	var
 	std
 	csv
+	dismodat.py
 $$
 $navigate%
 	Up%Location%
@@ -32,6 +33,14 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 01-19$$
+The file name was removed from the log table entry at the
+$cref/start/dismodat.py/Log Table/Start/$$
+of a $code dismodat.py$$ command.
+This is so that all log messages with
+$cref/message_type/log_table/message_type/$$ $code command$$
+start with $code begin$$ and then the name of the command.
 
 $head 01-11$$
 Change the order of the columns in the file

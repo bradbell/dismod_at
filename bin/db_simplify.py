@@ -203,11 +203,17 @@ import numpy
 import random
 import time
 #
-# import dismod_at
-sandbox = 'python/dismod_at'
-if os.path.isdir(sandbox) :
-	print('using sandbox version of dismod_at')
+# check for sandbox version of dismod_at
+if os.path.isdir('python/dismod_at') :
+	print('using sandbox version of python/dismod_at')
 	sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
+if os.path.isfile('bin/dismodat.py') :
+	print('using sandbox version of bin/dismodat.py')
+	os.environ['PATH'] = os.getcwd() + '/bin:' + os.environ['PATH']
+if os.path.isfile('build/devel/dismod_at') :
+	print('using sandbox version of build/devel/dismod_at')
+	os.environ['PATH'] = os.getcwd() + '/build/devel:' + os.environ['PATH']
+	#
 import dismod_at
 #
 def execute_print_help() :
@@ -265,20 +271,28 @@ setup()
 # Utilities that do not use global data tables
 # ===========================================================================
 fp_log_file = None
-def print_and_log(message = None, operation = None) :
+def trace(message = None, operation = None) :
 	global fp_log_file
+	# start
+	if operation == 'start' :
+		assert fp_log_file is None
+		log_file    = disease_directory + '/db_simplify.log'
+		fp_log_file = open(log_file, 'w')
+		return
+	assert fp_log_file is not None
+	#
+	# message
 	if operation is None :
 		assert message is not None
 		print(message)
 		fp_log_file.write(message + '\n')
 		return
 	assert message is None
-	if operation == 'start' :
-		log_file    = disease_directory + '/db_simplify.log'
-		fp_log_file = open(log_file, 'w')
-		return
+	#
+	# stop
 	assert operation == 'stop'
 	fp_log_file.close()
+	fp_log_file = None
 	return
 # ----------------------------------------------------------------------------
 def plot_fit(which_fit) :
@@ -367,7 +381,7 @@ def put_table (table_name, table, col_name, col_type) :
 # ----------------------------------------------------------------------------
 def sql_command(command) :
 	# execute an sql command on this temp_database
-	print_and_log(command)
+	trace(command)
 	new          = False
 	connection   = dismod_at.create_connection(temp_database, new)
 	cursor       = connection.cursor()
@@ -389,7 +403,7 @@ def system_command (command_list) :
 	# and hence prints a summary message.
 	msg  = '\nsystem_command\n'
 	msg += " ".join(command_list)
-	print_and_log(msg)
+	trace(msg)
 	#
 	# flush python's pending standard output in case this command
 	# generates more standard output
@@ -398,7 +412,7 @@ def system_command (command_list) :
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
 		if new_database :
-			print_and_log('random_seed = ', random_seed )
+			trace('random_seed = ', random_seed )
 		sys.exit('db_simplify.py: system command failed')
 # ----------------------------------------------------------------------------
 def table_name2id(table, table_name) :
@@ -630,7 +644,7 @@ def plot_rate(rate_name, directory, which_fit) :
 					else :
 						assert smooth_id == row['smooth_id']
 	if smooth_id == None :
-		print_and_log('plot_rate: ' + rate_name + ' is identically zero')
+		trace('plot_rate: ' + rate_name + ' is identically zero')
 		return
 	#
 	# n_age, n_time
@@ -809,7 +823,7 @@ def plot_integrand(integrand_name, directory, which_fit) :
 	index_list = range(n_list)
 	if n_list < 2 :
 		msg = 'plot_integrand: ' + integrand_name + ' has less than 2 points'
-		print_and_log(msg)
+		trace(msg)
 		return
 	#
 	# map node id to index in set of node_id's
@@ -918,7 +932,7 @@ def subset_data () :
 	# that are out of bounds
 	msg  = '\nsubset_data\n'
 	msg += 'removing hold out and covariate out of bounds data'
-	print_and_log(msg)
+	trace(msg)
 	#
 	# Need global becasue we will use an assingnment to data_table
 	global data_table
@@ -999,7 +1013,7 @@ def random_subsample_data(integrand_name, max_sample) :
 	#
 	msg  = '\nrandom_subsample_data\n'
 	msg += 'number of {} samples: in = {} out = {}'
-	print_and_log( msg.format(integrand_name, n_sample_in, n_sample_out) )
+	trace( msg.format(integrand_name, n_sample_in, n_sample_out) )
 # -----------------------------------------------------------------------------
 def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 	# for a specified integrand or node, set the hold_out to 0 or 1
@@ -1018,7 +1032,7 @@ def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
 	if node_name is not None :
 		msg += 'node = {}'.format(node_name)
 	msg += ', hold_out = {}'.format(hold_out)
-	print_and_log(msg)
+	trace(msg)
 	#
 	if integrand_name is not None :
 		node_id      = None
@@ -1055,7 +1069,7 @@ def set_data_likelihood (
 	if factor_eta is not None :
 		msg += '\n' + 12 * ' ' + 'where m is the meadian of the'
 		msg += ' {} data'.format(integrand_name)
-	print_and_log( msg )
+	trace( msg )
 	#
 	# integrand_id
 	integrand_id =integrand_name2id[integrand_name]
@@ -1085,7 +1099,7 @@ def compress_age_time_interval(integrand_name, age_size, time_size) :
 	msg += 'integrand = {}'.format(integrand_name)
 	msg += ', age_size= {}'.format(age_size)
 	msg += ', time_size= {}'.format(time_size)
-	print_and_log(msg)
+	trace(msg)
 	#
 	# integrand_id
 	integrand_id =integrand_name2id[integrand_name]
@@ -1472,7 +1486,7 @@ def zero_rate(rate_name, zero_parent, zero_children) :
 	msg += 'rate = {}'.format(rate_name)
 	msg += ', zero_parent = {}'.format(zero_parent)
 	msg += ', zero_children = {}'.format(zero_children)
-	print_and_log( msg)
+	trace( msg)
 	#
 	for row in rate_table :
 		if row['rate_name'] == rate_name :
@@ -1520,7 +1534,7 @@ def set_covariate_reference (covariate_id, reference_name) :
 	msg += ', reference_name = {}'.format(reference_name)
 	msg += '\nold_reference = {:.5g}'.format(old_reference)
 	msg += ', new_reference = {:.5g}'.format(new_reference)
-	print_and_log( msg )
+	trace( msg )
 	#
 	table_name = 'covariate'
 	put_table(
@@ -1538,7 +1552,7 @@ def set_mulcov_zero (covariate_id, restore= None) :
 		msg  = '\nset_mulcov_zero\n' + msg
 	else :
 		msg  = '\nrestore_mulcov\n' + msg
-	print_and_log( msg )
+	trace( msg )
 	#
 	# -------------------------------------------------------------------------
 	if restore is not None :
@@ -1578,7 +1592,7 @@ def set_mulcov_bound(covariate_id) :
 	#
 	msg  = '\nset_mulcov_bound\n'
 	msg += 'covariate = x_{}'.format(covariate_id)
-	print_and_log( msg )
+	trace( msg )
 	#
 	# reference for this covariate
 	reference = covariate_table[covariate_id]['reference']
@@ -1649,7 +1663,7 @@ def parent_rate_smoothing(
 	msg += msg_prior('value', value_prior)
 	msg += msg_prior('dage',  dage_prior)
 	msg += msg_prior('dtime', dtime_prior)
-	print_and_log( msg )
+	trace( msg )
 	#
 	# add the smothing
 	smooth_id = new_smoothing(
@@ -1664,7 +1678,7 @@ def parent_rate_smoothing(
 	# write out the tables that changed
 	for row in prior_table :
 		if row['prior_name'].startswith('smoothing_') :
-			print_and_log( row['prior_name'] )
+			trace( row['prior_name'] )
 	put_table('age',         age_table,   age_col_name,   age_col_type)
 	put_table('time',        time_table,  time_col_name,  time_col_type)
 	put_table('prior',       prior_table, prior_col_name, prior_col_type)
@@ -1713,7 +1727,7 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	msg += ', upper:m*{}'.format(factor['upper'])
 	msg += '\n              where m is the median of the'
 	msg += ' {} data'.format(integrand_name)
-	print_and_log( msg )
+	trace( msg )
 	#
 	median = numpy.median( integrand_data[integrand_name] )
 	lower  = median * factor['lower']
@@ -1787,14 +1801,18 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
-print_and_log(operation = 'start')
+# start new db_simplify.log file
+trace(operation = 'start')
 #
-# print case_study_title
+# print the title for this study
 parent_node_id   = get_parent_node_id()
 parent_node_name = node_table[parent_node_id]['node_name']
 title            = case_study_title(parent_node_name)
 line             = len(title) * '-'
-print_and_log( '\n' + line + '\n' + title + '\n' + line + '\n' )
+trace( '\n' + line + '\n' + title + '\n' + line + '\n' )
+#
+# erase the database log table so log is just for this session
+sql_command('DROP TABLE IF EXISTS log')
 #
 # start_time
 start_time = time.time()
@@ -1872,7 +1890,7 @@ else :
 		system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 		msg  = 'fit_with_ode time = '
 		msg += str( round( time.time() - t0 ) ) + ' seconds'
-		print_and_log(msg)
+		trace(msg)
 		#
 		which_fit = 'no_ode'
 		plot_fit(which_fit)
@@ -1897,7 +1915,7 @@ else :
 			system_command([ 'dismod_at', temp_database, 'fit', 'both'])
 			msg  = 'fit_with_ode time = '
 			msg += str( round( time.time() - t0 ) ) + ' seconds'
-			print_and_log(msg)
+			trace(msg)
 			#
 			which_fit = 'yes_ode'
 			plot_fit(which_fit)
@@ -1924,17 +1942,17 @@ else :
 				t1 = time.time()
 				msg  = 'fit_with_ode time = '
 				msg += str( round( time.time() - t0 ) ) + ' seconds'
-				print_and_log(msg)
+				trace(msg)
 				#
 				which_fit = 'students'
 				plot_fit(which_fit)
 # ----------------------------------------------------------------------
-print_and_log('\nintegrands  = ' + str( integrand_list_all ) )
+trace('\nintegrands  = ' + str( integrand_list_all ) )
 if new_database :
-	print_and_log('random_seed = ' + str( random_seed ) )
+	trace('random_seed = ' + str( random_seed ) )
 msg  = 'fit_with_ode time = '
 msg += str( round( time.time() - start_time ) ) + ' seconds'
-print_and_log( msg )
-print_and_log('db_simplify.py: OK')
-print_and_log('stop')
+trace( msg )
+trace('db_simplify.py: OK')
+trace('stop')
 sys.exit(0)

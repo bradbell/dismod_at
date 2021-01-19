@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -21,7 +21,7 @@
 #
 # $head Log Table$$
 #
-# $subhead At Start$$
+# $subhead Start$$
 # At the start, a $code dismodat.py$$
 # command adds a
 # $cref/command/log_table/message_type/command/$$
@@ -29,10 +29,10 @@
 # $cref/message/log_table/message/$$
 # equal to
 # $codei%
-#      begin %database% %command% ...
+#      begin %command% ...
 # %$$
 #
-# $subhead At End$$
+# $subhead End$$
 # At the end,
 # a $code dismodat.py$$ command adds a command log entry with message equal to
 # $codei%
@@ -97,8 +97,8 @@ log_id        = len( log_table )
 #
 # message
 message       = 'begin'
-for i in range(len(sys.argv) - 1) :
-	message += ' ' + sys.argv[i+1]
+for i in range(len(sys.argv) - 2) :
+	message += ' ' + sys.argv[i+2]
 #
 cmd  = 'insert into log'
 cmd += ' (log_id,message_type,table_name,row_id,unix_time,message) values('
