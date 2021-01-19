@@ -65,16 +65,14 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 	rate_name    = 'pini'
 	age_grid     = [ age_table[0]['age'] ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	median       = numpy.median( integrand_data['prevalence'] )
-	density_name = 'gaussian'
-	density_id   = density_name2id[density_name]
+	density_id   = density_name2id['uniform']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_pini_value_prior' ,
 		'density_id' : density_id      ,
 		'lower'      : 1e-5            ,
 		'upper'      : 1e-5            ,
 		'mean'       : 1e-5            ,
-		'std'        : 1.0             ,
+		'std'        : None            ,
 		'eta'        : None            ,
 		'nu'         : None            ,
 	}
@@ -84,7 +82,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
+		'std'        : None           ,
 		'eta'        : None           ,
 		'nu'         : None           ,
 	}
@@ -94,7 +92,7 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
+		'std'        : None           ,
 		'eta'        : None           ,
 		'nu'         : None           ,
 	}
@@ -104,10 +102,9 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 	# -----------------------------------------------------------------------
 	# set smoothing for iota
 	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(10, 90, 10) ]
+	age_grid     = [ float(age)  for age in range(0, 110, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_name = 'log_gaussian'
-	density_id   = density_name2id[density_name]
+	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_iota_value_prior' ,
 		'density_id' : density_id      ,
@@ -150,10 +147,9 @@ def disease_specific_rate_priors(density_name2id, integrand_data) :
 	#
 	# set smoothing for chi
 	rate_name    = 'chi'
-	age_grid     = [ float(age)  for age in range(0, 90, 10) ]
+	age_grid     = [ float(age)  for age in range(0, 110, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_name = 'log_gaussian'
-	density_id   = density_name2id[density_name]
+	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_chi_value_prior' ,
 		'density_id' : density_id      ,
