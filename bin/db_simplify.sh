@@ -20,6 +20,11 @@ then
 	echo 'where disease is Diabetes, Chrons, or Kidney'
 	exit 1
 fi
+if [ "$(git status -s)" != '' ]
+then
+	echo 'db_simplify: "git stauts -s" is not empty'
+	exit 1
+fi
 disease="$1"
 file='bin/db_simplify.py'
 #
