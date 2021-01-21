@@ -1549,12 +1549,20 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	)
 	return
 # -----------------------------------------------------------------------------
-def parent_rate_smoothing(
-	rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+def set_rate_smoothing(parent_rate, rate_name,
+	age_grid, time_grid, value_prior, dage_prior, dtime_prior
 ) :
-	# Set a smoothing for a parent rate
-	msg  = '\nparent_rate_smoothing\n'
-	msg += '{:11} = {} '.format('rate',  rate_name)
+	# parent_rate: is True (False) for parent (child) smoohting
+	# rate_name:   the rate we are seting the smoohting for
+	# age_grid:    list of ages specificing age grid for smoothing
+	# time_grid:   list of times specificing time grid for smoothing
+	# value_piror: dict containing prior for the rate values
+	# dage_prior:  dict containing priot for dage smoothing
+	# dtime_piror: dict containt prior for dtime smoohting
+	#
+	msg  = '\nrate_smoothing\n'
+	msg += '{:11} = {} '.format('rate',  parent_rate)
+	msg += '\n{:11} = {} '.format('rate',  rate_name)
 	msg += '\n{:11} = {}'.format('age_grid',  age_grid)
 	msg += '\n{:11} = {}'.format('time_grid', time_grid)
 	def msg_prior(name, prior) :
@@ -1579,7 +1587,10 @@ def parent_rate_smoothing(
 	# change rate_table
 	for row in rate_table :
 		if row['rate_name'] == rate_name :
-			row['parent_smooth_id'] = smooth_id
+			if parent_rate :
+				row['parent_smooth_id'] = smooth_id
+			else :
+				row['child_smooth_id'] = smooth_id
 	#
 	# write out the tables that changed
 	for row in prior_table :
@@ -1753,17 +1764,26 @@ for integrand_name in integrand_list_all :
 # integrand_data
 integrand_data = get_integrand_data()
 #
-# Set the rate priros for this disease
+# import disease specific information
 exec('import dismod_at.ihme.' + disease_specific_name + ' as specific' )
+#
+# Set parent rate priros for this disease
+parent_rate = True
 for rate_name in specific.parent_smoothing :
-	fun    = specific.parent_smoothing[rate_name]
 	# 2DO: Looks like a bug in python that we have to store result
 	# and then unpack it instead of assigning to unpacked form
+	fun    = specific.parent_smoothing[rate_name]
 	result = fun( age_table, time_table, density_name2id, integrand_data )
-	(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
-	parent_rate_smoothing(rate_name,
-		age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
+	#
+	if result is None :
+		zero_parent   = True
+		zero_children = False
+		zero_rate(rate_name, zero_parent, zero_children)
+	else :
+		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
+		set_rate_smoothing(parent_rate, rate_name,
+			age_grid, time_grid, value_prior, dage_prior, dtime_prior
+		)
 #
 # Have not yet implemented specific.child.smoothing
 assert len( specific.child_smoothing ) == 0
