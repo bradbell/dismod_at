@@ -18,7 +18,7 @@ ihme_case_study_dict = {
 # Disease     Relative path to database
 # -------     -------------------------
 'Crohns'      : 'data/475533/dbs/1/2/dismod.db',
-'Kidney'      : 'data/475718/dbs/70/1/dismod.db',
+'kidney'      : 'data/475718/dbs/70/1/dismod.db',
 't1_diabetes' : 'data/475588/dbs/100/3/dismod.db',
 }
 # ============================================================================
@@ -47,7 +47,7 @@ fit_students       = True
 random_seed        = 0
 #
 # disease that this analaysis is for (must be in ihme_case_study_dict)
-disease_specific_name = 't1_diabetes'
+disease_specific_name = 'kidney'
 #
 # ============================================================================
 # END: Settings that User Can Change
@@ -267,9 +267,8 @@ def check_for_table(table_name) :
 	return len(result) > 0
 # ----------------------------------------------------------------------------
 def system_command (command_list) :
-	# Execute a command at the system level
-	# This routine is a a step in the processing, not a utility,
-	# and hence prints a summary message.
+	# Execute a command at the system level. Each use of this routine
+	# is a step in the processing, not a utility. Hence it traces a message.
 	msg  = '\nsystem_command\n'
 	msg += " ".join(command_list)
 	trace(msg)
@@ -280,7 +279,7 @@ def system_command (command_list) :
 	#
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
-		trace('random_seed = ', random_seed )
+		print('random_seed = ', random_seed )
 		sys.exit('db_simplify.py: system command failed')
 # ----------------------------------------------------------------------------
 def table_name2id(table, table_name) :
@@ -868,7 +867,7 @@ def subset_data () :
 			table_out.append(row)
 	data_table = table_out
 	table_name = 'data'
-	put_table(table_name, data_table, data_col_name, data_col_type)
+	put_table('data', data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
 def random_subsample_data(integrand_name, max_sample) :
 	# for a specified integrand, sample at most max_sample entries.
@@ -1401,7 +1400,7 @@ def zero_rate(rate_name, zero_parent, zero_children) :
 			if zero_children :
 				row['child_smooth_id']  = None
 				row['child_nslist_id']  = None
-	put_table(table_name, rate_table, rate_col_name, rate_col_type)
+	put_table('rate', rate_table, rate_col_name, rate_col_type)
 # -----------------------------------------------------------------------------
 def set_covariate_reference (covariate_id, reference_name) :
 	# set the reference value for a specified covariate where reference_name
@@ -1768,10 +1767,7 @@ integrand_data = get_integrand_data()
 exec('import dismod_at.ihme.' + disease_specific_name + ' as specific' )
 #
 # Set parent rate priros for this disease
-parent_rate = True
 for rate_name in specific.parent_smoothing :
-	# 2DO: Looks like a bug in python that we have to store result
-	# and then unpack it instead of assigning to unpacked form
 	fun    = specific.parent_smoothing[rate_name]
 	result = fun( age_table, time_table, density_name2id, integrand_data )
 	#
@@ -1780,13 +1776,27 @@ for rate_name in specific.parent_smoothing :
 		zero_children = False
 		zero_rate(rate_name, zero_parent, zero_children)
 	else :
+		parent_rate = True
 		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
 		set_rate_smoothing(parent_rate, rate_name,
 			age_grid, time_grid, value_prior, dage_prior, dtime_prior
 		)
 #
-# Have not yet implemented specific.child.smoothing
-assert len( specific.child_smoothing ) == 0
+# Set child rate priros for this disease
+for rate_name in specific.child_smoothing :
+	fun    = specific.child_smoothing[rate_name]
+	result = fun( age_table, time_table, density_name2id, integrand_data )
+	#
+	if result is None :
+		zero_parent   = False
+		zero_children = True
+		zero_rate(rate_name, zero_parent, zero_children)
+	else :
+		parent_rate = False
+		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
+		set_rate_smoothing(parent_rate, rate_name,
+			age_grid, time_grid, value_prior, dage_prior, dtime_prior
+		)
 #
 # set options
 set_option('tolerance_fixed',    '1e-6')
