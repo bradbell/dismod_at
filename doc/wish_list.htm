@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list speed log density bound constraints laplace random effect immunity simulating priors warm starting optimizer multi-threading user examples meas_std lagrange multipliers censored create_database ode solution prevalence large excess mortality rate_case command diagrams real world example point tracing optimization windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list tracing optimization speed log density bound constraints laplace random effect immunity simulating priors warm starting optimizer multi-threading user examples meas_std lagrange multipliers censored create_database ode solution prevalence large excess mortality rate_case command diagrams real world example point windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -62,6 +62,7 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
+<br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
 <br><a href="wish_list.htm#Speed" target="_top">Speed</a>
 <br><a href="wish_list.htm#Log Density" target="_top">Log&nbsp;Density</a>
 <br><a href="wish_list.htm#Bound Constraints" target="_top">Bound&nbsp;Constraints</a>
@@ -82,9 +83,19 @@ A:active { color : purple }
 <br><a href="wish_list.htm#Command Diagrams" target="_top">Command&nbsp;Diagrams</a>
 <br><a href="wish_list.htm#Real World Example" target="_top">Real&nbsp;World&nbsp;Example</a>
 <br><a href="wish_list.htm#Random Starting Point" target="_top">Random&nbsp;Starting&nbsp;Point</a>
-<br><a href="wish_list.htm#Tracing Optimization" target="_top">Tracing&nbsp;Optimization</a>
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
+<b><big><a name="Tracing Optimization" id="Tracing Optimization">Tracing Optimization</a></big></b>
+<br>
+Add options to specify the file name for the optimizer trace
+at both the fixed and random effects levels; see
+<a href="https://list.coin-or.org/pipermail/ipopt/2015-October/004160.html" target="_top"><span style='white-space: nowrap'>output&nbsp;file&nbsp;options</span></a>
+.
+This would require making the same change to <code><font color="blue">cppad_mixed</font></code>
+and adding output file names to the option table.
+
+<br>
+<br>
 <b><big><a name="Speed" id="Speed">Speed</a></big></b>
 <br>
 The CppADCodeGen package compiles CppAD code.
@@ -455,13 +466,6 @@ that could be made distributed freely without any restriction on its use.
 Have an option to start at a random point from the prior for the fixed effects
 (instead of the mean of the fixed effects).
 This would better detect local minima and represent solution uncertainty.
-
-<br>
-<br>
-<b><big><a name="Tracing Optimization" id="Tracing Optimization">Tracing Optimization</a></big></b>
-<br>
-Add options to specify the file name for the optimizer trace
-at both the fixed and random effects levels.
 
 <br>
 <br>

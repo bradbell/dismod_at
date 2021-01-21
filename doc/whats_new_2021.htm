@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>01-21</option>
+<option>01-19</option>
+<option>01-11</option>
 <option>01-10</option>
 <option>01-09</option>
 <option>01-08</option>
@@ -74,6 +77,43 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="01-21" id="01-21">01-21</a></big></b>
+<br>
+The program <code><font color="blue">db_simplify</font></code> was changed to
+<code><font color="blue">fit_ihme.py</font></code> because it fits ihme databases.
+It now gets installed and is part of the User API.
+You can use it, if you have access to the ihme databases,
+but there is no documentation (specifications).
+If you execute <code><font color="blue">fit_ihme.py</font></code> with no arguments,
+you will get a usage message that give you some idea how to use it.
+
+<br>
+<br>
+<b><big><a name="01-19" id="01-19">01-19</a></big></b>
+<br>
+The file name was removed from the log table entry at the
+<a href="dismodat.py.htm#Log Table.Start" target="_top"><span style='white-space: nowrap'>start</span></a>
+
+of a <code><font color="blue">dismodat.py</font></code> command.
+This is so that all log messages with
+<a href="log_table.htm#message_type" target="_top"><span style='white-space: nowrap'>message_type</span></a>
+ <code><font color="blue">command</font></code>
+start with <code><font color="blue">begin</font></code> and then the name of the command.
+
+<br>
+<br>
+<b><big><a name="01-11" id="01-11">01-11</a></big></b>
+<br>
+Change the order of the columns in the file
+<a href="db2csv_command.htm#variable.csv" target="_top"><span style='white-space: nowrap'>variable.csv</span></a>
+ so that
+the fit results
+<a href="db2csv_command.htm#variable.csv.fit_value" target="_top"><span style='white-space: nowrap'>fit_value</span></a>
+
+are next to the corresponding lower and upper limits.
+
+<br>
 <br>
 <b><big><a name="01-10" id="01-10">01-10</a></big></b>
 
