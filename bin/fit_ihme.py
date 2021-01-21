@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 # 2DO: IHME database uses x_0, x_1, ... for covariate names and hides the
 #      real covariate name in c_covariate_name. db_simlify.py could be
-#      changed to account for this. For now, db_simplify only references
+#      changed to account for this. For now, fit_ihme only references
 #      covariates by their covariate_id.
 # ---------------------------------------------------------------------------
 # The files on the IHME cluster are relative to /ihme/epi/at_cascade
@@ -24,14 +24,14 @@ ihme_case_study_dict = {
 # ============================================================================
 # BEGIN: Settings that User Can Change
 # ============================================================================
-# print the help message for all the db_simplify routines and then exit
+# print the help message for all the fit_ihme routines and then exit
 print_help         = False
 #
 # Directory on the local machine that file locations are realtive to.
 root_on_local_machine = 'ihme_db'
 # A copy of the IHME database has same path relative to this directory.
 # The subdirectory root_to_local_machine/disease_specific_name is called
-# the disease directory. The file db_simplify.log, in the disese directory,
+# the disease directory. The file fit_ihme.log, in the disese directory,
 # is the log for the most recent fits for this disease.
 # The temporary database temp.db is also located in the disease directory.
 # The sub-directories no_ode, yes_ode, and students will contain the db2csv
@@ -47,7 +47,7 @@ fit_students       = True
 random_seed        = 0
 #
 # disease that this analaysis is for (must be in ihme_case_study_dict)
-disease_specific_name = 'crohns'
+disease_specific_name = 't1_diabetes'
 #
 # The python module dismod_at.ihme.disease_specific_name
 # defines the following variables, that contain the special settings
@@ -108,7 +108,7 @@ if os.path.isfile('build/devel/dismod_at') :
 import dismod_at
 #
 def execute_print_help() :
-	# print the help message for each db_simplify routine
+	# print the help message for each fit_ihme routine
 	file_name = sys.argv[0]
 	fp        = open(file_name, 'r')
 	fp_data   = fp.read()
@@ -168,7 +168,7 @@ def trace(message = None, operation = None) :
 	# start
 	if operation == 'start' :
 		assert fp_log_file is None
-		log_file    = disease_directory + '/db_simplify.log'
+		log_file    = disease_directory + '/fit_ihme.log'
 		fp_log_file = open(log_file, 'w')
 		return
 	assert fp_log_file is not None
@@ -305,7 +305,7 @@ def system_command (command_list) :
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
 		print('random_seed = ', random_seed )
-		sys.exit('db_simplify.py: system command failed')
+		sys.exit('fit_ihme.py: system command failed')
 # ----------------------------------------------------------------------------
 def table_name2id(table, table_name) :
 	# Return dictionary that maps a value in the name column to corresponding
@@ -1742,7 +1742,7 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
-# start new db_simplify.log file
+# start new fit_ihme.log file
 trace(operation = 'start')
 #
 # print the title for this study
@@ -1926,6 +1926,6 @@ msg += '\nrandom_seed  = ' + str( random_seed )
 msg += '\nTotal time   = '
 msg += str( round( time.time() - start_time ) ) + ' seconds'
 trace( msg )
-trace('db_simplify.py: OK')
+trace('fit_ihme.py: OK')
 trace('stop')
 sys.exit(0)
