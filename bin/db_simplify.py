@@ -15,11 +15,11 @@
 # ---------------------------------------------------------------------------
 # The files on the IHME cluster are relative to /ihme/epi/at_cascade
 ihme_case_study_dict = {
-# Disease    Relative path to database
-# -------    -------------------------
-'Diabetes' : 'data/475588/dbs/100/3/dismod.db',
-'Crohns'   : 'data/475533/dbs/1/2/dismod.db',
-'Kidney'   : 'data/475718/dbs/70/1/dismod.db',
+# Disease     Relative path to database
+# -------     -------------------------
+'Crohns'      : 'data/475533/dbs/1/2/dismod.db',
+'Kidney'      : 'data/475718/dbs/70/1/dismod.db',
+'t1_diabetes' : 'data/475588/dbs/100/3/dismod.db',
 }
 # ============================================================================
 # BEGIN: Settings that User Can Change
@@ -49,7 +49,7 @@ fit_students       = True
 random_seed        = 0
 #
 # disease that this analaysis is for (must be in ihme_case_study_dict)
-disease_specific_name = 'Diabetes'
+disease_specific_name = 't1_diabetes'
 #
 # list of integrand that are in fitting without ode but not with ode
 disease_specific_fit_with_ode_hold_out_list = ['mtexcess']

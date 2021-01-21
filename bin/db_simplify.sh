@@ -15,7 +15,7 @@ then
 fi
 list='
 	Crohns
-	Diabetes
+	t1_diabetes
 	Kidney
 '
 list=$(echo $list | sed -e 's|[\t\n]| |g')
