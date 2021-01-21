@@ -17,7 +17,7 @@
 ihme_case_study_dict = {
 # Disease     Relative path to database
 # -------     -------------------------
-'Crohns'      : 'data/475533/dbs/1/2/dismod.db',
+'crohns'      : 'data/475533/dbs/1/2/dismod.db',
 'kidney'      : 'data/475718/dbs/70/1/dismod.db',
 't1_diabetes' : 'data/475588/dbs/100/3/dismod.db',
 }
@@ -47,10 +47,35 @@ fit_students       = True
 random_seed        = 0
 #
 # disease that this analaysis is for (must be in ihme_case_study_dict)
-disease_specific_name = 'kidney'
+disease_specific_name = 'crohns'
+#
+# The python module dismod_at.ihme.disease_specific_name
+# defines the following variables, that contain the special settings
+# for this disease:
+#
+# ode_hold_out_list:
+# list of integrand names that are in fitting without ode but not with ode
+#
+# max_covariate_effect:
+# Maximum absolute covariate effect; i.e, multiplier * (covariate - referece).
+# Note that exp(effect) multiplies a model value to get another model value
+# corresponding to a covariate value. Noise covariate multipliers are not
+# included in the maximum.
+#
+# parent_smoothng:
+# An ordered dictionary where keys are rate names for the smoothings
+# that are changed. The values are functions f with the syntax
+# (age_grid, time_grid, value_prior, dage_prior, dtime_prior) = f(
+#	 age_table, time_table, density_name2id, integrand_data
+# )
+# If the function f = parent_smooth[rate_name] returns None,
+# then that parent rate is removed from the fit; i.e. it is zero.
+#
+# child_smoothing:
+# It the same as parent_smoothing except that it is the the child rates.
 #
 # ============================================================================
-# END: Settings that User Can Change
+# END: Settings user can change
 # ============================================================================
 if not fit_without_ode :
 	assert not fit_with_ode
