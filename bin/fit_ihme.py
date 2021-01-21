@@ -1,4 +1,4 @@
-#! /bin/python3
+#! /usr/bin/env python3
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-21 University of Washington
@@ -22,36 +22,86 @@ ihme_case_study_dict = {
 't1_diabetes' : 'data/475588/dbs/100/3/dismod.db',
 }
 # ============================================================================
-# BEGIN: Settings that User Can Change
-# ============================================================================
-# print the help message for all the fit_ihme routines and then exit
+import sys
+import os
+#
+# usage
+if len(sys.argv) != 5 :
+	usage='''
+fit_ihme.py data_dir which_fit random_seed disease
+
+data_dir:
+Directory on the local machine that corresponds to /ihme/epi/at_cascade.
+A copy of the IHME database, on the local machine, for the specified disease
+has same relative path.  The subdirectory data_dir/disease is called
+the disease directory. The file fit_ihme.log, in the disese directory, is the
+log for the most recent fits for this disease. The temporary database temp.db
+is also located in the disease directory. The sub-directories no_ode, yes_ode,
+and students will contain the db2csv files (*.csv) and plots (*.pdf)
+for the corresponding fits.
+
+which_fit:
+The argument which_fit must be one of the following:
+'no_ode'    for only fitting without the ode.
+'yes_ode'   for fititng without ode and then with ode.
+'students'  for fititng without ode, then with ode, then with students-t.
+
+random_seed:
+This is an integer value that seeds the random number generator that is
+used to sub-sample the data. If this value is zero, the system clock
+is used to seed the random number generator. The seed corresponding to
+the clock changes every second and does not repeat.
+
+disease:
+The argument disease, and relative directory, must be one of the following:
+'''
+	for key in ihme_case_study_dict :
+		usage +=  key + ': ' + ihme_case_study_dict[key] + '\n'
+	sys.exit(usage)
+#
+# This is used to print help for each of the routines in this file
 print_help         = False
 #
-# Directory on the local machine that file locations are realtive to.
-root_on_local_machine = 'ihme_db'
-# A copy of the IHME database has same path relative to this directory.
-# The subdirectory root_to_local_machine/disease_specific_name is called
-# the disease directory. The file fit_ihme.log, in the disese directory,
-# is the log for the most recent fits for this disease.
-# The temporary database temp.db is also located in the disease directory.
-# The sub-directories no_ode, yes_ode, and students will contain the db2csv
-# files (*.csv) and plots (*.pdf) for the corresponding fits.
+# data_dir_arg
+data_dir_arg = sys.argv[1]
+if not os.path.isdir(data_dir_arg) :
+	msg = 'data_dir = {} is not a directory'.format(data_dir_arg)
+	sys.exit(msg)
 #
-# fit without integrands that require the ode
+# which_fit
+which_fit_arg = sys.argv[2]
+if which_fit_arg not in [ 'no_ode', 'yes_ode', 'students' ] :
+	msg = 'which_fit = {} is not one of following: no_ode, yes_ode, students'
+	sys.exit( msg.format(which_fit_arg) )
+#
+# random_seed
+random_seed_arg = sys.argv[3]
+if not random_seed_arg.isdigit() :
+	msg = 'random_seed = {} is not a positive integer without sign in front'
+	sys.exit( msg.format(random_seed_arg) )
+#
+# disease
+disease_arg = sys.argv[4]
+if disease_arg not in ihme_case_study_dict :
+	msg = 'disease = {} is not one of following:'
+	for key in ihme_case_study_dict :
+		msg += ' ' + key
+	sys.exit( msg.format(disease_arg) )
+#
+# fit_without_ode
 fit_without_ode    = True
-# fit with integrands that require the ode (fit_without_ode must be true)
-fit_with_ode       = True
-# Re-fit  with data density replaced by Students-t (fit_with_ode must be true)
-fit_students       = True
-# random seed to use when subseting data, if 0 use the clock choose seed
-random_seed        = 0
 #
-# disease that this analaysis is for (must be in ihme_case_study_dict)
-disease_specific_name = 't1_diabetes'
+# fit_with_ode
+fit_with_ode = which_fit_arg != 'no_ode'
 #
-# The python module dismod_at.ihme.disease_specific_name
-# defines the following variables, that contain the special settings
-# for this disease:
+# fit_students
+fit_students = which_fit_arg == 'students'
+#
+# random_seed
+random_seed = int(random_seed_arg)
+#
+# The python module dismod_at.ihme.disease defines the following variables,
+# which contain the special settings for this disease:
 #
 # ode_hold_out_list:
 # list of integrand names that are in fitting without ode but not with ode
@@ -146,9 +196,9 @@ def setup() :
 	global disease_directory
 	global temp_database
 	# directory where plots are stored
-	relative_path     = ihme_case_study_dict[disease_specific_name]
-	original_database = root_on_local_machine + '/' + relative_path
-	disease_directory = root_on_local_machine + '/' + disease_specific_name
+	relative_path     = ihme_case_study_dict[disease_arg]
+	original_database = data_dir_arg + '/' + relative_path
+	disease_directory = data_dir_arg + '/' + disease_arg
 	temp_database     = disease_directory + '/temp.db'
 	#
 	if not os.path.exists(disease_directory) :
@@ -230,11 +280,11 @@ def plot_fit(which_fit) :
 # ----------------------------------------------------------------------------
 def case_study_title(location, which_fit = None) :
 	# return the title for this study and fit
-	relative_path =  ihme_case_study_dict[disease_specific_name]
+	relative_path =  ihme_case_study_dict[disease_arg]
 	text          = relative_path.split('/')
 	model_id      = text[1]
 	sex           = text[4]
-	disease       = disease_specific_name
+	disease       = disease_arg
 	result        = location + ': ' + disease
 	if which_fit is not None :
 		result += '\n' + which_fit
@@ -1789,7 +1839,7 @@ for integrand_name in integrand_list_all :
 integrand_data = get_integrand_data()
 #
 # import disease specific information
-exec('import dismod_at.ihme.' + disease_specific_name + ' as specific' )
+exec('import dismod_at.ihme.' + disease_arg + ' as specific' )
 #
 # Set parent rate priros for this disease
 for rate_name in specific.parent_smoothing :

@@ -18,6 +18,7 @@ $spell
 	std
 	csv
 	dismodat.py
+	ihme
 $$
 $navigate%
 	Up%Location%
@@ -33,6 +34,15 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 01-21$$
+The program $code db_simplify$$ was changed to
+$code fit_ihme.py$$ because it fits ihme databases.
+It now gets installed and is part of the User API.
+You can use it, if you have access to the ihme databases,
+but there is no documentation (specifications).
+If you execute $code fit_ihme.py$$ with no arguments,
+you will get a usage message that give you some idea how to use it.
 
 $head 01-19$$
 The file name was removed from the log table entry at the
