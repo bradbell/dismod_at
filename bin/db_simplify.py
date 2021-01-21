@@ -37,9 +37,7 @@ root_on_local_machine = 'ihme_db'
 # The sub-directories no_ode, yes_ode, and students will contain the db2csv
 # files (*.csv) and plots (*.pdf) for the corresponding fits.
 #
-# create new database
-new_database       = True
-# fit without integrands that require the ode (new_database must be true)
+# fit without integrands that require the ode
 fit_without_ode    = True
 # fit with integrands that require the ode (fit_without_ode must be true)
 fit_with_ode       = True
@@ -54,8 +52,6 @@ disease_specific_name = 't1_diabetes'
 # ============================================================================
 # END: Settings that User Can Change
 # ============================================================================
-if not new_database :
-	assert not fit_without_ode
 if not fit_without_ode :
 	assert not fit_with_ode
 if not fit_with_ode :
@@ -134,8 +130,7 @@ def setup() :
 		os.mkdir(disease_directory)
 	#
 	# temp_database
-	if new_database :
-		shutil.copyfile(original_database, temp_database)
+	shutil.copyfile(original_database, temp_database)
 	#
 setup()
 # ===========================================================================
@@ -285,8 +280,7 @@ def system_command (command_list) :
 	#
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
-		if new_database :
-			trace('random_seed = ', random_seed )
+		trace('random_seed = ', random_seed )
 		sys.exit('db_simplify.py: system command failed')
 # ----------------------------------------------------------------------------
 def table_name2id(table, table_name) :
@@ -1728,156 +1722,153 @@ sql_command('DROP TABLE IF EXISTS log')
 #
 # start_time
 start_time = time.time()
-if not new_database :
-	# list of integrands in temp_database
-	integrand_list_yes_ode = get_integrand_list(True)
-	integrand_list_no_ode  = get_integrand_list(False)
-	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
-else :
-	# seed used to randomly subsample data
-	if random_seed == 0 :
-		random_seed = int( time.time() )
-	random.seed(random_seed)
+#
+# ----------------------------------------------------------------------------
+# Changes to database
+# ----------------------------------------------------------------------------
+# seed used to randomly subsample data
+if random_seed == 0 :
+	random_seed = int( time.time() )
+random.seed(random_seed)
+#
+# remove all hold out data and data past covariate limits
+subset_data()
+#
+# set reference value for x_0 to its median
+reference_name  = 'median'
+for covariate_id in range( len(covariate_table) ) :
+	if relative_covariate(covariate_id) :
+		set_covariate_reference(covariate_id, reference_name)
+#
+# subsetting the data can remove some integrands
+integrand_list_yes_ode = get_integrand_list(True)
+integrand_list_no_ode  = get_integrand_list(False)
+integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
+#
+# randomly subsample
+for integrand_name in integrand_list_all :
+	max_sample = 1000
+	random_subsample_data(integrand_name, max_sample)
+#
+# integrand_data
+integrand_data = get_integrand_data()
+#
+# Set the rate priros for this disease
+exec('import dismod_at.ihme.' + disease_specific_name + ' as specific' )
+for rate_name in specific.parent_smoothing :
+	fun    = specific.parent_smoothing[rate_name]
+	# 2DO: Looks like a bug in python that we have to store result
+	# and then unpack it instead of assigning to unpacked form
+	result = fun( age_table, time_table, density_name2id, integrand_data )
+	(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
+	parent_rate_smoothing(rate_name,
+		age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+#
+# Have not yet implemented specific.child.smoothing
+assert len( specific.child_smoothing ) == 0
+#
+# set options
+set_option('tolerance_fixed',    '1e-6')
+set_option('max_num_iter_fixed', '50')
+set_option('zero_sum_child_rate', 'iota chi')
+set_option('bound_random',        '3')
+set_option('meas_noise_effect',   'add_std_scale_none')
+#
+# add measurement noise covariates
+group_id = 0
+factor   = { 'lower':1e-2, 'mean':1e-2, 'upper':1e-2 }
+for integrand_name in integrand_list_all :
+	add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor)
+#
+# compress age and time intervals
+age_size  = 10.0
+time_size = 10.0
+for integrand_name in integrand_list_all :
+	compress_age_time_interval(integrand_name, age_size, time_size)
+#
+# set bounds for all the covariates
+n_covariate = len( covariate_table )
+for covariate_id in range( n_covariate ) :
+	set_mulcov_bound(specific.max_covariate_effect, covariate_id)
+#
+# hold out all ode integrand data
+for integrand_name in integrand_list_yes_ode :
+	hold_out_data(integrand_name = integrand_name, hold_out = 1)
+#
+# init
+system_command([ 'dismod_at', temp_database, 'init'])
+# -----------------------------------------------------------------------------
+if fit_without_ode :
 	#
-	# remove all hold out data and data past covariate limits
-	subset_data()
+	# fit both
+	t0 = time.time()
+	system_command([ 'dismod_at', temp_database, 'fit', 'both'])
+	msg  = 'fit_without time = '
+	msg += str( round( time.time() - t0 ) ) + ' seconds'
+	trace(msg)
+	check_last_fit()
 	#
-	# set reference value for x_0 to its median
-	reference_name  = 'median'
-	for covariate_id in range( len(covariate_table) ) :
-		if relative_covariate(covariate_id) :
-			set_covariate_reference(covariate_id, reference_name)
-	#
-	# subsetting the data can remove some integrands
-	integrand_list_yes_ode = get_integrand_list(True)
-	integrand_list_no_ode  = get_integrand_list(False)
-	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
-	#
-	# randomly subsample
-	for integrand_name in integrand_list_all :
-		max_sample = 1000
-		random_subsample_data(integrand_name, max_sample)
-	#
-	# integrand_data
-	integrand_data = get_integrand_data()
-	#
-	# Set the rate priros for this disease
-	exec('import dismod_at.ihme.' + disease_specific_name + ' as specific' )
-	for rate_name in specific.parent_smoothing :
-		fun    = specific.parent_smoothing[rate_name]
-		# 2DO: Looks like a bug in python that we have to store result
-		# and then unpack it instead of assigning to unpacked form
-		result = fun( age_table, time_table, density_name2id, integrand_data )
-		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
-		parent_rate_smoothing(rate_name,
-			age_grid, time_grid, value_prior, dage_prior, dtime_prior
-		)
-	#
-	# Have not yet implemented specific.child.smoothing
-	assert len( specific.child_smoothing ) == 0
-	#
-	# set options
-	set_option('tolerance_fixed',    '1e-6')
-	set_option('max_num_iter_fixed', '50')
-	set_option('zero_sum_child_rate', 'iota chi')
-	set_option('bound_random',        '3')
-	set_option('meas_noise_effect',   'add_std_scale_none')
-	#
-	# add measurement noise covariates
-	group_id = 0
-	factor   = { 'lower':1e-2, 'mean':1e-2, 'upper':1e-2 }
-	for integrand_name in integrand_list_all :
-		add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor)
-	#
-	# compress age and time intervals
-	age_size  = 10.0
-	time_size = 10.0
-	for integrand_name in integrand_list_all :
-		compress_age_time_interval(integrand_name, age_size, time_size)
-	#
-	# set bounds for all the covariates
-	n_covariate = len( covariate_table )
-	for covariate_id in range( n_covariate ) :
-		set_mulcov_bound(specific.max_covariate_effect, covariate_id)
-	#
-	# hold out all ode integrand data
-	for integrand_name in integrand_list_yes_ode :
-		hold_out_data(integrand_name = integrand_name, hold_out = 1)
-	#
-	# init
-	system_command([ 'dismod_at', temp_database, 'init'])
-	#
-	if fit_without_ode :
+	which_fit = 'no_ode'
+	plot_fit(which_fit)
+	# ------------------------------------------------------------------------
+	if fit_with_ode :
+		#
+		# use previous fit as starting point
+		system_command([
+			'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
+		])
+		#
+		# put ode integrands data back in the fit
+		for integrand_name in integrand_list_yes_ode :
+			hold_out_data(integrand_name = integrand_name, hold_out = 0)
+		#
+		# exclude integerands that are just used to get starting value
+		for integrand_name in specific.ode_hold_out_list :
+			hold_out_data(integrand_name = integrand_name, hold_out = 1)
 		#
 		# fit both
 		t0 = time.time()
 		system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-		msg  = 'fit_without time = '
+		msg  = 'fit_with_ode time = '
 		msg += str( round( time.time() - t0 ) ) + ' seconds'
 		trace(msg)
 		check_last_fit()
 		#
-		which_fit = 'no_ode'
+		which_fit = 'yes_ode'
 		plot_fit(which_fit)
-		#
-		if fit_with_ode :
+		# --------------------------------------------------------------------
+		if fit_students :
+			# change data likelihood to use students-t
+			density_name = 'log_students'
+			factor_eta   = 1e-2
+			nu           = 5
+			for integrand_name in integrand_list_all :
+				set_data_likelihood(integrand_data,
+					integrand_name, density_name, factor_eta, nu
+				)
 			#
 			# use previous fit as starting point
 			system_command([
 				'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
 			])
 			#
-			# put ode integrands data back in the fit
-			for integrand_name in integrand_list_yes_ode :
-				hold_out_data(integrand_name = integrand_name, hold_out = 0)
-			#
-			# exclude integerands that are just used to get starting value
-			for integrand_name in specific.ode_hold_out_list :
-				hold_out_data(integrand_name = integrand_name, hold_out = 1)
-			#
 			# fit both
 			t0 = time.time()
 			system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-			msg  = 'fit_with_ode time = '
+			t1 = time.time()
+			msg  = 'fit_students time = '
 			msg += str( round( time.time() - t0 ) ) + ' seconds'
 			trace(msg)
 			check_last_fit()
 			#
-			which_fit = 'yes_ode'
+			which_fit = 'students'
 			plot_fit(which_fit)
-			#
-			if fit_students :
-				#
-				# change data likelihood to use students-t
-				density_name = 'log_students'
-				factor_eta   = 1e-2
-				nu           = 5
-				for integrand_name in integrand_list_all :
-					set_data_likelihood(integrand_data,
-						integrand_name, density_name, factor_eta, nu
-					)
-				#
-				# use previous fit as starting point
-				system_command([
-					'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
-				])
-				#
-				# fit both
-				t0 = time.time()
-				system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-				t1 = time.time()
-				msg  = 'fit_students time = '
-				msg += str( round( time.time() - t0 ) ) + ' seconds'
-				trace(msg)
-				check_last_fit()
-				#
-				which_fit = 'students'
-				plot_fit(which_fit)
 # ----------------------------------------------------------------------
-trace('\nintegrands  = ' + str( integrand_list_all ) )
-if new_database :
-	trace('random_seed = ' + str( random_seed ) )
-msg  = 'Total time = '
+msg  = '\n'
+msg += '\nintegrands   = ' + str( integrand_list_all )
+msg += '\nrandom_seed  = ' + str( random_seed )
+msg += '\nTotal time   = '
 msg += str( round( time.time() - start_time ) ) + ' seconds'
 trace( msg )
 trace('db_simplify.py: OK')
