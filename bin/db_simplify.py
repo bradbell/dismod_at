@@ -51,136 +51,6 @@ random_seed        = 0
 # disease that this analaysis is for (must be in ihme_case_study_dict)
 disease_specific_name = 't1_diabetes'
 #
-# list of integrand that are in fitting without ode but not with ode
-disease_specific_fit_with_ode_hold_out_list = ['mtexcess']
-#
-# Maximum absolute covariate effect = multiplier * (covariate - referece).
-# Note that exp(effect) multiplies a model value to get the model value for
-# this covariate value. (Noise covariate multipliers are not included.)
-disease_specific_max_covariate_effect = 2.0
-#
-def disease_specific_rate_priors(density_name2id, integrand_data) :
-	# ------------------------------------------------------------------------
-	# set smoothing for pini
-	rate_name    = 'pini'
-	age_grid     = [ 0.0 ]
-	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
-	median       = numpy.median( integrand_data['prevalence'] )
-	density_id   = density_name2id['uniform']
-	value_prior = {
-		'prior_name' : 'parent_smoothing_pini_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 0.0             ,
-		'upper'      : 1.0             ,
-		'mean'       : 0.0             ,
-		'std'        : None            ,
-		'eta'        : None            ,
-		'nu'         : None            ,
-	}
-	density_id   = density_name2id['log_gaussian']
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_pini_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : 1e-9           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_pini_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
-		'eta'        : 1e-9           ,
-		'nu'         : None           ,
-	}
-	parent_rate_smoothing(
-		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
-	# -----------------------------------------------------------------------
-	# set smoothing for iota
-	rate_name    = 'iota'
-	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
-	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_id   = density_name2id['log_gaussian']
-	value_prior = {
-		'prior_name' : 'parent_smoothing_iota_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-19           ,
-		'upper'      : 0.1             ,
-		'mean'       : 1e-5            ,
-		'std'        : 5.0             ,
-		'eta'        : 1e-6            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_iota_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.05           ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_iota_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	parent_rate_smoothing(
-		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
-	# -----------------------------------------------------------------------
-	# set smoothing for chi
-	rate_name    = 'chi'
-	age_grid     = [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 20.0 ]
-	age_grid    += [ float(age)  for age in range(30, 110, 10) ]
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_id   = density_name2id['log_gaussian']
-	value_prior = {
-		'prior_name' : 'parent_smoothing_chi_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-19           ,
-		'upper'      : 1.0             ,
-		'mean'       : 1e-3            ,
-		'std'        : 5.0             ,
-		'eta'        : 1e-6            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_chi_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.2            ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_chi_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	parent_rate_smoothing(
-		rate_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	)
 # ============================================================================
 # END: Settings that User Can Change
 # ============================================================================
@@ -1627,7 +1497,7 @@ def set_mulcov_zero (covariate_id, restore= None) :
 	)
 	return restore
 # -----------------------------------------------------------------------------
-def set_mulcov_bound(covariate_id) :
+def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	# Set bounds for all of the multipliers for a specified covariate so
 	# corresponding effect is bounded by disease_specific_max_covariate_effect.
 	# Noise covariate multipliers are not included.
@@ -1656,11 +1526,11 @@ def set_mulcov_bound(covariate_id) :
 	if max_difference == 0.0 :
 		upper = None
 	else :
-		upper = disease_specific_max_covariate_effect / max_difference
+		upper = max_covariate_effect / max_difference
 	if min_difference == 0.0 :
 		lower = None
 	else :
-		lower = disease_specific_max_covariate_effect / min_difference
+		lower = max_covariate_effect / min_difference
 	#
 	for row in mulcov_table :
 		if row['covariate_id'] == covariate_id :
@@ -1892,7 +1762,19 @@ else :
 	integrand_data = get_integrand_data()
 	#
 	# Set the rate priros for this disease
-	disease_specific_rate_priors(density_name2id, integrand_data)
+	exec('import dismod_at.ihme.' + disease_specific_name + ' as specific' )
+	for rate_name in specific.parent_smoothing :
+		fun    = specific.parent_smoothing[rate_name]
+		# 2DO: Looks like a bug in python that we have to store result
+		# and then unpack it instead of assigning to unpacked form
+		result = fun( age_table, time_table, density_name2id, integrand_data )
+		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
+		parent_rate_smoothing(rate_name,
+			age_grid, time_grid, value_prior, dage_prior, dtime_prior
+		)
+	#
+	# Have not yet implemented specific.child.smoothing
+	assert len( specific.child_smoothing ) == 0
 	#
 	# set options
 	set_option('tolerance_fixed',    '1e-6')
@@ -1916,7 +1798,7 @@ else :
 	# set bounds for all the covariates
 	n_covariate = len( covariate_table )
 	for covariate_id in range( n_covariate ) :
-		set_mulcov_bound(covariate_id)
+		set_mulcov_bound(specific.max_covariate_effect, covariate_id)
 	#
 	# hold out all ode integrand data
 	for integrand_name in integrand_list_yes_ode :
@@ -1950,7 +1832,7 @@ else :
 				hold_out_data(integrand_name = integrand_name, hold_out = 0)
 			#
 			# exclude integerands that are just used to get starting value
-			for integrand_name in disease_specific_fit_with_ode_hold_out_list :
+			for integrand_name in specific.ode_hold_out_list :
 				hold_out_data(integrand_name = integrand_name, hold_out = 1)
 			#
 			# fit both
