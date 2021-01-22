@@ -87,6 +87,9 @@ def chi_parent_smoothing(
 	}
 	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 # --------------------------------------------------------------------------
+# relative path for original ihme database
+relative_path = 'data/475533/dbs/1/2/dismod.db'
+#
 # maximum number or sampels per integrand
 max_sample = 1000
 #

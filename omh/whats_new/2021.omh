@@ -46,7 +46,13 @@ $cref/rate_case/option_table/rate_case/$$ to a value
 that is consistent with the rest of the database.
 $lnext
 Automatic detection and setting of $icode rate_case$$ in the
-$code fit_ihme.py$$ program
+$code fit_ihme.py$$ program.
+$lnext
+Move $code fit_ihme.py$$ relative path to database into
+the disease specific file.
+$lnext
+Change the smoothing function to be $code None$$ instead of returning
+$code None$$ when a rate is zero. This is simpler.
 $lend
 
 

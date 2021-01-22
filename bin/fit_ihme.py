@@ -14,14 +14,6 @@
 #      covariates by their covariate_id.
 # ---------------------------------------------------------------------------
 # The files on the IHME cluster are relative to /ihme/epi/at_cascade
-ihme_case_study_dict = {
-# Disease     Relative path to database
-# -------     -------------------------
-'crohns'      : 'data/475533/dbs/1/2/dismod.db',
-'dialysis'    : 'data//475527/dbs/96/2/dismod.db',     # Under Construction
-'kidney'      : 'data/475718/dbs/70/1/dismod.db',
-'t1_diabetes' : 'data/475588/dbs/100/3/dismod.db',
-}
 # ============================================================================
 import sys
 import os
@@ -52,10 +44,12 @@ is used to seed the random number generator. The seed corresponding to
 the clock changes every second and does not repeat.
 
 disease:
-The argument disease, and relative directory, must be one of the following:
+The argument disease must be one of the following:
+	 crohns, kidney, t1_diabetes.
+It may also correspond to a file called
+	dismod_at/ihme/disease.py
+that you have added.
 '''
-	for key in ihme_case_study_dict :
-		usage +=  key + ': ' + ihme_case_study_dict[key] + '\n'
 	usage += '\nfit_ihme.py data_dir which_fit random_seed disease'
 	sys.exit(usage)
 #
@@ -82,11 +76,10 @@ if not random_seed_arg.isdigit() :
 #
 # disease
 disease_arg = sys.argv[4]
-if disease_arg not in ihme_case_study_dict :
-	msg = 'disease = {} is not one of following:'
-	for key in ihme_case_study_dict :
-		msg += ' ' + key
-	sys.exit( msg.format(disease_arg) )
+if disease_arg not in [ 'crohns', 'kidney', 't1_diabetes' ] :
+	msg  = 'Warning: disease = {} is not one that comes with the install\n'
+	msg += 'You must have added the file site-packages/dismod_at/{}.py'
+	print( msg.format(disease_arg, disease_arg) )
 #
 # fit_without_ode
 fit_without_ode    = True
@@ -102,6 +95,10 @@ random_seed = int(random_seed_arg)
 #
 # The python module dismod_at.ihme.disease defines the following variables,
 # which contain the special settings for this disease:
+#
+# relative_path:
+# The database for this study is location in /ihme/epi/at_cascage/relative_path
+# on the IHME cluster and in data_dir/realtive_path on the local machine.
 #
 # max_sample:
 # Is the maximum number of samples to include for any one integrand.
@@ -138,6 +135,12 @@ if not fit_without_ode :
 if not fit_with_ode :
 	assert not fit_students
 # ----------------------------------------------------------------------
+# imports
+# import disease specific information
+try :
+	exec('import dismod_at.ihme.' + disease_arg + ' as specific' )
+except :
+	sys.exit('Cannot find dismod_at.ihme.' + disease_arg)
 #
 # imports
 import math
@@ -202,8 +205,7 @@ def setup() :
 	global disease_directory
 	global temp_database
 	# directory where plots are stored
-	relative_path     = ihme_case_study_dict[disease_arg]
-	original_database = data_dir_arg + '/' + relative_path
+	original_database = data_dir_arg + '/' + specific.relative_path
 	disease_directory = data_dir_arg + '/' + disease_arg
 	temp_database     = disease_directory + '/temp.db'
 	#
@@ -286,8 +288,7 @@ def plot_fit(which_fit) :
 # ----------------------------------------------------------------------------
 def case_study_title(location, which_fit = None) :
 	# return the title for this study and fit
-	relative_path =  ihme_case_study_dict[disease_arg]
-	text          = relative_path.split('/')
+	text          = specific.relative_path.split('/')
 	model_id      = text[1]
 	sex           = text[4]
 	disease       = disease_arg
@@ -372,7 +373,7 @@ def table_name2id(table, table_name) :
 		result[ row[name_column] ] = row_id
 	return result
 # ----------------------------------------------------------------------------
-def check_last_fit() :
+def check_last_fit(which_fit) :
 	table_name = 'log'
 	(table, col_name, col_type) = get_table(table_name);
 	#
@@ -402,10 +403,10 @@ def check_last_fit() :
 			msg += message_type + ' ' + row['message'] + '\n'
 	#
 	if msg == '' :
-		msg = '\nFit OK\n'
+		msg = '\nfit_{} OK\n'.format(which_fit)
 		trace(msg)
 	else :
-		msg = '\nFit Errors and or Warnings::\n' + msg
+		msg = '\nfit_{} Errors and or Warnings::\n'.format(which_fit) + msg
 		trace(msg)
 	return
 # ----------------------------------------------------------------------------
@@ -1840,9 +1841,6 @@ integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 # integrand_data
 integrand_data = get_integrand_data()
 #
-# import disease specific information
-exec('import dismod_at.ihme.' + disease_arg + ' as specific' )
-#
 # randomly subsample
 for integrand_name in integrand_list_all :
 	random_subsample_data(integrand_name, specific.max_sample)
@@ -1945,9 +1943,9 @@ if fit_without_ode :
 	msg  = 'fit_without time = '
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
-	check_last_fit()
 	#
 	which_fit = 'no_ode'
+	check_last_fit(which_fit)
 	plot_fit(which_fit)
 	# ------------------------------------------------------------------------
 	if fit_with_ode :
@@ -1971,9 +1969,9 @@ if fit_without_ode :
 		msg  = 'fit_with_ode time = '
 		msg += str( round( time.time() - t0 ) ) + ' seconds'
 		trace(msg)
-		check_last_fit()
 		#
 		which_fit = 'yes_ode'
+		check_last_fit(which_fit)
 		plot_fit(which_fit)
 		# --------------------------------------------------------------------
 		if fit_students :
@@ -1998,9 +1996,9 @@ if fit_without_ode :
 			msg  = 'fit_students time = '
 			msg += str( round( time.time() - t0 ) ) + ' seconds'
 			trace(msg)
-			check_last_fit()
 			#
 			which_fit = 'students'
+			check_last_fit(which_fit)
 			plot_fit(which_fit)
 # ----------------------------------------------------------------------
 msg  = '\n'
