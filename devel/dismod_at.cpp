@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -33,6 +33,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_column_max.hpp>
 # include <dismod_at/get_db_input.hpp>
 # include <dismod_at/get_integrand_table.hpp>
+# include <dismod_at/get_option_table.hpp>
 # include <dismod_at/get_sample_table.hpp>
 # include <dismod_at/get_data_sim_table.hpp>
 # include <dismod_at/get_prior_sim_table.hpp>
@@ -156,6 +157,26 @@ int main(int n_arg, const char** argv)
 	// old2new command must fix database before get_db_input can be run
 	if( command_arg == "old2new" )
 	{	dismod_at::old2new_command(db);
+		message = "end " + command_arg;
+		dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
+		sqlite3_close(db);
+		return 0;
+	}
+	// ----------------------------------------------------------------------
+	// The "set option" comands must be done before get_db_input can be run
+	// because an option might affect if input is correct; e.g., rate_case
+	if( command_arg == "set" && strcmp(argv[3], "option") == 0 )
+	{	if( n_arg != 6 )
+		{	cerr << "expected name and value to follow "
+			"dismod_at database set option\n";
+			std::exit(1);
+		}
+		CppAD::vector<dismod_at::option_struct> option_table =
+			dismod_at::get_option_table(db);
+		std::string name  = argv[4];
+		std::string value = argv[5];
+		dismod_at::set_option_command(db, option_table, name, value);
+		//
 		message = "end " + command_arg;
 		dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
 		sqlite3_close(db);
@@ -366,18 +387,11 @@ int main(int n_arg, const char** argv)
 # endif
 	// =======================================================================
 	if( command_arg == "set" )
-	{	if( std::strcmp(argv[3], "option") == 0 )
-		{	if( n_arg != 6 )
-			{	cerr << "expected name and value to follow "
-				"dismod_at database set option\n";
-				std::exit(1);
-			}
-			std::string name  = argv[4];
-			std::string value = argv[5];
-			dismod_at::set_option_command(
-				db, db_input.option_table, name, value);
-		}
-		else if( std::strcmp(argv[3], "avgint") == 0 )
+	{	// The set option commands should have been completed before
+		// calling get_db_input.
+		assert( std::strcmp(argv[3], "option") != 0 );
+		//
+		if( std::strcmp(argv[3], "avgint") == 0 )
 		{	if( n_arg != 5 )
 			{	cerr << "expected data to follow "
 				"dismod_at database set avgint\n";

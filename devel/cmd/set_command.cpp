@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -33,6 +33,8 @@ $section Directly Setting Table Values$$
 $head Syntax$$
 $codei%dismod_at %database% set option %name% %value%
 %$$
+$comment The syntax cases below are implementd in the dismod_at main program
+$$
 $codei%dismod_at %database% set avgint data
 %$$
 $codei%dismod_at %database% set %table_out% %source%

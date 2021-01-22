@@ -93,7 +93,7 @@ def iota_parent_smoothing(
 def rho_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
-	age_grid     = [ float(age)  for age in range(0, 110, 10) ]
+	age_grid     = [ float(age)  for age in range(0, 105, 5) ]
 	time_grid    = [ float(time) for time in range(1990, 2030, 10) ]
 	density_id   = density_name2id['uniform']
 	value_prior = {
@@ -180,11 +180,16 @@ max_covariate_effect = 2.0
 # Ordered dictionary of parent smoothing functions
 import collections
 parent_smoothing = collections.OrderedDict()
-parent_smoothing['pini'] = pini_parent_smoothing
-parent_smoothing['iota'] = iota_parent_smoothing
+parent_smoothing['pini'] = no_smoothing
+parent_smoothing['iota'] = no_smoothing
 parent_smoothing['rho']  = rho_parent_smoothing
-parent_smoothing['chi']  = chi_parent_smoothing
+parent_smoothing['chi']  = no_smoothing
+parent_smoothing['omega']  = no_smoothing
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
+child_smoothing['pini'] = no_smoothing
+child_smoothing['iota'] = no_smoothing
+child_smoothing['rho']  = no_smoothing
 child_smoothing['chi']  = no_smoothing
+child_smoothing['omega']  = no_smoothing

@@ -467,6 +467,7 @@ table_name = 'prior'
 # rate_table
 table_name = 'rate'
 (rate_table, rate_col_name, rate_col_type) = get_table(table_name)
+rate_name2id = table_name2id(rate_table, table_name)
 #
 # smooth_table
 table_name = 'smooth'
@@ -1873,12 +1874,27 @@ for rate_name in specific.child_smoothing :
 			age_grid, time_grid, value_prior, dage_prior, dtime_prior
 		)
 #
+# rate_case
+iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
+rho_zero  = rate_table[ rate_name2id['rho'] ]['parent_smooth_id'] is None
+if iota_zero :
+	if rho_zero :
+		rate_case = 'iota_zero_rho_zero'
+	else :
+		rate_case = 'iota_zero_rho_pos'
+else :
+	if rho_zero :
+		rate_case = 'iota_pos_rho_zero'
+	else :
+		rate_case = 'iota_pos_rho_pos'
+#
 # set options
 set_option('tolerance_fixed',    '1e-6')
 set_option('max_num_iter_fixed', '50')
 set_option('zero_sum_child_rate', 'iota rho chi')
 set_option('bound_random',        '3')
 set_option('meas_noise_effect',   'add_std_scale_none')
+set_option('rate_case',           rate_case)
 #
 # add measurement noise covariates
 group_id = 0

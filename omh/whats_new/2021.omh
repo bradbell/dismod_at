@@ -35,6 +35,21 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 01-22$$
+$list number$$
+The $cref/set/set_command/$$ $code option$$ command
+no longer requires the option table it to be consistent with all the
+other $cref input$$ tables.
+It only has to be self consistent.
+This enables one to use the $code set option$$ command to change the
+$cref/rate_case/option_table/rate_case/$$ to a value
+that is consistent with the rest of the database.
+$lnext
+Automatic detection and setting of $icode rate_case$$ in the
+$code fit_ihme.py$$ program
+$lend
+
+
 $head 01-21$$
 The program $code db_simplify$$ was changed to
 $code fit_ihme.py$$ because it fits ihme databases.
