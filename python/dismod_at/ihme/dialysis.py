@@ -8,11 +8,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-def no_smoothing(
-	age_table, time_table, density_name2id, integrand_data
-) :
-	return None
-# --------------------------------------------------------------------------
 def pini_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
@@ -182,15 +177,15 @@ max_covariate_effect = 2.0
 # Ordered dictionary of parent smoothing functions
 import collections
 parent_smoothing = collections.OrderedDict()
-parent_smoothing['pini'] = no_smoothing
-parent_smoothing['iota'] = no_smoothing
-parent_smoothing['rho']  = rho_parent_smoothing
-parent_smoothing['chi']  = no_smoothing
-parent_smoothing['omega']  = no_smoothing
+parent_smoothing['pini']   = None
+parent_smoothing['iota']   = None
+parent_smoothing['rho']    = rho_parent_smoothing
+parent_smoothing['chi']    = None
+parent_smoothing['omega']  = None
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
-child_smoothing['pini'] = no_smoothing
-child_smoothing['iota'] = no_smoothing
-child_smoothing['chi']  = no_smoothing
-child_smoothing['omega']  = no_smoothing
+child_smoothing['pini']   = None
+child_smoothing['iota']   = None
+child_smoothing['chi']    = None
+child_smoothing['omega']  = None

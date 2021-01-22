@@ -126,11 +126,6 @@ def chi_parent_smoothing(
 	}
 	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 # ----------------------------------------------------------------------------
-def chi_child_smoothing(
-	age_table, time_table, density_name2id, integrand_data
-) :
-	return None
-# --------------------------------------------------------------------------
 # maximum number or sampels per integrand
 max_sample = 1000
 #
@@ -151,4 +146,4 @@ parent_smoothing['chi']  = chi_parent_smoothing
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
-child_smoothing['chi']   = chi_child_smoothing
+child_smoothing['chi']   = None

@@ -120,11 +120,11 @@ random_seed = int(random_seed_arg)
 #
 # parent_smoothng:
 # An ordered dictionary where keys are rate names for the smoothings
-# that are changed. The values are functions f with the syntax
+# that are changed. The values are None or functions f with the syntax
 # (age_grid, time_grid, value_prior, dage_prior, dtime_prior) = f(
 #	 age_table, time_table, density_name2id, integrand_data
 # )
-# If the function f = parent_smooth[rate_name] returns None,
+# If the function f = parent_smooth[rate_name] is None,
 # then that parent rate is removed from the fit; i.e. it is zero.
 #
 # child_smoothing:
@@ -1849,15 +1849,15 @@ for integrand_name in integrand_list_all :
 #
 # Set parent rate priros for this disease
 for rate_name in specific.parent_smoothing :
-	fun    = specific.parent_smoothing[rate_name]
-	result = fun( age_table, time_table, density_name2id, integrand_data )
+	fun = specific.parent_smoothing[rate_name]
 	#
-	if result is None :
+	if fun is None :
 		zero_parent   = True
 		zero_children = False
 		zero_rate(rate_name, zero_parent, zero_children)
 	else :
 		parent_rate = True
+		result = fun( age_table, time_table, density_name2id, integrand_data )
 		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
 		set_rate_smoothing(parent_rate, rate_name,
 			age_grid, time_grid, value_prior, dage_prior, dtime_prior
@@ -1865,15 +1865,15 @@ for rate_name in specific.parent_smoothing :
 #
 # Set child rate priros for this disease
 for rate_name in specific.child_smoothing :
-	fun    = specific.child_smoothing[rate_name]
-	result = fun( age_table, time_table, density_name2id, integrand_data )
+	fun = specific.child_smoothing[rate_name]
 	#
-	if result is None :
+	if fun is None :
 		zero_parent   = False
 		zero_children = True
 		zero_rate(rate_name, zero_parent, zero_children)
 	else :
 		parent_rate = False
+		result = fun( age_table, time_table, density_name2id, integrand_data )
 		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
 		set_rate_smoothing(parent_rate, rate_name,
 			age_grid, time_grid, value_prior, dage_prior, dtime_prior
