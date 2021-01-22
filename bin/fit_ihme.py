@@ -18,6 +18,7 @@ ihme_case_study_dict = {
 # Disease     Relative path to database
 # -------     -------------------------
 'crohns'      : 'data/475533/dbs/1/2/dismod.db',
+'dialysis'    : 'data//475527/dbs/96/2/dismod.db',     # Under Construction
 'kidney'      : 'data/475718/dbs/70/1/dismod.db',
 't1_diabetes' : 'data/475588/dbs/100/3/dismod.db',
 }
