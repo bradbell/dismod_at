@@ -89,7 +89,7 @@ def rho_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
 	age_grid     = [ float(age)  for age in range(0, 105, 5) ]
-	time_grid    = [ 2000.0  ]
+	time_grid    = [ 1990.0, 2020.0 ]
 	density_id   = density_name2id['uniform']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_rho_value_prior' ,
@@ -157,7 +157,7 @@ def chi_parent_smoothing(
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 1.0            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -167,7 +167,7 @@ def chi_parent_smoothing(
 relative_path = 'data/475527/dbs/96/2/dismod.db'
 #
 # maximum number or sampels per integrand
-max_sample = 100
+max_sample = 1000
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []
