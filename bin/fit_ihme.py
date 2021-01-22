@@ -136,13 +136,8 @@ if not fit_with_ode :
 	assert not fit_students
 # ----------------------------------------------------------------------
 # imports
-# import disease specific information
-try :
-	exec('import dismod_at.ihme.' + disease_arg + ' as specific' )
-except :
-	sys.exit('Cannot find dismod_at.ihme.' + disease_arg)
 #
-# imports
+# normale imports
 import math
 import os
 import sys
@@ -164,8 +159,15 @@ if os.path.isfile('build/devel/dismod_at') :
 	print('using sandbox version of build/devel/dismod_at')
 	os.environ['PATH'] = os.getcwd() + '/build/devel:' + os.environ['PATH']
 	#
+#
+# dismod_at imports
 import dismod_at
 #
+try :
+	exec('import dismod_at.ihme.' + disease_arg + ' as specific' )
+except :
+	sys.exit('Cannot find dismod_at.ihme.' + disease_arg)
+# ----------------------------------------------------------------------------
 def execute_print_help() :
 	# print the help message for each fit_ihme routine
 	file_name = sys.argv[0]
@@ -197,9 +199,9 @@ def execute_print_help() :
 if print_help :
 	# use a function to avoid defining global variables
 	execute_print_help()
-#
+# ----------------------------------------------------------------------------
 disease_directory = None
-temp_database              = None
+temp_database     = None
 def setup() :
 	# set up some globals
 	global disease_directory

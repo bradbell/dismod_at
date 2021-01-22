@@ -89,7 +89,7 @@ def rho_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
 	age_grid     = [ float(age)  for age in range(0, 105, 5) ]
-	time_grid    = [ float(time) for time in range(1990, 2030, 10) ]
+	time_grid    = [ 2000.0  ]
 	density_id   = density_name2id['uniform']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_rho_value_prior' ,
@@ -164,7 +164,7 @@ def chi_parent_smoothing(
 	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 # ----------------------------------------------------------------------------
 # relative path for original ihme database
-relative_path = 'data//475527/dbs/96/2/dismod.db'
+relative_path = 'data/475527/dbs/96/2/dismod.db'
 #
 # maximum number or sampels per integrand
 max_sample = 100
