@@ -103,8 +103,14 @@ random_seed = int(random_seed_arg)
 # The python module dismod_at.ihme.disease defines the following variables,
 # which contain the special settings for this disease:
 #
+# max_sample:
+# Is the maximum number of samples to include for any one integrand.
+# If the available samples exceeds this number, a subset of size max_sample
+# is randomly chosen.
+#
 # ode_hold_out_list:
-# list of integrand names that are in fitting without ode but not with ode
+# list of integrand names that are in includd when fitting without ode
+# but not with ode.
 #
 # max_covariate_effect:
 # Maximum absolute covariate effect; i.e, multiplier * (covariate - referece).
@@ -1831,16 +1837,15 @@ integrand_list_yes_ode = get_integrand_list(True)
 integrand_list_no_ode  = get_integrand_list(False)
 integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 #
-# randomly subsample
-for integrand_name in integrand_list_all :
-	max_sample = 1000
-	random_subsample_data(integrand_name, max_sample)
-#
 # integrand_data
 integrand_data = get_integrand_data()
 #
 # import disease specific information
 exec('import dismod_at.ihme.' + disease_arg + ' as specific' )
+#
+# randomly subsample
+for integrand_name in integrand_list_all :
+	random_subsample_data(integrand_name, specific.max_sample)
 #
 # Set parent rate priros for this disease
 for rate_name in specific.parent_smoothing :
@@ -1874,9 +1879,12 @@ for rate_name in specific.child_smoothing :
 			age_grid, time_grid, value_prior, dage_prior, dtime_prior
 		)
 #
-# rate_case
+# iota_zero, rho_zero, chi_zero
 iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
 rho_zero  = rate_table[ rate_name2id['rho'] ]['parent_smooth_id'] is None
+chi_zero  = rate_table[ rate_name2id['chi'] ]['parent_smooth_id'] is None
+#
+# rate_case
 if iota_zero :
 	if rho_zero :
 		rate_case = 'iota_zero_rho_zero'
@@ -1891,6 +1899,7 @@ else :
 # set options
 set_option('tolerance_fixed',    '1e-6')
 set_option('max_num_iter_fixed', '50')
+set_option('quasi_fixed',        'false')
 set_option('zero_sum_child_rate', 'iota rho chi')
 set_option('bound_random',        '3')
 set_option('meas_noise_effect',   'add_std_scale_none')
@@ -1916,6 +1925,14 @@ for covariate_id in range( n_covariate ) :
 # hold out all ode integrand data
 for integrand_name in integrand_list_yes_ode :
 	hold_out_data(integrand_name = integrand_name, hold_out = 1)
+#
+# hold out integrands that do not have corresponding rates
+if iota_zero :
+	hold_out_data(integrand_name = 'Sincidence', hold_out = 1)
+if rho_zero :
+	hold_out_data(integrand_name = 'remission', hold_out = 1)
+if chi_zero :
+	hold_out_data(integrand_name = 'mtexcess', hold_out = 1)
 #
 # init
 system_command([ 'dismod_at', temp_database, 'init'])

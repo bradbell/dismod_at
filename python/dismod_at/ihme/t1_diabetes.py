@@ -131,6 +131,8 @@ def chi_parent_smoothing(
 	}
 	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 # --------------------------------------------------------------------------
+# maximum number or sampels per integrand
+max_sample = 1000
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = ['mtexcess']

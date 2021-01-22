@@ -100,7 +100,7 @@ def rho_parent_smoothing(
 		'prior_name' : 'parent_smoothing_rho_value_prior' ,
 		'density_id' : density_id      ,
 		'lower'      : 1e-4           ,
-		'upper'      : 1.0             ,
+		'upper'      : 2.0             ,
 		'mean'       : 1e-1            ,
 		'std'        : None            ,
 		'eta'        : None            ,
@@ -113,7 +113,7 @@ def rho_parent_smoothing(
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 1.0            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -168,6 +168,8 @@ def chi_parent_smoothing(
 	}
 	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 # ----------------------------------------------------------------------------
+# maximum number or sampels per integrand
+max_sample = 100
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []
@@ -190,6 +192,5 @@ parent_smoothing['omega']  = no_smoothing
 child_smoothing = collections.OrderedDict()
 child_smoothing['pini'] = no_smoothing
 child_smoothing['iota'] = no_smoothing
-child_smoothing['rho']  = no_smoothing
 child_smoothing['chi']  = no_smoothing
 child_smoothing['omega']  = no_smoothing

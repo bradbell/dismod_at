@@ -131,6 +131,8 @@ def chi_child_smoothing(
 ) :
 	return None
 # --------------------------------------------------------------------------
+# maximum number or sampels per integrand
+max_sample = 1000
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []
