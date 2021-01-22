@@ -29,8 +29,6 @@ import os
 # usage
 if len(sys.argv) != 5 :
 	usage='''
-fit_ihme.py data_dir which_fit random_seed disease
-
 data_dir:
 Directory on the local machine that corresponds to /ihme/epi/at_cascade.
 A copy of the IHME database, on the local machine, for the specified disease
@@ -58,6 +56,7 @@ The argument disease, and relative directory, must be one of the following:
 '''
 	for key in ihme_case_study_dict :
 		usage +=  key + ': ' + ihme_case_study_dict[key] + '\n'
+	usage += '\nfit_ihme.py data_dir which_fit random_seed disease'
 	sys.exit(usage)
 #
 # This is used to print help for each of the routines in this file
@@ -1877,7 +1876,7 @@ for rate_name in specific.child_smoothing :
 # set options
 set_option('tolerance_fixed',    '1e-6')
 set_option('max_num_iter_fixed', '50')
-set_option('zero_sum_child_rate', 'iota chi')
+set_option('zero_sum_child_rate', 'iota rho chi')
 set_option('bound_random',        '3')
 set_option('meas_noise_effect',   'add_std_scale_none')
 #
