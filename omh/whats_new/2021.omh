@@ -43,6 +43,9 @@ Add dialysis to the $code fit_ihme.py$$ disease list:
 crohns, dialysis, kidney, t1_diabetes.
 $lnext
 Add the relative path to the log for each $code fit_ihme.py$$ disease.
+$lnext
+Change $code fit_ihme.py$$ so setting parent rate to zero
+also sets corresponding child rates to zero.
 $lend
 
 $head 01-22$$

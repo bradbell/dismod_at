@@ -1475,21 +1475,26 @@ def identically_one_covariate () :
 	#
 	return covariate_id
 # -----------------------------------------------------------------------------
-def zero_rate(rate_name, zero_parent, zero_children) :
-	# zero as rate's parent (fixed efffects) or children (random effects)
-	assert zero_parent or zero_children
+def zero_parent_and_child_rate(rate_name) :
+	# zero a rate's parent and child values
 	#
-	msg = '\nzero_rate\n'
-	msg += 'rate = {}'.format(rate_name)
-	msg += ', zero_parent = {}'.format(zero_parent)
-	msg += ', zero_children = {}'.format(zero_children)
+	msg = '\nzero_parent_and_child_rate\nrate= {}'.format(rate_name)
 	trace( msg)
 	#
 	for row in rate_table :
 		if row['rate_name'] == rate_name :
-			if zero_parent :
 				row['parent_smooth_id'] = None
-			if zero_children :
+				row['child_smooth_id']  = None
+				row['child_nslist_id']  = None
+	put_table('rate', rate_table, rate_col_name, rate_col_type)
+def zero_child_rate(rate_name) :
+	# zero a rate's child values
+	#
+	msg = '\nzero_child_rate\nrate= {}'.format(rate_name)
+	trace( msg)
+	#
+	for row in rate_table :
+		if row['rate_name'] == rate_name :
 				row['child_smooth_id']  = None
 				row['child_nslist_id']  = None
 	put_table('rate', rate_table, rate_col_name, rate_col_type)
@@ -1588,7 +1593,8 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	# Noise covariate multipliers are not included.
 	#
 	msg  = '\nset_mulcov_bound\n'
-	msg += 'covariate = x_{}'.format(covariate_id)
+	msg += 'covariate = x_{}, max_covariate_effect = {}'
+	msg  = msg.format(covariate_id, max_covariate_effect)
 	trace( msg )
 	#
 	# reference for this covariate
@@ -1797,12 +1803,6 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 # Example Changes Note Currently Used
 # ==========================================================================
 #
-# remove child randome effecst for chi
-#	rate_name     = 'chi'
-#	zero_parent   = False
-#	zero_children = True
-#	zero_rate(rate_name, zero_parent, zero_children)
-#
 # hold out Korea before subset_data() do it gets removed
 #	hold_out_data(node_name = 'Republic of Korea', hold_out = 1)
 #	hold_out_data(node_name = 'Japan', hold_out = 1)
@@ -1858,13 +1858,13 @@ for integrand_name in integrand_list_all :
 	random_subsample_data(integrand_name, specific.max_sample)
 #
 # Set parent rate priros for this disease
+zero_parent_rate_set = set()
 for rate_name in specific.parent_smoothing :
 	fun = specific.parent_smoothing[rate_name]
 	#
 	if fun is None :
-		zero_parent   = True
-		zero_children = False
-		zero_rate(rate_name, zero_parent, zero_children)
+		zero_parent_and_child_rate(rate_name)
+		zero_parent_rate_set.add(rate_name)
 	else :
 		parent_rate = True
 		result = fun( age_table, time_table, density_name2id, integrand_data )
@@ -1878,9 +1878,8 @@ for rate_name in specific.child_smoothing :
 	fun = specific.child_smoothing[rate_name]
 	#
 	if fun is None :
-		zero_parent   = False
-		zero_children = True
-		zero_rate(rate_name, zero_parent, zero_children)
+		if rate_name not in zero_parent_rate_set :
+			zero_child_rate(rate_name)
 	else :
 		parent_rate = False
 		result = fun( age_table, time_table, density_name2id, integrand_data )

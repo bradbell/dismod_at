@@ -190,5 +190,5 @@ parent_smoothing['chi']    = chi_parent_smoothing
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
-child_smoothing['pini']   = None
+# child_smoothing['pini']   = None # Note necessary because parent is None
 child_smoothing['chi']    = None
