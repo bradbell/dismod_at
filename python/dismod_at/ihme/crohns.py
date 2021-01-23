@@ -93,6 +93,9 @@ relative_path = 'data/475533/dbs/1/2/dismod.db'
 # maximum number or sampels per integrand
 max_sample = 1000
 #
+# maximum number of iterations when optimizing fixed effects
+max_num_iter_fixed = 50
+#
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []
 #

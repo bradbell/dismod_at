@@ -88,7 +88,8 @@ def iota_parent_smoothing(
 def rho_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
-	age_grid     = [ float(age)  for age in range(0, 105, 5) ]
+	age_grid     = [ float(age) for age in range(0, 60, 10) ]
+	age_grid    += [ float(age) for age in range(60, 105, 5) ]
 	time_grid    = [ 1990.0, 2020.0 ]
 	density_id   = density_name2id['uniform']
 	value_prior = {
@@ -108,7 +109,7 @@ def rho_parent_smoothing(
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 1.0            ,
+		'std'        : 0.5            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -168,6 +169,9 @@ relative_path = 'data/475527/dbs/96/2/dismod.db'
 #
 # maximum number or sampels per integrand
 max_sample = 1000
+#
+# maximum number of iterations when optimizing fixed effects
+max_num_iter_fixed = 100
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []

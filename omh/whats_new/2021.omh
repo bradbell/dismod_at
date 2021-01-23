@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2021$$
 $spell
+	num_iter
 	Dismod
 	dage
 	dtime
@@ -48,7 +49,8 @@ $lnext
 Automatic detection and setting of $icode rate_case$$ in the
 $code fit_ihme.py$$ program.
 $lnext
-Move $code fit_ihme.py$$ relative path to database into
+Move $code fit_ihme.py$$ $icode relative_path$$,
+$icode max_sample$$, and $icode max_num_iter_fixed$$ into
 the disease specific file.
 $lnext
 Change the smoothing function to be $code None$$ instead of returning

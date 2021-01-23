@@ -105,6 +105,10 @@ random_seed = int(random_seed_arg)
 # If the available samples exceeds this number, a subset of size max_sample
 # is randomly chosen.
 #
+# max_num_iter_fixed:
+# Is the maxium number of optimizer iterations when optimizing the
+# fixed effects.
+#
 # ode_hold_out_list:
 # list of integrand names that are in includd when fitting without ode
 # but not with ode.
@@ -1898,7 +1902,7 @@ else :
 #
 # set options
 set_option('tolerance_fixed',    '1e-6')
-set_option('max_num_iter_fixed', '50')
+set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
 set_option('quasi_fixed',        'false')
 set_option('zero_sum_child_rate', 'iota rho chi')
 set_option('bound_random',        '3')
