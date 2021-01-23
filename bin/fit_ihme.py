@@ -15,6 +15,47 @@
 # ---------------------------------------------------------------------------
 # The files on the IHME cluster are relative to /ihme/epi/at_cascade
 # ============================================================================
+# The python module dismod_at.ihme.disease defines the following variables,
+# which contain the special settings for this disease:
+#
+# relative_path:
+# The database for this study is location in
+#	/ihme/epi/at_cascage/relative_path
+# on the IHME cluster and in
+#	data_dir/realtive_path on the local machine.
+# see the data_dir command line argument.
+#
+# max_sample:
+# Is the maximum number of samples to include for any one integrand.
+# If the available samples exceeds this number, a subset of size max_sample
+# is randomly chosen.
+#
+# max_num_iter_fixed:
+# Is the maxium number of optimizer iterations when optimizing the
+# fixed effects.
+#
+# ode_hold_out_list:
+# list of integrand names that are in includd when fitting without ode
+# but not with ode.
+#
+# max_covariate_effect:
+# Maximum absolute covariate effect; i.e, multiplier * (covariate - referece).
+# Note that exp(effect) multiplies a model value to get another model value
+# corresponding to a covariate value. Noise covariate multipliers are not
+# included in the maximum.
+#
+# parent_smoothng:
+# An ordered dictionary where keys are rate names for the smoothings
+# that are changed. The values are None or functions f with the syntax
+# (age_grid, time_grid, value_prior, dage_prior, dtime_prior) = f(
+#	 age_table, time_table, density_name2id, integrand_data
+# )
+# If the function f = parent_smooth[rate_name] is None,
+# then that parent rate is removed from the fit; i.e. it is zero.
+#
+# child_smoothing:
+# It the same as parent_smoothing except that it is the the child rates.
+#
 import sys
 import os
 #
@@ -45,10 +86,10 @@ the clock changes every second and does not repeat.
 
 disease:
 The argument disease must be one of the following:
-	 crohns, kidney, t1_diabetes.
+	 crohns, dialysis, kidney, t1_diabetes.
 It may also correspond to a file called
 	dismod_at/ihme/disease.py
-that you have added.
+that you have added below your site-packages directory.
 '''
 	usage += '\nfit_ihme.py data_dir which_fit random_seed disease'
 	sys.exit(usage)
@@ -92,44 +133,6 @@ fit_students = which_fit_arg == 'students'
 #
 # random_seed
 random_seed = int(random_seed_arg)
-#
-# The python module dismod_at.ihme.disease defines the following variables,
-# which contain the special settings for this disease:
-#
-# relative_path:
-# The database for this study is location in /ihme/epi/at_cascage/relative_path
-# on the IHME cluster and in data_dir/realtive_path on the local machine.
-#
-# max_sample:
-# Is the maximum number of samples to include for any one integrand.
-# If the available samples exceeds this number, a subset of size max_sample
-# is randomly chosen.
-#
-# max_num_iter_fixed:
-# Is the maxium number of optimizer iterations when optimizing the
-# fixed effects.
-#
-# ode_hold_out_list:
-# list of integrand names that are in includd when fitting without ode
-# but not with ode.
-#
-# max_covariate_effect:
-# Maximum absolute covariate effect; i.e, multiplier * (covariate - referece).
-# Note that exp(effect) multiplies a model value to get another model value
-# corresponding to a covariate value. Noise covariate multipliers are not
-# included in the maximum.
-#
-# parent_smoothng:
-# An ordered dictionary where keys are rate names for the smoothings
-# that are changed. The values are None or functions f with the syntax
-# (age_grid, time_grid, value_prior, dage_prior, dtime_prior) = f(
-#	 age_table, time_table, density_name2id, integrand_data
-# )
-# If the function f = parent_smooth[rate_name] is None,
-# then that parent rate is removed from the fit; i.e. it is zero.
-#
-# child_smoothing:
-# It the same as parent_smoothing except that it is the the child rates.
 #
 # ============================================================================
 # END: Settings user can change
@@ -1901,7 +1904,7 @@ else :
 		rate_case = 'iota_pos_rho_pos'
 #
 # set options
-set_option('tolerance_fixed',     '1e-6')
+set_option('tolerance_fixed',     '1e-8')
 set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
 set_option('quasi_fixed',         'false')
 set_option('zero_sum_child_rate', 'iota rho chi')

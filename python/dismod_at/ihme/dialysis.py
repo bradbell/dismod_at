@@ -128,20 +128,19 @@ def rho_parent_smoothing(
 def chi_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
-	age_grid     = [ 0.0, 100.0 ]
+	age_grid     = [ float(age) for age in range(0, 110, 10) ]
 	time_grid    = [ 1990.0, 2020.0 ]
-	density_id   = density_name2id['uniform']
+	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_chi_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 1e-5           ,
-		'upper'      : 1.0             ,
+		'lower'      : 1e-3           ,
+		'upper'      : 5.0             ,
 		'mean'       : 1e-1            ,
-		'std'        : None            ,
-		'eta'        : None            ,
+		'std'        : 1e-1            ,
+		'eta'        : 1e-8            ,
 		'nu'         : None            ,
 	}
-	density_id   = density_name2id['log_gaussian']
 	dage_prior = {
 		'prior_name' : 'parent_smoothing_chi_dage_prior',
 		'density_id' : density_id     ,
@@ -187,11 +186,9 @@ parent_smoothing = collections.OrderedDict()
 parent_smoothing['pini']   = None
 parent_smoothing['iota']   = iota_parent_smoothing
 parent_smoothing['rho']    = rho_parent_smoothing
-parent_smoothing['chi']    = None
-parent_smoothing['omega']  = None
+parent_smoothing['chi']    = chi_parent_smoothing
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
 child_smoothing['pini']   = None
 child_smoothing['chi']    = None
-child_smoothing['omega']  = None
