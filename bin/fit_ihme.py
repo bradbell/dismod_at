@@ -1819,6 +1819,9 @@ title            = case_study_title(parent_node_name)
 line             = len(title) * '-'
 trace( '\n' + line + '\n' + title + '\n' + line + '\n' )
 #
+msg = 'original database\n/ihme/epi/at_cascade/{}\n'
+trace( msg.format(specific.relative_path) )
+#
 # erase the database log table so log is just for this session
 sql_command('DROP TABLE IF EXISTS log')
 #
