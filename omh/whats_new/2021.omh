@@ -20,6 +20,7 @@ $spell
 	csv
 	dismodat.py
 	ihme
+	crohns
 $$
 $navigate%
 	Up%Location%
@@ -35,6 +36,10 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 01-23$$
+Add dialysis to the $code fit_ihme.py$$ disease list:
+crohns, dialysis, kidney, t1_diabetes.
 
 $head 01-22$$
 $list number$$
