@@ -49,7 +49,7 @@ def pini_parent_smoothing(
 def iota_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
-	age_grid     = [ float(age)  for age in range(0, 120, 20) ]
+	age_grid     = [ float(age)  for age in range(0, 110, 10) ]
 	time_grid    = [ float(time) for time in range(1990, 2030, 10) ]
 	density_id   = density_name2id['uniform']
 	value_prior = {
@@ -69,7 +69,7 @@ def iota_parent_smoothing(
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
+		'std'        : 0.5            ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -171,7 +171,7 @@ relative_path = 'data/475527/dbs/96/2/dismod.db'
 max_sample = 1000
 #
 # maximum number of iterations when optimizing fixed effects
-max_num_iter_fixed = 100
+max_num_iter_fixed = 200
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []
@@ -185,7 +185,7 @@ max_covariate_effect = 2.0
 import collections
 parent_smoothing = collections.OrderedDict()
 parent_smoothing['pini']   = None
-parent_smoothing['iota']   = None
+parent_smoothing['iota']   = iota_parent_smoothing
 parent_smoothing['rho']    = rho_parent_smoothing
 parent_smoothing['chi']    = None
 parent_smoothing['omega']  = None
@@ -193,6 +193,5 @@ parent_smoothing['omega']  = None
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
 child_smoothing['pini']   = None
-child_smoothing['iota']   = None
 child_smoothing['chi']    = None
 child_smoothing['omega']  = None

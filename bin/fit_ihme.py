@@ -1901,9 +1901,9 @@ else :
 		rate_case = 'iota_pos_rho_pos'
 #
 # set options
-set_option('tolerance_fixed',    '1e-6')
+set_option('tolerance_fixed',     '1e-6')
 set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
-set_option('quasi_fixed',        'false')
+set_option('quasi_fixed',         'false')
 set_option('zero_sum_child_rate', 'iota rho chi')
 set_option('bound_random',        '3')
 set_option('meas_noise_effect',   'add_std_scale_none')
