@@ -17,53 +17,63 @@
 # ============================================================================
 # The python module dismod_at.ihme.disease defines the following variables,
 # which contain the special settings for this disease:
-#
-# relative_path:
-# The database for this study is location in
-#	/ihme/epi/at_cascage/relative_path
-# on the IHME cluster and in
-#	data_dir/realtive_path on the local machine.
-# see the data_dir command line argument.
-#
-# max_sample:
-# Is the maximum number of samples to include for any one integrand.
-# If the available samples exceeds this number, a subset of size max_sample
-# is randomly chosen.
-#
-# max_num_iter_fixed:
-# Is the maxium number of optimizer iterations when optimizing the
-# fixed effects.
-#
-# ode_hold_out_list:
-# list of integrand names that are in includd when fitting without ode
-# but not with ode.
-#
-# max_covariate_effect:
-# Maximum absolute covariate effect; i.e, multiplier * (covariate - referece).
-# Note that exp(effect) multiplies a model value to get another model value
-# corresponding to a covariate value. Noise covariate multipliers are not
-# included in the maximum.
-#
-# parent_smoothng:
-# An ordered dictionary where keys are rate names for the smoothings
-# that are changed. The values are None or functions f with the syntax
-# (age_grid, time_grid, value_prior, dage_prior, dtime_prior) = f(
-#	 age_table, time_table, density_name2id, integrand_data
-# )
-# If the function f = parent_smooth[rate_name] is None,
-# then that parent rate is removed from the fit; i.e. it is zero.
-#
-# child_smoothing:
-# It the same as parent_smoothing except that it is the the child rates.
-#
-import sys
+# ----------------------------------------------------------------------------
+# normal imports
+import math
 import os
+import sys
+import shutil
+import subprocess
+import copy
+import numpy
+import random
+import time
 #
-# usage
-if len(sys.argv) != 5 :
-	usage='''
+print_developer_help = False
+def execute_print_developer_help() :
+	# print the help message for each fit_ihme routine
+	file_name = sys.argv[0]
+	fp        = open(file_name, 'r')
+	fp_data   = fp.read()
+	print()
+	#
+	def more(index) :
+		while fp_data[index] in ' \t' :
+			index += 1
+		if fp_data[index] == '#' :
+			return index
+		return -1
+	#
+	start  = 0
+	index  = fp_data.find('\ndef ', start)
+	while 0 <= index :
+		start  = index + 5
+		stop   = fp_data.find(':', start) + 2
+		output = fp_data[start : stop]
+		while 0 <= more(stop) :
+			start   = more(stop) + 2
+			stop    = fp_data.find('\n', stop) + 1
+			output += fp_data[start : stop]
+		print( output )
+		start = stop
+		index  = fp_data.find('\ndef ', start)
+	sys.exit(0)
+if print_developer_help :
+	# use a function to avoid defining global variables
+	execute_print_developer_help()
+#
+user_help_message_dict = {
+'usage':'''
+usage:
+fit_ihme.py data_dir which_fit random_seed disease
+fit_ihme.py help
+fit_ihme.py help topic
+''',
+
+'data_dir':'''
 data_dir:
-Directory on the local machine that corresponds to /ihme/epi/at_cascade.
+This command line arument is the Directory on the local machine that
+corresponds to /ihme/epi/at_cascade.
 A copy of the IHME database, on the local machine, for the specified disease
 has same relative path.  The subdirectory data_dir/disease is called
 the disease directory. The file fit_ihme.log, in the disese directory, is the
@@ -71,31 +81,110 @@ log for the most recent fits for this disease. The temporary database temp.db
 is also located in the disease directory. The sub-directories no_ode, yes_ode,
 and students will contain the db2csv files (*.csv) and plots (*.pdf)
 for the corresponding fits.
+''',
 
+'which_fit':'''
 which_fit:
-The argument which_fit must be one of the following:
+This command line argument must be one of the following:
 'no_ode'    for only fitting without the ode.
 'yes_ode'   for fititng without ode and then with ode.
 'students'  for fititng without ode, then with ode, then with students-t.
+''',
 
+'random_seed':'''
 random_seed:
-This is an integer value that seeds the random number generator that is
-used to sub-sample the data. If this value is zero, the system clock
-is used to seed the random number generator. The seed corresponding to
-the clock changes every second and does not repeat.
+This command line argument is an integer value that seeds the random
+number generator that is used to sub-sample the data.
+If this value is zero, the system clock is used to seed the generator.
+The seed corresponding to the clock changes every second and does not repeat.
+''',
 
+'disease':'''
 disease:
-The argument disease must be one of the following:
+The command line argument must be one of the following:
 	 crohns, dialysis, kidney, t1_diabetes.
 It may also correspond to a file called
 	dismod_at/ihme/disease.py
 that you have added below your site-packages directory.
-'''
-	usage += '\nfit_ihme.py data_dir which_fit random_seed disease'
-	sys.exit(usage)
-#
-# This is used to print help for each of the routines in this file
-print_help         = False
+''',
+
+'relative_path':'''
+relative_path:
+This variable, in the python file for this disease,
+is the relative path of database for this study; i.e.,
+	/ihme/epi/at_cascage/relative_path
+is the path on the IHME cluster and
+	data_dir/realtive_path
+is the path on the local machine; see the data_dir command line argument.
+''',
+
+'max_sample':'''
+max_sample:
+max_sample:
+This variable, in the python file for this disease,
+is the maximum number of samples to include for any one integrand.
+If the available samples exceeds this number, a subset of size max_sample
+is randomly chosen.
+''',
+
+'max_num_iter_fixed':'''
+max_num_iter_fixed:
+This variable, in the python file for this disease,
+is the maxium number of optimizer iterations when optimizing the ixed effects.
+''',
+
+'ode_hold_out_list':'''
+ode_hold_out_list:
+This variable, in the python file for this disease,
+is a list of integrand names that are in includd when fitting without ode
+but not with ode.
+''',
+
+'max_covariate_effect':'''
+max_covariate_effect:
+This variable, in the python file for this disease, is the
+maximum absolute covariate effect; i.e, multiplier * (covariate - referece).
+Note that exp(effect) multiplies a model value to get another model value
+corresponding to a covariate value. Noise covariate multipliers are not
+included in the maximum.
+''',
+
+'parent_smoothng':'''
+parent_smoothng:
+This variable, in the python file for this disease, is the
+an ordered dictionary where keys are rate names for the smoothings
+that are changed. The values are None or functions f with the syntax
+(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = f(
+	age_table, time_table, density_name2id, integrand_data
+)
+If the function f = parent_smooth[rate_name] is None,
+then that parent and child rates are removed from the fit; i.e. they are zero.
+
+''',
+'child_smoothing':'''
+child_smoothing:
+It the same as parent_smoothing except that it is the the child rates.
+In addition setting a chiild smmothing to None does not affect the
+correpsonding parent rates.
+''',
+}
+if len(sys.argv) == 2 :
+	if sys.argv[1] == 'help' :
+		msg = 'The folllowing is a list of fit_ihme help topics:'
+		for key in user_help_message_dict :
+			print(key)
+		sys.exit(0)
+if len(sys.argv) == 3 :
+	if sys.argv[1] == 'help' :
+		if sys.argv[2] in user_help_message_dict :
+			print( user_help_message_dict[sys.argv[2]] )
+			sys.exit(0)
+		msg = '{} is not a valid help topic'.format(sys.argv[2])
+		print(msg)
+		sys.exit(1)
+if len(sys.argv) != 5 :
+	print( user_help_message_dict['usage'] )
+	sys.exit(1)
 #
 # data_dir_arg
 data_dir_arg = sys.argv[1]
@@ -134,26 +223,11 @@ fit_students = which_fit_arg == 'students'
 # random_seed
 random_seed = int(random_seed_arg)
 #
-# ============================================================================
-# END: Settings user can change
-# ============================================================================
 if not fit_without_ode :
 	assert not fit_with_ode
 if not fit_with_ode :
 	assert not fit_students
 # ----------------------------------------------------------------------
-# imports
-#
-# normale imports
-import math
-import os
-import sys
-import shutil
-import subprocess
-import copy
-import numpy
-import random
-import time
 #
 # check for sandbox version of dismod_at
 if os.path.isdir('python/dismod_at') :
@@ -174,38 +248,6 @@ try :
 	exec('import dismod_at.ihme.' + disease_arg + ' as specific' )
 except :
 	sys.exit('Cannot find dismod_at.ihme.' + disease_arg)
-# ----------------------------------------------------------------------------
-def execute_print_help() :
-	# print the help message for each fit_ihme routine
-	file_name = sys.argv[0]
-	fp        = open(file_name, 'r')
-	fp_data   = fp.read()
-	print()
-	#
-	def more(index) :
-		while fp_data[index] in ' \t' :
-			index += 1
-		if fp_data[index] == '#' :
-			return index
-		return -1
-	#
-	start  = 0
-	index  = fp_data.find('\ndef ', start)
-	while 0 <= index :
-		start  = index + 5
-		stop   = fp_data.find(':', start) + 2
-		output = fp_data[start : stop]
-		while 0 <= more(stop) :
-			start   = more(stop) + 2
-			stop    = fp_data.find('\n', stop) + 1
-			output += fp_data[start : stop]
-		print( output )
-		start = stop
-		index  = fp_data.find('\ndef ', start)
-	sys.exit(0)
-if print_help :
-	# use a function to avoid defining global variables
-	execute_print_help()
 # ----------------------------------------------------------------------------
 disease_directory = None
 temp_database     = None

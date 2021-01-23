@@ -46,6 +46,8 @@ Add the relative path to the log for each $code fit_ihme.py$$ disease.
 $lnext
 Change $code fit_ihme.py$$ so setting parent rate to zero
 also sets corresponding child rates to zero.
+$lnext
+Get a list of help topic using$code fit_ihme.py help$$.
 $lend
 
 $head 01-22$$
