@@ -106,6 +106,8 @@ The command line argument must be one of the following:
 It may also correspond to a file called
 	dismod_at/ihme/disease.py
 that you have added below your site-packages directory.
+See the following files for examples of how to do this:
+	crohns.py, dialysis.py, kidney.py, t1_diabetes.py
 ''',
 
 'relative_path':'''
@@ -169,6 +171,12 @@ correpsonding parent rates.
 ''',
 
 'whats_new_2021':'''
+
+01-24:
+1. Print and log the actual limits (in addition to the median factor) for
+   add_mesas_noise_mulcov and set_mulcov_bound.
+2. Change the add_meas_noise_mulcov terms to use variances instead of
+   standard deviations.
 
 01-23:
 1. Add dialysis to the disease list.
@@ -1777,9 +1785,11 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	# group_id: specifies the group for the covariate multiplier.
 	#
 	# factor: is a dictionary with following keys: mean, lower, upper.
-	# For each key the factor multipliers the median of the data for this
-	# integrand to get the corresponding value in the uniform prior for the
-	# covariate multiplier.
+	# For each key the factor multipliers the absolute value of the
+	# median of the data for this integrand to get the corresponding value
+	# in the uniform prior for the square root of the covariate multiplier.
+	# In other words, the factor is times a value is in standard deviation
+	# units, while the prior values are in variance units.
 	#
 	# Note that meas_noise multipliers can't have
 	# ramdom effect (so the subgroup id is null in the mulcov table).
@@ -1793,21 +1803,19 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 			group_name = row['group_name']
 	assert group_name is not None
 	#
-	msg  = '\nadd_meas_noise_mulcov\n'
-	msg += 'integrand   = {}'.format(integrand_name)
-	msg += ', group = {}'.format(group_name)
-	msg += '\nvalue_prior = uniform'
-	msg += ', lower:m*{}'.format(factor['lower'])
-	msg += ', mean:m*{}'.format(factor['mean'])
-	msg += ', upper:m*{}'.format(factor['upper'])
-	msg += '\n              where m is the median of the'
-	msg += ' {} data'.format(integrand_name)
-	trace( msg )
+	median = abs( numpy.median( integrand_data[integrand_name] ) )
+	lower  = ( median * factor['lower'] )**2
+	mean   = ( median * factor['mean']  )**2
+	upper  = ( median * factor['upper'] )**2
 	#
-	median = numpy.median( integrand_data[integrand_name] )
-	lower  = median * factor['lower']
-	mean   = median * factor['mean']
-	upper  = median * factor['upper']
+	msg  = '\nadd_meas_noise_mulcov\n'
+	msg += 'integrand = {}, group = {}, uniform value prior\n'
+	msg  = msg.format(integrand_name, group_name)
+	msg += 'lower = |median|*{} = {}\n'.format(factor['lower'], lower)
+	msg += 'mean  = |median|*{} = {}\n'.format(factor['mean'],  mean)
+	msg += 'upper = |median|*{} = {}\n'.format(factor['upper'], upper)
+	msg += 'where median is the median of the {} data'.format(integrand_name)
+	trace( msg )
 	#
 	# integrand_id
 	integrand_id = integrand_name2id[integrand_name]
@@ -1972,12 +1980,12 @@ set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
 set_option('quasi_fixed',         'false')
 set_option('zero_sum_child_rate', 'iota rho chi')
 set_option('bound_random',        '3')
-set_option('meas_noise_effect',   'add_std_scale_none')
+set_option('meas_noise_effect',   'add_var_scale_none')
 set_option('rate_case',           rate_case)
 #
 # add measurement noise covariates
 group_id = 0
-factor   = { 'lower':1e-2, 'mean':1e-2, 'upper':1e-2 }
+factor   = { 'lower':1e-1, 'mean':1e-1, 'upper':1e-1 }
 for integrand_name in integrand_list_all :
 	add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor)
 #
