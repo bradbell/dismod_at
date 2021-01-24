@@ -37,21 +37,7 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
-$head 01-23$$
-$list number$$
-Add dialysis to the $code fit_ihme.py$$ disease list:
-crohns, dialysis, kidney, t1_diabetes.
-$lnext
-Add the relative path to the log for each $code fit_ihme.py$$ disease.
-$lnext
-Change $code fit_ihme.py$$ so setting parent rate to zero
-also sets corresponding child rates to zero.
-$lnext
-Get a list of help topic using$code fit_ihme.py help$$.
-$lend
-
 $head 01-22$$
-$list number$$
 The $cref/set/set_command/$$ $code option$$ command
 no longer requires the option table it to be consistent with all the
 other $cref input$$ tables.
@@ -59,17 +45,6 @@ It only has to be self consistent.
 This enables one to use the $code set option$$ command to change the
 $cref/rate_case/option_table/rate_case/$$ to a value
 that is consistent with the rest of the database.
-$lnext
-Automatic detection and setting of $icode rate_case$$ in the
-$code fit_ihme.py$$ program.
-$lnext
-Move $code fit_ihme.py$$ $icode relative_path$$,
-$icode max_sample$$, and $icode max_num_iter_fixed$$ into
-the disease specific file.
-$lnext
-Change the smoothing function to be $code None$$ instead of returning
-$code None$$ when a rate is zero. This is simpler.
-$lend
 
 
 $head 01-21$$
@@ -77,7 +52,7 @@ The program $code db_simplify$$ was changed to
 $code fit_ihme.py$$ because it fits ihme databases.
 It now gets installed and is part of the User API.
 You can use it, if you have access to the ihme databases,
-but there is no documentation (specifications).
+but it is not part of this documentation (specifications).
 If you execute $code fit_ihme.py$$ with no arguments,
 you will get a usage message that give you some idea how to use it.
 

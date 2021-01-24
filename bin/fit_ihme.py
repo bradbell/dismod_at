@@ -167,6 +167,21 @@ It the same as parent_smoothing except that it is the the child rates.
 In addition setting a chiild smmothing to None does not affect the
 correpsonding parent rates.
 ''',
+
+'whats_new_2021':'''
+
+01-23:
+1. Add dialysis to the disease list.
+2. Add the relative path to the log for each disease.
+3. Setting parent rates to zero also sets corresponding child rates to zero.
+4. Add help syntax to fit_ihme.py
+
+01-22:
+1. Automatic detection and setting of proper rate_case.
+2. Move relative_path, max_sample, max_num_iter_fixed to disease specific file.
+3. Change the smoothing function to be None, instead of returning None,
+   when seting a rate to zero. This is simpler.
+'''
 }
 if len(sys.argv) == 2 :
 	if sys.argv[1] == 'help' :
@@ -1634,11 +1649,6 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	# corresponding effect is bounded by disease_specific_max_covariate_effect.
 	# Noise covariate multipliers are not included.
 	#
-	msg  = '\nset_mulcov_bound\n'
-	msg += 'covariate = x_{}, max_covariate_effect = {}'
-	msg  = msg.format(covariate_id, max_covariate_effect)
-	trace( msg )
-	#
 	# reference for this covariate
 	reference = covariate_table[covariate_id]['reference']
 	#
@@ -1686,6 +1696,15 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	put_table('smooth_grid',
 		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
 	)
+	if lower is None :
+		lower = - float('inf')
+	if upper is None :
+		upper = + float('inf')
+	msg  = '\nset_mulcov_bound\n'
+	msg += 'covariate = x_{}, max_covariate_effect = {}, '
+	msg += 'lower = {:.5g}, upper = {:.5g}'
+	msg  = msg.format(covariate_id, max_covariate_effect, lower, upper)
+	trace( msg )
 	return
 # -----------------------------------------------------------------------------
 def set_rate_smoothing(parent_rate, rate_name,
