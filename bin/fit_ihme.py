@@ -1811,9 +1811,9 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	msg  = '\nadd_meas_noise_mulcov\n'
 	msg += 'integrand = {}, group = {}, uniform value prior\n'
 	msg  = msg.format(integrand_name, group_name)
-	msg += 'lower = |median|*{} = {}\n'.format(factor['lower'], lower)
-	msg += 'mean  = |median|*{} = {}\n'.format(factor['mean'],  mean)
-	msg += 'upper = |median|*{} = {}\n'.format(factor['upper'], upper)
+	msg += 'lower = (|median|*{})^2 = {:.5g}\n'.format(factor['lower'], lower)
+	msg += 'mean  = (|median|*{})^2 = {:.5g}\n'.format(factor['mean'],  mean)
+	msg += 'upper = (|median|*{})^2 = {:.5g}\n'.format(factor['upper'], upper)
 	msg += 'where median is the median of the {} data'.format(integrand_name)
 	trace( msg )
 	#
