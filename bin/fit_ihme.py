@@ -13,11 +13,6 @@
 #      changed to account for this. For now, fit_ihme only references
 #      covariates by their covariate_id.
 # ---------------------------------------------------------------------------
-# The files on the IHME cluster are relative to /ihme/epi/at_cascade
-# ============================================================================
-# The python module dismod_at.ihme.disease defines the following variables,
-# which contain the special settings for this disease:
-# ----------------------------------------------------------------------------
 # normal imports
 import math
 import os
@@ -73,7 +68,7 @@ fit_ihme.py help topic
 'data_dir':'''
 data_dir:
 This command line arument is the Directory on the local machine that
-corresponds to /ihme/epi/at_cascade.
+corresponds to /share/epi/at_cascade.
 A copy of the IHME database, on the local machine, for the specified disease
 has same relative path.  The subdirectory data_dir/disease is called
 the disease directory. The file fit_ihme.log, in the disese directory, is the
@@ -114,7 +109,7 @@ See the following files for examples of how to do this:
 relative_path:
 This variable, in the python file for this disease,
 is the relative path of database for this study; i.e.,
-	/ihme/epi/at_cascage/relative_path
+	/share/epi/at_cascage/relative_path
 is the path on the IHME cluster and
 	data_dir/realtive_path
 is the path on the local machine; see the data_dir command line argument.
@@ -151,7 +146,7 @@ corresponding to a covariate value. Noise covariate multipliers are not
 included in the maximum.
 ''',
 
-'parent_smoothng':'''
+'parent_smoothing':'''
 parent_smoothng:
 This variable, in the python file for this disease, is the
 an ordered dictionary where keys are rate names for the smoothings
@@ -166,11 +161,16 @@ then that parent and child rates are removed from the fit; i.e. they are zero.
 'child_smoothing':'''
 child_smoothing:
 It the same as parent_smoothing except that it is the the child rates.
-In addition setting a chiild smmothing to None does not affect the
+In addition setting a chiild smothing to None does not affect the
 correpsonding parent rates.
 ''',
 
 'whats_new_2021':'''
+
+01-25:
+1. Correct /ihme/epi/at_cascade -> /share/epi/at_cascade.
+2. Fix some help spelling errors.
+3. Change plot title to only put location on first line.
 
 01-24:
 1. Print and log the actual limits (in addition to the median factor) for
@@ -362,14 +362,15 @@ def plot_fit(which_fit) :
 # ----------------------------------------------------------------------------
 def case_study_title(location, which_fit = None) :
 	# return the title for this study and fit
+	sex_map       = { '1':'male', '2':'female', '3':'both' }
 	text          = specific.relative_path.split('/')
-	model_id      = text[1]
-	sex           = text[4]
+	version       = text[1]
+	sex           = sex_map[ text[4] ]
 	disease       = disease_arg
-	result        = location + ': ' + disease
+	result        = location
 	if which_fit is not None :
 		result += '\n' + which_fit
-	result += ': sex=' + sex + ' model_id=' + model_id
+	result += ', {}, {}, version={}'.format(disease, sex, version);
 	return result
 # ----------------------------------------------------------------------------
 def get_table (table_name) :
@@ -1340,7 +1341,7 @@ def new_smoothing(age_grid, time_grid, value_prior, dage_prior, dtime_prior):
 	# time grid points. The smooth, smooth_grid, age, and time tables are
 	# modified, but the new versions are not written by this routine.
 	# The arguments value_prior, dage_prior, dtime_prior,
-	# contain the priors used in the smmothing.
+	# contain the priors used in the smothing.
 	#
 	def table_value2id(table, col_name, value_list) :
 		result = list()
@@ -1888,7 +1889,7 @@ title            = case_study_title(parent_node_name)
 line             = len(title) * '-'
 trace( '\n' + line + '\n' + title + '\n' + line + '\n' )
 #
-msg = 'original database\n/ihme/epi/at_cascade/{}\n'
+msg = 'original database\n/share/epi/at_cascade/{}\n'
 trace( msg.format(specific.relative_path) )
 #
 # erase the database log table so log is just for this session
