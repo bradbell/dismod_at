@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 01-23 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,7 +61,6 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
-<option>01-23</option>
 <option>01-22</option>
 <option>01-21</option>
 <option>01-19</option>
@@ -80,29 +79,8 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
 <br>
-<b><big><a name="01-23" id="01-23">01-23</a></big></b>
-
-<ol type="1"><li>
-Add dialysis to the <code><font color="blue">fit_ihme.py</font></code> disease list:
-crohns, dialysis, kidney, t1_diabetes.
-</li><li>
-
-Add the relative path to the log for each <code><font color="blue">fit_ihme.py</font></code> disease.
-</li><li>
-
-Change <code><font color="blue">fit_ihme.py</font></code> so setting parent rate to zero
-also sets corresponding child rates to zero.
-</li><li>
-
-Get a list of help topic using<code><font color="blue">fit_ihme.py help</font></code>.
-</li></ol>
-
-
-<br>
-<br>
 <b><big><a name="01-22" id="01-22">01-22</a></big></b>
-
-<ol type="1"><li>
+<br>
 The <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set</span></a>
  <code><font color="blue">option</font></code> command
 no longer requires the option table it to be consistent with all the
@@ -113,29 +91,6 @@ This enables one to use the <code><font color="blue">set option</font></code> co
 <a href="option_table.htm#rate_case" target="_top"><span style='white-space: nowrap'>rate_case</span></a>
  to a value
 that is consistent with the rest of the database.
-</li><li>
-
-Automatic detection and setting of 
-<code><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i></code>
- in the
-<code><font color="blue">fit_ihme.py</font></code> program.
-</li><li>
-
-Move <code><font color="blue">fit_ihme.py</font></code> 
-<code><i><font color="black"><span style='white-space: nowrap'>relative_path</span></font></i></code>
-,
-
-<code><i><font color="black"><span style='white-space: nowrap'>max_sample</span></font></i></code>
-, and 
-<code><i><font color="black"><span style='white-space: nowrap'>max_num_iter_fixed</span></font></i></code>
- into
-the disease specific file.
-</li><li>
-
-Change the smoothing function to be <code><font color="blue">None</font></code> instead of returning
-<code><font color="blue">None</font></code> when a rate is zero. This is simpler.
-</li></ol>
-
 
 
 <br>
@@ -146,7 +101,7 @@ The program <code><font color="blue">db_simplify</font></code> was changed to
 <code><font color="blue">fit_ihme.py</font></code> because it fits ihme databases.
 It now gets installed and is part of the User API.
 You can use it, if you have access to the ihme databases,
-but there is no documentation (specifications).
+but it is not part of this documentation (specifications).
 If you execute <code><font color="blue">fit_ihme.py</font></code> with no arguments,
 you will get a usage message that give you some idea how to use it.
 
