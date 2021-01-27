@@ -60,9 +60,22 @@ if print_developer_help :
 user_help_message_dict = {
 'usage':'''
 usage:
-fit_ihme.py data_dir disease which_fit data_dir [ random_seed ]
+fit_ihme.py data_dir disease which_fit [ random_seed ]
 fit_ihme.py help
 fit_ihme.py help topic
+''',
+
+'data_dir':'''
+data_dir:
+This command line argument is the director on the local machine that
+corresponds to /share/epi/at_cascade.
+A copy of the IHME database, on the local machine, for the specified disease
+has same relative path.  The subdirectory data_dir/disease is called
+the disease directory. The file fit_ihme.log, in the disese directory, is the
+log for the most recent fits for this disease. The temporary database temp.db
+is also located in the disease directory. The sub-directories no_ode, yes_ode,
+and students will contain the db2csv files (*.csv) and plots (*.pdf)
+for the corresponding fits.
 ''',
 
 'disease':'''
@@ -82,19 +95,6 @@ This command line argument must be one of the following:
 'no_ode'    fit without ode integrands (no previous fit necessary).
 'yes_ode'   fit with ode integrands    (previous no_ode fit necessary).
 'students'  fit using students-t       (previous yes_ode fit necessary).
-''',
-
-'data_dir':'''
-data_dir:
-This command line argument is the director on the local machine that
-corresponds to /share/epi/at_cascade.
-A copy of the IHME database, on the local machine, for the specified disease
-has same relative path.  The subdirectory data_dir/disease is called
-the disease directory. The file fit_ihme.log, in the disese directory, is the
-log for the most recent fits for this disease. The temporary database temp.db
-is also located in the disease directory. The sub-directories no_ode, yes_ode,
-and students will contain the db2csv files (*.csv) and plots (*.pdf)
-for the corresponding fits.
 ''',
 
 'random_seed':'''
@@ -169,8 +169,8 @@ correpsonding parent rates.
 'whats_new_2021':'''
 
 01-27:
-1. Change command line order to disease, which_file, data_dir, random_seed.
-2. Change so continues from previous fit (does not have to redo them).
+1. Change command line order to data_dir, disease, which_fit, random_seed.
+2. Change so continues from previous fit (do not have to redo fits).
 
 01-25:
 1. Correct /ihme/epi/at_cascade -> /share/epi/at_cascade.
@@ -216,15 +216,21 @@ if len(sys.argv) not in [4, 5] :
 	print( user_help_message_dict['usage'] )
 	sys.exit(1)
 #
+# data_dir_arg
+data_dir_arg = sys.argv[1]
+if not os.path.isdir(data_dir_arg) :
+	msg = 'data_dir = {} is not a directory'.format(data_dir_arg)
+	sys.exit(msg)
+#
 # disease
-disease_arg = sys.argv[1]
+disease_arg = sys.argv[2]
 if disease_arg not in [ 'crohns', 'kidney', 't1_diabetes' ] :
 	msg  = 'Warning: disease = {} is not one that comes with the install\n'
 	msg += 'You must have added the file site-packages/dismod_at/{}.py'
 	print( msg.format(disease_arg, disease_arg) )
 #
 # which_fit
-which_fit_arg = sys.argv[2]
+which_fit_arg = sys.argv[3]
 if which_fit_arg not in [ 'no_ode', 'yes_ode', 'students' ] :
 	msg = 'which_fit = {} is not one of following: no_ode, yes_ode, students'
 	sys.exit( msg.format(which_fit_arg) )
@@ -235,12 +241,6 @@ if len(sys.argv) == 4 and which_fit_arg == 'no_ode' :
 if len(sys.argv) == 5 and which_fit_arg != 'no_ode' :
 	msg  = 'random_seed should not be present when '
 	msg += 'which_fit is {}'.format(which_fit_arg)
-	sys.exit(msg)
-#
-# data_dir_arg
-data_dir_arg = sys.argv[3]
-if not os.path.isdir(data_dir_arg) :
-	msg = 'data_dir = {} is not a directory'.format(data_dir_arg)
 	sys.exit(msg)
 #
 if which_fit_arg == 'no_ode' :
