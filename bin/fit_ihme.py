@@ -322,20 +322,26 @@ def trace(message = None, operation = None) :
 	fp_log_file = None
 	return
 # ----------------------------------------------------------------------------
-def plot_fit(which_fit) :
-	# output plot files (*.pdf) and db2csv files (*.csv) in sub-directory
-	# of the disease_directory.
-	#
+def new_fit_directory(which_fit) :
 	assert which_fit in [ 'no_ode', 'yes_ode', 'students' ]
-	directory = disease_directory + '/' + which_fit
 	#
-	# if necessary, create the plot sub-directory for this fit
-	if os.path.exists(directory) :
-		# erase previous contentes of this plot directory
-		for name in os.listdir(directory) :
-			os.remove(directory + '/' + name)
-	if not os.path.exists(directory) :
-		os.mkdir(directory)
+	# fit_directory
+	fit_directory = disease_directory + '/' + which_fit
+	#
+	# if necessary, create this fit directory
+	if os.path.exists(fit_directory) :
+		# erase previous contentes of this fit_directory
+		for name in os.listdir(fit_directory) :
+			os.remove(fit_directory + '/' + name)
+	if not os.path.exists(fit_directory) :
+		os.mkdir(fit_directory)
+	#
+	# database for this fit
+	fit_database = fit_directory + '/' + which_fit + '.db'
+	shutil.copyfile(temp_database, fit_database )
+	#
+	# csv files
+	system_command( [ 'dismodat.py',  fit_database, 'db2csv' ] )
 	#
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
@@ -345,23 +351,21 @@ def plot_fit(which_fit) :
 	for (rate_id, row) in enumerate(rate_table) :
 		if row['parent_smooth_id'] is not None :
 			rate_name = row['rate_name']
-			plot_rate(row['rate_name'], directory, which_fit)
+			plot_rate(row['rate_name'], fit_directory, which_fit)
 	#
 	# plot data
 	for integrand_name in integrand_list_all :
-		plot_integrand(integrand_name, directory, which_fit)
+		plot_integrand(integrand_name, fit_directory, which_fit)
 	#
-	# plot prediction
+	# plot predictions
 	predict_integrand_list   = [ 'susceptible', 'withC' ]
 	covariate_integrand_list = integrand_list_yes_ode
 	plot_predict(
-		covariate_integrand_list, predict_integrand_list, directory, which_fit
+		covariate_integrand_list,
+		predict_integrand_list,
+		fit_directory,
+		which_fit
 	)
-	#
-	# db2csv
-	copy_database = directory + '/temp.db'
-	shutil.copyfile(temp_database, copy_database )
-	system_command( [ 'dismodat.py',  copy_database, 'db2csv' ] )
 # ----------------------------------------------------------------------------
 def case_study_title(location, which_fit = None) :
 	# return the title for this study and fit
@@ -2030,7 +2034,7 @@ if fit_without_ode :
 	#
 	which_fit = 'no_ode'
 	check_last_fit(which_fit)
-	plot_fit(which_fit)
+	new_fit_directory(which_fit)
 	# ------------------------------------------------------------------------
 	if fit_with_ode :
 		#
@@ -2056,7 +2060,7 @@ if fit_without_ode :
 		#
 		which_fit = 'yes_ode'
 		check_last_fit(which_fit)
-		plot_fit(which_fit)
+		new_fit_directory(which_fit)
 		# --------------------------------------------------------------------
 		if fit_students :
 			# change data likelihood to use students-t
@@ -2083,7 +2087,7 @@ if fit_without_ode :
 			#
 			which_fit = 'students'
 			check_last_fit(which_fit)
-			plot_fit(which_fit)
+			new_fit_directory(which_fit)
 # ----------------------------------------------------------------------
 msg  = '\n'
 msg += '\nintegrands   = ' + str( integrand_list_all )
