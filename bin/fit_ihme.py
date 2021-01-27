@@ -61,6 +61,7 @@ user_help_message_dict = {
 'usage':'''
 usage:
 fit_ihme.py data_dir disease which_fit [ random_seed ]
+fit_ihme.py data_dir disease which_fit sample number_sample
 fit_ihme.py help
 fit_ihme.py help topic
 ''',
@@ -104,6 +105,15 @@ It is an integer value that seeds the random
 number generator that is used to sub-sample the data.
 If this value is zero, the system clock is used to seed the generator.
 The seed corresponding to the clock changes every second and does not repeat.
+''',
+
+'number_sample':'''
+number_sample:
+If the explicit text 'sample' is present in the syntax, the value
+number_smaple must follow. This specifies the number of samples of the
+posterior distribution for the model variables to simulate.
+These samples correspond to the fit specified by which_fit.
+The dismod_at asymptotic sampling method is used.
 ''',
 
 'relative_path':'''
@@ -212,9 +222,12 @@ if len(sys.argv) == 3 and sys.argv[1] == 'help' :
 	sys.exit(1)
 #
 # parse command line arguments
-if len(sys.argv) not in [4, 5] :
+if len(sys.argv) not in [4, 5, 6] :
 	print( user_help_message_dict['usage'] )
 	sys.exit(1)
+if len(sys.argv) == 6 and sys.argv[4] != 'sample' :
+	msg = 'The text "sample" must preceed the number_sample argument'
+	sys.exit(msg)
 #
 # data_dir_arg
 data_dir_arg = sys.argv[1]
@@ -236,20 +249,40 @@ if which_fit_arg not in [ 'no_ode', 'yes_ode', 'students' ] :
 	sys.exit( msg.format(which_fit_arg) )
 #
 if len(sys.argv) == 4 and which_fit_arg == 'no_ode' :
-	msg  = 'random_seed is required when which_fit is no_ode.'
-	sys.exit(msg)
-if len(sys.argv) == 5 and which_fit_arg != 'no_ode' :
-	msg  = 'random_seed should not be present when '
-	msg += 'which_fit is {}'.format(which_fit_arg)
+	msg  = 'random_seed or sample is required when which_fit is no_ode.'
 	sys.exit(msg)
 #
-if which_fit_arg == 'no_ode' :
-	#
-	# random_seed
-	random_seed_arg = sys.argv[4]
-	if not random_seed_arg.isdigit() :
-		msg = 'random_seed = {} not a positive integer without sign in front'
-		sys.exit( msg.format(random_seed_arg) )
+# sample_command
+# random_seed
+# number_sample
+sample_command    = False
+random_seed_arg   = None
+number_sample_arg = None
+if 4 < len( sys.argv ) :
+	sample_command = sys.argv[4] == 'sample'
+	if not sample_command :
+		if which_fit_arg != 'no_ode' :
+			msg  = 'random_seed should not be present when '
+			msg += 'which_fit is {}'.format(which_fit_arg)
+			sys.exit(msg)
+		if which_fit_arg == 'no_ode' :
+			# random_seed
+			random_seed_arg = sys.argv[4]
+			if not random_seed_arg.isdigit() :
+				msg  = 'random_seed = {} not a positive integer '
+				msg += 'without sign in front'
+				sys.exit( msg.format(random_seed_arg) )
+	if sample_command :
+		if len(sys.argv) != 6 :
+			msg = 'sample comamnd requires number_sample argument'
+			sys.exit(msg)
+		# number sample
+		number_sample_arg = sys.argv[5]
+		if not number_sample_arg.isdigit() :
+			msg  = 'number_sample = {} not a positive integer '
+			msg += 'without sign in front'
+			sys.exit( msg.format(number_sample_arg) )
+
 # ----------------------------------------------------------------------
 #
 # check for sandbox version of dismod_at
@@ -284,7 +317,11 @@ def setup() :
 	# temporary database that gets modified
 	temp_database     = disease_directory + '/temp.db'
 	#
-	if which_fit_arg == 'no_ode' :
+	if sample_command :
+		fit_database  = disease_directory + '/' + which_fit_arg
+		fit_database += '/' + which_fit_arg + '.db'
+		shutil.copyfile(fit_database, temp_database)
+	elif which_fit_arg == 'no_ode' :
 		original_database = data_dir_arg + '/' + specific.relative_path
 		if not os.path.exists(disease_directory) :
 			os.mkdir(disease_directory)
@@ -1927,7 +1964,28 @@ start_time = time.time()
 integrand_list_yes_ode = get_integrand_list(True)
 integrand_list_no_ode  = get_integrand_list(False)
 integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
-#
+# --------------------------------------------------------------------
+if sample_command :
+	#
+	# continue the fit_ihme.log file
+	trace(operation = 'continue')
+	#
+	# dismod_at sample command
+	system_command([
+		'dismod_at',
+		temp_database,
+		'sample',
+		'asymptotic',
+		'both',
+		number_sample_arg,
+	])
+	msg  = '\nTotal time   = '
+	msg += str( round( time.time() - start_time ) ) + ' seconds'
+	trace( msg )
+	trace('fit_ihme.py: OK')
+	trace('stop')
+	sys.exit(0)
+# --------------------------------------------------------------------
 if which_fit_arg == 'no_ode'  :
 	# start new fit_ihme.log file
 	trace(operation = 'start')
