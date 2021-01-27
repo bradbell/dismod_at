@@ -60,22 +60,9 @@ if print_developer_help :
 user_help_message_dict = {
 'usage':'''
 usage:
-fit_ihme.py data_dir disease which_fit random_seed
+fit_ihme.py disease which_fit data_dir random_seed
 fit_ihme.py help
 fit_ihme.py help topic
-''',
-
-'data_dir':'''
-data_dir:
-This command line arument is the Directory on the local machine that
-corresponds to /share/epi/at_cascade.
-A copy of the IHME database, on the local machine, for the specified disease
-has same relative path.  The subdirectory data_dir/disease is called
-the disease directory. The file fit_ihme.log, in the disese directory, is the
-log for the most recent fits for this disease. The temporary database temp.db
-is also located in the disease directory. The sub-directories no_ode, yes_ode,
-and students will contain the db2csv files (*.csv) and plots (*.pdf)
-for the corresponding fits.
 ''',
 
 'disease':'''
@@ -95,6 +82,19 @@ This command line argument must be one of the following:
 'no_ode'    for only fitting without the ode.
 'yes_ode'   for fititng without ode and then with ode.
 'students'  for fititng without ode, then with ode, then with students-t.
+''',
+
+'data_dir':'''
+data_dir:
+This command line arument is the Directory on the local machine that
+corresponds to /share/epi/at_cascade.
+A copy of the IHME database, on the local machine, for the specified disease
+has same relative path.  The subdirectory data_dir/disease is called
+the disease directory. The file fit_ihme.log, in the disese directory, is the
+log for the most recent fits for this disease. The temporary database temp.db
+is also located in the disease directory. The sub-directories no_ode, yes_ode,
+and students will contain the db2csv files (*.csv) and plots (*.pdf)
+for the corresponding fits.
 ''',
 
 'random_seed':'''
@@ -168,7 +168,7 @@ correpsonding parent rates.
 'whats_new_2021':'''
 
 01-27:
-1. Change command line order to data_dir, disease, which_file, random_seed.
+1. Change command line order to disease, which_file, data_dir, random_seed.
 
 01-25:
 1. Correct /ihme/epi/at_cascade -> /share/epi/at_cascade.
@@ -212,24 +212,24 @@ if len(sys.argv) != 5 :
 	print( user_help_message_dict['usage'] )
 	sys.exit(1)
 #
-# data_dir_arg
-data_dir_arg = sys.argv[1]
-if not os.path.isdir(data_dir_arg) :
-	msg = 'data_dir = {} is not a directory'.format(data_dir_arg)
-	sys.exit(msg)
-#
 # disease
-disease_arg = sys.argv[2]
+disease_arg = sys.argv[1]
 if disease_arg not in [ 'crohns', 'kidney', 't1_diabetes' ] :
 	msg  = 'Warning: disease = {} is not one that comes with the install\n'
 	msg += 'You must have added the file site-packages/dismod_at/{}.py'
 	print( msg.format(disease_arg, disease_arg) )
 #
 # which_fit
-which_fit_arg = sys.argv[3]
+which_fit_arg = sys.argv[2]
 if which_fit_arg not in [ 'no_ode', 'yes_ode', 'students' ] :
 	msg = 'which_fit = {} is not one of following: no_ode, yes_ode, students'
 	sys.exit( msg.format(which_fit_arg) )
+#
+# data_dir_arg
+data_dir_arg = sys.argv[3]
+if not os.path.isdir(data_dir_arg) :
+	msg = 'data_dir = {} is not a directory'.format(data_dir_arg)
+	sys.exit(msg)
 #
 # random_seed
 random_seed_arg = sys.argv[4]
