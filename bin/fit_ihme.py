@@ -60,7 +60,7 @@ if print_developer_help :
 user_help_message_dict = {
 'usage':'''
 usage:
-fit_ihme.py disease which_fit data_dir random_seed
+fit_ihme.py data_dir disease which_fit data_dir [ random_seed ]
 fit_ihme.py help
 fit_ihme.py help topic
 ''',
@@ -79,14 +79,14 @@ See the following files for examples of how to do this:
 'which_fit':'''
 which_fit:
 This command line argument must be one of the following:
-'no_ode'    for only fitting without the ode.
-'yes_ode'   for fititng without ode and then with ode.
-'students'  for fititng without ode, then with ode, then with students-t.
+'no_ode'    fit without ode integrands (no previous fit necessary).
+'yes_ode'   fit with ode integrands    (previous no_ode fit necessary).
+'students'  fit using students-t       (previous yes_ode fit necessary).
 ''',
 
 'data_dir':'''
 data_dir:
-This command line arument is the Directory on the local machine that
+This command line argument is the director on the local machine that
 corresponds to /share/epi/at_cascade.
 A copy of the IHME database, on the local machine, for the specified disease
 has same relative path.  The subdirectory data_dir/disease is called
@@ -99,7 +99,8 @@ for the corresponding fits.
 
 'random_seed':'''
 random_seed:
-This command line argument is an integer value that seeds the random
+This command line argument is only present when which_fit is 'no_ode'.
+It is an integer value that seeds the random
 number generator that is used to sub-sample the data.
 If this value is zero, the system clock is used to seed the generator.
 The seed corresponding to the clock changes every second and does not repeat.
@@ -169,6 +170,7 @@ correpsonding parent rates.
 
 01-27:
 1. Change command line order to disease, which_file, data_dir, random_seed.
+2. Change so continues from previous fit (does not have to redo them).
 
 01-25:
 1. Correct /ihme/epi/at_cascade -> /share/epi/at_cascade.
@@ -194,21 +196,23 @@ correpsonding parent rates.
    when seting a rate to zero. This is simpler.
 '''
 }
+# help cases
 if len(sys.argv) == 2 :
 	if sys.argv[1] == 'help' :
 		msg = 'The folllowing is a list of fit_ihme help topics:'
 		for key in user_help_message_dict :
 			print(key)
 		sys.exit(0)
-if len(sys.argv) == 3 :
-	if sys.argv[1] == 'help' :
-		if sys.argv[2] in user_help_message_dict :
-			print( user_help_message_dict[sys.argv[2]] )
-			sys.exit(0)
-		msg = '{} is not a valid help topic'.format(sys.argv[2])
-		print(msg)
-		sys.exit(1)
-if len(sys.argv) != 5 :
+if len(sys.argv) == 3 and sys.argv[1] == 'help' :
+	if sys.argv[2] in user_help_message_dict :
+		print( user_help_message_dict[sys.argv[2]] )
+		sys.exit(0)
+	msg = '{} is not a valid help topic'.format(sys.argv[2])
+	print(msg)
+	sys.exit(1)
+#
+# parse command line arguments
+if len(sys.argv) not in [4, 5] :
 	print( user_help_message_dict['usage'] )
 	sys.exit(1)
 #
@@ -225,34 +229,27 @@ if which_fit_arg not in [ 'no_ode', 'yes_ode', 'students' ] :
 	msg = 'which_fit = {} is not one of following: no_ode, yes_ode, students'
 	sys.exit( msg.format(which_fit_arg) )
 #
+if len(sys.argv) == 4 and which_fit_arg == 'no_ode' :
+	msg  = 'random_seed is required when which_fit is no_ode.'
+	sys.exit(msg)
+if len(sys.argv) == 5 and which_fit_arg != 'no_ode' :
+	msg  = 'random_seed should not be present when '
+	msg += 'which_fit is {}'.format(which_fit_arg)
+	sys.exit(msg)
+#
 # data_dir_arg
 data_dir_arg = sys.argv[3]
 if not os.path.isdir(data_dir_arg) :
 	msg = 'data_dir = {} is not a directory'.format(data_dir_arg)
 	sys.exit(msg)
 #
-# random_seed
-random_seed_arg = sys.argv[4]
-if not random_seed_arg.isdigit() :
-	msg = 'random_seed = {} is not a positive integer without sign in front'
-	sys.exit( msg.format(random_seed_arg) )
-#
-# fit_without_ode
-fit_without_ode    = True
-#
-# fit_with_ode
-fit_with_ode = which_fit_arg != 'no_ode'
-#
-# fit_students
-fit_students = which_fit_arg == 'students'
-#
-# random_seed
-random_seed = int(random_seed_arg)
-#
-if not fit_without_ode :
-	assert not fit_with_ode
-if not fit_with_ode :
-	assert not fit_students
+if which_fit_arg == 'no_ode' :
+	#
+	# random_seed
+	random_seed_arg = sys.argv[4]
+	if not random_seed_arg.isdigit() :
+		msg = 'random_seed = {} not a positive integer without sign in front'
+		sys.exit( msg.format(random_seed_arg) )
 # ----------------------------------------------------------------------
 #
 # check for sandbox version of dismod_at
@@ -265,7 +262,6 @@ if os.path.isfile('bin/dismodat.py') :
 if os.path.isfile('build/devel/dismod_at') :
 	print('using sandbox version of build/devel/dismod_at')
 	os.environ['PATH'] = os.getcwd() + '/build/devel:' + os.environ['PATH']
-	#
 #
 # dismod_at imports
 import dismod_at
@@ -281,16 +277,25 @@ def setup() :
 	# set up some globals
 	global disease_directory
 	global temp_database
-	# directory where plots are stored
-	original_database = data_dir_arg + '/' + specific.relative_path
+	#
+	# directory for this disease
 	disease_directory = data_dir_arg + '/' + disease_arg
+	#
+	# temporary database that gets modified
 	temp_database     = disease_directory + '/temp.db'
 	#
-	if not os.path.exists(disease_directory) :
-		os.mkdir(disease_directory)
-	#
-	# temp_database
-	shutil.copyfile(original_database, temp_database)
+	if which_fit_arg == 'no_ode' :
+		original_database = data_dir_arg + '/' + specific.relative_path
+		if not os.path.exists(disease_directory) :
+			os.mkdir(disease_directory)
+		shutil.copyfile(original_database, temp_database)
+	elif which_fit_arg == 'yes_ode' :
+		previous_database = disease_directory + '/no_ode/no_ode.db'
+		shutil.copyfile(previous_database, temp_database)
+	elif which_fit_arg == 'students' :
+		previosus_database = disease_directory + '/yes_ode/yes_ode.db'
+	else :
+		assert False
 	#
 setup()
 # ===========================================================================
@@ -300,15 +305,26 @@ fp_log_file = None
 def trace(message = None, operation = None) :
 	# Print output and manage log file
 	global fp_log_file
+	#
 	# start
 	if operation == 'start' :
 		assert fp_log_file is None
 		log_file    = disease_directory + '/fit_ihme.log'
 		fp_log_file = open(log_file, 'w')
 		return
-	assert fp_log_file is not None
+	#
+	# continue
+	if operation == 'continue' :
+		assert fp_log_file is None
+		log_file    = disease_directory + '/fit_ihme.log'
+		if not os.path.exists(log_file) :
+			msg = 'which_fit = {} but cannot file the log file\n{}'
+			sys.exit( msg.format(log_file) )
+		fp_log_file = open(log_file, 'a')
+		return
 	#
 	# message
+	assert fp_log_file is not None
 	if operation is None :
 		assert message is not None
 		print(message)
@@ -443,7 +459,7 @@ def system_command (command_list) :
 	#
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
-		print('random_seed = ', random_seed )
+		print('random_seed = ', random_seed_arg )
 		sys.exit('fit_ihme.py: system command failed')
 # ----------------------------------------------------------------------------
 def table_name2id(table, table_name) :
@@ -1886,21 +1902,6 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 # ----------------------------------------------------------------------
 # Actual Changes
 # ----------------------------------------------------------------------
-# start new fit_ihme.log file
-trace(operation = 'start')
-#
-# print the title for this study
-parent_node_id   = get_parent_node_id()
-parent_node_name = node_table[parent_node_id]['node_name']
-title            = case_study_title(parent_node_name)
-line             = len(title) * '-'
-trace( '\n' + line + '\n' + title + '\n' + line + '\n' )
-#
-msg = 'original database\n/share/epi/at_cascade/{}\n'
-trace( msg.format(specific.relative_path) )
-#
-# erase the database log table so log is just for this session
-sql_command('DROP TABLE IF EXISTS log')
 #
 # start_time
 start_time = time.time()
@@ -1908,11 +1909,35 @@ start_time = time.time()
 # ----------------------------------------------------------------------------
 # Changes to database
 # ----------------------------------------------------------------------------
-if fit_without_ode :
+# integrand lists
+integrand_list_yes_ode = get_integrand_list(True)
+integrand_list_no_ode  = get_integrand_list(False)
+integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
+#
+if which_fit_arg == 'no_ode'  :
+	# start new fit_ihme.log file
+	trace(operation = 'start')
+	#
+	# print the title for this study
+	parent_node_id   = get_parent_node_id()
+	parent_node_name = node_table[parent_node_id]['node_name']
+	title            = case_study_title(parent_node_name)
+	line             = len(title) * '-'
+	trace( '\n' + line + '\n' + title + '\n' + line + '\n' )
+	#
+	msg = 'original database\n/share/epi/at_cascade/{}\n'
+	trace( msg.format(specific.relative_path) )
+	#
+	# erase the database log table so log is just for this session
+	sql_command('DROP TABLE IF EXISTS log')
+	#
 	# seed used to randomly subsample data
+	random_seed = int( random_seed_arg )
 	if random_seed == 0 :
 		random_seed = int( time.time() )
 	random.seed(random_seed)
+	msg = '\nrandom_seed  = ' + str( random_seed )
+	trace(msg)
 	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
@@ -1927,6 +1952,8 @@ if fit_without_ode :
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
+	msg = '\nintegrands   = ' + str( integrand_list_all )
+	trace(msg)
 	#
 	# integrand_data
 	integrand_data = get_integrand_data()
@@ -2038,63 +2065,69 @@ if fit_without_ode :
 	which_fit = 'no_ode'
 	check_last_fit(which_fit)
 	new_fit_directory(which_fit)
-	# ------------------------------------------------------------------------
-	if fit_with_ode :
-		#
-		# use previous fit as starting point
-		system_command([
-			'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
-		])
-		#
-		# put ode integrands data back in the fit
-		for integrand_name in integrand_list_yes_ode :
-			hold_out_data(integrand_name = integrand_name, hold_out = 0)
-		#
-		# exclude integerands that are just used to get starting value
-		for integrand_name in specific.ode_hold_out_list :
-			hold_out_data(integrand_name = integrand_name, hold_out = 1)
-		#
-		# fit both
-		t0 = time.time()
-		system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-		msg  = 'fit_with_ode time = '
-		msg += str( round( time.time() - t0 ) ) + ' seconds'
-		trace(msg)
-		#
-		which_fit = 'yes_ode'
-		check_last_fit(which_fit)
-		new_fit_directory(which_fit)
-		# --------------------------------------------------------------------
-		if fit_students :
-			# change data likelihood to use students-t
-			density_name = 'log_students'
-			factor_eta   = 1e-2
-			nu           = 5
-			for integrand_name in integrand_list_all :
-				set_data_likelihood(integrand_data,
-					integrand_name, density_name, factor_eta, nu
-				)
-			#
-			# use previous fit as starting point
-			system_command([
-				'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
-			])
-			#
-			# fit both
-			t0 = time.time()
-			system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-			t1 = time.time()
-			msg  = 'fit_students time = '
-			msg += str( round( time.time() - t0 ) ) + ' seconds'
-			trace(msg)
-			#
-			which_fit = 'students'
-			check_last_fit(which_fit)
-			new_fit_directory(which_fit)
+# ------------------------------------------------------------------------
+if which_fit_arg == 'yes_ode'  :
+	#
+	# continue the fit_ihme.log file
+	trace(operation = 'continue')
+	#
+	# use previous fit as starting point
+	system_command([
+		'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
+	])
+	#
+	# put ode integrands data back in the fit
+	for integrand_name in integrand_list_yes_ode :
+		hold_out_data(integrand_name = integrand_name, hold_out = 0)
+	#
+	# exclude integerands that are just used to get starting value
+	for integrand_name in specific.ode_hold_out_list :
+		hold_out_data(integrand_name = integrand_name, hold_out = 1)
+	#
+	# fit both
+	t0 = time.time()
+	system_command([ 'dismod_at', temp_database, 'fit', 'both'])
+	msg  = 'fit_with_ode time = '
+	msg += str( round( time.time() - t0 ) ) + ' seconds'
+	trace(msg)
+	#
+	which_fit = 'yes_ode'
+	check_last_fit(which_fit)
+	new_fit_directory(which_fit)
+# --------------------------------------------------------------------
+if which_fit_arg == 'students'  :
+	#
+	# continue the fit_ihme.log file
+	trace(operation = 'continue')
+	#
+	# change data likelihood to use students-t
+	integrand_data = get_integrand_data()
+	density_name   = 'log_students'
+	factor_eta     = 1e-2
+	nu             = 5
+	for integrand_name in integrand_list_all :
+		set_data_likelihood(integrand_data,
+			integrand_name, density_name, factor_eta, nu
+		)
+	#
+	# use previous fit as starting point
+	system_command([
+		'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
+	])
+	#
+	# fit both
+	t0 = time.time()
+	system_command([ 'dismod_at', temp_database, 'fit', 'both'])
+	t1 = time.time()
+	msg  = 'fit_students time = '
+	msg += str( round( time.time() - t0 ) ) + ' seconds'
+	trace(msg)
+	#
+	which_fit = 'students'
+	check_last_fit(which_fit)
+	new_fit_directory(which_fit)
 # ----------------------------------------------------------------------
 msg  = '\n'
-msg += '\nintegrands   = ' + str( integrand_list_all )
-msg += '\nrandom_seed  = ' + str( random_seed )
 msg += '\nTotal time   = '
 msg += str( round( time.time() - start_time ) ) + ' seconds'
 trace( msg )
