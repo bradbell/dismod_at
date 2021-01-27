@@ -1908,122 +1908,125 @@ start_time = time.time()
 # ----------------------------------------------------------------------------
 # Changes to database
 # ----------------------------------------------------------------------------
-# seed used to randomly subsample data
-if random_seed == 0 :
-	random_seed = int( time.time() )
-random.seed(random_seed)
-#
-# remove all hold out data and data past covariate limits
-subset_data()
-#
-# set reference value for x_0 to its median
-reference_name  = 'median'
-for covariate_id in range( len(covariate_table) ) :
-	if relative_covariate(covariate_id) :
-		set_covariate_reference(covariate_id, reference_name)
-#
-# subsetting the data can remove some integrands
-integrand_list_yes_ode = get_integrand_list(True)
-integrand_list_no_ode  = get_integrand_list(False)
-integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
-#
-# integrand_data
-integrand_data = get_integrand_data()
-#
-# randomly subsample
-for integrand_name in integrand_list_all :
-	random_subsample_data(integrand_name, specific.max_sample)
-#
-# Set parent rate priros for this disease
-zero_parent_rate_set = set()
-for rate_name in specific.parent_smoothing :
-	fun = specific.parent_smoothing[rate_name]
-	#
-	if fun is None :
-		zero_parent_and_child_rate(rate_name)
-		zero_parent_rate_set.add(rate_name)
-	else :
-		parent_rate = True
-		result = fun( age_table, time_table, density_name2id, integrand_data )
-		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
-		set_rate_smoothing(parent_rate, rate_name,
-			age_grid, time_grid, value_prior, dage_prior, dtime_prior
-		)
-#
-# Set child rate priros for this disease
-for rate_name in specific.child_smoothing :
-	fun = specific.child_smoothing[rate_name]
-	#
-	if fun is None :
-		if rate_name not in zero_parent_rate_set :
-			zero_child_rate(rate_name)
-	else :
-		parent_rate = False
-		result = fun( age_table, time_table, density_name2id, integrand_data )
-		(age_grid, time_grid, value_prior, dage_prior, dtime_prior) = result
-		set_rate_smoothing(parent_rate, rate_name,
-			age_grid, time_grid, value_prior, dage_prior, dtime_prior
-		)
-#
-# iota_zero, rho_zero, chi_zero
-iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
-rho_zero  = rate_table[ rate_name2id['rho'] ]['parent_smooth_id'] is None
-chi_zero  = rate_table[ rate_name2id['chi'] ]['parent_smooth_id'] is None
-#
-# rate_case
-if iota_zero :
-	if rho_zero :
-		rate_case = 'iota_zero_rho_zero'
-	else :
-		rate_case = 'iota_zero_rho_pos'
-else :
-	if rho_zero :
-		rate_case = 'iota_pos_rho_zero'
-	else :
-		rate_case = 'iota_pos_rho_pos'
-#
-# set options
-set_option('tolerance_fixed',     '1e-8')
-set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
-set_option('quasi_fixed',         'false')
-set_option('zero_sum_child_rate', 'iota rho chi')
-set_option('bound_random',        '3')
-set_option('meas_noise_effect',   'add_var_scale_none')
-set_option('rate_case',           rate_case)
-#
-# add measurement noise covariates
-group_id = 0
-factor   = { 'lower':1e-1, 'mean':1e-1, 'upper':1e-1 }
-for integrand_name in integrand_list_all :
-	add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor)
-#
-# compress age and time intervals
-age_size  = 10.0
-time_size = 10.0
-for integrand_name in integrand_list_all :
-	compress_age_time_interval(integrand_name, age_size, time_size)
-#
-# set bounds for all the covariates
-n_covariate = len( covariate_table )
-for covariate_id in range( n_covariate ) :
-	set_mulcov_bound(specific.max_covariate_effect, covariate_id)
-#
-# hold out all ode integrand data
-for integrand_name in integrand_list_yes_ode :
-	hold_out_data(integrand_name = integrand_name, hold_out = 1)
-#
-# hold out integrands that do not have corresponding rates
-if iota_zero :
-	hold_out_data(integrand_name = 'Sincidence', hold_out = 1)
-if rho_zero :
-	hold_out_data(integrand_name = 'remission', hold_out = 1)
-if chi_zero :
-	hold_out_data(integrand_name = 'mtexcess', hold_out = 1)
-#
-# init
-system_command([ 'dismod_at', temp_database, 'init'])
-# -----------------------------------------------------------------------------
 if fit_without_ode :
+	# seed used to randomly subsample data
+	if random_seed == 0 :
+		random_seed = int( time.time() )
+	random.seed(random_seed)
+	#
+	# remove all hold out data and data past covariate limits
+	subset_data()
+	#
+	# set reference value for x_0 to its median
+	reference_name  = 'median'
+	for covariate_id in range( len(covariate_table) ) :
+		if relative_covariate(covariate_id) :
+			set_covariate_reference(covariate_id, reference_name)
+	#
+	# subsetting the data can remove some integrands
+	integrand_list_yes_ode = get_integrand_list(True)
+	integrand_list_no_ode  = get_integrand_list(False)
+	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
+	#
+	# integrand_data
+	integrand_data = get_integrand_data()
+	#
+	# randomly subsample
+	for integrand_name in integrand_list_all :
+		random_subsample_data(integrand_name, specific.max_sample)
+	#
+	# Set parent rate priros for this disease
+	zero_parent_rate_set = set()
+	for rate_name in specific.parent_smoothing :
+		fun = specific.parent_smoothing[rate_name]
+		#
+		if fun is None :
+			zero_parent_and_child_rate(rate_name)
+			zero_parent_rate_set.add(rate_name)
+		else :
+			parent_rate = True
+			result = fun(
+				age_table, time_table, density_name2id, integrand_data
+			)
+			(age_grid, time_grid, value_prior, dage_prior, dtime_prior)=result
+			set_rate_smoothing(parent_rate, rate_name,
+				age_grid, time_grid, value_prior, dage_prior, dtime_prior
+			)
+	#
+	# Set child rate priros for this disease
+	for rate_name in specific.child_smoothing :
+		fun = specific.child_smoothing[rate_name]
+		#
+		if fun is None :
+			if rate_name not in zero_parent_rate_set :
+				zero_child_rate(rate_name)
+		else :
+			parent_rate = False
+			result = fun(
+				age_table, time_table, density_name2id, integrand_data
+			)
+			(age_grid, time_grid, value_prior, dage_prior, dtime_prior)=result
+			set_rate_smoothing(parent_rate, rate_name,
+				age_grid, time_grid, value_prior, dage_prior, dtime_prior
+			)
+	#
+	# iota_zero, rho_zero, chi_zero
+	iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
+	rho_zero  = rate_table[ rate_name2id['rho'] ]['parent_smooth_id'] is None
+	chi_zero  = rate_table[ rate_name2id['chi'] ]['parent_smooth_id'] is None
+	#
+	# rate_case
+	if iota_zero :
+		if rho_zero :
+			rate_case = 'iota_zero_rho_zero'
+		else :
+			rate_case = 'iota_zero_rho_pos'
+	else :
+		if rho_zero :
+			rate_case = 'iota_pos_rho_zero'
+		else :
+			rate_case = 'iota_pos_rho_pos'
+	#
+	# set options
+	set_option('tolerance_fixed',     '1e-8')
+	set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
+	set_option('quasi_fixed',         'false')
+	set_option('zero_sum_child_rate', 'iota rho chi')
+	set_option('bound_random',        '3')
+	set_option('meas_noise_effect',   'add_var_scale_none')
+	set_option('rate_case',           rate_case)
+	#
+	# add measurement noise covariates
+	group_id = 0
+	factor   = { 'lower':1e-1, 'mean':1e-1, 'upper':1e-1 }
+	for integrand_name in integrand_list_all :
+		add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor)
+	#
+	# compress age and time intervals
+	age_size  = 10.0
+	time_size = 10.0
+	for integrand_name in integrand_list_all :
+		compress_age_time_interval(integrand_name, age_size, time_size)
+	#
+	# set bounds for all the covariates
+	n_covariate = len( covariate_table )
+	for covariate_id in range( n_covariate ) :
+		set_mulcov_bound(specific.max_covariate_effect, covariate_id)
+	#
+	# hold out all ode integrand data
+	for integrand_name in integrand_list_yes_ode :
+		hold_out_data(integrand_name = integrand_name, hold_out = 1)
+	#
+	# hold out integrands that do not have corresponding rates
+	if iota_zero :
+		hold_out_data(integrand_name = 'Sincidence', hold_out = 1)
+	if rho_zero :
+		hold_out_data(integrand_name = 'remission', hold_out = 1)
+	if chi_zero :
+		hold_out_data(integrand_name = 'mtexcess', hold_out = 1)
+	#
+	# init
+	system_command([ 'dismod_at', temp_database, 'init'])
 	#
 	# fit both
 	t0 = time.time()
