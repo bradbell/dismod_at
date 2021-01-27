@@ -1969,12 +1969,12 @@ if which_fit_arg == 'no_ode'  :
 	msg = '\nintegrands   = ' + str( integrand_list_all )
 	trace(msg)
 	#
-	# integrand_data
-	integrand_data = get_integrand_data()
-	#
 	# randomly subsample
 	for integrand_name in integrand_list_all :
 		random_subsample_data(integrand_name, specific.max_sample)
+	#
+	# integrand_data
+	integrand_data = get_integrand_data()
 	#
 	# Set parent rate priros for this disease
 	zero_parent_rate_set = set()
