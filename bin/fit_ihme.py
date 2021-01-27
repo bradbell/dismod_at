@@ -180,20 +180,11 @@ correpsonding parent rates.
 
 'whats_new_2021':'''
 
-01-27:
-1. Change command line order to data_dir, disease, which_fit, random_seed.
-2. Change so continues from previous fit (do not have to redo fits).
-
-01-25:
-1. Correct /ihme/epi/at_cascade -> /share/epi/at_cascade.
-2. Fix some help spelling errors.
-3. Change plot title to only put location on first line.
-
-01-24:
-1. Print and log the actual limits (in addition to the median factor) for
-   add_mesas_noise_mulcov and set_mulcov_bound.
-2. Change the add_meas_noise_mulcov terms to use variances instead of
-   standard deviations.
+01-22:
+1. Automatic detection and setting of proper rate_case.
+2. Move relative_path, max_sample, max_num_iter_fixed to disease specific file.
+3. Change the smoothing function to be None, instead of returning None,
+   when seting a rate to zero. This is simpler.
 
 01-23:
 1. Add dialysis to the disease list.
@@ -201,11 +192,24 @@ correpsonding parent rates.
 3. Setting parent rates to zero also sets corresponding child rates to zero.
 4. Add help syntax to fit_ihme.py
 
-01-22:
-1. Automatic detection and setting of proper rate_case.
-2. Move relative_path, max_sample, max_num_iter_fixed to disease specific file.
-3. Change the smoothing function to be None, instead of returning None,
-   when seting a rate to zero. This is simpler.
+
+01-24:
+1. Print and log the actual limits (in addition to the median factor) for
+   add_mesas_noise_mulcov and set_mulcov_bound.
+2. Change the add_meas_noise_mulcov terms to use variances instead of
+   standard deviations.
+
+01-25:
+1. Correct /ihme/epi/at_cascade -> /share/epi/at_cascade.
+2. Fix some help spelling errors.
+3. Change plot title to only put location on first line.
+
+01-27:
+1. Change command line order to data_dir, disease, which_fit, random_seed.
+2. Change so continues from previous fit (do not have to redo fits).
+3. Add the sample command see 'help number_sample'.
+4. Automatically drop covarites multipliers for useless covariates because
+   they would cause the statistics to fail.
 '''
 }
 # help cases
@@ -653,6 +657,16 @@ def relative_covariate(covariate_id) :
 			value_set.add( value )
 	# sex is an aboslute covariate and has 3 values, -0.5, 0.0, +0.5
 	return len( value_set ) > 3
+def useless_covariate(covariate_id) :
+	value_set  = set()
+	column_name = 'x_{}'.format(covariate_id)
+	reference   = covariate_table[covariate_id]['reference']
+	result      = True
+	for row in data_table :
+		value = row[column_name]
+		if value is not None :
+			result = result and value == reference
+	return result
 # ----------------------------------------------------------------------------
 def get_integrand_list (ode) :
 	# If ode is true (false) get list of integrands that require
@@ -2159,7 +2173,10 @@ if which_fit_arg == 'no_ode'  :
 	# set bounds for all the covariates
 	n_covariate = len( covariate_table )
 	for covariate_id in range( n_covariate ) :
-		set_mulcov_bound(specific.max_covariate_effect, covariate_id)
+		if useless_covariate( covariate_id ) :
+			set_mulcov_zero( covariate_id )
+		else :
+			set_mulcov_bound(specific.max_covariate_effect, covariate_id)
 	#
 	# hold out all ode integrand data
 	for integrand_name in integrand_list_yes_ode :
