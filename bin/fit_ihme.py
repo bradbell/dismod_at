@@ -114,6 +114,8 @@ number_smaple must follow. This specifies the number of samples of the
 posterior distribution for the model variables to simulate.
 These samples correspond to the fit specified by which_fit.
 The dismod_at asymptotic sampling method is used.
+This will add error bar to the rate plots in the corresponding fit directory.
+It will also add the sample table to the correspnding database.
 ''',
 
 'relative_path':'''
@@ -415,7 +417,7 @@ def new_fit_directory(which_fit) :
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
 	# plot rate
-	for (rate_id, row) in enumerate(rate_table) :
+	for row in rate_table :
 		if row['parent_smooth_id'] is not None :
 			rate_name = row['rate_name']
 			plot_rate(row['rate_name'], fit_directory, which_fit)
@@ -724,6 +726,11 @@ def plot_rate(rate_name, directory, which_fit) :
 	table_name = 'fit_var'
 	(fit_var_table, col_name, col_type) = get_table(table_name)
 	#
+	# sample
+	if sample_command :
+		table_name = 'sample'
+		(sample_table, col_name, col_type) = get_table(table_name)
+	#
 	# rate_id
 	rate_id = rate_name2id[rate_name]
 	#
@@ -784,10 +791,10 @@ def plot_rate(rate_name, directory, which_fit) :
 		trace('plot_rate: ' + rate_name + ' is identically zero')
 		return
 	#
-	# n_age, n_time
+	# n_age, n_time, n_var
 	n_age  = smooth_table[smooth_id]['n_age']
 	n_time = smooth_table[smooth_id]['n_time']
-	assert len(triple_list) == n_age * n_time
+	n_var  = len(var_table)
 	#
 	# sort triple_list first by age and then by time
 	key = lambda triple : pair( triple[0], triple[1] )
@@ -797,6 +804,10 @@ def plot_rate(rate_name, directory, which_fit) :
 	age  = numpy.zeros( (n_age, n_time), dtype = float)
 	time = numpy.zeros( (n_age, n_time), dtype = float)
 	rate = numpy.zeros( (n_age, n_time), dtype = float)
+	if sample_command :
+		n_sample = int( number_sample_arg )
+		assert len(sample_table) == n_sample * n_var
+		std  = numpy.zeros( (n_age, n_time), dtype = float)
 	#
 	for i in range(n_age) :
 		for j in range(n_time) :
@@ -810,6 +821,13 @@ def plot_rate(rate_name, directory, which_fit) :
 			age[i, j]  = age_table[age_id]['age']
 			time[i, j] = time_table[time_id]['time']
 			rate[i, j] = fit_var_table[var_id]['fit_var_value']
+			if sample_command :
+				sumsq = 0.0
+				for k in range(n_sample) :
+					sample_id = k * n_var + var_id
+					var_value = sample_table[sample_id]['var_value']
+					sumsq    += (var_value - rate[i, j])**2
+				std[i, j] = numpy.sqrt(sumsq / n_sample)
 	#
 	rate_min = numpy.min(rate) * 0.95
 	rate_max = numpy.max(rate) * 1.05
@@ -842,7 +860,14 @@ def plot_rate(rate_name, directory, which_fit) :
 			x     = [age_min] + x.tolist() + [age_max]
 			y     = [y[0]]    + y.tolist() + [y[-1]]
 			label = str( time[0,j] )
-			pyplot.plot(x, y, label=label, color=color, linestyle=style)
+			if not sample_command :
+				pyplot.plot(x, y, label=label, color=color, linestyle=style)
+			else :
+				s  = std[:,j]
+				s  = [s[0]] + s.tolist() + [s[-1]]
+				pyplot.errorbar(
+					x, y, yerr=s, label=label, color=color, linestyle=style
+				)
 			#
 			# axis labels
 			pyplot.xlabel('age')
@@ -882,7 +907,14 @@ def plot_rate(rate_name, directory, which_fit) :
 			x              = [time_min] + x.tolist() + [time_max]
 			y              = [y[0]]     + y.tolist() + [y[-1]]
 			label          = str( age[i,0] )
-			pyplot.plot(x, y, label=label, color=color, linestyle=style)
+			if not sample_command :
+				pyplot.plot(x, y, label=label, color=color, linestyle=style)
+			else :
+				s  = std[i,:]
+				s  = [s[0]] + s.tolist() + [s[-1]]
+				pyplot.errorbar(
+					x, y, yerr=s, label=label, color=color, linestyle=style
+				)
 			#
 			# axis labels
 			pyplot.xlabel('time')
@@ -1979,6 +2011,23 @@ if sample_command :
 		'both',
 		number_sample_arg,
 	])
+	#
+	# fit_directory
+	fit_directory = disease_directory + '/' + which_fit_arg
+	#
+	# copy the database (with samples in it)
+	fit_database = fit_directory + '/' + which_fit_arg + '.db'
+	shutil.copyfile(temp_database, fit_database )
+	#
+	# csv files (with samples)
+	system_command( [ 'dismodat.py',  fit_database, 'db2csv' ] )
+	#
+	#
+	for row in rate_table :
+		if row['parent_smooth_id'] is not None :
+			rate_name = row['rate_name']
+			plot_rate(row['rate_name'], fit_directory, which_fit_arg)
+	#
 	msg  = '\nTotal time   = '
 	msg += str( round( time.time() - start_time ) ) + ' seconds'
 	trace( msg )
