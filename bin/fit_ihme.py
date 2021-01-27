@@ -293,7 +293,8 @@ def setup() :
 		previous_database = disease_directory + '/no_ode/no_ode.db'
 		shutil.copyfile(previous_database, temp_database)
 	elif which_fit_arg == 'students' :
-		previosus_database = disease_directory + '/yes_ode/yes_ode.db'
+		previous_database = disease_directory + '/yes_ode/yes_ode.db'
+		shutil.copyfile(previous_database, temp_database)
 	else :
 		assert False
 	#
