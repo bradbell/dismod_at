@@ -60,7 +60,7 @@ if print_developer_help :
 user_help_message_dict = {
 'usage':'''
 usage:
-fit_ihme.py data_dir which_fit random_seed disease
+fit_ihme.py data_dir disease which_fit random_seed
 fit_ihme.py help
 fit_ihme.py help topic
 ''',
@@ -78,6 +78,17 @@ and students will contain the db2csv files (*.csv) and plots (*.pdf)
 for the corresponding fits.
 ''',
 
+'disease':'''
+disease:
+The command line argument must be one of the following:
+	 crohns, dialysis, kidney, t1_diabetes.
+It may also correspond to a file called
+	dismod_at/ihme/disease.py
+that you have added below your site-packages directory.
+See the following files for examples of how to do this:
+	crohns.py, dialysis.py, kidney.py, t1_diabetes.py
+''',
+
 'which_fit':'''
 which_fit:
 This command line argument must be one of the following:
@@ -92,17 +103,6 @@ This command line argument is an integer value that seeds the random
 number generator that is used to sub-sample the data.
 If this value is zero, the system clock is used to seed the generator.
 The seed corresponding to the clock changes every second and does not repeat.
-''',
-
-'disease':'''
-disease:
-The command line argument must be one of the following:
-	 crohns, dialysis, kidney, t1_diabetes.
-It may also correspond to a file called
-	dismod_at/ihme/disease.py
-that you have added below your site-packages directory.
-See the following files for examples of how to do this:
-	crohns.py, dialysis.py, kidney.py, t1_diabetes.py
 ''',
 
 'relative_path':'''
@@ -167,6 +167,9 @@ correpsonding parent rates.
 
 'whats_new_2021':'''
 
+01-27:
+1. Change command line order to data_dir, disease, which_file, random_seed.
+
 01-25:
 1. Correct /ihme/epi/at_cascade -> /share/epi/at_cascade.
 2. Fix some help spelling errors.
@@ -215,24 +218,24 @@ if not os.path.isdir(data_dir_arg) :
 	msg = 'data_dir = {} is not a directory'.format(data_dir_arg)
 	sys.exit(msg)
 #
+# disease
+disease_arg = sys.argv[2]
+if disease_arg not in [ 'crohns', 'kidney', 't1_diabetes' ] :
+	msg  = 'Warning: disease = {} is not one that comes with the install\n'
+	msg += 'You must have added the file site-packages/dismod_at/{}.py'
+	print( msg.format(disease_arg, disease_arg) )
+#
 # which_fit
-which_fit_arg = sys.argv[2]
+which_fit_arg = sys.argv[3]
 if which_fit_arg not in [ 'no_ode', 'yes_ode', 'students' ] :
 	msg = 'which_fit = {} is not one of following: no_ode, yes_ode, students'
 	sys.exit( msg.format(which_fit_arg) )
 #
 # random_seed
-random_seed_arg = sys.argv[3]
+random_seed_arg = sys.argv[4]
 if not random_seed_arg.isdigit() :
 	msg = 'random_seed = {} is not a positive integer without sign in front'
 	sys.exit( msg.format(random_seed_arg) )
-#
-# disease
-disease_arg = sys.argv[4]
-if disease_arg not in [ 'crohns', 'kidney', 't1_diabetes' ] :
-	msg  = 'Warning: disease = {} is not one that comes with the install\n'
-	msg += 'You must have added the file site-packages/dismod_at/{}.py'
-	print( msg.format(disease_arg, disease_arg) )
 #
 # fit_without_ode
 fit_without_ode    = True
