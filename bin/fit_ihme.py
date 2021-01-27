@@ -304,13 +304,32 @@ setup()
 fp_log_file = None
 def trace(message = None, operation = None) :
 	# Print output and manage log file
+	#
 	global fp_log_file
+	#
+	# message
+	if operation is None :
+		assert fp_log_file is not None
+		assert message is not None
+		print(message)
+		fp_log_file.write(message + '\n')
+		return
+	assert message is None
+	#
+	import datetime
+	#
+	# date_time (drop faction of a second)
+	date_time = str( datetime.datetime.now() )
+	date_time = date_time[ : date_time.rfind('.') ]
 	#
 	# start
 	if operation == 'start' :
 		assert fp_log_file is None
 		log_file    = disease_directory + '/fit_ihme.log'
 		fp_log_file = open(log_file, 'w')
+		msg  = 79 * '-' + '\n'
+		msg += 'Starting log file: {}\n\n'.format(date_time)
+		fp_log_file.write( msg )
 		return
 	#
 	# continue
@@ -321,16 +340,10 @@ def trace(message = None, operation = None) :
 			msg = 'which_fit = {} but cannot file the log file\n{}'
 			sys.exit( msg.format(log_file) )
 		fp_log_file = open(log_file, 'a')
+		msg  = 79 * '-' + '\n'
+		msg += 'Continuing log file: {}\n\n'.format(date_time)
+		fp_log_file.write( msg )
 		return
-	#
-	# message
-	assert fp_log_file is not None
-	if operation is None :
-		assert message is not None
-		print(message)
-		fp_log_file.write(message + '\n')
-		return
-	assert message is None
 	#
 	# stop
 	assert operation == 'stop'
