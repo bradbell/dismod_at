@@ -213,10 +213,11 @@ correpsonding parent rates.
 
 01-28:
 1. Plot standard errors as function of age, time and in same figure as rate.
-2. Better avoidance of log of zero ploting rates and standard erros
-   (which may be zero).
+2. Better avoidance of log of zero ploting rates and standard errors.
 3. Do not plot standard errors for omega (for ihme they are always zero).
+4. Fix problem with y axis titlles for rate plots outside of figure boundary.
 '''
+
 }
 # help cases
 if len(sys.argv) == 2 :
@@ -915,7 +916,9 @@ def plot_rate(rate_name, directory, which_fit) :
 			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
 		# Shrink current axis by 15% and place legend to right
 		box = axis.get_position()
-		axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+		axis.set_position([
+			box.x0 + box.width*.05 , box.y0, box.width*0.85, box.height
+		])
 		axis.legend(
 			title = 'time', loc='center left', bbox_to_anchor=(1, 0.5)
 		)
@@ -958,7 +961,9 @@ def plot_rate(rate_name, directory, which_fit) :
 				pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
 			# Shrink current axis by 15% but do not need legend this time
 			box = axis.get_position()
-			axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+			axis.set_position([
+				box.x0 + box.width*.05 , box.y0, box.width*0.85, box.height
+			])
 		# --------------------------------------------------------------------
 		pdf.savefig( fig )
 		pyplot.close( fig )
@@ -1012,7 +1017,9 @@ def plot_rate(rate_name, directory, which_fit) :
 			pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
 		# Shrink current axis by 15% and place legend to right
 		box = axis.get_position()
-		axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+		axis.set_position([
+			box.x0 + box.width*.05 , box.y0, box.width*0.85, box.height
+		])
 		axis.legend(
 			title = 'age', loc='center left', bbox_to_anchor=(1, 0.5)
 		)
@@ -1054,7 +1061,9 @@ def plot_rate(rate_name, directory, which_fit) :
 				pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
 			# Shrink current axis by 15% but do not ned legent this time
 			box = axis.get_position()
-			axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+			axis.set_position([
+				box.x0 + box.width*.05 , box.y0, box.width*0.85, box.height
+			])
 		# --------------------------------------------------------------------
 		pdf.savefig( fig )
 		pyplot.close( fig )
