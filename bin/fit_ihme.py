@@ -858,7 +858,9 @@ def plot_rate(rate_name, directory, which_fit) :
 		std_max   = numpy.max(std) * 1.05
 		std_min   = numpy.min(std) * 0.95
 		std_min   = max(std_min, std_max * 1e-5)
-		n_subplot = 2
+		# no standard error subplot when it is identically zero
+		if std_min > 0 :
+			n_subplot = 2
 	#
 	from matplotlib import pyplot
 	#
@@ -880,7 +882,7 @@ def plot_rate(rate_name, directory, which_fit) :
 		save_color_index = color_index
 		#
 		fig    = pyplot.figure()
-		fig.subplots_adjust( hspace = 0 )
+		fig.subplots_adjust( hspace = .01 )
 		#
 		# axis for subplot and title for figure
 		axis   = pyplot.subplot(n_subplot, 1, 1)
@@ -982,7 +984,7 @@ def plot_rate(rate_name, directory, which_fit) :
 		#
 		# new figure
 		fig    = pyplot.figure()
-		fig.subplots_adjust( hspace = 0 )
+		fig.subplots_adjust( hspace = .01 )
 		#
 		# axis for subplot and title for figure
 		axis   = pyplot.subplot(n_subplot, 1 ,1)
