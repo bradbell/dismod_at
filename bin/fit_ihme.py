@@ -210,6 +210,12 @@ correpsonding parent rates.
 3. Add the sample command see 'help number_sample'.
 4. Automatically drop covarites multipliers for useless covariates because
    they would cause the statistics to fail.
+
+01-28:
+1. Plot standard errors as function of age, time and in same figure as rate.
+2. Better avoidance of log of zero ploting rates and standard erros
+   (which may be zero).
+3. Do not plot standard errors for omega (for ihme they are always zero).
 '''
 }
 # help cases
@@ -835,7 +841,7 @@ def plot_rate(rate_name, directory, which_fit) :
 			age[i, j]  = age_table[age_id]['age']
 			time[i, j] = time_table[time_id]['time']
 			rate[i, j] = fit_var_table[var_id]['fit_var_value']
-			if sample_command :
+			if sample_command and rate_name != 'omega' :
 				sumsq = 0.0
 				for k in range(n_sample) :
 					sample_id = k * n_var + var_id
@@ -843,8 +849,15 @@ def plot_rate(rate_name, directory, which_fit) :
 					sumsq    += (var_value - rate[i, j])**2
 				std[i, j] = numpy.sqrt(sumsq / n_sample)
 	#
-	rate_min = numpy.min(rate) * 0.95
-	rate_max = numpy.max(rate) * 1.05
+	rate_max  = numpy.max(rate) * 1.05
+	rate_min  = numpy.min(rate) * 0.95
+	rate_min  = max(rate_min , rate_max * 1e-5)
+	n_subplot = 1
+	if sample_command and rate_name != 'omega' :
+		std_max   = numpy.max(std) * 1.05
+		std_min   = numpy.min(std) * 0.95
+		std_min   = max(std_min, std_max * 1e-5)
+		n_subplot = 2
 	#
 	from matplotlib import pyplot
 	#
@@ -852,15 +865,26 @@ def plot_rate(rate_name, directory, which_fit) :
 	file_name = directory + '/' + rate_name + '.pdf'
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
-	# for each time, plot rate as a function of age
+	# ------------------------------------------------------------------------
+	# for each time, plot rate and possibly std as a function of age
+	# ------------------------------------------------------------------------
 	n_fig       = math.ceil( n_time / ( n_color_style - 1) )
 	n_per_fig   = math.ceil( n_time / n_fig )
-	color_index = -1
 	assert n_per_fig < n_color_style
+	#
+	color_index = -1
+	#
 	for i_fig in range( n_fig ) :
+		# save for possible re-use by second subplot
+		save_color_index = color_index
+		#
 		fig    = pyplot.figure()
-		axis   = pyplot.subplot(1,1,1)
+		fig.subplots_adjust( hspace = 0 )
+		#
+		# axis for subplot and title for figure
+		axis   = pyplot.subplot(n_subplot, 1, 1)
 		axis.set_title( case_study_title(parent_node_name, which_fit) )
+		#
 		start  = i_fig * n_per_fig
 		if i_fig > 0 :
 			start        = start - 1
@@ -871,17 +895,15 @@ def plot_rate(rate_name, directory, which_fit) :
 			(color, style,) = color_style_list[color_index]
 			x     = age[:,j]
 			y     = rate[:,j]
+			# avoid values less than or equal zero
+			y     = numpy.maximum(y, rate_min)
+			# extend as constant to min and max age
 			x     = [age_min] + x.tolist() + [age_max]
 			y     = [y[0]]    + y.tolist() + [y[-1]]
+			# label used by legend
 			label = str( time[0,j] )
-			if not sample_command :
-				pyplot.plot(x, y, label=label, color=color, linestyle=style)
-			else :
-				s  = std[:,j]
-				s  = [s[0]] + s.tolist() + [s[-1]]
-				pyplot.errorbar(
-					x, y, yerr=s, label=label, color=color, linestyle=style
-				)
+			#
+			pyplot.plot(x, y, label=label, color=color, linestyle=style)
 			#
 			# axis labels
 			pyplot.xlabel('age')
@@ -897,17 +919,70 @@ def plot_rate(rate_name, directory, which_fit) :
 		axis.legend(
 			title = 'time', loc='center left', bbox_to_anchor=(1, 0.5)
 		)
+		# --------------------------------------------------------------------
+		if n_subplot == 2 :
+			# restart colors so are the same as for first subplot
+			# (only need one legend for both subplots)
+			color_index = save_color_index
+			#
+			# ais for subplot (uses same title as figure)
+			axis   = pyplot.subplot(n_subplot, 1, 2)
+			#
+			start  = i_fig * n_per_fig
+			if i_fig > 0 :
+				start        = start - 1
+				color_index -= 1
+			stop   = min(n_time, start + n_per_fig )
+			for j in range(start, stop) :
+				color_index    = (color_index + 1) % n_color_style
+				(color, style,) = color_style_list[color_index]
+				x     = age[:,j]
+				y     = std[:,j]
+				# avoid values less than or equal zero
+				y     = numpy.maximum(y, std_min)
+				# extend as constant to min and max age
+				x     = [age_min] + x.tolist() + [age_max]
+				y     = [y[0]]    + y.tolist() + [y[-1]]
+				# label used by legend
+				label = str( time[0,j] )
+				#
+				pyplot.plot(x, y, label=label, color=color, linestyle=style)
+				#
+				# axis labels
+				pyplot.xlabel('age')
+				pyplot.ylabel('std error')
+				pyplot.yscale('log')
+				pyplot.ylim(std_min, std_max)
+			for i in range(n_age) :
+				x = age[i, 0]
+				pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
+			# Shrink current axis by 15% but do not need legend this time
+			box = axis.get_position()
+			axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+		# --------------------------------------------------------------------
 		pdf.savefig( fig )
 		pyplot.close( fig )
-
+	# ------------------------------------------------------------------------
 	# for each age, plot rate as a function of time
+	# ------------------------------------------------------------------------
 	n_fig       = math.ceil( n_age / (n_color_style - 1) )
 	n_per_fig   = math.ceil( n_age / n_fig )
-	color_index = -1
 	assert n_per_fig < n_color_style
+	#
+	color_index = -1
+	#
 	for i_fig in range( n_fig ) :
+		# save for possible re-use by second subplot
+		save_color_index = color_index
+		#
+		# new figure
 		fig    = pyplot.figure()
-		axis   = pyplot.subplot(1,1,1)
+		fig.subplots_adjust( hspace = 0 )
+		#
+		# axis for subplot and title for figure
+		axis   = pyplot.subplot(n_subplot, 1 ,1)
+		axis.set_title( case_study_title(parent_node_name, which_fit) )
+		#
 		start  = i_fig * n_per_fig
 		if i_fig > 0 :
 			start        = start - 1
@@ -916,19 +991,16 @@ def plot_rate(rate_name, directory, which_fit) :
 		for i in range(start, stop) :
 			color_index    = (color_index + 1) % n_color_style
 			(color, style) = color_style_list[color_index]
-			x              = time[i,:]
-			y              = rate[i,:]
-			x              = [time_min] + x.tolist() + [time_max]
-			y              = [y[0]]     + y.tolist() + [y[-1]]
-			label          = str( age[i,0] )
-			if not sample_command :
-				pyplot.plot(x, y, label=label, color=color, linestyle=style)
-			else :
-				s  = std[i,:]
-				s  = [s[0]] + s.tolist() + [s[-1]]
-				pyplot.errorbar(
-					x, y, yerr=s, label=label, color=color, linestyle=style
-				)
+			x     = time[i,:]
+			y     = rate[i,:]
+			# avoid values less than or equal zero
+			y     = numpy.maximum(y, rate_min)
+			# extend as constant to min and max time
+			x     = [time_min] + x.tolist() + [time_max]
+			y     = [y[0]]     + y.tolist() + [y[-1]]
+			# label used by legend
+			label = str( age[i,0] )
+			pyplot.plot(x, y, label=label, color=color, linestyle=style)
 			#
 			# axis labels
 			pyplot.xlabel('time')
@@ -944,6 +1016,46 @@ def plot_rate(rate_name, directory, which_fit) :
 		axis.legend(
 			title = 'age', loc='center left', bbox_to_anchor=(1, 0.5)
 		)
+		# --------------------------------------------------------------------
+		if n_subplot == 2 :
+			# restart colors so are the same as for first subplot
+			# (only need one legend for both subplots)
+			color_index = save_color_index
+			#
+			# axis for subplot (uses same title as figure)
+			axis   = pyplot.subplot(n_subplot, 1, 2)
+			#
+			start  = i_fig * n_per_fig
+			if i_fig > 0 :
+				start        = start - 1
+				color_index -= 1
+			stop   = min(n_age, start + n_per_fig )
+			for i in range(start, stop) :
+				color_index    = (color_index + 1) % n_color_style
+				(color, style) = color_style_list[color_index]
+				x     = time[i,:]
+				y     = std[i,:]
+				# avoid values less than or equal zero
+				y     = numpy.maximum(y, std_min)
+				# extend as constant to min and max time
+				x     = [time_min] + x.tolist() + [time_max]
+				y     = [y[0]]     + y.tolist() + [y[-1]]
+				# label used by legend
+				label = str( age[i,0] )
+				pyplot.plot(x, y, label=label, color=color, linestyle=style)
+				#
+				# axis labels
+				pyplot.xlabel('time')
+				pyplot.ylabel('std error')
+				pyplot.yscale('log')
+				pyplot.ylim(std_min, std_max)
+			for j in range(n_time) :
+				x = time[0, j]
+				pyplot.axvline(x, color='black', linestyle='dotted', alpha=0.3)
+			# Shrink current axis by 15% but do not ned legent this time
+			box = axis.get_position()
+			axis.set_position([box.x0, box.y0, box.width * 0.85, box.height])
+		# --------------------------------------------------------------------
 		pdf.savefig( fig )
 		pyplot.close( fig )
 	#
