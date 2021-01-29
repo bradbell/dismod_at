@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -73,8 +73,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20201124'
-	dismod_at_hash='1cfc6d2d5b8be42226fda7fa5a2af0938cb6f0f6'
+	dismod_at_version='20210128'
+	dismod_at_hash='a5aa82c3b2256ebe34f3c6291151ddde17972c3d'
 # %$$
 #
 # The image commands will not execute if the corresponding docker image
@@ -325,7 +325,7 @@ cat << EOF > Dockerfile
 # The vim editor is included for use when debugging docker containers and
 # is not required by dismod_at.
 # -----------------------------------------------------------------------------
-FROM ubuntu:19.10
+FROM ubuntu:20.04
 RUN  apt-get update
 RUN  DEBIAN_FRONTEND=noninteractive apt-get install -y  \
 cmake \

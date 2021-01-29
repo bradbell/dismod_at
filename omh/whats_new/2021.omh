@@ -37,6 +37,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 01-28$$
+Advance to $cref dock_dismod_at.sh$$ version 20210128.
+Most importantly this includes the new $icode meas_noise_effect$$ options
+added on $cref/01-10/whats_new_2021/01-10/$$.
+For those at IHME, it is also has the new $code fit_ihme.py$$ program.
+
 $head 01-22$$
 The $cref/set/set_command/$$ $code option$$ command
 no longer requires the option table it to be consistent with all the
