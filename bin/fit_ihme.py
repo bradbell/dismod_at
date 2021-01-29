@@ -83,11 +83,21 @@ for the corresponding fits.
 disease:
 The command line argument must be one of the following:
 	 crohns, dialysis, kidney, t1_diabetes.
-It may also correspond to a file called
+It may also correspond to a disease specific file called
 	dismod_at/ihme/disease.py
 that you have added below your site-packages directory.
-See the following files for examples of how to do this:
+See the following files for examples disease specific files:
 	crohns.py, dialysis.py, kidney.py, t1_diabetes.py
+The settings in a disease specific file are the part of the model that is
+different for each disease. Currently, the following settings are included:
+	relative_path
+	max_sample
+	max_num_iter_fixed
+	ode_hold_out_list
+	max_covariate_effect
+	parent_smoothing
+	child_smoothing
+This is a very minimal set and more settings would be useful.
 ''',
 
 'which_fit':'''
@@ -216,8 +226,10 @@ correpsonding parent rates.
 2. Better avoidance of log of zero ploting rates and standard errors.
 3. Do not plot standard errors for omega (for ihme they are always zero).
 4. Fix problem with y axis titlles for rate plots outside of figure boundary.
-'''
 
+01-29:
+1. More discussion of the disease specific file in 'fit_ihme.py help disease'.
+'''
 }
 # help cases
 if len(sys.argv) == 2 :
