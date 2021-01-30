@@ -1591,12 +1591,16 @@ def plot_predict(
 	#
 	pdf.close()
 # --------------------------------------------------------------------------
-def new_smoothing(age_grid, time_grid, value_prior, dage_prior, dtime_prior):
+def new_smoothing(
+		smooth_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	) :
 	# Add a new smoothing that has one prior that is used for all age and
 	# time grid points. The smooth, smooth_grid, age, and time tables are
 	# modified, but the new versions are not written by this routine.
 	# The arguments value_prior, dage_prior, dtime_prior,
 	# contain the priors used in the smothing.
+	# The argument smooth_name is the name used in the smoothing grid table
+	# for this smoothing.
 	#
 	def table_value2id(table, col_name, value_list) :
 		result = list()
@@ -1631,7 +1635,6 @@ def new_smoothing(age_grid, time_grid, value_prior, dage_prior, dtime_prior):
 	prior_table.append( copy.copy( dtime_prior   ) )
 	#
 	# add row to smooth_table
-	smooth_name    = 'smoothing_{}_dtime_prior'.format(new_smooth_id)
 	row =  {
 		'smooth_name'           : smooth_name    ,
 		'n_age'                 : n_age          ,
@@ -1710,7 +1713,7 @@ def new_bounded_smooth_id (smooth_id, lower, upper) :
 	# smooth_table
 	new_smooth_id = len(smooth_table)
 	new_row                = copy.copy( smooth_table[smooth_id] )
-	new_row['smooth_name'] = 'bound_smoothing #' + str( new_smooth_id )
+	new_row['smooth_name'] = 'bound_smoothing_' + str( new_smooth_id )
 	smooth_table.append( new_row )
 	#
 	new_prior_id  = len(prior_table)
@@ -2002,8 +2005,10 @@ def set_rate_smoothing(parent_rate, rate_name,
 	trace( msg )
 	#
 	# add the smothing
+	smooth_id   = len(smooth_table)
+	smooth_name = '{}_smoothing_{}'.format(rate_name, smooth_id)
 	smooth_id = new_smoothing(
-		age_grid, time_grid, value_prior, dage_prior, dtime_prior
+		smooth_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
 	#
 	# change rate_table
@@ -2102,8 +2107,10 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	# new one point smoothing
 	age_grid  = [ age_table[0]['age'] ]
 	time_grid = [ time_table[0]['time'] ]
+	smooth_id = len(smooth_table)
+	smooth_name = '{}_noise_smoothing_{}'.format(integrand_name, smooth_id)
 	smooth_id = new_smoothing(
-		age_grid, time_grid, value_prior, dage_prior, dtime_prior
+		smooth_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	)
 	#
 	# new row in mulcov_table
