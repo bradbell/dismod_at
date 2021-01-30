@@ -229,6 +229,7 @@ correpsonding parent rates.
 
 01-29:
 1. More discussion of the disease specific file in 'fit_ihme.py help disease'.
+2. Better choice of smooth_name for the new smoothings added by fit_ihme.py.
 '''
 }
 # help cases
