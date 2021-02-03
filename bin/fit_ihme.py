@@ -23,6 +23,7 @@ import copy
 import numpy
 import random
 import time
+import importlib
 #
 print_developer_help = False
 def execute_print_developer_help() :
@@ -237,6 +238,7 @@ correpsonding parent rates.
 02-03:
 1. Increase maximum dynamic range in rate plots (from 1e5 -> 1e6).
 2. Report errors and warnings during sample in fit_ihme.log.
+3. Do not abort (just report) when statistics cannot be calculated.
 '''
 }
 # help cases
@@ -333,9 +335,14 @@ if os.path.isfile('build/devel/dismod_at') :
 import dismod_at
 #
 try :
-	exec('import dismod_at.ihme.' + disease_arg + ' as specific' )
-except :
-	sys.exit('Cannot find dismod_at.ihme.' + disease_arg)
+	disease_module = f'dismod_at.ihme.{disease_arg}'
+	specific=  importlib.import_module(disease_module, package = dismod_at)
+except Exception as e:
+	print('\n')
+	print(e)
+	msg  = f'You must add the file {disease_arg}.py to the directory\n'
+	msg += 'site-packages/dismod_at/ihme'
+	sys.exit(msg)
 # ----------------------------------------------------------------------------
 disease_directory = None
 temp_database     = None
@@ -559,6 +566,8 @@ def table_name2id(table, table_name) :
 	return result
 # ----------------------------------------------------------------------------
 def check_last_command(command, which_fit) :
+	# Trace any errros or warnings and return.
+	# In addition, return True for no errors or warnings and Flase otherwise.
 	table_name = 'log'
 	(table, col_name, col_type) = get_table(table_name);
 	#
@@ -600,10 +609,11 @@ def check_last_command(command, which_fit) :
 	if msg == '' :
 		msg = '\n{}_{} OK\n'.format(command, which_fit)
 		trace(msg)
+		return True
 	else :
 		msg = f'\n{command}_{which_fit} Errors and or Warnings::\n' + msg
 		trace(msg)
-	return msg
+		return False
 # ----------------------------------------------------------------------------
 # ============================================================================
 # API input tables that do not change
@@ -2153,9 +2163,8 @@ if sample_command :
 			number_sample_arg,
 		], abort_on_error = False
 	)
-	msg = check_last_command('sample', which_fit_arg)
-	if msg != '' :
-		print('Exiting due to problems with sample command\n')
+	if not check_last_command('sample', which_fit_arg) :
+		print('Exiting due to problems with this sample command\n')
 		sys.exit(0)
 	#
 	# fit_directory
@@ -2329,7 +2338,9 @@ if which_fit_arg == 'no_ode'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	check_last_command('fit', which_fit_arg)
+	if not check_last_command('fit', which_fit_arg) :
+		print('Exiting due to problems with this fit command\n')
+		sys.exit(0)
 	new_fit_directory(which_fit_arg)
 # ------------------------------------------------------------------------
 if which_fit_arg == 'yes_ode'  :
@@ -2357,7 +2368,9 @@ if which_fit_arg == 'yes_ode'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	check_last_command('fit', which_fit_arg)
+	if not check_last_command('fit', which_fit_arg) :
+		print('Exiting due to problems with this fit command\n')
+		sys.exit(0)
 	new_fit_directory(which_fit_arg)
 # --------------------------------------------------------------------
 if which_fit_arg == 'students'  :
@@ -2388,7 +2401,9 @@ if which_fit_arg == 'students'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	check_last_command('fit', which_fit_arg)
+	if not check_last_command('fit', which_fit_arg) :
+		print('Exiting due to problems with this fit command\n')
+		sys.exit(0)
 	new_fit_directory(which_fit_arg)
 # ----------------------------------------------------------------------
 msg  = '\n'
