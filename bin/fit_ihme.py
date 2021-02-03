@@ -230,6 +230,9 @@ correpsonding parent rates.
 01-29:
 1. More discussion of the disease specific file in 'fit_ihme.py help disease'.
 2. Better choice of smooth_name for the new smoothings added by fit_ihme.py.
+
+02-02:
+1. Fix the set_mulcov_bound routine.
 '''
 }
 # help cases
@@ -1914,8 +1917,12 @@ def set_mulcov_zero (covariate_id, restore= None) :
 # -----------------------------------------------------------------------------
 def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	# Set bounds for all of the multipliers for a specified covariate so
-	# corresponding effect is bounded by disease_specific_max_covariate_effect.
+	# corresponding absolute effect is bounded by
+	# disease_specific_max_covariate_effect.
 	# Noise covariate multipliers are not included.
+	if max_covariate_effect < 0.0 :
+		msg = 'disease specific max_covariate_effect is negative'
+		sys.exit(msg)
 	#
 	# reference for this covariate
 	reference = covariate_table[covariate_id]['reference']
@@ -1933,15 +1940,18 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	min_difference = min(difference)
 	max_difference = max(difference)
 	#
-	# bounds on covariate multiplier
-	if max_difference == 0.0 :
-		upper = None
-	else :
-		upper = max_covariate_effect / max_difference
-	if min_difference == 0.0 :
-		lower = None
-	else :
-		lower = max_covariate_effect / min_difference
+	# initialize
+	lower = - float("inf")
+	upper = + float("inf")
+	if max_difference > 0 :
+		upper = min(upper,    max_covariate_effect / max_difference)
+		lower = max(lower,  - max_covariate_effect / max_difference)
+	if min_difference < 0 :
+		upper = min(upper,  - max_covariate_effect / min_difference)
+		lower = max(lower,    max_covariate_effect / min_difference)
+	if upper == float("inf") :
+		lower = 0.0
+		upper = 0.0
 	#
 	for row in mulcov_table :
 		if row['covariate_id'] == covariate_id :
