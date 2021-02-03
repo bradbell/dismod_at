@@ -267,14 +267,14 @@ if not os.path.isdir(data_dir_arg) :
 	msg = 'data_dir = {} is not a directory'.format(data_dir_arg)
 	sys.exit(msg)
 #
-# disease
+# disease_arg
 disease_arg = sys.argv[2]
 if disease_arg not in [ 'crohns', 'kidney', 't1_diabetes' ] :
 	msg  = 'Warning: disease = {} is not one that comes with the install\n'
 	msg += 'You must have added the file site-packages/dismod_at/{}.py'
 	print( msg.format(disease_arg, disease_arg) )
 #
-# which_fit
+# which_fit_arg
 which_fit_arg = sys.argv[3]
 if which_fit_arg not in [ 'no_ode', 'yes_ode', 'students' ] :
 	msg = 'which_fit = {} is not one of following: no_ode, yes_ode, students'
@@ -285,8 +285,8 @@ if len(sys.argv) == 4 and which_fit_arg == 'no_ode' :
 	sys.exit(msg)
 #
 # sample_command
-# random_seed
-# number_sample
+# random_seed_arg
+# number_sample_arg
 sample_command    = False
 random_seed_arg   = None
 number_sample_arg = None
@@ -408,7 +408,7 @@ def trace(message = None, operation = None) :
 		log_file    = disease_directory + '/fit_ihme.log'
 		if not os.path.exists(log_file) :
 			msg = 'which_fit = {} but cannot file the log file\n{}'
-			sys.exit( msg.format(log_file) )
+			sys.exit( msg.format(which_fit_arg, log_file) )
 		fp_log_file = open(log_file, 'a')
 		msg  = 79 * '-' + '\n'
 		msg += 'Continuing log file: {}\n\n'.format(date_time)
@@ -2309,9 +2309,8 @@ if which_fit_arg == 'no_ode'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	which_fit = 'no_ode'
-	check_last_fit(which_fit)
-	new_fit_directory(which_fit)
+	check_last_fit(which_fit_arg)
+	new_fit_directory(which_fit_arg)
 # ------------------------------------------------------------------------
 if which_fit_arg == 'yes_ode'  :
 	#
@@ -2338,9 +2337,8 @@ if which_fit_arg == 'yes_ode'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	which_fit = 'yes_ode'
-	check_last_fit(which_fit)
-	new_fit_directory(which_fit)
+	check_last_fit(which_fit_arg)
+	new_fit_directory(which_fit_arg)
 # --------------------------------------------------------------------
 if which_fit_arg == 'students'  :
 	#
@@ -2370,9 +2368,8 @@ if which_fit_arg == 'students'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	which_fit = 'students'
-	check_last_fit(which_fit)
-	new_fit_directory(which_fit)
+	check_last_fit(which_fit_arg)
+	new_fit_directory(which_fit_arg)
 # ----------------------------------------------------------------------
 msg  = '\n'
 msg += '\nTotal time   = '
