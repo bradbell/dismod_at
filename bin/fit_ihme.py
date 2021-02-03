@@ -233,6 +233,9 @@ correpsonding parent rates.
 
 02-02:
 1. Fix the set_mulcov_bound routine.
+
+02-03:
+1. Increase maximum dynamic range in rate plots (from 1e5 -> 1e6).
 '''
 }
 # help cases
@@ -868,7 +871,7 @@ def plot_rate(rate_name, directory, which_fit) :
 	#
 	rate_max  = numpy.max(rate) * 1.05
 	rate_min  = numpy.min(rate) * 0.95
-	rate_min  = max(rate_min , rate_max * 1e-5)
+	rate_min  = max(rate_min , rate_max * 1e-6)
 	n_subplot = 1
 	if sample_command and rate_name != 'omega' :
 		std_max   = numpy.max(std) * 1.05
@@ -1871,50 +1874,6 @@ def set_covariate_reference (covariate_id, reference_name) :
 		table_name, covariate_table, covariate_col_name, covariate_col_type
 	)
 # -----------------------------------------------------------------------------
-# 2DO: remvoe this when bounds on mulcov work
-def set_mulcov_zero (covariate_id, restore= None) :
-	# set all of the multipliers for a specified covariate to zero without
-	# changing the order or size of the var table
-	covariate_name = covariate_table[covariate_id]['covariate_name']
-	msg            = 'covariate = {}'.format(covariate_name)
-	msg           += ', covariate_id = {}'.format(covariate_id)
-	if restore is None :
-		msg  = '\nset_mulcov_zero\n' + msg
-	else :
-		msg  = '\nrestore_mulcov\n' + msg
-	trace( msg )
-	#
-	# -------------------------------------------------------------------------
-	if restore is not None :
-		for (mulcov_id, group_smooth_id, subgroup_smooth_id) in restore :
-			row = mulcov_table[ mulcov_id ]
-			assert row['covariate_id'] == covariate_id
-			row['group_smooth_id']     = group_smooth_id
-			row['subgroup_smooth_id']  = subgroup_smooth_id
-		#
-		put_table('mulcov',  mulcov_table, mulcov_col_name, mulcov_col_type)
-		return None
-	# -------------------------------------------------------------------------
-	restore = list()
-	for (mulcov_id, row)  in  enumerate( mulcov_table ) :
-		if row['covariate_id'] == covariate_id :
-			group_smooth_id           = row['group_smooth_id']
-			row['group_smooth_id']    = new_zero_smooth_id(
-				group_smooth_id
-			)
-			subgroup_smooth_id        = row['subgroup_smooth_id']
-			row['subgroup_smooth_id'] = new_zero_smooth_id(
-				subgroup_smooth_id
-			)
-			restore.append( (mulcov_id, group_smooth_id, subgroup_smooth_id) )
-	#
-	put_table('mulcov',      mulcov_table, mulcov_col_name, mulcov_col_type)
-	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
-	put_table('smooth_grid',
-		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
-	)
-	return restore
-# -----------------------------------------------------------------------------
 def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	# Set bounds for all of the multipliers for a specified covariate so
 	# corresponding absolute effect is bounded by
@@ -2326,10 +2285,7 @@ if which_fit_arg == 'no_ode'  :
 	# set bounds for all the covariates
 	n_covariate = len( covariate_table )
 	for covariate_id in range( n_covariate ) :
-		if useless_covariate( covariate_id ) :
-			set_mulcov_zero( covariate_id )
-		else :
-			set_mulcov_bound(specific.max_covariate_effect, covariate_id)
+		set_mulcov_bound(specific.max_covariate_effect, covariate_id)
 	#
 	# hold out all ode integrand data
 	for integrand_name in integrand_list_yes_ode :
