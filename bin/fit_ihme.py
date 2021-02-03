@@ -236,6 +236,7 @@ correpsonding parent rates.
 
 02-03:
 1. Increase maximum dynamic range in rate plots (from 1e5 -> 1e6).
+2. Report errors and warnings during sample in fit_ihme.log.
 '''
 }
 # help cases
@@ -529,7 +530,7 @@ def check_for_table(table_name) :
 	result   = sql_command(command)
 	return len(result) > 0
 # ----------------------------------------------------------------------------
-def system_command (command_list) :
+def system_command (command_list, abort_on_error=True) :
 	# Execute a command at the system level. Each use of this routine
 	# is a step in the processing, not a utility. Hence it traces a message.
 	msg  = '\nsystem_command\n'
@@ -543,7 +544,10 @@ def system_command (command_list) :
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
 		print('random_seed = ', random_seed_arg )
-		sys.exit('fit_ihme.py: system command failed')
+		if abort_on_error :
+			sys.exit('fit_ihme.py: system command failed')
+		else :
+			print('fit_ihme.py: system command failed')
 # ----------------------------------------------------------------------------
 def table_name2id(table, table_name) :
 	# Return dictionary that maps a value in the name column to corresponding
@@ -554,42 +558,52 @@ def table_name2id(table, table_name) :
 		result[ row[name_column] ] = row_id
 	return result
 # ----------------------------------------------------------------------------
-def check_last_fit(which_fit) :
+def check_last_command(command, which_fit) :
 	table_name = 'log'
 	(table, col_name, col_type) = get_table(table_name);
 	#
 	# search for end of log entry for last fit
-	log_id   = len(table)
-	end_fit  = False
-	while not end_fit :
+	log_id              = len(table)
+	begin_last_command  = False
+	while not begin_last_command :
 		assert log_id > 0
 		log_id -= 1
 		row     = table[log_id]
 		if row['message_type'] == 'command' :
 			message = row['message']
-			end_fit = message.startswith('end fit')
+			begin_last_command = message.startswith('begin ')
 	#
-	begin_fit = False
-	msg       = ''
-	while not begin_fit :
-		assert log_id > 0
-		log_id      -= 1
+	# check for the expected command
+	if not message.startswith(f'begin {command}') :
+		msg  = f'expected begin {command} but fouund\n'
+		msg += message
+		sys.exit(msg)
+	#
+	msg             = ''
+	log_id         += 1
+	end_last_command = log_id == len(table)
+	while not end_last_command :
 		row          = table[log_id]
 		message_type = row['message_type']
 		if message_type == 'command' :
 			message = row['message']
-			assert message.startswith('begin fit')
-			begin_fit = True
-		elif message_type in [ 'warning', 'error' ] :
-			msg += message_type + ' ' + row['message'] + '\n'
+			assert message.startswith(f'end {command}')
+			end_last_command = True
+		else :
+			if message_type in [ 'warning', 'error' ] :
+				msg += message_type + ' ' + row['message'] + '\n'
+			log_id += 1
+			if log_id == len(table) :
+				end_last_command = True
+				msg += f'Did not find end for this {command} command\n'
 	#
 	if msg == '' :
-		msg = '\nfit_{} OK\n'.format(which_fit)
+		msg = '\n{}_{} OK\n'.format(command, which_fit)
 		trace(msg)
 	else :
-		msg = '\nfit_{} Errors and or Warnings::\n'.format(which_fit) + msg
+		msg = f'\n{command}_{which_fit} Errors and or Warnings::\n' + msg
 		trace(msg)
-	return
+	return msg
 # ----------------------------------------------------------------------------
 # ============================================================================
 # API input tables that do not change
@@ -2129,14 +2143,20 @@ if sample_command :
 	trace(operation = 'continue')
 	#
 	# dismod_at sample command
-	system_command([
-		'dismod_at',
-		temp_database,
-		'sample',
-		'asymptotic',
-		'both',
-		number_sample_arg,
-	])
+	system_command(
+		[
+			'dismod_at',
+			temp_database,
+			'sample',
+			'asymptotic',
+			'both',
+			number_sample_arg,
+		], abort_on_error = False
+	)
+	msg = check_last_command('sample', which_fit_arg)
+	if msg != '' :
+		print('Exiting due to problems with sample command\n')
+		sys.exit(0)
 	#
 	# fit_directory
 	fit_directory = disease_directory + '/' + which_fit_arg
@@ -2309,7 +2329,7 @@ if which_fit_arg == 'no_ode'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	check_last_fit(which_fit_arg)
+	check_last_command('fit', which_fit_arg)
 	new_fit_directory(which_fit_arg)
 # ------------------------------------------------------------------------
 if which_fit_arg == 'yes_ode'  :
@@ -2337,7 +2357,7 @@ if which_fit_arg == 'yes_ode'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	check_last_fit(which_fit_arg)
+	check_last_command('fit', which_fit_arg)
 	new_fit_directory(which_fit_arg)
 # --------------------------------------------------------------------
 if which_fit_arg == 'students'  :
@@ -2368,7 +2388,7 @@ if which_fit_arg == 'students'  :
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
-	check_last_fit(which_fit_arg)
+	check_last_command('fit', which_fit_arg)
 	new_fit_directory(which_fit_arg)
 # ----------------------------------------------------------------------
 msg  = '\n'
