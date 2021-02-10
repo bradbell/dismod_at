@@ -239,6 +239,11 @@ correpsonding parent rates.
 1. Increase maximum dynamic range in rate plots (from 1e5 -> 1e6).
 2. Report errors and warnings during sample in fit_ihme.log.
 3. Do not abort (just report) when statistics cannot be calculated.
+
+02-10:
+1. Change set_mulcov_bound to be specific for each integrand. This avoids the
+   problem where a covariate is equal to its reference for one integrand
+2. Make prior for pini a gassian so it does not go wild during no_ode fit.
 '''
 }
 # help cases
@@ -1903,6 +1908,8 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	# corresponding absolute effect is bounded by
 	# disease_specific_max_covariate_effect.
 	# Noise covariate multipliers are not included.
+	# The bounds for an integerand are set to zero if the covariate
+	# is identically equalt the reference for that integrand.
 	if max_covariate_effect < 0.0 :
 		msg = 'disease specific max_covariate_effect is negative'
 		sys.exit(msg)
@@ -1910,34 +1917,50 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	# reference for this covariate
 	reference = covariate_table[covariate_id]['reference']
 	#
-	# covariate minus reference
-	difference  = list()
+	# difference_dict = covariate minus reference
+	difference_dict  = dict()
 	column_name = 'x_{}'.format(covariate_id)
 	for row in data_table :
-		if data_table :
-			value = row[column_name]
-			if value is not None :
-				difference.append( value - reference )
+		integrand_id = row['integrand_id']
+		covariate   = row[column_name]
+		if covariate is not None :
+			if integrand_id not in difference_dict :
+				difference_dict[integrand_id] = list()
+			difference_dict[integrand_id].append( covariate - reference )
 	#
-	# maximum and minimum difference
-	min_difference = min(difference)
-	max_difference = max(difference)
-	#
-	# initialize
-	lower = - float("inf")
-	upper = + float("inf")
-	if max_difference > 0 :
-		upper = min(upper,    max_covariate_effect / max_difference)
-		lower = max(lower,  - max_covariate_effect / max_difference)
-	if min_difference < 0 :
-		upper = min(upper,  - max_covariate_effect / min_difference)
-		lower = max(lower,    max_covariate_effect / min_difference)
-	if upper == float("inf") :
-		lower = 0.0
-		upper = 0.0
+	# lower_dict and  upper_dict
+	lower_dict = dict()
+	upper_dict = dict()
+	for integrand_id in difference_dict :
+		#
+		# maximum and minimum difference
+		min_difference = min(difference_dict[integrand_id])
+		max_difference = max(difference_dict[integrand_id])
+		#
+		# initialize
+		lower = - float("inf")
+		upper = + float("inf")
+		if max_difference > 0 :
+			upper = min(upper,    max_covariate_effect / max_difference)
+			lower = max(lower,  - max_covariate_effect / max_difference)
+		if min_difference < 0 :
+			upper = min(upper,  - max_covariate_effect / min_difference)
+			lower = max(lower,    max_covariate_effect / min_difference)
+		if upper == float("inf") :
+			lower = 0.0
+			upper = 0.0
+		lower_dict[integrand_id] = lower
+		upper_dict[integrand_id] = upper
 	#
 	for row in mulcov_table :
 		if row['covariate_id'] == covariate_id :
+			integrand_id = row['integrand_id']
+			if integrand_id not in difference_dict :
+				lower = 0.0
+				upper = 0.0
+			else :
+				lower = lower_dict[integrand_id]
+				upper = upper_dict[integrand_id]
 			if row['mulcov_type'] != 'meas_noise' :
 				group_smooth_id = row['group_smooth_id']
 				group_smooth_id = new_bounded_smooth_id(
@@ -1980,7 +2003,7 @@ def set_rate_smoothing(parent_rate, rate_name,
 	# dtime_piror: dict containt prior for dtime smoohting
 	#
 	msg  = '\nrate_smoothing\n'
-	msg += '{:11} = {} '.format('rate',  parent_rate)
+	msg += '{:11} = {} '.format('parent',  parent_rate)
 	msg += '\n{:11} = {} '.format('rate',  rate_name)
 	msg += '\n{:11} = {}'.format('age_grid',  age_grid)
 	msg += '\n{:11} = {}'.format('time_grid', time_grid)

@@ -16,14 +16,14 @@ def pini_parent_smoothing(
 	age_grid     = [ 0.0 ]
 	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
 	median       = numpy.median( integrand_data['prevalence'] )
-	density_id   = density_name2id['uniform']
+	density_id   = density_name2id['gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_pini_value_prior' ,
 		'density_id' : density_id      ,
 		'lower'      : 0.0             ,
 		'upper'      : 1.0             ,
 		'mean'       : 0.0             ,
-		'std'        : None            ,
+		'std'        : 1.0             ,
 		'eta'        : None            ,
 		'nu'         : None            ,
 	}
@@ -56,7 +56,7 @@ def iota_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
 	age_grid     = [ float(age)  for age in range(30, 90, 10) ]
-	age_grid     = [10.0, 15.0, 20.0, 25.0] + age_grid
+	age_grid     = [ 0.0, 5.0, 10.0, 15.0, 20.0, 25.0] + age_grid
 	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
 	density_id   = density_name2id['log_gaussian']
 	value_prior = {
@@ -75,7 +75,7 @@ def iota_parent_smoothing(
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.05           ,
+		'std'        : 0.15           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -85,7 +85,7 @@ def iota_parent_smoothing(
 		'lower'      : None           ,
 		'upper'      : None           ,
 		'mean'       : 0.0            ,
-		'std'        : 0.02           ,
+		'std'        : 0.05           ,
 		'eta'        : 1e-8           ,
 		'nu'         : None           ,
 	}
@@ -130,15 +130,96 @@ def chi_parent_smoothing(
 		'nu'         : None           ,
 	}
 	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
+# ----------------------------------------------------------------------------
+# (age_grid, time_grid, value_prior, dage_prior, dtime_prior) =
+def iota_child_smoothing(
+	age_table, time_table, density_name2id, integrand_data
+) :
+	age_grid     = [0.0]
+	time_grid    = [1990]
+	density_id   = density_name2id['gaussian']
+	value_prior = {
+		'prior_name' : 'iota_child_smoothing_value_prior' ,
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 2.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	density_id   = density_name2id['uniform']
+	dage_prior = {
+		'prior_name' : 'iota_child_smooting_dage_piror',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : None           ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'iota_child_smooting_dtime_piror',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : None           ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
+# ----------------------------------------------------------------------------
+# (age_grid, time_grid, value_prior, dage_prior, dtime_prior) =
+def chi_child_smoothing(
+	age_table, time_table, density_name2id, integrand_data
+) :
+	age_grid     = [0.0]
+	time_grid    = [1990]
+	density_id   = density_name2id['gaussian']
+	value_prior = {
+		'prior_name' : 'chi_child_smoothing_value_prior' ,
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : 2.0            ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	density_id   = density_name2id['uniform']
+	dage_prior = {
+		'prior_name' : 'chi_child_smooting_dage_piror',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : None           ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	dtime_prior = {
+		'prior_name' : 'chi_child_smooting_dtime_piror',
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : None           ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 # --------------------------------------------------------------------------
 # relative path for original ihme database
+relative_path =  'data/475882/dbs/100/2/dismod.db'
 relative_path =  'data/475588/dbs/100/3/dismod.db'
 #
 # maximum number or sampels per integrand
 max_sample = 1000
 #
 # maximum number of iterations when optimizing fixed effects
-max_num_iter_fixed = 50
+max_num_iter_fixed = 100
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = ['mtexcess']
@@ -156,4 +237,6 @@ parent_smoothing['iota'] = iota_parent_smoothing
 parent_smoothing['chi']  = chi_parent_smoothing
 #
 # Ordered dictionary of child smoothing functions
-child_smoothing = dict()
+child_smoothing = collections.OrderedDict()
+# child_smoothing['iota'] = iota_child_smoothing
+# child_smoothing['chi']  = chi_child_smoothing
