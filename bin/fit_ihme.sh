@@ -22,23 +22,54 @@ then
 	echo $disease_list
 	exit 1
 fi
-if [ "$1" != '' ]
+if [ "$1" != 'all' ]
 then
 	disease_list="$1"
 fi
+for disease in $disease_list
+do
+	if [ -e "ihme_db/$disease" ]
+	then
+		echo_eval rm -r ihme_db/$disease
+	fi
+done
 number_sample='20'
 random_seed='0'
 for disease in $disease_list
 do
+	fit_ok='yes'
 	for which_fit in no_ode yes_ode students
 	do
+		base_cmd="bin/fit_ihme.py ihme_db $disease $which_fit"
 		if [ "$which_fit" == 'no_ode' ]
 		then
-			echo_eval bin/fit_ihme.py ihme_db $disease $which_fit $random_seed
+			cmd="$base_cmd $random_seed"
 		else
-			echo_eval bin/fit_ihme.py ihme_db $disease $which_fit
+			cmd="$base_cmd"
 		fi
-			echo_eval bin/fit_ihme.py ihme_db $disease $which_fit sample $number_sample
+		if [ "$fit_ok" == 'yes' ]
+		then
+			# do this fit
+			echo "$cmd"
+			if $cmd
+			then
+				echo "$cmd: OK"
+			else
+				echo "$cmd: Error"
+				fit_ok='no'
+			fi
+		fi
+		if [ "$fit_ok" == 'yes' ]
+		then
+			# statistics for this fit
+			cmd="$base_cmd sample $number_sample"
+			if $cmd
+			then
+				echo "$cmd: OK"
+			else
+				echo "$cmd: Error"
+			fi
+		fi
 	done
 done
 #

@@ -243,7 +243,8 @@ correpsonding parent rates.
 02-10:
 1. Change set_mulcov_bound to be specific for each integrand. This avoids the
    problem where a covariate is equal to its reference for one integrand
-2. Make prior for pini a gassian so it does not go wild during no_ode fit.
+2. Change priors for parent pini from uniform to gaussian so it does not go
+   wild during no_ode fit (when there is no data to determine pini).
 '''
 }
 # help cases

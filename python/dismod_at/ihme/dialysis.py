@@ -19,8 +19,8 @@ def pini_parent_smoothing(
 		'density_id' : density_id      ,
 		'lower'      : 0.0             ,
 		'upper'      : 1e-3            ,
-		'mean'       : 1e-5            ,
-		'std'        : None            ,
+		'mean'       : 0.0             ,
+		'std'        : 1.0             ,
 		'eta'        : None            ,
 		'nu'         : None            ,
 	}
