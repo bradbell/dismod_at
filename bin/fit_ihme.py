@@ -245,6 +245,13 @@ correpsonding parent rates.
    problem where a covariate is equal to its reference for one integrand
 2. Change priors for parent pini from uniform to gaussian so it does not go
    wild during no_ode fit (when there is no data to determine pini).
+
+02-17:
+1. All of the rate_value covariate multipliers were mistakenly constrained to
+   zero. This has been fixed.
+2. The max_covariate_effect for crohns diesease was changed from 2.0 -> 4.0.
+   The fit works fine this way and the optimal iota/x_0 multiplier is
+   no longer at its upper bound (x_0 corresponds to sdi).
 '''
 }
 # help cases
@@ -1927,7 +1934,10 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 		if covariate is not None :
 			if integrand_id not in difference_dict :
 				difference_dict[integrand_id] = list()
+			if column_name not in difference_dict :
+				difference_dict[column_name] = list()
 			difference_dict[integrand_id].append( covariate - reference )
+			difference_dict[column_name].append( covariate - reference )
 	#
 	# lower_dict and  upper_dict
 	lower_dict = dict()
@@ -1956,12 +1966,23 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	for row in mulcov_table :
 		if row['covariate_id'] == covariate_id :
 			integrand_id = row['integrand_id']
-			if integrand_id not in difference_dict :
-				lower = 0.0
-				upper = 0.0
-			else :
+			if integrand_id in difference_dict :
 				lower = lower_dict[integrand_id]
 				upper = upper_dict[integrand_id]
+				assert row['mulcov_type'] != 'rate_value'
+			elif integrand_id is not None :
+				lower = 0.0
+				upper = 0.0
+				assert row['mulcov_type'] != 'rate_value'
+			else :
+				assert row['mulcov_type'] == 'rate_value'
+				column_name = 'x_{}'.format(covariate_id)
+				if column_name in difference_dict :
+				    lower = lower_dict[column_name]
+				    upper = upper_dict[column_name]
+				else :
+				    lower = 0.0
+				    upper = 0.0
 			if row['mulcov_type'] != 'meas_noise' :
 				group_smooth_id = row['group_smooth_id']
 				group_smooth_id = new_bounded_smooth_id(
