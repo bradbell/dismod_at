@@ -270,6 +270,7 @@ correpsonding parent rates.
    when setting the bound.
 2. Change the max_covariate_effect for crohns back to 2.0.
 3. Add set_mulcov_value diesease specific option.
+4. Fix warning that dialysis does not come with install (it does)'
 '''
 }
 # help cases
@@ -303,7 +304,7 @@ if not os.path.isdir(data_dir_arg) :
 #
 # disease_arg
 disease_arg = sys.argv[2]
-if disease_arg not in [ 'crohns', 'kidney', 't1_diabetes' ] :
+if disease_arg not in [ 'crohns', 'dialysis', 'kidney', 't1_diabetes' ] :
 	msg  = 'Warning: disease = {} is not one that comes with the install\n'
 	msg += 'You must have added the file site-packages/dismod_at/{}.py'
 	print( msg.format(disease_arg, disease_arg) )
@@ -2046,11 +2047,11 @@ def set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value) :
 	# The corresponding multiplier must be in the covariate table.
 	# Noise covariate multipliers are not included.
 	#
-	rate_match      = False
-	integrand_match = False
+	match_type = None
 	for row in mulcov_table :
-		covariate_id = row['covariate_id']
-		cov_name     = covariate_table[covariate_id]['covariate_name']
+		match_this_row  = False
+		covariate_id    = row['covariate_id']
+		cov_name        = covariate_table[covariate_id]['covariate_name']
 		mulcov_type   = row['mulcov_type']
 		if cov_name == covariate_name and mulcov_type == 'rate_value' :
 			rate_id  = row['rate_id']
@@ -2059,8 +2060,9 @@ def set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value) :
 			else :
 				rate_name     = rate_table[rate_id]['rate_name']
 			if rate_name == rate_or_integrand_name :
-				assert not integrand_match or rate_match
-				rate_match = True
+				assert match_type is None
+				match_type     = 'rate'
+				match_this_row = True
 		if cov_name == covariate_name and mulcov_type == 'meas_value' :
 			integrand_id  = row['integrand_id']
 			if integrand_id is None :
@@ -2068,9 +2070,10 @@ def set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value) :
 			else :
 				integrand_name =integrand_table[integrand_id]['integrand_name']
 			if integrand_name == rate_or_integrand_name :
-				assert not integrand_match or rate_match
-				integrand_match = True
-		if rate_match or integrand_match :
+				assert match_type is None
+				match_type     = 'integrand'
+				match_this_row = True
+		if match_this_row :
 			lower = mulcov_value
 			upper = mulcov_value
 			group_smooth_id = row['group_smooth_id']
@@ -2092,16 +2095,12 @@ def set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value) :
 		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
 	)
 	msg  = '\nset_mulcov_value\n'
-	if rate_match :
-		msg += 'covariate = {}, rate = {}, value = {:.5g}'
-	elif integrand_match:
-		msg += 'covariate = {}, integrand = {}, value = :{.5g}'
-	else :
-		msg  = 'set_mulcov_value: Cannot find following entry in mulcov table:'
-		msg += 'covariate = {}, integrand_or_rate = {}, value = :{.5g}'
-		msg  = msg.format(covariate_name, rate_or_integrand_name, mulcov_value)
+	msg += 'covariate = {}, {}  = {}, value = {:.5g}'
+	msg  = msg.format(
+		covariate_name, match_type, rate_or_integrand_name, mulcov_value
+	)
+	if match_type is None :
 		sys.exit(msg)
-	msg  = msg.format(covariate_name, rate_or_integrand_name, mulcov_value)
 	trace( msg )
 	return
 # -----------------------------------------------------------------------------
