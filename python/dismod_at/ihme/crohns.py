@@ -102,7 +102,7 @@ ode_hold_out_list = []
 # Maximum absolute covariate effect = multiplier * (covariate - referece).
 # Note that exp(effect) multiplies a model value to get the model value for
 # this covariate value. (Noise covariate multipliers are not included.)
-max_covariate_effect = 4.0
+max_covariate_effect = 2.0
 #
 # Ordered dictionary of parent smoothing functions
 import collections

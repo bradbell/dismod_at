@@ -252,6 +252,10 @@ correpsonding parent rates.
 2. The max_covariate_effect for crohns diesease was changed from 2.0 -> 4.0.
    The fit works fine this way and the optimal iota/x_0 multiplier is
    no longer at its upper bound (x_0 corresponds to sdi).
+
+1. Fix set_mulcov_bound so it takes a covariates max_difference into account
+   when setting the bound.
+2. Change the max_covariate_effect for crohns back to 2.0.
 '''
 }
 # help cases
@@ -563,7 +567,6 @@ def system_command (command_list, abort_on_error=True) :
 	#
 	run = subprocess.run(command_list)
 	if run.returncode != 0 :
-		print('random_seed = ', random_seed_arg )
 		if abort_on_error :
 			sys.exit('fit_ihme.py: system command failed')
 		else :
@@ -1869,7 +1872,9 @@ def zero_child_rate(rate_name) :
 # -----------------------------------------------------------------------------
 def set_covariate_reference (covariate_id, reference_name) :
 	# set the reference value for a specified covariate where reference_name
-	# is 'mean' or 'median'
+	# is 'mean' or 'median'. This also removes any bounds on the covariate
+	# difference (it is assumed data outsude the desired bounds has already
+	# been removed).
 	#
 	reference_list = [ 'median', 'mean' ]
 	if reference_name not in reference_list :
@@ -1895,6 +1900,9 @@ def set_covariate_reference (covariate_id, reference_name) :
 	#
 	covariate_name = covariate_table[covariate_id]['covariate_name']
 	old_reference  = covariate_table[covariate_id]['reference']
+	max_difference = covariate_table[covariate_id]['max_difference']
+	if max_difference is None :
+		max_difference = numpy.infinity()
 	#
 	covariate_table[covariate_id]['reference'] = new_reference
 	#
@@ -1904,6 +1912,7 @@ def set_covariate_reference (covariate_id, reference_name) :
 	msg += ', reference_name = {}'.format(reference_name)
 	msg += '\nold_reference = {:.5g}'.format(old_reference)
 	msg += ', new_reference = {:.5g}'.format(new_reference)
+	msg += '\nmax_difference = {:.5g}'.format(max_difference)
 	trace( msg )
 	#
 	table_name = 'covariate'
@@ -1923,7 +1932,10 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 		sys.exit(msg)
 	#
 	# reference for this covariate
-	reference = covariate_table[covariate_id]['reference']
+	reference      = covariate_table[covariate_id]['reference']
+	max_difference = covariate_table[covariate_id]['max_difference']
+	if max_difference is None :
+		max_difference = numpy.inf
 	#
 	# difference_dict = covariate minus reference
 	difference_dict  = dict()
@@ -1932,21 +1944,23 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 		integrand_id = row['integrand_id']
 		covariate   = row[column_name]
 		if covariate is not None :
-			if integrand_id not in difference_dict :
-				difference_dict[integrand_id] = list()
-			if column_name not in difference_dict :
-				difference_dict[column_name] = list()
-			difference_dict[integrand_id].append( covariate - reference )
-			difference_dict[column_name].append( covariate - reference )
+			difference = covariate - reference
+			if difference < max_difference :
+				if integrand_id not in difference_dict :
+					difference_dict[integrand_id] = list()
+				if column_name not in difference_dict :
+					difference_dict[column_name] = list()
+				difference_dict[integrand_id].append(difference)
+				difference_dict[column_name].append(difference)
 	#
 	# lower_dict and  upper_dict
 	lower_dict = dict()
 	upper_dict = dict()
-	for integrand_id in difference_dict :
+	for key in difference_dict :
 		#
 		# maximum and minimum difference
-		min_difference = min(difference_dict[integrand_id])
-		max_difference = max(difference_dict[integrand_id])
+		min_difference = min(difference_dict[key])
+		max_difference = max(difference_dict[key])
 		#
 		# initialize
 		lower = - float("inf")
@@ -1960,8 +1974,8 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 		if upper == float("inf") :
 			lower = 0.0
 			upper = 0.0
-		lower_dict[integrand_id] = lower
-		upper_dict[integrand_id] = upper
+		lower_dict[key] = lower
+		upper_dict[key] = upper
 	#
 	for row in mulcov_table :
 		if row['covariate_id'] == covariate_id :
