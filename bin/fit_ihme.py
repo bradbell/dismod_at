@@ -83,7 +83,7 @@ for the corresponding fits.
 'disease':'''
 disease:
 The command line argument must be one of the following:
-	 crohns, dialysis, kidney, t1_diabetes.
+crohns, dialysis, kidney, t1_diabetes.
 It may also correspond to a disease specific file called
 	dismod_at/ihme/disease.py
 that you have added below your site-packages directory.
@@ -96,6 +96,7 @@ different for each disease. Currently, the following settings are included:
 	max_num_iter_fixed
 	ode_hold_out_list
 	max_covariate_effect
+	set_mulcov_value
 	parent_smoothing
 	child_smoothing
 This is a very minimal set and more settings would be useful.
@@ -168,6 +169,17 @@ maximum absolute covariate effect; i.e, multiplier * (covariate - referece).
 Note that exp(effect) multiplies a model value to get another model value
 corresponding to a covariate value. Noise covariate multipliers are not
 included in the maximum.
+''',
+
+'set_mulcov_value':'''
+This option may be necessary to get statstics for a fit where
+one or more of the covariate multipliers is at its upper or lower bound.
+set_mulcov_value is a list with each entry a list with the following structure:
+	[covariate_name, rate_or_integrand_name, mulcov_value]
+covariate_name:         is the covariate in the dismod_at database.
+rate_or_integrand_name: is the rate of integrand for this multiplier.
+mulcov_value:           is the value we are setting the multiplier to.
+This overrides the max_covariate_effect setting for multipliers in this list.
 ''',
 
 'parent_smoothing':'''
@@ -253,9 +265,11 @@ correpsonding parent rates.
    The fit works fine this way and the optimal iota/x_0 multiplier is
    no longer at its upper bound (x_0 corresponds to sdi).
 
+02-20
 1. Fix set_mulcov_bound so it takes a covariates max_difference into account
    when setting the bound.
 2. Change the max_covariate_effect for crohns back to 2.0.
+3. Add set_mulcov_value diesease specific option.
 '''
 }
 # help cases
@@ -1926,7 +1940,7 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	# disease_specific_max_covariate_effect.
 	# Noise covariate multipliers are not included.
 	# The bounds for an integerand are set to zero if the covariate
-	# is identically equalt the reference for that integrand.
+	# is identically equal to the reference for that integrand.
 	if max_covariate_effect < 0.0 :
 		msg = 'disease specific max_covariate_effect is negative'
 		sys.exit(msg)
@@ -2024,6 +2038,70 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	msg += 'covariate = x_{}, max_covariate_effect = {}, '
 	msg += 'lower = {:.5g}, upper = {:.5g}'
 	msg  = msg.format(covariate_id, max_covariate_effect, lower, upper)
+	trace( msg )
+	return
+# -----------------------------------------------------------------------------
+def set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value) :
+	# Set the value for a specific covariate multiplier.
+	# The corresponding multiplier must be in the covariate table.
+	# Noise covariate multipliers are not included.
+	#
+	rate_match      = False
+	integrand_match = False
+	for row in mulcov_table :
+		covariate_id = row['covariate_id']
+		cov_name     = covariate_table[covariate_id]['covariate_name']
+		mulcov_type   = row['mulcov_type']
+		if cov_name == covariate_name and mulcov_type == 'rate_value' :
+			rate_id  = row['rate_id']
+			if rate_id is None :
+				rate_name = None
+			else :
+				rate_name     = rate_table[rate_id]['rate_name']
+			if rate_name == rate_or_integrand_name :
+				assert not integrand_match or rate_match
+				rate_match = True
+		if cov_name == covariate_name and mulcov_type == 'meas_value' :
+			integrand_id  = row['integrand_id']
+			if integrand_id is None :
+				integrand_name = None
+			else :
+				integrand_name =integrand_table[integrand_id]['integrand_name']
+			if integrand_name == rate_or_integrand_name :
+				assert not integrand_match or rate_match
+				integrand_match = True
+		if rate_match or integrand_match :
+			lower = mulcov_value
+			upper = mulcov_value
+			group_smooth_id = row['group_smooth_id']
+			group_smooth_id = new_bounded_smooth_id(
+				group_smooth_id, lower, upper
+			)
+			row['group_smooth_id'] = group_smooth_id
+			#
+			subgroup_smooth_id = row['subgroup_smooth_id']
+			subgroup_smooth_id = new_bounded_smooth_id(
+				subgroup_smooth_id, lower, upper
+			)
+			row['subgroup_smooth_id'] = subgroup_smooth_id
+	#
+	put_table('prior',   prior_table,  prior_col_name,  prior_col_type)
+	put_table('mulcov',  mulcov_table, mulcov_col_name, mulcov_col_type)
+	put_table('smooth',  smooth_table, smooth_col_name, smooth_col_type)
+	put_table('smooth_grid',
+		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
+	)
+	msg  = '\nset_mulcov_value\n'
+	if rate_match :
+		msg += 'covariate = {}, rate = {}, value = {:.5g}'
+	elif integrand_match:
+		msg += 'covariate = {}, integrand = {}, value = :{.5g}'
+	else :
+		msg  = 'set_mulcov_value: Cannot find following entry in mulcov table:'
+		msg += 'covariate = {}, integrand_or_rate = {}, value = :{.5g}'
+		msg  = msg.format(covariate_name, rate_or_integrand_name, mulcov_value)
+		sys.exit(msg)
+	msg  = msg.format(covariate_name, rate_or_integrand_name, mulcov_value)
 	trace( msg )
 	return
 # -----------------------------------------------------------------------------
@@ -2374,6 +2452,14 @@ if which_fit_arg == 'no_ode'  :
 	n_covariate = len( covariate_table )
 	for covariate_id in range( n_covariate ) :
 		set_mulcov_bound(specific.max_covariate_effect, covariate_id)
+	#
+	# Covariate multipliers that we are setting a specific value for
+	# (this must be done after set_mulcov_bound).
+	for row in specific.set_mulcov_value :
+		covariate_name         = row[0]
+		rate_or_integrand_name = row[1]
+		mulcov_value           = row[2]
+		set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value)
 	#
 	# hold out all ode integrand data
 	for integrand_name in integrand_list_yes_ode :

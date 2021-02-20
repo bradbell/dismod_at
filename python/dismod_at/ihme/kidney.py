@@ -143,6 +143,11 @@ ode_hold_out_list = []
 # this covariate value. (Noise covariate multipliers are not included.)
 max_covariate_effect = 2.0
 #
+# Covariate multipliers that are set to a specific value:
+# This is a list with each entrry a list consisting of
+# covariate_name, rate or integrand, and value we are setting multilpier to
+set_mulcov_value = []
+#
 # Ordered dictionary of parent smoothing functions
 import collections
 parent_smoothing = collections.OrderedDict()

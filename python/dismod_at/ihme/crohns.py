@@ -104,6 +104,13 @@ ode_hold_out_list = []
 # this covariate value. (Noise covariate multipliers are not included.)
 max_covariate_effect = 2.0
 #
+# Covariate multipliers that are set to a specific value:
+# This is a list with each entrry a list consisting of
+# covariate_name, rate or integrand, and value we are setting multilpier to
+set_mulcov_value = [
+	[ 'x_0',     'iota',    3.8661 ]
+]
+#
 # Ordered dictionary of parent smoothing functions
 import collections
 parent_smoothing = collections.OrderedDict()
@@ -113,4 +120,4 @@ parent_smoothing['chi']  = chi_parent_smoothing
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
-# child_smoothing['pini'] = None # is not nceccary becacuse parent is None
+# child_smoothing['pini'] = None # is not necessary becacuse parent is None
