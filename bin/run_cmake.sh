@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -47,7 +47,7 @@ verbose_makefile='no'
 # &head build_type&&
 # Use either &code debug&& or &code release&& for the type of this build:
 # &codep
-build_type='release'
+build_type='debug'
 # &&
 #
 # &head dismod_at_prefix&&

@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -44,8 +44,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='b60addfe7c8172c4b5bf12fe03353c5aca9b6c82'
-version='20201222'
+hash_key='4f2eb6fb266bd61b13ffee808f6dde6f7a7ff6eb'
+version='20210302'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
