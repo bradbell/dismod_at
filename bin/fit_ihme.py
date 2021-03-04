@@ -207,7 +207,7 @@ correpsonding parent rates.
 1. Automatic detection and setting of proper rate_case.
 2. Move relative_path, max_sample, max_num_iter_fixed to disease specific file.
 3. Change the smoothing function to be None, instead of returning None,
-   when seting a rate to zero. This is simpler.
+   when setting a rate to zero. This is simpler.
 
 01-23:
 1. Add dialysis to the disease list.
@@ -271,6 +271,11 @@ correpsonding parent rates.
 2. Change the max_covariate_effect for crohns back to 2.0.
 3. Add set_mulcov_value diesease specific option.
 4. Fix warning that dialysis does not come with install (it does)'
+
+03-04:
+1. Fix the printing of the set_mulcov_bound lower and upper bounds so they
+   are integrand specific both on standard output aind in fit_ihme.log.
+2. Remove the printing of 'stop' directly after fit_ihme.py: OK.
 '''
 }
 # help cases
@@ -1992,38 +1997,66 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 		lower_dict[key] = lower
 		upper_dict[key] = upper
 	#
+	# start trace for this covariate_id
+	msg  = '\nset_mulcov_bound: covariate = x_{}, max_covariate_effect = {}'
+	msg = msg.format(covariate_id, max_covariate_effect);
+	trace(msg)
+	#
+	# modify mulcov_table
 	for row in mulcov_table :
 		if row['covariate_id'] == covariate_id :
 			integrand_id = row['integrand_id']
 			if integrand_id in difference_dict :
 				lower = lower_dict[integrand_id]
 				upper = upper_dict[integrand_id]
+				# integrand_id is not None
 				assert row['mulcov_type'] != 'rate_value'
 			elif integrand_id is not None :
 				lower = 0.0
 				upper = 0.0
+				# integrand_id is not None
 				assert row['mulcov_type'] != 'rate_value'
 			else :
+				# integrand_id is None
 				assert row['mulcov_type'] == 'rate_value'
 				column_name = 'x_{}'.format(covariate_id)
 				if column_name in difference_dict :
-				    lower = lower_dict[column_name]
-				    upper = upper_dict[column_name]
+					lower = lower_dict[column_name]
+					upper = upper_dict[column_name]
 				else :
-				    lower = 0.0
-				    upper = 0.0
+					lower = 0.0
+					upper = 0.0
+			# Skip measurement noise covariates
 			if row['mulcov_type'] != 'meas_noise' :
+				# replace group smoothing by one with specified bounds
 				group_smooth_id = row['group_smooth_id']
 				group_smooth_id = new_bounded_smooth_id(
 					group_smooth_id, lower, upper
 				)
 				row['group_smooth_id'] = group_smooth_id
 				#
+				# replace subgroup smoothing by one with specified bounds
 				subgroup_smooth_id = row['subgroup_smooth_id']
 				subgroup_smooth_id = new_bounded_smooth_id(
 					subgroup_smooth_id, lower, upper
 				)
 				row['subgroup_smooth_id'] = subgroup_smooth_id
+			# lower and upper for printing
+			if lower is None :
+				lower = - float('inf')
+			if upper is None :
+				upper = + float('inf')
+			#
+			if integrand_id is None :
+				rate_id   = row['rate_id']
+				name  = rate_table[rate_id]['rate_name']
+				text  = 'rate = {}, lower = {:.5g}, upper = {:.5g}'
+				msg   = text.format(name, lower, upper)
+			else :
+				name  = integrand_table[integrand_id]['integrand_name']
+				text  = 'integrand = {}, lower = {:.5g}, upper = {:.5g}'
+				msg   = text.format(name, lower, upper)
+			trace(msg)
 	#
 	put_table('prior',   prior_table,  prior_col_name,  prior_col_type)
 	put_table('mulcov',  mulcov_table, mulcov_col_name, mulcov_col_type)
@@ -2031,15 +2064,6 @@ def set_mulcov_bound(max_covariate_effect, covariate_id) :
 	put_table('smooth_grid',
 		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
 	)
-	if lower is None :
-		lower = - float('inf')
-	if upper is None :
-		upper = + float('inf')
-	msg  = '\nset_mulcov_bound\n'
-	msg += 'covariate = x_{}, max_covariate_effect = {}, '
-	msg += 'lower = {:.5g}, upper = {:.5g}'
-	msg  = msg.format(covariate_id, max_covariate_effect, lower, upper)
-	trace( msg )
 	return
 # -----------------------------------------------------------------------------
 def set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value) :
@@ -2323,7 +2347,6 @@ if sample_command :
 	msg += str( round( time.time() - start_time ) ) + ' seconds'
 	trace( msg )
 	trace('fit_ihme.py: OK')
-	trace('stop')
 	sys.exit(0)
 # --------------------------------------------------------------------
 if which_fit_arg == 'no_ode'  :
@@ -2555,5 +2578,4 @@ msg += '\nTotal time   = '
 msg += str( round( time.time() - start_time ) ) + ' seconds'
 trace( msg )
 trace('fit_ihme.py: OK')
-trace('stop')
 sys.exit(0)
