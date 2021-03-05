@@ -184,7 +184,7 @@ This overrides the max_covariate_effect setting for multipliers in this list.
 
 'parent_smoothing':'''
 parent_smoothng:
-This variable, in the python file for this disease, is the
+This variable, in the python file for this disease, is
 an ordered dictionary where keys are rate names for the smoothings
 that are changed. The values are None or functions f with the syntax
 (age_grid, time_grid, value_prior, dage_prior, dtime_prior) = f(
@@ -192,6 +192,9 @@ that are changed. The values are None or functions f with the syntax
 )
 If the function f = parent_smooth[rate_name] is None,
 then that parent and child rates are removed from the fit; i.e. they are zero.
+The integrand data is intended to help when constructing priors; e.g.,
+mtexcess can help construct a prior for chi. Note that this only works when
+there is mtexcess data.
 
 ''',
 'child_smoothing':'''
@@ -2397,7 +2400,7 @@ if which_fit_arg == 'no_ode'  :
 	# integrand_data
 	integrand_data = get_integrand_data()
 	#
-	# Set parent rate priros for this disease
+	# Set parent rate priors for this disease
 	zero_parent_rate_set = set()
 	for rate_name in specific.parent_smoothing :
 		fun = specific.parent_smoothing[rate_name]
@@ -2415,7 +2418,7 @@ if which_fit_arg == 'no_ode'  :
 				age_grid, time_grid, value_prior, dage_prior, dtime_prior
 			)
 	#
-	# Set child rate priros for this disease
+	# Set child rate priors for this disease
 	for rate_name in specific.child_smoothing :
 		fun = specific.child_smoothing[rate_name]
 		#

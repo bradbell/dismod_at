@@ -15,6 +15,8 @@ def pini_parent_smoothing(
 	import numpy
 	age_grid     = [ 0.0 ]
 	time_grid    = [ float(time) for time in range(2000, 2020, 5) ]
+	# This strategy only works when there is prevalence data
+	assert 'prevalence' in integrand_data
 	median       = numpy.median( integrand_data['prevalence'] )
 	density_id   = density_name2id['gaussian']
 	value_prior = {
