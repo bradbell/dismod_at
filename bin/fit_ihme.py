@@ -190,17 +190,17 @@ that are changed. The values are None or functions f with the syntax
 (age_grid, time_grid, value_prior, dage_prior, dtime_prior) = f(
 	age_table, time_table, density_name2id, integrand_data
 )
-If the function f = parent_smooth[rate_name] is None,
+If the function f = parent_smooth[rate_name] is None, or if it returns None,
 then that parent and child rates are removed from the fit; i.e. they are zero.
-The integrand data is intended to help when constructing priors; e.g.,
+The integrand data is intended to help constructing priors; e.g.,
 mtexcess can help construct a prior for chi. Note that this only works when
 there is mtexcess data.
 
 ''',
 'child_smoothing':'''
 child_smoothing:
-It the same as parent_smoothing except that it is the the child rates.
-In addition setting a chiild smothing to None does not affect the
+It the same as parent_smoothing except that it is for the child rates.
+In addition setting a child smothing to None does not affect the
 correpsonding parent rates.
 ''',
 
@@ -279,6 +279,10 @@ correpsonding parent rates.
 1. Fix the printing of the set_mulcov_bound lower and upper bounds so they
    are integrand specific both on standard output aind in fit_ihme.log.
 2. Remove the printing of 'stop' directly after fit_ihme.py: OK.
+
+03-05:
+1. If the parent_smoothing or child_smoothing functions returns None, it's
+	the same as if the function is None; i.e., corresponding rates are zero.
 '''
 }
 # help cases
@@ -2409,14 +2413,18 @@ if which_fit_arg == 'no_ode'  :
 			zero_parent_and_child_rate(rate_name)
 			zero_parent_rate_set.add(rate_name)
 		else :
-			parent_rate = True
 			result = fun(
 				age_table, time_table, density_name2id, integrand_data
 			)
-			(age_grid, time_grid, value_prior, dage_prior, dtime_prior)=result
-			set_rate_smoothing(parent_rate, rate_name,
-				age_grid, time_grid, value_prior, dage_prior, dtime_prior
-			)
+			if result is None :
+				zero_parent_and_child_rate(rate_name)
+				zero_parent_rate_set.add(rate_name)
+			else :
+				parent_rate = True
+				(age_grid,time_grid,value_prior,dage_prior,dtime_prior)= result
+				set_rate_smoothing(parent_rate, rate_name,
+					age_grid, time_grid, value_prior, dage_prior, dtime_prior
+				)
 	#
 	# Set child rate priors for this disease
 	for rate_name in specific.child_smoothing :
@@ -2426,14 +2434,17 @@ if which_fit_arg == 'no_ode'  :
 			if rate_name not in zero_parent_rate_set :
 				zero_child_rate(rate_name)
 		else :
-			parent_rate = False
 			result = fun(
 				age_table, time_table, density_name2id, integrand_data
 			)
-			(age_grid, time_grid, value_prior, dage_prior, dtime_prior)=result
-			set_rate_smoothing(parent_rate, rate_name,
-				age_grid, time_grid, value_prior, dage_prior, dtime_prior
-			)
+			if result is None :
+				zero_child_rate(rate_name)
+			else :
+				parent_rate = False
+				(age_grid,time_grid,value_prior,dage_prior,dtime_prior)= result
+				set_rate_smoothing(parent_rate, rate_name,
+					age_grid, time_grid, value_prior, dage_prior, dtime_prior
+				)
 	#
 	# iota_zero, rho_zero, chi_zero
 	iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
