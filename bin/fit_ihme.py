@@ -283,6 +283,10 @@ correpsonding parent rates.
 03-05:
 1. If the parent_smoothing or child_smoothing functions returns None, it's
 	the same as if the function is None; i.e., corresponding rates are zero.
+
+03-22:
+1. Print out median of data when setting eta in data likelihood.
+2. Set reference for covariates after subsampling data.
 '''
 }
 # help cases
@@ -1458,10 +1462,6 @@ def set_data_likelihood (
 		msg += ', eta = m*{}'.format(factor_eta)
 	if nu is not None :
 		msg += ', nu = {}'.format(nu)
-	if factor_eta is not None :
-		msg += '\n' + 12 * ' ' + 'where m is the meadian of the'
-		msg += ' {} data'.format(integrand_name)
-	trace( msg )
 	#
 	# integrand_id
 	integrand_id =integrand_name2id[integrand_name]
@@ -1473,7 +1473,10 @@ def set_data_likelihood (
 		eta = None
 	else :
 		median = numpy.median( integrand_data[integrand_name] )
-		eta = factor_eta * median
+		eta  = factor_eta * median
+		msg += '\n    ' + 'where m = {:.5g} is the median of the {} data'
+		msg  = msg.format(median, integrand_name)
+	trace( msg )
 	for row in data_table :
 		if row['integrand_id'] == integrand_id :
 			row['density_id'] = density_id
@@ -1929,7 +1932,7 @@ def set_covariate_reference (covariate_id, reference_name) :
 	old_reference  = covariate_table[covariate_id]['reference']
 	max_difference = covariate_table[covariate_id]['max_difference']
 	if max_difference is None :
-		max_difference = numpy.infinity()
+		max_difference = numpy.inf
 	#
 	covariate_table[covariate_id]['reference'] = new_reference
 	#
@@ -2384,12 +2387,6 @@ if which_fit_arg == 'no_ode'  :
 	# remove all hold out data and data past covariate limits
 	subset_data()
 	#
-	# set reference value for x_0 to its median
-	reference_name  = 'median'
-	for covariate_id in range( len(covariate_table) ) :
-		if relative_covariate(covariate_id) :
-			set_covariate_reference(covariate_id, reference_name)
-	#
 	# subsetting the data can remove some integrands
 	integrand_list_yes_ode = get_integrand_list(True)
 	integrand_list_no_ode  = get_integrand_list(False)
@@ -2400,6 +2397,12 @@ if which_fit_arg == 'no_ode'  :
 	# randomly subsample
 	for integrand_name in integrand_list_all :
 		random_subsample_data(integrand_name, specific.max_sample)
+	#
+	# set reference value for x_0 to its median
+	reference_name  = 'median'
+	for covariate_id in range( len(covariate_table) ) :
+		if relative_covariate(covariate_id) :
+			set_covariate_reference(covariate_id, reference_name)
 	#
 	# integrand_data
 	integrand_data = get_integrand_data()
