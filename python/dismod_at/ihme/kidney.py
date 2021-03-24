@@ -97,9 +97,11 @@ def chi_parent_smoothing(
 	value_prior = {
 		'prior_name' : 'parent_smoothing_chi_value_prior' ,
 		'density_id' : density_id      ,
-		'lower'      : 1e-6           ,
+		'lower'      : 1e-6            ,
 		'upper'      : 1.0             ,
 		'mean'       : 1e-3            ,
+		# This standard deviation is very small, but we can fit the data
+		# with it. We need more data to better resolve chi.
 		'std'        : 0.1             ,
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,

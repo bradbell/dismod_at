@@ -22,7 +22,7 @@ def iota_parent_smoothing(
 		'lower'      : 1e-19           ,
 		'upper'      : 0.1             ,
 		'mean'       : 1e-5            ,
-		'std'        : 5.0             ,
+		'std'        : 10.0            ,
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,
 	}
@@ -61,7 +61,7 @@ def chi_parent_smoothing(
 		'lower'      : 1e-19           ,
 		'upper'      : 1.0             ,
 		'mean'       : 1e-3            ,
-		'std'        : 5.0             ,
+		'std'        : 10.0            ,
 		'eta'        : 1e-6            ,
 		'nu'         : None            ,
 	}
