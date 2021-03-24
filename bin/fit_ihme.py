@@ -287,6 +287,11 @@ correpsonding parent rates.
 03-22:
 1. Print out median of data when setting eta in data likelihood.
 2. Set reference for covariates after subsampling data.
+
+03-24:
+1. Change dialysis parent priors from uniform to log-gaussian with large std.
+   This seems to speed up convergence without affecting results.
+2. Change dialysis time grid to better reflect data times range and variability.
 '''
 }
 # help cases

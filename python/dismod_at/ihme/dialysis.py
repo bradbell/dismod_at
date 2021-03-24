@@ -50,19 +50,18 @@ def iota_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
 	age_grid     = [ float(age)  for age in range(0, 110, 10) ]
-	time_grid    = [ float(time) for time in range(1990, 2030, 10) ]
-	density_id   = density_name2id['uniform']
+	time_grid    = [ 1990.0, 1995.0, 2015.0 ]
+	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_iota_value_prior' ,
 		'density_id' : density_id      ,
 		'lower'      : 1e-6           ,
 		'upper'      : 1e-2            ,
 		'mean'       : 1e-4            ,
-		'std'        : None            ,
-		'eta'        : None            ,
+		'std'        : 10.0            ,
+		'eta'        : 1e-8            ,
 		'nu'         : None            ,
 	}
-	density_id   = density_name2id['log_gaussian']
 	dage_prior = {
 		'prior_name' : 'parent_smoothing_iota_dage_prior',
 		'density_id' : density_id     ,
@@ -90,19 +89,18 @@ def rho_parent_smoothing(
 ) :
 	age_grid     = [ float(age) for age in range(0, 60, 10) ]
 	age_grid    += [ float(age) for age in range(60, 105, 5) ]
-	time_grid    = [ 1990.0, 2020.0 ]
-	density_id   = density_name2id['uniform']
+	time_grid    = [ 1990.0, 2015.0 ]
+	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_rho_value_prior' ,
 		'density_id' : density_id      ,
 		'lower'      : 1e-4           ,
 		'upper'      : 2.0             ,
 		'mean'       : 1e-1            ,
-		'std'        : None            ,
-		'eta'        : None            ,
+		'std'        : 10.0            ,
+		'eta'        : 1e-8            ,
 		'nu'         : None            ,
 	}
-	density_id   = density_name2id['log_gaussian']
 	dage_prior = {
 		'prior_name' : 'parent_smoothing_rho_dage_prior',
 		'density_id' : density_id     ,
@@ -129,7 +127,7 @@ def chi_parent_smoothing(
 	age_table, time_table, density_name2id, integrand_data
 ) :
 	age_grid     = [ float(age) for age in range(0, 110, 10) ]
-	time_grid    = [ 1990.0, 2020.0 ]
+	time_grid    = [ 1990.0, 2015.0 ]
 	density_id   = density_name2id['log_gaussian']
 	value_prior = {
 		'prior_name' : 'parent_smoothing_chi_value_prior' ,
@@ -137,7 +135,7 @@ def chi_parent_smoothing(
 		'lower'      : 1e-3           ,
 		'upper'      : 5.0             ,
 		'mean'       : 1e-1            ,
-		'std'        : 1e-1            ,
+		'std'        : 10.0            ,
 		'eta'        : 1e-8            ,
 		'nu'         : None            ,
 	}
@@ -167,10 +165,10 @@ def chi_parent_smoothing(
 relative_path = 'data/475527/dbs/96/2/dismod.db'
 #
 # maximum number or sampels per integrand
-max_sample = 1000
+max_sample = 500
 #
 # maximum number of iterations when optimizing fixed effects
-max_num_iter_fixed = 200
+max_num_iter_fixed = 50
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []
