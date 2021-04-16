@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -135,6 +135,11 @@ def example_db (file_name) :
 		{ 'name':'print_level_random',     'value':'0'                 },
 		{ 'name':'tolerance_random',       'value':'1e-10'             }
 	]
+	#
+	# This entry used to fail on fit both because there are no child iota rates
+	option_table.append(
+		{'name':'zero_sum_child_rate',     'value':'iota' }
+	)
 	# ----------------------------------------------------------------------
 	# avgint table: empty
 	avgint_table = list()
