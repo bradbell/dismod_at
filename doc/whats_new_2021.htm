@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>04-16</option>
 <option>03-02</option>
 <option>01-28</option>
 <option>01-22</option>
@@ -80,6 +81,29 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="04-16" id="04-16">04-16</a></big></b>
+
+<ol type="1"><li>
+The <a href="fit_command.htm#variables.both" target="_top"><span style='white-space: nowrap'>fit&nbsp;both</span></a>
+ command was failing when
+<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
+
+was specified for a rate that did not have any children.
+This has been fixed.
+</li><li>
+
+There was a syntax error in the <code><font color="blue">test/user/fit_sim.py</font></code> program.
+This has been fixed.
+</li><li>
+
+Advance to <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+ version 20210416.
+This includes the bug fix above.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="03-02" id="03-02">03-02</a></big></b>
 <br>
