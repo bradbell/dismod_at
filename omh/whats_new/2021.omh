@@ -40,10 +40,15 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 04-16$$
+$list number$$
 The $cref/fit both/fit_command/variables/both/$$ command was failing when
 $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$
 was specified for a rate that did not have any children.
 This has been fixed.
+$lnext
+There was a syntax error in the $code test/user/fit_sim.py$$ program.
+This has been fixed.
+$lend
 
 $head 03-02$$
 Advance to cppad_mixed-20210302.

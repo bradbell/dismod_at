@@ -50,7 +50,7 @@ def system_command(command) :
 	flag = subprocess.call( command )
 	if flag != 0 :
 		msg  = 'command failed: flag = ' + str(flag)
-		msg += ', random_seed = ', random_seed_str
+		msg += ', random_seed = ' + random_seed_str
 		sys.exit(msg)
 	return
 # ------------------------------------------------------------------------
