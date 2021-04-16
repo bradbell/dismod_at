@@ -73,8 +73,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20210128'
-	dismod_at_hash='a5aa82c3b2256ebe34f3c6291151ddde17972c3d'
+	dismod_at_version='20210416'
+	dismod_at_hash='cb8888b63ef5e6351284f2a31fe8cf259c59f006'
 # %$$
 #
 # The image commands will not execute if the corresponding docker image

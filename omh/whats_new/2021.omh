@@ -48,6 +48,9 @@ This has been fixed.
 $lnext
 There was a syntax error in the $code test/user/fit_sim.py$$ program.
 This has been fixed.
+$lnext
+Advance to $cref dock_dismod_at.sh$$ version 20210416.
+This includes the bug fix above.
 $lend
 
 $head 03-02$$
