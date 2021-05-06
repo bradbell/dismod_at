@@ -404,7 +404,9 @@
 #	/Adjusted Standard Deviation, delta_i(theta)
 # /$$ for this row.
 # This value is computed for this command by dividing by the residual
-# and is not valid when the residual is zero.
+# which is not valid when the residual is zero and reported as empty.
+# This value is also reported as empty if the result of the division
+# is greater than the maximum python $code float$$ value.
 #
 # $subhead meas_value$$
 # is the data table
@@ -586,7 +588,10 @@ def db2csv_command(database_file_arg) :
 			difference  = math.log(meas_value + eta) - math.log(avgint + eta)
 			sigma = difference / residual
 			# sigma = log(meas_value + eta + delta) - log(meas_value + eta)
-			delta   = (meas_value + eta) * (math.exp(sigma) - 1.0)
+			if sigma > math.log( sys.float_info.max ) :
+				delta = None
+			else :
+				delta   = (meas_value + eta) * (math.exp(sigma) - 1.0)
 		return delta
 	# -------------------------------------------------------------------------
 	def round_to(x, n_digits) :

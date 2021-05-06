@@ -39,6 +39,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 05-06$$
+If a $cref/meas_delta/db2csv_command/data.csv/meas_delta/$$,
+in the $code data.csv$$ created by $code db2csv$$ command,
+is greater than the maximum python $code float$$, report it as empty.
+
 $head 04-16$$
 $list number$$
 The $cref/fit both/fit_command/variables/both/$$ command was failing when
