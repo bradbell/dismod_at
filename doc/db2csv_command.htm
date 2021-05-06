@@ -854,7 +854,9 @@ this is the
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
  for this row.
 This value is computed for this command by dividing by the residual
-and is not valid when the residual is zero.
+which is not valid when the residual is zero and reported as empty.
+This value is also reported as empty if the result of the division
+is greater than the maximum python <code><font color="blue">float</font></code> value.
 
 <br>
 <br>
