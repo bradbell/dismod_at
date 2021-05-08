@@ -10,8 +10,8 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2021$$
 $spell
-    cppad
-    Ipopt
+	cppad
+	Ipopt
 	num_iter
 	Dismod
 	dage
@@ -23,6 +23,8 @@ $spell
 	dismodat.py
 	ihme
 	crohns
+	msys
+	cygwin
 $$
 $navigate%
 	Up%Location%
@@ -38,6 +40,10 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 05-07$$
+Advance to cppad_mixed-20210507. This should solve some install problems
+on the msys and cygwin systems.
 
 $head 05-06$$
 If a $cref/meas_delta/db2csv_command/data.csv/meas_delta/$$,

@@ -44,8 +44,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='4f2eb6fb266bd61b13ffee808f6dde6f7a7ff6eb'
-version='20210302'
+hash_key='cff0b8c7c78df775d40a73a0942b2c4472a3d160'
+version='20210507'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -86,12 +86,12 @@ then
 	bin/build_type.sh example_install.sh $dismod_at_prefix $build_type
 fi
 # ---------------------------------------------------------------------------
-# cd into external/$build_type
-if [ ! -e external/$build_type ]
+# cd into external
+if [ ! -e external ]
 then
-    mkdir -p external/$build_type
+    mkdir external
 fi
-echo_eval cd external/$build_type
+echo_eval cd external
 # --------------------------------------------------------------------------
 # clone cppad_mixed.git
 if [ ! -e cppad_mixed.git ]
@@ -117,7 +117,7 @@ else
     optimize='no'
 fi
 # install options
-echo 'edit build/external/cppad_mixed.git/bin/run_cmake.sh.sh'
+echo 'edit external/cppad_mixed.git/bin/run_cmake.sh.sh'
 sed \
     -e "s|^verbose_makefile=.*|verbose_makefile='no'|" \
     -e "s|^build_type=.*|build_type='$build_type'|" \
@@ -132,7 +132,7 @@ mv run_cmake.$$ bin/run_cmake.sh
 chmod +x bin/run_cmake.sh
 #
 # supress call to cppad_mixed build_type.sh
-echo 'edit build/external/cppad_mixed.git/bin/example_install.sh'
+echo 'edit external/cppad_mixed.git/bin/example_install.sh'
 sed \
     -e 's|bin/build_type.sh .*|:|' \
     -e 's|for cmd in check speed install|for cmd in install|' \
