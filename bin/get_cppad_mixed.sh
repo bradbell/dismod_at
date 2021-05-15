@@ -44,20 +44,20 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='cff0b8c7c78df775d40a73a0942b2c4472a3d160'
-version='20210507'
+hash_key='7ec4ecf922f58fa78608db7907fb557a4dba3f92'
+version='20210515'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
 then
-    echo "$name: must be executed from its parent directory"
-    exit 1
+	echo "$name: must be executed from its parent directory"
+	exit 1
 fi
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-    echo $*
-    eval $*
+	echo $*
+	eval $*
 }
 # --------------------------------------------------------------------------
 # build_type
@@ -89,14 +89,14 @@ fi
 # cd into external
 if [ ! -e external ]
 then
-    mkdir external
+	mkdir external
 fi
 echo_eval cd external
 # --------------------------------------------------------------------------
 # clone cppad_mixed.git
 if [ ! -e cppad_mixed.git ]
 then
-    echo_eval git clone $web_page cppad_mixed.git
+	echo_eval git clone $web_page cppad_mixed.git
 fi
 cd cppad_mixed.git
 echo_eval git reset --hard
@@ -104,44 +104,73 @@ echo_eval git checkout master
 echo_eval git pull --ff-only
 echo_eval git checkout --quiet $hash_key
 check=`grep '^SET(cppad_mixed_version' CMakeLists.txt | \
-    sed -e 's|^[^"]*"\([^"]*\).*|\1|'`
+	sed -e 's|^[^"]*"\([^"]*\).*|\1|'`
 if [ "$version" != "$check" ]
 then
-    echo 'get_cppad_mixed.sh: version number does not agree with hash_key'
-    exit 1
+	echo 'get_cppad_mixed.sh: version number does not agree with hash_key'
+	exit 1
 fi
 if [ "$build_type" == 'release' ]
 then
-    optimize='yes'
+	optimize='yes'
 else
-    optimize='no'
+	optimize='no'
 fi
-# install options
-echo 'edit external/cppad_mixed.git/bin/run_cmake.sh.sh'
+#
+# transfer cppad_py install options to cppad_mixed run_cmake.sh
+dir=$(pwd)
+echo "edit $dir/bin/run_cmake.sh"
 sed \
-    -e "s|^verbose_makefile=.*|verbose_makefile='no'|" \
-    -e "s|^build_type=.*|build_type='$build_type'|" \
-    -e "s|^cmake_install_prefix=.*|cmake_install_prefix='$dismod_at_prefix'|" \
-    -e "s|^extra_cxx_flags=.*|extra_cxx_flags='$extra_cxx_flags'|" \
-    -e "s|^cmake_libdir=.*|cmake_libdir='$cmake_libdir'|" \
-    -e "s|^ldlt_cholmod=.*|ldlt_cholmod='yes'|" \
-    -e "s|^optimize_cppad_function=.*|optimize_cppad_function='$optimize'|" \
-    -e "s|^for_hes_sparsity=.*|for_hes_sparsity='yes'|" \
-    bin/run_cmake.sh > run_cmake.$$
+	-e "s|^verbose_makefile=.*|verbose_makefile='no'|" \
+	-e "s|^build_type=.*|build_type='$build_type'|" \
+	-e "s|^cmake_install_prefix=.*|cmake_install_prefix='$dismod_at_prefix'|" \
+	-e "s|^extra_cxx_flags=.*|extra_cxx_flags='$extra_cxx_flags'|" \
+	-e "s|^cmake_libdir=.*|cmake_libdir='$cmake_libdir'|" \
+	-e "s|^ldlt_cholmod=.*|ldlt_cholmod='yes'|" \
+	-e "s|^optimize_cppad_function=.*|optimize_cppad_function='$optimize'|" \
+	-e "s|^for_hes_sparsity=.*|for_hes_sparsity='yes'|" \
+	bin/run_cmake.sh > run_cmake.$$
 mv run_cmake.$$ bin/run_cmake.sh
 chmod +x bin/run_cmake.sh
+#
+# check edit
+list="
+	^verbose_makefile='no'
+	^build_type='$build_type'
+	^cmake_install_prefix='$dismod_at_prefix'
+	^cmake_libdir='$cmake_libdir'
+	^ldlt_cholmod='yes'
+	^optimize_cppad_function='$optimize'
+	^for_hes_sparsity='yes'
+"
+for pattern in $list
+do
+	if ! grep "$pattern" bin/run_cmake.sh > /dev/null
+	then
+		echo "pattern=$pattern"
+		echo "get_cppad_mixed.sh: Edit of $dir/bin/run_cmake.sh failed"
+		exit 1
+	fi
+done
+# $extra_cxx_flags my have spaces in it
+if ! grep "^extra_cxx_flags='$extra_cxx_flags'"  bin/run_cmake.sh > /dev/null
+then
+	echo "get_cppad_mixed.sh: Edit of $dir/bin/run_cmake.sh failed"
+	exit 1
+fi
 #
 # supress call to cppad_mixed build_type.sh
 echo 'edit external/cppad_mixed.git/bin/example_install.sh'
 sed \
-    -e 's|bin/build_type.sh .*|:|' \
-    -e 's|for cmd in check speed install|for cmd in install|' \
-    bin/example_install.sh > example_install.$$
+	-e 's|bin/build_type.sh .*|:|' \
+	-e 's|for cmd in check speed install|for cmd in install|' \
+	bin/example_install.sh > example_install.$$
 mv example_install.$$ bin/example_install.sh
 chmod +x bin/example_install.sh
 # -----------------------------------------------------------------------------
 # cppad_mixed example install
-echo_eval bin/example_install.sh replace
+run_test='false'
+echo_eval bin/example_install.sh $run_test
 #
 # -----------------------------------------------------------------------------
 echo 'get_cppad_mixed.sh: OK'

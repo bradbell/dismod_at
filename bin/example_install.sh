@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -81,6 +81,7 @@ else
 fi
 #
 # build dismod_at using n_jobs
+echo "make -j $n_job 1>> ../example_install.log 2>> ../example_install.err"
 if ! make -j $n_job 1>> ../example_install.log 2>> ../example_install.err
 then
 	echo "Try running the follow command in $(pwd)"

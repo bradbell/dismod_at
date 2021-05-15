@@ -129,7 +129,8 @@ do
 usage: bin/run_cmake.sh \\
 	[--help] \\
 	[--debug] \\
-	[--verbose]
+	[--verbose] \\
+	[--clang]
 EOF
 		exit 0
 	fi
@@ -139,6 +140,9 @@ EOF
 	elif [ "$1" == '--verbose' ]
 	then
 		verbose_makefile='yes'
+	elif [ "$1" == '--clang' ]
+	then
+		cmake_cxx_compiler='clang++'
 	else
 		echo "'$1' is an invalid option"
 		bin/run_cmake.sh --help
@@ -168,6 +172,10 @@ then
 	compiler=''
 else
 	compiler="-D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"
+	if [ "$cmake_cxx_compiler" == 'clang++' ]
+	then
+		compiler="$compiler -D CMAKE_C_COMPILER=clang"
+	fi
 fi
 cmake \
 	-Wno-dev \
