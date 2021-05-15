@@ -135,6 +135,7 @@ echo_eval cd build
 <b><font color="#0000FF">fi</font></b>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># build dismod_at using n_jobs</font></i>
+echo <font color="#FF0000">"make -j $n_job 1&gt;&gt; ../example_install.log 2&gt;&gt; ../example_install.err"</font>
 <b><font color="#0000FF">if</font></b> <font color="#990000">!</font> make -j <font color="#009900">$n_job</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
 <b><font color="#0000FF">then</font></b>
      echo <font color="#FF0000">"Try running the follow command in $(pwd)"</font>
