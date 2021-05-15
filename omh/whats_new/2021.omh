@@ -45,6 +45,7 @@ $head 05-15$$
 Advance to cppad_mixed-20210515.
 This avoids running the cppad_mixed tests during
 $cref example_install.sh$$.
+It also fixes a problem with the optimization of cppad function objects.
 
 $head 05-07$$
 Advance to cppad_mixed-20210507. This should solve some install problems
