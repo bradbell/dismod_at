@@ -300,7 +300,7 @@ correpsonding parent rates.
 03-25:
 2. Change dialysis.py to use global data.
 
-05-15:
+05-16:
 1. Change max_sample -> max_per_integrand
    to avoid confusion with sample command.
 2. Split the documentation for number_sample into the help topics 'sample' and
