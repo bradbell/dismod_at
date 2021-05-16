@@ -165,8 +165,8 @@ def chi_parent_smoothing(
 relative_path = 'data/475527/dbs/96/2/dismod.db' # Australasia
 relative_path = 'data/475527/dbs/1/2/dismod.db'  # Global
 #
-# maximum number or sampels per integrand
-max_sample = 1000
+# maximum number of data values per integrand
+max_per_integrand = 1000
 #
 # maximum number of iterations when optimizing fixed effects
 max_num_iter_fixed = 50

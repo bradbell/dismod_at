@@ -217,8 +217,8 @@ def chi_child_smoothing(
 relative_path =  'data/475882/dbs/100/2/dismod.db'
 relative_path =  'data/475588/dbs/100/3/dismod.db'
 #
-# maximum number or sampels per integrand
-max_sample = 1000
+# maximum number of data values per integrand
+max_per_integrand = 1000
 #
 # maximum number of iterations when optimizing fixed effects
 max_num_iter_fixed = 50

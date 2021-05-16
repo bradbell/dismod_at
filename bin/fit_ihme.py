@@ -83,7 +83,7 @@ for the corresponding fits.
 'disease':'''
 disease:
 The command line argument must be one of the following:
-crohns, dialysis, kidney, t1_diabetes.
+	crohns, dialysis, kidney, t1_diabetes.
 It may also correspond to a disease specific file called
 	dismod_at/ihme/disease.py
 that you have added below your site-packages directory.
@@ -92,7 +92,7 @@ See the following files for examples disease specific files:
 The settings in a disease specific file are the part of the model that is
 different for each disease. Currently, the following settings are included:
 	relative_path
-	max_sample
+	max_per_integrand
 	max_num_iter_fixed
 	ode_hold_out_list
 	max_covariate_effect
@@ -113,21 +113,26 @@ This command line argument must be one of the following:
 'random_seed':'''
 random_seed:
 This command line argument is only present when which_fit is 'no_ode'.
-It is an integer value that seeds the random
-number generator that is used to sub-sample the data.
+It is an integer value that seeds the random number generator that is used
+to sub-sample the data for each integrand; see max_per_integrand.
 If this value is zero, the system clock is used to seed the generator.
 The seed corresponding to the clock changes every second and does not repeat.
 ''',
 
+'sample':'''
+sample:
+If the explicit text 'sample' is present in the syntax, this command samples
+from the posterior distribution for the model variables using a dismod_at
+sample command.  These samples correspond to the fit specified by which_fit.
+The dismod_at asymptotic sampling method is used. Running this command
+adds a std error plot sub-plot to the rate plots in the corresponding fit
+directory. It also adds the sample table to the correspnding database.
+''',
+
 'number_sample':'''
 number_sample:
-If the explicit text 'sample' is present in the syntax, the value
-number_smaple must follow. This specifies the number of samples of the
-posterior distribution for the model variables to simulate.
-These samples correspond to the fit specified by which_fit.
-The dismod_at asymptotic sampling method is used.
-This will add error bar to the rate plots in the corresponding fit directory.
-It will also add the sample table to the correspnding database.
+This specifies the number of samples of the posterior distribution
+for the model variables that are simulated using the dismod_at sample comamnd.
 ''',
 
 'relative_path':'''
@@ -140,12 +145,11 @@ is the path on the IHME cluster and
 is the path on the local machine; see the data_dir command line argument.
 ''',
 
-'max_sample':'''
-max_sample:
-max_sample:
+'max_per_integrand':'''
+max_per_integrand:
 This variable, in the python file for this disease,
-is the maximum number of samples to include for any one integrand.
-If the available samples exceeds this number, a subset of size max_sample
+is the maximum number of data points to include for any one integrand.
+If the available data exceeds this number, a subset of size max_per_integrand
 is randomly chosen.
 ''',
 
@@ -295,14 +299,24 @@ correpsonding parent rates.
 
 03-25:
 2. Change dialysis.py to use global data.
+
+05-15:
+1. Change max_sample -> max_per_integrand
+   to avoid confusion with sample command.
+2. Split the documentation for number_sample into the help topics 'sample' and
+   'number_sample' (so that every command line argument has a help topic).
+3. Include a descriptive message above the list of help topics printed by
+   fit_ihme.py help
 '''
 }
 # help cases
 if len(sys.argv) == 2 :
 	if sys.argv[1] == 'help' :
-		msg = 'The folllowing is a list of fit_ihme help topics:'
+		msg = 'Get help for a specific topic using fit_ihme.py help topic\n'
+		msg += 'where topic is one of the following:'
+		print(msg)
 		for key in user_help_message_dict :
-			print(key)
+			print( '    ' + key)
 		sys.exit(0)
 if len(sys.argv) == 3 and sys.argv[1] == 'help' :
 	if sys.argv[2] in user_help_message_dict :
@@ -1368,8 +1382,8 @@ def subset_data () :
 	table_name = 'data'
 	put_table('data', data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
-def random_subsample_data(integrand_name, max_sample) :
-	# for a specified integrand, sample at most max_sample entries.
+def random_subsample_data(integrand_name, max_per_integrand) :
+	# for a specified integrand, include at most max_per_integrand data values.
 	# This does random sampling that can be seeded by calling random.seed.
 	# The origianl order of the data is preserved (in index plots)
 	# by sorting the subsample.
@@ -1390,7 +1404,7 @@ def random_subsample_data(integrand_name, max_sample) :
 	n_sample_in = count
 	#
 	# subsample of indices for this integrand
-	n_sample_out = min(max_sample, n_sample_in)
+	n_sample_out = min(max_per_integrand, n_sample_in)
 	if n_sample_out < n_sample_in :
 		count_list = random.sample(count_list,  n_sample_out)
 		count_list = sorted( count_list )
@@ -2404,7 +2418,7 @@ if which_fit_arg == 'no_ode'  :
 	#
 	# randomly subsample
 	for integrand_name in integrand_list_all :
-		random_subsample_data(integrand_name, specific.max_sample)
+		random_subsample_data(integrand_name, specific.max_per_integrand)
 	#
 	# set reference value for x_0 to its median
 	reference_name  = 'median'
