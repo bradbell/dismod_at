@@ -50,6 +50,7 @@ do
 		if [ "$fit_ok" == 'yes' ]
 		then
 			# do this fit
+			date
 			echo "$cmd"
 			if $cmd
 			then

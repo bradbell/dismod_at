@@ -83,12 +83,12 @@ for the corresponding fits.
 'disease':'''
 disease:
 The command line argument must be one of the following:
-	crohns, dialysis, kidney, t1_diabetes.
+	crohns, dialysis, kidney, t1_diabetes, unknown.
 It may also correspond to a disease specific file called
 	dismod_at/ihme/disease.py
 that you have added below your site-packages directory.
 See the following files for examples disease specific files:
-	crohns.py, dialysis.py, kidney.py, t1_diabetes.py
+	crohns.py, dialysis.py, kidney.py, t1_diabetes.py, unknown.py
 The settings in a disease specific file are the part of the model that is
 different for each disease. Currently, the following settings are included:
 	relative_path
@@ -100,6 +100,8 @@ different for each disease. Currently, the following settings are included:
 	parent_smoothing
 	child_smoothing
 This is a very minimal set and more settings would be useful.
+The unknown disease is for fitting a database that is not on the IHME cluster
+and is meant to be modified.
 ''',
 
 'which_fit':'''
@@ -139,10 +141,12 @@ for the model variables that are simulated using the dismod_at sample comamnd.
 relative_path:
 This variable, in the python file for this disease,
 is the relative path of database for this study; i.e.,
-	/share/epi/at_cascage/relative_path
-is the path on the IHME cluster and
+	/ihme/epi/at_cascage/relative_path
+is the path on the IHME cluster. There also is a local copy at
 	data_dir/realtive_path
 is the path on the local machine; see the data_dir command line argument.
+In the special case of the unknown disease, the relative path need not be
+its location on the IHME cluster, but it must begin with 'data'.
 ''',
 
 'max_per_integrand':'''
@@ -307,6 +311,13 @@ correpsonding parent rates.
    'number_sample' (so that every command line argument has a help topic).
 3. Include a descriptive message above the list of help topics printed by
    fit_ihme.py help
+
+05-17:
+1. Add the 'unknown' disease type. This can be used to applying fit_ihme.py
+   to a database that does not come from the ihme cascade_at directory.
+2. In the add_meas_noise routine choose the prior_name so that it better avoids
+   conflict with a previous prior. If there already was a meas_noise multiplier
+   for this covariate and integrand, use it and do not add another one.
 '''
 }
 # help cases
@@ -342,7 +353,8 @@ if not os.path.isdir(data_dir_arg) :
 #
 # disease_arg
 disease_arg = sys.argv[2]
-if disease_arg not in [ 'crohns', 'dialysis', 'kidney', 't1_diabetes' ] :
+if disease_arg not in \
+	[ 'crohns', 'dialysis', 'kidney', 't1_diabetes', 'unknown' ] :
 	msg  = 'Warning: disease = {} is not one that comes with the install\n'
 	msg += 'You must have added the file site-packages/dismod_at/{}.py'
 	print( msg.format(disease_arg, disease_arg) )
@@ -546,8 +558,11 @@ def new_fit_directory(which_fit) :
 # ----------------------------------------------------------------------------
 def case_study_title(location, which_fit = None) :
 	# return the title for this study and fit
+	if disease_arg == 'unknown' :
+		return 'unknown'
 	sex_map       = { '1':'male', '2':'female', '3':'both' }
 	text          = specific.relative_path.split('/')
+	#
 	version       = text[1]
 	sex           = sex_map[ text[4] ]
 	disease       = disease_arg
@@ -2227,22 +2242,38 @@ def set_option (name, value) :
 	] )
 # -----------------------------------------------------------------------------
 def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
-	# Add a meas_noise covariate multiplier for a specified integrand.
+	# Add a meas_noise covariate multiplier for a specified integrand
+	# if one does not already exist. Note that meas_noise multipliers can't
+	# have ramdom effect (so the subgroup id is null in the mulcov table).
+	#
 	# integrand_data: is the current result of get_integrand_data.
+	# integrand_name: specifies which integrand the multiplier is for.
 	# group_id: specifies the group for the covariate multiplier.
 	#
-	# factor: is a dictionary with following keys: mean, lower, upper.
+	# factor:
+	# is a dictionary with following keys: mean, lower, upper.
 	# For each key the factor multipliers the absolute value of the
 	# median of the data for this integrand to get the corresponding value
 	# in the uniform prior for the square root of the covariate multiplier.
 	# In other words, the factor is times a value is in standard deviation
 	# units, while the prior values are in variance units.
 	#
-	# Note that meas_noise multipliers can't have
-	# ramdom effect (so the subgroup id is null in the mulcov table).
+	# return:
+	# if there already is a meas_noise covariate multiplier for this
+	# integrand the new multiplier is not added and this routine returns false.
+	# Otherwise it returns true and the new multiplier is reported using trace.
 	assert 0.0             <= factor['lower']
 	assert factor['lower'] <= factor['mean']
 	assert factor['mean']  <= factor['upper']
+	#
+	# integrand_id
+	integrand_id = integrand_name2id[integrand_name]
+	#
+	# check if there already is a meas_noise multiplier for this integrand
+	for row in mulcov_table :
+		if row['mulcov_type'] == 'meas_noise' :
+			if row['integrand_id'] == integrand_id :
+				return False
 	#
 	group_name = None
 	for row in subgroup_table :
@@ -2264,9 +2295,6 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	msg += 'where median is the median of the {} data'.format(integrand_name)
 	trace( msg )
 	#
-	# integrand_id
-	integrand_id = integrand_name2id[integrand_name]
-	#
 	# covariate_id
 	covariate_id = identically_one_covariate()
 	#
@@ -2275,8 +2303,10 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	#
 	# prior used in one point smoothing
 	density_id = density_name2id['uniform']
+	index      = str( len(prior_table) )
+	prior_name = integrand_name + '_meas_noise_value_prior_' + index
 	value_prior = {
-		'prior_name' : integrand_name + '_meas_noise_value_prior'    ,
+		'prior_name' : prior_name     ,
 		'density_id' : density_id     ,
 		'lower'      : lower          ,
 		'upper'      : upper          ,
@@ -2286,9 +2316,12 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 		'nu'         : None           ,
 	}
 	dage_prior  = copy.copy( value_prior )
+	prior_name = integrand_name + '_meas_noise_dage_prior_' + index
+	dage_prior['prior_name']  =  prior_name
+	#
 	dtime_prior = copy.copy( value_prior )
-	dage_prior['prior_name']  =  integrand_name + '_meas_noise_dage_prior'
-	dtime_prior['prior_name'] =  integrand_name + '_meas_noise_dtime_prior'
+	prior_name = integrand_name + '_meas_noise_dtime_prior_' + index
+	dtime_prior['prior_name'] = prior_name
 	#
 	# new one point smoothing
 	age_grid  = [ age_table[0]['age'] ]
@@ -2317,6 +2350,9 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	put_table('smooth_grid',
 		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
 	)
+	#
+	# return true because we have added the covariate multiplier
+	return True
 # ==========================================================================
 # Example Changes Note Currently Used
 # ==========================================================================
@@ -2392,8 +2428,9 @@ if which_fit_arg == 'no_ode'  :
 	line             = len(title) * '-'
 	trace( '\n' + line + '\n' + title + '\n' + line + '\n' )
 	#
-	msg = 'original database\n/share/epi/at_cascade/{}\n'
-	trace( msg.format(specific.relative_path) )
+	if disease_arg != 'unknown' :
+		msg = 'original database\n/ihme/epi/at_cascade/{}\n'
+		trace( msg.format(specific.relative_path) )
 	#
 	# erase the database log table so log is just for this session
 	sql_command('DROP TABLE IF EXISTS log')
@@ -2501,7 +2538,13 @@ if which_fit_arg == 'no_ode'  :
 	group_id = 0
 	factor   = { 'lower':1e-1, 'mean':1e-1, 'upper':1e-1 }
 	for integrand_name in integrand_list_all :
-		add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor)
+		added = add_meas_noise_mulcov(
+			integrand_data, integrand_name, group_id, factor
+		)
+		if not added :
+			msg  = 'found meas_noise multiplier for ' + integrand_name
+			msg += ' in original database'
+			trace(msg)
 	#
 	# compress age and time intervals
 	age_size  = 10.0

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -383,7 +383,7 @@ n_child_        ( child_id2node_id.size() )
 			for(size_t j = 0; j < info_vec->size(); j++)
 			{	if( (*info_vec)[j].covariate_id == covariate_id )
 				{	string msg = "covariate_id appears twice with "
-						"mulcov_type equal to";
+						"mulcov_type equal to ";
 					msg += mulcov_type;
 					string table_name = "mulcov";
 					error_exit(msg, table_name, mulcov_id);
