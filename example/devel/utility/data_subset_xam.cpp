@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -127,6 +127,10 @@ bool data_subset_xam(void)
 	ok &= data_subset_obj[1].node_id == 2;
 	// data_id = 3 is has a sex covariate that is out of bounds
 	ok &= data_subset_obj.size() == 2;
+
+	// check that data_sim_value is set to nan by the data_subset routine
+	for(size_t i = 0; i < data_subset_obj.size(); ++i)
+		ok &= std::isnan( data_subset_obj[i].data_sim_value );
 
 	return ok;
 }

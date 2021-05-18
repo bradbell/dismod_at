@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -40,9 +40,17 @@ This argument has prototype
 $codei%
 	const %Float%& z
 %$$
-If $icode diff$$ is true,
-it specifies the first random variable in the difference.
-This argument is not used when $icode diff$$ is false.
+$list number$$
+If $icode diff$$ is true, $icode z$$ is not nan and $icode prior$$ is true.
+In this case $icode z$$ specifies the first random variable in the difference.
+$lnext
+If $icode diff$$ is false and $icode z$$ is not nan,
+$icode prior$$ must be false and
+$icode z$$ is a simulated value for the measurement $icode y$$.
+$lnext
+If $icode diff$$ is false and $icode z$$ is nan,
+the likelihood is for the single random variable $icode y$$.
+$lend
 
 $head y$$
 This argument has prototype
@@ -50,8 +58,12 @@ $codei%
 	const %Float%& y
 %$$
 If $icode diff$$ is true,
-it specifies the second random variable in the difference.
-Otherwise it specifies the only random variable.
+$icode y$$ specifies the second random variable in the difference.
+If $icode diff$$ is false and $icode z$$ is nan,
+$icode y$$ is used both for measurement value
+and for calculating log-density standard deviations.
+If $icode diff$$ is false and $icode z$$ is not nan,
+$icode y$$ is only used for calculating log-density standard deviations.
 
 $head mu$$
 This argument has prototype
@@ -236,6 +248,14 @@ residual_struct<Float> residual_density(
 	bool               diff       ,
 	bool               prior      )
 {
+
+# ifndef NDEBUG
+	if( diff )
+		assert(prior);
+	if( diff )
+		assert( ! CppAD::isnan(z) );
+# endif
+
 	Float tiny = 10.0 / std::numeric_limits<double>::max();;
 	double nan = std::numeric_limits<double>::quiet_NaN();
 	double r2  = std::sqrt(2.0);
@@ -260,7 +280,11 @@ residual_struct<Float> residual_density(
 		if( diff )
 			wres  = ( z - y - mu) / sigma;
 		else
-			wres = (y - mu) / sigma;
+		{	if( CppAD::isnan(z) )
+				wres = (y - mu) / sigma;
+			else
+				wres = (z - mu) / sigma;
+		}
 		break;
 
 		case log_gaussian_enum:
@@ -283,7 +307,10 @@ residual_struct<Float> residual_density(
 		}
 		else // data case
 		{	sigma = log( 1.0 + delta / (y + d_eta) );
-			wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
+			if( CppAD::isnan(z) )
+				wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
+			else
+				wres  = ( log( z + d_eta ) - log( mu + d_eta ) ) / sigma;
 		}
 		break;
 

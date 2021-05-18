@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -49,10 +49,10 @@ $end
 */
 void depend_command(
 	sqlite3*                                      db               ,
-	const CppAD::vector<double>&                         prior_mean       ,
-	data_model&                        data_object      ,
-	const CppAD::vector<data_subset_struct>&  data_subset_obj  ,
-	const prior_model&                 prior_object     )
+	const CppAD::vector<double>&                  prior_mean       ,
+	data_model&                                   data_object      ,
+	const CppAD::vector<data_subset_struct>&      data_subset_obj  ,
+	const prior_model&                            prior_object     )
 {	using std::string;
 	using CppAD::vector;
 	//

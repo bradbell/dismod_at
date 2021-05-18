@@ -466,10 +466,16 @@ The values
 $cref/density_id/data_table/density_id/$$,
 $cref/hold_out/data_table/hold_out/$$,
 $cref/meas_value/data_table/meas_value/$$,
-$cref/meas_std/data_table/meas_std/$$ are not necessary to calculate
+$cref/meas_std/data_table/meas_std/$$,
+$cref/eta/data_table/eta/$$,
+$cref/nu/data_table/nu/$$,
+are not necessary to calculate the average integrand.
 However, the are necessary to use the functions
 $cref/data_object.like_one/data_model_like_one/$$ and
 $cref/data_object.like_all/data_model_like_all/$$.
+If the $cref/data_sim_value/data_sim_table/data_sim_value/$$
+values in $icode data_subset_obj$$ are not nan, these
+are simulated values used in calculating the likelihood.
 
 $head data_object$$
 This object has prototype
@@ -542,6 +548,8 @@ void data_model::replace_like(
 			data_subset_obj[subset_id].eta;
 		data_subset_obj_[subset_id].nu =
 			data_subset_obj[subset_id].nu;
+		data_subset_obj_[subset_id].data_sim_value =
+			data_subset_obj[subset_id].data_sim_value;
 		//
 		data_info_[subset_id].density = data_subset_obj[subset_id].density;
 		//
@@ -819,6 +827,8 @@ residual_struct<Float> data_model::like_one(
 	size_t subgroup_id  = size_t( data_subset_obj_[subset_id].subgroup_id );
 	size_t integrand_id = size_t( data_subset_obj_[subset_id].integrand_id );
 	//
+	double data_sim_value   = data_subset_obj_[subset_id].data_sim_value;
+	//
 	// average noise effect
 	Float std_effect = avg_noise_obj_.rectangle(
 		age_lower,
@@ -873,11 +883,10 @@ residual_struct<Float> data_model::like_one(
 		assert(false);
 	}
 	//
-	Float not_used;
 	bool diff  = false;
 	bool prior = false;
 	struct residual_struct<Float> residual = residual_density(
-		not_used,
+		Float(data_sim_value),
 		Float(meas_value),
 		avg,
 		delta_out,

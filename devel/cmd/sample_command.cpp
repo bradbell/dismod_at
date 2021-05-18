@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -429,6 +429,8 @@ void sample_command(
 				}
 				data_subset_obj[subset_id].meas_value =
 					data_sim_table[data_sim_id].data_sim_value;
+				data_subset_obj[subset_id].data_sim_value =
+					data_sim_table[data_sim_id].data_sim_value;
 				if( log_density( data_subset_obj[subset_id].density ) )
 				{	// simulated data is fit with no mimumum_meas_cv
 					// so meas_std is same as meas_stdcv
@@ -622,6 +624,8 @@ void sample_command(
 		for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
 		{	size_t data_sim_id = n_subset * sim_index_size_t + subset_id;
 			data_subset_obj[subset_id].meas_value =
+				data_sim_table[data_sim_id].data_sim_value;
+			data_subset_obj[subset_id].data_sim_value =
 				data_sim_table[data_sim_id].data_sim_value;
 			if( log_density( data_subset_obj[subset_id].density ) )
 			{	// simulated data is fit with no minimum_meas_cv

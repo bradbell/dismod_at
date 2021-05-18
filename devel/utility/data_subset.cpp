@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -21,6 +21,7 @@ $spell
 	struct
 	obj
 	cov
+	sim
 $$
 
 $section Create a Subsampled Version of Data Table$$
@@ -104,7 +105,7 @@ We use the notation $icode subset_id$$ for an index between
 zero and $icode%n_subset%-1%$$,
 
 $subhead original_id$$
-There an extra field in $code data_struct$$ that has
+There an extra field in $code data_subset_struct$$ that has
 name $code original_id$$, type $code int$$.
 The values in this field are equal to the
 $icode original_id$$ for the corresponding row of $cref data_table$$.
@@ -118,6 +119,13 @@ $codei%
 	%data_subset_obj%[%subset_id%].original_id <
 		%data_subset_obj%[%subset_id%+1].original_id
 %$$
+
+$subhead data_sim_value$$
+There an extra field in $code data_subset_struct$$ that has
+name $code data_sim_value$$, type $code double$$.
+All of these values are set to $code nan$$ by this routine.
+These values get replaced by simulated measurement values
+when we are fitting simulated data.
 
 $head data_subset_cov_value$$
 This argument has prototype
@@ -257,6 +265,9 @@ void data_subset(
 			one_sample.meas_std     = data_table[data_id].meas_std;
 			one_sample.eta          = data_table[data_id].eta;
 			one_sample.nu           = data_table[data_id].nu;
+			// value that depends on data_sim table
+			one_sample.data_sim_value =
+				std::numeric_limits<double>::quiet_NaN();
 			//
 			// advance to next sample
 			subset_id++;
