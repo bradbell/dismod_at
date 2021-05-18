@@ -41,6 +41,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 05-18$$
+Advance to cppad_mixed-20210517.
+This change, and changes to dismod_at, catch and report throws of $code std::exception$$
+both in the output and in the $cref log_table$$.
+
 $head 05-15$$
 Advance to cppad_mixed-20210515.
 This avoids running the cppad_mixed tests during

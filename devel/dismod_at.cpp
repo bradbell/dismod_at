@@ -592,6 +592,12 @@ int main(int n_arg, const char** argv)
 	// =======================================================================
 # ifdef NDEBUG
 	} // END_TRY_BLOCK (when not debugging)
+	catch(const std::exception& e)
+	{	message = "dismod_at ";
+		message += database_arg + " " + command_arg + "\nstd::excpetion: ";
+		message += e.what();
+		dismod_at::error_exit(message);
+	}
 	catch(const CppAD::mixed::exception& e)
 	{	string catcher("dismod_at");
 		catcher += " " + database_arg + " " + command_arg;
