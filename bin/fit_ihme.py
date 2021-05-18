@@ -314,7 +314,7 @@ correpsonding parent rates.
 
 05-17:
 1. Add the 'unknown' disease type. This can be used to applying fit_ihme.py
-   to a database that does not come from the ihme cascade_at directory.
+   to a database that does not come from the /ihme/epi/at_cascade directory.
 2. In the add_meas_noise routine choose the prior_name so that it better avoids
    conflict with a previous prior. If there already was a meas_noise multiplier
    for this covariate and integrand, use it and do not add another one.
