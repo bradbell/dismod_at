@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>05-18</option>
 <option>05-15</option>
 <option>05-07</option>
 <option>05-06</option>
@@ -85,12 +86,22 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
 <br>
+<b><big><a name="05-18" id="05-18">05-18</a></big></b>
+<br>
+Advance to cppad_mixed-20210517.
+This change, and changes to dismod_at, catch and report throws of <code><font color="blue">std::exception</font></code>
+both in the output and in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+.
+
+<br>
+<br>
 <b><big><a name="05-15" id="05-15">05-15</a></big></b>
 <br>
 Advance to cppad_mixed-20210515.
 This avoids running the cppad_mixed tests during
 <a href="example_install.sh.htm" target="_top"><span style='white-space: nowrap'>example_install.sh</span></a>
 .
+It also fixes a problem with the optimization of cppad function objects.
 
 <br>
 <br>
