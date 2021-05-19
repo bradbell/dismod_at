@@ -239,7 +239,9 @@ void fit_command(
 		// replace meas_value in data_subset_obj
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t data_sim_id = n_subset * sim_index + subset_id;
+# ifndef NDEBUG
 			double old_value = data_subset_obj[subset_id].data_sim_value;
+# endif
 			double new_value =data_sim_table[data_sim_id].data_sim_value;
 			assert(   std::isnan(old_value) );
 			assert( ! std::isnan(new_value) );

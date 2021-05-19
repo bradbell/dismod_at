@@ -427,7 +427,9 @@ void sample_command(
 					table_name = "data_sim";
 					dismod_at::error_exit(msg, table_name, data_sim_id);
 				}
+# ifndef NDEBUG
 				double old_value = data_subset_obj[subset_id].data_sim_value;
+# endif
 				double new_value =data_sim_table[data_sim_id].data_sim_value;
 				assert(   std::isnan(old_value) || sample_index > 0 );
 				assert( ! std::isnan(new_value) );
@@ -618,7 +620,9 @@ void sample_command(
 		// replace meas_value in data_subset_obj
 		for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
 		{	size_t data_sim_id = n_subset * sim_index_size_t + subset_id;
+# ifndef NDEBUG
 			double old_value = data_subset_obj[subset_id].data_sim_value;
+# endif
 			double new_value =data_sim_table[data_sim_id].data_sim_value;
 			assert(   std::isnan(old_value) );
 			assert( ! std::isnan(new_value) );
