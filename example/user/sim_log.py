@@ -20,7 +20,7 @@
 iota_true         = 0.01
 eta_global        = iota_true * 1e-3
 meas_std_global   = iota_true * 0.5
-meas_value_global = iota_true
+meas_value_global = iota_true * 1.5
 # %$$
 # $head Model$$
 # The only non-zero model variable for this example is
@@ -242,7 +242,7 @@ system_command([ program, file_name, 'init' ])
 system_command([ program, file_name, 'set', 'truth_var', 'prior_mean' ])
 #
 # create data_sim table
-n_simulate = 200
+n_simulate = 2000
 system_command([ program, file_name, 'simulate', str(n_simulate) ])
 # -----------------------------------------------------------------------
 # check simulated data

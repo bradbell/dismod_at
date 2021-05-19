@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -23,7 +23,8 @@ $$
 $section Simulate a Dismod_at Random Distribution$$
 
 $head Syntax$$
-$icode%z% = sim_random(%difference%, %density%, %mu%, %delta%, %eta%, %nu%)%$$
+$icode%z% = sim_random(
+	%difference%, %density%, %y%, %mu%, %delta%, %eta%, %nu%)%$$
 
 $head manage_gsl_rng$$
 The routine $cref manage_gsl_rng$$ sets up and controls the underlying
@@ -78,6 +79,12 @@ $code log_students_enum$$ $pre  $$ $cnext
 $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
 $tend
 
+$head y$$
+If $icode density$$ is a log transformed distribution
+and $icode difference$$ is false,
+$icode y$$ is used to transform the standard deviation.
+Otherwise, $icode y$$ is not used.
+
 $head mu$$
 This argument has prototype
 $codei%
@@ -115,7 +122,7 @@ $codei%
 $subhead value$$
 If the density is a log density, and difference is false,
 $codei%
-	log( %mu% + %eta% + %delta% ) - log( %mu% + %eta% )
+	log( %y% + %eta% + %delta% ) - log( %y% + %eta% )
 %$$
 is the standard deviation for
 $codei%
@@ -170,6 +177,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 double sim_random(
 	bool         difference,
 	density_enum density,
+	double       y      ,
 	double       mu     ,
 	double       delta  ,
 	double       eta    ,
@@ -178,45 +186,52 @@ double sim_random(
 	//
 	assert( density != uniform_enum );
 	assert( delta > 0.0 );
-	//
+	// -----------------------------------------------------------------------
+	// linear Gaussian
 	if( density == gaussian_enum )
 		return mu + gsl_ran_gaussian(rng, delta);
 	if( density == cen_gaussian_enum )
 		return std::max(0.0, mu + gsl_ran_gaussian(rng, delta) );
 	//
+	// linear Laplace
 	if( density == laplace_enum )
 	{	double width = delta / std::sqrt(2.0);
 		return mu + gsl_ran_laplace(rng, width);
 	}
-	//
 	if( density == cen_laplace_enum )
 	{	double width = delta / std::sqrt(2.0);
 		return std::max(0.0, mu + gsl_ran_laplace(rng, width) );
 	}
 	//
+	// linear students
 	if( density == students_enum )
 	{	assert( nu > 2.0 );
 		double x = gsl_ran_tdist(rng, nu);
 		return  mu +  x * std::sqrt( (nu - 2.0) / nu ) * delta;
 	}
-	//
+	// ----------------------------------------------------------------------
+	// log transformed cases
 	assert( mu + eta > 0.0 );
 	//
-	// standard deviation in transformed space
-	double sigma = std::log(mu + eta + delta) - std::log(mu + eta);
-	if( difference )
-		sigma = delta;
+	// transformed standard deviation
+	double sigma = delta;
+	if( ! difference )
+		sigma = std::log(y + eta + delta) - std::log(y + eta);
 	//
 	// difference from mean in transformed space
 	double d_log;
 	if( density == log_gaussian_enum || density == cen_log_gaussian_enum )
+	{	// log Gaussian
 		d_log = gsl_ran_gaussian(rng, sigma);
+	}
 	else if( density == log_laplace_enum || density == cen_log_laplace_enum )
-	{	double width = sigma / std::sqrt(2.0);
+	{	// log Laplace
+		double width = sigma / std::sqrt(2.0);
 		d_log = gsl_ran_laplace(rng, width);
 	}
 	else
-	{	assert( density == log_students_enum );
+	{	// log Students
+		assert( density == log_students_enum );
 		assert( nu > 2.0 );
 		double x = gsl_ran_tdist(rng, nu);
 		d_log = x * std::sqrt( (nu - 2.0) / nu ) * sigma;
@@ -225,9 +240,11 @@ double sim_random(
 	// d_log = log(z + eta) - log(mu + eta)
 	double z = std::exp( d_log ) * (mu + eta) - eta;
 	//
+	// log censored cases
 	if( density == cen_log_gaussian_enum || density == cen_log_laplace_enum )
 		z = std::max(0.0, z);
 	//
+	// log and not censored
 	return z;
 }
 

@@ -51,8 +51,15 @@ $cref/log transformed standard deviation
 /$$
 use the original data for the transformations (instead of simulated data).
 
-$subhead 05-19$$
+$list number$$
 Add the $cref user_sim_log.py$$ example.
+$lnext
+When simulating log transformed data,
+the transformed standard deviation was computed using
+the mean instead of the measurment.
+This has been fixed.
+$lend
+
 $comment -------------------------------------------------------------------$$
 
 $head 05-19$$

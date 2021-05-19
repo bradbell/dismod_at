@@ -244,7 +244,7 @@ void simulate_command(
 			//
 			// sim_value
 			double sim_value   = sim_random(
-				difference, density, avg, delta, eta, nu
+				difference, density, meas_value,avg, delta, eta, nu
 			);
 			//
 			// sim_delta
@@ -381,7 +381,7 @@ void simulate_command(
 					sim_str[k] = "null";
 				else
 				{	double sim = sim_random(
-						difference, density, mean, std, eta, nu
+						difference, density, mean, mean, std, eta, nu
 					);
 					//
 					sim = std::min(sim, upper);
