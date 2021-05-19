@@ -319,6 +319,7 @@ residual_struct<Float> residual_density(
 	}
 	Float logden_smooth  = nan;
 	Float logden_sub_abs = nan;
+	bool  censor;
 	switch( d_id )
 	{
 		case uniform_enum:
@@ -336,7 +337,11 @@ residual_struct<Float> residual_density(
 		case cen_gaussian_enum:
 		case cen_log_gaussian_enum:
 		assert( ! diff );
-		if( y <= 0 )
+		if( CppAD::isnan(z) )
+			censor = y <= 0.0;
+		else
+			censor = z <= 0.0;
+		if( censor )
 		{	Float c = 0.0;
 			if( d_id == cen_log_gaussian_enum )
 				c = d_eta;
