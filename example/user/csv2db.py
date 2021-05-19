@@ -1,6 +1,6 @@
 #,  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -87,7 +87,7 @@
 # $cref/mtall/csv2db_command/integrand/mtall/$$ data.
 # As a check, we include the mtall data with hold_out equal to one.
 #
-# $head Source$$
+# $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1
 # %$$
 #
