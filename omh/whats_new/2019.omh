@@ -719,8 +719,8 @@ The change of names was motivated by a problem using sqlite
 when two column names that only differed by case; i.e.,
 $code Delta$$ and $code delta$$.
 $list number$$
-The new column $cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$
-in the data_sim table is value of $icode Delta$$ that is used when
+The new column $code data_sim_stdcv$$,
+in the data_sim table, is value of $icode Delta$$ that is used when
 fitting the corresponding simulated data.
 This corrects a bug in fitting simulated
 $cref/log scaled/density_table/Notation/Log Scaled/$$ data that has

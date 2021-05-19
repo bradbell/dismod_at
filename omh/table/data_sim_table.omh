@@ -57,28 +57,9 @@ and $icode data_subset_id$$ equal zero to $codei%n_subset%-1%$$.
 $head data_sim_value$$
 This column has type $code real$$ and is
 the simulated measurement value that for the specified row of the data table;
-i.e., it can act as a replacement for the value
-$cref/meas_value/data_table/meas_value/$$ in the data table.
+see $cref/z/data_sim_table/Method/z/$$ in the method below.
 If the density for this $icode data_id$$ is censored (not censored)
-$icode data_sim_value$$ has value $codei%max(%z%, 0)%$$, ($icode z$$);
-see $cref/z/data_sim_table/Method/z/$$ below.
-Note that for censored
-$cref/log scaled/density_table/Notation/Log Scaled/$$ densities,
-if $latex z$$ is not equal $icode data_sim_value$$,
-the transformed standard deviation for the simulated data is not the
-same for the simulated and original data.
-
-$head data_sim_delta$$
-The column has type $code real$$ and is
-the adjusted standard deviation corresponding to this simulated measurement;
-see $cref/delta_hat/data_sim_table/Method/delta_hat/$$ below.
-
-$head data_sim_stdcv$$
-The column has type $code real$$ and is the
-minimum cv standard deviation
-$cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$,
-for use when fitting this simulated data;
-see $cref/Delta_hat/data_sim_table/Method/Delta_hat/$$ below.
+$icode data_sim_value$$ has value $codei%max(%z%, 0)%$$, ($icode z$$).
 
 $head Method$$
 
@@ -181,87 +162,6 @@ $latex \[
 	z        & = & \exp(e) ( A + \eta ) - \eta
 \end{array}
 \] $$
-
-$subhead delta_hat$$
-Given $latex z$$, we can solve the equation
-$latex \[
-	\sigma = \log( z + \eta + \hat{\delta} ) - \log( z + \eta )
-\] $$
-to obtain the value
-$latex \[
-\hat{\delta} = \left\{ \begin{array}{ll}
-	[ exp(\sigma) - 1 ] ( z + \eta )  & \R{if \; log \; density}
-	\\
-	\sigma                            & \R{otherwise}
-\end{array} \right.
-\] $$
-The value $latex \hat{\delta}$$ is the
-$cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-/$$
-that corresponds to measurement error $latex \sigma$$
-and measurement value $latex z$$.
-Note that if $latex z$$ happened to be equal to $latex y$$,
-then $latex \hat{\delta}$$ would be equal to $latex \delta$$.
-
-
-$subhead Delta_hat$$
-Given $latex \hat{\delta}$$ we can compute a
-$cref/minimum cv standard deviation
-	/data_like
-	/Notation
-	/Minimum CV Standard Deviation, Delta_i
-/$$
-$latex \hat{\Delta}$$; see
-$cref/adjusted standard deviations
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-/$$.
-$list number$$
-Adding standard deviations and no scaling:
-In this case
-$latex \[
-\begin{array}{rcl}
-	\hat{\delta} & = & \hat{\Delta} + E_i ( \theta )
-	\\
-	\hat{\Delta} & = & \hat{\delta} -  E_i ( \theta )
-\end{array}
-\] $$
-$lnext
-Adding standard deviations with scaling:
-In this case
-$latex \[
-\begin{array}{rcl}
-	\hat{\delta} & = & \hat{\Delta} [ 1 + E_i ( \theta ) ]
-	\\
-	\hat{\Delta} & = & \hat{\delta} / [ 1 + E_i ( \theta ) ]
-\end{array}
-\] $$
-$lnext
-Adding variances and no scaling:
-In this case
-$latex \[
-\begin{array}{rcl}
-	\hat{\delta} & = & \sqrt{ \hat{\Delta}^2 + E_i ( \theta ) }
-	\\
-	\hat{\Delta} & = & \sqrt{ \hat{\delta}^2 -  E_i ( \theta ) }
-\end{array}
-\] $$
-$lnext
-Adding variances with scaling:
-In this case
-$latex \[
-\begin{array}{rcl}
-	\hat{\delta} & = & \hat{\Delta} \sqrt{ 1 + E_i ( \theta ) }
-	\\
-	\hat{\Delta} & = & \hat{\delta} / \sqrt{ 1 + E_i ( \theta ) }
-\end{array}
-\] $$
-$lend
-Note that if $latex z$$ happened to be equal to $latex y$$,
-then $latex \hat{\Delta}$$ would be equal to $latex \Delta$$.
-
 
 $head Example$$
 See the $cref user_data_sim.py$$ and $cref simulate_command.py$$

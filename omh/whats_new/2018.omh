@@ -628,8 +628,7 @@ $bold Warning$$: this is not a backward compatible change to the user API.
 Change the name of the $code simulate_table$$ to $cref data_sim_table$$.
 In the data sim table change $code simulate_value$$ to
 $cref/data_sim_value/data_sim_table/data_sim_value/$$ and
-$code simulate_delta$$ to
-$cref/data_sim_delta/data_sim_table/data_sim_delta/$$.
+$code simulate_delta$$ to $code data_sim_delta$$.
 
 $head 04-16$$
 $list number$$
@@ -1117,7 +1116,7 @@ $lnext
 The fields $icode meas_value$$ and $icode meas_std$$
 in the data_sim table were changed to
 $cref/data_sim_value/data_sim_table/data_sim_value/$$ and
-$cref/data_sim_delta/data_sim_table/data_sim_delta/$$.
+$icode data_sim_delta$$.
 $lend
 
 $head 01-18$$

@@ -434,17 +434,10 @@
 # value zero is used for the $icode simulate_index$$.
 #
 # $subhead sim_stdcv$$
-# This is the minimum cv standard deviation
-# $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$
-# that should be used when fitting the simulated data for this
-# $cref/data_id/db2csv_command/data.csv/data_id/$$ the
-# $icode simulate_index$$ (see $icode sim_value$$ above).
+# This column will be removed.
 #
 # $subhead sim_delta$$
-# This is the
-# $cref/data_sim_delta/data_sim_table/data_sim_delta/$$ for this
-# $cref/data_id/db2csv_command/data.csv/data_id/$$ the
-# $icode simulate_index$$ (see $icode sim_value$$ above).
+# This column will be removed.
 #
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
