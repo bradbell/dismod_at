@@ -126,8 +126,13 @@ minimum_meas_cv = 0.10
 # is the $cref/fit_var_value/fit_var_table/fit_var_value/$$
 # at age zero (age 100).
 #
+# $head Source Code$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $end
+#
 # $end
 # ---------------------------------------------------------------------------
+# BEGIN PYTHON
 import sys
 import os
 import distutils.dir_util
@@ -368,6 +373,6 @@ delta    = fun_omega_dage_std()
 check    = (math.log(z + eta) - math.log(y + eta) - mu) / delta
 relerr   = residual_dage / check - 1.0
 assert( abs(relerr) <= eps99 )
-
 # -----------------------------------------------------------------------
 print('residual.py: OK')
+# END PYTHON

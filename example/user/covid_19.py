@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -163,9 +163,14 @@
 # $srccode%py%
 display_fit = True
 # %$$
+#
+# $head Source Code$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
-# ------------------------------------------------------------------------------------
-# BEGIN_PYTHON
+#
+# $end
+# -----------------------------------------------------------------------------
+# BEGIN PYTHON
 import sys
 import os
 import csv
@@ -538,4 +543,4 @@ assert abs( residual_avg ) < 0.5
 #
 print('covid_19.py: OK')
 sys.exit(0)
-# END_PYTHON
+# END PYTHON

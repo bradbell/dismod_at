@@ -25,6 +25,7 @@ $spell
 	crohns
 	msys
 	cygwin
+	covid
 $$
 $navigate%
 	Up%Location%
@@ -40,6 +41,11 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 05-19$$
+Add missing source code in the documentation for the
+$cref/covid_19.py/user_covid_19.py/Source Code/$$ and
+$cref/residual.py/user_residual.py/Source Code/$$ examples.
 
 $head 05-18$$
 Advance to cppad_mixed-20210517.
