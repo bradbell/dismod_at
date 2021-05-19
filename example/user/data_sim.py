@@ -134,6 +134,7 @@ import sys
 import os
 import distutils.dir_util
 import copy
+import numpy
 test_program = 'example/user/data_sim.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -429,6 +430,7 @@ for meas_noise_effect in meas_noise_effect_list :
 	#
 	# check the values in the data_sim table
 	eps99 = 99.0 * sys.float_info.epsilon
+	residual_list = list()
 	for data_sim_id in range( len(data_sim_table) ) :
 		#
 		# data_sim table valeus
@@ -459,18 +461,21 @@ for meas_noise_effect in meas_noise_effect_list :
 		else :
 			sigma  = delta
 		#
-		# Notation for values in the sim_data table
-		z         = data_sim_value  # no censoring
-		Delta_hat = data_sim_stdcv
-		delta_hat = data_sim_delta
-		#
-		# check tha the transformed standard deviation is the same for z and y
+		# residual
+		z  = data_sim_value  # simulated data withoout censoring
+		mu = iota_true       # mean of the simulated data
 		if log_density(density) :
-			sigma_hat = math.log(z + eta + delta_hat) - math.log(z + eta)
+			residual = (math.log(z + eta + delta) - math.log(mu + eta)) / sigma
 		else :
-			sigma_hat = delta_hat
-		#
-		assert abs( 1.0 - sigma / sigma_hat ) < eps99
+			residual = (z - mu) / sigma
+		residual_list.append(residual)
+	residual_array  = numpy.array( residual_list )
+	residual_mean   = residual_array.mean()
+	residual_std    = residual_array.std(ddof=1)
+	# check that the mean of the residuals is within 2.5 standard deviations
+	assert abs(residual_mean) <=  2.5 / numpy.sqrt(n_data)
+	# check that the standard deviation of the residuals is near one
+	assert abs(residual_std - 1.0) <= 2.5 / numpy.sqrt(n_data)
 	#
 connection.close()
 # -----------------------------------------------------------------------------

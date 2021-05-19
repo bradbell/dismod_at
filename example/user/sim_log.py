@@ -11,6 +11,7 @@
 # $spell
 #	std
 #	Sincidence
+#	covariate
 # $$
 # $section Simulating Data with Log Transformed Distribution$$
 #
@@ -19,9 +20,10 @@
 # $srccode%py%
 number_simulate   = 200
 iota_true         = 0.01
-eta_global        = iota_true * 1e-3
-meas_std_global   = iota_true * 0.5
 meas_value_global = iota_true * 1.5
+eta_global        = iota_true * 1e-3
+meas_std_global   = meas_value_global * 0.25
+gamma_global      = meas_value_global * 0.25
 # %$$
 # $head Model$$
 # The only non-zero model variable for this example is
@@ -34,6 +36,11 @@ meas_value_global = iota_true * 1.5
 # offset $icode eta_global$$, and standard deviation
 # $icode meas_std_global$$.
 #
+# $head Covariate Multiplier$$
+# For this example there is one covariate multiplier.
+# It is a $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ multiplier
+# and the corresponding covariate value is one.
+#
 # $head Notation$$
 # $table
 # $latex y$$       $cnext is the measurement value, $icode meas_value_global$$
@@ -42,7 +49,9 @@ meas_value_global = iota_true * 1.5
 # $rnext
 # $latex \eta$$    $cnext offset in log transform, $icode eta_global$$
 # $rnext
-# $latex \delta$$  $cnext standard deviation of data, $icode meas_std_global$$
+# $latex \Delta$$  $cnext data measurement error, $icode meas_std_global$$
+# $rnext
+# $latex \gamma$$  $cnext meta regression error, $icode gamma_global$$
 # $rnext
 # $latex n$$       $cnext number of simulated data values,
 #                  $cref/number_simulate/simulate_command/number_simulate/$$
@@ -55,6 +64,18 @@ meas_value_global = iota_true * 1.5
 # $rnext
 # $latex z_i$$     $cnext $th i$$ simulate data for $latex i = 1, \ldots , n$$
 # $tend
+#
+# $head Adjusted Standard Deviation$$
+# For this example we use the
+# $cref/add_std_scale_none
+#	/data_like
+#	/Adjusted Standard Deviation, delta_i(theta)
+#	/add_std_scale_none
+# /$$
+# definition of the adjusted standard deviation; i.e.
+# $latex \[
+#	delta = \Delta + \gamma
+# \] $$
 #
 # $head Simulations$$
 # The log transformed standard deviation is given by
@@ -114,6 +135,8 @@ def system_command(command) :
 # ------------------------------------------------------------------------
 def fun_iota_parent(a, t) :
 	return ('prior_iota_parent', None, None)
+def fun_gamma(a, t):
+	return ('prior_gamma', None, None)
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -137,6 +160,20 @@ def example_db (file_name) :
 	mulcov_table    = list()
 	avgint_table    = list()
 	nslist_table = dict()
+	#
+	# covariate table
+	covariate_table = [
+		{'name':'one',  'reference':0.0}
+	]
+	#
+	# mulcov table
+	mulcov_table = [ {
+			'covariate':  'one',
+			'type':       'meas_noise',
+			'effected':   'Sincidence',
+			'group':      'world',
+			'smooth':     'smooth_gamma',
+	} ]
 	# ----------------------------------------------------------------------
 	# data table:
 	# values that are the same for all data rows
@@ -154,6 +191,7 @@ def example_db (file_name) :
 		'meas_std':     meas_std_global,
 		'node':         'world',
 		'integrand':    'Sincidence',
+		'one':          1.0,
 	}
 	data_table = [ row ]
 	# ----------------------------------------------------------------------
@@ -168,6 +206,13 @@ def example_db (file_name) :
 			'mean':     iota_true ,
 			'std':      None,
 			'eta':      None
+		},{
+			# prior_gamma
+			'name':     'prior_gamma',
+			'density':  'uniform',
+			'lower':    gamma_global,
+			'upper':    gamma_global,
+			'mean':     gamma_global,
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -179,6 +224,11 @@ def example_db (file_name) :
 	smooth_table = [
 		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
 	]
+	name = 'smooth_gamma'
+	fun  = fun_gamma
+	smooth_table.append(
+		{'name':name, 'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
+	)
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
@@ -191,18 +241,19 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':'world'             },
-		{ 'name':'random_seed',            'value':random_seed_str     },
+		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
+		{ 'name':'parent_node_name',       'value':'world'               },
+		{ 'name':'random_seed',            'value':random_seed_str       },
+		{ 'name':'meas_noise_effect',      'value':'add_std_scale_none'  },
 
-		{ 'name':'quasi_fixed',            'value':'false'             },
-		{ 'name':'max_num_iter_fixed',     'value':'50'                },
-		{ 'name':'print_level_fixed',      'value':'0'                 },
-		{ 'name':'tolerance_fixed',        'value':'1e-6'              },
+		{ 'name':'quasi_fixed',            'value':'false'               },
+		{ 'name':'max_num_iter_fixed',     'value':'50'                  },
+		{ 'name':'print_level_fixed',      'value':'0'                   },
+		{ 'name':'tolerance_fixed',        'value':'1e-6'                },
 
-		{ 'name':'max_num_iter_random',    'value':'100'               },
-		{ 'name':'print_level_random',     'value':'0'                 },
-		{ 'name':'tolerance_random',       'value':'1e-8'              }
+		{ 'name':'max_num_iter_random',    'value':'100'                 },
+		{ 'name':'print_level_random',     'value':'0'                   },
+		{ 'name':'tolerance_random',       'value':'1e-8'                }
 	]
 	# ----------------------------------------------------------------------
 	# subgroup_table
@@ -263,10 +314,8 @@ for row in data_sim_table :
 	meas_value     = data_table[data_id]['meas_value']
 	meas_std       = data_table[data_id]['meas_std']
 	eta            = data_table[data_id]['eta']
-	assert meas_value == meas_value_global
-	assert meas_std   == meas_std_global
-	assert eta        == eta_global
-	sigma          = log(meas_value + meas_std + eta) - log(meas_value + eta)
+	delta          = meas_std + gamma_global
+	sigma          = log(meas_value + delta + eta) - log(meas_value + eta)
 	residual       = (log(data_sim_value + eta) - log(iota_true + eta) )/sigma
 	residual_list.append( residual )
 residual_array  = numpy.array( residual_list )

@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -22,6 +22,7 @@
 import sys
 import os
 import copy
+import numpy
 import distutils.dir_util
 from math import exp
 # ---------------------------------------------------------------------------
@@ -85,34 +86,41 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 # simulate command
 program         = '../../devel/dismod_at'
 command         = 'simulate'
-number_simulate = '1'
-dismod_at.system_command_prc( [program, file_name, command , number_simulate] )
+number_simulate = 200
+dismod_at.system_command_prc(
+	[program, file_name, command , str(number_simulate) ]
+)
 # -----------------------------------------------------------------------
 # check the data_sim table
-data_table      = dismod_at.get_table_dict(connection, 'data')
-data_sim_table  = dismod_at.get_table_dict(connection, 'data_sim')
+data_table        = dismod_at.get_table_dict(connection, 'data')
+data_subset_table = dismod_at.get_table_dict(connection, 'data_subset')
+data_sim_table    = dismod_at.get_table_dict(connection, 'data_sim')
 assert len(data_table) == 1
-assert len(data_sim_table) == 1
-data_row = data_table[0]
-sim_row  = data_sim_table[0]
+assert len(data_sim_table) == number_simulate
 #
-# There is only on simulation so
-assert sim_row['simulate_index'] == 0
-# For this case, data_subset_id is same as data_id
-assert sim_row['data_subset_id'] == 0
-# There are no measurement noise covariates, so
-assert abs( sim_row['data_sim_delta'] / data_row['meas_std'] - 1.0 ) < 1e-7
-# Compute the model value for the measurement (with no noise)
-# Note that age_lower is equal age_upper
-age            = data_row['age_lower']
-income         = data_row['x_0']
-adjusted_omega = omega_world * exp(income_multiplier * income)
-model_value    = exp( - adjusted_omega * age )
-# check if model value is within 3 standard deviations of the simulated value
-data_sim_value = sim_row['data_sim_value']
-data_sim_delta = sim_row['data_sim_delta']
-assert abs( model_value - data_sim_value ) < 3.0 * data_sim_delta
-assert abs( model_value - data_sim_value ) > data_sim_delta * 1e-3
+residual_list = list()
+for row in data_sim_table :
+	data_sim_value = row['data_sim_value']
+	data_subset_id = row['data_subset_id']
+	#
+	data_id        = data_subset_table[data_subset_id]['data_id']
+	meas_std       = data_table[data_id]['meas_std']
+	income         = data_table[data_id]['x_0']
+	age_lower      = data_table[data_id]['age_lower']
+	age_upper      = data_table[data_id]['age_upper']
+	assert age_lower == age_upper
+	#
+	adjusted_omega = omega_world * exp( income_multiplier * income )
+	meas_model     = exp( - adjusted_omega * age_lower )
+	residual       = (data_sim_value - meas_model) / meas_std
+	residual_list.append( residual )
+residual_array  = numpy.array( residual_list )
+residual_mean   = residual_array.mean()
+residual_std    = residual_array.std(ddof=1)
+# check that the mean of the residuals is within 2.5 standard deviations
+assert abs(residual_mean) <=  2.5 / numpy.sqrt(number_simulate)
+# check that the standard deviation of the residuals is near one
+assert abs(residual_std - 1.0) <= 2.5 / numpy.sqrt(number_simulate)
 # -----------------------------------------------------------------------
 print('simulate_command: OK')
 # END PYTHON

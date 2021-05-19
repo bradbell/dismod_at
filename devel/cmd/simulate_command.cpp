@@ -100,7 +100,6 @@ void simulate_command(
 	using CppAD::to_string;
 	double nan = std::numeric_limits<double>::quiet_NaN();
 	//
-	const vector<integrand_struct>& integrand_table( db_input.integrand_table );
 	const vector<prior_struct>&     prior_table( db_input.prior_table );
 	const vector<density_enum>&     density_table( db_input.density_table );
 	const vector<subgroup_struct>&  subgroup_table( db_input.subgroup_table );
@@ -113,25 +112,6 @@ void simulate_command(
 		error_exit(msg);
 	}
 	size_t n_simulate = size_t(tmp);
-	// -----------------------------------------------------------------------
-	// meas_noise_effect
-	meas_noise_effect_enum type_effect = number_meas_noise_effect_enum;
-	// add_std
-	if( meas_noise_effect == "add_std_scale_all" )
-		type_effect = add_std_scale_all_enum;
-	else if( meas_noise_effect == "add_std_scale_none" )
-		type_effect = add_std_scale_none_enum;
-	else if( meas_noise_effect == "add_std_scale_log" )
-		type_effect = add_std_scale_log_enum;
-	// add_var
-	else if( meas_noise_effect == "add_var_scale_all" )
-		type_effect = add_var_scale_all_enum;
-	else if( meas_noise_effect == "add_var_scale_none" )
-		type_effect = add_var_scale_none_enum;
-	else if( meas_noise_effect == "add_var_scale_log" )
-		type_effect = add_var_scale_log_enum;
-	else
-		assert(false);
 	// -----------------------------------------------------------------------
 	// read truth_var table into truth_var
 	vector<double> truth_var;
@@ -181,56 +161,13 @@ void simulate_command(
 		//
 		// data table information
 		double difference   = false;
-		int integrand_id    = data_subset_obj[subset_id].integrand_id;
 		double meas_value   = data_subset_obj[subset_id].meas_value;
-		double meas_std     = data_subset_obj[subset_id].meas_std;
 		double eta          = data_subset_obj[subset_id].eta;
 		double nu           = data_subset_obj[subset_id].nu;
-		//
-		// data table minimum cv standard deviation, Delta
-		assert( meas_std > 0.0 );
-		double meas_cv = integrand_table[integrand_id].minimum_meas_cv;
-		double Delta = std::max(meas_std, meas_cv * std::fabs(meas_value) );
 		//
 		// data table adjusted standard deviation, delta
 		double delta;
 		data_object.like_one(subset_id, truth_var, avg, delta);
-		//
-		// effect
-		double effect = nan;
-		switch( type_effect )
-		{	// ---------------------------------------------------------------
-			// add_std
-			case add_std_scale_all_enum:
-			effect = delta / Delta - 1.0;
-			break;
-			case add_std_scale_none_enum:
-			effect = delta - Delta;
-			break;
-			case add_std_scale_log_enum:
-			if( log_density(density) )
-				effect = delta / Delta - 1.0;
-			else
-				effect = delta - Delta;
-			break;
-			// ---------------------------------------------------------------
-			// add_var
-			case add_var_scale_all_enum:
-			effect = (delta * delta) / (Delta * Delta) - 1.0;
-			break;
-			case add_var_scale_none_enum:
-			effect = (delta * delta) - (Delta * Delta);
-			break;
-			case add_var_scale_log_enum:
-			if( log_density(density) )
-				effect = (delta * delta) / (Delta * Delta) - 1.0;
-			else
-				effect = (delta * delta) - (Delta * Delta);
-			break;
-			// ---------------------------------------------------------------
-			default:
-			assert(false);
-		}
 		//
 		// data table sigma
 		double sigma = delta;
@@ -248,56 +185,9 @@ void simulate_command(
 			);
 			//
 			// sim_delta
-			double sim_delta = sigma;
-			if( log_density(density) )
-				sim_delta = (std::exp(sigma) - 1.0) * (sim_value + eta);
-			//
+			double sim_delta = 0.0;
 			// sim_stdcv
-			double sim_stdcv = nan;
-			switch( type_effect )
-			{	// -----------------------------------------------------------
-				// add_std
-				case add_std_scale_all_enum:
-				sim_stdcv = sim_delta / (1.0 + effect);
-				break;
-				case add_std_scale_none_enum:
-				sim_stdcv = sim_delta - effect;
-				break;
-				case add_std_scale_log_enum:
-				if( log_density(density) )
-					sim_stdcv = sim_delta / (1.0 + effect);
-				else
-					sim_stdcv = sim_delta - effect;
-				break;
-				// ------------------------------------------------------------
-				// add_var
-				case add_var_scale_all_enum:
-				sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
-				break;
-				case add_var_scale_none_enum:
-				sim_stdcv = std::sqrt(sim_delta * sim_delta - effect);
-				break;
-				case add_var_scale_log_enum:
-				if( log_density(density) )
-					sim_stdcv = sim_delta / std::sqrt(1.0 + effect);
-				else
-					sim_stdcv = std::sqrt(sim_delta * sim_delta - effect);
-				break;
-
-				default:
-				assert(false);
-			}
-			if( std::isnan( sim_stdcv ) || sim_stdcv < 0.0 )
-			{	msg  = "dismod_at: simulate_command ";
-				msg += "sim_stdcv is nan or less than zero\n";
-				msg += "Either meas_std is too small or measurment noise ";
-				msg += "effect is too large\n";
-				size_t data_id = data_subset_obj[subset_id].original_id;
-				msg += "data_id = " + to_string(data_id);
-				error_exit(msg);
-			}
-			assert( ! std::isnan( sim_value ) );
-			assert( ! std::isnan( sim_delta ) );
+			double sim_stdcv = 0.0;
 			//
 			size_t data_sim_id = sim_index * n_subset + subset_id;
 			row_value[data_sim_id * n_col + 0] = to_string( sim_index );

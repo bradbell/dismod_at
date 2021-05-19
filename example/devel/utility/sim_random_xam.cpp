@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -51,7 +51,7 @@ bool sim_random_xam(void)
 	double nu      = 0.0; // not used (avoid warning)
 	for(size_t i = 0; i < sample_size; i++)
 	{	double z = dismod_at::sim_random(
-			difference, density, mu, delta, eta, nu
+			difference, density, mu, mu, delta, eta, nu
 		);
 		if( 0.5 <= z / delta )
 			count ++;
@@ -80,7 +80,7 @@ bool sim_random_xam(void)
 	for(size_t i = 0; i < sample_size; i++)
 	{	difference = bool( i % 2 ); // does not matter
 		double z = dismod_at::sim_random(
-			difference, density, mu, delta, eta, nu
+			difference, density, mu, mu, delta, eta, nu
 		);
 		if( 0.5 <= z / delta )
 			count ++;
@@ -111,7 +111,7 @@ bool sim_random_xam(void)
 	for(size_t i = 0; i < sample_size; i++)
 	{	difference = bool( i % 2 ); // does not matter
 		double z = dismod_at::sim_random(
-			difference, density, mu, delta, eta, nu
+			difference, density, mu, mu, delta, eta, nu
 		);
 		if( 0.5 <= z / delta )
 			count ++;
@@ -143,7 +143,7 @@ bool sim_random_xam(void)
 	for(size_t i = 0; i < sample_size; i++)
 	{	difference   = bool( i % 2 ); // does matter
 		double z     = dismod_at::sim_random(
-			difference, density, mu, delta, eta, nu
+			difference, density, mu, mu, delta, eta, nu
 		);
 		double w = ( log(z + eta) - log(mu + eta) ) / sigma;
 		if( difference )
@@ -177,7 +177,7 @@ bool sim_random_xam(void)
 	for(size_t i = 0; i < sample_size; i++)
 	{	difference   = bool( i % 2 ); // does matter
 		double z     = dismod_at::sim_random(
-			difference, density, mu, delta, eta, nu
+			difference, density, mu, mu, delta, eta, nu
 		);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
 		if( difference )
@@ -212,7 +212,7 @@ bool sim_random_xam(void)
 	for(size_t i = 0; i < sample_size; i++)
 	{	difference   = bool( i % 2 ); // does matter
 		double z     = dismod_at::sim_random(
-			difference, density, mu, delta, eta, nu
+			difference, density, mu, mu, delta, eta, nu
 		);
 		double w     = ( log(z + eta) - log(mu + eta) ) / sigma;
 		if( difference )
