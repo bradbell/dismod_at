@@ -30,7 +30,7 @@ minimum_meas_cv = 0.10
 # %$$
 #
 # $head Model$$
-# The only non-zero for this example is
+# The only non-zero model variable for this example is
 # other cause mortality, $latex \omega$$, for the parent area.
 # The parent omega grid has two points,
 # one at age zero and the other at age 100.

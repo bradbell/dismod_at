@@ -7,15 +7,69 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# Simulate a data set and fit it. In addition, using sample table
-# as the source in a set command.
-# Test a case where sim_std is much different from meas_std.
+# $begin user_sim_log.py$$ $newlinech #$$
+# $spell
+#	std
+#	Sincidence
+# $$
+# $section Simulating Data with Log Transformed Distribution$$
 #
-# values used to simulate data
-iota_true       = 0.01
-eta_global      = iota_true * 1e-3
-meas_std_global = iota_true * 0.5
+# $head Example Parameters$$
+# The following values are used to simulate the data
+# $srccode%py%
+iota_true         = 0.01
+eta_global        = iota_true * 1e-3
+meas_std_global   = iota_true * 0.5
+meas_value_global = iota_true
+# %$$
+# $head Model$$
+# The only non-zero model variable for this example is
+# the rate of incidence for the world which is constant in age and time.
+#
+# $head Data$$
+# There is only one data point for this example and it's integrand is
+# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$.
+# This data has a log transformed distribution with mean $icode iota_true$$,
+# offset $icode eta_global$$, and standard deviation
+# $icode meas_std_global$$.
+#
+# $head Notation$$
+# $table
+# $latex y$$       $cnext $cref/meas_value/data_table/meas_value/$$
+# $rnext
+# $latex \mu$$     $cnext mean of the data, $icode iota_true$$
+# $rnext
+# $latex \eta$$    $cnext offset in log transform, $icode eta_global$$
+# $rnext
+# $latex \delta$$  $cnext standard deviation of data,$icode meas_std_global$$
+# $rnext
+# $latex \sigma$$  $cnext
+# $cref/log transformed standard deviation
+#	/data_like
+#	/Transformed Standard Deviation, sigma_i(theta)
+# /$$
+# $rnext
+# $latex z_i$$     $cnext The $th i$$ simulated value for the measurement
+# $tend
+#
+# $head Simulations$$
+# The log transformed standard deviation is given by
+# $latex \[
+#	\sigma = \log( y + \eta + \delta ) - \log(y + \eta)
+# \] $$
+# The offset log transform of each simulated measurement $latex z_i$$ has
+# the following Gaussian distribution:
+# $latex \[
+#	\log( z_i + \eta ) - \log( \mu + \eta ) \sim N(0, \sigma^2 )
+# \] $$
+#
+# $head Source Code$$
+# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# $end
+#
+# $end
 # ------------------------------------------------------------------------
+# BEGIN PYTHON
 import sys
 import os
 import distutils.dir_util
@@ -83,8 +137,8 @@ def example_db (file_name) :
 	# data table:
 	# values that are the same for all data rows
 	row = {
-		'meas_value':  iota_true  ,
-		'eta':         eta_global ,
+		'meas_value':  meas_value_global,
+		'eta':         eta_global,
 		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   2000.,
@@ -206,7 +260,7 @@ for row in data_sim_table :
 	meas_value     = data_table[data_id]['meas_value']
 	meas_std       = data_table[data_id]['meas_std']
 	eta            = data_table[data_id]['eta']
-	assert meas_value == iota_true
+	assert meas_value == meas_value_global
 	assert meas_std   == meas_std_global
 	assert eta        == eta_global
 	sigma          = log(meas_value + meas_std + eta) - log(meas_value + eta)
@@ -221,3 +275,4 @@ assert abs(residual_mean) <=  2.5 / numpy.sqrt(n_simulate)
 assert abs(residual_std - 1.0) <= 2.5 / numpy.sqrt(n_simulate)
 # -----------------------------------------------------------------------------
 print('fit_sim.py: OK')
+# END PYTHON
