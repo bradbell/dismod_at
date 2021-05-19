@@ -56,7 +56,7 @@ Add the $cref user_sim_log.py$$ example.
 $lnext
 When simulating log transformed data,
 the transformed standard deviation was computed using
-the mean instead of the measurment.
+the mean instead of the measurement.
 This has been fixed.
 $lend
 

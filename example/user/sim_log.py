@@ -17,6 +17,7 @@
 # $head Example Parameters$$
 # The following values are used to simulate the data
 # $srccode%py%
+number_simulate   = 200
 iota_true         = 0.01
 eta_global        = iota_true * 1e-3
 meas_std_global   = iota_true * 0.5
@@ -35,13 +36,16 @@ meas_value_global = iota_true * 1.5
 #
 # $head Notation$$
 # $table
-# $latex y$$       $cnext $cref/meas_value/data_table/meas_value/$$
+# $latex y$$       $cnext is the measurement value, $icode meas_value_global$$
 # $rnext
 # $latex \mu$$     $cnext mean of the data, $icode iota_true$$
 # $rnext
 # $latex \eta$$    $cnext offset in log transform, $icode eta_global$$
 # $rnext
-# $latex \delta$$  $cnext standard deviation of data,$icode meas_std_global$$
+# $latex \delta$$  $cnext standard deviation of data, $icode meas_std_global$$
+# $rnext
+# $latex n$$       $cnext number of simulated data values,
+#                  $cref/number_simulate/simulate_command/number_simulate/$$
 # $rnext
 # $latex \sigma$$  $cnext
 # $cref/log transformed standard deviation
@@ -49,7 +53,7 @@ meas_value_global = iota_true * 1.5
 #	/Transformed Standard Deviation, sigma_i(theta)
 # /$$
 # $rnext
-# $latex z_i$$     $cnext The $th i$$ simulated value for the measurement
+# $latex z_i$$     $cnext $th i$$ simulate data for $latex i = 1, \ldots , n$$
 # $tend
 #
 # $head Simulations$$
@@ -242,8 +246,7 @@ system_command([ program, file_name, 'init' ])
 system_command([ program, file_name, 'set', 'truth_var', 'prior_mean' ])
 #
 # create data_sim table
-n_simulate = 2000
-system_command([ program, file_name, 'simulate', str(n_simulate) ])
+system_command([ program, file_name, 'simulate', str(number_simulate) ])
 # -----------------------------------------------------------------------
 # check simulated data
 from math import log
@@ -270,9 +273,9 @@ residual_array  = numpy.array( residual_list )
 residual_mean   = residual_array.mean()
 residual_std    = residual_array.std(ddof=1)
 # check that the mean of the residuals is within 2.5 standard deviations
-assert abs(residual_mean) <=  2.5 / numpy.sqrt(n_simulate)
+assert abs(residual_mean) <=  2.5 / numpy.sqrt(number_simulate)
 # check that the standard deviation of the residuals is near one
-assert abs(residual_std - 1.0) <= 2.5 / numpy.sqrt(n_simulate)
+assert abs(residual_std - 1.0) <= 2.5 / numpy.sqrt(number_simulate)
 # -----------------------------------------------------------------------------
 print('fit_sim.py: OK')
 # END PYTHON
