@@ -54,8 +54,6 @@ def system_command(command) :
 		sys.exit(msg)
 	return
 # ------------------------------------------------------------------------
-def constant_weight_fun(a, t) :
-	return 1.0
 # note that the a, t values are not used for this case
 def fun_rate_child(a, t) :
 	return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
@@ -84,14 +82,7 @@ def example_db (file_name) :
 		node_table.append( { 'name':name, 'parent':'world' } )
 	#
 	# weight table:
-	# The constant function 1.0, note any valid age and time id would work
-	name    = 'constant'
-	fun     = constant_weight_fun
-	age_id  = int( len(age_list) / 2 )
-	time_id = int( len(time_list) / 2 )
-	weight_table = [
-		{ 'name':name,  'age_id':[age_id], 'time_id':[time_id], 'fun':fun }
-	]
+	weight_table = list()
 	#
 	# covariate table:
 	covariate_table = [
@@ -118,7 +109,7 @@ def example_db (file_name) :
 		'meas_value':  1.,   # measurement is way off truth and not used
 		'eta':         1e-6,
 		'nu':          10,
-		'weight':      'constant',
+		'weight':      '',
 		'hold_out':     False,
 		'time_lower':   2000.,
 		'time_upper':   2000.,
@@ -224,27 +215,11 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
-		{	'name':          'pini',
-			'parent_smooth': None,
-			'child_smooth':  None,
-			'child_nslist':  None
-		},{	'name':          'iota',
+		{	'name':          'iota',
 			'parent_smooth': 'smooth_iota_parent',
 			'child_smooth':  'smooth_rate_child',
 			'child_nslist':  None
-		},{	'name':          'rho',
-			'parent_smooth': None,
-			'child_smooth':  None,
-			'child_nslist':  None
-		},{	'name':          'chi',
-			'parent_smooth': None,
-			'child_smooth':  None,
-			'child_nslist':  None
-		},{	'name':          'omega',
-			'parent_smooth': None,
-			'child_smooth':  None,
-			'child_nslist':  None
-		}
+		},
 	]
 	# ----------------------------------------------------------------------
 	# option_table
