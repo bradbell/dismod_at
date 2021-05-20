@@ -377,10 +377,15 @@ int main(int n_arg, const char** argv)
 	}
 	// fit_simulated_data
 	bool fit_simulated_data = false;
-	if( command_arg == "fit" && n_arg >= 5 )
+	if( command_arg == "fit" && n_arg == 5 )
 		fit_simulated_data = true;
-	if( command_arg == "sample" &&  std::strcmp(argv[4], "simulate") == 0 )
-		fit_simulated_data = true;
+	if( command_arg == "sample" )
+	{	if( std::strcmp(argv[3], "simulate") == 0 )
+			fit_simulated_data = true;
+		if( std::strcmp(argv[3], "asymptotic") == 0 && n_arg == 7 )
+			fit_simulated_data = true;
+	}
+	// =======================================================================
 	// =======================================================================
 # ifdef NDEBUG
 	try { // BEGIN_TRY_BLOCK (when not debugging)

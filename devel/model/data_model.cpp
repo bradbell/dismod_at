@@ -512,11 +512,6 @@ $icode%data_subset_obj%[%subset_id%].%field%$$,
 is used as a replacement for
 $icode%subset_object[%subset_id%]%.%field%$$.
 
-$subhead fit_simulated_data$$
-If $cref/fit_simulated_data/data_model_ctor/fit_simulated_data/$$ is true,
-we are fitting simulated data $icode data_sim_value$$,
-otherwise we are fitting the actual data $icode meas_value$$.
-
 $head Laplace Density$$
 The Laplace density is only allowed if the model for the
 $cref avg_integrand$$ does not depend on the value of the random effects.
@@ -838,8 +833,6 @@ residual_struct<Float> data_model::like_one(
 	assert( meas_std  > 0.0 );
 	double meas_cv = minimum_meas_cv_[integrand_id];
 	double Delta   = std::max(meas_std, meas_cv * std::fabs(meas_value) );
-	if( fit_simulated_data_ )
-		Delta = meas_std;
 	//
 	// Compute the adusted standard deviation, delta_out
 	density_enum density = data_info_[subset_id].density;
@@ -878,6 +871,12 @@ residual_struct<Float> data_model::like_one(
 	//
 	bool diff  = false;
 	bool prior = false;
+# ifndef NDEBUG
+	if( fit_simulated_data_ )
+		assert( ! std::isnan(data_sim_value) );
+	else
+		assert( std::isnan(data_sim_value) );
+# endif
 	struct residual_struct<Float> residual = residual_density(
 		Float(data_sim_value),
 		Float(meas_value),
