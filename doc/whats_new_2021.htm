@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>05-20</option>
+<option>05-19</option>
 <option>05-18</option>
 <option>05-15</option>
 <option>05-07</option>
@@ -85,6 +87,58 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="05-20" id="05-20">05-20</a></big></b>
+<br>
+During a <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+,
+the calculation of <code><font color="blue">data_sim_delta</font></code> and <code><font color="blue">data_sim_stdcv</font></code> in the
+<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+ often resulted in zero or negative values,
+which does not make sense and would cause dismod_at to abort.
+This problem has been fixed by using
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+
+to replace 
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_delta</span></font></i></code>
+ and
+<a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>minimum&nbsp;CV&nbsp;standard&nbsp;deviation</span></a>
+
+to replace 
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_stdcv</span></font></i></code>
+.
+These replacements use the original measurements
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+
+instead of the simulated measurements
+<a href="data_sim_table.htm#data_sim_value" target="_top"><span style='white-space: nowrap'>data_sim_value</span></a>
+
+to define the corresponding
+<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
+.
+<ol type="1"><li>
+Add the <a href="user_sim_log.py.htm" target="_top"><span style='white-space: nowrap'>user_sim_log.py</span></a>
+ example.
+</li><li>
+
+<b>API Change:</b>
+The columns <code><font color="blue">data_sim_delta</font></code> and <code><font color="blue">data_sim_stdcv</font></code> in the
+<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+ have been removed.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-19" id="05-19">05-19</a></big></b>
+<br>
+Add missing source code in the documentation for the
+<a href="user_covid_19.py.htm#Source Code" target="_top"><span style='white-space: nowrap'>covid_19.py</span></a>
+ and
+<a href="user_residual.py.htm#Source Code" target="_top"><span style='white-space: nowrap'>residual.py</span></a>
+ examples.
+
+<br>
 <br>
 <b><big><a name="05-18" id="05-18">05-18</a></big></b>
 <br>
@@ -255,8 +309,8 @@ The documentation for the <a href="data_sim_table.htm" target="_top"><span style
  was improved.
 </li><li>
 
-Fix a bug in the value of
-<a href="data_sim_table.htm#data_sim_stdcv" target="_top"><span style='white-space: nowrap'>data_sim_stdcv</span></a>
+Fix a bug in the value of the data_sim table column 
+<code><i><font color="black"><span style='white-space: nowrap'>data_sim_stdcv</span></font></i></code>
 
 when <a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
  is

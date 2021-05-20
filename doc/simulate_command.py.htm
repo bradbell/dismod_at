@@ -73,6 +73,7 @@ A:active { color : purple }
 <br><pre><tt><b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> copy
+<b><font color="#000080">import</font></b> numpy
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">from</font></b> math <b><font color="#000080">import</font></b> exp
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
@@ -136,34 +137,41 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</fo
 <i><font color="#9A1900"># simulate command</font></i>
 program         <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
 command         <font color="#990000">=</font> <font color="#FF0000">'simulate'</font>
-number_simulate <font color="#990000">=</font> <font color="#FF0000">'1'</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font> <font color="#990000">[</font>program<font color="#990000">,</font> file_name<font color="#990000">,</font> command <font color="#990000">,</font> number_simulate<font color="#990000">]</font> <font color="#990000">)</font>
+number_simulate <font color="#990000">=</font> <font color="#993399">200</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font>program<font color="#990000">,</font> file_name<font color="#990000">,</font> command <font color="#990000">,</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>number_simulate<font color="#990000">)</font> <font color="#990000">]</font>
+<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># check the data_sim table</font></i>
-data_table      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'data'</font><font color="#990000">)</font>
-data_sim_table  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'data_sim'</font><font color="#990000">)</font>
+data_table        <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'data'</font><font color="#990000">)</font>
+data_subset_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'data_subset'</font><font color="#990000">)</font>
+data_sim_table    <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'data_sim'</font><font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_sim_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
-data_row <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
-sim_row  <font color="#990000">=</font> data_sim_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_sim_table<font color="#990000">)</font> <font color="#990000">==</font> number_simulate
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># There is only on simulation so</font></i>
-<b><font color="#0000FF">assert</font></b> sim_row<font color="#990000">[</font><font color="#FF0000">'simulate_index'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<i><font color="#9A1900"># For this case, data_subset_id is same as data_id</font></i>
-<b><font color="#0000FF">assert</font></b> sim_row<font color="#990000">[</font><font color="#FF0000">'data_subset_id'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<i><font color="#9A1900"># There are no measurement noise covariates, so</font></i>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> sim_row<font color="#990000">[</font><font color="#FF0000">'data_sim_delta'</font><font color="#990000">]</font> <font color="#990000">/</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-7</font>
-<i><font color="#9A1900"># Compute the model value for the measurement (with no noise)</font></i>
-<i><font color="#9A1900"># Note that age_lower is equal age_upper</font></i>
-age            <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>
-income         <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'x_0'</font><font color="#990000">]</font>
-adjusted_omega <font color="#990000">=</font> omega_world <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font>income_multiplier <font color="#990000">*</font> income<font color="#990000">)</font>
-model_value    <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> adjusted_omega <font color="#990000">*</font> age <font color="#990000">)</font>
-<i><font color="#9A1900"># check if model value is within 3 standard deviations of the simulated value</font></i>
-data_sim_value <font color="#990000">=</font> sim_row<font color="#990000">[</font><font color="#FF0000">'data_sim_value'</font><font color="#990000">]</font>
-data_sim_delta <font color="#990000">=</font> sim_row<font color="#990000">[</font><font color="#FF0000">'data_sim_delta'</font><font color="#990000">]</font>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> model_value <font color="#990000">-</font> data_sim_value <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">3.0</font> <font color="#990000">*</font> data_sim_delta
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> model_value <font color="#990000">-</font> data_sim_value <font color="#990000">)</font> <font color="#990000">&gt;</font> data_sim_delta <font color="#990000">*</font> <font color="#993399">1e-3</font>
+residual_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> data_sim_table <font color="#990000">:</font>
+     data_sim_value <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'data_sim_value'</font><font color="#990000">]</font>
+     data_subset_id <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'data_subset_id'</font><font color="#990000">]</font>
+     <i><font color="#9A1900">#</font></i>
+     data_id        <font color="#990000">=</font> data_subset_table<font color="#990000">[</font>data_subset_id<font color="#990000">][</font><font color="#FF0000">'data_id'</font><font color="#990000">]</font>
+     meas_std       <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
+     income         <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'x_0'</font><font color="#990000">]</font>
+     age_lower      <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>
+     age_upper      <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>
+     <b><font color="#0000FF">assert</font></b> age_lower <font color="#990000">==</font> age_upper
+     <i><font color="#9A1900">#</font></i>
+     adjusted_omega <font color="#990000">=</font> omega_world <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> income_multiplier <font color="#990000">*</font> income <font color="#990000">)</font>
+     meas_model     <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> adjusted_omega <font color="#990000">*</font> age_lower <font color="#990000">)</font>
+     residual       <font color="#990000">=</font> <font color="#990000">(</font>data_sim_value <font color="#990000">-</font> meas_model<font color="#990000">)</font> <font color="#990000">/</font> meas_std
+     residual_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> residual <font color="#990000">)</font>
+residual_array  <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> residual_list <font color="#990000">)</font>
+residual_mean   <font color="#990000">=</font> residual_array<font color="#990000">.</font><b><font color="#000000">mean</font></b><font color="#990000">()</font>
+residual_std    <font color="#990000">=</font> residual_array<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">)</font>
+<i><font color="#9A1900"># check that the mean of the residuals is within 2.5 standard deviations</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>residual_mean<font color="#990000">)</font> <font color="#990000">&lt;=</font>  <font color="#993399">2.5</font> <font color="#990000">/</font> numpy<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>number_simulate<font color="#990000">)</font>
+<i><font color="#9A1900"># check that the standard deviation of the residuals is near one</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>residual_std <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">2.5</font> <font color="#990000">/</font> numpy<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>number_simulate<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'simulate_command: OK'</font><font color="#990000">)</font></tt></pre>
 

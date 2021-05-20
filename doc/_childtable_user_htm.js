@@ -35,6 +35,7 @@ document.write('\
 <option>user_sample_simple.py</option>\
 <option>user_sample_sim.py</option>\
 <option>user_sample_asy.py</option>\
+<option>user_sim_log.py</option>\
 <option>user_speed.py</option>\
 <option>user_students.py</option>\
 <option>user_subgroup_mulcov.py</option>\
@@ -79,6 +80,7 @@ function user_child(item)
 		'user_sample_simple.py.htm',
 		'user_sample_sim.py.htm',
 		'user_sample_asy.py.htm',
+		'user_sim_log.py.htm',
 		'user_speed.py.htm',
 		'user_students.py.htm',
 		'user_subgroup_mulcov.py.htm',

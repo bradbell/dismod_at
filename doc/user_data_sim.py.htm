@@ -296,6 +296,7 @@ n_data             <font color="#990000">=</font> <font color="#993399">10</font
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> copy
+<b><font color="#000080">import</font></b> numpy
 test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/data_sim.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
@@ -591,6 +592,7 @@ meas_noise_effect_list <font color="#990000">=</font> <font color="#990000">[</f
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># check the values in the data_sim table</font></i>
      eps99 <font color="#990000">=</font> <font color="#993399">99.0</font> <font color="#990000">*</font> sys<font color="#990000">.</font>float_info<font color="#990000">.</font>epsilon
+     residual_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
      <b><font color="#0000FF">for</font></b> data_sim_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_sim_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
           <i><font color="#9A1900">#</font></i>
           <i><font color="#9A1900"># data_sim table valeus</font></i>
@@ -598,8 +600,6 @@ meas_noise_effect_list <font color="#990000">=</font> <font color="#990000">[</f
           simulate_index <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'simulate_index'</font><font color="#990000">]</font>
           data_subset_id <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'data_subset_id'</font><font color="#990000">]</font>
           data_sim_value <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'data_sim_value'</font><font color="#990000">]</font>
-          data_sim_stdcv <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'data_sim_stdcv'</font><font color="#990000">]</font>
-          data_sim_delta <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'data_sim_delta'</font><font color="#990000">]</font>
           <i><font color="#9A1900">#</font></i>
           <i><font color="#9A1900"># only one set of data is simulated</font></i>
           <b><font color="#0000FF">assert</font></b> simulate_index <font color="#990000">==</font> <font color="#993399">0</font>
@@ -621,18 +621,21 @@ meas_noise_effect_list <font color="#990000">=</font> <font color="#990000">[</f
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
                sigma  <font color="#990000">=</font> delta
           <i><font color="#9A1900">#</font></i>
-          <i><font color="#9A1900"># Notation for values in the sim_data table</font></i>
-          z         <font color="#990000">=</font> data_sim_value  <i><font color="#9A1900"># no censoring</font></i>
-          Delta_hat <font color="#990000">=</font> data_sim_stdcv
-          delta_hat <font color="#990000">=</font> data_sim_delta
-          <i><font color="#9A1900">#</font></i>
-          <i><font color="#9A1900"># check tha the transformed standard deviation is the same for z and y</font></i>
+          <i><font color="#9A1900"># residual</font></i>
+          z  <font color="#990000">=</font> data_sim_value  <i><font color="#9A1900"># simulated data withoout censoring</font></i>
+          mu <font color="#990000">=</font> iota_true       <i><font color="#9A1900"># mean of the simulated data</font></i>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">log_density</font></b><font color="#990000">(</font>density<font color="#990000">)</font> <font color="#990000">:</font>
-               sigma_hat <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta <font color="#990000">+</font> delta_hat<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta<font color="#990000">)</font>
+               residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               sigma_hat <font color="#990000">=</font> delta_hat
-          <i><font color="#9A1900">#</font></i>
-          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> sigma <font color="#990000">/</font> sigma_hat <font color="#990000">)</font> <font color="#990000">&lt;</font> eps99
+               residual <font color="#990000">=</font> <font color="#990000">(</font>z <font color="#990000">-</font> mu<font color="#990000">)</font> <font color="#990000">/</font> sigma
+          residual_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>residual<font color="#990000">)</font>
+     residual_array  <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> residual_list <font color="#990000">)</font>
+     residual_mean   <font color="#990000">=</font> residual_array<font color="#990000">.</font><b><font color="#000000">mean</font></b><font color="#990000">()</font>
+     residual_std    <font color="#990000">=</font> residual_array<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">)</font>
+     <i><font color="#9A1900"># check that the mean of the residuals is within 2.5 standard deviations</font></i>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>residual_mean<font color="#990000">)</font> <font color="#990000">&lt;=</font>  <font color="#993399">2.5</font> <font color="#990000">/</font> numpy<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>n_data<font color="#990000">)</font>
+     <i><font color="#9A1900"># check that the standard deviation of the residuals is near one</font></i>
+     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>residual_std <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">2.5</font> <font color="#990000">/</font> numpy<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>n_data<font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
 connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>

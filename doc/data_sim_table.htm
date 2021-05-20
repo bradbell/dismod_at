@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Measurements and Adjusted Standard Deviations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Measurements and Adjusted Standard Deviations">
-<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value data_sim_delta data_sim_stdcv method data_id y delta d eta e sigma z delta_hat example ">
+<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations data_sim_id simulate_index data_subset_id data_sim_value method data_id y delta d eta e sigma z example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,8 +74,6 @@ A:active { color : purple }
 <br><a href="data_sim_table.htm#simulate_index" target="_top">simulate_index</a>
 <br><a href="data_sim_table.htm#data_subset_id" target="_top">data_subset_id</a>
 <br><a href="data_sim_table.htm#data_sim_value" target="_top">data_sim_value</a>
-<br><a href="data_sim_table.htm#data_sim_delta" target="_top">data_sim_delta</a>
-<br><a href="data_sim_table.htm#data_sim_stdcv" target="_top">data_sim_stdcv</a>
 <br><a href="data_sim_table.htm#Method" target="_top">Method</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.data_id" target="_top">data_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y" target="_top">y</a>
@@ -88,8 +86,6 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.sigma" target="_top">sigma</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.e" target="_top">e</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.z" target="_top">z</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta_hat" target="_top">delta_hat</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.Delta_hat" target="_top">Delta_hat</a>
 <br><a href="data_sim_table.htm#Example" target="_top">Example</a>
 <br>The <code><font color="blue">data_sim</font></code> table is created during a
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
@@ -164,9 +160,8 @@ and
 <br>
 This column has type <code><font color="blue">real</font></code> and is
 the simulated measurement value that for the specified row of the data table;
-i.e., it can act as a replacement for the value
-<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
- in the data table.
+see <a href="data_sim_table.htm#Method.z" target="_top"><span style='white-space: nowrap'>z</span></a>
+ in the method below.
 If the density for this 
 <code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
  is censored (not censored)
@@ -176,40 +171,7 @@ If the density for this
 <code><font color="blue"><span style='white-space: nowrap'>max(</span></font><i><font color="black"><span style='white-space: nowrap'>z</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;0)</span></font></code>
 , (
 <code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
-);
-see <a href="data_sim_table.htm#Method.z" target="_top"><span style='white-space: nowrap'>z</span></a>
- below.
-Note that for censored
-<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
- densities,
-if <small>@(@
-z
-@)@</small> is not equal 
-<code><i><font color="black"><span style='white-space: nowrap'>data_sim_value</span></font></i></code>
-,
-the transformed standard deviation for the simulated data is not the
-same for the simulated and original data.
-
-<br>
-<br>
-<b><big><a name="data_sim_delta" id="data_sim_delta">data_sim_delta</a></big></b>
-<br>
-The column has type <code><font color="blue">real</font></code> and is
-the adjusted standard deviation corresponding to this simulated measurement;
-see <a href="data_sim_table.htm#Method.delta_hat" target="_top"><span style='white-space: nowrap'>delta_hat</span></a>
- below.
-
-<br>
-<br>
-<b><big><a name="data_sim_stdcv" id="data_sim_stdcv">data_sim_stdcv</a></big></b>
-<br>
-The column has type <code><font color="blue">real</font></code> and is the
-minimum cv standard deviation
-<a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
-,
-for use when fitting this simulated data;
-see <a href="data_sim_table.htm#Method.Delta_hat" target="_top"><span style='white-space: nowrap'>Delta_hat</span></a>
- below.
+).
 
 <br>
 <br>
@@ -409,130 +371,6 @@ It the density is <a href="density_table.htm#Notation.Log Scaled" target="_top">
 \end{array}
 
 @]@</small>
-
-<br>
-<br>
-<big><a name="Method.delta_hat" id="Method.delta_hat">delta_hat</a></big>
-<br>
-Given <small>@(@
-z
-@)@</small>, we can solve the equation
-<small>@[@
-
-	\sigma = \log( z + \eta + \hat{\delta} ) - \log( z + \eta )
-
-@]@</small>
-to obtain the value
-<small>@[@
-
-\hat{\delta} = \left\{ \begin{array}{ll}
-	[ exp(\sigma) - 1 ] ( z + \eta )  & \R{if \; log \; density}
-	\\
-	\sigma                            & \R{otherwise}
-\end{array} \right.
-
-@]@</small>
-The value <small>@(@
-\hat{\delta}
-@)@</small> is the
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
-
-that corresponds to measurement error <small>@(@
-\sigma
-@)@</small>
-and measurement value <small>@(@
-z
-@)@</small>.
-Note that if <small>@(@
-z
-@)@</small> happened to be equal to <small>@(@
-y
-@)@</small>,
-then <small>@(@
-\hat{\delta}
-@)@</small> would be equal to <small>@(@
-\delta
-@)@</small>.
-
-
-<br>
-<br>
-<big><a name="Method.Delta_hat" id="Method.Delta_hat">Delta_hat</a></big>
-<br>
-Given <small>@(@
-\hat{\delta}
-@)@</small> we can compute a
-<a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>minimum&nbsp;cv&nbsp;standard&nbsp;deviation</span></a>
-
-<small>@(@
-\hat{\Delta}
-@)@</small>; see
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviations</span></a>
-.
-<ol type="1"><li>
-Adding standard deviations and no scaling:
-In this case
-<small>@[@
-
-\begin{array}{rcl}
-	\hat{\delta} & = & \hat{\Delta} + E_i ( \theta )
-	\\
-	\hat{\Delta} & = & \hat{\delta} -  E_i ( \theta )
-\end{array}
-
-@]@</small>
-</li><li>
-
-Adding standard deviations with scaling:
-In this case
-<small>@[@
-
-\begin{array}{rcl}
-	\hat{\delta} & = & \hat{\Delta} [ 1 + E_i ( \theta ) ]
-	\\
-	\hat{\Delta} & = & \hat{\delta} / [ 1 + E_i ( \theta ) ]
-\end{array}
-
-@]@</small>
-</li><li>
-
-Adding variances and no scaling:
-In this case
-<small>@[@
-
-\begin{array}{rcl}
-	\hat{\delta} & = & \sqrt{ \hat{\Delta}^2 + E_i ( \theta ) }
-	\\
-	\hat{\Delta} & = & \sqrt{ \hat{\delta}^2 -  E_i ( \theta ) }
-\end{array}
-
-@]@</small>
-</li><li>
-
-Adding variances with scaling:
-In this case
-<small>@[@
-
-\begin{array}{rcl}
-	\hat{\delta} & = & \hat{\Delta} \sqrt{ 1 + E_i ( \theta ) }
-	\\
-	\hat{\Delta} & = & \hat{\delta} / \sqrt{ 1 + E_i ( \theta ) }
-\end{array}
-
-@]@</small>
-</li></ol>
-
-Note that if <small>@(@
-z
-@)@</small> happened to be equal to <small>@(@
-y
-@)@</small>,
-then <small>@(@
-\hat{\Delta}
-@)@</small> would be equal to <small>@(@
-\Delta
-@)@</small>.
-
 
 <br>
 <br>
