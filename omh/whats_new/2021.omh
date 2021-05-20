@@ -43,28 +43,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
-$comment -------------------------------------------------------------------$$
-$head Simulate Branch$$
-This branch is working on changing the
-$cref/log transformed standard deviation
-	/data_like
-	/Transformed Standard Deviation, sigma_i(theta)
-/$$
-use the original data for the transformations (instead of simulated data).
-
-$list number$$
-Add the $cref user_sim_log.py$$ example.
-$lnext
-When simulating log transformed data,
-the transformed standard deviation was computed using
-the mean instead of the measurement.
-This has been fixed.
-$lnext
-When simulating log transformed data with
-$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariates,
-the columns $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
-$cref data_sim_table$$ often could not be calculated
-(were negative and did not make sense).
+$comment Merge simulate branch$$
+$head 05-20$$
+During a $cref simulate_command$$,
+the calculation of $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
+$cref data_sim_table$$ often resulted in zero or negative values,
+which does not make sense and would cause dismod_at to abort.
 This problem has been fixed by using
 $cref/adjusted standard deviation
 	/data_like
@@ -86,12 +70,13 @@ $cref/transformed standard deviation
 	/data_like
 	/Transformed Standard Deviation, sigma_i(theta)
 /$$.
+$list number$$
+Add the $cref user_sim_log.py$$ example.
 $lnext
+$bold API Change:$$
 The columns $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
 $cref data_sim_table$$ have been removed.
 $lend
-
-$comment -------------------------------------------------------------------$$
 
 $head 05-19$$
 Add missing source code in the documentation for the
