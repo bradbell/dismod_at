@@ -433,12 +433,6 @@
 # in the previous fit command, the
 # value zero is used for the $icode simulate_index$$.
 #
-# $subhead sim_stdcv$$
-# This column will be removed.
-#
-# $subhead sim_delta$$
-# This column will be removed.
-#
 # $subhead Covariates$$
 # For each covariate in the $cref covariate_table$$ there is a column with
 # the corresponding $icode covariate_name$$.
@@ -1334,8 +1328,6 @@ def db2csv_command(database_file_arg) :
 	]
 	if simulate_index != None :
 		header.append('sim_value')
-		header.append('sim_stdcv')
-		header.append('sim_delta')
 	for row in table_data['covariate'] :
 		header.append( row['covariate_name'] )
 	csv_writer = csv.DictWriter(csv_file, fieldnames=header)
@@ -1427,11 +1419,7 @@ def db2csv_command(database_file_arg) :
 		if simulate_index != None :
 			data_sim_id =  n_subset * simulate_index + subset_id
 			sim_value = table_data['data_sim'][data_sim_id]['data_sim_value']
-			sim_stdcv = table_data['data_sim'][data_sim_id]['data_sim_stdcv']
-			sim_delta = table_data['data_sim'][data_sim_id]['data_sim_delta']
 			row_out['sim_value'] = convert2output( sim_value )
-			row_out['sim_stdcv'] = convert2output( sim_stdcv )
-			row_out['sim_delta'] = convert2output( sim_delta )
 		csv_writer.writerow(row_out)
 		subset_id += 1
 	csv_file.close()

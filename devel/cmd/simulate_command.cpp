@@ -123,7 +123,7 @@ void simulate_command(
 	exec_sql_cmd(db, sql_cmd);
 	//
 	table_name      = "data_sim";
-	size_t n_col    = 5;
+	size_t n_col    = 3;
 	size_t n_subset = data_subset_obj.size();
 	size_t n_row    = n_simulate * n_subset;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
@@ -140,14 +140,6 @@ void simulate_command(
 	col_name[2]   = "data_sim_value";
 	col_type[2]   = "real";
 	col_unique[2] = false;
-	//
-	col_name[3]   = "data_sim_stdcv";
-	col_type[3]   = "real";
-	col_unique[3] = false;
-	//
-	col_name[4]   = "data_sim_delta";
-	col_type[4]   = "real";
-	col_unique[4] = false;
 	//
 	// for each measurement in the data_subset table
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
@@ -184,17 +176,10 @@ void simulate_command(
 				difference, density, meas_value,avg, delta, eta, nu
 			);
 			//
-			// sim_delta
-			double sim_delta = 0.0;
-			// sim_stdcv
-			double sim_stdcv = 0.0;
-			//
 			size_t data_sim_id = sim_index * n_subset + subset_id;
 			row_value[data_sim_id * n_col + 0] = to_string( sim_index );
 			row_value[data_sim_id * n_col + 1] = to_string( subset_id );
 			row_value[data_sim_id * n_col + 2] = to_string( sim_value );
-			row_value[data_sim_id * n_col + 3] = to_string( sim_stdcv );
-			row_value[data_sim_id * n_col + 4] = to_string( sim_delta );
 		}
 	}
 	create_table(

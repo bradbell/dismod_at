@@ -64,16 +64,6 @@ $code double$$ $cnext $code data_sim_value$$ $cnext
 	The $cref/meas_value/data_table/meas_value/$$
 	for this simulated measurement.
 $rnext
-$code double$$ $cnext $code data_sim_stdcv$$ $cnext
-	The minimum CV standard deviation
-	$cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$.
-$code double$$ $cnext $code data_sim_delta$$ $cnext
-	The $cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/$$
-	for this simulated measurement.
-$rnext
 $tend
 
 $children%example/devel/table/get_data_sim_table_xam.cpp
@@ -113,23 +103,11 @@ CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3* db)
 	get_table_column(db, table_name, column_name, data_sim_value);
 	assert( data_sim_value.size() == n_data_sim );
 
-	column_name             =  "data_sim_stdcv";
-	CppAD::vector<double>       data_sim_stdcv;
-	get_table_column(db, table_name, column_name, data_sim_stdcv);
-	assert( data_sim_stdcv.size() == n_data_sim );
-
-	column_name             =  "data_sim_delta";
-	CppAD::vector<double>       data_sim_delta;
-	get_table_column(db, table_name, column_name, data_sim_delta);
-	assert( data_sim_delta.size() == n_data_sim );
-
 	CppAD::vector<data_sim_struct> data_sim_table(n_data_sim);
 	for(size_t i = 0; i < n_data_sim; i++)
 	{	data_sim_table[i].simulate_index   = simulate_index[i];
 		data_sim_table[i].data_subset_id   = data_subset_id[i];
 		data_sim_table[i].data_sim_value   = data_sim_value[i];
-		data_sim_table[i].data_sim_stdcv   = data_sim_stdcv[i];
-		data_sim_table[i].data_sim_delta   = data_sim_delta[i];
 	}
 	return data_sim_table;
 }

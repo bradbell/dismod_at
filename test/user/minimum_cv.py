@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -177,6 +177,7 @@ connection      = dismod_at.create_connection(file_name, new)
 #
 # get variable and fit_var tables
 var_table      = dismod_at.get_table_dict(connection, 'var')
+data_table     = dismod_at.get_table_dict(connection, 'data')
 fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
 fit_data_table = dismod_at.get_table_dict(connection, 'fit_data_subset')
 #
@@ -187,16 +188,24 @@ assert( var_table[0]['var_type'] == 'rate' )
 assert( var_table[0]['rate_id'] == omega_id )
 assert( fit_var_table[0]['fit_var_value'] == omega_mean )
 #
+# eps
 eps     = 1e-10
-n_data  = len(fit_data_table)
-assert( n_data == 1 )
+#
+# n_data
+n_data  = 1
+assert( n_data == len(fit_data_table) )
+assert( n_data == len(data_table) )
+#
+# avg_integrand
 avg_integrand = fit_data_table[0]['avg_integrand']
 check         = math.exp( - omega_mean * 50.0 )
 assert( abs(avg_integrand / check - 1.0) < eps )
-meas_value    = math.exp( - omega_true * 50.0 )
-meas_stdcv    = minimum_meas_cv * meas_value
+#
+# check minimum_cv is applied
+meas_value    = data_table[0]['meas_value']
+Delta         = minimum_meas_cv * meas_value
 residual      = fit_data_table[0]['weighted_residual']
-check         = (meas_value - avg_integrand) / meas_stdcv
+check         = (meas_value - avg_integrand) / Delta
 assert( abs(residual / check - 1.0) < eps )
 # -----------------------------------------------------------------------
 # run sandbox version of dismodat.py example.db db2csv
@@ -211,19 +220,19 @@ if flag != 0 :
 	sys.exit('The dismod_at db2csv command failed')
 os.chdir('build/test/user')
 #
-# variable_table
-data_table = list()
+# data_csv
 file_ptr   = open('data.csv', 'r')
 reader     = csv.DictReader(file_ptr)
+data_csv = list()
 for row in reader :
-	data_table.append(row)
+	data_csv.append(row)
 file_ptr.close()
+assert( n_data == len(data_csv) )
 #
 # only 4 digits of accuracy in data.csv
 eps    = 1e-4
-n_data = len(data_table)
-assert( n_data == 1 )
-meas_stdcv  = float( data_table[0]['meas_stdcv'] )
+#
+meas_stdcv  = float( data_csv[0]['meas_stdcv'] )
 check       = minimum_meas_cv * meas_value
 assert( abs(meas_stdcv / check - 1.0) < 1e-4 )
 # -----------------------------------------------------------------------

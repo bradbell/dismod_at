@@ -438,8 +438,6 @@ for meas_noise_effect in meas_noise_effect_list :
 		simulate_index = row['simulate_index']
 		data_subset_id = row['data_subset_id']
 		data_sim_value = row['data_sim_value']
-		data_sim_stdcv = row['data_sim_stdcv']
-		data_sim_delta = row['data_sim_delta']
 		#
 		# only one set of data is simulated
 		assert simulate_index == 0

@@ -735,8 +735,7 @@ $cref/minimum cv standard deviation
 	/Minimum CV Standard Deviation, Delta_i
 /$$.
 $lnext
-The
-$cref/sim_stdcv/db2csv_command/data.csv/sim_stdcv/$$ column has been added
+The $icode sim_stdcv$$ column has been added
 to the $cref/data.csv/db2csv_command/data.csv/$$ file..
 $lnext
 The documentation of the
