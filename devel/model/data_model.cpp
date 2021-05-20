@@ -513,11 +513,9 @@ is used as a replacement for
 $icode%subset_object[%subset_id%]%.%field%$$.
 
 $subhead fit_simulated_data$$
-In the case where
-$cref/fit_simulated_data/data_model_ctor/fit_simulated_data/$$ is true,
-the value $icode%data_subset_obj%[%subset_id%]%.meas_std%$$
-is actually a
-$cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$ value.
+If $cref/fit_simulated_data/data_model_ctor/fit_simulated_data/$$ is true,
+we are fitting simulated data $icode data_sim_value$$,
+otherwise we are fitting the actual data $icode meas_value$$.
 
 $head Laplace Density$$
 The Laplace density is only allowed if the model for the
@@ -733,13 +731,8 @@ calls to avoid re-allocating memory).
 
 $subhead fit_simulated_data$$
 If $cref/fit_simulated_data/data_model_ctor/fit_simulated_data/$$ is true,
-the $icode meas_std$$ is actually
-$cref/data_sim_stdcv/data_sim_table/data_sim_stdcv/$$; see
-$cref/replace_like
-	/data_model_replace_like
-	/data_subset_obj
-	/fit_simulated_data
-/$$.
+we are fitting simulated data $icode data_sim_value$$,
+otherwise we are fitting the actual data $icode meas_value$$.
 
 $head Float$$
 The type $icode Float$$ must be $code double$$ or
