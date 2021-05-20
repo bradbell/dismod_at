@@ -26,6 +26,7 @@ $spell
 	msys
 	cygwin
 	covid
+	covariates
 $$
 $navigate%
 	Up%Location%
@@ -58,6 +59,36 @@ When simulating log transformed data,
 the transformed standard deviation was computed using
 the mean instead of the measurement.
 This has been fixed.
+$lnext
+When simulating log transformed data with
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariates,
+the columns $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
+$cref data_sim_table$$ often could not be calculated
+(were negative and did not make sense).
+This problem has been fixed by using
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+/$$
+to replace $icode data_sim_delta$$ and
+$cref/minimum CV standard deviation
+	/data_like
+	/Notation
+	/Minimum CV Standard Deviation, Delta_i
+/$$
+to replace $icode data_sim_stdcv$$.
+These replacements use the original measurements
+$cref/meas_value/data_table/meas_value/$$
+instead of the simulated measurements
+$cref/data_sim_value/data_sim_table/data_sim_value/$$
+to define the corresponding
+$cref/transformed standard deviation
+	/data_like
+	/Transformed Standard Deviation, sigma_i(theta)
+/$$.
+$lnext
+The columns $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
+$cref data_sim_table$$ have been removed.
 $lend
 
 $comment -------------------------------------------------------------------$$
