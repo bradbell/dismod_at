@@ -176,7 +176,11 @@ iota_parent_true          <font color="#990000">=</font> <font color="#993399">0
 mulcov_income_iota_true   <font color="#990000">=</font> <font color="#993399">1.0</font>
 n_children                <font color="#990000">=</font> <font color="#993399">2</font>
 n_data                    <font color="#990000">=</font> <font color="#993399">20</font>
+random_seed               <font color="#990000">=</font> <font color="#993399">0</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
+<b><font color="#0000FF">if</font></b> random_seed <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
+     <b><font color="#000080">import</font></b> time
+     random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
@@ -333,12 +337,12 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># option_table</font></i>
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font> <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><b><font color="#000000">str</font></b><font color="#990000">(</font>random_seed<font color="#990000">)</font>    <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>        <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>          <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'10.0'</font>         <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'random_seed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>            <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'zero_sum_child_rate'</font><font color="#990000">,</font>    <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota'</font>         <font color="#990000">},</font>
 
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'true'</font>         <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>        <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font>  <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'first-order'</font>  <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'100'</font>          <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>            <font color="#990000">},</font>
@@ -444,8 +448,9 @@ max_error    <font color="#990000">=</font> <font color="#993399">0.0</font>
           max_error <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font><b><font color="#000000">abs</font></b><font color="#990000">(</font>fit_value<font color="#990000">)</font> <font color="#990000">,</font> max_error<font color="#990000">)</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           max_error <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>fit_value <font color="#990000">/</font> true_value <font color="#990000">-</font> <font color="#993399">1.0</font><font color="#990000">),</font> max_error<font color="#990000">)</font>
-<b><font color="#0000FF">if</font></b> max_error <font color="#990000">&gt;</font> <font color="#993399">5e-2</font> <font color="#990000">:</font>
+<b><font color="#0000FF">if</font></b> max_error <font color="#990000">&gt;</font> <font color="#993399">1e-2</font> <font color="#990000">:</font>
      <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'max_error = '</font><font color="#990000">,</font> max_error<font color="#990000">)</font>
+     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed = '</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
      <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># check that the simulted random effects sum to zero</font></i>
