@@ -77,7 +77,7 @@ gamma_global      = meas_value_global * 0.25
 # /$$
 # definition of the adjusted standard deviation; i.e.
 # $latex \[
-#	delta = \Delta + \gamma
+#	\delta = \Delta + \gamma
 # \] $$
 #
 # $head Simulations$$
