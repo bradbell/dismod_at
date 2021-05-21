@@ -44,6 +44,7 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 02-21$$
+$list number$$
 In the $code user_data_sim_py$$ example the code
 $srccode%py%
 	residual = (math.log(z + eta + delta) - math.log(mu + eta)) / sigma
@@ -52,6 +53,11 @@ was incorrect and was changed to
 $srccode%py%
 	residual = (math.log(z + eta) - math.log(mu + eta)) / sigma
 %$$
+$lnext
+Change the default setting for
+$cref/quasi_fixed/user_diabetes.py/Problem Parameters/quasi_fixed/$$
+from $code 'true'$$ to $code 'false'$$.
+$lend
 
 $head 05-20$$ $comment Merge simulate branch$$
 During a $cref simulate_command$$,

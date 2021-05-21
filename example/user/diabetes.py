@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -330,7 +330,7 @@ random_seed = '0'
 # This requires second derivatives in which case initialization
 # and function evaluations take longer:
 # $srccode%py%
-quasi_fixed = 'true'
+quasi_fixed = 'false'
 # %$$
 #
 # $subhead tolerance_fixed$$
