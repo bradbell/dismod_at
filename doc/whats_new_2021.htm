@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 02-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>02-21</option>
 <option>05-20</option>
 <option>05-19</option>
 <option>05-18</option>
@@ -88,8 +89,29 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
 <br>
-<b><big><a name="05-20" id="05-20">05-20</a></big></b>
+<b><big><a name="02-21" id="02-21">02-21</a></big></b>
+
+<ol type="1"><li>
+In the <code><font color="blue">user_data_sim_py</font></code> example the code
+<pre style='display:inline'><tt>
+     residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
+</tt></pre>
+was incorrect and was changed to
+<pre style='display:inline'><tt>
+     residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
+</tt></pre>
+</li><li>
+Change the default setting for
+<a href="user_diabetes.py.htm#Problem Parameters.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+
+from <code><font color="blue">'true'</font></code> to <code><font color="blue">'false'</font></code>.
+</li></ol>
+
+
 <br>
+<br>
+<b><big><a name="05-20" id="05-20">05-20</a></big></b>
+ <br>
 During a <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
 ,
 the calculation of <code><font color="blue">data_sim_delta</font></code> and <code><font color="blue">data_sim_stdcv</font></code> in the
@@ -118,13 +140,20 @@ to define the corresponding
 .
 <ol type="1"><li>
 Add the <a href="user_sim_log.py.htm" target="_top"><span style='white-space: nowrap'>user_sim_log.py</span></a>
- example.
+ example to highlight this change.
 </li><li>
 
-<b>API Change:</b>
-The columns <code><font color="blue">data_sim_delta</font></code> and <code><font color="blue">data_sim_stdcv</font></code> in the
-<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
- have been removed.
+Adapt the <a href="user_data_sim.py.htm" target="_top"><span style='white-space: nowrap'>user_data_sim.py</span></a>
+ examples to this change.
+</li><li>
+
+<b>API Changes:</b>
+The <code><font color="blue">data_sim_delta</font></code> and <code><font color="blue">data_sim_stdcv</font></code> columns
+were removed from the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+.
+The <code><font color="blue">sim_stdcv</font></code> and <code><font color="blue">sim_delta</font></code> columns
+were removed from the <a href="db2csv_command.htm#data.csv" target="_top"><span style='white-space: nowrap'>data.csv</span></a>
+.
 </li></ol>
 
 

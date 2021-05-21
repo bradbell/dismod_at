@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-{ tag: 'dismod_at', title:'dismod_at-20210520: User Documentation and API', other:' purpose links' },
+{ tag: 'dismod_at', title:'dismod_at-20210521: User Documentation and API', other:' purpose links' },
 { tag: 'math_abstract', title:'An Introduction To The Mathematics of Dismod_at', other:'' },
 { tag: 'math_ode', title:'The Dismod_at Ordinary Differential Equation', other:' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t)' },
 { tag: 'censor_density', title:'The Censored Gaussian and Laplace Densities', other:' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac)' },
@@ -25,7 +25,7 @@ Keyword =
 { tag: 'user_continue_fit.py', title:'Continuing a Fit From Where it Left Off', other:' option table source code' },
 { tag: 'user_covid_19.py', title:'Model The Covid-19 Epidemic', other:' goal data file sir discussion dismod variables rates covariates predictions display fit source code' },
 { tag: 'user_csv2db.py', title:'csv2db_command: Example and Test', other:' using this discussion rate_true grids data predictions mtall source code' },
-{ tag: 'user_data_sim.py', title:'Explanation of Simulated Data Table, data_sim', other:' purpose random effects priors iota other rates covariate multiplier subset meas_noise_effect notation before simulation delta sigma z delta_hat source code' },
+{ tag: 'user_data_sim.py', title:'Explanation of Simulated Data Table, data_sim', other:' see also purpose random effects priors iota other rates covariate multiplier subset meas_noise_effect notation before simulation delta sigma z delta_hat source code' },
 { tag: 'user_diabetes.py', title:'An Example / Speed Test Fitting Simulated Diabetes Data', other:' running this omega rho covariates table multipliers truth parent rates child effects predict problem parameters mulcov_dict node_list integrand_list parent_age_grid child_age_grid parent_time_grid child_time_grid ode_step_size meas_cv meas_repeat fit_with_noise_in_data random_seed quasi_fixed tolerance_fixed derivative_test_fixed truth2start accept_rel_err source code' },
 { tag: 'user_diff_constraint.py', title:'Fitting with Constraints on Differences in Age and Time', other:' source code' },
 { tag: 'user_fit_fixed_both.py', title:'Fit Fixed First Then Both', other:' purpose discussion source code' },
@@ -48,7 +48,7 @@ Keyword =
 { tag: 'user_sample_simple.py', title:'Simple Sampling From The Posterior Distribution', other:' purpose discussion variance source code' },
 { tag: 'user_sample_sim.py', title:'Sample Posterior Using Simulated Data', other:' purpose node table model variables iota x parameters delta values likelihood number_sample number_metropolis truth random_seed source code' },
 { tag: 'user_sample_asy.py', title:'Sample from Asymptotic Distribution for Model Variables', other:' purpose notation likelihood problem parameters source code' },
-{ tag: 'user_sim_log.py', title:'Simulating Data with Log Transformed Distribution', other:' example parameters model covariate multiplier notation adjusted standard deviation simulations source code' },
+{ tag: 'user_sim_log.py', title:'Simulating Data with Log Transformed Distribution', other:' see also example parameters model covariate multiplier notation adjusted standard deviation simulations source code' },
 { tag: 'user_speed.py', title:'A Simulate Data Speed Test', other:' syntax python3 random_seed n_children quasi_fixed ode_step_size effects iota_parent_true rho_parent_true mulcov_income_iota_true mulcov_sex_rho_true eta measure_cv n_data age_list time_list source code' },
 { tag: 'user_students.py', title:'Using Student\'s-t to Fit With Remove Outliers Present', other:' purpose problem parameters age time values variables data table rate prior fitting source code' },
 { tag: 'user_subgroup_mulcov.py', title:'Example Fitting With Subgroup Covariate Multipliers', other:' node table model variables parent rates child effects data problem parameters source code' },
@@ -170,7 +170,7 @@ Keyword =
 { tag: 'unicode_tuple', title:'Convert an Iterable Object to a Unicode String', other:' syntax quote_string none infinity u_tuple example' },
 { tag: 'unicode_tuple.py', title:'unicode_tuple: Example and Test', other:'' },
 { tag: 'release_notes', title:'Changes and Additions to Dismod_at', other:' introduction this year previous years' },
-{ tag: 'whats_new_2021', title:'Changes and Additions to Dismod_at During 2021', other:' 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08' },
+{ tag: 'whats_new_2021', title:'Changes and Additions to Dismod_at During 2021', other:' 02-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08' },
 { tag: 'whats_new_2020', title:'Changes and Additions to Dismod_at During 2020', other:' 12-30 12-29 12-26 12-22 12-17 11-24 11-22 11-23 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07' },
 { tag: 'whats_new_2019', title:'Changes and Additions to Dismod_at During 2019', other:' 12-07 12-06 12-05 12-04 11-30 11-29 11-28 11-26 11-25 11-24 11-22 11-20 11-18 11-17 10-24 10-09 10-08 10-06 10-02 10-01 09-30 09-24 09-23 09-22 09-21 09-20 09-19 09-17 09-15 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10' },
 { tag: 'whats_new_2018', title:'Changes and Additions to Dismod_at During 2018', other:' 12-19 12-15 12-14 10-30 10-22 10-21 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09' },

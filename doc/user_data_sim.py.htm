@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Explanation of Simulated Data Table, data_sim</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Explanation of Simulated Data Table, data_sim">
-<meta name="keywords" id="keywords" content=" explanation simulated data table data_sim purpose random effects priors iota other rates covariate multiplier subset meas_noise_effect notation before simulation y delta e sigma z delta_hat source code ">
+<meta name="keywords" id="keywords" content=" explanation simulated data table data_sim see also purpose random effects priors iota other rates covariate multiplier subset meas_noise_effect notation before simulation y delta e sigma z delta_hat source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,6 +63,7 @@ A:active { color : purple }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Explanation of Simulated Data Table, data_sim</big></big></b></center>
 
+<br><a href="user_data_sim.py.htm#See Also" target="_top">See&nbsp;Also</a>
 <br><a href="user_data_sim.py.htm#Purpose" target="_top">Purpose</a>
 <br><a href="user_data_sim.py.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
 <br><a href="user_data_sim.py.htm#Priors" target="_top">Priors</a>
@@ -84,6 +85,14 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Simulation Notation.Delta_hat" target="_top">Delta_hat</a>
 <br><a href="user_data_sim.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
+<b><big><a name="See Also" id="See Also">See Also</a></big></b>
+
+<br>
+<a href="user_sim_log.py.htm" target="_top"><span style='white-space: nowrap'>user_sim_log.py</span></a>
+
+
+<br>
+<br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 This example explains the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
@@ -288,7 +297,7 @@ z
 <i><font color="#9A1900"># You can changed the values below and rerun this program</font></i>
 iota_true          <font color="#990000">=</font> <font color="#993399">0.01</font>
 meas_std           <font color="#990000">=</font> <font color="#993399">0.001</font>
-n_data             <font color="#990000">=</font> <font color="#993399">10</font>
+n_data             <font color="#990000">=</font> <font color="#993399">1000</font>
 <i><font color="#9A1900"># You can changed the values above and rerun this program</font></i>
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> math
@@ -625,13 +634,14 @@ meas_noise_effect_list <font color="#990000">=</font> <font color="#990000">[</f
           z  <font color="#990000">=</font> data_sim_value  <i><font color="#9A1900"># simulated data withoout censoring</font></i>
           mu <font color="#990000">=</font> iota_true       <i><font color="#9A1900"># mean of the simulated data</font></i>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">log_density</font></b><font color="#990000">(</font>density<font color="#990000">)</font> <font color="#990000">:</font>
-               residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
+               residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
                residual <font color="#990000">=</font> <font color="#990000">(</font>z <font color="#990000">-</font> mu<font color="#990000">)</font> <font color="#990000">/</font> sigma
           residual_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>residual<font color="#990000">)</font>
      residual_array  <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> residual_list <font color="#990000">)</font>
      residual_mean   <font color="#990000">=</font> residual_array<font color="#990000">.</font><b><font color="#000000">mean</font></b><font color="#990000">()</font>
      residual_std    <font color="#990000">=</font> residual_array<font color="#990000">.</font><b><font color="#000000">std</font></b><font color="#990000">(</font>ddof<font color="#990000">=</font><font color="#993399">1</font><font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># check that the mean of the residuals is within 2.5 standard deviations</font></i>
      <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>residual_mean<font color="#990000">)</font> <font color="#990000">&lt;=</font>  <font color="#993399">2.5</font> <font color="#990000">/</font> numpy<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font>n_data<font color="#990000">)</font>
      <i><font color="#9A1900"># check that the standard deviation of the residuals is near one</font></i>
