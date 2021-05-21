@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -88,7 +88,11 @@ iota_parent_true          = 0.01
 mulcov_income_iota_true   = 1.0
 n_children                = 2
 n_data                    = 20
+random_seed               = 0
 # ------------------------------------------------------------------------
+if random_seed == 0 :
+	import time
+	random_seed = int( time.time() )
 import sys
 import os
 import distutils.dir_util
@@ -245,12 +249,12 @@ def example_db (file_name) :
 	# option_table
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
+		{ 'name':'random_seed',            'value':str(random_seed)    },
 		{ 'name':'parent_node_name',       'value':'world'        },
 		{ 'name':'ode_step_size',          'value':'10.0'         },
-		{ 'name':'random_seed',            'value':'0'            },
 		{ 'name':'zero_sum_child_rate',    'value':'iota'         },
 
-		{ 'name':'quasi_fixed',            'value':'true'         },
+		{ 'name':'quasi_fixed',            'value':'false'        },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
@@ -356,8 +360,9 @@ for var_id in range( len(var_table) ) :
 		max_error = max(abs(fit_value) , max_error)
 	else :
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
-if max_error > 5e-2 :
+if max_error > 1e-2 :
 	print('max_error = ', max_error)
+	print('random_seed = ', random_seed)
 	assert(False)
 # -----------------------------------------------------------------------------
 # check that the simulted random effects sum to zero

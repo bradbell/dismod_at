@@ -57,6 +57,10 @@ $lnext
 Change the default setting for
 $cref/quasi_fixed/user_diabetes.py/Problem Parameters/quasi_fixed/$$
 from $code 'true'$$ to $code 'false'$$.
+$lnext
+Change $cref user_fit_sim.py$$ $icode quasi_newton$$ setting from
+$code 'true'$$ to $code 'false'$$ and make the maximum allowable error
+smaller.
 $lend
 
 $head 05-20$$ $comment Merge simulate branch$$
