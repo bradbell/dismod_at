@@ -92,6 +92,19 @@ A:active { color : purple }
 <b><big><a name="02-21" id="02-21">02-21</a></big></b>
 
 <ol type="1"><li>
+Advance to <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
+ version 20210416.
+Building this new image will require executing
+<pre style='display:inline'><tt>
+     <font color="#990000">.</font>/dock_dismod_at image mixed
+     <font color="#990000">.</font>/dock_dismod_at image dismod_at
+</tt></pre>
+The <a href="dock_dismod_at.sh.htm#Building Images.dismod_at.mixed" target="_top"><span style='white-space: nowrap'>dismod_at.mixed</span></a>
+
+image is necessary because the version of cppad-mixed has changed since
+the last advancement of dock_dismod_at.sh.
+</li><li>
+
 In the <code><font color="blue">user_data_sim_py</font></code> example the code
 <pre style='display:inline'><tt>
      residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
@@ -124,9 +137,13 @@ During a <a href="simulate_command.htm" target="_top"><span style='white-space: 
 ,
 the calculation of <code><font color="blue">data_sim_delta</font></code> and <code><font color="blue">data_sim_stdcv</font></code> in the
 <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
- often resulted in zero or negative values,
-which does not make sense and would cause dismod_at to abort.
-This problem has been fixed by using
+ often resulted in zero or negative values
+which does not make sense and would cause dismod_at to abort with the message
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;simulate_command&nbsp;sim_stdcv&nbsp;is&nbsp;nan&nbsp;or&nbsp;less&nbsp;than&nbsp;zero&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+This problem has been fixed using
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
 
 to replace 
@@ -155,7 +172,7 @@ Adapt the <a href="user_data_sim.py.htm" target="_top"><span style='white-space:
  examples to this change.
 </li><li>
 
-<b>API Changes:</b>
+<b>API Change</b>:
 The <code><font color="blue">data_sim_delta</font></code> and <code><font color="blue">data_sim_stdcv</font></code> columns
 were removed from the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
 .
