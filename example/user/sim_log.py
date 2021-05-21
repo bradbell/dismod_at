@@ -15,6 +15,9 @@
 # $$
 # $section Simulating Data with Log Transformed Distribution$$
 #
+# $head See Also$$
+# $cref user_data_sim.py$$
+#
 # $head Example Parameters$$
 # The following values are used to simulate the data
 # $srccode%py%

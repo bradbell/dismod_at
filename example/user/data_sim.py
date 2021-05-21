@@ -19,6 +19,9 @@
 #
 # $section Explanation of Simulated Data Table, data_sim$$
 #
+# $head See Also$$
+# $cref user_sim_log.py$$
+#
 # $head Purpose$$
 # This example explains the $cref data_sim_table$$ by showing that the
 # $cref/transformed standard deviation
@@ -126,7 +129,7 @@
 # You can changed the values below and rerun this program
 iota_true          = 0.01
 meas_std           = 0.001
-n_data             = 10
+n_data             = 1000
 # You can changed the values above and rerun this program
 # ----------------------------------------------------------------------------
 import math
@@ -463,13 +466,14 @@ for meas_noise_effect in meas_noise_effect_list :
 		z  = data_sim_value  # simulated data withoout censoring
 		mu = iota_true       # mean of the simulated data
 		if log_density(density) :
-			residual = (math.log(z + eta + delta) - math.log(mu + eta)) / sigma
+			residual = (math.log(z + eta) - math.log(mu + eta)) / sigma
 		else :
 			residual = (z - mu) / sigma
 		residual_list.append(residual)
 	residual_array  = numpy.array( residual_list )
 	residual_mean   = residual_array.mean()
 	residual_std    = residual_array.std(ddof=1)
+	#
 	# check that the mean of the residuals is within 2.5 standard deviations
 	assert abs(residual_mean) <=  2.5 / numpy.sqrt(n_data)
 	# check that the standard deviation of the residuals is near one

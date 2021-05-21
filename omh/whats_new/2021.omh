@@ -43,8 +43,17 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
-$comment Merge simulate branch$$
-$head 05-20$$
+$head 02-21$$
+In the $code user_data_sim_py$$ example the code
+$srccode%py%
+	residual = (math.log(z + eta + delta) - math.log(mu + eta)) / sigma
+%$$
+was incorrect and was changed to
+$srccode%py%
+	residual = (math.log(z + eta) - math.log(mu + eta)) / sigma
+%$$
+
+$head 05-20$$ $comment Merge simulate branch$$
 During a $cref simulate_command$$,
 the calculation of $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
 $cref data_sim_table$$ often resulted in zero or negative values,
@@ -71,11 +80,15 @@ $cref/transformed standard deviation
 	/Transformed Standard Deviation, sigma_i(theta)
 /$$.
 $list number$$
-Add the $cref user_sim_log.py$$ example.
+Add the $cref user_sim_log.py$$ example to highlight this change.
 $lnext
-$bold API Change:$$
-The columns $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
-$cref data_sim_table$$ have been removed.
+Adapt the $cref user_data_sim.py$$ examples to this change.
+$lnext
+$bold API Changes:$$
+The $code data_sim_delta$$ and $code data_sim_stdcv$$ columns
+were removed from the $cref data_sim_table$$.
+The $code sim_stdcv$$ and $code sim_delta$$ columns
+were removed from the $cref/data.csv/db2csv_command/data.csv/$$.
 $lend
 
 $head 05-19$$

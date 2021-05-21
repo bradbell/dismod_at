@@ -98,7 +98,6 @@ void simulate_command(
 	using std::string;
 	using CppAD::vector;
 	using CppAD::to_string;
-	double nan = std::numeric_limits<double>::quiet_NaN();
 	//
 	const vector<prior_struct>&     prior_table( db_input.prior_table );
 	const vector<density_enum>&     density_table( db_input.density_table );
