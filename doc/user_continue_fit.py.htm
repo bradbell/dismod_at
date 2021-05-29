@@ -304,7 +304,9 @@ connection<font color="#990000">.</font><b><font color="#000000">close</font></b
 <i><font color="#9A1900"># Simulate one data set, start at prior mean fit, start at fit results, fit</font></i>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'simulate'</font><font color="#990000">,</font> <font color="#FF0000">'1'</font> <font color="#990000">])</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">])</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'fit_var'</font> <font color="#990000">])</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'fit_var'</font> <font color="#990000">]</font>
+<font color="#990000">)</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <font color="#FF0000">'0'</font> <font color="#990000">])</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># check fit results</font></i>
@@ -319,7 +321,7 @@ warning_count <font color="#990000">=</font> <font color="#993399">0</font>
 <b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> log_table <font color="#990000">:</font>
      <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'message_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'warning'</font> <font color="#990000">:</font>
           warning_count <font color="#990000">+=</font> <font color="#993399">1</font>
-<b><font color="#0000FF">assert</font></b> warning_count <font color="#990000">==</font> <font color="#993399">1</font>
+<b><font color="#0000FF">assert</font></b> warning_count <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">]</font>
 <i><font color="#9A1900">#</font></i>
 max_error    <font color="#990000">=</font> <font color="#993399">0.0</font>
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>

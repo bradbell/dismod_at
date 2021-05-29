@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 02-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,7 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
-<option>02-21</option>
+<option>05-29</option>
+<option>05-21</option>
 <option>05-20</option>
 <option>05-19</option>
 <option>05-18</option>
@@ -89,7 +90,33 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
 <br>
-<b><big><a name="02-21" id="02-21">02-21</a></big></b>
+<b><big><a name="05-29" id="05-29">05-29</a></big></b>
+
+<ol type="1"><li>
+Advance to cppad_mixed-20210528.
+This speeds up and improves the <code><font color="blue">adaptive</font></code>
+<a href="option_table.htm#Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+.
+It also improves the checking of bounds, complementarity, and
+the gradient of the Lagrangian at the final solution.
+It also improves the detection of when Lagrangian multipliers should be
+non-zero because a constraint is active; e.g., see
+<a href="fit_var_table.htm#lagrange_value" target="_top"><span style='white-space: nowrap'>lagrange_value</span></a>
+ in the
+fit_var table.
+</li><li>
+
+The new version of cppad_mixed found identifiability problems with the
+<a href="user_subgroup_mulcov.py.htm" target="_top"><span style='white-space: nowrap'>user_subgroup_mulcov.py</span></a>
+ example.
+This has been fixed by change the prior for the child and subgroup
+random effect from uniform to a very broad Gaussian.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="05-21" id="05-21">05-21</a></big></b>
 
 <ol type="1"><li>
 Advance to <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-space: nowrap'>dock_dismod_at.sh</span></a>
