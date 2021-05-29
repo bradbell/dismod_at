@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2021$$
 $spell
+	complementarity
 	cppad
 	Ipopt
 	num_iter
@@ -43,7 +44,26 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
-$head 02-21$$
+
+$head 05-29$$
+$list number$$
+Advance to cppad_mixed-20210528.
+This speeds up and improves the $code adaptive$$
+$cref/derivative_test/option_table/Fixed and Random/derivative_test/$$.
+It also improves the checking of bounds, complementarity, and
+the gradient of the Lagrangian at the final solution.
+It also improves the detection of when Lagrangian multipliers should be
+non-zero because a constraint is active; e.g., see
+$cref/lagrange_value/fit_var_table/lagrange_value/$$ in the
+fit_var table.
+$lnext
+The new version of cppad_mixed found identifiability problems with the
+$cref user_subgroup_mulcov.py$$ example.
+This has been fixed by change the prior for the child and subgroup
+random effect from uniform to a very broad Gaussian.
+$lend
+
+$head 05-21$$
 $list number$$
 Advance to $cref dock_dismod_at.sh$$ version 20210416.
 Building this new image will require executing

@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -42,6 +42,7 @@
 # There is an iota
 # $cref/parent rate/model_variables/Fixed Effects, theta/Parent Rates/$$
 # corresponding to node p1.
+# This variable has a uniform prior.
 #
 # $subhead Group Covariate Multiplier$$
 # There is a
@@ -52,6 +53,7 @@
 #	Group Covariate Multipliers
 # /$$
 # that affects all the data in group g1.
+# This variable has a uniform prior.
 #
 # $subhead Child Rate Effects$$
 # There are two
@@ -62,6 +64,8 @@
 # /$$
 # one for the data corresponding to child c1,
 # the other for child c2.
+# These variables have gaussian priors with mean zero and standard deviation
+# 100 times the absolute true child rate effect.
 #
 # $subhead Subgroup Covariate Multiplier$$
 # There are two
@@ -73,6 +77,8 @@
 # /$$
 # one for the data corresponding to subgroup s1,
 # the other for subgroup s2.
+# These variables have gaussian priors with mean zero and standard deviation
+# 100 times the absolute true subgroup effect.
 #
 # $head Rate Table$$
 # There is one entry in the rate table that
@@ -135,15 +141,15 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
-def avg_integrand(child, subgroup) :
+def avg_integrand(node, subgroup) :
 	effect = 0.0
 	if subgroup == 's1' :
 		effect += subgroup_effect_true + group_effect_true
 	elif subgroup == 's2' :
 		effect += - subgroup_effect_true + group_effect_true
-	if child == 'c1' :
+	if node == 'c1' :
 		effect += child_effect_true
-	elif child == 'c2' :
+	elif node == 'c2' :
 		effect += - child_effect_true
 	#
 	return iota_parent_true * math.exp(effect)
@@ -207,16 +213,18 @@ def example_db (file_name) :
 			'mean':    iota_parent_true / 2.0,
 		},{ # prior_iota_child
 			'name':    'prior_iota_child',
-			'density': 'uniform',
-			'mean':     1e-3,
+			'density': 'gaussian',
+			'mean':     0.0,
+			'std':      100 * child_effect_true,
 		},{ # prior_iota_group
 			'name':    'prior_iota_group',
 			'density': 'uniform',
 			'mean':     0.0,
 		},{ # prior_iota_subgroup
 			'name':    'prior_iota_subgroup',
-			'density': 'uniform',
-			'mean':     1e-3,
+			'density': 'gaussian',
+			'mean':     0.0,
+			'std':      100 * subgroup_effect_true,
 		}
 	]
 	# smooth_table
@@ -276,16 +284,16 @@ def example_db (file_name) :
 		'time_upper':  2000.0,
 		'one':         1.0,
 	}
-	for child in [ 'c1', 'c2' ] :
-		for subgroup in [ 's1', 's2', 'none' ] :
-			# true value of iota for this child, subgroup
-			iota       = avg_integrand(child, subgroup)
+	for subgroup in [ 'none', 's1', 's2' ] :
+		for node in [ 'c1', 'c2', 'p1' ] :
+			# true value of iota for this node, subgroup
+			iota       = avg_integrand(node, subgroup)
 			# measurement standard deviation is used during fittting
 			meas_std   = iota * meas_cv
 			# for this example, measurements are simulated without any noise
 			meas_value = iota
 			#
-			row['node']       = child
+			row['node']       = node
 			row['subgroup']   = subgroup
 			row['meas_value'] = meas_value
 			row['meas_std']   = meas_std
@@ -327,6 +335,7 @@ dismod_at.system_command_prc( [ program, file_name, 'init' ] )
 #
 # fit both the fixed and random effects
 dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
+#
 # ---------------------------------------------------------------------------
 # Compare Fit and Truth
 # ---------------------------------------------------------------------------
@@ -341,6 +350,7 @@ fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 n_var            = len(var_table)
 #
 # check fit results
+max_abs_rel_err = 0.0
 for var_id in range(n_var) :
 	fit_var_value  = fit_var_table[var_id]['fit_var_value']
 	var_type       = var_table[var_id]['var_type']
@@ -368,9 +378,10 @@ for var_id in range(n_var) :
 		's2': - subgroup_effect_true  ,
 	}
 	truth   = truth_var_value[name]
-	relerr  = 1.0 - fit_var_value / truth
-	# print(name, truth, fit_var_value, relerr)
-	assert abs(relerr) < 1e-10
+	rel_err = 1.0 - fit_var_value / truth
+	# print(name, truth, fit_var_value, rel_err)
+	max_abs_rel_err = max(max_abs_rel_err, abs(rel_err) )
+assert max_abs_rel_err < 1e-4
 # ----------------------------------------------------------------------------
 print('subgroup_mulcov.py: OK')
 # END PYTHON

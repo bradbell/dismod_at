@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -248,7 +248,9 @@ connection.close()
 # Simulate one data set, start at prior mean fit, start at fit results, fit
 dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'both', '0' ])
-dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'fit_var' ])
+dismod_at.system_command_prc(
+	[ program, file_name, 'set', 'start_var', 'fit_var' ]
+)
 dismod_at.system_command_prc([ program, file_name, 'fit', 'both', '0' ])
 # -----------------------------------------------------------------------
 # check fit results
@@ -263,7 +265,7 @@ warning_count = 0
 for row in log_table :
 	if row['message_type'] == 'warning' :
 		warning_count += 1
-assert warning_count == 1
+assert warning_count in [ 1, 2]
 #
 max_error    = 0.0
 for var_id in range( len(var_table) ) :
