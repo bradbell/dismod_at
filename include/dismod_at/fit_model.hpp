@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -81,10 +81,11 @@ namespace dismod_at {
 		// -------------------------------------------------------------------
 		// solution found by run_fit and in pack_info order
 		struct {
-			CppAD::vector<double> fit_var_value;
-			CppAD::vector<double> lagrange_value;
-			CppAD::vector<double> lagrange_dage;
-			CppAD::vector<double> lagrange_dtime;
+			CppAD::vector<double>           fit_var_value;
+			CppAD::vector<double>           lagrange_value;
+			CppAD::vector<double>           lagrange_dage;
+			CppAD::vector<double>           lagrange_dtime;
+			CppAD::mixed::warm_start_struct warm_start;
 		} solution_;
 		// ---------------------------------------------------------------
 		// private member functions
@@ -150,10 +151,11 @@ namespace dismod_at {
 		);
 		// get_solution
 		void get_solution(
-			CppAD::vector<double>& fit_var_value   ,
-			CppAD::vector<double>& lagrange_value  ,
-			CppAD::vector<double>& lagrange_dage   ,
-			CppAD::vector<double>& lagrange_dtime
+			CppAD::vector<double>&           fit_var_value   ,
+			CppAD::vector<double>&           lagrange_value  ,
+			CppAD::vector<double>&           lagrange_dage   ,
+			CppAD::vector<double>&           lagrange_dtime  ,
+			CppAD::mixed::warm_start_struct& warm_start
 		);
 		// sample from asympotitic approximation for posterior distribution
 		void sample_posterior(

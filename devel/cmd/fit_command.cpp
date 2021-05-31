@@ -328,8 +328,9 @@ void fit_command(
 	);
 	fit_object.run_fit(random_only, option_map);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
+	CppAD::mixed::warm_start_struct warm_start;
 	fit_object.get_solution(
-		opt_value, lag_value, lag_dage, lag_dtime
+		opt_value, lag_value, lag_dage, lag_dtime, warm_start
 	);
 	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit_var";

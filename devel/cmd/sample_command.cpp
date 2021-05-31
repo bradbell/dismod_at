@@ -510,8 +510,9 @@ void sample_command(
 			);
 			fit_object_both.run_fit(random_only, option_map);
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
+			CppAD::mixed::warm_start_struct warm_start;
 			fit_object_both.get_solution(
-				opt_value, lag_value, lag_dage, lag_dtime
+				opt_value, lag_value, lag_dage, lag_dtime, warm_start
 			);
 			assert( opt_value.size() == n_var );
 			//
@@ -570,8 +571,9 @@ void sample_command(
 				data_object
 			);
 			fit_object_random.run_fit(random_only, option_map);
+			CppAD::mixed::warm_start_struct not_used;
 			fit_object_random.get_solution(
-				opt_value, lag_value, lag_dage, lag_dtime
+				opt_value, lag_value, lag_dage, lag_dtime, not_used
 			);
 			//
 			// solution for random effects and this sample_index -> row_value

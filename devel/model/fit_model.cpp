@@ -507,9 +507,10 @@ $end
 			cppad_mixed_random_upper,
 			cppad_mixed_random_in
 		);
-		fixed_opt      = fixed_sol.fixed_opt;
-		fixed_lag      = fixed_sol.fixed_lag;
-		fixed_con_lag  = fixed_sol.fix_con_lag;
+		fixed_opt            = fixed_sol.fixed_opt;
+		fixed_lag            = fixed_sol.fixed_lag;
+		fixed_con_lag        = fixed_sol.fix_con_lag;
+		solution_.warm_start = fixed_sol.warm_start;
 	}
 	// optimal random effects
 	d_vector random_opt(n_random_);
@@ -575,6 +576,7 @@ $end
 ---------------------------------------------------------------------------
 $begin fit_model_get_solution$$
 $spell
+	ipopt
 	dage
 	dtime
 	CppAD
@@ -585,7 +587,11 @@ $section Get Solution Corresponding to Previous Fit$$
 
 $head Syntax$$
 $codei%%fit_object%.get_solution(
-	%fit_var_value%, %lagrange_value%, %lagrange_dage%, %lagrange_dtime%
+	%fit_var_value%,
+	%lagrange_value%,
+	%lagrange_dage%,
+	%lagrange_dtime%,
+	%warm_start%
 )%$$
 
 $head fit_object$$
@@ -627,6 +633,12 @@ If a variable does not have a forward time difference,
 if there is no limit, or if a limit is not active, the corresponding
 element is zero.
 
+$head warm_start$$
+This is the ipopt warm start information.
+It can be used to continue the fit from where it left off; e.g.,
+it the maximum number of iterations was reached and one decides to
+continue the fit with more iterations.
+
 $children%example/devel/model/fit_model_xam.cpp
 %$$
 $head Example$$
@@ -636,10 +648,11 @@ of using this routine.
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::get_solution(
-	CppAD::vector<double>& fit_var_value   ,
-	CppAD::vector<double>& lagrange_value  ,
-	CppAD::vector<double>& lagrange_dage   ,
-	CppAD::vector<double>& lagrange_dtime  )
+	CppAD::vector<double>&           fit_var_value   ,
+	CppAD::vector<double>&           lagrange_value  ,
+	CppAD::vector<double>&           lagrange_dage   ,
+	CppAD::vector<double>&           lagrange_dtime  ,
+	CppAD::mixed::warm_start_struct& warm_start )
 /* %$$
 $end
 */
@@ -647,6 +660,7 @@ $end
 	lagrange_value = solution_.lagrange_value;
 	lagrange_dage  = solution_.lagrange_dage;
 	lagrange_dtime = solution_.lagrange_dtime;
+	warm_start     = solution_.warm_start;
 	return;
 }
 /*

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -441,7 +441,10 @@ bool fit_model_xam(void)
 	bool random_only = false;
 	fit_object.run_fit( random_only, option_map );
 	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;
-	fit_object.get_solution(solution, lag_value, lag_dage, lag_dtime);
+	CppAD::mixed::warm_start_struct warm_start;
+	fit_object.get_solution(
+		solution, lag_value, lag_dage, lag_dtime, warm_start
+	);
 
 	// check against known solution
 	double check_tol = 1e-3;
