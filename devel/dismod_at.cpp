@@ -378,8 +378,12 @@ int main(int n_arg, const char** argv)
 	}
 	// fit_simulated_data
 	bool fit_simulated_data = false;
-	if( command_arg == "fit" && n_arg == 5 )
-		fit_simulated_data = true;
+	if( command_arg == "fit" )
+	{	if( n_arg == 5 )
+			fit_simulated_data = string(argv[4]) != "warm_start";
+		if( n_arg == 6 )
+			fit_simulated_data = true;
+	}
 	if( command_arg == "sample" )
 	{	if( std::strcmp(argv[3], "simulate") == 0 )
 			fit_simulated_data = true;
@@ -540,16 +544,14 @@ int main(int n_arg, const char** argv)
 				string simulate_index = "";
 				bool   use_warm_start = false;
 				if( n_arg == 5 )
-				{	string tmp = argv[4];
-					if( tmp == "warm_start" )
+				{	if( string( argv[4] ) == "warm_start" )
 						use_warm_start = true;
 					else
-						simulate_index = tmp;
+						simulate_index = argv[4];
 				}
 				if( n_arg == 6 )
 				{	simulate_index = argv[4];
-					string tmp     = argv[5];
-					use_warm_start = tmp == "warm_start";
+					use_warm_start = string( argv[5] ) == "warm_start";
 					if( ! use_warm_start )
 					{	message = "dismod_at fit command syntax error";
 						dismod_at::error_exit(message);

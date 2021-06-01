@@ -328,6 +328,16 @@ void fit_command(
 	unpack_random(pack_object, var_lower, random_lower);
 	unpack_random(pack_object, var_upper, random_upper);
 	remove_const random_const(random_lower, random_upper);
+	//
+	// warm_start_in
+	CppAD::mixed::warm_start_struct warm_start_in;
+	if( use_warm_start )
+	{	table_name         = "ipopt_info";
+		string col_name    = "warm_start";
+		size_t sizeof_data = sizeof(warm_start_in);
+		void* data         = reinterpret_cast<void*>( &warm_start_in);
+		read_blob_table(db, table_name, col_name, sizeof_data, data);
+	}
 	// ------------------ run fit_model ------------------------------------
 	// quasi_fixed
 	bool quasi_fixed = option_map["quasi_fixed"] == "true";
@@ -354,11 +364,11 @@ void fit_command(
 		zero_sum_mulcov_group,
 		data_object
 	);
-	fit_object.run_fit(random_only, option_map);
+	fit_object.run_fit(random_only, option_map, warm_start_in);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
-	CppAD::mixed::warm_start_struct warm_start;
+	CppAD::mixed::warm_start_struct warm_start_out;
 	fit_object.get_solution(
-		opt_value, lag_value, lag_dage, lag_dtime, warm_start
+		opt_value, lag_value, lag_dage, lag_dtime, warm_start_out
 	);
 	// ------------------ ipopt_info table -----------------------------------
 	if( ! random_only )
@@ -367,8 +377,8 @@ void fit_command(
 		//
 		table_name         = "ipopt_info";
 		string col_name    = "warm_start";
-		size_t sizeof_data = sizeof(warm_start);
-		void* data         = reinterpret_cast<void*>( &warm_start);
+		size_t sizeof_data = sizeof(warm_start_out);
+		void* data         = reinterpret_cast<void*>( &warm_start_out);
 		write_blob_table(db, table_name, col_name, sizeof_data, data);
 	}
 	// -------------------- fit_var table --------------------------------------

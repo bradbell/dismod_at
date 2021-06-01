@@ -327,12 +327,14 @@ $spell
 	const
 	num
 	iter
+	ipopt
+	struct
 $$
 
 $section Run optimization to determine the optimal fixed and random effects$$
 
 $head Syntax$$
-$icode%fit_object%.run_fit(%random_only%, %option_map%)
+$icode%fit_object%.run_fit(%random_only%, %option_map%, %warm_start%)
 %$$
 
 $head fit_object$$
@@ -375,22 +377,31 @@ $codei%
 	%option_map%["limited_memory_max_history_fixed"]
 %$$
 
+$head warm_start$$
+If $icode%warm_start%.x_info.size()%$$ is non-zero,
+the ipopt warm start information is in this structure.
+In this case, $icode random_only$$ must be false.
+Note that the default constructor for $code warm_start_struct$$ sets
+$icode%warm_start%.x_info.size()%$$ to zero.
+
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::run_fit(
-	bool                                random_only    ,
-	std::map<std::string, std::string>& option_map     )
+	bool                                      random_only    ,
+	std::map<std::string, std::string>&       option_map     ,
+	const CppAD::mixed::warm_start_struct&    warm_start     )
 /* %$$
 $end
 */
 {	assert( ! no_scaling_ );
+	assert( warm_start.x_info.size() == 0 || ! random_only );
 	double inf = std::numeric_limits<double>::infinity();
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( var2prior_.size() == n_var );
 	d_vector pack_vec( n_var );
-
+	//
 	// fixed_lower, fixed_upper
 	double bound_random = inf; // does not matter for fixed effects
 	d_vector var_lower(n_var), var_upper(n_var);
@@ -505,7 +516,8 @@ $end
 			fixed_in,
 			cppad_mixed_random_lower,
 			cppad_mixed_random_upper,
-			cppad_mixed_random_in
+			cppad_mixed_random_in,
+			warm_start
 		);
 		fixed_opt            = fixed_sol.fixed_opt;
 		fixed_lag            = fixed_sol.fixed_lag;

@@ -145,9 +145,10 @@ namespace dismod_at {
 		//
 		// run fit
 		void run_fit(
-			bool                                random_only ,
+			bool                                  random_only ,
 			// effectively const
-			std::map<std::string, std::string>& option_map
+			std::map<std::string, std::string>&   option_map  ,
+			const CppAD::mixed::warm_start_struct& warm_start
 		);
 		// get_solution
 		void get_solution(

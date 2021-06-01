@@ -439,9 +439,12 @@ bool fit_model_xam(void)
 		data_object
 	);
 	bool random_only = false;
-	fit_object.run_fit( random_only, option_map );
-	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;
+	// empty warm_start information
 	CppAD::mixed::warm_start_struct warm_start;
+	fit_object.run_fit( random_only, option_map, warm_start );
+	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;
+	//
+	// ignore resulting warm_start information
 	fit_object.get_solution(
 		solution, lag_value, lag_dage, lag_dtime, warm_start
 	);

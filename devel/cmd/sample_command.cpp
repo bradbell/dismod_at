@@ -508,11 +508,14 @@ void sample_command(
 				zero_sum_mulcov_group,
 				data_object
 			);
-			fit_object_both.run_fit(random_only, option_map);
+			// input empty warm_start information
+			CppAD::mixed::warm_start_struct warm_start_1;
+			fit_object_both.run_fit(random_only, option_map, warm_start_1);
+			//
+			// ignore resulting warm_start information
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
-			CppAD::mixed::warm_start_struct warm_start;
 			fit_object_both.get_solution(
-				opt_value, lag_value, lag_dage, lag_dtime, warm_start
+				opt_value, lag_value, lag_dage, lag_dtime, warm_start_1
 			);
 			assert( opt_value.size() == n_var );
 			//
@@ -570,10 +573,13 @@ void sample_command(
 				zero_sum_mulcov_group,
 				data_object
 			);
-			fit_object_random.run_fit(random_only, option_map);
-			CppAD::mixed::warm_start_struct not_used;
+			// empty warm_start information
+			CppAD::mixed::warm_start_struct warm_start_2;
+			fit_object_random.run_fit(random_only, option_map, warm_start_2);
+			//
+			// ignore resulting warm_start information
 			fit_object_random.get_solution(
-				opt_value, lag_value, lag_dage, lag_dtime, not_used
+				opt_value, lag_value, lag_dage, lag_dtime, warm_start_2
 			);
 			//
 			// solution for random effects and this sample_index -> row_value
