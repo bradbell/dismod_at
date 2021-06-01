@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>06-01</option>
+<option>05-31</option>
 <option>05-29</option>
 <option>05-21</option>
 <option>05-20</option>
@@ -89,6 +91,26 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="06-01" id="06-01">06-01</a></big></b>
+<br>
+The <a href="fit_command.htm#warm_start" target="_top"><span style='white-space: nowrap'>warm_start</span></a>
+ option was added
+to the fit command.
+This is much better than just modifying the
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+ because it also sets the initial Lagrange multipliers.
+For an example, see <a href="user_warm_start.py.htm" target="_top"><span style='white-space: nowrap'>user_warm_start.py</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="05-31" id="05-31">05-31</a></big></b>
+<br>
+Advance to cppad_mixed-20210531.
+This is in preparation for adding a warm start option to the fit command.
+
+<br>
 <br>
 <b><big><a name="05-29" id="05-29">05-29</a></big></b>
 

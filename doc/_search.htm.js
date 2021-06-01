@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-{ tag: 'dismod_at', title:'dismod_at-20210529: User Documentation and API', other:' purpose links' },
+{ tag: 'dismod_at', title:'dismod_at-20210601: User Documentation and API', other:' purpose links' },
 { tag: 'math_abstract', title:'An Introduction To The Mathematics of Dismod_at', other:'' },
 { tag: 'math_ode', title:'The Dismod_at Ordinary Differential Equation', other:' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t)' },
 { tag: 'censor_density', title:'The Censored Gaussian and Laplace Densities', other:' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac)' },
@@ -56,6 +56,7 @@ Keyword =
 { tag: 'user_zsum_child_rate.py', title:'Constrain Sum of Child Rate Effect to Zero', other:' see also purpose problem parameters data simulation nodes model variables source code' },
 { tag: 'user_zsum_mulcov_meas.py', title:'Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero', other:' see also purpose problem parameters data simulation nodes model variables source code' },
 { tag: 'user_zsum_mulcov_rate.py', title:'Constrain Sum of Subgroup Rate Covariate Multipliers to Zero', other:' see also purpose problem parameters data simulation nodes model variables source code' },
+{ tag: 'user_warm_start.py', title:'Continuing a Fit Using Ipopt Warm Start', other:' option table source code' },
 { tag: 'database', title:'The Dismod_at Database Tables', other:' comment columns primary key name foreign parent text can be null not empty integer real nan bounds that type names' },
 { tag: 'input', title:'Tables That Are Only Used as Inputs', other:'' },
 { tag: 'age_table', title:'The Age Table', other:' age_id average grid example' },
@@ -131,7 +132,7 @@ Keyword =
 { tag: 'command', title:'The dismod_at Commands', other:' data flow log messages' },
 { tag: 'depend_command', title:'The Depend Command', other:' syntax database depend_var_table example' },
 { tag: 'depend_command.py', title:'depend Command: Example and Test', other:'' },
-{ tag: 'fit_command', title:'The Fit Command', other:' syntax database variables fixed random both simulate_index data_sim_table prior_sim_table fit_var_table fit_data_subset_table effects convergence problems ipopt options example' },
+{ tag: 'fit_command', title:'The Fit Command', other:' syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info fit_var_table fit_data_subset_table effects convergence problems options example' },
 { tag: 'fit_command.py', title:'fit Command: Example and Test', other:'' },
 { tag: 'init_command', title:'The Initialize Command', other:' syntax purpose changing values database age_avg_table var_table data_subset_table start_var_table scale_var_table deleted tables example' },
 { tag: 'init_command.py', title:'init Command: Example and Test', other:'' },
@@ -170,7 +171,7 @@ Keyword =
 { tag: 'unicode_tuple', title:'Convert an Iterable Object to a Unicode String', other:' syntax quote_string none infinity u_tuple example' },
 { tag: 'unicode_tuple.py', title:'unicode_tuple: Example and Test', other:'' },
 { tag: 'release_notes', title:'Changes and Additions to Dismod_at', other:' introduction this year previous years' },
-{ tag: 'whats_new_2021', title:'Changes and Additions to Dismod_at During 2021', other:' 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08' },
+{ tag: 'whats_new_2021', title:'Changes and Additions to Dismod_at During 2021', other:' 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08' },
 { tag: 'whats_new_2020', title:'Changes and Additions to Dismod_at During 2020', other:' 12-30 12-29 12-26 12-22 12-17 11-24 11-22 11-23 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07' },
 { tag: 'whats_new_2019', title:'Changes and Additions to Dismod_at During 2019', other:' 12-07 12-06 12-05 12-04 11-30 11-29 11-28 11-26 11-25 11-24 11-22 11-20 11-18 11-17 10-24 10-09 10-08 10-06 10-02 10-01 09-30 09-24 09-23 09-22 09-21 09-20 09-19 09-17 09-15 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10' },
 { tag: 'whats_new_2018', title:'Changes and Additions to Dismod_at During 2018', other:' 12-19 12-15 12-14 10-30 10-22 10-21 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09' },

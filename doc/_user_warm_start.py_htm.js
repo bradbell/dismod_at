@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
-'release_notes.htm',
-'whats_new_2021.htm'
+'user.htm',
+'user_warm_start.py.htm'
 ];
 var list_across0 = [
 '_contents.htm',
@@ -9,28 +9,6 @@ var list_across0 = [
 '_index.htm',
 '_search.htm',
 '_external.htm'
-];
-var list_current0 = [
-'whats_new_2021.htm#06-01',
-'whats_new_2021.htm#05-31',
-'whats_new_2021.htm#05-29',
-'whats_new_2021.htm#05-21',
-'whats_new_2021.htm#05-20',
-'whats_new_2021.htm#05-19',
-'whats_new_2021.htm#05-18',
-'whats_new_2021.htm#05-15',
-'whats_new_2021.htm#05-07',
-'whats_new_2021.htm#05-06',
-'whats_new_2021.htm#04-16',
-'whats_new_2021.htm#03-02',
-'whats_new_2021.htm#01-28',
-'whats_new_2021.htm#01-22',
-'whats_new_2021.htm#01-21',
-'whats_new_2021.htm#01-19',
-'whats_new_2021.htm#01-11',
-'whats_new_2021.htm#01-10',
-'whats_new_2021.htm#01-09',
-'whats_new_2021.htm#01-08'
 ];
 function choose_up0(item)
 {	var index          = item.selectedIndex;
@@ -61,10 +39,4 @@ function choose_down0(item)
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_down0[index-1];
-}
-function choose_current0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_current0[index-1];
 }

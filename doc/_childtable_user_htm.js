@@ -43,6 +43,7 @@ document.write('\
 <option>user_zsum_child_rate.py</option>\
 <option>user_zsum_mulcov_meas.py</option>\
 <option>user_zsum_mulcov_rate.py</option>\
+<option>user_warm_start.py</option>\
 </select>\
 ');
 function user_child(item)
@@ -87,7 +88,8 @@ function user_child(item)
 		'user_sum_residual.py.htm',
 		'user_zsum_child_rate.py.htm',
 		'user_zsum_mulcov_meas.py.htm',
-		'user_zsum_mulcov_rate.py.htm'
+		'user_zsum_mulcov_rate.py.htm',
+		'user_warm_start.py.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;

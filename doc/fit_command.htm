@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table fit_var_table fit_data_subset_table effects convergence problems ipopt options example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info fit_var_table fit_data_subset_table effects convergence problems ipopt options example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -74,6 +74,8 @@ A:active { color : purple }
 <br><a href="fit_command.htm#simulate_index" target="_top">simulate_index</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#simulate_index.data_sim_table" target="_top">data_sim_table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#simulate_index.prior_sim_table" target="_top">prior_sim_table</a>
+<br><a href="fit_command.htm#warm_start" target="_top">warm_start</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#warm_start.ipopt_info" target="_top">ipopt_info</a>
 <br><a href="fit_command.htm#fit_var_table" target="_top">fit_var_table</a>
 <br><a href="fit_command.htm#fit_data_subset_table" target="_top">fit_data_subset_table</a>
 <br><a href="fit_command.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
@@ -88,10 +90,14 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;fit&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;fit&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;fit&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
 
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;fit&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;warm_start<br>
+</span></font></code>
 
-<br>
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;fit&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;warm_start<br>
+</span></font></code>
 <br>
 <b><big><a name="database" id="database">database</a></big></b>
 <br>
@@ -212,6 +218,31 @@ are the same as when
  is not present; e.g.,
 <a href="prior_table.htm#std" target="_top"><span style='white-space: nowrap'>std</span></a>
  comes from the prior table.
+
+<br>
+<br>
+<b><big><a name="warm_start" id="warm_start">warm_start</a></big></b>
+<br>
+If <code><font color="blue">warm_start</font></code> is at the end of the command,
+the ipopt_info table, written by the previous fit,
+is used to start the optimization where the previous fit left off.
+In this case, the other options must be the same as for the previous fit.
+
+<br>
+<br>
+<big><a name="warm_start.ipopt_info" id="warm_start.ipopt_info">ipopt_info</a></big>
+<br>
+The fixed effect are optimized when
+
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ is equal to <code><font color="blue">both</font></code> or <code><font color="blue">fixed</font></code>.
+In the case a new ipopt_info table, corresponding to the final
+fit for the fixed effects, is written to the ipopt_info table.
+This can be used to continue the fit when it is terminated due to reaching
+<a href="option_table.htm#Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter_fixed</span></a>
+.
+The contents of this table are unspecified; i.e., not part of the
+dismod_at API and my change.
 
 <br>
 <br>
