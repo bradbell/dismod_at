@@ -96,7 +96,8 @@ $children%
 	example/user/sum_residual.py%
 	example/user/zsum_child_rate.py%
 	example/user/zsum_mulcov_meas.py%
-	example/user/zsum_mulcov_rate.py
+	example/user/zsum_mulcov_rate.py%
+	example/user/warm_start.py
 %$$
 $comment END_SORT_THIS_LINE_MINUS_3$$
 
@@ -138,6 +139,7 @@ $rref user_subgroup_mulcov.py$$
 $rref user_hes_fixed_math.py$$
 $rref user_hes_random.py$$
 $rref user_sum_residual.py$$
+$rref user_warm_start.py$$
 $tend
 
 $head More Examples$$

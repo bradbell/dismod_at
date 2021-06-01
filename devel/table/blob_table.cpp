@@ -49,21 +49,22 @@ and is the name of the column that we are reading or writing.
 $head sizeof_data$$
 This argument has prototype
 $codei%
-	size_t %sizeof_data%
+	size_t& %sizeof_data%
 %$$
 This is the number of bytes of data that we are reading or writing.
+If this is a write (read) then $icode sizeof_data$$ is (is not) $code const$$.
+If this is read and the input value of $icode sizeof_data$$ is zero,
+$icode sizeof_data$$ is set to the number of bytes in the data.
+In this case, you should change $icode data$$ to point to the necessary space
+and then call read again without changing $icode sizeof_data$$.
 
 $head data$$
 For the read operation, this argument has prototype
 $codei%
 	void* %data%
 %$$
-and is the data that is written to the table.
-For the write operation, it has prototype
-$codei%
-	const void* %data%
-%$$
-and is where the data is read into memory.
+and is the data that is written or read from the table.
+If this is a write (read) then $icode data$$ is (is not) $code const$$.
 
 $children%example/devel/table/blob_table_xam.cpp
 %$$
@@ -84,7 +85,7 @@ void write_blob_table(
 	sqlite3*                db             ,
 	const std::string&      table_name     ,
 	const std::string&      col_name       ,
-	size_t                  sizeof_data    ,
+	const size_t&           sizeof_data    ,
 	const void*             data           )
 {	//
 	std::string cmd;
@@ -128,7 +129,7 @@ void read_blob_table(
 	sqlite3*                db             ,
 	const std::string&      table_name     ,
 	const std::string&      col_name       ,
-	size_t                  sizeof_data    ,
+	size_t&                 sizeof_data    ,
 	void*                   data           )
 {	//
 	std::string cmd;
@@ -158,6 +159,14 @@ void read_blob_table(
 	int col_index = 0;
 	n_byte = sqlite3_column_bytes(p_stmt, col_index);
 	//
+	if( sizeof_data == 0 )
+	{	sizeof_data = n_byte;
+		//
+		// delete the statement
+		sqlite3_finalize(p_stmt);
+		//
+		return;
+	}
 	if( size_t(n_byte) != sizeof_data )
 	{	std::string message = "read_blob_table: unexpected size of blob in ";
 		message            += table_name;

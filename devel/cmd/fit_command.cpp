@@ -19,6 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_var_limits.hpp>
 # include <dismod_at/remove_const.hpp>
 # include <dismod_at/blob_table.hpp>
+# include <dismod_at/pack_warm_start.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -332,11 +333,19 @@ void fit_command(
 	// warm_start_in
 	CppAD::mixed::warm_start_struct warm_start_in;
 	if( use_warm_start )
-	{	table_name         = "ipopt_info";
+	{	// get sizeof_data
+		table_name         = "ipopt_info";
 		string col_name    = "warm_start";
-		size_t sizeof_data = sizeof(warm_start_in);
-		void* data         = reinterpret_cast<void*>( &warm_start_in);
+		size_t sizeof_data = 0;
+		void* data         = nullptr;
 		read_blob_table(db, table_name, col_name, sizeof_data, data);
+		//
+		// read the data
+		assert( sizeof_data % sizeof(double) == 0 );
+		vector<double> vec( sizeof_data / sizeof(double) );
+		data = reinterpret_cast<void*>( vec.data() );
+		read_blob_table(db, table_name, col_name, sizeof_data, data);
+		warm_start_in = unpack_warm_start(vec);
 	}
 	// ------------------ run fit_model ------------------------------------
 	// quasi_fixed
@@ -375,10 +384,13 @@ void fit_command(
 	{	string sql_cmd = "drop table if exists ipopt_info";
 		dismod_at::exec_sql_cmd(db, sql_cmd);
 		//
+		// pack the warm start information in a vector
+		vector<double> vec = pack_warm_start(warm_start_out);
+		//
 		table_name         = "ipopt_info";
 		string col_name    = "warm_start";
-		size_t sizeof_data = sizeof(warm_start_out);
-		void* data         = reinterpret_cast<void*>( &warm_start_out);
+		size_t sizeof_data = vec.size() * sizeof(double);
+		void* data         = reinterpret_cast<void*>( vec.data() );
 		write_blob_table(db, table_name, col_name, sizeof_data, data);
 	}
 	// -------------------- fit_var table --------------------------------------

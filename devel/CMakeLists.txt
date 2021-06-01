@@ -50,6 +50,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/age_avg_grid.cpp
 	utility/remove_const.cpp
 	utility/get_var_limits.cpp
+	utility/pack_warm_start.cpp
 
 	table/blob_table.cpp
 	table/check_child_prior.cpp

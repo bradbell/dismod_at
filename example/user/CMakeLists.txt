@@ -51,6 +51,7 @@ FOREACH(user_case
 	zsum_mulcov_meas
 	re_scale
 	students
+	warm_start
 )
 # END_SORT_THIS_LINE_MINUS_2
 	ADD_CUSTOM_TARGET(

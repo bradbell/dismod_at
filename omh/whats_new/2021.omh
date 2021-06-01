@@ -44,6 +44,13 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-01$$
+The $cref/warm_start/fit_command/warm_start/$$ option was added
+to the fit command.
+This is much better than just modifying the
+$cref start_var_table$$ because it also sets the initial Lagrange multipliers.
+For an example, see $cref user_warm_start.py$$.
+
 $head 05-31$$
 Advance to cppad_mixed-20210531.
 This is in preparation for adding a warm start option to the fit command.
