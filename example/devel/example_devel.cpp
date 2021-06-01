@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -60,6 +60,7 @@ extern bool split_space_xam(void);
 extern bool time_line_vec_xam(void);
 
 // table subdirectory
+extern bool blob_table_xam(void);
 extern bool check_pini_n_age_xam(void);
 extern bool create_table_xam(void);
 extern bool get_age_table_xam(void);
@@ -153,6 +154,7 @@ int main(void)
 	RUN(time_line_vec_xam);
 
 	// table subdirectory
+	RUN(blob_table_xam);
 	RUN(check_pini_n_age_xam);
 	RUN(create_table_xam);
 	RUN(get_age_table_xam);
