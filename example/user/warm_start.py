@@ -36,7 +36,6 @@
 # BEGIN PYTHON
 # values used to simulate data
 iota_true                 = 0.01
-n_data                    = 1
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -154,7 +153,7 @@ def example_db (file_name) :
 
 		{ 'name':'quasi_fixed',            'value':'false'               },
 		{ 'name':'max_num_iter_fixed',     'value':'5'                   },
-		{ 'name':'print_level_fixed',      'value':'5'                   },
+		{ 'name':'print_level_fixed',      'value':'0'                   },
 		{ 'name':'tolerance_fixed',        'value':'1e-8'                },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                  },
@@ -214,18 +213,15 @@ for row in log_table :
 		warning_count += 1
 assert warning_count in [ 1, 2]
 #
-max_error    = 0.0
-for var_id in range( len(var_table) ) :
-	fit_value = fit_var_table[var_id]['fit_var_value']
-	var_row   = var_table[var_id]
-	rate_id   = var_row['rate_id']
-	rate_name = rate_table[rate_id]['rate_name']
-	if rate_name == 'iota' :
-		print( fit_value / iota_true - 1.0 )
-		ok = abs( fit_value / iota_true - 1.0 ) < .05
-		if not ok :
-			print( "iota relative error = ", fit_value / iota_true - 1.0)
-			assert abs( fit_value / iota_true - 1.0 ) < .05
+assert len(var_table) == 1
+fit_value = fit_var_table[0]['fit_var_value']
+var_row   = var_table[0]
+rate_id   = var_row['rate_id']
+rate_name = rate_table[rate_id]['rate_name']
+assert rate_name == 'iota'
+rel_err   = fit_value / iota_true - 1.0
+if abs( rel_err ) > 1e-6 :
+	print( "iota rel_err = ", rel_err)
 # -----------------------------------------------------------------------------
 print('warm_start.py: OK')
 # -----------------------------------------------------------------------------
