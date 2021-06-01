@@ -71,6 +71,7 @@ int main(int n_arg, const char** argv)
 		{"depend",    3},
 		{"fit",       4},
 		{"fit",       5},
+		{"fit",       6},
 		{"simulate",  4},
 		{"sample",    6},
 		{"sample",    7},
@@ -537,9 +538,25 @@ int main(int n_arg, const char** argv)
 			else if( command_arg == "fit" )
 			{	string variables      = argv[3];
 				string simulate_index = "";
+				bool   use_warm_start = false;
 				if( n_arg == 5 )
-					simulate_index = argv[4];
+				{	string tmp = argv[4];
+					if( tmp == "warm_start" )
+						use_warm_start = true;
+					else
+						simulate_index = tmp;
+				}
+				if( n_arg == 6 )
+				{	simulate_index = argv[4];
+					string tmp     = argv[5];
+					use_warm_start = tmp == "warm_start";
+					if( ! use_warm_start )
+					{	message = "dismod_at fit command syntax error";
+						dismod_at::error_exit(message);
+					}
+				}
 				fit_command(
+					use_warm_start   ,
 					variables        ,
 					simulate_index   ,
 					db               ,

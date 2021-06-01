@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -10,6 +10,7 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin data_flow$$
 $spell
+	ipopt
 	sim
 	Dismod
 	init
@@ -95,6 +96,9 @@ yes
 $rnext
 $cref/fit_data_subset/fit_data_subset_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
+$rnext
+$cref/ipopt_info/fit_command/warm_start/ipopt_info/$$ $cnext
+$cref/fit/fit_command/$$ $cnext
 no
 $rnext
 $cref/data_sim/data_sim_table/$$ $cnext
@@ -137,6 +141,7 @@ $cref start_var_table$$, $cref scale_var_table$$, $cref truth_var_table$$
 $rnext
 $cref/fit/fit_command/$$     $cnext
 $cref fit_var_table$$, $cref fit_data_subset_table$$, $cref age_avg_table$$
+$cref/warm_start/fit_command/warm_start/$$
 $rnext
 $cref/simulate/simulate_command/$$ $cnext
 $cref data_sim_table$$, $cref age_avg_table$$

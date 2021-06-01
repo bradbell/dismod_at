@@ -18,6 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/get_var_limits.hpp>
 # include <dismod_at/remove_const.hpp>
+# include <dismod_at/blob_table.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -41,7 +42,12 @@ $section The Fit Command$$
 $head Syntax$$
 $codei%dismod_at %database% fit %variables%
 %$$
-$codei%dismod_at %database% fit %variables% %simulate_index%$$
+$codei%dismod_at %database% fit %variables% %simulate_index%
+%$$
+$codei%dismod_at %database% fit %variables% warm_start
+%$$
+$codei%dismod_at %database% fit %variables% %simulate_index% warm_start
+%$$
 
 $head database$$
 Is an
@@ -112,6 +118,22 @@ All the rest of the prior table values
 are the same as when $icode simulated_index$$ is not present; e.g.,
 $cref/std/prior_table/std/$$ comes from the prior table.
 
+$head warm_start$$
+If $code warm_start$$ is at the end of the command,
+the ipopt_info table, written by the previous fit,
+is used to start the optimization where the previous fit left off.
+In this case, the other options must be the same as for the previous fit.
+
+$subhead ipopt_info$$
+The fixed effect are optimized when
+$icode variables$$ is equal to $code both$$ or $code fixed$$.
+In the case a new ipopt_info table, corresponding to the final
+fit for the fixed effects, is written to the ipopt_info table.
+This can be used to continue the fit when it is terminated due to reaching
+$cref/max_num_iter_fixed/option_table/Fixed and Random/max_num_iter/$$.
+The contents of this table are unspecified; i.e., not part of the
+dismod_at API and my change.
+
 $head fit_var_table$$
 A new $cref fit_var_table$$ is created each time this command is run.
 It contains the results of the fit in its
@@ -164,6 +186,7 @@ $end
 // ----------------------------------------------------------------------------
 // data_subset_obj and prior_object are const when simulate_index == ""
 void fit_command(
+	bool                                          use_warm_start   ,
 	const std::string&                            variables        ,
 	const std::string&                            simulate_index   ,
 	sqlite3*                                      db               ,
@@ -185,8 +208,13 @@ void fit_command(
 	ok     |= variables == "both";
 	if( ! ok )
 	{	string msg = "dismod_at fit command variables = ";
-			msg += variables + "\nis not 'fixed', 'random' or 'both'";
-			dismod_at::error_exit(msg);
+		msg += variables + "\nis not 'fixed', 'random' or 'both'";
+		dismod_at::error_exit(msg);
+	}
+	if( use_warm_start && variables == "random" )
+	{	string msg = "dismod_at fit command: cannot warm start when ";
+		msg       += "only optimizing random effects";
+		dismod_at::error_exit(msg);
 	}
 	//
 	// bound_random
@@ -332,6 +360,17 @@ void fit_command(
 	fit_object.get_solution(
 		opt_value, lag_value, lag_dage, lag_dtime, warm_start
 	);
+	// ------------------ ipopt_info table -----------------------------------
+	if( ! random_only )
+	{	string sql_cmd = "drop table if exists ipopt_info";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+		//
+		table_name         = "ipopt_info";
+		string col_name    = "warm_start";
+		size_t sizeof_data = sizeof(warm_start);
+		void* data         = reinterpret_cast<void*>( &warm_start);
+		write_blob_table(db, table_name, col_name, sizeof_data, data);
+	}
 	// -------------------- fit_var table --------------------------------------
 	string sql_cmd = "drop table if exists fit_var";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
