@@ -18,8 +18,6 @@
 #
 # $section Continuing a Fit Using Ipopt Warm Start$$
 #
-# $head Under Construction$$
-#
 # $head Option Table$$
 # In the option table defined below,
 # $icode%max_num_iter_fixed% = 5%$$.
@@ -38,8 +36,7 @@
 # BEGIN PYTHON
 # values used to simulate data
 iota_true                 = 0.01
-chi_true                  = 0.1
-n_data                    = 51
+n_data                    = 1
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -79,7 +76,7 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name':'prevalence' }
+		 { 'name':'Sincidence' }
 	]
 	#
 	# node table:
@@ -104,24 +101,20 @@ def example_db (file_name) :
 	data_table = list()
 	# values that are the same for all data rows
 	row = {
-		'meas_value':  0.0,             # not used (will be simulated)
+		'integrand':   'Sincidence',
+		'meas_value':  iota_true,
 		'density':     'gaussian',
+		'meas_std':    iota_true / 10.,
 		'weight':      '',
 		'hold_out':     False,
+		'age_lower':    50.0,
+		'age_upper':    50.0,
 		'time_lower':   2000.,
 		'time_upper':   2000.,
+		'node':         'world',
 		'subgroup':     'world',
 	}
-	# values that change between rows:
-	for data_id in range( n_data ) :
-		fraction = data_id / float(n_data-1)
-		age      = age_list[0] + (age_list[-1] - age_list[0])*fraction
-		row['age_lower'] = age
-		row['age_upper'] = age
-		row['node']      = 'world'
-		row['integrand'] = 'prevalence'
-		row['meas_std']  = 0.01
-		data_table.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
@@ -138,33 +131,18 @@ def example_db (file_name) :
 	# smooth table
 	name           = 'smooth_iota'
 	fun            = fun_iota
-	age_id         = int( len( age_list ) / 2 )
-	time_id        = int( len( time_list ) / 2 )
 	smooth_table = [
 		{	'name':name,
-			'age_id':[age_id],
-			'time_id':[time_id],
+			'age_id':[0],
+			'time_id':[0],
 			'fun':fun
 		}
 	]
-	name           = 'smooth_chi'
-	fun            = fun_chi
-	age_id         = int( len( age_list ) / 2 )
-	time_id        = int( len( time_list ) / 2 )
-	smooth_table .append(
-		{	'name':name,
-			'age_id':[age_id],
-			'time_id':[time_id],
-			'fun':fun
-		}
-	)
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
 		{	'name':          'iota',
 			'parent_smooth': 'smooth_iota',
-		},{	'name':          'chi',
-			'parent_smooth': 'smooth_chi',
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -172,14 +150,12 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
 		{ 'name':'parent_node_name',       'value':'world'               },
-		{ 'name':'ode_step_size',          'value':'10.0'                },
-		{ 'name':'random_seed',            'value':'123'                 },
 		{ 'name':'warn_on_stderr',         'value':'false'               },
 
-		{ 'name':'quasi_fixed',            'value':'true'                },
+		{ 'name':'quasi_fixed',            'value':'false'               },
 		{ 'name':'max_num_iter_fixed',     'value':'5'                   },
-		{ 'name':'print_level_fixed',      'value':'0'                   },
-		{ 'name':'tolerance_fixed',        'value':'1e-7'                },
+		{ 'name':'print_level_fixed',      'value':'5'                   },
+		{ 'name':'tolerance_fixed',        'value':'1e-8'                },
 
 		{ 'name':'max_num_iter_random',    'value':'50'                  },
 		{ 'name':'print_level_random',     'value':'0'                   },
@@ -217,51 +193,21 @@ example_db(file_name)
 #
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+dismod_at.system_command_prc(
+	[ program, file_name, 'fit', 'fixed', 'warm_start'
+])
 # -----------------------------------------------------------------------
 # read database
 new           = False
 connection    = dismod_at.create_connection(file_name, new)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
-# -----------------------------------------------------------------------
-# truth table:
-tbl_name     = 'truth_var'
-col_name     = [ 'truth_var_value' ]
-col_type     = [ 'real' ]
-row_list     = list()
-var_id2true  = list()
-for var_id in range( len(var_table) ) :
-	var_info        = var_table[var_id]
-	truth_var_value = None
-	var_type = var_info['var_type']
-	assert var_type == 'rate'
-	rate_id   = var_info['rate_id']
-	rate_name = rate_table[rate_id]['rate_name']
-	if rate_name == 'iota' :
-		value = iota_true
-	elif rate_name == 'chi' :
-		value = chi_true
-	else :
-		assert False
-	row_list.append( [ value ] )
-dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-connection.close()
-# -----------------------------------------------------------------------
-# Simulate one data set, start at prior mean fit, start at fit results, fit
-dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'both', '0' ])
-dismod_at.system_command_prc(
-	[ program, file_name, 'fit', 'both', '0', 'warm_start'
-])
-# -----------------------------------------------------------------------
-# check fit results
-new           = False
-connection    = dismod_at.create_connection(file_name, new)
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 log_table     = dismod_at.get_table_dict(connection, 'log' )
 connection.close()
 #
-# check that we got one warning
+# check that we a warning (maximum number iterations during first fit)
 warning_count = 0
 for row in log_table :
 	if row['message_type'] == 'warning' :
@@ -275,12 +221,11 @@ for var_id in range( len(var_table) ) :
 	rate_id   = var_row['rate_id']
 	rate_name = rate_table[rate_id]['rate_name']
 	if rate_name == 'iota' :
+		print( fit_value / iota_true - 1.0 )
 		ok = abs( fit_value / iota_true - 1.0 ) < .05
 		if not ok :
 			print( "iota relative error = ", fit_value / iota_true - 1.0)
 			assert abs( fit_value / iota_true - 1.0 ) < .05
-	else :
-		assert fit_value == chi_true
 # -----------------------------------------------------------------------------
 print('warm_start.py: OK')
 # -----------------------------------------------------------------------------
