@@ -1,0 +1,120 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-21 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin fit_trace_table$$
+$spell
+	ipopt
+	dismod
+	cppad
+	iter
+	mu
+	ls
+	Wachter
+	Biegler
+	obj
+	inf
+	pr
+	du
+	infeasibility
+$$
+
+$section The Optimization Trace Table$$
+The fit_trace table contains the ipopt trace information
+for the most recent $cref/fit fixed/fit_command/variables/fixed/$$ command.
+Each row of this table corresponds to one iteration of the
+fixed effects optimization algorithm.
+
+$head Under Construction$$
+this table is under construction.
+
+$head fit_trace_id$$
+This column has type $code integer$$ and
+is the primary key for the data table.
+Its initial value is zero, and it increments by one for each row.
+Note that all the variables and constraints have been re-scaled by
+dismod_at and cppad_mixed before ipopt even sees the problem.
+
+$head iter$$
+This column has type $code integer$$ and
+is the current iteration count (which is equal to $icode fit_trace_id$$).
+This includes regular iterations and iterations during the restoration phase.
+
+$head obj_value$$
+This column has type $code real$$ and
+is the objective value at the current point.
+
+$head inf_pr$$
+This column has type $code real$$ and
+is the constraint violation at the current point.
+This quantity is the infinity-norm (max) of the constraint
+violation for $latex g(x)$$ in the Ipopt documentation.
+During the restoration phase, this value remains the constraint
+violation of the original problem at the current point.
+The option $code inf_pr_output$$ can be used to switch to the printing of
+a different quantity.
+
+$head inf_du$$
+This column has type $code real$$ and
+is the dual infeasibility at the current point.
+This quantity measure the infinity-norm (max) of the
+internal dual infeasibility, i.e, the derivative of the lagrangian
+with respect to the primal variables
+$latex \[
+	\nabla f(x) \nabla c(x) \lambda - z
+\]$$
+where $latex z $$ are the lagrange multipliers for the box constraints and
+$latex c(x) $$ are the nonlinear equality constraints
+(inequality constraints are reformulated using slack variables
+and problem scaling).
+During the restoration phase,
+this is the value of the dual infeasibility for the restoration phase problem.
+
+$head mu$$
+This column has type $code real$$ and
+is the value of the barrier parameter $latex \mu$$.
+
+$head d_norm$$
+This column has type $code real$$ and
+is the infinity norm (max) of the primal step
+(for the original variables $latex x$$ and the internal slack
+variables $latex s$$).
+During the restoration phase,
+this value includes the values of additional variables that
+capture the violation in $latex c(x) = 0$$.
+
+$head regularization_size$$
+This column has type $code real$$ and
+is the value of the regularization term for the Hessian
+of the Lagrangian in the augmented system.
+
+$head alpha_du$$
+This column has type $code real$$ and
+is the step size for the dual variables for the box constraints in the
+equality constrained formulation; i.e., $latex z$$.
+
+$head alpha_pr$$
+This column has type $code real$$ and
+is the step size for the primal variables
+$latex x$$ and $latex \lambda$$ in the equality constrained formulation.
+The number is usually followed by a character for additional diagnostic
+information regarding the step acceptance criterion.
+
+$head ls_trials$$
+This column has type $code integer$$ and
+is the number of backtracking line search steps
+(does not include second-order correction steps).
+
+$head Reference$$
+A. Wachter and L. T. Biegler.,
+On the implementation of a primal-dual interior point
+filter line search algorithm for large-scale nonlinear programming.
+Mathematical Programming, 106(1):25-57, 2006.
+
+$end
