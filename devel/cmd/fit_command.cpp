@@ -508,6 +508,57 @@ void fit_command(
 	dismod_at::create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
+	if( ! random_only )
+	{	// -------------------- fixed_trace table -----------------------------
+		sql_cmd = "drop table if exists fixed_trace";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+		//
+		table_name     = "fixed_trace";
+		size_t n_trace = trace_vec.size();
+		n_col = 10;
+		col_name.resize(n_col);
+		col_unique.resize(n_col);
+		col_type.resize(n_col);
+		row_value.resize(n_col * n_trace);
+		const char* col_name_lst[] = {
+			"iter",
+			"obj_value",
+			"inf_pr",
+			"inf_du",
+			"mu",
+			"d_norm",
+			"regularization_size",
+			"alpha_du",
+			"alpha_pr",
+			"ls_trials"
+		};
+		for(size_t j = 0; j < n_col; ++j)
+		{	col_name[j]   = col_name_lst[j];
+			col_unique[j] = false;
+			if( col_name[j] == "iter" || col_name[j] == "ls_trials" )
+				col_type[j] = "integer";
+			else
+				col_type[j] = "real";
+		}
+		for(size_t id = 0; id < n_trace; ++id)
+		{
+			row_value[ id * n_col + 0] = to_string( trace_vec[id].iter );
+			row_value[ id * n_col + 1] = to_string( trace_vec[id].obj_value );
+			row_value[ id * n_col + 2] = to_string( trace_vec[id].inf_pr );
+			row_value[ id * n_col + 3] = to_string( trace_vec[id].inf_du );
+			row_value[ id * n_col + 4] = to_string( trace_vec[id].mu );
+			row_value[ id * n_col + 5] = to_string( trace_vec[id].d_norm );
+			row_value[ id * n_col + 6] =
+				to_string( trace_vec[id].regularization_size );
+			row_value[ id * n_col + 7] = to_string( trace_vec[id].alpha_du );
+			row_value[ id * n_col + 8] = to_string( trace_vec[id].alpha_pr );
+			row_value[ id * n_col + 9] = to_string( trace_vec[id].ls_trials );
+		}
+		dismod_at::create_table(
+			db, table_name, col_name, col_type, col_unique, row_value
+		);
+	}
+
 	return;
 }
 
