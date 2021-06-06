@@ -33,6 +33,8 @@ namespace dismod_at {
 		//
 	// =======================================================================
 	private:
+		typedef CppAD::mixed::warm_start_struct warm_start_struct;
+		typedef CppAD::mixed::trace_struct      trace_struct;
 		// ---------------------------------------------------------------
 		// private member data
 		// ---------------------------------------------------------------
@@ -85,7 +87,8 @@ namespace dismod_at {
 			CppAD::vector<double>           lagrange_value;
 			CppAD::vector<double>           lagrange_dage;
 			CppAD::vector<double>           lagrange_dtime;
-			CppAD::mixed::warm_start_struct warm_start;
+			CppAD::vector<trace_struct>     trace_vec;
+			warm_start_struct               warm_start;
 		} solution_;
 		// ---------------------------------------------------------------
 		// private member functions
@@ -148,7 +151,7 @@ namespace dismod_at {
 			bool                                  random_only ,
 			// effectively const
 			std::map<std::string, std::string>&   option_map  ,
-			const CppAD::mixed::warm_start_struct& warm_start
+			const warm_start_struct&              warm_start
 		);
 		// get_solution
 		void get_solution(
@@ -156,7 +159,7 @@ namespace dismod_at {
 			CppAD::vector<double>&           lagrange_value  ,
 			CppAD::vector<double>&           lagrange_dage   ,
 			CppAD::vector<double>&           lagrange_dtime  ,
-			CppAD::mixed::warm_start_struct& warm_start
+			warm_start_struct&               warm_start
 		);
 		// sample from asympotitic approximation for posterior distribution
 		void sample_posterior(
