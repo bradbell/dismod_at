@@ -44,6 +44,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-06$$
+Advance to cppad_mixed-20210606.
+
 $head 06-01$$
 The $cref/warm_start/fit_command/warm_start/$$ option was added
 to the fit command.
