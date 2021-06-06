@@ -45,7 +45,7 @@ $children%omh/table/log_table.omh
 	%omh/table/hes_fixed_table.omh
 	%omh/table/hes_random_table.omh
 	%omh/table/predict_table.omh
-	%omh/table/fit_trace_table.omh
+	%omh/table/fixed_trace_table.omh
 %$$
 
 $head Output Tables by Table Name$$
@@ -99,7 +99,7 @@ $cref/fit_data_subset/fit_data_subset_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 $rnext
 no
-$cref/fit_trace/fit_trace_table/$$ $cnext
+$cref/fixed_trace/fixed_trace_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 $rnext
 no
@@ -147,7 +147,7 @@ $cref start_var_table$$, $cref scale_var_table$$, $cref truth_var_table$$
 $rnext
 $cref/fit/fit_command/$$     $cnext
 $cref fit_var_table$$, $cref fit_data_subset_table$$, $cref age_avg_table$$,
-$cref fit_trace_table$$, $cref/warm_start/fit_command/warm_start/$$
+$cref fixed_trace_table$$, $cref/warm_start/fit_command/warm_start/$$
 $rnext
 $cref/simulate/simulate_command/$$ $cnext
 $cref data_sim_table$$, $cref age_avg_table$$

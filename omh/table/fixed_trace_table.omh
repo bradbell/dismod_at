@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
-$begin fit_trace_table$$
+$begin fixed_trace_table$$
 $spell
 	ipopt
 	dismod
@@ -26,7 +26,7 @@ $spell
 $$
 
 $section The Optimization Trace Table$$
-The fit_trace table contains the ipopt trace information
+The fixed_trace table contains the ipopt trace information
 for the most recent $cref/fit fixed/fit_command/variables/fixed/$$ command.
 Each row of this table corresponds to one iteration of the
 fixed effects optimization algorithm.
@@ -34,7 +34,7 @@ fixed effects optimization algorithm.
 $head Under Construction$$
 this table is under construction.
 
-$head fit_trace_id$$
+$head fixed_trace_id$$
 This column has type $code integer$$ and
 is the primary key for the data table.
 Its initial value is zero, and it increments by one for each row.
@@ -43,7 +43,7 @@ dismod_at and cppad_mixed before ipopt even sees the problem.
 
 $head iter$$
 This column has type $code integer$$ and
-is the current iteration count (which is equal to $icode fit_trace_id$$).
+is the current iteration count (which is equal to $icode fixed_trace_id$$).
 This includes regular iterations and iterations during the restoration phase.
 
 $head obj_value$$
