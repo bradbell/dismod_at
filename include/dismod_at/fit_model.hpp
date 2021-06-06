@@ -159,6 +159,7 @@ namespace dismod_at {
 			CppAD::vector<double>&           lagrange_value  ,
 			CppAD::vector<double>&           lagrange_dage   ,
 			CppAD::vector<double>&           lagrange_dtime  ,
+			CppAD::vector<trace_struct>&     trace_vec       ,
 			warm_start_struct&               warm_start
 		);
 		// sample from asympotitic approximation for posterior distribution

@@ -375,9 +375,10 @@ void fit_command(
 	);
 	fit_object.run_fit(random_only, option_map, warm_start_in);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;
+	vector<CppAD::mixed::trace_struct> trace_vec;
 	CppAD::mixed::warm_start_struct warm_start_out;
 	fit_object.get_solution(
-		opt_value, lag_value, lag_dage, lag_dtime, warm_start_out
+		opt_value, lag_value, lag_dage, lag_dtime, trace_vec, warm_start_out
 	);
 	// ------------------ ipopt_info table -----------------------------------
 	if( ! random_only )

@@ -514,8 +514,9 @@ void sample_command(
 			//
 			// ignore resulting warm_start information
 			vector<double> opt_value, lag_value, lag_dage, lag_dtime;
+			vector<CppAD::mixed::trace_struct> trace_vec;
 			fit_object_both.get_solution(
-				opt_value, lag_value, lag_dage, lag_dtime, warm_start_1
+			opt_value, lag_value, lag_dage, lag_dtime, trace_vec, warm_start_1
 			);
 			assert( opt_value.size() == n_var );
 			//
@@ -579,7 +580,7 @@ void sample_command(
 			//
 			// ignore resulting warm_start information
 			fit_object_random.get_solution(
-				opt_value, lag_value, lag_dage, lag_dtime, warm_start_2
+			opt_value, lag_value, lag_dage, lag_dtime, trace_vec, warm_start_2
 			);
 			//
 			// solution for random effects and this sample_index -> row_value

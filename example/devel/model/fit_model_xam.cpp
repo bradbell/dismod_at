@@ -443,10 +443,11 @@ bool fit_model_xam(void)
 	CppAD::mixed::warm_start_struct warm_start;
 	fit_object.run_fit( random_only, option_map, warm_start );
 	CppAD::vector<double> solution, lag_value, lag_dage, lag_dtime;
+	CppAD::vector<CppAD::mixed::trace_struct> trace_vec;
 	//
 	// ignore resulting warm_start information
 	fit_object.get_solution(
-		solution, lag_value, lag_dage, lag_dtime, warm_start
+		solution, lag_value, lag_dage, lag_dtime, trace_vec, warm_start
 	);
 
 	// check against known solution

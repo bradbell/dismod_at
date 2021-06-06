@@ -522,6 +522,7 @@ $end
 		fixed_opt            = fixed_sol.fixed_opt;
 		fixed_lag            = fixed_sol.fixed_lag;
 		fixed_con_lag        = fixed_sol.fix_con_lag;
+		solution_.trace_vec  = fixed_sol.trace_vec;
 		solution_.warm_start = fixed_sol.warm_start;
 	}
 	// optimal random effects
@@ -664,6 +665,7 @@ void fit_model::get_solution(
 	CppAD::vector<double>&           lagrange_value  ,
 	CppAD::vector<double>&           lagrange_dage   ,
 	CppAD::vector<double>&           lagrange_dtime  ,
+	CppAD::vector<trace_struct>&     trace_vec       ,
 	CppAD::mixed::warm_start_struct& warm_start )
 /* %$$
 $end
@@ -672,6 +674,7 @@ $end
 	lagrange_value = solution_.lagrange_value;
 	lagrange_dage  = solution_.lagrange_dage;
 	lagrange_dtime = solution_.lagrange_dtime;
+	trace_vec      = solution_.trace_vec;
 	warm_start     = solution_.warm_start;
 	return;
 }
