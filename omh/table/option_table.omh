@@ -40,6 +40,8 @@ $spell
 $$
 
 $section The Option Table$$
+
+$head Discussion$$
 These options control how the
 $code dismod_at$$ $cref/commands/command/$$ behave.
 Each option is an $icode option_name$$, $icode option_value$$ pair

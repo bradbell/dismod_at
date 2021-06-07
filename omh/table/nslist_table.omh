@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -14,6 +14,8 @@ $spell
 $$
 
 $section The Node Smoothing List Table$$
+
+$head Discussion$$
 This table uses
 $cref/nslist_id/nslist_pair_table/nslist_id/$$ to attach
 a name to each list in the $code nslist_pair$$ table.

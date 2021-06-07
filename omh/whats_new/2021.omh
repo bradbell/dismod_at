@@ -28,6 +28,7 @@ $spell
 	cygwin
 	covid
 	covariates
+	covariate
 $$
 $navigate%
 	Up%Location%
@@ -43,6 +44,12 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 06-07$$
+Add a discussion heading at the top of $cref database$$ sections
+that did not have a heading after the jump table at the top of the section;
+e.g., the covariate table
+$cref/discussion/covariate_table/Discussion/$$ heading.
 
 $head 06-06$$
 Advance to cppad_mixed-20210606.

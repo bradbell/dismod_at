@@ -20,6 +20,8 @@ $spell
 $$
 
 $section Simulated Measurements and Adjusted Standard Deviations$$
+
+$head Discussion$$
 The $code data_sim$$ table is created during a
 $cref simulate_command$$.
 It contains $cref/number_simulate/simulate_command/number_simulate/$$

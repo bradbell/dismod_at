@@ -19,6 +19,8 @@ $spell
 $$
 
 $section The Dismod_at Data Flow$$
+
+$head Discussion$$
 Tables are used to transfer information from one command to another.
 Each of the output tables
 below is created by a $cref command$$.

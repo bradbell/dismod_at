@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,6 +13,8 @@ $spell
 $$
 
 $section The Node Table$$
+
+$head Discussion$$
 The node table defines a graph that is a tree by specifying
 the parent for each node.
 The $code node$$ table has the following columns:

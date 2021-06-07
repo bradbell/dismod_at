@@ -19,6 +19,8 @@ $spell
 $$
 
 $section The Data Table$$
+
+$head Discussion$$
 Each row of the data table corresponds to one measurement;
 see $cref/meas_value/data_table/meas_value/$$ below.
 

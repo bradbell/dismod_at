@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -24,6 +24,8 @@ $spell
 $$
 
 $section The Rate Table$$
+
+$head Discussion$$
 The $code rate$$ table is used to set the smoothing for each of the rates.
 It has the following columns:
 

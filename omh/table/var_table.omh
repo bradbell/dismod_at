@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -21,6 +21,8 @@ $spell
 $$
 
 $section Identifying Model Variables$$
+
+$head Discussion$$
 The $code variable$$ table maps the $icode var_id$$
 to information that specifies exactly which
 $cref/model_variable/model_variables/$$ it corresponds to.

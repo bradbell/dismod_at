@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -16,6 +16,8 @@ $spell
 $$
 
 $section The Covariate Table$$
+
+$head Discussion$$
 The $code covariate$$ table is used to identify
 $cref/covariate/data_table/Covariates/$$ columns in the
 data table.

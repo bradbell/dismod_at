@@ -30,6 +30,8 @@ $spell
 $$
 
 $section The Integrand Table$$
+
+$head Discussion$$
 The $code integrand$$ table is used to identify data integrands.
 It has the following columns:
 

@@ -26,6 +26,8 @@ $spell
 $$
 
 $section The Fixed Effects Optimization Trace Table$$
+
+$head Discussion$$
 The fixed_trace table contains the ipopt trace information
 for optimizing the fixed effects during the most recent
 $cref/fit fixed/fit_command/variables/fixed/$$ or
