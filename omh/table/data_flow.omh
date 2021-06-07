@@ -97,12 +97,12 @@ yes
 $rnext
 $cref/fit_data_subset/fit_data_subset_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
-$rnext
 no
+$rnext
 $cref/fixed_trace/fixed_trace_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
-$rnext
 no
+$rnext
 $cref/ipopt_info/fit_command/warm_start/ipopt_info/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no

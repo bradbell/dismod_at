@@ -25,11 +25,13 @@ $spell
 	infeasibility
 $$
 
-$section The Optimization Trace Table$$
+$section The Fixed Effects Optimization Trace Table$$
 The fixed_trace table contains the ipopt trace information
-for the most recent $cref/fit fixed/fit_command/variables/fixed/$$ command.
+for optimizing the fixed effects during the most recent
+$cref/fit fixed/fit_command/variables/fixed/$$ or
+$cref/fit both/fit_command/variables/both/$$ command.
 Each row of this table corresponds to one iteration of the
-fixed effects optimization algorithm.
+fixed effects optimization.
 
 $head Under Construction$$
 this table is under construction.
