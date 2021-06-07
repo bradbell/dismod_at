@@ -121,7 +121,7 @@
 # $cref/col_var_id/hes_random_table/col_var_id/$$,
 # $cref/hes_random_value/hes_random_table/hes_random_value/$$.
 #
-# $head fixed_trace$$
+# $head fixed_trace.csv$$
 # If the $cref/fit fixed/fit_command/variables/fixed/$$ or
 # $cref/fit both/fit_command/variables/both/$$ command has completed,
 # the contents of the $cref fixed_trace_table$$ are written to
