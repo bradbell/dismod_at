@@ -29,6 +29,10 @@
 # To see this, set $icode%print_level_fixed% = 5%$$ (in the option table) and
 # $cref/run this example/user/Run One Example/$$.
 #
+# $head Fixed Trace Table$$
+# This example uses the $cref fixed_trace_table$$
+# to check the number of iterations used.
+#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
@@ -186,25 +190,40 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	return
 # ===========================================================================
-# Run the init command to create the var table
+# Create database
 file_name = 'example.db'
 example_db(file_name)
 #
+# first fit command
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+#
+# fixed_trace table
+new               = False
+connection        = dismod_at.create_connection(file_name, new)
+fixed_trace_table = dismod_at.get_table_dict(connection, 'fixed_trace')
+connection.close()
+# trace includes iteration zero
+assert( len(fixed_trace_table) == 6 )
+#
+# warm start second fit
 dismod_at.system_command_prc(
 	[ program, file_name, 'fit', 'fixed', 'warm_start'
 ])
 # -----------------------------------------------------------------------
 # read database
-new           = False
-connection    = dismod_at.create_connection(file_name, new)
-var_table     = dismod_at.get_table_dict(connection, 'var')
-rate_table    = dismod_at.get_table_dict(connection, 'rate')
-fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
-log_table     = dismod_at.get_table_dict(connection, 'log' )
+new               = False
+connection        = dismod_at.create_connection(file_name, new)
+var_table         = dismod_at.get_table_dict(connection, 'var')
+rate_table        = dismod_at.get_table_dict(connection, 'rate')
+fit_var_table     = dismod_at.get_table_dict(connection, 'fit_var')
+log_table         = dismod_at.get_table_dict(connection, 'log' )
+fixed_trace_table = dismod_at.get_table_dict(connection, 'fixed_trace')
 connection.close()
+#
+# second fit should converge in 2 iteations
+assert( len(fixed_trace_table) <= 3 )
 #
 # check that we a warning (maximum number iterations during first fit)
 warning_count = 0

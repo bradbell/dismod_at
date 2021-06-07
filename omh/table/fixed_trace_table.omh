@@ -33,9 +33,6 @@ $cref/fit both/fit_command/variables/both/$$ command.
 Each row of this table corresponds to one iteration of the
 fixed effects optimization.
 
-$head Under Construction$$
-this table is under construction.
-
 $head fixed_trace_id$$
 This column has type $code integer$$ and
 is the primary key for the data table.
