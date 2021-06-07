@@ -1567,5 +1567,7 @@ def db2csv_command(database_file_arg) :
 		for row in table_data['fixed_trace'] :
 			row['reg_size'] = row['regularization_size']
 			del row['regularization_size']
+			for key in row :
+				row[key] = convert2output(row[key])
 			csv_writer.writerow(row)
 		csv_file.close()
