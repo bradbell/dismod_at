@@ -238,9 +238,20 @@ The fixed effect are optimized when
  is equal to <code><font color="blue">both</font></code> or <code><font color="blue">fixed</font></code>.
 In the case a new ipopt_info table, corresponding to the final
 fit for the fixed effects, is written to the ipopt_info table.
-This can be used to continue the fit when it is terminated due to reaching
+It is intended to be used to continue the fit when in the following cases:
+<ol type="1"><li>
+Termination of previous fit is due to reaching
 <a href="option_table.htm#Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter_fixed</span></a>
 .
+</li><li>
+
+The
+<a href="option_table.htm#Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerance_fixed</span></a>
+
+has been changed to a smaller value.
+</li></ol>
+
+
 The contents of this table are unspecified; i.e., not part of the
 dismod_at API and my change.
 
