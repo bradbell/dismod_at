@@ -34,15 +34,6 @@ $$
 
 $section Dismod_at Wish List$$
 
-$head Tracing Optimization$$
-Add options to specify the file name for the optimizer trace
-at both the fixed and random effects levels; see
-$href%https://list.coin-or.org/pipermail/ipopt/2015-October/004160.html%
-	output file options
-%$$.
-This would require making the same change to $code cppad_mixed$$
-and adding output file names to the option table.
-
 $head Speed$$
 The CppADCodeGen package compiles CppAD code.
 While the compilation takes time, the resulting derivative evaluations
@@ -118,11 +109,6 @@ lower and upper limits.
 This will require projecting onto the lower and upper limits
 when the prior mean is used in the $cref start_var_table$$ or
 $cref scale_var_table$$.
-
-$head Warm Starting Optimizer$$
-Provide more information, than just the starting primal point,
-when warm starting Ipopt. This would help when continuing
-an optimization that had reached its maximum number of iterations.
 
 $head Multi-Threading$$
 On a shared-memory system,
