@@ -1560,7 +1560,8 @@ def db2csv_command(database_file_arg) :
 			'reg_size',
 			'alpha_du',
 			'alpha_pr',
-			'ls_trials'
+			'ls_trials',
+			'restoration'
 		]
 		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 		csv_writer.writeheader()

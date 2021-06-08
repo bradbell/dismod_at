@@ -112,6 +112,11 @@ This column has type $code integer$$ and
 is the number of backtracking line search steps
 (does not include second-order correction steps).
 
+$head restoration$$
+This column has type $code integer$$ is zero or one.
+If it is one (zero), this is a restoration iteration
+(is not a restoration iteration).
+
 $head Reference$$
 A. Wachter and L. T. Biegler.,
 On the implementation of a primal-dual interior point

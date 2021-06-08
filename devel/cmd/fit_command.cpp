@@ -515,7 +515,7 @@ void fit_command(
 		//
 		table_name     = "fixed_trace";
 		size_t n_trace = trace_vec.size();
-		n_col = 10;
+		n_col = 11;
 		col_name.resize(n_col);
 		col_unique.resize(n_col);
 		col_type.resize(n_col);
@@ -530,12 +530,16 @@ void fit_command(
 			"regularization_size",
 			"alpha_du",
 			"alpha_pr",
-			"ls_trials"
+			"ls_trials",
+			"restoration"
 		};
 		for(size_t j = 0; j < n_col; ++j)
 		{	col_name[j]   = col_name_lst[j];
 			col_unique[j] = false;
-			if( col_name[j] == "iter" || col_name[j] == "ls_trials" )
+			bool integer = col_name[j] == "iter";
+			integer     |= col_name[j] == "ls_trials";
+			integer     |= col_name[j] == "restoration";
+			if( integer )
 				col_type[j] = "integer";
 			else
 				col_type[j] = "real";
@@ -553,6 +557,8 @@ void fit_command(
 			row_value[ id * n_col + 7] = to_string( trace_vec[id].alpha_du );
 			row_value[ id * n_col + 8] = to_string( trace_vec[id].alpha_pr );
 			row_value[ id * n_col + 9] = to_string( trace_vec[id].ls_trials );
+			row_value[ id * n_col + 10] =
+				to_string( int( trace_vec[id].restoration ) );
 		}
 		dismod_at::create_table(
 			db, table_name, col_name, col_type, col_unique, row_value
