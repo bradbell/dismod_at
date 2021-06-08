@@ -130,8 +130,16 @@ The fixed effect are optimized when
 $icode variables$$ is equal to $code both$$ or $code fixed$$.
 In the case a new ipopt_info table, corresponding to the final
 fit for the fixed effects, is written to the ipopt_info table.
-This can be used to continue the fit when it is terminated due to reaching
+It is intended to be used to continue the fit when in the following cases:
+$list number$$
+Termination of previous fit is due to reaching
 $cref/max_num_iter_fixed/option_table/Fixed and Random/max_num_iter/$$.
+$lnext
+The
+$cref/tolerance_fixed/option_table/Fixed and Random/tolerance/$$
+has been changed to a smaller value.
+$lend
+
 The contents of this table are unspecified; i.e., not part of the
 dismod_at API and my change.
 
