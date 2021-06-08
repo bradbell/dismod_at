@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info fit_var_table fit_data_subset_table effects convergence problems ipopt options example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info_table fit_var_table fit_data_subset_table effects convergence problems ipopt options example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,7 +75,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#simulate_index.data_sim_table" target="_top">data_sim_table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#simulate_index.prior_sim_table" target="_top">prior_sim_table</a>
 <br><a href="fit_command.htm#warm_start" target="_top">warm_start</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#warm_start.ipopt_info" target="_top">ipopt_info</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#warm_start.ipopt_info_table" target="_top">ipopt_info_table</a>
 <br><a href="fit_command.htm#fit_var_table" target="_top">fit_var_table</a>
 <br><a href="fit_command.htm#fit_data_subset_table" target="_top">fit_data_subset_table</a>
 <br><a href="fit_command.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
@@ -225,20 +225,9 @@ are the same as when
 <br>
 If <code><font color="blue">warm_start</font></code> is at the end of the command,
 the ipopt_info table, written by the previous fit,
-is used to start the optimization where the previous fit left off.
-In this case, the other options must be the same as for the previous fit.
-
-<br>
-<br>
-<big><a name="warm_start.ipopt_info" id="warm_start.ipopt_info">ipopt_info</a></big>
-<br>
-The fixed effect are optimized when
-
-<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
- is equal to <code><font color="blue">both</font></code> or <code><font color="blue">fixed</font></code>.
-In the case a new ipopt_info table, corresponding to the final
-fit for the fixed effects, is written to the ipopt_info table.
-It is intended to be used to continue the fit when in the following cases:
+is used to start the optimization of the fixed effects
+where the previous fit left off.
+This is intended to be used in the following cases:
 <ol type="1"><li>
 Termination of previous fit is due to reaching
 <a href="option_table.htm#Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter_fixed</span></a>
@@ -246,12 +235,24 @@ Termination of previous fit is due to reaching
 </li><li>
 
 The
-<a href="option_table.htm#Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerance_fixed</span></a>
-
-has been changed to a smaller value.
+<a href="option_table.htm#Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerance</span></a>
+ for the
+fixed or random effects been changed.
 </li></ol>
 
+Other options besides those listed above,
+should be the same as for the previous fit.
 
+<br>
+<br>
+<big><a name="warm_start.ipopt_info_table" id="warm_start.ipopt_info_table">ipopt_info_table</a></big>
+<br>
+The fixed effect are optimized when
+
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ is equal to <code><font color="blue">both</font></code> or <code><font color="blue">fixed</font></code>.
+In the case a new ipopt_info table, corresponding to the final
+fit for the fixed effects, is written to the ipopt_info table.
 The contents of this table are unspecified; i.e., not part of the
 dismod_at API and my change.
 
