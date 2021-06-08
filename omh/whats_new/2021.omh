@@ -46,8 +46,7 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-08$$
-The case were the fixed effects tolerance is changed was added
-to the suggested usage of the $cref/warm_start/fit_command/warm_start/$$ fit option.
+The $cref/warm_start/fit_command/warm_start/$$ documentation was improved.
 
 $head 06-07$$
 $list number$$

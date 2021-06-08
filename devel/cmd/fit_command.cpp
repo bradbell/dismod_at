@@ -122,24 +122,25 @@ $cref/std/prior_table/std/$$ comes from the prior table.
 $head warm_start$$
 If $code warm_start$$ is at the end of the command,
 the ipopt_info table, written by the previous fit,
-is used to start the optimization where the previous fit left off.
-In this case, the other options must be the same as for the previous fit.
-
-$subhead ipopt_info$$
-The fixed effect are optimized when
-$icode variables$$ is equal to $code both$$ or $code fixed$$.
-In the case a new ipopt_info table, corresponding to the final
-fit for the fixed effects, is written to the ipopt_info table.
-It is intended to be used to continue the fit when in the following cases:
+is used to start the optimization of the fixed effects
+where the previous fit left off.
+This is intended to be used in the following cases:
 $list number$$
 Termination of previous fit is due to reaching
 $cref/max_num_iter_fixed/option_table/Fixed and Random/max_num_iter/$$.
 $lnext
 The
-$cref/tolerance_fixed/option_table/Fixed and Random/tolerance/$$
-has been changed to a smaller value.
+$cref/tolerance/option_table/Fixed and Random/tolerance/$$ for the
+fixed or random effects been changed.
 $lend
+Other options besides those listed above,
+should be the same as for the previous fit.
 
+$subhead ipopt_info_table$$
+The fixed effect are optimized when
+$icode variables$$ is equal to $code both$$ or $code fixed$$.
+In the case a new ipopt_info table, corresponding to the final
+fit for the fixed effects, is written to the ipopt_info table.
 The contents of this table are unspecified; i.e., not part of the
 dismod_at API and my change.
 

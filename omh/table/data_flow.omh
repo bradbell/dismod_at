@@ -105,7 +105,7 @@ $cref/fixed_trace/fixed_trace_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
 $rnext
-$cref/ipopt_info/fit_command/warm_start/ipopt_info/$$ $cnext
+$cref/ipopt_info/fit_command/warm_start/ipopt_info_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
 $rnext
