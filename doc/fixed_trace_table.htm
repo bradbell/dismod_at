@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fixed Effects Optimization Trace Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fixed Effects Optimization Trace Table">
-<meta name="keywords" id="keywords" content=" the fixed effects optimization trace table discussion fixed_trace_id iter obj_value inf_pr inf_du mu d_norm regularization_size alpha_du alpha_pr ls_trials reference ">
+<meta name="keywords" id="keywords" content=" the fixed effects optimization trace table discussion fixed_trace_id iter obj_value inf_pr inf_du mu d_norm regularization_size alpha_du alpha_pr ls_trials restoration reference ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -82,6 +82,7 @@ A:active { color : purple }
 <br><a href="fixed_trace_table.htm#alpha_du" target="_top">alpha_du</a>
 <br><a href="fixed_trace_table.htm#alpha_pr" target="_top">alpha_pr</a>
 <br><a href="fixed_trace_table.htm#ls_trials" target="_top">ls_trials</a>
+<br><a href="fixed_trace_table.htm#restoration" target="_top">restoration</a>
 <br><a href="fixed_trace_table.htm#Reference" target="_top">Reference</a>
 <br><br>
 <b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
@@ -228,6 +229,14 @@ information regarding the step acceptance criterion.
 This column has type <code><font color="blue">integer</font></code> and
 is the number of backtracking line search steps
 (does not include second-order correction steps).
+
+<br>
+<br>
+<b><big><a name="restoration" id="restoration">restoration</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> is zero or one.
+If it is one (zero), this is a restoration iteration
+(is not a restoration iteration).
 
 <br>
 <br>
