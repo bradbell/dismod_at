@@ -518,11 +518,11 @@ void fit_command(
 		db, table_name, col_name, col_type, col_unique, row_value
 	);
 	if( ! random_only )
-	{	// -------------------- fixed_trace table -----------------------------
-		sql_cmd = "drop table if exists fixed_trace";
+	{	// -------------------- trace_fixed table -----------------------------
+		sql_cmd = "drop table if exists trace_fixed";
 		dismod_at::exec_sql_cmd(db, sql_cmd);
 		//
-		table_name     = "fixed_trace";
+		table_name     = "trace_fixed";
 		size_t n_trace = trace_vec.size();
 		n_col = 11;
 		col_name.resize(n_col);

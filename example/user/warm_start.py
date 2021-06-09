@@ -30,7 +30,7 @@
 # $cref/run this example/user/Run One Example/$$.
 #
 # $head Fixed Trace Table$$
-# This example uses the $cref fixed_trace_table$$
+# This example uses the $cref trace_fixed_table$$
 # to check the number of iterations used.
 #
 # $head Source Code$$
@@ -199,13 +199,13 @@ program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
-# fixed_trace table
+# trace_fixed table
 new               = False
 connection        = dismod_at.create_connection(file_name, new)
-fixed_trace_table = dismod_at.get_table_dict(connection, 'fixed_trace')
+trace_fixed_table = dismod_at.get_table_dict(connection, 'trace_fixed')
 connection.close()
 # trace includes iteration zero
-assert( len(fixed_trace_table) == 6 )
+assert( len(trace_fixed_table) == 6 )
 #
 # warm start second fit
 dismod_at.system_command_prc(
@@ -219,11 +219,11 @@ var_table         = dismod_at.get_table_dict(connection, 'var')
 rate_table        = dismod_at.get_table_dict(connection, 'rate')
 fit_var_table     = dismod_at.get_table_dict(connection, 'fit_var')
 log_table         = dismod_at.get_table_dict(connection, 'log' )
-fixed_trace_table = dismod_at.get_table_dict(connection, 'fixed_trace')
+trace_fixed_table = dismod_at.get_table_dict(connection, 'trace_fixed')
 connection.close()
 #
 # second fit should converge in 2 iteations
-assert( len(fixed_trace_table) <= 3 )
+assert( len(trace_fixed_table) <= 3 )
 #
 # check that we a warning (maximum number iterations during first fit)
 warning_count = 0

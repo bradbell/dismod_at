@@ -127,7 +127,7 @@ void init_command(
 		"fit_var",
 		"truth_var",
 		"fit_data_subset",
-		"fixed_trace",
+		"trace_fixed",
 		"ipopt_info",
 		"data_sim",
 		"prior_sim",

@@ -46,10 +46,14 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-09$$
-The $cref fixed_trace_table$$ and
+$list number$$
+Change the $code fixed_trace$$ table's name to $code trace_fixed$$.
+$lnext
+The $cref trace_fixed_table$$ and
 $cref/ipopt_info_table/fit_command/warm_start/ipopt_info_table/$$ were
 not being deleted by the $cref init_command$$.
 This has been fixed.
+$lend
 
 $head 06-08$$
 $list number$$
@@ -62,7 +66,7 @@ $lend
 $head 06-07$$
 $list number$$
 Advance to cppad_mixed-20210607
-and add $cref/restoration/fixed_trace_table/restoration/$$
+and add $cref/restoration/trace_fixed_table/restoration/$$
 to the fixed_trace table.
 $lnext
 Add a discussion heading at the top of $cref database$$ sections
@@ -73,7 +77,7 @@ $lend
 
 $head 06-06$$
 Advance to cppad_mixed-20210606.
-This enable adding the $cref fixed_trace_table$$,
+This enable adding the $cref/fixed_trace_table/trace_fixed_table/$$,
 for an example usage; see
 $cref/fixed trace table/user_warm_start.py/Fixed Trace Table/$$
 in the warm start example.

@@ -121,14 +121,14 @@
 # $cref/col_var_id/hes_random_table/col_var_id/$$,
 # $cref/hes_random_value/hes_random_table/hes_random_value/$$.
 #
-# $head fixed_trace.csv$$
+# $head trace_fixed.csv$$
 # If the $cref/fit fixed/fit_command/variables/fixed/$$ or
 # $cref/fit both/fit_command/variables/both/$$ command has completed,
-# the contents of the $cref fixed_trace_table$$ are written to
-# the CSV file $icode%dir%/fixed_trace.csv%$$.
+# the contents of the $cref trace_fixed_table$$ are written to
+# the CSV file $icode%dir%/trace_fixed.csv%$$.
 # The columns in this table have the same name as in the corresponding table
 # with the exception that the column
-# $cref/regularization_size/fixed_trace_table/regularization_size/$$
+# $cref/regularization_size/trace_fixed_table/regularization_size/$$
 # is called $icode reg_size$$.
 #
 # $comment ------------------------------------------------------------$$
@@ -745,7 +745,7 @@ def db2csv_command(database_file_arg) :
 	have_table['predict']         = check4table(cursor, 'predict')
 	have_table['hes_fixed']       = check4table(cursor, 'hes_fixed')
 	have_table['hes_random']      = check4table(cursor, 'hes_random')
-	have_table['fixed_trace']     = check4table(cursor, 'fixed_trace')
+	have_table['trace_fixed']     = check4table(cursor, 'trace_fixed')
 	# ----------------------------------------------------------------------
 	# check pairs of tables that should come togeather
 	table_pair_list = [
@@ -1544,10 +1544,10 @@ def db2csv_command(database_file_arg) :
 			csv_writer.writerow(row)
 		csv_file.close()
 	# =========================================================================
-	# fixed_trace.csv
+	# trace_fixed.csv
 	# =========================================================================
-	if have_table['fixed_trace'] :
-		file_name = os.path.join(database_dir, 'fixed_trace.csv')
+	if have_table['trace_fixed'] :
+		file_name = os.path.join(database_dir, 'trace_fixed.csv')
 		csv_file  = open(file_name, 'w')
 		#
 		header = [
@@ -1565,7 +1565,7 @@ def db2csv_command(database_file_arg) :
 		]
 		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
 		csv_writer.writeheader()
-		for row in table_data['fixed_trace'] :
+		for row in table_data['trace_fixed'] :
 			row['reg_size'] = row['regularization_size']
 			del row['regularization_size']
 			for key in row :

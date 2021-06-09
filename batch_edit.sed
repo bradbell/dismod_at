@@ -16,12 +16,12 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	omh/table/fit_trace_table.omh
+#	omh/table/fixed_trace_table.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#	s|fit_trace|fixed_trace|
+#	s|fixed_trace|trace_fixed|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,4 +33,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|fit_trace|fixed_trace|g
+s|fixed_trace|trace_fixed|g
