@@ -80,6 +80,7 @@ $end
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/get_option_table.hpp>
 # include <dismod_at/get_table_column.hpp>
+# include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/null_int.hpp>
@@ -108,6 +109,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "data_extra_columns",               ""                   },
 		{ "derivative_test_fixed",            "none"               },
 		{ "derivative_test_random",           "none"               },
+		{ "hold_out_integrand",               ""                   },
 		{ "limited_memory_max_history_fixed", "30"                 },
 		{ "max_num_iter_fixed",               "100"                },
 		{ "max_num_iter_random",              "100"                },
@@ -186,6 +188,24 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		}
 		value_vec[match] = option_value[option_id];
 		//
+		if( name_vec[match] == "hold_out_integrand" )
+		{	CppAD::vector<string> integrand_list = split_space(
+					option_value[option_id]
+			);
+			for(size_t i = 0; i < integrand_list.size(); ++i)
+			{	string name  = integrand_list[i];
+				bool   found = false;
+				for(size_t j = 0; j < number_integrand_enum; ++j)
+				{	if( name == integrand_enum2name[j] && name != "mulcov" )
+						found = true;
+				}
+				if( ! found )
+				{	msg = "hold_out_integrand: invalid interand_name = '";
+					msg += name + "'";
+					error_exit(msg, table_name, option_id);
+				}
+			}
+		}
 		if( name_vec[match] == "meas_noise_effect" )
 		{	bool ok = false;
 			ok     |= option_value[option_id] == "add_std_scale_all";

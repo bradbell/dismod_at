@@ -1040,6 +1040,7 @@ def db2csv_command(database_file_arg) :
 		[ "data_extra_columns",                ""],
 		[ "derivative_test_fixed",             "none"],
 		[ "derivative_test_random",            "none"],
+		[ "hold_out_integrand",                ""],
 		[ "limited_memory_max_history_fixed",  "30"],
 		[ "method_random",                     "ipopt_random"],
 		[ "max_num_iter_fixed",                "100"],
