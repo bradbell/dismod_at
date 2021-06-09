@@ -45,6 +45,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-09$$
+The $cref fixed_trace_table$$ and
+$cref/ipopt_info_table/fit_command/warm_start/ipopt_info_table/$$ were
+not being deleted by the $cref init_command$$.
+This has been fixed.
+
 $head 06-08$$
 $list number$$
 The $cref/warm_start/fit_command/warm_start/$$ documentation was improved.

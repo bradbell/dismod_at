@@ -50,10 +50,10 @@ $children%omh/table/log_table.omh
 	%omh/table/fixed_trace_table.omh
 %$$
 
+$comment This list should in same order as drop_list in init_command.cpp$$
 $head Output Tables by Table Name$$
 Below is a list of the $code dismod_at$$ output tables by table name:
-The ones that can be created directly by the user have
-yes under By User.
+The ones that can be created directly by the user have yes under By User.
 $table
 Table $cnext
 Output By $cnext
@@ -149,7 +149,8 @@ $cref start_var_table$$, $cref scale_var_table$$, $cref truth_var_table$$
 $rnext
 $cref/fit/fit_command/$$     $cnext
 $cref fit_var_table$$, $cref fit_data_subset_table$$, $cref age_avg_table$$,
-$cref fixed_trace_table$$, $cref/warm_start/fit_command/warm_start/$$
+$cref fixed_trace_table$$,
+$cref/ipopt_info_table/fit_command/warm_start/ipopt_info_table/$$
 $rnext
 $cref/simulate/simulate_command/$$ $cnext
 $cref data_sim_table$$, $cref age_avg_table$$

@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -116,7 +116,8 @@ void init_command(
 
 	// -----------------------------------------------------------------------
 	const char* drop_list[] = {
-		// All the output tables in Data flow section except for age_avg table
+		// This is the list of Output Tables by Table Name in the file
+		// data_flow.omh except for the age_avg table
 		// which is created by dismod_at.cpp before calling this routine.
 		"var",
 		"data_subset",
@@ -126,6 +127,8 @@ void init_command(
 		"fit_var",
 		"truth_var",
 		"fit_data_subset",
+		"fixed_trace",
+		"ipopt_info",
 		"data_sim",
 		"prior_sim",
 		"sample",
