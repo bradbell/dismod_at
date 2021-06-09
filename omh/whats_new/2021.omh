@@ -47,6 +47,9 @@ $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-09$$
 $list number$$
+Remove $code _table$$ from the links in $cref data_flow$$
+where they are in lists of tables and it is not necessary.
+$lnext
 Change the $code fixed_trace$$ table's name to $code trace_fixed$$.
 $lnext
 The $cref trace_fixed_table$$ and
