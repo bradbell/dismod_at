@@ -382,6 +382,8 @@
 # $subhead out$$
 # is the data table
 # $cref/hold_out/data_table/hold_out/$$.
+# Note that $cref/hold_out_integrand/option_table/hold_out_integrand/$$
+# in the $code option.csv$$ file may override this value.
 #
 # $subhead density$$
 # is the
