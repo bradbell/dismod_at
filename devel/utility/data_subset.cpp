@@ -70,6 +70,8 @@ $lend
 $head hold_out_integrand$$
 Is the value of $cref/hold_out_integrand/option_table/hold_out_integrand/$$
 in the option table.
+If this list is empty, $icode integrand_table$$ is not used
+(which is useful for testing).
 
 $head integrand_table$$
 is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
@@ -171,6 +173,7 @@ $end
 # include <dismod_at/data_subset.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/split_space.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -194,6 +197,22 @@ void data_subset(
 	size_t n_child     = child_object.child_size();
 	size_t n_data    = data_table.size();
 	size_t n_covariate = covariate_table.size();
+	//
+	// hold_out_vec
+	CppAD::vector<bool> hold_out_vec;
+	CppAD::vector<std::string> hold_out_list = split_space(hold_out_integrand);
+	size_t n_hold_out = hold_out_list.size();
+	if( n_hold_out > 0 )
+	{	size_t n_integrand = integrand_table.size();
+		hold_out_vec.resize(n_integrand);
+		for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
+		{	integrand_enum integrand = integrand_table[integrand_id].integrand;
+			std::string    name      = integrand_enum2name[integrand];
+			hold_out_vec[integrand_id] = false;
+			for(size_t j = 0; j < n_hold_out; ++j)
+				hold_out_vec[integrand_id] |= name == hold_out_list[j];
+		}
+	}
 	//
 	size_t n_subset = 0;
 	CppAD::vector<bool> ok(n_data);
@@ -254,8 +273,7 @@ void data_subset(
 			one_sample.age_upper    = data_table[data_id].age_upper;
 			one_sample.time_lower   = data_table[data_id].time_lower;
 			one_sample.time_upper   = data_table[data_id].time_upper;
-			// values not in avgint_subset_struct
-			one_sample.hold_out     = data_table[data_id].hold_out;
+			// values not in avgint_subset_struct except hold_out
 			int density_id          = data_table[data_id].density_id;
 			one_sample.density      = density_table[density_id];
 			one_sample.meas_value   = data_table[data_id].meas_value;
@@ -265,6 +283,13 @@ void data_subset(
 			// value that depends on data_sim table
 			one_sample.data_sim_value =
 				std::numeric_limits<double>::quiet_NaN();
+			// hold_out
+			if( hold_out_vec.size() == 0 )
+				one_sample.hold_out = data_table[data_id].hold_out;
+			else if( hold_out_vec[ data_table[data_id].integrand_id ] )
+				one_sample.hold_out = 1; // int value used for true
+			else
+				one_sample.hold_out = data_table[data_id].hold_out;
 			//
 			// advance to next sample
 			subset_id++;

@@ -31,7 +31,7 @@ namespace dismod_at {
 		double      time_lower;
 		double      time_upper;
 		// values not in avgint_subset_struct
-		int          hold_out;
+		int          hold_out; // depends on option table hold_out_integrand
 		density_enum density;
 		double       meas_value;
 		double       meas_std;
