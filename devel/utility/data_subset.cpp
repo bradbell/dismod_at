@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 /*
 $begin data_subset$$
 $spell
+	integrand
 	avgint
 	covariate
 	subsamples
@@ -26,14 +27,18 @@ $$
 
 $section Create a Subsampled Version of Data Table$$
 
+$head See Also$$
+$cref avgint_subset$$.
+
 $head Syntax$$
 $codei%data_subset(
+	%hold_out_integrand%, %integrand_table%,
 	%data_table%, %data_cov_value%, %covariate_table%, %child_object%,
 	%data_subset_obj%, %data_subset_cov_value%
 )%$$
 
-$head See Also$$
-$cref avgint_subset$$.
+$head Prototype$$
+$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
 
 $head Purpose$$
 This routine subsamples the $icode data_table$$, in the following way:
@@ -46,10 +51,14 @@ Only rows for which the covariates satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria
 are included.
 $lnext
-The subsampled rows are the same as the corresponding original row
-except that for each covariate, its
+For each covariate, its
 $cref/reference/covariate_table/reference/$$ value is subtracted
 from the value of the covariate in $icode data_table$$.
+$lnext
+For each integrand in the
+$cref/hold_out_integrand/option_table/hold_out_integrand/$$ list,
+the hold is set to one, no matter what
+$cref/hold_out/data_table/hold_out/$$ is in the data table.
 $lnext
 All of the
 $cref/child data/data_table/node_id/Child Data/$$
@@ -58,40 +67,28 @@ $cref/laplace/density_table/density_name/laplace/$$ or
 $cref/log_laplace/density_table/density_name/log_laplace/$$ density.
 $lend
 
+$head hold_out_integrand$$
+Is the value of $cref/hold_out_integrand/option_table/hold_out_integrand/$$
+in the option table.
+
+$head integrand_table$$
+is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
+
 $head data_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<data_struct>& %data_table%
-%$$
-and is the $cref/data_table/get_data_table/data_table/$$.
+is the $cref/data_table/get_data_table/data_table/$$.
 
 $head data_cov_value$$
-This argument has prototype
-$codei%
-	const CppAD::vector<double>& %data_cov_value%
-%$$
-and is the $cref/data_table/get_data_table/data_cov_value/$$
+is the $cref/data_table/get_data_table/data_cov_value/$$
 covariate values.
 
 $head covariate_table$$
-This argument has prototype
-$codei%
-	const CppAD::vector<covariate_struct>& %covariate_table%
-%$$
-and is the $cref/covariate_table/get_covariate_table/covariate_table/$$.
+is the $cref/covariate_table/get_covariate_table/covariate_table/$$.
 
 $head child_object$$
-This argument has prototype
-$codei%
-	const child_info& %child_object%
-%$$
+is a $cref child_info$$ object.
 
 $head data_subset_obj$$
-This argument has prototype
-$codei%
-	CppAD::vector<data_subset_struct>& %data_subset_obj%
-%$$
-Its input size is zero and upon return
+The input size is zero and upon return
 its size is the number of rows in $icode data_table$$ that satisfy
 the purpose above.
 The structure has all the fields that are present in
@@ -128,11 +125,7 @@ These values get replaced by simulated measurement values
 when we are fitting simulated data.
 
 $head data_subset_cov_value$$
-This argument has prototype
-$codei%
-	CppAD::vector<double>& %data_subset_cov_value%
-%$$
-Its input size is zero and upon return
+The input size is zero and upon return
 its size is $icode%n_subset% * %n_covariate%$$.
 For each $icode subset_id$$ and
 $cref/covariate_id/covariate_table/covariate_id/$$,
@@ -181,6 +174,7 @@ $end
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// BEGIN_PROTOTYPE
 void data_subset(
 	const std::string&                     hold_out_integrand    ,
 	const CppAD::vector<integrand_struct>& integrand_table       ,
@@ -191,6 +185,7 @@ void data_subset(
 	const child_info&                      child_object          ,
 	CppAD::vector<data_subset_struct>&     data_subset_obj       ,
 	CppAD::vector<double>&                 data_subset_cov_value )
+// END_PROTOTYPE
 {	assert( data_subset_obj.size() == 0 );
 	assert( data_subset_cov_value.size() == 0 );
 	if( data_table.size() == 0 )
