@@ -13,14 +13,11 @@ SET(depends "")
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
 FOREACH(user_case
-	residual
-	bilevel_random
 	age_avg_split
-	sample_asy
-	sample_sim
+	bilevel_random
 	cascade
-	change_grid
 	censor
+	change_grid
 	const_random
 	const_value
 	continue_fit
@@ -32,27 +29,30 @@ FOREACH(user_case
 	fit_random
 	fit_sim
 	group_mulcov
+	hes_fixed_math
+	hes_random
 	hold_out
 	ill_condition
 	jump_at_age
 	lasso_covariate
-	hes_fixed_math
-	hes_random
 	metropolis
 	no_children
 	one_function
-	sample_simple
-	sim_log
-	subgroup_mulcov
-	sum_residual
 	predict_fit
 	predict_mulcov
-	zsum_child_rate
-	zsum_mulcov_rate
-	zsum_mulcov_meas
 	re_scale
+	residual
+	sample_asy
+	sample_sim
+	sample_simple
+	sim_log
 	students
+	subgroup_mulcov
+	sum_residual
 	warm_start
+	zsum_child_rate
+	zsum_mulcov_meas
+	zsum_mulcov_rate
 )
 # END_SORT_THIS_LINE_MINUS_2
 	ADD_CUSTOM_TARGET(
