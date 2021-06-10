@@ -82,11 +82,12 @@ below is created by a <a href="command.htm" target="_top"><span style='white-spa
 .
 Some of the extra input tables
 may be created, or replaced, by the dismod_at user.
-Also note that a row is written in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
- at the beginning
-and end of every command.
+Also note that a row is written in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log</span></a>
+ table
+at the beginning and end of every command.
 In addition, the log table is cumulative; i.e.,
 it is never erased and restarted.
+
 
 
 
@@ -95,8 +96,7 @@ it is never erased and restarted.
 <b><big><a name="Output Tables by Table Name" id="Output Tables by Table Name">Output Tables by Table Name</a></big></b>
 <br>
 Below is a list of the <code><font color="blue">dismod_at</font></code> output tables by table name:
-The ones that can be created directly by the user have
-yes under By User.
+The ones that can be created directly by the user have yes under By User.
 <table><tr><td align='left'  valign='top'>
 
 Table </td><td align='left'  valign='top'>
@@ -199,7 +199,7 @@ yes
 no
 </td></tr><tr><td align='left'  valign='top'>
 
-<a href="fixed_trace_table.htm" target="_top"><span style='white-space: nowrap'>fixed_trace</span></a>
+<a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed</span></a>
  </td><td align='left'  valign='top'>
 
 <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit</span></a>
@@ -287,58 +287,66 @@ Output Tables </td><td align='left'  valign='top'>
 <a href="depend_command.htm" target="_top"><span style='white-space: nowrap'>depend</span></a>
    </td><td align='left'  valign='top'>
 
-<a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var_table</span></a>
-, <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+<a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var</span></a>
+
+<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set</span></a>
                      </td><td align='left'  valign='top'>
 
-<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
-, <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
-, <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+
+<a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
+
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit</span></a>
      </td><td align='left'  valign='top'>
 
-<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
-, <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
-, <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+
+<a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset</span></a>
+
+<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 ,
-<a href="fixed_trace_table.htm" target="_top"><span style='white-space: nowrap'>fixed_trace_table</span></a>
-, <a href="fit_command.htm#warm_start" target="_top"><span style='white-space: nowrap'>warm_start</span></a>
+<a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed</span></a>
+,
+<a href="fit_command.htm#warm_start.ipopt_info_table" target="_top"><span style='white-space: nowrap'>ipopt_info_table</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
  </td><td align='left'  valign='top'>
 
-<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
-, <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim</span></a>
+
+<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
  </td><td align='left'  valign='top'>
 
-<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
 ,
-<a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed_table</span></a>
+<a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed</span></a>
 ,
-<a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
+<a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random</span></a>
 
-<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
  </td><td align='left'  valign='top'>
 
-<a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict_table</span></a>
-, <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
+<a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
+
+<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 
 </td></tr>
 </table>
@@ -388,40 +396,45 @@ none
 <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set</span></a>
                      </td><td align='left'  valign='top'>
 
-<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
-, <a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
+<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+
+<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit</span></a>
      </td><td align='left'  valign='top'>
 
-<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate</span></a>
  </td><td align='left'  valign='top'>
 
-<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
  </td><td align='left'  valign='top'>
 
-<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
-, <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
-, <a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim_table</span></a>
+<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+
+<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim</span></a>
+
+<a href="prior_sim_table.htm" target="_top"><span style='white-space: nowrap'>prior_sim</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
  </td><td align='left'  valign='top'>
 
-<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample_table</span></a>
-, <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
-, <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var_table</span></a>
+<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
+
+<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
+
+<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
 
 </td></tr>
 </table>

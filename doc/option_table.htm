@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table discussion conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect zero_sum_child_rate zero_sum_mulcov_group data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv ode_step_size age_avg_split age average grid random_seed rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table discussion conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect zero_sum_child_rate zero_sum_mulcov_group data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv hold_out_integrand ode_step_size age_avg_split age average grid random_seed rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -97,6 +97,7 @@ A:active { color : purple }
 <br><a href="option_table.htm#warn_on_stderr" target="_top">warn_on_stderr</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#warn_on_stderr.Default" target="_top">Default</a>
 <br><a href="option_table.htm#minimum_meas_cv" target="_top">minimum_meas_cv</a>
+<br><a href="option_table.htm#hold_out_integrand" target="_top">hold_out_integrand</a>
 <br><a href="option_table.htm#ode_step_size" target="_top">ode_step_size</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#ode_step_size.Default" target="_top">Default</a>
 <br><a href="option_table.htm#age_avg_split" target="_top">age_avg_split</a>
@@ -497,6 +498,24 @@ This option is no longer available because it is now
 integrand specific; see
 <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
 .
+
+<br>
+<br>
+<b><big><a name="hold_out_integrand" id="hold_out_integrand">hold_out_integrand</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;hold_out_integrand</span></font></code>
+,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is a space separated list of
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_names</span></a>
+.
+(The integrand names cannot begin with <code><font color="blue">mulcov_</font></code>.)
+All the data for the corresponding integrands is held out during any fit.
+This overrides the data table <a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+
+value for the corresponding integrands.
 
 <br>
 <br>

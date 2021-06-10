@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fixed Effects Optimization Trace Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fixed Effects Optimization Trace Table">
-<meta name="keywords" id="keywords" content=" the fixed effects optimization trace table discussion fixed_trace_id iter obj_value inf_pr inf_du mu d_norm regularization_size alpha_du alpha_pr ls_trials restoration reference ">
+<meta name="keywords" id="keywords" content=" the fixed effects optimization trace table discussion trace_fixed_id iter obj_value inf_pr inf_du mu d_norm regularization_size alpha_du alpha_pr ls_trials restoration reference ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_fixed_trace_table_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_trace_fixed_table_htm.js'>
 </script>
 </head>
 <body>
@@ -37,7 +37,7 @@ A:active { color : purple }
 <option>dismod_at</option>
 <option>database</option>
 <option>data_flow</option>
-<option>fixed_trace_table</option>
+<option>trace_fixed_table</option>
 </select>
 </td>
 <td>
@@ -61,7 +61,7 @@ A:active { color : purple }
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_data_flow_htm.js'></script>
 </td>
-<td>fixed_trace_table</td>
+<td>trace_fixed_table</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
@@ -70,24 +70,24 @@ A:active { color : purple }
 
 <center><b><big><big>The Fixed Effects Optimization Trace Table</big></big></b></center>
 
-<br><a href="fixed_trace_table.htm#Discussion" target="_top">Discussion</a>
-<br><a href="fixed_trace_table.htm#fixed_trace_id" target="_top">fixed_trace_id</a>
-<br><a href="fixed_trace_table.htm#iter" target="_top">iter</a>
-<br><a href="fixed_trace_table.htm#obj_value" target="_top">obj_value</a>
-<br><a href="fixed_trace_table.htm#inf_pr" target="_top">inf_pr</a>
-<br><a href="fixed_trace_table.htm#inf_du" target="_top">inf_du</a>
-<br><a href="fixed_trace_table.htm#mu" target="_top">mu</a>
-<br><a href="fixed_trace_table.htm#d_norm" target="_top">d_norm</a>
-<br><a href="fixed_trace_table.htm#regularization_size" target="_top">regularization_size</a>
-<br><a href="fixed_trace_table.htm#alpha_du" target="_top">alpha_du</a>
-<br><a href="fixed_trace_table.htm#alpha_pr" target="_top">alpha_pr</a>
-<br><a href="fixed_trace_table.htm#ls_trials" target="_top">ls_trials</a>
-<br><a href="fixed_trace_table.htm#restoration" target="_top">restoration</a>
-<br><a href="fixed_trace_table.htm#Reference" target="_top">Reference</a>
+<br><a href="trace_fixed_table.htm#Discussion" target="_top">Discussion</a>
+<br><a href="trace_fixed_table.htm#trace_fixed_id" target="_top">trace_fixed_id</a>
+<br><a href="trace_fixed_table.htm#iter" target="_top">iter</a>
+<br><a href="trace_fixed_table.htm#obj_value" target="_top">obj_value</a>
+<br><a href="trace_fixed_table.htm#inf_pr" target="_top">inf_pr</a>
+<br><a href="trace_fixed_table.htm#inf_du" target="_top">inf_du</a>
+<br><a href="trace_fixed_table.htm#mu" target="_top">mu</a>
+<br><a href="trace_fixed_table.htm#d_norm" target="_top">d_norm</a>
+<br><a href="trace_fixed_table.htm#regularization_size" target="_top">regularization_size</a>
+<br><a href="trace_fixed_table.htm#alpha_du" target="_top">alpha_du</a>
+<br><a href="trace_fixed_table.htm#alpha_pr" target="_top">alpha_pr</a>
+<br><a href="trace_fixed_table.htm#ls_trials" target="_top">ls_trials</a>
+<br><a href="trace_fixed_table.htm#restoration" target="_top">restoration</a>
+<br><a href="trace_fixed_table.htm#Reference" target="_top">Reference</a>
 <br><br>
 <b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
 <br>
-The fixed_trace table contains the ipopt trace information
+The trace_fixed table contains the ipopt trace information
 for optimizing the fixed effects during the most recent
 <a href="fit_command.htm#variables.fixed" target="_top"><span style='white-space: nowrap'>fit&nbsp;fixed</span></a>
  or
@@ -98,7 +98,7 @@ fixed effects optimization.
 
 <br>
 <br>
-<b><big><a name="fixed_trace_id" id="fixed_trace_id">fixed_trace_id</a></big></b>
+<b><big><a name="trace_fixed_id" id="trace_fixed_id">trace_fixed_id</a></big></b>
 <br>
 This column has type <code><font color="blue">integer</font></code> and
 is the primary key for the data table.
@@ -112,7 +112,7 @@ dismod_at and cppad_mixed before ipopt even sees the problem.
 <br>
 This column has type <code><font color="blue">integer</font></code> and
 is the current iteration count (which is equal to 
-<code><i><font color="black"><span style='white-space: nowrap'>fixed_trace_id</span></font></i></code>
+<code><i><font color="black"><span style='white-space: nowrap'>trace_fixed_id</span></font></i></code>
 ).
 This includes regular iterations and iterations during the restoration phase.
 
@@ -248,7 +248,7 @@ filter line search algorithm for large-scale nonlinear programming.
 Mathematical Programming, 106(1):25-57, 2006.
 
 
-<hr>Input File: omh/table/fixed_trace_table.omh
+<hr>Input File: omh/table/trace_fixed_table.omh
 
 </body>
 </html>

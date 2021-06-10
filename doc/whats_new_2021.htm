@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>06-10</option>
+<option>06-09</option>
 <option>06-08</option>
 <option>06-07</option>
 <option>06-06</option>
@@ -95,6 +97,38 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
 <br>
+<b><big><a name="06-10" id="06-10">06-10</a></big></b>
+<br>
+Add the <a href="option_table.htm#hold_out_integrand" target="_top"><span style='white-space: nowrap'>hold_out_integrand</span></a>
+ option
+and <a href="user_hold_out.py.htm" target="_top"><span style='white-space: nowrap'>user_hold_out.py</span></a>
+ example.
+
+<br>
+<br>
+<b><big><a name="06-09" id="06-09">06-09</a></big></b>
+
+<ol type="1"><li>
+Remove <code><font color="blue">_table</font></code> from the links in <a href="data_flow.htm" target="_top"><span style='white-space: nowrap'>data_flow</span></a>
+
+where they are in lists of tables and it is not necessary.
+</li><li>
+
+Change the <code><font color="blue">fixed_trace</font></code> table's name to <code><font color="blue">trace_fixed</font></code>.
+</li><li>
+
+The <a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed_table</span></a>
+ and
+<a href="fit_command.htm#warm_start.ipopt_info_table" target="_top"><span style='white-space: nowrap'>ipopt_info_table</span></a>
+ were
+not being deleted by the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+.
+This has been fixed.
+</li></ol>
+
+
+<br>
+<br>
 <b><big><a name="06-08" id="06-08">06-08</a></big></b>
 
 <ol type="1"><li>
@@ -113,7 +147,7 @@ because they have been completed.
 
 <ol type="1"><li>
 Advance to cppad_mixed-20210607
-and add <a href="fixed_trace_table.htm#restoration" target="_top"><span style='white-space: nowrap'>restoration</span></a>
+and add <a href="trace_fixed_table.htm#restoration" target="_top"><span style='white-space: nowrap'>restoration</span></a>
 
 to the fixed_trace table.
 </li><li>
@@ -132,7 +166,7 @@ e.g., the covariate table
 <b><big><a name="06-06" id="06-06">06-06</a></big></b>
 <br>
 Advance to cppad_mixed-20210606.
-This enable adding the <a href="fixed_trace_table.htm" target="_top"><span style='white-space: nowrap'>fixed_trace_table</span></a>
+This enable adding the <a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>fixed_trace_table</span></a>
 ,
 for an example usage; see
 <a href="user_warm_start.py.htm#Fixed Trace Table" target="_top"><span style='white-space: nowrap'>fixed&nbsp;trace&nbsp;table</span></a>

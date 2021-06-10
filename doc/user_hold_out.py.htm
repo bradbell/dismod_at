@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Continuing a Fit Using Ipopt Warm Start</title>
+<title>Using hold_out in Data and Option Tables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Continuing a Fit Using Ipopt Warm Start">
-<meta name="keywords" id="keywords" content=" continuing fit using ipopt warm start option table fixed trace source code ">
+<meta name="description" id="description" content="Using hold_out in Data and Option Tables">
+<meta name="keywords" id="keywords" content=" using hold_out data option tables purpose integrands nodes prevalence sincidence model fit source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_warm_start.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_hold_out.py_htm.js'>
 </script>
 </head>
 <body>
@@ -36,7 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>user</option>
-<option>user_warm_start.py</option>
+<option>user_hold_out.py</option>
 </select>
 </td>
 <td>
@@ -49,50 +49,101 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_zsum_mulcov_rate.py.htm" target="_top">Prev</a>
-</td><td><a href="database.htm" target="_top">Next</a>
+<td><a href="user_group_mulcov.py.htm" target="_top">Prev</a>
+</td><td><a href="user_ill_condition.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
 </td>
-<td>user_warm_start.py</td>
+<td>user_hold_out.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Continuing a Fit Using Ipopt Warm Start</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Using hold_out in Data and Option Tables</big></big></b></center>
 
-<br><a href="user_warm_start.py.htm#Option Table" target="_top">Option&nbsp;Table</a>
-<br><a href="user_warm_start.py.htm#Fixed Trace Table" target="_top">Fixed&nbsp;Trace&nbsp;Table</a>
-<br><a href="user_warm_start.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><a href="user_hold_out.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_hold_out.py.htm#Integrands" target="_top">Integrands</a>
+<br><a href="user_hold_out.py.htm#Nodes" target="_top">Nodes</a>
+<br><a href="user_hold_out.py.htm#Data" target="_top">Data</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_hold_out.py.htm#Data.prevalence" target="_top">prevalence</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_hold_out.py.htm#Data.Sincidence" target="_top">Sincidence</a>
+<br><a href="user_hold_out.py.htm#Model" target="_top">Model</a>
+<br><a href="user_hold_out.py.htm#Fit" target="_top">Fit</a>
+<br><a href="user_hold_out.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
-<b><big><a name="Option Table" id="Option Table">Option Table</a></big></b>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-In the option table defined below,
-
-<code><i><font color="black"><span style='white-space: nowrap'>max_num_iter_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;5</span></font></code>
-.
-This fit will terminate when
-the maximum number of iterations is reached.
-The corresponding warning is suppressed by setting
-
-<code><i><font color="black"><span style='white-space: nowrap'>warn_on_stderr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;false</span></font></code>
-.
-The second fit will start where the first left off.
-To see this, set 
-<code><i><font color="black"><span style='white-space: nowrap'>print_level_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;5</span></font></code>
- (in the option table) and
-<a href="user.htm#Run One Example" target="_top"><span style='white-space: nowrap'>run&nbsp;this&nbsp;example</span></a>
+This example shows how to use the data table
+<a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ and option table
+<a href="option_table.htm#hold_out_integrand" target="_top"><span style='white-space: nowrap'>hold_out_integrand</span></a>
 .
 
 <br>
 <br>
-<b><big><a name="Fixed Trace Table" id="Fixed Trace Table">Fixed Trace Table</a></big></b>
+<b><big><a name="Integrands" id="Integrands">Integrands</a></big></b>
 <br>
-This example uses the <a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed_table</span></a>
+For this example there are two integrand,
+<code><font color="blue">Sincidence</font></code> and <code><font color="blue">prevalence</font></code>.
 
-to check the number of iterations used.
+<br>
+<br>
+<b><big><a name="Nodes" id="Nodes">Nodes</a></big></b>
+<br>
+There is only one node called <code><font color="blue">world</font></code> for this example.
+There are no random effects because there are no child nodes.
+
+<br>
+<br>
+<b><big><a name="Data" id="Data">Data</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Data.prevalence" id="Data.prevalence">prevalence</a></big>
+<br>
+All of the prevalence data is zero, but it is held out using
+<a href="option_table.htm#hold_out_integrand" target="_top"><span style='white-space: nowrap'>hold_out_integrand</span></a>
+.
+
+<br>
+<br>
+<big><a name="Data.Sincidence" id="Data.Sincidence">Sincidence</a></big>
+<br>
+There are two incidence data points,
+one has the true value for incidence with 
+<code><i><font color="black"><span style='white-space: nowrap'>hold_out</span></font></i></code>
+ equal to zero,
+the other is zero with 
+<code><i><font color="black"><span style='white-space: nowrap'>hold_out</span></font></i></code>
+ equal to one.
+
+<br>
+<br>
+<b><big><a name="Model" id="Model">Model</a></big></b>
+<br>
+There is only one rate 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ and it is constant in age and time.
+The corresponding model for the Sincidence data is 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+.
+The corresponding mode for the prevalence data is
+
+<code><font color="blue"><span style='white-space: nowrap'>1&nbsp;-&nbsp;exp(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+.
+
+<br>
+<br>
+<b><big><a name="Fit" id="Fit">Fit</a></big></b>
+<br>
+Because the zero prevalence data and zero incidence data is held out,
+the fitting value for 
+<code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
+ is very close to the true value
+for incidence.
 
 <br>
 <br>
@@ -106,7 +157,8 @@ iota_true                 <font color="#990000">=</font> <font color="#993399">0
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> copy
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/warm_start.py'</font>
+<b><font color="#000080">import</font></b> math
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/hold_out.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -140,7 +192,8 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># integrand table:</font></i>
      integrand_table <font color="#990000">=</font> <font color="#990000">[</font>
-           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Sincidence'</font> <font color="#990000">}</font>
+           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Sincidence'</font> <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'prevalence'</font> <font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># node table:</font></i>
@@ -163,7 +216,8 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># data table:</font></i>
      data_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
-     <i><font color="#9A1900"># values that are the same for all data rows</font></i>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># Data point with true value for Sincidence</font></i>
      row <font color="#990000">=</font> <font color="#990000">{</font>
           <font color="#FF0000">'integrand'</font><font color="#990000">:</font>   <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font>
           <font color="#FF0000">'meas_value'</font><font color="#990000">:</font>  iota_true<font color="#990000">,</font>
@@ -180,14 +234,26 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <font color="#990000">}</font>
      data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># Data point with zero value for Sincidence and held out in data table</font></i>
+     row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'Sincidence'</font>
+     row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font>
+     row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> True<font color="#990000">;</font>
+     data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># Data point with zero value for prevalence not held out in data table</font></i>
+     row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'prevalence'</font>
+     row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font>
+     row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> False
+     data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># prior_table</font></i>
      prior_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <i><font color="#9A1900"># prior_iota</font></i>
                <font color="#FF0000">'name'</font><font color="#990000">:</font>     <font color="#FF0000">'prior_iota'</font><font color="#990000">,</font>
                <font color="#FF0000">'density'</font><font color="#990000">:</font>  <font color="#FF0000">'uniform'</font><font color="#990000">,</font>
-               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    iota_true <font color="#990000">/</font> <font color="#993399">10</font><font color="#990000">.,</font>
-               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    iota_true <font color="#990000">*</font> <font color="#993399">10</font><font color="#990000">.,</font>
+               <font color="#FF0000">'lower'</font><font color="#990000">:</font>    iota_true <font color="#990000">/</font> <font color="#993399">10.0</font><font color="#990000">,</font>
+               <font color="#FF0000">'upper'</font><font color="#990000">:</font>    iota_true <font color="#990000">*</font> <font color="#993399">10.0</font><font color="#990000">,</font>
                <font color="#FF0000">'mean'</font><font color="#990000">:</font>     iota_true <font color="#990000">*</font> <font color="#993399">2.0</font><font color="#990000">,</font>
           <font color="#990000">}</font>
      <font color="#990000">]</font>
@@ -217,14 +283,18 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'warn_on_stderr'</font><font color="#990000">,</font>         <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>               <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>               <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'5'</font>                   <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'50'</font>                  <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>      <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                   <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>        <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-8'</font>                <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'max_num_iter_random'</font><font color="#990000">,</font>    <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'50'</font>                  <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'print_level_random'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'0'</font>                   <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_random'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-10'</font>               <font color="#990000">}</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'tolerance_random'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'1e-10'</font>               <font color="#990000">},</font>
      <font color="#990000">]</font>
+     <i><font color="#9A1900"># hold out all prevalence data no matter what hold_out in data table</font></i>
+     option_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'hold_out_integrand'</font><font color="#990000">,</font>     <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'prevalence'</font>          <font color="#990000">}</font>
+     <font color="#990000">)</font>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># subgroup_table</font></i>
      subgroup_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'subgroup'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font> <font color="#FF0000">'group'</font><font color="#990000">:</font><font color="#FF0000">'world'</font> <font color="#990000">}</font> <font color="#990000">]</font>
@@ -259,54 +329,73 @@ file_name <font color="#990000">=</font> <font color="#FF0000">'example.db'</fon
 program <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># trace_fixed table</font></i>
-new               <font color="#990000">=</font> False
-connection        <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-trace_fixed_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'trace_fixed'</font><font color="#990000">)</font>
-connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
-<i><font color="#9A1900"># trace includes iteration zero</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>trace_fixed_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">6</font> <font color="#990000">)</font>
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># warm start second fit</font></i>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font><font color="#990000">,</font> <font color="#FF0000">'warm_start'</font>
-<font color="#990000">])</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># read database</font></i>
-new               <font color="#990000">=</font> False
-connection        <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-var_table         <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
-rate_table        <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'rate'</font><font color="#990000">)</font>
-fit_var_table     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
-log_table         <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'log'</font> <font color="#990000">)</font>
-trace_fixed_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'trace_fixed'</font><font color="#990000">)</font>
+new                   <font color="#990000">=</font> False
+connection            <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+var_table             <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
+fit_var_table         <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
+data_table            <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'data'</font><font color="#990000">)</font>
+integrand_table       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'integrand'</font><font color="#990000">)</font>
+fit_data_subset_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_data_subset'</font><font color="#990000">)</font>
 connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># second fit should converge in 2 iteations</font></i>
-<b><font color="#0000FF">assert</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>trace_fixed_table<font color="#990000">)</font> <font color="#990000">&lt;=</font> <font color="#993399">3</font> <font color="#990000">)</font>
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check that we a warning (maximum number iterations during first fit)</font></i>
-warning_count <font color="#990000">=</font> <font color="#993399">0</font>
-<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> log_table <font color="#990000">:</font>
-     <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'message_type'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'warning'</font> <font color="#990000">:</font>
-          warning_count <font color="#990000">+=</font> <font color="#993399">1</font>
-<b><font color="#0000FF">assert</font></b> warning_count <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">]</font>
-<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># only one varable in this model, iota</font></i>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
-fit_value <font color="#990000">=</font> fit_var_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
-var_row   <font color="#990000">=</font> var_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
-rate_id   <font color="#990000">=</font> var_row<font color="#990000">[</font><font color="#FF0000">'rate_id'</font><font color="#990000">]</font>
-rate_name <font color="#990000">=</font> rate_table<font color="#990000">[</font>rate_id<font color="#990000">][</font><font color="#FF0000">'rate_name'</font><font color="#990000">]</font>
-<b><font color="#0000FF">assert</font></b> rate_name <font color="#990000">==</font> <font color="#FF0000">'iota'</font>
-rel_err   <font color="#990000">=</font> fit_value <font color="#990000">/</font> iota_true <font color="#990000">-</font> <font color="#993399">1.0</font>
-<b><font color="#0000FF">if</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> rel_err <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1e-6</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font> <font color="#FF0000">"iota rel_err = "</font><font color="#990000">,</font> rel_err<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>fit_var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># all three data points are in the data_sebset table, so data_subset_id is</font></i>
+<i><font color="#9A1900"># the same as data_id (see data subset table documentation).</font></i>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>fit_data_subset_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check fitted value for iota</font></i>
+iota_fit <font color="#990000">=</font> fit_var_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> iota_fit <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check residual for the first data point</font></i>
+data_row       <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+fit_row        <font color="#990000">=</font> fit_data_subset_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+integrand_id   <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
+integrand_name <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
+meas_std       <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'Sincidence'</font>
+<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
+<b><font color="#0000FF">assert</font></b> fit_row<font color="#990000">[</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font> <font color="#990000">*</font> meas_std <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check residual for the second data point (which should be -iota_true)</font></i>
+data_row       <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
+fit_row        <font color="#990000">=</font> fit_data_subset_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
+integrand_id   <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
+integrand_name <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
+meas_std       <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'Sincidence'</font>
+<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font>
+<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
+<i><font color="#9A1900"># un-weight the residual and flip sign</font></i>
+model_minus_data <font color="#990000">=</font> <font color="#990000">-</font> fit_row<font color="#990000">[</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font> <font color="#990000">*</font> meas_std
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> model_minus_data <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># check residual for the third data point (which should be - true prevalence)</font></i>
+data_row       <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font>
+fit_row        <font color="#990000">=</font> fit_data_subset_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font>
+integrand_id   <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
+integrand_name <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
+meas_std       <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
+age            <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>
+<b><font color="#0000FF">assert</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'prevalence'</font>
+<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
+<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
+<b><font color="#0000FF">assert</font></b> age <font color="#990000">==</font> data_row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>
+<i><font color="#9A1900"># un-weight the residual and flip sign</font></i>
+model_minus_data <font color="#990000">=</font> <font color="#990000">-</font> fit_row<font color="#990000">[</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font> <font color="#990000">*</font> meas_std
+prevalence_true  <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> iota_true <font color="#990000">*</font> age <font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> model_minus_data <font color="#990000">/</font> prevalence_true <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'warm_start.py: OK'</font><font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'hold_out.py: OK'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i></tt></pre>
 
-<hr>Input File: example/user/warm_start.py
+<hr>Input File: example/user/hold_out.py
 
 </body>
 </html>

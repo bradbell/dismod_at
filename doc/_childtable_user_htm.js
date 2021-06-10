@@ -20,6 +20,7 @@ document.write('\
 <option>user_fit_random.py</option>\
 <option>user_fit_sim.py</option>\
 <option>user_group_mulcov.py</option>\
+<option>user_hold_out.py</option>\
 <option>user_ill_condition.py</option>\
 <option>user_jump_at_age.py</option>\
 <option>user_lasso_covariate.py</option>\
@@ -66,6 +67,7 @@ function user_child(item)
 		'user_fit_random.py.htm',
 		'user_fit_sim.py.htm',
 		'user_group_mulcov.py.htm',
+		'user_hold_out.py.htm',
 		'user_ill_condition.py.htm',
 		'user_jump_at_age.py.htm',
 		'user_lasso_covariate.py.htm',
