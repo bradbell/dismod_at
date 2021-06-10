@@ -32,6 +32,7 @@ FOREACH(user_case
 	fit_random
 	fit_sim
 	group_mulcov
+	hold_out
 	ill_condition
 	jump_at_age
 	lasso_covariate

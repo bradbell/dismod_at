@@ -74,6 +74,7 @@ $children%
 	example/user/fit_random.py%
 	example/user/fit_sim.py%
 	example/user/group_mulcov.py%
+	example/user/hold_out.py%
 	example/user/ill_condition.py%
 	example/user/jump_at_age.py%
 	example/user/lasso_covariate.py%
@@ -103,8 +104,8 @@ $comment END_SORT_THIS_LINE_MINUS_3$$
 
 $head Examples With Explanation$$
 $table
-$rref user_covid_19.py$$
 $rref user_one_function.py$$
+$rref user_hold_out.py$$
 $rref user_sim_log.py$$
 $rref user_residual.py$$
 $rref user_fit_random.py$$
@@ -140,6 +141,7 @@ $rref user_hes_fixed_math.py$$
 $rref user_hes_random.py$$
 $rref user_sum_residual.py$$
 $rref user_warm_start.py$$
+$rref user_covid_19.py$$
 $tend
 
 $head More Examples$$
