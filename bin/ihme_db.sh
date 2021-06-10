@@ -2,7 +2,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -138,6 +138,7 @@ then
 	echo_eval mkdir -p "$local_dir"
 fi
 echo_eval cp $full_path $local_dir/$database
+echo_eval chmod a+w $local_dir/$database
 echo_eval bin/dismodat.py $local_dir/$database db2csv
 # ---------------------------------------------------------------------------
 echo 'bin/ihme_db.sh: OK'

@@ -318,6 +318,10 @@ correpsonding parent rates.
 2. In the add_meas_noise routine choose the prior_name so that it better avoids
    conflict with a previous prior. If there already was a meas_noise multiplier
    for this covariate and integrand, use it and do not add another one.
+
+06-10:
+1. Use the new hold_out_integrand setting to switch between no_ode and yes_ode
+   fitting (this simplified the fit_ihme.py code).
 '''
 }
 # help cases
@@ -1448,41 +1452,6 @@ def random_subsample_data(integrand_name, max_per_integrand) :
 	msg += 'number of {} samples: in = {} out = {}'
 	trace( msg.format(integrand_name, n_sample_in, n_sample_out) )
 # -----------------------------------------------------------------------------
-def hold_out_data (integrand_name=None, node_name= None, hold_out=None) :
-	# for a specified integrand or node, set the hold_out to 0 or 1
-	if integrand_name is None and node_name is None :
-		sys.exit('hold_out_data: both integrand_name and node_name are None')
-	if integrand_name is not None and node_name is not None :
-		sys.exit('hold_out_data: both integrand_name and node_name not None')
-	#
-	if hold_out not in [ 0, 1] :
-		msg = 'hold_out_data: hold_out is not zero or one'
-		sys.exit(msg)
-	#
-	msg  = '\nhold_out_data\n'
-	if integrand_name is not None :
-		msg += 'integrand = {}'.format(integrand_name)
-	if node_name is not None :
-		msg += 'node = {}'.format(node_name)
-	msg += ', hold_out = {}'.format(hold_out)
-	trace(msg)
-	#
-	if integrand_name is not None :
-		node_id      = None
-		integrand_id = integrand_name2id[integrand_name]
-	else :
-		node_name is not None
-		integrand_id = None
-		node_id      = node_name2id[node_name]
-	#
-	#
-	for row in data_table :
-		if integrand_id == row['integrand_id'] or node_id == row['node_id'] :
-			row['hold_out'] = hold_out
-	#
-	table_name = 'data'
-	put_table(table_name, data_table, data_col_name, data_col_type)
-# -----------------------------------------------------------------------------
 def set_data_likelihood (
 		integrand_data, integrand_name, density_name, factor_eta=None, nu=None
 ) :
@@ -2565,17 +2534,16 @@ if which_fit_arg == 'no_ode'  :
 		mulcov_value           = row[2]
 		set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value)
 	#
-	# hold out all ode integrand data
-	for integrand_name in integrand_list_yes_ode :
-		hold_out_data(integrand_name = integrand_name, hold_out = 1)
-	#
-	# hold out integrands that do not have corresponding rates
+	# hold_out_integrand
+	hold_out_integrand = copy.copy( integrand_list_yes_ode )
 	if iota_zero :
-		hold_out_data(integrand_name = 'Sincidence', hold_out = 1)
+		hold_out_integrand.append('Sincidence')
 	if rho_zero :
-		hold_out_data(integrand_name = 'remission', hold_out = 1)
+		hold_out_integrand.append('remission')
 	if chi_zero :
-		hold_out_data(integrand_name = 'mtexcess', hold_out = 1)
+		hold_out_integrand.append('mtexcess')
+	hold_out_integrand = ' '.join(hold_out_integrand)
+	set_option('hold_out_integrand',  hold_out_integrand)
 	#
 	# init
 	system_command([ 'dismod_at', temp_database, 'init'])
@@ -2602,13 +2570,19 @@ if which_fit_arg == 'yes_ode'  :
 		'dismod_at', temp_database, 'set', 'start_var', 'fit_var'
 	])
 	#
-	# put ode integrands data back in the fit
-	for integrand_name in integrand_list_yes_ode :
-		hold_out_data(integrand_name = integrand_name, hold_out = 0)
-	#
-	# exclude integerands that are just used to get starting value
-	for integrand_name in specific.ode_hold_out_list :
-		hold_out_data(integrand_name = integrand_name, hold_out = 1)
+	# hold_out_integrand
+	hold_out_integrand = copy.copy( specific.ode_hold_out_list )
+	iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
+	rho_zero  = rate_table[ rate_name2id['rho'] ]['parent_smooth_id'] is None
+	chi_zero  = rate_table[ rate_name2id['chi'] ]['parent_smooth_id'] is None
+	if iota_zero :
+		hold_out_integrand.append('Sincidence')
+	if rho_zero :
+		hold_out_integrand.append('remission')
+	if chi_zero :
+		hold_out_integrand.append('mtexcess')
+	hold_out_integrand = ' '.join(hold_out_integrand)
+	set_option('hold_out_integrand',  hold_out_integrand)
 	#
 	# fit both
 	t0 = time.time()
