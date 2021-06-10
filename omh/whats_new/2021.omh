@@ -45,6 +45,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-10$$
+Add the $cref/hold_out_integrand/option_table/hold_out_integrand/$$ option
+and $cref user_hold_out.py$$ example.
+
 $head 06-09$$
 $list number$$
 Remove $code _table$$ from the links in $cref data_flow$$
