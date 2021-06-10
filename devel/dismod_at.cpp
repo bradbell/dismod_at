@@ -475,8 +475,11 @@ int main(int n_arg, const char** argv)
 	{	// -------------------------------------------------------------------
 		// data_subset_obj
 		vector<dismod_at::data_subset_struct> data_subset_obj;
+		string hold_out_integrand = option_map["hold_out_integrand"];
 		vector<double> data_subset_cov_value;
 		data_subset(
+			hold_out_integrand,
+			db_input.integrand_table,
 			db_input.density_table,
 			db_input.data_table,
 			db_input.data_cov_value,

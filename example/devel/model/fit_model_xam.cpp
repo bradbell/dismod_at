@@ -333,7 +333,10 @@ bool fit_model_xam(void)
 	// data_subset
 	vector<dismod_at::data_subset_struct> data_subset_obj;
 	vector<double> data_subset_cov_value;
+	std::string hold_out_integrand = "";
 	data_subset(
+		hold_out_integrand,
+		integrand_table,
 		density_table,
 		data_table,
 		data_cov_value,

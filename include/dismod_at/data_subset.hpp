@@ -15,6 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "get_data_table.hpp"
 # include "get_covariate_table.hpp"
 # include "get_density_table.hpp"
+# include "get_integrand_table.hpp"
 # include "child_info.hpp"
 
 namespace dismod_at {
@@ -40,6 +41,8 @@ namespace dismod_at {
 		double       data_sim_value;
 	};
 	extern void data_subset(
+		const std::string&                     hold_out_integrand      ,
+		const CppAD::vector<integrand_struct>& integrand_table         ,
 		const CppAD::vector<density_enum>&     density_table           ,
 		const CppAD::vector<data_struct>&      data_table              ,
 		const CppAD::vector<double>&           data_cov_value          ,

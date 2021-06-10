@@ -182,6 +182,8 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void data_subset(
+	const std::string&                     hold_out_integrand    ,
+	const CppAD::vector<integrand_struct>& integrand_table       ,
 	const CppAD::vector<density_enum>&     density_table         ,
 	const CppAD::vector<data_struct>&      data_table            ,
 	const CppAD::vector<double>&           data_cov_value        ,

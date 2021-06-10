@@ -16,12 +16,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	omh/table/fixed_trace_table.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#	s|fixed_trace|trace_fixed|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,4 +31,6 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|fixed_trace|trace_fixed|g
+s|^\tdata_subset($|\tstd::string hold_out_integrand = "";\n&\
+\t\thold_out_integrand,\
+\t\tintegrand_table,|

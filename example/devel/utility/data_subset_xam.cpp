@@ -24,6 +24,7 @@ $end
 */
 // BEGIN C++
 # include <limits>
+# include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/get_covariate_table.hpp>
 # include <dismod_at/get_node_table.hpp>
@@ -104,7 +105,11 @@ bool data_subset_xam(void)
 	// data_subset_obj
 	vector<dismod_at::data_subset_struct> data_subset_obj;
 	vector<double> data_subset_cov_value;
+	std::string hold_out_integrand = "";
+	vector<dismod_at::integrand_struct> integrand_table;
 	data_subset(
+		hold_out_integrand,
+		integrand_table,
 		density_table,
 		data_table,
 		data_cov_value,
