@@ -310,7 +310,7 @@ avg_noise_obj_(
 	// -----------------------------------------------------------------------
 	// subset_data_obj_
 	//
-	// only set the values that are common to data_subset and avgint_subset
+	// only set values that are in subset_data_struct and avgint_subset_struct
 	size_t n_subset = subset_object.size();
 	subset_data_obj_.resize(n_subset);
 	assert( subset_cov_value.size() == n_covariate * n_subset );
