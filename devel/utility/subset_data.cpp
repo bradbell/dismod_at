@@ -9,7 +9,7 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin data_subset$$
+$begin subset_data$$
 $spell
 	integrand
 	avgint
@@ -31,10 +31,10 @@ $head See Also$$
 $cref avgint_subset$$.
 
 $head Syntax$$
-$codei%data_subset(
+$codei%subset_data(
 	%hold_out_integrand%, %integrand_table%,
 	%data_table%, %data_cov_value%, %covariate_table%, %child_object%,
-	%data_subset_obj%, %data_subset_cov_value%
+	%subset_data_obj%, %subset_data_cov_value%
 )%$$
 
 $head Prototype$$
@@ -89,7 +89,7 @@ is the $cref/covariate_table/get_covariate_table/covariate_table/$$.
 $head child_object$$
 is a $cref child_info$$ object.
 
-$head data_subset_obj$$
+$head subset_data_obj$$
 The input size is zero and upon return
 its size is the number of rows in $icode data_table$$ that satisfy
 the purpose above.
@@ -97,48 +97,48 @@ The structure has all the fields that are present in
 $cref/data_struct/get_data_table/data_table/data_struct/$$.
 
 $subhead n_subset$$
-We use the notation $icode%n_subset% = %data_subset_obj%.size()%$$.
+We use the notation $icode%n_subset% = %subset_data_obj%.size()%$$.
 
 $subhead subset_id$$
 We use the notation $icode subset_id$$ for an index between
 zero and $icode%n_subset%-1%$$,
 
 $subhead original_id$$
-There an extra field in $code data_subset_struct$$ that has
+There an extra field in $code subset_data_struct$$ that has
 name $code original_id$$, type $code int$$.
 The values in this field are equal to the
 $icode original_id$$ for the corresponding row of $cref data_table$$.
 The value of
 $codei%
-	%data_subset_obj%[%subset_id%].original_id
+	%subset_data_obj%[%subset_id%].original_id
 %$$
 increases with $icode subset_id$$;
 i.e., for each $icode subset_id$$ less than $icode%n_subset%-2%$$,
 $codei%
-	%data_subset_obj%[%subset_id%].original_id <
-		%data_subset_obj%[%subset_id%+1].original_id
+	%subset_data_obj%[%subset_id%].original_id <
+		%subset_data_obj%[%subset_id%+1].original_id
 %$$
 
 $subhead data_sim_value$$
-There an extra field in $code data_subset_struct$$ that has
+There an extra field in $code subset_data_struct$$ that has
 name $code data_sim_value$$, type $code double$$.
 All of these values are set to $code nan$$ by this routine.
 These values get replaced by simulated measurement values
 when we are fitting simulated data.
 
-$head data_subset_cov_value$$
+$head subset_data_cov_value$$
 The input size is zero and upon return
 its size is $icode%n_subset% * %n_covariate%$$.
 For each $icode subset_id$$ and
 $cref/covariate_id/covariate_table/covariate_id/$$,
 $codei%
-%data_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%]
+%subset_data_cov_value%[%subset_id% * %n_covariate% + %covariate_id%]
 = %data_cov_value%[%original_id% * %n_covariate% + %covariate_id%]
   - reference(%covariate_id%)
 %$$
 where
 $codei%
-	%original_id% = %data_subset_obj%[%subset_id%].original_id
+	%original_id% = %subset_data_obj%[%subset_id%].original_id
 %$$
 and $codei%reference(%covariate_id%)%$$ is the
 $cref/reference/covariate_table/reference/$$ value for the
@@ -148,11 +148,11 @@ $cref/max_difference/covariate_table/max_difference/$$
 value is $code null$$ in the covariate table,
 or the covariate value is $code null$$ in $cref data_table$$,
 $codei%
-%data_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] = 0
+%subset_data_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] = 0
 %$$
 Also note that
 $codei%
-| %data_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] |
+| %subset_data_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] |
 <= max_difference(%covariate_id%)
 %$$
 where $codei%max_difference(%covariate_id%)%$$ is the
@@ -170,7 +170,7 @@ $end
 */
 
 # include <cmath>
-# include <dismod_at/data_subset.hpp>
+# include <dismod_at/subset_data.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/split_space.hpp>
@@ -178,7 +178,7 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
-void data_subset(
+void subset_data(
 	const std::string&                     hold_out_integrand    ,
 	const CppAD::vector<integrand_struct>& integrand_table       ,
 	const CppAD::vector<density_enum>&     density_table         ,
@@ -186,11 +186,11 @@ void data_subset(
 	const CppAD::vector<double>&           data_cov_value        ,
 	const CppAD::vector<covariate_struct>& covariate_table       ,
 	const child_info&                      child_object          ,
-	CppAD::vector<data_subset_struct>&     data_subset_obj       ,
-	CppAD::vector<double>&                 data_subset_cov_value )
+	CppAD::vector<subset_data_struct>&     subset_data_obj       ,
+	CppAD::vector<double>&                 subset_data_cov_value )
 // END_PROTOTYPE
-{	assert( data_subset_obj.size() == 0 );
-	assert( data_subset_cov_value.size() == 0 );
+{	assert( subset_data_obj.size() == 0 );
+	assert( subset_data_cov_value.size() == 0 );
 	if( data_table.size() == 0 )
 		return;
 	//
@@ -246,12 +246,12 @@ void data_subset(
 			n_subset++;
 	}
 	//
-	data_subset_obj.resize(n_subset);
-	data_subset_cov_value.resize(n_subset * n_covariate);
+	subset_data_obj.resize(n_subset);
+	subset_data_cov_value.resize(n_subset * n_covariate);
 	size_t subset_id = 0;
 	for(size_t data_id = 0; data_id < n_data; data_id++)
 	{	if( ok[data_id] )
-		{	data_subset_struct& one_sample( data_subset_obj[subset_id] );
+		{	subset_data_struct& one_sample( subset_data_obj[subset_id] );
 			//
 			for(size_t j = 0; j < n_covariate; j++)
 			{	size_t index          = data_id * n_covariate + j;
@@ -261,7 +261,7 @@ void data_subset(
 				if( ! std::isnan(x_j) )
 					difference = x_j - reference;
 				index = subset_id * n_covariate + j;
-				data_subset_cov_value[index] = difference;
+				subset_data_cov_value[index] = difference;
 			}
 			// values in avgint_subset_struct
 			one_sample.original_id  = int( data_id );

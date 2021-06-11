@@ -8,8 +8,8 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
-# ifndef DISMOD_AT_DATA_SUBSET_HPP
-# define DISMOD_AT_DATA_SUBSET_HPP
+# ifndef DISMOD_AT_SUBSET_DATA_HPP
+# define DISMOD_AT_SUBSET_DATA_HPP
 
 # include <cppad/utility/vector.hpp>
 # include "get_data_table.hpp"
@@ -19,7 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include "child_info.hpp"
 
 namespace dismod_at {
-	struct data_subset_struct {
+	struct subset_data_struct {
 		// values in avgint_subset_struct
 		int         original_id;
 		int         integrand_id;
@@ -40,7 +40,7 @@ namespace dismod_at {
 		// value that depends data_sim table
 		double       data_sim_value;
 	};
-	extern void data_subset(
+	extern void subset_data(
 		const std::string&                     hold_out_integrand      ,
 		const CppAD::vector<integrand_struct>& integrand_table         ,
 		const CppAD::vector<density_enum>&     density_table           ,
@@ -48,8 +48,8 @@ namespace dismod_at {
 		const CppAD::vector<double>&           data_cov_value          ,
 		const CppAD::vector<covariate_struct>& covariate_table         ,
 		const child_info&                      child_object            ,
-		CppAD::vector<data_subset_struct>&     data_subset_obj         ,
-		CppAD::vector<double>&                 data_subset_cov_value
+		CppAD::vector<subset_data_struct>&     subset_data_obj         ,
+		CppAD::vector<double>&                 subset_data_cov_value
 	);
 }
 

@@ -51,14 +51,14 @@ void depend_command(
 	sqlite3*                                      db               ,
 	const CppAD::vector<double>&                  prior_mean       ,
 	data_model&                                   data_object      ,
-	const CppAD::vector<data_subset_struct>&      data_subset_obj  ,
+	const CppAD::vector<subset_data_struct>&      subset_data_obj  ,
 	const prior_model&                            prior_object     )
 {	using std::string;
 	using CppAD::vector;
 	//
 	string table_name = "depend_var";
 	//
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(subset_data_obj);
 	//
 	// compute the dependencies
 	vector<bool> data_depend_vec  =

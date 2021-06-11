@@ -102,12 +102,12 @@ This is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
 
 $head subset_object$$
 This is the sub-sampled version of the data or avgint table; see
-$cref/data_subset_obj/data_subset/data_subset_obj/$$,
+$cref/subset_data_obj/subset_data/subset_data_obj/$$,
 $cref/avgint_subset_obj/avgint_subset/avgint_subset_obj/$$.
 
 $head subset_cov_value$$
 This is the sub-sampled version of the covariates; see
-$cref/data_subset_cov_value/data_subset/data_subset_cov_value/$$,
+$cref/subset_data_cov_value/subset_data/subset_data_cov_value/$$,
 $cref/avgint_subset_cov_value/avgint_subset/avgint_subset_cov_value/$$.
 A reference to $icode subset_cov_value$$ is used by $icode data_object$$
 (so $icode age_table$$ cannot be deleted for as long as
@@ -163,8 +163,8 @@ initialize as false.
 $head n_child_$$
 set to number of children.
 
-$head data_subset_obj_$$
-for each $icode subset_id$$, set $codei%data_subset_obj_[%subset_id%]%$$
+$head subset_data_obj_$$
+for each $icode subset_id$$, set $codei%subset_data_obj_[%subset_id%]%$$
 fields that are command both data_subset and avgint_subset.
 
 $head data_info_$$
@@ -308,27 +308,27 @@ avg_noise_obj_(
 	replace_like_called_ = false;
 	//
 	// -----------------------------------------------------------------------
-	// data_subset_obj_
+	// subset_data_obj_
 	//
 	// only set the values that are common to data_subset and avgint_subset
 	size_t n_subset = subset_object.size();
-	data_subset_obj_.resize(n_subset);
+	subset_data_obj_.resize(n_subset);
 	assert( subset_cov_value.size() == n_covariate * n_subset );
 	for(size_t i = 0; i < n_subset; i++)
-	{	data_subset_obj_[i].original_id  = subset_object[i].original_id;
-		data_subset_obj_[i].integrand_id = subset_object[i].integrand_id;
-		data_subset_obj_[i].node_id      = subset_object[i].node_id;
-		data_subset_obj_[i].subgroup_id  = subset_object[i].subgroup_id;
-		data_subset_obj_[i].weight_id    = subset_object[i].weight_id;
-		data_subset_obj_[i].age_lower    = subset_object[i].age_lower;
-		data_subset_obj_[i].age_upper    = subset_object[i].age_upper;
-		data_subset_obj_[i].time_lower   = subset_object[i].time_lower;
-		data_subset_obj_[i].time_upper   = subset_object[i].time_upper;
+	{	subset_data_obj_[i].original_id  = subset_object[i].original_id;
+		subset_data_obj_[i].integrand_id = subset_object[i].integrand_id;
+		subset_data_obj_[i].node_id      = subset_object[i].node_id;
+		subset_data_obj_[i].subgroup_id  = subset_object[i].subgroup_id;
+		subset_data_obj_[i].weight_id    = subset_object[i].weight_id;
+		subset_data_obj_[i].age_lower    = subset_object[i].age_lower;
+		subset_data_obj_[i].age_upper    = subset_object[i].age_upper;
+		subset_data_obj_[i].time_lower   = subset_object[i].time_lower;
+		subset_data_obj_[i].time_upper   = subset_object[i].time_upper;
 	}
 	// -----------------------------------------------------------------------
 	// data_info_
 	//
-	// has same size as data_subset_obj
+	// has same size as subset_data_obj
 	data_info_.resize( n_subset );
 	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
@@ -459,7 +459,7 @@ $$
 $section Set Value Necessary for Likelihood (not for Average Integrand)$$
 
 $head Syntax$$
-$icode%data_object%.replace_like(%data_subset_obj%)%$$
+$icode%data_object%.replace_like(%subset_data_obj%)%$$
 
 $head Purpose$$
 The values
@@ -474,7 +474,7 @@ However, the are necessary to use the functions
 $cref/data_object.like_one/data_model_like_one/$$ and
 $cref/data_object.like_all/data_model_like_all/$$.
 If the $cref/data_sim_value/data_sim_table/data_sim_value/$$
-values in $icode data_subset_obj$$ are not nan, these
+values in $icode subset_data_obj$$ are not nan, these
 are simulated values used in calculating the likelihood.
 
 $head data_object$$
@@ -500,15 +500,15 @@ This an index between zero and $icode%n_subset% - 1%$$.
 It is used to refer to the corresponding element of
 $icode subset_object$$.
 
-$head data_subset_obj$$
+$head subset_data_obj$$
 This argument has prototype
 $codei%
-	const CppAD::vector<data_subset_struct>& %data_subset_obj%
+	const CppAD::vector<subset_data_struct>& %subset_data_obj%
 %$$
 and has size $icode n_subset$$.
 For each $icode subset_id$$,
 and for $icode%field% = density_id%,% hold_out%,% meas_value%,% meas_std%$$,
-$icode%data_subset_obj%[%subset_id%].%field%$$,
+$icode%subset_data_obj%[%subset_id%].%field%$$,
 is used as a replacement for
 $icode%subset_object[%subset_id%]%.%field%$$.
 
@@ -521,36 +521,36 @@ program exits.
 $end
 */
 void data_model::replace_like(
-		const CppAD::vector<data_subset_struct>&  data_subset_obj )
+		const CppAD::vector<subset_data_struct>&  subset_data_obj )
 {
 	// n_subset
-	size_t n_subset = data_subset_obj_.size();
-	assert( data_subset_obj.size() == n_subset );
+	size_t n_subset = subset_data_obj_.size();
+	assert( subset_data_obj.size() == n_subset );
 	//
 	// replace density_id, hold_out, meas_value, meas_std, eta, nu
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	data_subset_obj_[subset_id].density =
-			data_subset_obj[subset_id].density;
-		data_subset_obj_[subset_id].hold_out =
-			data_subset_obj[subset_id].hold_out;
-		data_subset_obj_[subset_id].meas_value =
-			data_subset_obj[subset_id].meas_value;
-		data_subset_obj_[subset_id].meas_std =
-			data_subset_obj[subset_id].meas_std;
-		data_subset_obj_[subset_id].eta =
-			data_subset_obj[subset_id].eta;
-		data_subset_obj_[subset_id].nu =
-			data_subset_obj[subset_id].nu;
-		data_subset_obj_[subset_id].data_sim_value =
-			data_subset_obj[subset_id].data_sim_value;
+	{	subset_data_obj_[subset_id].density =
+			subset_data_obj[subset_id].density;
+		subset_data_obj_[subset_id].hold_out =
+			subset_data_obj[subset_id].hold_out;
+		subset_data_obj_[subset_id].meas_value =
+			subset_data_obj[subset_id].meas_value;
+		subset_data_obj_[subset_id].meas_std =
+			subset_data_obj[subset_id].meas_std;
+		subset_data_obj_[subset_id].eta =
+			subset_data_obj[subset_id].eta;
+		subset_data_obj_[subset_id].nu =
+			subset_data_obj[subset_id].nu;
+		subset_data_obj_[subset_id].data_sim_value =
+			subset_data_obj[subset_id].data_sim_value;
 		//
-		data_info_[subset_id].density = data_subset_obj[subset_id].density;
+		data_info_[subset_id].density = subset_data_obj[subset_id].density;
 		//
 		bool laplace = data_info_[subset_id].density == laplace_enum;
 		laplace     |= data_info_[subset_id].density == log_laplace_enum;
 		if( laplace && data_info_[subset_id].depend_on_ran_var )
 		{	std::string msg, table_name;
-			size_t data_id = data_subset_obj_[subset_id].original_id;
+			size_t data_id = subset_data_obj_[subset_id].original_id;
 			table_name = "data";
 			msg  = "density_id corresponds to laplace or log_laplace and\n";
 			msg += "model depends on random effects that are not constrained";
@@ -592,7 +592,7 @@ This argument has prototype
 $codei%
 	size_t %subset_id%
 %$$
-and is the $cref/subset_id/data_subset/data_subset_obj/subset_id/$$
+and is the $cref/subset_id/subset_data/subset_data_obj/subset_id/$$
 we are computing the average integrand for.
 
 $head pack_vec$$
@@ -628,7 +628,7 @@ Float data_model::average(
 	const CppAD::vector<Float>&   pack_vec  )
 {
 	// arguments to avg_integrand::rectangle
-	const data_subset_struct& data_item = data_subset_obj_[subset_id];
+	const subset_data_struct& data_item = subset_data_obj_[subset_id];
 	double age_lower    = data_item.age_lower;
 	double age_upper    = data_item.age_upper;
 	double time_lower   = data_item.time_lower;
@@ -704,7 +704,7 @@ before calling this function.
 $head Log-likelihood$$
 We use $cref/y_i/data_like/Notation/y_i/$$ to denote the
 $cref/meas_value/data_table/meas_value/$$ corresponding
-to this $cref/subset_id/data_subset/data_subset_obj/subset_id/$$.
+to this $cref/subset_id/subset_data/subset_data_obj/subset_id/$$.
 The log-likelihood computed by $code like_one$$ is the mapping
 $latex \[
 	\ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
@@ -738,7 +738,7 @@ This argument has prototype
 $codei%
 	size_t %subset_id%
 %$$
-and is the $cref/subset_id/data_subset/data_subset_obj/subset_id/$$
+and is the $cref/subset_id/subset_data/subset_data_obj/subset_id/$$
 we are computing the weighted residual and log-likelihood for.
 
 $head pack_vec$$
@@ -803,19 +803,19 @@ residual_struct<Float> data_model::like_one(
 	CppAD::vector<double> x(n_covariate_);
 	for(size_t j = 0; j < n_covariate_; j++)
 		x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
-	double eta          = data_subset_obj_[subset_id].eta;
-	double nu           = data_subset_obj_[subset_id].nu;
-	double meas_value   = data_subset_obj_[subset_id].meas_value;
-	double meas_std     = data_subset_obj_[subset_id].meas_std;
-	double age_lower    = data_subset_obj_[subset_id].age_lower;
-	double age_upper    = data_subset_obj_[subset_id].age_upper;
-	double time_lower   = data_subset_obj_[subset_id].time_lower;
-	double time_upper   = data_subset_obj_[subset_id].time_upper;
-	size_t weight_id    = size_t( data_subset_obj_[subset_id].weight_id );
-	size_t subgroup_id  = size_t( data_subset_obj_[subset_id].subgroup_id );
-	size_t integrand_id = size_t( data_subset_obj_[subset_id].integrand_id );
+	double eta          = subset_data_obj_[subset_id].eta;
+	double nu           = subset_data_obj_[subset_id].nu;
+	double meas_value   = subset_data_obj_[subset_id].meas_value;
+	double meas_std     = subset_data_obj_[subset_id].meas_std;
+	double age_lower    = subset_data_obj_[subset_id].age_lower;
+	double age_upper    = subset_data_obj_[subset_id].age_upper;
+	double time_lower   = subset_data_obj_[subset_id].time_lower;
+	double time_upper   = subset_data_obj_[subset_id].time_upper;
+	size_t weight_id    = size_t( subset_data_obj_[subset_id].weight_id );
+	size_t subgroup_id  = size_t( subset_data_obj_[subset_id].subgroup_id );
+	size_t integrand_id = size_t( subset_data_obj_[subset_id].integrand_id );
 	//
-	double data_sim_value   = data_subset_obj_[subset_id].data_sim_value;
+	double data_sim_value   = subset_data_obj_[subset_id].data_sim_value;
 	//
 	// average noise effect
 	Float std_effect = avg_noise_obj_.rectangle(
@@ -971,7 +971,7 @@ for the corresponding residual.
 $subhead Include Hold Outs$$
 If $icode hold_out$$ is false,
 the size of $icode residual$$ is equal the number of subset data values
-$cref/n_subset/data_subset/data_subset_obj/n_subset/$$.
+$cref/n_subset/subset_data/subset_data_obj/n_subset/$$.
 The order of the residuals is the same as in
 $cref/subset_object/data_model_ctor/subset_object/$$ in the
 $icode data_object$$ constructor.
@@ -979,7 +979,7 @@ $icode data_object$$ constructor.
 $subhead No Hold Outs$$
 If $icode hold_out$$ is true,
 the size of $icode residual$$ is equal the number of subset data values
-$cref/n_subset/data_subset/data_subset_obj/n_subset/$$,
+$cref/n_subset/subset_data/subset_data_obj/n_subset/$$,
 minus the number for which
 $cref/hold_out/data_table/hold_out/$$ is one.
 The order of the residuals is not specified in this case.
@@ -1002,9 +1002,9 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 	//
 	// loop over the subsampled data
 	CppAD::vector< residual_struct<Float> > residual_vec;
-	for(size_t subset_id = 0; subset_id < data_subset_obj_.size(); subset_id++)
+	for(size_t subset_id = 0; subset_id < subset_data_obj_.size(); subset_id++)
 	{	bool keep = hold_out == false;
-		keep     |= data_subset_obj_[subset_id].hold_out == 0;
+		keep     |= subset_data_obj_[subset_id].hold_out == 0;
 		if( random_depend )
 			keep &= data_info_[subset_id].depend_on_ran_var == true;
 		else
@@ -1046,7 +1046,7 @@ template data_model::data_model(                                   \
 	const pack_info&                         pack_object        ,  \
 	const child_info&                        child_object          \
 );
-DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(data_subset_struct)
+DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(subset_data_struct)
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \

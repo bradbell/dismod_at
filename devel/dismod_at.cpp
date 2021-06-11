@@ -473,11 +473,11 @@ int main(int n_arg, const char** argv)
 	}
 	else
 	{	// -------------------------------------------------------------------
-		// data_subset_obj
-		vector<dismod_at::data_subset_struct> data_subset_obj;
+		// subset_data_obj
+		vector<dismod_at::subset_data_struct> subset_data_obj;
 		string hold_out_integrand = option_map["hold_out_integrand"];
-		vector<double> data_subset_cov_value;
-		data_subset(
+		vector<double> subset_data_cov_value;
+		subset_data(
 			hold_out_integrand,
 			db_input.integrand_table,
 			db_input.density_table,
@@ -485,14 +485,14 @@ int main(int n_arg, const char** argv)
 			db_input.data_cov_value,
 			db_input.covariate_table,
 			child_data,
-			data_subset_obj,
-			data_subset_cov_value
+			subset_data_obj,
+			subset_data_cov_value
 		);
 		if( command_arg == "init" )
 		{	dismod_at::init_command(
 				db,
 				prior_mean,
-				data_subset_obj,
+				subset_data_obj,
 				pack_object,
 				db_input,
 				parent_node_id,
@@ -525,8 +525,8 @@ int main(int n_arg, const char** argv)
 				db_input.integrand_table ,
 				db_input.mulcov_table    ,
 				db_input.prior_table     ,
-				data_subset_obj          ,
-				data_subset_cov_value    ,
+				subset_data_obj          ,
+				subset_data_cov_value    ,
 				w_info_vec               ,
 				s_info_vec               ,
 				pack_object              ,
@@ -538,7 +538,7 @@ int main(int n_arg, const char** argv)
 					db               ,
 					prior_mean       ,
 					data_object      ,
-					data_subset_obj  ,
+					subset_data_obj  ,
 					prior_object
 				);
 			}
@@ -565,7 +565,7 @@ int main(int n_arg, const char** argv)
 					variables        ,
 					simulate_index   ,
 					db               ,
-					data_subset_obj  ,
+					subset_data_obj  ,
 					data_object      , // not  const
 					prior_object     , // not  const
 					pack_object      ,
@@ -576,12 +576,12 @@ int main(int n_arg, const char** argv)
 			}
 			else if( command_arg == "simulate" )
 			{	// replace_like
-				data_object.replace_like(data_subset_obj );
+				data_object.replace_like(subset_data_obj );
 				simulate_command(
 					argv[3]                  , // number_simulate
 					meas_noise_effect        ,
 					db                       ,
-					data_subset_obj          ,
+					subset_data_obj          ,
 					data_object              ,
 					var2prior                ,
 					pack_object              ,
@@ -602,7 +602,7 @@ int main(int n_arg, const char** argv)
 					number_sample        , // ..
 					simulate_index       , // ..
 					db                   , // not const
-					data_subset_obj      , // ...
+					subset_data_obj      , // ...
 					data_object          , // ...
 					prior_object         , // ...
 					db_input.prior_table , // const

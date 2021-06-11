@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -32,7 +32,7 @@ $codei%avgint_subset(
 )%$$
 
 $head See Also$$
-$cref data_subset$$
+$cref subset_data$$
 
 $head Purpose$$
 This routine subsamples the $icode avgint_table$$, in the following way:

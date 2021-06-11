@@ -331,10 +331,10 @@ bool fit_model_xam(void)
 	dismod_at::remove_const random_const(random_lower, random_upper);
 	//
 	// data_subset
-	vector<dismod_at::data_subset_struct> data_subset_obj;
-	vector<double> data_subset_cov_value;
+	vector<dismod_at::subset_data_struct> subset_data_obj;
+	vector<double> subset_data_cov_value;
 	std::string hold_out_integrand = "";
-	data_subset(
+	subset_data(
 		hold_out_integrand,
 		integrand_table,
 		density_table,
@@ -342,8 +342,8 @@ bool fit_model_xam(void)
 		data_cov_value,
 		covariate_table,
 		child_object,
-		data_subset_obj,
-		data_subset_cov_value
+		subset_data_obj,
+		subset_data_cov_value
 	);
 	//
 	// data_model
@@ -369,14 +369,14 @@ bool fit_model_xam(void)
 		integrand_table,
 		mulcov_table,
 		prior_table,
-		data_subset_obj,
-		data_subset_cov_value,
+		subset_data_obj,
+		subset_data_cov_value,
 		w_info_vec,
 		s_info_vec,
 		pack_object,
 		child_object
 	);
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(subset_data_obj);
 	//
 	// start_var, scale_var
 	vector<double> start_var( pack_object.size() );

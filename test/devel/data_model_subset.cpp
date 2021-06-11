@@ -233,10 +233,10 @@ bool data_model_subset(void)
 		nslist_pair
 	);
 	// data_subset
-	vector<dismod_at::data_subset_struct> data_subset_obj;
-	vector<double> data_subset_cov_value;
+	vector<dismod_at::subset_data_struct> subset_data_obj;
+	vector<double> subset_data_cov_value;
 	std::string hold_out_integrand = "";
-	data_subset(
+	subset_data(
 		hold_out_integrand,
 		integrand_table,
 		density_table,
@@ -244,8 +244,8 @@ bool data_model_subset(void)
 		data_cov_value,
 		covariate_table,
 		child_object,
-		data_subset_obj,
-		data_subset_cov_value
+		subset_data_obj,
+		subset_data_cov_value
 	);
 	// data_model
 	double bound_random = std::numeric_limits<double>::infinity();
@@ -270,8 +270,8 @@ bool data_model_subset(void)
 		integrand_table,
 		mulcov_table,
 		prior_table,
-		data_subset_obj,
-		data_subset_cov_value,
+		subset_data_obj,
+		subset_data_cov_value,
 		w_info_vec,
 		s_info_vec,
 		pack_object,
@@ -297,11 +297,11 @@ bool data_model_subset(void)
 		}
 	}
 	// check results
-	size_t n_sample = data_subset_obj.size();
+	size_t n_sample = subset_data_obj.size();
 	ok &= n_sample == 3;
 	for(size_t subset_id = 0; subset_id < n_sample; subset_id++)
 	{	Float avg      = data_object.average(subset_id, pack_vec);
-		size_t data_id = data_subset_obj[subset_id].original_id;
+		size_t data_id = subset_data_obj[subset_id].original_id;
 		double check   = check_avg(data_table[data_id]) / (age_max*time_max);
 		ok            &= fabs( 1.0 - avg / check ) <= eps;
 	}

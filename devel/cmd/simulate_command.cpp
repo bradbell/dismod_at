@@ -86,7 +86,7 @@ void simulate_command(
 	const std::string&                       number_simulate   ,
 	const std::string&                       meas_noise_effect ,
 	sqlite3*                                 db                ,
-	const CppAD::vector<data_subset_struct>& data_subset_obj   ,
+	const CppAD::vector<subset_data_struct>& subset_data_obj   ,
 	data_model&                              data_object       ,
 	const pack_prior&                        var2prior         ,
 	const pack_info&                         pack_object       ,
@@ -123,7 +123,7 @@ void simulate_command(
 	//
 	table_name      = "data_sim";
 	size_t n_col    = 3;
-	size_t n_subset = data_subset_obj.size();
+	size_t n_subset = subset_data_obj.size();
 	size_t n_row    = n_simulate * n_subset;
 	vector<string> col_name(n_col), col_type(n_col), row_value(n_col * n_row);
 	vector<bool>   col_unique(n_col);
@@ -148,13 +148,13 @@ void simulate_command(
 		double avg = data_object.average(subset_id, truth_var);
 		//
 		// density corresponding to this data point
-		density_enum density = data_subset_obj[subset_id].density;
+		density_enum density = subset_data_obj[subset_id].density;
 		//
 		// data table information
 		double difference   = false;
-		double meas_value   = data_subset_obj[subset_id].meas_value;
-		double eta          = data_subset_obj[subset_id].eta;
-		double nu           = data_subset_obj[subset_id].nu;
+		double meas_value   = subset_data_obj[subset_id].meas_value;
+		double eta          = subset_data_obj[subset_id].eta;
+		double nu           = subset_data_obj[subset_id].nu;
 		//
 		// data table adjusted standard deviation, delta
 		double delta;

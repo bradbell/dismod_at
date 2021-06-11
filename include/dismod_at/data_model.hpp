@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -13,7 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 # include <limits>
 # include <cppad/utility/vector.hpp>
-# include "data_subset.hpp"
+# include "subset_data.hpp"
 # include "get_integrand_table.hpp"
 # include "get_subgroup_table.hpp"
 # include "get_density_table.hpp"
@@ -54,11 +54,11 @@ private:
 	bool                         replace_like_called_;
 
 	// set by consructor, except that following fields set by replace_like
-	// data_subset_obj_[subset_id].density_id
-	// data_subset_obj_[subset_id].hold_out
-	// data_subset_obj_[subset_id].meas_value
-	// data_subset_obj_[subset_id].meas_std
-	CppAD::vector<data_subset_struct>         data_subset_obj_;
+	// subset_data_obj_[subset_id].density_id
+	// subset_data_obj_[subset_id].hold_out
+	// subset_data_obj_[subset_id].meas_value
+	// subset_data_obj_[subset_id].meas_std
+	CppAD::vector<subset_data_struct>         subset_data_obj_;
 
 	// Used to compute average of integrands
 	// (effectively const)
@@ -94,7 +94,7 @@ public:
 	~data_model(void);
 	//
 	void replace_like(
-		const CppAD::vector<data_subset_struct>& data_subset_obj
+		const CppAD::vector<subset_data_struct>& subset_data_obj
 	);
 	//
 	// compute an average integrand: data_model is effectively const

@@ -194,13 +194,13 @@ $end
 */
 
 // ----------------------------------------------------------------------------
-// data_subset_obj and prior_object are const when simulate_index == ""
+// subset_data_obj and prior_object are const when simulate_index == ""
 void fit_command(
 	bool                                          use_warm_start   ,
 	const std::string&                            variables        ,
 	const std::string&                            simulate_index   ,
 	sqlite3*                                      db               ,
-	CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj  ,
+	CppAD::vector<dismod_at::subset_data_struct>& subset_data_obj  ,
 	dismod_at::data_model&                        data_object      ,
 	dismod_at::prior_model&                       prior_object     ,
 	const dismod_at::pack_info&                   pack_object      ,
@@ -251,7 +251,7 @@ void fit_command(
 		vector<dismod_at::prior_sim_struct> prior_sim_table =
 			dismod_at::get_prior_sim_table(db);
 		size_t n_var      = var2prior.size();
-		size_t n_subset   = data_subset_obj.size();
+		size_t n_subset   = subset_data_obj.size();
 		size_t n_simulate = prior_sim_table.size() / n_var;
 		//
 		if( sim_index >= n_simulate )
@@ -274,22 +274,22 @@ void fit_command(
 		}
 		prior_object.replace_mean(prior_mean);
 
-		// replace meas_value in data_subset_obj
+		// replace meas_value in subset_data_obj
 		for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 		{	size_t data_sim_id = n_subset * sim_index + subset_id;
 # ifndef NDEBUG
-			double old_value = data_subset_obj[subset_id].data_sim_value;
+			double old_value = subset_data_obj[subset_id].data_sim_value;
 # endif
 			double new_value =data_sim_table[data_sim_id].data_sim_value;
 			assert(   std::isnan(old_value) );
 			assert( ! std::isnan(new_value) );
-			data_subset_obj[subset_id].data_sim_value = new_value;
+			subset_data_obj[subset_id].data_sim_value = new_value;
 		}
 
 		// simulation index
 		simulation_index = int(sim_index);
 	}
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(subset_data_obj);
 	// -----------------------------------------------------------------------
 	// read start_var table into start_var
 	vector<double> start_var;
@@ -483,7 +483,7 @@ void fit_command(
 	sql_cmd = "drop table if exists fit_data_subset";
 	dismod_at::exec_sql_cmd(db, sql_cmd);
 	//
-	size_t n_subset = data_subset_obj.size();
+	size_t n_subset = subset_data_obj.size();
 	table_name      = "fit_data_subset";
 	//
 	n_col           = 2;

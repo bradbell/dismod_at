@@ -104,7 +104,7 @@ $end
 void init_command(
 	sqlite3*                                         db                  ,
 	const CppAD::vector<double>&                     prior_mean          ,
-	const CppAD::vector<data_subset_struct>&         data_subset_obj     ,
+	const CppAD::vector<subset_data_struct>&         subset_data_obj     ,
 	const pack_info&                                 pack_object         ,
 	const db_input_struct&                           db_input            ,
 	const size_t&                                    parent_node_id      ,
@@ -158,14 +158,14 @@ void init_command(
 	// -----------------------------------------------------------------------
 	// data_subset table
 	string table_name = "data_subset";
-	size_t n_subset   = data_subset_obj.size();
+	size_t n_subset   = subset_data_obj.size();
 	vector<string> col_name(1), col_type(1), row_value(n_subset);
 	vector<bool>   col_unique(1);
 	col_name[0]       = "data_id";
 	col_type[0]       = "integer";
 	col_unique[0]     = true;
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	int data_id    = data_subset_obj[subset_id].original_id;
+	{	int data_id    = subset_data_obj[subset_id].original_id;
 		row_value[subset_id] = to_string( data_id );
 	}
 	create_table(

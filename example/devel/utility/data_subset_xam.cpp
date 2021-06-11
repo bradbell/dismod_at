@@ -29,7 +29,7 @@ $end
 # include <dismod_at/get_covariate_table.hpp>
 # include <dismod_at/get_node_table.hpp>
 # include <dismod_at/child_info.hpp>
-# include <dismod_at/data_subset.hpp>
+# include <dismod_at/subset_data.hpp>
 # include <dismod_at/null_int.hpp>
 
 bool data_subset_xam(void)
@@ -102,12 +102,12 @@ bool data_subset_xam(void)
 		parent_node_id, node_table, data_table
 	);
 
-	// data_subset_obj
-	vector<dismod_at::data_subset_struct> data_subset_obj;
-	vector<double> data_subset_cov_value;
+	// subset_data_obj
+	vector<dismod_at::subset_data_struct> subset_data_obj;
+	vector<double> subset_data_cov_value;
 	std::string hold_out_integrand = "";
 	vector<dismod_at::integrand_struct> integrand_table;
-	data_subset(
+	subset_data(
 		hold_out_integrand,
 		integrand_table,
 		density_table,
@@ -115,27 +115,27 @@ bool data_subset_xam(void)
 		data_cov_value,
 		covariate_table,
 		child_object,
-		data_subset_obj,
-		data_subset_cov_value
+		subset_data_obj,
+		subset_data_cov_value
 	);
 
 	// data_id = 0 is for world and hence not included
-	ok &= data_subset_obj[0].original_id == 1;
+	ok &= subset_data_obj[0].original_id == 1;
 	// data_id = 1 covariate values minus corresponding reference value
-	ok &= data_subset_cov_value[0 * n_covariate + 0]    == 0.0;
-	ok &= data_subset_cov_value[0 * n_covariate + 1]    == 100.;
-	ok &= data_subset_obj[0].node_id == 1;
+	ok &= subset_data_cov_value[0 * n_covariate + 0]    == 0.0;
+	ok &= subset_data_cov_value[0 * n_covariate + 1]    == 100.;
+	ok &= subset_data_obj[0].node_id == 1;
 	// data_id = 2 covariate values minus corresponding reference value
-	ok &= data_subset_obj[1].original_id == 2;
-	ok &= data_subset_cov_value[1 * n_covariate + 0]    == 0.5;
-	ok &= data_subset_cov_value[1 * n_covariate + 1]    == 200.;
-	ok &= data_subset_obj[1].node_id == 2;
+	ok &= subset_data_obj[1].original_id == 2;
+	ok &= subset_data_cov_value[1 * n_covariate + 0]    == 0.5;
+	ok &= subset_data_cov_value[1 * n_covariate + 1]    == 200.;
+	ok &= subset_data_obj[1].node_id == 2;
 	// data_id = 3 is has a sex covariate that is out of bounds
-	ok &= data_subset_obj.size() == 2;
+	ok &= subset_data_obj.size() == 2;
 
 	// check that data_sim_value is set to nan by the data_subset routine
-	for(size_t i = 0; i < data_subset_obj.size(); ++i)
-		ok &= std::isnan( data_subset_obj[i].data_sim_value );
+	for(size_t i = 0; i < subset_data_obj.size(); ++i)
+		ok &= std::isnan( subset_data_obj[i].data_sim_value );
 
 	return ok;
 }

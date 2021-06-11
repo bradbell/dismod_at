@@ -33,7 +33,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/censor_var_limit.cpp
 	utility/child_info.cpp
 	utility/cohort_ode.cpp
-	utility/data_subset.cpp
+	utility/subset_data.cpp
 	utility/eigen_ode2.cpp
 	utility/error_exit.cpp
 	utility/fixed_effect.cpp

@@ -237,10 +237,10 @@ bool like_all_xam(void)
 		nslist_pair
 	);
 	// data_subset
-	vector<dismod_at::data_subset_struct> data_subset_obj;
-	vector<double> data_subset_cov_value;
+	vector<dismod_at::subset_data_struct> subset_data_obj;
+	vector<double> subset_data_cov_value;
 	std::string hold_out_integrand = "";
-	data_subset(
+	subset_data(
 		hold_out_integrand,
 		integrand_table,
 		density_table,
@@ -248,8 +248,8 @@ bool like_all_xam(void)
 		data_cov_value,
 		covariate_table,
 		child_object,
-		data_subset_obj,
-		data_subset_cov_value
+		subset_data_obj,
+		subset_data_cov_value
 	);
 	//
 	// data_model
@@ -275,14 +275,14 @@ bool like_all_xam(void)
 		integrand_table,
 		mulcov_table,
 		prior_table,
-		data_subset_obj,
-		data_subset_cov_value,
+		subset_data_obj,
+		subset_data_cov_value,
 		w_info_vec,
 		s_info_vec,
 		pack_object,
 		child_object
 	);
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(subset_data_obj);
 	//
 	// pack_vec
 	vector<Float> pack_vec( pack_object.size() );
@@ -300,7 +300,7 @@ bool like_all_xam(void)
 		}
 	}
 	// check results
-	ok &= data_table.size() == data_subset_obj.size();
+	ok &= data_table.size() == subset_data_obj.size();
 	bool hold_out = false;
 	// parent node data does not depend on random effects
 	bool random_depend = false;

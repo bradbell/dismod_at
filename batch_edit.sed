@@ -13,13 +13,17 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#	omh/whats_new/2015.omh
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#	devel/utility/data_subset.cpp
+#	include/dismod_at/data_subset.hpp
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#	s|data_subset|subset_data|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,6 +35,13 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|^\tdata_subset($|\tstd::string hold_out_integrand = "";\n&\
-\t\thold_out_integrand,\
-\t\tintegrand_table,|
+s|DISMOD_AT_DATA_SUBSET_HPP|DISMOD_AT_SUBSET_DATA_HPP|
+s|$begin data_subset\$|$begin subset_data$|g
+s|$cref data_subset\$|$cref subset_data$|g
+s|$cref/\([a-z_]*\)/data_subset/|$cref/\1/subset_data/|g
+s|data_subset.cpp|subset_data.cpp|g
+s|data_subset.hpp|subset_data.hpp|g
+s|data_subset_struct|subset_data_struct|g
+s|data_subset_obj|subset_data_obj|g
+s|data_subset_cov_value|subset_data_cov_value|g
+s|data_subset(|subset_data(|g

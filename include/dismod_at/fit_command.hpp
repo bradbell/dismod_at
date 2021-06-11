@@ -20,7 +20,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/pack_prior.hpp>
 # include <dismod_at/get_db_input.hpp>
-# include <dismod_at/data_subset.hpp>
+# include <dismod_at/subset_data.hpp>
 # include <dismod_at/get_density_table.hpp>
 
 namespace dismod_at {
@@ -29,7 +29,7 @@ namespace dismod_at {
 		const std::string&                            variables        ,
 		const std::string&                            simulate_index   ,
 		sqlite3*                                      db               ,
-		CppAD::vector<dismod_at::data_subset_struct>& data_subset_obj  ,
+		CppAD::vector<dismod_at::subset_data_struct>& subset_data_obj  ,
 		dismod_at::data_model&                        data_object      ,
 		dismod_at::prior_model&                       prior_object     ,
 		const dismod_at::pack_info&                   pack_object      ,

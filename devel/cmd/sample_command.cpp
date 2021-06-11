@@ -220,7 +220,7 @@ void sample_command(
 	const std::string&                                 number_sample    ,
 	const std::string&                                 simulate_index   ,
 	sqlite3*                                           db               ,
-	CppAD::vector<dismod_at::data_subset_struct>&      data_subset_obj  ,
+	CppAD::vector<dismod_at::subset_data_struct>&      subset_data_obj  ,
 	dismod_at::data_model&                             data_object      ,
 	dismod_at::prior_model&                            prior_object     ,
 	const CppAD::vector<dismod_at::prior_struct>&      prior_table      ,
@@ -337,7 +337,7 @@ void sample_command(
 	if( method == "simulate" || simulate_index != "" )
 	{	data_sim_table = get_data_sim_table(db);
 		// n_subset
-		n_subset = data_subset_obj.size();
+		n_subset = subset_data_obj.size();
 		//
 		// check n_sample * n_subset == data_sim_table.size()
 		if( n_subset == 0 && data_sim_table.size() != 0  )
@@ -412,7 +412,7 @@ void sample_command(
 			// estimate fixed effects for this sample_index
 			// --------------------------------------------------------------
 			//
-			// replace data_sim_value in data_subset_obj
+			// replace data_sim_value in subset_data_obj
 			size_t offset = n_subset * sample_index;
 			for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 			{	size_t data_sim_id = offset + subset_id;
@@ -428,15 +428,15 @@ void sample_command(
 					dismod_at::error_exit(msg, table_name, data_sim_id);
 				}
 # ifndef NDEBUG
-				double old_value = data_subset_obj[subset_id].data_sim_value;
+				double old_value = subset_data_obj[subset_id].data_sim_value;
 # endif
 				double new_value =data_sim_table[data_sim_id].data_sim_value;
 				assert(   std::isnan(old_value) || sample_index > 0 );
 				assert( ! std::isnan(new_value) );
-				data_subset_obj[subset_id].data_sim_value = new_value;
+				subset_data_obj[subset_id].data_sim_value = new_value;
 			}
 			// replace_like
-			data_object.replace_like(data_subset_obj);
+			data_object.replace_like(subset_data_obj);
 			//
 			// replace prior means for fixed effects
 			for(size_t var_id = 0; var_id < n_var; ++var_id)
@@ -626,21 +626,21 @@ void sample_command(
 			dismod_at::error_exit(msg, table_name);
 		}
 		//
-		// replace meas_value in data_subset_obj
+		// replace meas_value in subset_data_obj
 		for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
 		{	size_t data_sim_id = n_subset * sim_index_size_t + subset_id;
 # ifndef NDEBUG
-			double old_value = data_subset_obj[subset_id].data_sim_value;
+			double old_value = subset_data_obj[subset_id].data_sim_value;
 # endif
 			double new_value =data_sim_table[data_sim_id].data_sim_value;
 			assert(   std::isnan(old_value) );
 			assert( ! std::isnan(new_value) );
-			data_subset_obj[subset_id].data_sim_value = new_value;
+			subset_data_obj[subset_id].data_sim_value = new_value;
 		}
 	}
 	//
 	// replace_like
-	data_object.replace_like(data_subset_obj);
+	data_object.replace_like(subset_data_obj);
 	//
 	// fit_var_value
 	vector<double> fit_var_value;
