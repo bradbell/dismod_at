@@ -266,8 +266,8 @@ assert data_table[2]['hold_out'] == 0
 #
 # check hold_out in data_subset table
 assert data_subset_table[0]['hold_out'] == 0
-assert data_subset_table[1]['hold_out'] == 1
-assert data_subset_table[2]['hold_out'] == 1
+assert data_subset_table[1]['hold_out'] == 0
+assert data_subset_table[2]['hold_out'] == 0
 #
 # check fitted value for iota
 iota_fit = fit_var_table[0]['fit_var_value']

@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin data_subset_table$$
 $spell
 	covariates
+	initializes
 $$
 
 $section The Data Subset Table$$.
@@ -19,28 +20,13 @@ $head data_subset_id$$
 This column has type $code integer$$ and is the primary key for this table.
 Its initial value is zero, and it increments by one for each row.
 
+
 $head data_id$$
 This column has type $code integer$$ and is a
 $cref/data_id/data_table/data_id/$$ in the data table.
 These values are unique and monotone increasing with
 $icode data_subset_id$$.
-
-$head hold_out$$
-This column has type $code integer$$.
-It is zero unless one of the following conditions holds:
-$list number$$
-The corresponding
-$cref/hold_out/data_table/hold_out/$$ is one in the data table.
-$lnext
-The corresponding
-$cref/integrand_id/data_table/integrand_id/$$ has an
-$cref/integrand_name/integrand_table/integrand_name/$$ in the
-$cref/hold_out_integrand/option_table/hold_out_integrand/$$ list.
-$lend
-
-
-$head Discussion$$
-This table identifies which rows of the
+This column identifies which rows of the
 $cref data_table$$ are included in the $cref fit_data_subset_table$$.
 This is defined by the set of rows in the $code data$$ table
 such that the following conditions hold:
@@ -56,6 +42,13 @@ All of the
 $cref/covariates/data_table/Covariates/$$ satisfy the
 $cref/max_difference/covariate_table/max_difference/$$ criteria.
 
+$head hold_out$$
+This column has type $code integer$$.
+If the value in this column is zero (one), the
+corresponding data is (is not) included in subsequent fits.
+The $cref init_command$$ initializes this column as zero.
+The $cref hold_out_command$$ can be used to randomly choose
+non-zero entries in this column.
 
 $head Example$$
 See $cref init_command.py$$ example and test.

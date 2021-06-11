@@ -172,9 +172,9 @@ void init_command(
 	col_type[1]       = "integer";
 	col_unique[1]     = false;
 	//
+	int hold_out = 0;
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = subset_data_obj[subset_id].original_id;
-		int hold_out   = subset_data_obj[subset_id].hold_out;
 		row_value[n_col * subset_id + 0] = to_string( data_id );
 		row_value[n_col * subset_id + 1] = to_string( hold_out );
 	}
