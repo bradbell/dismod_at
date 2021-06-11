@@ -256,7 +256,7 @@ bool meas_mulcov(void)
 		rate_table,
 		nslist_pair
 	);
-	// data_subset
+	// subset_data
 	vector<dismod_at::subset_data_struct> subset_data_obj;
 	vector<double> subset_data_cov_value;
 	std::string hold_out_integrand = "";

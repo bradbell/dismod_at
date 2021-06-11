@@ -44,7 +44,7 @@ extern bool avgint_subset_xam(void);
 extern bool bilinear_interp_xam(void);
 extern bool child_info_xam(void);
 extern bool cohort_ode_xam(void);
-extern bool data_subset_xam(void);
+extern bool subset_data_xam(void);
 extern bool eigen_ode2_xam(void);
 extern bool fixed_effect_xam(void);
 extern bool manage_gsl_rng_xam(void);
@@ -138,7 +138,7 @@ int main(void)
 	RUN(bilinear_interp_xam);
 	RUN(child_info_xam);
 	RUN(cohort_ode_xam);
-	RUN(data_subset_xam);
+	RUN(subset_data_xam);
 	RUN(eigen_ode2_xam);
 	RUN(fixed_effect_xam);
 	RUN(manage_gsl_rng_xam);

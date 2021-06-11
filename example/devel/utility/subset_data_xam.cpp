@@ -9,13 +9,13 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
-$begin data_subset_xam.cpp$$
+$begin subset_data_xam.cpp$$
 $spell
 	data
 	xam
 $$
 
-$section C++ data_subset: Example and Test$$
+$section C++ subset_data: Example and Test$$
 
 $srcthisfile%
 	0%// BEGIN C++%// END C++%1%$$
@@ -32,7 +32,7 @@ $end
 # include <dismod_at/subset_data.hpp>
 # include <dismod_at/null_int.hpp>
 
-bool data_subset_xam(void)
+bool subset_data_xam(void)
 {
 	bool   ok = true;
 	using  std::string;
@@ -133,7 +133,7 @@ bool data_subset_xam(void)
 	// data_id = 3 is has a sex covariate that is out of bounds
 	ok &= subset_data_obj.size() == 2;
 
-	// check that data_sim_value is set to nan by the data_subset routine
+	// check that data_sim_value is set to nan by the subset_data routine
 	for(size_t i = 0; i < subset_data_obj.size(); ++i)
 		ok &= std::isnan( subset_data_obj[i].data_sim_value );
 

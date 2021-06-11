@@ -810,7 +810,7 @@ $code cppad_mixed no_random_xam.cpp$$,
 $cref create_database.py$$.
 It was also fixed for the following developer examples:
 $code dev::avgint_subset_xam.cpp.cpp$$,
-$code dev::data_subset_xam.cpp.cpp$$.
+$code dev::subset_data_xam.cpp.cpp$$.
 $lnext
 Handle the case where the
 $code cppad_mixed fix_like$$ is empty.

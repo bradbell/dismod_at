@@ -330,7 +330,7 @@ bool fit_model_xam(void)
 	unpack_random(pack_object, var_upper, random_upper);
 	dismod_at::remove_const random_const(random_lower, random_upper);
 	//
-	// data_subset
+	// subset_data
 	vector<dismod_at::subset_data_struct> subset_data_obj;
 	vector<double> subset_data_cov_value;
 	std::string hold_out_integrand = "";

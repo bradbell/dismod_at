@@ -159,10 +159,10 @@ where $codei%max_difference(%covariate_id%)%$$ is the
 maximum difference for the corresponding $icode covariate_id$$.
 
 
-$childtable%example/devel/utility/data_subset_xam.cpp
+$childtable%example/devel/utility/subset_data_xam.cpp
 %$$
 $head Example$$
-The file $cref data_subset_xam.cpp$$ contains
+The file $cref subset_data_xam.cpp$$ contains
 and example and test of $code data_subset$$.
 It returns true for success and false for failure.
 
