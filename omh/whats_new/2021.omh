@@ -29,6 +29,7 @@ $spell
 	covid
 	covariates
 	covariate
+	ubuntu
 $$
 $navigate%
 	Up%Location%
@@ -46,8 +47,13 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-10$$
+$list number$$
 Add the $cref/hold_out_integrand/option_table/hold_out_integrand/$$ option
 and $cref user_hold_out.py$$ example.
+$lnext
+Advance to cppad_mixed-20210610.
+This fixes a warning message during $code bin/get_cppad_mixed.sh$$ on ubuntu.
+$lend
 
 $head 06-09$$
 $list number$$
