@@ -244,6 +244,7 @@ connection            = dismod_at.create_connection(file_name, new)
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 data_table            = dismod_at.get_table_dict(connection, 'data')
+data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
 integrand_table       = dismod_at.get_table_dict(connection, 'integrand')
 fit_data_subset_table = dismod_at.get_table_dict(connection, 'fit_data_subset')
 connection.close()
@@ -254,7 +255,19 @@ assert len(fit_var_table) == 1
 #
 # all three data points are in the data_sebset table, so data_subset_id is
 # the same as data_id (see data subset table documentation).
+assert len(data_table) == 3
+assert len(data_subset_table) == 3
 assert len(fit_data_subset_table) == 3
+#
+# check hold_out in data table
+assert data_table[0]['hold_out'] == 0
+assert data_table[1]['hold_out'] == 1
+assert data_table[2]['hold_out'] == 0
+#
+# check hold_out in data_subset table
+assert data_subset_table[0]['hold_out'] == 0
+assert data_subset_table[1]['hold_out'] == 1
+assert data_subset_table[2]['hold_out'] == 1
 #
 # check fitted value for iota
 iota_fit = fit_var_table[0]['fit_var_value']

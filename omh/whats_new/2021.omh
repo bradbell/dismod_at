@@ -46,6 +46,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-11$$
+Add the $cref/hold_out/data_subset_table/hold_out/$$ column
+to the data_subset table.
+
 $head 06-10$$
 $list number$$
 Add the $cref/hold_out_integrand/option_table/hold_out_integrand/$$ option

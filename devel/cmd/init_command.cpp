@@ -159,14 +159,24 @@ void init_command(
 	// data_subset table
 	string table_name = "data_subset";
 	size_t n_subset   = subset_data_obj.size();
-	vector<string> col_name(1), col_type(1), row_value(n_subset);
-	vector<bool>   col_unique(1);
+	size_t n_col      = 2;
+	vector<string> col_name(n_col), col_type(n_col);
+	vector<string> row_value(n_col * n_subset);
+	vector<bool>   col_unique(n_col);
+	//
 	col_name[0]       = "data_id";
 	col_type[0]       = "integer";
 	col_unique[0]     = true;
+	//
+	col_name[1]       = "hold_out";
+	col_type[1]       = "integer";
+	col_unique[1]     = false;
+	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = subset_data_obj[subset_id].original_id;
-		row_value[subset_id] = to_string( data_id );
+		int hold_out   = subset_data_obj[subset_id].hold_out;
+		row_value[n_col * subset_id + 0] = to_string( data_id );
+		row_value[n_col * subset_id + 1] = to_string( hold_out );
 	}
 	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -174,7 +184,7 @@ void init_command(
 	// -----------------------------------------------------------------------
 	// create var table
 	size_t n_row = pack_object.size();
-	size_t n_col = 11;
+	n_col = 11;
 	table_name   = "var";
 	col_name.resize(n_col);
 	col_type.resize(n_col);

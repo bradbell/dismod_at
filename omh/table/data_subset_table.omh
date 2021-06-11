@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -25,8 +25,22 @@ $cref/data_id/data_table/data_id/$$ in the data table.
 These values are unique and monotone increasing with
 $icode data_subset_id$$.
 
+$head hold_out$$
+This column has type $code integer$$.
+It is zero unless one of the following conditions holds:
+$list number$$
+The corresponding
+$cref/hold_out/data_table/hold_out/$$ is one in the data table.
+$lnext
+The corresponding
+$cref/integrand_id/data_table/integrand_id/$$ has an
+$cref/integrand_name/integrand_table/integrand_name/$$ in the
+$cref/hold_out_integrand/option_table/hold_out_integrand/$$ list.
+$lend
+
+
 $head Discussion$$
-The $code data_subset$$ table identifies which rows of the
+This table identifies which rows of the
 $cref data_table$$ are included in the $cref fit_data_subset_table$$.
 This is defined by the set of rows in the $code data$$ table
 such that the following conditions hold:
