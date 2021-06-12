@@ -41,5 +41,5 @@ do
 done
 cat user_test.tmp
 rm user_test.tmp
-echo 'user_test.sh: $user_test: Error or warning 3 times in a row.'
+echo "user_test.sh: $user_test: Error or warning 3 times in a row."
 exit 1

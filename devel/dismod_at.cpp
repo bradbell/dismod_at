@@ -220,6 +220,23 @@ int main(int n_arg, const char** argv)
 		CppAD::mixed::new_gsl_rng(random_seed);
 # endif
 	}
+	// ------------------------------------------------------------------------------
+	// check for init_command output tables
+	const char* init_table_name[] = {"var", "data_subset", "start_var", "scale_var"};
+	if( command_arg != "init" ) for(size_t i = 0; i < 4; ++i)
+	{	string sql_cmd = "select count(*) from sqlite_master ";
+		sql_cmd       += "where type='table' and name='";
+		sql_cmd       += init_table_name[i];
+		sql_cmd       += "';";
+		char sep       = ',';
+		string result  = dismod_at::exec_sql_cmd(db, sql_cmd, sep);
+		assert( result == "0\n" || result == "1\n" );
+		if( result == "0\n" && command_arg != "init" && command_arg != "set" )
+		{	message = init_table_name[i];
+			message += " table is missing and this is not init or set command";
+			dismod_at::error_exit(message);
+		}
+	}
 	// ---------------------------------------------------------------------
 	// n_covariate
 	size_t n_covariate = db_input.covariate_table.size();
@@ -390,7 +407,6 @@ int main(int n_arg, const char** argv)
 		if( std::strcmp(argv[3], "asymptotic") == 0 && n_arg == 7 )
 			fit_simulated_data = true;
 	}
-	// =======================================================================
 	// =======================================================================
 # ifdef NDEBUG
 	try { // BEGIN_TRY_BLOCK (when not debugging)
