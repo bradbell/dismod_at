@@ -424,6 +424,17 @@ int main(int n_arg, const char** argv)
 			);
 		}
 	}
+	else if( command_arg == "init" )
+	{	dismod_at::init_command(
+			db,
+			prior_mean,
+			pack_object,
+			db_input,
+			parent_node_id,
+			child_data,     // could also use child_avgint
+			s_info_vec
+		);
+	}
 	else if( command_arg == "predict" )
 	{	// avgint_subset_obj
 		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
@@ -488,132 +499,119 @@ int main(int n_arg, const char** argv)
 			subset_data_obj,
 			subset_data_cov_value
 		);
-		if( command_arg == "init" )
-		{	dismod_at::init_command(
-				db,
-				prior_mean,
-				pack_object,
-				db_input,
-				parent_node_id,
-				child_data,     // could also use child_avgint
-				s_info_vec
+		// prior_object
+		dismod_at::prior_model prior_object(
+			pack_object           ,
+			var2prior             ,
+			db_input.age_table    ,
+			db_input.time_table   ,
+			db_input.prior_table  ,
+			db_input.density_table
+		);
+		// data_object
+		dismod_at::data_model data_object(
+			fit_simulated_data       ,
+			meas_noise_effect        ,
+			rate_case                ,
+			bound_random             ,
+			n_covariate              ,
+			ode_step_size            ,
+			age_avg_grid             ,
+			db_input.age_table       ,
+			db_input.time_table      ,
+			db_input.subgroup_table  ,
+			db_input.integrand_table ,
+			db_input.mulcov_table    ,
+			db_input.prior_table     ,
+			subset_data_obj          ,
+			subset_data_cov_value    ,
+			w_info_vec               ,
+			s_info_vec               ,
+			pack_object              ,
+			child_data
+		);
+		//
+		if( command_arg == "depend" )
+		{	depend_command(
+				db               ,
+				prior_mean       ,
+				data_object      ,
+				subset_data_obj  ,
+				prior_object
+			);
+		}
+		else if( command_arg == "fit" )
+		{	string variables      = argv[3];
+			string simulate_index = "";
+			bool   use_warm_start = false;
+			if( n_arg == 5 )
+			{	if( string( argv[4] ) == "warm_start" )
+					use_warm_start = true;
+				else
+					simulate_index = argv[4];
+			}
+			if( n_arg == 6 )
+			{	simulate_index = argv[4];
+				use_warm_start = string( argv[5] ) == "warm_start";
+				if( ! use_warm_start )
+				{	message = "dismod_at fit command syntax error";
+					dismod_at::error_exit(message);
+				}
+			}
+			fit_command(
+				use_warm_start   ,
+				variables        ,
+				simulate_index   ,
+				db               ,
+				subset_data_obj  ,
+				data_object      , // not  const
+				prior_object     , // not  const
+				pack_object      ,
+				var2prior        ,
+				db_input         ,
+				option_map
+			);
+		}
+		else if( command_arg == "simulate" )
+		{	// replace_like
+			data_object.replace_like(subset_data_obj );
+			simulate_command(
+				argv[3]                  , // number_simulate
+				meas_noise_effect        ,
+				db                       ,
+				subset_data_obj          ,
+				data_object              ,
+				var2prior                ,
+				pack_object              ,
+				db_input                 ,
+				option_map
+			);
+		}
+		else if( command_arg == "sample" )
+		{	string method         = argv[3];
+			string variables      = argv[4];
+			string number_sample  = argv[5];
+			string simulate_index = "";
+			if( n_arg == 7 )
+				simulate_index = argv[6];
+			sample_command(
+				method               , // const
+				variables            , // ..
+				number_sample        , // ..
+				simulate_index       , // ..
+				db                   , // not const
+				subset_data_obj      , // ...
+				data_object          , // ...
+				prior_object         , // ...
+				db_input.prior_table , // const
+				pack_object          , // ...
+				var2prior            , // ...
+				db_input             , // ...
+				option_map             // effectively const
 			);
 		}
 		else
-		{	// ---------------------------------------------------------------
-			//
-			dismod_at::prior_model prior_object(
-				pack_object           ,
-				var2prior             ,
-				db_input.age_table    ,
-				db_input.time_table   ,
-				db_input.prior_table  ,
-				db_input.density_table
-			);
-			dismod_at::data_model data_object(
-				fit_simulated_data       ,
-				meas_noise_effect        ,
-				rate_case                ,
-				bound_random             ,
-				n_covariate              ,
-				ode_step_size            ,
-				age_avg_grid             ,
-				db_input.age_table       ,
-				db_input.time_table      ,
-				db_input.subgroup_table  ,
-				db_input.integrand_table ,
-				db_input.mulcov_table    ,
-				db_input.prior_table     ,
-				subset_data_obj          ,
-				subset_data_cov_value    ,
-				w_info_vec               ,
-				s_info_vec               ,
-				pack_object              ,
-				child_data
-			);
-			//
-			if( command_arg == "depend" )
-			{	depend_command(
-					db               ,
-					prior_mean       ,
-					data_object      ,
-					subset_data_obj  ,
-					prior_object
-				);
-			}
-			else if( command_arg == "fit" )
-			{	string variables      = argv[3];
-				string simulate_index = "";
-				bool   use_warm_start = false;
-				if( n_arg == 5 )
-				{	if( string( argv[4] ) == "warm_start" )
-						use_warm_start = true;
-					else
-						simulate_index = argv[4];
-				}
-				if( n_arg == 6 )
-				{	simulate_index = argv[4];
-					use_warm_start = string( argv[5] ) == "warm_start";
-					if( ! use_warm_start )
-					{	message = "dismod_at fit command syntax error";
-						dismod_at::error_exit(message);
-					}
-				}
-				fit_command(
-					use_warm_start   ,
-					variables        ,
-					simulate_index   ,
-					db               ,
-					subset_data_obj  ,
-					data_object      , // not  const
-					prior_object     , // not  const
-					pack_object      ,
-					var2prior        ,
-					db_input         ,
-					option_map
-				);
-			}
-			else if( command_arg == "simulate" )
-			{	// replace_like
-				data_object.replace_like(subset_data_obj );
-				simulate_command(
-					argv[3]                  , // number_simulate
-					meas_noise_effect        ,
-					db                       ,
-					subset_data_obj          ,
-					data_object              ,
-					var2prior                ,
-					pack_object              ,
-					db_input                 ,
-					option_map
-				);
-			}
-			else if( command_arg == "sample" )
-			{	string method         = argv[3];
-				string variables      = argv[4];
-				string number_sample  = argv[5];
-				string simulate_index = "";
-				if( n_arg == 7 )
-					simulate_index = argv[6];
-				sample_command(
-					method               , // const
-					variables            , // ..
-					number_sample        , // ..
-					simulate_index       , // ..
-					db                   , // not const
-					subset_data_obj      , // ...
-					data_object          , // ...
-					prior_object         , // ...
-					db_input.prior_table , // const
-					pack_object          , // ...
-					var2prior            , // ...
-					db_input             , // ...
-					option_map             // effectively const
-				);
-			}
-			else
-				assert(false);
-		}
+			assert(false);
 	}
 	// =======================================================================
 # ifdef NDEBUG
