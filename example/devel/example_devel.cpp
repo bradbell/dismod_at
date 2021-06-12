@@ -70,6 +70,7 @@ extern bool get_option_table_xam(void);
 extern bool get_column_max_xam(void);
 extern bool get_covariate_table_xam(void);
 extern bool get_data_table_xam(void);
+extern bool get_data_subset_xam(void);
 extern bool get_density_table_xam(void);
 extern bool get_integrand_table_xam(void);
 extern bool get_prior_table_xam(void);
@@ -164,6 +165,7 @@ int main(void)
 	RUN(get_column_max_xam);
 	RUN(get_covariate_table_xam);
 	RUN(get_data_table_xam);
+	RUN(get_data_subset_xam);
 	RUN(get_density_table_xam);
 	RUN(get_integrand_table_xam);
 	RUN(get_prior_table_xam);

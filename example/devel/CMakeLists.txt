@@ -53,6 +53,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/get_column_max_xam.cpp
 	table/get_covariate_table_xam.cpp
 	table/get_data_table_xam.cpp
+	table/get_data_subset_xam.cpp
 	table/get_density_table_xam.cpp
 	table/get_integrand_table_xam.cpp
 	table/get_prior_table_xam.cpp

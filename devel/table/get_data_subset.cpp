@@ -55,12 +55,11 @@ $code int$$ $cnext $code hold_out$$ $cnext
 	for this measurement.
 $tend
 
-$comment%example/devel/table/get_data_subset_xam.cpp
-%
-head Example
-The file cref get_data_subset_xam.cpp contains an example
+$children%example/devel/table/get_data_subset_xam.cpp
+%$$
+$head Example$$
+The file $cref get_data_subset_xam.cpp$$ contains an example
 and test of this function.
-$$
 
 $end
 -----------------------------------------------------------------------------
