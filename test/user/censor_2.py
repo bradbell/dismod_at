@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -266,6 +266,7 @@ if abs( 1.0 - second_estimate / iota_true ) > 1e-1 :
 if abs(first_estimate - second_estimate) / iota_true < 5e-3 :
 	print("random_seed = ", random_seed)
 	print( (first_estimate - second_estimate) / iota_true )
+	assert False
 #
 # check all the simulated data values were non-negative
 data_sim_table = dismod_at.get_table_dict(connection, 'data_sim')

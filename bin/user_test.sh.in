@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -20,30 +20,26 @@ then
 	exit 1
 fi
 user_test="$1"
-if @python3_executable@ $user_test >& user_test.tmp
-then
-	if ! grep 'warning:' user_test.tmp > /dev/null
+for try in {1..3}
+do
+	if @python3_executable@ $user_test >& user_test.tmp
 	then
-		cat user_test.tmp
-		rm user_test.tmp
-		echo 'user_test.sh: OK'
-		exit 0
+		if ! grep 'warning:' user_test.tmp > /dev/null
+		then
+			cat user_test.tmp
+			rm user_test.tmp
+			echo 'user_test.sh: OK'
+			exit 0
+		fi
 	fi
-fi
-echo "First try failed, re-running $user_test with a different random seed:"
-echo 'sleep 1'
-sleep 1
-if @python3_executable@ $user_test >& user_test.tmp
-then
-	if ! grep 'warning:' user_test.tmp > /dev/null
+	if [ "$try" != '3' ]
 	then
-		cat user_test.tmp
-		rm user_test.tmp
-		echo 'user_test.sh: OK'
-		exit 0
+		echo "$user_test: Error or warning, re-running with a different seed:"
+		echo 'sleep 1'
+		sleep 1
 	fi
-fi
+done
 cat user_test.tmp
 rm user_test.tmp
-echo 'user_test.sh: Error or warning.'
+echo 'user_test.sh: $user_test: Error or warning 3 times in a row.'
 exit 1
