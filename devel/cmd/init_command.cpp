@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/get_data_subset.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -100,11 +101,57 @@ using this command.
 $end
 */
 
+namespace { // BEGIN_EMPTY_NAMESPACE
+CppAD::vector<data_subset_struct> make_data_subset_table(
+	const child_info&                      child_object          ,
+	const CppAD::vector<covariate_struct>& covariate_table       ,
+	const CppAD::vector<data_struct>&      data_table            ,
+	const CppAD::vector<double>&           data_cov_value        )
+{
+	// n_data
+	size_t n_data = data_table.size();
+	//
+	// n_child
+	size_t n_child = child_object.child_size();
+	//
+	// n_covariate
+	size_t n_covariate = covariate_table.size();
+	//
+	// data_subset_table
+	CppAD::vector<data_subset_struct> data_subset_table;
+	for(size_t data_id = 0; data_id < n_data; data_id++)
+	{	size_t child = child_object.table_id2child(data_id);
+		//
+		// check if this data is for parent or one of its descendants
+		bool in_subset = child <= n_child;
+		if( in_subset )
+		{	for(size_t j = 0; j < n_covariate; j++)
+			{	size_t index          = data_id * n_covariate + j;
+				double x_j            = data_cov_value[index];
+				double reference      = covariate_table[j].reference;
+				double max_difference = covariate_table[j].max_difference;
+				double difference     = 0.0;
+				if( ! std::isnan(x_j) )
+					difference = x_j - reference;
+				in_subset &= std::fabs(difference) <= max_difference;
+			}
+		}
+		if( in_subset )
+		{	data_subset_struct row;
+			row.data_id  = int( data_id );
+			row.hold_out = 0;
+			data_subset_table.push_back(row);
+		}
+	}
+	return data_subset_table;
+}
+
+} // END_EMPTY_NAMESPACE
+
 // ----------------------------------------------------------------------------
 void init_command(
 	sqlite3*                                         db                  ,
 	const CppAD::vector<double>&                     prior_mean          ,
-	const CppAD::vector<subset_data_struct>&         subset_data_obj     ,
 	const pack_info&                                 pack_object         ,
 	const db_input_struct&                           db_input            ,
 	const size_t&                                    parent_node_id      ,
@@ -158,7 +205,13 @@ void init_command(
 	// -----------------------------------------------------------------------
 	// data_subset table
 	string table_name = "data_subset";
-	size_t n_subset   = subset_data_obj.size();
+	vector<data_subset_struct> data_subset_table = make_data_subset_table(
+		child_object,
+		db_input.covariate_table,
+		db_input.data_table,
+		db_input.data_cov_value
+	);
+	size_t n_subset   = data_subset_table.size();
 	size_t n_col      = 2;
 	vector<string> col_name(n_col), col_type(n_col);
 	vector<string> row_value(n_col * n_subset);
@@ -172,9 +225,9 @@ void init_command(
 	col_type[1]       = "integer";
 	col_unique[1]     = false;
 	//
-	int hold_out = 0;
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-	{	int data_id    = subset_data_obj[subset_id].original_id;
+	{	int data_id    = data_subset_table[subset_id].data_id;
+		int hold_out   = data_subset_table[subset_id].hold_out;
 		row_value[n_col * subset_id + 0] = to_string( data_id );
 		row_value[n_col * subset_id + 1] = to_string( hold_out );
 	}

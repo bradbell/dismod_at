@@ -492,7 +492,6 @@ int main(int n_arg, const char** argv)
 		{	dismod_at::init_command(
 				db,
 				prior_mean,
-				subset_data_obj,
 				pack_object,
 				db_input,
 				parent_node_id,
