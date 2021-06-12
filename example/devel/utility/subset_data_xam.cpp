@@ -96,6 +96,13 @@ bool subset_data_xam(void)
 	data_cov_value[ 2 * n_covariate + 0] =  0.0; // within sex bounds
 	data_cov_value[ 3 * n_covariate + 0] =  0.5; // out of sex bounds
 	//
+	// data_subset_table
+	vector<dismod_at::data_subset_struct> data_subset_table(2);
+	for(size_t i = 0; i < data_subset_table.size(); ++i)
+	{	data_subset_table[i].data_id = int(i+1);
+		data_subset_table[i].hold_out = 0;
+	}
+	//
 	// child_object
 	size_t parent_node_id = 1; // north_america
 	dismod_at::child_info child_object(
@@ -105,10 +112,11 @@ bool subset_data_xam(void)
 	// subset_data_obj
 	vector<dismod_at::subset_data_struct> subset_data_obj;
 	vector<double> subset_data_cov_value;
-	std::string hold_out_integrand = "";
 	vector<dismod_at::integrand_struct> integrand_table;
+	std::string hold_out_integrand = "";
 	subset_data(
 		hold_out_integrand,
+		data_subset_table,
 		integrand_table,
 		density_table,
 		data_table,

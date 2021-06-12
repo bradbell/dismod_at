@@ -32,7 +32,7 @@ $cref avgint_subset$$.
 
 $head Syntax$$
 $codei%subset_data(
-	%hold_out_integrand%, %integrand_table%,
+	%hold_out_integrand%, %data_table%, %integrand_table%,
 	%data_table%, %data_cov_value%, %covariate_table%, %child_object%,
 	%subset_data_obj%, %subset_data_cov_value%
 )%$$
@@ -68,10 +68,13 @@ $cref/log_laplace/density_table/density_name/log_laplace/$$ density.
 $lend
 
 $head hold_out_integrand$$
-Is the value of $cref/hold_out_integrand/option_table/hold_out_integrand/$$
+is the value of $cref/hold_out_integrand/option_table/hold_out_integrand/$$
 in the option table.
 If this list is empty, $icode integrand_table$$ is not used
 (which is useful for testing).
+
+$head data_subset_table$$
+is the $cref/data_subset_table/get_data_subset/data_subset_table/$$.
 
 $head integrand_table$$
 is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
@@ -179,15 +182,16 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
 void subset_data(
-	const std::string&                     hold_out_integrand    ,
-	const CppAD::vector<integrand_struct>& integrand_table       ,
-	const CppAD::vector<density_enum>&     density_table         ,
-	const CppAD::vector<data_struct>&      data_table            ,
-	const CppAD::vector<double>&           data_cov_value        ,
-	const CppAD::vector<covariate_struct>& covariate_table       ,
-	const child_info&                      child_object          ,
-	CppAD::vector<subset_data_struct>&     subset_data_obj       ,
-	CppAD::vector<double>&                 subset_data_cov_value )
+	const std::string&                       hold_out_integrand    ,
+	const CppAD::vector<data_subset_struct>& data_subset_table     ,
+	const CppAD::vector<integrand_struct>&   integrand_table       ,
+	const CppAD::vector<density_enum>&       density_table         ,
+	const CppAD::vector<data_struct>&        data_table            ,
+	const CppAD::vector<double>&             data_cov_value        ,
+	const CppAD::vector<covariate_struct>&   covariate_table       ,
+	const child_info&                        child_object          ,
+	CppAD::vector<subset_data_struct>&       subset_data_obj       ,
+	CppAD::vector<double>&                   subset_data_cov_value )
 // END_PROTOTYPE
 {	assert( subset_data_obj.size() == 0 );
 	assert( subset_data_cov_value.size() == 0 );
@@ -245,6 +249,7 @@ void subset_data(
 		if( ok[data_id] )
 			n_subset++;
 	}
+	assert( n_subset == data_subset_table.size() );
 	//
 	subset_data_obj.resize(n_subset);
 	subset_data_cov_value.resize(n_subset * n_covariate);
@@ -264,6 +269,7 @@ void subset_data(
 				subset_data_cov_value[index] = difference;
 			}
 			// values in avgint_subset_struct
+			assert( size_t( data_subset_table[subset_id].data_id ) == data_id );
 			one_sample.original_id  = int( data_id );
 			one_sample.integrand_id = data_table[data_id].integrand_id;
 			one_sample.node_id      = data_table[data_id].node_id;
@@ -284,12 +290,14 @@ void subset_data(
 			one_sample.data_sim_value =
 				std::numeric_limits<double>::quiet_NaN();
 			// hold_out
-			if( hold_out_vec.size() == 0 )
-				one_sample.hold_out = data_table[data_id].hold_out;
-			else if( hold_out_vec[ data_table[data_id].integrand_id ] )
-				one_sample.hold_out = 1; // int value used for true
-			else
-				one_sample.hold_out = data_table[data_id].hold_out;
+			int hold_out = data_table[data_id].hold_out;
+			if( data_subset_table[subset_id].hold_out == 1 )
+				hold_out = 1;
+			if( hold_out_vec.size() != 0 )
+			{	if( hold_out_vec[ data_table[data_id].integrand_id ] )
+					hold_out = 1;
+			}
+			one_sample.hold_out = hold_out;
 			//
 			// advance to next sample
 			subset_id++;

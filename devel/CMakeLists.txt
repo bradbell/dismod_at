@@ -9,6 +9,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # devel
+# BEGIN_SORT_THIS_LINE_PLUS_2
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	cmd/depend_command.cpp
 	cmd/fit_command.cpp
@@ -19,7 +20,6 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	cmd/sample_command.cpp
 	cmd/set_command.cpp
 	cmd/simulate_command.cpp
-
 	model/data_model.cpp
 	model/fit_model.cpp
 	model/prior_model.cpp
@@ -28,7 +28,6 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	model/avg_integrand.cpp
 	model/avg_noise_effect.cpp
 	model/ran_con_rcv.cpp
-
 	utility/avgint_subset.cpp
 	utility/bilinear_interp.cpp
 	utility/censor_var_limit.cpp
@@ -52,7 +51,6 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/remove_const.cpp
 	utility/get_var_limits.cpp
 	utility/pack_warm_start.cpp
-
 	table/blob_table.cpp
 	table/check_child_prior.cpp
 	table/check_child_nslist.cpp
@@ -68,6 +66,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/get_column_max.cpp
 	table/get_covariate_table.cpp
 	table/get_data_table.cpp
+	table/get_data_subset.cpp
 	table/get_density_table.cpp
 	table/get_db_input.cpp
 	table/get_integrand_table.cpp
@@ -93,6 +92,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/smooth_info.cpp
 	table/weight_info.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
 # ---------------------------------------------------------------------------
 # devel
 SET_TARGET_PROPERTIES(devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}")

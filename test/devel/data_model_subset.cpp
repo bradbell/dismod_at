@@ -183,6 +183,13 @@ bool data_model_subset(void)
 		data_table[data_id].density_id   =  int( dismod_at::uniform_enum );
 	}
 	//
+	// data_subset_table
+	vector<dismod_at::data_subset_struct> data_subset_table(3);
+	for(size_t i = 0; i < data_subset_table.size(); ++i)
+	{	data_subset_table[i].data_id = int(i + 2);
+		data_subset_table[i].hold_out = 0;
+	}
+	//
 	// subgroup_table
 	size_t n_subgroup = 1;
 	vector<dismod_at::subgroup_struct> subgroup_table(n_subgroup);
@@ -238,6 +245,7 @@ bool data_model_subset(void)
 	std::string hold_out_integrand = "";
 	subset_data(
 		hold_out_integrand,
+		data_subset_table,
 		integrand_table,
 		density_table,
 		data_table,

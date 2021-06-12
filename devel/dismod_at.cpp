@@ -36,6 +36,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_option_table.hpp>
 # include <dismod_at/get_sample_table.hpp>
 # include <dismod_at/get_data_sim_table.hpp>
+# include <dismod_at/get_data_subset.hpp>
 # include <dismod_at/get_prior_sim_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/open_connection.hpp>
@@ -500,12 +501,17 @@ int main(int n_arg, const char** argv)
 	}
 	else
 	{	// -------------------------------------------------------------------
+		// data_subset_table
+		vector<dismod_at::data_subset_struct> data_subset_table =
+			dismod_at::get_data_subset(db);
+		//
 		// subset_data_obj
 		vector<dismod_at::subset_data_struct> subset_data_obj;
 		string hold_out_integrand = option_map["hold_out_integrand"];
 		vector<double> subset_data_cov_value;
 		subset_data(
 			hold_out_integrand,
+			data_subset_table,
 			db_input.integrand_table,
 			db_input.density_table,
 			db_input.data_table,
