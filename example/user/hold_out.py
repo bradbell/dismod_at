@@ -16,12 +16,13 @@
 #	exp
 # $$
 #
-# $section Using hold_out in Data and Option Tables$$
+# $section Using hold_out in Data, Subset Data, and Option Tables$$
 #
 # $head Purpose$$
-# This example shows how to use the data table
-# $cref/hold_out/data_table/hold_out/$$ and option table
-# $cref/hold_out_integrand/option_table/hold_out_integrand/$$.
+# This example shows how to use hold_out in the
+# $cref/data_table/data_table/hold_out/$$,
+# $cref/option_table/option_table/hold_out_integrand/$$, and
+# $cref hold_out_command$$.
 #
 # $head Integrands$$
 # For this example there are two integrand,
@@ -38,9 +39,14 @@
 # $cref/hold_out_integrand/option_table/hold_out_integrand/$$.
 #
 # $subhead Sincidence$$
-# There are two incidence data points,
-# one has the true value for incidence with $icode hold_out$$ equal to zero,
-# the other is zero with $icode hold_out$$ equal to one.
+# There are three incidence data points.
+# The first Sincidence data value is zero and it is held out using
+# the data table $cref/hold_out/data_table/hold_out/$$ equal to one.
+# The other two Sincidence data are
+# the true value for incidence and have the data table hold_out
+# equal to zero.
+# The $cref hold_out_command$$ is used to randomly select one of these
+# two points to be held out.
 #
 # $head Model$$
 # There is only one rate $icode iota$$ and it is constant in age and time.
@@ -125,14 +131,11 @@ def example_db (file_name) :
 	# data table:
 	data_table = list()
 	#
-	# Data point with true value for Sincidence
+	# values that are the same for all data points
 	row = {
-		'integrand':   'Sincidence',
-		'meas_value':  iota_true,
 		'density':     'gaussian',
 		'meas_std':    iota_true / 10.,
 		'weight':      '',
-		'hold_out':     False,
 		'age_lower':    50.0,
 		'age_upper':    50.0,
 		'time_lower':   2000.,
@@ -140,18 +143,23 @@ def example_db (file_name) :
 		'node':         'world',
 		'subgroup':     'world',
 	}
-	data_table.append( copy.copy(row) )
-	#
-	# Data point with zero value for Sincidence and held out in data table
+	# Sincidence data point with value 0.0 and data_table hold_out 1
 	row['integrand']  = 'Sincidence'
+	row['hold_out']   = True
 	row['meas_value'] = 0.0
-	row['hold_out']   = True;
 	data_table.append( copy.copy(row) )
 	#
-	# Data point with zero value for prevalence not held out in data table
+	# Two Sincidence data points with value iota_true and data_table hold_out 0
+	row['integrand']  = 'Sincidence'
+	row['hold_out']   = False
+	row['meas_value'] = iota_true
+	data_table.append( copy.copy(row) )
+	data_table.append( copy.copy(row) )
+	#
+	# prevalence data point with value 0.0 and held out in data table 0
 	row['integrand']  = 'prevalence'
 	row['meas_value'] = 0.0
-	row['hold_out']   = False
+	row['hold_out']   = False;
 	data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
@@ -233,9 +241,15 @@ def example_db (file_name) :
 file_name = 'example.db'
 example_db(file_name)
 #
-# first fit command
+#
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
+#
+integrand = 'Sincidence'
+max_fit   = "1"
+dismod_at.system_command_prc(
+	[ program, file_name, 'hold_out', integrand, max_fit ]
+)
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # read database
@@ -253,39 +267,51 @@ connection.close()
 assert len(var_table) == 1
 assert len(fit_var_table) == 1
 #
-# all three data points are in the data_sebset table, so data_subset_id is
+# all four data points are in the data_sebset table, so data_subset_id is
 # the same as data_id (see data subset table documentation).
-assert len(data_table) == 3
-assert len(data_subset_table) == 3
-assert len(fit_data_subset_table) == 3
+assert len(data_table) == 4
+assert len(data_subset_table) == 4
+assert len(fit_data_subset_table) == 4
 #
 # check hold_out in data table
-assert data_table[0]['hold_out'] == 0
-assert data_table[1]['hold_out'] == 1
+assert data_table[0]['hold_out'] == 1
+assert data_table[1]['hold_out'] == 0
 assert data_table[2]['hold_out'] == 0
+assert data_table[3]['hold_out'] == 0
 #
 # check hold_out in data_subset table
-assert data_subset_table[0]['hold_out'] == 0
-assert data_subset_table[1]['hold_out'] == 0
-assert data_subset_table[2]['hold_out'] == 0
+count_data_subset_hold_out = 0
+for data_id in range(4) :
+	assert data_id == data_subset_table[data_id]['data_id']
+	hold_out        = data_table[data_id]['hold_out']
+	integrand_id    = data_table[data_id]['integrand_id']
+	integrand_name  = integrand_table[integrand_id]['integrand_name']
+	if hold_out == 1 :
+		assert data_subset_table[data_id]['hold_out'] == 0
+	if integrand_name != 'Sincidence' :
+		assert data_subset_table[data_id]['hold_out'] == 0
+	if data_subset_table[data_id]['hold_out'] == 1 :
+		count_data_subset_hold_out += 1
+assert count_data_subset_hold_out == 1
 #
 # check fitted value for iota
 iota_fit = fit_var_table[0]['fit_var_value']
 assert abs( 1.0 - iota_fit / iota_true ) < 1e-6
 #
-# check residual for the first data point
+# check residual for the second and third data points
+for data_id in [1, 2] :
+	data_row       = data_table[data_id]
+	fit_row        = fit_data_subset_table[data_id]
+	integrand_id   = data_row['integrand_id']
+	integrand_name = integrand_table[integrand_id]['integrand_name']
+	meas_std       = data_row['meas_std']
+	assert integrand_name == 'Sincidence'
+	assert data_row['hold_out'] == 0
+	assert fit_row['weighted_residual'] * meas_std < 1e-6
+#
+# check residual for the first data point (which should be -iota_true)
 data_row       = data_table[0]
 fit_row        = fit_data_subset_table[0]
-integrand_id   = data_row['integrand_id']
-integrand_name = integrand_table[integrand_id]['integrand_name']
-meas_std       = data_row['meas_std']
-assert integrand_name == 'Sincidence'
-assert data_row['hold_out'] == 0
-assert fit_row['weighted_residual'] * meas_std < 1e-6
-#
-# check residual for the second data point (which should be -iota_true)
-data_row       = data_table[1]
-fit_row        = fit_data_subset_table[1]
 integrand_id   = data_row['integrand_id']
 integrand_name = integrand_table[integrand_id]['integrand_name']
 meas_std       = data_row['meas_std']
@@ -296,9 +322,9 @@ assert data_row['meas_value'] == 0
 model_minus_data = - fit_row['weighted_residual'] * meas_std
 assert abs( 1.0 - model_minus_data / iota_true ) < 1e-6
 #
-# check residual for the third data point (which should be - true prevalence)
-data_row       = data_table[2]
-fit_row        = fit_data_subset_table[2]
+# check residual for the fourth data point (which should be - true prevalence)
+data_row       = data_table[3]
+fit_row        = fit_data_subset_table[3]
 integrand_id   = data_row['integrand_id']
 integrand_name = integrand_table[integrand_id]['integrand_name']
 meas_std       = data_row['meas_std']

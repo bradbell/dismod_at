@@ -24,8 +24,7 @@ void hold_out_command(
 	std::string&                                  integrand_name    ,
 	std::string&                                  max_fit_str       ,
 	const CppAD::vector<integrand_struct>&        integrand_table   ,
-	const CppAD::vector<data_struct>&             data_table        ,
-	CppAD::vector<data_subset_struct>&            data_subset_table
+	const CppAD::vector<data_struct>&             data_table
 );
 
 } // END_DISMOD_AT_NAMESPACE

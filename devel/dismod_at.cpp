@@ -18,6 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/sample_command.hpp>
 # include <dismod_at/set_command.hpp>
 # include <dismod_at/simulate_command.hpp>
+# include <dismod_at/hold_out_command.hpp>
 
 # include <map>
 # include <cassert>
@@ -69,6 +70,7 @@ int main(int n_arg, const char** argv)
 		{"init",      3},
 		{"set",       5},
 		{"set",       6},
+		{"hold_out",  5},
 		{"depend",    3},
 		{"fit",       4},
 		{"fit",       5},
@@ -450,6 +452,17 @@ int main(int n_arg, const char** argv)
 			parent_node_id,
 			child_data,     // could also use child_avgint
 			s_info_vec
+		);
+	}
+	else if( command_arg == "hold_out" )
+	{	string integrand_name = argv[3];
+		string max_fit_str    = argv[4];
+		dismod_at::hold_out_command(
+			db,
+			integrand_name,
+			max_fit_str,
+			db_input.integrand_table,
+			db_input.data_table
 		);
 	}
 	else if( command_arg == "predict" )

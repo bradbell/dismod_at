@@ -9,11 +9,14 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 
 # include <gsl/gsl_randist.h>
+# include <cppad/utility/to_string.hpp>
 # include <cppad/mixed/manage_gsl_rng.hpp>
 # include <dismod_at/hold_out_command.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/get_integrand_table.hpp>
+# include <dismod_at/get_data_subset.hpp>
+# include <dismod_at/hold_out_command.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -25,10 +28,15 @@ $spell
 	var
 $$
 
-$section The Hold Out Command$$
+$section Hold Out Command: Randomly Sub-sample The Data$$
 
 $head Syntax$$
 $codei%dismod_at %database% hold_out %integrand_name% %max_fit%$$
+
+$head Purpose$$
+This command is to make the initialization and fitting are faster.
+The random sample can be made repeatable using
+$cref/random_seed/option_table/random_seed/$$.
 
 $head database$$
 Is an
@@ -40,9 +48,11 @@ This is the
 $cref/integrand/integrand_table/integrand_name/$$ that we are sub-sampling.
 
 $head max_fit$$
-This is the maximum number of data points to fit for the specified integrand.
-If there are more than this number of points,
-points will be randomly held out so that there are $icode max_fit$$
+This is the maximum number of data points to fit for the specified integrand;
+i.e., the maximum number that are not held out.
+If for this integrand there are more than $icode mas_fit$$ points with
+$cref/hold_out/data_table/hold_out/$$ zero in the data table,
+points are randomly held out so that there are $icode max_fit$$
 points fit for this integrand.
 
 $head data_subset_table$$
@@ -50,6 +60,8 @@ Only rows of the $cref data_subset_table$$ that correspond to this integrand
 are modified.
 The $cref/hold_out/data_subset_table/hold_out/$$ is set one (zero)
 if the corresponding data is (is not) selected for hold out.
+Only points that have $icode hold_out$$ zero in the data table
+can have hold_out non-zero in the data_subset table.
 
 $head Example$$
 The file $cref user_hold_out.py$$ contains an example and test
@@ -62,10 +74,12 @@ void hold_out_command(
 	std::string&                                  integrand_name    ,
 	std::string&                                  max_fit_str       ,
 	const CppAD::vector<integrand_struct>&        integrand_table   ,
-	const CppAD::vector<data_struct>&             data_table        ,
-	CppAD::vector<data_subset_struct>&            data_subset_table )
+	const CppAD::vector<data_struct>&             data_table        )
 {	using std::string;
 	using CppAD::vector;
+	//
+	// data_subset_table
+	vector<data_subset_struct> data_subset_table = get_data_subset(db);
 	//
 	// n_subset
 	size_t n_subset = data_subset_table.size();
@@ -84,12 +98,14 @@ void hold_out_command(
 	}
 	//
 	// src: array of indices to choose from
-	vector<size_t> src;
+	vector<int> src;
 	for(size_t data_subset_id = 0; data_subset_id < n_subset; ++data_subset_id)
-	{	size_t data_id                = data_subset_table[data_subset_id].data_id;
-		size_t integrand_id           = data_table[data_id].integrand_id;
+	{	size_t data_id      = data_subset_table[data_subset_id].data_id;
+		size_t integrand_id = data_table[data_id].integrand_id;
 		if( integrand ==  integrand_table[integrand_id].integrand )
-			src.push_back(data_subset_id);
+		{	if( data_table[data_id].hold_out == 0 )
+				src.push_back( int(data_subset_id) );
+		}
 		//
 		// initialize hold_out for this integrand as zero
 		data_subset_table[data_subset_id].hold_out = 0;
@@ -109,7 +125,14 @@ void hold_out_command(
 	vector<int> dest(n_choose);
 	//
 	// choose which elements to hold out
-	gsl_ran_choose(rng, dest.data(), n_choose, src.data(), src.size(), sizeof(int));
+	gsl_ran_choose(
+		rng,
+		dest.data(),
+		n_choose,
+		src.data(),
+		src.size(),
+		sizeof(int)
+	);
 	//
 	// hold out the chosen elements
 	for(size_t i = 0; i < n_choose; ++i)
@@ -117,6 +140,35 @@ void hold_out_command(
 		assert( data_subset_table[data_subset_id].hold_out == 0 );
 		data_subset_table[data_subset_id].hold_out = 1;
 	}
+	//
+	// drop old data_subset table
+	string sql_cmd    = "drop table data_subset";
+	exec_sql_cmd(db, sql_cmd);
+	//
+	// write new data_subset table
+	string table_name = "data_subset";
+	size_t n_col      = 2;
+	vector<string> col_name(n_col), col_type(n_col);
+	vector<string> row_value(n_col * n_subset);
+	vector<bool>   col_unique(n_col);
+	//
+	col_name[0]       = "data_id";
+	col_type[0]       = "integer";
+	col_unique[0]     = true;
+	//
+	col_name[1]       = "hold_out";
+	col_type[1]       = "integer";
+	col_unique[1]     = false;
+	//
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	int data_id    = data_subset_table[subset_id].data_id;
+		int hold_out   = data_subset_table[subset_id].hold_out;
+		row_value[n_col * subset_id + 0] = CppAD::to_string( data_id );
+		row_value[n_col * subset_id + 1] = CppAD::to_string( hold_out );
+	}
+	create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
 	return;
 }
 } // END_DISMOD_AT_NAMESPACE
