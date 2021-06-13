@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -13,7 +13,7 @@ SET(depends "")
 FOREACH(cmd db2csv depend init fit modify predict old2new set simulate sample)
 	ADD_CUSTOM_TARGET(
 		check_example_get_started_${cmd}
-		${python3_executable} example/get_started/${cmd}_command.py
+		bin/user_test.sh example/get_started/${cmd}_command.py
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		DEPENDS dismod_at
 	)

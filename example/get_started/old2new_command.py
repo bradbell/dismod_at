@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -97,4 +97,5 @@ dismod_at.system_command_prc( [ program, file_name, command ] )
 #
 # -----------------------------------------------------------------------
 print('old2new_command: OK')
+sys.exit(0)
 # END PYTHON

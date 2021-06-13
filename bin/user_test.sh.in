@@ -24,6 +24,9 @@ for try in {1..3}
 do
 	if @python3_executable@ $user_test >& user_test.tmp
 	then
+		sed -i user_test.tmp \
+		-e '/warning: Adding subgroup informtion to following tables:/d'
+		#
 		if ! grep 'warning:' user_test.tmp > /dev/null
 		then
 			cat user_test.tmp
