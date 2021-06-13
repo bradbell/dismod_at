@@ -1005,6 +1005,9 @@ def db2csv_command(database_file_arg) :
 		row           = log_data[log_id]
 		if simulate_index == None and row['message_type'] == 'command' :
 			message = row['message']
+			tmp     = message.find('warm_start')
+			if tmp > 0 :
+				message = message[0 : tmp - 1]
 			if message.startswith('begin fit fixed') :
 				simulate_index = message[ len('begin fit fixed') : ].strip()
 			if message.startswith('begin fit random') :

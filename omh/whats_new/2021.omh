@@ -47,6 +47,16 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-13$$
+The $cref db2csv_command$$ would fail, if the previous fit had a
+$cref/warm_start/fit_command/warm_start/$$, with the following message:
+$codep
+	Previous fit command in log table used simulated data but
+	cannot find data_sim table
+$$
+This has been fixed.
+
+
 $head 06-12$$
 $list number$$
 Add the $cref hold_out_command$$.

@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -199,6 +199,8 @@ program = '../../devel/dismod_at'
 command_list = [
 	[ program  , file_name, 'init' ],
 	[ program  , file_name, 'fit', 'fixed' ],
+	# db2csv used to crash if last fit had a warm_start
+	[ program  , file_name, 'fit', 'fixed', 'warm_start' ],
 ]
 for command in command_list :
 	print( ' '.join(command) )
