@@ -1,0 +1,151 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Hold Out Command: Randomly Sub-sample The Data</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Hold Out Command: Randomly Sub-sample The Data">
+<meta name="keywords" id="keywords" content=" hold out command: randomly sub-sample the data syntax purpose database integrand_name max_fit data_subset_table example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_hold_out_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>hold_out_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="init_command.py.htm" target="_top">Prev</a>
+</td><td><a href="old2new_command.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_command_htm.js'></script>
+</td>
+<td>hold_out_command</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Hold Out Command: Randomly Sub-sample The Data</big></big></b></center>
+
+<br><a href="hold_out_command.htm#Syntax" target="_top">Syntax</a>
+<br><a href="hold_out_command.htm#Purpose" target="_top">Purpose</a>
+<br><a href="hold_out_command.htm#database" target="_top">database</a>
+<br><a href="hold_out_command.htm#integrand_name" target="_top">integrand_name</a>
+<br><a href="hold_out_command.htm#max_fit" target="_top">max_fit</a>
+<br><a href="hold_out_command.htm#data_subset_table" target="_top">data_subset_table</a>
+<br><a href="hold_out_command.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;hold_out&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_fit</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This command is to make the initialization and fitting are faster.
+The random sample can be made repeatable using
+<a href="option_table.htm#random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is an
+<a href="http://www.sqlite.org/sqlite/" target="_top"><span style='white-space: nowrap'>http://www.sqlite.org/sqlite/</span></a>
+ database containing the
+<code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="integrand_name" id="integrand_name">integrand_name</a></big></b>
+<br>
+This is the
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand</span></a>
+ that we are sub-sampling.
+
+<br>
+<br>
+<b><big><a name="max_fit" id="max_fit">max_fit</a></big></b>
+<br>
+This is the maximum number of data points to fit for the specified integrand;
+i.e., the maximum number that are not held out.
+If for this integrand there are more than 
+<code><i><font color="black"><span style='white-space: nowrap'>mas_fit</span></font></i></code>
+ points with
+<a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ zero in the data table,
+points are randomly held out so that there are 
+<code><i><font color="black"><span style='white-space: nowrap'>max_fit</span></font></i></code>
+
+points fit for this integrand.
+
+<br>
+<br>
+<b><big><a name="data_subset_table" id="data_subset_table">data_subset_table</a></big></b>
+<br>
+Only rows of the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+ that correspond to this integrand
+are modified.
+The <a href="data_subset_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ is set one (zero)
+if the corresponding data is (is not) selected for hold out.
+Only points that have 
+<code><i><font color="black"><span style='white-space: nowrap'>hold_out</span></font></i></code>
+ zero in the data table
+can have hold_out non-zero in the data_subset table.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="user_hold_out.py.htm" target="_top"><span style='white-space: nowrap'>user_hold_out.py</span></a>
+ contains an example and test
+using this command.
+
+
+<hr>Input File: devel/cmd/hold_out_command.cpp
+
+</body>
+</html>

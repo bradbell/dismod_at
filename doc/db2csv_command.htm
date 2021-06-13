@@ -817,12 +817,24 @@ is the data table
 <br>
 <big><a name="data.csv.out" id="data.csv.out">out</a></big>
 <br>
-is the data table
+This column is one (zero) if any of the following conditions
+(none of the following conditions) hold:
+<ol type="1"><li>
+The corresponding data table
 <a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
-.
-Note that <a href="option_table.htm#hold_out_integrand" target="_top"><span style='white-space: nowrap'>hold_out_integrand</span></a>
+ is one.
+</li><li>
 
-in the <code><font color="blue">option.csv</font></code> file may override this value.
+The corresponding integrand is in the
+<a href="option_table.htm#hold_out_integrand" target="_top"><span style='white-space: nowrap'>hold_out_integrand</span></a>
+ list.
+</li><li>
+
+The corresponding data_subset table
+<a href="data_subset_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ is one.
+</li></ol>
+
 
 <br>
 <br>

@@ -5,6 +5,7 @@ document.write('\
 <option>depend_command</option>\
 <option>fit_command</option>\
 <option>init_command</option>\
+<option>hold_out_command</option>\
 <option>old2new_command</option>\
 <option>predict_command</option>\
 <option>sample_command</option>\
@@ -18,6 +19,7 @@ function command_child(item)
 		'depend_command.htm',
 		'fit_command.htm',
 		'init_command.htm',
+		'hold_out_command.htm',
 		'old2new_command.htm',
 		'predict_command.htm',
 		'sample_command.htm',
