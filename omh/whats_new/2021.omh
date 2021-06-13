@@ -48,7 +48,12 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-12$$
+$list number$$
 Add the $cref hold_out_command$$.
+$lnext
+Change $cref/out/db2csv_command/data.csv/out/$$ in the
+data.csv to include the result of all the hold_out settings.
+$lend
 
 $head 06-11$$
 $list number$$

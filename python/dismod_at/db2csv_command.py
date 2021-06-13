@@ -380,10 +380,18 @@
 # $cref/time_upper/data_table/time_upper/$$.
 #
 # $subhead out$$
-# is the data table
-# $cref/hold_out/data_table/hold_out/$$.
-# Note that $cref/hold_out_integrand/option_table/hold_out_integrand/$$
-# in the $code option.csv$$ file may override this value.
+# This column is one (zero) if any of the following conditions
+# (none of the following conditions) hold:
+# $list number$$
+# The corresponding data table
+# $cref/hold_out/data_table/hold_out/$$ is one.
+# $lnext
+# The corresponding integrand is in the
+# $cref/hold_out_integrand/option_table/hold_out_integrand/$$ list.
+# $lnext
+# The corresponding data_subset table
+# $cref/hold_out/data_subset_table/hold_out/$$ is one.
+# $lend
 #
 # $subhead density$$
 # is the
@@ -1024,6 +1032,10 @@ def db2csv_command(database_file_arg) :
 	# =========================================================================
 	# option.csv
 	# =========================================================================
+	#
+	# hold_out_integrand_list: computed during output of option.csv
+	hold_out_integrand_list = None
+	#
 	file_name  = os.path.join(database_dir, 'option.csv')
 	csv_file   = open(file_name, 'w')
 	header     = [ 'option_name', 'option_value' ]
@@ -1087,6 +1099,8 @@ def db2csv_command(database_file_arg) :
 				msg += '\nbut parent_node_name is ' + row[1]
 				sys.exit(msg)
 		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
+		if row[0] == 'hold_out_integrand' :
+			hold_out_integrand_list = row[1].split(' ')
 		csv_writer.writerow(row_out)
 	csv_file.close()
 	# =========================================================================
@@ -1369,7 +1383,6 @@ def db2csv_command(database_file_arg) :
 		row_out['age_up']      = convert2output( row_in['age_upper'] )
 		row_out['time_lo']     = convert2output( row_in['time_lower'] )
 		row_out['time_up']     = convert2output( row_in['time_upper'] )
-		row_out['out']         = row_in['hold_out']
 		row_out['meas_std']    = convert2output( row_in['meas_std'] )
 		row_out['eta']         = convert2output( row_in['eta'] )
 		row_out['nu']          = convert2output( row_in['nu'] )
@@ -1405,6 +1418,13 @@ def db2csv_command(database_file_arg) :
 		row_out['subgroup']   = table_lookup(
 			'subgroup', row_in['subgroup_id'], 'subgroup_name'
 		)
+		# out
+		row_out['out'] = row_in['hold_out']
+		if subset_row['hold_out'] != 0 :
+			row_out['out'] = 1
+		if row_out['integrand'] in hold_out_integrand_list :
+			row_out['out'] = 1
+		#
 		covariate_id = 0
 		for row in table_data['covariate'] :
 			field_in  = 'x_' + str(covariate_id)
