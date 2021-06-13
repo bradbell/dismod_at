@@ -2477,32 +2477,6 @@ if which_fit_arg == 'no_ode'  :
 					age_grid, time_grid, value_prior, dage_prior, dtime_prior
 				)
 	#
-	# iota_zero, rho_zero, chi_zero
-	iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
-	rho_zero  = rate_table[ rate_name2id['rho'] ]['parent_smooth_id'] is None
-	chi_zero  = rate_table[ rate_name2id['chi'] ]['parent_smooth_id'] is None
-	#
-	# rate_case
-	if iota_zero :
-		if rho_zero :
-			rate_case = 'iota_zero_rho_zero'
-		else :
-			rate_case = 'iota_zero_rho_pos'
-	else :
-		if rho_zero :
-			rate_case = 'iota_pos_rho_zero'
-		else :
-			rate_case = 'iota_pos_rho_pos'
-	#
-	# set options
-	set_option('tolerance_fixed',     '1e-8')
-	set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
-	set_option('quasi_fixed',         'false')
-	set_option('zero_sum_child_rate', 'iota rho chi')
-	set_option('bound_random',        '3')
-	set_option('meas_noise_effect',   'add_var_scale_none')
-	set_option('rate_case',           rate_case)
-	#
 	# add measurement noise covariates
 	group_id = 0
 	factor   = { 'lower':1e-1, 'mean':1e-1, 'upper':1e-1 }
@@ -2533,6 +2507,35 @@ if which_fit_arg == 'no_ode'  :
 		rate_or_integrand_name = row[1]
 		mulcov_value           = row[2]
 		set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value)
+	# -----------------------------------------------------------------------
+	# init:
+	system_command([ 'dismod_at', temp_database, 'init'])
+	# ------------------------------------------------------------------------
+	# set options
+	set_option('tolerance_fixed',     '1e-8')
+	set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
+	set_option('quasi_fixed',         'false')
+	set_option('zero_sum_child_rate', 'iota rho chi')
+	set_option('bound_random',        '3')
+	set_option('meas_noise_effect',   'add_var_scale_none')
+	#
+	# iota_zero, rho_zero, chi_zero
+	iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
+	rho_zero  = rate_table[ rate_name2id['rho'] ]['parent_smooth_id'] is None
+	chi_zero  = rate_table[ rate_name2id['chi'] ]['parent_smooth_id'] is None
+	#
+	# rate_case
+	if iota_zero :
+		if rho_zero :
+			rate_case = 'iota_zero_rho_zero'
+		else :
+			rate_case = 'iota_zero_rho_pos'
+	else :
+		if rho_zero :
+			rate_case = 'iota_pos_rho_zero'
+		else :
+			rate_case = 'iota_pos_rho_pos'
+	set_option('rate_case',           rate_case)
 	#
 	# hold_out_integrand
 	hold_out_integrand = copy.copy( integrand_list_yes_ode )
@@ -2544,10 +2547,7 @@ if which_fit_arg == 'no_ode'  :
 		hold_out_integrand.append('mtexcess')
 	hold_out_integrand = ' '.join(hold_out_integrand)
 	set_option('hold_out_integrand',  hold_out_integrand)
-	#
-	# init
-	system_command([ 'dismod_at', temp_database, 'init'])
-	#
+	# -------------------------------------------------------------------------
 	# fit both
 	t0 = time.time()
 	system_command([ 'dismod_at', temp_database, 'fit', 'both'])

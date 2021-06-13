@@ -19,6 +19,8 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_var_limits.hpp>
 # include <dismod_at/ran_con_rcv.hpp>
 
+# define PRINT_SIZE_MAP 1
+
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
 $begin fit_model_ctor$$
@@ -317,7 +319,15 @@ data_object_   ( data_object )
 	CppAD::vector<double> cppad_mixed_random_vec =
 		random_const_.remove( random_vec );
 	//
+# ifdef PRINT_SIZE_MAP
+	std::map<std::string, size_t> size_map =
+		initialize(fixed_vec, cppad_mixed_random_vec);
+	std::map<std::string, size_t>::iterator itr;
+	for(itr = size_map.begin(); itr != size_map.end(); itr++)
+		std::cout << itr->first << " = " << itr->second << "\n";
+# else
 	initialize(fixed_vec, cppad_mixed_random_vec);
+# endif
 }
 /*
 -----------------------------------------------------------------------------
