@@ -322,6 +322,11 @@ correpsonding parent rates.
 06-10:
 1. Use the new hold_out_integrand setting to switch between no_ode and yes_ode
    fitting (this simplified the fit_ihme.py code).
+
+06-13:
+1. Use the new hold_out_commnad to randomly subsample the data.
+   This simplifies the fit_ihme.py code and also provides residuals
+   for the data not inclueded because it is held out instead of removed.
 '''
 }
 # help cases
@@ -1401,57 +1406,6 @@ def subset_data () :
 	table_name = 'data'
 	put_table('data', data_table, data_col_name, data_col_type)
 # -----------------------------------------------------------------------------
-def random_subsample_data(integrand_name, max_per_integrand) :
-	# for a specified integrand, include at most max_per_integrand data values.
-	# This does random sampling that can be seeded by calling random.seed.
-	# The origianl order of the data is preserved (in index plots)
-	# by sorting the subsample.
-	#
-	integrand_id =integrand_name2id[integrand_name]
-	#
-	# Need global becasue we will use an assingnment to data_table
-	global data_table
-	#
-	# indices for this integrand
-	table_in   = data_table
-	count_list = list()
-	count      = 0
-	for row in table_in :
-		if row['integrand_id'] == integrand_id :
-			count_list.append(count)
-			count += 1
-	n_sample_in = count
-	#
-	# subsample of indices for this integrand
-	n_sample_out = min(max_per_integrand, n_sample_in)
-	if n_sample_out < n_sample_in :
-		count_list = random.sample(count_list,  n_sample_out)
-		count_list = sorted( count_list )
-	#
-	# subsample the integrand
-	index  = 0
-	count  = 0
-	table_out = list()
-	for row in table_in :
-		if row['integrand_id'] != integrand_id :
-			table_out.append(row)
-		else :
-			if index < n_sample_out :
-				if count_list[index] == count :
-					table_out.append(row)
-					index += 1
-			count += 1
-	assert index == n_sample_out
-	assert count == n_sample_in
-	#
-	data_table = table_out
-	table_name = 'data'
-	put_table(table_name, data_table, data_col_name, data_col_type)
-	#
-	msg  = '\nrandom_subsample_data\n'
-	msg += 'number of {} samples: in = {} out = {}'
-	trace( msg.format(integrand_name, n_sample_in, n_sample_out) )
-# -----------------------------------------------------------------------------
 def set_data_likelihood (
 		integrand_data, integrand_name, density_name, factor_eta=None, nu=None
 ) :
@@ -2503,13 +2457,16 @@ if which_fit_arg == 'no_ode'  :
 		rate_or_integrand_name = row[1]
 		mulcov_value           = row[2]
 		set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value)
-	# ------------------------------------------------------------------------
-	# randomly subsample
-	for integrand_name in integrand_list_all :
-		random_subsample_data(integrand_name, specific.max_per_integrand)
 	# -----------------------------------------------------------------------
 	# init:
 	system_command([ 'dismod_at', temp_database, 'init'])
+	# ------------------------------------------------------------------------
+	# randomly hold_out
+	max_fit_str = str(specific.max_per_integrand)
+	for integrand_name in integrand_list_all :
+		system_command([
+			'dismod_at', temp_database, 'hold_out', integrand_name, max_fit_str
+		])
 	# ------------------------------------------------------------------------
 	# set options
 	set_option('tolerance_fixed',     '1e-8')
