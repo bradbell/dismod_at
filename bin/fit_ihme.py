@@ -2422,10 +2422,6 @@ if which_fit_arg == 'no_ode'  :
 	msg = '\nintegrands   = ' + str( integrand_list_all )
 	trace(msg)
 	#
-	# randomly subsample
-	for integrand_name in integrand_list_all :
-		random_subsample_data(integrand_name, specific.max_per_integrand)
-	#
 	# set reference value for x_0 to its median
 	reference_name  = 'median'
 	for covariate_id in range( len(covariate_table) ) :
@@ -2507,6 +2503,10 @@ if which_fit_arg == 'no_ode'  :
 		rate_or_integrand_name = row[1]
 		mulcov_value           = row[2]
 		set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value)
+	# ------------------------------------------------------------------------
+	# randomly subsample
+	for integrand_name in integrand_list_all :
+		random_subsample_data(integrand_name, specific.max_per_integrand)
 	# -----------------------------------------------------------------------
 	# init:
 	system_command([ 'dismod_at', temp_database, 'init'])
