@@ -105,10 +105,10 @@ void hold_out_command(
 		if( integrand ==  integrand_table[integrand_id].integrand )
 		{	if( data_table[data_id].hold_out == 0 )
 				src.push_back( int(data_subset_id) );
+			//
+			// initialize hold_out for this integrand as zero
+			data_subset_table[data_subset_id].hold_out = 0;
 		}
-		//
-		// initialize hold_out for this integrand as zero
-		data_subset_table[data_subset_id].hold_out = 0;
 	}
 	//
 	// check if no hold outs in data_subset_table
