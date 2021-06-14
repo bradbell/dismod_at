@@ -21,7 +21,6 @@ import shutil
 import subprocess
 import copy
 import numpy
-import random
 import time
 import importlib
 #
@@ -115,10 +114,9 @@ This command line argument must be one of the following:
 'random_seed':'''
 random_seed:
 This command line argument is only present when which_fit is 'no_ode'.
-It is an integer value that seeds the random number generator that is used
-to sub-sample the data for each integrand; see max_per_integrand.
-If this value is zero, the system clock is used to seed the generator.
-The seed corresponding to the clock changes every second and does not repeat.
+It is an integer used to set the random seed in the dismod_at option table.
+If random_seed is zero, the sysetem clock rounded to one second is used
+to do random seeding.
 ''',
 
 'sample':'''
@@ -327,6 +325,8 @@ correpsonding parent rates.
 1. Use the new hold_out_commnad to randomly subsample the data.
    This simplifies the fit_ihme.py code and also provides residuals
    for the data not inclueded because it is held out instead of removed.
+2. random_seed is not used to set value in dismod_at option table
+   so that the results of the hold_out_command can be reproducible.
 '''
 }
 # help cases
@@ -2358,14 +2358,6 @@ if which_fit_arg == 'no_ode'  :
 	# erase the database log table so log is just for this session
 	sql_command('DROP TABLE IF EXISTS log')
 	#
-	# seed used to randomly subsample data
-	random_seed = int( random_seed_arg )
-	if random_seed == 0 :
-		random_seed = int( time.time() )
-	random.seed(random_seed)
-	msg = '\nrandom_seed  = ' + str( random_seed )
-	trace(msg)
-	#
 	# remove all hold out data and data past covariate limits
 	subset_data()
 	#
@@ -2475,6 +2467,10 @@ if which_fit_arg == 'no_ode'  :
 	set_option('zero_sum_child_rate', 'iota rho chi')
 	set_option('bound_random',        '3')
 	set_option('meas_noise_effect',   'add_var_scale_none')
+	#
+	# random_seed
+	assert random_seed_arg is not None
+	set_option('random_seed',         random_seed_arg)
 	#
 	# iota_zero, rho_zero, chi_zero
 	iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
