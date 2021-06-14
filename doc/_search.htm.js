@@ -134,7 +134,7 @@ Keyword =
 { tag: 'command', title:'The dismod_at Commands', other:' data flow log messages' },
 { tag: 'depend_command', title:'The Depend Command', other:' syntax database depend_var_table example' },
 { tag: 'depend_command.py', title:'depend Command: Example and Test', other:'' },
-{ tag: 'fit_command', title:'The Fit Command', other:' syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info_table fit_var_table fit_data_subset_table effects convergence problems options example' },
+{ tag: 'fit_command', title:'The Fit Command', other:' syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info_table fit_var_table fit_data_subset_table trace_fixed mixed_info effects convergence problems options example' },
 { tag: 'fit_command.py', title:'fit Command: Example and Test', other:'' },
 { tag: 'init_command', title:'The Initialize Command', other:' syntax purpose changing values database age_avg_table var_table data_subset_table start_var_table scale_var_table deleted tables example' },
 { tag: 'init_command.py', title:'init Command: Example and Test', other:'' },

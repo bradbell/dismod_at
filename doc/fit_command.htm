@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info_table fit_var_table fit_data_subset_table effects convergence problems ipopt options example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info_table fit_var_table fit_data_subset_table trace_fixed mixed_info effects convergence problems ipopt options example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -78,6 +78,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#warm_start.ipopt_info_table" target="_top">ipopt_info_table</a>
 <br><a href="fit_command.htm#fit_var_table" target="_top">fit_var_table</a>
 <br><a href="fit_command.htm#fit_data_subset_table" target="_top">fit_data_subset_table</a>
+<br><a href="fit_command.htm#trace_fixed" target="_top">trace_fixed</a>
+<br><a href="fit_command.htm#mixed_info" target="_top">mixed_info</a>
 <br><a href="fit_command.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
 <br><a href="fit_command.htm#Convergence Problems" target="_top">Convergence&nbsp;Problems</a>
 <br><a href="fit_command.htm#Ipopt Options" target="_top">Ipopt&nbsp;Options</a>
@@ -251,7 +253,7 @@ The fixed effect are optimized when
 
 <code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
  is equal to <code><font color="blue">both</font></code> or <code><font color="blue">fixed</font></code>.
-In the case a new ipopt_info table, corresponding to the final
+In the case a new <code><font color="blue">ipopt_info</font></code> table, corresponding to the final
 fit for the fixed effects, is written to the ipopt_info table.
 The contents of this table are unspecified; i.e., not part of the
 dismod_at API and my change.
@@ -276,6 +278,30 @@ It is a comparison of the model and data corresponding to the fit results.
 
 <br>
 <br>
+<b><big><a name="trace_fixed" id="trace_fixed">trace_fixed</a></big></b>
+<br>
+A new <a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed_table</span></a>
+ is created each time a
+<code><font color="blue">fit fixed</font></code> or <code><font color="blue">fit both</font></code> command is run.
+It contains a trace of the corresponding optimization.
+
+<br>
+<br>
+<b><big><a name="mixed_info" id="mixed_info">mixed_info</a></big></b>
+<br>
+A new <code><font color="blue">mixed_info</font></code> table is created each time this command is run.
+It contains unspecified information about the size of the
+<a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
+
+objects used to represent the objective function and its derivatives.
+This table is useful for seeing how the problem setup affects the
+size (and hence time) of the problem.
+For example, how different the size is when one uses
+a <a href="hold_out_command.htm" target="_top"><span style='white-space: nowrap'>hold_out_command</span></a>
+ to sub-sample the data.
+
+<br>
+<br>
 <b><big><a name="Random Effects" id="Random Effects">Random Effects</a></big></b>
 <br>
 A model has random effects if one of the
@@ -283,7 +309,7 @@ A model has random effects if one of the
  or
 <a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
  is not <code><font color="blue">null</font></code>.
-In this case, it is suggest that you
+In some cases it helps to
 first fit with 
 <code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
  equal to <code><font color="blue">fixed</font></code>
