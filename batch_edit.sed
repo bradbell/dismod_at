@@ -16,24 +16,21 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	example/devel/utility/data_subset_xam.cpp
+#	omh/table/mixed_info.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#	s|data_subset|subset_data|
+#	s|mixed_info.omh|mixed_info_table.omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#	example/devel/utility/subset_data_xam.cpp
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#	s|data_subset|subset_data|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|// data_subset$|// subset_data|
-s|data_subset_xam|subset_data_xam|
+s|mixed_info.omh|mixed_info_table.omh|

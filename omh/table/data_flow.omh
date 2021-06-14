@@ -48,7 +48,7 @@ $children%omh/table/log_table.omh
 	%omh/table/hes_random_table.omh
 	%omh/table/predict_table.omh
 	%omh/table/trace_fixed_table.omh
-	%omh/table/mixed_info.omh
+	%omh/table/mixed_info_table.omh
 %$$
 
 $comment This list should in same order as drop_list in init_command.cpp$$
