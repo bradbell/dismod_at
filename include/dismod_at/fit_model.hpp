@@ -91,6 +91,9 @@ namespace dismod_at {
 			warm_start_struct               warm_start;
 		} solution_;
 		// ---------------------------------------------------------------
+		// information the cppad_mixed object used by this model
+		std::map<std::string, size_t> cppad_mixed_info_;
+		// ---------------------------------------------------------------
 		// private member functions
 		// ---------------------------------------------------------------
 		// scaling
@@ -172,6 +175,10 @@ namespace dismod_at {
 			// effectively const
 			std::map<std::string, std::string>& option_map
 		);
+		// cppad_mixed_info
+		std::map<std::string, size_t> cppad_mixed_info(void) const
+		{	return cppad_mixed_info_; }
+		// -----------------------------------------------------------------
 	};
 }
 // implementation of template functions

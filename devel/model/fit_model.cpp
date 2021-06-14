@@ -319,14 +319,11 @@ data_object_   ( data_object )
 	CppAD::vector<double> cppad_mixed_random_vec =
 		random_const_.remove( random_vec );
 	//
+	cppad_mixed_info_ = initialize(fixed_vec, cppad_mixed_random_vec);
 # if PRINT_SIZE_MAP
-	std::map<std::string, size_t> size_map =
-		initialize(fixed_vec, cppad_mixed_random_vec);
 	std::map<std::string, size_t>::iterator itr;
-	for(itr = size_map.begin(); itr != size_map.end(); itr++)
+	for(itr = cppad_mixed_info_.begin(); itr != cppad_mixed_info_.end(); itr++)
 		std::cout << itr->first << " = " << itr->second << "\n";
-# else
-	initialize(fixed_vec, cppad_mixed_random_vec);
 # endif
 }
 /*

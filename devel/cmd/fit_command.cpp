@@ -36,6 +36,7 @@ $spell
 	py
 	std
     Ipopt
+	cppad_mixed
 $$
 
 $section The Fit Command$$
@@ -139,7 +140,7 @@ should be the same as for the previous fit.
 $subhead ipopt_info_table$$
 The fixed effect are optimized when
 $icode variables$$ is equal to $code both$$ or $code fixed$$.
-In the case a new ipopt_info table, corresponding to the final
+In the case a new $code ipopt_info$$ table, corresponding to the final
 fit for the fixed effects, is written to the ipopt_info table.
 The contents of this table are unspecified; i.e., not part of the
 dismod_at API and my change.
@@ -153,11 +154,26 @@ $head fit_data_subset_table$$
 A new $cref fit_data_subset_table$$ is created each time this command is run.
 It is a comparison of the model and data corresponding to the fit results.
 
+$head trace_fixed$$
+A new $cref trace_fixed_table$$ is created each time a
+$code fit fixed$$ or $code fit both$$ command is run.
+It contains a trace of the corresponding optimization.
+
+$head mixed_info$$
+A new $code mixed_info$$ table is created each time this command is run.
+It contains unspecified information about the size of the
+$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
+objects used to represent the objective function and its derivatives.
+This table is useful for seeing how the problem setup affects the
+size (and hence time) of the problem.
+For example, how different the size is when one uses
+a $cref hold_out_command$$ to sub-sample the data.
+
 $head Random Effects$$
 A model has random effects if one of the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$ or
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ is not $code null$$.
-In this case, it is suggest that you
+In some cases it helps to
 first fit with $icode variables$$ equal to $code fixed$$
 and then fit with $icode variables$$ equal to $code both$$.
 
@@ -389,6 +405,47 @@ void fit_command(
 	fit_object.get_solution(
 		opt_value, lag_value, lag_dage, lag_dtime, trace_vec, warm_start_out
 	);
+	// ------------------ mixed_info table ----------------------------
+	{	//
+		// drop previous verison of this table
+		string sql_cmd = "drop table if exists mixed_info";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+		//
+		// copy of map
+		std::map<std::string, size_t> info = fit_object.cppad_mixed_info();
+		//
+		// iterator for elements of map
+		std::map<std::string, size_t>::iterator itr;
+		//
+		// count number of elements in map
+		size_t n_info = 0;
+		for(itr = info.begin(); itr != info.end(); ++itr)
+			++n_info;
+		//
+		table_name   = "mixed_info";
+		size_t n_col = 2;
+		vector<string> col_name(n_col), col_type(n_col);
+		vector<string> row_value(n_col * n_info);
+		vector<bool>   col_unique(n_col);
+		//
+		col_name[0]   = "name";
+		col_type[0]   = "text";
+		col_unique[0] = true;
+		//
+		col_name[1]   = "value";
+		col_type[1]   = "integer";
+		col_unique[1] = false;
+		//
+		size_t i_info = 0;
+		for(itr = info.begin(); itr != info.end(); ++itr)
+		{	row_value[i_info * n_col + 0] = itr->first;
+			row_value[i_info * n_col + 1] = to_string( itr->second );
+			++i_info;
+		}
+		dismod_at::create_table(
+			db, table_name, col_name, col_type, col_unique, row_value
+		);
+	}
 	// ------------------ ipopt_info table -----------------------------------
 	if( ! random_only )
 	{	string sql_cmd = "drop table if exists ipopt_info";
