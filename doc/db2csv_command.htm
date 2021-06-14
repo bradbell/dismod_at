@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv mixed_info.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -82,6 +82,7 @@ A:active { color : purple }
 <br><a href="db2csv_command.htm#hes_fixed.csv" target="_top">hes_fixed.csv</a>
 <br><a href="db2csv_command.htm#hes_random.csv" target="_top">hes_random.csv</a>
 <br><a href="db2csv_command.htm#trace_fixed.csv" target="_top">trace_fixed.csv</a>
+<br><a href="db2csv_command.htm#mixed_info.csv" target="_top">mixed_info.csv</a>
 <br><a href="db2csv_command.htm#variable.csv" target="_top">variable.csv</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_id" target="_top">var_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_type" target="_top">var_type</a>
@@ -353,6 +354,18 @@ with the exception that the column
 
 is called 
 <code><i><font color="black"><span style='white-space: nowrap'>reg_size</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="mixed_info.csv" id="mixed_info.csv">mixed_info.csv</a></big></b>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ completed
+the contents of the <a href="mixed_info_table.htm" target="_top"><span style='white-space: nowrap'>mixed_info_table</span></a>
+ are written to
+the CSV file 
+<code><i><font color="black"><span style='white-space: nowrap'>dir</span></font></i><font color="blue"><span style='white-space: nowrap'>/mixed_info.csv</span></font></code>
 .
 
 

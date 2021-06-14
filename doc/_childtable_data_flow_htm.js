@@ -19,6 +19,7 @@ document.write('\
 <option>hes_random_table</option>\
 <option>predict_table</option>\
 <option>trace_fixed_table</option>\
+<option>mixed_info_table</option>\
 </select>\
 ');
 function data_flow_child(item)
@@ -39,7 +40,8 @@ function data_flow_child(item)
 		'hes_fixed_table.htm',
 		'hes_random_table.htm',
 		'predict_table.htm',
-		'trace_fixed_table.htm'
+		'trace_fixed_table.htm',
+		'mixed_info_table.htm'
 	];
 	var index = item.selectedIndex;
 	item.selectedIndex = 0;
