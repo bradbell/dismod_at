@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -17,8 +17,8 @@
 #
 # $head Purpose$$
 # This example demonstrate one reason for using the
-# $icode age_avg_split$$ option to create an
-# $cref/age average grid/option_table/age_avg_split/Age Average Grid/$$
+# $cref/age_avg_split/option_table/age_avg_split/$$ option to create an
+# $cref/age average grid/age_avg_table/Age Average Grid/$$
 # that is not uniformly spaced.
 #
 # $head Variables$$

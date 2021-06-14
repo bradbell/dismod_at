@@ -80,14 +80,9 @@ The average integrand time step $latex \Delta t$$
 is specified by $cref/ode_step_size/option_table/ode_step_size/$$
 in the option table.
 
-$head Average Integrand Age Grid$$
-The
-$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$
-is specified in the option table.
-
 $head Extended Age Grid$$
 The extended age grid is the union (as sets) of $latex \{ a_L , a_U \}$$
-and the average integrand age grid.
+and the $cref/age average grid/age_avg_table/Age Average Grid/$$.
 
 $head Cohort Solution of ODE$$
 A cohort solution is identified by its

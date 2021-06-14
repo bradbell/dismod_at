@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -27,12 +27,13 @@ none of the values may repeated.
 The values can be in any specific order; e.g.,
 they do not need to be increasing or decreasing.
 
-$subhead Age Average Grid$$
-Note that the maximum minus the minimum age divided by the
-$cref/ode_step_size/option_table/ode_step_size/$$,
-together with the $cref/age_avg_split/option_table/age_avg_split/$$,
-determines the
-$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$.
+$subhead age_min$$
+The maximum age in this table is called $icode age_min$$ and is used to define
+the $cref/age average grid/age_avg_table/Age Average Grid/$$.
+
+$subhead age_max$$
+The maximum age in this table is called $icode age_max$$ and is used to define
+the $cref/age average grid/age_avg_table/Age Average Grid/$$.
 
 $children%example/table/age_table.py
 %$$

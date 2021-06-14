@@ -123,7 +123,7 @@ This way the $cref age_avg_table$$ does not appear
 to have the same primary key as the $cref age_table$$.
 $lnext
 The
-$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$
+$cref/age average grid/age_avg_table/Age Average Grid/$$
 is now output in the $cref age_avg_table$$ to make
 $cref/age_avg_split/option_table/age_avg_split/$$ easier to use.
 $lnext
@@ -160,7 +160,7 @@ $head 10-21$$
 Change the way that average integrands are computed; see
 $cref numeric_average$$.
 This enables using a step size that varies with age; see
-$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$.
+$cref/age average grid/age_avg_table/Age Average Grid/$$.
 Here is one case of a speed comparison for this change using a uniformly
 spaced grid:
 before 4.9 seconds, after 3.6 second.

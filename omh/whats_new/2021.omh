@@ -47,6 +47,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-14$$
+Improve the documentation for the
+$cref/age average grid/age_avg_table/Age Average Grid/$$.
+
 $head 06-13$$
 $list number$$
 The $cref db2csv_command$$ would fail, if the previous fit had a

@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -12,9 +12,41 @@ $begin age_avg_table$$
 $spell
 	grid
 	csv
+	dismod
 $$
 
-$section The Age Average Grid$$
+$section The Age Average Table$$
+
+$head Age Average Grid$$
+We use
+$cref/age_min/age_table/age/age_min/$$,
+$cref/age_max/age_table/age/age_max/$$,
+to denote the minimum and maximum ages in the age table.
+We use $cref/ode_step_size/option_table/ode_step_size/$$
+to denote its value in the option table.
+Let $icode%N% >= 1%$$ be the minimum integer such that
+$codei%
+	%s% = ( %age_max% - %age_min% ) / %N% <= %ode_step_size%
+%$$
+Define the set of age points
+$latex a_i = i * s$$ for $latex i = 0, \ldots , N$$, and define the set
+$latex \[
+	S = \{ a_0, a_1 , \ldots , a_N \}
+\] $$
+Note that $latex a_0$$ is $icode age_min$$
+and $latex a_N$$ is $icode age_max$$.
+The age average grid is the union of the set $latex S$$
+and the set of age points in
+$cref/age_avg_split/option_table/age_avg_split/$$.
+This grid is used both for
+$cref/approximating averages/numeric_average/$$
+and for approximation the solution of the dismod_at
+$cref/ordinary differential equation
+	/avg_integrand
+	/Ordinary Differential Equation
+/$$.
+If $cref/age_avg_split/option_table/age_avg_split/$$ is the empty set,
+the age average grid is the set $latex S$$.
 
 $head Creation$$
 This table changes each time the
@@ -23,7 +55,7 @@ $cref/age_avg_split/option_table/age_avg_split/$$ changes.
 These value can change without having to re-execute the
 $cref init_command$$.
 For this reason, this table is re-written for each command
-with the exception of the following commands:
+with the exception of the following:
 $cref/set/set_command/$$,
 $cref/db2csv/db2csv_command/$$,
 $cref/csv2db/csv2db_command/$$,
@@ -37,8 +69,7 @@ Its initial value is zero, and it increments by one for each row.
 
 $head age$$
 This column has type $code real$$ and is a monotone
-increasing values in the
-$cref/age average grid/option_table/age_avg_split/Age Average Grid/$$
+increasing values in the age average grid.
 The values are unique; i.e.,
 none of the values are repeated.
 

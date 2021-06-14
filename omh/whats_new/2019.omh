@@ -928,17 +928,14 @@ $cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ for the log
 $cref/density/db2csv_command/data.csv/density/$$ cases.
 This has been fixed.
 $lnext
-Remove the Ode Grid section for the documentation.
+Remove the Ode Grid section from the documentation.
 It has been replaced by the
 $cref/average integrand time step
 	/numeric_average
 	/Average Integrand Time Step, Delta t
 /$$
 and the
-$cref/average integrand age grid
-	/numeric_average
-	/Average Integrand Age Grid
-/$$.
+$cref/age average grid/age_avg_table/Age Average Grid/$$.
 $lend
 
 $head 04-10$$
