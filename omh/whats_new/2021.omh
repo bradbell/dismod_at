@@ -57,6 +57,7 @@ $codep
 $$
 This has been fixed.
 $lnext
+Advance to cppad_mixed-20210613.
 Add the $cref mixed_info_table$$ table and the db2csv
 $cref/mixed_info.csv/db2csv_command/mixed_info.csv/$$ output file.
 $lend

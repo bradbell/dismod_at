@@ -236,6 +236,28 @@ for row in reader :
 		assert row['density'] == 'log_gaussian'
 		meas_delta  = meas_stdcv * math.sqrt( 1.0 + gamma_true)
 	assert abs( 1.0 - result / meas_delta) < 1e-4
+# -----------------------------------------------------------------------
+# mixed_info.csv
+data_file = open('build/test/user/mixed_info.csv', 'r')
+reader    = csv.DictReader(data_file)
+mixed_name_list = [
+	"n_fixed",
+	"n_random",
+	"quasi_fixed",
+	"A_nr",
+	"A_nnz",
+	"ran_like_fun.size_var",
+	"fix_like_fun.size_var"
+]
+mixed_info_table = list()
+for row in reader :
+	mixed_info_table.append(row)
+for mixed_name in mixed_name_list :
+	found = False
+	for row in mixed_info_table :
+		if row['mixed_name'] == mixed_name :
+			found = True
+	assert found
 # -----------------------------------------------------------------------------
 print('db2csv.py: OK')
 sys.exit(0)
