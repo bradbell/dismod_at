@@ -205,7 +205,12 @@ $lend
 
 $head 10-15$$
 Add the
-$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$ option which
+$cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$ option which
 constrains the sum of the random effects to be zero.
 
 $head 10-14$$

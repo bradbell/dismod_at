@@ -16,12 +16,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	omh/table/mixed_info.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#	s|mixed_info.omh|mixed_info_table.omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,4 +31,20 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|mixed_info.omh|mixed_info_table.omh|
+/\/zero_sum_mulcov_group\/option_table\/zero_sum_mulcov_group\//! b one
+s|zero_sum_mulcov_group|\n\t&|g
+s|option_table/|\n\t&\n\tZero Sum Constraints/|
+s|/\$\$|\n&|
+/^#/s|\n|\n#|g
+s|#/|# /|
+b end
+# -----------------------------------------------------------------
+: one
+/\/zero_sum_child_rate\/option_table\/zero_sum_child_rate\//! b end
+s|zero_sum_child_rate|\n\t&|g
+s|option_table/|\n\t&\n\tZero Sum Constraints/|
+s|/\$\$|\n&|
+/^#/s|\n|\n#|g
+s|#/|# /|
+# -----------------------------------------------------------------
+: end

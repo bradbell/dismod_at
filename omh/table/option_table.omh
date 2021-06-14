@@ -181,7 +181,13 @@ $cref/add_var_scale_log
 $subhead Default$$
 The default value for this option is $code add_std_scale_all$$.
 
-$head zero_sum_child_rate$$
+$head Zero Sum Constraints$$
+
+$subhead Default$$
+The default value for these options is null; i.e.,
+no corresponding zero sum constraints.
+
+$subhead zero_sum_child_rate$$
 If $icode option_name$$ is $code zero_sum_child_rate$$,
 the corresponding value is a space separated subset of the
 $cref/rate names/rate_table/rate_name/$$.
@@ -201,11 +207,7 @@ Note that for each rate in $icode zero_sum_child_rate$$,
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null; i.e.,
 all of the child must use the same smoothing for this rate.
 
-$subhead Default$$
-The default value for this option is null; i.e.,
-no zero sum constraints on these random effects.
-
-$head zero_sum_mulcov_group$$
+$subhead zero_sum_mulcov_group$$
 If $icode option_name$$ is $code zero_sum_mulcov_group$$,
 the corresponding value is a space separated subset of the
 $cref/group names/subgroup_table/group_name/$$.
@@ -223,10 +225,6 @@ $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
 The files $cref/zsum_mulcov_rate.py/user_zsum_mulcov_rate.py/$$
 and $cref/zsum_mulcov_meas.py/user_zsum_mulcov_meas.py/$$
 contain examples and tests using these constraints.
-
-$subhead Default$$
-The default value for this option is null; i.e.,
-no zero sum constraints on these random effects.
 
 $head data_extra_columns$$
 If $icode option_name$$ is $code data_extra_columns$$,

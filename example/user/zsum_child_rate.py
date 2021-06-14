@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -20,7 +20,12 @@
 #
 # $head Purpose$$
 # This example demonstrates using
-# The $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$
+# The $cref/
+#	zero_sum_child_rate/
+#	option_table/
+#	Zero Sum Constraints/
+#	zero_sum_child_rate
+# /$$
 # to improve the speed and accuracy of estimation of the fixed effects.
 #
 # $head Problem Parameters$$

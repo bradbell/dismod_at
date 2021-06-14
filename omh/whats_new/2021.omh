@@ -48,8 +48,13 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-14$$
+$list number$$
 Improve the documentation for the
 $cref/age average grid/age_avg_table/Age Average Grid/$$.
+$lnext
+Group $cref/zero sum constraints/option_table/Zero Sum Constraints/$$
+in option table documentation.
+$lend
 
 $head 06-13$$
 $list number$$
@@ -261,7 +266,12 @@ is greater than the maximum python $code float$$, report it as empty.
 $head 04-16$$
 $list number$$
 The $cref/fit both/fit_command/variables/both/$$ command was failing when
-$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$
+$cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$
 was specified for a rate that did not have any children.
 This has been fixed.
 $lnext

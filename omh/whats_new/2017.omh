@@ -354,7 +354,12 @@ $lnext
 Change $code random_bound$$ to
 $cref/bound_random/option_table/Random Only/bound_random/$$.
 Change $code zero_sum_child_rate$$ to
-$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$.
+$cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$.
 Change $code fixed_bound_frac$$ to
 $cref/bound_frac_fixed/option_table/Fixed Only/bound_frac_fixed/$$.
 $lend
@@ -638,12 +643,22 @@ $lnext
 There was a bug and the case
 $cref/fit fixed/fit_command/variables/fixed/$$ would not run
 when
-$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$ was not null
+$cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$ was not null
 (specified one or more rates).
 This has been fixed.
 $lnext
 For each $icode rate_name$$ in
-$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$
+$cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$
 the corresponding
 $cref/child_nslist_id/rate_table/child_nslist_id/$$
 must be null.
@@ -651,7 +666,12 @@ An error messages is reported if this is not the case.
 $lend
 
 $head 04-27$$
-Change the $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$ option
+Change the $cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$ option
 so it can select specific rates to have zero sum.
 This was necessary so that
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ can be used

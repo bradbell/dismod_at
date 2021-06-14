@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -62,10 +62,20 @@ for every row.
 
 $head option Table$$
 The $code zero_sum_random$$ option name was changed to
-$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$ on
+$cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$ on
 $cref/2019-11-29/whats_new_2019/11-29/$$.
 If the option name $code zero_sum_random$$ is in the option table, it is
-changed to $cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$.
+changed to $cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$.
 
 $end
 */

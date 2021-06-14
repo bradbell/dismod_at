@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -28,7 +28,12 @@ $codei%check_zero_sum(
 
 $head Purpose$$
 For each $icode rate_name$$ in
-$cref/zero_sum_child_rate/option_table/zero_sum_child_rate/$$,
+$cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$,
 the corresponding
 $cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null.
 
