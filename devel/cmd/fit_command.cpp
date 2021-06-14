@@ -160,14 +160,7 @@ $code fit fixed$$ or $code fit both$$ command is run.
 It contains a trace of the corresponding optimization.
 
 $head mixed_info$$
-A new $code mixed_info$$ table is created each time this command is run.
-It contains unspecified information about the size of the
-$cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
-objects used to represent the objective function and its derivatives.
-This table is useful for seeing how the problem setup affects the
-size (and hence time) of the problem.
-For example, how different the size is when one uses
-a $cref hold_out_command$$ to sub-sample the data.
+A new $cref mixed_info_table$$ table is created each time this command is run.
 
 $head Random Effects$$
 A model has random effects if one of the
@@ -428,11 +421,11 @@ void fit_command(
 		vector<string> row_value(n_col * n_info);
 		vector<bool>   col_unique(n_col);
 		//
-		col_name[0]   = "name";
+		col_name[0]   = "mixed_name";
 		col_type[0]   = "text";
 		col_unique[0] = true;
 		//
-		col_name[1]   = "value";
+		col_name[1]   = "mixed_value";
 		col_type[1]   = "integer";
 		col_unique[1] = false;
 		//

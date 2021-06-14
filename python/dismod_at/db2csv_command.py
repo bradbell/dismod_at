@@ -131,6 +131,11 @@
 # $cref/regularization_size/trace_fixed_table/regularization_size/$$
 # is called $icode reg_size$$.
 #
+# $head mixed_info.csv$$
+# If the $cref fit_command$$ completed
+# the contents of the $cref mixed_info_table$$ are written to
+# the CSV file $icode%dir%/mixed_info.csv%$$.
+#
 # $comment ------------------------------------------------------------$$
 # $head variable.csv$$
 # $comment ------------------------------------------------------------$$
@@ -756,6 +761,7 @@ def db2csv_command(database_file_arg) :
 	have_table['hes_fixed']       = check4table(cursor, 'hes_fixed')
 	have_table['hes_random']      = check4table(cursor, 'hes_random')
 	have_table['trace_fixed']     = check4table(cursor, 'trace_fixed')
+	have_table['mixed_info']      = check4table(cursor, 'mixed_info')
 	# ----------------------------------------------------------------------
 	# check pairs of tables that should come togeather
 	table_pair_list = [
@@ -1596,5 +1602,21 @@ def db2csv_command(database_file_arg) :
 			del row['regularization_size']
 			for key in row :
 				row[key] = convert2output(row[key])
+			csv_writer.writerow(row)
+		csv_file.close()
+	# =========================================================================
+	# mixed_info.csv
+	# =========================================================================
+	if have_table['mixed_info'] :
+		file_name = os.path.join(database_dir, 'mixed_info.csv')
+		csv_file  = open(file_name, 'w')
+		#
+		header = [
+			'mixed_name',
+			'mixed_value'
+		]
+		csv_writer = csv.DictWriter(csv_file, fieldnames=header)
+		csv_writer.writeheader()
+		for row in table_data['mixed_info'] :
 			csv_writer.writerow(row)
 		csv_file.close()

@@ -48,6 +48,7 @@ $children%omh/table/log_table.omh
 	%omh/table/hes_random_table.omh
 	%omh/table/predict_table.omh
 	%omh/table/trace_fixed_table.omh
+	%omh/table/mixed_info.omh
 %$$
 
 $comment This list should in same order as drop_list in init_command.cpp$$
@@ -105,7 +106,7 @@ $cref/trace_fixed/trace_fixed_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
 $rnext
-$cref/mixed_info/fit_command/mixed_info/$$ $cnext
+$cref/mixed_info/mixed_info_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
 $rnext
@@ -159,7 +160,7 @@ $cref/fit_var/fit_var_table/$$
 $cref/fit_data_subset/fit_data_subset_table/$$
 $cref/age_avg/age_avg_table/$$,
 $cref/trace_fixed/trace_fixed_table/$$,
-$cref/mixed_info/fit_command/mixed_info/$$
+$cref/mixed_info/mixed_info_table/$$
 $cref/ipopt_info_table/fit_command/warm_start/ipopt_info_table/$$
 $rnext
 $cref/simulate/simulate_command/$$ $cnext

@@ -57,7 +57,8 @@ $codep
 $$
 This has been fixed.
 $lnext
-Add the $cref/mixed_info/fit_command/mixed_info/$$ table.
+Add the $cref mixed_info_table$$ table and the db2csv
+$cref/mixed_info.csv/db2csv_command/mixed_info.csv/$$ output file.
 $lend
 
 
