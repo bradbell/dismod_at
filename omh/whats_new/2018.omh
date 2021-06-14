@@ -118,18 +118,33 @@ using simulated data.
 $head 10-30$$
 $list number$$
 The $icode avg_age_split$$ option was changed to the
-$cref/age_avg_split/option_table/age_avg_split/$$ option.
+$cref/
+	age_avg_split/
+	option_table/
+	Age Average Grid/
+	age_avg_split
+/$$ option.
 This way the $cref age_avg_table$$ does not appear
 to have the same primary key as the $cref age_table$$.
 $lnext
 The
 $cref/age average grid/age_avg_table/Age Average Grid/$$
 is now output in the $cref age_avg_table$$ to make
-$cref/age_avg_split/option_table/age_avg_split/$$ easier to use.
+$cref/
+	age_avg_split/
+	option_table/
+	Age Average Grid/
+	age_avg_split
+/$$ easier to use.
 $lnext
 There was a bug in the age_avg_split option
 when two splits occurred in the same
-$cref/ode_step_size/option_table/ode_step_size/$$ interval.
+$cref/
+	ode_step_size/
+	option_table/
+	Age Average Grid/
+	ode_step_size
+/$$ interval.
 This has been fixed.
 $lnext
 There was a bug in the age_avg_split option
@@ -142,7 +157,12 @@ This violated the
 $cref/text can be null, not empty/database/Text can be Null, not Empty/$$
 rule and has been fixed.
 $lnext
-If the $cref/age_avg_split/option_table/age_avg_split/$$ was not sorted,
+If the $cref/
+	age_avg_split/
+	option_table/
+	Age Average Grid/
+	age_avg_split
+/$$ was not sorted,
 the program would error even if the $cref set_command$$ was
 trying to fix it. This has been changed so the set command
 can fix it.
@@ -175,7 +195,12 @@ It does not use $icode age_avg_split$$ to vary the spacing of the age grid.
 
 $head 10-13$$
 $list number$$
-The $cref/ode_step_size/option_table/ode_step_size/$$ documentation
+The $cref/
+	ode_step_size/
+	option_table/
+	Age Average Grid/
+	ode_step_size
+/$$ documentation
 was changed to reflect the fact that it is also used for approximating
 the integrals in the average integrand.
 $lnext

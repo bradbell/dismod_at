@@ -17,7 +17,12 @@
 #
 # $head Purpose$$
 # This example demonstrate one reason for using the
-# $cref/age_avg_split/option_table/age_avg_split/$$ option to create an
+# $cref/
+#	age_avg_split/
+#	option_table/
+#	Age Average Grid/
+#	age_avg_split
+# /$$ option to create an
 # $cref/age average grid/age_avg_table/Age Average Grid/$$
 # that is not uniformly spaced.
 #
@@ -45,7 +50,12 @@
 # The second case averages over the age interval $code [ 1.1, 100.0 ]$$.
 #
 # $head ode_step_size$$
-# The $cref/ode_step_size/option_table/ode_step_size/$$ is
+# The $cref/
+#	ode_step_size/
+#	option_table/
+#	Age Average Grid/
+#	ode_step_size
+# /$$ is
 # $code 50.0$$ for this example.
 # If there were no $icode age_avg_split$$, a linear approximation
 # would be used from age 0.0 to age 50.

@@ -74,7 +74,12 @@ $cref/differential equation/avg_integrand/Differential Equation/$$
 needs to be solved for each cohort
 that intersects or surrounds the age-time span for this data point.
 (The space between cohorts is determined by the
-$cref/ode_step_size/option_table/ode_step_size/$$.)
+$cref/
+	ode_step_size/
+	option_table/
+	Age Average Grid/
+	ode_step_size
+/$$.)
 
 This computation is preformed each time the $cref model_variables$$ change.
 

@@ -31,20 +31,18 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/\/option_table\/data_extra_columns\//! b one
-s|data_extra_columns|\n\t&|g
-s|data_extra_column[^s]|\n\t&|g
-s|option_table/|\n\t&\n\tExtra Columns/|
+/\/option_table\/age_avg_split\//! b one
+s|age_avg_split|\n\t&|g
+s|option_table/|\n\t&\n\tAge Average Grid/|
 s|/\$\$|\n&|
 /^#/s|\n|\n#|g
 s|#/|# /|
 b end
 # -----------------------------------------------------------------
 : one
-/\/option_table\/avgint_extra_columns\//! b end
-s|avgint_extra_columns|\n\t&|g
-s|avgint_extra_column[^s]|\n\t&|g
-s|option_table/|\n\t&\n\tExtra Columns/|
+/\/option_table\/ode_step_size\//! b end
+s|ode_step_size|\n\t&|g
+s|option_table/|\n\t&\n\tAge Average Grid/|
 s|/\$\$|\n&|
 /^#/s|\n|\n#|g
 s|#/|# /|

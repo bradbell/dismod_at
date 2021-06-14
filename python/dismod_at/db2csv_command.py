@@ -97,8 +97,18 @@
 # It is a CSV file with the contents of the age_avg table.
 # The only column in this table is $cref/age/age_avg_table/age/$$.
 # Note that a $cref set_command$$ may change the value of
-# $cref/ode_step_size/option_table/ode_step_size/$$ or
-# $cref/age_avg_split/option_table/age_avg_split/$$ but it will not
+# $cref/
+#	ode_step_size/
+#	option_table/
+#	Age Average Grid/
+#	ode_step_size
+# /$$ or
+# $cref/
+#	age_avg_split/
+#	option_table/
+#	Age Average Grid/
+#	age_avg_split
+# /$$ but it will not
 # write out the new age_avg table.
 #
 # $head hes_fixed.csv$$

@@ -1,5 +1,5 @@
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -40,7 +40,12 @@
 #
 # $head ode_step_size$$
 # This argument is a floating point value and specifies the
-# $cref/ode_step_size/option_table/ode_step_size/$$
+# $cref/
+#	ode_step_size/
+#	option_table/
+#	Age Average Grid/
+#	ode_step_size
+# /$$
 # in the option table.
 # The total work for the test increases with proportional to the
 # square of this step size

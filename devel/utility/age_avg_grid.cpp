@@ -31,10 +31,20 @@ $srcthisfile%
 %$$
 
 $head ode_step_size$$
-is the $cref/ode_step_size/option_table/ode_step_size/$$.
+is the $cref/
+	ode_step_size/
+	option_table/
+	Age Average Grid/
+	ode_step_size
+/$$.
 
 $head age_avg_split$$
-is the $cref/age_avg_split/option_table/age_avg_split/$$.
+is the $cref/
+	age_avg_split/
+	option_table/
+	Age Average Grid/
+	age_avg_split
+/$$.
 
 $head age_table$$
 is the $cref age_table$$.

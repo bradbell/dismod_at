@@ -257,7 +257,12 @@ child_time_grid  = { 'index':[0], 'std':0.2 }
 #
 # $subhead ode_step_size$$
 # This is a $code str$$ that specifies the
-# $cref/ode_step_size/option_table/ode_step_size/$$.
+# $cref/
+#	ode_step_size/
+#	option_table/
+#	Age Average Grid/
+#	ode_step_size
+# /$$.
 # It is suggest that this value be less than the intervals in the
 # age and time grids:
 # $srccode%py%

@@ -77,7 +77,12 @@ $cref/time_upper/data_table/time_upper/$$ value.
 
 $head Average Integrand Time Step, Delta t$$
 The average integrand time step $latex \Delta t$$
-is specified by $cref/ode_step_size/option_table/ode_step_size/$$
+is specified by $cref/
+	ode_step_size/
+	option_table/
+	Age Average Grid/
+	ode_step_size
+/$$
 in the option table.
 
 $head Extended Age Grid$$

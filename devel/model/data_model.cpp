@@ -83,7 +83,12 @@ This is the number of covariates; i.e., number or rows in
 $cref covariate_table$$.
 
 $head ode_step_size$$
-This is the $cref/ode_step_size/option_table/ode_step_size/$$.
+This is the $cref/
+	ode_step_size/
+	option_table/
+	Age Average Grid/
+	ode_step_size
+/$$.
 
 $head age_avg_grid$$
 This is the $cref/age average grid/age_avg_table/Age Average Grid/$$.

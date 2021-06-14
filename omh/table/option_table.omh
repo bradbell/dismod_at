@@ -276,7 +276,9 @@ All the data for the corresponding integrands is held out during any fit.
 This overrides the data table $cref/hold_out/data_table/hold_out/$$
 value for the corresponding integrands.
 
-$head ode_step_size$$
+$head Age Average Grid$$
+
+$subhead ode_step_size$$
 If $icode%option_name% = ode_step_size%$$,
 the corresponding $icode option_value$$
 is a positive floating point number (greater than zero)
@@ -289,13 +291,7 @@ It is also the step size is also used to approximate the integrals in
 the definition of the
 $cref/average integrands/avg_integrand/Average Integrand, A_i/$$.
 
-$subhead Default$$
-The default value for this option is $code 10.0$$,
-which is reasonable if all the rates
-$icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
-are all less than $code 0.1$$.
-
-$head age_avg_split$$
+$subhead age_avg_split$$
 If $icode%option_name% = age_avg_split%$$,
 the corresponding $icode option_value$$ is a space separated set of
 age values at which to split the age integration.
@@ -306,6 +302,10 @@ $cref/age average grid/age_avg_table/Age Average Grid/$$.
 $subhead Default$$
 The default value for $icode age_avg_split$$ is null
 in which case $icode age_avg_split$$ is the empty set.
+The default value for $icode ode_step_size$$ is $code 10.0$$,
+which is reasonable if all the rates
+$icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
+are all less than $code 0.1$$.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number
