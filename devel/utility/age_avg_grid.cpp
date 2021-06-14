@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -40,7 +40,7 @@ $head age_table$$
 is the $cref age_table$$.
 
 $head age_grid$$
-is the $cref/age average grid/option_table/age_avg_split/Age Average Grid/$$.
+is the $cref/age average grid/age_avg_table/Age Average Grid/$$.
 
 $children%example/devel/utility/age_avg_grid_xam.cpp
 %$$
