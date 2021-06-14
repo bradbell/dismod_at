@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -42,7 +42,12 @@
 # The data table has a
 # $cref/comment column/database/Comment Columns and Tables/$$
 # named $code c_data_info$$ that is used as a
-# $cref/data_extra_column/option_table/data_extra_columns/$$.
+# $cref/
+#	data_extra_column/
+#	option_table/
+#	Extra Columns/
+#	data_extra_columns
+# /$$.
 # $lnext
 # There is one
 # $cref/covariate/covariate_table/$$ income and a corresponding

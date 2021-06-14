@@ -439,8 +439,18 @@ Fix a bug in $cref db2csv_command$$ when
 $cref/warn_on_stderr/option_table/warn_on_stderr/$$ was present.
 $lnext
 Fix a bug in $cref db2csv_command$$ when
-$cref/data_extra_columns/option_table/data_extra_columns/$$ or
-$cref/avgint_extra_columns/option_table/avgint_extra_columns/$$ was
+$cref/
+	data_extra_columns/
+	option_table/
+	Extra Columns/
+	data_extra_columns
+/$$ or
+$cref/
+	avgint_extra_columns/
+	option_table/
+	Extra Columns/
+	avgint_extra_columns
+/$$ was
 present and null.
 $lnext
 A $code db2csv$$ wish list item was added (fulfilled on
@@ -690,7 +700,12 @@ $lnext
 The $cref/avgint_id/db2csv_command/predict.csv/avgint_id/$$ was
 added to the $code predict.csv$$ file.
 $lnext
-Add $cref/data_extra_columns/option_table/data_extra_columns/$$
+Add $cref/
+	data_extra_columns/
+	option_table/
+	Extra Columns/
+	data_extra_columns
+/$$
 and remove $code data_name$$ column from the data table.
 $lend
 
@@ -710,7 +725,12 @@ Add the $cref user_continue_fit.py$$ example.
 $lnext
 Add the $cref/warn_on_stderr/option_table/warn_on_stderr/$$ option.
 $lnext
-Add the $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$ option.
+Add the $cref/
+	avgint_extra_columns/
+	option_table/
+	Extra Columns/
+	avgint_extra_columns
+/$$ option.
 $lend
 
 $head 04-24$$

@@ -31,18 +31,20 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/\/zero_sum_mulcov_group\/option_table\/zero_sum_mulcov_group\//! b one
-s|zero_sum_mulcov_group|\n\t&|g
-s|option_table/|\n\t&\n\tZero Sum Constraints/|
+/\/option_table\/data_extra_columns\//! b one
+s|data_extra_columns|\n\t&|g
+s|data_extra_column[^s]|\n\t&|g
+s|option_table/|\n\t&\n\tExtra Columns/|
 s|/\$\$|\n&|
 /^#/s|\n|\n#|g
 s|#/|# /|
 b end
 # -----------------------------------------------------------------
 : one
-/\/zero_sum_child_rate\/option_table\/zero_sum_child_rate\//! b end
-s|zero_sum_child_rate|\n\t&|g
-s|option_table/|\n\t&\n\tZero Sum Constraints/|
+/\/option_table\/avgint_extra_columns\//! b end
+s|avgint_extra_columns|\n\t&|g
+s|avgint_extra_column[^s]|\n\t&|g
+s|option_table/|\n\t&\n\tExtra Columns/|
 s|/\$\$|\n&|
 /^#/s|\n|\n#|g
 s|#/|# /|

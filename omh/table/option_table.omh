@@ -226,7 +226,13 @@ The files $cref/zsum_mulcov_rate.py/user_zsum_mulcov_rate.py/$$
 and $cref/zsum_mulcov_meas.py/user_zsum_mulcov_meas.py/$$
 contain examples and tests using these constraints.
 
-$head data_extra_columns$$
+$head Extra Columns$$
+
+$subhead Default$$
+The default value for these options is null; i.e.,
+no extra columns in the corresponding table or csv file.
+
+$subhead data_extra_columns$$
 If $icode option_name$$ is $code data_extra_columns$$,
 the corresponding value is space separated list of extra columns,
 in the $cref data_table$$.
@@ -234,21 +240,13 @@ These columns are not used by $code dismod_at$$ except that
 they get displayed in the
 $cref/data.csv/db2csv_command/data.csv/data_extra_columns/$$ file.
 
-$subhead Default$$
-The default value for this option is null; i.e.,
-no extra columns displayed in $code data.csv$$.
-
-$head avgint_extra_columns$$
+$subhead avgint_extra_columns$$
 If $icode option_name$$ is $code avgint_extra_columns$$,
 the corresponding value is space separated list of extra columns,
 in the $cref avgint_table$$.
 These columns are not used by $code dismod_at$$ except that
 they get displayed in the
 $cref/predict.csv/db2csv_command/predict.csv/avgint_extra_columns/$$ file.
-
-$subhead Default$$
-The default value for this option is null; i.e.,
-no extra columns displayed in $code predict.csv$$.
 
 $head warn_on_stderr$$
 If $icode option_name$$ is

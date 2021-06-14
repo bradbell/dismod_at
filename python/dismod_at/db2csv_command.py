@@ -336,7 +336,12 @@
 #
 # $subhead data_extra_columns$$
 # Each column specified by the
-# $cref/data_extra_columns/option_table/data_extra_columns/$$
+# $cref/
+#	data_extra_columns/
+#	option_table/
+#	Extra Columns/
+#	data_extra_columns
+# /$$
 # option is included in the $code data.csv$$ file.
 #
 # $subhead child$$
@@ -486,7 +491,12 @@
 #
 # $subhead avgint_extra_columns$$
 # Each column specified by the
-# $cref/avgint_extra_columns/option_table/avgint_extra_columns/$$
+# $cref/
+#	avgint_extra_columns/
+#	option_table/
+#	Extra Columns/
+#	avgint_extra_columns
+# /$$
 # option is included in the $code predict.csv$$ file.
 #
 # $subhead s_index$$

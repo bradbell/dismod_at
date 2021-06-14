@@ -54,6 +54,9 @@ $cref/age average grid/age_avg_table/Age Average Grid/$$.
 $lnext
 Group $cref/zero sum constraints/option_table/Zero Sum Constraints/$$
 in option table documentation.
+$lnext
+Group $cref/Extra Columns/option_table/Extra Columns/$$
+in option table documentation.
 $lend
 
 $head 06-13$$
