@@ -115,34 +115,33 @@ void hold_out_command(
 		}
 	}
 	//
-	// check if no hold outs in data_subset_table
-	if( src.size() <= max_fit )
-		return;
-	//
-	// rng: gsl random number generator
-	gsl_rng* rng = CppAD::mixed::get_gsl_rng();
-	//
-	// n_choose
-	size_t n_choose = src.size() - max_fit;
-	//
-	// dest: array of indices that are chosen
-	vector<int> dest(n_choose);
-	//
-	// choose which elements to hold out
-	gsl_ran_choose(
-		rng,
-		dest.data(),
-		n_choose,
-		src.data(),
-		src.size(),
-		sizeof(int)
-	);
-	//
-	// hold out the chosen elements
-	for(size_t i = 0; i < n_choose; ++i)
-	{	size_t data_subset_id = dest[i];
-		assert( data_subset_table[data_subset_id].hold_out == 0 );
-		data_subset_table[data_subset_id].hold_out = 1;
+	// check if there will be hold outs in data_subset_table
+	if( max_fit < src.size() )
+	{	// rng: gsl random number generator
+		gsl_rng* rng = CppAD::mixed::get_gsl_rng();
+		//
+		// n_choose
+		size_t n_choose = src.size() - max_fit;
+		//
+		// dest: array of indices that are chosen
+		vector<int> dest(n_choose);
+		//
+		// choose which elements to hold out
+		gsl_ran_choose(
+			rng,
+			dest.data(),
+			n_choose,
+			src.data(),
+			src.size(),
+			sizeof(int)
+		);
+		//
+		// hold out the chosen elements
+		for(size_t i = 0; i < n_choose; ++i)
+		{	size_t data_subset_id = dest[i];
+			assert( data_subset_table[data_subset_id].hold_out == 0 );
+			data_subset_table[data_subset_id].hold_out = 1;
+		}
 	}
 	//
 	// drop old data_subset table
