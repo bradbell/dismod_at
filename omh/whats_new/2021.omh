@@ -47,6 +47,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-15$$
+Move the default option values from $cref option_table$$ to
+$cref option_default$$ section.
+
 $head 06-14$$
 $list number$$
 Improve the documentation for the
@@ -60,8 +64,6 @@ in option table documentation.
 $lnext
 Group $cref/Age Average Grid/option_table/Age Average Grid/$$
 in option table documentation.
-$lnext
-Add the $cref option_name_list$$ section.
 $lend
 
 $head 06-13$$

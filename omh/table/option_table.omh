@@ -41,20 +41,6 @@ $$
 
 $section The Option Table$$
 
-$head Discussion$$
-These options control how the
-$code dismod_at$$ $cref/commands/command/$$ behave.
-Each option is an $icode option_name$$, $icode option_value$$ pair
-and has a default value that is used when the name
-is not present in the option table.
-
-$head Changing Values$$
-This table is special in that you can change almost all its values
-without invalidating the
-$cref/output tables/data_flow/Command Output Tables/$$.
-There is one exception; see
-$cref/parent node/option_table/Parent Node/$$ below.
-
 $head Table Format$$
 This table has the following columns:
 
@@ -67,12 +53,21 @@ $subhead option_name$$
 This column
 has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
-The possible values for $icode option_name$$ are discussed below
-and listed $cref/here/option_name_list/$$.
 
 $subhead option_value$$
 This column has type $code text$$ and is
 the value for the corresponding option.
+
+$head Default$$
+The possible values for $icode option_name$$ together with the corresponding
+default $icode option_value$$ are listed in $cref option_default$$.
+
+$head Changing Values$$
+This table is special in that you can change almost all its values
+without invalidating the
+$cref/output tables/data_flow/Command Output Tables/$$.
+There is one exception; see
+$cref/parent node/option_table/Parent Node/$$ below.
 
 $head Parent Node$$
 Unlike other options,
@@ -92,9 +87,6 @@ If $icode%option_name% = parent_node_name%$$
 the corresponding $icode option_value$$
 is an string that specifies the parent
 $cref/node_name/node_table/node_name/$$.
-
-$subhead Default$$
-The default value for these options is null.
 
 $subhead Name or Id$$
 $list number$$
@@ -172,14 +164,7 @@ $cref/add_var_scale_log
 	/add_var_scale_log
 /$$.
 
-$subhead Default$$
-The default value for this option is $code add_std_scale_all$$.
-
 $head Zero Sum Constraints$$
-
-$subhead Default$$
-The default value for these options is null; i.e.,
-no corresponding zero sum constraints.
 
 $subhead zero_sum_child_rate$$
 If $icode option_name$$ is $code zero_sum_child_rate$$,
@@ -222,10 +207,6 @@ contain examples and tests using these constraints.
 
 $head Extra Columns$$
 
-$subhead Default$$
-The default value for these options is null; i.e.,
-no extra columns in the corresponding table or csv file.
-
 $subhead data_extra_columns$$
 If $icode option_name$$ is $code data_extra_columns$$,
 the corresponding value is space separated list of extra columns,
@@ -252,9 +233,6 @@ warning messages are written to standard error.
 In either case, these messages are recorded in the $cref log_table$$.
 Error messages are always written to standard error
 and recorded in the log table.
-
-$subhead Default$$
-The default value for this option is $code true$$.
 
 $head minimum_meas_cv$$
 This option is no longer available because it is now
@@ -284,6 +262,10 @@ $cref/ordinary differential equation
 It is also the step size is also used to approximate the integrals in
 the definition of the
 $cref/average integrands/avg_integrand/Average Integrand, A_i/$$.
+The default value for $icode ode_step_size$$ is $code 10.0$$
+which is reasonable if all the rates
+$icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
+are all less than $code 0.1$$.
 
 $subhead age_avg_split$$
 If $icode%option_name% = age_avg_split%$$,
@@ -292,14 +274,7 @@ age values at which to split the age integration.
 This split is both for the computation of the average integrands
 and for the solution of the ODE; see
 $cref/age average grid/age_avg_table/Age Average Grid/$$.
-
-$subhead Default$$
-The default value for $icode age_avg_split$$ is null
-in which case $icode age_avg_split$$ is the empty set.
-The default value for $icode ode_step_size$$ is $code 10.0$$,
-which is reasonable if all the rates
-$icode iota$$, $icode rho$$, $icode chi$$, and $icode omega$$
-are all less than $code 0.1$$.
+If this value is null, $icode age_avg_split$$ is the empty set.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number
@@ -307,11 +282,7 @@ generator that is used by $code dismod_at$$.
 If this value is zero, the clock is used to seed the random number generator;
 see $cref/random_seed/log_table/message_type/random_seed/$$ in the log table.
 
-$subhead Default$$
-The default value for this option is $code 0$$.
-
 $head rate_case$$
-The $icode rate_case$$ value does not matter for the following integrands:
 
 $subhead no_ode$$
 The $icode rate_case$$ value does not matter for the following integrands:
@@ -352,9 +323,6 @@ $icode%option_value% = iota_zero_rho_pos%$$,
 the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 $icode iota$$ and $icode rho$$
 must always have lower limit greater than zero.
-
-$subhead Default$$
-The default value for this option is $code iota_pos_rho_zero$$.
 
 $head Fixed and Random$$
 The following options control the Ipopt optimization
@@ -415,7 +383,6 @@ In the special case where $icode max_num_iter_fixed$$ is $code -1$$,
 the solution in the fit table
 is the start_var table value for the fixed effects
 and the corresponding optimal value for the random effects.
-The default value for $icode max_num_fixed$$ is $code 100$$.
 
 $subhead print_level$$
 If $icode option_name$$ is
@@ -424,11 +391,10 @@ the corresponding $icode option_value$$
 is a positive integer between 0 and 12 inclusive
 that specifies the print level
 for optimizing the fixed effects (random effects).
-Zero, corresponds to no printing and should be the default for use
-with $code dismod_at$$ (the value 5 is the normal default for Ipopt).
+Zero, corresponds to no printing and is the default for $code dismod_at$$
+(the value 5 is the normal default for Ipopt).
 At least one these two print values
 (for the fixed and random effects) should be zero.
-The default value for this option is $code 0$$.
 
 $subhead accept_after_max_steps$$
 If $icode option_name$$ is
@@ -436,7 +402,6 @@ $code accept_after_max_steps_fixed$$ ($code accept_after_max_steps_random$$),
 the corresponding $icode option_value$$
 is a positive integer specifying the maximum number of
 backtracking steps to take before accepting a line search point.
-The default value for this option is $code 5$$.
 
 $subhead tolerance$$
 If $icode option_name$$ is
@@ -446,7 +411,6 @@ is a positive floating point number
 that specifies the desired relative convergence tolerance
 for optimizing the fixed effects (random effects).
 (This is called $code tol$$ in Ipopt documentation.)
-The default value for this option is $code 1e-8$$.
 For the fixed effects, this tolerance is relative to the derivatives
 of the fixed effects objective at the value of the fixed effects in
 $cref scale_var_table$$.
@@ -463,7 +427,6 @@ the corresponding possible values are
 $code true$$ or $code false$$.
 If it is $code true$$, a quasi-Newton method is used to optimize
 the fixed effects. Otherwise a full Newton method is used.
-The default value for this option is $code true$$.
 
 $subhead bound_frac_fixed$$
 If $icode option_name$$ is
@@ -489,7 +452,6 @@ if $icode option_name$$ is $code limited_memory_max_history_fixed$$,
 the corresponding $icode option_value$$ is
 the number of most recent iterations that are taken into account
 for the limited-memory quasi-Newton approximation.
-The default value for this option is $code 30$$.
 
 $head Random Only$$
 The following options control the Ipopt optimization
@@ -502,7 +464,6 @@ The method $code ipopt_solve$$ is part of the standard CppAD package.
 The method $code ipopt_random$$ is a special purpose interface to ipopt
 designed to optimizer the random effects for the cppad_mixed package
 (which should be faster).
-The default value for this option is $code ipopt_random$$.
 
 $subhead bound_random$$
 If $icode option_name$$ is $code bound_random$$,
@@ -559,7 +520,7 @@ limits specified by $icode bound_random$$.
 $lend
 
 $children%
-	omh/table/option_name_list.omh%
+	omh/table/option_default.omh%
 	example/table/option_table.py
 %$$
 $head Example$$
