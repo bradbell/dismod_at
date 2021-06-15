@@ -327,7 +327,7 @@ random_seed = '0'
 #
 # $subhead quasi_fixed$$
 # This $code str$$ that is either $code true$$ or $code false$$ and is the
-# $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ option value.
+# $cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$ option value.
 # If it is true, a quasi-Newton method is used.
 # This only requires function values and
 # first derivatives for the objective and constraints.

@@ -586,7 +586,7 @@ $head 07-10$$
 $list number$$
 Advance to $code cppad_mixed-20190710$$.
 This makes the Newton method for the fixed effects more robust
-($cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ false case).
+($cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$ false case).
 To be specific, one is less likely to an error message indicating
 that the Hessian w.r.t. the random effects is not positive definite.
 $lnext
@@ -685,7 +685,7 @@ This has been fixed by prohibiting a lower limit without an upper
 see $cref/upper/prior_table/upper/$$ in prior table documentation.
 $lnext
 Extra documentation was added for the
-$cref/bound_frac_fixed/option_table/Fixed Only/bound_frac_fixed/$$
+$cref/bound_frac_fixed/option_table/Optimize Fixed Only/bound_frac_fixed/$$
 option (and $icode bound_push$$ was set to zero).
 $lend
 

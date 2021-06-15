@@ -70,7 +70,7 @@ $code bound_frac_fixed$$ $cnext 1e-2 $cnext
 $cref/
 	bound_frac_fixed/
 	option_table/
-	Fixed Only/
+	Optimize Fixed Only/
 	bound_frac_fixed
 /$$
 $rnext
@@ -110,7 +110,7 @@ $code limited_memory_max_history_fixed$$ $cnext 30 $cnext
 $cref/
 	limited_memory_max_history_fixed/
 	option_table/
-	Fixed Only/
+	Optimize Fixed Only/
 	limited_memory_max_history_fixed
 /$$
 $rnext
@@ -189,7 +189,7 @@ $code quasi_fixed$$ $cnext true $cnext
 $cref/
 	quasi_fixed/
 	option_table/
-	Fixed Only/
+	Optimize Fixed Only/
 	quasi_fixed
 /$$
 $rnext

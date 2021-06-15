@@ -378,7 +378,7 @@ If Ipopt is run with zero iterations, the solution in the
 $cref/fit_var_value/fit_var_table/fit_var_value/$$ column of the fit table
 may not correspond to the starting fixed effects; i.e.,
 the fixed effects in the $cref start_var_table$$ table; see the heading
-$cref/bound_frac_fixed/option_table/Fixed Only/bound_frac_fixed/$$ below.
+$cref/bound_frac_fixed/option_table/Optimize Fixed Only/bound_frac_fixed/$$ below.
 In the special case where $icode max_num_iter_fixed$$ is $code -1$$,
 the solution in the fit table
 is the start_var table value for the fixed effects
@@ -415,7 +415,7 @@ For the fixed effects, this tolerance is relative to the derivatives
 of the fixed effects objective at the value of the fixed effects in
 $cref scale_var_table$$.
 
-$head Fixed Only$$
+$head Optimize Fixed Only$$
 The following options control the
 $href%http://www.coin-or.org/Ipopt/documentation/%Ipopt%$$ optimization
 of the fixed effects:

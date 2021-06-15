@@ -361,7 +361,7 @@ $cref/
 	zero_sum_child_rate
 /$$.
 Change $code fixed_bound_frac$$ to
-$cref/bound_frac_fixed/option_table/Fixed Only/bound_frac_fixed/$$.
+$cref/bound_frac_fixed/option_table/Optimize Fixed Only/bound_frac_fixed/$$.
 $lend
 
 $head 10-04$$

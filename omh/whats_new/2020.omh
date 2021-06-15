@@ -227,7 +227,7 @@ $lnext
 Advance to $code cppad_mixed-20200529$$.
 This adds a missing error report when the Hessian w.r.t. the random
 effects is not positive definite at the starting variable values and
-$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ is false.
+$cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$ is false.
 $lend
 
 $head 05-27$$

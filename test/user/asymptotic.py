@@ -15,7 +15,7 @@ random_seed = '0'
 #
 # $head quasi_fixed$$
 # This argument is $code true$$ or $code false$$ and specifies
-# $cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$
+# $cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$
 # in the option table.
 quasi_fixed = 'false'
 #

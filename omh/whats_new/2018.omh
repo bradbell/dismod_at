@@ -428,7 +428,7 @@ $code cppad_mixed-20180630$$,
 and remove
 $code checkpoint_newton_step$$ from $cref run_cmake.sh$$.
 This should make be faster and use less memory when
-$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ is false.
+$cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$ is false.
 For the $cref user_speed.py$$ example with
 $icode%n_children%=30%$$,
 $icode%n_data_per_child%=20%$$, and
@@ -728,7 +728,7 @@ $list number$$
 Add
 $cref/limited_memory_max_history_fixed
 	/option_table
-	/Fixed Only
+	/Optimize Fixed Only
 	/limited_memory_max_history_fixed
 /$$
 to the option table.
@@ -736,12 +736,12 @@ The default for this option was previously hard coded into the program
 and could not be changed.
 As it turns out, we seem to get better convergence with larger values for
 this option when
-$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ true.
+$cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$ true.
 $lnext
 The documentation for the optimizer options have been split up into
 three groups:
 $cref/fixed and random/option_table/Optimize Fixed and Random/$$,
-$cref/fixed only/option_table/Fixed Only/$$, and
+$cref/fixed only/option_table/Optimize Fixed Only/$$, and
 $cref/random only/option_table/Random Only/$$.
 $lend
 
@@ -937,7 +937,7 @@ $lnext
 Advance to $code cppad_mixed-20180208$$.
 This fixes a bug in the Laplace
 $cref/density/data_table/density_id/$$ in the data table when
-$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$ was $code false$$.
+$cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$ was $code false$$.
 $lnext
 Detect and report an error when the density in the data table is
 $cref/nonsmooth/density_table/Notation/Nonsmooth/$$.

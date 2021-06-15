@@ -116,7 +116,7 @@ $head quasi_fixed$$
 If this argument is true,
 a quasi-Newton method is used when optimizing the fixed effects.
 Otherwise a full Newton method is used; see
-$cref/quasi_fixed/option_table/Fixed Only/quasi_fixed/$$.
+$cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$.
 
 $head zero_sum_child_rate$$
 If this vector has size $code number_rate_enum$$.

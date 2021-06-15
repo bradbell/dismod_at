@@ -31,7 +31,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|$head Fixed and Random\$|$head Optimize Fixed and Random$|
-s|/Fixed and Random/|/Optimize Fixed and Random/|
-s|\tFixed and Random/|\tOptimize Fixed and Random/|
-s|\t/Fixed and Random|\t/Optimize Fixed and Random|
+s|$head Fixed Only\$|$head Optimize Fixed Only$|
+s|/Fixed Only/|/Optimize Fixed Only/|
+s|\tFixed Only/|\tOptimize Fixed Only/|
+s|\t/Fixed Only|\t/Optimize Fixed Only|
