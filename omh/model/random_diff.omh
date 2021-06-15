@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -26,7 +26,7 @@ $section Random Effects Differences Density Function$$
 
 $head k, K$$
 For each $cref/rate_id/rate_table/rate_id/$$
-and each $cref/child/option_table/parent_node_name/Children/$$
+and each $cref/child/option_table/Parent Node/Children/$$
 there is a smoothing and corresponding set of model variables.
 In addition, for each
 $cref/mulcov_id/mulcov_table/mulcov_id/$$

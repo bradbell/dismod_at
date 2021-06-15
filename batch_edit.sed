@@ -31,20 +31,21 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/\/option_table\/age_avg_split\//! b one
-s|age_avg_split|\n\t&|g
-s|option_table/|\n\t&\n\tAge Average Grid/|
-s|/\$\$|\n&|
-/^#/s|\n|\n#|g
-s|#/|# /|
+/\/option_table\/parent_node_name\//! b one
+s|/parent/option_table/parent_node_name/|/parent node/option_table/Parent Node/|
+s|/parent node/option_table/parent_node_name/|/parent node/option_table/Parent Node/|
+s|/parent_node/option_table/parent_node_name/|/parent node/option_table/Parent Node/|
+s|/parent_node_name/option_table/parent_node_name/|/parent node/option_table/Parent Node/|
+s|/children/option_table/parent_node_name/Children/|/children/option_table/Parent Node/Children/|
+s|/child/option_table/parent_node_name/Children/|/child/option_table/Parent Node/Children/|
 b end
-# -----------------------------------------------------------------
+# -----------------------------------------------------------------------------
 : one
-/\/option_table\/ode_step_size\//! b end
-s|ode_step_size|\n\t&|g
-s|option_table/|\n\t&\n\tAge Average Grid/|
-s|/\$\$|\n&|
-/^#/s|\n|\n#|g
-s|#/|# /|
+/\/option_table\/parent_node_id\//! b two
+s|/parent node id/option_table/parent_node_id/|/parent node id/option_table/Parent Node/parent_node_id/|
+s|/parent node/option_table/parent_node_id/|/parent node id/option_table/Parent Node/|
+s|/parent_node_id/option_table/parent_node_id/|/parent node id/option_table/Parent Node/|
+# -----------------------------------------------------------------
+: two
 # -----------------------------------------------------------------
 : end

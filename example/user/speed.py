@@ -31,7 +31,7 @@
 #
 # $head n_children$$
 # is a non-negative positive integer specifying the number of
-# $cref/children/option_table/parent_node_name/Children/$$.
+# $cref/children/option_table/Parent Node/Children/$$.
 #
 # $head quasi_fixed$$
 # This argument is $code true$$ or $code false$$ and specifies

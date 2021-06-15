@@ -31,7 +31,7 @@
 # $cref/omega/rate_table/rate_name/omega/$$.
 # $lnext
 # There is only one node corresponding to the world, and hence there are no
-# $cref/children/option_table/parent_node_name/Children/$$ or
+# $cref/children/option_table/Parent Node/Children/$$ or
 # $cref/random effects/model_variables/Random Effects, u/$$.
 # $lnext
 # There is only one measurement and it is for the

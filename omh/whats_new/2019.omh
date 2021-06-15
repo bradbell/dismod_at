@@ -537,7 +537,7 @@ now explicitly states which default values are null
 (instead of using other words like empty).
 Furthermore, the possible combinations of null and not null
 for the parent node id and name are discussed under the heading
-$cref/parent_node_name/option_table/parent_node_name/$$.
+$cref/name or id/option_table/Parent Node/Name or Id/$$.
 $lnext
 A new version of $cref dock_dismod_at.sh$$
 automatically detects (and suggests solutions)
@@ -975,7 +975,7 @@ $lend
 
 $head 04-10$$
 $list number$$
-The $cref/parent_node/option_table/parent_node_name/$$,
+The $cref/parent node/option_table/Parent Node/$$,
 not just its $cref/descendants/node_table/parent/Descendant/$$,
 is included in the
 $cref/node/data_subset_table/data_id/Node/$$ restrictions

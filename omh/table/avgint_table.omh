@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -48,7 +48,7 @@ $latex q_k (a, t)$$ can be computed by using the following settings
 in this table:
 $list number$$
 Set $icode node_id$$ to the
-$cref/parent node id/option_table/parent_node_id/$$.
+$cref/parent node id/option_table/Parent Node/parent_node_id/$$.
 $lnext
 Set $icode integrand_id$$ to the integrand
 corresponding to rate $icode k$$.

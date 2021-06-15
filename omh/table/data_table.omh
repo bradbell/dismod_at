@@ -53,7 +53,7 @@ the $cref/average_integrand/avg_integrand/$$
 cannot depend on any of the random effects.
 For example, if the
 $cref/node_id/data_table/node_id/$$ is the
-$cref/parent node/option_table/parent_node_id/$$,
+$cref/parent_node_id/option_table/Parent Node/parent_node_id/$$,
 the average integrand does not depend on the random effects.
 Also, if the node corresponding to a child that has all its random effects
 constrained, the average integrand does not depend on the random effects.
@@ -68,7 +68,7 @@ the node for this measurement.
 
 $subhead Parent Data$$
 If the $icode node_id$$ is the
-$cref/parent_node_id/option_table/parent_node_id/$$,
+$cref/parent_node_id/option_table/Parent Node/parent_node_id/$$,
 this data will be associated with the parent node and not
 have any random effects in its model.
 

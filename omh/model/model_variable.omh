@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -95,9 +95,8 @@ The age and time difference priors specify the smoothing in a mathematical
 sense.
 
 $head Children$$
-The parent node is specified by
-$cref/parent_node_id/option_table/parent_node_id/$$ in the
-option table.
+The parent node is specified in the
+$cref/option table/option_table/Parent Node/$$.
 The $cref/children/node_table/parent/Children/$$
 corresponding to the parent node.
 (The children is a set of nodes not a set of variables.)

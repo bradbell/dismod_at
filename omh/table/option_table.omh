@@ -55,7 +55,7 @@ This table is special in that you can change almost all its values
 without invalidating the
 $cref/output tables/data_flow/Command Output Tables/$$.
 There is one exception; see
-$cref/parent_node_id/option_table/parent_node_id/$$ below.
+$cref/parent node/option_table/Parent Node/$$ below.
 
 $subhead option_id$$
 This column
@@ -72,7 +72,9 @@ $subhead option_value$$
 This column has type $code text$$ and is
 the value for the corresponding option.
 
-$head parent_node_id$$
+$head Parent Node$$
+
+$subhead parent_node_id$$
 If $icode%option_name% = parent_node_id%$$
 the corresponding $icode option_value$$
 is an integer that specifies the parent
@@ -80,31 +82,25 @@ $cref/node_id/node_table/node_id/$$.
 It is easier (and equivalent) to use $icode parent_node_name$$
 instead of $icode parent_node_id$$; see below.
 
-$subhead Default$$
-The default value for this option is null.
-
-$head parent_node_name$$
+$subhead parent_node_name$$
 If $icode%option_name% = parent_node_name%$$
 the corresponding $icode option_value$$
 is an string that specifies the parent
 $cref/node_name/node_table/node_name/$$.
 
 $subhead Default$$
-The default value for this option is null.
+The default value for these options is null.
 
-$subhead name or id$$
+$subhead Name or Id$$
 $list number$$
-Either $icode parent_node_name$$ or $icode parent_node_id$$ must
-not be null.
-$lnext
 If both $icode parent_node_name$$ and $icode parent_node_id$$ are not null,
 the corresponding $cref/node_id/node_table/node_id/$$
 and $cref/node_name/node_table/node_name/$$ must agree; see $cref node_table$$.
 $lnext
-If $icode parent_node_name$$ is null and $icode parent_node_id$$ is not null,
+If $icode parent_node_name$$ is null, $icode parent_node_id$$ is not null and
 $icode parent_node_id$$ determines the parent node.
 $lnext
-If $icode parent_node_name$$ is not null and $icode parent_node_id$$ is null,
+If $icode parent_node_id$$ is null, $icode parent_node_name$$ is not null and
 the $cref node_table$$ is searched to determine
 the corresponding $icode parent_node_id$$.
 this takes some extra time that it is not expected to be significant.

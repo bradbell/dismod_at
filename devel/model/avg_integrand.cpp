@@ -203,7 +203,7 @@ This is the $cref/integrand_id/integrand_table/integrand_id/$$
 in the integrand table corresponding to this average integrand.
 
 $head n_child_$$
-set to number of $cref/children/option_table/parent_node_name/Children/$$.
+set to number of $cref/children/option_table/Parent Node/Children/$$.
 
 $head child$$
 Is the $cref/child/child_info/table_id2child/child/$$ corresponding
@@ -586,7 +586,7 @@ This is the $cref/integrand_id/integrand_table/integrand_id/$$
 in the integrand table corresponding to this average integrand.
 
 $head n_child_$$
-set to number of $cref/children/option_table/parent_node_name/Children/$$.
+set to number of $cref/children/option_table/Parent Node/Children/$$.
 
 $head child$$
 Is the $cref/child/child_info/table_id2child/child/$$ corresponding

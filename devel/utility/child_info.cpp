@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -43,7 +43,7 @@ $codei%
 	size_t %parent_node_id%
 %$$
 and is the
-$cref/parent_node_id/option_table/parent_node_id/$$.
+$cref/parent node id/option_table/Parent Node/$$.
 for the fit command.
 
 $subhead node_table$$

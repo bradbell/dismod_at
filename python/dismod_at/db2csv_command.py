@@ -78,7 +78,7 @@
 # $cref/option_value/option_table/Conventions/option_value/$$.
 # If a row does not appear in the option table, the corresponding
 # default value is written to $code option.csv$$.
-# If the $cref/parent_node_id/option_table/parent_node_id/$$ appears
+# If the $cref/parent_node_id/option_table/Parent Node/parent_node_id/$$ appears
 # in the option table, the $icode parent_node_name$$ row of $code option.csv$$
 # is filled in with the corresponding node name.
 #
@@ -357,7 +357,7 @@
 # $subhead child$$
 # If this data row is associated with a child,
 # this is the name of the child. Otherwise, this data is associated
-# with the $cref/parent node/option_table/parent_node_id/$$.
+# with the $cref/parent node/option_table/Parent Node/$$.
 #
 # $subhead node$$
 # is the

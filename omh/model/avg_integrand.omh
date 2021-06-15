@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -124,7 +124,7 @@ $cref/parent rate
 	/Parent Rates
 /$$.
 This is the model for the rate corresponding to the
-$cref/parent node/option_table/parent_node_id/$$
+$cref/parent node/option_table/Parent Node/$$
 and the reference value for the covariates; i.e.
 $latex x_{i,j} = 0$$.
 The adjusted rate

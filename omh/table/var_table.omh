@@ -73,7 +73,7 @@ This variable is rate for the corresponding
 $icode age_id$$, $icode time_id$$,
 $icode node_id$$, and $icode rate_id$$.
 If the $icode node_id$$ is the
-$cref/parent_node_id/option_table/parent_node_id/$$, it is a
+$cref/parent_node_id/option_table/Parent Node/$$, it is a
 $cref/fixed effect/model_variables/Fixed Effects, theta/Parent Rates/$$.
 Otherwise, it is a
 $cref/random effect/model_variables/Random Effects, u/Child Rate Effects/$$.

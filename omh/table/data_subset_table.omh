@@ -33,7 +33,7 @@ such that the following conditions hold:
 
 $subhead Node$$
 The $cref/node/data_table/node_id/$$ is the
-$cref/parent/option_table/parent_node_name/$$ or a
+$cref/parent node/option_table/Parent Node/$$ or a
 $cref/descendant/node_table/parent/Descendant/$$
 of the parent node.
 

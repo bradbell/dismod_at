@@ -864,7 +864,7 @@ with respect to $latex \beta$$ was zero.
 This has been fixed.
 $lnext
 The data corresponding to the
-$cref/parent node/option_table/parent_node_id/$$ is now in represented using
+$cref/parent node/option_table/Parent Node/$$ is now in represented using
 $code cppad_mixed p(z | theta)$$ instead of
 $code cppad_mixed p(y | theta, u)$$.
 This speeds up the computation and enables one to use

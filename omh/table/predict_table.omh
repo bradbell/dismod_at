@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -35,7 +35,7 @@ The subset is defined by the following node and covariate conditions:
 
 $subhead Node$$
 The $cref/node/avgint_table/node_id/$$ must be the
-$cref/parent node/option_table/parent_node_name/$$, or a
+$cref/parent node/option_table/Parent Node/$$, or a
 $cref/descendant/node_table/parent/Descendant/$$ of the parent node.
 
 $subhead Covariates$$

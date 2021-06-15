@@ -462,7 +462,8 @@ $head 02-29$$
 $list number$$
 Add the $cref user_residual.py$$ example.
 $lnext
-If the user specified the $cref/parent_node_id/option_table/parent_node_id/$$
+If the user specified the
+$cref/parent_node_id/option_table/Parent Node/parent_node_id/$$
 in the option table, the corresponding parent node name is placed in the
 $cref/option.csv/db2csv_command/option.csv/$$.
 $lend
