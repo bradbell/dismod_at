@@ -737,7 +737,7 @@ If $icode%j% < %n_child%$$,
 it is the rate vector for the $th j$$ child node.
 If $icode%j% == %n_child%$$,
 this is the rate vector for the
-$cref/parent_node/option_table/parent_node_id/$$.
+$cref/parent node/option_table/Parent Node/$$.
 (Not specified when $icode smooth_id$$ corresponds to $code null$$).
 
 $head Example$$

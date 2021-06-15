@@ -44,7 +44,7 @@ $head Purpose$$
 This routine subsamples the $icode data_table$$, in the following way:
 $list number$$
 Only rows corresponding to the
-$cref/parent_node/option_table/parent_node_id/$$,
+$cref/parent node/option_table/Parent Node/$$,
 or a descendant of the parent node, are included.
 $lnext
 Only rows for which the covariates satisfy the
