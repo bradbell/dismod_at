@@ -223,7 +223,7 @@ using simulated data.
 The 
 <code><i><font color="black"><span style='white-space: nowrap'>avg_age_split</span></font></i></code>
  option was changed to the
-<a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+<a href="option_table.htm#Age Average Grid.age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
  option.
 This way the <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
  does not appear
@@ -232,17 +232,17 @@ to have the same primary key as the <a href="age_table.htm" target="_top"><span 
 </li><li>
 
 The
-<a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
+<a href="age_avg_table.htm#Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
 
 is now output in the <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
  to make
-<a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+<a href="option_table.htm#Age Average Grid.age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
  easier to use.
 </li><li>
 
 There was a bug in the age_avg_split option
 when two splits occurred in the same
-<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+<a href="option_table.htm#Age Average Grid.ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
  interval.
 This has been fixed.
 </li><li>
@@ -262,7 +262,7 @@ This violated the
 rule and has been fixed.
 </li><li>
 
-If the <a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+If the <a href="option_table.htm#Age Average Grid.age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
  was not sorted,
 the program would error even if the <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set_command</span></a>
  was
@@ -294,7 +294,7 @@ Change the way that average integrands are computed; see
 <a href="numeric_average.htm" target="_top"><span style='white-space: nowrap'>numeric_average</span></a>
 .
 This enables using a step size that varies with age; see
-<a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
+<a href="age_avg_table.htm#Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
 .
 Here is one case of a speed comparison for this change using a uniformly
 spaced grid:
@@ -319,7 +319,7 @@ It does not use
 <b><big><a name="10-13" id="10-13">10-13</a></big></b>
 
 <ol type="1"><li>
-The <a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+The <a href="option_table.htm#Age Average Grid.ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
  documentation
 was changed to reflect the fact that it is also used for approximating
 the integrals in the average integrand.
@@ -716,7 +716,7 @@ and remove
 <code><font color="blue">checkpoint_newton_step</font></code> from <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>run_cmake.sh</span></a>
 .
 This should make be faster and use less memory when
-<a href="option_table.htm#Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
  is false.
 For the <a href="user_speed.py.htm" target="_top"><span style='white-space: nowrap'>user_speed.py</span></a>
  example with
@@ -1232,24 +1232,24 @@ make this clearer.
 
 <ol type="1"><li>
 Add
-<a href="option_table.htm#Fixed Only.limited_memory_max_history_fixed" target="_top"><span style='white-space: nowrap'>limited_memory_max_history_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed Only.limited_memory_max_history_fixed" target="_top"><span style='white-space: nowrap'>limited_memory_max_history_fixed</span></a>
 
 to the option table.
 The default for this option was previously hard coded into the program
 and could not be changed.
 As it turns out, we seem to get better convergence with larger values for
 this option when
-<a href="option_table.htm#Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
  true.
 </li><li>
 
 The documentation for the optimizer options have been split up into
 three groups:
-<a href="option_table.htm#Fixed and Random" target="_top"><span style='white-space: nowrap'>fixed&nbsp;and&nbsp;random</span></a>
+<a href="option_table.htm#Optimize Fixed and Random" target="_top"><span style='white-space: nowrap'>fixed&nbsp;and&nbsp;random</span></a>
 ,
-<a href="option_table.htm#Fixed Only" target="_top"><span style='white-space: nowrap'>fixed&nbsp;only</span></a>
+<a href="option_table.htm#Optimize Fixed Only" target="_top"><span style='white-space: nowrap'>fixed&nbsp;only</span></a>
 , and
-<a href="option_table.htm#Random Only" target="_top"><span style='white-space: nowrap'>random&nbsp;only</span></a>
+<a href="option_table.htm#Optimize Random Only" target="_top"><span style='white-space: nowrap'>random&nbsp;only</span></a>
 .
 </li></ol>
 
@@ -1454,7 +1454,7 @@ Add two child nodes (random effects) to the
 
 Changes so the example with random effects runs faster:
 Increase the
-<a href="option_table.htm#Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerance_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerance_fixed</span></a>
 .
 Reduce the number of points in the
 <a href="user_diabetes.py.htm#Problem Parameters.parent_age_grid" target="_top"><span style='white-space: nowrap'>age</span></a>
@@ -1563,7 +1563,7 @@ Advance to <code><font color="blue">cppad_mixed-20180208</font></code>.
 This fixes a bug in the Laplace
 <a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density</span></a>
  in the data table when
-<a href="option_table.htm#Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
  was <code><font color="blue">false</font></code>.
 </li><li>
 
@@ -1732,7 +1732,7 @@ source for the predict command is
 </li><li>
 
 Mention that under normal circumstances,
-<a href="option_table.htm#Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
 
 should be <code><font color="blue">none</font></code>.
 </li></ol>
@@ -1921,7 +1921,7 @@ Fix an un-used variable warning when
 </li><li>
 
 Replace the default acceptable tolerance by the
-<a href="option_table.htm#Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerances</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerances</span></a>
 
 specified in the options table.
 (The acceptable tolerance is used when the optimizer is having trouble

@@ -331,7 +331,7 @@ In addition, the <a href="bilinear.htm#Plotting" target="_top"><span style='whit
 
 <ol type="1"><li>
 Add the option to specify
-<a href="option_table.htm#parent_node_name" target="_top"><span style='white-space: nowrap'>parent_node_name</span></a>
+<a href="option_table.htm#Parent Node.parent_node_name" target="_top"><span style='white-space: nowrap'>parent_node_name</span></a>
 
 instead of parent_node_id.
 The <a href="create_database.htm" target="_top"><span style='white-space: nowrap'>create_database</span></a>
@@ -598,13 +598,13 @@ In addition, remove the corresponding setting to <code><font color="blue">None</
 </li><li>
 
 Change <code><font color="blue">random_bound</font></code> to
-<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
 .
 Change <code><font color="blue">zero_sum_child_rate</font></code> to
-<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
+<a href="option_table.htm#Zero Sum Constraints.zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
 .
 Change <code><font color="blue">fixed_bound_frac</font></code> to
-<a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
 .
 </li></ol>
 
@@ -747,9 +747,9 @@ Fix a bug in <a href="db2csv_command.htm" target="_top"><span style='white-space
 
 Fix a bug in <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
  when
-<a href="option_table.htm#data_extra_columns" target="_top"><span style='white-space: nowrap'>data_extra_columns</span></a>
+<a href="option_table.htm#Extra Columns.data_extra_columns" target="_top"><span style='white-space: nowrap'>data_extra_columns</span></a>
  or
-<a href="option_table.htm#avgint_extra_columns" target="_top"><span style='white-space: nowrap'>avgint_extra_columns</span></a>
+<a href="option_table.htm#Extra Columns.avgint_extra_columns" target="_top"><span style='white-space: nowrap'>avgint_extra_columns</span></a>
  was
 present and null.
 </li><li>
@@ -925,7 +925,7 @@ speed example / test.
 </li><li>
 
 Add a definition of the
-<a href="option_table.htm#parent_node_name.Children" target="_top"><span style='white-space: nowrap'>children</span></a>
+<a href="option_table.htm#Parent Node.Children" target="_top"><span style='white-space: nowrap'>children</span></a>
 
 to the option table.
 </li></ol>
@@ -950,7 +950,7 @@ Advance to <code><font color="blue">cppad_mixed-20170801</font></code> to fix an
 </li><li>
 
 The postscripts <code><font color="blue">fixed</font></code> and <code><font color="blue">random</font></code> were missing from the
-<a href="option_table.htm#Fixed and Random.accept_after_max_steps" target="_top"><span style='white-space: nowrap'>accept_after_max_steps</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.accept_after_max_steps" target="_top"><span style='white-space: nowrap'>accept_after_max_steps</span></a>
 
 documentation.
 </li><li>
@@ -1070,7 +1070,7 @@ There was a bug and the case
 <a href="fit_command.htm#variables.fixed" target="_top"><span style='white-space: nowrap'>fit&nbsp;fixed</span></a>
  would not run
 when
-<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
+<a href="option_table.htm#Zero Sum Constraints.zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  was not null
 (specified one or more rates).
 This has been fixed.
@@ -1079,7 +1079,7 @@ This has been fixed.
 For each 
 <code><i><font color="black"><span style='white-space: nowrap'>rate_name</span></font></i></code>
  in
-<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
+<a href="option_table.htm#Zero Sum Constraints.zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
 
 the corresponding
 <a href="rate_table.htm#child_nslist_id" target="_top"><span style='white-space: nowrap'>child_nslist_id</span></a>
@@ -1093,7 +1093,7 @@ An error messages is reported if this is not the case.
 <br>
 <b><big><a name="04-27" id="04-27">04-27</a></big></b>
 <br>
-Change the <a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
+Change the <a href="option_table.htm#Zero Sum Constraints.zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  option
 so it can select specific rates to have zero sum.
 This was necessary so that
@@ -1123,7 +1123,7 @@ The <a href="db2csv_command.htm#predict.csv.avgint_id" target="_top"><span style
 added to the <code><font color="blue">predict.csv</font></code> file.
 </li><li>
 
-Add <a href="option_table.htm#data_extra_columns" target="_top"><span style='white-space: nowrap'>data_extra_columns</span></a>
+Add <a href="option_table.htm#Extra Columns.data_extra_columns" target="_top"><span style='white-space: nowrap'>data_extra_columns</span></a>
 
 and remove <code><font color="blue">data_name</font></code> column from the data table.
 </li></ol>
@@ -1140,7 +1140,7 @@ Advance to cppad_mixed-20170424.
 The convergence criteria, is now relative to the derivative values
 at the mean of the prior for the fixed effects.
 This also holds for the values printed during the optimization of the
-fixed effects, see <a href="option_table.htm#Fixed and Random.print_level" target="_top"><span style='white-space: nowrap'>print_level</span></a>
+fixed effects, see <a href="option_table.htm#Optimize Fixed and Random.print_level" target="_top"><span style='white-space: nowrap'>print_level</span></a>
 .
 These values used to be relative to the
 <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>starting&nbsp;variables</span></a>
@@ -1156,7 +1156,7 @@ Add the <a href="option_table.htm#warn_on_stderr" target="_top"><span style='whi
  option.
 </li><li>
 
-Add the <a href="option_table.htm#avgint_extra_columns" target="_top"><span style='white-space: nowrap'>avgint_extra_columns</span></a>
+Add the <a href="option_table.htm#Extra Columns.avgint_extra_columns" target="_top"><span style='white-space: nowrap'>avgint_extra_columns</span></a>
  option.
 </li></ol>
 
@@ -1279,7 +1279,7 @@ Add <code><font color="blue">random</font></code> to possible choices for
 
 <ol type="1"><li>
 The change on 04-15 introduced a bug whereby non-zero values for
-<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
  were not having
 any effects.
 This has been fixed.
@@ -1291,7 +1291,7 @@ fit command. It is better to use
 <code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
  equal to <code><font color="blue">fixed</font></code>,
 a apposed to changing
-<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
 
 in the <code><font color="blue">option</font></code> table.
 </li><li>
@@ -1336,7 +1336,7 @@ were added to the user example section.
 
 <ol type="1"><li>
 More discussion was added for how the
-<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+<a href="option_table.htm#Parent Node" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
 
 and the
 <a href="covariate_table.htm#max_difference" target="_top"><span style='white-space: nowrap'>max_difference</span></a>
@@ -1513,7 +1513,7 @@ This is in addition to the
 <b><big><a name="01-14" id="01-14">01-14</a></big></b>
 <br>
 The <code><font color="blue">adaptive</font></code> and <code><font color="blue">trace-adaptive</font></code>
-<a href="option_table.htm#Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
  options
 generated error messages. This has been fixed and they now work.
 

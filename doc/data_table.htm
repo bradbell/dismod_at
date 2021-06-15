@@ -160,7 +160,7 @@ cannot depend on any of the random effects.
 For example, if the
 <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
  is the
-<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+<a href="option_table.htm#Parent Node.parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
 ,
 the average integrand does not depend on the random effects.
 Also, if the node corresponding to a child that has all its random effects
@@ -185,7 +185,7 @@ the node for this measurement.
 If the 
 <code><i><font color="black"><span style='white-space: nowrap'>node_id</span></font></i></code>
  is the
-<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+<a href="option_table.htm#Parent Node.parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
 ,
 this data will be associated with the parent node and not
 have any random effects in its model.
@@ -276,11 +276,9 @@ This column has type <code><font color="blue">integer</font></code> and has valu
 Only the rows where hold_out is zero are included
 in the objective optimized during a <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
 .
-After the optimal variable values are found,
-the hold out residuals are computed so one can check the
-predictive validity for hold out data.
-The residuals for hold out data (other data) are computed once (many times)
-for each fit.
+See the fit command <a href="fit_command.htm#data_subset_table.hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+
+documentation.
 
 <br>
 <br>

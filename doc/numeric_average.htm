@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Numerical Approximation of Average Integrands</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Numerical Approximation of Average Integrands">
-<meta name="keywords" id="keywords" content=" numerical approximation average integrands noise effect ode initial age rectangle a_l a_u t_l t_u integrand time step delta t grid extended cohort solution line s_j lower cohorts upper refinement not required w(a t) g(a integration ">
+<meta name="keywords" id="keywords" content=" numerical approximation average integrands noise effect ode initial age rectangle a_l a_u t_l t_u integrand time step delta t extended grid cohort solution line s_j lower cohorts upper refinement not required w(a t) g(a integration ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,7 +76,6 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="numeric_average.htm#Rectangle.t_L" target="_top">t_L</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="numeric_average.htm#Rectangle.t_U" target="_top">t_U</a>
 <br><a href="numeric_average.htm#Average Integrand Time Step, Delta t" target="_top">Average&nbsp;Integrand&nbsp;Time&nbsp;Step,&nbsp;Delta&nbsp;t</a>
-<br><a href="numeric_average.htm#Average Integrand Age Grid" target="_top">Average&nbsp;Integrand&nbsp;Age&nbsp;Grid</a>
 <br><a href="numeric_average.htm#Extended Age Grid" target="_top">Extended&nbsp;Age&nbsp;Grid</a>
 <br><a href="numeric_average.htm#Cohort Solution of ODE" target="_top">Cohort&nbsp;Solution&nbsp;of&nbsp;ODE</a>
 <br><a href="numeric_average.htm#Time Line" target="_top">Time&nbsp;Line</a>
@@ -206,18 +205,9 @@ t_U
 The average integrand time step <small>@(@
 \Delta t
 @)@</small>
-is specified by <a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+is specified by <a href="option_table.htm#Age Average Grid.ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
 
 in the option table.
-
-<br>
-<br>
-<b><big><a name="Average Integrand Age Grid" id="Average Integrand Age Grid">Average Integrand Age Grid</a></big></b>
-<br>
-The
-<a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
-
-is specified in the option table.
 
 <br>
 <br>
@@ -226,7 +216,8 @@ is specified in the option table.
 The extended age grid is the union (as sets) of <small>@(@
 \{ a_L , a_U \}
 @)@</small>
-and the average integrand age grid.
+and the <a href="age_avg_table.htm#Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
+.
 
 <br>
 <br>

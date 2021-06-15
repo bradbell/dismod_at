@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info_table fit_var_table fit_data_subset_table trace_fixed mixed_info effects convergence problems ipopt options example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info_table fit_var_table fit_data_subset_table trace_fixed mixed_info data_subset_table hold_out effects convergence problems ipopt options example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -80,6 +80,8 @@ A:active { color : purple }
 <br><a href="fit_command.htm#fit_data_subset_table" target="_top">fit_data_subset_table</a>
 <br><a href="fit_command.htm#trace_fixed" target="_top">trace_fixed</a>
 <br><a href="fit_command.htm#mixed_info" target="_top">mixed_info</a>
+<br><a href="fit_command.htm#data_subset_table" target="_top">data_subset_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#data_subset_table.hold_out" target="_top">hold_out</a>
 <br><a href="fit_command.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
 <br><a href="fit_command.htm#Convergence Problems" target="_top">Convergence&nbsp;Problems</a>
 <br><a href="fit_command.htm#Ipopt Options" target="_top">Ipopt&nbsp;Options</a>
@@ -130,7 +132,7 @@ random effects corresponding to
 at their constrained values and the other random effects
 constrained to be zero.
 (This is equivalent to fitting with
-<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
  equal to zero.)
 This is useful when one uses fitting with no random effects as
 a starting point for fitting with random effects; see
@@ -144,7 +146,7 @@ This enables one to see the different between the two
 fits in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
 
 (as apposed to changing
-<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
 
 in the <code><font color="blue">option</font></code> table).
 
@@ -232,12 +234,12 @@ where the previous fit left off.
 This is intended to be used in the following cases:
 <ol type="1"><li>
 Termination of previous fit is due to reaching
-<a href="option_table.htm#Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter_fixed</span></a>
 .
 </li><li>
 
 The
-<a href="option_table.htm#Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerance</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.tolerance" target="_top"><span style='white-space: nowrap'>tolerance</span></a>
  for the
 fixed or random effects been changed.
 </li></ol>
@@ -291,6 +293,51 @@ It contains a trace of the corresponding optimization.
 <br>
 A new <a href="mixed_info_table.htm" target="_top"><span style='white-space: nowrap'>mixed_info_table</span></a>
  table is created each time this command is run.
+
+<br>
+<br>
+<b><big><a name="data_subset_table" id="data_subset_table">data_subset_table</a></big></b>
+<br>
+Only the data table rows with <a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+
+that also appear in the <a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_subset&nbsp;table</span></a>
+
+are included in the fit and residuals.
+
+<br>
+<br>
+<big><a name="data_subset_table.hold_out" id="data_subset_table.hold_out">hold_out</a></big>
+<br>
+A data table <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+
+is held out from the fit, but included in the residuals,
+if any of the following conditions hold:
+<ol type="1"><li>
+The data table <a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ is non-zero.
+</li><li>
+
+The corresponding data_subset table
+<a href="data_subset_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+ is non-zero;
+see <a href="hold_out_command.htm" target="_top"><span style='white-space: nowrap'>hold_out_command</span></a>
+.
+</li><li>
+
+The data table <a href="data_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand</span></a>
+
+corresponds to an <a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
+
+that is in the option table
+<a href="option_table.htm#hold_out_integrand" target="_top"><span style='white-space: nowrap'>hold_out_integrand</span></a>
+ list
+</li></ol>
+
+After the optimal variable values are found,
+the hold out residuals are computed so one can check the
+predictive validity for hold out data.
+The residuals for hold out data (other data) are computed once (many times)
+for each fit.
 
 <br>
 <br>

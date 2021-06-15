@@ -288,7 +288,7 @@ as a python list of dictionaries; see <a href="get_table_dict.htm" target="_top"
 .
 </li><li>
 
-If <a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+If <a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
  was zero,
 the <a href="sample_command.htm" target="_top"><span style='white-space: nowrap'>sample_command</span></a>
  would terminate with a <code><font color="blue">cppad_mixed</font></code>
@@ -379,7 +379,7 @@ Report invalid prevalence values in the <a href="log_table.htm" target="_top"><s
 <b><big><a name="10-15" id="10-15">10-15</a></big></b>
 <br>
 Add the
-<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
+<a href="option_table.htm#Zero Sum Constraints.zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
  option which
 constrains the sum of the random effects to be zero.
 
@@ -438,7 +438,7 @@ feature availability.
 
 <ol type="1"><li>
 Add the option to set the
-<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
  to zero.
 </li><li>
 
@@ -551,7 +551,7 @@ Make the same change for the reference to running the <code><font color="blue">s
 
 <ol type="1"><li>
 Add the optimizer
-<a href="option_table.htm#Fixed and Random.accept_after_max_steps" target="_top"><span style='white-space: nowrap'>accept_after_max_steps</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.accept_after_max_steps" target="_top"><span style='white-space: nowrap'>accept_after_max_steps</span></a>
 
 option to both the fixed and random effects optimization.
 </li><li>
@@ -738,7 +738,7 @@ when the implicit information matrix is not positive definite
 </li><li>
 
 Add the <code><font color="blue">adaptive</font></code> and <code><font color="blue">trace-adaptive</font></code> values for the
-<a href="option_table.htm#Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
 
 (<code><font color="blue">derivative_test_fixed</font></code> only).
 </li></ol>
@@ -869,7 +869,7 @@ there are no random effects.
 <b><big><a name="05-05" id="05-05">05-05</a></big></b>
 
 <ol type="1"><li>
-Change the <a href="option_table.htm#Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
+Change the <a href="option_table.htm#Optimize Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
 
 option so that <code><font color="blue">-1</font></code> returns the input <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
 ,
@@ -882,7 +882,7 @@ Change the <a href="option_table.htm" target="_top"><span style='white-space: no
 and do not need to appear in the table.
 </li><li>
 
-Add the <a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
+Add the <a href="option_table.htm#Optimize Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
 
 option.
 </li></ol>
@@ -1196,7 +1196,7 @@ is zero, (this does more model checking).
 <br>
 Advance to a newer version of cppad_mixed.
 This has a change so that when
-<a href="option_table.htm#Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
  is zero,
 for the fixed effects optimization problem,
 the resulting fixed effects estimate is the same as in the

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Dismod_at Data Flow</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Dismod_at Data Flow">
-<meta name="keywords" id="keywords" content=" the dismod_at data flow discussion output tables table name command init extra input ">
+<meta name="keywords" id="keywords" content=" the dismod_at data flow discussion output tables table name command extra input ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,7 +71,6 @@ A:active { color : purple }
 <br><a href="data_flow.htm#Discussion" target="_top">Discussion</a>
 <br><a href="data_flow.htm#Output Tables by Table Name" target="_top">Output&nbsp;Tables&nbsp;by&nbsp;Table&nbsp;Name</a>
 <br><a href="data_flow.htm#Command Output Tables" target="_top">Command&nbsp;Output&nbsp;Tables</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_flow.htm#Command Output Tables.init" target="_top">init</a>
 <br><a href="data_flow.htm#Command Extra Input Tables" target="_top">Command&nbsp;Extra&nbsp;Input&nbsp;Tables</a>
 <br><br>
 <b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
@@ -136,6 +135,8 @@ no
  </td><td align='left'  valign='top'>
 
 <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init</span></a>
+,
+<a href="hold_out_command.htm" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
  </td><td align='left'  valign='top'>
 
 no
@@ -297,7 +298,7 @@ Output Tables </td><td align='left'  valign='top'>
    </td><td align='left'  valign='top'>
 
 <a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var</span></a>
-
+,
 <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
@@ -306,10 +307,32 @@ Output Tables </td><td align='left'  valign='top'>
                      </td><td align='left'  valign='top'>
 
 <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var</span></a>
-
+,
 <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
-
+,
 <a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init</span></a>
+ </td><td align='left'  valign='top'>
+
+<a href="init_command.htm#age_avg_table" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
+,
+<a href="init_command.htm#var_table" target="_top"><span style='white-space: nowrap'>var</span></a>
+,
+<a href="init_command.htm#data_subset_table" target="_top"><span style='white-space: nowrap'>data_subset</span></a>
+,
+<a href="init_command.htm#start_var_table" target="_top"><span style='white-space: nowrap'>start_var</span></a>
+,
+<a href="init_command.htm#scale_var_table" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
+
+</td></tr><tr><td align='left'  valign='top'>
+
+<a href="hold_out_command.htm" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+  </td><td align='left'  valign='top'>
+
+<a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
@@ -317,16 +340,16 @@ Output Tables </td><td align='left'  valign='top'>
      </td><td align='left'  valign='top'>
 
 <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
-
+,
 <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset</span></a>
-
+,
 <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 ,
 <a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed</span></a>
 ,
 <a href="mixed_info_table.htm" target="_top"><span style='white-space: nowrap'>mixed_info</span></a>
-
-<a href="fit_command.htm#warm_start.ipopt_info_table" target="_top"><span style='white-space: nowrap'>ipopt_info_table</span></a>
+,
+<a href="fit_command.htm#warm_start.ipopt_info_table" target="_top"><span style='white-space: nowrap'>ipopt_info</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
 
@@ -334,7 +357,7 @@ Output Tables </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
 
 <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim</span></a>
-
+,
 <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
@@ -347,7 +370,7 @@ Output Tables </td><td align='left'  valign='top'>
 <a href="hes_fixed_table.htm" target="_top"><span style='white-space: nowrap'>hes_fixed</span></a>
 ,
 <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random</span></a>
-
+,
 <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 
 </td></tr><tr><td align='left'  valign='top'>
@@ -356,30 +379,11 @@ Output Tables </td><td align='left'  valign='top'>
  </td><td align='left'  valign='top'>
 
 <a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
-
+,
 <a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
 
 </td></tr>
 </table>
-<br>
-<big><a name="Command Output Tables.init" id="Command Output Tables.init">init</a></big>
-<br>
-The init command (which is not included in the list above)
-has the following output tables:
-<code><span style='white-space: nowrap'><br>
-</span></code><a href="init_command.htm#age_avg_table" target="_top"><span style='white-space: nowrap'>age_avg</span></a>
-,
-<a href="init_command.htm#var_table" target="_top"><span style='white-space: nowrap'>var</span></a>
-,
-<a href="init_command.htm#data_subset_table" target="_top"><span style='white-space: nowrap'>data_subset</span></a>
-,
-<a href="init_command.htm#start_var_table" target="_top"><span style='white-space: nowrap'>start_var</span></a>
-, and
-<a href="init_command.htm#scale_var_table" target="_top"><span style='white-space: nowrap'>scale_var</span></a>
-.
-
-
-<br>
 <br>
 <b><big><a name="Command Extra Input Tables" id="Command Extra Input Tables">Command Extra Input Tables</a></big></b>
 <br>

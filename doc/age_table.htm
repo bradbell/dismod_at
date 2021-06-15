@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Age Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Age Table">
-<meta name="keywords" id="keywords" content=" the age table age_id average grid example ">
+<meta name="keywords" id="keywords" content=" the age table age_id age_min age_max example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -71,7 +71,8 @@ A:active { color : purple }
 
 <br><a href="age_table.htm#age_id" target="_top">age_id</a>
 <br><a href="age_table.htm#age" target="_top">age</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="age_table.htm#age.Age Average Grid" target="_top">Age&nbsp;Average&nbsp;Grid</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="age_table.htm#age.age_min" target="_top">age_min</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="age_table.htm#age.age_max" target="_top">age_max</a>
 <br><a href="age_table.htm#Example" target="_top">Example</a>
 <br><br>
 <b><big><a name="age_id" id="age_id">age_id</a></big></b>
@@ -92,15 +93,22 @@ they do not need to be increasing or decreasing.
 
 <br>
 <br>
-<big><a name="age.Age Average Grid" id="age.Age Average Grid">Age Average Grid</a></big>
+<big><a name="age.age_min" id="age.age_min">age_min</a></big>
 <br>
-Note that the maximum minus the minimum age divided by the
-<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
-,
-together with the <a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
-,
-determines the
-<a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
+The maximum age in this table is called 
+<code><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i></code>
+ and is used to define
+the <a href="age_avg_table.htm#Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
+.
+
+<br>
+<br>
+<big><a name="age.age_max" id="age.age_max">age_max</a></big>
+<br>
+The maximum age in this table is called 
+<code><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i></code>
+ and is used to define
+the <a href="age_avg_table.htm#Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
 .
 
 

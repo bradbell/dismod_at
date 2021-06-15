@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>The Age Average Grid</title>
+<title>The Age Average Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="The Age Average Grid">
-<meta name="keywords" id="keywords" content=" the age average grid creation age_avg_id ">
+<meta name="description" id="description" content="The Age Average Table">
+<meta name="keywords" id="keywords" content=" the age average table grid creation age_avg_id ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,24 +68,84 @@ A:active { color : purple }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
-<center><b><big><big>The Age Average Grid</big></big></b></center>
+<center><b><big><big>The Age Average Table</big></big></b></center>
 
+<br><a href="age_avg_table.htm#Age Average Grid" target="_top">Age&nbsp;Average&nbsp;Grid</a>
 <br><a href="age_avg_table.htm#Creation" target="_top">Creation</a>
 <br><a href="age_avg_table.htm#age_avg_id" target="_top">age_avg_id</a>
 <br><a href="age_avg_table.htm#age" target="_top">age</a>
 <br><br>
+<b><big><a name="Age Average Grid" id="Age Average Grid">Age Average Grid</a></big></b>
+<br>
+We use
+<a href="age_table.htm#age.age_min" target="_top"><span style='white-space: nowrap'>age_min</span></a>
+,
+<a href="age_table.htm#age.age_max" target="_top"><span style='white-space: nowrap'>age_max</span></a>
+,
+to denote the minimum and maximum ages in the age table.
+We use <a href="option_table.htm#Age Average Grid.ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+
+to denote its value in the option table.
+Let 
+<code><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;1</span></font></code>
+ be the minimum integer such that
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>s</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Define the set of age points
+<small>@(@
+a_i = i * s
+@)@</small> for <small>@(@
+i = 0, \ldots , N
+@)@</small>, and define the set
+<small>@[@
+
+	S = \{ a_0, a_1 , \ldots , a_N \}
+
+@]@</small>
+Note that <small>@(@
+a_0
+@)@</small> is 
+<code><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i></code>
+
+and <small>@(@
+a_N
+@)@</small> is 
+<code><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i></code>
+.
+The age average grid is the union of the set <small>@(@
+S
+@)@</small>
+and the set of age points in
+<a href="option_table.htm#Age Average Grid.age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+.
+This grid is used both for
+<a href="numeric_average.htm" target="_top"><span style='white-space: nowrap'>approximating&nbsp;averages</span></a>
+
+and for approximation the solution of the dismod_at
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+.
+If <a href="option_table.htm#Age Average Grid.age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+ is the empty set,
+the age average grid is the set <small>@(@
+S
+@)@</small>.
+
+<br>
+<br>
 <b><big><a name="Creation" id="Creation">Creation</a></big></b>
 <br>
 This table changes each time the
-<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+<a href="option_table.htm#Age Average Grid.ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
  or the
-<a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+<a href="option_table.htm#Age Average Grid.age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
  changes.
 These value can change without having to re-execute the
 <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
 .
 For this reason, this table is re-written for each command
-with the exception of the following commands:
+with the exception of the following:
 <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set</span></a>
 ,
 <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv</span></a>
@@ -109,9 +169,7 @@ Its initial value is zero, and it increments by one for each row.
 <b><big><a name="age" id="age">age</a></big></b>
 <br>
 This column has type <code><font color="blue">real</font></code> and is a monotone
-increasing values in the
-<a href="option_table.htm#age_avg_split.Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
-
+increasing values in the age average grid.
 The values are unique; i.e.,
 none of the values are repeated.
 

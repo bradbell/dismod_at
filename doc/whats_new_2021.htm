@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>06-15</option>
+<option>06-14</option>
 <option>06-13</option>
 <option>06-12</option>
 <option>06-11</option>
@@ -99,6 +101,61 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="06-15" id="06-15">06-15</a></big></b>
+
+<ol type="1"><li>
+Move the default option values from <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+ to
+<a href="option_default.htm" target="_top"><span style='white-space: nowrap'>option_default</span></a>
+ section.
+</li><li>
+
+Re-order and improve the headings in the <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
+ documentation.
+</li><li>
+
+Include <a href="hold_out_command.htm" target="_top"><span style='white-space: nowrap'>hold_out_command</span></a>
+ and <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+ in the data flow
+<a href="data_flow.htm#Command Output Tables" target="_top"><span style='white-space: nowrap'>command&nbsp;output&nbsp;table</span></a>
+.
+In addition, add some missing commas in that table.
+</li><li>
+
+Improved documentation for
+<a href="fit_command.htm#data_subset_table.hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+.
+</li></ol>
+
+
+<br>
+<br>
+<b><big><a name="06-14" id="06-14">06-14</a></big></b>
+
+<ol type="1"><li>
+Improve the documentation for the
+<a href="age_avg_table.htm#Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
+.
+</li><li>
+
+Group <a href="option_table.htm#Zero Sum Constraints" target="_top"><span style='white-space: nowrap'>zero&nbsp;sum&nbsp;constraints</span></a>
+
+in option table documentation.
+</li><li>
+
+Group <a href="option_table.htm#Extra Columns" target="_top"><span style='white-space: nowrap'>Extra&nbsp;Columns</span></a>
+
+in option table documentation.
+</li><li>
+
+Group <a href="option_table.htm#Age Average Grid" target="_top"><span style='white-space: nowrap'>Age&nbsp;Average&nbsp;Grid</span></a>
+
+in option table documentation.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="06-13" id="06-13">06-13</a></big></b>
 
@@ -266,7 +323,7 @@ This is in preparation for adding a warm start option to the fit command.
 <ol type="1"><li>
 Advance to cppad_mixed-20210528.
 This speeds up and improves the <code><font color="blue">adaptive</font></code>
-<a href="option_table.htm#Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+<a href="option_table.htm#Optimize Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
 .
 It also improves the checking of bounds, complementarity, and
 the gradient of the Lagrangian at the final solution.
@@ -432,7 +489,7 @@ is greater than the maximum python <code><font color="blue">float</font></code>,
 <ol type="1"><li>
 The <a href="fit_command.htm#variables.both" target="_top"><span style='white-space: nowrap'>fit&nbsp;both</span></a>
  command was failing when
-<a href="option_table.htm#zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
+<a href="option_table.htm#Zero Sum Constraints.zero_sum_child_rate" target="_top"><span style='white-space: nowrap'>zero_sum_child_rate</span></a>
 
 was specified for a rate that did not have any children.
 This has been fixed.

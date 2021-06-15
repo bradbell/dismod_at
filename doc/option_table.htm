@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table discussion conventions changing values option_id option_name option_value parent_node_id default parent_node_name name id children data subset avgint meas_noise_effect zero_sum_child_rate zero_sum_mulcov_group data_extra_columns avgint_extra_columns warn_on_stderr minimum_meas_cv hold_out_integrand ode_step_size age_avg_split age average grid random_seed rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random example ">
+<meta name="keywords" id="keywords" content=" the option table format option_id option_name option_value default changing values parent node parent_node_id parent_node_name name id children data subset avgint zero sum constraints zero_sum_child_rate zero_sum_mulcov_group extra columns data_extra_columns avgint_extra_columns age average grid ode_step_size age_avg_split rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimize fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random meas_noise_effect warn_on_stderr minimum_meas_cv hold_out_integrand random_seed example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -51,7 +51,7 @@ A:active { color : purple }
 </select>
 </td>
 <td><a href="nslist_table.py.htm" target="_top">Prev</a>
-</td><td><a href="option_table.py.htm" target="_top">Next</a>
+</td><td><a href="option_default.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
@@ -69,97 +69,61 @@ A:active { color : purple }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Option Table</big></big></b></center>
 
-<br><a href="option_table.htm#Discussion" target="_top">Discussion</a>
-<br><a href="option_table.htm#Conventions" target="_top">Conventions</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Conventions.Changing Values" target="_top">Changing&nbsp;Values</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Conventions.option_id" target="_top">option_id</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Conventions.option_name" target="_top">option_name</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Conventions.option_value" target="_top">option_value</a>
-<br><a href="option_table.htm#parent_node_id" target="_top">parent_node_id</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_id.Default" target="_top">Default</a>
-<br><a href="option_table.htm#parent_node_name" target="_top">parent_node_name</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Default" target="_top">Default</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.name or id" target="_top">name&nbsp;or&nbsp;id</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Children" target="_top">Children</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Data Subset Table" target="_top">Data&nbsp;Subset&nbsp;Table</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Avgint Subset Table" target="_top">Avgint&nbsp;Subset&nbsp;Table</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#parent_node_name.Changing" target="_top">Changing</a>
-<br><a href="option_table.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#meas_noise_effect.Default" target="_top">Default</a>
-<br><a href="option_table.htm#zero_sum_child_rate" target="_top">zero_sum_child_rate</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#zero_sum_child_rate.Default" target="_top">Default</a>
-<br><a href="option_table.htm#zero_sum_mulcov_group" target="_top">zero_sum_mulcov_group</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#zero_sum_mulcov_group.Default" target="_top">Default</a>
-<br><a href="option_table.htm#data_extra_columns" target="_top">data_extra_columns</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#data_extra_columns.Default" target="_top">Default</a>
-<br><a href="option_table.htm#avgint_extra_columns" target="_top">avgint_extra_columns</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#avgint_extra_columns.Default" target="_top">Default</a>
-<br><a href="option_table.htm#warn_on_stderr" target="_top">warn_on_stderr</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#warn_on_stderr.Default" target="_top">Default</a>
-<br><a href="option_table.htm#minimum_meas_cv" target="_top">minimum_meas_cv</a>
-<br><a href="option_table.htm#hold_out_integrand" target="_top">hold_out_integrand</a>
-<br><a href="option_table.htm#ode_step_size" target="_top">ode_step_size</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#ode_step_size.Default" target="_top">Default</a>
-<br><a href="option_table.htm#age_avg_split" target="_top">age_avg_split</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#age_avg_split.Age Average Grid" target="_top">Age&nbsp;Average&nbsp;Grid</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#age_avg_split.Default" target="_top">Default</a>
-<br><a href="option_table.htm#random_seed" target="_top">random_seed</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#random_seed.Default" target="_top">Default</a>
+<br><a href="option_table.htm#Table Format" target="_top">Table&nbsp;Format</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Table Format.option_id" target="_top">option_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Table Format.option_name" target="_top">option_name</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Table Format.option_value" target="_top">option_value</a>
+<br><a href="option_table.htm#Default" target="_top">Default</a>
+<br><a href="option_table.htm#Changing Values" target="_top">Changing&nbsp;Values</a>
+<br><a href="option_table.htm#Parent Node" target="_top">Parent&nbsp;Node</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Parent Node.parent_node_id" target="_top">parent_node_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Parent Node.parent_node_name" target="_top">parent_node_name</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Parent Node.Name or Id" target="_top">Name&nbsp;or&nbsp;Id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Parent Node.Children" target="_top">Children</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Parent Node.Data Subset Table" target="_top">Data&nbsp;Subset&nbsp;Table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Parent Node.Avgint Subset Table" target="_top">Avgint&nbsp;Subset&nbsp;Table</a>
+<br><a href="option_table.htm#Zero Sum Constraints" target="_top">Zero&nbsp;Sum&nbsp;Constraints</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Zero Sum Constraints.zero_sum_child_rate" target="_top">zero_sum_child_rate</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Zero Sum Constraints.zero_sum_mulcov_group" target="_top">zero_sum_mulcov_group</a>
+<br><a href="option_table.htm#Extra Columns" target="_top">Extra&nbsp;Columns</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Extra Columns.data_extra_columns" target="_top">data_extra_columns</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Extra Columns.avgint_extra_columns" target="_top">avgint_extra_columns</a>
+<br><a href="option_table.htm#Age Average Grid" target="_top">Age&nbsp;Average&nbsp;Grid</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Age Average Grid.ode_step_size" target="_top">ode_step_size</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Age Average Grid.age_avg_split" target="_top">age_avg_split</a>
 <br><a href="option_table.htm#rate_case" target="_top">rate_case</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.no_ode" target="_top">no_ode</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_zero_rho_zero" target="_top">iota_zero_rho_zero</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_pos_rho_zero" target="_top">iota_pos_rho_zero</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_zero_rho_pos" target="_top">iota_zero_rho_pos</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_pos_rho_pos" target="_top">iota_pos_rho_pos</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.Default" target="_top">Default</a>
-<br><a href="option_table.htm#Fixed and Random" target="_top">Fixed&nbsp;and&nbsp;Random</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed and Random.derivative_test" target="_top">derivative_test</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed and Random.max_num_iter" target="_top">max_num_iter</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed and Random.print_level" target="_top">print_level</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed and Random.accept_after_max_steps" target="_top">accept_after_max_steps</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed and Random.tolerance" target="_top">tolerance</a>
-<br><a href="option_table.htm#Fixed Only" target="_top">Fixed&nbsp;Only</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed Only.quasi_fixed" target="_top">quasi_fixed</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top">bound_frac_fixed</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Fixed Only.limited_memory_max_history_fixed" target="_top">limited_memory_max_history_fixed</a>
-<br><a href="option_table.htm#Random Only" target="_top">Random&nbsp;Only</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Random Only.method_random" target="_top">method_random</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Random Only.bound_random" target="_top">bound_random</a>
+<br><a href="option_table.htm#Optimize Fixed and Random" target="_top">Optimize&nbsp;Fixed&nbsp;and&nbsp;Random</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed and Random.derivative_test" target="_top">derivative_test</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed and Random.max_num_iter" target="_top">max_num_iter</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed and Random.print_level" target="_top">print_level</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed and Random.accept_after_max_steps" target="_top">accept_after_max_steps</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed and Random.tolerance" target="_top">tolerance</a>
+<br><a href="option_table.htm#Optimize Fixed Only" target="_top">Optimize&nbsp;Fixed&nbsp;Only</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed Only.quasi_fixed" target="_top">quasi_fixed</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed Only.bound_frac_fixed" target="_top">bound_frac_fixed</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed Only.limited_memory_max_history_fixed" target="_top">limited_memory_max_history_fixed</a>
+<br><a href="option_table.htm#Optimize Random Only" target="_top">Optimize&nbsp;Random&nbsp;Only</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Random Only.method_random" target="_top">method_random</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Random Only.bound_random" target="_top">bound_random</a>
+<br><a href="option_table.htm#meas_noise_effect" target="_top">meas_noise_effect</a>
+<br><a href="option_table.htm#warn_on_stderr" target="_top">warn_on_stderr</a>
+<br><a href="option_table.htm#minimum_meas_cv" target="_top">minimum_meas_cv</a>
+<br><a href="option_table.htm#hold_out_integrand" target="_top">hold_out_integrand</a>
+<br><a href="option_table.htm#random_seed" target="_top">random_seed</a>
 <br><a href="option_table.htm#Example" target="_top">Example</a>
 <br><br>
-<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<b><big><a name="Table Format" id="Table Format">Table Format</a></big></b>
 <br>
-These options control how the
-<code><font color="blue">dismod_at</font></code> <a href="command.htm" target="_top"><span style='white-space: nowrap'>commands</span></a>
- behave.
-Each option is an 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
-, 
-<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
- pair
-and has a default value that is used when the name
-is not present in the option table.
+This table has the following columns:
 
 <br>
 <br>
-<b><big><a name="Conventions" id="Conventions">Conventions</a></big></b>
-
-
-<br>
-<br>
-<big><a name="Conventions.Changing Values" id="Conventions.Changing Values">Changing Values</a></big>
-<br>
-This table is special in that you can change almost all its values
-without invalidating the
-<a href="data_flow.htm#Command Output Tables" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
-.
-There is one exception; see
-<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
- below.
-
-<br>
-<br>
-<big><a name="Conventions.option_id" id="Conventions.option_id">option_id</a></big>
+<big><a name="Table Format.option_id" id="Table Format.option_id">option_id</a></big>
 <br>
 This column
 has type <code><font color="blue">integer</font></code> and is the primary key for this table.
@@ -167,25 +131,56 @@ Its initial value is zero, and it increments by one for each row.
 
 <br>
 <br>
-<big><a name="Conventions.option_name" id="Conventions.option_name">option_name</a></big>
+<big><a name="Table Format.option_name" id="Table Format.option_name">option_name</a></big>
 <br>
 This column
 has type <code><font color="blue">text</font></code> and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
-The possible values for 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
- are listed below.
 
 <br>
 <br>
-<big><a name="Conventions.option_value" id="Conventions.option_value">option_value</a></big>
+<big><a name="Table Format.option_value" id="Table Format.option_value">option_value</a></big>
 <br>
 This column has type <code><font color="blue">text</font></code> and is
 the value for the corresponding option.
 
 <br>
 <br>
-<b><big><a name="parent_node_id" id="parent_node_id">parent_node_id</a></big></b>
+<b><big><a name="Default" id="Default">Default</a></big></b>
+<br>
+The possible values for 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ together with the corresponding
+default 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ are listed in <a href="option_default.htm" target="_top"><span style='white-space: nowrap'>option_default</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="Changing Values" id="Changing Values">Changing Values</a></big></b>
+<br>
+This table is special in that you can change almost all its values
+without invalidating the
+<a href="data_flow.htm#Command Output Tables" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
+.
+There is one exception; see
+<a href="option_table.htm#Parent Node" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+ below.
+
+<br>
+<br>
+<b><big><a name="Parent Node" id="Parent Node">Parent Node</a></big></b>
+<br>
+Unlike other options,
+if you change the parent node, you must re-run the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+; see
+<a href="option_table.htm#Changing Values" target="_top"><span style='white-space: nowrap'>changing&nbsp;values</span></a>
+ above.
+
+<br>
+<br>
+<big><a name="Parent Node.parent_node_id" id="Parent Node.parent_node_id">parent_node_id</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;parent_node_id</span></font></code>
@@ -205,13 +200,7 @@ instead of
 
 <br>
 <br>
-<big><a name="parent_node_id.Default" id="parent_node_id.Default">Default</a></big>
-<br>
-The default value for this option is null.
-
-<br>
-<br>
-<b><big><a name="parent_node_name" id="parent_node_name">parent_node_name</a></big></b>
+<big><a name="Parent Node.parent_node_name" id="Parent Node.parent_node_name">parent_node_name</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;parent_node_name</span></font></code>
@@ -225,23 +214,9 @@ is an string that specifies the parent
 
 <br>
 <br>
-<big><a name="parent_node_name.Default" id="parent_node_name.Default">Default</a></big>
-<br>
-The default value for this option is null.
-
-<br>
-<br>
-<big><a name="parent_node_name.name or id" id="parent_node_name.name or id">name or id</a></big>
+<big><a name="Parent Node.Name or Id" id="Parent Node.Name or Id">Name or Id</a></big>
 
 <ol type="1"><li>
-Either 
-<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
- or 
-<code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
- must
-not be null.
-</li><li>
-
 If both 
 <code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
  and 
@@ -256,19 +231,19 @@ and <a href="node_table.htm#node_name" target="_top"><span style='white-space: n
 
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
- is null and 
+ is null, 
 <code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
- is not null,
+ is not null and
 
 <code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
  determines the parent node.
 </li><li>
 
 If 
-<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
- is not null and 
 <code><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i></code>
- is null,
+ is null, 
+<code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
+ is not null and
 the <a href="node_table.htm" target="_top"><span style='white-space: nowrap'>node_table</span></a>
  is searched to determine
 the corresponding 
@@ -280,7 +255,7 @@ this takes some extra time that it is not expected to be significant.
 
 <br>
 <br>
-<big><a name="parent_node_name.Children" id="parent_node_name.Children">Children</a></big>
+<big><a name="Parent Node.Children" id="Parent Node.Children">Children</a></big>
 <br>
 The <a href="node_table.htm#parent.Children" target="_top"><span style='white-space: nowrap'>children</span></a>
  corresponding to
@@ -288,7 +263,7 @@ the parent node.
 
 <br>
 <br>
-<big><a name="parent_node_name.Data Subset Table" id="parent_node_name.Data Subset Table">Data Subset Table</a></big>
+<big><a name="Parent Node.Data Subset Table" id="Parent Node.Data Subset Table">Data Subset Table</a></big>
 <br>
 Rows in the <code><font color="blue">data</font></code> table for which the
 <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
@@ -303,7 +278,7 @@ are not included in the <a href="data_subset_table.htm" target="_top"><span styl
 
 <br>
 <br>
-<big><a name="parent_node_name.Avgint Subset Table" id="parent_node_name.Avgint Subset Table">Avgint Subset Table</a></big>
+<big><a name="Parent Node.Avgint Subset Table" id="Parent Node.Avgint Subset Table">Avgint Subset Table</a></big>
 <br>
 Rows in the <code><font color="blue">avgint</font></code> table for which the
 <a href="data_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node</span></a>
@@ -319,45 +294,12 @@ see the heading Note for the
 
 <br>
 <br>
-<big><a name="parent_node_name.Changing" id="parent_node_name.Changing">Changing</a></big>
-<br>
-If you change the parent node
-all of the output tables become invalid.
-This value is in the option table,
-and not an argument to a particular command,
-because it is used by all the commands.
+<b><big><a name="Zero Sum Constraints" id="Zero Sum Constraints">Zero Sum Constraints</a></big></b>
+
 
 <br>
 <br>
-<b><big><a name="meas_noise_effect" id="meas_noise_effect">meas_noise_effect</a></big></b>
-<br>
-There are four options for how the
-<a href="data_like.htm#Measurement Noise Covariates.Average Noise Effect, E_i(theta)" target="_top"><span style='white-space: nowrap'>average&nbsp;noise&nbsp;effect</span></a>
-
-changes the measurement noise.
-The possible options are
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_all" target="_top"><span style='white-space: nowrap'>add_std_scale_all</span></a>
-,
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_none" target="_top"><span style='white-space: nowrap'>add_std_scale_none</span></a>
-,
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_log" target="_top"><span style='white-space: nowrap'>add_std_scale_log</span></a>
-,
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_all" target="_top"><span style='white-space: nowrap'>add_var_scale_all</span></a>
-,
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_none" target="_top"><span style='white-space: nowrap'>add_var_scale_none</span></a>
-,
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_log" target="_top"><span style='white-space: nowrap'>add_var_scale_log</span></a>
-.
-
-<br>
-<br>
-<big><a name="meas_noise_effect.Default" id="meas_noise_effect.Default">Default</a></big>
-<br>
-The default value for this option is <code><font color="blue">add_std_scale_all</font></code>.
-
-<br>
-<br>
-<b><big><a name="zero_sum_child_rate" id="zero_sum_child_rate">zero_sum_child_rate</a></big></b>
+<big><a name="Zero Sum Constraints.zero_sum_child_rate" id="Zero Sum Constraints.zero_sum_child_rate">zero_sum_child_rate</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -385,14 +327,7 @@ all of the child must use the same smoothing for this rate.
 
 <br>
 <br>
-<big><a name="zero_sum_child_rate.Default" id="zero_sum_child_rate.Default">Default</a></big>
-<br>
-The default value for this option is null; i.e.,
-no zero sum constraints on these random effects.
-
-<br>
-<br>
-<b><big><a name="zero_sum_mulcov_group" id="zero_sum_mulcov_group">zero_sum_mulcov_group</a></big></b>
+<big><a name="Zero Sum Constraints.zero_sum_mulcov_group" id="Zero Sum Constraints.zero_sum_mulcov_group">zero_sum_mulcov_group</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -418,14 +353,12 @@ contain examples and tests using these constraints.
 
 <br>
 <br>
-<big><a name="zero_sum_mulcov_group.Default" id="zero_sum_mulcov_group.Default">Default</a></big>
-<br>
-The default value for this option is null; i.e.,
-no zero sum constraints on these random effects.
+<b><big><a name="Extra Columns" id="Extra Columns">Extra Columns</a></big></b>
+
 
 <br>
 <br>
-<b><big><a name="data_extra_columns" id="data_extra_columns">data_extra_columns</a></big></b>
+<big><a name="Extra Columns.data_extra_columns" id="Extra Columns.data_extra_columns">data_extra_columns</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -440,14 +373,7 @@ they get displayed in the
 
 <br>
 <br>
-<big><a name="data_extra_columns.Default" id="data_extra_columns.Default">Default</a></big>
-<br>
-The default value for this option is null; i.e.,
-no extra columns displayed in <code><font color="blue">data.csv</font></code>.
-
-<br>
-<br>
-<b><big><a name="avgint_extra_columns" id="avgint_extra_columns">avgint_extra_columns</a></big></b>
+<big><a name="Extra Columns.avgint_extra_columns" id="Extra Columns.avgint_extra_columns">avgint_extra_columns</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -462,64 +388,12 @@ they get displayed in the
 
 <br>
 <br>
-<big><a name="avgint_extra_columns.Default" id="avgint_extra_columns.Default">Default</a></big>
-<br>
-The default value for this option is null; i.e.,
-no extra columns displayed in <code><font color="blue">predict.csv</font></code>.
+<b><big><a name="Age Average Grid" id="Age Average Grid">Age Average Grid</a></big></b>
+
 
 <br>
 <br>
-<b><big><a name="warn_on_stderr" id="warn_on_stderr">warn_on_stderr</a></big></b>
-<br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
- is
-<code><font color="blue">warn_on_stderr</font></code>,
-the corresponding possible values are
-<code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
-If the value is true,
-warning messages are written to standard error.
-In either case, these messages are recorded in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
-.
-Error messages are always written to standard error
-and recorded in the log table.
-
-<br>
-<br>
-<big><a name="warn_on_stderr.Default" id="warn_on_stderr.Default">Default</a></big>
-<br>
-The default value for this option is <code><font color="blue">true</font></code>.
-
-<br>
-<br>
-<b><big><a name="minimum_meas_cv" id="minimum_meas_cv">minimum_meas_cv</a></big></b>
-<br>
-This option is no longer available because it is now
-integrand specific; see
-<a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
-.
-
-<br>
-<br>
-<b><big><a name="hold_out_integrand" id="hold_out_integrand">hold_out_integrand</a></big></b>
-<br>
-If 
-<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;hold_out_integrand</span></font></code>
-,
-the corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
- is a space separated list of
-<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_names</span></a>
-.
-(The integrand names cannot begin with <code><font color="blue">mulcov_</font></code>.)
-All the data for the corresponding integrands is held out during any fit.
-This overrides the data table <a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
-
-value for the corresponding integrands.
-
-<br>
-<br>
-<b><big><a name="ode_step_size" id="ode_step_size">ode_step_size</a></big></b>
+<big><a name="Age Average Grid.ode_step_size" id="Age Average Grid.ode_step_size">ode_step_size</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;ode_step_size</span></font></code>
@@ -535,12 +409,9 @@ It is also the step size is also used to approximate the integrals in
 the definition of the
 <a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrands</span></a>
 .
-
-<br>
-<br>
-<big><a name="ode_step_size.Default" id="ode_step_size.Default">Default</a></big>
-<br>
-The default value for this option is <code><font color="blue">10.0</font></code>,
+The default value for 
+<code><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i></code>
+ is <code><font color="blue">10.0</font></code>
 which is reasonable if all the rates
 
 <code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
@@ -555,93 +426,27 @@ are all less than <code><font color="blue">0.1</font></code>.
 
 <br>
 <br>
-<b><big><a name="age_avg_split" id="age_avg_split">age_avg_split</a></big></b>
+<big><a name="Age Average Grid.age_avg_split" id="Age Average Grid.age_avg_split">age_avg_split</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;age_avg_split</span></font></code>
 ,
 the corresponding 
 <code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
- is a space separated list of
+ is a space separated set of
 age values at which to split the age integration.
 This split is both for the computation of the average integrands
-and for the solution of the ODE.
-
-<br>
-<br>
-<big><a name="age_avg_split.Age Average Grid" id="age_avg_split.Age Average Grid">Age Average Grid</a></big>
-<br>
-Let 
-<code><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i></code>
- and 
-<code><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i></code>
- be the minimum and maximum
-ages in the <a href="age_table.htm" target="_top"><span style='white-space: nowrap'>age_table</span></a>
+and for the solution of the ODE; see
+<a href="age_avg_table.htm#Age Average Grid" target="_top"><span style='white-space: nowrap'>age&nbsp;average&nbsp;grid</span></a>
 .
-Let 
-<code><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&gt;=&nbsp;1</span></font></code>
- be the minimum integer such that
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>ode_step_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-and define the age points
-
-<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
- for 
-<code><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;0&nbsp;,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>N</span></font></i></code>
- by
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_max</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_min</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>N</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-</span></font></code>
-The age average grid is the union of the set of 
-<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
-
-and the age points in 
+If this value is null, 
 <code><i><font color="black"><span style='white-space: nowrap'>age_avg_split</span></font></i></code>
-.
-This grid is used both for
-<a href="numeric_average.htm" target="_top"><span style='white-space: nowrap'>approximating&nbsp;averages</span></a>
-
-and for approximating the solution of the dismod_at
-<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
-.
-
-<br>
-<br>
-<big><a name="age_avg_split.Default" id="age_avg_split.Default">Default</a></big>
-<br>
-The default value for 
-<code><i><font color="black"><span style='white-space: nowrap'>age_avg_split</span></font></i></code>
- is null (empty set)
-in which case the age average grid is the set of 
-<code><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
-.
-
-<br>
-<br>
-<b><big><a name="random_seed" id="random_seed">random_seed</a></big></b>
-<br>
-This is a non-negative integer used to seed the random number
-generator that is used by <code><font color="blue">dismod_at</font></code>.
-If this value is zero, the clock is used to seed the random number generator;
-see <a href="log_table.htm#message_type.random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
- in the log table.
-
-<br>
-<br>
-<big><a name="random_seed.Default" id="random_seed.Default">Default</a></big>
-<br>
-The default value for this option is <code><font color="blue">0</font></code>.
+ is the empty set.
 
 <br>
 <br>
 <b><big><a name="rate_case" id="rate_case">rate_case</a></big></b>
-<br>
-The 
-<code><i><font color="black"><span style='white-space: nowrap'>rate_case</span></font></i></code>
- value does not matter for the following integrands:
+
 
 <br>
 <br>
@@ -740,20 +545,14 @@ must always have lower limit greater than zero.
 
 <br>
 <br>
-<big><a name="rate_case.Default" id="rate_case.Default">Default</a></big>
-<br>
-The default value for this option is <code><font color="blue">iota_pos_rho_zero</font></code>.
-
-<br>
-<br>
-<b><big><a name="Fixed and Random" id="Fixed and Random">Fixed and Random</a></big></b>
+<b><big><a name="Optimize Fixed and Random" id="Optimize Fixed and Random">Optimize Fixed and Random</a></big></b>
 <br>
 The following options control the Ipopt optimization
 of both the fixed and random effects:
 
 <br>
 <br>
-<big><a name="Fixed and Random.derivative_test" id="Fixed and Random.derivative_test">derivative_test</a></big>
+<big><a name="Optimize Fixed and Random.derivative_test" id="Optimize Fixed and Random.derivative_test">derivative_test</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -825,7 +624,7 @@ and are for program validation.)
 </td></tr>
 </table>
 <br>
-<big><a name="Fixed and Random.max_num_iter" id="Fixed and Random.max_num_iter">max_num_iter</a></big>
+<big><a name="Optimize Fixed and Random.max_num_iter" id="Optimize Fixed and Random.max_num_iter">max_num_iter</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -843,7 +642,7 @@ If Ipopt is run with zero iterations, the solution in the
 may not correspond to the starting fixed effects; i.e.,
 the fixed effects in the <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
  table; see the heading
-<a href="option_table.htm#Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed Only.bound_frac_fixed" target="_top"><span style='white-space: nowrap'>bound_frac_fixed</span></a>
  below.
 In the special case where 
 <code><i><font color="black"><span style='white-space: nowrap'>max_num_iter_fixed</span></font></i></code>
@@ -851,13 +650,10 @@ In the special case where
 the solution in the fit table
 is the start_var table value for the fixed effects
 and the corresponding optimal value for the random effects.
-The default value for 
-<code><i><font color="black"><span style='white-space: nowrap'>max_num_fixed</span></font></i></code>
- is <code><font color="blue">100</font></code>.
 
 <br>
 <br>
-<big><a name="Fixed and Random.print_level" id="Fixed and Random.print_level">print_level</a></big>
+<big><a name="Optimize Fixed and Random.print_level" id="Optimize Fixed and Random.print_level">print_level</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -869,15 +665,14 @@ the corresponding
 is a positive integer between 0 and 12 inclusive
 that specifies the print level
 for optimizing the fixed effects (random effects).
-Zero, corresponds to no printing and should be the default for use
-with <code><font color="blue">dismod_at</font></code> (the value 5 is the normal default for Ipopt).
+Zero, corresponds to no printing and is the default for <code><font color="blue">dismod_at</font></code>
+(the value 5 is the normal default for Ipopt).
 At least one these two print values
 (for the fixed and random effects) should be zero.
-The default value for this option is <code><font color="blue">0</font></code>.
 
 <br>
 <br>
-<big><a name="Fixed and Random.accept_after_max_steps" id="Fixed and Random.accept_after_max_steps">accept_after_max_steps</a></big>
+<big><a name="Optimize Fixed and Random.accept_after_max_steps" id="Optimize Fixed and Random.accept_after_max_steps">accept_after_max_steps</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -888,11 +683,10 @@ the corresponding
 
 is a positive integer specifying the maximum number of
 backtracking steps to take before accepting a line search point.
-The default value for this option is <code><font color="blue">5</font></code>.
 
 <br>
 <br>
-<big><a name="Fixed and Random.tolerance" id="Fixed and Random.tolerance">tolerance</a></big>
+<big><a name="Optimize Fixed and Random.tolerance" id="Optimize Fixed and Random.tolerance">tolerance</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -905,7 +699,6 @@ is a positive floating point number
 that specifies the desired relative convergence tolerance
 for optimizing the fixed effects (random effects).
 (This is called <code><font color="blue">tol</font></code> in Ipopt documentation.)
-The default value for this option is <code><font color="blue">1e-8</font></code>.
 For the fixed effects, this tolerance is relative to the derivatives
 of the fixed effects objective at the value of the fixed effects in
 <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
@@ -913,7 +706,7 @@ of the fixed effects objective at the value of the fixed effects in
 
 <br>
 <br>
-<b><big><a name="Fixed Only" id="Fixed Only">Fixed Only</a></big></b>
+<b><big><a name="Optimize Fixed Only" id="Optimize Fixed Only">Optimize Fixed Only</a></big></b>
 <br>
 The following options control the
 <a href="http://www.coin-or.org/Ipopt/documentation/" target="_top"><span style='white-space: nowrap'>Ipopt</span></a>
@@ -922,7 +715,7 @@ of the fixed effects:
 
 <br>
 <br>
-<big><a name="Fixed Only.quasi_fixed" id="Fixed Only.quasi_fixed">quasi_fixed</a></big>
+<big><a name="Optimize Fixed Only.quasi_fixed" id="Optimize Fixed Only.quasi_fixed">quasi_fixed</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -932,11 +725,10 @@ the corresponding possible values are
 <code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
 If it is <code><font color="blue">true</font></code>, a quasi-Newton method is used to optimize
 the fixed effects. Otherwise a full Newton method is used.
-The default value for this option is <code><font color="blue">true</font></code>.
 
 <br>
 <br>
-<big><a name="Fixed Only.bound_frac_fixed" id="Fixed Only.bound_frac_fixed">bound_frac_fixed</a></big>
+<big><a name="Optimize Fixed Only.bound_frac_fixed" id="Optimize Fixed Only.bound_frac_fixed">bound_frac_fixed</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -971,7 +763,7 @@ Note that
 
 <br>
 <br>
-<big><a name="Fixed Only.limited_memory_max_history_fixed" id="Fixed Only.limited_memory_max_history_fixed">limited_memory_max_history_fixed</a></big>
+<big><a name="Optimize Fixed Only.limited_memory_max_history_fixed" id="Optimize Fixed Only.limited_memory_max_history_fixed">limited_memory_max_history_fixed</a></big>
 <br>
 if 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -981,18 +773,17 @@ the corresponding
  is
 the number of most recent iterations that are taken into account
 for the limited-memory quasi-Newton approximation.
-The default value for this option is <code><font color="blue">30</font></code>.
 
 <br>
 <br>
-<b><big><a name="Random Only" id="Random Only">Random Only</a></big></b>
+<b><big><a name="Optimize Random Only" id="Optimize Random Only">Optimize Random Only</a></big></b>
 <br>
 The following options control the Ipopt optimization
 of the random effects:
 
 <br>
 <br>
-<big><a name="Random Only.method_random" id="Random Only.method_random">method_random</a></big>
+<big><a name="Optimize Random Only.method_random" id="Optimize Random Only.method_random">method_random</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -1004,11 +795,10 @@ The method <code><font color="blue">ipopt_solve</font></code> is part of the sta
 The method <code><font color="blue">ipopt_random</font></code> is a special purpose interface to ipopt
 designed to optimizer the random effects for the cppad_mixed package
 (which should be faster).
-The default value for this option is <code><font color="blue">ipopt_random</font></code>.
 
 <br>
 <br>
-<big><a name="Random Only.bound_random" id="Random Only.bound_random">bound_random</a></big>
+<big><a name="Optimize Random Only.bound_random" id="Optimize Random Only.bound_random">bound_random</a></big>
 <br>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
@@ -1090,6 +880,89 @@ limits specified by
 .
 </li></ol>
 
+
+<br>
+<br>
+<b><big><a name="meas_noise_effect" id="meas_noise_effect">meas_noise_effect</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;meas_noise_effect</span></font></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ determines how the
+<a href="data_like.htm#Measurement Noise Covariates.Average Noise Effect, E_i(theta)" target="_top"><span style='white-space: nowrap'>average&nbsp;noise&nbsp;effect</span></a>
+
+changes the measurement noise.
+The possible 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ are:
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_all" target="_top"><span style='white-space: nowrap'>add_std_scale_all</span></a>
+,
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_none" target="_top"><span style='white-space: nowrap'>add_std_scale_none</span></a>
+,
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_log" target="_top"><span style='white-space: nowrap'>add_std_scale_log</span></a>
+,
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_all" target="_top"><span style='white-space: nowrap'>add_var_scale_all</span></a>
+,
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_none" target="_top"><span style='white-space: nowrap'>add_var_scale_none</span></a>
+,
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_var_scale_log" target="_top"><span style='white-space: nowrap'>add_var_scale_log</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="warn_on_stderr" id="warn_on_stderr">warn_on_stderr</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">warn_on_stderr</font></code>,
+the corresponding possible values are
+<code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
+If the value is true,
+warning messages are written to standard error.
+In either case, these messages are recorded in the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+.
+Error messages are always written to standard error
+and recorded in the log table.
+
+<br>
+<br>
+<b><big><a name="minimum_meas_cv" id="minimum_meas_cv">minimum_meas_cv</a></big></b>
+<br>
+This option is no longer available because it is now
+integrand specific; see
+<a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="hold_out_integrand" id="hold_out_integrand">hold_out_integrand</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;hold_out_integrand</span></font></code>
+,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is a space separated list of
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_names</span></a>
+.
+(The integrand names cannot begin with <code><font color="blue">mulcov_</font></code>.)
+All the data for the corresponding integrands is held out during any fit.
+See the fit command <a href="fit_command.htm#data_subset_table.hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+
+documentation.
+
+<br>
+<br>
+<b><big><a name="random_seed" id="random_seed">random_seed</a></big></b>
+<br>
+This is a non-negative integer used to seed the random number
+generator that is used by <code><font color="blue">dismod_at</font></code>.
+If this value is zero, the clock is used to seed the random number generator;
+see <a href="log_table.htm#message_type.random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
+ in the log table.
 
 
 <br>

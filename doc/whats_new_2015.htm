@@ -325,7 +325,7 @@ instead of the values specified in <a href="start_var_table.htm" target="_top"><
 This has been fixed.
 </li><li>
 
-The optimization <a href="option_table.htm#Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
+The optimization <a href="option_table.htm#Optimize Fixed and Random.max_num_iter" target="_top"><span style='white-space: nowrap'>max_num_iter</span></a>
 
 was changed to allow for zero.
 This enables one to use the starting values in the
@@ -546,7 +546,7 @@ Add lower and upper limits to the random effects in
 <code><font color="blue">cppad_mixed optimize_random</font></code> and
 <code><font color="blue">cppad_mixed optimize_fixed</font></code>.
 This is represented by
-<a href="option_table.htm#Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+<a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
  in the option table.
 
 <br>
@@ -592,9 +592,9 @@ the input to the <a href="predict_command.htm" target="_top"><span style='white-
 .
 </li><li>
 
-One may now make changes the
-<a href="option_table.htm#Conventions.Changing Values" target="_top"><span style='white-space: nowrap'>option_table</span></a>
-,
+One may now
+<a href="option_table.htm#Changing Values" target="_top"><span style='white-space: nowrap'>change&nbsp;values</span></a>
+ in the option table
 without invalidating all of the
 <a href="data_flow.htm#Output Tables by Table Name" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
 .
@@ -862,7 +862,7 @@ a program option for the <code><font color="blue">cppad_mixed</font></code> pack
 
 The option to choose between quasi-Newton and full Newton
 for the fixed effects optimization was moved into the options table; see
-<a href="option_table.htm#Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
+<a href="option_table.htm#Optimize Fixed Only.quasi_fixed" target="_top"><span style='white-space: nowrap'>quasi_fixed</span></a>
 .
 </li></ol>
 
@@ -958,7 +958,7 @@ A separate <code><font color="blue">cppad_mixed ipopt_options</font></code> was 
 
 The splitting of the optimization options between fixed and random
 effects was extend to the dismod_at API;
-see <a href="option_table.htm#Fixed and Random" target="_top"><span style='white-space: nowrap'>optimizer&nbsp;options</span></a>
+see <a href="option_table.htm#Optimize Fixed and Random" target="_top"><span style='white-space: nowrap'>optimizer&nbsp;options</span></a>
 .
 </li><li>
 
@@ -1338,7 +1338,7 @@ and replace all uses of <code><font color="blue">dev::put_table_row.cpp</font></
 <b><big><a name="07-24" id="07-24">07-24</a></big></b>
 
 <ol type="1"><li>
-Add the <a href="option_table.htm#Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
+Add the <a href="option_table.htm#Optimize Fixed and Random.derivative_test" target="_top"><span style='white-space: nowrap'>derivative_test</span></a>
 
 option (because it is to slow to do all the time).
 </li><li>
@@ -1398,7 +1398,7 @@ This has been fixed.
 </li><li>
 
 The data corresponding to the
-<a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+<a href="option_table.htm#Parent Node" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
  is now in represented using
 <code><font color="blue">cppad_mixed p(z | theta)</font></code> instead of
 <code><font color="blue">cppad_mixed p(y | theta, u)</font></code>.
@@ -1463,7 +1463,7 @@ Some bugs were fixed in the
 <code><font color="blue">cppad_mixed constraint</font></code> option.
 </li><li>
 
-The <a href="option_table.htm#Fixed and Random.print_level" target="_top"><span style='white-space: nowrap'>print_level</span></a>
+The <a href="option_table.htm#Optimize Fixed and Random.print_level" target="_top"><span style='white-space: nowrap'>print_level</span></a>
  option
 was added to control tracing during optimization,
 use no tracing (zero) as default.

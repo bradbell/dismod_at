@@ -243,13 +243,13 @@ It is a CSV file with one row for each possible row in the
 <a href="option_table.htm" target="_top"><span style='white-space: nowrap'>option_table</span></a>
 .
 The columns in <code><font color="blue">option.csv</font></code> are
-<a href="option_table.htm#Conventions.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
+<a href="option_table.htm#Table Format.option_name" target="_top"><span style='white-space: nowrap'>option_name</span></a>
  and
-<a href="option_table.htm#Conventions.option_value" target="_top"><span style='white-space: nowrap'>option_value</span></a>
+<a href="option_table.htm#Table Format.option_value" target="_top"><span style='white-space: nowrap'>option_value</span></a>
 .
 If a row does not appear in the option table, the corresponding
 default value is written to <code><font color="blue">option.csv</font></code>.
-If the <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
+If the <a href="option_table.htm#Parent Node.parent_node_id" target="_top"><span style='white-space: nowrap'>parent_node_id</span></a>
  appears
 in the option table, the 
 <code><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i></code>
@@ -289,9 +289,9 @@ The only column in this table is <a href="age_avg_table.htm#age" target="_top"><
 .
 Note that a <a href="set_command.htm" target="_top"><span style='white-space: nowrap'>set_command</span></a>
  may change the value of
-<a href="option_table.htm#ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
+<a href="option_table.htm#Age Average Grid.ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
  or
-<a href="option_table.htm#age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
+<a href="option_table.htm#Age Average Grid.age_avg_split" target="_top"><span style='white-space: nowrap'>age_avg_split</span></a>
  but it will not
 write out the new age_avg table.
 
@@ -735,7 +735,7 @@ is the data table
 <big><a name="data.csv.data_extra_columns" id="data.csv.data_extra_columns">data_extra_columns</a></big>
 <br>
 Each column specified by the
-<a href="option_table.htm#data_extra_columns" target="_top"><span style='white-space: nowrap'>data_extra_columns</span></a>
+<a href="option_table.htm#Extra Columns.data_extra_columns" target="_top"><span style='white-space: nowrap'>data_extra_columns</span></a>
 
 option is included in the <code><font color="blue">data.csv</font></code> file.
 
@@ -745,7 +745,7 @@ option is included in the <code><font color="blue">data.csv</font></code> file.
 <br>
 If this data row is associated with a child,
 this is the name of the child. Otherwise, this data is associated
-with the <a href="option_table.htm#parent_node_id" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
+with the <a href="option_table.htm#Parent Node" target="_top"><span style='white-space: nowrap'>parent&nbsp;node</span></a>
 .
 
 <br>
@@ -1002,7 +1002,7 @@ is the avgint table
 <big><a name="predict.csv.avgint_extra_columns" id="predict.csv.avgint_extra_columns">avgint_extra_columns</a></big>
 <br>
 Each column specified by the
-<a href="option_table.htm#avgint_extra_columns" target="_top"><span style='white-space: nowrap'>avgint_extra_columns</span></a>
+<a href="option_table.htm#Extra Columns.avgint_extra_columns" target="_top"><span style='white-space: nowrap'>avgint_extra_columns</span></a>
 
 option is included in the <code><font color="blue">predict.csv</font></code> file.
 
