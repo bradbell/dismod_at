@@ -34,8 +34,10 @@ $head Syntax$$
 $codei%dismod_at %database% hold_out %integrand_name% %max_fit%$$
 
 $head Purpose$$
-This command is to make the initialization and fitting are faster.
-The random sample can be made repeatable using
+This command is used to set a maximum number of data values
+that are included in subsequent fits.
+It is intended to make the initialization and fitting faster.
+The random sample of which values to include can be made repeatable using
 $cref/random_seed/option_table/random_seed/$$.
 
 $head database$$
@@ -62,6 +64,8 @@ The $cref/hold_out/data_subset_table/hold_out/$$ is set one (zero)
 if the corresponding data is (is not) selected for hold out.
 Only points that have $icode hold_out$$ zero in the data table
 can have hold_out non-zero in the data_subset table.
+See the fit command $cref/hold_out/fit_command/data_subset_table/hold_out/$$
+documentation.
 
 $head Example$$
 The file $cref user_hold_out.py$$ contains an example and test

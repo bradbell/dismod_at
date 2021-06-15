@@ -511,8 +511,8 @@ the corresponding $icode option_value$$ is a space separated list of
 $cref/integrand_names/integrand_table/integrand_name/$$.
 (The integrand names cannot begin with $code mulcov_$$.)
 All the data for the corresponding integrands is held out during any fit.
-This overrides the data table $cref/hold_out/data_table/hold_out/$$
-value for the corresponding integrands.
+See the fit command $cref/hold_out/fit_command/data_subset_table/hold_out/$$
+documentation.
 
 $head random_seed$$
 This is a non-negative integer used to seed the random number

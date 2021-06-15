@@ -162,6 +162,33 @@ It contains a trace of the corresponding optimization.
 $head mixed_info$$
 A new $cref mixed_info_table$$ table is created each time this command is run.
 
+$head data_subset_table$$
+Only the data table rows with $cref/data_id/data_table/data_id/$$
+that also appear in the $cref/data_subset table/data_subset_table/data_id/$$
+are included in the fit and residuals.
+
+$subhead hold_out$$
+A data table $cref/meas_value/data_table/meas_value/$$
+is held out from the fit, but included in the residuals,
+if any of the following conditions hold:
+$list number$$
+The data table $cref/hold_out/data_table/hold_out/$$ is non-zero.
+$lnext
+The corresponding data_subset table
+$cref/hold_out/data_subset_table/hold_out/$$ is non-zero;
+see $cref hold_out_command$$.
+$lnext
+The data table $cref/integrand/data_table/integrand_id/$$
+corresponds to an $cref/integrand_name/integrand_table/integrand_name/$$
+that is in the option table
+$cref/hold_out_integrand/option_table/hold_out_integrand/$$ list
+$lend
+After the optimal variable values are found,
+the hold out residuals are computed so one can check the
+predictive validity for hold out data.
+The residuals for hold out data (other data) are computed once (many times)
+for each fit.
+
 $head Random Effects$$
 A model has random effects if one of the
 $cref/child_smooth_id/rate_table/child_smooth_id/$$ or

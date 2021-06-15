@@ -113,11 +113,8 @@ $head hold_out$$
 This column has type $code integer$$ and has value zero or one.
 Only the rows where hold_out is zero are included
 in the objective optimized during a $cref fit_command$$.
-After the optimal variable values are found,
-the hold out residuals are computed so one can check the
-predictive validity for hold out data.
-The residuals for hold out data (other data) are computed once (many times)
-for each fit.
+See the fit command $cref/hold_out/fit_command/data_subset_table/hold_out/$$
+documentation.
 
 $head meas_value$$
 This column has type $code real$$ and is the measured value

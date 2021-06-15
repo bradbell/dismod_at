@@ -57,6 +57,9 @@ $lnext
 Include $cref hold_out_command$$ and $cref init_command$$ in the data flow
 $cref/command output table/data_flow/Command Output Tables/$$.
 In addition, add some missing commas in that table.
+$lnext
+Improved documentation for
+$cref/hold_out/fit_command/data_subset_table/hold_out/$$.
 $lend
 
 $head 06-14$$
