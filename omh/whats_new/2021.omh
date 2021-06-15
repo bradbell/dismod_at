@@ -60,6 +60,8 @@ in option table documentation.
 $lnext
 Group $cref/Age Average Grid/option_table/Age Average Grid/$$
 in option table documentation.
+$lnext
+Add the $cref option_name_list$$ section.
 $lend
 
 $head 06-13$$

@@ -67,7 +67,8 @@ $subhead option_name$$
 This column
 has type $code text$$ and has a different value for every row;
 i.e., the names are unique and can act as substitutes for the primary key.
-The possible values for $icode option_name$$ are listed below.
+The possible values for $icode option_name$$ are discussed below
+and listed $cref/here/option_name_list/$$.
 
 $subhead option_value$$
 This column has type $code text$$ and is
@@ -557,7 +558,9 @@ On the other hand; the samples of the random effects are withing the
 limits specified by $icode bound_random$$.
 $lend
 
-$children%example/table/option_table.py
+$children%
+	omh/table/option_name_list.omh%
+	example/table/option_table.py
 %$$
 $head Example$$
 The files $cref option_table.py$$

@@ -1,0 +1,231 @@
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-21 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin option_name_list$$
+$spell
+	avgint
+	frac
+	num_iter
+	stderr
+	mulcov
+$$
+
+$section List of Option Names$$
+
+$table
+Option Name $cnext Link to Documentation
+$rnext
+$code accept_after_max_steps_fixed$$ $cnext
+$cref/
+	accept_after_max_steps/
+	option_table/
+	Fixed and Random/
+	accept_after_max_steps
+/$$
+$rnext
+$code accept_after_max_steps_random$$ $cnext
+$cref/
+	accept_after_max_steps/
+	option_table/
+	Fixed and Random/
+	accept_after_max_steps
+/$$
+$rnext
+$code age_avg_split$$ $cnext
+$cref/
+	age_avg_split/
+	option_table/
+	Age Average Grid/
+	age_avg_split
+/$$
+$rnext
+$code avgint_extra_columns$$ $cnext
+$cref/
+	avgint_extra_columns/
+	option_table/
+	Extra Columns/
+	avgint_extra_columns
+/$$
+$rnext
+$code bound_frac_fixed$$ $cnext
+$cref/
+	bound_frac_fixed/
+	option_table/
+	Fixed Only/
+	bound_frac_fixed
+/$$
+$rnext
+$code bound_random$$ $cnext
+$cref/
+	bound_random/
+	option_table/
+	Random Only/
+	bound_random
+/$$
+$rnext
+$code data_extra_columns$$ $cnext
+$cref/
+	data_extra_columns/
+	option_table/
+	Extra Columns/
+	data_extra_columns
+/$$
+$rnext
+$code derivative_test_fixed$$ $cnext
+$cref/
+	derivative_test/
+	option_table/
+	Fixed and Random/
+	derivative_test
+/$$
+$rnext
+$code derivative_test_random$$ $cnext
+$cref/
+	derivative_test/
+	option_table/
+	Fixed and Random/
+	derivative_test
+/$$
+$rnext
+$code limited_memory_max_history_fixed$$ $cnext
+$cref/
+	limited_memory_max_history_fixed/
+	option_table/
+	Fixed Only/
+	limited_memory_max_history_fixed
+/$$
+$rnext
+$code max_num_iter_fixed$$ $cnext
+$cref/
+	max_num_iter/
+	option_table/
+	Fixed and Random/
+	max_num_iter
+/$$
+$rnext
+$code max_num_iter_random$$ $cnext
+$cref/
+	max_num_iter/
+	option_table/
+	Fixed and Random/
+	max_num_iter
+/$$
+$rnext
+$code meas_noise_effect$$ $cnext
+$cref/
+	meas_noise_effect/
+	option_table/
+	meas_noise_effect
+/$$
+$rnext
+$code method_random$$ $cnext
+$cref/
+	method_random/
+	option_table/
+	Random Only/
+	method_random
+/$$
+$rnext
+$code ode_step_size$$ $cnext
+$cref/
+	ode_step_size/
+	option_table/
+	Age Average Grid/
+	ode_step_size
+/$$
+$rnext
+$code parent_node_id$$ $cnext
+$cref/
+	parent_node_id/
+	option_table/
+	Parent Node/
+	parent_node_id
+/$$
+$rnext
+$code parent_node_name$$ $cnext
+$cref/
+	parent_node_name/
+	option_table/
+	Parent Node/
+	parent_node_name
+/$$
+$rnext
+$code print_level_fixed$$ $cnext
+$cref/
+	print_level/
+	option_table/
+	Fixed and Random/
+	print_level
+/$$
+$rnext
+$code print_level_random$$ $cnext
+$cref/
+	print_level/
+	option_table/
+	Fixed and Random/
+	print_level
+/$$
+$rnext
+$code quasi_fixed$$ $cnext
+$cref/
+	quasi_fixed/
+	option_table/
+	Fixed Only/
+	quasi_fixed
+/$$
+$rnext
+$code random_seed$$ $cnext
+$cref/
+	quasi_fixed/
+	option_table/
+	random_seed
+/$$
+$rnext
+$code tolerance_fixed$$ $cnext
+$cref/
+	tolerance/
+	option_table/
+	Fixed and Random/
+	tolerance
+/$$
+$rnext
+$code tolerance_random$$ $cnext
+$cref/
+	tolerance/
+	option_table/
+	Fixed and Random/
+	tolerance
+/$$
+$rnext
+$code warn_on_stderr$$ $cnext
+$cref/
+	warn_on_stderr/
+	option_table/
+	warn_on_stderr
+/$$
+$rnext
+$code zero_sum_child_rate$$ $cnext
+$cref/
+	zero_sum_child_rate/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_child_rate
+/$$
+$rnext
+$code zero_sum_mulcov_group$$ $cnext
+$cref/
+	zero_sum_mulcov_group/
+	option_table/
+	Zero Sum Constraints/
+	zero_sum_mulcov_group
+/$$
+$tend
+
+
+$end
