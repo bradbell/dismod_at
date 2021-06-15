@@ -74,7 +74,7 @@ $cref/constant child value priors
 at their constrained values and the other random effects
 constrained to be zero.
 (This is equivalent to fitting with
-$cref/bound_random/option_table/Random Only/bound_random/$$ equal to zero.)
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$ equal to zero.)
 This is useful when one uses fitting with no random effects as
 a starting point for fitting with random effects; see
 $cref set_command$$,
@@ -83,7 +83,7 @@ $cref/fit_fixed_both.py/user_fit_fixed_both.py/$$.
 This enables one to see the different between the two
 fits in the $cref log_table$$
 (as apposed to changing
-$cref/bound_random/option_table/Random Only/bound_random/$$
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
 in the $code option$$ table).
 
 $subhead random$$

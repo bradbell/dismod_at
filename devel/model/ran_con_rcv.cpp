@@ -28,7 +28,7 @@ $srcthisfile%0%// BEGIN_RAN_CON_RCV%// END_RAN_CON_RCV%1
 
 $head bound_random$$
 This is the value of the
-$cref/bound_random/option_table/Random Only/bound_random/$$
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
 in the option table.
 
 $head zero_sum_child_rate$$

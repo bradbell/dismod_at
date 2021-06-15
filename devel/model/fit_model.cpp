@@ -75,7 +75,7 @@ If true, warnings will be printed on stderr.
 
 $head bound_random$$
 This is the value of the
-$cref/bound_random/option_table/Random Only/bound_random/$$
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
 in the option table.
 
 $head no_scaling$$

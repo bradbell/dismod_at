@@ -290,7 +290,7 @@ detected the bug mentioned in the previous item.
 $lend
 
 $head 10-06$$
-The $cref/bound_random/option_table/Random Only/bound_random/$$ documentation
+The $cref/bound_random/option_table/Optimize Random Only/bound_random/$$ documentation
 was improved by stating that it
 does not apply to random effects that have equal lower and upper limits.
 
@@ -493,7 +493,7 @@ $cref/zero_sum_child_rate
 /$$
 in the prior_sim table documentation.
 $lnext
-The $cref/method_random/option_table/Random Only/method_random/$$ option
+The $cref/method_random/option_table/Optimize Random Only/method_random/$$ option
 was added.
 This gives a different choice for optimizing the random effects.
 $lnext

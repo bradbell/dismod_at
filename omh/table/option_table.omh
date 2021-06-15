@@ -453,7 +453,7 @@ the corresponding $icode option_value$$ is
 the number of most recent iterations that are taken into account
 for the limited-memory quasi-Newton approximation.
 
-$head Random Only$$
+$head Optimize Random Only$$
 The following options control the Ipopt optimization
 of the random effects:
 

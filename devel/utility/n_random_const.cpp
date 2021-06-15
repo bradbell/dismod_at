@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -25,7 +25,7 @@ $icode%n_random_const% = number_random_const(
 
 $head bound_random$$
 This is the value of the
-$cref/bound_random/option_table/Random Only/bound_random/$$
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
 in the option table.
 
 $head pack_object$$

@@ -742,7 +742,7 @@ The documentation for the optimizer options have been split up into
 three groups:
 $cref/fixed and random/option_table/Optimize Fixed and Random/$$,
 $cref/fixed only/option_table/Optimize Fixed Only/$$, and
-$cref/random only/option_table/Random Only/$$.
+$cref/random only/option_table/Optimize Random Only/$$.
 $lend
 
 

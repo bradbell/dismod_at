@@ -199,7 +199,7 @@ $head Bounds$$
 If you use the $code simulate$$ method,
 the samples are all within the specified bounds, including the bounds
 on the random effects specified by
-$cref/bound_random/option_table/Random Only/bound_random/$$.
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
 If you use the $code asymptotic$$ method,
 the only bounds that are enforced are where the upper and lower limits
 are equal.

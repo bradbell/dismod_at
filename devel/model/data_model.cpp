@@ -76,7 +76,7 @@ $cref/rate_case/option_table/rate_case/$$ in the option table.
 
 $head bound_random$$
 This is the
-$cref/bound_random/option_table/Random Only/bound_random/$$.
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
 
 $head n_covariate$$
 This is the number of covariates; i.e., number or rows in

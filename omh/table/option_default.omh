@@ -78,7 +78,7 @@ $code bound_random$$ $cnext $code null$$ $cnext
 $cref/
 	bound_random/
 	option_table/
-	Random Only/
+	Optimize Random Only/
 	bound_random
 /$$
 $rnext
@@ -141,7 +141,7 @@ $code method_random$$ $cnext ipopt_random $cnext
 $cref/
 	method_random/
 	option_table/
-	Random Only/
+	Optimize Random Only/
 	method_random
 /$$
 $rnext
