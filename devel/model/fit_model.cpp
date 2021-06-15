@@ -364,13 +364,13 @@ $head option_map$$
 This argument is effectively $code const$$ and
 must have the following values:
 For $icode name$$ equal to
-$cref/derivative_test/option_table/Fixed and Random/derivative_test/$$,
-$cref/tolerance/option_table/Fixed and Random/tolerance/$$,
-$cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$,
-$cref/print_level/option_table/Fixed and Random/print_level/$$,
+$cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$,
+$cref/tolerance/option_table/Optimize Fixed and Random/tolerance/$$,
+$cref/max_num_iter/option_table/Optimize Fixed and Random/max_num_iter/$$,
+$cref/print_level/option_table/Optimize Fixed and Random/print_level/$$,
 $cref/accept_after_max_steps
 	/option_table
-	/Fixed and Random
+	/Optimize Fixed and Random
 	/accept_after_max_steps
 /$$,
 and for $icode fit$$ equal to $code fixed$$ and $code random$$

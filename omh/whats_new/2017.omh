@@ -578,7 +578,7 @@ Advance to $code cppad_mixed-20170801$$ to fix an install problem where
 $code ran_obj_tst$$ was not defined.
 $lnext
 The postscripts $code fixed$$ and $code random$$ were missing from the
-$cref/accept_after_max_steps/option_table/Fixed and Random/accept_after_max_steps/$$
+$cref/accept_after_max_steps/option_table/Optimize Fixed and Random/accept_after_max_steps/$$
 documentation.
 $lnext
 It would be nice to have a sample_data_subset table that is similar to the
@@ -716,7 +716,7 @@ $lnext
 The convergence criteria, is now relative to the derivative values
 at the mean of the prior for the fixed effects.
 This also holds for the values printed during the optimization of the
-fixed effects, see $cref/print_level/option_table/Fixed and Random/print_level/$$.
+fixed effects, see $cref/print_level/option_table/Optimize Fixed and Random/print_level/$$.
 These values used to be relative to the
 $cref/starting variables/start_var_table/$$ which would change
 when one continued an optimization.
@@ -952,7 +952,7 @@ $cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ done using $code eta$$.
 
 $head 01-14$$
 The $code adaptive$$ and $code trace-adaptive$$
-$cref/derivative_test/option_table/Fixed and Random/derivative_test/$$ options
+$cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$ options
 generated error messages. This has been fixed and they now work.
 
 $head 01-15$$

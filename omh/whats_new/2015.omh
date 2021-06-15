@@ -173,7 +173,7 @@ The $code fit_command$$ was using the mean for the variable values,
 instead of the values specified in $cref start_var_table$$.
 This has been fixed.
 $lnext
-The optimization $cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$
+The optimization $cref/max_num_iter/option_table/Optimize Fixed and Random/max_num_iter/$$
 was changed to allow for zero.
 This enables one to use the starting values in the
 $cref fit_var_table$$ and $cref fit_data_subset_table$$ tables.
@@ -577,7 +577,7 @@ $code cppad_mixed optimize_fixed$$.
 $lnext
 The splitting of the optimization options between fixed and random
 effects was extend to the dismod_at API;
-see $cref/optimizer options/option_table/Fixed and Random/$$.
+see $cref/optimizer options/option_table/Optimize Fixed and Random/$$.
 $lnext
 Advance to a newer version of CppAD (to avoid another bug)
 and hence requires $code bin/install_cppad.sh$$ to be re-run.
@@ -828,7 +828,7 @@ and replace all uses of $code dev::put_table_row.cpp$$ by $code create_table$$
 
 $head 07-24$$
 $list number$$
-Add the $cref/derivative_test/option_table/Fixed and Random/derivative_test/$$
+Add the $cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$
 option (because it is to slow to do all the time).
 $lnext
 Fix the automatic setting of the number of age and time points in the
@@ -904,7 +904,7 @@ The name of the $code argument_table$$ was change to the $cref option_table$$.
 Some bugs were fixed in the
 $code cppad_mixed constraint$$ option.
 $lnext
-The $cref/print_level/option_table/Fixed and Random/print_level/$$ option
+The $cref/print_level/option_table/Optimize Fixed and Random/print_level/$$ option
 was added to control tracing during optimization,
 use no tracing (zero) as default.
 $lnext

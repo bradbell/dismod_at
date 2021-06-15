@@ -128,10 +128,10 @@ where the previous fit left off.
 This is intended to be used in the following cases:
 $list number$$
 Termination of previous fit is due to reaching
-$cref/max_num_iter_fixed/option_table/Fixed and Random/max_num_iter/$$.
+$cref/max_num_iter_fixed/option_table/Optimize Fixed and Random/max_num_iter/$$.
 $lnext
 The
-$cref/tolerance/option_table/Fixed and Random/tolerance/$$ for the
+$cref/tolerance/option_table/Optimize Fixed and Random/tolerance/$$ for the
 fixed or random effects been changed.
 $lend
 Other options besides those listed above,

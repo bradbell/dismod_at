@@ -31,6 +31,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/option_value/option_table/Conventions/option_value/|/option_value/option_table/Table Format/option_value/|
-s|/option_name/option_table/Conventions/option_name/|/option_name/option_table/Table Format/option_name/|
-s|/changing values/option_table/Conventions/Changing Values/|/changing values/option_table/Changing Values/|
+s|$head Fixed and Random\$|$head Optimize Fixed and Random$|
+s|/Fixed and Random/|/Optimize Fixed and Random/|
+s|\tFixed and Random/|\tOptimize Fixed and Random/|
+s|\t/Fixed and Random|\t/Optimize Fixed and Random|

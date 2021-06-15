@@ -318,7 +318,7 @@ $list number$$
 Add the optimizer
 $cref/accept_after_max_steps
 	/option_table
-	/Fixed and Random
+	/Optimize Fixed and Random
 	/accept_after_max_steps
 /$$
 option to both the fixed and random effects optimization.
@@ -437,7 +437,7 @@ when the implicit information matrix is not positive definite
 (for diagnostic purposes).
 $lnext
 Add the $code adaptive$$ and $code trace-adaptive$$ values for the
-$cref/derivative_test/option_table/Fixed and Random/derivative_test/$$
+$cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$
 ($code derivative_test_fixed$$ only).
 $lend
 
@@ -520,7 +520,7 @@ there are no random effects.
 
 $head 05-05$$
 $list number$$
-Change the $cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$
+Change the $cref/max_num_iter/option_table/Optimize Fixed and Random/max_num_iter/$$
 option so that $code -1$$ returns the input $cref model_variables$$,
 and $code 0$$, includes the move of the initial variable values
 (to be inside the constraints).
@@ -713,7 +713,7 @@ is zero, (this does more model checking).
 $head 04-09$$
 Advance to a newer version of cppad_mixed.
 This has a change so that when
-$cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$ is zero,
+$cref/max_num_iter/option_table/Optimize Fixed and Random/max_num_iter/$$ is zero,
 for the fixed effects optimization problem,
 the resulting fixed effects estimate is the same as in the
 $cref start_var_table$$.

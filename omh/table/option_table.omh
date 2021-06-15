@@ -324,7 +324,7 @@ the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 $icode iota$$ and $icode rho$$
 must always have lower limit greater than zero.
 
-$head Fixed and Random$$
+$head Optimize Fixed and Random$$
 The following options control the Ipopt optimization
 of both the fixed and random effects:
 

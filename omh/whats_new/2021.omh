@@ -163,7 +163,7 @@ $head 05-29$$
 $list number$$
 Advance to cppad_mixed-20210528.
 This speeds up and improves the $code adaptive$$
-$cref/derivative_test/option_table/Fixed and Random/derivative_test/$$.
+$cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$.
 It also improves the checking of bounds, complementarity, and
 the gradient of the Lagrangian at the final solution.
 It also improves the detection of when Lagrangian multipliers should be

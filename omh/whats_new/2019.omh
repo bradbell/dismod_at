@@ -601,7 +601,7 @@ $lend
 
 $head 07-06$$
 Improve the documentation for the
-$cref/max_num_iter/option_table/Fixed and Random/max_num_iter/$$ option.
+$cref/max_num_iter/option_table/Optimize Fixed and Random/max_num_iter/$$ option.
 Most importantly, make it clear what value is returned for the random
 effects when $icode max_num_iter_fix$$ is $code -1$$.
 

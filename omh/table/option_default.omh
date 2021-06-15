@@ -38,7 +38,7 @@ $code accept_after_max_steps_fixed$$ $cnext 5 $cnext
 $cref/
 	accept_after_max_steps/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	accept_after_max_steps
 /$$
 $rnext
@@ -46,7 +46,7 @@ $code accept_after_max_steps_random$$ $cnext 5 $cnext
 $cref/
 	accept_after_max_steps/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	accept_after_max_steps
 /$$
 $rnext
@@ -94,7 +94,7 @@ $code derivative_test_fixed$$ $cnext none $cnext
 $cref/
 	derivative_test/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	derivative_test
 /$$
 $rnext
@@ -102,7 +102,7 @@ $code derivative_test_random$$ $cnext none $cnext
 $cref/
 	derivative_test/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	derivative_test
 /$$
 $rnext
@@ -118,7 +118,7 @@ $code max_num_iter_fixed$$ $cnext 100 $cnext
 $cref/
 	max_num_iter/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	max_num_iter
 /$$
 $rnext
@@ -126,7 +126,7 @@ $code max_num_iter_random$$ $cnext 100 $cnext
 $cref/
 	max_num_iter/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	max_num_iter
 /$$
 $rnext
@@ -173,7 +173,7 @@ $code print_level_fixed$$ $cnext 0 $cnext
 $cref/
 	print_level/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	print_level
 /$$
 $rnext
@@ -181,7 +181,7 @@ $code print_level_random$$ $cnext 0 $cnext
 $cref/
 	print_level/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	print_level
 /$$
 $rnext
@@ -211,7 +211,7 @@ $code tolerance_fixed$$ $cnext 1e-8 $cnext
 $cref/
 	tolerance/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	tolerance
 /$$
 $rnext
@@ -219,7 +219,7 @@ $code tolerance_random$$ $cnext 1e-8 $cnext
 $cref/
 	tolerance/
 	option_table/
-	Fixed and Random/
+	Optimize Fixed and Random/
 	tolerance
 /$$
 $rnext
