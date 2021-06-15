@@ -176,7 +176,7 @@ Change $cref user_fit_meas_noise.py$$ so that it used groups to identify a
 subset of that data that has extra measurement noise.
 $lnext
 The $code meas_std_effect$$
-$cref/option_name/option_table/Conventions/option_name/$$ was removed.
+$cref/option_name/option_table/Table Format/option_name/$$ was removed.
 It was deprecated (see $cref/04-08/whats_new_2019/04-08/$$ below)
 and should have been replaced by
 $cref/meas_noise_effect/option_table/meas_noise_effect/$$.

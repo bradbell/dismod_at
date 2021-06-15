@@ -48,14 +48,15 @@ Each option is an $icode option_name$$, $icode option_value$$ pair
 and has a default value that is used when the name
 is not present in the option table.
 
-$head Conventions$$
-
-$subhead Changing Values$$
+$head Changing Values$$
 This table is special in that you can change almost all its values
 without invalidating the
 $cref/output tables/data_flow/Command Output Tables/$$.
 There is one exception; see
 $cref/parent node/option_table/Parent Node/$$ below.
+
+$head Table Format$$
+This table has the following columns:
 
 $subhead option_id$$
 This column
@@ -73,6 +74,9 @@ This column has type $code text$$ and is
 the value for the corresponding option.
 
 $head Parent Node$$
+Unlike other options,
+if you change the parent node, you must re-run the $cref init_command$$; see
+$cref/changing values/option_table/Changing Values/$$ above.
 
 $subhead parent_node_id$$
 If $icode%option_name% = parent_node_id%$$
@@ -126,13 +130,6 @@ of the parent node,
 are not included in the $cref predict_table$$;
 see the heading Note for the
 $cref/predict table/predict_table/Avgint Subset/Node/$$.
-
-$subhead Changing$$
-If you change the parent node
-all of the output tables become invalid.
-This value is in the option table,
-and not an argument to a particular command,
-because it is used by all the commands.
 
 $head meas_noise_effect$$
 There are four options for how the

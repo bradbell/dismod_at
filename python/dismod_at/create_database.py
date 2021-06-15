@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -386,8 +386,8 @@
 # $head option_table$$
 # This is a list of $code dict$$
 # that define the values
-# $cref/option_name/option_table/Conventions/option_name/$$,
-# $cref/option_value/option_table/Conventions/option_value/$$ in the option table.
+# $cref/option_name/option_table/Table Format/option_name/$$,
+# $cref/option_value/option_table/Table Format/option_value/$$ in the option table.
 # The $th i$$ row of the table will have
 # $codei%
 #	%option_name%  = %option_table%[%i%]['name']

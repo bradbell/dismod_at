@@ -74,8 +74,8 @@
 # It is a CSV file with one row for each possible row in the
 # $cref option_table$$.
 # The columns in $code option.csv$$ are
-# $cref/option_name/option_table/Conventions/option_name/$$ and
-# $cref/option_value/option_table/Conventions/option_value/$$.
+# $cref/option_name/option_table/Table Format/option_name/$$ and
+# $cref/option_value/option_table/Table Format/option_value/$$.
 # If a row does not appear in the option table, the corresponding
 # default value is written to $code option.csv$$.
 # If the $cref/parent_node_id/option_table/Parent Node/parent_node_id/$$ appears

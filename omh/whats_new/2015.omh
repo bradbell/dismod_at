@@ -336,8 +336,8 @@ $lnext
 The $cref sample_table$$ may be created directly to control
 the input to the $cref predict_command$$.
 $lnext
-One may now make changes the
-$cref/option_table/option_table/Conventions/Changing Values/$$,
+One may now
+$cref/change values/option_table/Changing Values/$$ in the option table
 without invalidating all of the
 $cref/output tables/data_flow/Output Tables by Table Name/$$.
 $lnext

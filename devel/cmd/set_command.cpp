@@ -54,11 +54,11 @@ $code option$$ follows $code set$$.
 $subhead name$$
 Is the name of the option we are setting.
 It must be a valid
-$cref/option_name/option_table/Conventions/option_name/$$.
+$cref/option_name/option_table/Table Format/option_name/$$.
 
 $subhead value$$
 Is the new
-$cref/option_value/option_table/Conventions/option_value/$$
+$cref/option_value/option_table/Table Format/option_value/$$
 for the specified option name.
 If $icode value$$ is the empty string, null is used for the corresponding
 value in the database; see
