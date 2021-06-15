@@ -82,6 +82,30 @@ $cref/
 	bound_random
 /$$
 $rnext
+$code compress_integrand$$ $cnext $code null$$ $cnext
+$cref/
+	compress_integrand/
+	option_table/
+	Compress Intervals/
+	compress_integrand
+/$$
+$rnext
+$code compress_age_size$$ $cnext $code null$$ $cnext
+$cref/
+	compress_age_size/
+	option_table/
+	Compress Intervals/
+	compress_age_size
+/$$
+$rnext
+$code compress_time_size$$ $cnext $code null$$ $cnext
+$cref/
+	compress_time_size/
+	option_table/
+	Compress Intervals/
+	compress_time_size
+/$$
+$rnext
 $code data_extra_columns$$ $cnext $code null$$ $cnext
 $cref/
 	data_extra_columns/

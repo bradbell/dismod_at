@@ -253,6 +253,41 @@ the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 $icode iota$$ and $icode rho$$
 must always have lower limit greater than zero.
 
+$head Compress Intervals$$
+If in the data table,
+$cref/age_lower/data_table/age_lower/$$
+is equal to $cref/age_upper/data_table/age_upper/$$, and
+$cref/time_lower/data_table/time_lower/$$
+is equal to $cref/time_upper/data_table/time_upper/$$,
+the model for the data does not require integration over an interval.
+This option allows one to approximate age and time intervals
+by there midpoint and thereby speed up optimization of the model.
+
+$subhead compress_integrand$$
+If $icode%option_name% = compress_integrand%$$,
+the corresponding $icode option_value$$ is a space separated list of
+$cref/integrand_names/integrand_table/integrand_name/$$.
+The data table age and time intervals at or below a certain size
+are approximated their midpoint values (for these integrands).
+The zero size corresponds to no compression.
+
+$subhead compress_age_size$$
+If $icode%option_name% = compress_age_size%$$,
+the corresponding $icode option_value$$ is a space separated list of
+age interval sizes.
+The $th i$$ element of this list is the age interval compression size
+for the $th i$$ element of the $icode compress_integrand$$ list
+and the two lists must have the same number of elements..
+
+$subhead compress_time_size$$
+If $icode%option_name% = compress_time_size%$$,
+the corresponding $icode option_value$$ is a space separated list of
+time interval sizes.
+The $th i$$ element of this list is the time interval compression size
+for the $th i$$ element of the $icode compress_integrand$$ list
+and the two lists must have the same number of elements..
+
+
 $head Optimize Fixed and Random$$
 The following options control the Ipopt optimization
 of both the fixed and random effects:
