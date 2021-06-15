@@ -124,47 +124,6 @@ are not included in the $cref predict_table$$;
 see the heading Note for the
 $cref/predict table/predict_table/Avgint Subset/Node/$$.
 
-$head meas_noise_effect$$
-If $icode%option_name% = meas_noise_effect%$$,
-$icode option_value$$ determines how the
-$cref/average noise effect
-	/data_like
-	/Measurement Noise Covariates
-	/Average Noise Effect, E_i(theta)
-/$$
-changes the measurement noise.
-The possible $icode option_value$$ are:
-$cref/add_std_scale_all
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_std_scale_all
-/$$,
-$cref/add_std_scale_none
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_std_scale_none
-/$$,
-$cref/add_std_scale_log
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_std_scale_log
-/$$,
-$cref/add_var_scale_all
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_var_scale_all
-/$$,
-$cref/add_var_scale_none
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_var_scale_none
-/$$,
-$cref/add_var_scale_log
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_var_scale_log
-/$$.
-
 $head Zero Sum Constraints$$
 
 $subhead zero_sum_child_rate$$
@@ -224,31 +183,6 @@ These columns are not used by $code dismod_at$$ except that
 they get displayed in the
 $cref/predict.csv/db2csv_command/predict.csv/avgint_extra_columns/$$ file.
 
-$head warn_on_stderr$$
-If $icode option_name$$ is
-$code warn_on_stderr$$,
-the corresponding possible values are
-$code true$$ or $code false$$.
-If the value is true,
-warning messages are written to standard error.
-In either case, these messages are recorded in the $cref log_table$$.
-Error messages are always written to standard error
-and recorded in the log table.
-
-$head minimum_meas_cv$$
-This option is no longer available because it is now
-integrand specific; see
-$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$.
-
-$head hold_out_integrand$$
-If $icode%option_name% = hold_out_integrand%$$,
-the corresponding $icode option_value$$ is a space separated list of
-$cref/integrand_names/integrand_table/integrand_name/$$.
-(The integrand names cannot begin with $code mulcov_$$.)
-All the data for the corresponding integrands is held out during any fit.
-This overrides the data table $cref/hold_out/data_table/hold_out/$$
-value for the corresponding integrands.
-
 $head Age Average Grid$$
 
 $subhead ode_step_size$$
@@ -276,12 +210,6 @@ This split is both for the computation of the average integrands
 and for the solution of the ODE; see
 $cref/age average grid/age_avg_table/Age Average Grid/$$.
 If this value is null, $icode age_avg_split$$ is the empty set.
-
-$head random_seed$$
-This is a non-negative integer used to seed the random number
-generator that is used by $code dismod_at$$.
-If this value is zero, the clock is used to seed the random number generator;
-see $cref/random_seed/log_table/message_type/random_seed/$$ in the log table.
 
 $head rate_case$$
 
@@ -519,6 +447,78 @@ effects, does not take $icode bound_random$$ into account.
 On the other hand; the samples of the random effects are withing the
 limits specified by $icode bound_random$$.
 $lend
+
+$head meas_noise_effect$$
+If $icode%option_name% = meas_noise_effect%$$,
+$icode option_value$$ determines how the
+$cref/average noise effect
+	/data_like
+	/Measurement Noise Covariates
+	/Average Noise Effect, E_i(theta)
+/$$
+changes the measurement noise.
+The possible $icode option_value$$ are:
+$cref/add_std_scale_all
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_std_scale_all
+/$$,
+$cref/add_std_scale_none
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_std_scale_none
+/$$,
+$cref/add_std_scale_log
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_std_scale_log
+/$$,
+$cref/add_var_scale_all
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_var_scale_all
+/$$,
+$cref/add_var_scale_none
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_var_scale_none
+/$$,
+$cref/add_var_scale_log
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+	/add_var_scale_log
+/$$.
+
+$head warn_on_stderr$$
+If $icode option_name$$ is
+$code warn_on_stderr$$,
+the corresponding possible values are
+$code true$$ or $code false$$.
+If the value is true,
+warning messages are written to standard error.
+In either case, these messages are recorded in the $cref log_table$$.
+Error messages are always written to standard error
+and recorded in the log table.
+
+$head minimum_meas_cv$$
+This option is no longer available because it is now
+integrand specific; see
+$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$.
+
+$head hold_out_integrand$$
+If $icode%option_name% = hold_out_integrand%$$,
+the corresponding $icode option_value$$ is a space separated list of
+$cref/integrand_names/integrand_table/integrand_name/$$.
+(The integrand names cannot begin with $code mulcov_$$.)
+All the data for the corresponding integrands is held out during any fit.
+This overrides the data table $cref/hold_out/data_table/hold_out/$$
+value for the corresponding integrands.
+
+$head random_seed$$
+This is a non-negative integer used to seed the random number
+generator that is used by $code dismod_at$$.
+If this value is zero, the clock is used to seed the random number generator;
+see $cref/random_seed/log_table/message_type/random_seed/$$ in the log table.
 
 $children%
 	omh/table/option_default.omh%
