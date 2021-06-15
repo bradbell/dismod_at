@@ -125,14 +125,15 @@ see the heading Note for the
 $cref/predict table/predict_table/Avgint Subset/Node/$$.
 
 $head meas_noise_effect$$
-There are four options for how the
+If $icode%option_name% = meas_noise_effect%$$,
+$icode option_value$$ determines how the
 $cref/average noise effect
 	/data_like
 	/Measurement Noise Covariates
 	/Average Noise Effect, E_i(theta)
 /$$
 changes the measurement noise.
-The possible options are
+The possible $icode option_value$$ are:
 $cref/add_std_scale_all
 	/data_like
 	/Adjusted Standard Deviation, delta_i(theta)
