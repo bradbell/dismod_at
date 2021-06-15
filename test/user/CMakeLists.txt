@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -10,6 +10,7 @@
 # ---------------------------------------------------------------------------
 # Build test / user
 SET(depends "")
+# BEGIN_SORT_THIS_LINE_PLUS_2
 FOREACH(user_case
 	asymptotic
 	avgint
@@ -22,6 +23,7 @@ FOREACH(user_case
 	db2csv
 	fit_meas_noise
 	fit_sim
+	hold_out
 	init_covariate
 	laplace
 	minimum_cv
@@ -38,6 +40,8 @@ FOREACH(user_case
 	zero_random_1
 	zero_random_2
 )
+# END_SORT_THIS_LINE_MINUS 2
+#
 	ADD_CUSTOM_TARGET(
 		check_test_user_${user_case}
 		bin/user_test.sh test/user/${user_case}.py

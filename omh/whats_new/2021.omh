@@ -60,6 +60,9 @@ In addition, add some missing commas in that table.
 $lnext
 Improved documentation for
 $cref/hold_out/fit_command/data_subset_table/hold_out/$$.
+$lnext
+Fix bug in $cref hold_out_command$$ when no data is being held out
+(the old hold_out values were not erased).
 $lend
 
 $head 06-14$$
