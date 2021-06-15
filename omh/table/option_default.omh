@@ -106,6 +106,13 @@ $cref/
 	derivative_test
 /$$
 $rnext
+$code hold_out_integrand$$ $cnext $code null$$ $cnext
+$cref/
+	hold_out_integrand/
+	option_table/
+	hold_out_integrand
+/$$
+$rnext
 $code limited_memory_max_history_fixed$$ $cnext 30 $cnext
 $cref/
 	limited_memory_max_history_fixed/
