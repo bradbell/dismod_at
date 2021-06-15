@@ -48,8 +48,16 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-15$$
+$list number$$
 Move the default option values from $cref option_table$$ to
 $cref option_default$$ section.
+$lnext
+Re-order and improve the headings in the $cref option_table$$ documentation.
+$lnext
+Include $cref hold_out_command$$ and $cref init_command$$ in the data flow
+$cref/command output table/data_flow/Command Output Tables/$$.
+In addition, add some missing commas in that table.
+$lend
 
 $head 06-14$$
 $list number$$
