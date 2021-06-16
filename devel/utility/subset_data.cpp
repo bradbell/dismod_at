@@ -68,12 +68,12 @@ $cref/log_laplace/density_table/density_name/log_laplace/$$ density.
 $lend
 
 $head option_map$$
-This object is effectively $code const$$.
-It contains the values in the $cref option_table$$.
-The only value currently used in
+This contains the following keys:
+
+$subhead hold_out_integrand$$
+If this key is present in $icode option_map$$, it is the
 $cref/hold_out_integrand/option_table/hold_out_integrand/$$.
-If this list is empty, $icode integrand_table$$ is not used
-(which is useful for testing).
+If it is not present, the empty string is used.
 
 $head data_subset_table$$
 is the $cref/data_subset_table/get_data_subset/data_subset_table/$$.
@@ -179,21 +179,22 @@ $end
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/split_space.hpp>
+# include <dismod_at/get_str_map.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
 void subset_data(
-	std::map<std::string, std::string>&      option_map            ,
-	const CppAD::vector<data_subset_struct>& data_subset_table     ,
-	const CppAD::vector<integrand_struct>&   integrand_table       ,
-	const CppAD::vector<density_enum>&       density_table         ,
-	const CppAD::vector<data_struct>&        data_table            ,
-	const CppAD::vector<double>&             data_cov_value        ,
-	const CppAD::vector<covariate_struct>&   covariate_table       ,
-	const child_info&                        child_object          ,
-	CppAD::vector<subset_data_struct>&       subset_data_obj       ,
-	CppAD::vector<double>&                   subset_data_cov_value )
+	const std::map<std::string, std::string>&    option_map            ,
+	const CppAD::vector<data_subset_struct>&     data_subset_table     ,
+	const CppAD::vector<integrand_struct>&       integrand_table       ,
+	const CppAD::vector<density_enum>&           density_table         ,
+	const CppAD::vector<data_struct>&            data_table            ,
+	const CppAD::vector<double>&                 data_cov_value        ,
+	const CppAD::vector<covariate_struct>&       covariate_table       ,
+	const child_info&                            child_object          ,
+	CppAD::vector<subset_data_struct>&           subset_data_obj       ,
+	CppAD::vector<double>&                       subset_data_cov_value )
 // END_PROTOTYPE
 {	assert( subset_data_obj.size() == 0 );
 	assert( subset_data_cov_value.size() == 0 );
@@ -205,7 +206,9 @@ void subset_data(
 	size_t n_covariate = covariate_table.size();
 	//
 	// hold_out_vec
-	const std::string& hold_out_integrand = option_map["hold_out_integrand"];
+	const std::string& hold_out_integrand = get_str_map(
+		option_map, "hold_out_integrand", ""
+	);
 	CppAD::vector<std::string> hold_out_list = split_space(hold_out_integrand);
 	CppAD::vector<bool> hold_out_vec;
 	size_t n_hold_out = hold_out_list.size();

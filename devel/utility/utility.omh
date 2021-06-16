@@ -39,6 +39,7 @@ $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/time_line_vec.cpp
 	%include/dismod_at/remove_const.hpp
 	%devel/utility/get_var_limits.cpp
+	%devel/utility/get_str_map.cpp
 %$$
 
 $end
