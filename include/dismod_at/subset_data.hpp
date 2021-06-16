@@ -42,7 +42,7 @@ namespace dismod_at {
 		double       data_sim_value;
 	};
 	extern void subset_data(
-		const std::string&                       hold_out_integrand      ,
+		std::map<std::string, std::string>&      option_map              ,
 		const CppAD::vector<data_subset_struct>& data_subset_table       ,
 		const CppAD::vector<integrand_struct>&   integrand_table         ,
 		const CppAD::vector<density_enum>&       density_table           ,

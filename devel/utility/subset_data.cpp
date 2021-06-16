@@ -32,7 +32,7 @@ $cref avgint_subset$$.
 
 $head Syntax$$
 $codei%subset_data(
-	%hold_out_integrand%, %data_table%, %integrand_table%,
+	%option_map%, %data_table%, %integrand_table%,
 	%data_table%, %data_cov_value%, %covariate_table%, %child_object%,
 	%subset_data_obj%, %subset_data_cov_value%
 )%$$
@@ -67,9 +67,11 @@ $cref/laplace/density_table/density_name/laplace/$$ or
 $cref/log_laplace/density_table/density_name/log_laplace/$$ density.
 $lend
 
-$head hold_out_integrand$$
-is the value of $cref/hold_out_integrand/option_table/hold_out_integrand/$$
-in the option table.
+$head option_map$$
+This object is effectively $code const$$.
+It contains the values in the $cref option_table$$.
+The only value currently used in
+$cref/hold_out_integrand/option_table/hold_out_integrand/$$.
 If this list is empty, $icode integrand_table$$ is not used
 (which is useful for testing).
 
@@ -182,7 +184,7 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
 void subset_data(
-	const std::string&                       hold_out_integrand    ,
+	std::map<std::string, std::string>&      option_map            ,
 	const CppAD::vector<data_subset_struct>& data_subset_table     ,
 	const CppAD::vector<integrand_struct>&   integrand_table       ,
 	const CppAD::vector<density_enum>&       density_table         ,
@@ -203,8 +205,9 @@ void subset_data(
 	size_t n_covariate = covariate_table.size();
 	//
 	// hold_out_vec
-	CppAD::vector<bool> hold_out_vec;
+	const std::string& hold_out_integrand = option_map["hold_out_integrand"];
 	CppAD::vector<std::string> hold_out_list = split_space(hold_out_integrand);
+	CppAD::vector<bool> hold_out_vec;
 	size_t n_hold_out = hold_out_list.size();
 	if( n_hold_out > 0 )
 	{	size_t n_integrand = integrand_table.size();

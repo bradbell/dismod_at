@@ -330,17 +330,34 @@ bool fit_model_xam(void)
 	unpack_random(pack_object, var_upper, random_upper);
 	dismod_at::remove_const random_const(random_lower, random_upper);
 	//
+	// option_map
+	std::map<std::string, std::string> option_map;
+	// BEGIN_SORT_THIS_LINE_PLUS_1
+	option_map["accept_after_max_steps_fixed"]      = "5";
+	option_map["accept_after_max_steps_random"]     = "5";
+	option_map["bound_frac_fixed"]                  = "1e-2";
+	option_map["derivative_test_fixed"]             = "second-order";
+	option_map["derivative_test_random"]            = "second-order";
+	option_map["limited_memory_max_history_fixed"]  = "30";
+	option_map["max_num_iter_fixed"]                = "100";
+	option_map["max_num_iter_random"]               = "100";
+	option_map["method_random"]                     = "ipopt_solve";
+	option_map["print_level_fixed"]                 = "0";
+	option_map["print_level_random"]                = "0";
+	option_map["tolerance_fixed"]                   = "1e-8";
+	option_map["tolerance_random"]                  = "1e-8";
+	// END_SORT_THIS_LINE_MINUS_1
+	//
 	// subset_data
 	vector<dismod_at::subset_data_struct> subset_data_obj;
 	vector<double> subset_data_cov_value;
-	std::string hold_out_integrand = "";
 	vector<dismod_at::data_subset_struct> data_subset_table(data_table.size());
 	for(size_t i = 0; i < data_table.size(); ++i)
 	{	data_subset_table[i].data_id = int(i);
 		data_subset_table[i].hold_out = 0;
 	}
 	subset_data(
-		hold_out_integrand,
+		option_map,
 		data_subset_table,
 		integrand_table,
 		density_table,
@@ -392,24 +409,6 @@ bool fit_model_xam(void)
 		start_var[var_id] = prior_table[prior_id].mean;
 		scale_var[var_id] = prior_table[prior_id].mean;
 	}
-	//
-	// option_map
-	std::map<std::string, std::string> option_map;
-	// BEGIN_SORT_THIS_LINE_PLUS_1
-	option_map["accept_after_max_steps_fixed"]      = "5";
-	option_map["accept_after_max_steps_random"]     = "5";
-	option_map["bound_frac_fixed"]                  = "1e-2";
-	option_map["derivative_test_fixed"]             = "second-order";
-	option_map["derivative_test_random"]            = "second-order";
-	option_map["limited_memory_max_history_fixed"]  = "30";
-	option_map["max_num_iter_fixed"]                = "100";
-	option_map["max_num_iter_random"]               = "100";
-	option_map["method_random"]                     = "ipopt_solve";
-	option_map["print_level_fixed"]                 = "0";
-	option_map["print_level_random"]                = "0";
-	option_map["tolerance_fixed"]                   = "1e-8";
-	option_map["tolerance_random"]                  = "1e-8";
-	// END_SORT_THIS_LINE_MINUS_1
 	// ----------------------- run the fit -------------------------------
 	bool quasi_fixed = false;
 	//

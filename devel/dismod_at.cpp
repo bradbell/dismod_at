@@ -520,10 +520,9 @@ int main(int n_arg, const char** argv)
 		//
 		// subset_data_obj
 		vector<dismod_at::subset_data_struct> subset_data_obj;
-		string hold_out_integrand = option_map["hold_out_integrand"];
 		vector<double> subset_data_cov_value;
 		subset_data(
-			hold_out_integrand,
+			option_map,
 			data_subset_table,
 			db_input.integrand_table,
 			db_input.density_table,

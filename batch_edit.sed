@@ -31,7 +31,12 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|$head Random Only\$|$head Optimize Random Only$|
-s|/Random Only/|/Optimize Random Only/|
-s|\tRandom Only/|\tOptimize Random Only/|
-s|\t/Random Only|\t/Optimize Random Only|
+/^\tsubset_data/! b one
+N
+s|hold_out_integrand,|option_map,|
+b end
+#
+: one
+s|\tstd::string hold_out_integrand = "";|\tstd::map<std::string, std::string> option_map;|
+#
+: end

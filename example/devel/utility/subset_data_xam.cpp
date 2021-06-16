@@ -113,9 +113,9 @@ bool subset_data_xam(void)
 	vector<dismod_at::subset_data_struct> subset_data_obj;
 	vector<double> subset_data_cov_value;
 	vector<dismod_at::integrand_struct> integrand_table;
-	std::string hold_out_integrand = "";
+	std::map<std::string, std::string> option_map;
 	subset_data(
-		hold_out_integrand,
+		option_map,
 		data_subset_table,
 		integrand_table,
 		density_table,
