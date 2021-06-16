@@ -60,6 +60,15 @@ $cref/hold_out_integrand/option_table/hold_out_integrand/$$ list,
 the hold is set to one, no matter what
 $cref/hold_out/data_table/hold_out/$$ is in the data table.
 $lnext
+For each integrand in the
+$cref/
+	compress_integrand/
+	option_table/
+	Compress Intervals/
+	compress_integrand
+/$$ list,
+the corresponding age and time compressions are enforced.
+$lnext
 All of the
 $cref/child data/data_table/node_id/Child Data/$$
 is checked to make sure that it does not use a
@@ -201,20 +210,44 @@ void subset_data(
 	if( data_table.size() == 0 )
 		return;
 	//
+	// sizes of const tables
 	size_t n_child     = child_object.child_size();
-	size_t n_data    = data_table.size();
+	size_t n_data      = data_table.size();
 	size_t n_covariate = covariate_table.size();
+	size_t n_integrand = integrand_table.size();
 	//
-	// hold_out_vec
+	// hold_out_integrand_list
 	const std::string& hold_out_integrand = get_str_map(
 		option_map, "hold_out_integrand", ""
 	);
 	CppAD::vector<std::string> hold_out_list = split_space(hold_out_integrand);
+	//
+	// compress_integrand_list
+	const std::string& compress_integrand = get_str_map(
+		option_map, "compress_integrand", ""
+	);
+	CppAD::vector<std::string> compress_integrand_list =
+		split_space(compress_integrand);
+	//
+	// compress_age_size_list
+	const std::string& compress_age_size = get_str_map(
+		option_map, "compress_age_size", ""
+	);
+	CppAD::vector<std::string> compress_age_size_list =
+		split_space(compress_age_size);
+	//
+	// compress_time_size_list
+	const std::string& compress_time_size = get_str_map(
+		option_map, "compress_time_size", ""
+	);
+	CppAD::vector<std::string> compress_time_size_list =
+		split_space(compress_time_size);
+	//
+	// hold_out_vec
 	CppAD::vector<bool> hold_out_vec;
 	size_t n_hold_out = hold_out_list.size();
 	if( n_hold_out > 0 )
-	{	size_t n_integrand = integrand_table.size();
-		hold_out_vec.resize(n_integrand);
+	{	hold_out_vec.resize(n_integrand);
 		for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
 		{	integrand_enum integrand = integrand_table[integrand_id].integrand;
 			std::string    name      = integrand_enum2name[integrand];
@@ -224,6 +257,36 @@ void subset_data(
 		}
 	}
 	//
+	// age_size_vec
+	// time_size_vec
+	CppAD::vector<double> age_size_vec(n_integrand);
+	CppAD::vector<double> time_size_vec(n_integrand);
+	for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
+	{	age_size_vec[integrand_id]  = 0.0;
+		time_size_vec[integrand_id] = 0.0;
+	}
+	size_t n_compress = compress_integrand_list.size();
+	assert( n_compress == compress_age_size_list.size() );
+	assert( n_compress == compress_time_size_list.size() );
+	if( n_compress > 0 )
+	{	for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
+		{	integrand_enum integrand = integrand_table[integrand_id].integrand;
+			std::string    name      = integrand_enum2name[integrand];
+			for(size_t j = 0; j < n_compress; ++j)
+			{	if( name == compress_integrand_list[j] )
+				{	// age_size_vec[integrand_id]
+					const char* c_str = compress_age_size_list[j].c_str();
+					age_size_vec[integrand_id] = std::atof(c_str);
+					// time_size_vec[integrand_id]
+					c_str = compress_time_size_list[j].c_str();
+					time_size_vec[integrand_id] = std::atof(c_str);
+				}
+			}
+		}
+	}
+	//
+	// n_subset
+	// ok
 	size_t n_subset = 0;
 	CppAD::vector<bool> ok(n_data);
 	for(size_t data_id = 0; data_id < n_data; data_id++)
@@ -257,6 +320,8 @@ void subset_data(
 	}
 	assert( n_subset == data_subset_table.size() );
 	//
+	// subset_data_obj
+	// subset_data_cov_value
 	subset_data_obj.resize(n_subset);
 	subset_data_cov_value.resize(n_subset * n_covariate);
 	size_t subset_id = 0;
@@ -275,16 +340,13 @@ void subset_data(
 				subset_data_cov_value[index] = difference;
 			}
 			// values in avgint_subset_struct
+			// except age_lower, age_upper, time_lower, time_upper
 			assert( size_t( data_subset_table[subset_id].data_id ) == data_id );
 			one_sample.original_id  = int( data_id );
 			one_sample.integrand_id = data_table[data_id].integrand_id;
 			one_sample.node_id      = data_table[data_id].node_id;
 			one_sample.subgroup_id  = data_table[data_id].subgroup_id;
 			one_sample.weight_id    = data_table[data_id].weight_id;
-			one_sample.age_lower    = data_table[data_id].age_lower;
-			one_sample.age_upper    = data_table[data_id].age_upper;
-			one_sample.time_lower   = data_table[data_id].time_lower;
-			one_sample.time_upper   = data_table[data_id].time_upper;
 			// values not in avgint_subset_struct except hold_out
 			int density_id          = data_table[data_id].density_id;
 			one_sample.density      = density_table[density_id];
@@ -295,15 +357,45 @@ void subset_data(
 			// value that depends on data_sim table
 			one_sample.data_sim_value =
 				std::numeric_limits<double>::quiet_NaN();
+			//
+			// integrand_id
+			size_t integrand_id = data_table[data_id].integrand_id;
+			//
 			// hold_out
 			int hold_out = data_table[data_id].hold_out;
 			if( data_subset_table[subset_id].hold_out == 1 )
 				hold_out = 1;
 			if( hold_out_vec.size() != 0 )
-			{	if( hold_out_vec[ data_table[data_id].integrand_id ] )
+			{	if( hold_out_vec[integrand_id] )
 					hold_out = 1;
 			}
 			one_sample.hold_out = hold_out;
+			//
+			// age_lower, age_upper
+			double age_lower = data_table[data_id].age_lower;
+			double age_upper = data_table[data_id].age_upper;
+			if( age_upper - age_lower <= age_size_vec[integrand_id] )
+			{	double age_mid = (age_lower + age_upper) / 2.0;
+				one_sample.age_lower = age_mid;
+				one_sample.age_upper = age_mid;
+			}
+			else
+			{	one_sample.age_lower = age_lower;
+				one_sample.age_upper = age_upper;
+			}
+			//
+			// time_lower, time_upper
+			double time_lower = data_table[data_id].time_lower;
+			double time_upper = data_table[data_id].time_upper;
+			if( time_upper - time_lower <= time_size_vec[integrand_id] )
+			{	double time_mid = (time_lower + time_upper) / 2.0;
+				one_sample.time_lower = time_mid;
+				one_sample.time_upper = time_mid;
+			}
+			else
+			{	one_sample.time_lower = time_lower;
+				one_sample.time_upper = time_upper;
+			}
 			//
 			// advance to next sample
 			subset_id++;

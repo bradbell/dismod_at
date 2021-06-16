@@ -72,7 +72,7 @@ bool subset_data_xam(void)
 
 	// default value for a data table record
 	dismod_at::data_struct record;
-	record.integrand_id   = 1;
+	record.integrand_id   = 0;
 	record.density_id     = 0;
 	record.weight_id      = 4;
 	record.meas_value     = 1e-4;
@@ -108,11 +108,16 @@ bool subset_data_xam(void)
 	dismod_at::child_info child_object(
 		parent_node_id, node_table, data_table
 	);
-
+	//
+	// integrand_table
+	vector<dismod_at::integrand_struct> integrand_table(1);
+	integrand_table[0].integrand        = dismod_at::Sincidence_enum;
+	integrand_table[0].minimum_meas_cv = 0.0;
+	integrand_table[0].mulcov_id       = 0;
+	//
 	// subset_data_obj
 	vector<dismod_at::subset_data_struct> subset_data_obj;
 	vector<double> subset_data_cov_value;
-	vector<dismod_at::integrand_struct> integrand_table;
 	std::map<std::string, std::string> option_map;
 	subset_data(
 		option_map,
