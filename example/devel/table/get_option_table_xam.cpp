@@ -51,6 +51,9 @@ bool get_option_table_xam(void)
 		"avgint_extra_columns",             "",
 		"bound_frac_fixed",                 "1e-3",
 		"bound_random",                     "3.0",
+		"compress_integrand",               "",
+		"compress_age_size",                "",
+		"compress_time_size",               "",
 		"data_extra_columns",               "",
 		"derivative_test_fixed",            "second-order",
 		"derivative_test_random",           "first-order",
@@ -104,7 +107,7 @@ bool get_option_table_xam(void)
 		dismod_at::get_option_table(db);
 	//
 	// check that this test sets all the possible values in the option table
-	// (whiht max_num_iter_fixed left out)
+	// (with max_num_iter_fixed left out)
 	ok &=  n_option + 1 == option_table.size();
 	//
 	// check the table entries

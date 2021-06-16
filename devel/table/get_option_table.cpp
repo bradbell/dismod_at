@@ -106,6 +106,9 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "avgint_extra_columns",             ""                   },
 		{ "bound_frac_fixed",                 "1e-2"               },
 		{ "bound_random",                     ""                   },
+		{ "compress_age_size",                ""                   },
+		{ "compress_integrand",               ""                   },
+		{ "compress_time_size",               ""                   },
 		{ "data_extra_columns",               ""                   },
 		{ "derivative_test_fixed",            "none"               },
 		{ "derivative_test_random",           "none"               },
@@ -140,11 +143,13 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	string table_name  = "option";
 	size_t n_in_table  = check_table_id(db, table_name);
 	//
+	// option_name
 	string column_name = "option_name";
 	CppAD::vector<string>  option_name;
 	get_table_column(db, table_name, column_name, option_name);
 	assert( n_in_table == option_name.size() );
 	//
+	// option_value
 	column_name = "option_value";
 	CppAD::vector<string>  option_value;
 	get_table_column(db, table_name, column_name, option_value);
@@ -153,8 +158,15 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	// values in table
 	size_t  derivative_test_fixed_level = 0;
 	bool    quasi_fixed                 = true;
+	size_t  size_compress_integrand     = 0;
+	size_t  size_compress_age_size      = 0;
+	size_t  size_compress_time_size     = 0;
 	for(size_t option_id = 0; option_id < n_in_table; option_id++)
-	{	// minimum_meas_cv
+	{	// option_value_split
+		CppAD::vector<string> option_value_split = split_space(
+			option_value[option_id]
+		);
+		// minimum_meas_cv
 		if( option_name[option_id] == "minimum_meas_cv" )
 		{	msg  = "minimum_meas_cv is no longer a valid option name";
 			msg += "\nThis was moved to integrand table on 2018-05-23.";
@@ -188,10 +200,23 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		}
 		value_vec[match] = option_value[option_id];
 		//
-		if( name_vec[match] == "hold_out_integrand" )
-		{	CppAD::vector<string> integrand_list = split_space(
-					option_value[option_id]
-			);
+		// size_compress_integrand
+		if( name_vec[match] == "compress_integrand" )
+			size_compress_integrand = option_value_split.size();
+		//
+		// size_compress_age_size
+		if( name_vec[match] == "compress_age_size" )
+			size_compress_age_size = option_value_split.size();
+		//
+		// size_compress_time_size
+		if( name_vec[match] == "compress_time_size" )
+			size_compress_time_size = option_value_split.size();
+		//
+		// hold_out_integrand
+		// compress_integrand
+		if( name_vec[match] == "hold_out_integrand"  ||
+			name_vec[match] == "compress_integrand"  )
+		{	const CppAD::vector<string>& integrand_list = option_value_split;
 			for(size_t i = 0; i < integrand_list.size(); ++i)
 			{	string name  = integrand_list[i];
 				bool   found = false;
@@ -200,12 +225,14 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 						found = true;
 				}
 				if( ! found )
-				{	msg = "hold_out_integrand: invalid interand_name = '";
+				{	string cmd = name_vec[match];
+					msg = cmd + ": invalid interand_name = '";
 					msg += name + "'";
 					error_exit(msg, table_name, option_id);
 				}
 			}
 		}
+		// mes_noise_effect
 		if( name_vec[match] == "meas_noise_effect" )
 		{	bool ok = false;
 			ok     |= option_value[option_id] == "add_std_scale_all";
@@ -221,6 +248,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// rate_case
 		if( name_vec[match] == "rate_case" )
 		{	bool ok = false;
 			ok     |= option_value[option_id] == "no_ode";
@@ -234,6 +262,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// ode_step_size
 		if( name_vec[match] == "ode_step_size" )
 		{	bool ok = std::atof( option_value[option_id].c_str() ) > 0.0;
 			if( ! ok )
@@ -241,6 +270,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// random_seed
 		if( name_vec[match] == "random_seed" )
 		{	bool ok = std::atoi( option_value[option_id].c_str() ) >= 0;
 			if( ! ok )
@@ -248,6 +278,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// quasi_fixed
 		if( name_vec[match] == "quasi_fixed" )
 		{	if( option_value[option_id] == "true" )
 				quasi_fixed = true;
@@ -258,6 +289,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// warn_on_stderr
 		if( name_vec[match] == "warn_on_stderr" )
 		{	if(
 				option_value[option_id] != "true" &&
@@ -266,6 +298,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// tolerance_fixed
+		// tolerance_random
 		if(
 			name_vec[match] == "tolerance_fixed" ||
 			name_vec[match] == "tolerance_random"
@@ -277,6 +311,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// bound_random
 		if( name_vec[match] == "bound_random" )
 		{	std::string bound_random_str = option_value[option_id];
 			if( bound_random_str != "" )
@@ -288,6 +323,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				}
 			}
 		}
+		// max_num_iter_fixed
+		// max_num_iter_random
 		if(
 			name_vec[match] == "max_num_iter_fixed" ||
 			name_vec[match] == "max_num_iter_random"
@@ -299,6 +336,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// print_level_fixed
+		// print_level_random
 		if(
 			name_vec[match] == "print_level_fixed" ||
 			name_vec[match] == "print_level_random"
@@ -310,6 +349,9 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// accept_after_max_steps_fixed
+		// accept_after_max_steps_random
+		// limited_memory_max_history_fixed
 		if(
 			name_vec[match] == "accept_after_max_steps_fixed"   ||
 			name_vec[match] == "accept_after_max_steps_random"  ||
@@ -322,6 +364,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				error_exit(msg, table_name, option_id);
 			}
 		}
+		// derivative_test_fixed
+		// derivative_test_random
 		if(
 			name_vec[match] == "derivative_test_fixed" ||
 			name_vec[match] == "derivative_test_random"
@@ -350,10 +394,9 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 					derivative_test_fixed_level = 1;
 			}
 		}
+		// zero_sum_child_rate
 		if( name_vec[match] == "zero_sum_child_rate" )
-		{	CppAD::vector<string> rate_list = split_space(
-					option_value[option_id]
-			);
+		{	const CppAD::vector<string>& rate_list = option_value_split;
 			size_t n_rate = number_rate_enum;
 			for(size_t i = 0; i < rate_list.size(); i++)
 			{	string rate_name = rate_list[i];
@@ -367,6 +410,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 				}
 			}
 		}
+		// method_random
 		if( name_vec[match] == "method_random" )
 		{	if( option_value[option_id] != "ipopt_solve"  &&
 			    option_value[option_id] != "ipopt_random"
@@ -380,6 +424,16 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	if( quasi_fixed && (derivative_test_fixed_level > 1 ) )
 	{	msg  = "quasi_fixed option is true and derivative_test_fixed";
 		msg += " is second-order or only-second-order";
+		error_exit(msg, table_name);
+	}
+	if( size_compress_age_size  != size_compress_integrand )
+	{	msg  = "number of compress_age_size entries not equal ";
+		msg += "numberof compres_integrand entries";
+		error_exit(msg, table_name);
+	}
+	if( size_compress_time_size  != size_compress_integrand )
+	{	msg  = "number of compress_time_size entries not equal ";
+		msg += "numberof compres_integrand entries";
 		error_exit(msg, table_name);
 	}
 	//
