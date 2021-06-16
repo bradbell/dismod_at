@@ -152,8 +152,7 @@ namespace dismod_at {
 		// run fit
 		void run_fit(
 			bool                                  random_only ,
-			// effectively const
-			std::map<std::string, std::string>&   option_map  ,
+			const std::map<std::string, std::string>&   option_map  ,
 			const warm_start_struct&              warm_start
 		);
 		// get_solution
@@ -172,8 +171,7 @@ namespace dismod_at {
 			size_t                              n_sample           ,
 			CppAD::vector<double>&              sample_out         ,
 			const CppAD::vector<double>&        fit_var_value      ,
-			// effectively const
-			std::map<std::string, std::string>& option_map
+			const std::map<std::string, std::string>& option_map
 		);
 		// cppad_mixed_info
 		std::map<std::string, size_t> cppad_mixed_info(void) const

@@ -13,48 +13,24 @@
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	cmd/depend_command.cpp
 	cmd/fit_command.cpp
-	cmd/init_command.cpp
 	cmd/hold_out_command.cpp
+	cmd/init_command.cpp
 	cmd/old2new_command.cpp
 	cmd/predict_command.cpp
 	cmd/sample_command.cpp
 	cmd/set_command.cpp
 	cmd/simulate_command.cpp
-	model/data_model.cpp
-	model/fit_model.cpp
-	model/prior_model.cpp
-	model/depend.cpp
 	model/adj_integrand.cpp
 	model/avg_integrand.cpp
 	model/avg_noise_effect.cpp
+	model/data_model.cpp
+	model/depend.cpp
+	model/fit_model.cpp
+	model/prior_model.cpp
 	model/ran_con_rcv.cpp
-	utility/avgint_subset.cpp
-	utility/bilinear_interp.cpp
-	utility/censor_var_limit.cpp
-	utility/child_info.cpp
-	utility/cohort_ode.cpp
-	utility/subset_data.cpp
-	utility/eigen_ode2.cpp
-	utility/error_exit.cpp
-	utility/fixed_effect.cpp
-	utility/get_prior_mean.cpp
-	utility/get_str_map.cpp
-	utility/random_effect.cpp
-	utility/n_random_const.cpp
-	utility/residual_density.cpp
-	utility/sim_random.cpp
-	utility/grid2line.cpp
-	utility/split_space.cpp
-	utility/pack_info.cpp
-	utility/pack_prior.cpp
-	utility/time_line_vec.cpp
-	utility/age_avg_grid.cpp
-	utility/remove_const.cpp
-	utility/get_var_limits.cpp
-	utility/pack_warm_start.cpp
 	table/blob_table.cpp
-	table/check_child_prior.cpp
 	table/check_child_nslist.cpp
+	table/check_child_prior.cpp
 	table/check_pini_n_age.cpp
 	table/check_rate_limit.cpp
 	table/check_table_id.cpp
@@ -63,35 +39,59 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp
 	table/get_avgint_table.cpp
-	table/get_option_table.cpp
 	table/get_column_max.cpp
 	table/get_covariate_table.cpp
-	table/get_data_table.cpp
+	table/get_data_sim_table.cpp
 	table/get_data_subset.cpp
-	table/get_density_table.cpp
+	table/get_data_table.cpp
 	table/get_db_input.cpp
+	table/get_density_table.cpp
 	table/get_integrand_table.cpp
-	table/get_prior_table.cpp
-	table/get_prior_sim_table.cpp
 	table/get_mulcov_table.cpp
 	table/get_node_table.cpp
-	table/get_rate_table.cpp
-	table/get_sample_table.cpp
-	table/get_data_sim_table.cpp
-	table/get_smooth_grid.cpp
 	table/get_nslist_pair.cpp
 	table/get_nslist_table.cpp
+	table/get_option_table.cpp
+	table/get_prior_sim_table.cpp
+	table/get_prior_table.cpp
+	table/get_rate_table.cpp
+	table/get_sample_table.cpp
+	table/get_smooth_grid.cpp
 	table/get_smooth_table.cpp
+	table/get_subgroup_table.cpp
 	table/get_table_column.cpp
 	table/get_time_table.cpp
 	table/get_weight_grid.cpp
 	table/get_weight_table.cpp
-	table/get_subgroup_table.cpp
 	table/log_message.cpp
 	table/open_connection.cpp
 	table/put_table_row.cpp
 	table/smooth_info.cpp
 	table/weight_info.cpp
+	utility/age_avg_grid.cpp
+	utility/avgint_subset.cpp
+	utility/bilinear_interp.cpp
+	utility/censor_var_limit.cpp
+	utility/child_info.cpp
+	utility/cohort_ode.cpp
+	utility/eigen_ode2.cpp
+	utility/error_exit.cpp
+	utility/fixed_effect.cpp
+	utility/get_prior_mean.cpp
+	utility/get_str_map.cpp
+	utility/get_var_limits.cpp
+	utility/grid2line.cpp
+	utility/n_random_const.cpp
+	utility/pack_info.cpp
+	utility/pack_prior.cpp
+	utility/pack_warm_start.cpp
+	utility/random_effect.cpp
+	utility/remove_const.cpp
+	utility/residual_density.cpp
+	utility/sim_random.cpp
+	utility/split_space.cpp
+	utility/subset_data.cpp
+	utility/time_line_vec.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 # ---------------------------------------------------------------------------

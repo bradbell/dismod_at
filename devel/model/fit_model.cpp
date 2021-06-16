@@ -18,6 +18,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/remove_const.hpp>
 # include <dismod_at/get_var_limits.hpp>
 # include <dismod_at/ran_con_rcv.hpp>
+# include <dismod_at/get_str_map.hpp>
 
 # define PRINT_SIZE_MAP 0
 
@@ -395,7 +396,7 @@ $head Prototype$$
 $srccode%cpp% */
 void fit_model::run_fit(
 	bool                                      random_only    ,
-	std::map<std::string, std::string>&       option_map     ,
+	const std::map<std::string, std::string>&       option_map     ,
 	const CppAD::mixed::warm_start_struct&    warm_start     )
 /* %$$
 $end
@@ -461,19 +462,24 @@ $end
 	options += "String    sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
 	options += "\nNumeric bound_push " + bound_push;
-	options += "\nNumeric tol " + option_map["tolerance_fixed"];
-	options += "\nNumeric acceptable_tol " + option_map["tolerance_fixed"];
-	options += "\nInteger print_level " + option_map["print_level_fixed"];
-	options += "\nInteger max_iter " + option_map["max_num_iter_fixed"];
+	options += "\nNumeric tol "
+		+ get_str_map(option_map, "tolerance_fixed");
+	options += "\nNumeric acceptable_tol "
+		+ get_str_map(option_map, "tolerance_fixed");
+	options += "\nInteger print_level "
+		+ get_str_map(option_map, "print_level_fixed");
+	options += "\nInteger max_iter "
+		+ get_str_map(option_map, "max_num_iter_fixed");
 	//
 	options += "\nInteger accept_after_max_steps "
-		+ option_map["accept_after_max_steps_fixed"];
+		+ get_str_map(option_map, "accept_after_max_steps_fixed");
 	options += "\nString derivative_test "
-		+ option_map["derivative_test_fixed"];
+		+ get_str_map(option_map, "derivative_test_fixed");
 	//
-	options += "\nNumeric bound_frac " + option_map["bound_frac_fixed"];
+	options += "\nNumeric bound_frac "
+		+ get_str_map(option_map, "bound_frac_fixed");
 	options += "\nInteger limited_memory_max_history "
-		+ option_map["limited_memory_max_history_fixed"];
+		+ get_str_map(option_map, "limited_memory_max_history_fixed");
 	options += "\n";
 	//
 	std::string fixed_options = options;
@@ -482,16 +488,21 @@ $end
 	options = "";
 	options += "String    sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
-	options += "\nNumeric tol " + option_map["tolerance_random"];
-	options += "\nNumeric acceptable_tol " + option_map["tolerance_random"];
-	options += "\nInteger print_level " + option_map["print_level_random"];
-	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
-	options += "\nString evaluation_method " + option_map["method_random"];
+	options += "\nNumeric tol "
+		+ get_str_map(option_map, "tolerance_random");
+	options += "\nNumeric acceptable_tol "
+		+ get_str_map(option_map, "tolerance_random");
+	options += "\nInteger print_level "
+		+ get_str_map(option_map, "print_level_random");
+	options += "\nInteger max_iter "
+		+ get_str_map(option_map, "max_num_iter_random");
+	options += "\nString evaluation_method "
+		+ get_str_map(option_map, "method_random");
 	//
 	options += "\nInteger accept_after_max_steps "
-		+ option_map["accept_after_max_steps_random"];
+		+ get_str_map(option_map, "accept_after_max_steps_random");
 	options += "\nString derivative_test "
-		+ option_map["derivative_test_random"];
+		+ get_str_map(option_map, "derivative_test_random");
 	//
 	options += "\nString hessian_approximation exact";
 	options += "\n";
@@ -799,7 +810,7 @@ void fit_model::sample_posterior(
 	size_t                              n_sample           ,
 	CppAD::vector<double>&              sample_out         ,
 	const CppAD::vector<double>&        fit_var_value      ,
-	std::map<std::string, std::string>& option_map         )
+	const std::map<std::string, std::string>& option_map         )
 /* %$$
 $end
 */
@@ -975,12 +986,16 @@ $end
 	std::string options = "";
 	options += "String  sb  yes";
 	options += "\nNumeric bound_relax_factor 0.0";
-	options += "\nNumeric tol " + option_map["tolerance_random"];
-	options += "\nNumeric acceptable_tol " + option_map["tolerance_random"];
-	options += "\nInteger max_iter " + option_map["max_num_iter_random"];
-	options += "\nInteger print_level " + option_map["print_level_random"];
+	options += "\nNumeric tol "
+		+ get_str_map(option_map, "tolerance_random");
+	options += "\nNumeric acceptable_tol "
+		+ get_str_map(option_map, "tolerance_random");
+	options += "\nInteger max_iter "
+		+ get_str_map(option_map, "max_num_iter_random");
+	options += "\nInteger print_level "
+		+ get_str_map(option_map, "print_level_random");
 	options += "\nString derivative_test "
-		+ option_map["derivative_test_random"] + "\n";
+		+ get_str_map(option_map, "derivative_test_random") + "\n";
 	std::string random_options = options;
 	//
 	// random_in
