@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table format option_id option_name option_value default changing values parent node parent_node_id parent_node_name name id children data subset avgint zero sum constraints zero_sum_child_rate zero_sum_mulcov_group extra columns data_extra_columns avgint_extra_columns age average grid ode_step_size age_avg_split rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimize fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random meas_noise_effect warn_on_stderr minimum_meas_cv hold_out_integrand random_seed example ">
+<meta name="keywords" id="keywords" content=" the option table format option_id option_name option_value default changing values parent node parent_node_id parent_node_name name id children data subset avgint zero sum constraints zero_sum_child_rate zero_sum_mulcov_group extra columns data_extra_columns avgint_extra_columns age average grid ode_step_size age_avg_split rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos compress intervals compress_integrand compress_age_size compress_time_size optimize fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random meas_noise_effect warn_on_stderr minimum_meas_cv hold_out_integrand random_seed example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -97,6 +97,10 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_pos_rho_zero" target="_top">iota_pos_rho_zero</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_zero_rho_pos" target="_top">iota_zero_rho_pos</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_pos_rho_pos" target="_top">iota_pos_rho_pos</a>
+<br><a href="option_table.htm#Compress Intervals" target="_top">Compress&nbsp;Intervals</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Compress Intervals.compress_integrand" target="_top">compress_integrand</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Compress Intervals.compress_age_size" target="_top">compress_age_size</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Compress Intervals.compress_time_size" target="_top">compress_time_size</a>
 <br><a href="option_table.htm#Optimize Fixed and Random" target="_top">Optimize&nbsp;Fixed&nbsp;and&nbsp;Random</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed and Random.derivative_test" target="_top">derivative_test</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Optimize Fixed and Random.max_num_iter" target="_top">max_num_iter</a>
@@ -542,6 +546,74 @@ the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-s
 <code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
 
 must always have lower limit greater than zero.
+
+<br>
+<br>
+<b><big><a name="Compress Intervals" id="Compress Intervals">Compress Intervals</a></big></b>
+<br>
+If in the data table,
+<a href="data_table.htm#age_lower" target="_top"><span style='white-space: nowrap'>age_lower</span></a>
+
+is equal to <a href="data_table.htm#age_upper" target="_top"><span style='white-space: nowrap'>age_upper</span></a>
+, and
+<a href="data_table.htm#time_lower" target="_top"><span style='white-space: nowrap'>time_lower</span></a>
+
+is equal to <a href="data_table.htm#time_upper" target="_top"><span style='white-space: nowrap'>time_upper</span></a>
+,
+the model for the data does not require integration over an interval.
+This option allows one to approximate age and time intervals
+by there midpoint and thereby speed up optimization of the model.
+
+<br>
+<br>
+<big><a name="Compress Intervals.compress_integrand" id="Compress Intervals.compress_integrand">compress_integrand</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;compress_integrand</span></font></code>
+,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is a space separated list of
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_names</span></a>
+.
+The data table age and time intervals at or below a certain size
+are approximated their midpoint values (for these integrands).
+The zero size corresponds to no compression.
+
+<br>
+<br>
+<big><a name="Compress Intervals.compress_age_size" id="Compress Intervals.compress_age_size">compress_age_size</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;compress_age_size</span></font></code>
+,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is a space separated list of
+age interval sizes.
+The <code><i>i</i></code>-th element of this list is the age interval compression size
+for the <code><i>i</i></code>-th element of the 
+<code><i><font color="black"><span style='white-space: nowrap'>compress_integrand</span></font></i></code>
+ list
+and the two lists must have the same number of elements..
+
+<br>
+<br>
+<big><a name="Compress Intervals.compress_time_size" id="Compress Intervals.compress_time_size">compress_time_size</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;compress_time_size</span></font></code>
+,
+the corresponding 
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is a space separated list of
+time interval sizes.
+The <code><i>i</i></code>-th element of this list is the time interval compression size
+for the <code><i>i</i></code>-th element of the 
+<code><i><font color="black"><span style='white-space: nowrap'>compress_integrand</span></font></i></code>
+ list
+and the two lists must have the same number of elements..
+
 
 <br>
 <br>

@@ -7,6 +7,7 @@ document.write('\
 <option>user_cascade.py</option>\
 <option>user_censor.py</option>\
 <option>user_change_grid.py</option>\
+<option>user_compress.py</option>\
 <option>user_const_random.py</option>\
 <option>user_const_value.py</option>\
 <option>user_continue_fit.py</option>\
@@ -54,6 +55,7 @@ function user_child(item)
 		'user_cascade.py.htm',
 		'user_censor.py.htm',
 		'user_change_grid.py.htm',
+		'user_compress.py.htm',
 		'user_const_random.py.htm',
 		'user_const_value.py.htm',
 		'user_continue_fit.py.htm',
