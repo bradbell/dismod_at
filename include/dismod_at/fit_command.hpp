@@ -35,8 +35,7 @@ namespace dismod_at {
 		const dismod_at::pack_info&                   pack_object      ,
 		const dismod_at::pack_prior&                  var2prior        ,
 		const dismod_at::db_input_struct&             db_input         ,
-		// effectively const
-		std::map<std::string, std::string>&           option_map
+		const std::map<std::string, std::string>&     option_map
 	);
 }
 

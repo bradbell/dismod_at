@@ -151,9 +151,9 @@ namespace dismod_at {
 		//
 		// run fit
 		void run_fit(
-			bool                                  random_only ,
+			bool                                        random_only ,
 			const std::map<std::string, std::string>&   option_map  ,
-			const warm_start_struct&              warm_start
+			const warm_start_struct&                    warm_start
 		);
 		// get_solution
 		void get_solution(
@@ -166,11 +166,11 @@ namespace dismod_at {
 		);
 		// sample from asympotitic approximation for posterior distribution
 		void sample_posterior(
-			CppAD::mixed::d_sparse_rcv&         hes_fixed_obj_out  ,
-			CppAD::mixed::d_sparse_rcv&         hes_random_obj_out ,
-			size_t                              n_sample           ,
-			CppAD::vector<double>&              sample_out         ,
-			const CppAD::vector<double>&        fit_var_value      ,
+			CppAD::mixed::d_sparse_rcv&              hes_fixed_obj_out  ,
+			CppAD::mixed::d_sparse_rcv&              hes_random_obj_out ,
+			size_t                                   n_sample           ,
+			CppAD::vector<double>&                   sample_out         ,
+			const CppAD::vector<double>&             fit_var_value      ,
 			const std::map<std::string, std::string>& option_map
 		);
 		// cppad_mixed_info

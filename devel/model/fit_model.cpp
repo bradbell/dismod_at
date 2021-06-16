@@ -362,8 +362,7 @@ random effects are optimized.
 Otherwise, both the fixed and random effects are optimized.
 
 $head option_map$$
-This argument is effectively $code const$$ and
-must have the following values:
+This argument must have the following values:
 For $icode name$$ equal to
 $cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$,
 $cref/tolerance/option_table/Optimize Fixed and Random/tolerance/$$,
@@ -396,7 +395,7 @@ $head Prototype$$
 $srccode%cpp% */
 void fit_model::run_fit(
 	bool                                      random_only    ,
-	const std::map<std::string, std::string>&       option_map     ,
+	const std::map<std::string, std::string>& option_map     ,
 	const CppAD::mixed::warm_start_struct&    warm_start     )
 /* %$$
 $end
@@ -805,11 +804,11 @@ ignore all constraints except for constants
 $head Prototype$$
 $srccode%cpp% */
 void fit_model::sample_posterior(
-	CppAD::mixed::d_sparse_rcv&         hes_fixed_obj_out  ,
-	CppAD::mixed::d_sparse_rcv&         hes_random_obj_out ,
-	size_t                              n_sample           ,
-	CppAD::vector<double>&              sample_out         ,
-	const CppAD::vector<double>&        fit_var_value      ,
+	CppAD::mixed::d_sparse_rcv&               hes_fixed_obj_out  ,
+	CppAD::mixed::d_sparse_rcv&               hes_random_obj_out ,
+	size_t                                    n_sample           ,
+	CppAD::vector<double>&                    sample_out         ,
+	const CppAD::vector<double>&              fit_var_value      ,
 	const std::map<std::string, std::string>& option_map         )
 /* %$$
 $end
