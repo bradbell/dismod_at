@@ -68,6 +68,8 @@ $cref/
 	compress_integrand
 /$$ list,
 the corresponding age and time compressions are enforced.
+An error message is printed and this routine exits if the compress
+integrand list, age_size list, and time_size lists do not have the same size.
 $lnext
 All of the
 $cref/child data/data_table/node_id/Child Data/$$
@@ -243,6 +245,23 @@ void subset_data(
 	CppAD::vector<std::string> compress_time_size_list =
 		split_space(compress_time_size);
 	//
+	// n_compress
+	size_t n_compress = compress_integrand_list.size();
+	if( n_compress != compress_age_size_list.size() )
+	{	std::string msg = "option_table: length of compress_integrand list ";
+		msg += "not equal length of compress_size_age list\n";
+		msg += "and this is not a set command";
+		std::string table_name = "option";
+		error_exit(msg, table_name);
+	}
+	if( n_compress != compress_time_size_list.size() )
+	{	std::string msg = "option_table: length of compress_integrand list ";
+		msg += "not equal length of compress_size_time list\n";
+		msg += "and this is not a set command";
+		std::string table_name = "option";
+		error_exit(msg, table_name);
+	}
+	//
 	// hold_out_vec
 	CppAD::vector<bool> hold_out_vec;
 	size_t n_hold_out = hold_out_list.size();
@@ -265,9 +284,6 @@ void subset_data(
 	{	age_size_vec[integrand_id]  = 0.0;
 		time_size_vec[integrand_id] = 0.0;
 	}
-	size_t n_compress = compress_integrand_list.size();
-	assert( n_compress == compress_age_size_list.size() );
-	assert( n_compress == compress_time_size_list.size() );
 	if( n_compress > 0 )
 	{	for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
 		{	integrand_enum integrand = integrand_table[integrand_id].integrand;

@@ -47,6 +47,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-16$$
+Add options that
+$cref/compress intervals/option_table/Compress Intervals/$$.
+For an example; see $cref user_compress.py$$.
+
 $head 06-15$$
 $list number$$
 Move the default option values from $cref option_table$$ to

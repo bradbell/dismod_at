@@ -158,9 +158,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	// values in table
 	size_t  derivative_test_fixed_level = 0;
 	bool    quasi_fixed                 = true;
-	size_t  size_compress_integrand     = 0;
-	size_t  size_compress_age_size      = 0;
-	size_t  size_compress_time_size     = 0;
 	for(size_t option_id = 0; option_id < n_in_table; option_id++)
 	{	// option_value_split
 		CppAD::vector<string> option_value_split = split_space(
@@ -199,18 +196,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			error_exit(msg, table_name, option_id);
 		}
 		value_vec[match] = option_value[option_id];
-		//
-		// size_compress_integrand
-		if( name_vec[match] == "compress_integrand" )
-			size_compress_integrand = option_value_split.size();
-		//
-		// size_compress_age_size
-		if( name_vec[match] == "compress_age_size" )
-			size_compress_age_size = option_value_split.size();
-		//
-		// size_compress_time_size
-		if( name_vec[match] == "compress_time_size" )
-			size_compress_time_size = option_value_split.size();
 		//
 		// hold_out_integrand
 		// compress_integrand
@@ -424,16 +409,6 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 	if( quasi_fixed && (derivative_test_fixed_level > 1 ) )
 	{	msg  = "quasi_fixed option is true and derivative_test_fixed";
 		msg += " is second-order or only-second-order";
-		error_exit(msg, table_name);
-	}
-	if( size_compress_age_size  != size_compress_integrand )
-	{	msg  = "number of compress_age_size entries not equal ";
-		msg += "numberof compres_integrand entries";
-		error_exit(msg, table_name);
-	}
-	if( size_compress_time_size  != size_compress_integrand )
-	{	msg  = "number of compress_time_size entries not equal ";
-		msg += "numberof compres_integrand entries";
 		error_exit(msg, table_name);
 	}
 	//

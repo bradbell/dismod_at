@@ -95,8 +95,6 @@ def example_db (file_name) :
 	# note that the a, t values are not used for this case
 	def fun_iota(a, t) :
 		return ('prior_iota', None, None)
-	def fun_chi(a, t) :
-		return (chi_true, None, None)
 	# ----------------------------------------------------------------------
 	# age table:
 	age_list    = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]

@@ -61,6 +61,7 @@ $children%
 	example/user/cascade.py%
 	example/user/censor.py%
 	example/user/change_grid.py%
+	example/user/compress.py%
 	example/user/const_random.py%
 	example/user/const_value.py%
 	example/user/continue_fit.py%
@@ -106,6 +107,7 @@ $head Examples With Explanation$$
 $table
 $rref user_one_function.py$$
 $rref user_hold_out.py$$
+$rref user_compress.py$$
 $rref user_sim_log.py$$
 $rref user_residual.py$$
 $rref user_fit_random.py$$
