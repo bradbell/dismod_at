@@ -346,7 +346,8 @@ void fit_command(
 	vector<bool> zero_sum_child_rate(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	string rate_name = dismod_at::get_rate_name(rate_id);
-		size_t found     = get_str_map(option_map, "zero_sum_child_rate").find( rate_name );
+		size_t found     =
+			get_str_map(option_map, "zero_sum_child_rate").find( rate_name );
 		zero_sum_child_rate[rate_id] = found < option_size;
 	}
 	// ----------------------------------------------------------------------
@@ -359,7 +360,8 @@ void fit_command(
 			subgroup_table( db_input.subgroup_table );
 		size_t first_subgroup_id = pack_object.first_subgroup_id(group_id);
 		string group_name = subgroup_table[first_subgroup_id].group_name;
-		size_t found = get_str_map(option_map, "zero_sum_mulcov_group").find(group_name);
+		size_t found =
+			get_str_map(option_map, "zero_sum_mulcov_group").find(group_name);
 		zero_sum_mulcov_group[group_id] = found < option_size;
 	}
 	// ----------------------------------------------------------------------

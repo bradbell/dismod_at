@@ -19,6 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_var_limits.hpp>
 # include <dismod_at/remove_const.hpp>
 # include <dismod_at/log_message.hpp>
+# include <dismod_at/get_str_map.hpp>
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -228,7 +229,7 @@ void sample_command(
 	const dismod_at::pack_prior&                       var2prior        ,
 	const dismod_at::db_input_struct&                  db_input         ,
 	// effectively const
-	std::map<std::string, std::string>&                option_map
+	const std::map<std::string, std::string>&          option_map
 )
 {	using std::string;
 	using CppAD::to_string;
@@ -280,38 +281,40 @@ void sample_command(
 	// -----------------------------------------------------------------------
 	// zero_sum_child_rate
 	size_t n_rate      = size_t(dismod_at::number_rate_enum);
-	size_t option_size = option_map["zero_sum_child_rate"].size();
+	size_t option_size = get_str_map(option_map, "zero_sum_child_rate").size();
 	vector<bool> zero_sum_child_rate(n_rate);
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	string rate_name = dismod_at::get_rate_name(rate_id);
-		size_t found     = option_map["zero_sum_child_rate"].find( rate_name );
+		size_t found     =
+			get_str_map(option_map, "zero_sum_child_rate").find( rate_name );
 		zero_sum_child_rate[rate_id] = found < option_size;
 	}
 	// ----------------------------------------------------------------------
 	// zero_sum_mulcov_group
 	size_t n_group = pack_object.group_size();
-	option_size    = option_map["zero_sum_mulcov_group"].size();
+	option_size    = get_str_map(option_map, "zero_sum_mulcov_group").size();
 	vector<bool> zero_sum_mulcov_group(n_group);
 	for(size_t group_id = 0; group_id < n_group; group_id++)
 	{	const vector<subgroup_struct>&
 			subgroup_table( db_input.subgroup_table );
 		size_t first_subgroup_id = pack_object.first_subgroup_id(group_id);
 		string group_name = subgroup_table[first_subgroup_id].group_name;
-		size_t found = option_map["zero_sum_mulcov_group"].find(group_name);
+		size_t found =
+			get_str_map(option_map, "zero_sum_mulcov_group").find(group_name);
 		zero_sum_mulcov_group[group_id] = found < option_size;
 	}
 	// ----------------------------------------------------------------------
 	// quasi_fixed
-	bool quasi_fixed = option_map["quasi_fixed"] == "true";
+	bool quasi_fixed = get_str_map(option_map, "quasi_fixed") == "true";
 	//
 	// warn_on_stderr
-	bool warn_on_stderr = option_map["warn_on_stderr"] == "true";
+	bool warn_on_stderr = get_str_map(option_map, "warn_on_stderr") == "true";
 	//
 	// bound_random, null corresponds to infinity
 	double bound_random = 0.0;
 	if( variables != "fixed" )
 	{	// null corresponds to infinity
-		std::string tmp_str = option_map["bound_random"];
+		std::string tmp_str = get_str_map(option_map, "bound_random");
 		if( tmp_str == "" )
 			bound_random = std::numeric_limits<double>::infinity();
 		else
