@@ -327,6 +327,9 @@ correpsonding parent rates.
    for the data not inclueded because it is held out instead of removed.
 2. random_seed is not used to set value in dismod_at option table
    so that the results of the hold_out_command can be reproducible.
+
+06-16:
+1. Use the new compres interval options to simplify the fit_ihme.py code.
 '''
 }
 # help cases
@@ -1445,37 +1448,6 @@ def set_data_likelihood (
 	#
 	table_name = 'data'
 	put_table(table_name, data_table, data_col_name, data_col_type)
-# ---------------------------------------------------------------------------
-def compress_age_time_interval(integrand_name, age_size, time_size) :
-	# For the specified integrand, compress age and time intervalces that are
-	# less than the specified size to a single point.
-	msg  = '\ncompress_age_time_interval\n'
-	msg += 'Use midpoint for intervals less than or equal specified size\n'
-	msg += 'integrand = {}'.format(integrand_name)
-	msg += ', age_size= {}'.format(age_size)
-	msg += ', time_size= {}'.format(time_size)
-	trace(msg)
-	#
-	# integrand_id
-	integrand_id =integrand_name2id[integrand_name]
-	#
-	for row in data_table :
-		if row['integrand_id'] == integrand_id :
-			age_lower  = row['age_lower']
-			age_upper  = row['age_upper']
-			time_lower = row['time_lower']
-			time_upper = row['time_upper']
-			if age_upper - age_lower <= age_size :
-				avg              = (age_upper + age_lower) / 2.0
-				row['age_lower'] = avg
-				row['age_upper'] = avg
-			if time_upper - time_lower <= time_size :
-				avg               = (time_upper + time_lower) / 2.0
-				row['time_lower'] = avg
-				row['time_upper'] = avg
-	#
-	table_name = 'data'
-	put_table(table_name, data_table, data_col_name, data_col_type)
 # ============================================================================
 # Routines that Change Other Tables
 # ============================================================================
@@ -2431,12 +2403,6 @@ if which_fit_arg == 'no_ode'  :
 			msg += ' in original database'
 			trace(msg)
 	#
-	# compress age and time intervals
-	age_size  = 10.0
-	time_size = 10.0
-	for integrand_name in integrand_list_all :
-		compress_age_time_interval(integrand_name, age_size, time_size)
-	#
 	# set bounds for all the covariates
 	n_covariate = len( covariate_table )
 	for covariate_id in range( n_covariate ) :
@@ -2500,6 +2466,15 @@ if which_fit_arg == 'no_ode'  :
 		hold_out_integrand.append('mtexcess')
 	hold_out_integrand = ' '.join(hold_out_integrand)
 	set_option('hold_out_integrand',  hold_out_integrand)
+	#
+	# compress age and time intervals
+	n_compress         = len(integrand_list_all)
+	compress_integrand  = ' '.join(integrand_list_all)
+	compress_age_size   = ' '.join( n_compress * ['10.0'] )
+	compress_time_size  = ' '.join( n_compress * ['10.0'] )
+	set_option('compress_integrand', compress_integrand)
+	set_option('compress_age_size',  compress_age_size)
+	set_option('compress_time_size', compress_time_size)
 	# -------------------------------------------------------------------------
 	# fit both
 	t0 = time.time()
