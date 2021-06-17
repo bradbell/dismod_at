@@ -53,7 +53,7 @@ $cref/compress intervals/option_table/Compress Intervals/$$.
 Include this setting in the
 $cref/age_lo/db2csv_command/data.csv/age_lo/$$,
 age_up, time_lo, time_up columns in the data.csv
-file output by $cref db2csv_command$$..
+file output by $cref db2csv_command$$.
 For an example; see $cref user_compress.py$$.
 
 $head 06-15$$
