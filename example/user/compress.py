@@ -273,7 +273,7 @@ for var_id in range( len(var_table) ) :
 	rel_error   = 1.0 - fit_value/true_value
 	assert abs(rel_error) < 1e-6
 # ---------------------------------------------------------------------------
-# Now check data.csv compression column 'com'
+# Now check data.csv for interval compression
 os.chdir('../../..')
 program   = 'bin/dismodat.py'
 file_name = 'build/example/user/' + file_name
@@ -282,12 +282,15 @@ data_file      = open('build/example/user/data.csv', 'r')
 reader         = csv.DictReader(data_file)
 for (data_id, row) in enumerate(reader) :
 	# check flag for age compression
+	if int(data_id) == 0 :
+		assert float( row['age_lo'] ) == 0.0
+		assert float( row['age_up'] ) == 0.0
 	if int(data_id) == 1 :
-		# age interval is compressed
-		assert row['com'] == 'a'
-	else :
-		# age interval is already compressed
-		assert row['com'] == '';
+		assert float( row['age_lo'] ) == 50.0
+		assert float( row['age_up'] ) == 50.0
+	if int(data_id) == 2 :
+		assert float( row['age_lo'] ) == 100.0
+		assert float( row['age_up'] ) == 100.0
 # -----------------------------------------------------------------------------
 print('compress.py: OK')
 # -----------------------------------------------------------------------------

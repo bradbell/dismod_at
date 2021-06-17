@@ -47,10 +47,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
-$head 06-16$$
+$head 06-17$$
 Add options that
-$cref/compress intervals/option_table/Compress Intervals/$$
-and add the $cref/com/db2csv_command/data.csv/com/$$ column to the data.csv
+$cref/compress intervals/option_table/Compress Intervals/$$.
+Include this setting in the
+$cref/age_lo/db2csv_command/data.csv/age_lo/$$,
+age_up, time_lo, time_up columns in the data.csv
 file output by $cref db2csv_command$$..
 For an example; see $cref user_compress.py$$.
 

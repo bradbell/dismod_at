@@ -383,20 +383,25 @@
 # $cref/weight_name/weight_table/weight_name/$$.
 #
 # $subhead age_lo$$
-# is the data table
-# $cref/age_lower/data_table/age_lower/$$.
+# is the lower age used in the fits; i.e., the data table
+# $cref/age_lower/data_table/age_lower/$$ modified by the
+# $cref/compress intervals/option_table/Compress Intervals/$$ option
+# (if they are set for this option).
 #
 # $subhead age_up$$
-# is the data table
-# $cref/age_upper/data_table/age_upper/$$.
+# is the upper age used in the fits; i.e., the data table
+# $cref/age_upper/data_table/age_upper/$$ modified by the
+# compress intervals option.
 #
 # $subhead time_lo$$
-# is the data table
-# $cref/time_lower/data_table/time_lower/$$.
+# is the lower time used in the fits; i.e., the data table
+# $cref/time_lower/data_table/time_lower/$$ modified by the
+# compress intervals option.
 #
 # $subhead time_up$$
-# is the data table
-# $cref/time_upper/data_table/time_upper/$$.
+# is the upper time used in the fits; i.e., the data table
+# $cref/time_upper/data_table/time_upper/$$ modified by the
+# compress intervals option.
 #
 # $subhead out$$
 # This column is one (zero) if any of the following conditions
@@ -411,17 +416,6 @@
 # The corresponding data_subset table
 # $cref/hold_out/data_subset_table/hold_out/$$ is one.
 # $lend
-#
-# $subhead com$$
-# This column indicates if the age and or time intervals were
-# $cref/compressed/option_table/Compress Intervals/$$.
-# If it is the empty '', neither interval was compressed.
-# If it is 'a', the age interval was compressed.
-# If it is 't', the time interval was compressed.
-# If it is 'at', both intervals were compressed.
-# Note that when the upper and lower limits are equal,
-# the interval is not considered to have been compressed.
-# (Compression of such an interval would not change anything.)
 #
 # $subhead density$$
 # is the
@@ -1406,7 +1400,6 @@ def db2csv_command(database_file_arg) :
 		'time_lo',
 		'time_up',
 		'out',
-		'com',
 		'density',
 		'eta',
 		'nu',
@@ -1442,10 +1435,7 @@ def db2csv_command(database_file_arg) :
 		for column in data_extra_columns :
 			row_out[column] = row_in[column]
 		#
-		row_out['age_lo']      = convert2output( row_in['age_lower'] )
-		row_out['age_up']      = convert2output( row_in['age_upper'] )
-		row_out['time_lo']     = convert2output( row_in['time_lower'] )
-		row_out['time_up']     = convert2output( row_in['time_upper'] )
+		# columns that are directly copied from data table
 		row_out['meas_std']    = convert2output( row_in['meas_std'] )
 		row_out['eta']         = convert2output( row_in['eta'] )
 		row_out['nu']          = convert2output( row_in['nu'] )
@@ -1488,25 +1478,29 @@ def db2csv_command(database_file_arg) :
 		if row_out['integrand'] in hold_out_integrand_list :
 			row_out['out'] = 1
 		#
-		# com
-		row_out['com'] = ''
+		# age_lower, age_upper, time_lower, time_upper
+		age_lower  = row_in['age_lower']
+		age_upper  = row_in['age_upper']
+		age_mid    = (age_lower + age_upper) / 2.0
+		time_lower = row_in['time_lower']
+		time_upper = row_in['time_upper']
+		time_mid   = (time_lower + time_upper) / 2.0
 		for i in range( n_compress ) :
 			integrand = compress_integrand_list[i]
 			if integrand == row_out['integrand'] :
 				age_size   = float( compress_age_size_list[i] )
 				time_size  = float( compress_time_size_list[i] )
 				#
-				age_lower  = float( row_out['age_lo'] )
-				age_upper  = float( row_out['age_up'] )
-				#
-				time_lower = float( row_out['time_lo'] )
-				time_upper = float( row_out['time_up'] )
-				if age_upper != age_lower :
-					if age_upper - age_lower <= age_size :
-						row_out['com'] += 'a'
-				if time_upper != time_lower :
-					if time_upper - time_lower <= time_size :
-						row_out['com'] += 't'
+				if age_upper - age_lower <= age_size :
+					age_lower  = age_mid
+					age_upper  = age_mid
+				if time_upper - time_lower <= time_size :
+					time_lower = time_mid
+					time_upper = time_mid
+		row_out['age_lo']  = convert2output(age_lower)
+		row_out['age_up']  = convert2output(age_upper)
+		row_out['time_lo'] = convert2output(time_lower)
+		row_out['time_up'] = convert2output(time_upper)
 		#
 		covariate_id = 0
 		for row in table_data['covariate'] :
