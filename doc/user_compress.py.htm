@@ -132,6 +132,7 @@ but faster to compute.
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
+<b><font color="#000080">import</font></b> csv
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> copy
 <b><font color="#000080">import</font></b> math
@@ -305,6 +306,7 @@ connection            <font color="#990000">=</font> dismod_at<font color="#9900
 age_table             <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'age'</font><font color="#990000">)</font>
 var_table             <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
 fit_var_table         <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
+connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># only one varable in this model, iota</font></i>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font>
@@ -338,6 +340,7 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_p
 new                   <font color="#990000">=</font> False
 connection            <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
 fit_var_table         <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
+connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check that this fit is accurate</font></i>
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
@@ -347,6 +350,25 @@ fit_var_table         <font color="#990000">=</font> dismod_at<font color="#9900
      fit_value   <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">][</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
      rel_error   <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> fit_value<font color="#990000">/</font>true_value
      <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_error<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+<i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
+<i><font color="#9A1900"># Now check data.csv for interval compression</font></i>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'../../..'</font><font color="#990000">)</font>
+program   <font color="#990000">=</font> <font color="#FF0000">'bin/dismodat.py'</font>
+file_name <font color="#990000">=</font> <font color="#FF0000">'build/example/user/'</font> <font color="#990000">+</font> file_name
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'db2csv'</font> <font color="#990000">])</font>
+data_file      <font color="#990000">=</font> <b><font color="#000000">open</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user/data.csv'</font><font color="#990000">,</font> <font color="#FF0000">'r'</font><font color="#990000">)</font>
+reader         <font color="#990000">=</font> csv<font color="#990000">.</font><b><font color="#000000">DictReader</font></b><font color="#990000">(</font>data_file<font color="#990000">)</font>
+<b><font color="#0000FF">for</font></b> <font color="#990000">(</font>data_id<font color="#990000">,</font> row<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> <b><font color="#000000">enumerate</font></b><font color="#990000">(</font>reader<font color="#990000">)</font> <font color="#990000">:</font>
+     <i><font color="#9A1900"># check flag for age compression</font></i>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font>data_id<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'age_lo'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0.0</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'age_up'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">0.0</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font>data_id<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'age_lo'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">50.0</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'age_up'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">50.0</font>
+     <b><font color="#0000FF">if</font></b> <b><font color="#000000">int</font></b><font color="#990000">(</font>data_id<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">2</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'age_lo'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">100.0</font>
+          <b><font color="#0000FF">assert</font></b> <b><font color="#000000">float</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'age_up'</font><font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">100.0</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'compress.py: OK'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i></tt></pre>
