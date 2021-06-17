@@ -1,4 +1,3 @@
-# $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
 #           Copyright (C) 2014-21 University of Washington
@@ -412,6 +411,17 @@
 # The corresponding data_subset table
 # $cref/hold_out/data_subset_table/hold_out/$$ is one.
 # $lend
+#
+# $subhead com$$
+# This column indicates if the age and or time intervals were
+# $cref/compressed/option_table/Compress Intervals/$$.
+# If it is the empty '', neither interval was compressed.
+# If it is 'a', the age interval was compressed.
+# If it is 't', the time interval was compressed.
+# If it is 'at', both intervals were compressed.
+# Note that when the upper and lower limits are equal,
+# the interval is not considered to have been compressed.
+# (Compression of such an interval would not change anything.)
 #
 # $subhead density$$
 # is the
@@ -1062,8 +1072,11 @@ def db2csv_command(database_file_arg) :
 	# option.csv
 	# =========================================================================
 	#
-	# hold_out_integrand_list: computed during output of option.csv
+	# These lists are extracted from the option table
 	hold_out_integrand_list = None
+	compress_integrand_list = None
+	comparess_age_size_list = None
+	compress_time_size_list = None
 	#
 	file_name  = os.path.join(database_dir, 'option.csv')
 	csv_file   = open(file_name, 'w')
@@ -1133,6 +1146,12 @@ def db2csv_command(database_file_arg) :
 		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
 		if row[0] == 'hold_out_integrand' :
 			hold_out_integrand_list = row[1].split(' ')
+		if row[0] == 'compress_integrand' :
+			compress_integrand_list = row[1].split(' ')
+		if row[0] == 'compress_age_size' :
+			compress_age_size_list = row[1].split(' ')
+		if row[0] == 'compress_time_size' :
+			compress_time_size_list = row[1].split(' ')
 		csv_writer.writerow(row_out)
 	csv_file.close()
 	# =========================================================================
@@ -1364,6 +1383,17 @@ def db2csv_command(database_file_arg) :
 	file_name = os.path.join(database_dir, 'data.csv')
 	csv_file  = open(file_name, 'w')
 	#
+	# n_compress
+	n_compress = len(compress_integrand_list)
+	if n_compress != len(compress_age_size_list) :
+		msg  = 'option table: compress_integrand list, compress_age_size list '
+		msg += 'have different sizes'
+		sys.exit(msg)
+	if n_compress != len(compress_time_size_list) :
+		msg  = 'option table: compress_integrand list, compress_time_size list '
+		msg += 'have different sizes'
+		sys.exit(msg)
+	#
 	header = ['data_id'] + data_extra_columns + [
 		'child',
 		'node',
@@ -1376,6 +1406,7 @@ def db2csv_command(database_file_arg) :
 		'time_lo',
 		'time_up',
 		'out',
+		'com',
 		'density',
 		'eta',
 		'nu',
@@ -1456,6 +1487,26 @@ def db2csv_command(database_file_arg) :
 			row_out['out'] = 1
 		if row_out['integrand'] in hold_out_integrand_list :
 			row_out['out'] = 1
+		#
+		# com
+		row_out['com'] = ''
+		for i in range( n_compress ) :
+			integrand = compress_integrand_list[i]
+			if integrand == row_out['integrand'] :
+				age_size   = float( compress_age_size_list[i] )
+				time_size  = float( compress_time_size_list[i] )
+				#
+				age_lower  = float( row_out['age_lo'] )
+				age_upper  = float( row_out['age_up'] )
+				#
+				time_lower = float( row_out['time_lo'] )
+				time_upper = float( row_out['time_up'] )
+				if age_upper != age_lower :
+					if age_upper - age_lower <= age_size :
+						row_out['com'] += 'a'
+				if time_upper != time_lower :
+					if time_upper - time_lower <= time_size :
+						row_out['com'] += 't'
 		#
 		covariate_id = 0
 		for row in table_data['covariate'] :

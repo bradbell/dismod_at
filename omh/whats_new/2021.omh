@@ -49,7 +49,9 @@ $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-16$$
 Add options that
-$cref/compress intervals/option_table/Compress Intervals/$$.
+$cref/compress intervals/option_table/Compress Intervals/$$
+and add the $cref/com/db2csv_command/data.csv/com/$$ column to the data.csv
+file output by $cref db2csv_command$$..
 For an example; see $cref user_compress.py$$.
 
 $head 06-15$$

@@ -54,6 +54,7 @@ def iota_true(age) :
 # ------------------------------------------------------------------------
 import sys
 import os
+import csv
 import distutils.dir_util
 import copy
 import math
@@ -227,6 +228,7 @@ connection            = dismod_at.create_connection(file_name, new)
 age_table             = dismod_at.get_table_dict(connection, 'age')
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 # only one varable in this model, iota
 assert len(var_table) == 3
@@ -260,6 +262,7 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 new                   = False
 connection            = dismod_at.create_connection(file_name, new)
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 # check that this fit is accurate
 for var_id in range( len(var_table) ) :
@@ -269,6 +272,22 @@ for var_id in range( len(var_table) ) :
 	fit_value   = fit_var_table[var_id]['fit_var_value']
 	rel_error   = 1.0 - fit_value/true_value
 	assert abs(rel_error) < 1e-6
+# ---------------------------------------------------------------------------
+# Now check data.csv compression column 'com'
+os.chdir('../../..')
+program   = 'bin/dismodat.py'
+file_name = 'build/example/user/' + file_name
+dismod_at.system_command_prc([ program, file_name, 'db2csv' ])
+data_file      = open('build/example/user/data.csv', 'r')
+reader         = csv.DictReader(data_file)
+for (data_id, row) in enumerate(reader) :
+	# check flag for age compression
+	if int(data_id) == 1 :
+		# age interval is compressed
+		assert row['com'] == 'a'
+	else :
+		# age interval is already compressed
+		assert row['com'] == '';
 # -----------------------------------------------------------------------------
 print('compress.py: OK')
 # -----------------------------------------------------------------------------
