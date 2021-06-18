@@ -28,31 +28,37 @@ The first one is a $code begin$$ message and includes the command arguments.
 The second is an $code end$$ message and signifies that the command completed.
 
 
-$children%devel/cmd/depend_command.cpp
-	%devel/cmd/fit_command.cpp
-	%devel/cmd/init_command.cpp
-	%devel/cmd/hold_out_command.cpp
-	%devel/cmd/old2new_command.cpp
-	%devel/cmd/predict_command.cpp
-	%devel/cmd/sample_command.cpp
-	%devel/cmd/set_command.cpp
-	%devel/cmd/simulate_command.cpp
-	%bin/dismodat.py.in
+$comment BEGIN_SORT_THIS_LINE_PLUS_2$$
+$children%
+	bin/dismodat.py.in%
+	devel/cmd/depend_command.cpp%
+	devel/cmd/fit_command.cpp%
+	devel/cmd/hold_out_command.cpp%
+	devel/cmd/init_command.cpp%
+	devel/cmd/old2new_command.cpp%
+	devel/cmd/predict_command.cpp%
+	devel/cmd/sample_command.cpp%
+	devel/cmd/set_command.cpp%
+	devel/cmd/simulate_command.cpp
 %$$
+$comment END_SORT_THIS_LINE_MINUS_2$$
+
 $head Commands$$
 $table
-$rref init_command$$
-$rref hold_out_command$$
-$rref fit_command$$
-$rref set_command$$
-$rref depend_command$$
-$rref simulate_command$$
-$rref sample_command$$
-$rref predict_command$$
-$rref db2csv_command$$
+$comment BEGIN_SORT_THIS_LINE_PLUS_1%$$
 $rref csv2db_command$$
+$rref db2csv_command$$
+$rref depend_command$$
+$rref fit_command$$
+$rref hold_out_command$$
+$rref init_command$$
 $rref modify_command$$
 $rref old2new_command$$
+$rref predict_command$$
+$rref sample_command$$
+$rref set_command$$
+$rref simulate_command$$
+$comment END_SORT_THIS_LINE_MINUS_1%$$
 $tend
 
 
