@@ -31,6 +31,7 @@ The second is an $code end$$ message and signifies that the command completed.
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $children%
 	bin/dismodat.py.in%
+	devel/cmd/bnd_mulcov_command.cpp%
 	devel/cmd/depend_command.cpp%
 	devel/cmd/fit_command.cpp%
 	devel/cmd/hold_out_command.cpp%
@@ -46,6 +47,7 @@ $comment END_SORT_THIS_LINE_MINUS_2$$
 $head Commands$$
 $table
 $comment BEGIN_SORT_THIS_LINE_PLUS_1%$$
+$rref bnd_mulcov_command$$
 $rref csv2db_command$$
 $rref db2csv_command$$
 $rref depend_command$$

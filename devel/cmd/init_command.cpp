@@ -26,6 +26,7 @@ $spell
 	var
 	dismod
 	initializes
+	bnd_mulcov
 $$
 
 $section The Initialize Command$$
@@ -40,11 +41,12 @@ $cref/output tables/data_flow/Output Tables by Table Name/$$,
 except for the $cref log_table$$,
 and then creates new versions of the following tables:
 $table
-$cref age_avg_table$$       $cnext $title age_avg_table$$     $rnext
-$cref var_table$$           $cnext $title var_table$$         $rnext
-$cref data_subset_table$$   $cnext $title data_subset_table$$ $rnext
-$cref start_var_table$$     $cnext $title start_var_table$$   $rnext
-$cref scale_var_table$$     $cnext $title scale_var_table$$
+$rref age_avg_table$$
+$rref bnd_mulcov_table$$
+$rref data_subset_table$$
+$rref start_var_table$$
+$rref scale_var_table$$
+$rref var_table$$
 $tend
 
 $head Changing Values$$
@@ -166,6 +168,7 @@ void init_command(
 	// except for that age_avg and log tables are not included.
 	// BEGIN_SORT_THIS_LINE_PLUS_2
 	const char* drop_list[] = {
+		"bnd_mulcov",
 		"data_sim",
 		"data_subset",
 		"depend_var",

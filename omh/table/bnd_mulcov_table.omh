@@ -1,0 +1,46 @@
+$Id$
+-----------------------------------------------------------------------------
+dismod_at: Estimating Disease Rates as Functions of Age and Time
+          Copyright (C) 2014-21 University of Washington
+             (Bradley M. Bell bradbell@uw.edu)
+
+This program is distributed under the terms of the
+	     GNU Affero General Public License version 3.0 or later
+see http://www.gnu.org/licenses/agpl.txt
+-----------------------------------------------------------------------------
+$begin bnd_mulcov_table$$
+$spell
+	Covariate
+	bnd_mulcov
+	init
+	py
+$$
+
+$section The Bound Covariate Multiplier$$.
+
+$head bnd_mulcov_id$$
+This column has type $code integer$$ and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The $code bnd_mulcov_id$$ column is also a foreign key for the
+$cref mulcov_table$$ ; i.e.,
+$codei%
+     %mulcov_id% = %bnd_mulcov_id%
+%$$
+In addition, the size of both tables is the same.
+
+$head lower$$
+This column has type $code real$$ and is a lower limit for corresponding
+covariate multiplier.
+This lower limit is in addition to the priors for the multiplier.
+If $icode lower$$ is null, interpreted as minus infinity and has no effect.
+
+$head upper$$
+This column has type $code real$$ and is an upper limit for corresponding
+covariate multiplier.
+This upper limit is in addition to the priors for the multiplier.
+If $icode upper$$ is null, interpreted as plus infinity and has no effect.
+
+$head Example$$
+See $code init_command.py$$ example and test.
+
+$end

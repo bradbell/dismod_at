@@ -16,6 +16,7 @@ $spell
 	init
 	var
 	hes
+	bnd_mulcov
 $$
 
 $section The Dismod_at Data Flow$$
@@ -34,6 +35,7 @@ it is never erased and restarted.
 $comment BEGIN_SORT_THIS_LINE_PLUS_2%$$
 $children%
 	omh/table/age_avg_table.omh%
+	omh/table/bnd_mulcov_table.omh%
 	omh/table/data_sim_table.omh%
 	omh/table/data_subset_table.omh%
 	omh/table/depend_var_table.omh%
@@ -62,6 +64,11 @@ $table
 Table $cnext
 Output By $cnext
 By User   $cnext
+
+$rnext
+$cref/bnd_mulcov/bnd_mulcov_table/$$ $cnext
+$cref/bnd_mulcov/bnd_mulcov_command/$$ $cnext
+no
 
 $rnext
 $cref/age_avg/age_avg_table/$$ $cnext
@@ -173,6 +180,11 @@ Output Tables $cnext
 $rnext
 $cref/depend/depend_command/$$   $cnext
 $cref/depend_var/depend_var_table/$$,
+$cref/age_avg/age_avg_table/$$
+
+$rnext
+$cref/bnd_mulcov/bnd_mulcov_command/$$   $cnext
+$cref/bnd_mulcov/bnd_mulcov_table/$$,
 $cref/age_avg/age_avg_table/$$
 
 $rnext

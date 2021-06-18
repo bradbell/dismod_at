@@ -11,6 +11,7 @@
 # devel
 # BEGIN_SORT_THIS_LINE_PLUS_2
 ADD_LIBRARY(devel EXCLUDE_FROM_ALL
+	cmd/bnd_mulcov_command.cpp
 	cmd/depend_command.cpp
 	cmd/fit_command.cpp
 	cmd/hold_out_command.cpp
