@@ -106,9 +106,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "avgint_extra_columns",             ""                   },
 		{ "bound_frac_fixed",                 "1e-2"               },
 		{ "bound_random",                     ""                   },
-		{ "compress_age_size",                ""                   },
-		{ "compress_integrand",               ""                   },
-		{ "compress_time_size",               ""                   },
+		{ "compress_interval",                "0 0"                },
 		{ "data_extra_columns",               ""                   },
 		{ "derivative_test_fixed",            "none"               },
 		{ "derivative_test_random",           "none"               },
@@ -198,9 +196,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		value_vec[match] = option_value[option_id];
 		//
 		// hold_out_integrand
-		// compress_integrand
-		if( name_vec[match] == "hold_out_integrand"  ||
-			name_vec[match] == "compress_integrand"  )
+		if( name_vec[match] == "hold_out_integrand" )
 		{	const CppAD::vector<string>& integrand_list = option_value_split;
 			for(size_t i = 0; i < integrand_list.size(); ++i)
 			{	string name  = integrand_list[i];
@@ -402,7 +398,23 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 			)
 			{	msg  = "method_random option is not ";
 				msg += "ipopt_solve or ipopt_random";
-				error_exit(msg, table_name);
+				error_exit(msg, table_name, option_id);
+			}
+		}
+		if( name_vec[match] == "compress_interval" )
+		{	if( option_value_split.size() != 2 )
+			{	msg = "option_value must have two space separated elements.";
+				error_exit(msg, table_name, option_id);
+			}
+			double age_size = std::atof( option_value_split[0].c_str() );
+			if( age_size < 0.0 )
+			{	msg = "option_valuew age_size is less than zero.";
+				error_exit(msg, table_name, option_id);
+			}
+			double time_size = std::atof( option_value_split[1].c_str() );
+			if( time_size < 0.0 )
+			{	msg = "option_valuew time_size is less than zero.";
+				error_exit(msg, table_name, option_id);
 			}
 		}
 	}

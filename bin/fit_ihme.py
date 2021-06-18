@@ -2468,13 +2468,7 @@ if which_fit_arg == 'no_ode'  :
 	set_option('hold_out_integrand',  hold_out_integrand)
 	#
 	# compress age and time intervals
-	n_compress         = len(integrand_list_all)
-	compress_integrand  = ' '.join(integrand_list_all)
-	compress_age_size   = ' '.join( n_compress * ['10.0'] )
-	compress_time_size  = ' '.join( n_compress * ['10.0'] )
-	set_option('compress_integrand', compress_integrand)
-	set_option('compress_age_size',  compress_age_size)
-	set_option('compress_time_size', compress_time_size)
+	set_option('compress_interval', "10.0 10.0")
 	# -------------------------------------------------------------------------
 	# fit both
 	t0 = time.time()

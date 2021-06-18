@@ -385,23 +385,23 @@
 # $subhead age_lo$$
 # is the lower age used in the fits; i.e., the data table
 # $cref/age_lower/data_table/age_lower/$$ modified by the
-# $cref/compress intervals/option_table/Compress Intervals/$$ option
-# (if they are set for this option).
+# age compression interval in the
+# $cref/compress_interval/option_table/compress_interval/$$ option.
 #
 # $subhead age_up$$
 # is the upper age used in the fits; i.e., the data table
 # $cref/age_upper/data_table/age_upper/$$ modified by the
-# compress intervals option.
+# age compression interval.
 #
 # $subhead time_lo$$
 # is the lower time used in the fits; i.e., the data table
 # $cref/time_lower/data_table/time_lower/$$ modified by the
-# compress intervals option.
+# time compression interval.
 #
 # $subhead time_up$$
 # is the upper time used in the fits; i.e., the data table
 # $cref/time_upper/data_table/time_upper/$$ modified by the
-# compress intervals option.
+# time compression interval.
 #
 # $subhead out$$
 # This column is one (zero) if any of the following conditions
@@ -1066,11 +1066,9 @@ def db2csv_command(database_file_arg) :
 	# option.csv
 	# =========================================================================
 	#
-	# These lists are extracted from the option table
-	hold_out_integrand_list = None
-	compress_integrand_list = None
-	comparess_age_size_list = None
-	compress_time_size_list = None
+	# These values are extracted from the option table
+	compress_age_size  = None
+	compress_time_size = None
 	#
 	file_name  = os.path.join(database_dir, 'option.csv')
 	csv_file   = open(file_name, 'w')
@@ -1087,9 +1085,7 @@ def db2csv_command(database_file_arg) :
 		[ "avgint_extra_columns",              ""],
 		[ "bound_frac_fixed",                  "1e-2"],
 		[ "bound_random",                      ""],
-		[ "compress_age_size",                 ""],
-		[ "compress_integrand",                ""],
-		[ "compress_time_size",                ""],
+		[ "compress_interval",                 "0 0"],
 		[ "data_extra_columns",                ""],
 		[ "derivative_test_fixed",             "none"],
 		[ "derivative_test_random",            "none"],
@@ -1140,12 +1136,10 @@ def db2csv_command(database_file_arg) :
 		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
 		if row[0] == 'hold_out_integrand' :
 			hold_out_integrand_list = row[1].split(' ')
-		if row[0] == 'compress_integrand' :
-			compress_integrand_list = row[1].split(' ')
-		if row[0] == 'compress_age_size' :
-			compress_age_size_list = row[1].split(' ')
-		if row[0] == 'compress_time_size' :
-			compress_time_size_list = row[1].split(' ')
+		if row[0] == 'compress_interval' :
+			compress_interval_list = row[1].split(' ')
+			compress_age_size  = float( compress_interval_list[0] )
+			compress_time_size = float( compress_interval_list[1] )
 		csv_writer.writerow(row_out)
 	csv_file.close()
 	# =========================================================================
@@ -1377,17 +1371,6 @@ def db2csv_command(database_file_arg) :
 	file_name = os.path.join(database_dir, 'data.csv')
 	csv_file  = open(file_name, 'w')
 	#
-	# n_compress
-	n_compress = len(compress_integrand_list)
-	if n_compress != len(compress_age_size_list) :
-		msg  = 'option table: compress_integrand list, compress_age_size list '
-		msg += 'have different sizes'
-		sys.exit(msg)
-	if n_compress != len(compress_time_size_list) :
-		msg  = 'option table: compress_integrand list, compress_time_size list '
-		msg += 'have different sizes'
-		sys.exit(msg)
-	#
 	header = ['data_id'] + data_extra_columns + [
 		'child',
 		'node',
@@ -1485,18 +1468,12 @@ def db2csv_command(database_file_arg) :
 		time_lower = row_in['time_lower']
 		time_upper = row_in['time_upper']
 		time_mid   = (time_lower + time_upper) / 2.0
-		for i in range( n_compress ) :
-			integrand = compress_integrand_list[i]
-			if integrand == row_out['integrand'] :
-				age_size   = float( compress_age_size_list[i] )
-				time_size  = float( compress_time_size_list[i] )
-				#
-				if age_upper - age_lower <= age_size :
-					age_lower  = age_mid
-					age_upper  = age_mid
-				if time_upper - time_lower <= time_size :
-					time_lower = time_mid
-					time_upper = time_mid
+		if age_upper - age_lower <= compress_age_size :
+			age_lower  = age_mid
+			age_upper  = age_mid
+		if time_upper - time_lower <= compress_time_size :
+			time_lower = time_mid
+			time_upper = time_mid
 		row_out['age_lo']  = convert2output(age_lower)
 		row_out['age_up']  = convert2output(age_upper)
 		row_out['time_lo'] = convert2output(time_lower)

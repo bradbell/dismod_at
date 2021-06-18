@@ -60,16 +60,12 @@ $cref/hold_out_integrand/option_table/hold_out_integrand/$$ list,
 the hold is set to one, no matter what
 $cref/hold_out/data_table/hold_out/$$ is in the data table.
 $lnext
-For each integrand in the
 $cref/
-	compress_integrand/
+	compression intervals/
 	option_table/
-	Compress Intervals/
-	compress_integrand
-/$$ list,
-the corresponding age and time compressions are enforced.
-An error message is printed and this routine exits if the compress
-integrand list, age_size list, and time_size lists do not have the same size.
+	compress_interval
+/$$
+are enforced.
 $lnext
 All of the
 $cref/child data/data_table/node_id/Child Data/$$
@@ -224,43 +220,15 @@ void subset_data(
 	);
 	CppAD::vector<std::string> hold_out_list = split_space(hold_out_integrand);
 	//
-	// compress_integrand_list
-	const std::string& compress_integrand = get_str_map(
-		option_map, "compress_integrand", ""
+	// age_size, time_size
+	const std::string& compress_interval = get_str_map(
+		option_map, "compress_interval", "0 0"
 	);
-	CppAD::vector<std::string> compress_integrand_list =
-		split_space(compress_integrand);
-	//
-	// compress_age_size_list
-	const std::string& compress_age_size = get_str_map(
-		option_map, "compress_age_size", ""
+	CppAD::vector<std::string> compress_interval_split = split_space(
+		compress_interval
 	);
-	CppAD::vector<std::string> compress_age_size_list =
-		split_space(compress_age_size);
-	//
-	// compress_time_size_list
-	const std::string& compress_time_size = get_str_map(
-		option_map, "compress_time_size", ""
-	);
-	CppAD::vector<std::string> compress_time_size_list =
-		split_space(compress_time_size);
-	//
-	// n_compress
-	size_t n_compress = compress_integrand_list.size();
-	if( n_compress != compress_age_size_list.size() )
-	{	std::string msg = "option_table: length of compress_integrand list ";
-		msg += "not equal length of compress_size_age list\n";
-		msg += "and this is not a set command";
-		std::string table_name = "option";
-		error_exit(msg, table_name);
-	}
-	if( n_compress != compress_time_size_list.size() )
-	{	std::string msg = "option_table: length of compress_integrand list ";
-		msg += "not equal length of compress_size_time list\n";
-		msg += "and this is not a set command";
-		std::string table_name = "option";
-		error_exit(msg, table_name);
-	}
+	double age_size  = std::atof( compress_interval_split[0].c_str() );
+	double time_size = std::atof( compress_interval_split[1].c_str() );
 	//
 	// hold_out_vec
 	CppAD::vector<bool> hold_out_vec;
@@ -273,31 +241,6 @@ void subset_data(
 			hold_out_vec[integrand_id] = false;
 			for(size_t j = 0; j < n_hold_out; ++j)
 				hold_out_vec[integrand_id] |= name == hold_out_list[j];
-		}
-	}
-	//
-	// age_size_vec
-	// time_size_vec
-	CppAD::vector<double> age_size_vec(n_integrand);
-	CppAD::vector<double> time_size_vec(n_integrand);
-	for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
-	{	age_size_vec[integrand_id]  = 0.0;
-		time_size_vec[integrand_id] = 0.0;
-	}
-	if( n_compress > 0 )
-	{	for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
-		{	integrand_enum integrand = integrand_table[integrand_id].integrand;
-			std::string    name      = integrand_enum2name[integrand];
-			for(size_t j = 0; j < n_compress; ++j)
-			{	if( name == compress_integrand_list[j] )
-				{	// age_size_vec[integrand_id]
-					const char* c_str = compress_age_size_list[j].c_str();
-					age_size_vec[integrand_id] = std::atof(c_str);
-					// time_size_vec[integrand_id]
-					c_str = compress_time_size_list[j].c_str();
-					time_size_vec[integrand_id] = std::atof(c_str);
-				}
-			}
 		}
 	}
 	//
@@ -390,7 +333,7 @@ void subset_data(
 			// age_lower, age_upper
 			double age_lower = data_table[data_id].age_lower;
 			double age_upper = data_table[data_id].age_upper;
-			if( age_upper - age_lower <= age_size_vec[integrand_id] )
+			if( age_upper - age_lower <= age_size )
 			{	double age_mid = (age_lower + age_upper) / 2.0;
 				one_sample.age_lower = age_mid;
 				one_sample.age_upper = age_mid;
@@ -403,7 +346,7 @@ void subset_data(
 			// time_lower, time_upper
 			double time_lower = data_table[data_id].time_lower;
 			double time_upper = data_table[data_id].time_upper;
-			if( time_upper - time_lower <= time_size_vec[integrand_id] )
+			if( time_upper - time_lower <= time_size )
 			{	double time_mid = (time_lower + time_upper) / 2.0;
 				one_sample.time_lower = time_mid;
 				one_sample.time_upper = time_mid;

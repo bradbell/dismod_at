@@ -18,7 +18,7 @@
 #
 # $head Purpose$$
 # This example shows how to use
-# $cref/compression intervals/option_table/Compress Intervals/$$.
+# $cref/compression intervals/option_table/compress_interval/$$.
 #
 # $head Integrands$$
 # For this example there are one integrand, $code Sincidence$$.
@@ -245,16 +245,10 @@ for var_id in range( len(var_table) ) :
 		assert age == 50.0
 		assert abs(rel_error) > 0.5
 # -----------------------------------------------------------------------
-# Now compress all the Sincidence data. This only affects the second
+# Now compress the age intervals for all the data. This only affects the second
 # data points because the others have intervals of size zero.
 dismod_at.system_command_prc([
-	program, file_name, 'set', 'option', 'compress_integrand', 'Sincidence'
-])
-dismod_at.system_command_prc([
-	program, file_name, 'set', 'option', 'compress_age_size', '100.0'
-])
-dismod_at.system_command_prc([
-	program, file_name, 'set', 'option', 'compress_time_size', '100.0'
+	program, file_name, 'set', 'option', 'compress_interval', '100.0 0.0'
 ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #

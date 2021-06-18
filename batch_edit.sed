@@ -31,12 +31,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/^\tsubset_data/! b one
-N
-s|hold_out_integrand,|option_map,|
-b end
-#
-: one
-s|\tstd::string hold_out_integrand = "";|\tstd::map<std::string, std::string> option_map;|
-#
+s|/option_table/Compress Intervals/|/option_table/compress_interval/|
 : end

@@ -31,6 +31,7 @@ $spell
 	covariate
 	ubuntu
 	init
+	integrands
 $$
 $navigate%
 	Up%Location%
@@ -47,9 +48,15 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-18$$
+Change the
+$cref/compression intervals/option_table/compress_interval/$$
+from age and time vectors to age and time scalars
+(use the same intervals for all integrands).
+
 $head 06-17$$
 Add options that
-$cref/compress intervals/option_table/Compress Intervals/$$.
+$cref/compress intervals/option_table/compress_interval/$$.
 Include this setting in the
 $cref/age_lo/db2csv_command/data.csv/age_lo/$$,
 age_up, time_lo, time_up columns in the data.csv

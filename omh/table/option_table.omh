@@ -253,41 +253,6 @@ the $cref/parent smoothing/rate_table/parent_smooth_id/$$ for
 $icode iota$$ and $icode rho$$
 must always have lower limit greater than zero.
 
-$head Compress Intervals$$
-If in the data table,
-$cref/age_lower/data_table/age_lower/$$
-is equal to $cref/age_upper/data_table/age_upper/$$, and
-$cref/time_lower/data_table/time_lower/$$
-is equal to $cref/time_upper/data_table/time_upper/$$,
-the model for the data does not require integration over an interval.
-This option allows one to approximate age and time intervals
-by there midpoint and thereby speed up optimization of the model.
-
-$subhead compress_integrand$$
-If $icode%option_name% = compress_integrand%$$,
-the corresponding $icode option_value$$ is a space separated list of
-$cref/integrand_names/integrand_table/integrand_name/$$.
-The data table age and time intervals at or below a certain size
-are approximated their midpoint values (for these integrands).
-The zero size corresponds to no compression.
-
-$subhead compress_age_size$$
-If $icode%option_name% = compress_age_size%$$,
-the corresponding $icode option_value$$ is a space separated list of
-age interval sizes.
-The $th i$$ element of this list is the age interval compression size
-for the $th i$$ element of the $icode compress_integrand$$ list
-and the two lists must have the same number of elements..
-
-$subhead compress_time_size$$
-If $icode%option_name% = compress_time_size%$$,
-the corresponding $icode option_value$$ is a space separated list of
-time interval sizes.
-The $th i$$ element of this list is the time interval compression size
-for the $th i$$ element of the $icode compress_integrand$$ list
-and the two lists must have the same number of elements..
-
-
 $head Optimize Fixed and Random$$
 The following options control the Ipopt optimization
 of both the fixed and random effects:
@@ -554,6 +519,36 @@ This is a non-negative integer used to seed the random number
 generator that is used by $code dismod_at$$.
 If this value is zero, the clock is used to seed the random number generator;
 see $cref/random_seed/log_table/message_type/random_seed/$$ in the log table.
+
+$head compress_interval$$
+If $icode%option_name% = compress_interval%$$,
+the corresponding $icode option_value$$ is a space separated list
+with two elements.
+The first element is called the $icode age_size$$ and the
+second element is called $icode time_size$$.
+If $cref/age_upper/data_table/age_upper/$$ is equal to
+$cref/age_lower/data_table/age_lower/$$ and
+$cref/time_upper/data_table/time_upper/$$ is equal to
+$cref/time_lower/data_table/time_lower/$$,
+the model for the data does not require integration over an interval.
+The average for data table age intervals with
+$codei%
+	%age_upper% - %age_lower% <= %age_size%
+%$$
+is approximated by the value at age
+$codei%
+	(%age_upper% + %age_lower%) / 2.0
+%$$
+The average for data table time intervals with
+$codei%
+	%time_upper% - %time_lower% <= %time_size%
+%$$
+is approximated by the value at time
+$codei%
+	(%time_upper% + %time_lower%) / 2.0
+%$$
+The default value for $icode age_size$$ and $icode time_size$$ is zero; i.e.,
+no age or time compression.
 
 $children%
 	omh/table/option_default.omh%
