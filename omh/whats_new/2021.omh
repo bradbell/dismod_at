@@ -49,10 +49,14 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-18$$
+$list number$$
 Change the
 $cref/compression intervals/option_table/compress_interval/$$
 from age and time vectors to age and time scalars
 (use the same intervals for all integrands).
+$lnext
+Sort the table in the $cref data_flow$$ section.
+$lend
 
 $head 06-17$$
 Add options that

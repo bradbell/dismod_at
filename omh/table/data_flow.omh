@@ -77,11 +77,6 @@ $cref/hold_out/hold_out_command/$$ $cnext
 no
 
 $rnext
-$cref/data_sim/data_sim_table/$$ $cnext
-$cref/simulate/simulate_command/$$ $cnext
-no
-
-$rnext
 $cref/depend_var/depend_var_table/$$ $cnext
 $cref/depend/depend_command/$$ $cnext
 no
@@ -132,11 +127,6 @@ $cref/simulate/simulate_command/$$ $cnext
 no
 
 $rnext
-$cref/prior_sim/prior_sim_table/$$ $cnext
-$cref/simulate/simulate_command/$$ $cnext
-no
-
-$rnext
 $cref/sample/sample_table/$$ $cnext
 $cref/sample/sample_command/$$ $cnext
 yes
@@ -176,25 +166,12 @@ Below is a list commands and their corresponding output tables:
 $table
 Command       $cnext
 Output Tables $cnext
+
 $rnext
 $cref/depend/depend_command/$$   $cnext
 $cref/depend_var/depend_var_table/$$,
 $cref/age_avg/age_avg_table/$$
-$rnext
-$cref/set/set_command/$$                     $cnext
-$cref/start_var/start_var_table/$$,
-$cref/scale_var/scale_var_table/$$,
-$cref/truth_var/truth_var_table/$$
-$rnext
-$cref/init/init_command/$$ $cnext
-$cref/age_avg/init_command/age_avg_table/$$,
-$cref/var/init_command/var_table/$$,
-$cref/data_subset/init_command/data_subset_table/$$,
-$cref/start_var/init_command/start_var_table/$$,
-$cref/scale_var/init_command/scale_var_table/$$
-$rnext
-$cref/hold_out/hold_out_command/$$  $cnext
-$cref/data_subset/data_subset_table/$$
+
 $rnext
 $cref/fit/fit_command/$$     $cnext
 $cref/fit_var/fit_var_table/$$,
@@ -203,20 +180,42 @@ $cref/age_avg/age_avg_table/$$,
 $cref/trace_fixed/trace_fixed_table/$$,
 $cref/mixed_info/mixed_info_table/$$,
 $cref/ipopt_info/fit_command/warm_start/ipopt_info_table/$$
+
 $rnext
-$cref/simulate/simulate_command/$$ $cnext
-$cref/data_sim/data_sim_table/$$,
+$cref/hold_out/hold_out_command/$$  $cnext
+$cref/data_subset/data_subset_table/$$
+
+$rnext
+$cref/init/init_command/$$ $cnext
+$cref/age_avg/init_command/age_avg_table/$$,
+$cref/var/init_command/var_table/$$,
+$cref/data_subset/init_command/data_subset_table/$$,
+$cref/start_var/init_command/start_var_table/$$,
+$cref/scale_var/init_command/scale_var_table/$$
+
+$rnext
+$cref/predict/predict_command/$$ $cnext
+$cref/predict/predict_table/$$,
 $cref/age_avg/age_avg_table/$$
+
 $rnext
 $cref/sample/sample_command/$$ $cnext
 $cref/sample/sample_table/$$,
 $cref/hes_fixed/hes_fixed_table/$$,
 $cref/hes_random/hes_random_table/$$,
 $cref/age_avg/age_avg_table/$$
+
 $rnext
-$cref/predict/predict_command/$$ $cnext
-$cref/predict/predict_table/$$,
+$cref/set/set_command/$$                     $cnext
+$cref/start_var/start_var_table/$$,
+$cref/scale_var/scale_var_table/$$,
+$cref/truth_var/truth_var_table/$$
+
+$rnext
+$cref/simulate/simulate_command/$$ $cnext
+$cref/data_sim/data_sim_table/$$,
 $cref/age_avg/age_avg_table/$$
+
 $tend
 
 
@@ -224,34 +223,38 @@ $head Command Extra Input Tables$$
 An extra input table is one that is not in the
 $cref input$$ table list
 and is not output by the $cref init_command$$ (see list above).
-Below is a list commands and their corresponding extra input tables:
+Below is a list commands
+(that have extra input tables) and their corresponding extra input tables:
 
 $table
 Command            $cnext
 Extra Input Tables $cnext
-$rnext
-$cref/depend/depend_command/$$   $cnext
-none
-$rnext
-$cref/set/set_command/$$                     $cnext
-$cref/fit_var/fit_var_table/$$
-$cref/sample/sample_table/$$
+
 $rnext
 $cref/fit/fit_command/$$     $cnext
 $cref/data_sim/data_sim_table/$$
-$rnext
-$cref/simulate/simulate_command/$$ $cnext
-$cref/truth_var/truth_var_table/$$
-$rnext
-$cref/sample/sample_command/$$ $cnext
-$cref/fit_var/fit_var_table/$$
-$cref/data_sim/data_sim_table/$$
-$cref/prior_sim/prior_sim_table/$$
+
 $rnext
 $cref/predict/predict_command/$$ $cnext
 $cref/sample/sample_table/$$
 $cref/fit_var/fit_var_table/$$
 $cref/truth_var/truth_var_table/$$
+
+$rnext
+$cref/simulate/simulate_command/$$ $cnext
+$cref/truth_var/truth_var_table/$$
+
+$rnext
+$cref/sample/sample_command/$$ $cnext
+$cref/fit_var/fit_var_table/$$
+$cref/data_sim/data_sim_table/$$
+$cref/prior_sim/prior_sim_table/$$
+
+$rnext
+$cref/set/set_command/$$  $cnext
+$cref/fit_var/fit_var_table/$$
+$cref/sample/sample_table/$$
+
 $tend
 
 $end
