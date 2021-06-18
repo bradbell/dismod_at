@@ -31,25 +31,28 @@ at the beginning and end of every command.
 In addition, the log table is cumulative; i.e.,
 it is never erased and restarted.
 
-$children%omh/table/log_table.omh
-	%omh/table/var_table.omh
-	%omh/table/data_subset_table.omh
-	%omh/table/depend_var_table.omh
-	%omh/table/start_var_table.omh
-	%omh/table/scale_var_table.omh
-	%omh/table/age_avg_table.omh
-	%omh/table/fit_var_table.omh
-	%omh/table/fit_data_subset_table.omh
-	%omh/table/truth_var_table.omh
-	%omh/table/prior_sim_table.omh
-	%omh/table/data_sim_table.omh
-	%omh/table/sample_table.omh
-	%omh/table/hes_fixed_table.omh
-	%omh/table/hes_random_table.omh
-	%omh/table/predict_table.omh
-	%omh/table/trace_fixed_table.omh
-	%omh/table/mixed_info_table.omh
+$comment BEGIN_SORT_THIS_LINE_PLUS_2%$$
+$children%
+	omh/table/age_avg_table.omh%
+	omh/table/data_sim_table.omh%
+	omh/table/data_subset_table.omh%
+	omh/table/depend_var_table.omh%
+	omh/table/fit_data_subset_table.omh%
+	omh/table/fit_var_table.omh%
+	omh/table/hes_fixed_table.omh%
+	omh/table/hes_random_table.omh%
+	omh/table/log_table.omh%
+	omh/table/mixed_info_table.omh%
+	omh/table/predict_table.omh%
+	omh/table/prior_sim_table.omh%
+	omh/table/sample_table.omh%
+	omh/table/scale_var_table.omh%
+	omh/table/start_var_table.omh%
+	omh/table/trace_fixed_table.omh%
+	omh/table/truth_var_table.omh%
+	omh/table/var_table.omh
 %$$
+$comment END_SORT_THIS_LINE_MINUS_2$$
 
 $comment This list should in same order as drop_list in init_command.cpp$$
 $head Output Tables by Table Name$$
