@@ -74,7 +74,7 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 This example shows how to use
-<a href="option_table.htm#Compress Intervals" target="_top"><span style='white-space: nowrap'>compression&nbsp;intervals</span></a>
+<a href="option_table.htm#compress_interval" target="_top"><span style='white-space: nowrap'>compression&nbsp;intervals</span></a>
 .
 
 <br>
@@ -323,16 +323,10 @@ connection<font color="#990000">.</font><b><font color="#000000">close</font></b
           <b><font color="#0000FF">assert</font></b> age <font color="#990000">==</font> <font color="#993399">50.0</font>
           <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_error<font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">0.5</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># Now compress all the Sincidence data. This only affects the second</font></i>
+<i><font color="#9A1900"># Now compress the age intervals for all the data. This only affects the second</font></i>
 <i><font color="#9A1900"># data points because the others have intervals of size zero.</font></i>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font>
-     program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'option'</font><font color="#990000">,</font> <font color="#FF0000">'compress_integrand'</font><font color="#990000">,</font> <font color="#FF0000">'Sincidence'</font>
-<font color="#990000">])</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font>
-     program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'option'</font><font color="#990000">,</font> <font color="#FF0000">'compress_age_size'</font><font color="#990000">,</font> <font color="#FF0000">'100.0'</font>
-<font color="#990000">])</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font>
-     program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'option'</font><font color="#990000">,</font> <font color="#FF0000">'compress_time_size'</font><font color="#990000">,</font> <font color="#FF0000">'100.0'</font>
+     program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'option'</font><font color="#990000">,</font> <font color="#FF0000">'compress_interval'</font><font color="#990000">,</font> <font color="#FF0000">'100.0 0.0'</font>
 <font color="#990000">])</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
