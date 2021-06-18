@@ -59,85 +59,115 @@ $table
 Table $cnext
 Output By $cnext
 By User   $cnext
-$rnext
-$cref/log/log_table/$$ $cnext
-all commands $cnext
-no
+
 $rnext
 $cref/age_avg/age_avg_table/$$ $cnext
 all except python and set commands $cnext
 no
+
 $rnext
-$cref/var/var_table/$$ $cnext
-$cref/init/init_command/$$ $cnext
+$cref/data_sim/data_sim_table/$$ $cnext
+$cref/simulate/simulate_command/$$ $cnext
 no
+
 $rnext
 $cref/data_subset/data_subset_table/$$ $cnext
 $cref/init/init_command/$$,
 $cref/hold_out/hold_out_command/$$ $cnext
 no
+
 $rnext
-$cref/start_var/start_var_table/$$ $cnext
-$cref/init/init_command/$$,
-$cref/set/set_command/table_out/start_var/$$ $cnext
+$cref/data_sim/data_sim_table/$$ $cnext
+$cref/simulate/simulate_command/$$ $cnext
+no
+
+$rnext
+$cref/depend_var/depend_var_table/$$ $cnext
+$cref/depend/depend_command/$$ $cnext
+no
+
+$rnext
+$cref/fit_data_subset/fit_data_subset_table/$$ $cnext
+$cref/fit/fit_command/$$ $cnext
+no
+
+$rnext
+$cref/fit_var/fit_var_table/$$ $cnext
+$cref/fit/fit_command/$$ $cnext
+no
+
+$rnext
+$cref/hes_fixed/hes_fixed_table/$$ $cnext
+$cref/sample/sample_command/$$ $cnext
+no
+
+$rnext
+$cref/hes_random/hes_random_table/$$ $cnext
+$cref/sample/sample_command/$$ $cnext
+no
+
+$rnext
+$cref/ipopt_info/fit_command/warm_start/ipopt_info_table/$$ $cnext
+$cref/fit/fit_command/$$ $cnext
+no
+
+$rnext
+$cref/log/log_table/$$ $cnext
+all commands $cnext
+no
+
+$rnext
+$cref/mixed_info/mixed_info_table/$$ $cnext
+$cref/fit/fit_command/$$ $cnext
+no
+
+$rnext
+$cref/predict/predict_table/$$ $cnext
+$cref/predict/predict_command/$$ $cnext
+no
+
+$rnext
+$cref/prior_sim/prior_sim_table/$$ $cnext
+$cref/simulate/simulate_command/$$ $cnext
+no
+
+$rnext
+$cref/prior_sim/prior_sim_table/$$ $cnext
+$cref/simulate/simulate_command/$$ $cnext
+no
+
+$rnext
+$cref/sample/sample_table/$$ $cnext
+$cref/sample/sample_command/$$ $cnext
 yes
+
 $rnext
 $cref/scale_var/scale_var_table/$$ $cnext
 $cref/init/init_command/$$,
 $cref/set/set_command/table_out/scale_var/$$ $cnext
 yes
+
 $rnext
-$cref/depend_var/depend_var_table/$$ $cnext
-$cref/depend/depend_command/$$ $cnext
-no
-$rnext
-$cref/fit_var/fit_var_table/$$ $cnext
-$cref/fit/fit_command/$$ $cnext
-no
-$rnext
-$cref/truth_var/truth_var_table/$$ $cnext
-$cref/set/set_command/table_out/truth_var/$$ $cnext
+$cref/start_var/start_var_table/$$ $cnext
+$cref/init/init_command/$$,
+$cref/set/set_command/table_out/start_var/$$ $cnext
 yes
-$rnext
-$cref/fit_data_subset/fit_data_subset_table/$$ $cnext
-$cref/fit/fit_command/$$ $cnext
-no
+
 $rnext
 $cref/trace_fixed/trace_fixed_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
+
 $rnext
-$cref/mixed_info/mixed_info_table/$$ $cnext
-$cref/fit/fit_command/$$ $cnext
-no
-$rnext
-$cref/ipopt_info/fit_command/warm_start/ipopt_info_table/$$ $cnext
-$cref/fit/fit_command/$$ $cnext
-no
-$rnext
-$cref/data_sim/data_sim_table/$$ $cnext
-$cref/simulate/simulate_command/$$ $cnext
-no
-$rnext
-$cref/prior_sim/prior_sim_table/$$ $cnext
-$cref/simulate/simulate_command/$$ $cnext
-no
-$rnext
-$cref/sample/sample_table/$$ $cnext
-$cref/sample/sample_command/$$ $cnext
+$cref/truth_var/truth_var_table/$$ $cnext
+$cref/set/set_command/table_out/truth_var/$$ $cnext
 yes
+
 $rnext
-$cref/hes_fixed/hes_fixed_table/$$ $cnext
-$cref/sample/sample_command/$$ $cnext
+$cref/var/var_table/$$ $cnext
+$cref/init/init_command/$$ $cnext
 no
-$rnext
-$cref/hes_random/hes_random_table/$$ $cnext
-$cref/sample/sample_command/$$ $cnext
-no
-$rnext
-$cref/predict/predict_table/$$ $cnext
-$cref/predict/predict_command/$$ $cnext
-no
+
 $tend
 
 $head Command Output Tables$$
