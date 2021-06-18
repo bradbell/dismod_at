@@ -162,27 +162,29 @@ void init_command(
 	using CppAD::vector;
 
 	// -----------------------------------------------------------------------
+	// Should be same as list of Output Tables by Table Name in data_flow.omh
+	// except for that age_avg and log tables are not included.
+	// BEGIN_SORT_THIS_LINE_PLUS_2
 	const char* drop_list[] = {
-		// This is the list of Output Tables by Table Name in the file
-		// data_flow.omh except for the age_avg table
-		// which is created by dismod_at.cpp before calling this routine.
-		"var",
-		"data_subset",
-		"start_var",
-		"scale_var",
-		"depend_var",
-		"fit_var",
-		"truth_var",
-		"fit_data_subset",
-		"trace_fixed",
-		"ipopt_info",
 		"data_sim",
-		"prior_sim",
-		"sample",
+		"data_subset",
+		"depend_var",
+		"fit_data_subset",
+		"fit_var",
 		"hes_fixed",
 		"hes_random",
+		"ipopt_info",
+		"mixed_info",
 		"predict",
+		"prior_sim",
+		"sample",
+		"scale_var",
+		"start_var",
+		"trace_fixed",
+		"truth_var",
+		"var",
 	};
+	// END_SORT_THIS_LINE_MINUS_2
 	size_t n_drop = sizeof( drop_list ) / sizeof( drop_list[0] );
 	string sql_cmd;
 	for(size_t i = 0; i < n_drop; i++)
