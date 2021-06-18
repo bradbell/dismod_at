@@ -159,6 +159,7 @@ n_child_        ( child_id2node_id.size() )
 
 	// used to set all fields to null
 	subvec_info null_info;
+	null_info.mulcov_id    = DISMOD_AT_NULL_SIZE_T;
 	null_info.covariate_id = DISMOD_AT_NULL_SIZE_T;
 	null_info.smooth_id    = DISMOD_AT_NULL_SIZE_T;
 	null_info.group_id     = DISMOD_AT_NULL_SIZE_T;
@@ -233,6 +234,7 @@ n_child_        ( child_id2node_id.size() )
 			size_t n_time = smooth_table[smooth_id].n_time;
 			size_t n_var  = n_age * n_time;
 			subvec_info& info = node_rate_value_info_[rate_id][j];
+			info.mulcov_id    = DISMOD_AT_NULL_SIZE_T;
 			info.covariate_id = DISMOD_AT_NULL_SIZE_T;
 			info.group_id     = DISMOD_AT_NULL_SIZE_T;
 			info.smooth_id    = smooth_id;
@@ -265,7 +267,8 @@ n_child_        ( child_id2node_id.size() )
 			//
 			CppAD::vector<subvec_info> info_vec(n_subgroup);
 			for(size_t k = 0; k < n_subgroup; ++k)
-			{	info_vec[k].covariate_id = covariate_id;
+			{	info_vec[k].mulcov_id    = mulcov_id;
+				info_vec[k].covariate_id = covariate_id;
 				info_vec[k].group_id     = size_t(mulcov_obj.group_id);
 				info_vec[k].smooth_id    = smooth_id;
 				info_vec[k].n_var        = n_age * n_time;
@@ -295,7 +298,8 @@ n_child_        ( child_id2node_id.size() )
 			//
 			CppAD::vector<subvec_info> info_vec(n_subgroup);
 			for(size_t k = 0; k < n_subgroup; ++k)
-			{	info_vec[k].covariate_id = covariate_id;
+			{	info_vec[k].mulcov_id    = mulcov_id;
+				info_vec[k].covariate_id = covariate_id;
 				info_vec[k].group_id     = size_t(mulcov_obj.group_id);
 				info_vec[k].smooth_id    = smooth_id;
 				info_vec[k].n_var        = n_age * n_time;
@@ -346,6 +350,7 @@ n_child_        ( child_id2node_id.size() )
 		{	size_t n_age  = smooth_table[smooth_id].n_age;
 			size_t n_time = smooth_table[smooth_id].n_time;
 			size_t n_var  = n_age * n_time;
+			info.mulcov_id    = DISMOD_AT_NULL_SIZE_T;
 			info.covariate_id = DISMOD_AT_NULL_SIZE_T;
 			info.group_id     = DISMOD_AT_NULL_SIZE_T;
 			info.smooth_id    = smooth_id;
@@ -394,6 +399,7 @@ n_child_        ( child_id2node_id.size() )
 			size_t n_time    = smooth_table[smooth_id].n_time;
 			//
 			subvec_info info;
+			info.mulcov_id    = mulcov_id;
 			info.covariate_id = covariate_id;
 			info.group_id     = size_t(mulcov_obj.group_id);
 			info.smooth_id    = smooth_id;
@@ -430,6 +436,7 @@ n_child_        ( child_id2node_id.size() )
 			size_t n_time    = smooth_table[smooth_id].n_time;
 			//
 			subvec_info info;
+			info.mulcov_id    = mulcov_id;
 			info.covariate_id = covariate_id;
 			info.group_id     = size_t(mulcov_obj.group_id);
 			info.smooth_id    = smooth_id;
@@ -707,6 +714,9 @@ $codei%
 	pack_info::subvec_info %info%
 %$$
 
+$subhead mulcov_id$$
+This field is set to null.
+
 $subhead covariate_id$$
 This field is set to null.
 
@@ -833,6 +843,10 @@ $codei%
 	pack_info::subvec_info %info%
 %$$
 
+$subhead mulcov_id$$
+is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ for the
+$th j$$ covariate multiplier for this $icode integrand_id$$.
+
 $subhead covariate_id$$
 is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
 $th j$$ covariate multiplier for this $icode integrand_id$$.
@@ -945,6 +959,10 @@ this return value has prototype
 $codei%
 	pack_info::subvec_info %info%
 %$$
+
+$subhead mulcov_id$$
+is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ for the
+$th j$$ covariate multiplier for this $icode integrand_id$$.
 
 $subhead covariate_id$$
 is the $cref/covariate_id/covariate_table/covariate_id/$$
@@ -1069,6 +1087,10 @@ this return value has prototype
 $codei%
 	pack_info::subvec_info %info%
 %$$
+
+$subhead mulcov_id$$
+is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ for the
+$th j$$ covariate multiplier for this $icode integrand_id$$.
 
 $subhead covariate_id$$
 is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
@@ -1200,6 +1222,10 @@ this return value has prototype
 $codei%
 	pack_info::subvec_info %info%
 %$$
+
+$subhead mulcov_id$$
+is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ for the
+$th j$$ covariate multiplier for this $icode integrand_id$$.
 
 $subhead covariate_id$$
 is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
