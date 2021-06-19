@@ -275,9 +275,8 @@ pack_prior::pack_prior(
 		prior_vec_[var_id].value_prior_id = DISMOD_AT_NULL_SIZE_T;
 		prior_vec_[var_id].dage_prior_id  = DISMOD_AT_NULL_SIZE_T;
 		prior_vec_[var_id].dtime_prior_id = DISMOD_AT_NULL_SIZE_T;
-		//
-		// default value for fixed_effect is true
-		prior_vec_[var_id].fixed_effect   = true;
+		// alternate value (should not matter)
+		prior_vec_[var_id].fixed_effect   = bool( var_id % 2 );
 	}
 	//
 	// get priors for smoothing standard deviation multipliers
@@ -319,7 +318,7 @@ pack_prior::pack_prior(
 			info             = pack_object.node_rate_value_info(rate_id, j);
 			size_t smooth_id = info.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
-			{	size_t offset    = info.offset;
+			{	size_t offset       = info.offset;
 				bool   fixed_effect = j == n_child;
 				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 			}
@@ -333,8 +332,8 @@ pack_prior::pack_prior(
 		{	size_t n_sub = pack_object.subgroup_rate_value_n_sub(rate_id, j);
 			for(size_t k = 0; k < n_sub; ++k)
 			{	info   = pack_object.subgroup_rate_value_info(rate_id, j, k);
-				size_t offset    = info.offset;
-				size_t smooth_id = info.smooth_id;
+				size_t offset       = info.offset;
+				size_t smooth_id    = info.smooth_id;
 				bool   fixed_effect = false;
 				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 			}
@@ -346,8 +345,8 @@ pack_prior::pack_prior(
 	{	size_t n_cov = pack_object.group_rate_value_n_cov(rate_id);
 		for(size_t j = 0; j < n_cov; j++)
 		{	info   = pack_object.group_rate_value_info(rate_id, j);
-			size_t offset    = info.offset;
-			size_t smooth_id = info.smooth_id;
+			size_t offset       = info.offset;
+			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 		}
@@ -363,8 +362,8 @@ pack_prior::pack_prior(
 			for(size_t k = 0; k < n_sub; ++k)
 			{	info =
 					pack_object.subgroup_meas_value_info(integrand_id, j, k);
-				size_t offset    = info.offset;
-				size_t smooth_id = info.smooth_id;
+				size_t offset       = info.offset;
+				size_t smooth_id    = info.smooth_id;
 				bool   fixed_effect = false;
 				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 			}
@@ -377,8 +376,8 @@ pack_prior::pack_prior(
 		size_t n_cov = pack_object.group_meas_value_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
 		{	info   = pack_object.group_meas_value_info(integrand_id, j);
-			size_t offset    = info.offset;
-			size_t smooth_id = info.smooth_id;
+			size_t offset       = info.offset;
+			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 		}
@@ -386,8 +385,8 @@ pack_prior::pack_prior(
 		n_cov = pack_object.group_meas_noise_n_cov(integrand_id);
 		for(size_t j = 0; j < n_cov; j++)
 		{	info   = pack_object.group_meas_noise_info(integrand_id, j);
-			size_t offset    = info.offset;
-			size_t smooth_id = info.smooth_id;
+			size_t offset       = info.offset;
+			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 		}

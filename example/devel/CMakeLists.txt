@@ -10,9 +10,9 @@
 # ---------------------------------------------------------------------------
 # Build C++ Examples / Tests
 # -----------------------------------------------------------------------------
+# BEIGN_SORT_THIS_LINE_PLUS_3
 ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	example_devel.cpp
-
 	model/adj_integrand_xam.cpp
 	model/avg_integrand_xam.cpp
 	model/avg_no_ode_xam.cpp
@@ -23,7 +23,6 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	model/like_all_xam.cpp
 	model/prior_fixed_xam.cpp
 	model/prior_random_xam.cpp
-
 	utility/avgint_subset_xam.cpp
 	utility/bilinear_interp_xam.cpp
 	utility/child_info_xam.cpp
@@ -42,11 +41,11 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/grid2line_xam.cpp
 	utility/split_space_xam.cpp
 	utility/time_line_vec_xam.cpp
-
 	table/blob_table_xam.cpp
 	table/check_pini_n_age_xam.cpp
 	table/create_table_xam.cpp
 	table/get_age_table_xam.cpp
+	table/get_bnd_mulcov_table_xam.cpp
 	table/get_nslist_table_xam.cpp
 	table/get_avgint_table_xam.cpp
 	table/get_option_table_xam.cpp
@@ -73,6 +72,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	table/put_table_row_xam.cpp
 	table/weight_info_xam.cpp
 )
+# END_SORT_THIS_LINE_MINUS_2
 #
 SET_TARGET_PROPERTIES(
 	example_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"

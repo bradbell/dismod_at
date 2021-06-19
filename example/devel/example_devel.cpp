@@ -60,6 +60,7 @@ extern bool split_space_xam(void);
 extern bool time_line_vec_xam(void);
 
 // table subdirectory
+extern bool get_bnd_mulcov_table_xam(void);
 extern bool blob_table_xam(void);
 extern bool check_pini_n_age_xam(void);
 extern bool create_table_xam(void);
@@ -155,6 +156,7 @@ int main(void)
 	RUN(time_line_vec_xam);
 
 	// table subdirectory
+	RUN(get_bnd_mulcov_table_xam);
 	RUN(blob_table_xam);
 	RUN(check_pini_n_age_xam);
 	RUN(create_table_xam);

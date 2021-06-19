@@ -16,6 +16,7 @@ $$
 
 $section Dismod_at Developer Table Documentation$$
 
+$comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $childtable%
 	devel/table/blob_table.cpp
 	%devel/table/check_child_prior.cpp
@@ -26,6 +27,7 @@ $childtable%
 	%devel/table/create_table.cpp
 	%devel/table/exec_sql_cmd.cpp
 	%devel/table/get_age_table.cpp
+	%devel/table/get_bnd_mulcov_table.cpp
 	%devel/table/get_avgint_table.cpp
 	%devel/table/get_column_max.cpp
 	%devel/table/get_covariate_table.cpp
@@ -56,5 +58,6 @@ $childtable%
 	%devel/table/smooth_info.omh
 	%devel/table/weight_info.cpp
 %$$
+$comment END_SORT_THIS_LINE_MINUS_2$$
 
 $end

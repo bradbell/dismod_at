@@ -40,6 +40,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	table/exec_sql_cmd.cpp
 	table/get_age_table.cpp
 	table/get_avgint_table.cpp
+	table/get_bnd_mulcov_table.cpp
 	table/get_column_max.cpp
 	table/get_covariate_table.cpp
 	table/get_data_sim_table.cpp
