@@ -19,6 +19,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/set_command.hpp>
 # include <dismod_at/simulate_command.hpp>
 # include <dismod_at/hold_out_command.hpp>
+# include <dismod_at/bnd_mulcov_command.hpp>
 
 # include <map>
 # include <cassert>
@@ -65,21 +66,24 @@ int main(int n_arg, const char** argv)
 	using CppAD::vector;
 	// ---------------- command line arguments ---------------------------
 	// command_info
+	// BEGIN_SORT_THIS_LINE_PLUS_2
 	struct { const char* name; int n_arg; } command_info[] = {
-		{"old2new",   3},
-		{"init",      3},
-		{"set",       5},
-		{"set",       6},
-		{"hold_out",  5},
-		{"depend",    3},
-		{"fit",       4},
-		{"fit",       5},
-		{"fit",       6},
-		{"simulate",  4},
-		{"sample",    6},
-		{"sample",    7},
-		{"predict",   4}
+		{"bnd_mulcov",   3},
+		{"depend",       3},
+		{"fit",          4},
+		{"fit",          5},
+		{"fit",          6},
+		{"hold_out",     5},
+		{"init",         3},
+		{"old2new",      3},
+		{"predict",      4},
+		{"sample",       6},
+		{"sample",       7},
+		{"set",          5},
+		{"set",          6},
+		{"simulate",     4}
 	};
+	// END_SORT_THIS_LINE_MINUS_2
 	size_t n_command = sizeof( command_info ) / sizeof( command_info[0] );
 	//
 	string program = "dismod_at-";
@@ -223,10 +227,13 @@ int main(int n_arg, const char** argv)
 		CppAD::mixed::new_gsl_rng(random_seed);
 # endif
 	}
-	// ------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	// check for init_command output tables
-	const char* init_table_name[] = {"var", "data_subset", "start_var", "scale_var"};
-	if( command_arg != "init" ) for(size_t i = 0; i < 4; ++i)
+	const char* init_table_name[] = {
+		"var", "data_subset", "start_var", "scale_var", "bnd_mulcov"
+	};
+	size_t n_init_table = sizeof(init_table_name) / sizeof(init_table_name[0]);
+	if( command_arg != "init" ) for(size_t i = 0; i < n_init_table; ++i)
 	{	string sql_cmd = "select count(*) from sqlite_master ";
 		sql_cmd       += "where type='table' and name='";
 		sql_cmd       += init_table_name[i];
@@ -463,6 +470,19 @@ int main(int n_arg, const char** argv)
 			max_fit_str,
 			db_input.integrand_table,
 			db_input.data_table
+		);
+	}
+	else if( command_arg == "bnd_mulcov" )
+	{	string max_abs_effect = argv[3];
+		vector<dismod_at::data_subset_struct> data_subset_table =
+			dismod_at::get_data_subset(db);
+		dismod_at::bnd_mulcov_command(
+			db,
+			max_abs_effect,
+			db_input.data_cov_value,
+			data_subset_table,
+			db_input.covariate_table,
+			db_input.mulcov_table
 		);
 	}
 	else if( command_arg == "predict" )
