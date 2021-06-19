@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -189,13 +189,14 @@ size_t pack_prior::dtime_var_id(size_t var_id) const
 bool pack_prior::fixed_effect(size_t  var_id) const
 {	return prior_vec_[var_id].fixed_effect; }
 
-// set_prior
-void pack_prior::set_prior(
-	CppAD::vector<dismod_at::pack_prior::one_prior_struct>&   prior_vec   ,
-	size_t                                                    offset      ,
-	size_t                                                    smooth_id   ,
-	const CppAD::vector<smooth_info>&                         s_info_vec  )
-{	//
+// set_prior_vec
+void pack_prior::set_prior_vec(
+	size_t                                                    offset       ,
+	bool                                                      fixed_effect ,
+	size_t                                                    smooth_id    ,
+	const CppAD::vector<smooth_info>&                         s_info_vec   )
+{	double inf = std::numeric_limits<double>::infinity();
+	//
 	smooth_info s_info  = s_info_vec[smooth_id];
 	size_t n_age        = s_info.age_size();
 	size_t n_time       = s_info.time_size();
@@ -206,30 +207,35 @@ void pack_prior::set_prior(
 		{	// var_id
 			size_t var_id   = offset + i * n_time + j;
 			//
+			// max_upper, min_lower, fixed effect
+			prior_vec_[var_id].max_upper    = + inf;
+			prior_vec_[var_id].min_lower    = - inf;
+			prior_vec_[var_id].fixed_effect = fixed_effect;
+			//
 			// const_value
 			double const_value            = s_info.const_value(i, j);
-			prior_vec[var_id].const_value = const_value;
+			prior_vec_[var_id].const_value = const_value;
 			//
 			// smooth_id
-			prior_vec[var_id].smooth_id = smooth_id;
+			prior_vec_[var_id].smooth_id = smooth_id;
 			//
 			// n_time
-			prior_vec[var_id].n_time = n_time;
+			prior_vec_[var_id].n_time = n_time;
 			//
 			// value prior
 			size_t value_prior_id            = s_info.value_prior_id(i, j);
-			prior_vec[var_id].value_prior_id = value_prior_id;
+			prior_vec_[var_id].value_prior_id = value_prior_id;
 			//
 			// dage prior
-			prior_vec[var_id].dage_prior_id = s_info.dage_prior_id(i, j);
+			prior_vec_[var_id].dage_prior_id = s_info.dage_prior_id(i, j);
 			CPPAD_ASSERT_UNKNOWN( i + 1 < n_age ||
-				prior_vec[var_id].dage_prior_id == DISMOD_AT_NULL_SIZE_T
+				prior_vec_[var_id].dage_prior_id == DISMOD_AT_NULL_SIZE_T
 			);
 			//
 			// dtime_prior
-			prior_vec[var_id].dtime_prior_id = s_info.dtime_prior_id(i, j);
+			prior_vec_[var_id].dtime_prior_id = s_info.dtime_prior_id(i, j);
 			CPPAD_ASSERT_UNKNOWN( j + 1 < n_time ||
-				prior_vec[var_id].dtime_prior_id == DISMOD_AT_NULL_SIZE_T
+				prior_vec_[var_id].dtime_prior_id == DISMOD_AT_NULL_SIZE_T
 			);
 			//
 # ifndef NDEBUG
@@ -314,13 +320,8 @@ pack_prior::pack_prior(
 			size_t smooth_id = info.smooth_id;
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset    = info.offset;
-				set_prior(prior_vec_, offset, smooth_id, s_info_vec);
-				//
-				// check for random effects variables
-				if( j < n_child )
-				{	for(size_t i = 0; i < info.n_var; i++)
-						prior_vec_[offset + i].fixed_effect = false;
-				}
+				bool   fixed_effect = j == n_child;
+				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 			}
 		}
 	}
@@ -334,9 +335,8 @@ pack_prior::pack_prior(
 			{	info   = pack_object.subgroup_rate_value_info(rate_id, j, k);
 				size_t offset    = info.offset;
 				size_t smooth_id = info.smooth_id;
-				set_prior(prior_vec_, offset, smooth_id, s_info_vec);
-				for(size_t i = 0; i < info.n_var; i++)
-					prior_vec_[offset + i].fixed_effect = false;
+				bool   fixed_effect = false;
+				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 			}
 		}
 	}
@@ -348,7 +348,8 @@ pack_prior::pack_prior(
 		{	info   = pack_object.group_rate_value_info(rate_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
+			bool   fixed_effect = true;
+			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 		}
 	}
 	// ------------------------------------------------------------------------
@@ -364,9 +365,8 @@ pack_prior::pack_prior(
 					pack_object.subgroup_meas_value_info(integrand_id, j, k);
 				size_t offset    = info.offset;
 				size_t smooth_id = info.smooth_id;
-				set_prior(prior_vec_, offset, smooth_id, s_info_vec);
-				for(size_t i = 0; i < info.n_var; i++)
-					prior_vec_[offset + i].fixed_effect = false;
+				bool   fixed_effect = false;
+				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 			}
 		}
 	}
@@ -379,7 +379,8 @@ pack_prior::pack_prior(
 		{	info   = pack_object.group_meas_value_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
+			bool   fixed_effect = true;
+			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 		}
 		// measurement std covariates for this integrand
 		n_cov = pack_object.group_meas_noise_n_cov(integrand_id);
@@ -387,7 +388,8 @@ pack_prior::pack_prior(
 		{	info   = pack_object.group_meas_noise_info(integrand_id, j);
 			size_t offset    = info.offset;
 			size_t smooth_id = info.smooth_id;
-			set_prior(prior_vec_, offset, smooth_id, s_info_vec);
+			bool   fixed_effect = true;
+			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
 		}
 	}
 	return;

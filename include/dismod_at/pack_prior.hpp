@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -27,6 +27,8 @@ namespace dismod_at {
 	private:
 		// one_prior_struct
 		struct one_prior_struct {
+			double  max_upper;
+			double  min_lower;
 			double  const_value;
 			size_t  n_time;
 			size_t  smooth_id;
@@ -37,11 +39,12 @@ namespace dismod_at {
 		};
 		// prior_vec_
 		CppAD::vector<one_prior_struct> prior_vec_;
-		// set_prior corresponding to one use of a smoothing
-		static void set_prior(
-			CppAD::vector<one_prior_struct>&     prior_vec  ,
-			size_t                               offset     ,
-			size_t                               smooth_id  ,
+		//
+		// set prior_vec_ corresponding to one use of a smoothing
+		void set_prior_vec(
+			size_t                               offset       ,
+			bool                                 fixed_effect ,
+			size_t                               smooth_id    ,
 			const CppAD::vector<smooth_info>&    s_info_vec
 		);
 	public:
