@@ -47,7 +47,7 @@ $icode%dtime_var_id%   = %var2prior%.dtime_next(%var_id%)
 %$$
 $icode%fixed_effect%   = %var2prior%.fixed_effect(%var_id%)
 %$$
-$icode%var2prior%.bnd_mulcov(%bnd_mulcov_table%)
+$icode%var2prior%.set_bnd_mulcov(%bnd_mulcov_table%)
 %$$
 $icode%min_lower%      = %var2prior%.min_lower(%var_id%)
 %$$
@@ -149,7 +149,7 @@ $icode var_id$$ is a
 $cref/fixed effect/model_variables/Fixed Effects, theta/$$
 (random effect).
 
-$head bnd_mulcov$$
+$head set_bnd_mulcov$$
 This member function sets the maximum upper and minimum lower
 limit for the covariate multipliers.
 The initial $icode var2prior$$ corresponds the maximum being
@@ -160,13 +160,13 @@ See$cref/bnd_mulcov_table/get_bnd_mulcov_table/bnd_mulcov_table/$$.
 
 $head min_lower$$
 Is the minimum lower limit for this variable corresponding to the
-previous call to $code bnd_mulcov$$.
-This is minus infinity before $code bnd_mulcov$$ is called.
+previous call to $code set_bnd_mulcov$$.
+This is minus infinity before $code set_bnd_mulcov$$ is called.
 
 $head max_upper$$
 Is the maximum upper limit for this variable corresponding to the
-previous call to $code bnd_mulcov$$.
-This is plus infinity before $code bnd_mulcov$$ is called.
+previous call to $code set_bnd_mulcov$$.
+This is plus infinity before $code set_bnd_mulcov$$ is called.
 
 $children%
 	example/devel/utility/pack_prior_xam.cpp
@@ -215,6 +215,28 @@ size_t pack_prior::dtime_var_id(size_t var_id) const
 // fixed_effect
 bool pack_prior::fixed_effect(size_t  var_id) const
 {	return prior_vec_[var_id].fixed_effect; }
+
+// max_upper
+double pack_prior::max_upper(size_t var_id) const
+{	return prior_vec_[var_id].max_upper; }
+
+// min_lower
+double pack_prior::min_lower(size_t var_id) const
+{	return prior_vec_[var_id].min_lower; }
+
+// set_bnd_mulcov
+void pack_prior::set_bnd_mulcov(
+	const CppAD::vector<bnd_mulcov_struct>& bnd_mulcov_table )
+{	for(size_t var_id = 0; var_id < prior_vec_.size(); ++var_id)
+	{	size_t mulcov_id = prior_vec_[var_id].mulcov_id;
+		if( mulcov_id != DISMOD_AT_NULL_SIZE_T )
+		{	double max_upper = bnd_mulcov_table[mulcov_id].max_upper;
+			double min_lower = bnd_mulcov_table[mulcov_id].min_lower;
+			prior_vec_[var_id].max_upper = max_upper;
+			prior_vec_[var_id].min_lower = min_lower;
+		}
+	}
+}
 
 // set_prior_vec
 // sets all fields except for min_lower and max_upper

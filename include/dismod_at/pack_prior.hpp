@@ -12,6 +12,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # define DISMOD_AT_PACK_PRIOR_HPP
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/smooth_info.hpp>
+# include <dismod_at/get_bnd_mulcov_table.hpp>
 
 namespace dismod_at {
 
@@ -50,9 +51,14 @@ namespace dismod_at {
 			const CppAD::vector<smooth_info>&    s_info_vec
 		);
 	public:
+		// ctor
 		pack_prior(
 			const pack_info&                     pack_object  ,
 			const CppAD::vector<smooth_info>&    s_info_vec
+		);
+		// set_bnd_mulcov
+		void set_bnd_mulcov(
+			const CppAD::vector<bnd_mulcov_struct>& bnd_mulcov_table
 		);
 		size_t size           (void)          const;
 		double const_value    (size_t var_id) const;
@@ -63,6 +69,8 @@ namespace dismod_at {
 		size_t dage_var_id    (size_t var_id) const;
 		size_t dtime_var_id   (size_t var_id) const;
 		bool   fixed_effect   (size_t var_id) const;
+		double max_upper      (size_t var_id) const;
+		double min_lower      (size_t var_id) const;
 	};
 
 }
