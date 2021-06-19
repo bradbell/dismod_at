@@ -77,15 +77,18 @@ $list number$$
 Only the subset of the data table specified by the $cref data_subset_table$$
 table are included when determining the minimum and maximum.
 $lnext
-The maximum and minimum are set to zero in the special case where,
-for a covariate, $icode cov_value$$ is equal to $icode cov_ref$$
-for all the point in the data_subset table.
-$lnext
 The maximum (minimum) for
 The $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
 covariate multipliers are set to null which is interpreted as
 plus infinity (minus infinity) and hence has no effect.
 $lend
+
+$head Infinite Case$$
+The case where a covariate is equal to its reference
+($icode cov_value$$ is equal to $icode cov_ref$$)
+for all the point in the data_subset table is special.
+In this case any multiplier for this covariate cannot have an effect.
+The minimum and maximum for this case are set to null.
 
 $comment 2DO: create the user_bnd_mulcov.py example$$
 $head Example$$
@@ -149,11 +152,6 @@ void bnd_mulcov_command(
 		{	upper = std::min(upper, - max_effect / cov_min_diff);
 			lower = std::max(upper, + max_effect / cov_min_diff);
 		}
-		if( upper == + inf )
-		{	// This covariate is equal to its reference for all values
-			lower = 0.0;
-			upper = 0.0;
-		}
 		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
 		if( size_t( mulcov_table[mulcov_id].covariate_id ) == covariate_id )
 		if( mulcov_table[mulcov_id].mulcov_type != meas_noise_enum )
@@ -184,8 +182,16 @@ void bnd_mulcov_command(
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 	{	double lower = bnd_mulcov_table[mulcov_id].min_lower;
 		double upper = bnd_mulcov_table[mulcov_id].max_upper;
-		row_value[n_col * mulcov_id + 0] = CppAD::to_string( lower );
-		row_value[n_col * mulcov_id + 1] = CppAD::to_string( upper );
+		if( lower == - inf )
+		{	assert( upper == + inf );
+			row_value[n_col * mulcov_id + 0] = "";
+			row_value[n_col * mulcov_id + 1] = "";
+		}
+		else
+		{	assert( upper != + inf );
+			row_value[n_col * mulcov_id + 0] = CppAD::to_string( lower );
+			row_value[n_col * mulcov_id + 1] = CppAD::to_string( upper );
+		}
 	}
 	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value

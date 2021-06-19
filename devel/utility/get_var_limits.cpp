@@ -36,6 +36,8 @@ $icode lower_limit$$ ($icode upper_limit$$)
 is a vector with size zero or equal to the number of $cref model_variables$$.
 The input value of its elements does not matter.
 Upon return it contains the lower (upper) limit for each variable.
+This include the prior limits and the $cref bnd_mulcov_table$$ limits.
+
 
 $head bound_random$$
 This is the value of the
@@ -106,6 +108,13 @@ namespace dismod_at {
 					}
 				}
 			}
+			// enforce the bnd_mulcov table values
+			double lower        = lower_limit[var_id];
+			double upper        = upper_limit[var_id];
+			double min_lower    = var2prior.min_lower(var_id);
+			double max_upper    = var2prior.max_upper(var_id);
+			lower_limit[var_id] = std::max(lower, min_lower);
+			upper_limit[var_id] = std::min(upper, max_upper);
 		}
 	}
 }

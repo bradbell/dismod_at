@@ -205,7 +205,6 @@ data_object_   ( data_object )
 	assert( pack_object.size() == n_var );
 	assert( var2prior_.size() == n_var );
 	// ----------------------------------------------------------------------
-# ifndef NDEBUG
 	for(size_t var_id = 0; var_id < n_var; var_id++)
 	{	size_t prior_id    = var2prior_.value_prior_id(var_id);
 		double const_value = var2prior_.const_value(var_id);
@@ -219,15 +218,28 @@ data_object_   ( data_object )
 			mean  = prior_table_[prior_id].mean;
 		}
 		assert(lower <= mean && mean <= upper);
-		if( (start_var_[var_id] < lower) | (upper < start_var_[var_id]) )
+		double start = start_var_[var_id];
+		if( (start < lower) | (upper < start) )
 		{	std::string msg;
-			msg  = "value = " + CppAD::to_string(start_var_[var_id]);
-			msg += "\nnot between lower = " + CppAD::to_string(lower);
-			msg += "\nand upper = " + CppAD::to_string(upper);
+			msg  = "variable start value not within its prior limits\n";
+			msg  = "var_id = " + CppAD::to_string(var_id);
+			msg  = ", start = " + CppAD::to_string(start);
+			msg += ", lower = " + CppAD::to_string(lower);
+			msg += ", upper = " + CppAD::to_string(upper);
+			error_exit(msg, "start_var", var_id);
+		}
+		double max_upper = var2prior_.max_upper(var_id);
+		double min_lower = var2prior_.min_lower(var_id);
+		if( (start < min_lower) | (max_upper < start) )
+		{	std::string msg;
+			msg  = "variable start value not within its bnd_mulcov limits\n";
+			msg  = "var_id = " + CppAD::to_string(var_id);
+			msg  = ", start = " + CppAD::to_string(start);
+			msg += ", min_lower = " + CppAD::to_string(min_lower);
+			msg += ", max_upper = " + CppAD::to_string(max_upper);
 			error_exit(msg, "start_var", var_id);
 		}
 	}
-# endif
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_, n_random_equal_
 	random_lower_   = random_const_.lower();
