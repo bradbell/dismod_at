@@ -22,6 +22,8 @@ $spell
 	dage
 	dtime
 	bool
+	bnd_mulcov
+	covariate
 $$
 
 $section Priors in Variable ID Order$$
@@ -44,6 +46,12 @@ $icode%dage_var_id%    = %var2prior%.dage_next(%var_id%)
 $icode%dtime_var_id%   = %var2prior%.dtime_next(%var_id%)
 %$$
 $icode%fixed_effect%   = %var2prior%.fixed_effect(%var_id%)
+%$$
+$icode%var2prior%.bnd_mulcov(%bnd_mulcov_table%)
+%$$
+$icode%min_lower%      = %var2prior%.min_lower(%var_id%)
+%$$
+$icode%max_upper%      = %var2prior%.max_upper(%var_id%)
 %$$
 
 $head Prototype$$
@@ -141,6 +149,25 @@ $icode var_id$$ is a
 $cref/fixed effect/model_variables/Fixed Effects, theta/$$
 (random effect).
 
+$head bnd_mulcov$$
+This member function sets the maximum upper and minimum lower
+limit for the covariate multipliers.
+The initial $icode var2prior$$ corresponds the maximum being
+plus infinity and the minimum being minus infinity.
+
+$head bnd_mulcov_table$$
+See$cref/bnd_mulcov_table/get_bnd_mulcov_table/bnd_mulcov_table/$$.
+
+$head min_lower$$
+Is the minimum lower limit for this variable corresponding to the
+previous call to $code bnd_mulcov$$.
+This is minus infinity before $code bnd_mulcov$$ is called.
+
+$head max_upper$$
+Is the maximum upper limit for this variable corresponding to the
+previous call to $code bnd_mulcov$$.
+This is plus infinity before $code bnd_mulcov$$ is called.
+
 $children%
 	example/devel/utility/pack_prior_xam.cpp
 %$$
@@ -190,13 +217,14 @@ bool pack_prior::fixed_effect(size_t  var_id) const
 {	return prior_vec_[var_id].fixed_effect; }
 
 // set_prior_vec
+// sets all fields except for min_lower and max_upper
 void pack_prior::set_prior_vec(
 	size_t                                                    offset       ,
 	bool                                                      fixed_effect ,
+	size_t                                                    mulcov_id    ,
 	size_t                                                    smooth_id    ,
 	const CppAD::vector<smooth_info>&                         s_info_vec   )
-{	double inf = std::numeric_limits<double>::infinity();
-	//
+{	//
 	smooth_info s_info  = s_info_vec[smooth_id];
 	size_t n_age        = s_info.age_size();
 	size_t n_time       = s_info.time_size();
@@ -207,10 +235,8 @@ void pack_prior::set_prior_vec(
 		{	// var_id
 			size_t var_id   = offset + i * n_time + j;
 			//
-			// max_upper, min_lower, fixed effect
-			prior_vec_[var_id].max_upper    = + inf;
-			prior_vec_[var_id].min_lower    = - inf;
 			prior_vec_[var_id].fixed_effect = fixed_effect;
+			prior_vec_[var_id].mulcov_id    = mulcov_id;
 			//
 			// const_value
 			double const_value            = s_info.const_value(i, j);
@@ -259,6 +285,7 @@ pack_prior::pack_prior(
 	//
 	pack_info::subvec_info info;
 	double nan   = std::numeric_limits<double>::quiet_NaN();
+	double inf   = std::numeric_limits<double>::infinity();
 	//
 	size_t n_var       = pack_object.size();
 	size_t n_child     = pack_object.child_size();
@@ -266,12 +293,17 @@ pack_prior::pack_prior(
 	size_t n_smooth    = s_info_vec.size();
 	//
 	// -----------------------------------------------------------------------
-	// initialize everyting as nan or null
-	// except fixed_effect which is initialized as true.
+	// initialize everyting to not defined except min_lower, max_upper
 	prior_vec_.resize(n_var);
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
-	{	prior_vec_[var_id].n_time         = DISMOD_AT_NULL_SIZE_T;
+	{
+		prior_vec_[var_id].min_lower      = - inf;
+		prior_vec_[var_id].max_upper      = + inf;
+		//
 		prior_vec_[var_id].const_value    = nan;
+		prior_vec_[var_id].n_time         = DISMOD_AT_NULL_SIZE_T;
+		prior_vec_[var_id].smooth_id      = DISMOD_AT_NULL_SIZE_T;
+		prior_vec_[var_id].mulcov_id      = DISMOD_AT_NULL_SIZE_T;
 		prior_vec_[var_id].value_prior_id = DISMOD_AT_NULL_SIZE_T;
 		prior_vec_[var_id].dage_prior_id  = DISMOD_AT_NULL_SIZE_T;
 		prior_vec_[var_id].dtime_prior_id = DISMOD_AT_NULL_SIZE_T;
@@ -305,6 +337,7 @@ pack_prior::pack_prior(
 				}
 				// this prior is for a constant; i.e., n_age = n_time = 1
 				prior_vec_[offset].n_time         = 1;
+				prior_vec_[offset].fixed_effect   = true;
 				prior_vec_[offset].value_prior_id = prior_id;
 			}
 		}
@@ -317,10 +350,14 @@ pack_prior::pack_prior(
 		{	// child if j < n_child, otherwise parent
 			info             = pack_object.node_rate_value_info(rate_id, j);
 			size_t smooth_id = info.smooth_id;
+			// if smooth_id is null this has no variables
 			if( smooth_id != DISMOD_AT_NULL_SIZE_T )
 			{	size_t offset       = info.offset;
 				bool   fixed_effect = j == n_child;
-				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
+				size_t mulcov_id    = info.mulcov_id;
+				set_prior_vec(
+					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
+				);
 			}
 		}
 	}
@@ -335,7 +372,10 @@ pack_prior::pack_prior(
 				size_t offset       = info.offset;
 				size_t smooth_id    = info.smooth_id;
 				bool   fixed_effect = false;
-				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
+				size_t mulcov_id    = info.mulcov_id;
+				set_prior_vec(
+					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
+				);
 			}
 		}
 	}
@@ -348,7 +388,10 @@ pack_prior::pack_prior(
 			size_t offset       = info.offset;
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
-			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
+			size_t mulcov_id    = info.mulcov_id;
+			set_prior_vec(
+				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
+			);
 		}
 	}
 	// ------------------------------------------------------------------------
@@ -365,7 +408,10 @@ pack_prior::pack_prior(
 				size_t offset       = info.offset;
 				size_t smooth_id    = info.smooth_id;
 				bool   fixed_effect = false;
-				set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
+				size_t mulcov_id    = info.mulcov_id;
+				set_prior_vec(
+					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
+				);
 			}
 		}
 	}
@@ -379,7 +425,10 @@ pack_prior::pack_prior(
 			size_t offset       = info.offset;
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
-			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
+			size_t mulcov_id    = info.mulcov_id;
+			set_prior_vec(
+				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
+			);
 		}
 		// measurement std covariates for this integrand
 		n_cov = pack_object.group_meas_noise_n_cov(integrand_id);
@@ -388,7 +437,10 @@ pack_prior::pack_prior(
 			size_t offset       = info.offset;
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
-			set_prior_vec(offset, fixed_effect, smooth_id, s_info_vec);
+			size_t mulcov_id    = info.mulcov_id;
+			set_prior_vec(
+				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
+			);
 		}
 	}
 	return;

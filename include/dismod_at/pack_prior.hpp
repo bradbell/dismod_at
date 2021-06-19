@@ -32,6 +32,7 @@ namespace dismod_at {
 			double  const_value;
 			size_t  n_time;
 			size_t  smooth_id;
+			size_t  mulcov_id;
 			size_t  value_prior_id;
 			size_t  dage_prior_id;
 			size_t  dtime_prior_id;
@@ -44,6 +45,7 @@ namespace dismod_at {
 		void set_prior_vec(
 			size_t                               offset       ,
 			bool                                 fixed_effect ,
+			size_t                               mulcov_id    ,
 			size_t                               smooth_id    ,
 			const CppAD::vector<smooth_info>&    s_info_vec
 		);
