@@ -66,21 +66,25 @@ $codei%
 
 $head bnd_mulcov_table$$
 The table $cref bnd_mulcov_table$$ is output by this command.
-It contains the maximum upper bound and minimum lower bound,
-for each covariate multiplier, such that the inequality above
-is satisfied for all $icode mul_value$$ between the lower and upper bound.
+It contains the maximum upper limit
+$cref/max_upper/bnd_mulcov_table/max_upper/$$,
+and minimum lower limit
+$cref/min_lower/bnd_mulcov_table/min_lower/$$,
+for each covariate multiplier.
+This maximum (minimum) is the largest (smallest) value such that the inequality
+is satisfied for all $icode mul_value$$ between the minimum and maximum.
 $list number$$
 Only the subset of the data table specified by the $cref data_subset_table$$
-table are included in this calculation.
+table are included when determining the minimum and maximum.
 $lnext
-The upper and lower bounds are set to zero in the special case where,
+The maximum and minimum are set to zero in the special case where,
 for a covariate, $icode cov_value$$ is equal to $icode cov_ref$$
 for all the point in the data_subset table.
 $lnext
-The lower (upper) bound for
+The maximum (minimum) for
 The $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
 covariate multipliers are set to null which is interpreted as
-minus infinity (plus infinity) and hence has no effect.
+plus infinity (minus infinity) and hence has no effect.
 $lend
 
 $comment 2DO: create the user_bnd_mulcov.py example$$
