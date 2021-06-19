@@ -36,9 +36,8 @@ $codei%dismod_at %database% init%$$
 
 $head Purpose$$
 This command initializes the data flow.
-To be specific, it begins by deleting any existing
-$cref/output tables/data_flow/Output Tables by Table Name/$$,
-except for the $cref log_table$$,
+To be specific, it begins by deleting any existing output tables,
+except for the log table,
 and then creates new versions of the following tables:
 $table
 $rref age_avg_table$$
@@ -48,6 +47,11 @@ $rref start_var_table$$
 $rref scale_var_table$$
 $rref var_table$$
 $tend
+
+$head Deleted Tables$$
+This routine begins by deleting any existing
+$cref/output tables/data_flow/Output Tables by Table Name/$$,
+except for the $cref log_table$$.
 
 $head Changing Values$$
 You must re-run this command when ever any of the
@@ -83,16 +87,11 @@ $head scale_var_table$$
 A new $cref scale_var_table$$ is created using the
 means of the priors for the model variables.
 
-$head Deleted Tables$$
-The following tables are deleted (if they exist) when the
-$code init$$ command is run:
-$cref/depend_var/depend_var_table/$$,
-$cref/fit_var/fit_var_table/$$,
-$cref/truth_var/truth_var_table/$$,
-$cref/fit_data_subset/fit_data_subset_table/$$,
-$cref/data_sim/data_sim_table/$$,
-$cref/sample/sample_table/$$,
-$cref/predict/predict_table/$$.
+$head bnd_mulcov_table$$
+A new bnd_mulcov table is created using null for
+$cref/min_lower/bnd_mulcov_table/min_lower/$$ and
+$cref/max_upper/bnd_mulcov_table/max_upper/$$; i.e.,
+minus and plus infinity respectively.
 
 $children%example/get_started/init_command.py
 %$$
@@ -208,8 +207,31 @@ void init_command(
 	sample_index = "";
 	set_command(table_out, source, sample_index, db, prior_mean);
 	// -----------------------------------------------------------------------
+	// bnd_mulcov_table
+	string table_name = "bnd_mulcov";
+	size_t n_mulcov   = db_input.mulcov_table.size();
+	size_t n_col      = 2;
+	vector<string> col_name(n_col), col_type(n_col);
+	vector<string> row_value(n_col * n_mulcov);
+	vector<bool>   col_unique(n_col);
+	//
+	col_name[0]     = "min_lower";
+	col_type[0]     = "real";
+	col_unique[0]   = false;
+	//
+	col_name[1]     = "max_upper";
+	col_type[1]     = "real";
+	col_unique[1]   = false;
+	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
+	{	row_value[n_col * mulcov_id + 0] = ""; // empty string corresponds
+		row_value[n_col * mulcov_id + 1] = ""; // to null; i.e., no bound
+	}
+	create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	// -----------------------------------------------------------------------
 	// data_subset table
-	string table_name = "data_subset";
+	table_name = "data_subset";
 	vector<data_subset_struct> data_subset_table = make_data_subset_table(
 		child_object,
 		db_input.covariate_table,
@@ -217,10 +239,11 @@ void init_command(
 		db_input.data_cov_value
 	);
 	size_t n_subset   = data_subset_table.size();
-	size_t n_col      = 2;
-	vector<string> col_name(n_col), col_type(n_col);
-	vector<string> row_value(n_col * n_subset);
-	vector<bool>   col_unique(n_col);
+	n_col             = 2;
+	col_name.resize(n_col);
+	col_type.resize(n_col);
+	row_value.resize(n_col * n_subset);
+	col_unique.resize(n_col);
 	//
 	col_name[0]       = "data_id";
 	col_type[0]       = "integer";
@@ -381,7 +404,7 @@ void init_command(
 	//
 	// mulcov_table
 	const vector<mulcov_struct>& mulcov_table( db_input.mulcov_table );
-	size_t n_mulcov        = mulcov_table.size();
+	n_mulcov               = mulcov_table.size();
 	size_t n_integrand     = db_input.integrand_table.size();
 	//
 	// initialize counters for different types of covariate multipliers

@@ -206,7 +206,8 @@ $cref/age_avg/init_command/age_avg_table/$$,
 $cref/var/init_command/var_table/$$,
 $cref/data_subset/init_command/data_subset_table/$$,
 $cref/start_var/init_command/start_var_table/$$,
-$cref/scale_var/init_command/scale_var_table/$$
+$cref/scale_var/init_command/scale_var_table/$$,
+$cref/bnd_mulcov/init_command/bnd_mulcov_table/$$
 
 $rnext
 $cref/predict/predict_command/$$ $cnext
