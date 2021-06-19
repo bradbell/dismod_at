@@ -16,12 +16,10 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#	devel/command.omh
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#	s|devel/command.omh|devel/cmd/command.omh|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,4 +31,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|devel/command.omh|devel/cmd/command.omh|
+s|bnd_mulcov_table\[\([a-z_]*\)]\.lower|bnd_mulcov_table[\1].min_lower|g
+s|bnd_mulcov_table\[\([a-z_]*\)]\.upper|bnd_mulcov_table[\1].max_upper|g

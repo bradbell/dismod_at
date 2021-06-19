@@ -117,8 +117,8 @@ void bnd_mulcov_command(
 	// initialize bnd_mulcov_table
 	CppAD::vector<bnd_mulcov_struct> bnd_mulcov_table(n_mulcov);
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
-	{	bnd_mulcov_table[mulcov_id].lower = nan;
-		bnd_mulcov_table[mulcov_id].upper = nan;
+	{	bnd_mulcov_table[mulcov_id].min_lower = nan;
+		bnd_mulcov_table[mulcov_id].max_upper = nan;
 	}
 	//
 	// covariate loop
@@ -153,8 +153,8 @@ void bnd_mulcov_command(
 		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
 		if( size_t( mulcov_table[mulcov_id].covariate_id ) == covariate_id )
 		if( mulcov_table[mulcov_id].mulcov_type != meas_noise_enum )
-		{	bnd_mulcov_table[mulcov_id].lower = lower;
-			bnd_mulcov_table[mulcov_id].upper = upper;
+		{	bnd_mulcov_table[mulcov_id].min_lower = lower;
+			bnd_mulcov_table[mulcov_id].max_upper = upper;
 		}
 	}
 	//
@@ -178,8 +178,8 @@ void bnd_mulcov_command(
 	col_unique[1]     = false;
 	//
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
-	{	double lower = bnd_mulcov_table[mulcov_id].lower;
-		double upper = bnd_mulcov_table[mulcov_id].upper;
+	{	double lower = bnd_mulcov_table[mulcov_id].min_lower;
+		double upper = bnd_mulcov_table[mulcov_id].max_upper;
 		row_value[n_col * mulcov_id + 0] = CppAD::to_string( lower );
 		row_value[n_col * mulcov_id + 1] = CppAD::to_string( upper );
 	}

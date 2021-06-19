@@ -47,11 +47,11 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code double$$ $cnext $code lower$$ $cnext
-	The $cref/lower/bnd_mulcov_table/lower/$$
+$code double$$ $cnext $code min_lower$$ $cnext
+	The $cref/min_lower/bnd_mulcov_table/min_lower/$$
 $rnext
-$code double$$ $cnext $code upper$$ $cnext
-	The $cref/upper/bnd_mulcov_table/upper/$$
+$code double$$ $cnext $code max_upper$$ $cnext
+	The $cref/max_upper/bnd_mulcov_table/max_upper/$$
 $tend
 
 $children%example/devel/table/get_bnd_mulcov_table_xam.cpp
@@ -78,20 +78,20 @@ CppAD::vector<bnd_mulcov_struct> get_bnd_mulcov_table(sqlite3* db)
 	string table_name     = "bnd_mulcov";
 	size_t n_bnd_mulcov   = check_table_id(db, table_name);
 
-	std::string column_name =  "lower";
-	CppAD::vector<double>       lower;
-	get_table_column(db, table_name, column_name, lower);
-	assert( lower.size() == n_bnd_mulcov );
+	std::string column_name =  "min_lower";
+	CppAD::vector<double>       min_lower;
+	get_table_column(db, table_name, column_name, min_lower);
+	assert( min_lower.size() == n_bnd_mulcov );
 
-	column_name             =   "upper";
-	CppAD::vector<double>        upper;
-	get_table_column(db, table_name, column_name, upper);
-	assert( upper.size() == n_bnd_mulcov );
+	column_name             =   "max_upper";
+	CppAD::vector<double>        max_upper;
+	get_table_column(db, table_name, column_name, max_upper);
+	assert( max_upper.size() == n_bnd_mulcov );
 
 	CppAD::vector<bnd_mulcov_struct> bnd_mulcov_table(n_bnd_mulcov);
 	for(size_t i = 0; i < n_bnd_mulcov; i++)
-	{	bnd_mulcov_table[i].lower  = lower[i];
-		bnd_mulcov_table[i].upper  = upper[i];
+	{	bnd_mulcov_table[i].min_lower  = min_lower[i];
+		bnd_mulcov_table[i].max_upper  = max_upper[i];
 	}
 	return bnd_mulcov_table;
 }

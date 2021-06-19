@@ -28,17 +28,17 @@ $codei%
 %$$
 In addition, the size of both tables is the same.
 
-$head lower$$
-This column has type $code real$$ and is a lower limit for corresponding
-covariate multiplier.
-This lower limit is in addition to the priors for the multiplier.
-If $icode lower$$ is null, interpreted as minus infinity and has no effect.
+$head min_lower$$
+This column has type $code real$$ and is a minimum value for the
+lower limit for the corresponding covariate multiplier.
+This minimum value is in addition to the priors for the multiplier.
+The $icode min_lower$$ null is interpreted as minus infinity and has no effect.
 
-$head upper$$
-This column has type $code real$$ and is an upper limit for corresponding
-covariate multiplier.
-This upper limit is in addition to the priors for the multiplier.
-If $icode upper$$ is null, interpreted as plus infinity and has no effect.
+$head max_upper$$
+This column has type $code real$$ and is an maximum value for the
+upper limit for the corresponding covariate multiplier.
+This maximum in addition to the priors for the multiplier.
+The $icode max_upper$$ null is interpreted as plus infinity and has no effect.
 
 $head Example$$
 See $code init_command.py$$ example and test.
