@@ -52,6 +52,7 @@ $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
 
 $head max_abs_effect$$
+This is a non-negative value.
 A covariate multiplier is defined by a row of the $cref mulcov_table$$.
 We use the notation $icode mul_value$$ for a value of the multiplier.
 There is a corresponding covariate for each multiplier.
@@ -63,13 +64,15 @@ The maximum effect condition is
 $codei%
 	| %mul_value% * (%cov_value% - %cov_ref%) | <= %max_abs_effect%
 %$$
+Note that the limits on the covariate multiplier in its prior have units
+and the $icode max_abs_effect$$ does not have units.
 
 $head bnd_mulcov_table$$
 The table $cref bnd_mulcov_table$$ is output by this command.
 It contains the maximum upper limit
 $cref/max_upper/bnd_mulcov_table/max_upper/$$,
 and minimum lower limit
-$cref/min_lower/bnd_mulcov_table/min_lower/$$,
+$cref/min_lower/bnd_mulcov_table/min_lower/$$
 for each covariate multiplier.
 This maximum (minimum) is the largest (smallest) value such that the inequality
 is satisfied for all $icode mul_value$$ between the minimum and maximum.
@@ -130,32 +133,23 @@ void bnd_mulcov_command(
 	//
 	// covariate loop
 	for(size_t covariate_id = 0; covariate_id < n_covariate; ++covariate_id)
-	{	double cov_min_diff = + inf;
-		double cov_max_diff = - inf;
+	{	double cov_max_diff = 0.0;
 		double cov_ref = covariate_table[covariate_id].reference;
 		for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
 		{	size_t data_id = data_subset_table[subset_id].data_id;
 			size_t index   = data_id * n_covariate + covariate_id;
 			if( ! std::isnan( data_cov_value[index] ) )
-			{	double diff    = data_cov_value[index] - cov_ref;
-				cov_min_diff   = std::min(cov_min_diff, diff);
-				cov_max_diff   = std::max(cov_max_diff, diff);
+			{	double abs_diff = std::fabs( data_cov_value[index] - cov_ref );
+				cov_max_diff    = std::max(cov_max_diff, abs_diff);
 			}
 		}
 		double upper = + inf;
-		double lower = - inf;
-		if( cov_max_diff > 0 )
-		{	upper = std::min(upper, + max_effect / cov_max_diff);
-			lower = std::max(lower, - max_effect / cov_max_diff);
-		}
-		if( cov_min_diff < 0 )
-		{	upper = std::min(upper, - max_effect / cov_min_diff);
-			lower = std::max(upper, + max_effect / cov_min_diff);
-		}
+		if( cov_max_diff > 0.0 )
+			upper = max_effect / cov_max_diff;
 		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
 		if( size_t( mulcov_table[mulcov_id].covariate_id ) == covariate_id )
 		if( mulcov_table[mulcov_id].mulcov_type != meas_noise_enum )
-		{	bnd_mulcov_table[mulcov_id].min_lower = lower;
+		{	bnd_mulcov_table[mulcov_id].min_lower = - upper;
 			bnd_mulcov_table[mulcov_id].max_upper = upper;
 		}
 	}
@@ -171,11 +165,11 @@ void bnd_mulcov_command(
 	vector<string> row_value(n_col * n_mulcov);
 	vector<bool>   col_unique(n_col);
 	//
-	col_name[0]       = "lower";
+	col_name[0]       = "min_lower";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	//
-	col_name[1]       = "upper";
+	col_name[1]       = "max_upper";
 	col_type[1]       = "real";
 	col_unique[1]     = false;
 	//

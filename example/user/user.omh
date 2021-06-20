@@ -58,6 +58,7 @@ $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $children%
 	example/user/age_avg_split.py%
 	example/user/bilevel_random.py%
+	example/user/bnd_mulcov.py%
 	example/user/cascade.py%
 	example/user/censor.py%
 	example/user/change_grid.py%

@@ -68,7 +68,7 @@ int main(int n_arg, const char** argv)
 	// command_info
 	// BEGIN_SORT_THIS_LINE_PLUS_2
 	struct { const char* name; int n_arg; } command_info[] = {
-		{"bnd_mulcov",   3},
+		{"bnd_mulcov",   4},
 		{"depend",       3},
 		{"fit",          4},
 		{"fit",          5},

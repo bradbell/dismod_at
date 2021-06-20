@@ -15,6 +15,7 @@ SET(depends "")
 FOREACH(user_case
 	age_avg_split
 	bilevel_random
+	bnd_mulcov
 	cascade
 	censor
 	change_grid
