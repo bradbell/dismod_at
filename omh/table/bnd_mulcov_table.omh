@@ -28,13 +28,13 @@ $codei%
 %$$
 In addition, the size of both tables is the same.
 
-$head max_upper$$
+$head max_mulcov$$
 This column has type $code real$$, is non-negative,
 and is an maximum value for the
 upper limit for the corresponding covariate multiplier.
 This maximum in addition to the priors for the multiplier.
-The $icode max_upper$$ null is interpreted as plus infinity and has no effect.
-The value $codei%-%max_upper%$$ is the minimum lower limit.
+The $icode max_mulcov$$ null is interpreted as plus infinity and has no effect.
+The value $codei%-%max_mulcov%$$ is the minimum lower limit.
 
 $head max_abs_cov$$
 This column has type $icode real$$ and the maximum absolute difference

@@ -41,7 +41,7 @@ bool get_bnd_mulcov_table_xam(void)
 	const char* sql_cmd[] = {
 		"create table bnd_mulcov("
 		"bnd_mulcov_id     integer primary key,"
-		"max_upper         real)",
+		"max_mulcov        real)",
 		"insert into bnd_mulcov values(0,   null)",
 		"insert into bnd_mulcov values(1, +100.0)"
 	};
@@ -56,8 +56,8 @@ bool get_bnd_mulcov_table_xam(void)
 	// check the table
 	size_t n_bnd_mulcov = bnd_mulcov_table.size();
 	ok  &= n_bnd_mulcov == 2;
-	ok  &= std::isnan( bnd_mulcov_table[0].max_upper );
-	ok  &= bnd_mulcov_table[1].max_upper  == + 100.0;
+	ok  &= std::isnan( bnd_mulcov_table[0].max_mulcov );
+	ok  &= bnd_mulcov_table[1].max_mulcov == + 100.0;
 
 	// close database and return
 	sqlite3_close(db);

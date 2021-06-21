@@ -49,7 +49,7 @@ $icode%fixed_effect%   = %var2prior%.fixed_effect(%var_id%)
 %$$
 $icode%var2prior%.set_bnd_mulcov(%bnd_mulcov_table%)
 %$$
-$icode%max_upper%      = %var2prior%.max_upper(%var_id%)
+$icode%max_mulcov%     = %var2prior%.max_mulcov(%var_id%)
 %$$
 
 $head Prototype$$
@@ -156,7 +156,7 @@ plus infinity and the minimum being minus infinity.
 $head bnd_mulcov_table$$
 See$cref/bnd_mulcov_table/get_bnd_mulcov_table/bnd_mulcov_table/$$.
 
-$head max_upper$$
+$head max_mulcov$$
 Is the maximum upper limit for this variable corresponding to the
 previous call to $code set_bnd_mulcov$$.
 This is plus infinity before $code set_bnd_mulcov$$ is called.
@@ -209,9 +209,9 @@ size_t pack_prior::dtime_var_id(size_t var_id) const
 bool pack_prior::fixed_effect(size_t  var_id) const
 {	return prior_vec_[var_id].fixed_effect; }
 
-// max_upper
-double pack_prior::max_upper(size_t var_id) const
-{	return prior_vec_[var_id].max_upper; }
+// max_mulcov
+double pack_prior::max_mulcov(size_t var_id) const
+{	return prior_vec_[var_id].max_mulcov; }
 
 // set_bnd_mulcov
 void pack_prior::set_bnd_mulcov(
@@ -219,14 +219,14 @@ void pack_prior::set_bnd_mulcov(
 {	for(size_t var_id = 0; var_id < prior_vec_.size(); ++var_id)
 	{	size_t mulcov_id = prior_vec_[var_id].mulcov_id;
 		if( mulcov_id != DISMOD_AT_NULL_SIZE_T )
-		{	double max_upper = bnd_mulcov_table[mulcov_id].max_upper;
-			prior_vec_[var_id].max_upper = max_upper;
+		{	double max_mulcov = bnd_mulcov_table[mulcov_id].max_mulcov;
+			prior_vec_[var_id].max_mulcov = max_mulcov;
 		}
 	}
 }
 
 // set_prior_vec
-// sets all fields except for max_upper
+// sets all fields except for max_mulcov
 void pack_prior::set_prior_vec(
 	size_t                                                    offset       ,
 	bool                                                      fixed_effect ,
@@ -302,11 +302,11 @@ pack_prior::pack_prior(
 	size_t n_smooth    = s_info_vec.size();
 	//
 	// -----------------------------------------------------------------------
-	// initialize everyting to not defined except max_upper
+	// initialize everyting to not defined except max_mulcov
 	prior_vec_.resize(n_var);
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
 	{
-		prior_vec_[var_id].max_upper      = + inf;
+		prior_vec_[var_id].max_mulcov     = + inf;
 		//
 		prior_vec_[var_id].const_value    = nan;
 		prior_vec_[var_id].n_time         = DISMOD_AT_NULL_SIZE_T;

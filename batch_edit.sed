@@ -31,5 +31,7 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|bnd_mulcov_table\[\([a-z_]*\)]\.lower|bnd_mulcov_table[\1].min_lower|g
-s|bnd_mulcov_table\[\([a-z_]*\)]\.upper|bnd_mulcov_table[\1].max_upper|g
+s|max_upper  |max_mulcov |g
+s|  max_upper| max_mulcov|g
+s|max_upper%  |max_mulcov% |g
+s|max_upper|max_mulcov|g

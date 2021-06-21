@@ -70,7 +70,7 @@ and the $icode max_abs_effect$$ does not have units.
 $head bnd_mulcov_table$$
 The table $cref bnd_mulcov_table$$ is output by this command.
 It contains the maximum upper limit
-$cref/max_upper/bnd_mulcov_table/max_upper/$$
+$cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$
 for each covariate multiplier.
 This maximum (minimum) is the largest (smallest) value such that the inequality
 is satisfied for all $icode mul_value$$ between the minimum and maximum.
@@ -125,7 +125,7 @@ void bnd_mulcov_command(
 	// initialize bnd_mulcov_table
 	CppAD::vector<bnd_mulcov_struct> bnd_mulcov_table(n_mulcov);
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
-		bnd_mulcov_table[mulcov_id].max_upper = nan;
+		bnd_mulcov_table[mulcov_id].max_mulcov = nan;
 	//
 	// covariate loop
 	for(size_t covariate_id = 0; covariate_id < n_covariate; ++covariate_id)
@@ -145,7 +145,7 @@ void bnd_mulcov_command(
 		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
 		if( size_t( mulcov_table[mulcov_id].covariate_id ) == covariate_id )
 		if( mulcov_table[mulcov_id].mulcov_type != meas_noise_enum )
-			bnd_mulcov_table[mulcov_id].max_upper = upper;
+			bnd_mulcov_table[mulcov_id].max_mulcov = upper;
 	}
 	//
 	// drop old bnd_mulcov table
@@ -159,12 +159,12 @@ void bnd_mulcov_command(
 	vector<string> row_value(n_col * n_mulcov);
 	vector<bool>   col_unique(n_col);
 	//
-	col_name[0]       = "max_upper";
+	col_name[0]       = "max_mulcov";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	//
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
-	{	double upper = bnd_mulcov_table[mulcov_id].max_upper;
+	{	double upper = bnd_mulcov_table[mulcov_id].max_mulcov;
 		if( upper == inf )
 		{	row_value[n_col * mulcov_id + 0] = "";
 		}

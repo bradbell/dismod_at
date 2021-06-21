@@ -16,7 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	struct bnd_mulcov_struct {
-		double max_upper;
+		double max_mulcov;
 	};
 	extern CppAD::vector<bnd_mulcov_struct> get_bnd_mulcov_table(sqlite3* db);
 }

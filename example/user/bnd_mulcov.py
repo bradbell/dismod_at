@@ -74,9 +74,9 @@ max_abs_effect = 3.0
 # $codei% - %europe_avg_income% / 2%$$ and
 # $icode%europe_avg_income%$$.
 # This yields the following value
-# $cref/max_upper/bnd_mulcov_table/max_upper/$$:
+# $cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$:
 # $codei%
-#	%max_upper% = + %max_abs_effect% / %europe_avg_income%
+#	%max_mulcov% = + %max_abs_effect% / %europe_avg_income%
 # %$$.
 #
 #
@@ -323,11 +323,11 @@ for var_id in range( len(var_table) ) :
 		rel_error   = 1.0 - fit_var_value/true_value
 		assert abs(rel_error) < 1e-5
 #
-# check max_upper
+# check max_mulcov
 assert len(bnd_mulcov_table) == 1
-max_upper = bnd_mulcov_table[0]['max_upper']
+max_mulcov = bnd_mulcov_table[0]['max_mulcov']
 check     = max_abs_effect / europe_avg_income
-rel_err   = 1.0 - max_upper / check
+rel_err   = 1.0 - max_mulcov / check
 assert abs(rel_error) < 1e-5
 #
 # -----------------------------------------------------------------------------

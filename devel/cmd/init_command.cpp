@@ -89,7 +89,7 @@ means of the priors for the model variables.
 
 $head bnd_mulcov_table$$
 A new bnd_mulcov table is created using null for
-$cref/max_upper/bnd_mulcov_table/max_upper/$$; i.e., plus infinity.
+$cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$; i.e., plus infinity.
 
 $children%example/get_started/init_command.py
 %$$
@@ -276,7 +276,7 @@ void init_command(
 	row_value.resize(n_col * n_mulcov);
 	col_unique.resize(n_col);
 	//
-	col_name[0]     = "max_upper";
+	col_name[0]     = "max_mulcov";
 	col_type[0]     = "real";
 	col_unique[0]   = false;
 	//

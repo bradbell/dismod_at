@@ -228,13 +228,13 @@ data_object_   ( data_object )
 			msg += ", upper = " + CppAD::to_string(upper);
 			error_exit(msg, "start_var", var_id);
 		}
-		double max_upper = var2prior_.max_upper(var_id);
-		if( (start < - max_upper) | (max_upper < start) )
+		double max_mulcov = var2prior_.max_mulcov(var_id);
+		if( (start < - max_mulcov) | (max_mulcov < start) )
 		{	std::string msg;
 			msg  = "variable start value not within its bnd_mulcov limits\n";
 			msg  = "var_id = " + CppAD::to_string(var_id);
 			msg  = ", start = " + CppAD::to_string(start);
-			msg += ", max_upper = " + CppAD::to_string(max_upper);
+			msg += ", max_mulcov = " + CppAD::to_string(max_mulcov);
 			error_exit(msg, "start_var", var_id);
 		}
 	}

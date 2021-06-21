@@ -47,8 +47,8 @@ This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
 $rnext
-$code double$$ $cnext $code max_upper$$ $cnext
-	The $cref/max_upper/bnd_mulcov_table/max_upper/$$
+$code double$$ $cnext $code max_mulcov$$ $cnext
+	The $cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$
 $tend
 
 $children%example/devel/table/get_bnd_mulcov_table_xam.cpp
@@ -75,14 +75,14 @@ CppAD::vector<bnd_mulcov_struct> get_bnd_mulcov_table(sqlite3* db)
 	string table_name     = "bnd_mulcov";
 	size_t n_bnd_mulcov   = check_table_id(db, table_name);
 
-	string column_name    =   "max_upper";
-	CppAD::vector<double>        max_upper;
-	get_table_column(db, table_name, column_name, max_upper);
-	assert( max_upper.size() == n_bnd_mulcov );
+	string column_name    =   "max_mulcov";
+	CppAD::vector<double>       max_mulcov;
+	get_table_column(db, table_name, column_name, max_mulcov);
+	assert( max_mulcov.size() == n_bnd_mulcov );
 
 	CppAD::vector<bnd_mulcov_struct> bnd_mulcov_table(n_bnd_mulcov);
 	for(size_t i = 0; i < n_bnd_mulcov; i++)
-	{	bnd_mulcov_table[i].max_upper  = max_upper[i];
+	{	bnd_mulcov_table[i].max_mulcov = max_mulcov[i];
 	}
 	return bnd_mulcov_table;
 }
