@@ -206,29 +206,13 @@ void init_command(
 	source       = "prior_mean";
 	sample_index = "";
 	set_command(table_out, source, sample_index, db, prior_mean);
-	// -----------------------------------------------------------------------
-	// bnd_mulcov_table
-	string table_name = "bnd_mulcov";
-	size_t n_mulcov   = db_input.mulcov_table.size();
-	size_t n_col      = 2;
-	vector<string> col_name(n_col), col_type(n_col);
-	vector<string> row_value(n_col * n_mulcov);
-	vector<bool>   col_unique(n_col);
 	//
-	col_name[0]     = "min_lower";
-	col_type[0]     = "real";
-	col_unique[0]   = false;
-	//
-	col_name[1]     = "max_upper";
-	col_type[1]     = "real";
-	col_unique[1]   = false;
-	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
-	{	row_value[n_col * mulcov_id + 0] = ""; // empty string corresponds
-		row_value[n_col * mulcov_id + 1] = ""; // to null; i.e., no bound
-	}
-	create_table(
-		db, table_name, col_name, col_type, col_unique, row_value
-	);
+	// declare some variables used for all tables
+	string table_name;
+	vector<string> col_name, col_type;
+	vector<string> row_value;
+	vector<bool>   col_unique;
+	size_t n_col;
 	// -----------------------------------------------------------------------
 	// data_subset table
 	table_name = "data_subset";
@@ -258,6 +242,78 @@ void init_command(
 		int hold_out   = data_subset_table[subset_id].hold_out;
 		row_value[n_col * subset_id + 0] = to_string( data_id );
 		row_value[n_col * subset_id + 1] = to_string( hold_out );
+	}
+	create_table(
+		db, table_name, col_name, col_type, col_unique, row_value
+	);
+	// -----------------------------------------------------------------------
+	// bnd_mulcov_table
+	//
+	// max_abs_diff
+	size_t n_integrand = db_input.integrand_table.size();
+	size_t n_covariate = db_input.covariate_table.size();
+	vector<double> max_abs_diff(n_integrand * n_covariate);
+	for(size_t i = 0; i < n_integrand * n_covariate; ++i)
+		max_abs_diff[i] = 0.0;
+	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+	{	int data_id         = data_subset_table[subset_id].data_id;
+		int integrand_id    = db_input.data_table[data_id].integrand_id;
+		for(size_t id = 0; id < n_covariate; ++id)
+		{
+			size_t index        = size_t(data_id) * n_covariate + id;
+			double cov_value    = db_input.data_cov_value[index];
+			double reference    = db_input.covariate_table[id].reference;
+			double abs_diff     = std::fabs(cov_value - reference);
+			//
+			index               = size_t(integrand_id) * n_covariate + id;
+			max_abs_diff[index] = std::max( abs_diff, max_abs_diff[index] );
+		}
+	}
+	//
+	table_name        = "bnd_mulcov";
+	size_t n_mulcov   = db_input.mulcov_table.size();
+	n_col             = 3;
+	col_name.resize(n_col);
+	col_type.resize(n_col);
+	row_value.resize(n_col * n_mulcov);
+	col_unique.resize(n_col);
+	//
+	col_name[0]     = "min_lower";
+	col_type[0]     = "real";
+	col_unique[0]   = false;
+	//
+	col_name[1]     = "max_upper";
+	col_type[1]     = "real";
+	col_unique[1]   = false;
+	//
+	col_name[2]     = "max_abs_cov";
+	col_type[2]     = "real";
+	col_unique[2]   = false;
+	//
+	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
+	{	int covariate_id    = db_input.mulcov_table[mulcov_id].covariate_id;
+		int integrand_id    = db_input.mulcov_table[mulcov_id].integrand_id;
+		//
+		double max_abs_cov = 0.0;
+		if( integrand_id != DISMOD_AT_NULL_INT )
+		{	size_t index = integrand_id * n_covariate + covariate_id;
+			max_abs_cov = max_abs_diff[index];
+		}
+		else
+		{
+# ifndef NDEBUG
+			mulcov_type_enum mulcov_type =
+				db_input.mulcov_table[mulcov_id].mulcov_type;
+			assert( mulcov_type == rate_value_enum );
+# endif
+			for(size_t id = 0; id < n_integrand; ++id)
+			{	size_t index = id * n_covariate + size_t(covariate_id);
+				max_abs_cov = std::max( max_abs_diff[index], max_abs_cov);
+			}
+		}
+		row_value[n_col * mulcov_id + 0] = ""; // empty string corresponds
+		row_value[n_col * mulcov_id + 1] = ""; // to null; i.e., no bound
+		row_value[n_col * mulcov_id + 2] = to_string(max_abs_cov);
 	}
 	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
@@ -405,7 +461,7 @@ void init_command(
 	// mulcov_table
 	const vector<mulcov_struct>& mulcov_table( db_input.mulcov_table );
 	n_mulcov               = mulcov_table.size();
-	size_t n_integrand     = db_input.integrand_table.size();
+	assert( n_integrand  == db_input.integrand_table.size() );
 	//
 	// initialize counters for different types of covariate multipliers
 	vector<size_t> count_group_meas_value(n_integrand);

@@ -12,8 +12,8 @@ $begin bnd_mulcov_table$$
 $spell
 	Covariate
 	bnd_mulcov
-	init
-	py
+	cov
+	integrands
 $$
 
 $section The Bound Covariate Multiplier$$.
@@ -40,7 +40,23 @@ upper limit for the corresponding covariate multiplier.
 This maximum in addition to the priors for the multiplier.
 The $icode max_upper$$ null is interpreted as plus infinity and has no effect.
 
-$head Example$$
-See $code init_command.py$$ example and test.
+$head max_abs_cov$$
+This column has type $icode real$$ and the maximum absolute difference
+of the covariate minus its reference.
+$list number$$
+This maximum is restricted to the
+$cref/data_id/data_subset_table/data_id/$$ in the data_subset table and the
+data table covariate column corresponding to the
+$cref/covariate_id/mulcov_table/covariate_id/$$ in the mulcov table.
+$lnext
+If the $cref/mulcov_type/mulcov_table/mulcov_type/$$ corresponding
+to this $icode mulcov_id$$ is $code rate_value$$,
+the maximum is respect to the covariate value for all integrands.
+$lnext
+Otherwise, the maximum is further restricted to the data with
+$cref/integrand_id/data_table/integrand_id/$$ in the data table
+the same as
+$cref/integrand_id/mulcov_table/integrand_id/$$ in the mulcov table.
+$lend
 
 $end
