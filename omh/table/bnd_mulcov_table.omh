@@ -14,9 +14,10 @@ $spell
 	bnd_mulcov
 	cov
 	integrands
+	diff
 $$
 
-$section The Bound Covariate Multiplier$$.
+$section The Covariate and Multiplier Bound Table$$.
 
 $head bnd_mulcov_id$$
 This column has type $code integer$$ and is the primary key for this table.
@@ -28,31 +29,38 @@ $codei%
 %$$
 In addition, the size of both tables is the same.
 
-$head max_mulcov$$
-This column has type $code real$$, is non-negative,
-and is an maximum value for the
-upper limit for the corresponding covariate multiplier.
-This maximum in addition to the priors for the multiplier.
-The $icode max_mulcov$$ null is interpreted as plus infinity and has no effect.
-The value $codei%-%max_mulcov%$$ is the minimum lower limit.
-
-$head max_abs_cov$$
-This column has type $icode real$$ and the maximum absolute difference
-of the covariate minus its reference.
+$head max_cov_diff$$
+This column has type $icode real$$ and contains the maximum absolute difference
+of the covariate minus its reference (for this covariate multiplier).
 $list number$$
-This maximum is restricted to the
-$cref/data_id/data_subset_table/data_id/$$ in the data_subset table and the
-data table covariate column corresponding to the
-$cref/covariate_id/mulcov_table/covariate_id/$$ in the mulcov table.
+This maximum is restricted to the data table covariate values
+that have $cref/data_id/data_subset_table/data_id/$$
+in the data_subset table.
 $lnext
-If the $cref/mulcov_type/mulcov_table/mulcov_type/$$ corresponding
-to this $icode mulcov_id$$ is $code rate_value$$,
-the maximum is respect to the covariate value for all integrands.
+This maximum is further restricted to the covariate column
+corresponding to the $cref/covariate_id/mulcov_table/covariate_id/$$
+for this covariate multiplier.
 $lnext
-Otherwise, the maximum is further restricted to the data with
-$cref/integrand_id/data_table/integrand_id/$$ in the data table
-the same as
-$cref/integrand_id/mulcov_table/integrand_id/$$ in the mulcov table.
+If the $cref/mulcov_type/mulcov_table/mulcov_type/$$
+for this multiplier is $code rate_value$$,
+$cref/integrand_id/mulcov_table/integrand_id/$$ for this multiplier is null
+and the maximum is respect to all integrands.
+$lnext
+If the $icode mulcov_type$$ for this multiplier is not $code rate_value$$,
+$cref/integrand_id/mulcov_table/integrand_id/$$ for this multiplier is not null
+and the maximum is further restricted the that integrand.
 $lend
+If this value is zero, the corresponding covariate multiplier does not
+affect the model value for any of the data included during a fit.
+
+$head max_mulcov$$
+This column has type $code real$$, is non-negative.
+The value $icode max_mulcov$$ is a maximum for the
+upper limit for the corresponding covariate multiplier during optimization.
+The value $codei%- %max_mulcov%$$ is a minimum for the
+lower limit for the corresponding covariate multiplier during optimization.
+This maximum and minimum are in addition to the priors for the multiplier.
+If $icode max_mulcov$$ is null,
+it is interpreted as plus infinity and has no effect.
 
 $end

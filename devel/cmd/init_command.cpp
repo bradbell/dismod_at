@@ -280,33 +280,34 @@ void init_command(
 	col_type[0]     = "real";
 	col_unique[0]   = false;
 	//
-	col_name[1]     = "max_abs_cov";
+	col_name[1]     = "max_cov_diff";
 	col_type[1]     = "real";
 	col_unique[1]   = false;
 	//
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 	{	int covariate_id    = db_input.mulcov_table[mulcov_id].covariate_id;
 		int integrand_id    = db_input.mulcov_table[mulcov_id].integrand_id;
-		//
-		double max_abs_cov = 0.0;
-		if( integrand_id != DISMOD_AT_NULL_INT )
-		{	size_t index = integrand_id * n_covariate + covariate_id;
-			max_abs_cov = max_abs_diff[index];
-		}
-		else
-		{
 # ifndef NDEBUG
 			mulcov_type_enum mulcov_type =
 				db_input.mulcov_table[mulcov_id].mulcov_type;
+		if( integrand_id == DISMOD_AT_NULL_INT )
 			assert( mulcov_type == rate_value_enum );
+		else
+			assert( mulcov_type != rate_value_enum );
 # endif
-			for(size_t id = 0; id < n_integrand; ++id)
+		double max_cov_diff = 0.0;
+		if( integrand_id != DISMOD_AT_NULL_INT )
+		{	size_t index = integrand_id * n_covariate + covariate_id;
+			max_cov_diff = max_abs_diff[index];
+		}
+		else
+		{	for(size_t id = 0; id < n_integrand; ++id)
 			{	size_t index = id * n_covariate + size_t(covariate_id);
-				max_abs_cov = std::max( max_abs_diff[index], max_abs_cov);
+				max_cov_diff = std::max( max_abs_diff[index], max_cov_diff);
 			}
 		}
 		row_value[n_col * mulcov_id + 0] = ""; // empty string corresponds
-		row_value[n_col * mulcov_id + 1] = to_string(max_abs_cov);
+		row_value[n_col * mulcov_id + 1] = to_string(max_cov_diff);
 	}
 	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value

@@ -479,9 +479,6 @@ int main(int n_arg, const char** argv)
 		dismod_at::bnd_mulcov_command(
 			db,
 			max_abs_effect,
-			db_input.data_cov_value,
-			data_subset_table,
-			db_input.covariate_table,
 			db_input.mulcov_table
 		);
 	}

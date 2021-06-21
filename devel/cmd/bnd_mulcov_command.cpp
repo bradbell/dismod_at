@@ -30,6 +30,8 @@ $spell
 	mul
 	cov
 	py
+	diff
+	inf
 $$
 
 $section Bound The Covariate Multiplier Absolute Data Effect$$
@@ -68,28 +70,20 @@ Note that the limits on the covariate multiplier in its prior have units
 and the $icode max_abs_effect$$ does not have units.
 
 $head bnd_mulcov_table$$
-The table $cref bnd_mulcov_table$$ is output by this command.
-It contains the maximum upper limit
-$cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$
-for each covariate multiplier.
-This maximum (minimum) is the largest (smallest) value such that the inequality
-is satisfied for all $icode mul_value$$ between the minimum and maximum.
-$list number$$
-Only the subset of the data table specified by the $cref data_subset_table$$
-table are included when determining the minimum and maximum.
-$lnext
-The maximum (minimum) for
-The $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
-covariate multipliers are set to null which is interpreted as
-plus infinity (minus infinity) and hence has no effect.
-$lend
+The table $cref bnd_mulcov_table$$ is and input and output for this command.
+Its $cref/max_cov_diff/bnd_mulcov_table/max_cov_diff/$$ column is not changed.
+The $cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$ column is set so the
+inequality above is true for all the data that is modeled using this
+covariate multiplier and that is included in the fit.
+To be specific, for each covariate multiplier
+$codei%
+	%max_mulcov% = %max_abs_effect% / %max_cov_diff%
+%$$
 
 $head Infinite Case$$
-The case where a covariate is equal to its reference
-($icode cov_value$$ is equal to $icode cov_ref$$)
-for all the point in the data_subset table is special.
-In this case any multiplier for this covariate cannot have an effect.
-The minimum and maximum for this case are set to null.
+The case where $icode max_abs_effect$$ is $code inf$$ or
+$icode max_cov_diff$$ is zero,
+$icode max_mulcov$$ is set to null (which corresponds to plus infinity).
 
 $comment 2DO: create the user_bnd_mulcov.py example$$
 $head Example$$
@@ -101,52 +95,22 @@ $end
 void bnd_mulcov_command(
 	sqlite3*                                      db                ,
 	std::string&                                  max_abs_effect    ,
-	const CppAD::vector<double>&                  data_cov_value    ,
-	const CppAD::vector<data_subset_struct>&      data_subset_table ,
-	const CppAD::vector<covariate_struct>&        covariate_table   ,
 	const CppAD::vector<mulcov_struct>&           mulcov_table      )
 {	using std::string;
 	using CppAD::vector;
+	using CppAD::to_string;
 	double inf = std::numeric_limits<double>::infinity();
-	double nan = std::numeric_limits<double>::quiet_NaN();
 	//
 	// max_abs_effect
-	double max_effect = std::atoi( max_abs_effect.c_str() );
-	//
-	// n_data
-	size_t n_subset = data_subset_table.size();
-	//
-	// n_covariate
-	size_t n_covariate = covariate_table.size();
+	double max_effect = inf;
+	if( max_abs_effect != "inf" )
+		max_effect = std::atoi( max_abs_effect.c_str() );
 	//
 	// n_mulcov
 	size_t n_mulcov    = mulcov_table.size();
 	//
-	// initialize bnd_mulcov_table
-	CppAD::vector<bnd_mulcov_struct> bnd_mulcov_table(n_mulcov);
-	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
-		bnd_mulcov_table[mulcov_id].max_mulcov = nan;
-	//
-	// covariate loop
-	for(size_t covariate_id = 0; covariate_id < n_covariate; ++covariate_id)
-	{	double cov_max_diff = 0.0;
-		double cov_ref = covariate_table[covariate_id].reference;
-		for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
-		{	size_t data_id = data_subset_table[subset_id].data_id;
-			size_t index   = data_id * n_covariate + covariate_id;
-			if( ! std::isnan( data_cov_value[index] ) )
-			{	double abs_diff = std::fabs( data_cov_value[index] - cov_ref );
-				cov_max_diff    = std::max(cov_max_diff, abs_diff);
-			}
-		}
-		double upper = + inf;
-		if( cov_max_diff > 0.0 )
-			upper = max_effect / cov_max_diff;
-		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
-		if( size_t( mulcov_table[mulcov_id].covariate_id ) == covariate_id )
-		if( mulcov_table[mulcov_id].mulcov_type != meas_noise_enum )
-			bnd_mulcov_table[mulcov_id].max_mulcov = upper;
-	}
+	// get the current bnd_mulcov table
+	vector<bnd_mulcov_struct> bnd_mulcov_table = get_bnd_mulcov_table(db);
 	//
 	// drop old bnd_mulcov table
 	string sql_cmd    = "drop table bnd_mulcov";
@@ -154,7 +118,7 @@ void bnd_mulcov_command(
 	//
 	// write new data_subset table
 	string table_name = "bnd_mulcov";
-	size_t n_col      = 1;
+	size_t n_col      = 2;
 	vector<string> col_name(n_col), col_type(n_col);
 	vector<string> row_value(n_col * n_mulcov);
 	vector<bool>   col_unique(n_col);
@@ -163,14 +127,19 @@ void bnd_mulcov_command(
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	//
+	col_name[1]       = "max_cov_diff";
+	col_type[1]       = "real";
+	col_unique[1]     = false;
+	//
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
-	{	double upper = bnd_mulcov_table[mulcov_id].max_mulcov;
-		if( upper == inf )
-		{	row_value[n_col * mulcov_id + 0] = "";
-		}
+	{	double max_cov_diff = bnd_mulcov_table[mulcov_id].max_cov_diff;
+		if( max_cov_diff == 0.0 || max_effect == inf )
+			row_value[n_col * mulcov_id + 0] = "";
 		else
-		{	row_value[n_col * mulcov_id + 0] = CppAD::to_string( upper );
+		{	double max_mulcov = max_effect / max_cov_diff;
+			row_value[n_col * mulcov_id + 0] = to_string( max_mulcov );
 		}
+		row_value[n_col * mulcov_id + 1] = to_string( max_cov_diff );
 	}
 	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
