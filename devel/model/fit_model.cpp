@@ -229,13 +229,11 @@ data_object_   ( data_object )
 			error_exit(msg, "start_var", var_id);
 		}
 		double max_upper = var2prior_.max_upper(var_id);
-		double min_lower = var2prior_.min_lower(var_id);
-		if( (start < min_lower) | (max_upper < start) )
+		if( (start < - max_upper) | (max_upper < start) )
 		{	std::string msg;
 			msg  = "variable start value not within its bnd_mulcov limits\n";
 			msg  = "var_id = " + CppAD::to_string(var_id);
 			msg  = ", start = " + CppAD::to_string(start);
-			msg += ", min_lower = " + CppAD::to_string(min_lower);
 			msg += ", max_upper = " + CppAD::to_string(max_upper);
 			error_exit(msg, "start_var", var_id);
 		}

@@ -70,9 +70,7 @@ and the $icode max_abs_effect$$ does not have units.
 $head bnd_mulcov_table$$
 The table $cref bnd_mulcov_table$$ is output by this command.
 It contains the maximum upper limit
-$cref/max_upper/bnd_mulcov_table/max_upper/$$,
-and minimum lower limit
-$cref/min_lower/bnd_mulcov_table/min_lower/$$
+$cref/max_upper/bnd_mulcov_table/max_upper/$$
 for each covariate multiplier.
 This maximum (minimum) is the largest (smallest) value such that the inequality
 is satisfied for all $icode mul_value$$ between the minimum and maximum.
@@ -127,9 +125,7 @@ void bnd_mulcov_command(
 	// initialize bnd_mulcov_table
 	CppAD::vector<bnd_mulcov_struct> bnd_mulcov_table(n_mulcov);
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
-	{	bnd_mulcov_table[mulcov_id].min_lower = nan;
 		bnd_mulcov_table[mulcov_id].max_upper = nan;
-	}
 	//
 	// covariate loop
 	for(size_t covariate_id = 0; covariate_id < n_covariate; ++covariate_id)
@@ -149,9 +145,7 @@ void bnd_mulcov_command(
 		for(size_t mulcov_id = 0; mulcov_id < n_mulcov; ++mulcov_id)
 		if( size_t( mulcov_table[mulcov_id].covariate_id ) == covariate_id )
 		if( mulcov_table[mulcov_id].mulcov_type != meas_noise_enum )
-		{	bnd_mulcov_table[mulcov_id].min_lower = - upper;
 			bnd_mulcov_table[mulcov_id].max_upper = upper;
-		}
 	}
 	//
 	// drop old bnd_mulcov table
@@ -160,31 +154,22 @@ void bnd_mulcov_command(
 	//
 	// write new data_subset table
 	string table_name = "bnd_mulcov";
-	size_t n_col      = 2;
+	size_t n_col      = 1;
 	vector<string> col_name(n_col), col_type(n_col);
 	vector<string> row_value(n_col * n_mulcov);
 	vector<bool>   col_unique(n_col);
 	//
-	col_name[0]       = "min_lower";
+	col_name[0]       = "max_upper";
 	col_type[0]       = "real";
 	col_unique[0]     = false;
 	//
-	col_name[1]       = "max_upper";
-	col_type[1]       = "real";
-	col_unique[1]     = false;
-	//
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
-	{	double lower = bnd_mulcov_table[mulcov_id].min_lower;
-		double upper = bnd_mulcov_table[mulcov_id].max_upper;
-		if( lower == - inf )
-		{	assert( upper == + inf );
-			row_value[n_col * mulcov_id + 0] = "";
-			row_value[n_col * mulcov_id + 1] = "";
+	{	double upper = bnd_mulcov_table[mulcov_id].max_upper;
+		if( upper == inf )
+		{	row_value[n_col * mulcov_id + 0] = "";
 		}
 		else
-		{	assert( upper != + inf );
-			row_value[n_col * mulcov_id + 0] = CppAD::to_string( lower );
-			row_value[n_col * mulcov_id + 1] = CppAD::to_string( upper );
+		{	row_value[n_col * mulcov_id + 0] = CppAD::to_string( upper );
 		}
 	}
 	create_table(

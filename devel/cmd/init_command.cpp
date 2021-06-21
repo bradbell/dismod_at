@@ -89,9 +89,7 @@ means of the priors for the model variables.
 
 $head bnd_mulcov_table$$
 A new bnd_mulcov table is created using null for
-$cref/min_lower/bnd_mulcov_table/min_lower/$$ and
-$cref/max_upper/bnd_mulcov_table/max_upper/$$; i.e.,
-minus and plus infinity respectively.
+$cref/max_upper/bnd_mulcov_table/max_upper/$$; i.e., plus infinity.
 
 $children%example/get_started/init_command.py
 %$$
@@ -272,23 +270,19 @@ void init_command(
 	//
 	table_name        = "bnd_mulcov";
 	size_t n_mulcov   = db_input.mulcov_table.size();
-	n_col             = 3;
+	n_col             = 2;
 	col_name.resize(n_col);
 	col_type.resize(n_col);
 	row_value.resize(n_col * n_mulcov);
 	col_unique.resize(n_col);
 	//
-	col_name[0]     = "min_lower";
+	col_name[0]     = "max_upper";
 	col_type[0]     = "real";
 	col_unique[0]   = false;
 	//
-	col_name[1]     = "max_upper";
+	col_name[1]     = "max_abs_cov";
 	col_type[1]     = "real";
 	col_unique[1]   = false;
-	//
-	col_name[2]     = "max_abs_cov";
-	col_type[2]     = "real";
-	col_unique[2]   = false;
 	//
 	for(size_t mulcov_id = 0; mulcov_id < n_mulcov; mulcov_id++)
 	{	int covariate_id    = db_input.mulcov_table[mulcov_id].covariate_id;
@@ -312,8 +306,7 @@ void init_command(
 			}
 		}
 		row_value[n_col * mulcov_id + 0] = ""; // empty string corresponds
-		row_value[n_col * mulcov_id + 1] = ""; // to null; i.e., no bound
-		row_value[n_col * mulcov_id + 2] = to_string(max_abs_cov);
+		row_value[n_col * mulcov_id + 1] = to_string(max_abs_cov);
 	}
 	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value

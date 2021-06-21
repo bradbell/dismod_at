@@ -73,11 +73,9 @@ max_abs_effect = 3.0
 # The corresponding difference from the income reference are
 # $codei% - %europe_avg_income% / 2%$$ and
 # $icode%europe_avg_income%$$.
-# This yields the following values for
-# $cref/min_lower/bnd_mulcov_table/min_lower/$$ and
+# This yields the following value
 # $cref/max_upper/bnd_mulcov_table/max_upper/$$:
 # $codei%
-#	%min_lower% = - %max_abs_effect% / %europe_avg_income%
 #	%max_upper% = + %max_abs_effect% / %europe_avg_income%
 # %$$.
 #
@@ -332,11 +330,6 @@ check     = max_abs_effect / europe_avg_income
 rel_err   = 1.0 - max_upper / check
 assert abs(rel_error) < 1e-5
 #
-# check min_lower
-min_lower = bnd_mulcov_table[0]['min_lower']
-check     = - max_abs_effect / europe_avg_income
-rel_err   = 1.0 - min_lower / check
-assert abs(rel_error) < 1e-5
 # -----------------------------------------------------------------------------
 print('compress.py: OK')
 # -----------------------------------------------------------------------------
