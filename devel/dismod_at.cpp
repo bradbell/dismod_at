@@ -69,6 +69,7 @@ int main(int n_arg, const char** argv)
 	// BEGIN_SORT_THIS_LINE_PLUS_2
 	struct { const char* name; int n_arg; } command_info[] = {
 		{"bnd_mulcov",   4},
+		{"bnd_mulcov",   5},
 		{"depend",       3},
 		{"fit",          4},
 		{"fit",          5},
@@ -474,11 +475,16 @@ int main(int n_arg, const char** argv)
 	}
 	else if( command_arg == "bnd_mulcov" )
 	{	string max_abs_effect = argv[3];
+		string covariate_name = "";
+		if( n_arg == 5 )
+			covariate_name = argv[4];
 		vector<dismod_at::data_subset_struct> data_subset_table =
 			dismod_at::get_data_subset(db);
 		dismod_at::bnd_mulcov_command(
 			db,
 			max_abs_effect,
+			covariate_name,
+			db_input.covariate_table,
 			db_input.mulcov_table
 		);
 	}
