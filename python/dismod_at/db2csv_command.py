@@ -30,6 +30,8 @@
 #	mulcov
 #	cv
 #	stdcv
+#	cov_diff
+#	bnd
 # $$
 #
 # $section Create Csv Files that Summarize The Database$$
@@ -174,6 +176,13 @@
 # If this variable is a covariate multiplier, this is the corresponding
 # $cref/mulcov_id/mulcov_table/mulcov_id/$$.
 #
+# $subhead m_diff$$
+# If this variable is a covariate multiplier, this is the corresponding
+# $cref/max_cov_diff/bnd_mulcov_table/max_cov_diff/$$.
+#
+# $subhead m_bnd$$
+# If this variable is a covariate multiplier, this is the corresponding
+# $cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$.
 #
 # $subhead age$$
 # is the $cref/age/age_table/age/$$.
@@ -747,6 +756,7 @@ def db2csv_command(database_file_arg) :
 		'age',
 		'age_avg',
 		'avgint',
+		'bnd_mulcov',
 		'covariate',
 		'data',
 		'data_subset',
@@ -1204,6 +1214,8 @@ def db2csv_command(database_file_arg) :
 		'var_type',
 		's_id',
 		'm_id',
+		'm_diff',
+		'm_bnd',
 		'age',
 		'time',
 		'rate',
@@ -1255,6 +1267,12 @@ def db2csv_command(database_file_arg) :
 		row_out['time']      = table_lookup('time', row_in['time_id'], 'time')
 		row_out['sam_avg']   = round_to(sam_avg[var_id], 3)
 		row_out['sam_std']   = round_to(sam_std[var_id], 3)
+		row_out['m_diff']    = table_lookup(
+			'bnd_mulcov', row_in['mulcov_id'], 'max_cov_diff'
+		)
+		row_out['m_bnd']    = table_lookup(
+			'bnd_mulcov', row_in['mulcov_id'], 'max_mulcov'
+		)
 		row_out['rate']      = table_lookup(
 			'rate', row_in['rate_id'], 'rate_name'
 		)

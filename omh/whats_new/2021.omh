@@ -32,6 +32,8 @@ $spell
 	ubuntu
 	init
 	integrands
+	diff
+	bnd
 $$
 $navigate%
 	Up%Location%
@@ -50,7 +52,10 @@ $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-22$$
 $list number$$
-Add the $cref bnd_mulcov_command$$.
+Add the $cref bnd_mulcov_table$$, $cref bnd_mulcov_command$$
+and columns
+$cref/m_diff/db2csv_command/variable.csv/m_diff/$$,
+$cref/m_bnd/db2csv_command/variable.csv/m_bnd/$$ to variable.csv.
 $lnext
 Change the section name $code user$$ to $cref user_example$$
 and sort the user examples.

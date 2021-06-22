@@ -62,5 +62,8 @@ lower limit for the corresponding covariate multiplier during optimization.
 This maximum and minimum are in addition to the priors for the multiplier.
 If $icode max_mulcov$$ is null,
 it is interpreted as plus infinity and has no effect.
+Also, in the special case where the prior upper and lower limits are equal,
+this maximum and minimum are ignored (have no effect).
+
 
 $end

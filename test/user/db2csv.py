@@ -82,9 +82,16 @@ def example_db (file_name) :
 	#
 	# mulcov table:
 	mulcov_table = [
-		{
+		{	# meas_noise covariates not affected by max_abs_effect
 			'covariate': 'one',
 			'type':      'meas_noise',
+			'effected':  'Sincidence',
+			'group':     'world',
+			'smooth':    'smooth_gamma'
+		},{
+			# This covariate held out of fit because max_abs_effect is 0
+			'covariate': 'one',
+			'type':      'meas_value',
 			'effected':  'Sincidence',
 			'group':     'world',
 			'smooth':    'smooth_gamma'
@@ -198,6 +205,7 @@ example_db(file_name)
 program = '../../devel/dismod_at'
 command_list = [
 	[ program  , file_name, 'init' ],
+	[ program  , file_name, 'bnd_mulcov', '0.0' ],
 	[ program  , file_name, 'fit', 'fixed' ],
 	# db2csv used to crash if last fit had a warm_start
 	[ program  , file_name, 'fit', 'fixed', 'warm_start' ],
@@ -214,6 +222,21 @@ print( ' '.join(command) )
 flag = subprocess.call( command )
 if flag != 0 :
 	sys.exit('db2csv.py: command failed')
+# -----------------------------------------------------------------------
+# variable.csv
+data_file    = open('build/test/user/variable.csv', 'r')
+reader       = csv.DictReader(data_file)
+count_mulcov = 0
+for row in reader :
+	# Check bnd_mulcov informaiton
+	if row['var_type'].startswith('mulcov_') :
+		count_mulcov += 1
+		max_cov_diff = float( row['m_diff'] )
+		assert max_cov_diff == 1.0
+		if row['var_type'] == 'mulcov_meas_noise' :
+			assert row['m_bnd'] == ''
+		else :
+			assert float( row['m_bnd'] ) == 0.0
 # -----------------------------------------------------------------------
 # data.csv
 data_file = open('build/test/user/data.csv', 'r')

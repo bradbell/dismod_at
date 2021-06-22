@@ -111,9 +111,11 @@ namespace dismod_at {
 			// enforce the bnd_mulcov table values
 			double lower        = lower_limit[var_id];
 			double upper        = upper_limit[var_id];
-			double max_mulcov   = var2prior.max_mulcov(var_id);
-			lower_limit[var_id] = std::max(lower, - max_mulcov);
-			upper_limit[var_id] = std::min(upper, max_mulcov);
+			if( lower < upper )
+			{	double max_mulcov   = var2prior.max_mulcov(var_id);
+				lower_limit[var_id] = std::max(lower, - max_mulcov);
+				upper_limit[var_id] = std::min(upper, max_mulcov);
+			}
 		}
 	}
 }

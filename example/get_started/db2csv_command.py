@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -142,6 +142,9 @@ variable_table = get_table('variable')
 # no sample command
 always_empty  = [ 'integrand', 'depend', 'truth', 'sam_avg', 'sam_std' ]
 #
+# empty because no bnd_mulcov command was executed
+always_empty += [ 'm_bnd' ]
+#
 # res_value is empty because value prior is uniform
 # sim_v, sim_a, sim_t are empty because have not run simulate command
 always_empty += [ 'res_value', 'res_dage', 'res_dtime' ]
@@ -165,9 +168,16 @@ for row in variable_table :
 		if field in empty_field :
 			assert row[field] == ''
 		else :
-			if row[field] == '' :
+			if field == 'm_diff' :
+				if row['var_type'].startswith('mulcov_') :
+					ok = row[field] != ''
+				else :
+					ok = row[field] == ''
+			else :
+				ok = row[field] != ''
+			if not ok :
 				print(field, row)
-			assert row[field] != ''
+			assert ok
 	#
 	assert row['rate']               == 'omega'
 	assert row['fixed']              == 'true'

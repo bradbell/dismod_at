@@ -330,6 +330,9 @@ correpsonding parent rates.
 
 06-16:
 1. Use the new compres interval options to simplify the fit_ihme.py code.
+
+06-22:
+1. Use the new bnd_mulcov command to improve and simplify the fit_ihme.py code.
 '''
 }
 # help cases
@@ -1882,132 +1885,6 @@ def set_covariate_reference (covariate_id, reference_name) :
 		table_name, covariate_table, covariate_col_name, covariate_col_type
 	)
 # -----------------------------------------------------------------------------
-def set_mulcov_bound(max_covariate_effect, covariate_id) :
-	# Set bounds for all of the multipliers for a specified covariate so
-	# corresponding absolute effect is bounded by
-	# disease_specific_max_covariate_effect.
-	# Noise covariate multipliers are not included.
-	# The bounds for an integerand are set to zero if the covariate
-	# is identically equal to the reference for that integrand.
-	if max_covariate_effect < 0.0 :
-		msg = 'disease specific max_covariate_effect is negative'
-		sys.exit(msg)
-	#
-	# reference for this covariate
-	reference      = covariate_table[covariate_id]['reference']
-	max_difference = covariate_table[covariate_id]['max_difference']
-	if max_difference is None :
-		max_difference = numpy.inf
-	#
-	# difference_dict = covariate minus reference
-	difference_dict  = dict()
-	column_name = 'x_{}'.format(covariate_id)
-	for row in data_table :
-		integrand_id = row['integrand_id']
-		covariate   = row[column_name]
-		if covariate is not None :
-			difference = covariate - reference
-			if difference < max_difference :
-				if integrand_id not in difference_dict :
-					difference_dict[integrand_id] = list()
-				if column_name not in difference_dict :
-					difference_dict[column_name] = list()
-				difference_dict[integrand_id].append(difference)
-				difference_dict[column_name].append(difference)
-	#
-	# lower_dict and  upper_dict
-	lower_dict = dict()
-	upper_dict = dict()
-	for key in difference_dict :
-		#
-		# maximum and minimum difference
-		min_difference = min(difference_dict[key])
-		max_difference = max(difference_dict[key])
-		#
-		# initialize
-		lower = - float("inf")
-		upper = + float("inf")
-		if max_difference > 0 :
-			upper = min(upper,    max_covariate_effect / max_difference)
-			lower = max(lower,  - max_covariate_effect / max_difference)
-		if min_difference < 0 :
-			upper = min(upper,  - max_covariate_effect / min_difference)
-			lower = max(lower,    max_covariate_effect / min_difference)
-		if upper == float("inf") :
-			lower = 0.0
-			upper = 0.0
-		lower_dict[key] = lower
-		upper_dict[key] = upper
-	#
-	# start trace for this covariate_id
-	msg  = '\nset_mulcov_bound: covariate = x_{}, max_covariate_effect = {}'
-	msg = msg.format(covariate_id, max_covariate_effect);
-	trace(msg)
-	#
-	# modify mulcov_table
-	for row in mulcov_table :
-		if row['covariate_id'] == covariate_id :
-			integrand_id = row['integrand_id']
-			if integrand_id in difference_dict :
-				lower = lower_dict[integrand_id]
-				upper = upper_dict[integrand_id]
-				# integrand_id is not None
-				assert row['mulcov_type'] != 'rate_value'
-			elif integrand_id is not None :
-				lower = 0.0
-				upper = 0.0
-				# integrand_id is not None
-				assert row['mulcov_type'] != 'rate_value'
-			else :
-				# integrand_id is None
-				assert row['mulcov_type'] == 'rate_value'
-				column_name = 'x_{}'.format(covariate_id)
-				if column_name in difference_dict :
-					lower = lower_dict[column_name]
-					upper = upper_dict[column_name]
-				else :
-					lower = 0.0
-					upper = 0.0
-			# Skip measurement noise covariates
-			if row['mulcov_type'] != 'meas_noise' :
-				# replace group smoothing by one with specified bounds
-				group_smooth_id = row['group_smooth_id']
-				group_smooth_id = new_bounded_smooth_id(
-					group_smooth_id, lower, upper
-				)
-				row['group_smooth_id'] = group_smooth_id
-				#
-				# replace subgroup smoothing by one with specified bounds
-				subgroup_smooth_id = row['subgroup_smooth_id']
-				subgroup_smooth_id = new_bounded_smooth_id(
-					subgroup_smooth_id, lower, upper
-				)
-				row['subgroup_smooth_id'] = subgroup_smooth_id
-			# lower and upper for printing
-			if lower is None :
-				lower = - float('inf')
-			if upper is None :
-				upper = + float('inf')
-			#
-			if integrand_id is None :
-				rate_id   = row['rate_id']
-				name  = rate_table[rate_id]['rate_name']
-				text  = 'rate = {}, lower = {:.5g}, upper = {:.5g}'
-				msg   = text.format(name, lower, upper)
-			else :
-				name  = integrand_table[integrand_id]['integrand_name']
-				text  = 'integrand = {}, lower = {:.5g}, upper = {:.5g}'
-				msg   = text.format(name, lower, upper)
-			trace(msg)
-	#
-	put_table('prior',   prior_table,  prior_col_name,  prior_col_type)
-	put_table('mulcov',  mulcov_table, mulcov_col_name, mulcov_col_type)
-	put_table('smooth',  smooth_table, smooth_col_name, smooth_col_type)
-	put_table('smooth_grid',
-		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
-	)
-	return
-# -----------------------------------------------------------------------------
 def set_mulcov_value(covariate_name, rate_or_integrand_name, mulcov_value) :
 	# Set the value for a specific covariate multiplier.
 	# The corresponding multiplier must be in the covariate table.
@@ -2403,13 +2280,7 @@ if which_fit_arg == 'no_ode'  :
 			msg += ' in original database'
 			trace(msg)
 	#
-	# set bounds for all the covariates
-	n_covariate = len( covariate_table )
-	for covariate_id in range( n_covariate ) :
-		set_mulcov_bound(specific.max_covariate_effect, covariate_id)
-	#
 	# Covariate multipliers that we are setting a specific value for
-	# (this must be done after set_mulcov_bound).
 	for row in specific.set_mulcov_value :
 		covariate_name         = row[0]
 		rate_or_integrand_name = row[1]
@@ -2419,12 +2290,18 @@ if which_fit_arg == 'no_ode'  :
 	# init:
 	system_command([ 'dismod_at', temp_database, 'init'])
 	# ------------------------------------------------------------------------
-	# randomly hold_out
+	# randomly subsample the data
 	max_fit_str = str(specific.max_per_integrand)
 	for integrand_name in integrand_list_all :
 		system_command([
 			'dismod_at', temp_database, 'hold_out', integrand_name, max_fit_str
 		])
+	#
+	# set bound for the covariate effect
+	max_abs_effect_str = str(specific.max_covariate_effect)
+	system_command([
+		'dismod_at', temp_database, 'bnd_mulcov', max_abs_effect_str
+	])
 	# ------------------------------------------------------------------------
 	# set options
 	set_option('tolerance_fixed',     '1e-8')
