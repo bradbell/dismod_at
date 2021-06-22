@@ -5,7 +5,7 @@ document.write('\
 <option>math_abstract</option>\
 <option>install</option>\
 <option>get_started</option>\
-<option>user</option>\
+<option>user_example</option>\
 <option>database</option>\
 <option>model</option>\
 <option>command</option>\
@@ -23,7 +23,7 @@ function dismod_at_child(item)
 		'math_abstract.htm',
 		'install.htm',
 		'get_started.htm',
-		'user.htm',
+		'user_example.htm',
 		'database.htm',
 		'model.htm',
 		'command.htm',

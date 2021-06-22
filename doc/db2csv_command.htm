@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv mixed_info.csv variable.csv var_id var_type s_id m_id age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv mixed_info.csv variable.csv var_id var_type s_id m_id m_diff m_bnd age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -88,6 +88,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.var_type" target="_top">var_type</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.s_id" target="_top">s_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.m_id" target="_top">m_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.m_diff" target="_top">m_diff</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.m_bnd" target="_top">m_bnd</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.age" target="_top">age</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.time" target="_top">time</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.rate" target="_top">rate</a>
@@ -416,6 +418,21 @@ If this variable is a covariate multiplier, this is the corresponding
 <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
 .
 
+<br>
+<br>
+<big><a name="variable.csv.m_diff" id="variable.csv.m_diff">m_diff</a></big>
+<br>
+If this variable is a covariate multiplier, this is the corresponding
+<a href="bnd_mulcov_table.htm#max_cov_diff" target="_top"><span style='white-space: nowrap'>max_cov_diff</span></a>
+.
+
+<br>
+<br>
+<big><a name="variable.csv.m_bnd" id="variable.csv.m_bnd">m_bnd</a></big>
+<br>
+If this variable is a covariate multiplier, this is the corresponding
+<a href="bnd_mulcov_table.htm#max_mulcov" target="_top"><span style='white-space: nowrap'>max_mulcov</span></a>
+.
 
 <br>
 <br>

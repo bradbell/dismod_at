@@ -1,0 +1,159 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>The Covariate and Multiplier Bound Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Covariate and Multiplier Bound Table">
+<meta name="keywords" id="keywords" content=" the covariate multiplier bound table bnd_mulcov_id max_cov_diff max_mulcov ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_bnd_mulcov_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>bnd_mulcov_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="age_avg_table.htm" target="_top">Prev</a>
+</td><td><a href="data_sim_table.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_database_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_data_flow_htm.js'></script>
+</td>
+<td>bnd_mulcov_table</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Covariate and Multiplier Bound Table</big></big></b></center>
+
+<br><a href="bnd_mulcov_table.htm#bnd_mulcov_id" target="_top">bnd_mulcov_id</a>
+<br><a href="bnd_mulcov_table.htm#max_cov_diff" target="_top">max_cov_diff</a>
+<br><a href="bnd_mulcov_table.htm#max_mulcov" target="_top">max_mulcov</a>
+<br>.
+
+<br>
+<br>
+<b><big><a name="bnd_mulcov_id" id="bnd_mulcov_id">bnd_mulcov_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code> and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The <code><font color="blue">bnd_mulcov_id</font></code> column is also a foreign key for the
+<a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
+ ; i.e.,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bnd_mulcov_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+In addition, the size of both tables is the same.
+
+<br>
+<br>
+<b><big><a name="max_cov_diff" id="max_cov_diff">max_cov_diff</a></big></b>
+<br>
+This column has type 
+<code><i><font color="black"><span style='white-space: nowrap'>real</span></font></i></code>
+ and contains the maximum absolute difference
+of the covariate minus its reference (for this covariate multiplier).
+<ol type="1"><li>
+This maximum is restricted to the data table covariate values
+that have <a href="data_subset_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
+
+in the data_subset table.
+</li><li>
+
+This maximum is further restricted to the covariate column
+corresponding to the <a href="mulcov_table.htm#covariate_id" target="_top"><span style='white-space: nowrap'>covariate_id</span></a>
+
+for this covariate multiplier.
+</li><li>
+
+If the <a href="mulcov_table.htm#mulcov_type" target="_top"><span style='white-space: nowrap'>mulcov_type</span></a>
+
+for this multiplier is <code><font color="blue">rate_value</font></code>,
+<a href="mulcov_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ for this multiplier is null
+and the maximum is respect to all integrands.
+</li><li>
+
+If the 
+<code><i><font color="black"><span style='white-space: nowrap'>mulcov_type</span></font></i></code>
+ for this multiplier is not <code><font color="blue">rate_value</font></code>,
+<a href="mulcov_table.htm#integrand_id" target="_top"><span style='white-space: nowrap'>integrand_id</span></a>
+ for this multiplier is not null
+and the maximum is further restricted the that integrand.
+</li></ol>
+
+If this value is zero, the corresponding covariate multiplier does not
+affect the model value for any of the data included during a fit.
+
+<br>
+<br>
+<b><big><a name="max_mulcov" id="max_mulcov">max_mulcov</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code>, is non-negative.
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>max_mulcov</span></font></i></code>
+ is a maximum for the
+upper limit for the corresponding covariate multiplier during optimization.
+The value 
+<code><font color="blue"><span style='white-space: nowrap'>-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_mulcov</span></font></i></code>
+ is a minimum for the
+lower limit for the corresponding covariate multiplier during optimization.
+This maximum and minimum are in addition to the priors for the multiplier.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>max_mulcov</span></font></i></code>
+ is null,
+it is interpreted as plus infinity and has no effect.
+Also, in the special case where the prior upper and lower limits are equal,
+this maximum and minimum are ignored (have no effect).
+
+
+
+<hr>Input File: omh/table/bnd_mulcov_table.omh
+
+</body>
+</html>

@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_example_htm.js'>
 </script>
 </head>
 <body>
@@ -35,7 +35,7 @@ A:active { color : purple }
 <select onchange='choose_up0(this)'>
 <option>Location-&gt;</option>
 <option>dismod_at</option>
-<option>user</option>
+<option>user_example</option>
 </select>
 </td>
 <td>
@@ -54,19 +54,19 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
 </td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>User Examples and Tests</big></big></b></center>
 
-<br><a href="user.htm#See Also" target="_top">See&nbsp;Also</a>
-<br><a href="user.htm#Run One Example" target="_top">Run&nbsp;One&nbsp;Example</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="user.htm#Run One Example.user_speed.py" target="_top">user_speed.py</a>
-<br><a href="user.htm#example.db" target="_top">example.db</a>
-<br><a href="user.htm#Examples With Explanation" target="_top">Examples&nbsp;With&nbsp;Explanation</a>
-<br><a href="user.htm#More Examples" target="_top">More&nbsp;Examples</a>
+<br><a href="user_example.htm#See Also" target="_top">See&nbsp;Also</a>
+<br><a href="user_example.htm#Run One Example" target="_top">Run&nbsp;One&nbsp;Example</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_example.htm#Run One Example.user_speed.py" target="_top">user_speed.py</a>
+<br><a href="user_example.htm#example.db" target="_top">example.db</a>
+<br><a href="user_example.htm#Examples With Explanation" target="_top">Examples&nbsp;With&nbsp;Explanation</a>
+<br><a href="user_example.htm#More Examples" target="_top">More&nbsp;Examples</a>
 <br><br>
 <b><big><a name="See Also" id="See Also">See Also</a></big></b>
 
@@ -129,140 +129,73 @@ which can be inspected using any sqlite viewer; e.g.,
 
 <table><tr><td align='left'  valign='top'>
 
-<a href="user_one_function.py.htm" target="_top">user_one_function.py</a></td><td>
-Fitting One Function of Two Variables</td></tr>
-<tr><td>
-
-<a href="user_hold_out.py.htm" target="_top">user_hold_out.py</a></td><td>
-Using hold_out in Data, Subset Data, and Option Tables</td></tr>
-<tr><td>
-
-<a href="user_compress.py.htm" target="_top">user_compress.py</a></td><td>
-Using Data Interval Compression</td></tr>
-<tr><td>
-
-<a href="user_sim_log.py.htm" target="_top">user_sim_log.py</a></td><td>
-Simulating Data with Log Transformed Distribution</td></tr>
-<tr><td>
-
-<a href="user_residual.py.htm" target="_top">user_residual.py</a></td><td>
-Weighted Residuals</td></tr>
-<tr><td>
-
-<a href="user_fit_random.py.htm" target="_top">user_fit_random.py</a></td><td>
-Fitting Just Random Effects</td></tr>
-<tr><td>
-
-<a href="user_fit_fixed_both.py.htm" target="_top">user_fit_fixed_both.py</a></td><td>
-Fit Fixed First Then Both</td></tr>
-<tr><td>
-
-<a href="user_fit_sim.py.htm" target="_top">user_fit_sim.py</a></td><td>
-Fitting Simulated Data Example</td></tr>
-<tr><td>
-
-<a href="user_fit_meas_noise.py.htm" target="_top">user_fit_meas_noise.py</a></td><td>
-Group Measurement Noise Covariate Multipliers, Gamma</td></tr>
-<tr><td>
 
 <a href="user_age_avg_split.py.htm" target="_top">user_age_avg_split.py</a></td><td>
 Non-uniform Age Average Grid</td></tr>
-<tr><td>
-
-<a href="user_diabetes.py.htm" target="_top">user_diabetes.py</a></td><td>
-An Example / Speed Test Fitting Simulated Diabetes Data</td></tr>
-<tr><td>
-
-<a href="user_ill_condition.py.htm" target="_top">user_ill_condition.py</a></td><td>
-An Ill Conditioned Example Where Re-Scaling is Helpful</td></tr>
-<tr><td>
-
-<a href="user_jump_at_age.py.htm" target="_top">user_jump_at_age.py</a></td><td>
-Zero Rate Until a Jump at a Known Age</td></tr>
-<tr><td>
-
-<a href="user_change_grid.py.htm" target="_top">user_change_grid.py</a></td><td>
-Remove an Age or Time From a Smoothing</td></tr>
-<tr><td>
-
-<a href="user_lasso_covariate.py.htm" target="_top">user_lasso_covariate.py</a></td><td>
-Using Lasso on Covariate Multiplier</td></tr>
-<tr><td>
-
-<a href="user_students.py.htm" target="_top">user_students.py</a></td><td>
-Using Student's-t to Fit With Remove Outliers Present</td></tr>
-<tr><td>
-
-<a href="user_censor.py.htm" target="_top">user_censor.py</a></td><td>
-Fitting Data That Has Negative Values Censored</td></tr>
-<tr><td>
-
-<a href="user_cascade.py.htm" target="_top">user_cascade.py</a></td><td>
-Generating Priors For Next Level Down Node Tree</td></tr>
-<tr><td>
-
-<a href="user_predict_fit.py.htm" target="_top">user_predict_fit.py</a></td><td>
-Predict Average Integrand Using Results of a Fit</td></tr>
-<tr><td>
-
-<a href="user_predict_mulcov.py.htm" target="_top">user_predict_mulcov.py</a></td><td>
-Predict Covariate Multiplier Values</td></tr>
-<tr><td>
-
-<a href="user_data_sim.py.htm" target="_top">user_data_sim.py</a></td><td>
-Explanation of Simulated Data Table, data_sim</td></tr>
-<tr><td>
-
-<a href="user_sample_simple.py.htm" target="_top">user_sample_simple.py</a></td><td>
-Simple Sampling From The Posterior Distribution</td></tr>
-<tr><td>
-
-<a href="user_sample_sim.py.htm" target="_top">user_sample_sim.py</a></td><td>
-Sample Posterior Using Simulated Data</td></tr>
-<tr><td>
-
-<a href="user_sample_asy.py.htm" target="_top">user_sample_asy.py</a></td><td>
-Sample from Asymptotic Distribution for Model Variables</td></tr>
-<tr><td>
-
-<a href="user_speed.py.htm" target="_top">user_speed.py</a></td><td>
-A Simulate Data Speed Test</td></tr>
-<tr><td>
-
-<a href="user_continue_fit.py.htm" target="_top">user_continue_fit.py</a></td><td>
-Continuing a Fit From Where it Left Off</td></tr>
-<tr><td>
-
-<a href="user_const_value.py.htm" target="_top">user_const_value.py</a></td><td>
-Constrain Omega Using const_value</td></tr>
-<tr><td>
-
-<a href="user_mulstd.py.htm" target="_top">user_mulstd.py</a></td><td>
-Estimating Smoothing Standard Deviation Multiplies</td></tr>
-<tr><td>
-
-<a href="user_group_mulcov.py.htm" target="_top">user_group_mulcov.py</a></td><td>
-Using Group Covariate Multipliers</td></tr>
-<tr><td>
-
-<a href="user_zsum_child_rate.py.htm" target="_top">user_zsum_child_rate.py</a></td><td>
-Constrain Sum of Child Rate Effect to Zero</td></tr>
-<tr><td>
-
-<a href="user_zsum_mulcov_rate.py.htm" target="_top">user_zsum_mulcov_rate.py</a></td><td>
-Constrain Sum of Subgroup Rate Covariate Multipliers to Zero</td></tr>
-<tr><td>
-
-<a href="user_zsum_mulcov_meas.py.htm" target="_top">user_zsum_mulcov_meas.py</a></td><td>
-Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero</td></tr>
 <tr><td>
 
 <a href="user_bilevel_random.py.htm" target="_top">user_bilevel_random.py</a></td><td>
 Example Fitting With Two Levels of Random Effects</td></tr>
 <tr><td>
 
-<a href="user_subgroup_mulcov.py.htm" target="_top">user_subgroup_mulcov.py</a></td><td>
-Example Fitting With Subgroup Covariate Multipliers</td></tr>
+<a href="user_bnd_mulcov.py.htm" target="_top">user_bnd_mulcov.py</a></td><td>
+Bounding Covariate Multipliers Absolute Data Effect</td></tr>
+<tr><td>
+
+<a href="user_cascade.py.htm" target="_top">user_cascade.py</a></td><td>
+Generating Priors For Next Level Down Node Tree</td></tr>
+<tr><td>
+
+<a href="user_censor.py.htm" target="_top">user_censor.py</a></td><td>
+Fitting Data That Has Negative Values Censored</td></tr>
+<tr><td>
+
+<a href="user_change_grid.py.htm" target="_top">user_change_grid.py</a></td><td>
+Remove an Age or Time From a Smoothing</td></tr>
+<tr><td>
+
+<a href="user_compress.py.htm" target="_top">user_compress.py</a></td><td>
+Using Data Interval Compression</td></tr>
+<tr><td>
+
+<a href="user_const_value.py.htm" target="_top">user_const_value.py</a></td><td>
+Constrain Omega Using const_value</td></tr>
+<tr><td>
+
+<a href="user_continue_fit.py.htm" target="_top">user_continue_fit.py</a></td><td>
+Continuing a Fit From Where it Left Off</td></tr>
+<tr><td>
+
+<a href="user_covid_19.py.htm" target="_top">user_covid_19.py</a></td><td>
+Model The Covid-19 Epidemic</td></tr>
+<tr><td>
+
+<a href="user_data_sim.py.htm" target="_top">user_data_sim.py</a></td><td>
+Explanation of Simulated Data Table, data_sim</td></tr>
+<tr><td>
+
+<a href="user_diabetes.py.htm" target="_top">user_diabetes.py</a></td><td>
+An Example / Speed Test Fitting Simulated Diabetes Data</td></tr>
+<tr><td>
+
+<a href="user_fit_fixed_both.py.htm" target="_top">user_fit_fixed_both.py</a></td><td>
+Fit Fixed First Then Both</td></tr>
+<tr><td>
+
+<a href="user_fit_meas_noise.py.htm" target="_top">user_fit_meas_noise.py</a></td><td>
+Group Measurement Noise Covariate Multipliers, Gamma</td></tr>
+<tr><td>
+
+<a href="user_fit_random.py.htm" target="_top">user_fit_random.py</a></td><td>
+Fitting Just Random Effects</td></tr>
+<tr><td>
+
+<a href="user_fit_sim.py.htm" target="_top">user_fit_sim.py</a></td><td>
+Fitting Simulated Data Example</td></tr>
+<tr><td>
+
+<a href="user_group_mulcov.py.htm" target="_top">user_group_mulcov.py</a></td><td>
+Using Group Covariate Multipliers</td></tr>
 <tr><td>
 
 <a href="user_hes_fixed_math.py.htm" target="_top">user_hes_fixed_math.py</a></td><td>
@@ -273,6 +206,70 @@ Check the Hessian of the Fixed Effects Objective</td></tr>
 Check the Hessian of the Fixed Effects Objective</td></tr>
 <tr><td>
 
+<a href="user_hold_out.py.htm" target="_top">user_hold_out.py</a></td><td>
+Using hold_out in Data, Subset Data, and Option Tables</td></tr>
+<tr><td>
+
+<a href="user_ill_condition.py.htm" target="_top">user_ill_condition.py</a></td><td>
+An Ill Conditioned Example Where Re-Scaling is Helpful</td></tr>
+<tr><td>
+
+<a href="user_jump_at_age.py.htm" target="_top">user_jump_at_age.py</a></td><td>
+Zero Rate Until a Jump at a Known Age</td></tr>
+<tr><td>
+
+<a href="user_lasso_covariate.py.htm" target="_top">user_lasso_covariate.py</a></td><td>
+Using Lasso on Covariate Multiplier</td></tr>
+<tr><td>
+
+<a href="user_mulstd.py.htm" target="_top">user_mulstd.py</a></td><td>
+Estimating Smoothing Standard Deviation Multiplies</td></tr>
+<tr><td>
+
+<a href="user_one_function.py.htm" target="_top">user_one_function.py</a></td><td>
+Fitting One Function of Two Variables</td></tr>
+<tr><td>
+
+<a href="user_predict_fit.py.htm" target="_top">user_predict_fit.py</a></td><td>
+Predict Average Integrand Using Results of a Fit</td></tr>
+<tr><td>
+
+<a href="user_predict_mulcov.py.htm" target="_top">user_predict_mulcov.py</a></td><td>
+Predict Covariate Multiplier Values</td></tr>
+<tr><td>
+
+<a href="user_residual.py.htm" target="_top">user_residual.py</a></td><td>
+Weighted Residuals</td></tr>
+<tr><td>
+
+<a href="user_sample_asy.py.htm" target="_top">user_sample_asy.py</a></td><td>
+Sample from Asymptotic Distribution for Model Variables</td></tr>
+<tr><td>
+
+<a href="user_sample_sim.py.htm" target="_top">user_sample_sim.py</a></td><td>
+Sample Posterior Using Simulated Data</td></tr>
+<tr><td>
+
+<a href="user_sample_simple.py.htm" target="_top">user_sample_simple.py</a></td><td>
+Simple Sampling From The Posterior Distribution</td></tr>
+<tr><td>
+
+<a href="user_sim_log.py.htm" target="_top">user_sim_log.py</a></td><td>
+Simulating Data with Log Transformed Distribution</td></tr>
+<tr><td>
+
+<a href="user_speed.py.htm" target="_top">user_speed.py</a></td><td>
+A Simulate Data Speed Test</td></tr>
+<tr><td>
+
+<a href="user_students.py.htm" target="_top">user_students.py</a></td><td>
+Using Student's-t to Fit With Remove Outliers Present</td></tr>
+<tr><td>
+
+<a href="user_subgroup_mulcov.py.htm" target="_top">user_subgroup_mulcov.py</a></td><td>
+Example Fitting With Subgroup Covariate Multipliers</td></tr>
+<tr><td>
+
 <a href="user_sum_residual.py.htm" target="_top">user_sum_residual.py</a></td><td>
 Sum of Residuals at Optimal Estimate</td></tr>
 <tr><td>
@@ -281,9 +278,18 @@ Sum of Residuals at Optimal Estimate</td></tr>
 Continuing a Fit Using Ipopt Warm Start</td></tr>
 <tr><td>
 
-<a href="user_covid_19.py.htm" target="_top">user_covid_19.py</a></td><td>
-Model The Covid-19 Epidemic</td></tr>
+<a href="user_zsum_child_rate.py.htm" target="_top">user_zsum_child_rate.py</a></td><td>
+Constrain Sum of Child Rate Effect to Zero</td></tr>
 <tr><td>
+
+<a href="user_zsum_mulcov_meas.py.htm" target="_top">user_zsum_mulcov_meas.py</a></td><td>
+Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero</td></tr>
+<tr><td>
+
+<a href="user_zsum_mulcov_rate.py.htm" target="_top">user_zsum_mulcov_rate.py</a></td><td>
+Constrain Sum of Subgroup Rate Covariate Multipliers to Zero</td></tr>
+<tr><td>
+
 
 </td></tr>
 </table>

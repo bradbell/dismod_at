@@ -35,7 +35,7 @@ A:active { color : purple }
 <select onchange='choose_up0(this)'>
 <option>Location-&gt;</option>
 <option>dismod_at</option>
-<option>user</option>
+<option>user_example</option>
 <option>user_compress.py</option>
 </select>
 </td>
@@ -55,7 +55,7 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_user_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
 </td>
 <td>user_compress.py</td>
 </tr></table><br>
@@ -73,9 +73,9 @@ A:active { color : purple }
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-This example shows how to use
+This example shows how to use the
 <a href="option_table.htm#compress_interval" target="_top"><span style='white-space: nowrap'>compression&nbsp;intervals</span></a>
-.
+ option.
 
 <br>
 <br>
@@ -308,7 +308,7 @@ var_table             <font color="#990000">=</font> dismod_at<font color="#9900
 fit_var_table         <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
 connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># only one varable in this model, iota</font></i>
+<i><font color="#9A1900"># There are three values for iota in this model</font></i>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>fit_var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">3</font>
 <i><font color="#9A1900">#</font></i>

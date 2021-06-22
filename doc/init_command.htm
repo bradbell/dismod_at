@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Initialize Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Initialize Command">
-<meta name="keywords" id="keywords" content=" the initialize command syntax purpose changing values database age_avg_table var_table data_subset_table start_var_table scale_var_table deleted tables example ">
+<meta name="keywords" id="keywords" content=" the initialize command syntax purpose deleted tables changing values database age_avg_table var_table data_subset_table start_var_table scale_var_table bnd_mulcov_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="fit_command.py.htm" target="_top">Prev</a>
+<td><a href="hold_out_command.htm" target="_top">Prev</a>
 </td><td><a href="init_command.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
@@ -63,10 +63,14 @@ A:active { color : purple }
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Initialize Command</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Initialize Command</big></big></b></center>
 
 <br><a href="init_command.htm#Syntax" target="_top">Syntax</a>
 <br><a href="init_command.htm#Purpose" target="_top">Purpose</a>
+<br><a href="init_command.htm#Deleted Tables" target="_top">Deleted&nbsp;Tables</a>
 <br><a href="init_command.htm#Changing Values" target="_top">Changing&nbsp;Values</a>
 <br><a href="init_command.htm#database" target="_top">database</a>
 <br><a href="init_command.htm#age_avg_table" target="_top">age_avg_table</a>
@@ -74,7 +78,7 @@ A:active { color : purple }
 <br><a href="init_command.htm#data_subset_table" target="_top">data_subset_table</a>
 <br><a href="init_command.htm#start_var_table" target="_top">start_var_table</a>
 <br><a href="init_command.htm#scale_var_table" target="_top">scale_var_table</a>
-<br><a href="init_command.htm#Deleted Tables" target="_top">Deleted&nbsp;Tables</a>
+<br><a href="init_command.htm#bnd_mulcov_table" target="_top">bnd_mulcov_table</a>
 <br><a href="init_command.htm#Example" target="_top">Example</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
@@ -89,35 +93,47 @@ A:active { color : purple }
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
 This command initializes the data flow.
-To be specific, it begins by deleting any existing
-<a href="data_flow.htm#Output Tables by Table Name" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
-,
-except for the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
-,
+To be specific, it begins by deleting any existing output tables,
+except for the log table,
 and then creates new versions of the following tables:
 <table><tr><td align='left'  valign='top'>
 
-<a href="age_avg_table.htm" target="_top"><span style='white-space: nowrap'>age_avg_table</span></a>
-       </td><td align='left'  valign='top'>
- The Age Average Table     </td></tr><tr><td align='left'  valign='top'>
+<a href="age_avg_table.htm" target="_top">age_avg_table</a></td><td>
+The Age Average Table</td></tr>
+<tr><td>
 
-<a href="var_table.htm" target="_top"><span style='white-space: nowrap'>var_table</span></a>
-           </td><td align='left'  valign='top'>
- Identifying Model Variables         </td></tr><tr><td align='left'  valign='top'>
+<a href="bnd_mulcov_table.htm" target="_top">bnd_mulcov_table</a></td><td>
+The Covariate and Multiplier Bound Table</td></tr>
+<tr><td>
 
-<a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
-   </td><td align='left'  valign='top'>
- The Data Subset Table </td></tr><tr><td align='left'  valign='top'>
+<a href="data_subset_table.htm" target="_top">data_subset_table</a></td><td>
+The Data Subset Table</td></tr>
+<tr><td>
 
-<a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
-     </td><td align='left'  valign='top'>
- Starting Values Used During a Fit   </td></tr><tr><td align='left'  valign='top'>
+<a href="start_var_table.htm" target="_top">start_var_table</a></td><td>
+Starting Values Used During a Fit</td></tr>
+<tr><td>
 
-<a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
-     </td><td align='left'  valign='top'>
- Scaling Fixed Effects Objective and Constraints
+<a href="scale_var_table.htm" target="_top">scale_var_table</a></td><td>
+Scaling Fixed Effects Objective and Constraints</td></tr>
+<tr><td>
+
+<a href="var_table.htm" target="_top">var_table</a></td><td>
+Identifying Model Variables</td></tr>
+<tr><td>
+
 </td></tr>
 </table>
+<br>
+<b><big><a name="Deleted Tables" id="Deleted Tables">Deleted Tables</a></big></b>
+<br>
+This routine begins by deleting any existing
+<a href="data_flow.htm#Output Tables by Table Name" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
+,
+except for the <a href="log_table.htm" target="_top"><span style='white-space: nowrap'>log_table</span></a>
+.
+
+<br>
 <br>
 <b><big><a name="Changing Values" id="Changing Values">Changing Values</a></big></b>
 <br>
@@ -186,24 +202,11 @@ means of the priors for the model variables.
 
 <br>
 <br>
-<b><big><a name="Deleted Tables" id="Deleted Tables">Deleted Tables</a></big></b>
+<b><big><a name="bnd_mulcov_table" id="bnd_mulcov_table">bnd_mulcov_table</a></big></b>
 <br>
-The following tables are deleted (if they exist) when the
-<code><font color="blue">init</font></code> command is run:
-<a href="depend_var_table.htm" target="_top"><span style='white-space: nowrap'>depend_var</span></a>
-,
-<a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var</span></a>
-,
-<a href="truth_var_table.htm" target="_top"><span style='white-space: nowrap'>truth_var</span></a>
-,
-<a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset</span></a>
-,
-<a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim</span></a>
-,
-<a href="sample_table.htm" target="_top"><span style='white-space: nowrap'>sample</span></a>
-,
-<a href="predict_table.htm" target="_top"><span style='white-space: nowrap'>predict</span></a>
-.
+A new bnd_mulcov table is created using null for
+<a href="bnd_mulcov_table.htm#max_mulcov" target="_top"><span style='white-space: nowrap'>max_mulcov</span></a>
+; i.e., plus infinity.
 
 
 <br>

@@ -1,6 +1,6 @@
 var list_up0 = [
 'dismod_at.htm',
-'user.htm',
+'user_example.htm',
 'user_zsum_child_rate.py.htm'
 ];
 var list_across0 = [

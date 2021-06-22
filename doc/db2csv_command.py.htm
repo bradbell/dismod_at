@@ -191,6 +191,9 @@ variable_table <font color="#990000">=</font> <b><font color="#000000">get_table
 <i><font color="#9A1900"># no sample command</font></i>
 always_empty  <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integrand'</font><font color="#990000">,</font> <font color="#FF0000">'depend'</font><font color="#990000">,</font> <font color="#FF0000">'truth'</font><font color="#990000">,</font> <font color="#FF0000">'sam_avg'</font><font color="#990000">,</font> <font color="#FF0000">'sam_std'</font> <font color="#990000">]</font>
 <i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># empty because no bnd_mulcov command was executed</font></i>
+always_empty <font color="#990000">+=</font> <font color="#990000">[</font> <font color="#FF0000">'m_bnd'</font> <font color="#990000">]</font>
+<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># res_value is empty because value prior is uniform</font></i>
 <i><font color="#9A1900"># sim_v, sim_a, sim_t are empty because have not run simulate command</font></i>
 always_empty <font color="#990000">+=</font> <font color="#990000">[</font> <font color="#FF0000">'res_value'</font><font color="#990000">,</font> <font color="#FF0000">'res_dage'</font><font color="#990000">,</font> <font color="#FF0000">'res_dtime'</font> <font color="#990000">]</font>
@@ -214,9 +217,16 @@ always_empty <font color="#990000">+=</font> <font color="#990000">[</font> <fon
           <b><font color="#0000FF">if</font></b> field <b><font color="#0000FF">in</font></b> empty_field <font color="#990000">:</font>
                <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">''</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">''</font> <font color="#990000">:</font>
+               <b><font color="#0000FF">if</font></b> field <font color="#990000">==</font> <font color="#FF0000">'m_diff'</font> <font color="#990000">:</font>
+                    <b><font color="#0000FF">if</font></b> row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">].</font><b><font color="#000000">startswith</font></b><font color="#990000">(</font><font color="#FF0000">'mulcov_'</font><font color="#990000">)</font> <font color="#990000">:</font>
+                         ok <font color="#990000">=</font> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#FF0000">''</font>
+                    <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+                         ok <font color="#990000">=</font> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">''</font>
+               <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+                    ok <font color="#990000">=</font> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#FF0000">''</font>
+               <b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> ok <font color="#990000">:</font>
                     <b><font color="#0000FF">print</font></b><font color="#990000">(</font>field<font color="#990000">,</font> row<font color="#990000">)</font>
-               <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font>field<font color="#990000">]</font> <font color="#990000">!=</font> <font color="#FF0000">''</font>
+               <b><font color="#0000FF">assert</font></b> ok
      <i><font color="#9A1900">#</font></i>
      <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'rate'</font><font color="#990000">]</font>               <font color="#990000">==</font> <font color="#FF0000">'omega'</font>
      <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'fixed'</font><font color="#990000">]</font>              <font color="#990000">==</font> <font color="#FF0000">'true'</font>

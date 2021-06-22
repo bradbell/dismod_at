@@ -1,0 +1,215 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Bound The Covariate Multiplier Absolute Data Effect</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Bound The Covariate Multiplier Absolute Data Effect">
+<meta name="keywords" id="keywords" content=" bound the covariate multiplier absolute data effect syntax purpose database max_abs_effect covariate_name bnd_mulcov_table max_cov_diff max_mulcov infinite case example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_bnd_mulcov_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>bnd_mulcov_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="dismodat.py.htm" target="_top">Prev</a>
+</td><td><a href="depend_command.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_command_htm.js'></script>
+</td>
+<td>bnd_mulcov_command</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Bound The Covariate Multiplier Absolute Data Effect</big></big></b></center>
+
+<br><a href="bnd_mulcov_command.htm#Syntax" target="_top">Syntax</a>
+<br><a href="bnd_mulcov_command.htm#Purpose" target="_top">Purpose</a>
+<br><a href="bnd_mulcov_command.htm#database" target="_top">database</a>
+<br><a href="bnd_mulcov_command.htm#max_abs_effect" target="_top">max_abs_effect</a>
+<br><a href="bnd_mulcov_command.htm#covariate_name" target="_top">covariate_name</a>
+<br><a href="bnd_mulcov_command.htm#bnd_mulcov_table" target="_top">bnd_mulcov_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="bnd_mulcov_command.htm#bnd_mulcov_table.max_cov_diff" target="_top">max_cov_diff</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="bnd_mulcov_command.htm#bnd_mulcov_table.max_mulcov" target="_top">max_mulcov</a>
+<br><a href="bnd_mulcov_command.htm#Infinite Case" target="_top">Infinite&nbsp;Case</a>
+<br><a href="bnd_mulcov_command.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bnd_mulcov&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_abs_effect</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bnd_mulcov&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_abs_effect</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This command is used to set the maximum absolute effect
+in the model for the data values.
+This is done by changing the lower and upper bounds
+for the covariate multipliers (ignoring bounds in the corresponding priors).
+The <a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
+
+covariates are not included.
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is an
+<a href="http://www.sqlite.org/sqlite/" target="_top"><span style='white-space: nowrap'>http://www.sqlite.org/sqlite/</span></a>
+ database containing the
+<code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="max_abs_effect" id="max_abs_effect">max_abs_effect</a></big></b>
+<br>
+is either <code><font color="blue">inf</font></code> (for infinity) or
+a non-negative value that bounds absolute covariate effects.
+A covariate multiplier is defined by each row of the <a href="mulcov_table.htm" target="_top"><span style='white-space: nowrap'>mulcov_table</span></a>
+.
+We use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>mul_value</span></font></i></code>
+ for a value of the multiplier.
+We use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>cov_value</span></font></i></code>
+ for a value of the
+<a href="data_table.htm#Covariates" target="_top"><span style='white-space: nowrap'>covariate</span></a>
+ in the data table.
+We use the notation 
+<code><i><font color="black"><span style='white-space: nowrap'>cov_ref</span></font></i></code>
+ for the
+<a href="covariate_table.htm#reference" target="_top"><span style='white-space: nowrap'>reference</span></a>
+ for the covariate.
+The maximum effect condition is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mul_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>cov_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cov_ref</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;|&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_abs_effect</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Note that the limits on the covariate multiplier in its prior have units
+and the 
+<code><i><font color="black"><span style='white-space: nowrap'>max_abs_effect</span></font></i></code>
+ does not have units.
+
+<br>
+<br>
+<b><big><a name="covariate_name" id="covariate_name">covariate_name</a></big></b>
+<br>
+If this argument is present, it is a
+<a href="covariate_table.htm#covariate_name" target="_top"><span style='white-space: nowrap'>covariate_name</span></a>
+.
+In this case, the inequality above only refers to
+covariate multipliers that use this covariate.
+
+<br>
+<br>
+<b><big><a name="bnd_mulcov_table" id="bnd_mulcov_table">bnd_mulcov_table</a></big></b>
+<br>
+The table <a href="bnd_mulcov_table.htm" target="_top"><span style='white-space: nowrap'>bnd_mulcov_table</span></a>
+ is and input and output for this command.
+
+<br>
+<br>
+<big><a name="bnd_mulcov_table.max_cov_diff" id="bnd_mulcov_table.max_cov_diff">max_cov_diff</a></big>
+<br>
+The <a href="bnd_mulcov_table.htm#max_cov_diff" target="_top"><span style='white-space: nowrap'>max_cov_diff</span></a>
+ column is not changed.
+
+<br>
+<br>
+<big><a name="bnd_mulcov_table.max_mulcov" id="bnd_mulcov_table.max_mulcov">max_mulcov</a></big>
+<br>
+The <a href="bnd_mulcov_table.htm#max_mulcov" target="_top"><span style='white-space: nowrap'>max_mulcov</span></a>
+ column is set so the
+inequality above is true for all the data that is modeled using this
+covariate multiplier and that is included in the fit.
+To be specific, for each covariate multiplier
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_mulcov</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_abs_effect</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_cov_diff</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>covariate_name</span></font></i></code>
+ is present,
+
+<code><i><font color="black"><span style='white-space: nowrap'>max_mulcov</span></font></i></code>
+ the bound is only changed
+for multipliers that use that covariate.
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>max_mulcov</span></font></i></code>
+ value for
+<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
+ covariates
+are not changed.
+
+<br>
+<br>
+<b><big><a name="Infinite Case" id="Infinite Case">Infinite Case</a></big></b>
+<br>
+The case where 
+<code><i><font color="black"><span style='white-space: nowrap'>max_abs_effect</span></font></i></code>
+ is <code><font color="blue">inf</font></code> or
+
+<code><i><font color="black"><span style='white-space: nowrap'>max_cov_diff</span></font></i></code>
+ is zero,
+
+<code><i><font color="black"><span style='white-space: nowrap'>max_mulcov</span></font></i></code>
+ is set to null (which corresponds to plus infinity).
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <code><font color="blue">user_bnd_mulcov.py</font></code> contains an example and test
+using this command.
+
+
+<hr>Input File: devel/cmd/bnd_mulcov_command.cpp
+
+</body>
+</html>
