@@ -611,7 +611,7 @@ $head 04-25$$
 $list number$$
 Add Instructions for running one
 $cref/get_started/get_started/Run One Example/$$ or
-$cref/user/user/Run One Example/$$.
+$cref/user/user_example/Run One Example/$$.
 $lnext
 Improve the $cref user_fit_random.py$$ example.
 $lnext
@@ -1082,7 +1082,7 @@ $codei%
 %$$
 so that $code None$$ can be returned for $icode da$$ and $icode dt$$
 when there is no such forward difference.
-In addition, change the $cref user$$ examples to use this feature.
+In addition, change the $cref user_example$$ examples to use this feature.
 
 $head 01-23$$
 $list number$$

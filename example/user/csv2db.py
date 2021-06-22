@@ -19,7 +19,7 @@
 # $section csv2db_command: Example and Test$$
 #
 # $head Using This Example$$
-# See $cref/run one example/user/Run One Example/$$ for instructions
+# See $cref/run one example/user_example/Run One Example/$$ for instructions
 # on running just this example.
 # After doing that, one can run the command
 # $codep

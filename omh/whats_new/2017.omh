@@ -349,7 +349,7 @@ Change the $code create_database$$ so that when certain entries
 are not present, the value null is used for the corresponding
 entry in the database.
 In addition, remove the corresponding setting to $code None$$ in the
-$cref user$$ examples.
+$cref user_example$$ examples.
 $lnext
 Change $code random_bound$$ to
 $cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
@@ -381,7 +381,7 @@ Change the $code create_database$$
 $cref/data_table/create_database/data_table/$$ so that
 $icode meas_std$$ and $icode eta$$ need not appear when they are null.
 In addition, remove the null $icode eta$$ values from the
-$cref user$$ examples.
+$cref user_example$$ examples.
 $lnext
 Reduce the chance of random
 failure in the $cref user_lasso_covariate.py$$ example.
@@ -629,7 +629,7 @@ $cref/node/db2csv_command/data.csv/node/$$ in
 data.csv
 $lnext
 The $cref get_started$$ section has been moved to the same level as
-$cref user$$ and the
+$cref user_example$$ and the
 $code Commands$$ heading has been added to the user section
 (it has since been removed).
 $lnext
@@ -690,7 +690,7 @@ while other rates have the same prior for each child and zero sum.
 
 $head 04-26$$
 $list number$$
-In the $cref user$$ examples,
+In the $cref user_example$$ examples,
 move the setup of
 $cref/avgint_table/create_database/avgint_table/$$
 just before the setup of
@@ -837,7 +837,7 @@ This makes it much easier to constrain a variable to
 have a specific value at a specific age and time.
 $lnext
 Instructions on how to create the database
-$cref/example.db/user/example.db/$$ for a specific example,
+$cref/example.db/user_example/example.db/$$ for a specific example,
 were added to the user example section.
 $lend
 

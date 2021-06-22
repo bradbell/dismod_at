@@ -27,7 +27,7 @@
 # $icode%warn_on_stderr% = false%$$.
 # The second fit will start where the first left off.
 # To see this, set $icode%print_level_fixed% = 5%$$ (in the option table) and
-# $cref/run this example/user/Run One Example/$$.
+# $cref/run this example/user_example/Run One Example/$$.
 #
 # $head Fixed Trace Table$$
 # This example uses the $cref trace_fixed_table$$

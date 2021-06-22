@@ -48,6 +48,16 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-22$$
+$list number$$
+Add the $cref bnd_mulcov_command$$.
+$lnext
+Change the section name $code user$$ to $cref user_example$$
+and sort the user examples.
+$lend
+
+
+
 $head 06-18$$
 $list number$$
 Change the

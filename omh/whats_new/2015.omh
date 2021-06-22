@@ -461,10 +461,10 @@ $codep
 $$
 $lnext
 Remove some unused code in the dismod_at
-$cref user$$ examples (used for return value in
+$cref user_example$$ examples (used for return value in
 $cref get_started_db.py$$).
 In addition, simply setting of the standard deviation multipliers
-to one (in the dismod_at $cref user$$ examples).
+to one (in the dismod_at $cref user_example$$ examples).
 $lnext
 Add a $cref/simulated data/user_speed.py/$$ example
 that also serves as a dismod_at speed test (the size of the problem
@@ -635,7 +635,7 @@ Edit discussion of text can be empty
 $cref/text can be null, not empty/database/Text can be Null, not Empty/$$).
 $lnext
 Remove the special prior that is a constant one from the
-$cref user$$ examples (since 08-12 $code null$$ can be used to
+$cref user_example$$ examples (since 08-12 $code null$$ can be used to
 the same effect for
 $cref/standard deviation multipliers
 	/model_variables

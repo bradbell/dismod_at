@@ -33,3 +33,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
+s|$cref user\$|$cref user_example$|
+s|$cref\(.*\)/user/|$cref\1/user_example/|g

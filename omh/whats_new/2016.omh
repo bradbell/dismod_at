@@ -140,7 +140,7 @@ $lend
 
 $head 10-18$$
 $list number$$
-In the $cref user$$ examples,
+In the $cref user_example$$ examples,
 change $icode%name%_dict%$$ to $icode%name%_table%$$
 for $icode name$$ equal to $code var$$, $code predict$$, and $code sample$$.
 This makes it clearer that they are copies of the corresponding tables

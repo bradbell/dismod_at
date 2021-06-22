@@ -38,7 +38,7 @@
 # $section An Example / Speed Test Fitting Simulated Diabetes Data$$
 #
 # $head Running This example$$
-# see $cref/run one example/user/Run One Example/$$.
+# see $cref/run one example/user_example/Run One Example/$$.
 # The time required to run the program will be printed at then end.
 #
 # $head omega$$

@@ -1,7 +1,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -43,7 +43,7 @@
 # If an error occurs, re-run the command as printed to get this information.
 #
 # $head Example$$
-# Many of the $cref user$$ examples use this utility.
+# Many of the $cref user_example$$ examples use this utility.
 #
 # $end
 # ---------------------------------------------------------------------------

@@ -125,8 +125,8 @@ should be divided by a number close to the number of cores
 available on the system.
 
 $head User Examples$$
-The $cref user$$ examples below
-$cref/examples with explanation/user/Examples With Explanation/$$
+The $cref user_example$$ examples below
+$cref/examples with explanation/user_example/Examples With Explanation/$$
 have a discussion at the top of each example.
 Add a discussion for the other the user examples.
 

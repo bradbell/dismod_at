@@ -169,7 +169,7 @@ The $code meas_covariate.py$$ example was changed to be an example
 using group covariate multipliers; see $cref user_group_mulcov.py$$.
 In addition, a discussion of this example was added.
 $lnext
-The constant weighting function was removed from the $cref user$$ examples
+The constant weighting function was removed from the $cref user_example$$ examples
 (it is now the default weighting and hence no longer needed).
 $lnext
 Change $cref user_fit_meas_noise.py$$ so that it used groups to identify a
@@ -301,7 +301,7 @@ $cref user_zsum_child_rate.py$$ example.
 $head 10-01$$
 $list number$$
 The $cref system_command_prc$$ utility was added used
-to simplify the $cref user$$ examples.
+to simplify the $cref user_example$$ examples.
 $lnext
 The new $cref user_mulstd.py$$ example demonstrates
 estimating standard deviation multipliers.
@@ -326,7 +326,7 @@ to install dismod_at.
 $lnext
 The $cref csv2db_command$$ wish list items were removed because we
 assume that the dismod_at user can write code in some scripting language
-and can read the Python $cref user$$ examples.
+and can read the Python $cref user_example$$ examples.
 $lend
 
 $head 09-23$$
@@ -467,7 +467,7 @@ $cref/avgint table/avgint_table/weight_id/null/$$.
 This weighting can also be specified by the empty
 string in $code create_database$$; see
 $cref/weight/create_database/avgint_table/weight/$$.
-The $cref user$$ examples were simplified using this option.
+The $cref user_example$$ examples were simplified using this option.
 $lnext
 Advance $code dock_dismod_at.sh$$ to version $code 20190913$$.
 $lend
@@ -844,7 +844,7 @@ $lend
 
 $head 04-28$$
 Remove some dead code that was repeated between different
-$cref user$$ examples.
+$cref user_example$$ examples.
 In addition, use a local $code system_command$$ function
 to simplify the user examples.
 
@@ -895,7 +895,7 @@ For example, use a Laplace prior to get a better estimate of
 $cref/alpha/user_cascade.py/Multipliers/alpha/$$,
 when fitting with $icode n1$$ as the parent.
 $lnext
-In the $cref user$$ examples,
+In the $cref user_example$$ examples,
 move functions that to define smoothings
 inside the corresponding function that defines a database;
 see $cref/fun/create_database/smooth_table/fun/$$.
