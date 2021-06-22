@@ -1,5 +1,7 @@
 # Plan for future changes on master branch
 # 1. s|^\t\(  *\)GNU Affero|        GNU Affero|
+# 2. s|covaraite|covariate|
+# 3. s|eqaul|equal|
 # ----------------------------------------------------------------------------
 # None of the lists below can have white space or a dollar sign in an entry.
 #
@@ -31,7 +33,3 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|max_upper  |max_mulcov |g
-s|  max_upper| max_mulcov|g
-s|max_upper%  |max_mulcov% |g
-s|max_upper|max_mulcov|g

@@ -106,6 +106,8 @@ $comment END_SORT_THIS_LINE_MINUS_3$$
 
 $head Examples With Explanation$$
 $table
+$comment BEGIN_SORT_THIS_LINE_PLUS_ONE$$
+$rref user_bnd_mulcov.py$$
 $rref user_one_function.py$$
 $rref user_hold_out.py$$
 $rref user_compress.py$$
@@ -145,6 +147,7 @@ $rref user_hes_random.py$$
 $rref user_sum_residual.py$$
 $rref user_warm_start.py$$
 $rref user_covid_19.py$$
+$comment END_SORT_THIS_LINE_MINUS_ONE$$
 $tend
 
 $head More Examples$$
