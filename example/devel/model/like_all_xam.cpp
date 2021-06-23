@@ -242,8 +242,11 @@ bool like_all_xam(void)
 	std::map<std::string, std::string> option_map;
 	vector<dismod_at::data_subset_struct> data_subset_table(data_table.size());
 	for(size_t i = 0; i < data_table.size(); ++i)
-	{	data_subset_table[i].data_id = int(i);
-		data_subset_table[i].hold_out = 0;
+	{	data_subset_table[i].data_id    = int(i);
+		data_subset_table[i].hold_out   = 0;
+		data_subset_table[i].density_id = data_table[i].density_id;
+		data_subset_table[i].eta        = data_table[i].eta;
+		data_subset_table[i].nu         = data_table[i].nu;
 	}
 	subset_data(
 		option_map,

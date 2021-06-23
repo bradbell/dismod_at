@@ -53,6 +53,18 @@ $rnext
 $code int$$ $cnext $code hold_out$$ $cnext
 	The $cref/hold_out/data_subset_table/hold_out/$$
 	for this measurement.
+$rnext
+$code int$$ $cnext $code density_id$$ $cnext
+	The $cref/density_id/data_subset_table/density_id/$$
+	for this measurement.
+$rnext
+$code int$$ $cnext $code eta$$ $cnext
+	The $cref/eta/data_subset_table/eta/$$
+	for this measurement.
+$rnext
+$code int$$ $cnext $code nu$$ $cnext
+	The $cref/nu/data_subset_table/nu/$$
+	for this measurement.
 $tend
 
 $children%example/devel/table/get_data_subset_xam.cpp
@@ -89,10 +101,28 @@ CppAD::vector<data_subset_struct> get_data_subset(sqlite3* db)
 	get_table_column(db, table_name, column_name, hold_out);
 	assert( hold_out.size() == n_data_subset );
 
+	column_name             =  "density_id";
+	CppAD::vector<int>          density_id;
+	get_table_column(db, table_name, column_name, density_id);
+	assert( hold_out.size() == n_data_subset );
+
+	column_name             =  "eta";
+	CppAD::vector<double>       eta;
+	get_table_column(db, table_name, column_name, eta);
+	assert( hold_out.size() == n_data_subset );
+
+	column_name             =  "nu";
+	CppAD::vector<double>       nu;
+	get_table_column(db, table_name, column_name, nu);
+	assert( hold_out.size() == n_data_subset );
+
 	CppAD::vector<data_subset_struct> data_subset_table(n_data_subset);
 	for(size_t i = 0; i < n_data_subset; i++)
-	{	data_subset_table[i].data_id   = data_id[i];
-		data_subset_table[i].hold_out  = hold_out[i];
+	{	data_subset_table[i].data_id    = data_id[i];
+		data_subset_table[i].hold_out   = hold_out[i];
+		data_subset_table[i].density_id  = density_id[i];
+		data_subset_table[i].eta         = eta[i];
+		data_subset_table[i].nu          = nu[i];
 	}
 	return data_subset_table;
 }

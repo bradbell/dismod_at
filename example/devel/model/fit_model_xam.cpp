@@ -353,8 +353,11 @@ bool fit_model_xam(void)
 	vector<double> subset_data_cov_value;
 	vector<dismod_at::data_subset_struct> data_subset_table(data_table.size());
 	for(size_t i = 0; i < data_table.size(); ++i)
-	{	data_subset_table[i].data_id = int(i);
-		data_subset_table[i].hold_out = 0;
+	{	data_subset_table[i].data_id    = int(i);
+		data_subset_table[i].hold_out   = 0;
+		data_subset_table[i].density_id = data_table[i].density_id;
+		data_subset_table[i].eta        = data_table[i].eta;
+		data_subset_table[i].nu         = data_table[i].nu;
 	}
 	subset_data(
 		option_map,

@@ -306,13 +306,14 @@ void subset_data(
 			one_sample.node_id      = data_table[data_id].node_id;
 			one_sample.subgroup_id  = data_table[data_id].subgroup_id;
 			one_sample.weight_id    = data_table[data_id].weight_id;
-			// values not in avgint_subset_struct except hold_out
-			int density_id          = data_table[data_id].density_id;
+			// values in data_subset_table
+			int density_id          = data_subset_table[subset_id].density_id;
 			one_sample.density      = density_table[density_id];
+			one_sample.eta          = data_subset_table[subset_id].eta;
+			one_sample.nu           = data_subset_table[subset_id].nu;
+			// values not in avgint_subset_struct except hold_out
 			one_sample.meas_value   = data_table[data_id].meas_value;
 			one_sample.meas_std     = data_table[data_id].meas_std;
-			one_sample.eta          = data_table[data_id].eta;
-			one_sample.nu           = data_table[data_id].nu;
 			// value that depends on data_sim table
 			one_sample.data_sim_value =
 				std::numeric_limits<double>::quiet_NaN();

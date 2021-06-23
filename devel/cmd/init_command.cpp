@@ -239,7 +239,7 @@ void init_command(
 		db_input.data_cov_value
 	);
 	size_t n_subset   = data_subset_table.size();
-	n_col             = 2;
+	n_col             = 5;
 	col_name.resize(n_col);
 	col_type.resize(n_col);
 	row_value.resize(n_col * n_subset);
@@ -253,11 +253,35 @@ void init_command(
 	col_type[1]       = "integer";
 	col_unique[1]     = false;
 	//
+	col_name[2]       = "density_id";
+	col_type[2]       = "integer";
+	col_unique[2]     = false;
+	//
+	col_name[3]       = "eta";
+	col_type[3]       = "real";
+	col_unique[3]     = false;
+	//
+	col_name[4]       = "nu";
+	col_type[4]       = "real";
+	col_unique[4]     = false;
+	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = data_subset_table[subset_id].data_id;
 		int hold_out   = data_subset_table[subset_id].hold_out;
+		int density_id = data_subset_table[subset_id].density_id;
+		double eta     = data_subset_table[subset_id].eta;
+		double nu      = data_subset_table[subset_id].nu;
 		row_value[n_col * subset_id + 0] = to_string( data_id );
 		row_value[n_col * subset_id + 1] = to_string( hold_out );
+		row_value[n_col * subset_id + 2] = to_string( density_id );
+		if( std::isnan(eta) )
+			row_value[n_col * subset_id + 3] = "";
+		else
+			row_value[n_col * subset_id + 3] = to_string( eta );
+		if( std::isnan(nu) )
+			row_value[n_col * subset_id + 4] = "";
+		else
+			row_value[n_col * subset_id + 4] = to_string( nu );
 	}
 	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value

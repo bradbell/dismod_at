@@ -78,6 +78,7 @@ void hold_out_command(
 	const CppAD::vector<data_struct>&             data_table        )
 {	using std::string;
 	using CppAD::vector;
+	using CppAD::to_string;
 	//
 	// data_subset_table
 	vector<data_subset_struct> data_subset_table = get_data_subset(db);
@@ -147,7 +148,7 @@ void hold_out_command(
 	//
 	// write new data_subset table
 	string table_name = "data_subset";
-	size_t n_col      = 2;
+	size_t n_col      = 5;
 	vector<string> col_name(n_col), col_type(n_col);
 	vector<string> row_value(n_col * n_subset);
 	vector<bool>   col_unique(n_col);
@@ -160,11 +161,35 @@ void hold_out_command(
 	col_type[1]       = "integer";
 	col_unique[1]     = false;
 	//
+	col_name[2]       = "density_id";
+	col_type[2]       = "integer";
+	col_unique[2]     = false;
+	//
+	col_name[3]       = "eta";
+	col_type[3]       = "real";
+	col_unique[3]     = false;
+	//
+	col_name[4]       = "nu";
+	col_type[4]       = "real";
+	col_unique[4]     = false;
+	//
 	for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
 	{	int data_id    = data_subset_table[subset_id].data_id;
 		int hold_out   = data_subset_table[subset_id].hold_out;
-		row_value[n_col * subset_id + 0] = CppAD::to_string( data_id );
-		row_value[n_col * subset_id + 1] = CppAD::to_string( hold_out );
+		int density_id = data_subset_table[subset_id].density_id;
+		double eta     = data_subset_table[subset_id].eta;
+		double nu      = data_subset_table[subset_id].nu;
+		row_value[n_col * subset_id + 0] = to_string( data_id );
+		row_value[n_col * subset_id + 1] = to_string( hold_out );
+		row_value[n_col * subset_id + 2] = to_string( density_id );
+		if( std::isnan(eta) )
+			row_value[n_col * subset_id + 3] = "";
+		else
+			row_value[n_col * subset_id + 3] = to_string( eta );
+		if( std::isnan(nu) )
+			row_value[n_col * subset_id + 4] = "";
+		else
+			row_value[n_col * subset_id + 4] = to_string( nu );
 	}
 	create_table(
 		db, table_name, col_name, col_type, col_unique, row_value
