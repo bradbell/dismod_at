@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -16,6 +16,7 @@ $spell
 	cpp
 	cen
 	nonsmooth
+	const
 $$
 
 $section C++: Get the Density Table Information$$
@@ -89,8 +90,8 @@ It is false otherwise.
 $head density_enum2name$$
 This is a global variable.
 If $icode%density%$$, is an $code density_enum$$ value,
-$codei%density_enum2name[%density%]%$$ is the
-$icode density_name$$ corresponding to the enum value.
+$codei%density_enum2name[%density%]%$$ is a $code const char*[]$$
+representation of the $icode density_name$$ corresponding to the enum value.
 
 $children%example/devel/table/get_density_table_xam.cpp
 %$$

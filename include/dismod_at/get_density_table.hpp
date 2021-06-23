@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Density Estimation as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -33,6 +33,7 @@ namespace dismod_at {
 	extern bool log_density(density_enum density);
 	extern bool nonsmooth_density(density_enum density);
 	extern bool censored_density(density_enum density);
+	extern const char* density_enum2name[];
 }
 
 # endif

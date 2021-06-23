@@ -11,7 +11,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <gsl/gsl_randist.h>
 # include <cppad/utility/to_string.hpp>
 # include <cppad/mixed/manage_gsl_rng.hpp>
-# include <dismod_at/hold_out_command.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/create_table.hpp>
 # include <dismod_at/get_integrand_table.hpp>
@@ -23,9 +22,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 -----------------------------------------------------------------------------
 $begin hold_out_command$$
 $spell
-	sim
 	dismod
-	var
 $$
 
 $section Hold Out Command: Randomly Sub-sample The Data$$

@@ -79,6 +79,21 @@ $head data_subset_table$$
 A new $cref data_subset_table$$ is created.
 This makes explicit exactly which rows of the data table are used.
 
+$subhead hold_out$$
+This column is set to zero.
+
+$subhead density_id$$
+This column is set to the corresponding
+$cref/density_id/data_table/density_id/$$ in the data table.
+
+$subhead eta$$
+This column is set to the corresponding
+$cref/eta/data_table/eta/$$ in the data table.
+
+$subhead nu$$
+This column is set to the corresponding
+$cref/nu/data_table/nu/$$ in the data table.
+
 $head start_var_table$$
 A new $cref start_var_table$$ is created using the
 means of the priors for the model variables.
@@ -137,8 +152,11 @@ CppAD::vector<data_subset_struct> make_data_subset_table(
 		}
 		if( in_subset )
 		{	data_subset_struct row;
-			row.data_id  = int( data_id );
-			row.hold_out = 0;
+			row.data_id     = int( data_id );
+			row.hold_out    = 0;
+			row.density_id  = data_table[data_id].density_id;
+			row.eta         = data_table[data_id].eta;
+			row.nu          = data_table[data_id].nu;
 			data_subset_table.push_back(row);
 		}
 	}
