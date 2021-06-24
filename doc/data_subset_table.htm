@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Data Subset Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Data Subset Table">
-<meta name="keywords" id="keywords" content=" the data subset table data_subset_id data_id node covariates hold_out example ">
+<meta name="keywords" id="keywords" content=" the data subset table data_subset_id data_id node covariates hold_out density_id eta nu example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,6 +75,9 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_subset_table.htm#data_id.Node" target="_top">Node</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_subset_table.htm#data_id.Covariates" target="_top">Covariates</a>
 <br><a href="data_subset_table.htm#hold_out" target="_top">hold_out</a>
+<br><a href="data_subset_table.htm#density_id" target="_top">density_id</a>
+<br><a href="data_subset_table.htm#eta" target="_top">eta</a>
+<br><a href="data_subset_table.htm#nu" target="_top">nu</a>
 <br><a href="data_subset_table.htm#Example" target="_top">Example</a>
 <br>.
 
@@ -138,6 +141,45 @@ The <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>i
 The <a href="hold_out_command.htm" target="_top"><span style='white-space: nowrap'>hold_out_command</span></a>
  can be used to randomly choose
 non-zero entries in this column.
+This column is set to zero by the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="density_id" id="density_id">density_id</a></big></b>
+<br>
+This column has type <code><font color="blue">integer</font></code>.
+It specifies which density is used for the corresponding data.
+The <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+ set it to be the same as the corresponding
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ in the data table.
+
+<br>
+<br>
+<b><big><a name="eta" id="eta">eta</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code>.
+It specifies the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ used for the corresponding data.
+The <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+ set it to be the same as the corresponding
+<a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ in the data table.
+
+<br>
+<br>
+<b><big><a name="nu" id="nu">nu</a></big></b>
+<br>
+This column has type <code><font color="blue">real</font></code>.
+It specifies the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i></code>
+ used for the corresponding data.
+The <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+ set it to be the same as the corresponding
+<a href="data_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
+ in the data table.
 
 <br>
 <br>

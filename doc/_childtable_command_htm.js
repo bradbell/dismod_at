@@ -4,6 +4,7 @@ document.write('\
 <option>command-&gt;</option>\
 <option>dismodat.py</option>\
 <option>bnd_mulcov_command</option>\
+<option>data_density_command</option>\
 <option>depend_command</option>\
 <option>fit_command</option>\
 <option>hold_out_command</option>\
@@ -19,6 +20,7 @@ function command_child(item)
 {	var child_list = [
 		'dismodat.py.htm',
 		'bnd_mulcov_command.htm',
+		'data_density_command.htm',
 		'depend_command.htm',
 		'fit_command.htm',
 		'hold_out_command.htm',

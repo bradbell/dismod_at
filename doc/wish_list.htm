@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list speed log density bound constraints laplace random effect immunity simulating priors multi-threading user examples meas_std lagrange multipliers censored create_database ode solution prevalence large excess mortality rate_case command diagrams real world example starting point windows install ">
+<meta name="keywords" id="keywords" content=" dismod_at wish list speed bound constraints laplace random effect immunity simulating priors multi-threading user examples meas_std lagrange multipliers censored create_database ode solution prevalence large excess mortality rate_case command diagrams real world example starting point windows install ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -63,7 +63,6 @@ A:active { color : purple }
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
 <br><a href="wish_list.htm#Speed" target="_top">Speed</a>
-<br><a href="wish_list.htm#Log Density" target="_top">Log&nbsp;Density</a>
 <br><a href="wish_list.htm#Bound Constraints" target="_top">Bound&nbsp;Constraints</a>
 <br><a href="wish_list.htm#Laplace Random Effect" target="_top">Laplace&nbsp;Random&nbsp;Effect</a>
 <br><a href="wish_list.htm#Immunity" target="_top">Immunity</a>
@@ -93,25 +92,6 @@ are much faster; see
 Perhaps it is possible to make certain calculations; e.g.,
 the ODE solution an CppAD atomic function that is evaluated using
 CppADCodeGen code.
-
-<br>
-<br>
-<b><big><a name="Log Density" id="Log Density">Log Density</a></big></b>
-<br>
-Currently the log densities transform the standard deviation to log space; see
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
-.
-It would be much simpler, and provide more control, to have a separate
-standard deviation that is used for log densities; e.g.,
-in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
- table it could be called 
-<code><i><font color="black"><span style='white-space: nowrap'>log_std</span></font></i></code>
-.
-The new column in the data and other tables
-would be optional.
-If it is not present,
-the current method would be used for log-densities
-(for backward compatibility).
 
 <br>
 <br>

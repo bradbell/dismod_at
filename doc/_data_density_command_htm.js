@@ -1,7 +1,7 @@
 var list_up0 = [
 'dismod_at.htm',
-'user_example.htm',
-'user_students.py.htm'
+'command.htm',
+'data_density_command.htm'
 ];
 var list_across0 = [
 '_contents.htm',

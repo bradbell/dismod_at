@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Initialize Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Initialize Command">
-<meta name="keywords" id="keywords" content=" the initialize command syntax purpose deleted tables changing values database age_avg_table var_table data_subset_table start_var_table scale_var_table bnd_mulcov_table example ">
+<meta name="keywords" id="keywords" content=" the initialize command syntax purpose deleted tables changing values database age_avg_table var_table data_subset_table hold_out density_id eta nu start_var_table scale_var_table bnd_mulcov_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,6 +76,10 @@ A:active { color : purple }
 <br><a href="init_command.htm#age_avg_table" target="_top">age_avg_table</a>
 <br><a href="init_command.htm#var_table" target="_top">var_table</a>
 <br><a href="init_command.htm#data_subset_table" target="_top">data_subset_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="init_command.htm#data_subset_table.hold_out" target="_top">hold_out</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="init_command.htm#data_subset_table.density_id" target="_top">density_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="init_command.htm#data_subset_table.eta" target="_top">eta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="init_command.htm#data_subset_table.nu" target="_top">nu</a>
 <br><a href="init_command.htm#start_var_table" target="_top">start_var_table</a>
 <br><a href="init_command.htm#scale_var_table" target="_top">scale_var_table</a>
 <br><a href="init_command.htm#bnd_mulcov_table" target="_top">bnd_mulcov_table</a>
@@ -183,6 +187,36 @@ to its meaning in terms of the
 A new <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
  is created.
 This makes explicit exactly which rows of the data table are used.
+
+<br>
+<br>
+<big><a name="data_subset_table.hold_out" id="data_subset_table.hold_out">hold_out</a></big>
+<br>
+This column is set to zero.
+
+<br>
+<br>
+<big><a name="data_subset_table.density_id" id="data_subset_table.density_id">density_id</a></big>
+<br>
+This column is set to the corresponding
+<a href="data_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+ in the data table.
+
+<br>
+<br>
+<big><a name="data_subset_table.eta" id="data_subset_table.eta">eta</a></big>
+<br>
+This column is set to the corresponding
+<a href="data_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ in the data table.
+
+<br>
+<br>
+<big><a name="data_subset_table.nu" id="data_subset_table.nu">nu</a></big>
+<br>
+This column is set to the corresponding
+<a href="data_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
+ in the data table.
 
 <br>
 <br>

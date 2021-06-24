@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Using Student's-t to Fit With Remove Outliers Present</title>
+<title>Fit With Outliers Using Data Density Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Using Student's-t to Fit With Remove Outliers Present">
-<meta name="keywords" id="keywords" content=" using student's-t to fit with remove outliers present purpose problem parameters age time values variables data table rate prior fitting source code ">
+<meta name="description" id="description" content="Fit With Outliers Using Data Density Command">
+<meta name="keywords" id="keywords" content=" fit with outliers using data density command purpose problem parameters age time values variables table rate prior fitting source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_students.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_data_density.py_htm.js'>
 </script>
 </head>
 <body>
@@ -36,7 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>user_example</option>
-<option>user_students.py</option>
+<option>user_data_density.py</option>
 </select>
 </td>
 <td>
@@ -49,35 +49,37 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_speed.py.htm" target="_top">Prev</a>
-</td><td><a href="user_subgroup_mulcov.py.htm" target="_top">Next</a>
+<td><a href="user_csv2db.py.htm" target="_top">Prev</a>
+</td><td><a href="user_data_sim.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
 </td>
-<td>user_students.py</td>
+<td>user_data_density.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Using Student's-t to Fit With Remove Outliers Present</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Fit With Outliers Using Data Density Command</big></big></b></center>
 
-<br><a href="user_students.py.htm#Purpose" target="_top">Purpose</a>
-<br><a href="user_students.py.htm#Problem Parameters" target="_top">Problem&nbsp;Parameters</a>
-<br><a href="user_students.py.htm#Age and Time Values" target="_top">Age&nbsp;and&nbsp;Time&nbsp;Values</a>
-<br><a href="user_students.py.htm#Variables" target="_top">Variables</a>
-<br><a href="user_students.py.htm#Data Table" target="_top">Data&nbsp;Table</a>
-<br><a href="user_students.py.htm#Rate Table" target="_top">Rate&nbsp;Table</a>
-<br><a href="user_students.py.htm#Prior Table" target="_top">Prior&nbsp;Table</a>
-<br><a href="user_students.py.htm#Fitting" target="_top">Fitting</a>
-<br><a href="user_students.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><a href="user_data_density.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_data_density.py.htm#Problem Parameters" target="_top">Problem&nbsp;Parameters</a>
+<br><a href="user_data_density.py.htm#Age and Time Values" target="_top">Age&nbsp;and&nbsp;Time&nbsp;Values</a>
+<br><a href="user_data_density.py.htm#Variables" target="_top">Variables</a>
+<br><a href="user_data_density.py.htm#Data Table" target="_top">Data&nbsp;Table</a>
+<br><a href="user_data_density.py.htm#Rate Table" target="_top">Rate&nbsp;Table</a>
+<br><a href="user_data_density.py.htm#Prior Table" target="_top">Prior&nbsp;Table</a>
+<br><a href="user_data_density.py.htm#Fitting" target="_top">Fitting</a>
+<br><a href="user_data_density.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-This example uses the <a href="density_table.htm#density_name.students" target="_top"><span style='white-space: nowrap'>students</span></a>
-
-density for the data to remove the effect on outliers in the data.
+This example first fits using a Gaussian data density.
+It uses the first fit as a starting point for another fit
+with a Student's-t data density.
+The <a href="data_density_command.htm" target="_top"><span style='white-space: nowrap'>data_density_command</span></a>
+ is used to change the data density.
 
 <br>
 <br>
@@ -191,7 +193,7 @@ random_seed  <font color="#990000">=</font> <font color="#993399">0</font>    <i
 <b><font color="#000080">import</font></b> copy
 <b><font color="#000080">import</font></b> math
 <b><font color="#000080">import</font></b> random
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/students.py'</font>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/data_density.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -346,29 +348,27 @@ program <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># connect to database and get density table</font></i>
-new             <font color="#990000">=</font> False
-connection      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-density_table   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'density'</font><font color="#990000">)</font>
-<i><font color="#9A1900">#</font></i>
-students_id <font color="#990000">=</font> None
-<b><font color="#0000FF">for</font></b> density_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>density_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">if</font></b> density_table<font color="#990000">[</font>density_id<font color="#990000">][</font><font color="#FF0000">'density_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'students'</font> <font color="#990000">:</font>
-          students_id <font color="#990000">=</font> density_id
-<i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># set start_var table equal to fit_var table</font></i>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
      <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'set'</font><font color="#990000">,</font> <font color="#FF0000">'start_var'</font><font color="#990000">,</font> <font color="#FF0000">'fit_var'</font> <font color="#990000">]</font>
 <font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># change data densities to be students-t</font></i>
-command <font color="#990000">=</font> <font color="#FF0000">'UPDATE data SET density_id = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>students_id<font color="#990000">)</font>
-dismod_at<font color="#990000">.</font><b><font color="#000000">sql_command</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> command<font color="#990000">)</font>
+<i><font color="#9A1900"># change the density from gaussian to students</font></i>
+integrand_name <font color="#990000">=</font> <font color="#FF0000">'Sincidence'</font>
+density_name   <font color="#990000">=</font> <font color="#FF0000">'students'</font>
+eta_str        <font color="#990000">=</font> <font color="#FF0000">'null'</font>
+nu_str         <font color="#990000">=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>nu<font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font>
+     program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'data_density'</font><font color="#990000">,</font>
+     integrand_name<font color="#990000">,</font> density_name<font color="#990000">,</font> eta_str<font color="#990000">,</font> nu_str
+<font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># fit with Students-t (now that we have a better starting point)</font></i>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># get second fit information</font></i>
+new             <font color="#990000">=</font> False
+connection      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
 node_table      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
 rate_table      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'rate'</font><font color="#990000">)</font>
 var_table       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
@@ -409,9 +409,9 @@ ok <font color="#990000">=</font> True
      <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'random_seed = '</font><font color="#990000">,</font> random_seed<font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> ok
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'students.py: OK'</font><font color="#990000">)</font></tt></pre>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'data_density.py: OK'</font><font color="#990000">)</font></tt></pre>
 
-<hr>Input File: example/user/students.py
+<hr>Input File: example/user/data_density.py
 
 </body>
 </html>

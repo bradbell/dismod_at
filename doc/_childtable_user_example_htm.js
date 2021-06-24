@@ -14,6 +14,7 @@ document.write('\
 <option>user_continue_fit.py</option>\
 <option>user_covid_19.py</option>\
 <option>user_csv2db.py</option>\
+<option>user_data_density.py</option>\
 <option>user_data_sim.py</option>\
 <option>user_diabetes.py</option>\
 <option>user_diff_constraint.py</option>\
@@ -40,7 +41,6 @@ document.write('\
 <option>user_sample_simple.py</option>\
 <option>user_sim_log.py</option>\
 <option>user_speed.py</option>\
-<option>user_students.py</option>\
 <option>user_subgroup_mulcov.py</option>\
 <option>user_sum_residual.py</option>\
 <option>user_warm_start.py</option>\
@@ -63,6 +63,7 @@ function user_example_child(item)
 		'user_continue_fit.py.htm',
 		'user_covid_19.py.htm',
 		'user_csv2db.py.htm',
+		'user_data_density.py.htm',
 		'user_data_sim.py.htm',
 		'user_diabetes.py.htm',
 		'user_diff_constraint.py.htm',
@@ -89,7 +90,6 @@ function user_example_child(item)
 		'user_sample_simple.py.htm',
 		'user_sim_log.py.htm',
 		'user_speed.py.htm',
-		'user_students.py.htm',
 		'user_subgroup_mulcov.py.htm',
 		'user_sum_residual.py.htm',
 		'user_warm_start.py.htm',

@@ -1,0 +1,208 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Data Density Command: Change the Density for an Integrand</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Data Density Command: Change the Density for an Integrand">
+<meta name="keywords" id="keywords" content=" data density command: change the integrand syntax purpose database integrand_name eta_factor nu data_subset_table density_id eta example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_data_density_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>data_density_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="bnd_mulcov_command.htm" target="_top">Prev</a>
+</td><td><a href="depend_command.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_command_htm.js'></script>
+</td>
+<td>data_density_command</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>Data Density Command: Change the Density for an Integrand</big></big></b></center>
+
+<br><a href="data_density_command.htm#Syntax" target="_top">Syntax</a>
+<br><a href="data_density_command.htm#Purpose" target="_top">Purpose</a>
+<br><a href="data_density_command.htm#database" target="_top">database</a>
+<br><a href="data_density_command.htm#integrand_name" target="_top">integrand_name</a>
+<br><a href="data_density_command.htm#eta_factor" target="_top">eta_factor</a>
+<br><a href="data_density_command.htm#nu" target="_top">nu</a>
+<br><a href="data_density_command.htm#data_subset_table" target="_top">data_subset_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_density_command.htm#data_subset_table.density_id" target="_top">density_id</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_density_command.htm#data_subset_table.eta" target="_top">eta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_density_command.htm#data_subset_table.nu" target="_top">nu</a>
+<br><a href="data_density_command.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;data_density<br>
+</span></font></code>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;data_density&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta_factor</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This command is used to change the density used for an integrand
+during subsequent fits..
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+Is an
+<a href="http://www.sqlite.org/sqlite/" target="_top"><span style='white-space: nowrap'>http://www.sqlite.org/sqlite/</span></a>
+ database containing the
+<code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
+ tables which are not modified.
+
+<br>
+<br>
+<b><big><a name="integrand_name" id="integrand_name">integrand_name</a></big></b>
+<br>
+This is the
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand</span></a>
+ that we setting
+the density for.
+If this argument is not present, the data density is set back to the
+values specified by the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="eta_factor" id="eta_factor">eta_factor</a></big></b>
+<br>
+This specifies the value of
+<a href="statistic.htm#Notation.eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+ used with this density setting.
+This value is not used when the density is
+<a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+
+(You can use the text <code><font color="blue">null</font></code> in this case).
+If the density is
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
+the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i></code>
+ used with this density is
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta_factor</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;median(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+</span></font></code>
+Here 
+<code><font color="blue"><span style='white-space: nowrap'>median(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+ is the median of the
+<a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
+ in the data table.
+
+<br>
+<br>
+<b><big><a name="nu" id="nu">nu</a></big></b>
+<br>
+This specifies the value of
+<a href="statistic.htm#Notation.nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
+ used with this density setting.
+This value is only used when the density is
+<code><font color="blue">students</font></code> or <code><font color="blue">log_students</font></code>.
+(You can use text <code><font color="blue">null</font></code> is when it is not used.)
+
+<br>
+<br>
+<b><big><a name="data_subset_table" id="data_subset_table">data_subset_table</a></big></b>
+<br>
+Only rows of the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+ that correspond to this integrand
+are modified.
+
+<br>
+<br>
+<big><a name="data_subset_table.density_id" id="data_subset_table.density_id">density_id</a></big>
+<br>
+The subset table <a href="data_subset_table.htm#density_id" target="_top"><span style='white-space: nowrap'>density_id</span></a>
+
+for this integrand is changed to this 
+<code><i><font color="black"><span style='white-space: nowrap'>density</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="data_subset_table.eta" id="data_subset_table.eta">eta</a></big>
+<br>
+If the density is
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+,
+the subset table <a href="data_subset_table.htm#eta" target="_top"><span style='white-space: nowrap'>eta</span></a>
+
+is set to the value defined above.
+Otherwise, it is set to null.
+
+<br>
+<br>
+<big><a name="data_subset_table.nu" id="data_subset_table.nu">nu</a></big>
+<br>
+If the density is <code><font color="blue">students</font></code> or <code><font color="blue">log_students</font></code>,
+the subset table <a href="data_subset_table.htm#nu" target="_top"><span style='white-space: nowrap'>nu</span></a>
+
+is set to the value specified above.
+Otherwise, it is set to null.
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="user_data_density.py.htm" target="_top"><span style='white-space: nowrap'>user_data_density.py</span></a>
+ contains an example and test
+using this command.
+
+
+<hr>Input File: devel/cmd/data_density_command.cpp
+
+</body>
+</html>
