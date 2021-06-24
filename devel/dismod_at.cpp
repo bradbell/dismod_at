@@ -102,9 +102,21 @@ int main(int n_arg, const char** argv)
 		<< "usage:    dismod_at database command [arguments]\n"
 		<< "database: sqlite database\n"
 		<< "command:  " << command_info[0].name;
+		size_t column = 10 + std::strlen( command_info[0].name );
 		for(size_t i = 1; i < n_command; i++)
-			cerr << ", " << command_info[i].name;
-		cerr << endl
+		{	string name = command_info[i].name;
+			if( name != command_info[i-1].name )
+			{	column += 2 + name.size();
+				if( column < 80 )
+					cerr << ", ";
+				else
+				{	cerr << "\n          ";
+					column = 10 + name.size();
+				}
+				cerr << name;
+			}
+		}
+		cerr << "\n"
 		<< "arguments: optional arguments depending on particular command\n";
 		std::exit(1);
 	}
