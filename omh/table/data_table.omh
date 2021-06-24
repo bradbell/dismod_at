@@ -46,6 +46,7 @@ the density function for the measurement nose.
 The $cref/density_name/density_table/density_name/$$
 corresponding to $icode density_id$$ cannot be $code uniform$$.
 (Use $cref/hold_out/data_table/hold_out/$$ to ignore data during fitting.)
+This density may be replaced using the $cref data_density_command$$.
 
 $subhead Nonsmooth$$
 If the density is $cref/nonsmooth/density_table/Notation/Nonsmooth/$$,
@@ -184,6 +185,7 @@ $cref/weighted residual function
 	/statistic
 	/Weighted Residual Function, R
 /$$.
+This offset may be replaced using the $cref data_density_command$$.
 
 $subhead null$$
 If $icode density_id$$ does not correspond to
@@ -199,6 +201,8 @@ number of degrees of freedom in the distribution for this point; see
 the definition of the log-density for
 $cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ and
 $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$.
+The degrees of freedom may be replaced using the
+$cref data_density_command$$.
 
 $head null$$
 If $icode density_id$$ does not correspond to
