@@ -333,6 +333,9 @@ correpsonding parent rates.
 
 06-22:
 1. Use the new bnd_mulcov command to improve and simplify the fit_ihme.py code.
+
+06-23:
+1. Use the new data_density command to improve and simplify fit_ihme.py code.
 '''
 }
 # help cases
@@ -1411,50 +1414,9 @@ def subset_data () :
 	data_table = table_out
 	table_name = 'data'
 	put_table('data', data_table, data_col_name, data_col_type)
-# -----------------------------------------------------------------------------
-def set_data_likelihood (
-		integrand_data, integrand_name, density_name, factor_eta=None, nu=None
-) :
-	# For a specified integrand, set its density, eta, and nu.
-	# The default value for eta and nu is None.
-	# If factor_eta is not None, eta is set to the factor times the median
-	# value for the integrand.
-	assert (factor_eta is None) or 0.0 <= factor_eta
-	#
-	msg  = '\nset_data_likelihood\n'
-	msg += 'integrand = {}'.format(integrand_name)
-	msg += ', density = {}'.format(density_name)
-	if factor_eta is not None :
-		msg += ', eta = m*{}'.format(factor_eta)
-	if nu is not None :
-		msg += ', nu = {}'.format(nu)
-	#
-	# integrand_id
-	integrand_id =integrand_name2id[integrand_name]
-	#
-	# density_id
-	density_id = density_name2id[density_name]
-	#
-	if factor_eta is None :
-		eta = None
-	else :
-		median = numpy.median( integrand_data[integrand_name] )
-		eta  = factor_eta * median
-		msg += '\n    ' + 'where m = {:.5g} is the median of the {} data'
-		msg  = msg.format(median, integrand_name)
-	trace( msg )
-	for row in data_table :
-		if row['integrand_id'] == integrand_id :
-			row['density_id'] = density_id
-			row['eta']        = eta
-			row['nu']         = nu
-	#
-	table_name = 'data'
-	put_table(table_name, data_table, data_col_name, data_col_type)
 # ============================================================================
 # Routines that Change Other Tables
 # ============================================================================
-# ----------------------------------------------------------------------------
 # plot_predict
 def plot_predict(
 		covariate_integrand_list, predict_integrand_list, directory, which_fit
@@ -2403,12 +2365,13 @@ if which_fit_arg == 'students'  :
 	# change data likelihood to use students-t
 	integrand_data = get_integrand_data()
 	density_name   = 'log_students'
-	factor_eta     = 1e-2
-	nu             = 5
+	factor_eta_str = '1e-2'
+	nu_str         = '5'
 	for integrand_name in integrand_list_all :
-		set_data_likelihood(integrand_data,
-			integrand_name, density_name, factor_eta, nu
-		)
+		system_command([
+			'dismod_at', temp_database, 'data_density',
+			integrand_name, density_name, factor_eta_str, nu_str
+		])
 	#
 	# use previous fit as starting point
 	system_command([
