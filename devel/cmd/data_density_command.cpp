@@ -96,8 +96,7 @@ is set to the value specified above.
 Otherwise, it is set to null.
 
 $head Example$$
-2DO:
-The file $code user_data_density.py$$ contains an example and test
+The file $cref user_data_density.py$$ contains an example and test
 using this command.
 
 $end

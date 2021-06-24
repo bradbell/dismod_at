@@ -23,6 +23,7 @@ FOREACH(user_case
 	const_value
 	continue_fit
 	csv2db
+	data_density
 	data_sim
 	diff_constraint
 	fit_fixed_both
@@ -47,7 +48,6 @@ FOREACH(user_case
 	sample_sim
 	sample_simple
 	sim_log
-	students
 	subgroup_mulcov
 	sum_residual
 	warm_start

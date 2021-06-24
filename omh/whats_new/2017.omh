@@ -367,7 +367,7 @@ $lend
 $head 10-04$$
 Add the $cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ and
 $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
-density functions; see $cref user_students.py$$.
+density functions; see $code user_students.py$$.
 This required changing $cref density_table$$ in a way that is not backward
 compatible. To be specific, the
 $cref/students/density_table/density_name/students/$$ and

@@ -7,18 +7,20 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_students.py$$ $newlinech #$$
+# $begin user_data_density.py$$ $newlinech #$$
 # $spell
 #	init
 #	Sincidence
 #	cv
 # $$
 #
-# $section Using Student's-t to Fit With Remove Outliers Present$$
+# $section Fit With Outliers Using Data Density Command$$
 #
 # $head Purpose$$
-# This example uses the $cref/students/density_table/density_name/students/$$
-# density for the data to remove the effect on outliers in the data.
+# This example first fits using a Gaussian data density.
+# It uses the first fit as a starting point for another fit
+# with a Student's-t data density.
+# The $cref data_density_command$$ is used to change the data density.
 #
 # $head Problem Parameters$$
 # The following values are used to simulate and model the data:
@@ -93,7 +95,7 @@ import distutils.dir_util
 import copy
 import math
 import random
-test_program = 'example/user/students.py'
+test_program = 'example/user/data_density.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -309,5 +311,5 @@ if not ok :
 	print('random_seed = ', random_seed)
 assert ok
 # -----------------------------------------------------------------------
-print('students.py: OK')
+print('data_density.py: OK')
 # END PYTHON

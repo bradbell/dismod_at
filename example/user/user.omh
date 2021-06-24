@@ -68,6 +68,7 @@ $children%
 	example/user/continue_fit.py%
 	example/user/covid_19.py%
 	example/user/csv2db.py%
+	example/user/data_density.py%
 	example/user/data_sim.py%
 	example/user/diabetes.py%
 	example/user/diff_constraint.py%
@@ -94,7 +95,6 @@ $children%
 	example/user/sample_simple.py%
 	example/user/sim_log.py%
 	example/user/speed.py%
-	example/user/students.py%
 	example/user/subgroup_mulcov.py%
 	example/user/sum_residual.py%
 	example/user/warm_start.py%
@@ -117,6 +117,7 @@ $rref user_compress.py$$
 $rref user_const_value.py$$
 $rref user_continue_fit.py$$
 $rref user_covid_19.py$$
+$rref user_data_density.py$$
 $rref user_data_sim.py$$
 $rref user_diabetes.py$$
 $rref user_fit_fixed_both.py$$
@@ -140,7 +141,6 @@ $rref user_sample_sim.py$$
 $rref user_sample_simple.py$$
 $rref user_sim_log.py$$
 $rref user_speed.py$$
-$rref user_students.py$$
 $rref user_subgroup_mulcov.py$$
 $rref user_sum_residual.py$$
 $rref user_warm_start.py$$

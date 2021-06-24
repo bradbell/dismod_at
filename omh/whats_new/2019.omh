@@ -947,7 +947,8 @@ faster when running in debug mode).
 $lend
 
 $head 04-15$$
-Improve the $cref user_students.py$$ example.
+Improve the $code user_students.py$$ example
+(this example has since moved to $cref user_data_density.py$$).
 
 $head 04-14$$
 Improve the $cref user_lasso_covariate.py$$ example.
