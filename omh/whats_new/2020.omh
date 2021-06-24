@@ -65,7 +65,7 @@ $head 12-26$$
 $list number$$
 Change $code bin/db_simplify.py$$ from a Chron's Disease to a Diabetes case.
 $lnext
-Add a $cref/log density/wish_list/Log Density/$$ item and a
+Add a log density item and a
 $cref/speed/wish_list/Speed/$$ item to the wish list.
 Remove the checkpointing item
 ,and change the conditional item heading to

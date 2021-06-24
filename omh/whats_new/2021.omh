@@ -51,11 +51,16 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 06-24$$
+$list number$$
 Add the $cref data_density_command$$ and include its settings in
 the data.csv file columns
 $cref/density/db2csv_command/data.csv/density/$$,
 $cref/eta/db2csv_command/data.csv/eta/$$,
 $cref/nu/db2csv_command/data.csv/nu/$$.
+$lnext
+Remove the log density wish list item which is no longer necessary
+after the improvement to log densities on $cref/05-20/whats_new_2021/05-20/$$.
+$lend
 
 $head 06-22$$
 $list number$$
