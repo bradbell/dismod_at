@@ -217,25 +217,28 @@ data_object_   ( data_object )
 			upper = prior_table_[prior_id].upper;
 			mean  = prior_table_[prior_id].mean;
 		}
-		assert(lower <= mean && mean <= upper);
 		double start = start_var_[var_id];
-		if( (start < lower) | (upper < start) )
+		if( start < lower || upper < start || mean < lower || upper < mean )
 		{	std::string msg;
 			msg  = "variable start value not within its prior limits\n";
 			msg  = "var_id = " + CppAD::to_string(var_id);
 			msg  = ", start = " + CppAD::to_string(start);
+			msg  = ", mean  = " + CppAD::to_string(mean);
 			msg += ", lower = " + CppAD::to_string(lower);
 			msg += ", upper = " + CppAD::to_string(upper);
-			error_exit(msg, "start_var", var_id);
+			error_exit(msg, "var", var_id);
 		}
 		double max_mulcov = var2prior_.max_mulcov(var_id);
-		if( (start < - max_mulcov) | (max_mulcov < start) )
+		lower = - max_mulcov;
+		upper = max_mulcov;
+		if( start < lower || upper < start || mean < lower || upper < mean )
 		{	std::string msg;
 			msg  = "variable start value not within its bnd_mulcov limits\n";
 			msg  = "var_id = " + CppAD::to_string(var_id);
 			msg  = ", start = " + CppAD::to_string(start);
+			msg  = ", mean = " + CppAD::to_string(start);
 			msg += ", max_mulcov = " + CppAD::to_string(max_mulcov);
-			error_exit(msg, "start_var", var_id);
+			error_exit(msg, "var", var_id);
 		}
 	}
 	// ----------------------------------------------------------------------
