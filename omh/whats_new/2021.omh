@@ -62,6 +62,8 @@ Remove the log density wish list item which is no longer necessary
 after the improvement to log densities on $cref/05-20/whats_new_2021/05-20/$$.
 $lnext
 Improve the usage message with $code dismod_at$$ is executed with no arguments.
+$lnext
+Advance to version 20210624 of cppad_mixed and dock_dismod_at.sh.
 $lend
 
 $head 06-22$$

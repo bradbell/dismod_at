@@ -44,8 +44,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='cc8b55149e9cfed28181dac60c43c924a02861c7'
-version='20210613'
+hash_key='144ca07c9e306f865c3d0b1095fb9a395cf21ec6'
+version='20210624'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -117,7 +117,7 @@ else
 	optimize='no'
 fi
 # -----------------------------------------------------------------------------
-# transfer cppad_py install options to cppad_mixed run_cmake.sh
+# transfer dismod_at install options to cppad_mixed run_cmake.sh
 dir=$(pwd)
 echo "edit $dir/bin/run_cmake.sh"
 sed \
