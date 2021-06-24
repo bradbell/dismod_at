@@ -431,12 +431,12 @@
 # $cref/density_name/density_table/density_name/$$ for this row.
 #
 # $subhead eta$$
-# is the data table
-# $cref/eta/data_table/eta/$$ for this row.
+# is the data_subset table
+# $cref/eta/data_subset_table/eta/$$ for this row.
 #
 # $subhead nu$$
-# is the data table
-# $cref/nu/data_table/nu/$$ for this row.
+# is the data_subset table
+# $cref/nu/data_subset_table/nu/$$ for this row.
 #
 # $subhead meas_std$$
 # is the data table
@@ -1438,8 +1438,8 @@ def db2csv_command(database_file_arg) :
 		#
 		# columns that are directly copied from data table
 		row_out['meas_std']    = convert2output( row_in['meas_std'] )
-		row_out['eta']         = convert2output( row_in['eta'] )
-		row_out['nu']          = convert2output( row_in['nu'] )
+		row_out['eta']         = convert2output( subset_row['eta'] )
+		row_out['nu']          = convert2output( subset_row['nu'] )
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 		row_out['child']       = node_id2child( row_in['node_id'] )
 		#
@@ -1458,7 +1458,7 @@ def db2csv_command(database_file_arg) :
 		)
 		# denisty
 		row_out['density'] = table_lookup(
-			'density', row_in['density_id'], 'density_name'
+			'density', subset_row['density_id'], 'density_name'
 		)
 		# node
 		row_out['node']  = table_lookup(

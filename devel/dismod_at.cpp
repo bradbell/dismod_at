@@ -20,6 +20,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/simulate_command.hpp>
 # include <dismod_at/hold_out_command.hpp>
 # include <dismod_at/bnd_mulcov_command.hpp>
+# include <dismod_at/data_density_command.hpp>
 
 # include <map>
 # include <cassert>
@@ -70,6 +71,8 @@ int main(int n_arg, const char** argv)
 	struct { const char* name; int n_arg; } command_info[] = {
 		{"bnd_mulcov",   4},
 		{"bnd_mulcov",   5},
+		{"data_density", 3},
+		{"data_density", 7},
 		{"depend",       3},
 		{"fit",          4},
 		{"fit",          5},
@@ -486,6 +489,28 @@ int main(int n_arg, const char** argv)
 			covariate_name,
 			db_input.covariate_table,
 			db_input.mulcov_table
+		);
+	}
+	else if( command_arg == "data_density" )
+	{	string integrand_name  = "";
+		string density_name    = "";
+		string eta_str         = "";
+		string nu_str          = "";
+		if( n_arg == 7 )
+		{	integrand_name = argv[3];
+			density_name   = argv[4];
+			eta_str        = argv[5];
+			nu_str         = argv[6];
+		}
+		dismod_at::data_density_command(
+			db,
+			integrand_name,
+			density_name,
+			eta_str,
+			nu_str,
+			db_input.integrand_table,
+			db_input.density_table,
+			db_input.data_table
 		);
 	}
 	else if( command_arg == "predict" )

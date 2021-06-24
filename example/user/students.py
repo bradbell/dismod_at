@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -248,29 +248,27 @@ program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
-# connect to database and get density table
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-density_table   = dismod_at.get_table_dict(connection, 'density')
-#
-students_id = None
-for density_id in range( len(density_table) ) :
-	if density_table[density_id]['density_name'] == 'students' :
-		students_id = density_id
-#
 # set start_var table equal to fit_var table
 dismod_at.system_command_prc(
 	[ program, file_name, 'set', 'start_var', 'fit_var' ]
 )
 #
-# change data densities to be students-t
-command = 'UPDATE data SET density_id = ' + str(students_id)
-dismod_at.sql_command(connection, command)
+# change the density from gaussian to students
+integrand_name = 'Sincidence'
+density_name   = 'students'
+eta_str        = 'null'
+nu_str         = str(nu)
+dismod_at.system_command_prc([
+	program, file_name, 'data_density',
+	integrand_name, density_name, eta_str, nu_str
+])
 #
 # fit with Students-t (now that we have a better starting point)
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
 # get second fit information
+new             = False
+connection      = dismod_at.create_connection(file_name, new)
 node_table      = dismod_at.get_table_dict(connection, 'node')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 var_table       = dismod_at.get_table_dict(connection, 'var')
