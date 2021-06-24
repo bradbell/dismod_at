@@ -428,7 +428,8 @@
 #
 # $subhead density$$
 # is the
-# $cref/density_name/density_table/density_name/$$ for this row.
+# $cref/density_name/density_table/density_name/$$ for data_subset table
+# $cref/density_id/data_subset_table/density_id/$$ for this row.
 #
 # $subhead eta$$
 # is the data_subset table

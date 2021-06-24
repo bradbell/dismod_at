@@ -50,6 +50,13 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 06-24$$
+Add the $cref data_density_command$$ and include its settings in
+the data.csv file columns
+$cref/density/db2csv_command/data.csv/density/$$,
+$cref/eta/db2csv_command/data.csv/eta/$$,
+$cref/nu/db2csv_command/data.csv/nu/$$.
+
 $head 06-22$$
 $list number$$
 Add the $cref bnd_mulcov_table$$, $cref bnd_mulcov_command$$
