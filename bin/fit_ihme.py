@@ -336,6 +336,10 @@ correpsonding parent rates.
 
 06-23:
 1. Use the new data_density command to improve and simplify fit_ihme.py code.
+
+06-24:
+1. It is no longer necessary to subset the data so remove that step.
+   Now we get residuals for data what was originaly help out; e.g. mtall.
 '''
 }
 # help cases
@@ -1373,51 +1377,7 @@ def plot_integrand(integrand_name, directory, which_fit) :
 		pyplot.close( fig )
 	#
 	pdf.close()
-# =============================================================================
-# Routines that Only Change Data Table
-# =============================================================================
 # -----------------------------------------------------------------------------
-# subset_data:
-def subset_data () :
-	# remove datat table rows that are held out or have covariates
-	# that are out of bounds
-	msg  = '\nsubset_data\n'
-	msg += 'removing hold out and covariate out of bounds data'
-	trace(msg)
-	#
-	# Need global becasue we will use an assingnment to data_table
-	global data_table
-	#
-	table_in      = data_table
-	table_out     = list()
-	col_key       = list()
-	reference     = list()
-	max_diff      = list()
-	n_covariate   = len(covariate_table)
-	for covariate_id in range( n_covariate ) :
-		col_key.append( 'x_' + str(covariate_id) )
-		row  = covariate_table[covariate_id]
-		reference.append( float( row['reference'] ) )
-		if row['max_difference'] is None :
-			max_diff.append( math.inf )
-		else :
-			max_diff.append( float( row['max_difference'] ) )
-	for row in table_in :
-		keep = row['hold_out'] == 0
-		if keep :
-			for covariate_in in range( n_covariate ) :
-				value      = float( row[col_key[covariate_id]] )
-				difference = value - reference[covariate_id]
-				keep       = keep and abs(difference) <= max_diff[covariate_id]
-		if keep :
-			table_out.append(row)
-	data_table = table_out
-	table_name = 'data'
-	put_table('data', data_table, data_col_name, data_col_type)
-# ============================================================================
-# Routines that Change Other Tables
-# ============================================================================
-# plot_predict
 def plot_predict(
 		covariate_integrand_list, predict_integrand_list, directory, which_fit
 	) :
@@ -1564,7 +1524,9 @@ def plot_predict(
 	assert predict_id == len(predict_table)
 	#
 	pdf.close()
-# --------------------------------------------------------------------------
+# ============================================================================
+# Routines that Change Input Tables
+# ============================================================================
 def new_smoothing(
 		smooth_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
 	) :
@@ -2087,16 +2049,9 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	#
 	# return true because we have added the covariate multiplier
 	return True
-# ==========================================================================
-# Example Changes Note Currently Used
-# ==========================================================================
-#
-# hold out Korea before subset_data() do it gets removed
-#	hold_out_data(node_name = 'Republic of Korea', hold_out = 1)
-#	hold_out_data(node_name = 'Japan', hold_out = 1)
-# ----------------------------------------------------------------------
-# Actual Changes
-# ----------------------------------------------------------------------
+# ============================================================================
+# Begin Main Program
+# ============================================================================
 #
 # start_time
 start_time = time.time()
@@ -2168,16 +2123,6 @@ if which_fit_arg == 'no_ode'  :
 	#
 	# erase the database log table so log is just for this session
 	sql_command('DROP TABLE IF EXISTS log')
-	#
-	# remove all hold out data and data past covariate limits
-	subset_data()
-	#
-	# subsetting the data can remove some integrands
-	integrand_list_yes_ode = get_integrand_list(True)
-	integrand_list_no_ode  = get_integrand_list(False)
-	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
-	msg = '\nintegrands   = ' + str( integrand_list_all )
-	trace(msg)
 	#
 	# set reference value for x_0 to its median
 	reference_name  = 'median'
