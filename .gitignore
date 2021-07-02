@@ -50,5 +50,5 @@
 *.pyc
 #
 # temporary file for many purposes
-junk
-junk.*
+temp
+temp.*
