@@ -1137,7 +1137,7 @@ def db2csv_command(database_file_arg) :
 		if row[0] == 'parent_node_name' :
 			node_table       = table_data['node']
 			parent_node_name = node_table[parent_node_id]['node_name']
-			if row[1] == "" :
+			if row[1] == "" or row[1] is None :
 				row[1] = parent_node_name
 			elif row[1] != parent_node_name :
 				msg  = 'Error in option table parent_node_id has name '
@@ -1146,7 +1146,10 @@ def db2csv_command(database_file_arg) :
 				sys.exit(msg)
 		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
 		if row[0] == 'hold_out_integrand' :
-			hold_out_integrand_list = row[1].split(' ')
+			if row[1] == "" or row[1] is None :
+				hold_out_integrand_list = list()
+			else :
+				hold_out_integrand_list = row[1].split(' ')
 		if row[0] == 'compress_interval' :
 			compress_interval_list = row[1].split(' ')
 			compress_age_size  = float( compress_interval_list[0] )

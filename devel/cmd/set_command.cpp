@@ -183,7 +183,10 @@ void set_option_command(
 	{	string option_id = CppAD::to_string( option_name.size() );
 		sql_cmd  = "insert into option ";
 		sql_cmd += "values ('" + option_id + "','";
-		sql_cmd += name + "','" + value + "')";
+		if( value == "" )
+			sql_cmd += name + "', null )";
+		else
+			sql_cmd += name + "','" + value + "')";
 		exec_sql_cmd(db, sql_cmd);
 	}
 	//

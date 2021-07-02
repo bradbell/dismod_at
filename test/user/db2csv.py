@@ -204,6 +204,9 @@ example_db(file_name)
 #
 program = '../../devel/dismod_at'
 command_list = [
+	# db2csv used to crash when hold_out_integrand was null in option table
+	[ program  , file_name, 'set' , 'option', 'hold_out_integrand', '' ],
+	#
 	[ program  , file_name, 'init' ],
 	[ program  , file_name, 'bnd_mulcov', '0.0' ],
 	[ program  , file_name, 'fit', 'fixed' ],

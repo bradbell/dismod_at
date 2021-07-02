@@ -50,6 +50,14 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 07-02$$
+There was a bug in the
+$cref/set option/set_command/option/$$ command.
+To be specific, if you set an option that was not yet in the table
+to the empty string, an empty string (instead of null)
+was put in the option table.
+This has been fixed.
+
 $head 06-24$$
 $list number$$
 Add the $cref data_density_command$$ and include its settings in

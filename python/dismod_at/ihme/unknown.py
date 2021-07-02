@@ -12,7 +12,7 @@
 # of paths on the IHME cluster. It is meant for testing.
 #
 # relative path for original ihme database
-relative_path = 'data/unknown/dismod.db'
+relative_path = 'data/unknown/475588-102-3.db'
 #
 # maximum number of data values per integrand
 max_per_integrand = 1000
