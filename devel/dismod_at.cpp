@@ -300,20 +300,20 @@ int main(int n_arg, const char** argv)
 	assert( parent_node_id < db_input.node_table.size() );
 	// ------------------------------------------------------------------------
 
-	// child_data
-	dismod_at::child_info child_data(
+	// child_info4data
+	dismod_at::child_info child_info4data(
 		parent_node_id          ,
 		db_input.node_table     ,
 		db_input.data_table
 	);
-	// child_avgint
-	dismod_at::child_info child_avgint(
+	// child_info4avgint
+	dismod_at::child_info child_info4avgint(
 		parent_node_id          ,
 		db_input.node_table     ,
 		db_input.avgint_table
 	);
 	// n_child, n_integrand, n_weight, n_smooth
-	size_t n_child     = child_data.child_size();
+	size_t n_child     = child_info4data.child_size();
 	size_t n_integrand = db_input.integrand_table.size();
 	size_t n_weight    = db_input.weight_table.size();
 	size_t n_smooth    = db_input.smooth_table.size();
@@ -347,8 +347,8 @@ int main(int n_arg, const char** argv)
 	// child_id2node_id
 	vector<size_t> child_id2node_id(n_child);
 	for(size_t child_id = 0; child_id < n_child; child_id++)
-	{	size_t node_id = child_data.child_id2node_id(child_id);
-		assert( node_id == child_avgint.child_id2node_id(child_id) );
+	{	size_t node_id = child_info4data.child_id2node_id(child_id);
+		assert( node_id == child_info4avgint.child_id2node_id(child_id) );
 		child_id2node_id[child_id] = node_id;
 	}
 	// pack_object
@@ -473,7 +473,7 @@ int main(int n_arg, const char** argv)
 			pack_object,
 			db_input,
 			parent_node_id,
-			child_data,     // could also use child_avgint
+			child_info4data,     // could also use child_info4avgint
 			s_info_vec
 		);
 	}
@@ -533,7 +533,7 @@ int main(int n_arg, const char** argv)
 				db_input.avgint_table,
 				db_input.avgint_cov_value,
 				db_input.covariate_table,
-				child_avgint,
+				child_info4avgint,
 				avgint_subset_obj,
 				avgint_subset_cov_value
 		);
@@ -558,7 +558,7 @@ int main(int n_arg, const char** argv)
 			w_info_vec               ,
 			s_info_vec               ,
 			pack_object              ,
-			child_avgint
+			child_info4avgint
 		);
 		size_t n_var = pack_object.size();
 		std::string source = argv[3];
@@ -589,7 +589,7 @@ int main(int n_arg, const char** argv)
 			db_input.data_table,
 			db_input.data_cov_value,
 			db_input.covariate_table,
-			child_data,
+			child_info4data,
 			subset_data_obj,
 			subset_data_cov_value
 		);
@@ -622,7 +622,7 @@ int main(int n_arg, const char** argv)
 			w_info_vec               ,
 			s_info_vec               ,
 			pack_object              ,
-			child_data
+			child_info4data
 		);
 		//
 		if( command_arg == "depend" )

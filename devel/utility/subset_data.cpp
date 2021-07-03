@@ -33,7 +33,7 @@ $cref avgint_subset$$.
 $head Syntax$$
 $codei%subset_data(
 	%option_map%, %data_table%, %integrand_table%,
-	%data_table%, %data_cov_value%, %covariate_table%, %child_object%,
+	%data_table%, %data_cov_value%, %covariate_table%, %child_info4data%,
 	%subset_data_obj%, %subset_data_cov_value%
 )%$$
 
@@ -98,7 +98,7 @@ covariate values.
 $head covariate_table$$
 is the $cref/covariate_table/get_covariate_table/covariate_table/$$.
 
-$head child_object$$
+$head child_info4data$$
 is a $cref child_info$$ object.
 
 $head subset_data_obj$$
@@ -199,7 +199,7 @@ void subset_data(
 	const CppAD::vector<data_struct>&            data_table            ,
 	const CppAD::vector<double>&                 data_cov_value        ,
 	const CppAD::vector<covariate_struct>&       covariate_table       ,
-	const child_info&                            child_object          ,
+	const child_info&                            child_info4data       ,
 	CppAD::vector<subset_data_struct>&           subset_data_obj       ,
 	CppAD::vector<double>&                       subset_data_cov_value )
 // END_PROTOTYPE
@@ -209,7 +209,7 @@ void subset_data(
 		return;
 	//
 	// sizes of const tables
-	size_t n_child     = child_object.child_size();
+	size_t n_child     = child_info4data.child_size();
 	size_t n_data      = data_table.size();
 	size_t n_covariate = covariate_table.size();
 	size_t n_integrand = integrand_table.size();
@@ -249,7 +249,7 @@ void subset_data(
 	size_t n_subset = 0;
 	CppAD::vector<bool> ok(n_data);
 	for(size_t data_id = 0; data_id < n_data; data_id++)
-	{	size_t child = child_object.table_id2child(data_id);
+	{	size_t child = child_info4data.table_id2child(data_id);
 		if( child < n_child )
 		{	int density_id = data_table[data_id].density_id;
 			density_enum density = density_table[density_id];

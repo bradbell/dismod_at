@@ -103,9 +103,9 @@ bool subset_data_xam(void)
 		data_subset_table[i].hold_out = 0;
 	}
 	//
-	// child_object
+	// child_info4data
 	size_t parent_node_id = 1; // north_america
-	dismod_at::child_info child_object(
+	dismod_at::child_info child_info4data(
 		parent_node_id, node_table, data_table
 	);
 	//
@@ -127,7 +127,7 @@ bool subset_data_xam(void)
 		data_table,
 		data_cov_value,
 		covariate_table,
-		child_object,
+		child_info4data,
 		subset_data_obj,
 		subset_data_cov_value
 	);

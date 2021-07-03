@@ -218,12 +218,12 @@ bool like_one_xam(void)
 		rate_table[rate_id].child_nslist_id  =  int( DISMOD_AT_NULL_INT );
 	}
 	// child_info
-	dismod_at::child_info child_object(
+	dismod_at::child_info child_info4data(
 		parent_node_id ,
 		node_table     ,
 		data_table
 	);
-	size_t n_child = child_object.child_size();
+	size_t n_child = child_info4data.child_size();
 	assert( n_child == 0 );
 	// pack_object
 	// values in child_id2node_id do not matter because child_nslist_id is null
@@ -258,7 +258,7 @@ bool like_one_xam(void)
 		data_table,
 		data_cov_value,
 		covariate_table,
-		child_object,
+		child_info4data,
 		subset_data_obj,
 		subset_data_cov_value
 	);
@@ -291,7 +291,7 @@ bool like_one_xam(void)
 		w_info_vec,
 		s_info_vec,
 		pack_object,
-		child_object
+		child_info4data
 	);
 	data_object.replace_like(subset_data_obj);
 	//

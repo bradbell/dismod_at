@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -50,23 +50,23 @@ bool child_info_xam(void)
 	data_table[3].node_id = 0; // in parent node   set
 
 	// constructor
-	dismod_at::child_info child_object(
+	dismod_at::child_info child_info4data(
 		parent_node_id, node_table, data_table
 	);
 
 	// check child_size
-	size_t n_child = child_object.child_size();
+	size_t n_child = child_info4data.child_size();
 	ok &= n_child == 2;
 
 	// check child_id2node_id
-	ok &= child_object.child_id2node_id(0) == 1; // first  child node_id = 1
-	ok &= child_object.child_id2node_id(1) == 2; // second child node_id = 2
+	ok &= child_info4data.child_id2node_id(0) == 1; // first  child node_id = 1
+	ok &= child_info4data.child_id2node_id(1) == 2; // second child node_id = 2
 
 	// check table_id2child_id
-	ok &= child_object.table_id2child(0) == 1;      // first  data child_id = 1
-	ok &= child_object.table_id2child(1) == 1;      // second data child_id = 1
-	ok &= child_object.table_id2child(2) == 0;      // third  data child_id = 0
-	ok &= child_object.table_id2child(3) == n_child;// fourth in parent set
+	ok &= child_info4data.table_id2child(0) == 1;      // first  data child_id = 1
+	ok &= child_info4data.table_id2child(1) == 1;      // second data child_id = 1
+	ok &= child_info4data.table_id2child(2) == 0;      // third  data child_id = 0
+	ok &= child_info4data.table_id2child(3) == n_child;// fourth in parent set
 
 	return ok;
 }

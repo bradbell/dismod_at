@@ -51,7 +51,7 @@ $codei%data_model %data_object%(
 	%w_info_vec%,
 	%s_info_vec%,
 	%pack_object%,
-	%child_object%
+	%child_info4data%
 )%$$
 
 $head Prototype$$
@@ -142,7 +142,7 @@ This is the $cref pack_info$$ information corresponding to
 the $cref model_variables$$.
 A reference to $icode pack_object$$ is used by $icode data_object$$.
 
-$head child_object$$
+$head child_info4data$$
 This is the $cref child_info$$ information corresponding to
 parent node, node table, and data table.
 
@@ -246,14 +246,14 @@ data_model::data_model(
 	const CppAD::vector<weight_info>&        w_info_vec         ,
 	const CppAD::vector<smooth_info>&        s_info_vec         ,
 	const pack_info&                         pack_object        ,
-	const child_info&                        child_object       )
+	const child_info&                        child_info4data    )
 // END_DATA_MODEL_PROTOTYPE
 :
 // const
 fit_simulated_data_ ( fit_simulated_data)           ,
 n_covariate_        (n_covariate)                   ,
 ode_step_size_      (ode_step_size)                 ,
-n_child_            ( child_object.child_size() )   ,
+n_child_            ( child_info4data.child_size() )   ,
 subset_cov_value_   (subset_cov_value)              ,
 pack_object_        (pack_object)                   ,
 avgint_obj_(
@@ -345,7 +345,7 @@ avg_noise_obj_(
 		integrand_enum integrand = integrand_table[integrand_id].integrand;
 
 		// child of parent node that this data is associated with
-		size_t  child            = child_object.table_id2child(original_id);
+		size_t  child            = child_info4data.table_id2child(original_id);
 
 		// group_id for this data point
 		size_t subgroup_id       = subset_object[subset_id].subgroup_id;
@@ -1049,7 +1049,7 @@ template data_model::data_model(                                   \
 	const CppAD::vector<weight_info>&        w_info_vec         ,  \
 	const CppAD::vector<smooth_info>&        s_info_vec         ,  \
 	const pack_info&                         pack_object        ,  \
-	const child_info&                        child_object          \
+	const child_info&                        child_info4data       \
 );
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(subset_data_struct)
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)

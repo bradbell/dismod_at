@@ -25,7 +25,7 @@ void init_command(
 	const pack_info&                                 pack_object         ,
 	const db_input_struct&                           db_input            ,
 	const size_t&                                    parent_node_id      ,
-	const child_info&                                child_object        ,
+	const child_info&                                child_info4data     ,
 	const CppAD::vector<smooth_info>&                s_info_vec
 );
 

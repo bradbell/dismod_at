@@ -117,7 +117,7 @@ $end
 
 namespace { // BEGIN_EMPTY_NAMESPACE
 CppAD::vector<data_subset_struct> make_data_subset_table(
-	const child_info&                      child_object          ,
+	const child_info&                      child_info4data       ,
 	const CppAD::vector<covariate_struct>& covariate_table       ,
 	const CppAD::vector<data_struct>&      data_table            ,
 	const CppAD::vector<double>&           data_cov_value        )
@@ -126,7 +126,7 @@ CppAD::vector<data_subset_struct> make_data_subset_table(
 	size_t n_data = data_table.size();
 	//
 	// n_child
-	size_t n_child = child_object.child_size();
+	size_t n_child = child_info4data.child_size();
 	//
 	// n_covariate
 	size_t n_covariate = covariate_table.size();
@@ -134,7 +134,7 @@ CppAD::vector<data_subset_struct> make_data_subset_table(
 	// data_subset_table
 	CppAD::vector<data_subset_struct> data_subset_table;
 	for(size_t data_id = 0; data_id < n_data; data_id++)
-	{	size_t child = child_object.table_id2child(data_id);
+	{	size_t child = child_info4data.table_id2child(data_id);
 		//
 		// check if this data is for parent or one of its descendants
 		bool in_subset = child <= n_child;
@@ -172,7 +172,7 @@ void init_command(
 	const pack_info&                                 pack_object         ,
 	const db_input_struct&                           db_input            ,
 	const size_t&                                    parent_node_id      ,
-	const child_info&                                child_object        ,
+	const child_info&                                child_info4data     ,
 	const CppAD::vector<smooth_info>&                s_info_vec          )
 {	using std::string;
 	using CppAD::to_string;
@@ -233,7 +233,7 @@ void init_command(
 	// data_subset table
 	table_name = "data_subset";
 	vector<data_subset_struct> data_subset_table = make_data_subset_table(
-		child_object,
+		child_info4data,
 		db_input.covariate_table,
 		db_input.data_table,
 		db_input.data_cov_value
@@ -449,14 +449,14 @@ void init_command(
 	}
 	// rate variables
 	size_t n_rate  = db_input.rate_table.size();
-	size_t n_child = child_object.child_size();
+	size_t n_child = child_info4data.child_size();
 	size_t n_var, n_time, node_id;
 	for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
 	{	for(size_t child_id = 0; child_id <= n_child; child_id++)
 		{	if( child_id == n_child )
 				node_id = parent_node_id;
 			else
-				node_id = child_object.child_id2node_id(child_id);
+				node_id = child_info4data.child_id2node_id(child_id);
 			//
 			pack_info::subvec_info info;
 			info      = pack_object.node_rate_value_info(rate_id, child_id);

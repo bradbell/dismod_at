@@ -89,7 +89,7 @@ public:
 		const CppAD::vector<weight_info>&        w_info_vec         ,
 		const CppAD::vector<smooth_info>&        s_info_vec         ,
 		const pack_info&                         pack_object        ,
-		const child_info&                        child_object
+		const child_info&                        child_info4data
 	);
 	~data_model(void);
 	//

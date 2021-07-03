@@ -49,7 +49,7 @@ namespace dismod_at {
 		const CppAD::vector<data_struct>&         data_table              ,
 		const CppAD::vector<double>&              data_cov_value          ,
 		const CppAD::vector<covariate_struct>&    covariate_table         ,
-		const child_info&                         child_object            ,
+		const child_info&                         child_info4data         ,
 		CppAD::vector<subset_data_struct>&       subset_data_obj         ,
 		CppAD::vector<double>&                   subset_data_cov_value
 	);

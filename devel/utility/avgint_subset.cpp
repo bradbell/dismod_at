@@ -27,7 +27,7 @@ $section Create a Subsampled Version of Average Integrand Case Table$$
 
 $head Syntax$$
 $codei%avgint_subset(
-	%avgint_table%, %avgint_cov_value%, %covariate_table%, %child_object%,
+	%avgint_table%, %avgint_cov_value%, %covariate_table%, %child_info4avgint%,
 	%avgint_subset_obj, %avgint_subset_cov_value%
 )%$$
 
@@ -73,10 +73,10 @@ $codei%
 %$$
 and is the $cref/covariate_table/get_covariate_table/covariate_table/$$.
 
-$head child_object$$
+$head child_info4avgint$$
 This argument has prototype
 $codei%
-	const child_info& %child_object%
+	const child_info& %child_info4avgint%
 %$$
 
 $head avgint_subset_obj$$
@@ -168,7 +168,7 @@ void avgint_subset(
 	const CppAD::vector<avgint_struct>&    avgint_table            ,
 	const CppAD::vector<double>&           avgint_cov_value        ,
 	const CppAD::vector<covariate_struct>& covariate_table         ,
-	const child_info&                      child_object            ,
+	const child_info&                      child_info4avgint         ,
 	CppAD::vector<avgint_subset_struct>&   avgint_subset_obj       ,
 	CppAD::vector<double>&                 avgint_subset_cov_value )
 {	assert( avgint_subset_obj.size() == 0 );
@@ -176,14 +176,14 @@ void avgint_subset(
 	if( avgint_table.size() == 0 )
 		return;
 	//
-	size_t n_child     = child_object.child_size();
+	size_t n_child     = child_info4avgint.child_size();
 	size_t n_avgint    = avgint_table.size();
 	size_t n_covariate = covariate_table.size();
 	//
 	size_t n_subset = 0;
 	CppAD::vector<bool> ok(n_avgint);
 	for(size_t avgint_id = 0; avgint_id < n_avgint; avgint_id++)
-	{	size_t child = child_object.table_id2child(avgint_id);
+	{	size_t child = child_info4avgint.table_id2child(avgint_id);
 		// check if this avgint is for parent or one of its descendants
 		ok[avgint_id] = child <= n_child;
 		if( ok[avgint_id] )
