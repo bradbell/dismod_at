@@ -56,6 +56,7 @@ $end
 */
 # include <dismod_at/get_var_limits.hpp>
 # include <dismod_at/null_int.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at {
 	// BEGIN PROTOTYPE
@@ -69,6 +70,7 @@ namespace dismod_at {
 	{
 		double inf   = std::numeric_limits<double>::infinity();
 		size_t n_var = var2prior.size();
+		std::string msg;
 		//
 		assert( bound_random >= 0.0 );
 		assert( n_var == lower_limit.size() );
@@ -108,13 +110,24 @@ namespace dismod_at {
 					}
 				}
 			}
-			// enforce the bnd_mulcov table values
+			// enforce the max_abs table values
 			double lower        = lower_limit[var_id];
 			double upper        = upper_limit[var_id];
+			double max_abs      = var2prior.max_abs(var_id);
+			if( upper < - max_abs )
+			{	msg  = "var_id = " + CppAD::to_string(var_id);
+				msg += ": varialbe upper limit < - maximum absolute value\n";
+				error_exit(msg);
+			}
+			if(  max_abs < lower )
+			{	msg  = "var_id = " + CppAD::to_string(var_id);
+				msg += ": maximum absolute value < variable lower limit\n";
+				error_exit(msg);
+			}
 			if( lower < upper )
-			{	double max_mulcov   = var2prior.max_mulcov(var_id);
-				lower_limit[var_id] = std::max(lower, - max_mulcov);
-				upper_limit[var_id] = std::min(upper, max_mulcov);
+			{
+				lower_limit[var_id] = std::max(lower, - max_abs);
+				upper_limit[var_id] = std::min(upper, max_abs);
 			}
 		}
 	}

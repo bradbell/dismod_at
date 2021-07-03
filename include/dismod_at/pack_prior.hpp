@@ -28,7 +28,7 @@ namespace dismod_at {
 	private:
 		// one_prior_struct
 		struct one_prior_struct {
-			double max_mulcov;
+			double  max_abs;
 			double  const_value;
 			size_t  n_time;
 			size_t  smooth_id;
@@ -68,7 +68,7 @@ namespace dismod_at {
 		size_t dage_var_id    (size_t var_id) const;
 		size_t dtime_var_id   (size_t var_id) const;
 		bool   fixed_effect   (size_t var_id) const;
-		double max_mulcov     (size_t var_id) const;
+		double max_abs        (size_t var_id) const;
 	};
 
 }

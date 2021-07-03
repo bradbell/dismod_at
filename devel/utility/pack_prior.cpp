@@ -47,9 +47,9 @@ $icode%dtime_var_id%   = %var2prior%.dtime_next(%var_id%)
 %$$
 $icode%fixed_effect%   = %var2prior%.fixed_effect(%var_id%)
 %$$
-$icode%var2prior%.set_bnd_mulcov(%bnd_mulcov_table%)
+$icode%max_abs%        = %var2prior%.max_abs(%var_id%)
 %$$
-$icode%max_mulcov%     = %var2prior%.max_mulcov(%var_id%)
+$icode%var2prior%.set_bnd_mulcov(%bnd_mulcov_table%)
 %$$
 
 $head Prototype$$
@@ -149,17 +149,19 @@ $cref/fixed effect/model_variables/Fixed Effects, theta/$$
 
 $head set_bnd_mulcov$$
 This member function sets the maximum upper and minimum lower
-limit for the covariate multipliers.
-The initial $icode var2prior$$ corresponds the maximum being
-plus infinity and the minimum being minus infinity.
+limit for the covariate multipliers; i.e., $icode max_abs$$
+for covariate multipliers.
 
 $head bnd_mulcov_table$$
 See$cref/bnd_mulcov_table/get_bnd_mulcov_table/bnd_mulcov_table/$$.
 
-$head max_mulcov$$
-Is the maximum upper limit for this variable corresponding to the
-previous call to $code set_bnd_mulcov$$.
-This is plus infinity before $code set_bnd_mulcov$$ is called.
+$head max_abs$$
+Is the maximum absolute value for this variable.
+This constraint is in addition to the upper and lower limits
+in the prior for the variables.
+The initial $icode var2prior$$ corresponds to this maximum being infinity.
+If there is a previous call to $code set_bnd_mulcov$$,
+it specified the maximum for covariate multipliers.
 
 $children%
 	example/devel/utility/pack_prior_xam.cpp
@@ -209,9 +211,9 @@ size_t pack_prior::dtime_var_id(size_t var_id) const
 bool pack_prior::fixed_effect(size_t  var_id) const
 {	return prior_vec_[var_id].fixed_effect; }
 
-// max_mulcov
-double pack_prior::max_mulcov(size_t var_id) const
-{	return prior_vec_[var_id].max_mulcov; }
+// max_abs
+double pack_prior::max_abs(size_t var_id) const
+{	return prior_vec_[var_id].max_abs; }
 
 // set_bnd_mulcov
 void pack_prior::set_bnd_mulcov(
@@ -220,13 +222,12 @@ void pack_prior::set_bnd_mulcov(
 	{	size_t mulcov_id = prior_vec_[var_id].mulcov_id;
 		if( mulcov_id != DISMOD_AT_NULL_SIZE_T )
 		{	double max_mulcov = bnd_mulcov_table[mulcov_id].max_mulcov;
-			prior_vec_[var_id].max_mulcov = max_mulcov;
+			prior_vec_[var_id].max_abs = max_mulcov;
 		}
 	}
 }
 
 // set_prior_vec
-// sets all fields except for max_mulcov
 void pack_prior::set_prior_vec(
 	size_t                                                    offset       ,
 	bool                                                      fixed_effect ,
@@ -302,11 +303,11 @@ pack_prior::pack_prior(
 	size_t n_smooth    = s_info_vec.size();
 	//
 	// -----------------------------------------------------------------------
-	// initialize everyting to not defined except max_mulcov
+	// initialize everyting to not defined except max_abs
 	prior_vec_.resize(n_var);
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
 	{
-		prior_vec_[var_id].max_mulcov     = + inf;
+		prior_vec_[var_id].max_abs        = + inf;
 		//
 		prior_vec_[var_id].const_value    = nan;
 		prior_vec_[var_id].n_time         = DISMOD_AT_NULL_SIZE_T;
