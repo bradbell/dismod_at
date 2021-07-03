@@ -230,18 +230,21 @@ bool n_random_const_xam(void)
 	);
 	// ----------------------- number_random_const ----------------------------
 	double bound_random = inf;
-	dismod_at::pack_prior var2prior(
+	dismod_at::pack_prior var2prior_inf(
 		bound_random, prior_table, pack_object, s_info_vec
 	);
 	size_t n_random_const = number_random_const(
-		bound_random, pack_object, var2prior, prior_table
+		pack_object, var2prior_inf, prior_table
 	);
 	// one constraint per child for iota, rho, chi, omega
 	ok &= n_random_const == n_child * 4;
 	//
 	bound_random = 0.0;
+	dismod_at::pack_prior var2prior_zero(
+		bound_random, prior_table, pack_object, s_info_vec
+	);
 	n_random_const = number_random_const(
-		bound_random, pack_object, var2prior, prior_table
+		pack_object, var2prior_zero, prior_table
 	);
 	ok &= n_random_const == pack_object.random_size();
 	//

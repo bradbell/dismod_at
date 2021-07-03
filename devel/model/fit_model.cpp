@@ -171,7 +171,7 @@ $end
 	number_fixed(pack_object),
 	// n_random in dismod_at minus number random effects that are constant
 	pack_object.random_size() - number_random_const(
-		bound_random, pack_object, var2prior, prior_table
+		pack_object, var2prior, prior_table
 	),
 	// quasi_fixed
 	quasi_fixed,
