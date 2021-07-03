@@ -13,6 +13,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/pack_info.hpp>
 # include <dismod_at/smooth_info.hpp>
 # include <dismod_at/get_bnd_mulcov_table.hpp>
+# include <dismod_at/get_prior_table.hpp>
 
 namespace dismod_at {
 
@@ -44,6 +45,7 @@ namespace dismod_at {
 		// set prior_vec_ corresponding to one use of a smoothing
 		void set_prior_vec(
 			double                               bound_random ,
+			const CppAD::vector<prior_struct>&  prior_table  ,
 			size_t                               offset       ,
 			bool                                 fixed_effect ,
 			size_t                               mulcov_id    ,
@@ -54,6 +56,7 @@ namespace dismod_at {
 		// ctor
 		pack_prior(
 			double                               bound_random ,
+			const CppAD::vector<prior_struct>&   prior_table  ,
 			const pack_info&                     pack_object  ,
 			const CppAD::vector<smooth_info>&    s_info_vec
 		);

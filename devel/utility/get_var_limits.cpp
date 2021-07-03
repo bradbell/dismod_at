@@ -63,7 +63,6 @@ namespace dismod_at {
 	void get_var_limits(
 		CppAD::vector<double>&               lower_limit  ,
 		CppAD::vector<double>&               upper_limit  ,
-		double                               bound_random ,
 	    const pack_prior&                    var2prior    ,
 		const CppAD::vector<prior_struct>&   prior_table  )
 	// END PROTOTYPE
@@ -72,7 +71,6 @@ namespace dismod_at {
 		size_t n_var = var2prior.size();
 		std::string msg;
 		//
-		assert( bound_random >= 0.0 );
 		assert( n_var == lower_limit.size() );
 		assert( n_var == upper_limit.size() );
 		//
@@ -84,31 +82,13 @@ namespace dismod_at {
 				upper_limit[var_id] = const_value;
 			}
 			else if( prior_id == DISMOD_AT_NULL_SIZE_T )
-			{	if( var2prior.fixed_effect(var_id) )
-				{	lower_limit[var_id] = -inf;
-					upper_limit[var_id] = +inf;
-				}
-				else
-				{	lower_limit[var_id] = -bound_random;
-					upper_limit[var_id] = +bound_random;
-				}
+			{	lower_limit[var_id] = -inf;
+				upper_limit[var_id] = +inf;
 			}
 			else
 			{
 				lower_limit[var_id] = prior_table[prior_id].lower;
 				upper_limit[var_id] = prior_table[prior_id].upper;
-				//
-				// random effects case
-				if( ! var2prior.fixed_effect(var_id) )
-				{	double lower = lower_limit[var_id];
-					double upper = upper_limit[var_id];
-					if( lower != upper )
-					{	assert( lower == -inf );
-						assert( upper == +inf );
-						lower_limit[var_id] = -bound_random;
-						upper_limit[var_id] = +bound_random;
-					}
-				}
 			}
 			// enforce the max_abs table values
 			double lower        = lower_limit[var_id];
@@ -116,7 +96,7 @@ namespace dismod_at {
 			double max_abs      = var2prior.max_abs(var_id);
 			if( upper < - max_abs )
 			{	msg  = "var_id = " + CppAD::to_string(var_id);
-				msg += ": varialbe upper limit < - maximum absolute value\n";
+				msg += ": variable upper limit < - maximum absolute value\n";
 				error_exit(msg);
 			}
 			if(  max_abs < lower )
@@ -125,8 +105,7 @@ namespace dismod_at {
 				error_exit(msg);
 			}
 			if( lower < upper )
-			{
-				lower_limit[var_id] = std::max(lower, - max_abs);
+			{	lower_limit[var_id] = std::max(lower, - max_abs);
 				upper_limit[var_id] = std::min(upper, max_abs);
 			}
 		}

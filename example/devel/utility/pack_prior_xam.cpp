@@ -226,7 +226,9 @@ bool pack_prior_xam(void)
 	);
 	// ----------------------- value_prior -------------------------------
 	double bound_random = inf;
-	dismod_at::pack_prior var2prior(bound_random, pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(
+		bound_random, prior_table, pack_object, s_info_vec
+	);
 	dismod_at::pack_info::subvec_info info;
 	//
 	// check mulstd

@@ -370,7 +370,7 @@ void fit_command(
 	size_t n_random = pack_object.random_size();
 	CppAD::mixed::d_vector var_lower(n_var), var_upper(n_var);
 	get_var_limits(
-		var_lower, var_upper, bound_random, var2prior, db_input.prior_table
+		var_lower, var_upper, var2prior, db_input.prior_table
 	);
 	CppAD::mixed::d_vector random_lower(n_random);
 	CppAD::mixed::d_vector random_upper(n_random);

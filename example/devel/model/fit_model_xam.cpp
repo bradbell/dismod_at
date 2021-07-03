@@ -312,7 +312,9 @@ bool fit_model_xam(void)
 	double bound_random = std::numeric_limits<double>::infinity();
 	//
 	// var2prior
-	dismod_at::pack_prior var2prior(bound_random, pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(
+		bound_random, prior_table, pack_object, s_info_vec
+	);
 	//
 	// prior_object
 	dismod_at::prior_model prior_object(
@@ -324,7 +326,7 @@ bool fit_model_xam(void)
 	size_t n_random     = pack_object.random_size();
 	CppAD::mixed::d_vector var_lower(n_var), var_upper(n_var);
 	get_var_limits(
-		var_lower, var_upper, bound_random, var2prior, prior_table
+		var_lower, var_upper, var2prior, prior_table
 	);
 	CppAD::mixed::d_vector random_lower(n_random);
 	CppAD::mixed::d_vector random_upper(n_random);

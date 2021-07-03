@@ -285,7 +285,9 @@ bool prior_fixed_xam(void)
 	//
 	// var2prior
 	double bound_random = inf;
-	dismod_at::pack_prior var2prior(bound_random, pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(
+		bound_random, prior_table, pack_object, s_info_vec
+	);
 	//
 	// mulcov_meas_value: none
 	// mulcov_meas_noise: none

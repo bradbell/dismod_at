@@ -32,6 +32,7 @@ $spell
 	const
 	enum
 	stderr
+	cppad
 $$
 
 $section Fit Model Constructor$$
@@ -97,6 +98,8 @@ Mapping from $icode var_id$$ to prior information.
 $head start_var$$
 This vector is the starting $cref model_variables$$ in the order
 specified by $cref pack_info$$.
+These values get projected onto the [ lower , upper ] interval
+for each variable before being passed to cppad_mixed.
 
 $head scale_var$$
 The object and constraints are scaled using this value for the
@@ -204,43 +207,6 @@ data_object_   ( data_object )
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object.size() == n_var );
 	assert( var2prior_.size() == n_var );
-	// ----------------------------------------------------------------------
-	for(size_t var_id = 0; var_id < n_var; var_id++)
-	{	size_t prior_id    = var2prior_.value_prior_id(var_id);
-		double const_value = var2prior_.const_value(var_id);
-		double lower       = const_value;
-		double upper       = const_value;
-		double mean        = const_value;
-		if( std::isnan(const_value) )
-		{	assert( prior_id != DISMOD_AT_NULL_SIZE_T );
-			lower = prior_table_[prior_id].lower;
-			upper = prior_table_[prior_id].upper;
-			mean  = prior_table_[prior_id].mean;
-		}
-		double start = start_var_[var_id];
-		if( start < lower || upper < start || mean < lower || upper < mean )
-		{	std::string msg;
-			msg  = "variable start value not within its prior limits\n";
-			msg  = "var_id = " + CppAD::to_string(var_id);
-			msg  = ", start = " + CppAD::to_string(start);
-			msg  = ", mean  = " + CppAD::to_string(mean);
-			msg += ", lower = " + CppAD::to_string(lower);
-			msg += ", upper = " + CppAD::to_string(upper);
-			error_exit(msg, "var", var_id);
-		}
-		double max_abs = var2prior_.max_abs(var_id);
-		lower = - max_abs;
-		upper = max_abs;
-		if( start < lower || upper < start || mean < lower || upper < mean )
-		{	std::string msg;
-			msg  = "variable start not within its maximum absolute limits\n";
-			msg  = "var_id = " + CppAD::to_string(var_id);
-			msg  = ", start = " + CppAD::to_string(start);
-			msg  = ", mean = " + CppAD::to_string(start);
-			msg += ", max_abs = " + CppAD::to_string(max_abs);
-			error_exit(msg, "var", var_id);
-		}
-	}
 	// ----------------------------------------------------------------------
 	// random_lower_, random_upper_, n_random_equal_
 	random_lower_   = random_const_.lower();
@@ -415,23 +381,23 @@ $end
 */
 {	assert( ! no_scaling_ );
 	assert( warm_start.x_info.size() == 0 || ! random_only );
-	double inf = std::numeric_limits<double>::infinity();
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
 	assert( var2prior_.size() == n_var );
 	d_vector pack_vec( n_var );
 	//
-	// fixed_lower, fixed_upper
-	double bound_random = inf; // does not matter for fixed effects
+	// var_lower, var_upper
 	d_vector var_lower(n_var), var_upper(n_var);
 	get_var_limits(
-		var_lower, var_upper, bound_random, var2prior_, prior_table_
+		var_lower, var_upper, var2prior_, prior_table_
 	);
+	// fixed_lower, fixed_upper
 	d_vector fixed_lower(n_fixed_), fixed_upper(n_fixed_);
 	unpack_fixed(pack_object_, var_lower, fixed_lower);
 	unpack_fixed(pack_object_, var_upper, fixed_upper);
 	//
+	// fixed_lower_scaled, fixed_upper_scaled
 	d_vector fixed_lower_scaled(n_fixed_), fixed_upper_scaled(n_fixed_);
 	scale_fixed_effect(fixed_lower, fixed_lower_scaled);
 	scale_fixed_effect(fixed_upper, fixed_upper_scaled);
@@ -450,10 +416,17 @@ $end
 		fix_constraint_lower.push_back(lower);
 		fix_constraint_upper.push_back(upper);
 	}
+	//
+	// var_in
+	d_vector var_in(n_var);
+	for(size_t var_id = 0; var_id < n_var; ++var_id)
+	{	var_in[var_id] = std::max(var_lower[var_id], start_var_[var_id]);
+		var_in[var_id] = std::min(var_upper[var_id], var_in[var_id]);
+	}
 
 	// fixed_in
 	d_vector fixed_in(n_fixed_);
-	unpack_fixed(pack_object_, start_var_, fixed_in);
+	unpack_fixed(pack_object_, var_in, fixed_in);
 	scale_fixed_effect(fixed_in, fixed_in);
 
 	// Note that scale_fixed_effect scales argument values.

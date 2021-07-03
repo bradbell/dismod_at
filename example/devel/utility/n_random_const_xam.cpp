@@ -230,7 +230,9 @@ bool n_random_const_xam(void)
 	);
 	// ----------------------- number_random_const ----------------------------
 	double bound_random = inf;
-	dismod_at::pack_prior var2prior(bound_random, pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(
+		bound_random, prior_table, pack_object, s_info_vec
+	);
 	size_t n_random_const = number_random_const(
 		bound_random, pack_object, var2prior, prior_table
 	);

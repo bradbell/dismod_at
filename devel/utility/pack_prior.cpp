@@ -29,7 +29,9 @@ $$
 $section Priors in Variable ID Order$$
 
 $head Syntax$$
-$codei%pack_prior %var2prior%(%bound_random%, %pack_object%, %s_info_vec%)
+$codei%pack_prior %var2prior%(
+	%bound_random%, %prior_table%, %pack_object%, %s_info_vec%
+)
 %$$
 $icode%size%           = %var2prior%.size()
 %$$
@@ -71,6 +73,12 @@ have type $code size_t$$ and are an index in the prior table.
 $head bound_random$$
 This is a bound for the absolute value of the random effects
 (which can be infinity).
+This bound does not apply for random effects that have equal upper and
+lower limits.
+
+$head prior_table$$
+is the in memory representation of the
+$cref/prior_table/get_prior_table/prior_table/$$.
 
 $head pack_object$$
 is the $cref pack_info$$ information corresponding to
@@ -241,6 +249,7 @@ void pack_prior::set_bnd_mulcov(
 // set_prior_vec
 void pack_prior::set_prior_vec(
 	double                                                    bound_random ,
+	const CppAD::vector<prior_struct>&                        prior_table  ,
 	size_t                                                    offset       ,
 	bool                                                      fixed_effect ,
 	size_t                                                    mulcov_id    ,
@@ -257,11 +266,6 @@ void pack_prior::set_prior_vec(
 	{	for(size_t j = 0; j < n_time; j++)
 		{	// var_id
 			size_t var_id   = offset + i * n_time + j;
-			//
-			if( fixed_effect )
-				prior_vec_[var_id].max_abs = inf;
-			else
-				prior_vec_[var_id].max_abs = bound_random;
 			//
 			prior_vec_[var_id].fixed_effect = fixed_effect;
 			prior_vec_[var_id].mulcov_id    = mulcov_id;
@@ -292,6 +296,21 @@ void pack_prior::set_prior_vec(
 				prior_vec_[var_id].dtime_prior_id == DISMOD_AT_NULL_SIZE_T
 			);
 			//
+			// max_abs
+			if( fixed_effect )
+				prior_vec_[var_id].max_abs = inf;
+			else if ( ! std::isnan( const_value ) )
+				prior_vec_[var_id].max_abs = inf;
+			else
+			{	CPPAD_ASSERT_UNKNOWN(value_prior_id != DISMOD_AT_NULL_SIZE_T);
+				double lower = prior_table[value_prior_id].lower;
+				double upper = prior_table[value_prior_id].upper;
+				if( lower == upper )
+					prior_vec_[var_id].max_abs = inf;
+				else
+					prior_vec_[var_id].max_abs = bound_random;
+			}
+			//
 # ifndef NDEBUG
 			bool value_prior_null = value_prior_id == DISMOD_AT_NULL_SIZE_T;
 			bool const_value_null = std::isnan( const_value );
@@ -307,6 +326,7 @@ void pack_prior::set_prior_vec(
 // BEGIN CTOR_PROTOTYPE
 pack_prior::pack_prior(
 	double                             bound_random ,
+	const CppAD::vector<prior_struct>& prior_table  ,
 	const pack_info&                   pack_object  ,
 	const CppAD::vector<smooth_info>&  s_info_vec   )
 // END CTOR_PROTOTYPE
@@ -383,7 +403,7 @@ pack_prior::pack_prior(
 			{	size_t offset       = info.offset;
 				bool   fixed_effect = j == n_child;
 				size_t mulcov_id    = info.mulcov_id;
-				set_prior_vec(bound_random,
+				set_prior_vec(bound_random, prior_table,
 					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 				);
 			}
@@ -401,7 +421,7 @@ pack_prior::pack_prior(
 				size_t smooth_id    = info.smooth_id;
 				bool   fixed_effect = false;
 				size_t mulcov_id    = info.mulcov_id;
-				set_prior_vec(bound_random,
+				set_prior_vec(bound_random, prior_table,
 					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 				);
 			}
@@ -417,7 +437,7 @@ pack_prior::pack_prior(
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			size_t mulcov_id    = info.mulcov_id;
-			set_prior_vec(bound_random,
+			set_prior_vec(bound_random, prior_table,
 				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 			);
 		}
@@ -437,7 +457,7 @@ pack_prior::pack_prior(
 				size_t smooth_id    = info.smooth_id;
 				bool   fixed_effect = false;
 				size_t mulcov_id    = info.mulcov_id;
-				set_prior_vec(bound_random,
+				set_prior_vec(bound_random, prior_table,
 					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 				);
 			}
@@ -454,7 +474,7 @@ pack_prior::pack_prior(
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			size_t mulcov_id    = info.mulcov_id;
-			set_prior_vec(bound_random,
+			set_prior_vec(bound_random, prior_table,
 				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 			);
 		}
@@ -466,7 +486,7 @@ pack_prior::pack_prior(
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			size_t mulcov_id    = info.mulcov_id;
-			set_prior_vec(bound_random,
+			set_prior_vec(bound_random, prior_table,
 				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 			);
 		}

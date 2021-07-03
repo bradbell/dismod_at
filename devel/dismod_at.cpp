@@ -377,7 +377,9 @@ int main(int n_arg, const char** argv)
 	);
 	//
 	// var2prior
-	dismod_at::pack_prior var2prior(bound_random, pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(
+		bound_random, db_input.prior_table, pack_object, s_info_vec
+	);
 	//
 	// prior_mean
 	vector<double> prior_mean = get_prior_mean(
