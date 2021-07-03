@@ -308,8 +308,11 @@ bool fit_model_xam(void)
 		nslist_pair
 	);
 	//
+	// bound_random
+	double bound_random = std::numeric_limits<double>::infinity();
+	//
 	// var2prior
-	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(bound_random, pack_object, s_info_vec);
 	//
 	// prior_object
 	dismod_at::prior_model prior_object(
@@ -317,7 +320,6 @@ bool fit_model_xam(void)
 	);
 	//
 	// random_const
-	double bound_random = std::numeric_limits<double>::infinity();
 	size_t n_var        = pack_object.size();
 	size_t n_random     = pack_object.random_size();
 	CppAD::mixed::d_vector var_lower(n_var), var_upper(n_var);

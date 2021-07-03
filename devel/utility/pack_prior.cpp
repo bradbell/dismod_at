@@ -29,7 +29,7 @@ $$
 $section Priors in Variable ID Order$$
 
 $head Syntax$$
-$codei%pack_prior %var2prior%(%pack_object%, %s_info_vec%)
+$codei%pack_prior %var2prior%(%bound_random%, %pack_object%, %s_info_vec%)
 %$$
 $icode%size%           = %var2prior%.size()
 %$$
@@ -67,6 +67,10 @@ $subhead prior_id$$
 The variable names that end in
 $cref/prior_id/prior_table/prior_id/$$
 have type $code size_t$$ and are an index in the prior table.
+
+$head bound_random$$
+This is a bound for the absolute value of the random effects
+(which can be infinity).
 
 $head pack_object$$
 is the $cref pack_info$$ information corresponding to
@@ -151,6 +155,8 @@ $head set_bnd_mulcov$$
 This member function sets the maximum upper and minimum lower
 limit for the covariate multipliers; i.e., $icode max_abs$$
 for covariate multipliers.
+If a covariate multiplier is a random effects,
+this overrides the $icode bound_random$$ setting.
 
 $head bnd_mulcov_table$$
 See$cref/bnd_mulcov_table/get_bnd_mulcov_table/bnd_mulcov_table/$$.
@@ -158,10 +164,15 @@ See$cref/bnd_mulcov_table/get_bnd_mulcov_table/bnd_mulcov_table/$$.
 $head max_abs$$
 Is the maximum absolute value for this variable.
 This constraint is in addition to the upper and lower limits
+$list number$$
 in the prior for the variables.
-The initial $icode var2prior$$ corresponds to this maximum being infinity.
-If there is a previous call to $code set_bnd_mulcov$$,
-it specified the maximum for covariate multipliers.
+$lnext
+The initial $icode var2prior$$ corresponds to this maximum being
+$icode bound_random$$ for random effects and infinity for fixed effects.
+$lnext
+If there was a previous call to $code set_bnd_mulcov$$,
+it specified $icode max_abs$$ for covariate multipliers.
+$lend
 
 $children%
 	example/devel/utility/pack_prior_xam.cpp
@@ -229,12 +240,14 @@ void pack_prior::set_bnd_mulcov(
 
 // set_prior_vec
 void pack_prior::set_prior_vec(
+	double                                                    bound_random ,
 	size_t                                                    offset       ,
 	bool                                                      fixed_effect ,
 	size_t                                                    mulcov_id    ,
 	size_t                                                    smooth_id    ,
 	const CppAD::vector<smooth_info>&                         s_info_vec   )
 {	//
+	double      inf     = std::numeric_limits<double>::infinity();
 	smooth_info s_info  = s_info_vec[smooth_id];
 	size_t n_age        = s_info.age_size();
 	size_t n_time       = s_info.time_size();
@@ -244,6 +257,11 @@ void pack_prior::set_prior_vec(
 	{	for(size_t j = 0; j < n_time; j++)
 		{	// var_id
 			size_t var_id   = offset + i * n_time + j;
+			//
+			if( fixed_effect )
+				prior_vec_[var_id].max_abs = inf;
+			else
+				prior_vec_[var_id].max_abs = bound_random;
 			//
 			prior_vec_[var_id].fixed_effect = fixed_effect;
 			prior_vec_[var_id].mulcov_id    = mulcov_id;
@@ -288,8 +306,9 @@ void pack_prior::set_prior_vec(
 
 // BEGIN CTOR_PROTOTYPE
 pack_prior::pack_prior(
-	const pack_info&                   pack_object ,
-	const CppAD::vector<smooth_info>&  s_info_vec  )
+	double                             bound_random ,
+	const pack_info&                   pack_object  ,
+	const CppAD::vector<smooth_info>&  s_info_vec   )
 // END CTOR_PROTOTYPE
 {
 	//
@@ -303,12 +322,11 @@ pack_prior::pack_prior(
 	size_t n_smooth    = s_info_vec.size();
 	//
 	// -----------------------------------------------------------------------
-	// initialize everyting to not defined except max_abs
+	// initialize everyting to not defined
 	prior_vec_.resize(n_var);
 	for(size_t var_id = 0; var_id < n_var; ++var_id)
 	{
-		prior_vec_[var_id].max_abs        = + inf;
-		//
+		prior_vec_[var_id].max_abs        = nan;
 		prior_vec_[var_id].const_value    = nan;
 		prior_vec_[var_id].n_time         = DISMOD_AT_NULL_SIZE_T;
 		prior_vec_[var_id].smooth_id      = DISMOD_AT_NULL_SIZE_T;
@@ -345,6 +363,7 @@ pack_prior::pack_prior(
 					assert(false);
 				}
 				// this prior is for a constant; i.e., n_age = n_time = 1
+				prior_vec_[offset].max_abs        = inf;
 				prior_vec_[offset].n_time         = 1;
 				prior_vec_[offset].fixed_effect   = true;
 				prior_vec_[offset].value_prior_id = prior_id;
@@ -364,7 +383,7 @@ pack_prior::pack_prior(
 			{	size_t offset       = info.offset;
 				bool   fixed_effect = j == n_child;
 				size_t mulcov_id    = info.mulcov_id;
-				set_prior_vec(
+				set_prior_vec(bound_random,
 					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 				);
 			}
@@ -382,7 +401,7 @@ pack_prior::pack_prior(
 				size_t smooth_id    = info.smooth_id;
 				bool   fixed_effect = false;
 				size_t mulcov_id    = info.mulcov_id;
-				set_prior_vec(
+				set_prior_vec(bound_random,
 					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 				);
 			}
@@ -398,7 +417,7 @@ pack_prior::pack_prior(
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			size_t mulcov_id    = info.mulcov_id;
-			set_prior_vec(
+			set_prior_vec(bound_random,
 				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 			);
 		}
@@ -418,7 +437,7 @@ pack_prior::pack_prior(
 				size_t smooth_id    = info.smooth_id;
 				bool   fixed_effect = false;
 				size_t mulcov_id    = info.mulcov_id;
-				set_prior_vec(
+				set_prior_vec(bound_random,
 					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 				);
 			}
@@ -435,7 +454,7 @@ pack_prior::pack_prior(
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			size_t mulcov_id    = info.mulcov_id;
-			set_prior_vec(
+			set_prior_vec(bound_random,
 				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 			);
 		}
@@ -447,7 +466,7 @@ pack_prior::pack_prior(
 			size_t smooth_id    = info.smooth_id;
 			bool   fixed_effect = true;
 			size_t mulcov_id    = info.mulcov_id;
-			set_prior_vec(
+			set_prior_vec(bound_random,
 				offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
 			);
 		}

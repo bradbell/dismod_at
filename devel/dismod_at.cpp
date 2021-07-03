@@ -298,8 +298,22 @@ int main(int n_arg, const char** argv)
 		dismod_at::error_exit(message, table_name);
 	}
 	assert( parent_node_id < db_input.node_table.size() );
+	// -----------------------------------------------------------------------
+	// bound_random
+	double bound_random = 0.0;
+	bool only_fixed =
+		command_arg == "fit" && std::strcmp(argv[3], "fixed") == 0;
+	only_fixed  |=
+		command_arg == "sample" && std::strcmp(argv[4], "fixed") == 0;
+	if( ! only_fixed  )
+	{	// null corresponds to infinity
+		std::string tmp_str = option_map["bound_random"];
+		if( tmp_str == "" )
+			bound_random = std::numeric_limits<double>::infinity();
+		else
+			bound_random = std::atof( tmp_str.c_str() );
+	}
 	// ------------------------------------------------------------------------
-
 	// child_info4data
 	dismod_at::child_info child_info4data(
 		parent_node_id          ,
@@ -363,7 +377,7 @@ int main(int n_arg, const char** argv)
 	);
 	//
 	// var2prior
-	dismod_at::pack_prior var2prior(pack_object, s_info_vec);
+	dismod_at::pack_prior var2prior(bound_random, pack_object, s_info_vec);
 	//
 	// prior_mean
 	vector<double> prior_mean = get_prior_mean(
@@ -403,21 +417,6 @@ int main(int n_arg, const char** argv)
 		dismod_at::create_table(
 			db, table_name, col_name, col_type, col_unique, row_value
 		);
-	}
-	//
-	// bound_random
-	double bound_random = 0.0;
-	bool only_fixed =
-		command_arg == "fit" && std::strcmp(argv[3], "fixed") == 0;
-	only_fixed  |=
-		command_arg == "sample" && std::strcmp(argv[4], "fixed") == 0;
-	if( ! only_fixed  )
-	{	// null corresponds to infinity
-		std::string tmp_str = option_map["bound_random"];
-		if( tmp_str == "" )
-			bound_random = std::numeric_limits<double>::infinity();
-		else
-			bound_random = std::atof( tmp_str.c_str() );
 	}
 	// fit_simulated_data
 	bool fit_simulated_data = false;
