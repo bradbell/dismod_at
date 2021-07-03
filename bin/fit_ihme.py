@@ -673,7 +673,7 @@ def table_name2id(table, table_name) :
 # ----------------------------------------------------------------------------
 def check_last_command(command, which_fit) :
 	# Trace any errros or warnings and return.
-	# In addition, return True for no errors or warnings and Flase otherwise.
+	# In addition, return True for no errors or warnings and False otherwise.
 	table_name = 'log'
 	(table, col_name, col_type) = get_table(table_name);
 	#
@@ -813,16 +813,6 @@ def relative_covariate(covariate_id) :
 			value_set.add( value )
 	# sex is an aboslute covariate and has 3 values, -0.5, 0.0, +0.5
 	return len( value_set ) > 3
-def useless_covariate(covariate_id) :
-	value_set  = set()
-	column_name = 'x_{}'.format(covariate_id)
-	reference   = covariate_table[covariate_id]['reference']
-	result      = True
-	for row in data_table :
-		value = row[column_name]
-		if value is not None :
-			result = result and value == reference
-	return result
 # ----------------------------------------------------------------------------
 def get_integrand_list (ode) :
 	# If ode is true (false) get list of integrands that require
@@ -875,6 +865,11 @@ def get_parent_node_id() :
 	return parent_node_id
 # ----------------------------------------------------------------------------
 def plot_rate(rate_name, directory, which_fit) :
+	# Plot the fit_var parent node model values for a specified rate.
+	# The values are plotted on the parent_node grid
+	# If sample command, the standad deviation for each rate is also plotted.
+	# These are repeated, once with age as the independent variables,
+	# and the other with time as the independent variable.
 	color_style_list = [
 		('blue',       'dashed'),  ('lightblue',  'solid'),
 		('red',        'dashed'),  ('pink',       'solid'),
@@ -1379,8 +1374,8 @@ def plot_integrand(integrand_name, directory, which_fit) :
 	pdf.close()
 # -----------------------------------------------------------------------------
 def plot_predict(
-		covariate_integrand_list, predict_integrand_list, directory, which_fit
-	) :
+	covariate_integrand_list, predict_integrand_list, directory, which_fit
+) :
 	# Plot the model predictions for each integrand in the predict integrand
 	# list. The is one such plot for each integrand in the covariate integrand
 	# list (which determines the covariate values used for the predictions).
@@ -1528,8 +1523,8 @@ def plot_predict(
 # Routines that Change Input Tables
 # ============================================================================
 def new_smoothing(
-		smooth_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
-	) :
+	smooth_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+) :
 	# Add a new smoothing that has one prior that is used for all age and
 	# time grid points. The smooth, smooth_grid, age, and time tables are
 	# modified, but the new versions are not written by this routine.
@@ -1596,30 +1591,6 @@ def new_smoothing(
 			smooth_grid_table.append(row)
 	#
 	# return the new smoothing
-	return new_smooth_id
-# ----------------------------------------------------------------------------
-# 2DO: Remove this when bounds on mulcov work
-def new_zero_smooth_id (smooth_id) :
-	# add a new smoothing that has the same grid as smooth_id smoothing
-	# and that constrains to zero. The smooth and smooth_grid tables are
-	# modified by this routine but they are not written out.
-	if smooth_id is None :
-		return None
-	#
-	new_smooth_id          = len(smooth_table)
-	new_row                = copy.copy( smooth_table[smooth_id] )
-	new_row['smooth_name'] = 'zero_smoothing #' + str( new_smooth_id )
-	smooth_table.append( new_row )
-	#
-	for old_row in smooth_grid_table :
-		if old_row['smooth_id'] == smooth_id :
-			new_row = copy.copy( old_row )
-			new_row['smooth_id']      = new_smooth_id
-			new_row['value_prior_id'] = None
-			new_row['dage_prior_id']  = None
-			new_row['dtime_prior_id'] = None
-			new_row['const_value']    = 0.0
-			smooth_grid_table.append( new_row )
 	return new_smooth_id
 # ----------------------------------------------------------------------------
 def new_bounded_smooth_id (smooth_id, lower, upper) :

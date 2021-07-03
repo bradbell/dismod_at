@@ -18,7 +18,7 @@ relative_path = 'data/unknown/475588-102-3.db'
 max_per_integrand = 1000
 #
 # maximum number of iterations when optimizing fixed effects
-max_num_iter_fixed = 50
+max_num_iter_fixed = 40
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []
@@ -26,7 +26,7 @@ ode_hold_out_list = []
 # Maximum absolute covariate effect = multiplier * (covariate - referece).
 # Note that exp(effect) multiplies a model value to get the model value for
 # this covariate value. (Noise covariate multipliers are not included.)
-max_covariate_effect = float('inf')
+max_covariate_effect = 2.0
 #
 # Covariate multipliers that are set to a specific value:
 # This is a list with each entrry a list consisting of
