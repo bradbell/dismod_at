@@ -43,6 +43,7 @@ extern bool prior_random_xam(void);
 extern bool avgint_subset_xam(void);
 extern bool bilinear_interp_xam(void);
 extern bool child_info_xam(void);
+extern bool child_data_in_fit_xam(void);
 extern bool cohort_ode_xam(void);
 extern bool subset_data_xam(void);
 extern bool eigen_ode2_xam(void);
@@ -139,6 +140,7 @@ int main(void)
 	RUN(avgint_subset_xam);
 	RUN(bilinear_interp_xam);
 	RUN(child_info_xam);
+	RUN(child_data_in_fit_xam);
 	RUN(cohort_ode_xam);
 	RUN(subset_data_xam);
 	RUN(eigen_ode2_xam);

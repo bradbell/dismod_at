@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -80,6 +80,7 @@ $rnext
 $code int$$ $cnext
 	$cref/mulcov_id/mulcov_table/mulcov_id/$$ $cnext
 	covariate multiplier corresponding to this integrand
+	($code DISMOD_AT_NULL_INT$$ if not a covariate multiplier).
 $tend
 
 $head integrand_enum$$

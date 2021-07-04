@@ -56,6 +56,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/age_avg_grid_xam.cpp
 	utility/avgint_subset_xam.cpp
 	utility/bilinear_interp_xam.cpp
+	utility/child_data_in_fit_xam.cpp
 	utility/child_info_xam.cpp
 	utility/cohort_ode_xam.cpp
 	utility/eigen_ode2_xam.cpp

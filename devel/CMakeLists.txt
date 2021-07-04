@@ -75,6 +75,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
 	utility/avgint_subset.cpp
 	utility/bilinear_interp.cpp
 	utility/censor_var_limit.cpp
+	utility/child_data_in_fit.cpp
 	utility/child_info.cpp
 	utility/cohort_ode.cpp
 	utility/eigen_ode2.cpp

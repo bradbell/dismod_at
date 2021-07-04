@@ -16,11 +16,13 @@ $$
 
 $section Dismod_at Developer Utility Documentation$$
 
+$comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/avgint_subset.cpp
 	%devel/utility/bilinear_interp.cpp
 	%devel/utility/censor_var_limit.cpp
 	%devel/utility/child_info.cpp
+	%devel/utility/child_data_in_fit.cpp
 	%devel/utility/cohort_ode.cpp
 	%devel/utility/subset_data.cpp
 	%devel/utility/eigen_ode2.cpp
@@ -41,5 +43,6 @@ $childtable%include/dismod_at/a1_double.hpp
 	%devel/utility/get_var_limits.cpp
 	%devel/utility/get_str_map.cpp
 %$$
+$comment END_SORT_THIS_LINE_MINUS_2$$
 
 $end
