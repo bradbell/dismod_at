@@ -49,8 +49,17 @@ This command is used to set the maximum absolute effect
 in the model for the data values.
 This is done by changing the lower and upper bounds
 for the covariate multipliers (ignoring bounds in the corresponding priors).
-The $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
-covariates are not included.
+The $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ multipliers and
+$cref/
+	subgroup covariate multipliers/
+	model_variables/
+	Random Effects, u/
+	Subgroup Covariate Multipliers
+/$$
+are not included.
+The subgroup covariate multipliers are random effects and
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
+set the absolute bound for all the random effects.
 
 $head database$$
 Is an

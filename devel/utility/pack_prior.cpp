@@ -171,15 +171,21 @@ See$cref/bnd_mulcov_table/get_bnd_mulcov_table/bnd_mulcov_table/$$.
 
 $head max_abs$$
 Is the maximum absolute value for this variable.
-This constraint is in addition to the upper and lower limits
 $list number$$
+This constraint is in addition to the upper and lower limits
 in the prior for the variables.
 $lnext
 The initial $icode var2prior$$ corresponds to this maximum being
 $icode bound_random$$ for random effects and infinity for fixed effects.
 $lnext
 If there was a previous call to $code set_bnd_mulcov$$,
-it specified $icode max_abs$$ for covariate multipliers.
+it specified $icode max_abs$$ for fixed effect covariate multipliers; i.e.,
+$cref/
+	group covariate multipliers/
+	model_variables/
+	Fixed Effects, theta/
+	Group Covariate Multipliers
+/$$.
 $lend
 
 $children%
@@ -238,6 +244,7 @@ double pack_prior::max_abs(size_t var_id) const
 void pack_prior::set_bnd_mulcov(
 	const CppAD::vector<bnd_mulcov_struct>& bnd_mulcov_table )
 {	for(size_t var_id = 0; var_id < prior_vec_.size(); ++var_id)
+	if( ! prior_vec_[var_id].fixed_effect )
 	{	size_t mulcov_id = prior_vec_[var_id].mulcov_id;
 		if( mulcov_id != DISMOD_AT_NULL_SIZE_T )
 		{	double max_mulcov = bnd_mulcov_table[mulcov_id].max_mulcov;
