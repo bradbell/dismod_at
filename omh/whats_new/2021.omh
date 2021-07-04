@@ -50,6 +50,15 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 07-25$$
+If a child node does not have any data,
+its rate random effects automatically use a random bound of zero; see
+$cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
+This removes them from the optimization problem and yields the same results.
+The variable.csv column $code m_bnd$$ was changed to
+$cref/bound/db2csv_command/variable.csv/bound/$$ to included this
+new feature in its output.
+
 $head 07-02$$
 There was a bug in the
 $cref/set option/set_command/option/$$ command.
@@ -79,7 +88,7 @@ $list number$$
 Add the $cref bnd_mulcov_table$$, $cref bnd_mulcov_command$$
 and columns
 $cref/m_diff/db2csv_command/variable.csv/m_diff/$$,
-$cref/m_bnd/db2csv_command/variable.csv/m_bnd/$$ to variable.csv.
+and $code m_bnd$$ to variable.csv
 $lnext
 Change the section name $code user$$ to $cref user_example$$
 and sort the user examples.

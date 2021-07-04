@@ -180,9 +180,12 @@
 # If this variable is a covariate multiplier, this is the corresponding
 # $cref/max_cov_diff/bnd_mulcov_table/max_cov_diff/$$.
 #
-# $subhead m_bnd$$
-# If this variable is a covariate multiplier, this is the corresponding
-# $cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$.
+# $subhead bound$$
+# If the upper and lower value limits in the value prior for this variable
+# are not equal,
+# this is a bound for the absolute value of this variable; see
+# $cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$ and
+# $cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
 #
 # $subhead age$$
 # is the $cref/age/age_table/age/$$.
@@ -747,6 +750,35 @@ def db2csv_command(database_file_arg) :
 			descendant_id = parent_id
 		assert False
 	# -------------------------------------------------------------------------
+	def child_has_data() :
+		result = set()
+		for subset_row in table_data['data_subset'] :
+			data_id         = subset_row['data_id']
+			data_row        = table_data['data'][data_id]
+			node_id         = data_row['node_id']
+			integrand_id    = data_row['integrand_id']
+			integrand_name  = table_lookup(
+				'integrand', integrand_id, 'integrand_name'
+			)
+			hold_out        = data_row['hold_out'] != 0
+			if subset_row['hold_out'] != 0 :
+				hold_out = true
+			if integrand_name in hold_out_integrand_list :
+				hold_out = true
+			if (not hold_out) and (node_id != parent_node_id) :
+				# child_node_id
+				child_node_id = node_id
+				parent_id     = table_data['node'][child_node_id]['parent']
+				while parent_id != parent_node_id :
+					child_node_id = parent_id
+					parent_id     = table['node'][child_node_id]['parent']
+					if parent_id is None :
+						msg  = 'Cannot determine child for row in data_subset '
+						msg += 'table. Must re-run init command'
+				# update result
+				result.add(child_node_id)
+		return result
+	# -------------------------------------------------------------------------
 	file_name    = database_file_arg
 	database_dir = os.path.split(database_file_arg)[0]
 	new          = False
@@ -1219,7 +1251,7 @@ def db2csv_command(database_file_arg) :
 		's_id',
 		'm_id',
 		'm_diff',
-		'm_bnd',
+		'bound',
 		'age',
 		'time',
 		'rate',
@@ -1251,6 +1283,9 @@ def db2csv_command(database_file_arg) :
 	csv_writer.writeheader()
 	var_id  = 0
 	#
+	# child_has_data
+	child_has_data_set = child_has_data()
+	#
 	# group_id2name
 	group_id2name = [ table_data['subgroup'][0]['group_name'] ]
 	for row in table_data['subgroup'] :
@@ -1273,9 +1308,6 @@ def db2csv_command(database_file_arg) :
 		row_out['sam_std']   = round_to(sam_std[var_id], 3)
 		row_out['m_diff']    = table_lookup(
 			'bnd_mulcov', row_in['mulcov_id'], 'max_cov_diff'
-		)
-		row_out['m_bnd']    = table_lookup(
-			'bnd_mulcov', row_in['mulcov_id'], 'max_mulcov'
 		)
 		row_out['rate']      = table_lookup(
 			'rate', row_in['rate_id'], 'rate_name'
@@ -1310,6 +1342,22 @@ def db2csv_command(database_file_arg) :
 				group_name  = group_id2name[ row_in['group_id'] ]
 				row_out['group'] = group_name
 				row_out['fixed'] = 'true'
+		#
+		# bound
+		if row_out['fixed'] == 'true' :
+			row_out['bound']    = table_lookup(
+				'bnd_mulcov', row_in['mulcov_id'], 'max_mulcov'
+			)
+		else :
+			bound_random = None
+			for row in option_list :
+				if row[0] == 'bound_random' :
+					bound_random = row[1]
+			assert bound_random is not None
+			if row_in['node_id'] != None :
+				if not row_in['node_id'] in child_has_data_set :
+					bound_random = '0'
+			row_out['bound'] = bound_random
 		#
 		# depend
 		if have_table['depend_var'] :

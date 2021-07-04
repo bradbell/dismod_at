@@ -143,7 +143,7 @@ variable_table = get_table('variable')
 always_empty  = [ 'integrand', 'depend', 'truth', 'sam_avg', 'sam_std' ]
 #
 # empty because no bnd_mulcov command was executed
-always_empty += [ 'm_bnd' ]
+always_empty += [ 'bound' ]
 #
 # res_value is empty because value prior is uniform
 # sim_v, sim_a, sim_t are empty because have not run simulate command

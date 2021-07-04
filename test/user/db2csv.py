@@ -237,9 +237,9 @@ for row in reader :
 		max_cov_diff = float( row['m_diff'] )
 		assert max_cov_diff == 1.0
 		if row['var_type'] == 'mulcov_meas_noise' :
-			assert row['m_bnd'] == ''
+			assert row['bound'] == ''
 		else :
-			assert float( row['m_bnd'] ) == 0.0
+			assert float( row['bound'] ) == 0.0
 # -----------------------------------------------------------------------
 # data.csv
 data_file = open('build/test/user/data.csv', 'r')
