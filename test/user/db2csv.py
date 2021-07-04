@@ -46,8 +46,10 @@ os.chdir('build/test/user')
 # Note that the a, t values are not used for this example
 def constant_weight_fun(a, t) :
 	return 1.0
-def fun_iota(a, t) :
-	return ('prior_iota', None, None)
+def fun_iota_parent(a, t) :
+	return ('prior_iota_parent', None, None)
+def fun_iota_child(a, t) :
+	return ('prior_iota_child', None, None)
 def fun_gamma(a, t) :
 	return ('prior_gamma', None, None)
 # ------------------------------------------------------------------------
@@ -67,6 +69,7 @@ def example_db (file_name) :
 	# node table: north_america
 	node_table = [
 		{ 'name':'north_america', 'parent':'' },
+		{ 'name':'canada',        'parent':'north_america' },
 	]
 	#
 	# weight table: The constant function 1.0 (one age and one time point)
@@ -129,12 +132,17 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{	# prior_iota
-			'name':     'prior_iota',
+		{	# prior_iota_parent
+			'name':     'prior_iota_parent',
 			'density':  'uniform',
 			'lower':    iota_true / 10.0,
 			'mean':     iota_true,
 			'upper':    10.0 *iota_true
+		},{	# prior_iota_child
+			'name':     'prior_iota_child',
+			'density':  'gaussian',
+			'mean':     0.0,
+			'std':      1.0,
 		},{	# prior_gamma
 			'name':     'prior_gamma',
 			'density':  'uniform',
@@ -146,11 +154,16 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# smooth table
 	smooth_table = [
-		{	# smooth_iota
-			'name':                     'smooth_iota',
+		{	# smooth_iota_parent
+			'name':                     'smooth_iota_parent',
 			'age_id':                   [0],
 			'time_id':                  [0],
-			'fun':                      fun_iota
+			'fun':                      fun_iota_parent
+		},{	# smooth_iota_child
+			'name':                     'smooth_iota_child',
+			'age_id':                   [0],
+			'time_id':                  [0],
+			'fun':                      fun_iota_child
 		},{	# smooth_gamma
 			'name':                     'smooth_gamma',
 			'age_id':                   [0],
@@ -162,7 +175,8 @@ def example_db (file_name) :
 	# rate table
 	rate_table = [
 		{	'name':          'iota',
-			'parent_smooth': 'smooth_iota',
+			'parent_smooth': 'smooth_iota_parent',
+			'child_smooth':  'smooth_iota_child',
 		},
 	]
 	# ----------------------------------------------------------------------
@@ -240,6 +254,14 @@ for row in reader :
 			assert row['bound'] == ''
 		else :
 			assert float( row['bound'] ) == 0.0
+	# canada has no data check that its random effect bounds are zero
+	if row['var_type'] == 'rate' :
+		node_name = row['node']
+		if node_name == 'canada' :
+			assert float( row['bound'] ) == 0.0
+		else :
+			assert node_name == 'north_america'
+			assert row['bound'] == ''
 # -----------------------------------------------------------------------
 # data.csv
 data_file = open('build/test/user/data.csv', 'r')
