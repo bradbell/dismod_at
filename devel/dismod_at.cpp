@@ -55,6 +55,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/depend.hpp>
 # include <dismod_at/get_prior_mean.hpp>
 # include <dismod_at/age_avg_grid.hpp>
+# include <dismod_at/child_data_in_fit.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -376,15 +377,23 @@ int main(int n_arg, const char** argv)
 		db_input.nslist_pair_table
 	);
 	//
-	// var2prior
-	dismod_at::pack_prior var2prior(
-		bound_random, db_input.prior_table, pack_object, s_info_vec
-	);
-	//
 	// prior_mean
-	vector<double> prior_mean = get_prior_mean(
-		db_input.prior_table, var2prior
-	);
+	vector<double> prior_mean;
+	{	vector<size_t> one(n_child);
+		for(size_t child = 0; child < n_child; ++child)
+			one[child] = 1;
+		dismod_at::pack_prior var2prior_temp(
+			bound_random,
+			one,
+			db_input.prior_table,
+			pack_object,
+			s_info_vec
+		);
+		prior_mean  = get_prior_mean(
+			db_input.prior_table, var2prior_temp
+		);
+	}
+	//
 	// meas_noise_effect
 	string meas_noise_effect = option_map["meas_noise_effect"];
 	//
@@ -527,7 +536,24 @@ int main(int n_arg, const char** argv)
 		);
 	}
 	else if( command_arg == "predict" )
-	{	// avgint_subset_obj
+	{	// var2prior
+		vector<dismod_at::data_subset_struct> data_subset_table =
+			dismod_at::get_data_subset(db);
+		vector<size_t> n_child_data_in_fit = child_data_in_fit(
+			option_map,
+			data_subset_table,
+			db_input.integrand_table,
+			db_input.data_table,
+			child_info4data
+		);
+		dismod_at::pack_prior var2prior(
+			bound_random,
+			n_child_data_in_fit,
+			db_input.prior_table,
+			pack_object,
+			s_info_vec
+		);
+		// avgint_subset_obj
 		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
 		vector<double> avgint_subset_cov_value;
 		avgint_subset(
@@ -578,6 +604,22 @@ int main(int n_arg, const char** argv)
 		// data_subset_table
 		vector<dismod_at::data_subset_struct> data_subset_table =
 			dismod_at::get_data_subset(db);
+		//
+		// var2pior
+		vector<size_t> n_child_data_in_fit = child_data_in_fit(
+			option_map,
+			data_subset_table,
+			db_input.integrand_table,
+			db_input.data_table,
+			child_info4data
+		);
+		dismod_at::pack_prior var2prior(
+			bound_random,
+			n_child_data_in_fit,
+			db_input.prior_table,
+			pack_object,
+			s_info_vec
+		);
 		//
 		// subset_data_obj
 		vector<dismod_at::subset_data_struct> subset_data_obj;

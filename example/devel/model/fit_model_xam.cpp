@@ -312,8 +312,11 @@ bool fit_model_xam(void)
 	double bound_random = std::numeric_limits<double>::infinity();
 	//
 	// var2prior
+	vector<size_t> n_child_data_in_fit(n_child);
+	for(size_t child = 0; child < n_child; ++child)
+		n_child_data_in_fit[child] = 1;
 	dismod_at::pack_prior var2prior(
-		bound_random, prior_table, pack_object, s_info_vec
+		bound_random, n_child_data_in_fit, prior_table, pack_object, s_info_vec
 	);
 	//
 	// prior_object

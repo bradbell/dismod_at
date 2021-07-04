@@ -230,8 +230,11 @@ bool n_random_const_xam(void)
 	);
 	// ----------------------- number_random_const ----------------------------
 	double bound_random = inf;
+	vector<size_t> n_child_data_in_fit(n_child);
+	for(size_t child = 0; child < n_child; ++child)
+		n_child_data_in_fit[child] = 1;
 	dismod_at::pack_prior var2prior_inf(
-		bound_random, prior_table, pack_object, s_info_vec
+		bound_random, n_child_data_in_fit, prior_table, pack_object, s_info_vec
 	);
 	size_t n_random_const = number_random_const(
 		pack_object, var2prior_inf, prior_table
@@ -241,7 +244,7 @@ bool n_random_const_xam(void)
 	//
 	bound_random = 0.0;
 	dismod_at::pack_prior var2prior_zero(
-		bound_random, prior_table, pack_object, s_info_vec
+		bound_random, n_child_data_in_fit, prior_table, pack_object, s_info_vec
 	);
 	n_random_const = number_random_const(
 		pack_object, var2prior_zero, prior_table

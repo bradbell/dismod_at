@@ -332,10 +332,11 @@ void pack_prior::set_prior_vec(
 
 // BEGIN CTOR_PROTOTYPE
 pack_prior::pack_prior(
-	double                             bound_random ,
-	const CppAD::vector<prior_struct>& prior_table  ,
-	const pack_info&                   pack_object  ,
-	const CppAD::vector<smooth_info>&  s_info_vec   )
+	double                             bound_random        ,
+	const CppAD::vector<size_t>&       n_child_data_in_fit ,
+	const CppAD::vector<prior_struct>& prior_table         ,
+	const pack_info&                   pack_object         ,
+	const CppAD::vector<smooth_info>&  s_info_vec          )
 // END CTOR_PROTOTYPE
 {
 	//
@@ -410,9 +411,18 @@ pack_prior::pack_prior(
 			{	size_t offset       = info.offset;
 				bool   fixed_effect = j == n_child;
 				size_t mulcov_id    = info.mulcov_id;
-				set_prior_vec(bound_random, prior_table,
-					offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
-				);
+				if( j < n_child && n_child_data_in_fit[j] == 0 )
+				{	// constrain these random effects to be constant
+					double zero_bound_random = 0.0;
+					set_prior_vec(zero_bound_random, prior_table,
+						offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
+					);
+				}
+				else
+				{	set_prior_vec(bound_random, prior_table,
+						offset, fixed_effect, mulcov_id, smooth_id, s_info_vec
+					);
+				}
 			}
 		}
 	}
