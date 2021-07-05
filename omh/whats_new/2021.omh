@@ -51,8 +51,11 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 07-05$$
-Fix a bug in the change on 07-04 when using
+Fix two bugs in the changes on 07-04.
+One ocurred when using
 $cref/zero sum constraints/option_table/Zero Sum Constraints/$$.
+The other was in the $cref db2csv_command$$
+(the python code value $code true$$ was corrected to $code True$$).
 
 $head 07-04$$
 If a child node does not have any data,

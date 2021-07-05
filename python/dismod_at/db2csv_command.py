@@ -762,9 +762,9 @@ def db2csv_command(database_file_arg) :
 			)
 			hold_out        = data_row['hold_out'] != 0
 			if subset_row['hold_out'] != 0 :
-				hold_out = true
+				hold_out = True
 			if integrand_name in hold_out_integrand_list :
-				hold_out = true
+				hold_out = True
 			if (not hold_out) and (node_id != parent_node_id) :
 				# child_node_id
 				child_node_id = node_id
