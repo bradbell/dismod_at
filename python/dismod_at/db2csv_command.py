@@ -771,7 +771,7 @@ def db2csv_command(database_file_arg) :
 				parent_id     = table_data['node'][child_node_id]['parent']
 				while parent_id != parent_node_id :
 					child_node_id = parent_id
-					parent_id     = table['node'][child_node_id]['parent']
+					parent_id     = table_data['node'][child_node_id]['parent']
 					if parent_id is None :
 						msg  = 'Cannot determine child for row in data_subset '
 						msg += 'table. Must re-run init command'

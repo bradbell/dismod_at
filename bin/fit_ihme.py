@@ -92,6 +92,7 @@ The settings in a disease specific file are the part of the model that is
 different for each disease. Currently, the following settings are included:
 	relative_path
 	max_per_integrand
+	tolerance_fixed
 	max_num_iter_fixed
 	ode_hold_out_list
 	max_covariate_effect
@@ -153,6 +154,12 @@ This variable, in the python file for this disease,
 is the maximum number of data points to include for any one integrand.
 If the available data exceeds this number, a subset of size max_per_integrand
 is randomly chosen.
+''',
+
+'tolerance_fixed':'''
+tolerance_fixed:
+This variable, in the python file for this disease,
+is the convergence tolerance for the fixed effects.
 ''',
 
 'max_num_iter_fixed':'''
@@ -340,6 +347,9 @@ correpsonding parent rates.
 06-24:
 1. It is no longer necessary to subset the data so remove that step.
    Now we get residuals for data what was originaly help out; e.g. mtall.
+
+07-05:
+Move tolerance_fixed to the disease specific files.
 '''
 }
 # help cases
@@ -2182,7 +2192,7 @@ if which_fit_arg == 'no_ode'  :
 	])
 	# ------------------------------------------------------------------------
 	# set options
-	set_option('tolerance_fixed',     '1e-8')
+	set_option('tolerance_fixed',     str(specific.tolerance_fixed) )
 	set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
 	set_option('quasi_fixed',         'false')
 	set_option('zero_sum_child_rate', 'iota rho chi')

@@ -15,7 +15,10 @@
 relative_path = 'data/unknown/475588-102-3.db'
 #
 # maximum number of data values per integrand
-max_per_integrand = 1000
+max_per_integrand = 500
+#
+# fixed effects convergence tolerance
+tolerance_fixed   = 1e-3
 #
 # maximum number of iterations when optimizing fixed effects
 max_num_iter_fixed = 40

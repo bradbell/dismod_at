@@ -220,6 +220,9 @@ relative_path =  'data/475588/dbs/100/3/dismod.db'
 # maximum number of data values per integrand
 max_per_integrand = 1000
 #
+# fixed effects convergence tolerance
+tolerance_fixed   = 1e-8
+#
 # maximum number of iterations when optimizing fixed effects
 max_num_iter_fixed = 50
 #
