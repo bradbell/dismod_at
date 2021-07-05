@@ -50,7 +50,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
-$head 07-25$$
+$head 07-05$$
+Fix a bug in the change on 07-04 when using
+$cref/zero sum constraints/option_table/Zero Sum Constraints/$$.
+
+$head 07-04$$
 If a child node does not have any data,
 its rate random effects automatically use a random bound of zero; see
 $cref/bound_random/option_table/Optimize Random Only/bound_random/$$.

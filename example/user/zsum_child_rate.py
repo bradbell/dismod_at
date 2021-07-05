@@ -34,21 +34,33 @@
 # %$$
 #
 # $head Data Simulation$$
-# The true rate for the parent region $code north_america$$,
-# used for simulating data, are
-# $icode iota_parent$$ and $icode rho_parent$$ problem parameters. The
+#
+# $subhead north_america$$
+# The true rates for the parent region $code north_america$$
+# (used for simulating data) are the
+# $icode iota_parent$$ and $icode rho_parent$$ problem parameters.
+#
+# $subhead canada$$
+# The true
 # $cref/child rate effect
 #	/model_variables
 #	/Random Effects, u
 #	/Child Rate Effects
 # /$$
-# for $code canada$$ is $icode rate_effect_child$$
-# and for the $code united_states$$ is $codei%-%rate_effect_child%$$.
+# for $code canada$$ is $icode rate_effect_child$$.
+#
+# $subhead united_states$$
+# The true child rate effect
+# for the $code united_states$$ is $codei%-%rate_effect_child%$$.
+#
+# $subhead mexico$$
+# No data is included for mexico, hence it is automatically constrained to have
+# zero child rate random effects.
 #
 # $head Nodes$$
-# There are just three nodes for this example,
-# The parent node, $code north_america$$, and the two child nodes
-# $code united_states$$ and $code canada$$.
+# There are just four nodes for this example,
+# The parent node, $code north_america$$, and the three child nodes
+# $code united_states$$, $code canada$$ and $code mexico$$.
 #
 # $head Model Variables$$
 # The non-zero $cref model_variables$$ for this example are
@@ -126,7 +138,8 @@ def example_db (file_name) :
 	node_table = [
 		{ 'name':'north_america', 'parent':''              },
 		{ 'name':'united_states', 'parent':'north_america' },
-		{ 'name':'canada',        'parent':'north_america' }
+		{ 'name':'canada',        'parent':'north_america' },
+		{ 'name':'mexico',        'parent':'north_america'}
 	]
 	#
 	# weight table:
@@ -305,11 +318,11 @@ rate_table    = dismod_at.get_table_dict(connection, 'rate')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 time_table    = dismod_at.get_table_dict(connection, 'time')
 #
-# for rate = iota, rho :
-#	for node = north_america, canada, united_states
-#		for time = 1990, 2010
+# for node = north_america, canada, united_states, mexico
+#	for time = 1990, 2010
+#		for rate = iota, rho :
 n_var = len(var_table)
-assert n_var == 12
+assert n_var == 4 * 2 * 2
 #
 # initialize sum of random effects for each rate and time
 sum_random = {
@@ -342,6 +355,8 @@ for var_id in range( n_var ) :
 			relerr = value / rho_parent - 1.0
 	elif node_name == 'canada' :
 		relerr = value / rate_effect_child  - 1.0
+	elif node_name == 'mexico' :
+		relerr = value - 0.0
 	else :
 		assert node_name == 'united_states'
 		relerr = - value / rate_effect_child  - 1.0
@@ -352,7 +367,7 @@ for var_id in range( n_var ) :
 	if node_name != 'north_america' :
 		sum_random[rate_name][time_id] += value
 		count_random += 1
-assert count_random == 8
+assert count_random == 3 * 2 * 2
 for rate in [ 'iota', 'rho' ] :
 	for time_id in [ 0 , 1 ] :
 		if( abs( sum_random[rate][time_id] ) ) > 1e-9 :
