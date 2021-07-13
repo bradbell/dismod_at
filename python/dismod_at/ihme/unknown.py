@@ -10,6 +10,40 @@
 # ---------------------------------------------------------------------------
 # This is a special case where the relative path does not have the structure
 # of paths on the IHME cluster. It is meant for testing.
+# ----------------------------------------------------------------------------
+# (age_grid, time_grid, value_prior, dage_prior, dtime_prior) =
+def child_smoothing_fun(
+	age_table, time_table, density_name2id, integrand_data
+) :
+	import copy
+	age_grid      = [0.0]
+	time_grid     = [1990]
+	density_id    = density_name2id['uniform']
+	#
+	# default prior
+	default_prior = {
+		'prior_name' : ''             ,
+		'density_id' : density_id     ,
+		'lower'      : None           ,
+		'upper'      : None           ,
+		'mean'       : 0.0            ,
+		'std'        : None           ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	# value_prior
+	value_prior = copy.copy( default_prior )
+	value_prior['prior_name'] = 'child_smoothing_value_prior'
+	value_prior['density_id'] = density_name2id['gaussian']
+	value_prior['std']        = 1.0
+	#
+	# dage_prior
+	dage_prior  = default_prior
+	#
+	# dtime_prior
+	dtime_prior = default_prior
+	#
+	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 #
 # relative path for original ihme database
 relative_path = 'data/unknown/475588-102-3.db'
@@ -18,7 +52,7 @@ relative_path = 'data/unknown/475588-102-3.db'
 max_per_integrand = 500
 #
 # fixed effects convergence tolerance
-tolerance_fixed   = 1e-3
+tolerance_fixed   = 1e-8
 #
 # maximum number of iterations when optimizing fixed effects
 max_num_iter_fixed = 40
@@ -42,3 +76,5 @@ parent_smoothing = collections.OrderedDict()
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
+# child_smoothing['iota']   = child_smoothing_fun
+# child_smoothing['chi']    = child_smoothing_fun

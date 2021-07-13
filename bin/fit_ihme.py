@@ -349,7 +349,9 @@ correpsonding parent rates.
    Now we get residuals for data what was originaly help out; e.g. mtall.
 
 07-05:
-Move tolerance_fixed to the disease specific files.
+1. Move tolerance_fixed to the disease specific files.
+2. Automatically add number at end of prior names in parent_smoothing and
+   child_smoothing (so that prior names are unique).
 '''
 }
 # help cases
@@ -1540,6 +1542,7 @@ def new_smoothing(
 	# modified, but the new versions are not written by this routine.
 	# The arguments value_prior, dage_prior, dtime_prior,
 	# contain the priors used in the smothing.
+	# The prior_id is added to the prior names to help make them uniquue.
 	# The argument smooth_name is the name used in the smoothing grid table
 	# for this smoothing.
 	#
@@ -1557,6 +1560,13 @@ def new_smoothing(
 				table.append(row)
 			result.append(match)
 		return result
+	#
+	def copy_prior(prior) :
+		new_id               = len( prior_table )
+		prior_name           = '{}_{}'.format( prior['prior_name'] , new_id )
+		result               = copy.copy( prior )
+		result['prior_name'] = prior_name
+		return result
 	n_age          = len(age_grid)
 	n_time         = len(time_grid)
 	age_id_list    = table_value2id(age_table,  'age',  age_grid)
@@ -1565,15 +1575,15 @@ def new_smoothing(
 	#
 	# add value_prior to prior_table
 	new_value_prior_id  = len(prior_table)
-	prior_table.append( copy.copy( value_prior ) )
+	prior_table.append( copy_prior( value_prior ) )
 	#
 	# add dage_prior to prior table
 	new_dage_prior_id  = len(prior_table)
-	prior_table.append( copy.copy( dage_prior   ) )
+	prior_table.append( copy_prior( dage_prior   ) )
 	#
 	# add dtime_prior to prior table
 	new_dtime_prior_id  = len(prior_table)
-	prior_table.append( copy.copy( dtime_prior   ) )
+	prior_table.append( copy_prior( dtime_prior   ) )
 	#
 	# add row to smooth_table
 	row =  {
@@ -1980,8 +1990,7 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	#
 	# prior used in one point smoothing
 	density_id = density_name2id['uniform']
-	index      = str( len(prior_table) )
-	prior_name = integrand_name + '_meas_noise_value_prior_' + index
+	prior_name = integrand_name + '_meas_noise_value_prior'
 	value_prior = {
 		'prior_name' : prior_name     ,
 		'density_id' : density_id     ,
@@ -1993,11 +2002,11 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 		'nu'         : None           ,
 	}
 	dage_prior  = copy.copy( value_prior )
-	prior_name = integrand_name + '_meas_noise_dage_prior_' + index
+	prior_name = integrand_name + '_meas_noise_dage_prior'
 	dage_prior['prior_name']  =  prior_name
 	#
 	dtime_prior = copy.copy( value_prior )
-	prior_name = integrand_name + '_meas_noise_dtime_prior_' + index
+	prior_name = integrand_name + '_meas_noise_dtime_prior'
 	dtime_prior['prior_name'] = prior_name
 	#
 	# new one point smoothing

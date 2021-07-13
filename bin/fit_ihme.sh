@@ -15,9 +15,9 @@ disease_list=$(
 	git ls-files python/dismod_at/ihme |
 	sed -e 's|.*/||' -e 's|\.py||'
 )
-if [ "$1" == '' ]
+if [ "$2" == '' ]
 then
-	echo 'usage: bin/fit_ihme.sh disease'
+	echo 'usage: bin/fit_ihme.sh disease random_seed'
 	echo 'were disease is "all" or in the following list:'
 	echo $disease_list
 	exit 1
@@ -33,8 +33,8 @@ do
 		echo_eval rm -r ihme_db/$disease
 	fi
 done
+random_seed="$2"
 number_sample='20'
-random_seed='0'
 for disease in $disease_list
 do
 	fit_ok='yes'
