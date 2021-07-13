@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>07-05</option>
+<option>07-04</option>
 <option>07-02</option>
 <option>06-24</option>
 <option>06-22</option>
@@ -106,6 +108,32 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="07-05" id="07-05">07-05</a></big></b>
+<br>
+Fix two bugs in the changes on 07-04.
+One ocurred when using
+<a href="option_table.htm#Zero Sum Constraints" target="_top"><span style='white-space: nowrap'>zero&nbsp;sum&nbsp;constraints</span></a>
+.
+The other was in the <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+
+(the python code value <code><font color="blue">true</font></code> was corrected to <code><font color="blue">True</font></code>).
+
+<br>
+<br>
+<b><big><a name="07-04" id="07-04">07-04</a></big></b>
+<br>
+If a child node does not have any data,
+its rate random effects automatically use a random bound of zero; see
+<a href="option_table.htm#Optimize Random Only.bound_random" target="_top"><span style='white-space: nowrap'>bound_random</span></a>
+.
+This removes them from the optimization problem and yields the same results.
+The variable.csv column <code><font color="blue">m_bnd</font></code> was changed to
+<a href="db2csv_command.htm#variable.csv.bound" target="_top"><span style='white-space: nowrap'>bound</span></a>
+ to included this
+new feature in its output.
+
+<br>
 <br>
 <b><big><a name="07-02" id="07-02">07-02</a></big></b>
 <br>
@@ -156,8 +184,7 @@ Add the <a href="bnd_mulcov_table.htm" target="_top"><span style='white-space: n
 and columns
 <a href="db2csv_command.htm#variable.csv.m_diff" target="_top"><span style='white-space: nowrap'>m_diff</span></a>
 ,
-<a href="db2csv_command.htm#variable.csv.m_bnd" target="_top"><span style='white-space: nowrap'>m_bnd</span></a>
- to variable.csv.
+and <code><font color="blue">m_bnd</font></code> to variable.csv
 </li><li>
 
 Change the section name <code><font color="blue">user</font></code> to <a href="user_example.htm" target="_top"><span style='white-space: nowrap'>user_example</span></a>

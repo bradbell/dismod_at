@@ -804,10 +804,9 @@ designed to optimizer the random effects for the cppad_mixed package
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
  is <code><font color="blue">bound_random</font></code>,
-plus and minus the corresponding 
-<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
 
-are the bounds for each of the
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
+ is a bound for the absolute value of
 <a href="model_variables.htm#Random Effects, u" target="_top"><span style='white-space: nowrap'>random&nbsp;effects</span></a>
 .
 If 
@@ -820,6 +819,8 @@ This bound does not apply for random effects that have their upper
 and lower limits equal; see
 <a href="rate_table.htm#Child Value Priors.Constant" target="_top"><span style='white-space: nowrap'>constant&nbsp;child&nbsp;value&nbsp;priors</span></a>
 .
+In addition, if a child node does not have any data,
+its rate random effects automatically use a random bound of zero.
 
 <ol type="1"><li>
 The theory for

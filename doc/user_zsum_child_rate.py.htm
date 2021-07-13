@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Constrain Sum of Child Rate Effect to Zero</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Constrain Sum of Child Rate Effect to Zero">
-<meta name="keywords" id="keywords" content=" constrain sum child rate effect to zero see also purpose problem parameters data simulation nodes model variables source code ">
+<meta name="keywords" id="keywords" content=" constrain sum child rate effect to zero see also purpose problem parameters data simulation north_america canada united_states mexico nodes model variables source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,6 +67,10 @@ A:active { color : purple }
 <br><a href="user_zsum_child_rate.py.htm#Purpose" target="_top">Purpose</a>
 <br><a href="user_zsum_child_rate.py.htm#Problem Parameters" target="_top">Problem&nbsp;Parameters</a>
 <br><a href="user_zsum_child_rate.py.htm#Data Simulation" target="_top">Data&nbsp;Simulation</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_zsum_child_rate.py.htm#Data Simulation.north_america" target="_top">north_america</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_zsum_child_rate.py.htm#Data Simulation.canada" target="_top">canada</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_zsum_child_rate.py.htm#Data Simulation.united_states" target="_top">united_states</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_zsum_child_rate.py.htm#Data Simulation.mexico" target="_top">mexico</a>
 <br><a href="user_zsum_child_rate.py.htm#Nodes" target="_top">Nodes</a>
 <br><a href="user_zsum_child_rate.py.htm#Model Variables" target="_top">Model&nbsp;Variables</a>
 <br><a href="user_zsum_child_rate.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
@@ -100,30 +104,54 @@ rate_effect_child <font color="#990000">=</font> <font color="#993399">0.2</font
 measurement_cv    <font color="#990000">=</font> <font color="#993399">0.01</font></tt></pre>
 <br>
 <b><big><a name="Data Simulation" id="Data Simulation">Data Simulation</a></big></b>
+
+
 <br>
-The true rate for the parent region <code><font color="blue">north_america</font></code>,
-used for simulating data, are
+<br>
+<big><a name="Data Simulation.north_america" id="Data Simulation.north_america">north_america</a></big>
+<br>
+The true rates for the parent region <code><font color="blue">north_america</font></code>
+(used for simulating data) are the
 
 <code><i><font color="black"><span style='white-space: nowrap'>iota_parent</span></font></i></code>
  and 
 <code><i><font color="black"><span style='white-space: nowrap'>rho_parent</span></font></i></code>
- problem parameters. The
+ problem parameters.
+
+<br>
+<br>
+<big><a name="Data Simulation.canada" id="Data Simulation.canada">canada</a></big>
+<br>
+The true
 <a href="model_variables.htm#Random Effects, u.Child Rate Effects" target="_top"><span style='white-space: nowrap'>child&nbsp;rate&nbsp;effect</span></a>
 
 for <code><font color="blue">canada</font></code> is 
 <code><i><font color="black"><span style='white-space: nowrap'>rate_effect_child</span></font></i></code>
+.
 
-and for the <code><font color="blue">united_states</font></code> is 
+<br>
+<br>
+<big><a name="Data Simulation.united_states" id="Data Simulation.united_states">united_states</a></big>
+<br>
+The true child rate effect
+for the <code><font color="blue">united_states</font></code> is 
 <code><font color="blue"><span style='white-space: nowrap'>-</span></font><i><font color="black"><span style='white-space: nowrap'>rate_effect_child</span></font></i></code>
 .
 
 <br>
 <br>
+<big><a name="Data Simulation.mexico" id="Data Simulation.mexico">mexico</a></big>
+<br>
+No data is included for mexico, hence it is automatically constrained to have
+zero child rate random effects.
+
+<br>
+<br>
 <b><big><a name="Nodes" id="Nodes">Nodes</a></big></b>
 <br>
-There are just three nodes for this example,
-The parent node, <code><font color="blue">north_america</font></code>, and the two child nodes
-<code><font color="blue">united_states</font></code> and <code><font color="blue">canada</font></code>.
+There are just four nodes for this example,
+The parent node, <code><font color="blue">north_america</font></code>, and the three child nodes
+<code><font color="blue">united_states</font></code>, <code><font color="blue">canada</font></code> and <code><font color="blue">mexico</font></code>.
 
 <br>
 <br>
@@ -208,7 +236,8 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
      node_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font><font color="#990000">,</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">''</font>              <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'united_states'</font><font color="#990000">,</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font> <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'canada'</font><font color="#990000">,</font>        <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font> <font color="#990000">}</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'canada'</font><font color="#990000">,</font>        <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font> <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'mexico'</font><font color="#990000">,</font>        <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'north_america'</font><font color="#990000">}</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># weight table:</font></i>
@@ -387,11 +416,11 @@ rate_table    <font color="#990000">=</font> dismod_at<font color="#990000">.</f
 node_table    <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
 time_table    <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'time'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># for rate = iota, rho :</font></i>
-<i><font color="#9A1900">#    for node = north_america, canada, united_states</font></i>
-<i><font color="#9A1900">#         for time = 1990, 2010</font></i>
+<i><font color="#9A1900"># for node = north_america, canada, united_states, mexico</font></i>
+<i><font color="#9A1900">#    for time = 1990, 2010</font></i>
+<i><font color="#9A1900">#         for rate = iota, rho :</font></i>
 n_var <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b> n_var <font color="#990000">==</font> <font color="#993399">12</font>
+<b><font color="#0000FF">assert</font></b> n_var <font color="#990000">==</font> <font color="#993399">4</font> <font color="#990000">*</font> <font color="#993399">2</font> <font color="#990000">*</font> <font color="#993399">2</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># initialize sum of random effects for each rate and time</font></i>
 sum_random <font color="#990000">=</font> <font color="#990000">{</font>
@@ -424,6 +453,8 @@ ok           <font color="#990000">=</font> True
                relerr <font color="#990000">=</font> value <font color="#990000">/</font> rho_parent <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">elif</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'canada'</font> <font color="#990000">:</font>
           relerr <font color="#990000">=</font> value <font color="#990000">/</font> rate_effect_child  <font color="#990000">-</font> <font color="#993399">1.0</font>
+     <b><font color="#0000FF">elif</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'mexico'</font> <font color="#990000">:</font>
+          relerr <font color="#990000">=</font> value <font color="#990000">-</font> <font color="#993399">0.0</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> node_name <font color="#990000">==</font> <font color="#FF0000">'united_states'</font>
           relerr <font color="#990000">=</font> <font color="#990000">-</font> value <font color="#990000">/</font> rate_effect_child  <font color="#990000">-</font> <font color="#993399">1.0</font>
@@ -434,7 +465,7 @@ ok           <font color="#990000">=</font> True
      <b><font color="#0000FF">if</font></b> node_name <font color="#990000">!=</font> <font color="#FF0000">'north_america'</font> <font color="#990000">:</font>
           sum_random<font color="#990000">[</font>rate_name<font color="#990000">][</font>time_id<font color="#990000">]</font> <font color="#990000">+=</font> value
           count_random <font color="#990000">+=</font> <font color="#993399">1</font>
-<b><font color="#0000FF">assert</font></b> count_random <font color="#990000">==</font> <font color="#993399">8</font>
+<b><font color="#0000FF">assert</font></b> count_random <font color="#990000">==</font> <font color="#993399">3</font> <font color="#990000">*</font> <font color="#993399">2</font> <font color="#990000">*</font> <font color="#993399">2</font>
 <b><font color="#0000FF">for</font></b> rate <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'iota'</font><font color="#990000">,</font> <font color="#FF0000">'rho'</font> <font color="#990000">]</font> <font color="#990000">:</font>
      <b><font color="#0000FF">for</font></b> time_id <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#993399">0</font> <font color="#990000">,</font> <font color="#993399">1</font> <font color="#990000">]</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b><font color="#990000">(</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> sum_random<font color="#990000">[</font>rate<font color="#990000">][</font>time_id<font color="#990000">]</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">&gt;</font> <font color="#993399">1e-9</font> <font color="#990000">:</font>
