@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table format option_id option_name option_value default changing values parent node parent_node_id parent_node_name name id children data subset avgint zero sum constraints zero_sum_child_rate zero_sum_mulcov_group extra columns data_extra_columns avgint_extra_columns age average grid ode_step_size age_avg_split rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimize fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random meas_noise_effect warn_on_stderr minimum_meas_cv hold_out_integrand random_seed compress_interval example ">
+<meta name="keywords" id="keywords" content=" the option table format option_id option_name option_value default changing values parent node parent_node_id parent_node_name name id children data subset avgint zero sum constraints zero_sum_child_rate zero_sum_mulcov_group extra columns data_extra_columns avgint_extra_columns age average grid ode_step_size age_avg_split rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimize fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random meas_noise_effect warn_on_stderr minimum_meas_cv hold_out_integrand random_seed compress_interval example trace_init_fit_model ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -117,6 +117,7 @@ A:active { color : purple }
 <br><a href="option_table.htm#random_seed" target="_top">random_seed</a>
 <br><a href="option_table.htm#compress_interval" target="_top">compress_interval</a>
 <br><a href="option_table.htm#Example" target="_top">Example</a>
+<br><a href="option_table.htm#trace_init_fit_model" target="_top">trace_init_fit_model</a>
 <br><br>
 <b><big><a name="Table Format" id="Table Format">Table Format</a></big></b>
 <br>
@@ -1027,6 +1028,23 @@ no age or time compression.
 The files <a href="option_table.py.htm" target="_top"><span style='white-space: nowrap'>option_table.py</span></a>
 
 contains an example <code><font color="blue">option</font></code> table.
+
+<br>
+<br>
+<b><big><a name="trace_init_fit_model" id="trace_init_fit_model">trace_init_fit_model</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i></code>
+ is
+<code><font color="blue">trace_init_fit_model</font></code>,
+the corresponding possible values are
+<code><font color="blue">true</font></code> or <code><font color="blue">false</font></code>.
+If it is <code><font color="blue">true</font></code>,
+a trace of the initialization of the <code><font color="blue">fit_model</font></code> data structure
+is printed on standard output.
+This gives one an indication of progress for large problems where
+this initialization takes a long time.
+
 
 
 <hr>Input File: omh/table/option_table.omh

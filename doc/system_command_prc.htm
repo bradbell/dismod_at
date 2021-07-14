@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Print Run and Check a System Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Print Run and Check a System Command">
-<meta name="keywords" id="keywords" content=" print run check system command syntax purpose standard output error example ">
+<meta name="keywords" id="keywords" content=" print run check system command syntax purpose stdout example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,14 +69,14 @@ A:active { color : purple }
 <br><a href="system_command_prc.htm#Syntax" target="_top">Syntax</a>
 <br><a href="system_command_prc.htm#Purpose" target="_top">Purpose</a>
 <br><a href="system_command_prc.htm#command" target="_top">command</a>
-<br><a href="system_command_prc.htm#Standard Output and Error" target="_top">Standard&nbsp;Output&nbsp;and&nbsp;Error</a>
+<br><a href="system_command_prc.htm#stdout" target="_top">stdout</a>
 <br><a href="system_command_prc.htm#Example" target="_top">Example</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>dismod_at.system_command_prc(</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>stdout</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>stderr</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;dismod_at.system_command_prc(</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -105,10 +105,9 @@ program to execute and the other elements are arguments to the program.
 
 <br>
 <br>
-<b><big><a name="Standard Output and Error" id="Standard Output and Error">Standard Output and Error</a></big></b>
+<b><big><a name="stdout" id="stdout">stdout</a></big></b>
 <br>
-These output streams are not displayed or returned.
-If an error occurs, re-run the command as printed to get this information.
+This is the standard output result for this command.
 
 <br>
 <br>

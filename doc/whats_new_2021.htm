@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>07-14</option>
 <option>07-05</option>
 <option>07-04</option>
 <option>07-02</option>
@@ -108,6 +109,35 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="07-14" id="07-14">07-14</a></big></b>
+
+<ol type="1"><li>
+Advance to cppad_mixed-20210714.
+This enabled adding the
+<a href="option_table.htm#trace_init_fit_model" target="_top"><span style='white-space: nowrap'>trace_init_fit_model</span></a>
+ option;
+see <a href="user_trace_init.py.htm" target="_top"><span style='white-space: nowrap'>user_trace_init.py</span></a>
+ for an example.
+</li><li>
+
+Change <code><font color="blue">bin/get_cppad_mixed.sh</font></code> so that
+<a href="example_install.sh.htm" target="_top"><span style='white-space: nowrap'>example_install.sh</span></a>
+ so that it automatically replaces all the
+<a href="install_unix.htm#Special Requirements" target="_top"><span style='white-space: nowrap'>special&nbsp;requirements</span></a>
+.
+This catches changes in the install of eigen, ipopt, and cppad
+without have to remove the old install directory.
+</li><li>
+
+Change <a href="system_command_prc.htm" target="_top"><span style='white-space: nowrap'>system_command_prc</span></a>
+ so that it return standard output
+and prints standard error when an error occurs.
+</li></ol>
+
+
+
+<br>
 <br>
 <b><big><a name="07-05" id="07-05">07-05</a></big></b>
 <br>
@@ -489,7 +519,7 @@ Building this new image will require executing
 </tt></pre>
 The <a href="dock_dismod_at.sh.htm#Building Images.dismod_at.mixed" target="_top"><span style='white-space: nowrap'>dismod_at.mixed</span></a>
 
-image is necessary because the version of cppad-mixed has changed since
+image is necessary because the version of cppad_mixed has changed since
 the last advancement of dock_dismod_at.sh.
 </li><li>
 
