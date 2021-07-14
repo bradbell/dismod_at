@@ -34,6 +34,7 @@ $spell
 	integrands
 	diff
 	bnd
+	eigen
 $$
 $navigate%
 	Up%Location%
@@ -49,6 +50,18 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 07-14$$
+$list number$$
+Advance to cppad_mixed-20210714.
+$lnext
+Change $code bin/get_cppad_mixed.sh$$ so that
+$cref example_install.sh$$ so that it automatically replaces all the
+$cref/special requirements/install_unix/Special Requirements/$$.
+This catches changes in the install of eigen, ipopt, and cppad
+without have to remove the old install directory.
+$lend
+
 
 $head 07-05$$
 Fix two bugs in the changes on 07-04.
@@ -275,7 +288,7 @@ $srccode%sh%
 	./dock_dismod_at image dismod_at
 %$$
 The $cref/dismod_at.mixed/dock_dismod_at.sh/Building Images/dismod_at.mixed/$$
-image is necessary because the version of cppad-mixed has changed since
+image is necessary because the version of cppad_mixed has changed since
 the last advancement of dock_dismod_at.sh.
 $lnext
 In the $code user_data_sim_py$$ example the code
