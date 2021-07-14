@@ -54,6 +54,8 @@ $section Changes and Additions to Dismod_at During 2021$$
 $head 07-14$$
 $list number$$
 Advance to cppad_mixed-20210714.
+This enabled adding the
+$cref/trace_init_fit_model/option_table/trace_init_fit_model/$$ option.
 $lnext
 Change $code bin/get_cppad_mixed.sh$$ so that
 $cref example_install.sh$$ so that it automatically replaces all the

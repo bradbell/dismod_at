@@ -146,7 +146,8 @@ namespace dismod_at {
 			bool                                 quasi_fixed           ,
 			const CppAD::vector<bool>&           zero_sum_child_rate   ,
 			const CppAD::vector<bool>&           zero_sum_mulcov_group ,
-			data_model&                          data_object
+			data_model&                          data_object           ,
+			bool                                 trace_init = false
 		);
 		//
 		// run fit

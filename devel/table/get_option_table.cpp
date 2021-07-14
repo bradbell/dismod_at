@@ -126,6 +126,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		{ "rate_case",                        "iota_pos_rho_zero"  },
 		{ "tolerance_fixed",                  "1e-8"               },
 		{ "tolerance_random",                 "1e-8"               },
+		{ "trace_init_fit_model",             "true"               },
 		{ "warn_on_stderr",                   "true"               },
 		{ "zero_sum_child_rate",              ""                   },
 		{ "zero_sum_mulcov_group",            ""                   },
@@ -272,6 +273,15 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		}
 		// warn_on_stderr
 		if( name_vec[match] == "warn_on_stderr" )
+		{	if(
+				option_value[option_id] != "true" &&
+				option_value[option_id] != "false" )
+			{	msg = "option_value is not true or false";
+				error_exit(msg, table_name, option_id);
+			}
+		}
+		// trace_init_fit_model
+		if( name_vec[match] == "trace_init_fit_model" )
 		{	if(
 				option_value[option_id] != "true" &&
 				option_value[option_id] != "false" )

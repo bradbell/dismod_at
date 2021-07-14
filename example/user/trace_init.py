@@ -7,44 +7,57 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_compress.py$$ $newlinech #$$
+# $begin user_trace_init.py$$ $newlinech #$$
 # $spell
-#	Integrands
-#	Sincidence
 #	def
 # $$
 #
-# $section Using Data Interval Compression$$
+# $section Using Initializaion Trace Option$$
 #
 # $head Purpose$$
 # This example shows how to use the
-# $cref/compression intervals/option_table/compress_interval/$$ option.
+# $cref/trace_init_fit_model/option_table/trace_init_fit_mode/$$ option.
 #
 # $head Integrands$$
 # For this example there are one integrand, $code Sincidence$$.
 #
 # $head Nodes$$
-# There is only one node called $code world$$ for this example.
-# There are no random effects because there are no child nodes.
+# There three nodes.
+# The first is called $code world$$ and is the parent node for this example.
+# The second (third) is called $code child_1$$ ($code child_2$$)
+# and is a child of the parent node.
 #
 # $head True Iota$$
 # For this example, the true model incidence rate $icode iota$$ is
-def iota_true(age) :
-	return 0.01 * ( 1 + ((age - 50) / 50)**2 )
+def iota_true(age, node) :
+	import math
+	iota_parent  = 0.01 * (1 + age / 100.0)
+	child_effect = 0.2
+	if node == 'world' :
+		return iota_parent
+	if node == 'child_1' :
+		return math.exp(+ child_effect) * iota_parent
+	if node == 'child_2' :
+		return math.exp(- child_effect) * iota_parent
+	assert False
 #
 # $head Model$$
-# There is only one rate $icode iota$$ and it piecewise linear in age
-# with knots at the age points 0, 50, and 100.
+#
+# $subhead Parent Node$$
+# There is only one rate $icode iota$$ and it linear in age
+# with knots at the age 0 and 100.
+#
+# $subhead Child Nodes$$
+# There is only one rate $icode iota$$ and it constant.
 #
 # $head Data$$
-# There is one data point measuring Sincidence
-# with the true value of $icode iota$$ at times 0.0, 50, 100.
-# The corresponding age intervals are [0,0], [0,100], [100,100].
-# The age interval for the second measurement should be [50,50]
-# and using interval compression with make it so.
-# This is a cooked up example where interval compression makes the solution
-# more accurate. Under normal circumstances, the answer less accurate
-# but faster to compute.
+# There are six data points measuring Sincidence
+# with the true value of $icode iota$$.
+# These correspond to ages 0 and 100 at each of the three nodes.
+#
+# $head trace_init_fit_model$$
+# The option $cref/trace_init_fit_model/option_table/trace_init_fit_model/$$
+# is set to true and the corresponding output is checked.
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -58,7 +71,7 @@ import csv
 import distutils.dir_util
 import copy
 import math
-test_program = 'example/user/compress.py'
+test_program = 'example/user/trace_init.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -78,15 +91,16 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-	# note that the a, t values are not used for this case
-	def fun_iota(a, t) :
-		return ('prior_iota', None, None)
+	def fun_iota_parent(a, t) :
+		return ('prior_iota_parent', None, None)
+	def fun_iota_child(a, t) :
+		return ('prior_iota_child', None, None)
 	# ----------------------------------------------------------------------
 	# age table:
-	age_list    = [ 0.0, 50.0, 100.0 ]
+	age_list    = [ 0.0, 100.0 ]
 	#
 	# time table:
-	time_list   = [ 1990.0, 2000.0, 2010.0, 2020.0 ]
+	time_list   = [ 1990.0, 2020.0 ]
 	#
 	# integrand table:
 	integrand_table = [
@@ -94,7 +108,11 @@ def example_db (file_name) :
 	]
 	#
 	# node table:
-	node_table = [ { 'name':'world', 'parent':'' } ]
+	node_table = [
+		{ 'name':'world',   'parent':''      } ,
+		{ 'name':'child_1', 'parent':'world' } ,
+		{ 'name':'child_2', 'parent':'world' } ,
+	]
 	#
 	# weight table:
 	weight_table = list()
@@ -119,58 +137,57 @@ def example_db (file_name) :
 		'integrand':   'Sincidence',
 		'hold_out':    False,
 		'density':     'gaussian',
-		'meas_std':    iota_true(0.0) / 10.,
 		'weight':      '',
 		'time_lower':   2000.,
 		'time_upper':   2000.,
-		'node':         'world',
 		'subgroup':     'world',
 	}
-	# Sincidence at age 0.0
-	row['meas_value'] = iota_true(0.0)
-	row['age_lower']  = 0.0
-	row['age_upper']  = 0.0
-	data_table.append( copy.copy(row) )
-	#
-	# average Sincidence between age 0.0 and 100
-	row['meas_value'] = iota_true(50.0)
-	row['age_lower']  = 0.0
-	row['age_upper']  = 100.0
-	data_table.append( copy.copy(row) )
-	#
-	# Sincidence between at age 100
-	row['meas_value'] = iota_true(100.0)
-	row['age_lower']  = 100.0
-	row['age_upper']  = 100.0
-	data_table.append( copy.copy(row) )
+	for age in [ 0.0 , 100.0 ] :
+		for node in [ 'world', 'child_1', 'child_2' ] :
+			# Sincidence
+			row['meas_value'] = iota_true(age, node)
+			row['meas_std']   = row['meas_value'] / 10.0
+			row['age_lower']  = age
+			row['age_upper']  = age
+			row['node']       = node
+			data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{ # prior_iota
-			'name':     'prior_iota',
+		{ # prior_iota_parent
+			'name':     'prior_iota_parent',
 			'density':  'uniform',
-			'lower':    iota_true(0) / 10.0,
-			'upper':    iota_true(0) * 10.0,
-			'mean':     iota_true(0) * 2.0,
+			'lower':    iota_true(0, 'world') / 10.0,
+			'upper':    iota_true(0, 'world') * 10.0,
+			'mean':     iota_true(0, 'world') / 2.0 ,
+		}, {
+			# prior_iota_child
+			'name':     'prior_iota_child',
+			'density':  'uniform',
+			'mean':     0.0 ,
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	name           = 'smooth_iota'
-	fun            = fun_iota
 	smooth_table = [
-		{	'name':name,
-			'age_id':[0, 1, 2], # ages 0, 50, 100
-			'time_id':[0],
-			'fun':fun
+		{	'name':    'smooth_iota_parent',
+			'age_id':  [0, 1], # ages 0, 100
+			'time_id': [0],
+			'fun':     fun_iota_parent
+		},{
+			'name':    'smooth_iota_child',
+			'age_id':  [0],
+			'time_id': [0],
+			'fun':     fun_iota_child
 		}
 	]
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
 		{	'name':          'iota',
-			'parent_smooth': 'smooth_iota',
+			'parent_smooth': 'smooth_iota_parent',
+			'child_smooth':  'smooth_iota_child',
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -184,9 +201,7 @@ def example_db (file_name) :
 		{ 'name':'print_level_fixed',      'value':'0'                   },
 		{ 'name':'tolerance_fixed',        'value':'1e-9'                },
 
-		{ 'name':'max_num_iter_random',    'value':'50'                  },
-		{ 'name':'print_level_random',     'value':'0'                   },
-		{ 'name':'tolerance_random',       'value':'1e-10'               },
+		{ 'name':'trace_init_fit_model',   'value':'true'                },
 	]
 	# ----------------------------------------------------------------------
 	# subgroup_table
@@ -220,72 +235,35 @@ example_db(file_name)
 #
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 # -----------------------------------------------------------------------
 # read database
 new                   = False
 connection            = dismod_at.create_connection(file_name, new)
+node_table            = dismod_at.get_table_dict(connection, 'node')
 age_table             = dismod_at.get_table_dict(connection, 'age')
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 connection.close()
 #
-# There are three values for iota in this model
-assert len(var_table) == 3
-assert len(fit_var_table) == 3
+# There are four values for iota in this model
+assert len(var_table) == 4
+assert len(fit_var_table) == 4
 #
-# check that this fit is not accurate
-for var_id in range( len(var_table) ) :
-	age_id      = var_table[var_id]['age_id']
-	if age_id == 1 :
-		age         = age_table[age_id]['age']
-		true_value  = iota_true(age)
-		fit_value   = fit_var_table[var_id]['fit_var_value']
-		rel_error   = 1.0 - fit_value/true_value
-		assert age == 50.0
-		assert abs(rel_error) > 0.5
-# -----------------------------------------------------------------------
-# Now compress the age intervals for all the data. This only affects the second
-# data points because the others have intervals of size zero.
-dismod_at.system_command_prc([
-	program, file_name, 'set', 'option', 'compress_interval', '100.0 0.0'
-])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
-#
-# read database
-new                   = False
-connection            = dismod_at.create_connection(file_name, new)
-fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
-connection.close()
-#
-# check that this fit is accurate
+# check that the fit is accurate
 for var_id in range( len(var_table) ) :
 	age_id      = var_table[var_id]['age_id']
 	age         = age_table[age_id]['age']
-	true_value  = iota_true(age)
+	node_id     = var_table[var_id]['node_id']
+	node_name   = node_table[node_id]['node_name']
+	true_value  = iota_true(age, node_name)
+	if node_name.startswith('child_') :
+		parent_value = iota_true(age, 'world')
+		true_value   = math.log( true_value / parent_value )
 	fit_value   = fit_var_table[var_id]['fit_var_value']
 	rel_error   = 1.0 - fit_value/true_value
 	assert abs(rel_error) < 1e-6
-# ---------------------------------------------------------------------------
-# Now check data.csv for interval compression
-os.chdir('../../..')
-program   = 'bin/dismodat.py'
-file_name = 'build/example/user/' + file_name
-dismod_at.system_command_prc([ program, file_name, 'db2csv' ])
-data_file      = open('build/example/user/data.csv', 'r')
-reader         = csv.DictReader(data_file)
-for (data_id, row) in enumerate(reader) :
-	# check flag for age compression
-	if int(data_id) == 0 :
-		assert float( row['age_lo'] ) == 0.0
-		assert float( row['age_up'] ) == 0.0
-	if int(data_id) == 1 :
-		assert float( row['age_lo'] ) == 50.0
-		assert float( row['age_up'] ) == 50.0
-	if int(data_id) == 2 :
-		assert float( row['age_lo'] ) == 100.0
-		assert float( row['age_up'] ) == 100.0
 # -----------------------------------------------------------------------------
-print('compress.py: OK')
+print('trace_init.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

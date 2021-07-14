@@ -399,6 +399,10 @@ void fit_command(
 	// quasi_fixed
 	bool quasi_fixed = get_str_map(option_map, "quasi_fixed") == "true";
 	//
+	// trace_init_fit_model
+	bool trace_init =
+		get_str_map(option_map, "trace_init_fit_model") == "true";
+	//
 	// warn_on_stderr
 	bool warn_on_stderr = get_str_map(option_map, "warn_on_stderr") == "true";
 	//
@@ -419,7 +423,8 @@ void fit_command(
 		quasi_fixed          ,
 		zero_sum_child_rate  ,
 		zero_sum_mulcov_group,
-		data_object
+		data_object          ,
+		trace_init
 	);
 	fit_object.run_fit(random_only, option_map, warm_start_in);
 	vector<double> opt_value, lag_value, lag_dage, lag_dtime;

@@ -1148,6 +1148,7 @@ def db2csv_command(database_file_arg) :
 		[ "rate_case",                         "iota_pos_rho_zero"],
 		[ "tolerance_fixed",                   "1e-8"],
 		[ "tolerance_random",                  "1e-8"],
+		[ "trace_init_fit_model",              "false"],
 		[ "warn_on_stderr",                    "true"],
 		[ "zero_sum_child_rate",               ""],
 		[ "zero_sum_mulcov_group",             ""],

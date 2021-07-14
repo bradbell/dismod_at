@@ -307,6 +307,11 @@ void sample_command(
 	// quasi_fixed
 	bool quasi_fixed = get_str_map(option_map, "quasi_fixed") == "true";
 	//
+	// trace_init
+	bool trace_init =
+		get_str_map(option_map, "trace_init_fit_model") == "true";
+	//
+	//
 	// warn_on_stderr
 	bool warn_on_stderr = get_str_map(option_map, "warn_on_stderr") == "true";
 	//
@@ -509,7 +514,8 @@ void sample_command(
 				quasi_fixed          ,
 				zero_sum_child_rate  ,
 				zero_sum_mulcov_group,
-				data_object
+				data_object          ,
+				trace_init
 			);
 			// input empty warm_start information
 			CppAD::mixed::warm_start_struct warm_start_1;
@@ -575,7 +581,8 @@ void sample_command(
 				quasi_fixed          ,
 				zero_sum_child_rate  ,
 				zero_sum_mulcov_group,
-				data_object
+				data_object          ,
+				trace_init
 			);
 			// empty warm_start information
 			CppAD::mixed::warm_start_struct warm_start_2;
@@ -671,7 +678,8 @@ void sample_command(
 		quasi_fixed          ,
 		zero_sum_child_rate  ,
 		zero_sum_mulcov_group,
-		data_object
+		data_object          ,
+		trace_init
 	);
 	//
 	// hes_fixed_obj_out, hes_random_obj_out, sample_out

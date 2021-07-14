@@ -33,6 +33,7 @@ $spell
 	enum
 	stderr
 	cppad
+	init
 $$
 
 $section Fit Model Constructor$$
@@ -54,7 +55,9 @@ $codei%fit_model %fit_object%(
 	%random_const%,
 	%quasi_fixed%,
 	%zero_sum_child_rate%,
-	%zero_sum_mulcov_group%
+	%zero_sum_mulcov_group%,
+	%data_object%,
+	%trace_init%
 )
 %$$
 
@@ -142,25 +145,33 @@ This object contains the model for the data density;
 see $cref/data_model/devel_data_model/$$.
 It is effectively const.
 
+$head trace_init$$
+If this argument is true,
+a trace of the initialization process is printed on standard output.
+This gives one an indication of progress for large problems where
+initialization takes a long time.
+This argument is optional and its default value is false.
+
 $head Prototype$$
 $srccode%cpp% */
 fit_model::fit_model(
-	sqlite3*                              db               ,
-	int                                   simulate_index   ,
-	bool                                  warn_on_stderr   ,
-	double                                bound_random     ,
-	bool                                  no_scaling       ,
-	const pack_info&                      pack_object      ,
-	const pack_prior&                     var2prior        ,
-	const CppAD::vector<double>&          start_var        ,
-	const CppAD::vector<double>&          scale_var        ,
-	const CppAD::vector<prior_struct>&    prior_table      ,
-	const prior_model&                    prior_object     ,
-	const remove_const&                   random_const     ,
-	bool                                  quasi_fixed      ,
-	const CppAD::vector<bool>&            zero_sum_child_rate  ,
-	const CppAD::vector<bool>&            zero_sum_mulcov_group,
-	data_model&                           data_object      )
+	sqlite3*                              db                    ,
+	int                                   simulate_index        ,
+	bool                                  warn_on_stderr        ,
+	double                                bound_random          ,
+	bool                                  no_scaling            ,
+	const pack_info&                      pack_object           ,
+	const pack_prior&                     var2prior             ,
+	const CppAD::vector<double>&          start_var             ,
+	const CppAD::vector<double>&          scale_var             ,
+	const CppAD::vector<prior_struct>&    prior_table           ,
+	const prior_model&                    prior_object          ,
+	const remove_const&                   random_const          ,
+	bool                                  quasi_fixed           ,
+	const CppAD::vector<bool>&            zero_sum_child_rate   ,
+	const CppAD::vector<bool>&            zero_sum_mulcov_group ,
+	data_model&                           data_object           ,
+	bool                                  trace_init            )
 /* %$$
 $end
 */
@@ -184,7 +195,9 @@ $end
 		zero_sum_mulcov_group,
 		pack_object,
 		random_const
-	)
+	),
+	// trace_init
+	trace_init
 ),
 db_            (db)                                 ,
 simulate_index_( simulate_index )                   ,
@@ -200,7 +213,10 @@ prior_table_   ( prior_table )                      ,
 prior_object_  ( prior_object )                     ,
 random_const_  ( random_const )                     ,
 data_object_   ( data_object )
-{	assert( bound_random >= 0.0 );
+{	if( trace_init )
+		std::cout << "Begin dismod_at: fit_model constructor\n";
+	//
+	assert( bound_random >= 0.0 );
 	double inf = std::numeric_limits<double>::infinity();
 	// ----------------------------------------------------------------------
 	// n_var
@@ -305,6 +321,8 @@ data_object_   ( data_object )
 	for(itr = cppad_mixed_info_.begin(); itr != cppad_mixed_info_.end(); itr++)
 		std::cout << itr->first << " = " << itr->second << "\n";
 # endif
+	if( trace_init )
+		std::cout << "End dismod_at: fit_model constructor\n";
 }
 /*
 -----------------------------------------------------------------------------

@@ -69,6 +69,7 @@ bool get_option_table_xam(void)
 		"rate_case",                        "iota_zero_rho_zero",
 		"tolerance_fixed",                  "1e-7",
 		"tolerance_random",                 "1e-7",
+		"trace_init_fit_model",             "false",
 		"warn_on_stderr",                   "true",
 		"zero_sum_child_rate",              "iota  omega",
 		"zero_sum_mulcov_group",            "world"

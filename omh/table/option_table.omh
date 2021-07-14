@@ -37,6 +37,7 @@ $spell
 	std
 	stderr
 	covariate
+	init
 $$
 
 $section The Option Table$$
@@ -558,5 +559,17 @@ $children%
 $head Example$$
 The files $cref option_table.py$$
 contains an example $code option$$ table.
+
+$head trace_init_fit_model$$
+If $icode option_name$$ is
+$code trace_init_fit_model$$,
+the corresponding possible values are
+$code true$$ or $code false$$.
+If it is $code true$$,
+a trace of the initialization of the $code fit_model$$ data structure
+is printed on standard output.
+This gives one an indication of progress for large problems where
+this initialization takes a long time.
+
 
 $end
