@@ -97,6 +97,7 @@ $children%
 	example/user/speed.py%
 	example/user/subgroup_mulcov.py%
 	example/user/sum_residual.py%
+	example/user/trace_init.py%
 	example/user/warm_start.py%
 	example/user/zsum_child_rate.py%
 	example/user/zsum_mulcov_meas.py%
@@ -143,6 +144,7 @@ $rref user_sim_log.py$$
 $rref user_speed.py$$
 $rref user_subgroup_mulcov.py$$
 $rref user_sum_residual.py$$
+$rref user_trace_init.py$$
 $rref user_warm_start.py$$
 $rref user_zsum_child_rate.py$$
 $rref user_zsum_mulcov_meas.py$$

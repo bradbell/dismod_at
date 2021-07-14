@@ -50,6 +50,7 @@ FOREACH(user_case
 	sim_log
 	subgroup_mulcov
 	sum_residual
+	trace_init
 	warm_start
 	zsum_child_rate
 	zsum_mulcov_meas

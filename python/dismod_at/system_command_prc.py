@@ -13,12 +13,14 @@
 #	dismod
 #	prc
 #	str
+#	stdout
+#	stderr
 # $$
 #
 # $section Print Run and Check a System Command$$
 #
 # $head Syntax$$
-# $codei%dismod_at.system_command_prc(%command%)
+# $icode%stdout%, %stderr% = dismod_at.system_command_prc(%command%)
 # %$$
 #
 # $head Purpose$$
@@ -38,9 +40,8 @@
 # is a $code list$$ with $code str$$ elements. The first element is the
 # program to execute and the other elements are arguments to the program.
 #
-# $head Standard Output and Error$$
-# These output streams are not displayed or returned.
-# If an error occurs, re-run the command as printed to get this information.
+# $head stdout$$
+# This is the standard output result for this command.
 #
 # $head Example$$
 # Many of the $cref user_example$$ examples use this utility.
@@ -53,10 +54,16 @@ def system_command_prc(command) :
 	#
 	# print the system command with arguments separated by spaces
 	print( ' '.join(command) )
+	#
 	# run the system command
-	flag = subprocess.call( command )
+	result = subprocess.run(
+		command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+	)
 	# check the system return value
-	if flag != 0 :
+	if result.returncode != 0 :
+		# print the commands error messages
+		print( result.stderr )
+		#
 		# inform user that the command failed and then exit
-		sys.exit('command failed: flag = ' + str(flag))
-	return
+		sys.exit('command failed: returncode = ' + str(returncode))
+	return result.stdout

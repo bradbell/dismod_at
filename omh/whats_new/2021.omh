@@ -55,13 +55,17 @@ $head 07-14$$
 $list number$$
 Advance to cppad_mixed-20210714.
 This enabled adding the
-$cref/trace_init_fit_model/option_table/trace_init_fit_model/$$ option.
+$cref/trace_init_fit_model/option_table/trace_init_fit_model/$$ option;
+see $cref user_trace_init.py$$ for an example.
 $lnext
 Change $code bin/get_cppad_mixed.sh$$ so that
 $cref example_install.sh$$ so that it automatically replaces all the
 $cref/special requirements/install_unix/Special Requirements/$$.
 This catches changes in the install of eigen, ipopt, and cppad
 without have to remove the old install directory.
+$lnext
+Change $cref system_command_prc$$ so that it return standard output
+and prints standard error when an error occurs.
 $lend
 
 
