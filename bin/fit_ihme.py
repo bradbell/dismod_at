@@ -352,6 +352,10 @@ correpsonding parent rates.
 1. Move tolerance_fixed to the disease specific files.
 2. Automatically add number at end of prior names in parent_smoothing and
    child_smoothing (so that prior names are unique).
+
+07-15:
+1. Set the new trace_init_fit_model option to true (this gives feed back
+   during initialization of large models).
 '''
 }
 # help cases
@@ -2201,12 +2205,13 @@ if which_fit_arg == 'no_ode'  :
 	])
 	# ------------------------------------------------------------------------
 	# set options
-	set_option('tolerance_fixed',     str(specific.tolerance_fixed) )
-	set_option('max_num_iter_fixed',  str(specific.max_num_iter_fixed))
-	set_option('quasi_fixed',         'false')
-	set_option('zero_sum_child_rate', 'iota rho chi')
-	set_option('bound_random',        '3')
-	set_option('meas_noise_effect',   'add_var_scale_none')
+	set_option('tolerance_fixed',       str(specific.tolerance_fixed) )
+	set_option('max_num_iter_fixed',    str(specific.max_num_iter_fixed))
+	set_option('quasi_fixed',           'false')
+	set_option('zero_sum_child_rate',   'iota rho chi')
+	set_option('bound_random',          '3')
+	set_option('meas_noise_effect',     'add_var_scale_none')
+	set_option('trace_init_fit_model',  'true')
 	#
 	# random_seed
 	assert random_seed_arg is not None
