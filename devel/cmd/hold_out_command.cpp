@@ -61,7 +61,7 @@ The $cref/hold_out/data_subset_table/hold_out/$$ is set one (zero)
 if the corresponding data is (is not) selected for hold out.
 Only points that have $icode hold_out$$ zero in the data table
 can have hold_out non-zero in the data_subset table.
-See the fit command $cref/hold_out/fit_command/data_subset_table/hold_out/$$
+See the fit command $cref/hold_out/fit_command/hold_out/$$
 documentation.
 
 $head Example$$

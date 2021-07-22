@@ -114,7 +114,7 @@ $head hold_out$$
 This column has type $code integer$$ and has value zero or one.
 Only the rows where hold_out is zero are included
 in the objective optimized during a $cref fit_command$$.
-See the fit command $cref/hold_out/fit_command/data_subset_table/hold_out/$$
+See the fit command $cref/hold_out/fit_command/hold_out/$$
 documentation.
 
 $head meas_value$$

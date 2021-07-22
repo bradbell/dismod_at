@@ -122,8 +122,9 @@ are the same as when $icode simulated_index$$ is not present; e.g.,
 $cref/std/prior_table/std/$$ comes from the prior table.
 
 $head warm_start$$
-If $code warm_start$$ is at the end of the command,
-the ipopt_info table, written by the previous fit,
+If $code warm_start$$ is at the end of the command, the
+$cref/ipopt_info_table/fit_command/Output Tables/ipopt_info_table/$$
+written by the previous fit,
 is used to start the optimization of the fixed effects
 where the previous fit left off.
 This is intended to be used in the following cases:
@@ -138,37 +139,12 @@ $lend
 Other options besides those listed above,
 should be the same as for the previous fit.
 
-$subhead ipopt_info_table$$
-The fixed effect are optimized when
-$icode variables$$ is equal to $code both$$ or $code fixed$$.
-In the case a new $code ipopt_info$$ table, corresponding to the final
-fit for the fixed effects, is written to the ipopt_info table.
-The contents of this table are unspecified; i.e., not part of the
-dismod_at API and my change.
-
-$head fit_var_table$$
-A new $cref fit_var_table$$ is created each time this command is run.
-It contains the results of the fit in its
-$cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
-
-$head fit_data_subset_table$$
-A new $cref fit_data_subset_table$$ is created each time this command is run.
-It is a comparison of the model and data corresponding to the fit results.
-
-$head trace_fixed$$
-A new $cref trace_fixed_table$$ is created each time a
-$code fit fixed$$ or $code fit both$$ command is run.
-It contains a trace of the corresponding optimization.
-
-$head mixed_info$$
-A new $cref mixed_info_table$$ table is created each time this command is run.
-
 $head data_subset_table$$
 Only the data table rows with $cref/data_id/data_table/data_id/$$
 that also appear in the $cref/data_subset table/data_subset_table/data_id/$$
 are included in the fit and residuals.
 
-$subhead hold_out$$
+$head hold_out$$
 A data table $cref/meas_value/data_table/meas_value/$$
 is held out from the fit, but included in the residuals,
 if any of the following conditions hold:
@@ -189,6 +165,33 @@ the hold out residuals are computed so one can check the
 predictive validity for hold out data.
 The residuals for hold out data (other data) are computed once (many times)
 for each fit.
+
+$head Output Tables$$
+
+$subhead fit_var_table$$
+A new $cref fit_var_table$$ is created each time this command is run.
+It contains the results of the fit in its
+$cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
+
+$subhead fit_data_subset_table$$
+A new $cref fit_data_subset_table$$ is created each time this command is run.
+It is a comparison of the model and data corresponding to the fit results.
+
+$subhead trace_fixed$$
+A new $cref trace_fixed_table$$ is created each time a
+$code fit fixed$$ or $code fit both$$ command is run.
+It contains a trace of the corresponding optimization.
+
+$subhead mixed_info$$
+A new $cref mixed_info_table$$ table is created each time this command is run.
+
+$subhead ipopt_info_table$$
+The fixed effect are optimized when
+$icode variables$$ is equal to $code both$$ or $code fixed$$.
+In the case a new $code ipopt_info$$ table, corresponding to the final
+fit for the fixed effects, is written to the ipopt_info table.
+The contents of this table are unspecified; i.e., not part of the
+dismod_at API and my change.
 
 $head Random Effects$$
 A model has random effects if one of the

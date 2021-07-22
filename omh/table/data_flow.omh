@@ -112,7 +112,7 @@ $cref/sample/sample_command/$$ $cnext
 no
 
 $rnext
-$cref/ipopt_info/fit_command/warm_start/ipopt_info_table/$$ $cnext
+$cref/ipopt_info/fit_command/Output Tables/ipopt_info_table/$$ $cnext
 $cref/fit/fit_command/$$ $cnext
 no
 
@@ -194,7 +194,7 @@ $cref/fit_data_subset/fit_data_subset_table/$$,
 $cref/age_avg/age_avg_table/$$,
 $cref/trace_fixed/trace_fixed_table/$$,
 $cref/mixed_info/mixed_info_table/$$,
-$cref/ipopt_info/fit_command/warm_start/ipopt_info_table/$$
+$cref/ipopt_info/fit_command/Output Tables/ipopt_info_table/$$
 
 $rnext
 $cref/hold_out/hold_out_command/$$  $cnext

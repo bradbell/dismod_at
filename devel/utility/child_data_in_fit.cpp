@@ -44,7 +44,7 @@ This vector has size equal to the number of children; i.e.
 $cref/child_size/pack_info_sizes/child_size/$$.
 The $th i$$ element of this vector is the number of data point
 included in the fit
-(not $cref/held out/fit_command/data_subset_table/hold_out/$$).
+(not $cref/held out/fit_command/hold_out/$$).
 
 $childtable%example/devel/utility/child_data_in_fit_xam.cpp
 %$$

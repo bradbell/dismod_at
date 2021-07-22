@@ -51,6 +51,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 07-22$$
+Group the $cref/output tables/fit_command/Output Tables/$$
+in the fit command documentation.
+
 $head 07-14$$
 $list number$$
 Advance to cppad_mixed-20210714.
@@ -153,7 +157,7 @@ $cref/command output table/data_flow/Command Output Tables/$$.
 In addition, add some missing commas in that table.
 $lnext
 Improved documentation for
-$cref/hold_out/fit_command/data_subset_table/hold_out/$$.
+$cref/hold_out/fit_command/hold_out/$$.
 $lnext
 Fix bug in $cref hold_out_command$$ when no data is being held out
 (the old hold_out values were not erased).
@@ -224,7 +228,7 @@ $lnext
 Change the $code fixed_trace$$ table's name to $code trace_fixed$$.
 $lnext
 The $cref trace_fixed_table$$ and
-$cref/ipopt_info_table/fit_command/warm_start/ipopt_info_table/$$ were
+$cref/ipopt_info_table/fit_command/Output Tables/ipopt_info_table/$$ were
 not being deleted by the $cref init_command$$.
 This has been fixed.
 $lend
