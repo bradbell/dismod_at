@@ -38,6 +38,7 @@ $spell
 	std
     Ipopt
 	cppad_mixed
+	hes
 $$
 
 $section The Fit Command$$
@@ -181,6 +182,14 @@ $subhead trace_fixed$$
 A new $cref trace_fixed_table$$ is created each time a
 $code fit fixed$$ or $code fit both$$ command is run.
 It contains a trace of the corresponding optimization.
+
+$subhead hes_random_table$$
+A new $cref hes_random_table$$ is created each time this command is run
+with $icode variables$$ equal to $code random$$ or $code both$$.
+The Hessian of the random effects objective is written in this table.
+If $icode simulate_index$$ is present (is not present) the Hessian corresponds
+to the simulated measurements in the $cref data_sim_table$$
+(measurements in the $cref data_table$$).
 
 $subhead mixed_info$$
 A new $cref mixed_info_table$$ table is created each time this command is run.
@@ -436,6 +445,51 @@ void fit_command(
 	fit_object.get_solution(
 		opt_value, lag_value, lag_dage, lag_dtime, trace_vec, warm_start_out
 	);
+	// ------------------ hes_random table ----------------------------------
+	if( variables != "fixed" )
+	{	//
+		// random_hes_rcv
+		CppAD::mixed::d_sparse_rcv random_hes_rcv =
+			fit_object.random_obj_hes(opt_value);
+		//
+		// drop previous verison of this table
+		string sql_cmd = "drop table if exists hes_random";
+		dismod_at::exec_sql_cmd(db, sql_cmd);
+		//
+		// create hes_random table
+		size_t n_col         = 3;
+		size_t n_row         = random_hes_rcv.nnz();
+		vector<string> col_name(n_col), col_type(n_col), row_value(n_col*n_row);
+		vector<bool>   col_unique(n_col);
+		//
+		col_name[0]   = "row_var_id";
+		col_type[0]   = "integer";
+		col_unique[0] = false;
+		//
+		col_name[1]   = "col_var_id";
+		col_type[1]   = "integer";
+		col_unique[1] = false;
+		//
+		col_name[2]   = "hes_random_value";
+		col_type[2]   = "integer";
+		col_unique[2] = false;
+		//
+		// re-size to zero to avoid error on assignment
+		CppAD::mixed::s_vector row_major = random_hes_rcv.row_major();
+		for(size_t k = 0; k < n_row; ++k)
+		{	size_t ell              = row_major[k];
+			size_t row_var_id       = random_hes_rcv.row()[ell];
+			size_t col_var_id       = random_hes_rcv.col()[ell];
+			double hes_random_value = random_hes_rcv.val()[ell];
+			row_value[n_col * k + 0] = to_string(row_var_id);
+			row_value[n_col * k + 1] = to_string(col_var_id);
+			row_value[n_col * k + 2] = to_string(hes_random_value);
+		}
+		table_name = "hes_random";
+		dismod_at::create_table(
+			db, table_name, col_name, col_type, col_unique, row_value
+		);
+	}
 	// ------------------ mixed_info table ----------------------------
 	{	//
 		// drop previous verison of this table

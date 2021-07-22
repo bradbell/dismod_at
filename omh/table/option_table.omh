@@ -552,14 +552,6 @@ $codei%
 The default value for $icode age_size$$ and $icode time_size$$ is zero; i.e.,
 no age or time compression.
 
-$children%
-	omh/table/option_default.omh%
-	example/table/option_table.py
-%$$
-$head Example$$
-The files $cref option_table.py$$
-contains an example $code option$$ table.
-
 $head trace_init_fit_model$$
 If $icode option_name$$ is
 $code trace_init_fit_model$$,
@@ -571,5 +563,12 @@ is printed on standard output.
 This gives one an indication of progress for large problems where
 this initialization takes a long time.
 
+$children%
+	omh/table/option_default.omh%
+	example/table/option_table.py
+%$$
+$head Example$$
+The files $cref option_table.py$$
+contains an example $code option$$ table.
 
 $end

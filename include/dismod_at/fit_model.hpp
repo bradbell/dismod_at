@@ -111,22 +111,22 @@ namespace dismod_at {
 		) const;
 		// -------------------------------------------------------------------
 		// virtual functions used by cppad_mixed base class
-		virtual a1_vector ran_likelihood(
+		a1_vector ran_likelihood(
 			const a1_vector& fixed_vec   ,
 			const a1_vector& random_vec
-		);
+		) override;
 		// pass fixed negative log-likelihood to base class
-		virtual a1_vector fix_likelihood(
+		a1_vector fix_likelihood(
 			const a1_vector& fixed_vec
-		);
+		) override;
 		// pass constraint functions to base class
-		virtual a1_vector fix_constraint(
+		a1_vector fix_constraint(
 			const a1_vector& fixed_vec_scaled
-		);
+		) override;
 		// display error message and terminate program
-		virtual void fatal_error(const std::string& error_message);
+		void fatal_error(const std::string& error_message) override;
 		// display warning message and continue
-		virtual void warning(const std::string& warning_message);
+		void warning(const std::string& warning_message) override;
 	// =======================================================================
 	public:
 		// constructor
@@ -173,6 +173,10 @@ namespace dismod_at {
 			CppAD::vector<double>&                   sample_out         ,
 			const CppAD::vector<double>&             fit_var_value      ,
 			const std::map<std::string, std::string>& option_map
+		);
+		// random_obj_hes
+		CppAD::mixed::d_sparse_rcv random_obj_hes(
+			const CppAD::vector<double>&   pack_vec
 		);
 		// cppad_mixed_info
 		std::map<std::string, size_t> cppad_mixed_info(void) const

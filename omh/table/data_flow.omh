@@ -108,6 +108,7 @@ no
 
 $rnext
 $cref/hes_random/hes_random_table/$$ $cnext
+$cref/fit/fit_command/$$,
 $cref/sample/sample_command/$$ $cnext
 no
 
@@ -193,6 +194,7 @@ $cref/fit_var/fit_var_table/$$,
 $cref/fit_data_subset/fit_data_subset_table/$$,
 $cref/age_avg/age_avg_table/$$,
 $cref/trace_fixed/trace_fixed_table/$$,
+$cref/hes_random/hes_random_table/$$,
 $cref/mixed_info/mixed_info_table/$$,
 $cref/ipopt_info/fit_command/Output Tables/ipopt_info_table/$$
 

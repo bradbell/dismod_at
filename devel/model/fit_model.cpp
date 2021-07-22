@@ -701,6 +701,101 @@ $end
 }
 /*
 ---------------------------------------------------------------------------
+$begin fit_model_random_obj_hes$$
+$spell
+	hes
+	rcv
+	obj
+	vec
+$$
+
+$section Compute Hessian Of Random Effects Objective$$
+
+$head Syntax$$
+$icode%random_hes_rcv% = fit_object%.random_obj_hes(%pack_vec%)
+%$$
+
+$head Prototype$$
+$srcthisfile%0%// BEGIN_RANDOM_OBJ_HES%// END_RANDOM_OBJ_HES%1%$$
+
+$head fit_object$$
+This object must have been constructed with
+$cref/no_scaling/fit_model_ctor/no_scaling/$$ equal to $code sample$$.
+
+$head Constants$$
+The model variables that have upper and lower limits equal
+are referred to as constants.
+
+$head pack_vec$$
+Is the value of the vector fixed effects,
+in $cref pack_info$$ order, at which we are computing the Hessian.
+The corresponding fixed effects are referred to as $latex \theta$$
+and the random effects are referred to as $latex u$$ below.
+
+$head random_hes_rcv$$
+is a sparse matrix representation of the
+Hessian of the random effects objective evaluated
+$latex ( \theta , u )$$.
+The row and column indices in this matrix are relative to the
+$cref pack_info$$ vector.
+Only the lower triangle is returned (column indices are less than or equal
+row indices) because the Hessian is symmetric.
+Note that the random effects objective does not have any
+Laplace density terms.
+
+$subhead Constraints$$
+The Hessians of random effects that have upper and lower limits equal
+are not included in $icode random_hes_rcv$$; i.e., they are zero in the
+sparse matrix representation.
+
+$end
+*/
+// BEGIN_RANDOM_OBJ_HES
+CppAD::mixed::d_sparse_rcv fit_model::random_obj_hes(
+	const CppAD::vector<double>&  pack_vec )
+// END_RANDOM_OBJ_HES
+/* %$$
+$end
+*/
+{	size_t n_var = n_fixed_ + n_random_;
+	assert( pack_vec.size() == n_var );
+	//
+	// fixed_vec, random_vec
+	CppAD::vector<double> fixed_vec(n_fixed_), random_vec(n_random_);
+	unpack_random(pack_object_, pack_vec, random_vec);
+	unpack_fixed(pack_object_,   pack_vec, fixed_vec);
+	//
+	// convert dismod_at random effects to cppad_mixed random effects
+	d_vector cppad_mixed_random_vec = random_const_.remove( random_vec );
+	//
+	// convert dismod_at fixed effect to cppad_mixed fixed effects
+	d_vector cppad_mixed_fixed_vec(n_fixed_);
+	scale_fixed_effect(fixed_vec, cppad_mixed_fixed_vec);
+	//
+	// hes_random_rcv
+	// This Hessian uses variable indices in cppad_mixed space
+	CppAD::mixed::d_sparse_rcv hes_random_rcv = hes_random_obj(
+		cppad_mixed_fixed_vec, cppad_mixed_random_vec
+	);
+	//
+	// random_hes_rcv
+	// This Hessian uses variable indices in dismod_at space
+	CppAD::vector<size_t> var_id = random2var_id(pack_object_);
+	size_t nnz = hes_random_rcv.nnz();
+	CppAD::mixed::sparse_rc pattern(n_var, n_var, nnz);
+	for(size_t k = 0; k < nnz; ++k)
+	{	size_t r = hes_random_rcv.row()[k];
+		size_t c = hes_random_rcv.col()[k];
+		pattern.set(k, var_id[r], var_id[c]);
+	}
+	CppAD::mixed::d_sparse_rcv random_hes_rcv( pattern );
+	for(size_t k = 0; k < nnz; ++k)
+		random_hes_rcv.set(k, hes_random_rcv.val()[k] );
+	//
+	return random_hes_rcv;
+}
+/*
+---------------------------------------------------------------------------
 $begin fit_model_sample_posterior$$
 $spell
 	dage

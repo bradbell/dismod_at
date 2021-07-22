@@ -123,8 +123,10 @@
 # $cref/hes_fixed_value/hes_fixed_table/hes_fixed_value/$$.
 #
 # $head hes_random.csv$$
-# If the $cref/asymptotic/sample_command/asymptotic/$$
-# sample command was executed,
+# If a $cref/fit both/fit_command/variables/both/$$,
+# $cref/fit random/fit_command/variables/random/$$,
+# or $cref/sample asymptotic/sample_command/asymptotic/$$
+# command was executed,
 # the contents of the $cref hes_random_table$$ are written to
 # the CSV file $icode%dir%/hes_random.csv%$$.
 # The columns in this table are
@@ -834,7 +836,6 @@ def db2csv_command(database_file_arg) :
 	table_pair_list = [
 		( 'fit_var',    'fit_data_subset' ),
 		( 'data_sim',   'prior_sim'),
-		( 'hes_fixed',  'hes_random'),
 	]
 	for pair in table_pair_list :
 		if have_table[pair[0]] != have_table[pair[1]] :

@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -278,14 +278,15 @@ dismod_at.system_command_prc(
 )
 # -----------------------------------------------------------------------
 # get tables
-new              = False
-connection       = dismod_at.create_connection(file_name, new)
-var_table        = dismod_at.get_table_dict(connection, 'var')
-node_table       = dismod_at.get_table_dict(connection, 'node')
-rate_table       = dismod_at.get_table_dict(connection, 'rate')
-fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
+new               = False
+connection        = dismod_at.create_connection(file_name, new)
+var_table         = dismod_at.get_table_dict(connection, 'var')
+node_table        = dismod_at.get_table_dict(connection, 'node')
+rate_table        = dismod_at.get_table_dict(connection, 'rate')
+fit_var_table     = dismod_at.get_table_dict(connection, 'fit_var')
+hes_random_before = dismod_at.get_table_dict(connection, 'hes_random')
 sample_table     = dismod_at.get_table_dict(connection, 'sample')
-hes_random_table = dismod_at.get_table_dict(connection, 'hes_random')
+hes_random_after = dismod_at.get_table_dict(connection, 'hes_random')
 connection.close()
 dismod_at.db2csv_command(file_name)
 # -----------------------------------------------------------------------
@@ -306,10 +307,11 @@ for var_id in range(len(var_table) ) :
 #
 # The Hessian of the random effects objective it diagonal
 # and there are two random effects
-assert len(hes_random_table) == 2
+assert hes_random_before == hes_random_after
+assert len(hes_random_after) == 2
 covariance = numpy.zeros((2, 2), dtype = float)
 uhat    = numpy.zeros(2, dtype = float)
-for row in hes_random_table :
+for row in hes_random_after :
 	assert row['row_var_id'] == row['col_var_id']
 	var_id           = row['row_var_id']
 	hes_random_value = row['hes_random_value']
@@ -371,8 +373,8 @@ for row in reader :
 	hes_random_csv.append(row)
 file_ptr.close()
 #
-for hes_random_id in range( len(hes_random_table) ) :
-	row_table    = hes_random_table[hes_random_id]
+for hes_random_id in range( len(hes_random_after) ) :
+	row_table    = hes_random_after[hes_random_id]
 	row_csv      = hes_random_csv[hes_random_id]
 	#
 	value_table  = row_table['row_var_id']

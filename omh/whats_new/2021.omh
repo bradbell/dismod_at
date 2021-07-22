@@ -35,6 +35,7 @@ $spell
 	diff
 	bnd
 	eigen
+	hes
 $$
 $navigate%
 	Up%Location%
@@ -52,8 +53,17 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 07-22$$
+$list number$$
 Group the $cref/output tables/fit_command/Output Tables/$$
 in the fit command documentation.
+$lnext
+Add the $cref/hes_random table/fit_command/Output Tables/hes_random_table/$$
+table to the output of the fit command.
+$lnext
+The default value for
+$cref/trace_init_fit_model/option_table/trace_init_fit_model/$$ was changed
+to $code false$$ and it was added to the $cref option_default$$ list.
+$lend
 
 $head 07-14$$
 $list number$$

@@ -17,6 +17,7 @@ $spell
 	std
 	ipopt
 	pos
+	init
 $$
 
 $section List of Option Default Values$$
@@ -235,6 +236,13 @@ $cref/
 	option_table/
 	Optimize Fixed and Random/
 	tolerance
+/$$
+$rnext
+$code trace_init_fit_model$$ $cnext false $cnext
+$cref/
+	trace_int_fit_model/
+	option_table/
+	trace_init_fit_model
 /$$
 $rnext
 $code warn_on_stderr$$ $cnext true $cnext
