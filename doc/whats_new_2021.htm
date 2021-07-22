@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>07-22</option>
 <option>07-14</option>
 <option>07-05</option>
 <option>07-04</option>
@@ -109,6 +110,29 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="07-22" id="07-22">07-22</a></big></b>
+
+<ol type="1"><li>
+Group the <a href="fit_command.htm#Output Tables" target="_top"><span style='white-space: nowrap'>output&nbsp;tables</span></a>
+
+in the fit command documentation.
+</li><li>
+
+Add the <a href="fit_command.htm#Output Tables.hes_random_table" target="_top"><span style='white-space: nowrap'>hes_random&nbsp;table</span></a>
+
+table to the output of the fit command.
+</li><li>
+
+The default value for
+<a href="option_table.htm#trace_init_fit_model" target="_top"><span style='white-space: nowrap'>trace_init_fit_model</span></a>
+ was changed
+to <code><font color="blue">false</font></code> and it was added to the <a href="option_default.htm" target="_top"><span style='white-space: nowrap'>option_default</span></a>
+ list.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="07-14" id="07-14">07-14</a></big></b>
 
@@ -282,7 +306,7 @@ In addition, add some missing commas in that table.
 </li><li>
 
 Improved documentation for
-<a href="fit_command.htm#data_subset_table.hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
+<a href="fit_command.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
 .
 </li><li>
 
@@ -405,7 +429,7 @@ Change the <code><font color="blue">fixed_trace</font></code> table's name to <c
 
 The <a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed_table</span></a>
  and
-<a href="fit_command.htm#warm_start.ipopt_info_table" target="_top"><span style='white-space: nowrap'>ipopt_info_table</span></a>
+<a href="fit_command.htm#Output Tables.ipopt_info_table" target="_top"><span style='white-space: nowrap'>ipopt_info_table</span></a>
  were
 not being deleted by the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
 .

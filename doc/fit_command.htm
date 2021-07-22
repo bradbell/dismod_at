@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fit Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fit Command">
-<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start ipopt_info_table fit_var_table fit_data_subset_table trace_fixed mixed_info data_subset_table hold_out effects convergence problems ipopt options example ">
+<meta name="keywords" id="keywords" content=" the fit command syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start data_subset_table hold_out output tables fit_var_table fit_data_subset_table trace_fixed hes_random_table mixed_info ipopt_info_table effects convergence problems ipopt options example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -75,13 +75,15 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#simulate_index.data_sim_table" target="_top">data_sim_table</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#simulate_index.prior_sim_table" target="_top">prior_sim_table</a>
 <br><a href="fit_command.htm#warm_start" target="_top">warm_start</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#warm_start.ipopt_info_table" target="_top">ipopt_info_table</a>
-<br><a href="fit_command.htm#fit_var_table" target="_top">fit_var_table</a>
-<br><a href="fit_command.htm#fit_data_subset_table" target="_top">fit_data_subset_table</a>
-<br><a href="fit_command.htm#trace_fixed" target="_top">trace_fixed</a>
-<br><a href="fit_command.htm#mixed_info" target="_top">mixed_info</a>
 <br><a href="fit_command.htm#data_subset_table" target="_top">data_subset_table</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#data_subset_table.hold_out" target="_top">hold_out</a>
+<br><a href="fit_command.htm#hold_out" target="_top">hold_out</a>
+<br><a href="fit_command.htm#Output Tables" target="_top">Output&nbsp;Tables</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#Output Tables.fit_var_table" target="_top">fit_var_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#Output Tables.fit_data_subset_table" target="_top">fit_data_subset_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#Output Tables.trace_fixed" target="_top">trace_fixed</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#Output Tables.hes_random_table" target="_top">hes_random_table</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#Output Tables.mixed_info" target="_top">mixed_info</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="fit_command.htm#Output Tables.ipopt_info_table" target="_top">ipopt_info_table</a>
 <br><a href="fit_command.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
 <br><a href="fit_command.htm#Convergence Problems" target="_top">Convergence&nbsp;Problems</a>
 <br><a href="fit_command.htm#Ipopt Options" target="_top">Ipopt&nbsp;Options</a>
@@ -227,8 +229,10 @@ are the same as when
 <br>
 <b><big><a name="warm_start" id="warm_start">warm_start</a></big></b>
 <br>
-If <code><font color="blue">warm_start</font></code> is at the end of the command,
-the ipopt_info table, written by the previous fit,
+If <code><font color="blue">warm_start</font></code> is at the end of the command, the
+<a href="fit_command.htm#Output Tables.ipopt_info_table" target="_top"><span style='white-space: nowrap'>ipopt_info_table</span></a>
+
+written by the previous fit,
 is used to start the optimization of the fixed effects
 where the previous fit left off.
 This is intended to be used in the following cases:
@@ -249,53 +253,6 @@ should be the same as for the previous fit.
 
 <br>
 <br>
-<big><a name="warm_start.ipopt_info_table" id="warm_start.ipopt_info_table">ipopt_info_table</a></big>
-<br>
-The fixed effect are optimized when
-
-<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
- is equal to <code><font color="blue">both</font></code> or <code><font color="blue">fixed</font></code>.
-In the case a new <code><font color="blue">ipopt_info</font></code> table, corresponding to the final
-fit for the fixed effects, is written to the ipopt_info table.
-The contents of this table are unspecified; i.e., not part of the
-dismod_at API and my change.
-
-<br>
-<br>
-<b><big><a name="fit_var_table" id="fit_var_table">fit_var_table</a></big></b>
-<br>
-A new <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
- is created each time this command is run.
-It contains the results of the fit in its
-<a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
- column.
-
-<br>
-<br>
-<b><big><a name="fit_data_subset_table" id="fit_data_subset_table">fit_data_subset_table</a></big></b>
-<br>
-A new <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
- is created each time this command is run.
-It is a comparison of the model and data corresponding to the fit results.
-
-<br>
-<br>
-<b><big><a name="trace_fixed" id="trace_fixed">trace_fixed</a></big></b>
-<br>
-A new <a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed_table</span></a>
- is created each time a
-<code><font color="blue">fit fixed</font></code> or <code><font color="blue">fit both</font></code> command is run.
-It contains a trace of the corresponding optimization.
-
-<br>
-<br>
-<b><big><a name="mixed_info" id="mixed_info">mixed_info</a></big></b>
-<br>
-A new <a href="mixed_info_table.htm" target="_top"><span style='white-space: nowrap'>mixed_info_table</span></a>
- table is created each time this command is run.
-
-<br>
-<br>
 <b><big><a name="data_subset_table" id="data_subset_table">data_subset_table</a></big></b>
 <br>
 Only the data table rows with <a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
@@ -306,7 +263,7 @@ are included in the fit and residuals.
 
 <br>
 <br>
-<big><a name="data_subset_table.hold_out" id="data_subset_table.hold_out">hold_out</a></big>
+<b><big><a name="hold_out" id="hold_out">hold_out</a></big></b>
 <br>
 A data table <a href="data_table.htm#meas_value" target="_top"><span style='white-space: nowrap'>meas_value</span></a>
 
@@ -338,6 +295,76 @@ the hold out residuals are computed so one can check the
 predictive validity for hold out data.
 The residuals for hold out data (other data) are computed once (many times)
 for each fit.
+
+<br>
+<br>
+<b><big><a name="Output Tables" id="Output Tables">Output Tables</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Output Tables.fit_var_table" id="Output Tables.fit_var_table">fit_var_table</a></big>
+<br>
+A new <a href="fit_var_table.htm" target="_top"><span style='white-space: nowrap'>fit_var_table</span></a>
+ is created each time this command is run.
+It contains the results of the fit in its
+<a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+ column.
+
+<br>
+<br>
+<big><a name="Output Tables.fit_data_subset_table" id="Output Tables.fit_data_subset_table">fit_data_subset_table</a></big>
+<br>
+A new <a href="fit_data_subset_table.htm" target="_top"><span style='white-space: nowrap'>fit_data_subset_table</span></a>
+ is created each time this command is run.
+It is a comparison of the model and data corresponding to the fit results.
+
+<br>
+<br>
+<big><a name="Output Tables.trace_fixed" id="Output Tables.trace_fixed">trace_fixed</a></big>
+<br>
+A new <a href="trace_fixed_table.htm" target="_top"><span style='white-space: nowrap'>trace_fixed_table</span></a>
+ is created each time a
+<code><font color="blue">fit fixed</font></code> or <code><font color="blue">fit both</font></code> command is run.
+It contains a trace of the corresponding optimization.
+
+<br>
+<br>
+<big><a name="Output Tables.hes_random_table" id="Output Tables.hes_random_table">hes_random_table</a></big>
+<br>
+A new <a href="hes_random_table.htm" target="_top"><span style='white-space: nowrap'>hes_random_table</span></a>
+ is created each time this command is run
+with 
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ equal to <code><font color="blue">random</font></code> or <code><font color="blue">both</font></code>.
+The Hessian of the random effects objective is written in this table.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
+ is present (is not present) the Hessian corresponds
+to the simulated measurements in the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
+
+(measurements in the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+).
+
+<br>
+<br>
+<big><a name="Output Tables.mixed_info" id="Output Tables.mixed_info">mixed_info</a></big>
+<br>
+A new <a href="mixed_info_table.htm" target="_top"><span style='white-space: nowrap'>mixed_info_table</span></a>
+ table is created each time this command is run.
+
+<br>
+<br>
+<big><a name="Output Tables.ipopt_info_table" id="Output Tables.ipopt_info_table">ipopt_info_table</a></big>
+<br>
+The fixed effect are optimized when
+
+<code><i><font color="black"><span style='white-space: nowrap'>variables</span></font></i></code>
+ is equal to <code><font color="blue">both</font></code> or <code><font color="blue">fixed</font></code>.
+In the case a new <code><font color="blue">ipopt_info</font></code> table, corresponding to the final
+fit for the fixed effects, is written to the ipopt_info table.
+The contents of this table are unspecified; i.e., not part of the
+dismod_at API and my change.
 
 <br>
 <br>

@@ -400,14 +400,15 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_p
 <font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># get tables</font></i>
-new              <font color="#990000">=</font> False
-connection       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-var_table        <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
-node_table       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
-rate_table       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'rate'</font><font color="#990000">)</font>
-fit_var_table    <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
+new               <font color="#990000">=</font> False
+connection        <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+var_table         <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'var'</font><font color="#990000">)</font>
+node_table        <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'node'</font><font color="#990000">)</font>
+rate_table        <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'rate'</font><font color="#990000">)</font>
+fit_var_table     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'fit_var'</font><font color="#990000">)</font>
+hes_random_before <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'hes_random'</font><font color="#990000">)</font>
 sample_table     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">)</font>
-hes_random_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'hes_random'</font><font color="#990000">)</font>
+hes_random_after <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'hes_random'</font><font color="#990000">)</font>
 connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">db2csv_command</font></b><font color="#990000">(</font>file_name<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
@@ -428,10 +429,11 @@ var_id2node_name <font color="#990000">=</font> <b><font color="#000000">dict</f
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># The Hessian of the random effects objective it diagonal</font></i>
 <i><font color="#9A1900"># and there are two random effects</font></i>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>hes_random_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">2</font>
+<b><font color="#0000FF">assert</font></b> hes_random_before <font color="#990000">==</font> hes_random_after
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>hes_random_after<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">2</font>
 covariance <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">zeros</font></b><font color="#990000">((</font><font color="#993399">2</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">),</font> dtype <font color="#990000">=</font> float<font color="#990000">)</font>
 uhat    <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">zeros</font></b><font color="#990000">(</font><font color="#993399">2</font><font color="#990000">,</font> dtype <font color="#990000">=</font> float<font color="#990000">)</font>
-<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> hes_random_table <font color="#990000">:</font>
+<b><font color="#0000FF">for</font></b> row <b><font color="#0000FF">in</font></b> hes_random_after <font color="#990000">:</font>
      <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'row_var_id'</font><font color="#990000">]</font> <font color="#990000">==</font> row<font color="#990000">[</font><font color="#FF0000">'col_var_id'</font><font color="#990000">]</font>
      var_id           <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'row_var_id'</font><font color="#990000">]</font>
      hes_random_value <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'hes_random_value'</font><font color="#990000">]</font>
@@ -493,8 +495,8 @@ reader    <font color="#990000">=</font> csv<font color="#990000">.</font><b><fo
      hes_random_csv<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
 file_ptr<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900">#</font></i>
-<b><font color="#0000FF">for</font></b> hes_random_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>hes_random_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     row_table    <font color="#990000">=</font> hes_random_table<font color="#990000">[</font>hes_random_id<font color="#990000">]</font>
+<b><font color="#0000FF">for</font></b> hes_random_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>hes_random_after<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     row_table    <font color="#990000">=</font> hes_random_after<font color="#990000">[</font>hes_random_id<font color="#990000">]</font>
      row_csv      <font color="#990000">=</font> hes_random_csv<font color="#990000">[</font>hes_random_id<font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      value_table  <font color="#990000">=</font> row_table<font color="#990000">[</font><font color="#FF0000">'row_var_id'</font><font color="#990000">]</font>
