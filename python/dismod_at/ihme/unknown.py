@@ -16,6 +16,7 @@ def child_smoothing_fun(
 	age_table, time_table, density_name2id, integrand_data
 ) :
 	import copy
+	import math
 	age_grid      = [0.0]
 	time_grid     = [1990]
 	density_id    = density_name2id['uniform']
@@ -35,7 +36,7 @@ def child_smoothing_fun(
 	value_prior = copy.copy( default_prior )
 	value_prior['prior_name'] = 'child_smoothing_value_prior'
 	value_prior['density_id'] = density_name2id['gaussian']
-	value_prior['std']        = 1.0
+	value_prior['std']        = 0.1
 	#
 	# dage_prior
 	dage_prior  = default_prior
@@ -49,7 +50,7 @@ def child_smoothing_fun(
 relative_path = 'data/unknown/475588-102-3.db'
 #
 # maximum number of data values per integrand
-max_per_integrand = 500
+max_per_integrand = 1000
 #
 # fixed effects convergence tolerance
 tolerance_fixed   = 1e-8
@@ -77,4 +78,4 @@ parent_smoothing = collections.OrderedDict()
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
 # child_smoothing['iota']   = child_smoothing_fun
-# child_smoothing['chi']    = child_smoothing_fun
+child_smoothing['chi']    = child_smoothing_fun

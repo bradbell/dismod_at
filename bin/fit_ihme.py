@@ -2252,7 +2252,7 @@ if which_fit_arg == 'no_ode'  :
 	# fit both
 	t0 = time.time()
 	system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-	msg  = 'fit_without time = '
+	msg  = 'fit_no_ode time = '
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
@@ -2288,7 +2288,7 @@ if which_fit_arg == 'yes_ode'  :
 	# fit both
 	t0 = time.time()
 	system_command([ 'dismod_at', temp_database, 'fit', 'both'])
-	msg  = 'fit_with_ode time = '
+	msg  = 'fit_yes_ode time = '
 	msg += str( round( time.time() - t0 ) ) + ' seconds'
 	trace(msg)
 	#
