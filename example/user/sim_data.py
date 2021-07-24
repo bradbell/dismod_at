@@ -55,6 +55,12 @@
 # There is no measurement noise in the simulated data, but it is modeled
 # as having measurement noise.
 #
+# $head ode_step_size$$
+# This example uses a very small
+# $cref/ode_step_size/option_table/Age Average Grid/ode_step_size/$$
+# to test that both the dismod_at and $cref sim_data$$ integrators are
+# working properly.
+#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
@@ -95,7 +101,7 @@ def iota_true(age, time) :
 		0.03 * (100 - a) * (t - 2000) / ( 100 * 20 ) + \
 		0.04 * (a   - 0) * (t - 2000) / ( 100 * 20 )
 	return result
-n_data             = 10
+n_data             = 20
 random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
 def sim_data(a, t, integrand_name) :
@@ -207,6 +213,7 @@ def example_db (file_name) :
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 		{ 'name':'parent_node_name',       'value':'world'             },
 		{ 'name':'random_seed',            'value':str(random_seed)    },
+		{ 'name':'ode_step_size',          'value':'1.0'               },
 
 	]
 	# ----------------------------------------------------------------------
@@ -266,4 +273,7 @@ for (var_id, row) in enumerate( var_table ) :
 	true_var_value = iota_true(age, time)
 	#
 	rel_err        = 1.0 - fit_var_value / true_var_value
-	print(rel_err)
+	assert abs(rel_err) < 1e-3
+# ---------------------------------------------------------------------------
+print('sim_data.py: OK')
+# END PYTHON
