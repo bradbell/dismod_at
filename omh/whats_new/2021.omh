@@ -36,6 +36,8 @@ $spell
 	bnd
 	eigen
 	hes
+	integrators
+	cen
 $$
 $navigate%
 	Up%Location%
@@ -51,6 +53,17 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 07-24$$
+$list number$$
+Add the $cref sim_data$$ utility which is slower and easier to use than the
+$cref simulate_command$$.
+It also can be used for independent testing of the dismod_at integrators.
+$lnext
+Remove cen_log_students from the
+$cref/log scaled density list/density_table/Notation/Log Scaled/$$
+(it is not yet a valid density).
+$lend
 
 $head 07-22$$
 $list number$$

@@ -121,16 +121,17 @@ $icode smooth_id$$, $icode age_id$$, and $icode time_id$$ in the
 $cref smooth_grid_table$$.
 
 $head age_id$$
-If $icode var_type$$ is $code rate$$,
-$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_noise$$,
-this is the $cref/age_id/age_table/age_id/$$ that identifies
+If $icode var_type$$ is
+$code mulstd_value$$, $code mulstd_dage$$, $code mulstd_dtime$$,
+this column is $code null$$.
+Otherwise this is the $cref/age_id/age_table/age_id/$$ that identifies
 the age for the corresponding variable.
-Otherwise, this column is $code null$$.
 
 $head time_id$$
-If $icode var_type$$ is $code rate$$,
-$code mulcov_rate_value$$, $code mulcov_meas_value$$ or $code mulcov_meas_noise$$,
-this is the $cref/time_id/time_table/time_id/$$ that identifies
+If $icode var_type$$ is
+$code mulstd_value$$, $code mulstd_dage$$, $code mulstd_dtime$$,
+this column is $code null$$.
+Otherwise this is the $cref/time_id/time_table/time_id/$$ that identifies
 the time for the corresponding variable.
 Otherwise, this column is $code null$$.
 

@@ -99,7 +99,6 @@ We refer to the following densities as log scaled:
 $code log_gaussian$$,
 $code cen_log_laplace$$,
 $code log_laplace$$,
-$code cen_log_students$$.
 $code log_students$$.
 
 $subhead Nonsmooth$$
