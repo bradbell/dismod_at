@@ -37,6 +37,10 @@ $codei%
 %$$
 returns a float equal to the value of the specified rate
 at the specified age and time.
+Note that $icode age$$ will always be zero when evaluating
+$codei%
+	%value% = %rate%['pini'](%age%, %time%)
+%$$
 If a rate name is not in the dictionary, the corresponding rate is zero.
 
 $head integrand_name$$
@@ -92,7 +96,7 @@ $end
 """
 # SC_fun
 def SC_fun(a, t, rate) :
-	import scipy
+	import scipy.integrate
 	#
 	# Overloading the functions S and C, we define the ODE
 	# S'(s) = - [ iota(a+s,t+s) + omega(a+s,t+s) ] * S(s)
@@ -100,7 +104,7 @@ def SC_fun(a, t, rate) :
 	# C'(s) = - [ rho(a+s,t+s) + omega(a+s,t+s) + chi(a+s,t+s) ] * C(s)
 	#         + i(a+s,t+s) * S(s)
 	# with initial values
-	# S(-a)  = pini(t-a)
+	# S(-a)  = pini(0, t-a)
 	# C(-a)  = 1 - S(-a)
 	#
 	# Then we have that
@@ -128,8 +132,8 @@ def SC_fun(a, t, rate) :
 		return [ [ -(iota + omega) , rho ], [ iota, -(rho + omega + chi) ] ]
 	#
 	# S(-a), C(-a)
-	Sini = rate['pini'](t - a)
-	Cini = 1.0 - Sini
+	Cini = rate['pini'](0, t - a)
+	Sini = 1.0 - Cini
 	#
 	# SC_ode
 	SC_ode = scipy.integrate.ode(f, jac)
@@ -137,7 +141,7 @@ def SC_fun(a, t, rate) :
 	SC_ode.set_initial_value( [Sini, Cini], - a )
 	#
 	# integrate ODE from s = -a to s = 0
-	SC = SC_ode.integrate(a)
+	SC = SC_ode.integrate(0.0)
 	return SC
 #
 def sim_data(rate, integrand_name, bound, noise) :
@@ -151,7 +155,7 @@ def sim_data(rate, integrand_name, bound, noise) :
 	#
 	# rate_extended
 	rate_extended = dict()
-	for key in ['iota', 'rho', 'chi', 'omega'] :
+	for key in ['pini', 'iota', 'rho', 'chi', 'omega'] :
 		if key in rate :
 			rate_extended[key] = rate[key]
 		else :
@@ -176,7 +180,7 @@ def sim_data(rate, integrand_name, bound, noise) :
 	if integrand_name in integrand_value :
 		return integrand_value[integrand_name]
 	#
-	# avoid division by zero when omeage zero in cases above
+	# avoid division by zero (when omeage zero) in cases above
 	if integrand_name == 'relrisk' :
 		return (omega + chi) / omega
 	#
@@ -190,6 +194,13 @@ def sim_data(rate, integrand_name, bound, noise) :
 		'Tincidence'  : iota * (1 - P),
 		'mtspecific'  : chi * P,
 		'mtall'       : omega + chi * P,
-		'mtstandard'  : (omega + chi) / (omega + chi * P)
 	}
-	return integrand_value[integrand_name]
+	if integrand_name in integrand_value :
+		return integrand_value[integrand_name]
+	#
+	# avoid division by zero (when omeage and P ae zero) in cases above
+	if integrand_name == 'mtstandard' :
+		return (omega + chi) / (omega + chi * P)
+	#
+	print('sim_data: ' + integrand_name + ' is not a vlaid integrand name')
+	assert False

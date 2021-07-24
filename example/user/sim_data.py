@@ -11,7 +11,6 @@
 # $spell
 #	init
 #	covariate
-#	Sincidence
 #	std
 #	sim
 #	cv
@@ -35,10 +34,10 @@
 # the following values:
 # $table
 # iota $cnext age  $cnect time $rnext
-# 0.1  $cnext   0  $cnext 2000 $rnext
-# 0.2  $cnext  100 $cnext 2000 $rnext
-# 0.2  $cnext    0 $cnext 2020 $rnext
-# 0.3  $cnext  100 $cnext 2020 $rnext
+# 0.01  $cnext   0  $cnext 2000 $rnext
+# 0.02  $cnext  100 $cnext 2000 $rnext
+# 0.03  $cnext    0 $cnext 2020 $rnext
+# 0.04  $cnext  100 $cnext 2020 $rnext
 # $tend
 # All the other rates are zero for this simulation.
 #
@@ -50,7 +49,7 @@
 # fit the data perfectly.
 #
 # $head Data$$
-# There are $icode n_data$$ measurements of Sincidence and
+# There are $icode n_data$$ measurements of prevalence and
 # each at a randomly selected age between 0 and 100 and random time
 # between 2000 and 2020.
 # There is no measurement noise in the simulated data, but it is modeled
@@ -87,23 +86,24 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
-def iota_true(a, t) :
+def iota_true(age, time) :
+	a = min( 100 , max(0, age) )
+	t = min( 2020 , max(2000, time) )
 	result = \
-		0.1 * (100 - a) * (2020 - t) / ( 100 * 20 ) + \
-		0.2 * (a   - 0) * (2020 - t) / ( 100 * 20 ) + \
-		0.2 * (100 - a) * (t - 2000) / ( 100 * 20 ) + \
-		0.3 * (a   - 0) * (t - 2000) / ( 100 * 20 )
+		0.01 * (100 - a) * (2020 - t) / ( 100 * 20 ) + \
+		0.02 * (a   - 0) * (2020 - t) / ( 100 * 20 ) + \
+		0.03 * (100 - a) * (t - 2000) / ( 100 * 20 ) + \
+		0.04 * (a   - 0) * (t - 2000) / ( 100 * 20 )
 	return result
 n_data             = 10
 random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
-def sim_data(a, t) :
-	rate            = { 'iota' : iota_true }
-	integrand_name  = 'Sincidence'
+def sim_data(a, t, integrand_name) :
+	rate    = { 'iota' : iota_true }
+	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
 	bound           = {
 		'age_lower' : a, 'age_upper' : a, 'time_lower' : t, 'time_upper' : t
 	}
-	noise           = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
 	return dismod_at.sim_data(rate, integrand_name, bound, noise)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
@@ -119,7 +119,7 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name': 'Sincidence' }
+		 { 'name': 'prevalence' }
 	]
 	#
 	# node table:
@@ -149,7 +149,7 @@ def example_db (file_name) :
 		'hold_out':     False,
 		'node':        'world',
 		'subgroup':    'world',
-		'integrand':   'Sincidence',
+		'integrand':   'prevalence',
 		'density':     'gaussian',
 		'meas_std':     meas_std,
 	}
@@ -157,7 +157,7 @@ def example_db (file_name) :
 	for data_id in range( n_data ) :
 		age        = random.uniform(0, 100)
 		time       = random.uniform(2000, 2020)
-		meas_value = sim_data(age, time)
+		meas_value = sim_data(age, time, 'prevalence')
 		row['age_lower']  = age
 		row['age_upper']  = age
 		row['time_lower'] = time
@@ -168,8 +168,8 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	iota_list = list()
-	for (age, time) in [ (0,2000), (100,2000), (0,2020), (0,2021) ] :
-		iota_list.append( sim_data(age, time) )
+	for (age, time) in [ (0,2000), (100,2000), (0,2020), (100,2020) ] :
+		iota_list.append( sim_data(age, time, 'Sincidence') )
 	prior_table = [
 		{ # prior_value
 			'name':     'prior_value',
