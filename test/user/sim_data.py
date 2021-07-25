@@ -38,7 +38,7 @@ def iota_true(age, time) :
 	a = min( 100 , max(0, age) )
 	result = 0.01 * (100 - a) / 100 + 0.02 * (a   - 0) / 100
 	return result
-n_data             = 10
+n_data             = 1
 random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
 def sim_data(bound, integrand_name) :
@@ -98,13 +98,11 @@ def example_db (file_name) :
 	# values that change between rows:
 	for data_id in range( n_data ) :
 		# age_lower, age_upper
-		age_lower  = random.uniform(0, 100)
-		age_upper  = random.uniform(0, 100)
-		if age_upper < age_lower :
-			age_lower, age_upper = age_upper, age_lower
+		age_lower  = 0.0
+		age_upper  = 100.0
 		#
 		# time_lower, time_upper
-		time_lower  = random.uniform(2000, 2020)
+		time_lower  = 2000.0
 		time_upper  = time_lower
 		#
 		bound = {
@@ -120,7 +118,7 @@ def example_db (file_name) :
 		data_table.append( copy.copy(row) )
 	#
 	# avgint table:
-	avgint_table = list()
+	avgint_table = data_table
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
@@ -203,32 +201,32 @@ program = '../../devel/dismod_at'
 #
 # fit fixed
 dismod_at.system_command_prc([ program, file_name, 'init' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+dismod_at.system_command_prc([
+	program, file_name, 'set', 'truth_var', 'prior_mean'
+])
+dismod_at.system_command_prc([ program, file_name, 'predict', 'truth_var' ])
 #
 #
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
-var_table       = dismod_at.get_table_dict(connection, 'var')
-fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
-age_table       = dismod_at.get_table_dict(connection, 'age')
-time_table      = dismod_at.get_table_dict(connection, 'time')
+data_table      = dismod_at.get_table_dict(connection, 'data')
+avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
+predict_table   = dismod_at.get_table_dict(connection, 'predict')
 #
-assert len(var_table) == 4
-for (var_id, row) in enumerate( var_table ) :
-	var_type = row['var_type']
-	assert var_type == 'rate'
+assert len(data_table) == n_data
+assert len(avgint_table) == n_data
+assert len(predict_table) == n_data
+for data_id in range( n_data ) :
+	data_row   = data_table[data_id]
+	avgint_id  = predict_table[data_id]['avgint_id']
+	avgint_row = avgint_table[avgint_id]
+	for key in avgint_row :
+		assert avgint_row[key] == data_row[key]
 	#
-	age_id         = row['age_id']
-	time_id        = row['time_id']
-	fit_var_value  = fit_var_table[var_id]['fit_var_value']
+	avg_integrand = predict_table[data_id]['avg_integrand']
+	meas_value    = data_table[data_id]['meas_value']
 	#
-	age            = age_table[age_id]['age']
-	time           = time_table[time_id]['time']
-	true_var_value = iota_true(age, time)
-	#
-	rel_err        = 1.0 - fit_var_value / true_var_value
-	print(rel_err)
-	assert abs(rel_err) < 1e-3
+	print(meas_value, avg_integrand)
 # ---------------------------------------------------------------------------
 print('sim_data.py: OK')
 # END PYTHON

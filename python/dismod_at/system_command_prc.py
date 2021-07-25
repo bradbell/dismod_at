@@ -65,5 +65,5 @@ def system_command_prc(command) :
 		print( result.stderr )
 		#
 		# inform user that the command failed and then exit
-		sys.exit('command failed: returncode = ' + str(returncode))
+		sys.exit('command failed: returncode = ' + str(result.returncode))
 	return result.stdout

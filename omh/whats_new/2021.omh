@@ -54,6 +54,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 07-25$$
+Fix a bug in the $cref system_command_prc$$ error reporting.
+To be specific, when an error ocurred during a system command,
+the command return code was not properly reported.
+
 $head 07-24$$
 $list number$$
 The $code sim_data$$ utility is
