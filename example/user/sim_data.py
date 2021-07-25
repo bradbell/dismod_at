@@ -7,64 +7,72 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_sim_data.py$$ $newlinech #$$
-# $spell
-#	init
-#	covariate
-#	std
-#	sim
-#	cv
-# $$
-#
-# $section Using the Python sim_data Utility$$
-#
-# $head See Also$$
-# $cref user_sim_data.py$$
-#
-# $head Random Effects$$
-# There are no random effects in this example.
-#
-# $head Priors$$
-# The priors do not matter for this example except for the fact that
-# the $cref truth_var_table$$ values for the $cref model_variables$$
-# must satisfy the lower and upper limits in the corresponding priors.
-#
-# $head Simulation$$
-# The simulation value for $icode iota$$ is bi-linear function with
-# the following values:
-# $table
-# iota $cnext age  $cnect time $rnext
-# 0.01  $cnext   0  $cnext 2000 $rnext
-# 0.02  $cnext  100 $cnext 2000 $rnext
-# 0.03  $cnext    0 $cnext 2020 $rnext
-# 0.04  $cnext  100 $cnext 2020 $rnext
-# $tend
-# All the other rates are zero for this simulation.
-#
-# $head Model$$
-# The only non-zero rate in this model is the parent iota.
-# The (age, time) grid for the iota model are
-# (0,2000), (100,2000), (0, 2020), (100, 2020).
-# This, if there is no noise in the measurements, the model should
-# fit the data perfectly.
-#
-# $head Data$$
-# There are $icode n_data$$ measurements of prevalence and
-# each at a randomly selected age between 0 and 100 and random time
-# between 2000 and 2020.
-# There is no measurement noise in the simulated data, but it is modeled
-# as having measurement noise.
-#
-# $head ode_step_size$$
-# This example uses a very small
-# $cref/ode_step_size/option_table/Age Average Grid/ode_step_size/$$
-# to test that both the dismod_at and $cref sim_data$$ integrators are
-# working properly.
-#
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
-# ---------------------------------------------------------------------------
+"""
+$begin user_sim_data.py$$
+$spell
+	init
+	covariate
+	std
+	sim
+	cv
+	Sincidence
+	dismod
+	integrators
+$$
+
+$section Using the Python sim_data Utility$$
+
+$head Under Construction$$
+This test is not yet passing and being debugged.
+
+$head See Also$$
+$cref user_sim_data.py$$
+
+$head Random Effects$$
+There are no random effects in this example.
+
+$head Priors$$
+The priors do not matter for this example except for the fact that
+the $cref truth_var_table$$ values for the $cref model_variables$$
+must satisfy the lower and upper limits in the corresponding priors.
+
+$head Simulation$$
+The simulation value for $icode iota$$ is bilinear function with
+the following values:
+$table
+iota $cnext age   $cnext time $rnext
+0.01  $cnext   0  $cnext 2000 $rnext
+0.02  $cnext  100 $cnext 2000 $rnext
+0.03  $cnext    0 $cnext 2020 $rnext
+0.04  $cnext  100 $cnext 2020 $rnext
+$tend
+All the other rates are zero for this simulation.
+
+$head Model$$
+The only non-zero rate in this model is the parent iota.
+The (age, time) grid for the iota model are
+(0,2000), (100,2000), (0, 2020), (100, 2020).
+This, if there is no noise in the measurements, the model should
+fit the data perfectly.
+
+$head Data$$
+There are $icode n_data$$ measurements of Sincidence and
+each at a randomly selected age between 0 and 100 and random time
+between 2000 and 2020.
+There is no measurement noise in the simulated data, but it is modeled
+as having measurement noise.
+
+$head ode_step_size$$
+This example uses a very small
+$cref/ode_step_size/option_table/Age Average Grid/ode_step_size/$$
+to test that both the dismod_at and $cref sim_data$$ integrators are
+working properly.
+
+$head Source Code$$
+$srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
+$end
+---------------------------------------------------------------------------
+"""
 # BEGIN PYTHON
 import time
 import sys
@@ -98,18 +106,15 @@ def iota_true(age, time) :
 	result = \
 		0.01 * (100 - a) * (2020 - t) / ( 100 * 20 ) + \
 		0.02 * (a   - 0) * (2020 - t) / ( 100 * 20 ) + \
-		0.03 * (100 - a) * (t - 2000) / ( 100 * 20 ) + \
-		0.04 * (a   - 0) * (t - 2000) / ( 100 * 20 )
+		0.01 * (100 - a) * (t - 2000) / ( 100 * 20 ) + \
+		0.02 * (a   - 0) * (t - 2000) / ( 100 * 20 )
 	return result
-n_data             = 20
+n_data             = 10
 random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
-def sim_data(a, t, integrand_name) :
+def sim_data(bound, integrand_name) :
 	rate    = { 'iota' : iota_true }
 	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
-	bound           = {
-		'age_lower' : a, 'age_upper' : a, 'time_lower' : t, 'time_upper' : t
-	}
 	return dismod_at.sim_data(rate, integrand_name, bound, noise)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
@@ -125,7 +130,7 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name': 'prevalence' }
+		 { 'name': 'Sincidence' }
 	]
 	#
 	# node table:
@@ -155,27 +160,41 @@ def example_db (file_name) :
 		'hold_out':     False,
 		'node':        'world',
 		'subgroup':    'world',
-		'integrand':   'prevalence',
+		'integrand':   'Sincidence',
 		'density':     'gaussian',
 		'meas_std':     meas_std,
 	}
 	# values that change between rows:
 	for data_id in range( n_data ) :
-		age        = random.uniform(0, 100)
-		time       = random.uniform(2000, 2020)
-		meas_value = sim_data(age, time, 'prevalence')
-		row['age_lower']  = age
-		row['age_upper']  = age
-		row['time_lower'] = time
-		row['time_upper'] = time
+		# age_lower, age_upper
+		age_lower  = random.uniform(0, 100)
+		age_upper  = random.uniform(0, 100)
+		if age_upper < age_lower :
+			age_lower, age_upper = age_upper, age_lower
+		#
+		# time_lower, time_upper
+		time_lower  = random.uniform(2000, 2020)
+		time_upper  = time_lower
+		if time_upper < time_lower :
+			time_lower, time_upper = time_upper, time_lower
+		#
+		bound = {
+			'age_lower' : age_lower ,
+			'age_upper' : age_upper ,
+			'time_lower' : time_lower ,
+			'time_upper' : time_upper
+		}
+		meas_value = sim_data(bound, 'Sincidence')
+		row.update(bound)
 		row['meas_value'] = meas_value
+		#
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
 	iota_list = list()
 	for (age, time) in [ (0,2000), (100,2000), (0,2020), (100,2020) ] :
-		iota_list.append( sim_data(age, time, 'Sincidence') )
+		iota_list.append( iota_true(age, time) )
 	prior_table = [
 		{ # prior_value
 			'name':     'prior_value',
@@ -273,6 +292,7 @@ for (var_id, row) in enumerate( var_table ) :
 	true_var_value = iota_true(age, time)
 	#
 	rel_err        = 1.0 - fit_var_value / true_var_value
+	print(rel_err)
 	assert abs(rel_err) < 1e-3
 # ---------------------------------------------------------------------------
 print('sim_data.py: OK')

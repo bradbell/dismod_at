@@ -14,9 +14,14 @@ $spell
 	sim
 	integrators
 	std
+	pini
 $$
 
 $section Simulate One Dismod_at Data Value$$
+
+$head Under Construction$$
+This routine is under construction because some if its test
+are not yet passing.
 
 $head Syntax$$
 $codei%meas_value% = dismod_at.sim_data(
@@ -91,6 +96,10 @@ $subhead meas_value$$
 This is the simulated
 $cref/meas_value/data_table/meas_value/$$.
 
+$children%example/user/sim_data.py
+%$$
+$head Example$$
+The file $cref user_sim_data.py$$ contains an example and test of this routine.
 $end
 ---------------------------------------------------------------------------
 """
@@ -144,30 +153,17 @@ def SC_fun(a, t, rate) :
 	SC = SC_ode.integrate(0.0)
 	return SC
 #
-def sim_data(rate, integrand_name, bound, noise) :
-	assert bound['age_lower'] == bound['age_upper']
-	assert bound['time_lower'] == bound['time_upper']
-	assert noise['meas_std'] == 0.0
-	#
-	# zero_fun
-	def zero_fun(a, t) :
-		return 0.0
-	#
-	# rate_extended
-	rate_extended = dict()
-	for key in ['pini', 'iota', 'rho', 'chi', 'omega'] :
-		if key in rate :
-			rate_extended[key] = rate[key]
-		else :
-			rate_extended[key] = zero_fun
+# integrand_fun
+def integrand_fun(a, t, rate, integrand_name, bound) :
+	import scipy.integrate
 	#
 	# iota, rho, chi, omega
 	a     = bound['age_lower']
 	t     = bound['time_lower']
-	iota  =  rate_extended['iota'](a, t)
-	rho   =   rate_extended['rho'](a, t)
-	chi   =   rate_extended['chi'](a, t)
-	omega = rate_extended['omega'](a, t)
+	iota  =  rate['iota'](a, t)
+	rho   =   rate['rho'](a, t)
+	chi   =   rate['chi'](a, t)
+	omega = rate['omega'](a, t)
 	#
 	# no ODE cases
 	integrand_value = {
@@ -185,7 +181,7 @@ def sim_data(rate, integrand_name, bound, noise) :
 		return (omega + chi) / omega
 	#
 	# ODE cases
-	(S, C) = SC_fun(a, t, rate_extended)
+	(S, C) = SC_fun(a, t, rate)
 	P      = C / (S + C)
 	integrand_value = {
 		'susceptible' : S,
@@ -202,5 +198,64 @@ def sim_data(rate, integrand_name, bound, noise) :
 	if integrand_name == 'mtstandard' :
 		return (omega + chi) / (omega + chi * P)
 	#
-	print('sim_data: ' + integrand_name + ' is not a vlaid integrand name')
+	print('sim_data: ' + integrand_name + ' is not a valid integrand name')
 	assert False
+
+def sim_data(rate, integrand_name, bound, noise) :
+	import scipy.integrate
+	assert noise['meas_std'] == 0.0
+	#
+	# zero_fun
+	def zero_fun(a, t) :
+		return 0.0
+	#
+	# rate_extended
+	rate_extended = dict()
+	for key in ['pini', 'iota', 'rho', 'chi', 'omega'] :
+		if key in rate :
+			rate_extended[key] = rate[key]
+		else :
+			rate_extended[key] = zero_fun
+	#
+	# bounds
+	age_lower  = bound['age_lower']
+	age_upper  = bound['age_upper']
+	age_equal  = age_lower == age_upper
+	assert age_lower <= age_upper
+	#
+	time_lower = bound['time_lower']
+	time_upper = bound['time_upper']
+	time_equal = time_lower == time_upper
+	assert time_lower <= time_upper
+	#
+	# function we will double integrate
+	def func(a, t ) :
+		return integrand_fun(a, t, rate_extended, integrand_name, bound)
+	#
+	if age_equal and time_equal :
+		return func(age_lower, time_lower)
+	#
+	if age_equal :
+		def func_time(t) :
+			return func(age_lower, t)
+		integral, abserr = scipy.integrate.quad(
+			func_time, time_lower, time_upper
+		)
+		avg      = integral / (time_upper - time_lower )
+		return avg
+	#
+	if time_equal :
+		def func_age(a) :
+			return func(a, time_lower)
+		integral, abserr = scipy.integrate.quad(
+			func_age, age_lower, age_upper
+		)
+		avg      = integral / (age_upper - age_lower )
+		return avg
+	#
+	integral, abserr = scipy.integrate.dblquad(
+		func, age_lower, age_upper, lambda a: time_lower, lambda a: time_upper
+	)
+	avg = integral / ((age_upper - age_lower) * (time_upper - time_lower) )
+	#
+	return avg

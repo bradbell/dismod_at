@@ -56,7 +56,9 @@ $section Changes and Additions to Dismod_at During 2021$$
 
 $head 07-24$$
 $list number$$
-Add the $cref sim_data$$ utility which is slower and easier to use than the
+The $code sim_data$$ utility is
+$cref/under construction/sim_data/Under Construction/$$.
+It which is slower and easier to use than the
 $cref simulate_command$$.
 It also can be used for independent testing of the dismod_at integrators.
 $lnext
