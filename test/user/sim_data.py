@@ -7,68 +7,6 @@
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-"""
-$begin user_sim_data.py$$
-$spell
-	init
-	covariate
-	std
-	sim
-	cv
-	dismod
-	integrators
-$$
-
-$section Using the Python sim_data Utility$$
-
-$head See Also$$
-$cref user_data_sim.py$$
-
-$head Random Effects$$
-There are no random effects in this example.
-
-$head Priors$$
-The priors do not matter for this example except for the fact that
-the $cref truth_var_table$$ values for the $cref model_variables$$
-must satisfy the lower and upper limits in the corresponding priors.
-
-$head Simulation$$
-The simulation value for $icode iota$$ is bilinear function with
-the following values:
-$table
-iota $cnext age   $cnext time $rnext
-0.01  $cnext   0  $cnext 2000 $rnext
-0.02  $cnext  100 $cnext 2000 $rnext
-0.03  $cnext    0 $cnext 2020 $rnext
-0.04  $cnext  100 $cnext 2020 $rnext
-$tend
-All the other rates are zero for this simulation.
-
-$head Model$$
-The only non-zero rate in this model is the parent iota.
-The (age, time) grid for the iota model are
-(0,2000), (100,2000), (0, 2020), (100, 2020).
-This, if there is no noise in the measurements, the model should
-fit the data perfectly.
-
-$head Data$$
-There are $icode n_data$$ measurements of prevalence and
-each at a randomly selected age between 0 and 100 and random time
-between 2000 and 2020.
-There is no measurement noise in the simulated data, but it is modeled
-as having measurement noise.
-
-$head ode_step_size$$
-This example uses a very small
-$cref/ode_step_size/option_table/Age Average Grid/ode_step_size/$$
-to test that both the dismod_at and $cref sim_data$$ integrators are
-working properly.
-
-$head Source Code$$
-$srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-$end
----------------------------------------------------------------------------
-"""
 # BEGIN PYTHON
 import time
 import sys
@@ -78,7 +16,7 @@ import copy
 import random
 import statistics
 # ---------------------------------------------------------------------------
-test_program = 'example/user/sim_data.py'
+test_program = 'test/user/sim_data.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -92,18 +30,13 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 	sys.path.insert(0, local_dir)
 import dismod_at
 #
-# change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
-os.chdir('build/example/user')
+# change into the build/test/user directory
+distutils.dir_util.mkpath('build/test/user')
+os.chdir('build/test/user')
 # ----------------------------------------------------------------------------
 def iota_true(age, time) :
 	a = min( 100 , max(0, age) )
-	t = min( 2020 , max(2000, time) )
-	result = \
-		0.01 * (100 - a) * (2020 - t) / ( 100 * 20 ) + \
-		0.02 * (a   - 0) * (2020 - t) / ( 100 * 20 ) + \
-		0.01 * (100 - a) * (t - 2000) / ( 100 * 20 ) + \
-		0.02 * (a   - 0) * (t - 2000) / ( 100 * 20 )
+	result = 0.01 * (100 - a) / 100 + 0.02 * (a   - 0) / 100
 	return result
 n_data             = 10
 random_seed        = int( time.time() )
@@ -116,7 +49,12 @@ def sim_data(bound, integrand_name) :
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
 	def fun_iota(a, t) :
-		return ('prior_value', 'prior_diff', 'prior_diff')
+		if a == 0.0 :
+			return ('prior_value_0', 'prior_diff', 'prior_diff')
+		elif a == 100.0 :
+			return ('prior_value_100', 'prior_diff', 'prior_diff')
+		else :
+			assert False
 	# ----------------------------------------------------------------------
 	# age table:
 	age_list    = [ 0.0, 100.0 ]
@@ -126,7 +64,7 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name': 'prevalence' }
+		 { 'name': 'Sincidence' }
 	]
 	#
 	# node table:
@@ -141,9 +79,6 @@ def example_db (file_name) :
 	# mulcov table:
 	mulcov_table = list()
 	#
-	# avgint table: empty
-	avgint_table = list()
-	#
 	# nslist_table:
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
@@ -156,7 +91,7 @@ def example_db (file_name) :
 		'hold_out':     False,
 		'node':        'world',
 		'subgroup':    'world',
-		'integrand':   'prevalence',
+		'integrand':   'Sincidence',
 		'density':     'gaussian',
 		'meas_std':     meas_std,
 	}
@@ -164,7 +99,9 @@ def example_db (file_name) :
 	for data_id in range( n_data ) :
 		# age_lower, age_upper
 		age_lower  = random.uniform(0, 100)
-		age_upper  = age_lower
+		age_upper  = random.uniform(0, 100)
+		if age_upper < age_lower :
+			age_lower, age_upper = age_upper, age_lower
 		#
 		# time_lower, time_upper
 		time_lower  = random.uniform(2000, 2020)
@@ -176,24 +113,30 @@ def example_db (file_name) :
 			'time_lower' : time_lower ,
 			'time_upper' : time_upper
 		}
-		meas_value = sim_data(bound, 'prevalence')
+		meas_value = sim_data(bound, 'Sincidence')
 		row.update(bound)
 		row['meas_value'] = meas_value
 		#
 		data_table.append( copy.copy(row) )
 	#
+	# avgint table:
+	avgint_table = list()
+	#
 	# ----------------------------------------------------------------------
 	# prior_table
-	iota_list = list()
-	for (age, time) in [ (0,2000), (100,2000), (0,2020), (100,2020) ] :
-		iota_list.append( iota_true(age, time) )
 	prior_table = [
-		{ # prior_value
-			'name':     'prior_value',
+		{ # prior_value_0
+			'name':     'prior_value_0',
 			'density':  'uniform',
-			'lower':    min( iota_list ) / 100.0,
-			'upper':    max( iota_list)  * 100.0,
-			'mean':     statistics.mean( iota_list)
+			'lower':    iota_true(0, 2000) / 100.0,
+			'upper':    iota_true(0, 2000)  * 100.0,
+			'mean':     iota_true(0, 2000)
+		},{ # prior_value_100
+			'name':     'prior_value_100',
+			'density':  'uniform',
+			'lower':    iota_true(100, 2000) / 100.0,
+			'upper':    iota_true(100, 2000)  * 100.0,
+			'mean':     iota_true(100, 2000)
 		},{ # prior_diff
 			'name':     'prior_diff',
 			'density':  'uniform',
@@ -284,6 +227,7 @@ for (var_id, row) in enumerate( var_table ) :
 	true_var_value = iota_true(age, time)
 	#
 	rel_err        = 1.0 - fit_var_value / true_var_value
+	print(rel_err)
 	assert abs(rel_err) < 1e-3
 # ---------------------------------------------------------------------------
 print('sim_data.py: OK')
