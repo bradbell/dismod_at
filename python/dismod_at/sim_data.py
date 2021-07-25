@@ -158,8 +158,6 @@ def integrand_fun(a, t, rate, integrand_name, bound) :
 	import scipy.integrate
 	#
 	# iota, rho, chi, omega
-	a     = bound['age_lower']
-	t     = bound['time_lower']
 	iota  =  rate['iota'](a, t)
 	rho   =   rate['rho'](a, t)
 	chi   =   rate['chi'](a, t)

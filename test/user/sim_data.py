@@ -223,7 +223,8 @@ for data_id in range( n_data ) :
 	avg_integrand = predict_table[data_id]['avg_integrand']
 	meas_value    = data_table[data_id]['meas_value']
 	#
-	print(meas_value, avg_integrand)
+	relerr = 1.0 - avg_integrand / meas_value
+	assert relerr < 1e-10
 # ---------------------------------------------------------------------------
 print('sim_data.py: OK')
 # END PYTHON
