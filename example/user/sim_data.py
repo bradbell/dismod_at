@@ -111,7 +111,8 @@ random_seed        = int( time.time() )
 def sim_data(bound, integrand_name) :
 	rate    = { 'iota' : iota_true }
 	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
-	return dismod_at.sim_data(rate, integrand_name, bound, noise)
+	abs_tol = 1e-5
+	return dismod_at.sim_data(rate, integrand_name, bound, noise, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case

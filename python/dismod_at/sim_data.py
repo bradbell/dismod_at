@@ -15,6 +15,7 @@ $spell
 	integrators
 	std
 	pini
+	tol
 $$
 
 $section Simulate One Dismod_at Data Value$$
@@ -25,7 +26,7 @@ are not yet passing.
 
 $head Syntax$$
 $codei%meas_value% = dismod_at.sim_data(
-	%rate%, %integrand_name%, %bound%, %noise%
+	%rate%, %integrand_name%, %bound%, %noise%, %abs_tol%
 )%$$
 
 $head Purpose$$
@@ -61,10 +62,6 @@ $code time_upper$$.
 The dictionary values are floats equal to the corresponding limits for the
 simulated data.
 
-$subhead Restriction$$
-The lower and upper limits must be equal.
-This restriction will be removed in the future.
-
 $head noise$$
 This is a dictionary with the following possible keys:
 
@@ -92,7 +89,10 @@ $subhead Restriction$$
 The $icode meas_std$$ must be zero.
 This restriction will be removed in the future.
 
-$subhead meas_value$$
+$head abs_tol$$
+This float is an absolute error bound, that the integrator will achieve.
+
+$head meas_value$$
 This is the simulated
 $cref/meas_value/data_table/meas_value/$$.
 
@@ -104,7 +104,7 @@ $end
 ---------------------------------------------------------------------------
 """
 # SC_fun
-def SC_fun(a, t, rate) :
+def SC_fun(a, t, rate, abs_tol) :
 	import scipy.integrate
 	#
 	# Overloading the functions S and C, we define the ODE
@@ -146,7 +146,7 @@ def SC_fun(a, t, rate) :
 	#
 	# SC_ode
 	SC_ode = scipy.integrate.ode(f, jac)
-	SC_ode.set_integrator('vode')
+	SC_ode.set_integrator('vode', atol = abs_tol)
 	SC_ode.set_initial_value( [Sini, Cini], - a )
 	#
 	# integrate ODE from s = -a to s = 0
@@ -154,7 +154,7 @@ def SC_fun(a, t, rate) :
 	return SC
 #
 # integrand_fun
-def integrand_fun(a, t, rate, integrand_name, bound) :
+def integrand_fun(a, t, rate, integrand_name, bound, abs_tol) :
 	import scipy.integrate
 	#
 	# iota, rho, chi, omega
@@ -179,7 +179,7 @@ def integrand_fun(a, t, rate, integrand_name, bound) :
 		return (omega + chi) / omega
 	#
 	# ODE cases
-	(S, C) = SC_fun(a, t, rate)
+	(S, C) = SC_fun(a, t, rate, abs_tol)
 	P      = C / (S + C)
 	integrand_value = {
 		'susceptible' : S,
@@ -199,7 +199,7 @@ def integrand_fun(a, t, rate, integrand_name, bound) :
 	print('sim_data: ' + integrand_name + ' is not a valid integrand name')
 	assert False
 
-def sim_data(rate, integrand_name, bound, noise) :
+def sim_data(rate, integrand_name, bound, noise, abs_tol) :
 	import scipy.integrate
 	assert noise['meas_std'] == 0.0
 	#
@@ -227,8 +227,10 @@ def sim_data(rate, integrand_name, bound, noise) :
 	assert time_lower <= time_upper
 	#
 	# function we will double integrate
-	def func(a, t ) :
-		return integrand_fun(a, t, rate_extended, integrand_name, bound)
+	def func(a, t) :
+		return integrand_fun(
+			a, t, rate_extended, integrand_name, bound, abs_tol
+		)
 	#
 	if age_equal and time_equal :
 		return func(age_lower, time_lower)
@@ -237,7 +239,7 @@ def sim_data(rate, integrand_name, bound, noise) :
 		def func_time(t) :
 			return func(age_lower, t)
 		integral, abserr = scipy.integrate.quad(
-			func_time, time_lower, time_upper
+			func_time, time_lower, time_upper, epsabs = abs_tol
 		)
 		avg      = integral / (time_upper - time_lower )
 		return avg
@@ -246,13 +248,14 @@ def sim_data(rate, integrand_name, bound, noise) :
 		def func_age(a) :
 			return func(a, time_lower)
 		integral, abserr = scipy.integrate.quad(
-			func_age, age_lower, age_upper
+			func_age, age_lower, age_upper, epsabs = abs_tol
 		)
 		avg      = integral / (age_upper - age_lower )
 		return avg
 	#
 	integral, abserr = scipy.integrate.dblquad(
-		func, age_lower, age_upper, lambda a: time_lower, lambda a: time_upper
+		func, age_lower, age_upper,
+		lambda a: time_lower, lambda a: time_upper, epsabs = abs_tol
 	)
 	avg = integral / ((age_upper - age_lower) * (time_upper - time_lower) )
 	#

@@ -42,7 +42,8 @@ n_data             = 1
 def sim_data(bound, integrand_name) :
 	rate    = { 'omega' : omega_true }
 	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
-	return dismod_at.sim_data(rate, integrand_name, bound, noise)
+	abs_tol = 1e-6
+	return dismod_at.sim_data(rate, integrand_name, bound, noise, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
@@ -224,7 +225,7 @@ for data_id in range( n_data ) :
 	meas_value    = data_table[data_id]['meas_value']
 	#
 	relerr = 1.0 - avg_integrand / meas_value
-	assert relerr < 1e-10
+	assert relerr < 1e-5
 # ---------------------------------------------------------------------------
 print('sim_data.py: OK')
 # END PYTHON
