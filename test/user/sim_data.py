@@ -13,7 +13,6 @@ import sys
 import os
 import distutils.dir_util
 import copy
-import random
 import statistics
 # ---------------------------------------------------------------------------
 test_program = 'test/user/sim_data.py'
@@ -34,21 +33,20 @@ import dismod_at
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
 # ----------------------------------------------------------------------------
-def iota_true(age, time) :
+def omega_true(age, time) :
 	a = min( 100 , max(0, age) )
-	result = 0.01 * (100 - a) / 100 + 0.02 * (a   - 0) / 100
+	result = 0.00 * (100 - a) / 100 + 1.0 * (a   - 0) / 100
 	return result
 n_data             = 1
-random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
 def sim_data(bound, integrand_name) :
-	rate    = { 'iota' : iota_true }
+	rate    = { 'omega' : omega_true }
 	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
 	return dismod_at.sim_data(rate, integrand_name, bound, noise)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
-	def fun_iota(a, t) :
+	def fun_omega(a, t) :
 		if a == 0.0 :
 			return ('prior_value_0', 'prior_diff', 'prior_diff')
 		elif a == 100.0 :
@@ -64,7 +62,7 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name': 'Sincidence' }
+		 { 'name': 'mtother' }
 	]
 	#
 	# node table:
@@ -91,7 +89,7 @@ def example_db (file_name) :
 		'hold_out':     False,
 		'node':        'world',
 		'subgroup':    'world',
-		'integrand':   'Sincidence',
+		'integrand':   'mtother',
 		'density':     'gaussian',
 		'meas_std':     meas_std,
 	}
@@ -111,7 +109,7 @@ def example_db (file_name) :
 			'time_lower' : time_lower ,
 			'time_upper' : time_upper
 		}
-		meas_value = sim_data(bound, 'Sincidence')
+		meas_value = sim_data(bound, 'mtother')
 		row.update(bound)
 		row['meas_value'] = meas_value
 		#
@@ -126,15 +124,15 @@ def example_db (file_name) :
 		{ # prior_value_0
 			'name':     'prior_value_0',
 			'density':  'uniform',
-			'lower':    iota_true(0, 2000) / 100.0,
-			'upper':    iota_true(0, 2000)  * 100.0,
-			'mean':     iota_true(0, 2000)
+			'lower':    omega_true(0, 2000) / 100.0,
+			'upper':    omega_true(0, 2000)  * 100.0,
+			'mean':     omega_true(0, 2000)
 		},{ # prior_value_100
 			'name':     'prior_value_100',
 			'density':  'uniform',
-			'lower':    iota_true(100, 2000) / 100.0,
-			'upper':    iota_true(100, 2000)  * 100.0,
-			'mean':     iota_true(100, 2000)
+			'lower':    omega_true(100, 2000) / 100.0,
+			'upper':    omega_true(100, 2000)  * 100.0,
+			'mean':     omega_true(100, 2000)
 		},{ # prior_diff
 			'name':     'prior_diff',
 			'density':  'uniform',
@@ -143,29 +141,28 @@ def example_db (file_name) :
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	name           = 'smooth_iota'
-	fun            = fun_iota
+	name           = 'smooth_omega'
+	fun            = fun_omega
 	age_id         = [0, 1]
 	time_id        = [0, 1]
 	smooth_table = [
 		{'name':name, 'age_id':age_id, 'time_id':time_id, 'fun':fun }
 	]
-	name = 'smooth_iota'
+	name = 'smooth_omega'
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
-		{	'name':          'iota',
-			'parent_smooth': 'smooth_iota',
+		{	'name':          'omega',
+			'parent_smooth': 'smooth_omega',
 			'child_smooth':  None
 		}
 	]
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':'world'             },
-		{ 'name':'random_seed',            'value':str(random_seed)    },
-		{ 'name':'ode_step_size',          'value':'1.0'               },
+		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' },
+		{ 'name':'parent_node_name',       'value':'world'              },
+		{ 'name':'ode_step_size',          'value':'1.0'                },
 
 	]
 	# ----------------------------------------------------------------------
