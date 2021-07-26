@@ -254,8 +254,8 @@ def sim_data(rate, integrand_name, bound, noise, abs_tol) :
 		return avg
 	#
 	integral, abserr = scipy.integrate.dblquad(
-		func, age_lower, age_upper,
-		lambda a: time_lower, lambda a: time_upper, epsabs = abs_tol
+		func, time_lower, time_upper,
+		lambda t: age_lower, lambda t: age_upper, epsabs = abs_tol
 	)
 	avg = integral / ((age_upper - age_lower) * (time_upper - time_lower) )
 	#

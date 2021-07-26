@@ -52,10 +52,14 @@ def sim_data(bound, integrand_name) :
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
 	def fun_iota(a, t) :
-		if a == 0.0 :
-			return ('prior_value_0', 'prior_diff', 'prior_diff')
-		elif a == 100.0 :
-			return ('prior_value_100', 'prior_diff', 'prior_diff')
+		if (a, t) == (0, 2000) :
+			return ('prior_value_0_2000', 'prior_diff', 'prior_diff')
+		elif (a, t) == (100, 2000) :
+			return ('prior_value_100_2000', 'prior_diff', 'prior_diff')
+		elif (a, t) == (0, 2020) :
+			return ('prior_value_0_2020', 'prior_diff', 'prior_diff')
+		elif (a, t) == (100, 2020) :
+			return ('prior_value_100_2020', 'prior_diff', 'prior_diff')
 		else :
 			assert False
 	# ----------------------------------------------------------------------
@@ -105,7 +109,7 @@ def example_db (file_name) :
 	#
 	# time_lower, time_upper
 	time_lower  = 2000.0
-	time_upper  = time_lower
+	time_upper  = 2020.0
 	#
 	bound = {
 		'age_lower' : age_lower ,
@@ -125,18 +129,30 @@ def example_db (file_name) :
 	# ----------------------------------------------------------------------
 	# prior_table
 	prior_table = [
-		{ # prior_value_0
-			'name':     'prior_value_0',
+		{ # prior_value_0_2000
+			'name':     'prior_value_0_2000',
 			'density':  'uniform',
 			'lower':    iota_true(0, 2000) / 100.0,
 			'upper':    iota_true(0, 2000)  * 100.0,
 			'mean':     iota_true(0, 2000)
-		},{ # prior_value_100
-			'name':     'prior_value_100',
+		},{ # prior_value_100_2000
+			'name':     'prior_value_100_2000',
 			'density':  'uniform',
 			'lower':    iota_true(100, 2000) / 100.0,
 			'upper':    iota_true(100, 2000)  * 100.0,
 			'mean':     iota_true(100, 2000)
+		},{ # prior_value_0_2020
+			'name':     'prior_value_0_2020',
+			'density':  'uniform',
+			'lower':    iota_true(0, 2020) / 100.0,
+			'upper':    iota_true(0, 2020)  * 100.0,
+			'mean':     iota_true(0, 2020)
+		},{ # prior_value_100_2020
+			'name':     'prior_value_100_2020',
+			'density':  'uniform',
+			'lower':    iota_true(100, 2020) / 100.0,
+			'upper':    iota_true(100, 2020)  * 100.0,
+			'mean':     iota_true(100, 2020)
 		},{ # prior_diff
 			'name':     'prior_diff',
 			'density':  'uniform',
@@ -227,11 +243,12 @@ for data_id in range( n_data ) :
 	avg_integrand = predict_table[data_id]['avg_integrand']
 	meas_value    = data_table[data_id]['meas_value']
 	#
-	if True :
+	relerr = 1.0 - avg_integrand / meas_value
+	if abs(relerr) >= 1e-5 :
 		msg = 'predict = '       + str(avg_integrand)
 		msg += ', data_sim = '   + str(meas_value)
+		msg += ', relerr = '     + str(relerr)
 		print(msg)
-	relerr = 1.0 - avg_integrand / meas_value
 	assert relerr < 1e-5
 # ---------------------------------------------------------------------------
 print('sim_data.py: OK')
