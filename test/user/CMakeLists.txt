@@ -36,11 +36,12 @@ FOREACH(user_case
 	scale_gamma
 	scale_zero
 	set_command
+	sim_data
 	subgroup_mulcov
 	zero_random_1
 	zero_random_2
 )
-# END_SORT_THIS_LINE_MINUS 2
+# END_SORT_THIS_LINE_MINUS_2
 #
 	ADD_CUSTOM_TARGET(
 		check_test_user_${user_case}

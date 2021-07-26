@@ -16,6 +16,7 @@ $spell
 	std
 	pini
 	tol
+	integrands
 $$
 
 $section Simulate One Dismod_at Data Value$$
@@ -55,18 +56,18 @@ $cref/integrand names/integrand_table/integrand_name/$$.
 
 $head grid$$
 This argument defines the grid for trapezoidal integration.
-(The dismod_at functions are often non-smooth and so a low order integration
+(The dismod_at integrands are often non-smooth and so a low order integration
 method is called for.)
 The $icode grid$$ is a dictionary with the following keys:
 
 $subhead age$$
-$icode%grid%['age']%$$ is a list of floats containg the grid points
+$icode%grid%['age']%$$ is a list of floats containing the grid points
 for the average w.r.t. age.
 These points are monotone increasing, the first (last) point is the
 lower (upper) age limit for the average
 
 $subhead time$$
-$icode%grid%['time']%$$ is a list of floats containg the grid points
+$icode%grid%['time']%$$ is a list of floats containing the grid points
 for the average w.r.t. time.
 These points are monotone increasing, the first (last) point is the
 lower (upper) time limit for the average
