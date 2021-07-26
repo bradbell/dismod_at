@@ -8,6 +8,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
+import math
 import time
 import sys
 import os
@@ -33,6 +34,23 @@ import dismod_at
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
 # ----------------------------------------------------------------------------
+def uniform_grid(start, stop, max_step) :
+	if start == stop :
+		return [ start ]
+	diff =  stop - start
+	assert 0.0 < diff
+	if diff < max_step :
+		n_interval = 1
+		step   = diff
+	else :
+		n_interval = math.floor( diff / max_step )
+		if max_step * n_interval < diff :
+			n_interval += 1
+		step = diff / n_interval
+		assert step <= max_step
+	grid   = [ start + i * step for i in range(n_interval + 1) ]
+	return grid
+# ----------------------------------------------------------------------------
 def iota_true(age, time) :
 	a = min( 100 , max(0, age) )
 	t = min( 2020 , max(2000, time) )
@@ -43,11 +61,11 @@ def iota_true(age, time) :
 		0.04 * (a   - 0) * (t - 2000) / ( 100 * 20 )
 	return result
 # ---------------------------------------------------------------------------
-def sim_data(bound, integrand_name) :
+def sim_data(integrand_name, grid) :
 	rate    = { 'iota' : iota_true }
 	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
 	abs_tol = 1e-6
-	return dismod_at.sim_data(rate, integrand_name, bound, noise, abs_tol)
+	return dismod_at.sim_data(rate, integrand_name, grid, noise, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
@@ -71,7 +89,8 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name': 'Sincidence' }
+		 { 'name': 'Sincidence' },
+		 { 'name': 'prevalence' },
 	]
 	#
 	# node table:
@@ -92,35 +111,38 @@ def example_db (file_name) :
 	# data table:
 	data_table = list()
 	# values that are the same for all data rows
-	meas_std  = 0.01
+	age_lower  = 10.0
+	age_upper  = 90.0
+	time_lower = 2000.0
+	time_upper = 2020.0
 	row = {
 		'weight':      '',
 		'hold_out':     False,
 		'node':        'world',
 		'subgroup':    'world',
-		'integrand':   'Sincidence',
 		'density':     'gaussian',
-		'meas_std':     meas_std,
+		'meas_std':     0.01,
+		'age_lower':    age_lower,
+		'age_upper' :   age_upper,
+		'time_lower' :  time_lower,
+		'time_upper' :  time_upper,
 	}
 	#
-	# age_lower, age_upper
-	age_lower  = 0.0
-	age_upper  = 100.0
+	max_step  = 1.0
+	age_grid  = uniform_grid(age_lower, age_upper, max_step)
+	time_grid = uniform_grid(time_lower, time_upper, max_step)
+	grid      = { 'age' : age_grid, 'time' : time_grid }
 	#
-	# time_lower, time_upper
-	time_lower  = 2000.0
-	time_upper  = 2020.0
-	#
-	bound = {
-		'age_lower' : age_lower ,
-		'age_upper' : age_upper ,
-		'time_lower' : time_lower ,
-		'time_upper' : time_upper
-	}
-	meas_value = sim_data(bound, 'Sincidence')
-	row.update(bound)
+	# Sincidence
+	meas_value = sim_data('Sincidence', grid)
+	row['integrand']  = 'Sincidence'
 	row['meas_value'] = meas_value
+	data_table.append( copy.copy(row) )
 	#
+	# prevalence
+	meas_value = sim_data('prevalence', grid)
+	row['integrand']  = 'prevalence'
+	row['meas_value'] = meas_value
 	data_table.append( copy.copy(row) )
 	#
 	# avgint table:
@@ -246,7 +268,7 @@ for data_id in range( n_data ) :
 	relerr = 1.0 - avg_integrand / meas_value
 	if abs(relerr) >= 1e-5 :
 		msg = 'predict = '       + str(avg_integrand)
-		msg += ', data_sim = '   + str(meas_value)
+		msg += ', sim_data = '   + str(meas_value)
 		msg += ', relerr = '     + str(relerr)
 		print(msg)
 	assert relerr < 1e-5

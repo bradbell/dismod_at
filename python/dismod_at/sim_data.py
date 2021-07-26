@@ -26,7 +26,7 @@ are not yet passing.
 
 $head Syntax$$
 $codei%meas_value% = dismod_at.sim_data(
-	%rate%, %integrand_name%, %bound%, %noise%, %abs_tol%
+	%rate%, %integrand_name%, %grid%, %noise%, %abs_tol%
 )%$$
 
 $head Purpose$$
@@ -53,14 +53,23 @@ $head integrand_name$$
 This string is one of the
 $cref/integrand names/integrand_table/integrand_name/$$.
 
-$head bound$$
-This dictionary has the following keys:
-$code age_lower$$,
-$code age_upper$$,
-$code time_lower$$,
-$code time_upper$$.
-The dictionary values are floats equal to the corresponding limits for the
-simulated data.
+$head grid$$
+This argument defines the grid for trapezoidal integration.
+(The dismod_at functions are often non-smooth and so a low order integration
+method is called for.)
+The $icode grid$$ is a dictionary with the following keys:
+
+$subhead age$$
+$icode%grid%['age']%$$ is a list of floats containg the grid points
+for the average w.r.t. age.
+These points are monotone increasing, the first (last) point is the
+lower (upper) age limit for the average
+
+$subhead time$$
+$icode%grid%['time']%$$ is a list of floats containg the grid points
+for the average w.r.t. time.
+These points are monotone increasing, the first (last) point is the
+lower (upper) time limit for the average
 
 $head noise$$
 This is a dictionary with the following possible keys:
@@ -103,6 +112,35 @@ The file $cref user_sim_data.py$$ contains an example and test of this routine.
 $end
 ---------------------------------------------------------------------------
 """
+# trapezoidal_average_1d
+def trapezoidal_average_1d(fun, grid) :
+	if len(grid) == 1 :
+		return fun( grid[0] )
+	#
+	n_interval = len(grid) - 1
+	integral     = 0.0
+	fun_previous = fun( grid[0] )
+	for j in range(n_interval) :
+		step        = grid[j+1] - grid[j]
+		fun_next    = fun(grid[j+1])
+		integral    += (fun_previous + fun_next) * step / 2.0
+		fun_previous = fun_next
+	return integral / (grid[-1] - grid[0])
+#
+# trapezoidal_average_2d
+def trapezoidal_average_2d(fun, age_grid, time_grid) :
+	assert len(age_grid) > 0
+	assert len(time_grid) > 0
+	#
+	# fun_time = average w.r.t age
+	def fun_time(t) :
+		# fun_age
+		def fun_age(a) :
+			return fun(a, t)
+		return trapezoidal_average_1d(fun_age, age_grid)
+	#
+	return trapezoidal_average_1d(fun_time, time_grid)
+#
 # SC_fun
 def SC_fun(a, t, rate, abs_tol) :
 	import scipy.integrate
@@ -154,7 +192,7 @@ def SC_fun(a, t, rate, abs_tol) :
 	return SC
 #
 # integrand_fun
-def integrand_fun(a, t, rate, integrand_name, bound, abs_tol) :
+def integrand_fun(a, t, rate, integrand_name, abs_tol) :
 	import scipy.integrate
 	#
 	# iota, rho, chi, omega
@@ -198,8 +236,9 @@ def integrand_fun(a, t, rate, integrand_name, bound, abs_tol) :
 	#
 	print('sim_data: ' + integrand_name + ' is not a valid integrand name')
 	assert False
-
-def sim_data(rate, integrand_name, bound, noise, abs_tol) :
+#
+# sim_data
+def sim_data(rate, integrand_name, grid, noise, abs_tol) :
 	import scipy.integrate
 	assert noise['meas_std'] == 0.0
 	#
@@ -215,48 +254,16 @@ def sim_data(rate, integrand_name, bound, noise, abs_tol) :
 		else :
 			rate_extended[key] = zero_fun
 	#
-	# bounds
-	age_lower  = bound['age_lower']
-	age_upper  = bound['age_upper']
-	age_equal  = age_lower == age_upper
-	assert age_lower <= age_upper
+	# grids
+	age_grid  = grid['age']
+	time_grid = grid['time']
 	#
-	time_lower = bound['time_lower']
-	time_upper = bound['time_upper']
-	time_equal = time_lower == time_upper
-	assert time_lower <= time_upper
-	#
-	# function we will double integrate
+	# function we will average
 	def func(a, t) :
 		return integrand_fun(
-			a, t, rate_extended, integrand_name, bound, abs_tol
+			a, t, rate_extended, integrand_name, abs_tol
 		)
 	#
-	if age_equal and time_equal :
-		return func(age_lower, time_lower)
-	#
-	if age_equal :
-		def func_time(t) :
-			return func(age_lower, t)
-		integral, abserr = scipy.integrate.quad(
-			func_time, time_lower, time_upper, epsabs = abs_tol
-		)
-		avg      = integral / (time_upper - time_lower )
-		return avg
-	#
-	if time_equal :
-		def func_age(a) :
-			return func(a, time_lower)
-		integral, abserr = scipy.integrate.quad(
-			func_age, age_lower, age_upper, epsabs = abs_tol
-		)
-		avg      = integral / (age_upper - age_lower )
-		return avg
-	#
-	integral, abserr = scipy.integrate.dblquad(
-		func, time_lower, time_upper,
-		lambda t: age_lower, lambda t: age_upper, epsabs = abs_tol
-	)
-	avg = integral / ((age_upper - age_lower) * (time_upper - time_lower) )
+	avg = trapezoidal_average_2d(func, age_grid, time_grid)
 	#
 	return avg

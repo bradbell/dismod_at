@@ -70,6 +70,7 @@ $end
 ---------------------------------------------------------------------------
 """
 # BEGIN PYTHON
+import math
 import time
 import sys
 import os
@@ -96,6 +97,23 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
+def uniform_grid(start, stop, max_step) :
+	if start == stop :
+		return [ start ]
+	diff =  stop - start
+	assert 0.0 < diff
+	if diff < max_step :
+		n_interval = 1
+		step   = diff
+	else :
+		n_interval = math.floor( diff / max_step )
+		if max_step * n_interval < diff :
+			n_interval += 1
+		step = diff / n_interval
+		assert step <= max_step
+	grid   = [ start + i * step for i in range(n_interval + 1) ]
+	return grid
+# ----------------------------------------------------------------------------
 def iota_true(age, time) :
 	a = min( 100 , max(0, age) )
 	t = min( 2020 , max(2000, time) )
@@ -108,11 +126,11 @@ def iota_true(age, time) :
 n_data             = 10
 random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
-def sim_data(bound, integrand_name) :
+def sim_data(integrand_name, grid) :
 	rate    = { 'iota' : iota_true }
 	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
 	abs_tol = 1e-5
-	return dismod_at.sim_data(rate, integrand_name, bound, noise, abs_tol)
+	return dismod_at.sim_data(rate, integrand_name, grid, noise, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
@@ -151,7 +169,6 @@ def example_db (file_name) :
 	# data table:
 	data_table = list()
 	# values that are the same for all data rows
-	meas_std  = 0.01
 	row = {
 		'weight':      '',
 		'hold_out':     False,
@@ -159,26 +176,32 @@ def example_db (file_name) :
 		'subgroup':    'world',
 		'integrand':   'prevalence',
 		'density':     'gaussian',
-		'meas_std':     meas_std,
+		'meas_std':     0.01,
 	}
+	max_step = 1.0
 	# values that change between rows:
 	for data_id in range( n_data ) :
 		# age_lower, age_upper
 		age_lower  = random.uniform(0, 100)
-		age_upper  = age_lower
+		age_upper  = random.uniform(0, 100)
+		if age_upper < age_lower :
+			age_lower, age_upper = age_upper, age_lower
+		age_grid   = uniform_grid(age_lower, age_upper, max_step)
 		#
 		# time_lower, time_upper
 		time_lower  = random.uniform(2000, 2020)
-		time_upper  = time_lower
+		time_upper  = random.uniform(2000, 2020)
+		if time_upper < time_lower :
+			time_lower, time_upper = time_upper, time_lower
+		time_grid   = uniform_grid(time_lower, time_upper, max_step)
 		#
-		bound = {
-			'age_lower' : age_lower ,
-			'age_upper' : age_upper ,
-			'time_lower' : time_lower ,
-			'time_upper' : time_upper
-		}
-		meas_value = sim_data(bound, 'prevalence')
-		row.update(bound)
+		row['age_lower']  = age_lower
+		row['age_upper']  = age_upper
+		row['time_lower'] = time_lower
+		row['time_upper'] = time_upper
+		#
+		grid       = { 'age' : age_grid, 'time' : time_grid }
+		meas_value = sim_data('prevalence', grid)
 		row['meas_value'] = meas_value
 		#
 		data_table.append( copy.copy(row) )
@@ -285,6 +308,8 @@ for (var_id, row) in enumerate( var_table ) :
 	true_var_value = iota_true(age, time)
 	#
 	rel_err        = 1.0 - fit_var_value / true_var_value
+	if abs(rel_err) >= 1e-3 :
+		print(fit_var_value, true_var_value, rel_err)
 	assert abs(rel_err) < 1e-3
 # ---------------------------------------------------------------------------
 print('sim_data.py: OK')
