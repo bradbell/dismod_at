@@ -33,21 +33,25 @@ import dismod_at
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
 # ----------------------------------------------------------------------------
-def omega_true(age, time) :
+def iota_true(age, time) :
 	a = min( 100 , max(0, age) )
-	result = 0.00 * (100 - a) / 100 + 1.0 * (a   - 0) / 100
+	t = min( 2020 , max(2000, time) )
+	result = \
+		0.01 * (100 - a) * (2020 - t) / ( 100 * 20 ) + \
+		0.02 * (a   - 0) * (2020 - t) / ( 100 * 20 ) + \
+		0.03 * (100 - a) * (t - 2000) / ( 100 * 20 ) + \
+		0.04 * (a   - 0) * (t - 2000) / ( 100 * 20 )
 	return result
-n_data             = 1
 # ---------------------------------------------------------------------------
 def sim_data(bound, integrand_name) :
-	rate    = { 'omega' : omega_true }
+	rate    = { 'iota' : iota_true }
 	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
 	abs_tol = 1e-6
 	return dismod_at.sim_data(rate, integrand_name, bound, noise, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
-	def fun_omega(a, t) :
+	def fun_iota(a, t) :
 		if a == 0.0 :
 			return ('prior_value_0', 'prior_diff', 'prior_diff')
 		elif a == 100.0 :
@@ -63,7 +67,7 @@ def example_db (file_name) :
 	#
 	# integrand table:
 	integrand_table = [
-		 { 'name': 'mtother' }
+		 { 'name': 'Sincidence' }
 	]
 	#
 	# node table:
@@ -90,31 +94,30 @@ def example_db (file_name) :
 		'hold_out':     False,
 		'node':        'world',
 		'subgroup':    'world',
-		'integrand':   'mtother',
+		'integrand':   'Sincidence',
 		'density':     'gaussian',
 		'meas_std':     meas_std,
 	}
-	# values that change between rows:
-	for data_id in range( n_data ) :
-		# age_lower, age_upper
-		age_lower  = 0.0
-		age_upper  = 100.0
-		#
-		# time_lower, time_upper
-		time_lower  = 2000.0
-		time_upper  = time_lower
-		#
-		bound = {
-			'age_lower' : age_lower ,
-			'age_upper' : age_upper ,
-			'time_lower' : time_lower ,
-			'time_upper' : time_upper
-		}
-		meas_value = sim_data(bound, 'mtother')
-		row.update(bound)
-		row['meas_value'] = meas_value
-		#
-		data_table.append( copy.copy(row) )
+	#
+	# age_lower, age_upper
+	age_lower  = 0.0
+	age_upper  = 100.0
+	#
+	# time_lower, time_upper
+	time_lower  = 2000.0
+	time_upper  = time_lower
+	#
+	bound = {
+		'age_lower' : age_lower ,
+		'age_upper' : age_upper ,
+		'time_lower' : time_lower ,
+		'time_upper' : time_upper
+	}
+	meas_value = sim_data(bound, 'Sincidence')
+	row.update(bound)
+	row['meas_value'] = meas_value
+	#
+	data_table.append( copy.copy(row) )
 	#
 	# avgint table:
 	avgint_table = data_table
@@ -125,15 +128,15 @@ def example_db (file_name) :
 		{ # prior_value_0
 			'name':     'prior_value_0',
 			'density':  'uniform',
-			'lower':    omega_true(0, 2000) / 100.0,
-			'upper':    omega_true(0, 2000)  * 100.0,
-			'mean':     omega_true(0, 2000)
+			'lower':    iota_true(0, 2000) / 100.0,
+			'upper':    iota_true(0, 2000)  * 100.0,
+			'mean':     iota_true(0, 2000)
 		},{ # prior_value_100
 			'name':     'prior_value_100',
 			'density':  'uniform',
-			'lower':    omega_true(100, 2000) / 100.0,
-			'upper':    omega_true(100, 2000)  * 100.0,
-			'mean':     omega_true(100, 2000)
+			'lower':    iota_true(100, 2000) / 100.0,
+			'upper':    iota_true(100, 2000)  * 100.0,
+			'mean':     iota_true(100, 2000)
 		},{ # prior_diff
 			'name':     'prior_diff',
 			'density':  'uniform',
@@ -142,26 +145,26 @@ def example_db (file_name) :
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	name           = 'smooth_omega'
-	fun            = fun_omega
+	name           = 'smooth_iota'
+	fun            = fun_iota
 	age_id         = [0, 1]
 	time_id        = [0, 1]
 	smooth_table = [
 		{'name':name, 'age_id':age_id, 'time_id':time_id, 'fun':fun }
 	]
-	name = 'smooth_omega'
+	name = 'smooth_iota'
 	# ----------------------------------------------------------------------
 	# rate table:
 	rate_table = [
-		{	'name':          'omega',
-			'parent_smooth': 'smooth_omega',
+		{	'name':          'iota',
+			'parent_smooth': 'smooth_iota',
 			'child_smooth':  None
 		}
 	]
 	# ----------------------------------------------------------------------
 	# option_table
 	option_table = [
-		{ 'name':'rate_case',              'value':'iota_zero_rho_zero' },
+		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'  },
 		{ 'name':'parent_node_name',       'value':'world'              },
 		{ 'name':'ode_step_size',          'value':'1.0'                },
 
@@ -211,7 +214,7 @@ data_table      = dismod_at.get_table_dict(connection, 'data')
 avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
 predict_table   = dismod_at.get_table_dict(connection, 'predict')
 #
-assert len(data_table) == n_data
+n_data =  len(data_table)
 assert len(avgint_table) == n_data
 assert len(predict_table) == n_data
 for data_id in range( n_data ) :
@@ -224,6 +227,10 @@ for data_id in range( n_data ) :
 	avg_integrand = predict_table[data_id]['avg_integrand']
 	meas_value    = data_table[data_id]['meas_value']
 	#
+	if True :
+		msg = 'predict = '       + str(avg_integrand)
+		msg += ', data_sim = '   + str(meas_value)
+		print(msg)
 	relerr = 1.0 - avg_integrand / meas_value
 	assert relerr < 1e-5
 # ---------------------------------------------------------------------------
