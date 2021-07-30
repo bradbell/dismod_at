@@ -179,7 +179,13 @@ ENDFOREACH(pkg)
 # suitesparse_suffix
 SET(suitesparse_prefix "NOTFOUND")
 SET(suitesparse_suffix "NOTFOUND")
-FOREACH(prefix /usr /usr/local /opt/local /usr/local/opt/suitesparse "${cmake_install_prefix}" )
+FOREACH(prefix
+	/usr
+	/usr/local
+	/opt/local
+	/usr/local/opt/suitesparse
+	"${cmake_install_prefix}"
+)
 	FOREACH(suffix "include" "include/suitesparse")
 		IF( EXISTS "${prefix}/${suffix}/cholmod.h" )
 			IF( suitesparse_prefix )
@@ -192,7 +198,7 @@ FOREACH(prefix /usr /usr/local /opt/local /usr/local/opt/suitesparse "${cmake_in
 			SET(suitesparse_suffix "${suffix}")
 		ENDIF( EXISTS "${prefix}/${suffix}/cholmod.h" )
 	ENDFOREACH(suffix in "include" "include/suitesparse")
-ENDFOREACH(prefix in /usr /usr/local "${cmake_install_prefix}" )
+ENDFOREACH(prefix)
 #
 # suitesparse_INCLUDE_DIR
 IF( suitesparse_prefix )
