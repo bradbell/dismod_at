@@ -102,7 +102,7 @@ ENDMACRO( set_library_path_list )
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(dismod_at)
-SET(dismod_at_version "20210726")
+SET(dismod_at_version "20210729")
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
@@ -171,6 +171,39 @@ FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed cppad)
 	# LINK_DIRECTORIES
 	LINK_DIRECTORIES( ${${pkg}_LIBRARY_DIRS} )
 ENDFOREACH(pkg)
+# ----------------------------------------------------------------------------
+# no pkg-config for SuiteSparse so explicitly set
+# suitesparse_INCLUDE_DIR
+#
+# suitesparse_prefix
+# suitesparse_suffix
+SET(suitesparse_prefix "NOTFOUND")
+SET(suitesparse_suffix "NOTFOUND")
+FOREACH(prefix /usr /usr/local /opt/local /usr/local/opt/suitesparse "${cmake_install_prefix}" )
+	FOREACH(suffix "include" "include/suitesparse")
+		IF( EXISTS "${prefix}/${suffix}/cholmod.h" )
+			IF( suitesparse_prefix )
+				MESSAGE(STATUS
+					"warning: found cholmod.h in ${prefix}/${suffix}"
+					" and ${suitesparse_prefix}"
+				)
+			ENDIF( suitesparse_prefix )
+			SET(suitesparse_prefix "${prefix}")
+			SET(suitesparse_suffix "${suffix}")
+		ENDIF( EXISTS "${prefix}/${suffix}/cholmod.h" )
+	ENDFOREACH(suffix in "include" "include/suitesparse")
+ENDFOREACH(prefix in /usr /usr/local "${cmake_install_prefix}" )
+#
+# suitesparse_INCLUDE_DIR
+IF( suitesparse_prefix )
+	SET(suitesparse_INCLUDE_DIR  "${suitesparse_prefix}/${suitesparse_suffix}" )
+ELSE( suitesparse_prefix )
+	MESSAGE(FATAL_ERROR "cannot find cholmod.h" )
+ENDIF( suitesparse_prefix )
+IF( NOT "${suitesparse_INCLUDE_DIR}" STREQUAL "/usr/include" )
+	MESSAGE(STATUS "suitesparse_INCLUDE_DIR=${suitesparse_INCLUDE_DIR}" )
+	INCLUDE_DIRECTORIES( ${suitesparse_INCLUDE_DIR} )
+ENDIF( "${suitesparse_INCLUDE_DIR}" != "/usr/include" )
 # ----------------------------------------------------------------------------
 # check compiler flags
 #

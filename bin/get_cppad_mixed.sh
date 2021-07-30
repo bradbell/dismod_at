@@ -44,8 +44,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='60eec34212fee24c358306ed244ca350e56d18b3'
-version='20210714'
+hash_key='a6e2c2675f9764ab55bfd7faac826a6eae5b460a '
+version='20210729'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -53,6 +53,9 @@ then
 	echo "$name: must be executed from its parent directory"
 	exit 1
 fi
+#
+# dismod_at_dir
+dismod_at_dir=$(pwd)
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -62,6 +65,10 @@ echo_eval() {
 # --------------------------------------------------------------------------
 # build_type
 cmd=`grep '^build_type=' bin/run_cmake.sh`
+eval $cmd
+#
+# specific_compiler
+cmd=`grep '^specific_compiler=' bin/run_cmake.sh`
 eval $cmd
 #
 # extra_cxx_flags
@@ -117,13 +124,14 @@ else
 	optimize='no'
 fi
 # -----------------------------------------------------------------------------
-# transfer dismod_at install options to cppad_mixed run_cmake.sh
-dir=$(pwd)
-echo "edit $dir/bin/run_cmake.sh"
+# transfer dismod_at.git run_cmake.sh options to cppad_mixed run_cmake.sh
+cppad_mixed_dir=$(pwd)
+echo "edit $cppad_mixed_dir/bin/run_cmake.sh"
 sed \
 	-e "s|^verbose_makefile=.*|verbose_makefile='no'|" \
 	-e "s|^build_type=.*|build_type='$build_type'|" \
 	-e "s|^cmake_install_prefix=.*|cmake_install_prefix='$dismod_at_prefix'|" \
+	-e "s|^specific_compiler=.*|specific_compiler='$specific_compiler'|" \
 	-e "s|^extra_cxx_flags=.*|extra_cxx_flags='$extra_cxx_flags'|" \
 	-e "s|^cmake_libdir=.*|cmake_libdir='$cmake_libdir'|" \
 	-e "s|^ldlt_cholmod=.*|ldlt_cholmod='yes'|" \
@@ -147,15 +155,16 @@ for pattern in $list
 do
 	if ! grep "$pattern" bin/run_cmake.sh > /dev/null
 	then
-		echo "pattern=$pattern"
-		echo "get_cppad_mixed.sh: Edit of $dir/bin/run_cmake.sh failed"
+		echo "get_cpapd_mixed.sh: pattern=$pattern"
+		echo "Edit of $cppad_mixed_dir/bin/run_cmake.sh failed"
 		exit 1
 	fi
 done
 # $extra_cxx_flags my have spaces in it
 if ! grep "^extra_cxx_flags='$extra_cxx_flags'"  bin/run_cmake.sh > /dev/null
 then
-	echo "get_cppad_mixed.sh: Edit of $dir/bin/run_cmake.sh failed"
+	echo 'get_cppad_mixed.sh: extra_cxx_flags'
+	echo "Edit of $cppad_mixed_dir/bin/run_cmake.sh failed"
 	exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -163,7 +172,11 @@ fi
 run_test='false'
 replace='true'
 echo_eval bin/example_install.sh $run_test $replace
-#
+# -----------------------------------------------------------------------------
+echo 'mv example_install.log get_cppad_mixed.log'
+echo 'mv example_install.err get_cppad_mixed.err'
+cp example_install.log $dismod_at_dir/get_cppad_mixed.log
+cp example_install.err $dismod_at_dir/get_cppad_mixed.err
 # -----------------------------------------------------------------------------
 echo 'get_cppad_mixed.sh: OK'
 exit 0

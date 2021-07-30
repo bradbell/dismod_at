@@ -35,13 +35,17 @@ echo_eval() {
 	eval $*
 }
 # --------------------------------------------------------------------------
-# remove old version of example_install.log and example_install.err
-for ext in log err
+# remove old version of
+# example_install.log, example_install.err, cpapd_mixed.log, cppad_mixed.err
+for script in example_install get_cppad_mixed
 do
-	if [ -e "example_install.$ext" ]
-	then
-		echo_eval rm "example_install.$ext"
-	fi
+	for ext in log err
+	do
+		if [ -e "$script.$ext" ]
+		then
+			echo_eval rm "$script.$ext"
+		fi
+	done
 done
 # --------------------------------------------------------------------------
 # set build link to build.debug or build.release depending on build_type

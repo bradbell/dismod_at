@@ -38,6 +38,7 @@ $spell
 	hes
 	integrators
 	cen
+	cmake
 $$
 $navigate%
 	Up%Location%
@@ -53,6 +54,16 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 07-29$$
+The Mac changed how $code bash$$ worked and this broke it's install.
+To be specific, $code export DYLD_LIBRARY_PATH$$ no longer works
+(export works for most shell variables but not others).
+The $code bin/get_cppad_mixed.sh$$ was changed to adapt to this problem
+including advancing to cppad_mixed-20210714.
+In addition, the $cref/specific_compiler/run_cmake.sh/specific_compiler/$$
+setting was added to $code bin/run_cmake.sh$$ to make it easier
+to build using MacPorts.
 
 $head 07-25$$
 Fix a bug in the $cref system_command_prc$$ error reporting.

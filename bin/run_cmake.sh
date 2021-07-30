@@ -34,6 +34,8 @@
 #	Wshadow
 #	Wconversion
 #	Wpedantic
+#	gcc
+#	gfortran
 # &&
 #
 # &section bin/run_cmake.sh: User Configuration Options&&
@@ -71,20 +73,32 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 # will need to be installed.
 #
 # &head python3_executable&&
-# Path to the python3 executable on this machine:
+# Path to the python3 executable on this machine.
 # &codep
 python3_executable='/usr/bin/python3'
 # &&
+# You can use the command $code which python3$$ to determine the location
+# of the default version for this system.
 # In the past, removing the &code #&& characters in front of the following
 # command would work for the IHME cluster:
 # &codei%
 # # python3_executable='/usr/local/anaconda3-current/bin/python'
 # %&&
 #
-# &head Choosing C++ Compiler&&
-# Which c++ compiler should cmake use (empty means cmake will choose it).
+# &head specific_compiler&&
+# On some systems, e.g. the Mac using port, there are problems with mixing
+# different compiler systems for fortran and C++; see
+# &href%https://github.com/coin-or/Ipopt/discussions/471%ipopt issue 471%&&.
+# This variable allows you to set a specific compiler for
+# C, and or CXX and or FC. For example
+# &code
+#	specific_compiler='CC=gcc CXX=g++ FC=gfortran'
+# &&
+# uses the gnu versions of these compilers.
+# The configuration will automatically find compilers that are not specified;
+# i.e., if
 # &codep
-cmake_cxx_compiler=''
+specific_compiler=''
 # &&
 #
 # &head extra_cxx_flags&&
