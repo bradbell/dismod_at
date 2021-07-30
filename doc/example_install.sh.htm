@@ -89,13 +89,17 @@ bin/example_install.sh</font></code>
      <b><font color="#0000FF">eval</font></b> <font color="#009900">$*</font>
 }
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># remove old version of example_install.log and example_install.err</font></i>
-<b><font color="#0000FF">for</font></b> ext <b><font color="#0000FF">in</font></b> log err
+<i><font color="#9A1900"># remove old version of</font></i>
+<i><font color="#9A1900"># example_install.log, example_install.err, cpapd_mixed.log, cppad_mixed.err</font></i>
+<b><font color="#0000FF">for</font></b> script <b><font color="#0000FF">in</font></b> example_install get_cppad_mixed
 <b><font color="#0000FF">do</font></b>
-     <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> -e <font color="#FF0000">"example_install.$ext"</font> <font color="#990000">]</font>
-     <b><font color="#0000FF">then</font></b>
-          echo_eval rm <font color="#FF0000">"example_install.$ext"</font>
-     <b><font color="#0000FF">fi</font></b>
+     <b><font color="#0000FF">for</font></b> ext <b><font color="#0000FF">in</font></b> log err
+     <b><font color="#0000FF">do</font></b>
+          <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> -e <font color="#FF0000">"$script.$ext"</font> <font color="#990000">]</font>
+          <b><font color="#0000FF">then</font></b>
+               echo_eval rm <font color="#FF0000">"$script.$ext"</font>
+          <b><font color="#0000FF">fi</font></b>
+     <b><font color="#0000FF">done</font></b>
 <b><font color="#0000FF">done</font></b>
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># set build link to build.debug or build.release depending on build_type</font></i>

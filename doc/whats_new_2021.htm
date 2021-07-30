@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>07-29</option>
+<option>07-25</option>
+<option>07-24</option>
 <option>07-22</option>
 <option>07-14</option>
 <option>07-05</option>
@@ -110,6 +113,50 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="07-29" id="07-29">07-29</a></big></b>
+<br>
+The Mac changed how <code><font color="blue">bash</font></code> worked and this broke it's install.
+To be specific, <code><font color="blue">export DYLD_LIBRARY_PATH</font></code> no longer works
+(export works for most shell variables but not others).
+The <code><font color="blue">bin/get_cppad_mixed.sh</font></code> was changed to adapt to this problem
+including advancing to cppad_mixed-20210714.
+In addition, the <a href="run_cmake.sh.htm#specific_compiler" target="_top"><span style='white-space: nowrap'>specific_compiler</span></a>
+
+setting was added to <code><font color="blue">bin/run_cmake.sh</font></code> to make it easier
+to build using MacPorts.
+
+<br>
+<br>
+<b><big><a name="07-25" id="07-25">07-25</a></big></b>
+<br>
+Fix a bug in the <a href="system_command_prc.htm" target="_top"><span style='white-space: nowrap'>system_command_prc</span></a>
+ error reporting.
+To be specific, when an error ocurred during a system command,
+the command return code was not properly reported.
+
+<br>
+<br>
+<b><big><a name="07-24" id="07-24">07-24</a></big></b>
+
+<ol type="1"><li>
+The <code><font color="blue">sim_data</font></code> utility is
+<a href="sim_data.htm#Under Construction" target="_top"><span style='white-space: nowrap'>under&nbsp;construction</span></a>
+.
+It which is slower and easier to use than the
+<a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
+.
+It also can be used for independent testing of the dismod_at integrators.
+</li><li>
+
+Remove cen_log_students from the
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled&nbsp;density&nbsp;list</span></a>
+
+(it is not yet a valid density).
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="07-22" id="07-22">07-22</a></big></b>
 
