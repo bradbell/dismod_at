@@ -24,9 +24,9 @@
 #
 # $head Purpose$$
 # This example explains the $cref data_sim_table$$ by showing that the
-# $cref/transformed standard deviation
+# $cref/Adjusted standard deviation
 #	/data_like
-#	/Transformed Standard Deviation, sigma_i(theta)
+#	/Adjusted Standard Deviation, delta_i(theta)
 # /$$
 # for the simulated data is the same as for the original data.
 #
@@ -95,11 +95,19 @@
 #
 # $subhead Delta$$
 # This is the minimum cv standard deviation corresponding to $latex y$$; see
-# $cref/Delta/data_sim_table/Method/Delta/$$.
+# $cref/Delta
+#	/data_like
+#	/Notation
+#	/Minimum CV Standard Deviation, Delta_i
+# /$$.
 #
 # $subhead sigma$$
 # This is the transformed standard deviation corresponding to $latex y$$; see
-# $cref/sigma_i/data_like/Notation/Transformed Standard Deviation, sigma_i/$$.
+# $cref/sigma
+#	/data_like
+#	/Notation
+#	/Transformed Standard Deviation, sigma_i
+# /$$.
 #
 # $subhead E$$
 # This is the average noise effect corresponding to $latex y$$; see
@@ -108,10 +116,6 @@
 # $subhead delta$$
 # This is the adjusted standard deviation corresponding to $latex y$$; see
 # $cref/delta/data_sim_table/Method/delta/$$.
-#
-# $subhead sigma$$
-# This is the transformed standard deviation corresponding to $latex y$$; see
-# $cref/sigma/data_sim_table/Method/sigma/$$.
 #
 # $head Simulation Notation$$
 #
