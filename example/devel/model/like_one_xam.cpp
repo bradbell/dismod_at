@@ -325,13 +325,17 @@ bool like_one_xam(void)
 		double eta        = 1e-4;
 		size_t density_id = data_table[data_id].density_id;
 
+		// for log densities, delta is in log space
+		if( dismod_at::log_density( density_table[density_id] ) )
+			delta = log(y + eta + delta) - log(y + eta);
+
 		// check delta_out
 		ok &= fabs( 1.0 - Value(delta_out) / delta ) <= eps;
 
 		// check wres
 		Float check;
 		if( dismod_at::log_density( density_table[density_id] ) )
-			check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(y+eta));
+			check = (log(y+eta) - log(avg+eta)) / delta;
 		else
 			check = (y - avg) / delta;
 		ok  &= fabs( 1.0 - wres / check ) <= eps;
@@ -345,28 +349,19 @@ bool like_one_xam(void)
 		// check loglike
 		double pi =  3.14159265358979323846264338327950288;
 		switch( density_table[density_id] )
-		{	double sigma;
-
+		{
 			case dismod_at::uniform_enum:
 			check = 0.0;
 			break;
 
 			case dismod_at::gaussian_enum:
+			case dismod_at::log_gaussian_enum:
 			check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
 			break;
 
 			case dismod_at::laplace_enum:
-			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
-			break;
-
-			case dismod_at::log_gaussian_enum:
-			sigma = log(1.0 + delta / (y + eta) );
-			check = - log( sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
-			break;
-
 			case dismod_at::log_laplace_enum:
-			sigma = log(1.0 + delta / (y + eta) );
-			check = - log( sigma * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
+			check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
 			break;
 
 			default:
