@@ -38,9 +38,9 @@ In the linear case, $latex \mu$$ denotes
 the expected value for $latex y$$ or
 the difference between $latex y$$ and $latex z$$.
 In the log case, it denotes
-the expected value for the log of $latex y$$ or
-the difference between the log of $latex y$$ and
-the log of $latex z$$.
+the expected value for $latex \log( y + \eta )$$ or
+the difference between $latex \log( y + \eta )$$ and
+$latex \log( z + \eta )$$.
 
 $subhead sigma$$
 If the density is
@@ -50,15 +50,21 @@ If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 this is the standard deviation for $latex \log( y + \eta )$$
 or $latex \log( z + \eta )  - \log ( y + \eta )$$.
-Note that $latex \sigma$$ has a different definition for different cases;
-see
-$cref/sigma_i(theta)/data_like
-	/Transformed Standard Deviation, sigma_i(theta)
-/$$,
+Note that $latex \sigma$$ has a different definition for different cases:
+$list number$$
+For data cases, $latex \sigma$$ is the
+$cref/adjusted standard deviation
+    /data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+/$$ $latex \delta_i( \theta )$$.
+$lnext
+For priors cases, $latex \sigma$$ is the transformed standard deviation;
+e.g.,
 $cref/sigma_j/fixed_value/sigma_j/$$,
 $cref/sigma_j/random_value/sigma_j/$$,
 $cref/sigma_ij/smooth_dage/sigma_ij/$$,
 $cref/sigma_ij/smooth_dtime/sigma_ij/$$.
+$lend
 
 
 $subhead eta$$
