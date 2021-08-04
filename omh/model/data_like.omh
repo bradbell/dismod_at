@@ -84,6 +84,18 @@ $pre
 	$$ $latex \Delta_i = $$
 $codei%max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )%$$
 
+$subhead Transformed Standard Deviation, sigma_i$$
+The transformed standard deviation is
+$latex \[
+\sigma_i = \left\{ \begin{array}{ll}
+	\log[ y_i + \eta_i + \Delta_i ] - \log( y_i + \eta_i )
+		& \R{if \; log \; density}
+	\\
+	\Delta_i ( \theta )
+		& \R{otherwise}
+\end{array} \right.
+\] $$
+
 $subhead Fixed Effects, theta$$
 We use $latex \theta$$ to denote the vector of
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$.
@@ -144,12 +156,12 @@ $head Adjusted Standard Deviation, delta_i(theta)$$
 For $latex j \in K_i$$ it should hold that
 $latex 0 \leq x_{i,j}$$, and
 $latex 0 \leq \gamma_j (a, t)$$
-so that $latex \Delta_i$$ is less than or equal $latex \delta_i ( \theta )$$
+so that $latex \sigma_i$$ is less than or equal $latex \delta_i ( \theta )$$
 defined below:
 
 $subhead Scaling$$
-For some cases below, $latex E_i ( \theta )$$ multiplies
-$cref/Delta_i/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$
+For some cases below, $latex E_i ( \theta )$$ multiplies the
+$cref/sigma_i/data_like/Notation/Transformed Standard Deviation, sigma_i/$$
 instead of multiplying $latex y_i$$.
 This avoids have no effect when $latex y_i$$ is zero.
 It is also possible to scale $latex E_i ( \theta )$$
@@ -175,7 +187,7 @@ $code add_std_scale_all$$
 (add standard deviations and scale all cases)
 the adjusted standard deviation is
 $latex \[
-\delta_i ( \theta ) = \Delta_i [ 1 + E_i (\theta) ]
+\delta_i ( \theta ) = \sigma_i [ 1 + E_i (\theta) ]
 \] $$
 
 $subhead add_std_scale_none$$
@@ -183,7 +195,7 @@ If $icode meas_noise_effect$$ is $code add_std_scale_none$$
 (add standard deviations and no scaling)
 the adjusted standard deviation is
 $latex \[
-\delta_i ( \theta ) = \Delta_i + E_i (\theta)
+\delta_i ( \theta ) = \sigma_i + E_i (\theta)
 \] $$
 
 $subhead add_std_scale_log$$
@@ -192,8 +204,8 @@ If $icode meas_noise_effect$$ is $code add_std_scale_log$$
 the adjusted standard deviation is
 $latex \[
 \delta_i ( \theta ) = \left\{ \begin{array}{ll}
-	\Delta_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
-	\Delta_i + E_i (\theta)       & \R{otherwise}
+	\sigma_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
+	\sigma_i + E_i (\theta)       & \R{otherwise}
 \end{array} \right.
 \] $$
 
@@ -202,7 +214,7 @@ If $icode meas_noise_effect$$ is $code add_var_scale_all$$
 (add variances and scale all cases)
 the adjusted standard deviation is
 $latex \[
-\delta_i ( \theta ) = \Delta_i \sqrt{ 1 + E_i (\theta) }
+\delta_i ( \theta ) = \sigma_i \sqrt{ 1 + E_i (\theta) }
 \] $$
 
 $subhead add_var_scale_none$$
@@ -210,7 +222,7 @@ If $icode meas_noise_effect$$ is $code add_var_scale_none$$
 (add variances and no scaling)
 the adjusted standard deviation is
 $latex \[
-\delta_i ( \theta ) = \sqrt{ \Delta_i^2 + E_i (\theta) }
+\delta_i ( \theta ) = \sqrt{ \sigma_i^2 + E_i (\theta) }
 \] $$
 
 $subhead add_var_scale_log$$
@@ -219,21 +231,9 @@ If $icode meas_noise_effect$$ is $code add_var_scale_log$$
 the adjusted standard deviation is
 $latex \[
 \delta_i ( \theta ) = \left\{ \begin{array}{ll}
-	\Delta_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
-	\sqrt{ \Delta_i^2 + E_i (\theta) } & \R{otherwise}
+	\sigma_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
+	\sqrt{ \sigma_i^2 + E_i (\theta) } & \R{otherwise}
 \end{array} \right.
-\] $$
-
-$head Transformed Standard Deviation, sigma_i(theta)$$
-The transformed standard deviation is
-$latex \[
-\begin{array}{ll}
-	\log[ y_i + \eta_i + \delta_i ( \theta ) ] - \log( y_i + \eta_i )
-		& \R{if \; log \; density}
-	\\
-	\delta_i ( \theta )
-		& \R{otherwise}
-\end{array}
 \] $$
 
 
@@ -245,7 +245,7 @@ $latex \[
  R [
 	y_i                  \W{,}
 	A_i ( u, \theta )    \W{,}
-	\sigma_i ( \theta )  \W{,}
+	\delta_i ( \theta )  \W{,}
 	d_i
 ]
 \] $$
@@ -256,7 +256,7 @@ $latex \[
 \exp \left( D [
 	y_i                  \W{,}
 	A_i ( u, \theta )    \W{,}
-	\sigma_i ( \theta )  \W{,}
+	\delta_i ( \theta )  \W{,}
 	d_i
 ] \right)
 \] $$
