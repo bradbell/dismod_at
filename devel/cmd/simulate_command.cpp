@@ -151,8 +151,6 @@ void simulate_command(
 		density_enum density = subset_data_obj[subset_id].density;
 		//
 		// data table information
-		double difference   = false;
-		double meas_value   = subset_data_obj[subset_id].meas_value;
 		double eta          = subset_data_obj[subset_id].eta;
 		double nu           = subset_data_obj[subset_id].nu;
 		//
@@ -164,9 +162,7 @@ void simulate_command(
 		{	// for each simulate_index
 			//
 			// sim_value
-			double sim_value   = sim_random(
-				difference, density, meas_value,avg, delta, eta, nu
-			);
+			double sim_value   = sim_random(density, avg, delta, eta, nu);
 			//
 			size_t data_sim_id = sim_index * n_subset + subset_id;
 			row_value[data_sim_id * n_col + 0] = to_string( sim_index );
@@ -238,18 +234,13 @@ void simulate_command(
 				double eta   = prior_table[ prior_id[k] ].eta;
 				double nu    = prior_table[ prior_id[k] ].nu;
 				//
-				// k = 0 is a value prior, others are difference priors
-				bool difference = k > 0;
-				//
 				int density_id = prior_table[prior_id[k]].density_id;
 				density_enum density = density_table[density_id];
 				//
 				if( density == uniform_enum )
 					sim_str[k] = "null";
 				else
-				{	double sim = sim_random(
-						difference, density, mean, mean, std, eta, nu
-					);
+				{	double sim = sim_random(density, mean, std, eta, nu);
 					//
 					sim = std::min(sim, upper);
 					sim = std::max(sim, lower);

@@ -24,14 +24,11 @@ $section Simulate a Dismod_at Random Distribution$$
 
 $head Syntax$$
 $icode%z% = sim_random(
-	%difference%, %density%, %y%, %mu%, %delta%, %eta%, %nu%)%$$
+	%density%, %mu%, %delta%, %eta%, %nu%)%$$
 
 $head manage_gsl_rng$$
 The routine $cref manage_gsl_rng$$ sets up and controls the underlying
 simulated random number generator.
-
-$head difference$$
-2DO: This argument is not longer used and should be removed.
 
 $head density$$
 This argument has prototype
@@ -69,9 +66,6 @@ $rnext
 $code log_students_enum$$ $pre  $$ $cnext
 $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
 $tend
-
-$head y$$
-2DO: This argument is not longer used and should be removed.
 
 $head mu$$
 This argument has prototype
@@ -152,9 +146,7 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 double sim_random(
-	bool         difference,
 	density_enum density,
-	double       y      ,
 	double       mu     ,
 	double       delta  ,
 	double       eta    ,

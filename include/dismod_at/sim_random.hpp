@@ -15,9 +15,7 @@ see http://www.gnu.org/licenses/agpl.txt
 
 namespace dismod_at {
 	double sim_random(
-		bool         difference,
 		density_enum density,
-		double       y,
 		double       mu,
 		double       delta,
 		double       eta,
