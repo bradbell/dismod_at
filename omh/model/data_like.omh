@@ -91,7 +91,7 @@ $latex \[
 	\log[ y_i + \eta_i + \Delta_i ] - \log( y_i + \eta_i )
 		& \R{if \; log \; density}
 	\\
-	\Delta_i ( \theta )
+	\Delta_i
 		& \R{otherwise}
 \end{array} \right.
 \] $$
