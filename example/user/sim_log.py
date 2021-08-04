@@ -21,7 +21,7 @@
 # $head Example Parameters$$
 # The following values are used to simulate the data
 # $srccode%py%
-number_simulate   = 200
+number_simulate   = 2000
 iota_true         = 0.01
 meas_value_global = iota_true * 1.5
 eta_global        = iota_true * 1e-3
@@ -315,11 +315,11 @@ for row in data_sim_table :
 	data_subset_id = row['data_subset_id']
 	data_id        = data_subset_table[data_subset_id]['data_id']
 	meas_value     = data_table[data_id]['meas_value']
-	meas_std       = data_table[data_id]['meas_std']
+	Delta          = data_table[data_id]['meas_std']
 	eta            = data_table[data_id]['eta']
-	delta          = meas_std + gamma_global
-	sigma          = log(meas_value + delta + eta) - log(meas_value + eta)
-	residual       = (log(data_sim_value + eta) - log(iota_true + eta) )/sigma
+	sigma          = log(meas_value + eta + Delta) - log(meas_value + eta)
+	delta          = sigma + gamma_global
+	residual       = (log(data_sim_value + eta) - log(iota_true + eta) )/delta
 	residual_list.append( residual )
 residual_array  = numpy.array( residual_list )
 residual_mean   = residual_array.mean()

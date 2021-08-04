@@ -97,6 +97,10 @@
 # This is the minimum cv standard deviation corresponding to $latex y$$; see
 # $cref/Delta/data_sim_table/Method/Delta/$$.
 #
+# $subhead sigma$$
+# This is the transformed standard deviation corresponding to $latex y$$; see
+# $cref/sigma_i/data_like/Notation/Transformed Standard Deviation, sigma_i/$$.
+#
 # $subhead E$$
 # This is the average noise effect corresponding to $latex y$$; see
 # $cref/E/data_sim_table/Method/E/$$.
@@ -115,12 +119,6 @@
 # This is the simulated measurement value, before censoring,
 # in the data_sim table; see $cref/z/data_sim_table/Method/z/$$.
 #
-# $subhead delta_hat$$
-# This is adjusted standard deviation corresponding to $latex z$$.
-#
-# $subhead Delta_hat$$
-# This is the minimum cv standard deviation corresponding to $latex z$$.
-#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
@@ -129,7 +127,7 @@
 # You can changed the values below and rerun this program
 iota_true          = 0.01
 meas_std           = 0.001
-n_data             = 1000
+n_data             = 2000
 # You can changed the values above and rerun this program
 # ----------------------------------------------------------------------------
 import math
@@ -172,28 +170,28 @@ def gamma_true(meas_noise_effect) :
 	return result
 # ---------------------------------------------------------------------------
 # delta_effect
-def delta_effect(meas_noise_effect, Delta, E) :
+def delta_effect(meas_noise_effect, sigma, E) :
 	# add_std
 	if meas_noise_effect == 'add_std_scale_all' :
-		delta = Delta * (1.0 + E)
+		delta = sigma * (1.0 + E)
 	elif meas_noise_effect == 'add_std_scale_none' :
-		delta = Delta + E
+		delta = sigma + E
 	elif meas_noise_effect == 'add_std_scale_log' :
 		if log_density(density) :
-			delta = Delta * (1.0 + E)
+			delta = sigma * (1.0 + E)
 		else :
-			delta = Delta + E
+			delta = sigma + E
 	# add var
 	elif meas_noise_effect == 'add_var_scale_all' :
-		delta = Delta * math.sqrt(1.0 + E)
+		delta = sigma * math.sqrt(1.0 + E)
 	elif meas_noise_effect == 'add_var_scale_none' :
-		delta = math.sqrt( Delta * Delta + E )
+		delta = math.sqrt( sigma * sigma + E )
 	else :
 		assert meas_noise_effect == 'add_var_scale_log'
 		if log_density(density) :
-			delta = Delta * math.sqrt(1.0 + E)
+			delta = sigma * math.sqrt(1.0 + E)
 		else :
-			delta = math.sqrt( Delta * Delta + E )
+			delta = math.sqrt( sigma * sigma + E )
 	return delta
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
@@ -449,6 +447,7 @@ for meas_noise_effect in meas_noise_effect_list :
 		# data table values
 		data_id        = data_subset_table[data_subset_id]['data_id']
 		meas_value     = data_table[data_id]['meas_value']
+		Delta          = data_table[data_id]['meas_std']
 		eta            = data_table[data_id]['eta']
 		density_id     = data_table[data_id]['density_id']
 		density        = density_table[density_id]['density_name']
@@ -456,19 +455,19 @@ for meas_noise_effect in meas_noise_effect_list :
 		# Values that do not depend on simulated data
 		y         = meas_value
 		E         = gamma_true(meas_noise_effect)
-		delta     = delta_effect(meas_noise_effect, meas_std, E)
 		if log_density(density) :
-			sigma  = math.log(y + eta + delta) - math.log(y + eta)
+			sigma  = math.log(y + eta + Delta) - math.log(y + eta)
 		else :
-			sigma  = delta
+			sigma  = Delta
+		delta     = delta_effect(meas_noise_effect, sigma, E)
 		#
 		# residual
 		z  = data_sim_value  # simulated data withoout censoring
 		mu = iota_true       # mean of the simulated data
 		if log_density(density) :
-			residual = (math.log(z + eta) - math.log(mu + eta)) / sigma
+			residual = (math.log(z + eta) - math.log(mu + eta)) / delta
 		else :
-			residual = (z - mu) / sigma
+			residual = (z - mu) / delta
 		residual_list.append(residual)
 	residual_array  = numpy.array( residual_list )
 	residual_mean   = residual_array.mean()

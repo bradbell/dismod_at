@@ -160,13 +160,6 @@ void simulate_command(
 		double delta;
 		data_object.like_one(subset_id, truth_var, avg, delta);
 		//
-		// data table sigma
-		double sigma = delta;
-		if( log_density(density) )
-		{	sigma  = std::log(meas_value + delta + eta);
-			sigma -= std::log(meas_value + eta);
-		}
-		//
 		for(size_t sim_index = 0; sim_index < n_simulate; sim_index++)
 		{	// for each simulate_index
 			//

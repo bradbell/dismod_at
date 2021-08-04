@@ -31,16 +31,7 @@ The routine $cref manage_gsl_rng$$ sets up and controls the underlying
 simulated random number generator.
 
 $head difference$$
-This argument has prototype
-$codei%
-	bool %difference%
-%$$
-If it is true, this simulation is for a difference,
-otherwise it is for a value; see
-$cref/delta/sim_random/delta/difference/$$ below.
-If $icode density$$ is
-$code cen_gaussian$$ or $code cen_laplace$$,
-$icode difference$$ must be false.
+2DO: This argument is not longer used and should be removed.
 
 $head density$$
 This argument has prototype
@@ -80,10 +71,7 @@ $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
 $tend
 
 $head y$$
-If $icode density$$ is a log transformed distribution
-and $icode difference$$ is false,
-$icode y$$ is used to transform the standard deviation.
-Otherwise, $icode y$$ is not used.
+2DO: This argument is not longer used and should be removed.
 
 $head mu$$
 This argument has prototype
@@ -110,21 +98,10 @@ $icode delta$$
 it is the standard deviation for $icode%z% - %mu%$$
 (before possible censoring).
 
-$subhead difference$$
+$subhead Log$$
 If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
-and difference is true,
 $icode delta$$ is the standard deviation for
-$codei%
-	log( %z% + %eta% ) - log( %mu% + %eta% )
-%$$
-
-$subhead value$$
-If the density is a log density, and difference is false,
-$codei%
-	log( %y% + %eta% + %delta% ) - log( %y% + %eta% )
-%$$
-is the standard deviation for
 $codei%
 	log( %z% + %eta% ) - log( %mu% + %eta% )
 %$$
@@ -213,20 +190,15 @@ double sim_random(
 	// log transformed cases
 	assert( mu + eta > 0.0 );
 	//
-	// transformed standard deviation
-	double sigma = delta;
-	if( ! difference )
-		sigma = std::log(y + eta + delta) - std::log(y + eta);
-	//
 	// difference from mean in transformed space
 	double d_log;
 	if( density == log_gaussian_enum || density == cen_log_gaussian_enum )
 	{	// log Gaussian
-		d_log = gsl_ran_gaussian(rng, sigma);
+		d_log = gsl_ran_gaussian(rng, delta);
 	}
 	else if( density == log_laplace_enum || density == cen_log_laplace_enum )
 	{	// log Laplace
-		double width = sigma / std::sqrt(2.0);
+		double width = delta / std::sqrt(2.0);
 		d_log = gsl_ran_laplace(rng, width);
 	}
 	else
@@ -234,7 +206,7 @@ double sim_random(
 		assert( density == log_students_enum );
 		assert( nu > 2.0 );
 		double x = gsl_ran_tdist(rng, nu);
-		d_log = x * std::sqrt( (nu - 2.0) / nu ) * sigma;
+		d_log = x * std::sqrt( (nu - 2.0) / nu ) * delta;
 	}
 	//
 	// d_log = log(z + eta) - log(mu + eta)
