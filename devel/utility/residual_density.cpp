@@ -78,8 +78,10 @@ This argument has prototype
 $codei%
 	const %Float%& delta
 %$$
-It is either the standard deviation or a parameter in the standard deviation;
-see below.
+It is either the standard deviation.
+For log data densities it is in log space.
+For all other cases (linear data densities or priors) it is in the
+same space as $icode y$.
 
 $head d_id$$
 This argument has prototype
@@ -306,7 +308,7 @@ residual_struct<Float> residual_density(
 			wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
 		}
 		else // data case
-		{	sigma = log( 1.0 + delta / (y + d_eta) );
+		{	sigma = delta;
 			if( CppAD::isnan(z) )
 				wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
 			else

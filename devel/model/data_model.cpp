@@ -838,36 +838,41 @@ residual_struct<Float> data_model::like_one(
 	assert( meas_std  > 0.0 );
 	double meas_cv = minimum_meas_cv_[integrand_id];
 	double Delta   = std::max(meas_std, meas_cv * std::fabs(meas_value) );
+	density_enum density = data_info_[subset_id].density;
+	//
+	// transformed standard deviation
+	double sigma = Delta;
+	if( log_density(density) )
+		sigma = log( meas_value + eta + Delta ) - log( meas_value + eta );
 	//
 	// Compute the adusted standard deviation, delta_out
-	density_enum density = data_info_[subset_id].density;
 	switch( meas_noise_effect_ )
 	{	// add_std
 		case add_std_scale_all_enum:
-		delta_out  = Delta * (1.0  + std_effect);
+		delta_out  = sigma * (1.0  + std_effect);
 		break;
 		case add_std_scale_none_enum:
-		delta_out  = Delta + std_effect;
+		delta_out  = sigma + std_effect;
 		break;
 		case add_std_scale_log_enum:
 		if( log_density(density) )
-			delta_out  = Delta * (1.0  + std_effect);
+			delta_out  = sigma * (1.0  + std_effect);
 		else
-			delta_out  = Delta + std_effect;
+			delta_out  = sigma + std_effect;
 		break;
 		// -----------------------------------------------------------------
 		// add_var
 		case add_var_scale_all_enum:
-		delta_out  = Delta * sqrt(1.0  + std_effect);
+		delta_out  = sigma * sqrt(1.0  + std_effect);
 		break;
 		case add_var_scale_none_enum:
-		delta_out  = sqrt( Delta * Delta + std_effect );
+		delta_out  = sqrt( sigma * sigma + std_effect );
 		break;
 		case add_var_scale_log_enum:
 		if( log_density(density) )
-			delta_out  = Delta * sqrt(1.0  + std_effect);
+			delta_out  = sigma * sqrt(1.0  + std_effect);
 		else
-			delta_out  = sqrt( Delta * Delta + std_effect );
+			delta_out  = sqrt( sigma * sigma + std_effect );
 		break;
 		// -----------------------------------------------------------------
 		default:
