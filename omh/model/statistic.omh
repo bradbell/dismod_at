@@ -42,7 +42,7 @@ the expected value for $latex \log( y + \eta )$$ or
 the difference between $latex \log( y + \eta )$$ and
 $latex \log( z + \eta )$$.
 
-$subhead sigma$$
+$subhead delta$$
 If the density is
 $cref/linear/density_table/Notation/Linear/$$,
 this is the standard deviation for $latex y$$ or $latex z - y$$,
@@ -50,15 +50,15 @@ If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 this is the standard deviation for $latex \log( y + \eta )$$
 or $latex \log( z + \eta )  - \log ( y + \eta )$$.
-Note that $latex \sigma$$ has a different definition for different cases:
+Note that $latex \delta$$ has a different definition for different cases:
 $list number$$
-For data cases, $latex \sigma$$ is the
+For data cases, $latex \delta$$ is the
 $cref/adjusted standard deviation
     /data_like
 	/Adjusted Standard Deviation, delta_i(theta)
 /$$ $latex \delta_i( \theta )$$.
 $lnext
-For priors cases, $latex \sigma$$ is the transformed standard deviation;
+For priors cases, $latex \delta$$ is the transformed standard deviation;
 e.g.,
 $cref/sigma_j/fixed_value/sigma_j/$$,
 $cref/sigma_j/random_value/sigma_j/$$,
@@ -96,24 +96,24 @@ If the density is
 $cref/uniform/density_table/density_name/uniform/$$,
 the weighted residual function for values is
 $latex \[
-	R(y, \mu, \sigma, d) = 0
+	R(y, \mu, \delta, d) = 0
 \] $$
 If the density is
 $cref/linear/density_table/Notation/Linear/$$,
 the weighted residual function for values is
 $latex \[
-	R(y, \mu, \sigma, d) = \frac{y - \mu}{\sigma}
+	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
 \] $$
 If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 the weighted residual function for values is
 $latex \[
-	R(y, \mu, \sigma, d)
+	R(y, \mu, \delta, d)
 	=
 	\frac{
 		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
 	}{
-		\sigma
+		\delta
 	}
 \] $$
 Note that, for both the linear and log case,
@@ -124,13 +124,13 @@ $subhead Difference$$
 If the density is uniform,
 the weighted residual function for differences is
 $latex \[
-	R(z, y, \mu, \sigma, d) = 0
+	R(z, y, \mu, \delta, d) = 0
 \] $$
 If the density is
 $cref/linear/density_table/Notation/Linear/$$,
 the weighted residual function for differences is
 $latex \[
-	R(z, y, \mu, \sigma, d) = \frac{z - y - \mu}{\sigma}
+	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 \] $$
 Note that, in the linear case, all the arguments (except $latex d$$)
 have the same units.
@@ -138,16 +138,16 @@ If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 the weighted residual function for differences is
 $latex \[
-	R(z, y, \mu, \sigma, d)
+	R(z, y, \mu, \delta, d)
 	=
 	\frac{
 		\log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
 	}{
-		\sigma
+		\delta
 	}
 \] $$
 Note that in the log case, $latex z, y$$ and $latex \eta$$ have the same units
-while $latex \mu$$ and $latex \sigma$$ are in log space.
+while $latex \mu$$ and $latex \delta$$ are in log space.
 
 $head Log-Density Function, D$$
 In the discussion below,
@@ -157,19 +157,19 @@ density function.
 
 $subhead Uniform$$
 If the density is $code uniform$$,
-the log-density function for values $latex D(y, \mu, \sigma, d)$$,
-and for differences $latex D(z, y, \mu, \sigma, d)$$,
+the log-density function for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
 are both defined by $latex D = 0$$.
 
 $subhead Gaussian$$
 If the density name is $code gaussian$$,
-the log-density functions for values $latex D(y, \mu, \sigma, d)$$,
-and for differences $latex D(z, y, \mu, \sigma, d)$$,
+the log-density functions for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
 are defined by
 $latex \[
 D
 =
-- \log \left( \sigma \sqrt{2 \pi} \right) - \frac{1}{2} R^2
+- \log \left( \delta \sqrt{2 \pi} \right) - \frac{1}{2} R^2
 \] $$
 where $latex D$$ and $latex R$$ have the same arguments;
 see $cref/Weighted Residual Function, R
@@ -185,9 +185,9 @@ is the same as for the $code gaussian$$ case.
 The log-density function for the values $latex y \leq 0$$,
 is defined by
 $latex \[
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-\log ( \R{erfc}[ \mu / ( \sigma \sqrt{2} ) ] ) - \log(2)
+\log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
 \] $$
 where $latex \R{erfc}$$ is the complementary error function;
 see the Gaussian case for the
@@ -202,17 +202,17 @@ $subhead Log-Gaussian$$
 If the density name is $code log_gaussian$$,
 the log-density function for values is
 $latex \[
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-- \log \left[ \sigma \sqrt{2 \pi} \right]
-- \frac{1}{2} R(y, \mu, \sigma, d)^2
+- \log \left[ \delta \sqrt{2 \pi} \right]
+- \frac{1}{2} R(y, \mu, \delta, d)^2
 \] $$
 The log-density function for differences is
 $latex \[
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 =
-- \log \left( \sigma \sqrt{2 \pi} \right)
-- \frac{1}{2} R(z, y, \mu, \sigma, d)^2
+- \log \left( \delta \sqrt{2 \pi} \right)
+- \frac{1}{2} R(z, y, \mu, \delta, d)^2
 \] $$
 
 $subhead Censored Log-Gaussian$$
@@ -223,11 +223,11 @@ is the same as for the $code log_gaussian$$ case.
 The log-density function for the values $latex y \leq 0$$,
 is defined by
 $latex \[
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-\log ( \R{erfc}[ ( \mu - \eta ) / ( \sigma \sqrt{2} ) ] ) - \log(2)
+\log ( \R{erfc}[ ( \mu - \eta ) / ( \delta \sqrt{2} ) ] ) - \log(2)
 \] $$
-where we the arguments to $latex \sigma$$ are the same as
+where we the arguments to $latex \delta$$ are the same as
 in the log Gaussian case
 and $latex \R{erfc}$$ is the complementary error function;
 see the Gaussian case for the
@@ -240,13 +240,13 @@ where the censoring value is $latex c = \eta$$.
 
 $subhead Laplace$$
 If the density name is $code laplace$$,
-the log-density functions for values $latex D(y, \mu, \sigma, d)$$,
-and for differences $latex D(z, y, \mu, \sigma, d)$$,
+the log-density functions for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
 are defined by
 $latex \[
 D
 =
-- \log \left( \sigma \sqrt{2} \right) - \sqrt{2} | R |
+- \log \left( \delta \sqrt{2} \right) - \sqrt{2} | R |
 \] $$
 where $latex D$$ and $latex R$$ have the same arguments.
 
@@ -258,9 +258,9 @@ is the same as for the $code laplace$$ case.
 The log-density function for the values $latex y \leq 0$$,
 is defined by
 $latex \[
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-- \mu \sqrt{2} / \sigma - \log(2)
+- \mu \sqrt{2} / \delta - \log(2)
 \] $$
 where $latex \R{erfc}$$ is the complementary error function;
 see the Gaussian case for the
@@ -275,17 +275,17 @@ $subhead Log-Laplace$$
 If the density name is $code log_laplace$$,
 the log-density function for values is
 $latex \[
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-- \log \left[ \sigma \sqrt{2} \right]
-- \sqrt{2} \left| R(y, \mu, \sigma, d) \right|
+- \log \left[ \delta \sqrt{2} \right]
+- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
 \] $$
 The log-density function for differences is
 $latex \[
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 =
-- \log \left( \sigma \sqrt{2} \right)
-- \sqrt{2} \left| R(z, y, \mu, \sigma, d) \right|
+- \log \left( \delta \sqrt{2} \right)
+- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
 \] $$
 
 $subhead Censored Log-Laplace$$
@@ -296,11 +296,11 @@ is the same as for the $code log_laplace$$ case.
 The log-density function for the values $latex y \leq 0$$,
 is defined by
 $latex \[
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-- ( \mu - \eta ) \sqrt{2} / \sigma - \log(2)
+- ( \mu - \eta ) \sqrt{2} / \delta - \log(2)
 \] $$
-where we the arguments to $latex \sigma$$ are the same as
+where we the arguments to $latex \delta$$ are the same as
 in the log Laplace case.
 See the Laplace case for the
 $cref/censored density
@@ -312,8 +312,8 @@ where the censoring value is $latex c = \eta$$.
 
 $subhead Student's-t$$
 If the density name is $code students$$,
-the log-density functions for values $latex D(y, \mu, \sigma, d)$$,
-and for differences $latex D(z, y, \mu, \sigma, d)$$,
+the log-density functions for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
 are defined by
 $latex \[
 D
@@ -329,8 +329,8 @@ and we have abbreviated $latex \nu[d]$$ using just $latex \nu$$.
 
 $subhead Log-Student's-t$$
 If the density name is $code log_students$$,
-the log-density functions for values $latex D(y, \mu, \sigma, d)$$,
-and for differences $latex D(z, y, \mu, \sigma, d)$$,
+the log-density functions for values $latex D(y, \mu, \delta, d)$$,
+and for differences $latex D(z, y, \mu, \delta, d)$$,
 are defined by
 $latex \[
 D
