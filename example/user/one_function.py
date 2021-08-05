@@ -12,6 +12,8 @@
 #	covariates
 #	covariate
 #	mulcov
+#	cv
+#	std
 # $$
 #
 # $section Fitting One Function of Two Variables$$
@@ -117,22 +119,31 @@ def Prevalence(age) :
 	return C / (S + C)
 # %$$
 #
-# $head Computing delta$$
+# $head Computing Delta$$
 # Once we have simulated a measurement value,
-# we can solve for $latex \delta$$ are follows; see
-# $cref/sigma/data_like/Transformed Standard Deviation, sigma_i(theta)/$$:
+# we can solve for $latex \Delta$$ are follows; see
+# $cref/sigma
+#	/data_like
+#	/Notation
+#	/Transformed Standard Deviation, sigma_i
+# /$$:
 # $latex \[
-#	\sigma = \log( y + \eta + \delta ) - \log(y + \eta )
+#	\sigma = \log( y + \eta + \Delta ) - \log(y + \eta )
 # \] $$
 # $latex \[
-#	\exp ( \sigma ) = \frac{ y + \eta + \delta }{ y + \eta }
+#	\exp ( \sigma ) = \frac{ y + \eta + \Delta }{ y + \eta }
 # \] $$
 # $latex \[
-#	\exp ( \sigma ) ( y + \eta ) = y + \eta + \delta
+#	\exp ( \sigma ) ( y + \eta ) = y + \eta + \Delta
 # \] $$
 # $latex \[
-#	\delta = [ \exp ( \sigma ) - 1 ] ( y + \eta )
+#	\Delta = [ \exp ( \sigma ) - 1 ] ( y + \eta )
 # \] $$
+# For this case there are no measurement noise covariates so
+# $latex \sigma$$ is the standard deviation for the simulated data.
+# Furthermore, the
+# $cref/minimum_meas_cv/option_table/minimum_meas_cv/$$ is zero,
+# so $latex \Delta$$ is the $icode meas_std$$.
 #
 # $head Prevalence Prior$$
 # Prevalence must always be between zero and one so this limits are used
@@ -254,12 +265,12 @@ def example_db (file_name) :
 		sigma         = prevalence_sigma
 		log_noise     = random.gauss(0, sigma)
 		y             = exp(log_noise) * Prevalence(age) * exp(income_effect)
-		delta         = ( exp(sigma) - 1 ) * ( y + eta )
+		Delta         = ( exp(sigma) - 1 ) * ( y + eta )
 		row['age_lower']  = age
 		row['age_upper']  = age
 		row['income']     = income
 		row['meas_value'] = y
-		row['meas_std']   = delta
+		row['meas_std']   = Delta
 		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
