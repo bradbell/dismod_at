@@ -13,6 +13,7 @@
 #	mtother
 #	std
 #	cv
+#	covariate
 #	covariates
 #	var
 #	mulstd
@@ -48,33 +49,30 @@ minimum_meas_cv = 0.10
 # $cref/meas_std/data_table/meas_std/$$ is above and below the bound specified
 # by $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ are included.
 #
-# $subhead delta$$
+# $subhead Delta$$
 # We use the notation
 # $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$ for
 # the standard deviation adjusted by the minimum measurement cv.
-# The adjusted standard deviation
-# $cref/delta/data_like/Adjusted Standard Deviation, delta_i(theta)/$$
-# is equal to $latex \Delta$$ because there are no measurement
-# standard deviation covariates multipliers for this example.
+#
+# $subhead sigma$$
+# We use the notation
+# $cref/sigma/data_like/Notation/Transformed Standard Deviation, sigma_i/$$ for
+# the transformed standard deviation.
+# There are no measurement noise covariate multipliers, so the
+# adjusted standard deviation is also equal to $latex \sigma$$.
 #
 # $subhead Gaussian Residuals$$
-# In the Gaussian case, the residual is
+# In the Gaussian case, $latex \sigma = \Delta$$ and
 # $latex \[
-#	(y - \mu) / \delta
+#	(y - \mu) / \sigma
 # \]$$,
 # where $latex y$$ is the measured value and $latex \mu$$ is the
 # model value for the
 # $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
 #
 # $subhead Log-Gaussian Residuals$$
-# In the Log-Gaussian case, we the
-# $cref/
-#   transformed standard deviation/
-#   data_like/
-#   Transformed Standard Deviation, sigma_i(theta)
-# /$$
 # $latex \[
-#	\sigma = \log ( y + \eta + \delta ) - \log( y + \eta )
+#	\sigma = \log ( y + \eta + \Delta ) - \log( y + \eta )
 # \] $$
 # where $latex y$$ is the measured value
 # and $latex \eta$$ is the offset in the log transform.
@@ -83,7 +81,6 @@ minimum_meas_cv = 0.10
 #	\frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
 # \] $$
 # where $latex \mu$$ is the model value for the average integrand.
-#
 #
 # $head Priors$$
 #
@@ -325,12 +322,11 @@ for data_subset_id in range(n_subset) :
 	eta            = data_row['eta']
 	density        = density_table[density_id]['density_name']
 	Delta          = max( minimum_meas_cv * meas_value, meas_std)
-	delta          = Delta
 	check          = None
 	if density == 'gaussian' :
-		check = (meas_value - avg_integrand) / delta
+		check = (meas_value - avg_integrand) / Delta
 	if density == 'log_gaussian' :
-		log_y_eta_plus  = math.log(meas_value + eta + delta)
+		log_y_eta_plus  = math.log(meas_value + eta + Delta)
 		log_y_eta       = math.log(meas_value + eta)
 		log_mu_eta      = math.log(avg_integrand + eta)
 		sigma           = log_y_eta_plus - log_y_eta
@@ -351,8 +347,8 @@ for var_id in range(n_var) :
 	value     = fit_row['fit_var_value']
 	residual  = fit_row['residual_value']
 	mu        = omega_mean
-	std       = fun_omega_value_std()
-	sigma     = math.log(mu + eta + std) - math.log(mu + eta)
+	delta     = fun_omega_value_std()
+	sigma     = math.log(mu + eta + delta) - math.log(mu + eta)
 	check     = (math.log(value + eta) - math.log(mu + eta)) / sigma
 	relerr    = residual / check - 1.0
 	assert abs(relerr) <= eps99
