@@ -356,6 +356,13 @@ correpsonding parent rates.
 07-15:
 1. Set the new trace_init_fit_model option to true (this gives feed back
    during initialization of large models).
+
+08-05:
+1. Adapt fit_ihme.py to new defintion adjusted standard deviaiton.
+   To be specific, see changes 2, 3, 4 directly below.
+2. Force data to be log-gaussian during no_ode and yes_ode.
+3. Change measurement noise covariate multiplier to 1e-2 (in log space).
+4. Use a smaller eta factor.
 '''
 }
 # help cases
@@ -1943,11 +1950,8 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 	#
 	# factor:
 	# is a dictionary with following keys: mean, lower, upper.
-	# For each key the factor multipliers the absolute value of the
-	# median of the data for this integrand to get the corresponding value
-	# in the uniform prior for the square root of the covariate multiplier.
-	# In other words, the factor is times a value is in standard deviation
-	# units, while the prior values are in variance units.
+	# These are the corresponding values in the uniform prior for the
+	# noise covariate multiplier.
 	#
 	# return:
 	# if there already is a meas_noise covariate multiplier for this
@@ -1972,18 +1976,15 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, factor) :
 			group_name = row['group_name']
 	assert group_name is not None
 	#
-	median = abs( numpy.median( integrand_data[integrand_name] ) )
-	lower  = ( median * factor['lower'] )**2
-	mean   = ( median * factor['mean']  )**2
-	upper  = ( median * factor['upper'] )**2
+	lower  = factor['lower']
+	mean   = factor['mean']
+	upper  = factor['upper']
 	#
 	msg  = '\nadd_meas_noise_mulcov\n'
 	msg += 'integrand = {}, group = {}, uniform value prior\n'
 	msg  = msg.format(integrand_name, group_name)
-	msg += 'lower = (|median|*{})^2 = {:.5g}\n'.format(factor['lower'], lower)
-	msg += 'mean  = (|median|*{})^2 = {:.5g}\n'.format(factor['mean'],  mean)
-	msg += 'upper = (|median|*{})^2 = {:.5g}\n'.format(factor['upper'], upper)
-	msg += 'where median is the median of the {} data'.format(integrand_name)
+	tmp  = 'lower = {:.5g}, mean = {:5g}, upper = {:5g}\n'
+	msg += tmp.format(lower, mean, upper)
 	trace( msg )
 	#
 	# covariate_id
@@ -2127,6 +2128,7 @@ if which_fit_arg == 'no_ode'  :
 	# integrand_data
 	integrand_data = get_integrand_data()
 	#
+	#
 	# Set parent rate priors for this disease
 	zero_parent_rate_set = set()
 	for rate_name in specific.parent_smoothing :
@@ -2171,7 +2173,7 @@ if which_fit_arg == 'no_ode'  :
 	#
 	# add measurement noise covariates
 	group_id = 0
-	factor   = { 'lower':1e-1, 'mean':1e-1, 'upper':1e-1 }
+	factor   = { 'lower':1e-2, 'mean':1e-2, 'upper':1e-2 }
 	for integrand_name in integrand_list_all :
 		added = add_meas_noise_mulcov(
 			integrand_data, integrand_name, group_id, factor
@@ -2190,6 +2192,17 @@ if which_fit_arg == 'no_ode'  :
 	# -----------------------------------------------------------------------
 	# init:
 	system_command([ 'dismod_at', temp_database, 'init'])
+	# ------------------------------------------------------------------------
+	# change data likelihood to use log Gaussian
+	integrand_data = get_integrand_data()
+	density_name   = 'log_gaussian'
+	factor_eta_str = '1e-3'
+	nu_str         = '5' # not used
+	for integrand_name in integrand_list_all :
+		system_command([
+			'dismod_at', temp_database, 'data_density',
+			integrand_name, density_name, factor_eta_str, nu_str
+		])
 	# ------------------------------------------------------------------------
 	# randomly subsample the data
 	max_fit_str = str(specific.max_per_integrand)
@@ -2305,7 +2318,7 @@ if which_fit_arg == 'students'  :
 	# change data likelihood to use students-t
 	integrand_data = get_integrand_data()
 	density_name   = 'log_students'
-	factor_eta_str = '1e-2'
+	factor_eta_str = '1e-3'
 	nu_str         = '5'
 	for integrand_name in integrand_list_all :
 		system_command([
