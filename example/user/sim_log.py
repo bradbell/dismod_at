@@ -59,36 +59,42 @@ gamma_global      = meas_value_global * 0.25
 # $latex n$$       $cnext number of simulated data values,
 #                  $cref/number_simulate/simulate_command/number_simulate/$$
 # $rnext
-# $latex \sigma$$  $cnext
-# $cref/log transformed standard deviation
-#	/data_like
-#	/Transformed Standard Deviation, sigma_i(theta)
-# /$$
-# $rnext
 # $latex z_i$$     $cnext $th i$$ simulate data for $latex i = 1, \ldots , n$$
 # $tend
 #
-# $head Adjusted Standard Deviation$$
+# $head sigma$$
+# The $cref/transformed standard deviation
+#	/data_like
+#	/Notation
+#	/Transformed Standard Deviation, sigma_i
+# /$$
+# is given by
+# $latex \[
+#	\sigma = \log( y + \eta + \Delta ) - \log(y + \eta)
+# \] $$
+
+#
+# $head delta$$
 # For this example we use the
 # $cref/add_std_scale_none
 #	/data_like
 #	/Adjusted Standard Deviation, delta_i(theta)
 #	/add_std_scale_none
 # /$$
-# definition of the adjusted standard deviation; i.e.
+# option in the definition of the
+# $cref/adjusted standard deviation
+#	/data_like
+#	/Adjusted Standard Deviation, delta_i(theta)
+# /$$ $latex \delta$$; i.e.,
 # $latex \[
-#	\delta = \Delta + \gamma
+#	\delta = \sigma + \gamma
 # \] $$
 #
 # $head Simulations$$
-# The log transformed standard deviation is given by
-# $latex \[
-#	\sigma = \log( y + \eta + \delta ) - \log(y + \eta)
-# \] $$
 # The offset log transform of each simulated measurement $latex z_i$$ has
 # the following Gaussian distribution:
 # $latex \[
-#	\log( z_i + \eta ) - \log( \mu + \eta ) \sim N(0, \sigma^2 )
+#	\log( z_i + \eta ) - \log( \mu + \eta ) \sim N(0, \delta^2 )
 # \] $$
 #
 # $head Source Code$$
