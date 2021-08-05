@@ -126,53 +126,22 @@ $head meas_std$$
 This column has type $code real$$,
 has same units at the data,
 and must be a positive number.
-
-$subhead Adjusted Standard Deviation, delta$$
-In the simple case where the
-$cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ is zero
-for this $cref/integrand/data_table/integrand_id/$$, the
+This is not the only contribution to the standard deviation
+used in the data likelihood; see
 $cref/minimum cv standard deviation
 	/data_like
 	/Notation
 	/Minimum CV Standard Deviation, Delta_i
-/$$
-is given by
-$codei%
-	%Delta% = %meas_std%
-%$$
-In the simple case where there are no
-$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
-covariate multipliers for this integrand, the
+/$$ $latex \Delta$$,
+$cref/transformed standard deviation
+	/data_like
+	/Notation
+	/Transformed Standard Deviation, sigma_i
+/$$ $latex \sigma$$, and
 $cref/adjusted standard deviation
 	/data_like
 	/Adjusted Standard Deviation, delta_i(theta)
-/$$
-is given by
-$codei%
-	%delta% = %Delta%
-%$$
-
-$subhead Linear Scaling$$
-If the density is $cref/linear/density_table/Notation/Linear/$$
-$icode delta$$ is the standard deviation for this measurement value.
-
-$subhead Log Scaling$$
-If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
-$codei%
-	%sigma% = log(%meas_value% + %eta% + %delta%) - log(%meas_value% + %eta%)
-%$$
-is the standard deviation for the log of $icode%meas_value% + %eta%$$; see
-$cref/transformed standard deviation
-	/data_like
-	/Transformed Standard Deviation, sigma_i(theta)
-/$$.
-Using the notation $code ~=$$ for approximately equal,
-and taking the derivative of the log at the midpoint for the difference,
-we get
-$codei%
-	%sigma% ~= %delta% / ( %meas_value% + %eta% + %delta% / 2 )
-%$$
-
+/$$ $latex \delta ( \theta )$$.
 
 $head eta$$
 This column has type $code real$$.

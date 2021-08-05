@@ -609,8 +609,12 @@ $head 06-28$$
 Add discussion of relation ship between the
 measurement standard deviation $icode meas_std$$ and the
 adjusted standard deviation
-$cref/delta/data_table/meas_std/Adjusted Standard Deviation, delta/$$
-to the data table documentation.
+$cref/delta(theta)
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+/$$
+to the
+$cref/meas_std/data_table/meas_std/$$ documentation.
 
 $head 06-27$$
 The relation between of the standard deviations and
