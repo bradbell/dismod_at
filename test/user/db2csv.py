@@ -16,15 +16,16 @@ meas_value      = 1.1 * iota_true
 meas_std        = 1e-5
 minimum_meas_cv = 1e-1
 meas_stdcv      = max(minimum_meas_cv * meas_value, meas_std)
-gamma_true      = meas_stdcv * meas_stdcv
+gamma_noise     = meas_stdcv * meas_stdcv
+eta             = meas_value / 100.0
 # ---------------------------------------------------------------------------
 import sys
 import os
 import distutils.dir_util
 import subprocess
 import copy
-import math
 import csv
+from math import log, exp, sqrt
 test_program = 'test/user/db2csv.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -50,8 +51,10 @@ def fun_iota_parent(a, t) :
 	return ('prior_iota_parent', None, None)
 def fun_iota_child(a, t) :
 	return ('prior_iota_child', None, None)
-def fun_gamma(a, t) :
-	return ('prior_gamma', None, None)
+def fun_noise(a, t) :
+	return ('prior_noise', None, None)
+def fun_flat(a, t) :
+	return ('prior_flat', None, None)
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	# ----------------------------------------------------------------------
@@ -90,14 +93,14 @@ def example_db (file_name) :
 			'type':      'meas_noise',
 			'effected':  'Sincidence',
 			'group':     'world',
-			'smooth':    'smooth_gamma'
+			'smooth':    'smooth_noise'
 		},{
 			# This covariate held out of fit because max_abs_effect is 0
 			'covariate': 'one',
 			'type':      'meas_value',
 			'effected':  'Sincidence',
 			'group':     'world',
-			'smooth':    'smooth_gamma'
+			'smooth':    'smooth_flat'
 		}
 	]
 	#
@@ -122,7 +125,7 @@ def example_db (file_name) :
 		'age_upper':    50.0,
 		'meas_value':   meas_value,
 		'meas_std':     meas_std,
-		'eta':          meas_value / 100.,
+		'eta':          eta,
 		'one':          1.0
 	}
 	row['density'] = 'gaussian'
@@ -143,12 +146,16 @@ def example_db (file_name) :
 			'density':  'gaussian',
 			'mean':     0.0,
 			'std':      1.0,
-		},{	# prior_gamma
-			'name':     'prior_gamma',
+		},{	# prior_noise
+			'name':     'prior_noise',
 			'density':  'uniform',
 			'lower':    0.00,
-			'mean':     gamma_true,
-			'upper':    10.0 * gamma_true
+			'mean':     gamma_noise,
+			'upper':    10.0 * gamma_noise
+		},{	# priot_flat
+			'name':     'prior_flat',
+			'density':  'uniform',
+			'mean':     0.0,
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -164,11 +171,16 @@ def example_db (file_name) :
 			'age_id':                   [0],
 			'time_id':                  [0],
 			'fun':                      fun_iota_child
-		},{	# smooth_gamma
-			'name':                     'smooth_gamma',
+		},{	# smooth_noise
+			'name':                     'smooth_noise',
 			'age_id':                   [0],
 			'time_id':                  [0],
-			'fun':                      fun_gamma
+			'fun':                      fun_noise
+		},{	# smooth_flat
+			'name':                     'smooth_flat',
+			'age_id':                   [0],
+			'time_id':                  [0],
+			'fun':                      fun_flat
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -184,7 +196,7 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'max_num_iter_fixed', 'value':'-1' },
 		{ 'name':'parent_node_name',   'value':'north_america' },
-		{ 'name':'meas_noise_effect',  'value':'add_var_scale_log' },
+		{ 'name':'meas_noise_effect',  'value':'add_var_scale_none' },
 		{ 'name':'print_level_fixed',  'value':'0' },
 	]
 	# ----------------------------------------------------------------------
@@ -279,10 +291,14 @@ for row in reader :
 	# meas_delta
 	result = float( row['meas_delta'] )
 	if row['density'] == 'gaussian' :
-		meas_delta  = math.sqrt( meas_stdcv * meas_stdcv + gamma_true)
+		delta       = sqrt( meas_stdcv * meas_stdcv + gamma_noise)
+		meas_delta  = delta
 	else :
 		assert row['density'] == 'log_gaussian'
-		meas_delta  = meas_stdcv * math.sqrt( 1.0 + gamma_true)
+		sigma   = log(meas_value + eta + meas_stdcv) - log(meas_value + eta)
+		delta   = sqrt( sigma * sigma + gamma_noise)
+		# delta = log(meas_value + eta + meas_delta) - log(meas_value + eta)
+		meas_delta  = (meas_value + eta) * (exp(delta) - 1.0)
 	assert abs( 1.0 - result / meas_delta) < 1e-4
 # -----------------------------------------------------------------------
 # mixed_info.csv

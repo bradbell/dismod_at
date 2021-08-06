@@ -456,15 +456,23 @@
 # If the previous fit command had a
 # $cref/simulate_index/db2csv_command/simulate_index/$$,
 # this column is empty.
-# Otherwise, if there was a previous fit command,
-# this is the
+# We use $icode delta$$ to denote the
 # $cref/adjusted standard deviation
 #	/data_like
 #	/Adjusted Standard Deviation, delta_i(theta)
 # /$$ for this row.
-# This value is computed for this command by dividing by the residual
-# which is not valid when the residual is zero and reported as empty.
-# This value is also reported as empty if the result of the division
+# If the density for this row is
+# $cref/linear/density_table/Notation/Linear/$$
+# $codei%
+#	%meas_delta% = %delta%
+# %$$
+# Otherwise, the density is log scaled and
+# $codei%
+#	%delta% = log(%meas_value% + %eta% + %meas_delta%) - log(%meas_value% + %eta%)
+# %$$
+# The value $icode delta$$ is computed by dividing by the residual,
+# which is plus infinity and not valid when the residual is zero.
+# This value is reported as empty if the calculation for $icode meas_delta$$
 # is greater than the maximum python $code float$$ value.
 #
 # $subhead meas_value$$
@@ -628,22 +636,35 @@ def db2csv_command(database_file_arg) :
 	parent_node_id = None
 	# -------------------------------------------------------------------------
 	def adjusted_meas_std(density, eta, meas_value, avgint, residual) :
-		log = density.startswith('log_')
+		from math import log
+		#
 		if residual == None or residual == 0.0 :
-			delta = None
-		elif not log :
-			# residual = (meas_value - avgint) / delta
+			return None
+		#
+		# log
+		is_log = density.startswith('log_') or density.startswith('cen_log_')
+		#
+		# linear case
+		if not is_log :
 			delta = (meas_value - avgint) / residual
-		else :
-			# residual = ( log(meas_value + eta) - log(avgint + eta) ) / sigma
-			difference  = math.log(meas_value + eta) - math.log(avgint + eta)
-			sigma = difference / residual
-			# sigma = log(meas_value + eta + delta) - log(meas_value + eta)
-			if sigma > math.log( sys.float_info.max ) :
-				delta = None
-			else :
-				delta   = (meas_value + eta) * (math.exp(sigma) - 1.0)
-		return delta
+			assert delta >= 0.0
+			if delta > log( sys.float_info.max ) :
+				return None
+			return delta
+		#
+		# log case
+		#
+		# delta
+		delta = (log(meas_value + eta) - log(avgint + eta)) / residual
+		assert delta >= 0.0
+		if delta > log( sys.float_info.max ) :
+			return None
+		#
+		# delta = log(meas_value + eta + delta) - log(meas_value + eta)
+		meas_delta = (meas_value + eta) * (math.exp(delta) - 1.0)
+		if meas_delta > log( sys.float_info.max ) :
+			return None
+		return meas_delta
 	# -------------------------------------------------------------------------
 	def round_to(x, n_digits) :
 		if x == None or x == 0.0:
