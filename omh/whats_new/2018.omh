@@ -1132,11 +1132,7 @@ $head 01-20$$
 $list number$$
 The method used by the $cref simulate_command$$ was simplified and documented.
 To be specific, the average integrand, instead of the simulated
-data value, was used to compute the transformed standard deviation
-$cref/sigma
-	/data_like
-	/Transformed Standard Deviation, sigma_i(theta)
-/$$.
+data value, was used to compute the transformed standard deviation.
 $lnext
 The fields $icode meas_value$$ and $icode meas_std$$
 in the data_sim table were changed to

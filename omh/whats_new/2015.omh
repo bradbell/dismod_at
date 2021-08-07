@@ -419,7 +419,8 @@ A large reduction in memory, and an increase in speed,
 was accomplished by making the
 $cref/transformed standard deviation
 	/data_like
-	/Transformed Standard Deviation, sigma_i(theta)
+	/Notation
+	/Transformed Standard Deviation, sigma_i
 /$$
 depend the data and not on the $cref model_variables$$.
 To be specific, $code valgrind --tool=massif$$ reported the following

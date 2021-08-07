@@ -368,17 +368,10 @@ which does not make sense and would cause dismod_at to abort with the message
 $codei%
 	%...% simulate_command sim_stdcv is nan or less than zero %...%
 %$$
-This problem has been fixed using
-$cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-/$$
+This problem has been fixed using the
+adjusted standard deviation
 to replace $icode data_sim_delta$$ and
-$cref/minimum CV standard deviation
-	/data_like
-	/Notation
-	/Minimum CV Standard Deviation, Delta_i
-/$$
+the minimum CV standard deviation
 to replace $icode data_sim_stdcv$$.
 These replacements use the original measurements
 $cref/meas_value/data_table/meas_value/$$
@@ -387,7 +380,8 @@ $cref/data_sim_value/data_sim_table/data_sim_value/$$
 to define the corresponding
 $cref/transformed standard deviation
 	/data_like
-	/Transformed Standard Deviation, sigma_i(theta)
+	/Notation
+	/Transformed Standard Deviation, sigma_i
 /$$.
 $list number$$
 Add the $cref user_sim_log.py$$ example to highlight this change.
@@ -533,7 +527,11 @@ $cref/log scaled/density_table/Notation/Log Scaled/$$ densities.
 In addition, the definition was move from the $cref statistic$$ section
 to a place where the different cases are easier to understand; see
 $icode sigma$$ in
-$cref/data_like/data_like/Transformed Standard Deviation, sigma_i(theta)/$$,
+$cref/data_like
+	/data_like
+	/Notation
+	/Transformed Standard Deviation, sigma_i
+/$$,
 $cref/fixed_value/fixed_value/sigma_j/$$,
 $cref/random_value/random_value/sigma_j/$$,
 $cref/smooth_dage/smooth_dage/sigma_ij/$$,
