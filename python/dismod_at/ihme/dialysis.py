@@ -165,6 +165,9 @@ def chi_parent_smoothing(
 relative_path = 'data/475527/dbs/1/2/dismod.db'  # Global
 relative_path = 'data/475527/dbs/96/2/dismod.db' # Australasia
 #
+# meta regression noise level for the variance of the log of the data
+log_meta_noise_level = 0.1
+#
 # maximum number of data values per integrand
 max_per_integrand = 1000
 #

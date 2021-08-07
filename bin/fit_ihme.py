@@ -91,6 +91,7 @@ See the following files for examples disease specific files:
 The settings in a disease specific file are the part of the model that is
 different for each disease. Currently, the following settings are included:
 	relative_path
+	log_meta_noise_level
 	max_per_integrand
 	tolerance_fixed
 	max_num_iter_fixed
@@ -146,6 +147,13 @@ is the path on the IHME cluster. There also is a local copy at
 is the path on the local machine; see the data_dir command line argument.
 In the special case of the unknown disease, the relative path need not be
 its location on the IHME cluster, but it must begin with 'data'.
+''',
+
+'log_meta_noise_level':'''
+log_meta_noise_level:
+This variable, in the python file for this disease,
+is the meta regression term for the variance of the log of the data.
+It can be zero to specify no meta regression noise.
 ''',
 
 'max_per_integrand':'''
@@ -364,9 +372,8 @@ correpsonding parent rates.
 3. Change measurement noise covariate multiplier to 1e-2 (in log space).
 4. Use a smaller eta factor.
 
-08-06:
-1. All the test cases now fit without adding measurement noise covariate
-   multipliers and the corresponding code was removed to simplify fit_ihme.py.
+08-07:
+1. Add the log_meta_noise_level variable to the disease specific information.
 '''
 }
 # help cases
@@ -1942,6 +1949,112 @@ def set_option (name, value) :
 	system_command( [
 		'dismod_at',  temp_database, 'set', 'option', name , value
 	] )
+# -----------------------------------------------------------------------------
+def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, level) :
+	# Add a meas_noise covariate multiplier for a specified integrand
+	# if one does not already exist. Note that meas_noise multipliers can't
+	# have ramdom effect (so the subgroup id is null in the mulcov table).
+	#
+	# integrand_data: is the current result of get_integrand_data.
+	# integrand_name: specifies which integrand the multiplier is for.
+	# group_id: specifies the group for the covariate multiplier.
+	#
+	# level:
+	# is a dictionary with following keys: mean, lower, upper.
+	# These are the corresponding values in the uniform prior for the
+	# noise covariate multiplier.
+	#
+	# return:
+	# if there already is a meas_noise covariate multiplier for this
+	# integrand the new multiplier is not added and this routine returns false.
+	# Otherwise it returns true and the new multiplier is reported using trace.
+	assert 0.0             <= level['lower']
+	assert level['lower'] <= level['mean']
+	assert level['mean']  <= level['upper']
+	#
+	# integrand_id
+	integrand_id = integrand_name2id[integrand_name]
+	#
+	# check if there already is a meas_noise multiplier for this integrand
+	for row in mulcov_table :
+		if row['mulcov_type'] == 'meas_noise' :
+			if row['integrand_id'] == integrand_id :
+				return False
+	#
+	group_name = None
+	for row in subgroup_table :
+		if row['group_id'] == group_id :
+			group_name = row['group_name']
+	assert group_name is not None
+	#
+	lower  = level['lower']
+	mean   = level['mean']
+	upper  = level['upper']
+	#
+	msg  = '\nadd_meas_noise_mulcov\n'
+	msg += 'integrand = {}, group = {}, uniform value prior\n'
+	msg  = msg.format(integrand_name, group_name)
+	tmp  = 'lower = {:.5g}, mean = {:5g}, upper = {:5g}\n'
+	msg += tmp.format(lower, mean, upper)
+	trace( msg )
+	#
+	# covariate_id
+	covariate_id = identically_one_covariate()
+	#
+	# mulcov_id
+	mulcov_id = len(mulcov_table)
+	#
+	# prior used in one point smoothing
+	density_id = density_name2id['uniform']
+	prior_name = integrand_name + '_meas_noise_value_prior'
+	value_prior = {
+		'prior_name' : prior_name     ,
+		'density_id' : density_id     ,
+		'lower'      : lower          ,
+		'upper'      : upper          ,
+		'mean'       : mean           ,
+		'std'        : None           ,
+		'eta'        : None           ,
+		'nu'         : None           ,
+	}
+	dage_prior  = copy.copy( value_prior )
+	prior_name = integrand_name + '_meas_noise_dage_prior'
+	dage_prior['prior_name']  =  prior_name
+	#
+	dtime_prior = copy.copy( value_prior )
+	prior_name = integrand_name + '_meas_noise_dtime_prior'
+	dtime_prior['prior_name'] = prior_name
+	#
+	# new one point smoothing
+	age_grid  = [ age_table[0]['age'] ]
+	time_grid = [ time_table[0]['time'] ]
+	smooth_id = len(smooth_table)
+	smooth_name = '{}_noise_smoothing_{}'.format(integrand_name, smooth_id)
+	smooth_id = new_smoothing(
+		smooth_name, age_grid, time_grid, value_prior, dage_prior, dtime_prior
+	)
+	#
+	# new row in mulcov_table
+	row = dict()
+	for col in mulcov_col_name :
+		row[col] = None
+	row['mulcov_type']      = 'meas_noise'
+	row['covariate_id']     = covariate_id
+	row['integrand_id']     = integrand_id
+	row['group_id']         = group_id
+	row['group_smooth_id']  = smooth_id
+	mulcov_table.append( row )
+	#
+	# write out the tables that changed
+	put_table('prior',       prior_table, prior_col_name, prior_col_type)
+	put_table('smooth',      smooth_table, smooth_col_name, smooth_col_type)
+	put_table('mulcov',      mulcov_table,  mulcov_col_name, mulcov_col_type)
+	put_table('smooth_grid',
+		smooth_grid_table, smooth_grid_col_name, smooth_grid_col_type
+	)
+	#
+	# return true because we have added the covariate multiplier
+	return True
 # ============================================================================
 # Begin Main Program
 # ============================================================================
@@ -2068,6 +2181,19 @@ if which_fit_arg == 'no_ode'  :
 				set_rate_smoothing(parent_rate, rate_name,
 					age_grid, time_grid, value_prior, dage_prior, dtime_prior
 				)
+	#
+	# add measurement noise covariates
+	group_id  = 0
+	var_log   = specific.log_meta_noise_level
+	level     = { 'lower':var_log, 'mean':var_log, 'upper':var_log }
+	for integrand_name in integrand_list_all :
+		added = add_meas_noise_mulcov(
+			integrand_data, integrand_name, group_id, level
+		)
+		if not added :
+			msg  = 'found meas_noise multiplier for ' + integrand_name
+			msg += ' in original database'
+			trace(msg)
 	#
 	# Covariate multipliers that we are setting a specific value for
 	for row in specific.set_mulcov_value :

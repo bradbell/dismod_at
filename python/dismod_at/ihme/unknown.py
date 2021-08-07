@@ -49,6 +49,9 @@ def child_smoothing_fun(
 # relative path for original ihme database
 relative_path = 'data/unknown/475588-102-3.db'
 #
+# meta regression noise level for the variance of the log of the data
+log_meta_noise_level = 0.1
+#
 # maximum number of data values per integrand
 max_per_integrand = 1000
 #
