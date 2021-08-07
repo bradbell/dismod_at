@@ -1591,7 +1591,7 @@ def db2csv_command(database_file_arg) :
 			if not fit_simulate_index :
 				meas_delta = adjusted_meas_std(
 					row_out['density']       ,
-					row_in['eta']            ,
+					subset_row['eta']        ,
 					row_in['meas_value']     ,
 					row['avg_integrand']     ,
 					row['weighted_residual']

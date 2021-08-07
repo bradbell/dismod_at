@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -8,10 +8,10 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 # values used to simulate data
-iota_true          = 0.01
-gamma_true_scale   = 2.0
-n_data             = 2000
-data_std           = iota_true / 3.0
+iota_true   = 1.0
+gamma_true  = iota_true * 2.0
+n_data      = 2000
+data_std    = iota_true / 10.0
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -111,19 +111,15 @@ def example_db (file_name, meas_noise_effect) :
 		'subgroup':    'world',
 		'one':          1.0
 	}
-	if meas_noise_effect == 'add_std_scale_all' :
-		delta      = data_std * (1.0 + gamma_true_scale)
-		gamma_true = gamma_true_scale
-	elif meas_noise_effect == 'add_std_scale_log' :
-		delta      = data_std * (1.0 + gamma_true_scale)
-		gamma_true = gamma_true_scale * data_std
-	elif meas_noise_effect == 'add_var_scale_all' :
-		delta      = data_std * math.sqrt( 1.0 + gamma_true_scale )
-		gamma_true = gamma_true_scale
-	else :
-		assert meas_noise_effect == 'add_var_scale_log'
-		delta      = data_std * math.sqrt( 1.0 + gamma_true_scale )
-		gamma_true = gamma_true_scale * data_std * data_std
+	delta_dict = {
+		'add_std_scale_none' : data_std + gamma_true ,
+		'add_std_scale_log'  : data_std + gamma_true ,
+		'add_std_scale_all'  : data_std * ( 1.0 +  gamma_true ) ,
+		'add_var_scale_none' : math.sqrt( data_std * data_std + gamma_true ),
+		'add_var_scale_log'  : math.sqrt( data_std * data_std + gamma_true ),
+		'add_var_scale_all'  : data_std * math.sqrt( 1.0 + gamma_true ),
+	}
+	delta = delta_dict[meas_noise_effect]
 	# values that change between rows:
 	for data_id in range( n_data ) :
 		row['meas_value'] = random.gauss(iota_true , delta)
@@ -184,10 +180,9 @@ def example_db (file_name, meas_noise_effect) :
 		{ 'name':'zero_sum_child_rate',    'value':'iota'         },
 
 		{ 'name':'quasi_fixed',            'value':'false'        },
-		{ 'name':'derivative_test_fixed',  'value':'second-order' },
 		{ 'name':'max_num_iter_fixed',     'value':'100'          },
 		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'        }
+		{ 'name':'tolerance_fixed',        'value':'1e-12'        }
 	]
 	# ----------------------------------------------------------------------
 	# subgroup_table
@@ -216,16 +211,14 @@ def example_db (file_name, meas_noise_effect) :
 	return
 # ===========================================================================
 for meas_noise_effect in [
-	'add_std_scale_all' ,
+	'add_std_scale_none' ,
 	'add_std_scale_log' ,
+	'add_std_scale_all' ,
+	'add_var_scale_none' ,
+	'add_var_scale_log' ,
 	'add_var_scale_all' ,
-	'add_var_scale_log'
 ] :
-	gamma_true = gamma_true_scale
-	if meas_noise_effect == 'add_std_scale_log' :
-		gamma_true = gamma_true_scale * data_std
-	if meas_noise_effect == 'add_var_scale_log' :
-		gamma_true = gamma_true_scale * data_std * data_std
+	print(meas_noise_effect)
 	#
 	# create database
 	file_name      = 'example.db'
@@ -265,7 +258,7 @@ for meas_noise_effect in [
 			true_value = iota_true
 		assert( true_value != None )
 		# remove # at start of next line to see relative error values
-		# print(meas_noise_effect, var_type, fit_value / true_value - 1.0)
+		# print (true_value, fit_value, fit_value / true_value - 1.0)
 		max_error = max( abs(fit_value / true_value - 1.0), max_error)
 	if max_error > 0.20 :
 		print('max_error = ', max_error)

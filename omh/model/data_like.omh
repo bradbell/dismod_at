@@ -181,15 +181,6 @@ Adding variances does not have this problem,
 but when the covariate value is one, the covariate multipliers
 have data squared units.
 
-$subhead add_std_scale_all$$
-If $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
-$code add_std_scale_all$$
-(add standard deviations and scale all cases)
-the adjusted standard deviation is
-$latex \[
-\delta_i ( \theta ) = \sigma_i [ 1 + E_i (\theta) ]
-\] $$
-
 $subhead add_std_scale_none$$
 If $icode meas_noise_effect$$ is $code add_std_scale_none$$
 (add standard deviations and no scaling)
@@ -209,12 +200,13 @@ $latex \[
 \end{array} \right.
 \] $$
 
-$subhead add_var_scale_all$$
-If $icode meas_noise_effect$$ is $code add_var_scale_all$$
-(add variances and scale all cases)
+$subhead add_std_scale_all$$
+If $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is
+$code add_std_scale_all$$
+(add standard deviations and scale all cases)
 the adjusted standard deviation is
 $latex \[
-\delta_i ( \theta ) = \sigma_i \sqrt{ 1 + E_i (\theta) }
+\delta_i ( \theta ) = \sigma_i [ 1 + E_i (\theta) ]
 \] $$
 
 $subhead add_var_scale_none$$
@@ -234,6 +226,14 @@ $latex \[
 	\sigma_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
 	\sqrt{ \sigma_i^2 + E_i (\theta) } & \R{otherwise}
 \end{array} \right.
+\] $$
+
+$subhead add_var_scale_all$$
+If $icode meas_noise_effect$$ is $code add_var_scale_all$$
+(add variances and scale all cases)
+the adjusted standard deviation is
+$latex \[
+\delta_i ( \theta ) = \sigma_i \sqrt{ 1 + E_i (\theta) }
 \] $$
 
 
