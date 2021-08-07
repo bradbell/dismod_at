@@ -45,8 +45,8 @@ FOREACH(user_case
 	re_scale
 	residual
 	sample_asy
+	sample_asy_sim
 	sample_sim
-	sample_simple
 	sim_data
 	sim_log
 	subgroup_mulcov

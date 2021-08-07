@@ -290,7 +290,7 @@ $lend
 
 $head 03-26$$
 The $code user_posterior.py$$ example was moved to
-$cref user_sample_simple.py$$ and it was extended to include the
+$cref user_sample_asy_sim.py$$ and it was extended to include the
 asymptotic sampling method.
 
 $head 03-25$$

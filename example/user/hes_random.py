@@ -13,7 +13,7 @@
 #	cppad
 # $$
 #
-# $section Check the Hessian of the Fixed Effects Objective$$
+# $section Check the Hessian of the Random Effects Objective$$
 #
 # $head Purpose$$
 # This example checks the computation of the Hessian of the

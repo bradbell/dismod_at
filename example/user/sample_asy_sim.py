@@ -1,13 +1,13 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_sample_simple.py$$ $newlinech #$$
+# $begin user_sample_asy_sim.py$$ $newlinech #$$
 # $spell
 #	init
 #	dismod
@@ -15,7 +15,7 @@
 #	exp
 # $$
 #
-# $section Simple Sampling From The Posterior Distribution$$
+# $section Sampling From The Asymptotic Distribution for a Simulated Data Fit$$
 #
 # $head Purpose$$
 # This example demonstrates using the commands
@@ -23,7 +23,7 @@
 #	dismod_at %database% set truth_var prior_mean
 #	dismod_at %database% simulate %number_sample%
 #	dismod_at %database% sample simulate %number_sample%
-#	dismod_at %database% sample asymptotic %number_sample%
+#	dismod_at %database% sample asymptotic both %number_sample%
 # %$$
 # To obtain the specified number of samples from the posterior distribution;
 # see $cref/simulation/posterior/Simulation/$$.
@@ -104,7 +104,7 @@ import os
 import distutils.dir_util
 import copy
 from math import exp
-test_program = 'example/user/sample_simple.py'
+test_program = 'example/user/sample_asy_sim.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -338,5 +338,5 @@ for row in hes_fixed_table :
 		rel_error = hes_fixed_value / hessian[0,1] - 1.0
 	assert abs(rel_error) < 1e-16
 # -----------------------------------------------------------------------
-print('sample_simple.py: OK')
+print('sample_asy_sim.py: OK')
 # END PYTHON
