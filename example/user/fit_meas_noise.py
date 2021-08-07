@@ -55,7 +55,7 @@
 # and the rate $code iota$$.
 # This is a measurement noise covariate multiplier
 # $cref/gamma/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$
-# that only effects the hospital data.
+# that only effects the survey data.
 # The prior for this multiplier is a uniform on the interval from zero
 # to $codei%10 * %gamma_true%$$.
 # The true value for this multiplier, used to simulate data, is
@@ -73,6 +73,9 @@
 #
 # $head meas_noise_effect$$
 # see $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
+# The function $code gamma_true$$ depends on this option,
+# this in turn affects the priors. Hence the data base must
+# be recreated for each choice of this option
 #
 # $head Scaling Gamma$$
 # The function $code gamma_true()$$ shows on the scaling of $icode gamma$$
@@ -85,23 +88,21 @@
 # BEGIN PYTHON
 # You can changed the values below and rerun this program
 iota_true          = 0.01
-scale_gamma_true   = 4.0
-n_data             = 1000
-meas_std           = 0.001
-meas_noise_effect  = 'add_std_scale_all'
+scale_gamma_true   = 2.0
+n_data             = 4000
+meas_std           = iota_true * 0.5
 # You can changed the values above and rerun this program
 # ---------------------------------------------------------------------------
 def gamma_true() :
-	if meas_noise_effect == 'add_std_scale_all' :
-		result = scale_gamma_true
-	elif meas_noise_effect == 'add_std_scale_log' :
-		result = scale_gamma_true * meas_std
-	elif meas_noise_effect == 'add_var_scale_all' :
-		result = scale_gamma_true
-	else :
-		assert meas_noise_effect == 'add_var_scale_log'
-		result = scale_gamma_true * meas_std * meas_std
-	return result
+	gamma_dict = {
+		'add_std_scale_none' : scale_gamma_true * meas_std ,
+		'add_std_scale_log'  : scale_gamma_true ,
+		'add_std_scale_all'  : scale_gamma_true ,
+		'add_var_scale_none' : scale_gamma_true * meas_std * meas_std ,
+		'add_var_scale_log'  : scale_gamma_true ,
+		'add_var_scale_all'  : scale_gamma_true ,
+	}
+	return gamma_dict[meas_noise_effect]
 # ----------------------------------------------------------------------------
 import sys
 import os
@@ -126,7 +127,7 @@ distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
-def example_db (file_name) :
+def example_db (file_name, meas_noise_effect) :
 	# note that the a, t values are not used for this case
 	def fun_iota(a, t) :
 		return ('prior_iota', None, None)
@@ -290,81 +291,92 @@ def example_db (file_name) :
 # ===========================================================================
 # Run the init command to create the var table
 file_name = 'example.db'
-example_db(file_name)
-#
-program = '../../devel/dismod_at'
-dismod_at.system_command_prc([ program, file_name, 'init' ])
-# -----------------------------------------------------------------------
-# read database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
-var_table       = dismod_at.get_table_dict(connection, 'var')
-rate_table      = dismod_at.get_table_dict(connection, 'rate')
-integrand_table = dismod_at.get_table_dict(connection, 'integrand')
-covariate_table = dismod_at.get_table_dict(connection, 'covariate')
-node_table      = dismod_at.get_table_dict(connection, 'node')
-# -----------------------------------------------------------------------
-# truth table:
-tbl_name     = 'truth_var'
-col_name     = [ 'truth_var_value' ]
-col_type     = [ 'real' ]
-row_list     = list()
-var_id2true  = list()
-for var_id in range( len(var_table) ) :
-	var_info        = var_table[var_id]
-	truth_var_value = None
-	var_type        = var_info['var_type']
-	if var_type == 'mulcov_meas_noise' :
-		integrand_id  = var_info['integrand_id']
-		integrand_name = integrand_table[integrand_id]['integrand_name']
-		assert integrand_name == 'Sincidence'
-		#
-		covariate_id   = var_info['covariate_id']
-		covariate_name = covariate_table[covariate_id]['covariate_name' ]
-		assert( covariate_name == 'one' )
-		#
-		truth_var_value = gamma_true()
-	else :
-		assert( var_type == 'rate' )
-		rate_id   = var_info['rate_id']
-		rate_name = rate_table[rate_id]['rate_name']
-		assert rate_name == 'iota'
-		#
-		node_id   = var_info['node_id']
-		node_name = node_table[node_id]['node_name']
-		assert node_name == 'world'
-		#
-		truth_var_value = iota_true
+for meas_noise_effect in [
+	'add_std_scale_none',
+	'add_std_scale_all',
+	'add_var_scale_none',
+	'add_var_scale_all',
+] :
+	print(meas_noise_effect)
+	example_db(file_name, meas_noise_effect)
 	#
-	var_id2true.append( truth_var_value )
-	row_list.append( [ truth_var_value ] )
-dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-connection.close()
-# -----------------------------------------------------------------------
-# Simulate then fit the data
-dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
-dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ])
-dismod_at.system_command_prc([ program, file_name, 'set', 'start_var', 'truth_var' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' , '0' ])
-# -----------------------------------------------------------------------
-# check fit results
-new          = False
-connection   = dismod_at.create_connection(file_name, new)
-fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
-connection.close()
-#
-max_error    = 0.0
-for var_id in range( len(var_table) ) :
-	row        = fit_var_table[var_id]
-	fit_value  = row['fit_var_value']
-	true_value = var_id2true[var_id]
-	assert( true_value != 0.0 )
-	# remove # at start of next line to see relative error values
-	# print( fit_value / true_value - 1.0 )
-	max_error = max( abs(fit_value / true_value - 1.0), max_error)
-if max_error > 1e-1 :
-	print('max_error = ', max_error)
-	assert(False)
+	program = '../../devel/dismod_at'
+	dismod_at.system_command_prc([ program, file_name, 'init' ])
+	# -----------------------------------------------------------------------
+	# read database
+	new             = False
+	connection      = dismod_at.create_connection(file_name, new)
+	var_table       = dismod_at.get_table_dict(connection, 'var')
+	rate_table      = dismod_at.get_table_dict(connection, 'rate')
+	integrand_table = dismod_at.get_table_dict(connection, 'integrand')
+	covariate_table = dismod_at.get_table_dict(connection, 'covariate')
+	node_table      = dismod_at.get_table_dict(connection, 'node')
+	# -----------------------------------------------------------------------
+	# truth table:
+	tbl_name     = 'truth_var'
+	col_name     = [ 'truth_var_value' ]
+	col_type     = [ 'real' ]
+	row_list     = list()
+	var_id2true  = list()
+	for var_id in range( len(var_table) ) :
+		var_info        = var_table[var_id]
+		truth_var_value = None
+		var_type        = var_info['var_type']
+		if var_type == 'mulcov_meas_noise' :
+			integrand_id  = var_info['integrand_id']
+			integrand_name = integrand_table[integrand_id]['integrand_name']
+			assert integrand_name == 'Sincidence'
+			#
+			covariate_id   = var_info['covariate_id']
+			covariate_name = covariate_table[covariate_id]['covariate_name' ]
+			assert( covariate_name == 'one' )
+			#
+			truth_var_value = gamma_true()
+		else :
+			assert( var_type == 'rate' )
+			rate_id   = var_info['rate_id']
+			rate_name = rate_table[rate_id]['rate_name']
+			assert rate_name == 'iota'
+			#
+			node_id   = var_info['node_id']
+			node_name = node_table[node_id]['node_name']
+			assert node_name == 'world'
+			#
+			truth_var_value = iota_true
+		#
+		var_id2true.append( truth_var_value )
+		row_list.append( [ truth_var_value ] )
+	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+	connection.close()
+	# -----------------------------------------------------------------------
+	# Simulate then fit the data
+	dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
+	dismod_at.system_command_prc([
+		program, file_name, 'set', 'start_var', 'truth_var'
+	])
+	dismod_at.system_command_prc([
+		program, file_name, 'set', 'start_var', 'truth_var'
+	])
+	dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' , '0' ])
+	# -----------------------------------------------------------------------
+	# check fit results
+	new          = False
+	connection   = dismod_at.create_connection(file_name, new)
+	fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+	connection.close()
+	#
+	max_error    = 0.0
+	for var_id in range( len(var_table) ) :
+		row        = fit_var_table[var_id]
+		fit_value  = row['fit_var_value']
+		true_value = var_id2true[var_id]
+		assert( true_value != 0.0 )
+		# remove # at start of next line to see relative error values
+		# print(true_value, fit_value, fit_value / true_value - 1.0 )
+		max_error = max( abs(fit_value / true_value - 1.0), max_error)
+	if max_error > 1e-1 :
+		print('max_error = ', max_error)
+		assert(False)
 # -----------------------------------------------------------------------------
 print('fit_meas_noise.py: OK')
 # -----------------------------------------------------------------------------
