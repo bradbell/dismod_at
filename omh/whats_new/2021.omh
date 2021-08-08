@@ -55,7 +55,7 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
-$head 08-08$$
+$head 08-08$$ $comment Merge std branch$$
 $list number$$
 $bold API Change$$:
 The
@@ -85,6 +85,8 @@ Correct the title in the $cref user_hes_random.py$$ example.
 $lnext
 Test the $cref user_fit_meas_noise.py$$ example using more values for the
 $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
+$lnext
+Move $code user_sample_simple.py$$ to $cref user_sample_asy_sim.py$$.
 $lend
 
 
