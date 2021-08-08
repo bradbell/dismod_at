@@ -55,6 +55,39 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-08$$
+$list number$$
+$bold API Change$$:
+The
+$cref/transformed standard deviation
+	/data_like
+	/Notation
+	/Transformed Standard Deviation, sigma_i
+/$$
+is now computed before the standard deviation adjustment, hence $latex \sigma$$
+no longer depends on the $cref model_variables$$.
+As a consequence for
+$cref/log scaled/density_table/Notation/Log Scaled/$$ densities, the
+$cref/adjusted standard deviation
+	/data_like
+	/Adjusted Standard Deviation, delta_i(theta)
+/$$
+is now in log of the data space (it used be have the same units as the data).
+This fixes a problem with simulating data that has
+$cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers.
+$lnext
+Change the definition of
+$cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ in data.csv so that
+it is still in data units
+even when the adjusted standard deviation is in log of data space.
+$lnext
+Correct the title in the $cref user_hes_random.py$$ example.
+$lnext
+Test the $cref user_fit_meas_noise.py$$ example using more values for the
+$cref/meas_noise_effect/option_table/meas_noise_effect/$$.
+$lend
+
+
 $head 07-29$$
 The Mac changed how $code bash$$ worked and this broke it's install.
 To be specific, $code export DYLD_LIBRARY_PATH$$ no longer works

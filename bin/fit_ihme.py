@@ -374,6 +374,7 @@ correpsonding parent rates.
 
 08-07:
 1. Add the log_meta_noise_level variable to the disease specific information.
+   (This used to be called the noise covariate multiplier.)
 '''
 }
 # help cases
