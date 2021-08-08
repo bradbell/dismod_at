@@ -18,6 +18,7 @@ $spell
 	mulcov
 	cv
 	var
+	csv
 $$
 
 $section Data Likelihood and Weighted Residuals$$
@@ -163,6 +164,9 @@ for $cref/linear/density_table/Notation/Linear/$$ densities,
 $latex \delta_i ( \theta )$$ has the same units as the data, and
 for $cref/log scaled/density_table/Notation/Log Scaled/$$ densities
 $latex \delta_i ( \theta) $$ is in log of the data space.
+The $cref/mess_delta/db2csv_command/data.csv/meas_delta/$$ column
+of the data.csv file displays the data units value corresponding to
+$latex \delta_i ( \theta )$$.
 
 $subhead Scaling$$
 For some cases below, $latex E_i ( \theta )$$ multiplies the
