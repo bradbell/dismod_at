@@ -592,6 +592,9 @@ def new_fit_directory(which_fit) :
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
+	msg = 'Creating plots in ' + fit_directory + '/*.pdf'
+	trace(msg)
+	#
 	# plot rate
 	for row in rate_table :
 		if row['parent_smooth_id'] is not None :

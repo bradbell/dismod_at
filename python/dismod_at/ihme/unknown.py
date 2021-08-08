@@ -59,7 +59,7 @@ max_per_integrand = 1000
 tolerance_fixed   = 1e-8
 #
 # maximum number of iterations when optimizing fixed effects
-max_num_iter_fixed = 40
+max_num_iter_fixed = 75
 #
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []

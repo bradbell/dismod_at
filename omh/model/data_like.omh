@@ -157,7 +157,12 @@ For $latex j \in K_i$$ it should hold that
 $latex 0 \leq x_{i,j}$$, and
 $latex 0 \leq \gamma_j (a, t)$$
 so that $latex \sigma_i$$ is less than or equal $latex \delta_i ( \theta )$$
-defined below:
+defined below.
+It is important to realize that
+for $cref/linear/density_table/Notation/Linear/$$ densities,
+$latex \delta_i ( \theta )$$ has the same units as the data, and
+for $cref/log scaled/density_table/Notation/Log Scaled/$$ densities
+$latex \delta_i ( \theta) $$ is in log of the data space.
 
 $subhead Scaling$$
 For some cases below, $latex E_i ( \theta )$$ multiplies the

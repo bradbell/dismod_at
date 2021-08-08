@@ -220,6 +220,9 @@ relative_path =  'data/475588/dbs/100/3/dismod.db'
 # maximum number of data values per integrand
 max_per_integrand = 1000
 #
+# meta regression noise level for the variance of the log of the data
+log_meta_noise_level = 0.0
+#
 # fixed effects convergence tolerance
 tolerance_fixed   = 1e-8
 #
