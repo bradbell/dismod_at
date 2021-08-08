@@ -375,6 +375,8 @@ correpsonding parent rates.
 08-07:
 1. Add the log_meta_noise_level variable to the disease specific information.
    (This used to be called the noise covariate multiplier.)
+2. Display the actual random seed in the fit_ihme.py output so that results
+   can be reproduced even when input random_see is zero.
 '''
 }
 # help cases
@@ -1998,7 +2000,7 @@ def add_meas_noise_mulcov(integrand_data, integrand_name, group_id, level) :
 	msg  = '\nadd_meas_noise_mulcov\n'
 	msg += 'integrand = {}, group = {}, uniform value prior\n'
 	msg  = msg.format(integrand_name, group_name)
-	tmp  = 'lower = {:.5g}, mean = {:5g}, upper = {:5g}\n'
+	tmp  = 'lower = {:.5g}, mean = {:5g}, upper = {:5g}'
 	msg += tmp.format(lower, mean, upper)
 	trace( msg )
 	#
@@ -2244,7 +2246,10 @@ if which_fit_arg == 'no_ode'  :
 	#
 	# random_seed
 	assert random_seed_arg is not None
-	set_option('random_seed',         random_seed_arg)
+	random_seed = int(random_seed_arg)
+	if random_seed == 0 :
+		random_seed = int( time.time)
+	set_option('random_seed',         str(random_seed))
 	#
 	# iota_zero, rho_zero, chi_zero
 	iota_zero = rate_table[ rate_name2id['iota'] ]['parent_smooth_id'] is None
