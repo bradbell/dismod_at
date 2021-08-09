@@ -81,7 +81,7 @@ $codei%
 It is either the standard deviation.
 For log data densities it is in log space.
 For all other cases (linear data densities or priors) it is in the
-same space as $icode y$.
+same space as $icode y$$.
 
 $head d_id$$
 This argument has prototype

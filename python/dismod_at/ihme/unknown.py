@@ -80,5 +80,5 @@ parent_smoothing = collections.OrderedDict()
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
-# child_smoothing['iota']   = child_smoothing_fun
+child_smoothing['iota']   = child_smoothing_fun
 child_smoothing['chi']    = child_smoothing_fun

@@ -595,7 +595,7 @@ def new_fit_directory(which_fit) :
 	integrand_list_no_ode  = get_integrand_list(False)
 	integrand_list_all     = integrand_list_yes_ode + integrand_list_no_ode
 	#
-	msg = 'Creating plots in ' + fit_directory + '/*.pdf'
+	msg = '\nCreating plots in ' + fit_directory + '/*.pdf'
 	trace(msg)
 	#
 	# plot rate
@@ -2199,7 +2199,7 @@ if which_fit_arg == 'no_ode'  :
 		if not added :
 			msg  = 'found meas_noise multiplier for ' + integrand_name
 			msg += ' in original database'
-			trace(msg)
+			sys.exit(msg)
 	#
 	# Covariate multipliers that we are setting a specific value for
 	for row in specific.set_mulcov_value :
@@ -2248,7 +2248,7 @@ if which_fit_arg == 'no_ode'  :
 	assert random_seed_arg is not None
 	random_seed = int(random_seed_arg)
 	if random_seed == 0 :
-		random_seed = int( time.time)
+		random_seed = int( start_time )
 	set_option('random_seed',         str(random_seed))
 	#
 	# iota_zero, rho_zero, chi_zero
