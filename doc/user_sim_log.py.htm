@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulating Data with Log Transformed Distribution</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulating Data with Log Transformed Distribution">
-<meta name="keywords" id="keywords" content=" simulating data with log transformed distribution see also example parameters model covariate multiplier notation adjusted standard deviation simulations source code ">
+<meta name="keywords" id="keywords" content=" simulating data with log transformed distribution see also example parameters model covariate multiplier notation sigma delta simulations source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_sample_simple.py.htm" target="_top">Prev</a>
+<td><a href="user_sample_sim.py.htm" target="_top">Prev</a>
 </td><td><a href="user_speed.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
@@ -69,7 +69,8 @@ A:active { color : purple }
 <br><a href="user_sim_log.py.htm#Data" target="_top">Data</a>
 <br><a href="user_sim_log.py.htm#Covariate Multiplier" target="_top">Covariate&nbsp;Multiplier</a>
 <br><a href="user_sim_log.py.htm#Notation" target="_top">Notation</a>
-<br><a href="user_sim_log.py.htm#Adjusted Standard Deviation" target="_top">Adjusted&nbsp;Standard&nbsp;Deviation</a>
+<br><a href="user_sim_log.py.htm#sigma" target="_top">sigma</a>
+<br><a href="user_sim_log.py.htm#delta" target="_top">delta</a>
 <br><a href="user_sim_log.py.htm#Simulations" target="_top">Simulations</a>
 <br><a href="user_sim_log.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
@@ -84,7 +85,7 @@ A:active { color : purple }
 <b><big><a name="Example Parameters" id="Example Parameters">Example Parameters</a></big></b>
 <br>
 The following values are used to simulate the data
-<pre><tt>number_simulate   <font color="#990000">=</font> <font color="#993399">200</font>
+<pre><tt>number_simulate   <font color="#990000">=</font> <font color="#993399">2000</font>
 iota_true         <font color="#990000">=</font> <font color="#993399">0.01</font>
 meas_value_global <font color="#990000">=</font> iota_true <font color="#990000">*</font> <font color="#993399">1.5</font>
 eta_global        <font color="#990000">=</font> iota_true <font color="#990000">*</font> <font color="#993399">1e-3</font>
@@ -177,14 +178,6 @@ n
 </td></tr><tr><td align='left'  valign='top'>
 
 <small>@(@
-\sigma
-@)@</small>  </td><td align='left'  valign='top'>
-
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>log&nbsp;transformed&nbsp;standard&nbsp;deviation</span></a>
-
-</td></tr><tr><td align='left'  valign='top'>
-
-<small>@(@
 z_i
 @)@</small>     </td><td align='left'  valign='top'>
  <code><i>i</i></code>-th simulate data for <small>@(@
@@ -193,15 +186,33 @@ i = 1, \ldots , n
 </td></tr>
 </table>
 <br>
-<b><big><a name="Adjusted Standard Deviation" id="Adjusted Standard Deviation">Adjusted Standard Deviation</a></big></b>
+<b><big><a name="sigma" id="sigma">sigma</a></big></b>
+<br>
+The <a href="data_like.htm#Notation.Transformed Standard Deviation, sigma_i" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
+
+is given by
+<small>@[@
+
+	\sigma = \log( y + \eta + \Delta ) - \log(y + \eta)
+
+@]@</small>
+
+
+<br>
+<br>
+<b><big><a name="delta" id="delta">delta</a></big></b>
 <br>
 For this example we use the
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta).add_std_scale_none" target="_top"><span style='white-space: nowrap'>add_std_scale_none</span></a>
 
-definition of the adjusted standard deviation; i.e.
+option in the definition of the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+ <small>@(@
+\delta
+@)@</small>; i.e.,
 <small>@[@
 
-	\delta = \Delta + \gamma
+	\delta = \sigma + \gamma
 
 @]@</small>
 
@@ -209,19 +220,13 @@ definition of the adjusted standard deviation; i.e.
 <br>
 <b><big><a name="Simulations" id="Simulations">Simulations</a></big></b>
 <br>
-The log transformed standard deviation is given by
-<small>@[@
-
-	\sigma = \log( y + \eta + \delta ) - \log(y + \eta)
-
-@]@</small>
 The offset log transform of each simulated measurement <small>@(@
 z_i
 @)@</small> has
 the following Gaussian distribution:
 <small>@[@
 
-	\log( z_i + \eta ) - \log( \mu + \eta ) \sim N(0, \sigma^2 )
+	\log( z_i + \eta ) - \log( \mu + \eta ) \sim N(0, \delta^2 )
 
 @]@</small>
 
@@ -447,11 +452,11 @@ residual_list      <font color="#990000">=</font> <b><font color="#000000">list<
      data_subset_id <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'data_subset_id'</font><font color="#990000">]</font>
      data_id        <font color="#990000">=</font> data_subset_table<font color="#990000">[</font>data_subset_id<font color="#990000">][</font><font color="#FF0000">'data_id'</font><font color="#990000">]</font>
      meas_value     <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>
-     meas_std       <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
+     Delta          <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
      eta            <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'eta'</font><font color="#990000">]</font>
-     delta          <font color="#990000">=</font> meas_std <font color="#990000">+</font> gamma_global
-     sigma          <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>meas_value <font color="#990000">+</font> delta <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>meas_value <font color="#990000">+</font> eta<font color="#990000">)</font>
-     residual       <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font>data_sim_value <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>iota_true <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">)/</font>sigma
+     sigma          <font color="#990000">=</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>meas_value <font color="#990000">+</font> eta <font color="#990000">+</font> Delta<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>meas_value <font color="#990000">+</font> eta<font color="#990000">)</font>
+     delta          <font color="#990000">=</font> sigma <font color="#990000">+</font> gamma_global
+     residual       <font color="#990000">=</font> <font color="#990000">(</font><b><font color="#000000">log</font></b><font color="#990000">(</font>data_sim_value <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">log</font></b><font color="#990000">(</font>iota_true <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">)/</font>delta
      residual_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> residual <font color="#990000">)</font>
 residual_array  <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> residual_list <font color="#990000">)</font>
 residual_mean   <font color="#990000">=</font> residual_array<font color="#990000">.</font><b><font color="#000000">mean</font></b><font color="#990000">()</font>

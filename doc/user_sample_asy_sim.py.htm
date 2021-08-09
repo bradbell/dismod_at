@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Simple Sampling From The Posterior Distribution</title>
+<title>Sampling From The Asymptotic Distribution for a Simulated Data Fit</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Simple Sampling From The Posterior Distribution">
-<meta name="keywords" id="keywords" content=" simple sampling from the posterior distribution purpose discussion variance source code ">
+<meta name="description" id="description" content="Sampling From The Asymptotic Distribution for a Simulated Data Fit">
+<meta name="keywords" id="keywords" content=" sampling from the asymptotic distribution simulated data fit purpose discussion posterior variance source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_sample_simple.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_sample_asy_sim.py_htm.js'>
 </script>
 </head>
 <body>
@@ -36,7 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>user_example</option>
-<option>user_sample_simple.py</option>
+<option>user_sample_asy_sim.py</option>
 </select>
 </td>
 <td>
@@ -49,24 +49,24 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_sample_sim.py.htm" target="_top">Prev</a>
-</td><td><a href="user_sim_log.py.htm" target="_top">Next</a>
+<td><a href="user_sample_asy.py.htm" target="_top">Prev</a>
+</td><td><a href="user_sample_sim.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
 </td>
-<td>user_sample_simple.py</td>
+<td>user_sample_asy_sim.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Simple Sampling From The Posterior Distribution</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Sampling From The Asymptotic Distribution for a Simulated Data Fit</big></big></b></center>
 
-<br><a href="user_sample_simple.py.htm#Purpose" target="_top">Purpose</a>
-<br><a href="user_sample_simple.py.htm#Discussion" target="_top">Discussion</a>
-<br><a href="user_sample_simple.py.htm#Posterior Variance" target="_top">Posterior&nbsp;Variance</a>
-<br><a href="user_sample_simple.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><a href="user_sample_asy_sim.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_sample_asy_sim.py.htm#Discussion" target="_top">Discussion</a>
+<br><a href="user_sample_asy_sim.py.htm#Posterior Variance" target="_top">Posterior&nbsp;Variance</a>
+<br><a href="user_sample_asy_sim.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -76,7 +76,7 @@ This example demonstrates using the commands
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;set&nbsp;truth_var&nbsp;prior_mean<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;simulate&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;simulate&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;asymptotic&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;sample&nbsp;asymptotic&nbsp;both&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>number_sample</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 To obtain the specified number of samples from the posterior distribution;
 see <a href="posterior.htm#Simulation" target="_top"><span style='white-space: nowrap'>simulation</span></a>
@@ -195,7 +195,7 @@ number_sample     <font color="#990000">=</font> <font color="#993399">100</font
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <b><font color="#000080">import</font></b> copy
 <b><font color="#000080">from</font></b> math <b><font color="#000080">import</font></b> exp
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/sample_simple.py'</font>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/sample_asy_sim.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -429,9 +429,9 @@ rel_error <font color="#990000">=</font> sample_cov <font color="#990000">/</fon
           rel_error <font color="#990000">=</font> hes_fixed_value <font color="#990000">/</font> hessian<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">,</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_error<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-16</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'sample_simple.py: OK'</font><font color="#990000">)</font></tt></pre>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'sample_asy_sim.py: OK'</font><font color="#990000">)</font></tt></pre>
 
-<hr>Input File: example/user/sample_simple.py
+<hr>Input File: example/user/sample_asy_sim.py
 
 </body>
 </html>

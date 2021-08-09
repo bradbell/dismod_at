@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Weighted Residuals</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Weighted Residuals">
-<meta name="keywords" id="keywords" content=" weighted residuals example parameters model data delta gaussian log-gaussian priors value residual difference source code ">
+<meta name="keywords" id="keywords" content=" weighted residuals example parameters model data delta sigma gaussian log-gaussian priors value residual difference source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -66,7 +66,8 @@ A:active { color : purple }
 <br><a href="user_residual.py.htm#Example Parameters" target="_top">Example&nbsp;Parameters</a>
 <br><a href="user_residual.py.htm#Model" target="_top">Model</a>
 <br><a href="user_residual.py.htm#Data" target="_top">Data</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Data.delta" target="_top">delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Data.Delta" target="_top">Delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Data.sigma" target="_top">sigma</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Data.Gaussian Residuals" target="_top">Gaussian&nbsp;Residuals</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_residual.py.htm#Data.Log-Gaussian Residuals" target="_top">Log-Gaussian&nbsp;Residuals</a>
 <br><a href="user_residual.py.htm#Priors" target="_top">Priors</a>
@@ -118,28 +119,36 @@ by <a href="integrand_table.htm#minimum_meas_cv" target="_top"><span style='whit
 
 <br>
 <br>
-<big><a name="Data.delta" id="Data.delta">delta</a></big>
+<big><a name="Data.Delta" id="Data.Delta">Delta</a></big>
 <br>
 We use the notation
 <a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
  for
 the standard deviation adjusted by the minimum measurement cv.
-The adjusted standard deviation
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>delta</span></a>
 
-is equal to <small>@(@
-\Delta
-@)@</small> because there are no measurement
-standard deviation covariates multipliers for this example.
+<br>
+<br>
+<big><a name="Data.sigma" id="Data.sigma">sigma</a></big>
+<br>
+We use the notation
+<a href="data_like.htm#Notation.Transformed Standard Deviation, sigma_i" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+ for
+the transformed standard deviation.
+There are no measurement noise covariate multipliers, so the
+adjusted standard deviation is also equal to <small>@(@
+\sigma
+@)@</small>.
 
 <br>
 <br>
 <big><a name="Data.Gaussian Residuals" id="Data.Gaussian Residuals">Gaussian Residuals</a></big>
 <br>
-In the Gaussian case, the residual is
+In the Gaussian case, <small>@(@
+\sigma = \Delta
+@)@</small> and
 <small>@[@
 
-	(y - \mu) / \delta
+	(y - \mu) / \sigma
 
 @]@</small>,
 where <small>@(@
@@ -154,16 +163,13 @@ model value for the
 <br>
 <br>
 <big><a name="Data.Log-Gaussian Residuals" id="Data.Log-Gaussian Residuals">Log-Gaussian Residuals</a></big>
-<br>
-In the Log-Gaussian case, we the
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
 
+<br>
 <small>@[@
 
-	\sigma = \log ( y + \eta + \delta ) - \log( y + \eta )
+	\sigma = \log ( y + \eta + \Delta ) - \log( y + \eta )
 
-@]@</small>
-where <small>@(@
+@]@</small>where <small>@(@
 y
 @)@</small> is the measured value
 and <small>@(@
@@ -178,7 +184,6 @@ The residual is
 where <small>@(@
 \mu
 @)@</small> is the model value for the average integrand.
-
 
 <br>
 <br>
@@ -454,12 +459,11 @@ n_subset <font color="#990000">=</font> <b><font color="#000000">len</font></b><
      eta            <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'eta'</font><font color="#990000">]</font>
      density        <font color="#990000">=</font> density_table<font color="#990000">[</font>density_id<font color="#990000">][</font><font color="#FF0000">'density_name'</font><font color="#990000">]</font>
      Delta          <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font> minimum_meas_cv <font color="#990000">*</font> meas_value<font color="#990000">,</font> meas_std<font color="#990000">)</font>
-     delta          <font color="#990000">=</font> Delta
      check          <font color="#990000">=</font> None
      <b><font color="#0000FF">if</font></b> density <font color="#990000">==</font> <font color="#FF0000">'gaussian'</font> <font color="#990000">:</font>
-          check <font color="#990000">=</font> <font color="#990000">(</font>meas_value <font color="#990000">-</font> avg_integrand<font color="#990000">)</font> <font color="#990000">/</font> delta
+          check <font color="#990000">=</font> <font color="#990000">(</font>meas_value <font color="#990000">-</font> avg_integrand<font color="#990000">)</font> <font color="#990000">/</font> Delta
      <b><font color="#0000FF">if</font></b> density <font color="#990000">==</font> <font color="#FF0000">'log_gaussian'</font> <font color="#990000">:</font>
-          log_y_eta_plus  <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>meas_value <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font>
+          log_y_eta_plus  <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>meas_value <font color="#990000">+</font> eta <font color="#990000">+</font> Delta<font color="#990000">)</font>
           log_y_eta       <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>meas_value <font color="#990000">+</font> eta<font color="#990000">)</font>
           log_mu_eta      <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>avg_integrand <font color="#990000">+</font> eta<font color="#990000">)</font>
           sigma           <font color="#990000">=</font> log_y_eta_plus <font color="#990000">-</font> log_y_eta
@@ -480,8 +484,8 @@ age_id2var_value <font color="#990000">=</font> n_var <font color="#990000">*</f
      value     <font color="#990000">=</font> fit_row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
      residual  <font color="#990000">=</font> fit_row<font color="#990000">[</font><font color="#FF0000">'residual_value'</font><font color="#990000">]</font>
      mu        <font color="#990000">=</font> omega_mean
-     std       <font color="#990000">=</font> <b><font color="#000000">fun_omega_value_std</font></b><font color="#990000">()</font>
-     sigma     <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta <font color="#990000">+</font> std<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">)</font>
+     delta     <font color="#990000">=</font> <b><font color="#000000">fun_omega_value_std</font></b><font color="#990000">()</font>
+     sigma     <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">)</font>
      check     <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>value <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
      relerr    <font color="#990000">=</font> residual <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relerr<font color="#990000">)</font> <font color="#990000">&lt;=</font> eps99

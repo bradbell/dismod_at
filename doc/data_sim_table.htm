@@ -83,8 +83,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.A" target="_top">A</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.E" target="_top">E</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta" target="_top">delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.sigma" target="_top">sigma</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta" target="_top">delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.e" target="_top">e</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.z" target="_top">z</a>
 <br><a href="data_sim_table.htm#Example" target="_top">Example</a>
@@ -281,6 +281,39 @@ and this
 
 <br>
 <br>
+<big><a name="Method.sigma" id="Method.sigma">sigma</a></big>
+<br>
+We use <small>@(@
+\sigma
+@)@</small> to denote the
+<a href="data_like.htm#Notation.Transformed Standard Deviation, sigma_i" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
+
+corresponding to the data table and this 
+<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
+; i.e.,
+<small>@[@
+
+\sigma = \left\{ \begin{array}{ll}
+	\log( y + \eta + \Delta ) - \log(y + \eta) & \R{if \; log \; density}
+	\\
+	\Delta                                     & \R{otherwise}
+\end{array} \right.
+
+@]@</small>
+Note that <small>@(@
+\sigma
+@)@</small> does not depend on simulated noise
+<small>@(@
+e
+@)@</small> defined below (because it is defined using <small>@(@
+y
+@)@</small>
+instead of <small>@(@
+z
+@)@</small>).
+
+<br>
+<br>
 <big><a name="Method.delta" id="Method.delta">delta</a></big>
 <br>
 We use <small>@(@
@@ -293,28 +326,6 @@ value for the model variables,
 the values in the data table, and this 
 <code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
 .
-
-<br>
-<br>
-<big><a name="Method.sigma" id="Method.sigma">sigma</a></big>
-<br>
-We use <small>@(@
-\sigma
-@)@</small> to denote the
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
-
-corresponding to the data table and this 
-<code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>
-; i.e.,
-<small>@[@
-
-\sigma = \left\{ \begin{array}{ll}
-	\log( y + \eta + \delta ) - \log(y + \eta) & \R{if \; log \; density}
-	\\
-	\delta                                     & \R{otherwise}
-\end{array} \right.
-
-@]@</small>
 Note that <small>@(@
 \sigma
 @)@</small> does not depend on simulated noise
@@ -330,7 +341,7 @@ We use <small>@(@
 e
 @)@</small> to denote the noise simulated with mean zero,
 standard deviation <small>@(@
-\sigma
+\delta
 @)@</small>, and density corresponding to
 this 
 <code><i><font color="black"><span style='white-space: nowrap'>data_id</span></font></i></code>

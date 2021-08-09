@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>08-08</option>
 <option>07-29</option>
 <option>07-25</option>
 <option>07-24</option>
@@ -113,6 +114,54 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="08-08" id="08-08">08-08</a></big></b>
+ 
+<ol type="1"><li>
+<b>API Change</b>:
+The
+<a href="data_like.htm#Notation.Transformed Standard Deviation, sigma_i" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
+
+is now computed before the standard deviation adjustment, hence <small>@(@
+\sigma
+@)@</small>
+no longer depends on the <a href="model_variables.htm" target="_top"><span style='white-space: nowrap'>model_variables</span></a>
+.
+As a consequence for
+<a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
+ densities, the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+
+is now in log of the data space (it used be have the same units as the data).
+This fixes a problem with simulating data that has
+<a href="mulcov_table.htm#mulcov_type.meas_noise" target="_top"><span style='white-space: nowrap'>meas_noise</span></a>
+ covariate multipliers.
+</li><li>
+
+Change the definition of
+<a href="db2csv_command.htm#data.csv.meas_delta" target="_top"><span style='white-space: nowrap'>meas_delta</span></a>
+ in data.csv so that
+it is still in data units
+even when the adjusted standard deviation is in log of data space.
+</li><li>
+
+Correct the title in the <a href="user_hes_random.py.htm" target="_top"><span style='white-space: nowrap'>user_hes_random.py</span></a>
+ example.
+</li><li>
+
+Test the <a href="user_fit_meas_noise.py.htm" target="_top"><span style='white-space: nowrap'>user_fit_meas_noise.py</span></a>
+ example using more values for the
+<a href="option_table.htm#meas_noise_effect" target="_top"><span style='white-space: nowrap'>meas_noise_effect</span></a>
+.
+</li><li>
+
+Move <code><font color="blue">user_sample_simple.py</font></code> to <a href="user_sample_asy_sim.py.htm" target="_top"><span style='white-space: nowrap'>user_sample_asy_sim.py</span></a>
+.
+</li></ol>
+
+
+
+<br>
 <br>
 <b><big><a name="07-29" id="07-29">07-29</a></big></b>
 <br>
@@ -632,14 +681,12 @@ which does not make sense and would cause dismod_at to abort with the message
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;simulate_command&nbsp;sim_stdcv&nbsp;is&nbsp;nan&nbsp;or&nbsp;less&nbsp;than&nbsp;zero&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-This problem has been fixed using
-<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
-
+This problem has been fixed using the
+adjusted standard deviation
 to replace 
 <code><i><font color="black"><span style='white-space: nowrap'>data_sim_delta</span></font></i></code>
  and
-<a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>minimum&nbsp;CV&nbsp;standard&nbsp;deviation</span></a>
-
+the minimum CV standard deviation
 to replace 
 <code><i><font color="black"><span style='white-space: nowrap'>data_sim_stdcv</span></font></i></code>
 .
@@ -650,7 +697,7 @@ instead of the simulated measurements
 <a href="data_sim_table.htm#data_sim_value" target="_top"><span style='white-space: nowrap'>data_sim_value</span></a>
 
 to define the corresponding
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
+<a href="data_like.htm#Notation.Transformed Standard Deviation, sigma_i" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
 .
 <ol type="1"><li>
 Add the <a href="user_sim_log.py.htm" target="_top"><span style='white-space: nowrap'>user_sim_log.py</span></a>
@@ -880,7 +927,7 @@ to a place where the different cases are easier to understand; see
 
 <code><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
  in
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>data_like</span></a>
+<a href="data_like.htm#Notation.Transformed Standard Deviation, sigma_i" target="_top"><span style='white-space: nowrap'>data_like</span></a>
 ,
 <a href="fixed_value.htm#sigma_j" target="_top"><span style='white-space: nowrap'>fixed_value</span></a>
 ,

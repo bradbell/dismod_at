@@ -930,13 +930,30 @@ If the previous fit command had a
 <a href="db2csv_command.htm#simulate_index" target="_top"><span style='white-space: nowrap'>simulate_index</span></a>
 ,
 this column is empty.
-Otherwise, if there was a previous fit command,
-this is the
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
+ to denote the
 <a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
  for this row.
-This value is computed for this command by dividing by the residual
-which is not valid when the residual is zero and reported as empty.
-This value is also reported as empty if the result of the division
+If the density for this row is
+<a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
+
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+</span></font></code>
+Otherwise, the density is log scaled and
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_delta</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>
+ is computed by dividing by the residual,
+which is plus infinity and not valid when the residual is zero.
+This value is reported as empty if the calculation for 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_delta</span></font></i></code>
+
 is greater than the maximum python <code><font color="blue">float</font></code> value.
 
 <br>

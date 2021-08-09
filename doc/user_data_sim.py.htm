@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Explanation of Simulated Data Table, data_sim</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Explanation of Simulated Data Table, data_sim">
-<meta name="keywords" id="keywords" content=" explanation simulated data table data_sim see also purpose random effects priors iota other rates covariate multiplier subset meas_noise_effect notation before simulation y delta e sigma z delta_hat source code ">
+<meta name="keywords" id="keywords" content=" explanation simulated data table data_sim see also purpose random effects priors iota other rates covariate multiplier subset meas_noise_effect notation before simulation y delta sigma e z source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -76,13 +76,11 @@ A:active { color : purple }
 <br><a href="user_data_sim.py.htm#Notation Before Simulation" target="_top">Notation&nbsp;Before&nbsp;Simulation</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Notation Before Simulation.y" target="_top">y</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Notation Before Simulation.Delta" target="_top">Delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Notation Before Simulation.sigma" target="_top">sigma</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Notation Before Simulation.E" target="_top">E</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Notation Before Simulation.delta" target="_top">delta</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Notation Before Simulation.sigma" target="_top">sigma</a>
 <br><a href="user_data_sim.py.htm#Simulation Notation" target="_top">Simulation&nbsp;Notation</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Simulation Notation.z" target="_top">z</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Simulation Notation.delta_hat" target="_top">delta_hat</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="user_data_sim.py.htm#Simulation Notation.Delta_hat" target="_top">Delta_hat</a>
 <br><a href="user_data_sim.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="See Also" id="See Also">See Also</a></big></b>
@@ -97,7 +95,7 @@ A:active { color : purple }
 <br>
 This example explains the <a href="data_sim_table.htm" target="_top"><span style='white-space: nowrap'>data_sim_table</span></a>
  by showing that the
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>transformed&nbsp;standard&nbsp;deviation</span></a>
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>Adjusted&nbsp;standard&nbsp;deviation</span></a>
 
 for the simulated data is the same as for the original data.
 
@@ -227,7 +225,17 @@ This is the measured value; see
 This is the minimum cv standard deviation corresponding to <small>@(@
 y
 @)@</small>; see
-<a href="data_sim_table.htm#Method.Delta" target="_top"><span style='white-space: nowrap'>Delta</span></a>
+<a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
+.
+
+<br>
+<br>
+<big><a name="Notation Before Simulation.sigma" id="Notation Before Simulation.sigma">sigma</a></big>
+<br>
+This is the transformed standard deviation corresponding to <small>@(@
+y
+@)@</small>; see
+<a href="data_like.htm#Notation.Transformed Standard Deviation, sigma_i" target="_top"><span style='white-space: nowrap'>sigma</span></a>
 .
 
 <br>
@@ -252,16 +260,6 @@ y
 
 <br>
 <br>
-<big><a name="Notation Before Simulation.sigma" id="Notation Before Simulation.sigma">sigma</a></big>
-<br>
-This is the transformed standard deviation corresponding to <small>@(@
-y
-@)@</small>; see
-<a href="data_sim_table.htm#Method.sigma" target="_top"><span style='white-space: nowrap'>sigma</span></a>
-.
-
-<br>
-<br>
 <b><big><a name="Simulation Notation" id="Simulation Notation">Simulation Notation</a></big></b>
 
 
@@ -275,29 +273,13 @@ in the data_sim table; see <a href="data_sim_table.htm#Method.z" target="_top"><
 
 <br>
 <br>
-<big><a name="Simulation Notation.delta_hat" id="Simulation Notation.delta_hat">delta_hat</a></big>
-<br>
-This is adjusted standard deviation corresponding to <small>@(@
-z
-@)@</small>.
-
-<br>
-<br>
-<big><a name="Simulation Notation.Delta_hat" id="Simulation Notation.Delta_hat">Delta_hat</a></big>
-<br>
-This is the minimum cv standard deviation corresponding to <small>@(@
-z
-@)@</small>.
-
-<br>
-<br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt>
 <i><font color="#9A1900"># You can changed the values below and rerun this program</font></i>
 iota_true          <font color="#990000">=</font> <font color="#993399">0.01</font>
 meas_std           <font color="#990000">=</font> <font color="#993399">0.001</font>
-n_data             <font color="#990000">=</font> <font color="#993399">1000</font>
+n_data             <font color="#990000">=</font> <font color="#993399">2000</font>
 <i><font color="#9A1900"># You can changed the values above and rerun this program</font></i>
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> math
@@ -340,28 +322,28 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <b><font color="#0000FF">return</font></b> result
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># delta_effect</font></i>
-<b><font color="#0000FF">def</font></b> <b><font color="#000000">delta_effect</font></b><font color="#990000">(</font>meas_noise_effect<font color="#990000">,</font> Delta<font color="#990000">,</font> E<font color="#990000">)</font> <font color="#990000">:</font>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">delta_effect</font></b><font color="#990000">(</font>meas_noise_effect<font color="#990000">,</font> sigma<font color="#990000">,</font> E<font color="#990000">)</font> <font color="#990000">:</font>
      <i><font color="#9A1900"># add_std</font></i>
      <b><font color="#0000FF">if</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_all'</font> <font color="#990000">:</font>
-          delta <font color="#990000">=</font> Delta <font color="#990000">*</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> E<font color="#990000">)</font>
+          delta <font color="#990000">=</font> sigma <font color="#990000">*</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> E<font color="#990000">)</font>
      <b><font color="#0000FF">elif</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_none'</font> <font color="#990000">:</font>
-          delta <font color="#990000">=</font> Delta <font color="#990000">+</font> E
+          delta <font color="#990000">=</font> sigma <font color="#990000">+</font> E
      <b><font color="#0000FF">elif</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_std_scale_log'</font> <font color="#990000">:</font>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">log_density</font></b><font color="#990000">(</font>density<font color="#990000">)</font> <font color="#990000">:</font>
-               delta <font color="#990000">=</font> Delta <font color="#990000">*</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> E<font color="#990000">)</font>
+               delta <font color="#990000">=</font> sigma <font color="#990000">*</font> <font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> E<font color="#990000">)</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               delta <font color="#990000">=</font> Delta <font color="#990000">+</font> E
+               delta <font color="#990000">=</font> sigma <font color="#990000">+</font> E
      <i><font color="#9A1900"># add var</font></i>
      <b><font color="#0000FF">elif</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_all'</font> <font color="#990000">:</font>
-          delta <font color="#990000">=</font> Delta <font color="#990000">*</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> E<font color="#990000">)</font>
+          delta <font color="#990000">=</font> sigma <font color="#990000">*</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> E<font color="#990000">)</font>
      <b><font color="#0000FF">elif</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_none'</font> <font color="#990000">:</font>
-          delta <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font> Delta <font color="#990000">*</font> Delta <font color="#990000">+</font> E <font color="#990000">)</font>
+          delta <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font> sigma <font color="#990000">*</font> sigma <font color="#990000">+</font> E <font color="#990000">)</font>
      <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
           <b><font color="#0000FF">assert</font></b> meas_noise_effect <font color="#990000">==</font> <font color="#FF0000">'add_var_scale_log'</font>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">log_density</font></b><font color="#990000">(</font>density<font color="#990000">)</font> <font color="#990000">:</font>
-               delta <font color="#990000">=</font> Delta <font color="#990000">*</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> E<font color="#990000">)</font>
+               delta <font color="#990000">=</font> sigma <font color="#990000">*</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font><font color="#993399">1.0</font> <font color="#990000">+</font> E<font color="#990000">)</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               delta <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font> Delta <font color="#990000">*</font> Delta <font color="#990000">+</font> E <font color="#990000">)</font>
+               delta <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font> sigma <font color="#990000">*</font> sigma <font color="#990000">+</font> E <font color="#990000">)</font>
      <b><font color="#0000FF">return</font></b> delta
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Note that the a, t values are not used for this example</font></i>
@@ -617,6 +599,7 @@ meas_noise_effect_list <font color="#990000">=</font> <font color="#990000">[</f
           <i><font color="#9A1900"># data table values</font></i>
           data_id        <font color="#990000">=</font> data_subset_table<font color="#990000">[</font>data_subset_id<font color="#990000">][</font><font color="#FF0000">'data_id'</font><font color="#990000">]</font>
           meas_value     <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>
+          Delta          <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
           eta            <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'eta'</font><font color="#990000">]</font>
           density_id     <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'density_id'</font><font color="#990000">]</font>
           density        <font color="#990000">=</font> density_table<font color="#990000">[</font>density_id<font color="#990000">][</font><font color="#FF0000">'density_name'</font><font color="#990000">]</font>
@@ -624,19 +607,19 @@ meas_noise_effect_list <font color="#990000">=</font> <font color="#990000">[</f
           <i><font color="#9A1900"># Values that do not depend on simulated data</font></i>
           y         <font color="#990000">=</font> meas_value
           E         <font color="#990000">=</font> <b><font color="#000000">gamma_true</font></b><font color="#990000">(</font>meas_noise_effect<font color="#990000">)</font>
-          delta     <font color="#990000">=</font> <b><font color="#000000">delta_effect</font></b><font color="#990000">(</font>meas_noise_effect<font color="#990000">,</font> meas_std<font color="#990000">,</font> E<font color="#990000">)</font>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">log_density</font></b><font color="#990000">(</font>density<font color="#990000">)</font> <font color="#990000">:</font>
-               sigma  <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>y <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>y <font color="#990000">+</font> eta<font color="#990000">)</font>
+               sigma  <font color="#990000">=</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>y <font color="#990000">+</font> eta <font color="#990000">+</font> Delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>y <font color="#990000">+</font> eta<font color="#990000">)</font>
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               sigma  <font color="#990000">=</font> delta
+               sigma  <font color="#990000">=</font> Delta
+          delta     <font color="#990000">=</font> <b><font color="#000000">delta_effect</font></b><font color="#990000">(</font>meas_noise_effect<font color="#990000">,</font> sigma<font color="#990000">,</font> E<font color="#990000">)</font>
           <i><font color="#9A1900">#</font></i>
           <i><font color="#9A1900"># residual</font></i>
           z  <font color="#990000">=</font> data_sim_value  <i><font color="#9A1900"># simulated data withoout censoring</font></i>
           mu <font color="#990000">=</font> iota_true       <i><font color="#9A1900"># mean of the simulated data</font></i>
           <b><font color="#0000FF">if</font></b> <b><font color="#000000">log_density</font></b><font color="#990000">(</font>density<font color="#990000">)</font> <font color="#990000">:</font>
-               residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
+               residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> delta
           <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-               residual <font color="#990000">=</font> <font color="#990000">(</font>z <font color="#990000">-</font> mu<font color="#990000">)</font> <font color="#990000">/</font> sigma
+               residual <font color="#990000">=</font> <font color="#990000">(</font>z <font color="#990000">-</font> mu<font color="#990000">)</font> <font color="#990000">/</font> delta
           residual_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>residual<font color="#990000">)</font>
      residual_array  <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> residual_list <font color="#990000">)</font>
      residual_mean   <font color="#990000">=</font> residual_array<font color="#990000">.</font><b><font color="#000000">mean</font></b><font color="#990000">()</font>

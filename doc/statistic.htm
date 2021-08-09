@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Some Statistical Function Definitions</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Some Statistical Function Definitions">
-<meta name="keywords" id="keywords" content=" some statistical function definitions notation y z mu sigma eta nu d weighted residual r value difference log-density uniform gaussian censored log-gaussian laplace log-laplace student's-t log-student's-t ">
+<meta name="keywords" id="keywords" content=" some statistical function definitions notation y z mu delta eta nu d weighted residual r value difference log-density uniform gaussian censored log-gaussian laplace log-laplace student's-t log-student's-t ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,7 +70,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.y" target="_top">y</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.z" target="_top">z</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.mu" target="_top">mu</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.sigma" target="_top">sigma</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.delta" target="_top">delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.nu" target="_top">nu</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="statistic.htm#Notation.d" target="_top">d</a>
@@ -140,19 +140,19 @@ y
 z
 @)@</small>.
 In the log case, it denotes
-the expected value for the log of <small>@(@
-y
+the expected value for <small>@(@
+\log( y + \eta )
 @)@</small> or
-the difference between the log of <small>@(@
-y
+the difference between <small>@(@
+\log( y + \eta )
 @)@</small> and
-the log of <small>@(@
-z
+<small>@(@
+\log( z + \eta )
 @)@</small>.
 
 <br>
 <br>
-<big><a name="Notation.sigma" id="Notation.sigma">sigma</a></big>
+<big><a name="Notation.delta" id="Notation.delta">delta</a></big>
 <br>
 If the density is
 <a href="density_table.htm#Notation.Linear" target="_top"><span style='white-space: nowrap'>linear</span></a>
@@ -172,11 +172,22 @@ or <small>@(@
 \log( z + \eta )  - \log ( y + \eta )
 @)@</small>.
 Note that <small>@(@
-\sigma
-@)@</small> has a different definition for different cases;
-see
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>sigma_i(theta)</span></a>
-,
+\delta
+@)@</small> has a different definition for different cases:
+<ol type="1"><li>
+For data cases, <small>@(@
+\delta
+@)@</small> is the
+<a href="data_like.htm#Adjusted Standard Deviation, delta_i(theta)" target="_top"><span style='white-space: nowrap'>adjusted&nbsp;standard&nbsp;deviation</span></a>
+ <small>@(@
+\delta_i( \theta )
+@)@</small>.
+</li><li>
+
+For priors cases, <small>@(@
+\delta
+@)@</small> is the transformed standard deviation;
+e.g.,
 <a href="fixed_value.htm#sigma_j" target="_top"><span style='white-space: nowrap'>sigma_j</span></a>
 ,
 <a href="random_value.htm#sigma_j" target="_top"><span style='white-space: nowrap'>sigma_j</span></a>
@@ -185,6 +196,8 @@ see
 ,
 <a href="smooth_dtime.htm#sigma_ij" target="_top"><span style='white-space: nowrap'>sigma_ij</span></a>
 .
+</li></ol>
+
 
 
 <br>
@@ -251,7 +264,7 @@ If the density is
 the weighted residual function for values is
 <small>@[@
 
-	R(y, \mu, \sigma, d) = 0
+	R(y, \mu, \delta, d) = 0
 
 @]@</small>
 If the density is
@@ -260,7 +273,7 @@ If the density is
 the weighted residual function for values is
 <small>@[@
 
-	R(y, \mu, \sigma, d) = \frac{y - \mu}{\sigma}
+	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
 
 @]@</small>
 If the density is
@@ -269,12 +282,12 @@ If the density is
 the weighted residual function for values is
 <small>@[@
 
-	R(y, \mu, \sigma, d)
+	R(y, \mu, \delta, d)
 	=
 	\frac{
 		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
 	}{
-		\sigma
+		\delta
 	}
 
 @]@</small>
@@ -294,7 +307,7 @@ If the density is uniform,
 the weighted residual function for differences is
 <small>@[@
 
-	R(z, y, \mu, \sigma, d) = 0
+	R(z, y, \mu, \delta, d) = 0
 
 @]@</small>
 If the density is
@@ -303,7 +316,7 @@ If the density is
 the weighted residual function for differences is
 <small>@[@
 
-	R(z, y, \mu, \sigma, d) = \frac{z - y - \mu}{\sigma}
+	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 
 @]@</small>
 Note that, in the linear case, all the arguments (except <small>@(@
@@ -316,12 +329,12 @@ If the density is
 the weighted residual function for differences is
 <small>@[@
 
-	R(z, y, \mu, \sigma, d)
+	R(z, y, \mu, \delta, d)
 	=
 	\frac{
 		\log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
 	}{
-		\sigma
+		\delta
 	}
 
 @]@</small>
@@ -333,7 +346,7 @@ z, y
 while <small>@(@
 \mu
 @)@</small> and <small>@(@
-\sigma
+\delta
 @)@</small> are in log space.
 
 <br>
@@ -351,10 +364,10 @@ density function.
 <br>
 If the density is <code><font color="blue">uniform</font></code>,
 the log-density function for values <small>@(@
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 @)@</small>,
 are both defined by <small>@(@
 D = 0
@@ -366,17 +379,17 @@ D = 0
 <br>
 If the density name is <code><font color="blue">gaussian</font></code>,
 the log-density functions for values <small>@(@
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 @)@</small>,
 are defined by
 <small>@[@
 
 D
 =
-- \log \left( \sigma \sqrt{2 \pi} \right) - \frac{1}{2} R^2
+- \log \left( \delta \sqrt{2 \pi} \right) - \frac{1}{2} R^2
 
 @]@</small>
 where <small>@(@
@@ -403,9 +416,9 @@ y \leq 0
 is defined by
 <small>@[@
 
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-\log ( \R{erfc}[ \mu / ( \sigma \sqrt{2} ) ] ) - \log(2)
+\log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
 
 @]@</small>
 where <small>@(@
@@ -426,19 +439,19 @@ If the density name is <code><font color="blue">log_gaussian</font></code>,
 the log-density function for values is
 <small>@[@
 
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-- \log \left[ \sigma \sqrt{2 \pi} \right]
-- \frac{1}{2} R(y, \mu, \sigma, d)^2
+- \log \left[ \delta \sqrt{2 \pi} \right]
+- \frac{1}{2} R(y, \mu, \delta, d)^2
 
 @]@</small>
 The log-density function for differences is
 <small>@[@
 
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 =
-- \log \left( \sigma \sqrt{2 \pi} \right)
-- \frac{1}{2} R(z, y, \mu, \sigma, d)^2
+- \log \left( \delta \sqrt{2 \pi} \right)
+- \frac{1}{2} R(z, y, \mu, \delta, d)^2
 
 @]@</small>
 
@@ -458,13 +471,13 @@ y \leq 0
 is defined by
 <small>@[@
 
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-\log ( \R{erfc}[ ( \mu - \eta ) / ( \sigma \sqrt{2} ) ] ) - \log(2)
+\log ( \R{erfc}[ ( \mu - \eta ) / ( \delta \sqrt{2} ) ] ) - \log(2)
 
 @]@</small>
 where we the arguments to <small>@(@
-\sigma
+\delta
 @)@</small> are the same as
 in the log Gaussian case
 and <small>@(@
@@ -483,17 +496,17 @@ c = \eta
 <br>
 If the density name is <code><font color="blue">laplace</font></code>,
 the log-density functions for values <small>@(@
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 @)@</small>,
 are defined by
 <small>@[@
 
 D
 =
-- \log \left( \sigma \sqrt{2} \right) - \sqrt{2} | R |
+- \log \left( \delta \sqrt{2} \right) - \sqrt{2} | R |
 
 @]@</small>
 where <small>@(@
@@ -518,9 +531,9 @@ y \leq 0
 is defined by
 <small>@[@
 
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-- \mu \sqrt{2} / \sigma - \log(2)
+- \mu \sqrt{2} / \delta - \log(2)
 
 @]@</small>
 where <small>@(@
@@ -541,19 +554,19 @@ If the density name is <code><font color="blue">log_laplace</font></code>,
 the log-density function for values is
 <small>@[@
 
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-- \log \left[ \sigma \sqrt{2} \right]
-- \sqrt{2} \left| R(y, \mu, \sigma, d) \right|
+- \log \left[ \delta \sqrt{2} \right]
+- \sqrt{2} \left| R(y, \mu, \delta, d) \right|
 
 @]@</small>
 The log-density function for differences is
 <small>@[@
 
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 =
-- \log \left( \sigma \sqrt{2} \right)
-- \sqrt{2} \left| R(z, y, \mu, \sigma, d) \right|
+- \log \left( \delta \sqrt{2} \right)
+- \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
 
 @]@</small>
 
@@ -573,13 +586,13 @@ y \leq 0
 is defined by
 <small>@[@
 
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 =
-- ( \mu - \eta ) \sqrt{2} / \sigma - \log(2)
+- ( \mu - \eta ) \sqrt{2} / \delta - \log(2)
 
 @]@</small>
 where we the arguments to <small>@(@
-\sigma
+\delta
 @)@</small> are the same as
 in the log Laplace case.
 See the Laplace case for the
@@ -595,10 +608,10 @@ c = \eta
 <br>
 If the density name is <code><font color="blue">students</font></code>,
 the log-density functions for values <small>@(@
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 @)@</small>,
 are defined by
 <small>@[@
@@ -629,10 +642,10 @@ and we have abbreviated <small>@(@
 <br>
 If the density name is <code><font color="blue">log_students</font></code>,
 the log-density functions for values <small>@(@
-D(y, \mu, \sigma, d)
+D(y, \mu, \delta, d)
 @)@</small>,
 and for differences <small>@(@
-D(z, y, \mu, \sigma, d)
+D(z, y, \mu, \delta, d)
 @)@</small>,
 are defined by
 <small>@[@

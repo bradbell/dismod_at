@@ -70,7 +70,7 @@ A:active { color : purple }
 <br><a href="user_one_function.py.htm#Simulated Data" target="_top">Simulated&nbsp;Data</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_one_function.py.htm#Simulated Data.Data Density" target="_top">Data&nbsp;Density</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_one_function.py.htm#Simulated Data.True Prevalence" target="_top">True&nbsp;Prevalence</a>
-<br><a href="user_one_function.py.htm#Computing delta" target="_top">Computing&nbsp;delta</a>
+<br><a href="user_one_function.py.htm#Computing Delta" target="_top">Computing&nbsp;Delta</a>
 <br><a href="user_one_function.py.htm#Prevalence Prior" target="_top">Prevalence&nbsp;Prior</a>
 <br><a href="user_one_function.py.htm#random_seed" target="_top">random_seed</a>
 <br><a href="user_one_function.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
@@ -238,34 +238,46 @@ It follows that
      C         <font color="#990000">=</font> exp_omega <font color="#990000">-</font> exp_sum
      <b><font color="#0000FF">return</font></b> C <font color="#990000">/</font> <font color="#990000">(</font>S <font color="#990000">+</font> C<font color="#990000">)</font></tt></pre>
 <br>
-<b><big><a name="Computing delta" id="Computing delta">Computing delta</a></big></b>
+<b><big><a name="Computing Delta" id="Computing Delta">Computing Delta</a></big></b>
 <br>
 Once we have simulated a measurement value,
 we can solve for <small>@(@
-\delta
+\Delta
 @)@</small> are follows; see
-<a href="data_like.htm#Transformed Standard Deviation, sigma_i(theta)" target="_top"><span style='white-space: nowrap'>sigma</span></a>
+<a href="data_like.htm#Notation.Transformed Standard Deviation, sigma_i" target="_top"><span style='white-space: nowrap'>sigma</span></a>
 :
 <small>@[@
 
-	\sigma = \log( y + \eta + \delta ) - \log(y + \eta )
+	\sigma = \log( y + \eta + \Delta ) - \log(y + \eta )
 
 @]@</small>
 <small>@[@
 
-	\exp ( \sigma ) = \frac{ y + \eta + \delta }{ y + \eta }
+	\exp ( \sigma ) = \frac{ y + \eta + \Delta }{ y + \eta }
 
 @]@</small>
 <small>@[@
 
-	\exp ( \sigma ) ( y + \eta ) = y + \eta + \delta
+	\exp ( \sigma ) ( y + \eta ) = y + \eta + \Delta
 
 @]@</small>
 <small>@[@
 
-	\delta = [ \exp ( \sigma ) - 1 ] ( y + \eta )
+	\Delta = [ \exp ( \sigma ) - 1 ] ( y + \eta )
 
 @]@</small>
+For this case there are no measurement noise covariates so
+<small>@(@
+\sigma
+@)@</small> is the standard deviation for the simulated data.
+Furthermore, the
+<a href="option_table.htm#minimum_meas_cv" target="_top"><span style='white-space: nowrap'>minimum_meas_cv</span></a>
+ is zero,
+so <small>@(@
+\Delta
+@)@</small> is the 
+<code><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i></code>
+.
 
 <br>
 <br>
@@ -389,12 +401,12 @@ random<font color="#990000">.</font><b><font color="#000000">seed</font></b><fon
           sigma         <font color="#990000">=</font> prevalence_sigma
           log_noise     <font color="#990000">=</font> random<font color="#990000">.</font><b><font color="#000000">gauss</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> sigma<font color="#990000">)</font>
           y             <font color="#990000">=</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font>log_noise<font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">Prevalence</font></b><font color="#990000">(</font>age<font color="#990000">)</font> <font color="#990000">*</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font>income_effect<font color="#990000">)</font>
-          delta         <font color="#990000">=</font> <font color="#990000">(</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font>sigma<font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font> y <font color="#990000">+</font> eta <font color="#990000">)</font>
+          Delta         <font color="#990000">=</font> <font color="#990000">(</font> <b><font color="#000000">exp</font></b><font color="#990000">(</font>sigma<font color="#990000">)</font> <font color="#990000">-</font> <font color="#993399">1</font> <font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">(</font> y <font color="#990000">+</font> eta <font color="#990000">)</font>
           row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>  <font color="#990000">=</font> age
           row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>  <font color="#990000">=</font> age
           row<font color="#990000">[</font><font color="#FF0000">'income'</font><font color="#990000">]</font>     <font color="#990000">=</font> income
           row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> y
-          row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> delta
+          row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> Delta
           data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>

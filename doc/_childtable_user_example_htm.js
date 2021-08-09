@@ -37,8 +37,8 @@ document.write('\
 <option>user_re_scale.py</option>\
 <option>user_residual.py</option>\
 <option>user_sample_asy.py</option>\
+<option>user_sample_asy_sim.py</option>\
 <option>user_sample_sim.py</option>\
-<option>user_sample_simple.py</option>\
 <option>user_sim_log.py</option>\
 <option>user_speed.py</option>\
 <option>user_subgroup_mulcov.py</option>\
@@ -87,8 +87,8 @@ function user_example_child(item)
 		'user_re_scale.py.htm',
 		'user_residual.py.htm',
 		'user_sample_asy.py.htm',
+		'user_sample_asy_sim.py.htm',
 		'user_sample_sim.py.htm',
-		'user_sample_simple.py.htm',
 		'user_sim_log.py.htm',
 		'user_speed.py.htm',
 		'user_subgroup_mulcov.py.htm',
