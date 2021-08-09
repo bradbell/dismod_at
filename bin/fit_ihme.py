@@ -377,6 +377,10 @@ correpsonding parent rates.
    (This used to be called the noise covariate multiplier.)
 2. Display the actual random seed in the fit_ihme.py output so that results
    can be reproduced even when input random_see is zero.
+
+08-09:
+1. It is an error to have measure noise covarites multipliers in the original
+   data file. This ensures the specific log_meta_noise_level gets implemented.
 '''
 }
 # help cases
