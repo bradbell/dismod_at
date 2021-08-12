@@ -20,7 +20,7 @@
 # $section Print Run and Check a System Command$$
 #
 # $head Syntax$$
-# $icode%stdout%, %stderr% = dismod_at.system_command_prc(%command%)
+# $icode%stdout% = dismod_at.system_command_prc(%command%)
 # %$$
 #
 # $head Purpose$$
@@ -32,8 +32,8 @@
 # Run the system command and wait for it to complete.
 # $lnext
 # Check the integer value returned by the system command.
-# If it is non-zero, exit this python program with message saying
-# that the command failed.
+# If it is non-zero, exit this python program with message containing
+# the stderr result for this command.
 # $lend
 #
 # $head command$$

@@ -39,6 +39,8 @@ $spell
 	integrators
 	cen
 	cmake
+    prc
+    stderr
 $$
 $navigate%
 	Up%Location%
@@ -54,6 +56,20 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 08-12$$
+$list number$$
+Advance to cppad_mixed-20210812. This fixes an install problem
+in cppad_mixed-20210714.
+$lnext
+Fix the $cref/syntax/system_command_prc/Syntax/$$ in the python
+$code system_command_prc$$ function.
+To be specific, stderr is not returned.
+$lend
+$comment
+Advance dock_dismod_at.sh from version 20210624 to version 20210809;
+see the items between 06-24 and 08-09 below.
+$$
 
 $head 08-08$$ $comment Merge std branch$$
 $list number$$
