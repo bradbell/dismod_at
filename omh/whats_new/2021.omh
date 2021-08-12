@@ -65,11 +65,10 @@ $lnext
 Fix the $cref/syntax/system_command_prc/Syntax/$$ in the python
 $code system_command_prc$$ function.
 To be specific, stderr is not returned.
+$lnext
+Advance dock_dismod_at.sh from version 20210624 to version 20210812;
+see the items between 06-24 and 08-12 in this section.
 $lend
-$comment
-Advance dock_dismod_at.sh from version 20210624 to version 20210809;
-see the items between 06-24 and 08-09 below.
-$$
 
 $head 08-08$$ $comment Merge std branch$$
 $list number$$
