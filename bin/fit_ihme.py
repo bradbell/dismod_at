@@ -381,6 +381,9 @@ correpsonding parent rates.
 08-09:
 1. It is an error to have measure noise covarites multipliers in the original
    data file. This ensures the specific log_meta_noise_level gets implemented.
+
+08-15:
+1. Use temp_connection for all the  modifications to temp_database.
 '''
 }
 # help cases
@@ -491,10 +494,12 @@ except Exception as e:
 # ----------------------------------------------------------------------------
 disease_directory = None
 temp_database     = None
+temp_connection   = None
 def setup() :
 	# set up some globals
 	global disease_directory
 	global temp_database
+	global temp_connection
 	#
 	# directory for this disease
 	disease_directory = data_dir_arg + '/' + disease_arg
@@ -519,6 +524,8 @@ def setup() :
 		shutil.copyfile(previous_database, temp_database)
 	else :
 		assert False
+	new             = False
+	temp_connection = dismod_at.create_connection(temp_database, new)
 	#
 setup()
 # ===========================================================================
@@ -640,11 +647,8 @@ def case_study_title(location, which_fit = None) :
 # ----------------------------------------------------------------------------
 def get_table (table_name) :
 	# read a dismod_at table
-	new                  = False
-	connection           = dismod_at.create_connection(temp_database, new)
-	(col_name, col_type) = dismod_at.get_name_type(connection, table_name)
-	table                = dismod_at.get_table_dict(connection, table_name)
-	connection.close()
+	(col_name, col_type) = dismod_at.get_name_type(temp_connection, table_name)
+	table                = dismod_at.get_table_dict(temp_connection, table_name)
 	primary_key  = table_name +  '_id'
 	assert col_name[0] == primary_key
 	del col_name[0]
@@ -653,9 +657,7 @@ def get_table (table_name) :
 # ----------------------------------------------------------------------------
 def put_table (table_name, table, col_name, col_type) :
 	# write a dismod_at table
-	new          = False
-	connection   = dismod_at.create_connection(temp_database, new)
-	cursor       = connection.cursor()
+	cursor       = temp_connection.cursor()
 	cmd          = 'DROP TABLE ' + table_name
 	cursor.execute(cmd)
 	#
@@ -666,19 +668,17 @@ def put_table (table_name, table, col_name, col_type) :
 			this_row.append( row[col] )
 		row_list.append( this_row )
 	#
-	dismod_at.create_table(connection,table_name,col_name,col_type,row_list)
-	connection.close()
+	dismod_at.create_table(
+		temp_connection, table_name, col_name, col_type, row_list
+	)
 # ----------------------------------------------------------------------------
 def sql_command(command) :
 	# execute an sql command on this temp_database
 	trace(command)
-	new          = False
-	connection   = dismod_at.create_connection(temp_database, new)
-	cursor       = connection.cursor()
+	cursor       = temp_connection.cursor()
 	cursor.execute(command)
-	connection.commit()
+	temp_connection.commit()
 	result       = cursor.fetchall()
-	connection.close()
 	return result
 # ----------------------------------------------------------------------------
 def check_for_table(table_name) :
