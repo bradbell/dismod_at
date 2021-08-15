@@ -1,0 +1,128 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Replace A a Table</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Replace A a Table">
+<meta name="keywords" id="keywords" content=" replace table syntax connection table_name table_dict primary key example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_replace_table_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>replace_table</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="modify_command.py.htm" target="_top">Prev</a>
+</td><td><a href="replace_table.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_replace_table_htm.js'></script>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Replace A a Table</big></big></b></center>
+
+<br><a href="replace_table.htm#Syntax" target="_top">Syntax</a>
+<br><a href="replace_table.htm#connection" target="_top">connection</a>
+<br><a href="replace_table.htm#table_name" target="_top">table_name</a>
+<br><a href="replace_table.htm#table_dict" target="_top">table_dict</a>
+<br><a href="replace_table.htm#Primary Key" target="_top">Primary&nbsp;Key</a>
+<br><a href="replace_table.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at.replace_table(</span></font><i><font color="black"><span style='white-space: nowrap'>connection</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tbl_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_dict</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="connection" id="connection">connection</a></big></b>
+<br>
+is a <a href="create_connection.htm#connection" target="_top"><span style='white-space: nowrap'>connection</span></a>
+ for this database.
+
+<br>
+<br>
+<b><big><a name="table_name" id="table_name">table_name</a></big></b>
+<br>
+is a <code><font color="blue">str</font></code> that specifies the name of a table that already in the
+database.
+
+<br>
+<br>
+<b><big><a name="table_dict" id="table_dict">table_dict</a></big></b>
+<br>
+is a <code><font color="blue">list</font></code> with each element of the list is a dictionary.
+Each dictionary contains a key for every column name in the original table.
+The columns in the original table are written to the new table with the
+same order and types as in the original table. Only the values are replaced
+using the values in 
+<code><i><font color="black"><span style='white-space: nowrap'>table_dict</span></font></i></code>
+.
+
+<br>
+<br>
+<b><big><a name="Primary Key" id="Primary Key">Primary Key</a></big></b>
+<br>
+This routine assumes the primary key is an integer,  corresponds
+to the first column, and has name 
+<code><i><font color="black"><span style='white-space: nowrap'>tbl_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id</span></font></code>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="replace_table.py.htm" target="_top"><span style='white-space: nowrap'>replace_table.py</span></a>
+ is an example use of
+<code><font color="blue">replace_table</font></code>.
+
+
+<hr>Input File: python/dismod_at/replace_table.py
+
+</body>
+</html>
