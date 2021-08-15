@@ -57,6 +57,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-15$$
+Add the $cref replace_table$$ utility.
+
 $head 08-12$$
 $list number$$
 Advance to cppad_mixed-20210812. This fixes an install problem

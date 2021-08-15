@@ -24,6 +24,7 @@
 #	python/dismod_at/get_table_dict.py%
 #	python/dismod_at/metropolis.py%
 #	python/dismod_at/modify_command.py%
+#	python/dismod_at/replace_table.py%
 #	python/dismod_at/sim_data.py%
 #	python/dismod_at/sql_command.py%
 #	python/dismod_at/system_command_prc.py%
@@ -44,6 +45,7 @@ from .get_row_list        import get_row_list
 from .get_table_dict      import get_table_dict
 from .metropolis          import metropolis
 from .modify_command      import modify_command
+from .replace_table       import replace_table
 from .sim_data            import sim_data
 from .sql_command         import sql_command
 from .system_command_prc  import system_command_prc
