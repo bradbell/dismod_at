@@ -57,6 +57,13 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-17$$
+There was a problem using a mulcov integrand in the $cref avgint_table$$
+(the integrand name begins with $code mulcov_$$).
+To be specific, these integrands would not get included in the predict table
+$cref/avgint subset/predict_table/Avgint Subset/$$.
+This has been fixed.
+
 $head 08-15$$
 Add the $cref replace_table$$ utility.
 

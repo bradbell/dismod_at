@@ -165,6 +165,7 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void avgint_subset(
+	const CppAD::vector<integrand_struct>& integrand_table         ,
 	const CppAD::vector<avgint_struct>&    avgint_table            ,
 	const CppAD::vector<double>&           avgint_cov_value        ,
 	const CppAD::vector<covariate_struct>& covariate_table         ,
@@ -183,9 +184,11 @@ void avgint_subset(
 	size_t n_subset = 0;
 	CppAD::vector<bool> ok(n_avgint);
 	for(size_t avgint_id = 0; avgint_id < n_avgint; avgint_id++)
-	{	size_t child = child_info4avgint.table_id2child(avgint_id);
+	{   int integrand_id         = avgint_table[avgint_id].integrand_id;
+        integrand_enum integrand = integrand_table[integrand_id].integrand;
+        size_t child = child_info4avgint.table_id2child(avgint_id);
 		// check if this avgint is for parent or one of its descendants
-		ok[avgint_id] = child <= n_child;
+		ok[avgint_id] = (child <= n_child) || (integrand == mulcov_enum);
 		if( ok[avgint_id] )
 		{	for(size_t j = 0; j < n_covariate; j++)
 			{	size_t index          = avgint_id * n_covariate + j;

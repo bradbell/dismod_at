@@ -557,6 +557,7 @@ int main(int n_arg, const char** argv)
 		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
 		vector<double> avgint_subset_cov_value;
 		avgint_subset(
+                db_input.integrand_table,
 				db_input.avgint_table,
 				db_input.avgint_cov_value,
 				db_input.covariate_table,
