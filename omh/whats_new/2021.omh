@@ -41,6 +41,8 @@ $spell
 	cmake
     prc
     stderr
+    mulcov
+    avgint
 $$
 $navigate%
 	Up%Location%
