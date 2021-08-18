@@ -32,8 +32,10 @@
 # Run the system command and wait for it to complete.
 # $lnext
 # Check the integer value returned by the system command.
-# If it is non-zero, exit this python program with message containing
-# the stderr result for this command.
+# If it is non-zero, print the contents of stderr and then
+# raise an assertion.
+# $lnext
+# Return the contents of standard out as a python string.
 # $lend
 #
 # $head command$$
@@ -57,13 +59,17 @@ def system_command_prc(command) :
 	#
 	# run the system command
 	result = subprocess.run(
-		command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+		command, stdout=subprocess.PIPE,
+		stderr=subprocess.PIPE,
+		encoding='utf-8'
 	)
-	# check the system return value
+	# check the command return cide
 	if result.returncode != 0 :
-		# print the commands error messages
+		# print error messages
+		print('system_command_prc failed: returncode = ' , result.returncode)
 		print( result.stderr )
 		#
-		# inform user that the command failed and then exit
-		sys.exit('command failed: returncode = ' + str(result.returncode))
+		# raise an exception
+		assert result.returncode == 0
+    #
 	return result.stdout

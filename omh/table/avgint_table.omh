@@ -19,6 +19,7 @@ $spell
 	Sincidence
 	mtexcess
 	mtother
+	mulcov
 $$
 
 $section The avgint Table: Defines Average Integrand Cases$$
@@ -102,6 +103,10 @@ $head node_id$$
 This column has type $code integer$$ and is the
 $cref/node_id/node_table/node_id/$$ that identifies
 the node for this case.
+If the $cref/integrand_name/integrand_table/integrand_name/$$
+begins with $code mulcov_$$, $icode node_id$$ should be null.
+Otherwise $icode node_id$$ should not be null.
+
 
 $head subgroup_id$$
 This column has type $code integer$$ and is the

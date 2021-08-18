@@ -242,21 +242,21 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 stdout = dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 # -----------------------------------------------------------------------
 # Check trace_init_fit_model results
-check  = b'Begin dismod_at: fit_model constructor\n'
-check += b'Begin cppad_mixed::initialize\n'
-check += b'init_ran_like_done_\n'
-check += b'init_ran_jac_done_\n'
-check += b'init_ran_hes_done_\n'
-check += b'init_ldlt_ran_hes_done_\n'
-check += b'init_hes_cross_done_\n'
-check += b'init_fix_like_done_\n'
-check += b'init_fix_con_done_\n'
-check += b'End cppad_mixed::initialize\n'
-check += b'End dismod_at: fit_model constructor\n'
-check += b'Begin cppad_mixed::init_laplace_obj\n'
-check += b'init_laplace_obj_fun_done_\n'
-check += b'init_laplace_obj_hes_done_\n'
-check += b'End cppad_mixed::init_laplace_obj\n'
+check  = 'Begin dismod_at: fit_model constructor\n'
+check += 'Begin cppad_mixed::initialize\n'
+check += 'init_ran_like_done_\n'
+check += 'init_ran_jac_done_\n'
+check += 'init_ran_hes_done_\n'
+check += 'init_ldlt_ran_hes_done_\n'
+check += 'init_hes_cross_done_\n'
+check += 'init_fix_like_done_\n'
+check += 'init_fix_con_done_\n'
+check += 'End cppad_mixed::initialize\n'
+check += 'End dismod_at: fit_model constructor\n'
+check += 'Begin cppad_mixed::init_laplace_obj\n'
+check += 'init_laplace_obj_fun_done_\n'
+check += 'init_laplace_obj_hes_done_\n'
+check += 'End cppad_mixed::init_laplace_obj\n'
 assert stdout == check
 # -----------------------------------------------------------------------
 # read database

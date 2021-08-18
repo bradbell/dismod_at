@@ -43,6 +43,7 @@ $spell
     stderr
     mulcov
     avgint
+	stdout
 $$
 $navigate%
 	Up%Location%
@@ -58,6 +59,20 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 08-18$$
+$list number$$
+Change the $code system_command_prc$$ function so that it returns
+$cref/stdout/system_command_prc/stdout/$$ as a python string
+(instead of bytes); e.g., see $cref user_trace_init.py$$.
+$lnext
+If an error occurs during $cref system_command_prc$$,
+print stderr as a string (instead of bytes)
+and raise an $code AssertionError$$ instead of exiting the current program.
+$lnext
+Add documentation in avgint table discussing when
+$cref/node_id/avgint_table/node_id/$$ should be null.
+$lend
 
 $head 08-17$$
 There was a problem using a mulcov integrand in the $cref avgint_table$$
