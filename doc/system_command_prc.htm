@@ -91,8 +91,11 @@ Run the system command and wait for it to complete.
 </li><li>
 
 Check the integer value returned by the system command.
-If it is non-zero, exit this python program with message containing
-the stderr result for this command.
+If it is non-zero, print the contents of stderr and then
+raise an assertion.
+</li><li>
+
+Return the contents of standard out as a python string.
 </li></ol>
 
 

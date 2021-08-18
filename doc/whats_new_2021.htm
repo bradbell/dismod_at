@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>08-18</option>
 <option>08-17</option>
 <option>08-15</option>
 <option>08-12</option>
@@ -117,6 +118,30 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="08-18" id="08-18">08-18</a></big></b>
+
+<ol type="1"><li>
+Change the <code><font color="blue">system_command_prc</font></code> function so that it returns
+<a href="system_command_prc.htm#stdout" target="_top"><span style='white-space: nowrap'>stdout</span></a>
+ as a python string
+(instead of bytes); e.g., see <a href="user_trace_init.py.htm" target="_top"><span style='white-space: nowrap'>user_trace_init.py</span></a>
+.
+</li><li>
+
+If an error occurs during <a href="system_command_prc.htm" target="_top"><span style='white-space: nowrap'>system_command_prc</span></a>
+,
+print stderr as a string (instead of bytes)
+and raise an <code><font color="blue">AssertionError</font></code> instead of exiting the current program.
+</li><li>
+
+Add documentation in avgint table discussing when
+<a href="avgint_table.htm#node_id" target="_top"><span style='white-space: nowrap'>node_id</span></a>
+ should be null.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="08-17" id="08-17">08-17</a></big></b>
 <br>

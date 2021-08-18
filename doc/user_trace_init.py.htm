@@ -333,21 +333,21 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_p
 stdout <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font> <font color="#990000">])</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># Check trace_init_fit_model results</font></i>
-check  <font color="#990000">=</font> b<font color="#FF0000">'Begin dismod_at: fit_model constructor\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'Begin cppad_mixed::initialize\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_ran_like_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_ran_jac_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_ran_hes_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_ldlt_ran_hes_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_hes_cross_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_fix_like_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_fix_con_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'End cppad_mixed::initialize\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'End dismod_at: fit_model constructor\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'Begin cppad_mixed::init_laplace_obj\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_laplace_obj_fun_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'init_laplace_obj_hes_done_\n'</font>
-check <font color="#990000">+=</font> b<font color="#FF0000">'End cppad_mixed::init_laplace_obj\n'</font>
+check  <font color="#990000">=</font> <font color="#FF0000">'Begin dismod_at: fit_model constructor\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'Begin cppad_mixed::initialize\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_ran_like_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_ran_jac_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_ran_hes_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_ldlt_ran_hes_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_hes_cross_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_fix_like_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_fix_con_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'End cppad_mixed::initialize\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'End dismod_at: fit_model constructor\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'Begin cppad_mixed::init_laplace_obj\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_laplace_obj_fun_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'init_laplace_obj_hes_done_\n'</font>
+check <font color="#990000">+=</font> <font color="#FF0000">'End cppad_mixed::init_laplace_obj\n'</font>
 <b><font color="#0000FF">assert</font></b> stdout <font color="#990000">==</font> check
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># read database</font></i>
