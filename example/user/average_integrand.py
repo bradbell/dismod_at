@@ -8,7 +8,7 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 """
-$begin user_sim_data.py$$
+$begin user_average_integrand.py$$
 $spell
 	init
 	covariate
@@ -19,7 +19,7 @@ $spell
 	integrators
 $$
 
-$section Using the Python sim_data Utility$$
+$section Using the Python average_integrand Utility$$
 
 $head See Also$$
 $cref user_data_sim.py$$
@@ -61,7 +61,7 @@ as having measurement noise.
 $head ode_step_size$$
 This example uses a very small
 $cref/ode_step_size/option_table/Age Average Grid/ode_step_size/$$
-to test that both the dismod_at and $cref sim_data$$ integrators are
+to test that both the dismod_at and $cref average_integrand$$ integrators are
 working properly.
 
 $head Source Code$$
@@ -79,7 +79,7 @@ import copy
 import random
 import statistics
 # ---------------------------------------------------------------------------
-test_program = 'example/user/sim_data.py'
+test_program = 'example/user/average_integrand.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -126,11 +126,10 @@ def iota_true(age, time) :
 n_data             = 10
 random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
-def sim_data(integrand_name, grid) :
+def average_integrand(integrand_name, grid) :
 	rate    = { 'iota' : iota_true }
-	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
 	abs_tol = 1e-5
-	return dismod_at.sim_data(rate, integrand_name, grid, noise, abs_tol)
+	return dismod_at.average_integrand(rate, integrand_name, grid, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
@@ -201,7 +200,7 @@ def example_db (file_name) :
 		row['time_upper'] = time_upper
 		#
 		grid       = { 'age' : age_grid, 'time' : time_grid }
-		meas_value = sim_data('prevalence', grid)
+		meas_value = average_integrand('prevalence', grid)
 		row['meas_value'] = meas_value
 		#
 		data_table.append( copy.copy(row) )
@@ -312,5 +311,5 @@ for (var_id, row) in enumerate( var_table ) :
 		print(fit_var_value, true_var_value, rel_err)
 	assert abs(rel_err) < 1e-3
 # ---------------------------------------------------------------------------
-print('sim_data.py: OK')
+print('average_integrand.py: OK')
 # END PYTHON

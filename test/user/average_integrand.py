@@ -16,7 +16,7 @@ import distutils.dir_util
 import copy
 import statistics
 # ---------------------------------------------------------------------------
-test_program = 'test/user/sim_data.py'
+test_program = 'test/user/average_integrand.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -61,11 +61,10 @@ def iota_true(age, time) :
 		0.04 * (a   - 0) * (t - 2000) / ( 100 * 20 )
 	return result
 # ---------------------------------------------------------------------------
-def sim_data(integrand_name, grid) :
+def average_integrand(integrand_name, grid) :
 	rate    = { 'iota' : iota_true }
-	noise   = { 'denisty_name' : 'gaussian', 'meas_std' : 0.0 }
 	abs_tol = 1e-6
-	return dismod_at.sim_data(rate, integrand_name, grid, noise, abs_tol)
+	return dismod_at.average_integrand(rate, integrand_name, grid, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
@@ -134,13 +133,13 @@ def example_db (file_name) :
 	grid      = { 'age' : age_grid, 'time' : time_grid }
 	#
 	# Sincidence
-	meas_value = sim_data('Sincidence', grid)
+	meas_value = average_integrand('Sincidence', grid)
 	row['integrand']  = 'Sincidence'
 	row['meas_value'] = meas_value
 	data_table.append( copy.copy(row) )
 	#
 	# prevalence
-	meas_value = sim_data('prevalence', grid)
+	meas_value = average_integrand('prevalence', grid)
 	row['integrand']  = 'prevalence'
 	row['meas_value'] = meas_value
 	data_table.append( copy.copy(row) )
@@ -268,10 +267,10 @@ for data_id in range( n_data ) :
 	relerr = 1.0 - avg_integrand / meas_value
 	if abs(relerr) >= 1e-5 :
 		msg = 'predict = '       + str(avg_integrand)
-		msg += ', sim_data = '   + str(meas_value)
+		msg += ', average_integrand = '   + str(meas_value)
 		msg += ', relerr = '     + str(relerr)
 		print(msg)
 	assert relerr < 1e-5
 # ---------------------------------------------------------------------------
-print('sim_data.py: OK')
+print('average_integrand.py: OK')
 # END PYTHON

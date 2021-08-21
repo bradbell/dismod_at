@@ -47,7 +47,7 @@ FOREACH(user_case
 	sample_asy
 	sample_asy_sim
 	sample_sim
-	sim_data
+	average_integrand
 	sim_log
 	subgroup_mulcov
 	sum_residual

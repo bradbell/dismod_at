@@ -60,6 +60,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-21$$
+The $code sim_data$$ utility was moved to $cref average_integrand$$.
+It is still considered under construction.
+
 $head 08-18$$
 $list number$$
 Change the $code system_command_prc$$ function so that it returns
@@ -149,8 +153,7 @@ the command return code was not properly reported.
 
 $head 07-24$$
 $list number$$
-The $code sim_data$$ utility is
-$cref/under construction/sim_data/Under Construction/$$.
+The $code sim_data$$ utility is under construction.
 It which is slower and easier to use than the
 $cref simulate_command$$.
 It also can be used for independent testing of the dismod_at integrators.

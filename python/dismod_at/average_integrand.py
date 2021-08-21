@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 ---------------------------------------------------------------------------
-$begin sim_data$$ $newlinech #$$
+$begin average_integrand$$ $newlinech #$$
 $spell
 	Dismod
 	sim
@@ -19,19 +19,18 @@ $spell
 	integrands
 $$
 
-$section Simulate One Dismod_at Data Value$$
+$section Compute The Average Integrand$$
 
 $head Under Construction$$
-This routine is under construction because some if its test
-are not yet passing.
+This routine is under construction.
 
 $head Syntax$$
-$codei%meas_value% = dismod_at.sim_data(
-	%rate%, %integrand_name%, %grid%, %noise%, %abs_tol%
+$codei%avg_integrand% = dismod_at.average_integrand(
+	%rate%, %integrand_name%, %grid%, %abs_tol%
 )%$$
 
 $head Purpose$$
-The $cref simulate_command$$ is a much faster way to simulate data.
+The $cref predict_command$$ is a much faster way to calculate these values.
 This routine is easier to use and provides independent testing of the
 dismod_at integrators.
 
@@ -72,44 +71,17 @@ for the average w.r.t. time.
 These points are monotone increasing, the first (last) point is the
 lower (upper) time limit for the average
 
-$head noise$$
-This is a dictionary with the following possible keys:
-
-$subhead density_name$$
-$icode%noise%['density_name']%$$ is a string equal to one of the
-$cref/density names/density_table/density_name/$$.
-
-$subhead meas_std$$
-$icode%noise%['meas_std']%$$ is a float equal to the
-$cref/meas_value/data_table/meas_value/$$ for the simulated data.
-
-$subhead eta$$
-$icode%noise%['eta']%$$ is a float equal to
-$cref/eta/data_table/eta/$$ for the simulated measurement.
-This is only used when $icode density_name$$
-is a $cref/log scaled density/density_table/Notation/Log Scaled/$$.
-
-$subhead nu$$
-$icode%noise%['nu']%$$ is a float equal to
-$cref/nu/data_table/nu/$$ for the simulated measurement.
-This is only used when $icode density_name$$
-is $code students$$ or $code log_students$$.
-
-$subhead Restriction$$
-The $icode meas_std$$ must be zero.
-This restriction will be removed in the future.
-
 $head abs_tol$$
 This float is an absolute error bound, that the integrator will achieve.
 
-$head meas_value$$
-This is the simulated
-$cref/meas_value/data_table/meas_value/$$.
+$head avg_integrand$$
+This is the calculated value for the
+$cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
 
-$children%example/user/sim_data.py
+$children%example/user/average_integrand.py
 %$$
 $head Example$$
-The file $cref user_sim_data.py$$ contains an example and test of this routine.
+The file $cref user_average_integrand.py$$ contains an example and test of this routine.
 $end
 ---------------------------------------------------------------------------
 """
@@ -235,13 +207,12 @@ def integrand_fun(a, t, rate, integrand_name, abs_tol) :
 	if integrand_name == 'mtstandard' :
 		return (omega + chi) / (omega + chi * P)
 	#
-	print('sim_data: ' + integrand_name + ' is not a valid integrand name')
+	print('average_integrand: ' + integrand_name + ' is not a valid integrand name')
 	assert False
 #
-# sim_data
-def sim_data(rate, integrand_name, grid, noise, abs_tol) :
+# average_integrand
+def average_integrand(rate, integrand_name, grid, abs_tol) :
 	import scipy.integrate
-	assert noise['meas_std'] == 0.0
 	#
 	# zero_fun
 	def zero_fun(a, t) :

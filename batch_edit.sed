@@ -18,10 +18,14 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#   example/user/sim_data.py
+#   python/dismod_at/sim_data.py
+#   test/user/sim_data.py
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#   s|sim_data|average_integrand|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -33,5 +37,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|/fit_command/data_subset_table/hold_out/|/fit_command/hold_out/|
-s|/fit_command/warm_start/ipopt_info_table/|/fit_command/Output Tables/ipopt_info_table/|
+s|sim_data|average_integrand|g
