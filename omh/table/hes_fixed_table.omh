@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -51,13 +51,21 @@ Note that the row and column indices are equal for the diagonal
 elements of the Hessian.
 
 $head Representation$$
+$list number$$
 Only the lower triangle of the Hessian is included
 (because the Hessian is symmetric).
+$lnext
 The matrix is in row major order; i.e. $icode row_var_id$$
 is monotone non-decreasing and for each value of $icode row_var_id$$
 the $icode col_var_id$$ is monotone increasing.
+$lnext
 This is a sparse representation; i.e.,
 if a pair of row and column indices in the lower triangle
 are not present, the Hessian is zero for that row and column pair.
+$lnext
+The asymptotic statistics require the Hessian to be positive definite
+on the sub-set of variables that have their lower limit less than upper.
+Only these variables are included in the sparse representation of the Hessian.
+$lend
 
 $end

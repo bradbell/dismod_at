@@ -60,6 +60,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-22$$
+Change $cref hes_fixed_table$$ so that it does not include fixed effects
+that have equal lower and upper limits.
+
 $head 08-21$$
 The $code sim_data$$ utility was moved to $cref average_integrand$$.
 It is still considered under construction.

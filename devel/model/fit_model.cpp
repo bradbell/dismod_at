@@ -849,6 +849,8 @@ The row and column indices in this matrix are relative to the
 $cref pack_info$$ vector.
 Only the lower triangle is returned (column indices are less than or equal
 row indices) because the Hessian is symmetric.
+Variables that are $cref/constant/fit_model_sample_posterior/Constants/$$
+are not included in the Hessian.
 The Laplace density terms in the likelihood function are not included
 because the Hessian is not defined at zero for an Laplace density.
 
@@ -946,18 +948,42 @@ $end
 		cppad_mixed_fixed_vec, cppad_mixed_random_opt
 	);
 	//
+	// var_lower, var_upper
+	d_vector var_lower(n_var), var_upper(n_var);
+	get_var_limits(
+		var_lower, var_upper, var2prior_, prior_table_
+	);
+	//
 	// hes_fixed_obj_out
 	{	CppAD::vector<size_t> var_id = fixed2var_id(pack_object_);
-		size_t nnz = hes_fixed_obj_rcv.nnz();
-		CppAD::mixed::sparse_rc pattern(n_var, n_var, nnz);
+		size_t nnz   = hes_fixed_obj_rcv.nnz();
+		CppAD::vector<bool> both_variable(nnz);
+		size_t n_both_variable = 0;
 		for(size_t k = 0; k < nnz; ++k)
 		{	size_t r = hes_fixed_obj_rcv.row()[k];
 			size_t c = hes_fixed_obj_rcv.col()[k];
-			pattern.set(k, var_id[r], var_id[c]);
+			//
+			size_t i = var_id[r];
+			size_t j = var_id[c];
+			//
+			both_variable[k]  = var_lower[i] < var_upper[i];
+			both_variable[k] &= var_lower[j] < var_upper[j];
+			//
+			if( both_variable[k] )
+			    ++n_both_variable;
 		}
+		CppAD::mixed::sparse_rc pattern(n_var, n_var, n_both_variable);
+		size_t count = 0;
+		for(size_t k = 0; k < nnz; ++k) if( both_variable[k] )
+		{	size_t r = hes_fixed_obj_rcv.row()[k];
+			size_t c = hes_fixed_obj_rcv.col()[k];
+			pattern.set(count++, var_id[r], var_id[c]);
+		}
+		assert( count == n_both_variable);
 		CppAD::mixed::d_sparse_rcv info( pattern );
-		for(size_t k = 0; k < nnz; ++k)
-			info.set(k, hes_fixed_obj_rcv.val()[k] );
+		count = 0;
+		for(size_t k = 0; k < nnz; ++k) if( both_variable[k] )
+			info.set(count++, hes_fixed_obj_rcv.val()[k] );
 		//
 		hes_fixed_obj_out = info;
 	}

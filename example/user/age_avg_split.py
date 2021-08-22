@@ -139,7 +139,7 @@ def example_db (file_name) :
 	# mulcov table
 	mulcov_table = list()
 	#
-	# avgint table: empty
+	# avgint table
 	avgint_table = list()
 	row = {
 		'integrand':  'mtother',

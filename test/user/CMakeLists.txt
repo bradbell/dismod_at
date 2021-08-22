@@ -13,6 +13,7 @@ SET(depends "")
 # BEGIN_SORT_THIS_LINE_PLUS_2
 FOREACH(user_case
 	asymptotic
+	average_integrand
 	avgint
 	bound_frac
 	bound_random
@@ -23,6 +24,7 @@ FOREACH(user_case
 	db2csv
 	fit_meas_noise
 	fit_sim
+	hes_fixed
 	hold_out
 	init_covariate
 	laplace
@@ -36,7 +38,6 @@ FOREACH(user_case
 	scale_gamma
 	scale_zero
 	set_command
-	average_integrand
 	subgroup_mulcov
 	zero_random_1
 	zero_random_2
