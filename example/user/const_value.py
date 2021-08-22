@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -20,6 +20,8 @@
 # $head Node Table$$
 # For this example the $cref node_table$$ is
 # $pre
+#          universe
+#             |
 #           world
 #          /      \
 #      child_1   child_2
@@ -139,9 +141,10 @@ def example_db (file_name) :
 	#
 	# node table:
 	node_table = [
-		{ 'name':'world', 'parent':'' },
-		{ 'name':'child_1', 'parent':'world' },
-		{ 'name':'child_2', 'parent':'world' }
+		{ 'name':'universe', 'parent':''         },
+		{ 'name':'world',    'parent':'universe' },
+		{ 'name':'child_1',  'parent':'world'    },
+		{ 'name':'child_2',  'parent':'world'    }
 	]
 	#
 	# weight table:

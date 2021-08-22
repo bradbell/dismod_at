@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-17 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -115,7 +115,20 @@ void check_child_nslist(
 	int parent_node_id = DISMOD_AT_NULL_INT;
 	for(size_t i = 0; i < option_table.size(); i++)
 	{	if( option_table[i].option_name == "parent_node_id" )
-			parent_node_id = std::atoi( option_table[i].option_value.c_str() );
+		{	if( option_table[i].option_value != "" )
+			    parent_node_id =
+					std::atoi( option_table[i].option_value.c_str() );
+		}
+		if( option_table[i].option_name == "parent_node_name" )
+		{	if( option_table[i].option_value != "" )
+			{	string node_name = option_table[i].option_value;
+				size_t n_node    = node_table.size();
+				for(size_t node_id = 0; node_id < n_node; ++node_id)
+				{	if( node_table[node_id].node_name == node_name )
+						parent_node_id = int( node_id );
+				}
+			}
+		}
 	}
 	assert( parent_node_id != DISMOD_AT_NULL_INT );
 	//
@@ -145,8 +158,9 @@ void check_child_nslist(
 			string table_name     = "nslist_pair";
 			if( node_table[node_id].parent != parent_node_id )
 			{	msg  = node_table[node_id].node_name;
-				msg += " is not a child of the parent node in option table ";
+				msg += " is not a child of the parent node ";
 				msg += node_table[parent_node_id].node_name;
+				msg += " specified in the option table";
 				error_exit(msg, table_name, pair_id);
 			}
 			for(size_t i = 0; i < n_child; i++)

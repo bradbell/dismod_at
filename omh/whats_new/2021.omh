@@ -60,6 +60,14 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-23$$
+The was a bug in checking that the child nodes in the
+$cref nslist_pair_table$$ were children of the parent node,
+when the $cref/node_id/node_table/node_id/$$ for the parent node was not zero
+and the parent node was specified using
+$cref/parent_node_name/option_table/Parent Node/parent_node_name/$$.
+This has been fixed.
+
 $head 08-22$$
 Change $cref hes_fixed_table$$ so that it does not include fixed effects
 that have equal lower and upper limits.
