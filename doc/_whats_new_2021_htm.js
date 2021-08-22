@@ -11,6 +11,9 @@ var list_across0 = [
 '_external.htm'
 ];
 var list_current0 = [
+'whats_new_2021.htm#08-23',
+'whats_new_2021.htm#08-22',
+'whats_new_2021.htm#08-21',
 'whats_new_2021.htm#08-18',
 'whats_new_2021.htm#08-17',
 'whats_new_2021.htm#08-15',

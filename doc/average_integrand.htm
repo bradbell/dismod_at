@@ -1,0 +1,197 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Compute The Average Integrand</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Compute The Average Integrand">
+<meta name="keywords" id="keywords" content=" compute the average integrand under construction syntax purpose rate integrand_name grid age time abs_tol avg_integrand example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_average_integrand_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>average_integrand</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="replace_table.py.htm" target="_top">Prev</a>
+</td><td><a href="user_average_integrand.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_average_integrand_htm.js'></script>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Compute The Average Integrand</big></big></b></center>
+
+<br><a href="average_integrand.htm#Under Construction" target="_top">Under&nbsp;Construction</a>
+<br><a href="average_integrand.htm#Syntax" target="_top">Syntax</a>
+<br><a href="average_integrand.htm#Purpose" target="_top">Purpose</a>
+<br><a href="average_integrand.htm#rate" target="_top">rate</a>
+<br><a href="average_integrand.htm#integrand_name" target="_top">integrand_name</a>
+<br><a href="average_integrand.htm#grid" target="_top">grid</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="average_integrand.htm#grid.age" target="_top">age</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="average_integrand.htm#grid.time" target="_top">time</a>
+<br><a href="average_integrand.htm#abs_tol" target="_top">abs_tol</a>
+<br><a href="average_integrand.htm#avg_integrand" target="_top">avg_integrand</a>
+<br><a href="average_integrand.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Under Construction" id="Under Construction">Under Construction</a></big></b>
+<br>
+This routine is under construction.
+
+<br>
+<br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>avg_integrand</span></font><i><font color="black"><span style='white-space: nowrap'>&nbsp;=&nbsp;dismod_at.average_integrand(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>rate</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>integrand_name</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>grid</span></font><i><font color="black"><span style='white-space: nowrap'>,&nbsp;</span></font></i><font color="blue"><span style='white-space: nowrap'>abs_tol</span></font><i><font color="black"><span style='white-space: nowrap'><br>
+)</span></font></i></code>
+
+
+<br>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+The <a href="predict_command.htm" target="_top"><span style='white-space: nowrap'>predict_command</span></a>
+ is a much faster way to calculate these values.
+This routine is easier to use and provides independent testing of the
+dismod_at integrators.
+
+<br>
+<br>
+<b><big><a name="rate" id="rate">rate</a></big></b>
+<br>
+This is a dictionary and it's possible keys are the
+<a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate&nbsp;names</span></a>
+.
+If a 
+<code><i><font color="black"><span style='white-space: nowrap'>key</span></font></i></code>
+ is a key in the dictionary,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>key</span></font></i><font color="blue"><span style='white-space: nowrap'>](</span></font><i><font color="black"><span style='white-space: nowrap'>age</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+returns a float equal to the value of the specified rate
+at the specified age and time.
+Note that 
+<code><i><font color="black"><span style='white-space: nowrap'>age</span></font></i></code>
+ will always be zero when evaluating
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>['pini'](</span></font><i><font color="black"><span style='white-space: nowrap'>age</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+If a rate name is not in the dictionary, the corresponding rate is zero.
+
+<br>
+<br>
+<b><big><a name="integrand_name" id="integrand_name">integrand_name</a></big></b>
+<br>
+This string is one of the
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand&nbsp;names</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="grid" id="grid">grid</a></big></b>
+<br>
+This argument defines the grid for trapezoidal integration.
+(The dismod_at integrands are often non-smooth and so a low order integration
+method is called for.)
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>grid</span></font></i></code>
+ is a dictionary with the following keys:
+
+<br>
+<br>
+<big><a name="grid.age" id="grid.age">age</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>grid</span></font></i><font color="blue"><span style='white-space: nowrap'>['age']</span></font></code>
+ is a list of floats containing the grid points
+for the average w.r.t. age.
+These points are monotone increasing, the first (last) point is the
+lower (upper) age limit for the average
+
+<br>
+<br>
+<big><a name="grid.time" id="grid.time">time</a></big>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>grid</span></font></i><font color="blue"><span style='white-space: nowrap'>['time']</span></font></code>
+ is a list of floats containing the grid points
+for the average w.r.t. time.
+These points are monotone increasing, the first (last) point is the
+lower (upper) time limit for the average
+
+<br>
+<br>
+<b><big><a name="abs_tol" id="abs_tol">abs_tol</a></big></b>
+<br>
+This float is an absolute error bound, that the integrator will achieve.
+
+<br>
+<br>
+<b><big><a name="avg_integrand" id="avg_integrand">avg_integrand</a></big></b>
+<br>
+This is the calculated value for the
+<a href="avg_integrand.htm#Average Integrand, A_i" target="_top"><span style='white-space: nowrap'>average&nbsp;integrand</span></a>
+.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="user_average_integrand.py.htm" target="_top"><span style='white-space: nowrap'>user_average_integrand.py</span></a>
+ contains an example and test of this routine.
+
+<hr>Input File: python/dismod_at/average_integrand.py
+
+</body>
+</html>

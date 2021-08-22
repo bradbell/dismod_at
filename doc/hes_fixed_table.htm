@@ -137,9 +137,12 @@ elements of the Hessian.
 <br>
 <br>
 <b><big><a name="Representation" id="Representation">Representation</a></big></b>
-<br>
+
+<ol type="1"><li>
 Only the lower triangle of the Hessian is included
 (because the Hessian is symmetric).
+</li><li>
+
 The matrix is in row major order; i.e. 
 <code><i><font color="black"><span style='white-space: nowrap'>row_var_id</span></font></i></code>
 
@@ -149,9 +152,18 @@ is monotone non-decreasing and for each value of
 the 
 <code><i><font color="black"><span style='white-space: nowrap'>col_var_id</span></font></i></code>
  is monotone increasing.
+</li><li>
+
 This is a sparse representation; i.e.,
 if a pair of row and column indices in the lower triangle
 are not present, the Hessian is zero for that row and column pair.
+</li><li>
+
+The asymptotic statistics require the Hessian to be positive definite
+on the sub-set of variables that have their lower limit less than upper.
+Only these variables are included in the sparse representation of the Hessian.
+</li></ol>
+
 
 
 <hr>Input File: omh/table/hes_fixed_table.omh

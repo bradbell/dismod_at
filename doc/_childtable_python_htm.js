@@ -13,7 +13,7 @@ document.write('\
 <option>metropolis</option>\
 <option>modify_command</option>\
 <option>replace_table</option>\
-<option>sim_data</option>\
+<option>average_integrand</option>\
 <option>sql_command</option>\
 <option>system_command_prc</option>\
 <option>unicode_tuple</option>\
@@ -32,7 +32,7 @@ function python_child(item)
 		'metropolis.htm',
 		'modify_command.htm',
 		'replace_table.htm',
-		'sim_data.htm',
+		'average_integrand.htm',
 		'sql_command.htm',
 		'system_command_prc.htm',
 		'unicode_tuple.htm'

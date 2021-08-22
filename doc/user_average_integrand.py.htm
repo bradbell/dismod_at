@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Using the Python sim_data Utility</title>
+<title>Using the Python average_integrand Utility</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Using the Python sim_data Utility">
-<meta name="keywords" id="keywords" content=" using the python sim_data utility see also random effects priors simulation model data ode_step_size source code ">
+<meta name="description" id="description" content="Using the Python average_integrand Utility">
+<meta name="keywords" id="keywords" content=" using the python average_integrand utility see also random effects priors simulation model data ode_step_size source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_sim_data.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_average_integrand.py_htm.js'>
 </script>
 </head>
 <body>
@@ -36,8 +36,8 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>python</option>
-<option>sim_data</option>
-<option>user_sim_data.py</option>
+<option>average_integrand</option>
+<option>user_average_integrand.py</option>
 </select>
 </td>
 <td>
@@ -50,7 +50,7 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="sim_data.htm" target="_top">Prev</a>
+<td><a href="average_integrand.htm" target="_top">Prev</a>
 </td><td><a href="sql_command.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
@@ -59,25 +59,25 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_sim_data_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_average_integrand_htm.js'></script>
 </td>
-<td>user_sim_data.py</td>
+<td>user_average_integrand.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
-<center><b><big><big>Using the Python sim_data Utility</big></big></b></center>
+<center><b><big><big>Using the Python average_integrand Utility</big></big></b></center>
 
-<br><a href="user_sim_data.py.htm#See Also" target="_top">See&nbsp;Also</a>
-<br><a href="user_sim_data.py.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
-<br><a href="user_sim_data.py.htm#Priors" target="_top">Priors</a>
-<br><a href="user_sim_data.py.htm#Simulation" target="_top">Simulation</a>
-<br><a href="user_sim_data.py.htm#Model" target="_top">Model</a>
-<br><a href="user_sim_data.py.htm#Data" target="_top">Data</a>
-<br><a href="user_sim_data.py.htm#ode_step_size" target="_top">ode_step_size</a>
-<br><a href="user_sim_data.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><a href="user_average_integrand.py.htm#See Also" target="_top">See&nbsp;Also</a>
+<br><a href="user_average_integrand.py.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
+<br><a href="user_average_integrand.py.htm#Priors" target="_top">Priors</a>
+<br><a href="user_average_integrand.py.htm#Simulation" target="_top">Simulation</a>
+<br><a href="user_average_integrand.py.htm#Model" target="_top">Model</a>
+<br><a href="user_average_integrand.py.htm#Data" target="_top">Data</a>
+<br><a href="user_average_integrand.py.htm#ode_step_size" target="_top">ode_step_size</a>
+<br><a href="user_average_integrand.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="See Also" id="See Also">See Also</a></big></b>
 
@@ -164,7 +164,7 @@ as having measurement noise.
 This example uses a very small
 <a href="option_table.htm#Age Average Grid.ode_step_size" target="_top"><span style='white-space: nowrap'>ode_step_size</span></a>
 
-to test that both the dismod_at and <a href="sim_data.htm" target="_top"><span style='white-space: nowrap'>sim_data</span></a>
+to test that both the dismod_at and <a href="average_integrand.htm" target="_top"><span style='white-space: nowrap'>average_integrand</span></a>
  integrators are
 working properly.
 
@@ -182,7 +182,7 @@ working properly.
 <b><font color="#000080">import</font></b> random
 <b><font color="#000080">import</font></b> statistics
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/sim_data.py'</font>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/average_integrand.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -229,11 +229,10 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
 n_data             <font color="#990000">=</font> <font color="#993399">10</font>
 random_seed        <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">def</font></b> <b><font color="#000000">sim_data</font></b><font color="#990000">(</font>integrand_name<font color="#990000">,</font> grid<font color="#990000">)</font> <font color="#990000">:</font>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">average_integrand</font></b><font color="#990000">(</font>integrand_name<font color="#990000">,</font> grid<font color="#990000">)</font> <font color="#990000">:</font>
      rate    <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'iota'</font> <font color="#990000">:</font> iota_true <font color="#990000">}</font>
-     noise   <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'denisty_name'</font> <font color="#990000">:</font> <font color="#FF0000">'gaussian'</font><font color="#990000">,</font> <font color="#FF0000">'meas_std'</font> <font color="#990000">:</font> <font color="#993399">0.0</font> <font color="#990000">}</font>
      abs_tol <font color="#990000">=</font> <font color="#993399">1e-5</font>
-     <b><font color="#0000FF">return</font></b> dismod_at<font color="#990000">.</font><b><font color="#000000">sim_data</font></b><font color="#990000">(</font>rate<font color="#990000">,</font> integrand_name<font color="#990000">,</font> grid<font color="#990000">,</font> noise<font color="#990000">,</font> abs_tol<font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> dismod_at<font color="#990000">.</font><b><font color="#000000">average_integrand</font></b><font color="#990000">(</font>rate<font color="#990000">,</font> integrand_name<font color="#990000">,</font> grid<font color="#990000">,</font> abs_tol<font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">example_db</font></b> <font color="#990000">(</font>file_name<font color="#990000">)</font> <font color="#990000">:</font>
      <i><font color="#9A1900"># note that the a, t values are not used for this case</font></i>
@@ -304,7 +303,7 @@ random_seed        <font color="#990000">=</font> <b><font color="#000000">int</
           row<font color="#990000">[</font><font color="#FF0000">'time_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> time_upper
           <i><font color="#9A1900">#</font></i>
           grid       <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'age'</font> <font color="#990000">:</font> age_grid<font color="#990000">,</font> <font color="#FF0000">'time'</font> <font color="#990000">:</font> time_grid <font color="#990000">}</font>
-          meas_value <font color="#990000">=</font> <b><font color="#000000">sim_data</font></b><font color="#990000">(</font><font color="#FF0000">'prevalence'</font><font color="#990000">,</font> grid<font color="#990000">)</font>
+          meas_value <font color="#990000">=</font> <b><font color="#000000">average_integrand</font></b><font color="#990000">(</font><font color="#FF0000">'prevalence'</font><font color="#990000">,</font> grid<font color="#990000">)</font>
           row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> meas_value
           <i><font color="#9A1900">#</font></i>
           data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
@@ -415,9 +414,9 @@ time_table      <font color="#990000">=</font> dismod_at<font color="#990000">.<
           <b><font color="#0000FF">print</font></b><font color="#990000">(</font>fit_var_value<font color="#990000">,</font> true_var_value<font color="#990000">,</font> rel_err<font color="#990000">)</font>
      <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>rel_err<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-3</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'sim_data.py: OK'</font><font color="#990000">)</font></tt></pre>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'average_integrand.py: OK'</font><font color="#990000">)</font></tt></pre>
 
-<hr>Input File: example/user/sim_data.py
+<hr>Input File: example/user/average_integrand.py
 
 </body>
 </html>
