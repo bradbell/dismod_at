@@ -2,6 +2,7 @@
 document.write('\
 <select onchange="python_child(this)">\
 <option>python-&gt;</option>\
+<option>average_integrand</option>\
 <option>create_connection</option>\
 <option>create_database</option>\
 <option>create_table</option>\
@@ -13,7 +14,6 @@ document.write('\
 <option>metropolis</option>\
 <option>modify_command</option>\
 <option>replace_table</option>\
-<option>average_integrand</option>\
 <option>sql_command</option>\
 <option>system_command_prc</option>\
 <option>unicode_tuple</option>\
@@ -21,6 +21,7 @@ document.write('\
 ');
 function python_child(item)
 {	var child_list = [
+		'average_integrand.htm',
 		'create_connection.htm',
 		'create_database.htm',
 		'create_table.htm',
@@ -32,7 +33,6 @@ function python_child(item)
 		'metropolis.htm',
 		'modify_command.htm',
 		'replace_table.htm',
-		'average_integrand.htm',
 		'sql_command.htm',
 		'system_command_prc.htm',
 		'unicode_tuple.htm'
