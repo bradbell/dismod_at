@@ -25,7 +25,7 @@ $head Under Construction$$
 This routine is under construction.
 
 $head Syntax$$
-$codei%avg_integrand% = dismod_at.average_integrand(
+$icode%avg_integrand% = dismod_at.average_integrand(
 	%rate%, %integrand_name%, %grid%, %abs_tol%
 )%$$
 
