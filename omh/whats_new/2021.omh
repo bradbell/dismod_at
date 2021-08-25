@@ -60,6 +60,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-25$$
+Advance dock_dismod_at.sh from version 20210812 to version 20210825.
+
 $head 08-24$$
 Change the some python exits with an error message to
 raising an assert exception with the same message.
