@@ -1,7 +1,7 @@
 # $Id:$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -71,7 +71,8 @@ def get_name_type(connection, tbl_name) :
 		pk            = row[5]
 		if cid == 0 :
 			if pk != 1 :
-				sys.exit(tbl_name + ' table: first column not primary key')
+				msg = tbl_name + ' table: first column not primary key'
+				assert False, msg
 			assert found_pk == False
 			assert col_type[cid] == 'integer'
 			assert col_name[cid] == (tbl_name + '_id')
@@ -79,6 +80,7 @@ def get_name_type(connection, tbl_name) :
 			found_ok       = True
 		else :
 			if pk != 0 :
-				sys.exit(tbl_name + ' table: muiltiple columns in primary key')
+				msg = tbl_name + ' table: muiltiple columns in primary key'
+				assert False, msg
 		cid += 1
 	return (col_name, col_type)

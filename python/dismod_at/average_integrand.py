@@ -207,8 +207,8 @@ def integrand_fun(a, t, rate, integrand_name, abs_tol) :
 	if integrand_name == 'mtstandard' :
 		return (omega + chi) / (omega + chi * P)
 	#
-	print('average_integrand: ' + integrand_name + ' is not a valid integrand name')
-	assert False
+	msg = 'average_integrand: ' + integrand_name + ' is not a valid integrand name'
+	assert False, msg
 #
 # average_integrand
 def average_integrand(rate, integrand_name, grid, abs_tol) :

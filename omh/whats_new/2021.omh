@@ -60,6 +60,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-24$$
+Change the some python exits with an error message to
+raising an assert exception with the same message.
+(This is more useful in the python debugger.)
+
 $head 08-23$$
 The was a bug in checking that the child nodes in the
 $cref nslist_pair_table$$ were children of the parent node,

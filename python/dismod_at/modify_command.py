@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -133,7 +133,7 @@ def modify_command(database, arg_list) :
 	if not column_name in col_name :
 		msg  = column_name + ' is not a column in table ' + table_name + '\n'
 		msg += 'of database ' + database
-		sys.exit(msg)
+		assert False, msg
 	# -------------------------------------------------------------------------
 	# map variable -> _v_['variable']
 	primary_key   = table_name + '_id'

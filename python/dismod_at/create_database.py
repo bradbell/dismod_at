@@ -885,7 +885,10 @@ def create_database(
 			elif isinstance(row[key], float) :
 				extra_type.append('real')
 			else :
-				assert False
+				msg  = 'db2csv_command: avgint_extra_columns: type error:'
+				msg += '\nThe type for column ' + key
+				msg += ' is not str, int, or float'
+				assert False, msg
 	#
 	# col_name
 	col_name = extra_name + [
@@ -975,7 +978,10 @@ def create_database(
 			elif isinstance(row[key], float) :
 				extra_type.append('real')
 			else :
-				assert False
+				msg  = 'db2csv_command: data_extra_columns: type error'
+				msg += '\nThe type for column ' + key
+				msg += ' is not str, int, or float'
+				assert False, msg
 	#
 	# col_name
 	col_name = extra_name + [
