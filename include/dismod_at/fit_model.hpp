@@ -43,7 +43,6 @@ namespace dismod_at {
 		sqlite3*                           db_;
 		const int                          simulate_index_;
 		const bool                         warn_on_stderr_;
-		const bool                         no_scaling_;
 		const size_t                       n_fixed_;
 		const size_t                       n_random_;
 		const pack_info&                   pack_object_;
@@ -135,7 +134,6 @@ namespace dismod_at {
 			int                                  simulate_index        ,
 			bool                                 warn_on_stderr        ,
 			double                               bound_random          ,
-			bool                                 no_scaling            ,
 			const pack_info&                     pack_object           ,
 			const pack_prior&                    var2prior             ,
 			const CppAD::vector<double>&         start_var             ,

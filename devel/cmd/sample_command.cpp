@@ -495,7 +495,6 @@ void sample_command(
 			prior_object.replace_mean(prior_mean);
 			//
 			// fit both fixed and random effects
-			bool no_scaling    = false;
 			bool random_only   = false;
 			int  sim_index_int = int(sample_index);
 			dismod_at::fit_model fit_object_both(
@@ -503,7 +502,6 @@ void sample_command(
 				sim_index_int        ,
 				warn_on_stderr       ,
 				bound_random         ,
-				no_scaling           ,
 				pack_object          ,
 				var2prior            ,
 				start_var_value      ,
@@ -570,7 +568,6 @@ void sample_command(
 				sim_index_int        ,
 				warn_on_stderr       ,
 				bound_random         ,
-				no_scaling           ,
 				pack_object          ,
 				var2prior            ,
 				opt_value            , // use optimal value for fixed effects
@@ -661,13 +658,11 @@ void sample_command(
 	);
 	//
 	// fit_object
-	bool no_scaling     = false;
 	dismod_at::fit_model fit_object(
 		db                   ,
 		sim_index_int        ,
 		warn_on_stderr       ,
 		bound_random         ,
-		no_scaling           ,
 		pack_object          ,
 		var2prior            ,
 		fit_var_value        ,

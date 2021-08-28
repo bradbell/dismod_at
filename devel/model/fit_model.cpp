@@ -44,7 +44,6 @@ $codei%fit_model %fit_object%(
 	%simulate_index%,
 	%warn_on_stderr%,
 	%bound_random%,
-	%no_scaling%,
 	%pack_object%,
 	%var2prior%,
 	%start_var%,
@@ -82,10 +81,6 @@ $head bound_random$$
 This is the value of the
 $cref/bound_random/option_table/Optimize Random Only/bound_random/$$
 in the option table.
-
-$head no_scaling$$
-If this argument is true, no
-$cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ is done.
 
 $head pack_object$$
 This argument is the $cref pack_info$$ information corresponding to the
@@ -159,7 +154,6 @@ fit_model::fit_model(
 	int                                   simulate_index        ,
 	bool                                  warn_on_stderr        ,
 	double                                bound_random          ,
-	bool                                  no_scaling            ,
 	const pack_info&                      pack_object           ,
 	const pack_prior&                     var2prior             ,
 	const CppAD::vector<double>&          start_var             ,
@@ -202,7 +196,6 @@ $end
 db_            (db)                                 ,
 simulate_index_( simulate_index )                   ,
 warn_on_stderr_( warn_on_stderr )                   ,
-no_scaling_    ( no_scaling )                       ,
 n_fixed_       ( number_fixed(pack_object) )        ,
 n_random_      ( pack_object.random_size() )        ,
 pack_object_   ( pack_object )                      ,
@@ -284,7 +277,6 @@ data_object_   ( data_object )
 			{	prior_struct prior          = prior_table[prior_id];
 				fixed_scale_eta_[fixed_id]  = prior.eta;
 				fixed_is_scaled_[fixed_id]  = ! std::isnan( prior.eta );
-				fixed_is_scaled_[fixed_id] &= ! no_scaling;
 				bool ok = std::isnan(prior.eta);
 				ok     |= prior.lower + prior.eta > 0.0;
 				if( ! ok  )
@@ -342,10 +334,6 @@ $head Syntax$$
 $icode%fit_object%.run_fit(%random_only%, %option_map%, %warm_start%)
 %$$
 
-$head fit_object$$
-This object must have been constructed with
-$cref/no_scaling/fit_model_ctor/no_scaling/$$ equal to $code fit$$.
-
 $head Scaling$$
 During optimization the
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$,
@@ -397,8 +385,7 @@ void fit_model::run_fit(
 /* %$$
 $end
 */
-{	assert( ! no_scaling_ );
-	assert( warm_start.x_info.size() == 0 || ! random_only );
+{	assert( warm_start.x_info.size() == 0 || ! random_only );
 	//
 	size_t n_var = n_fixed_ + n_random_;
 	assert( pack_object_.size() == n_var );
@@ -718,10 +705,6 @@ $icode%random_hes_rcv% = fit_object%.random_obj_hes(%pack_vec%)
 $head Prototype$$
 $srcthisfile%0%// BEGIN_RANDOM_OBJ_HES%// END_RANDOM_OBJ_HES%1%$$
 
-$head fit_object$$
-This object must have been constructed with
-$cref/no_scaling/fit_model_ctor/no_scaling/$$ equal to $code sample$$.
-
 $head Constants$$
 The model variables that have upper and lower limits equal
 are referred to as constants.
@@ -817,10 +800,6 @@ $icode%fit_object%.sample_posterior(
 	%fit_var_value%,
 	%option_map%
 )%$$
-
-$head fit_object$$
-This object must have been constructed with
-$cref/no_scaling/fit_model_ctor/no_scaling/$$ equal to $code sample$$.
 
 $head Constants$$
 The model variables that have upper and lower limits equal

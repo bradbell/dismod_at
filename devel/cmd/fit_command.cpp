@@ -418,13 +418,11 @@ void fit_command(
 	// warn_on_stderr
 	bool warn_on_stderr = get_str_map(option_map, "warn_on_stderr") == "true";
 	//
-	bool no_scaling = false;
 	dismod_at::fit_model fit_object(
 		db                   ,
 		simulation_index     ,
 		warn_on_stderr       ,
 		bound_random         ,
-		no_scaling           ,
 		pack_object          ,
 		var2prior            ,
 		start_var            ,
