@@ -60,6 +60,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 08-30$$
+The hold_out command did not properly detect and report when the
+$cref/integrand_name/hold_out_command/integrand_name/$$ was not valid.
+This has been fixed.
+
 $head 08-25$$
 Advance dock_dismod_at.sh from version 20210812 to version 20210825.
 

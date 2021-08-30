@@ -781,7 +781,7 @@ void sample_command(
 	);
 	// ----------------------------------------------------------------------
 	if( sample_out.size() == 0 )
-	{	msg = "sample_commad: sample table was not created";
+	{	msg = "sample_command: sample table was not created";
 		dismod_at::error_exit(msg);
 	}
 	return;

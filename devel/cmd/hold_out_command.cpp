@@ -16,6 +16,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/get_data_subset.hpp>
 # include <dismod_at/hold_out_command.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -95,8 +96,10 @@ void hold_out_command(
 	{	if( integrand_enum2name[i] == integrand_name )
 			integrand = integrand_enum(i);
 	}
+	if( integrand == number_integrand_enum )
 	{	string msg = "hold_out_command: " + integrand_name;
 		msg       += " is not a valid integrand name";
+		error_exit(msg);
 	}
 	//
 	// src: array of indices to choose from
