@@ -39,10 +39,10 @@ $spell
 	integrators
 	cen
 	cmake
-    prc
-    stderr
-    mulcov
-    avgint
+	prc
+	stderr
+	mulcov
+	avgint
 	stdout
 $$
 $navigate%
@@ -59,6 +59,21 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+
+$head 09-01$$
+If the file name for a database in a $cref command$$ did not exist,
+most commands gave the error message:
+$codei%
+	Could not find table or column in table.
+	detected in age table
+%$$
+This has been changed to
+$codei%
+	Cannot find the database %file_name%
+%$$
+where $icode file_name$$ is the name used for the database.
+
 
 $head 08-30$$
 The hold_out command did not properly detect and report when the

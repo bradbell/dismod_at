@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -64,14 +64,26 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 sqlite3* open_connection(const std::string& file_name, bool new_file)
 {
+	// attempt to open the database
+	std::ifstream ifile( file_name.c_str() );
 	if( new_file )
-	{	// delete old version of database
-		std::ifstream ifile( file_name.c_str() );
-		if( ifile )
-		{	ifile.close();
+	{	if( ifile )
+		{   // remove the old version of the file
+	ifile.close();
 			std::remove( file_name.c_str() );
 		}
 	}
+	else
+	{	// check that the database exists
+		if( ! ifile )
+		{	std::string msg;
+			msg = "Cannot find the database " + file_name;
+		    std::cerr << msg << std::endl;
+		    std::exit(1);
+		}
+	}
+	ifile.close();
+
 	// open a new database
 	sqlite3* db;
 	int rc = sqlite3_open(file_name.c_str(), &db);
