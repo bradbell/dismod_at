@@ -173,7 +173,7 @@ $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$.
 The degrees of freedom may be replaced using the
 $cref data_density_command$$.
 
-$head null$$
+$subhead null$$
 If $icode density_id$$ does not correspond to
 $code students$$ or $code log_students$$,
 $icode nu$$ can be $code null$$.
