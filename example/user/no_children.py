@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -10,13 +10,68 @@
 # ---------------------------------------------------------------------------
 # $begin user_no_children.py$$ $newlinech #$$
 # $spell
-#	init
-#	avgint
-#	dage
-#	dtime
+#	Integrands
+#	Sincidence
+#	mtexcess
+#	mtother
+#	pini
 # $$
 #
 # $section Case with no Children; i.e., no Random Effects$$
+#
+# $head Integrands$$
+# There is an integrand that directly measures each of the model rates; i.e.,
+# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
+# $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$,
+# $cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$, and
+# $cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$.
+# In addition the integrand prevalence is included, but is data values
+# are for age zero which corresponds to the
+# $cref/pini/rate_table/rate_name/pini/$$ rate.
+#
+# $head Nodes$$
+# There are four nodes in this example.
+# The world node has one child, north_america.
+# The north_america node has two children, united_states and canada.
+# The $cref/parent_node/option_table/Parent Node/$$ is canada which
+# does not have any children.
+#
+# $head Data$$
+# All of the data corresponds to canada.
+# There is one data point for each integrand and it is the true value
+# for the corresponding rate; i.e., there is no noise in this data.
+# $srccode%py%
+integrand2rate = {
+	'prevalence':  'pini'   ,
+	'Sincidence':  'iota'   ,
+	'remission':   'rho'    ,
+	'mtexcess' :   'chi'    ,
+	'mtother':     'omega'  ,
+}
+rate_true = {
+	'pini'  : 1e-2 ,
+	'iota'  : 2e-2 ,
+	'rho'   : 3e-2 ,
+	'chi'   : 4e-2 ,
+	'omega' : 5e-2 ,
+}
+# The data is modeled as if it had noise.
+# %$$
+#
+# $subhead Outlier$$
+# There is also one outlier at the end of the data table with
+# $cref/hold_out/data_table/hold_out/$$ equal to one.
+#
+# $head Smoothing$$
+# There is a smoothing the for each of the possible rates for the
+# parent node canada.
+# There is no child node smoothing.
+# The value priors for this smoothing is uniform with lower limit 1e-4
+# and upper limit 1.0. The mean 0.1, is only used as a starting point
+# for the optimization.
+# The time difference prior for this smoothing is
+# gaussian with mean zero and standard deviation 1e-2.
+#
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -86,28 +141,8 @@ def example_db (file_name) :
 	# nslist_table:
 	nslist_table = dict()
 	# ----------------------------------------------------------------------
-	# avgint table: same order as list of integrands
+	# avgint table:
 	avgint_table = list()
-	# values that are the same for all data rows
-	row = {
-		'node':        'canada',
-		'subgroup':    'world',
-		'weight':      '',
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
-		'age_lower':    0.0
-	}
-	# values that change between rows: (one data point for each integrand)
-	for avgint_id in range( len(integrand_table) ) :
-		integrand         = integrand_table[avgint_id]['name']
-		row['integrand']  = integrand
-		if integrand == 'prevalence' :
-			# prevalence is measured at age zero
-			row['age_upper'] = 0.0
-		else :
-			# other integrands are averaged from age zero to one hundred
-			row['age_upper'] = 100.0
-		avgint_table.append( copy.copy(row) )
 	# ----------------------------------------------------------------------
 	# data table: same order as list of integrands
 	data_table = list()
@@ -124,10 +159,9 @@ def example_db (file_name) :
 	}
 	# values that change between rows: (one data point for each integrand)
 	for integrand_id in range( len(integrand_table) ) :
-		rate_id           = integrand_id
-		meas_value        = 1e-2 * (rate_id + 1)
-		meas_std          = 0.2 * meas_value
 		integrand         = integrand_table[integrand_id]['name']
+		meas_value        = rate_true[ integrand2rate[integrand] ]
+		meas_std          = 0.2 * meas_value
 		row['meas_value'] = meas_value
 		row['meas_std']   = meas_std
 		row['integrand']  = integrand
@@ -157,7 +191,7 @@ def example_db (file_name) :
 			'density':  'uniform',
 			'lower':    1e-4,
 			'upper':    1.0,
-			'mean':     1e-1,
+			'mean':     0.1,
 		},{ # prior_gauss_zero
 			'name':     'prior_gauss_zero',
 			'density':  'gaussian',
@@ -167,12 +201,11 @@ def example_db (file_name) :
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
-	middle_age_id  = 1
-	last_time_id   = 2
+	last_time_id   = len(time_list) - 1
 	smooth_table = [
 		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
-			'age_id':                   [ middle_age_id ],
+			'age_id':                   [ 0 ],
 			'time_id':                  [ 0, last_time_id ],
 			'fun':                       fun_rate_parent
 		}
@@ -241,17 +274,9 @@ def example_db (file_name) :
 	)
 	# ----------------------------------------------------------------------
 	n_smooth  = len( smooth_table )
-	rate_true = []
-	for rate_id in range( len( data_table ) ) :
-		# for this particular example
-		data_id    = rate_id
-		meas_value = data_table[data_id]['meas_value']
-		rate_true.append(meas_value)
-	#
-	return (n_smooth, rate_true)
 # ===========================================================================
-file_name             = 'example.db'
-(n_smooth, rate_true) = example_db(file_name)
+file_name  = 'example.db'
+example_db(file_name)
 #
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
@@ -263,43 +288,31 @@ connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
 var_table       = dismod_at.get_table_dict(connection, 'var')
+node_table      = dismod_at.get_table_dict(connection, 'node')
+rate_table      = dismod_at.get_table_dict(connection, 'rate')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
-# mulstd variables
-for smooth_id in range( n_smooth ) :
-	for var_type in [ 'mulstd_value', 'mulstd_dage', 'mulstd_dtime' ] :
-		count = 0
-		for var_id in range( len(var_table) ) :
-			row   = var_table[var_id]
-			match = row['var_type'] == var_type
-			match = match and row['smooth_id'] == smooth_id
-			if match :
-				count += 1
-				fit_var_id     = var_id
-				fit_var_value  = fit_var_table[fit_var_id]['fit_var_value']
-				assert fit_var_value  == 1.0
-		assert count == 0
-#
-# rate variables
-parent_node_id = 3
-check_tol      = 1e-3
-n_rate         = 5;
-for rate_id in range(n_rate) :
-	count = 0
-	for var_id in range( len(var_table) ) :
-		row   = var_table[var_id]
-		match = row['var_type'] == 'rate'
-		match = match and row['rate_id'] == rate_id
-		if match :
-			assert row['node_id'] == parent_node_id
-			count         += 1
-			check          = rate_true[rate_id]
-			fit_var_id     = var_id
-			fit_var_value   = fit_var_table[fit_var_id]['fit_var_value']
-			err            = fit_var_value  / check - 1.0
-			assert abs(err) <= check_tol
-	# There is one age point and two time points for each rate
-	assert count == 2
+# 5 rates and two time points for each rate
+assert len(var_table) == 10
+for (var_id, row) in enumerate(var_table) :
+	assert row['var_type'] == 'rate'
+	#
+	# node_name
+	node_id   = row['node_id']
+	node_name = node_table[node_id]['node_name']
+	assert node_name == 'canada'
+	#
+	# rate_name
+	rate_id   = row['rate_id']
+	rate_name = rate_table[rate_id]['rate_name']
+	#
+	# fit_var_value
+	fit_var_value = fit_var_table[var_id]['fit_var_value']
+	#
+	# check
+	check  = rate_true[rate_name]
+	err    = fit_var_value  / check - 1.0
+	assert abs(err) < 1e-6
 # -----------------------------------------------------------------------------
 print('no_children.py: OK')
 # END PYTHON

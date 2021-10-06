@@ -60,6 +60,8 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 10-06$$
+Add a documentation to the $cref user_no_children.py$$ example.
 
 $head 09-01$$
 If the file name for a database in a $cref command$$ did not exist,

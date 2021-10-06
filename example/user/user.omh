@@ -133,6 +133,7 @@ $rref user_ill_condition.py$$
 $rref user_jump_at_age.py$$
 $rref user_lasso_covariate.py$$
 $rref user_mulstd.py$$
+$rref user_no_children.py$$
 $rref user_one_function.py$$
 $rref user_predict_fit.py$$
 $rref user_predict_mulcov.py$$
@@ -157,7 +158,6 @@ $table
 $rref user_metropolis.py$$
 $rref user_const_random.py$$
 $rref user_diff_constraint.py$$
-$rref user_no_children.py$$
 $rref user_re_scale.py$$
 $tend
 
