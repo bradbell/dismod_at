@@ -86,6 +86,7 @@ $children%
 	example/user/mulstd.py%
 	example/user/no_children.py%
 	example/user/one_function.py%
+	example/user/plot_data_fit.py%
 	example/user/predict_fit.py%
 	example/user/predict_mulcov.py%
 	example/user/re_scale.py%
@@ -135,6 +136,7 @@ $rref user_lasso_covariate.py$$
 $rref user_mulstd.py$$
 $rref user_no_children.py$$
 $rref user_one_function.py$$
+$rref user_plot_data_fit.py$$
 $rref user_predict_fit.py$$
 $rref user_predict_mulcov.py$$
 $rref user_residual.py$$

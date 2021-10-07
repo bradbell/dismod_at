@@ -25,6 +25,7 @@
 #	python/dismod_at/get_table_dict.py%
 #	python/dismod_at/metropolis.py%
 #	python/dismod_at/modify_command.py%
+#	python/dismod_at/plot_data_fit.py%
 #	python/dismod_at/replace_table.py%
 #	python/dismod_at/sql_command.py%
 #	python/dismod_at/system_command_prc.py%
@@ -35,7 +36,7 @@
 # $end
 # -----------------------------------------------------------------------------
 # BEGIN_SORT_THIS_LINE_PLUS_1
-from .average_integrand            import average_integrand
+from .average_integrand   import average_integrand
 from .create_connection   import create_connection
 from .create_database     import create_database
 from .create_table        import create_table
@@ -46,6 +47,7 @@ from .get_row_list        import get_row_list
 from .get_table_dict      import get_table_dict
 from .metropolis          import metropolis
 from .modify_command      import modify_command
+from .plot_data_fit       import plot_data_fit
 from .replace_table       import replace_table
 from .sql_command         import sql_command
 from .system_command_prc  import system_command_prc
