@@ -13,6 +13,7 @@ document.write('\
 <option>get_table_dict</option>\
 <option>metropolis</option>\
 <option>modify_command</option>\
+<option>plot_data_fit</option>\
 <option>replace_table</option>\
 <option>sql_command</option>\
 <option>system_command_prc</option>\
@@ -32,6 +33,7 @@ function python_child(item)
 		'get_table_dict.htm',
 		'metropolis.htm',
 		'modify_command.htm',
+		'plot_data_fit.htm',
 		'replace_table.htm',
 		'sql_command.htm',
 		'system_command_prc.htm',
