@@ -29,7 +29,7 @@ $cref fit_command$$.
 
 
 $head integrand_list$$
-Each element of $code list$$ of $code str$$ is an
+Each element of this $code list$$ is a $code str$$ containing an
 $cref/integrand_name/integrand_table/integrand_name/$$
 that we are plotting the fit for.
 
@@ -75,7 +75,7 @@ def plot_data_fit(database, integrand_list, file_name) :
 	n_point_list = list()
 	for integrand_name in integrand_list :
 		#
-		# integrand_name
+		# integrand_id
 		integrand_id = None
 		for (row_id, row) in enumerate(tables['integrand']) :
 			if row['integrand_name'] == integrand_name :
