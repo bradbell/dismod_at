@@ -197,12 +197,12 @@ def plot_data_fit(database, integrand_list, file_name) :
 					  sp.set_xticklabels( [] )
 				if subplot_index == 0 :
 					pyplot.title( integrand_name )
-		# x-axis label
-		pyplot.xlabel('data index')
-		#
-		# save plot
-		pdf.savefig( fig )
-		pyplot.close( fig )
+			# x-axis label
+			pyplot.xlabel('data index')
+			#
+			# save plot
+			pdf.savefig( fig )
+			pyplot.close( fig )
 	# end of pages in pdf file
 	pdf.close()
 	return n_point_list
