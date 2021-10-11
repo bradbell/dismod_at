@@ -21,7 +21,7 @@ $section Plot The Rates for a Fit$$
 $head Under Construction$$
 
 $head Syntax$$
-$icode%plot_list% = plot_rate_fit(%database%, %rate_list%, %pdf_file%)
+$icode%plot_set% = plot_rate_fit(%database%, %rate_set%, %pdf_file%)
 %$$
 
 $head database$$
@@ -31,43 +31,47 @@ $cref/fit/fit_command/$$.
 If there is a $cref sample_table$$ it is assumed
 it was created using a $cref sample_command$$ after the $cref fit_command$$.
 
-$head rate_list$$
-Each element of this $code list$$ an $code str$$ containing a
+$head rate_set$$
+Each element of this $code set$$ an $code str$$ containing a
 $cref/rate_name/rate_table/rate_name/$$
 that we are plotting the fit for.
 
 $head pdf_file$$
 Is the location where the pdf file containing the plot will be placed.
 
-$head plot_list$$
-Each element of this $code list$$ is a $code str$$ containing
-the name of a rate (in $icode rate_list$$) that was plotted.
+$head plot_set$$
+Each element of this $code set$$ is a $code str$$ containing
+the name of a rate (in $icode rate_set$$) that was plotted.
 If a rate was not plotted, it is constrained to be zero by the rate table.
 
 $head Example$$
-$comment user_plot_rate_fit.py$$.
+$cref user_plot_rate_fit.py$$.
 
 $end
 '''
 # ----------------------------------------------------------------------------
+import sys
 import numpy
+import math
 import dismod_at
 from matplotlib import pyplot
 import matplotlib.backends.backend_pdf
 # ----------------------------------------------------------------------------
 def get_parent_node_id(tables) :
 	parent_node_id = None
-	for row in tables['option'] :
-		if row['option_name'] == 'parent_node_id' :
-			parent_node_id = int( row['option_value'] )
-		if row['option_name'] == 'parent_node_name' :
-			parent_node_name = row['option_value']
-			for (node_id, node_row) in tables['node'] :
+	msg = 'Cannot find parent_node_id or parent_node_name in option table'
+	for option_row in tables['option'] :
+		if option_row['option_name'] == 'parent_node_id' :
+			parent_node_id = int( option_row['option_value'] )
+		if option_row['option_name'] == 'parent_node_name' :
+			parent_node_name = option_row['option_value']
+			msg  = f'Cannot find parent_node_name {parent_node_name} in '
+			msg += 'node table'
+			for (node_id, node_row) in enumerate(tables['node']) :
 				if node_row['node_name'] == parent_node_name :
-					parent_note_id = node_id
+					parent_node_id = node_id
 	if parent_node_id is None :
-		msg = 'Cannot find parent_node_id or parent_node_name in option table'
-		sys.exit(msg)
+		assert False, msg
 	return parent_node_id
 # ----------------------------------------------------------------------------
 def check4table(cursor, table_name) :
@@ -84,16 +88,17 @@ def check4table(cursor, table_name) :
 #
 # class for compariing an (age_id, time_id) pairs
 class pair:
-	def __init__(self, age_id, time_id) :
+	def __init__(self, tables, age_id, time_id) :
+		self.tables  = tables
 		self.age_id  = age_id
 		self.time_id = time_id
 	def __lt__(self, other) :
 		if self.age_id != other.age_id :
-			self_age   = age_table[ self.age_id ]['age']
-			other_age  = age_table[ other.age_id ]['age']
+			self_age   = tables['age'][ self.age_id ]['age']
+			other_age  = tables['age'][ other.age_id ]['age']
 			return self_age < other_age
-		self_time  = time_table[ self.time_id ]['time']
-		other_time = time_table[ other.time_id ]['time']
+		self_time  = tables['time'][ self.time_id ]['time']
+		other_time = tables['time'][ other.time_id ]['time']
 		return self_time < other_time
 	def _eq_(self, other) :
 		equal = self.age_id == other.age_id
@@ -108,7 +113,7 @@ class pair:
 	def __ne__(self, other) :
 		return not __eq__(self, other)
 # ----------------------------------------------------------------------------
-def plot_rate_fit(database, rate_list, file_name) :
+def plot_rate_fit(database, rate_set, file_name) :
 	#
 	# color_style_list, n_color_style
 	color_style_list = [
@@ -127,11 +132,13 @@ def plot_rate_fit(database, rate_list, file_name) :
 	connection = dismod_at.create_connection(database, new)
 	tables     = dict()
 	for name in [
+		'age',
 		'fit_var',
 		'node',
+		'option',
 		'rate',
-		'sample',
 		'smooth',
+		'time',
 		'var',
 
 	] :
@@ -141,18 +148,18 @@ def plot_rate_fit(database, rate_list, file_name) :
 	connection.close()
 	#
 	# parent_node_id
-	parent_node_id = get_parent_node_id()
+	parent_node_id = get_parent_node_id(tables)
 	#
 	# parent_node_name
 	parent_node_name = tables['node'][parent_node_id]['node_name']
 	#
 	# age_min, age_max
-	age_min = min( [ row['age'] for row in age_table ] )
-	age_max = max( [ row['age'] for row in age_table ] )
+	age_min = min( [ row['age'] for row in tables['age'] ] )
+	age_max = max( [ row['age'] for row in tables['age'] ] )
 	#
 	# time_min, time_max
-	time_min = min( [ row['time'] for row in time_table ] )
-	time_max = max( [ row['time'] for row in time_table ] )
+	time_min = min( [ row['time'] for row in tables['time'] ] )
+	time_max = max( [ row['time'] for row in tables['time'] ] )
 	#
 	# n_var, n_sample
 	n_var    = len( tables['var'] )
@@ -163,15 +170,15 @@ def plot_rate_fit(database, rate_list, file_name) :
 	# pdf
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
-	# plot_list
-	plot_list = list()
-	for row in rate_table :
+	# plot_set
+	plot_set = set()
+	for row in tables['rate'] :
 		if not row['parent_smooth_id'] is None :
 			rate_name = row['rate_name']
-			if rate_name in rate_list :
-				plot_list.append(rate_name)
+			if rate_name in rate_set :
+				plot_set.add(rate_name)
 	#
-	for rate_name in plot_list :
+	for rate_name in plot_set :
 		#
 		# rate_id
 		rate_id = None
@@ -188,7 +195,7 @@ def plot_rate_fit(database, rate_list, file_name) :
 		# triple_list
 		triple_list  = list()
 		smooth_id    = None
-		for (var_id, row) in enumerate(var_table) :
+		for (var_id, row) in enumerate(tables['var']) :
 			if row['var_type'] == 'rate' :
 				if row['rate_id'] == rate_id :
 					if  row['node_id'] == parent_node_id :
@@ -207,7 +214,7 @@ def plot_rate_fit(database, rate_list, file_name) :
 		#
 		# triple_list
 		# sort first by age and then by time
-		key = lambda triple : pair( triple[0], triple[1] )
+		key = lambda triple : pair(tables, triple[0], triple[1] )
 		triple_list = sorted(triple_list, key = key )
 		#
 		# age, time, rate, std
@@ -251,8 +258,15 @@ def plot_rate_fit(database, rate_list, file_name) :
 			std_min   = max(std_min, std_max * 1e-5)
 		#
 		# plot_std
-		if std_min > 0 :
-			plot_std = False
+		if plot_std :
+			if std_min == 0.0 :
+				plot_std = False
+		#
+		# n_subplot
+		if plot_std :
+			n_subplot = 2
+		else :
+			n_subplot = 1
 		#
 		# --------------------------------------------------------------------
 		# for each time, plot rate and possibly std as a function of age
@@ -342,4 +356,4 @@ def plot_rate_fit(database, rate_list, file_name) :
 	#
 	# end of pages in pdf file
 	pdf.close()
-	return plot_list
+	return plot_set
