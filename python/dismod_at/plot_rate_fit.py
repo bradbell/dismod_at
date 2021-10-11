@@ -18,8 +18,6 @@ $$
 
 $section Plot The Rates for a Fit$$
 
-$head Under Construction$$
-
 $head Syntax$$
 $icode%plot_set% = plot_rate_fit(%database%, %rate_set%, %pdf_file%)
 %$$
@@ -144,7 +142,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 	] :
 		tables[name] = dismod_at.get_table_dict(connection, name)
 	if check4table(connection, 'sample') :
-		tables['sample'] = dismod_at.get_table_dict(connection, name)
+		tables['sample'] = dismod_at.get_table_dict(connection, 'sample')
 	connection.close()
 	#
 	# parent_node_id
@@ -164,8 +162,8 @@ def plot_rate_fit(database, rate_set, file_name) :
 	# n_var, n_sample
 	n_var    = len( tables['var'] )
 	if 'sample' in tables :
-		n_sample = len( tables['sample'] ) / n_var
 		assert len( tables['sample'] ) % n_var == 0
+		n_sample = int( len( tables['sample'] ) / n_var )
 	#
 	# pdf
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
@@ -244,7 +242,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 					sumsq = 0.0
 					for k in range(n_sample) :
 						sample_id = k * n_var + var_id
-						var_value = sample_table[sample_id]['var_value']
+						var_value = tables['sample'][sample_id]['var_value']
 						sumsq    += (var_value - rate[i, j])**2
 					std[i, j] = numpy.sqrt(sumsq / n_sample)
 		#
@@ -259,7 +257,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 		#
 		# plot_std
 		if plot_std :
-			if std_min == 0.0 :
+			if std_max == 0.0 :
 				plot_std = False
 		#
 		# n_subplot
@@ -350,6 +348,71 @@ def plot_rate_fit(database, rate_set, file_name) :
 			axis.legend(
 				title = 'time', loc='center left', bbox_to_anchor=(1, 0.5)
 			)
+			# ---------------------------------------------------------------
+			if plot_std :
+				# restart colors so they are the same as for the first subplot
+				# (we only need on legend for both subplots)
+				color_index = save_color_index
+				#
+				# axis for subplot (uses the same title as the figure)
+				axis = pyplot.subplot(n_subplot, 1, 2)
+				#
+				#
+				# start, color_index, stop
+				start  = i_fig * n_line_per_fig
+				if i_fig > 0 :
+					# overlap figures by one line that does not get counted
+					# in value of n_line_per_fig
+					start        = start - 1
+					color_index -= 1
+				stop   = min(n_time, start + n_line_per_fig )
+				#
+				for j in range(start, stop) :
+					# color_index
+					color_index    = (color_index + 1) % n_color_style
+					#
+					# color, style
+					(color, style) = color_style_list[color_index]
+					#
+					# x, y
+					x   = age[:,j]
+					y   = std[:,j]
+					# avoid y values less than or equal zero
+					y     = numpy.maximum(y, std_min)
+					#
+					# x, y
+					# extend as constant to min and max age
+					x     = [age_min] + x.tolist() + [age_max]
+					y     = [y[0]]    + y.tolist() + [y[-1]]
+					#
+					# label
+					# used by legend
+					label = str( time[0,j] )
+					#
+					# plot this line
+					pyplot.plot(x, y, label=label, color=color, linestyle=style)
+					#
+					#
+					# axis labels
+					pyplot.xlabel('age')
+					pyplot.ylabel('log ' + rate_name)
+					#
+					# y axis sacling and limits
+					pyplot.yscale('log')
+					pyplot.ylim(std_min, std_max)
+				#
+				# plot age grid values as vertical lines
+				for i in range(n_age) :
+					x = age[i, 0]
+					pyplot.axvline(
+						x, color='black', linestyle='dotted', alpha=0.3
+					)
+				#
+				# Shrink current axis by 15% and place legend to right
+				box = axis.get_position()
+				axis.set_position([
+					box.x0 + box.width*.05 , box.y0, box.width*0.85, box.height
+				])
 		# --------------------------------------------------------------------
 		pdf.savefig( fig )
 		pyplot.close( fig )
@@ -436,6 +499,71 @@ def plot_rate_fit(database, rate_set, file_name) :
 			axis.legend(
 				title = 'age', loc='center left', bbox_to_anchor=(1, 0.5)
 			)
+			# ---------------------------------------------------------------
+			if plot_std :
+				# restart colors so they are the same as for the first subplot
+				# (we only need on legend for both subplots)
+				color_index = save_color_index
+				#
+				# axis for subplot (uses the same title as the figure)
+				axis = pyplot.subplot(n_subplot, 1, 2)
+				#
+				#
+				# start, color_index, stop
+				start  = i_fig * n_line_per_fig
+				if i_fig > 0 :
+					# overlap figures by one line that does not get counted
+					# in value of n_line_per_fig
+					start        = start - 1
+					color_index -= 1
+				stop   = min(n_age, start + n_line_per_fig )
+				#
+				for i in range(start, stop) :
+					# color_index
+					color_index    = (color_index + 1) % n_color_style
+					#
+					# color, style
+					(color, style) = color_style_list[color_index]
+					#
+					# x, y
+					x   = time[i,:]
+					y   = std[i,:]
+					# avoid y values less than or equal zero
+					y     = numpy.maximum(y, std_min)
+					#
+					# x, y
+					# extend as constant to min and max age
+					x     = [time_min] + x.tolist() + [time_max]
+					y     = [y[0]]    + y.tolist() + [y[-1]]
+					#
+					# label
+					# used by legend
+					label = str( age[i,0] )
+					#
+					# plot this line
+					pyplot.plot(x, y, label=label, color=color, linestyle=style)
+					#
+					#
+					# axis labels
+					pyplot.xlabel('time')
+					pyplot.ylabel('log ' + rate_name)
+					#
+					# y axis sacling and limits
+					pyplot.yscale('log')
+					pyplot.ylim(std_min, std_max)
+				#
+				# plot time grid values as vertical lines
+				for j in range(n_time) :
+					x = time[0, j]
+					pyplot.axvline(
+						x, color='black', linestyle='dotted', alpha=0.3
+					)
+				#
+				# Shrink current axis by 15% and place legend to right
+				box = axis.get_position()
+				axis.set_position([
+					box.x0 + box.width*.05 , box.y0, box.width*0.85, box.height
+				])
 		# --------------------------------------------------------------------
 		pdf.savefig( fig )
 		pyplot.close( fig )

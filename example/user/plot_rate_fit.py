@@ -54,7 +54,7 @@ integrand2rate = {
 #
 # $head Data$$
 # All of the data corresponds to canada.
-# There is one data point for eachof the integrands listed above.
+# There is one data point for each of the integrands listed above.
 # It is simulated using true value for the corresponding rate:
 # $srccode%py%
 def rate_true(rate_name, age, time) :
@@ -69,7 +69,7 @@ def rate_true(rate_name, age, time) :
 # Even though there is not noise in the simulated data, it is modeled as
 # have the following coefficient of variation:
 # $srccode%py%
-meas_cv = 0.1
+meas_cv = 0.2
 # %$$
 #
 # $head Source Code$$
@@ -268,6 +268,9 @@ example_db(file_name)
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
+dismod_at.system_command_prc(
+	[ program, file_name, 'sample', 'asymptotic', 'both', '20' ]
+)
 # --------------------------------------------------------------------------
 # plot_rate_fit
 database       = file_name

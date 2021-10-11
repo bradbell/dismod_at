@@ -60,6 +60,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 10-11$$
+Add the $cref plot_rate_fit$$ python function.
+
 $head 10-07$$
 Add the $cref plot_data_fit$$ python function.
 
