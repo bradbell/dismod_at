@@ -35,8 +35,8 @@
 # The value priors for the rate smoothing is uniform with lower limit 1e-4
 # and upper limit 1.0. The mean 0.1, is only used as a starting point
 # for the optimization.
-# The time difference prior for this smoothing is
-# gaussian with mean zero and standard deviation 1e-2.
+# The age and time difference prior for this smoothing is
+# uniform with mean zero and no upper or lower bound.
 #
 # $head Integrands$$
 # The integrands for this example are
@@ -54,34 +54,23 @@ integrand2rate = {
 #
 # $head Data$$
 # All of the data corresponds to canada.
-#
-# $subhead n_data$$
-# There are $icode n_data$$ data points for each of the integrands where
+# There is one data point for eachof the integrands listed above.
+# It is simulated using true value for the corresponding rate:
 # $srccode%py%
-n_data  = 100
+def rate_true(rate_name, age, time) :
+	age_fraction  = age / 100.0
+	time_fraction = (time - 1980) / 40.0
+	assert 0 <= age_fraction and age_fraction <= 1.0
+	assert 0 <= time_fraction and time_fraction <= 1.0
+	value         = age_fraction + time_fraction + 1.0
+	factor        = { 'iota':1e-2 , 'rho':5e-2 , 'chi':1e-3  }
+	return factor[rate_name] * value
 # %$$
-#
-# $subhead Measurement Noise$$
-# The data is simulated a Gaussian with mean equal to the
-# corresponding $icode rate_true$$ :
+# Even though there is not noise in the simulated data, it is modeled as
+# have the following coefficient of variation:
 # $srccode%py%
-rate_true = {
-	'iota'  : 1e-2 ,
-	'rho'   : 1e-3 ,
-	'chi'   : 1e-4 ,
-}
+meas_cv = 0.1
 # %$$
-# and with coefficient of variation $icode meas_cv$$ :
-# $srccode%py%
-meas_cv = 0.2
-# %$$
-#
-# $subhead hold_out$$
-# There is also one outlier for each integrand
-# (that is not simulated with the Gaussian noise described above).
-# The outlier is placed in the middle of the data set for each integrand.
-# The $cref/hold_out/data_table/hold_out/$$ for the outliers is set to one
-# (it is zero for all the other data).
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -118,13 +107,15 @@ random_seed = int( time.time() )
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
 	def fun_rate_parent(a, t) :
-		return ('prior_rate_parent', None, 'prior_gauss_zero')
+		return ('prior_rate_parent', 'prior_none', 'prior_none')
 	# ----------------------------------------------------------------------
 	# age table
-	age_list    = [ 0.0 , 50.0 , 100.0 ]
+	age_list    = list( range(0, 101, 10) )
+	age_index   = list( range(1, len(age_list) - 1, 1) )
 	#
 	# time table
-	time_list   = [ 1990.0, 2000.0, 2010.0, 2020 ]
+	time_list   = list( range(1980, 2021, 10) )
+	time_index  = list( range(1, len(time_list) - 1, 1) )
 	#
 	# integrand table
 	integrand_table = [
@@ -166,30 +157,26 @@ def example_db (file_name) :
 		'density':     'gaussian',
 		'weight':      '',
 		'hold_out':     False,
-		'age_lower':    50.0,
-		'age_upper':    50.0,
-		'time_lower':   2000.0,
-		'time_upper':   2000.0,
 	}
 	# values that change between rows: (one data point for each integrand)
 	for integrand_id in range( len(integrand_table) ) :
 		integrand_name    = integrand_table[integrand_id]['name']
-		true_value        = rate_true[ integrand2rate[integrand_name] ]
-		meas_std          = meas_cv * true_value
-		row['integrand']  = integrand_name
-		row['meas_std']   = meas_std
+		rate_name         = integrand2rate[integrand_name]
 		#
-		# i
-		for i in range(n_data) :
-			meas_value        = random.gauss(true_value, meas_std)
-			row['meas_value'] = meas_value
-			#
-			row['hold_out'] = int( i == int(n_data / 2) )
-			if row['hold_out'] == 1 :
-				# outlier
-				row['meas_value'] = 10. * true_value
-			#
-			data_table.append( copy.copy(row) )
+		for age_id in age_index :
+			for time_id in time_index :
+				age        = age_list[age_id]
+				time       = time_list[time_id]
+				true_value = rate_true(rate_name, age, time)
+				meas_std          = meas_cv * true_value
+				row['age_lower']  = age
+				row['age_upper']  = age
+				row['time_lower'] = time
+				row['time_upper'] = time
+				row['integrand']  = integrand_name
+				row['meas_value'] = true_value
+				row['meas_std']   = true_value * 0.2
+				data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
@@ -200,11 +187,10 @@ def example_db (file_name) :
 			'lower':    1e-4,
 			'upper':    1.0,
 			'mean':     0.1,
-		},{ # prior_gauss_zero
-			'name':     'prior_gauss_zero',
-			'density':  'gaussian',
+		},{ # prior_none
+			'name':     'prior_none',
+			'density':  'uniform',
 			'mean':     0.0,
-			'std':      1e-2,
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -213,9 +199,9 @@ def example_db (file_name) :
 	smooth_table = [
 		{ # smooth_rate_parent
 			'name':                     'smooth_rate_parent',
-			'age_id':                   [ 0 ],
-			'time_id':                  [ 0 ],
-			'fun':                       fun_rate_parent
+			'age_id':                   age_index,
+			'time_id':                  time_index,
+			'fun':                      fun_rate_parent
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -242,13 +228,13 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'false'        },
 		{ 'name':'derivative_test_fixed',  'value':'first-order'  },
 		{ 'name':'max_num_iter_fixed',     'value':'30'           },
-		{ 'name':'print_level_fixed',      'value':'0'            },
-		{ 'name':'tolerance_fixed',        'value':'1e-10'        },
+		{ 'name':'print_level_fixed',      'value':'5'            },
+		{ 'name':'tolerance_fixed',        'value':'1e-12'        },
 
 		{ 'name':'derivative_test_random', 'value':'second-order' },
 		{ 'name':'max_num_iter_random',    'value':'100'          },
 		{ 'name':'print_level_random',     'value':'0'            },
-		{ 'name':'tolerance_random',       'value':'1e-10'        }
+		{ 'name':'tolerance_random',       'value':'1e-12'        }
 	]
 	# ----------------------------------------------------------------------
 	# subgroup_table
@@ -295,33 +281,41 @@ new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # get variable and fit_var tables
+age_table       = dismod_at.get_table_dict(connection, 'age')
+time_table      = dismod_at.get_table_dict(connection, 'time')
 var_table       = dismod_at.get_table_dict(connection, 'var')
 node_table      = dismod_at.get_table_dict(connection, 'node')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
-# 3 rates and one variable for each rate
-assert len(var_table) == 3
+# 3 rates and n_grid values per rate
+n_grid = ( len(age_table) - 2) * ( len(time_table) - 2 )
+assert len(var_table) == 3 * n_grid
 for (var_id, row) in enumerate(var_table) :
 	assert row['var_type'] == 'rate'
 	#
-	# node_name
+	# age_id, time_id, node_id, rate_id
+	age_id    = row['age_id']
+	time_id   = row['time_id']
 	node_id   = row['node_id']
+	rate_id   = row['rate_id']
+	#
+	# age, time, node_name, rate_name
+	age       = age_table[age_id]['age']
+	time      = time_table[time_id]['time']
 	node_name = node_table[node_id]['node_name']
+	rate_name = rate_table[rate_id]['rate_name']
 	assert node_name == 'canada'
 	#
 	# rate_name
-	rate_id   = row['rate_id']
-	rate_name = rate_table[rate_id]['rate_name']
 	#
 	# fit_var_value
 	fit_var_value = fit_var_table[var_id]['fit_var_value']
 	#
 	# check
-	check  = rate_true[rate_name]
+	check  = rate_true(rate_name, age, time)
 	err    = fit_var_value  / check - 1.0
-	tol    = 3.0 * meas_cv / math.sqrt( n_data )
-	assert abs(err) < tol
+	assert abs(err) < 1e-6
 # -----------------------------------------------------------------------------
 print('plot_rate_fit.py: OK')
 # END PYTHON

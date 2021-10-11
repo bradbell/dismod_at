@@ -28,6 +28,8 @@
 # $head Rates$$
 # There is a parent smoothing the $icode iota$$, $icode rho$$
 # and $icode chi$$ rates.
+# This smoothing has one grid point; i.e., the rates are constant
+# in age and time.
 # There is no child node smoothing so there are no random effects
 # for these rates.
 # In addition, there is no parent smoothing for the other rates
@@ -35,8 +37,8 @@
 # The value priors for the rate smoothing is uniform with lower limit 1e-4
 # and upper limit 1.0. The mean 0.1, is only used as a starting point
 # for the optimization.
-# The time difference prior for this smoothing is
-# gaussian with mean zero and standard deviation 1e-2.
+# There are no difference priors because the smoothing
+# has only one grid point.
 #
 # $head Integrands$$
 # The integrands for this example are
@@ -118,7 +120,7 @@ random_seed = int( time.time() )
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
 	def fun_rate_parent(a, t) :
-		return ('prior_rate_parent', None, 'prior_gauss_zero')
+		return ('prior_rate_parent', None, None)
 	# ----------------------------------------------------------------------
 	# age table
 	age_list    = [ 0.0 , 50.0 , 100.0 ]
@@ -200,11 +202,6 @@ def example_db (file_name) :
 			'lower':    1e-4,
 			'upper':    1.0,
 			'mean':     0.1,
-		},{ # prior_gauss_zero
-			'name':     'prior_gauss_zero',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      1e-2,
 		}
 	]
 	# ----------------------------------------------------------------------

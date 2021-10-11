@@ -94,11 +94,11 @@ class pair:
 		self.time_id = time_id
 	def __lt__(self, other) :
 		if self.age_id != other.age_id :
-			self_age   = tables['age'][ self.age_id ]['age']
-			other_age  = tables['age'][ other.age_id ]['age']
+			self_age   = self.tables['age'][ self.age_id ]['age']
+			other_age  = self.tables['age'][ other.age_id ]['age']
 			return self_age < other_age
-		self_time  = tables['time'][ self.time_id ]['time']
-		other_time = tables['time'][ other.time_id ]['time']
+		self_time  = self.tables['time'][ self.time_id ]['time']
+		other_time = self.tables['time'][ other.time_id ]['time']
 		return self_time < other_time
 	def _eq_(self, other) :
 		equal = self.age_id == other.age_id
