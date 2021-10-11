@@ -33,6 +33,7 @@ document.write('\
 <option>user_no_children.py</option>\
 <option>user_one_function.py</option>\
 <option>user_plot_data_fit.py</option>\
+<option>user_plot_rate_fit.py</option>\
 <option>user_predict_fit.py</option>\
 <option>user_predict_mulcov.py</option>\
 <option>user_re_scale.py</option>\
@@ -84,6 +85,7 @@ function user_example_child(item)
 		'user_no_children.py.htm',
 		'user_one_function.py.htm',
 		'user_plot_data_fit.py.htm',
+		'user_plot_rate_fit.py.htm',
 		'user_predict_fit.py.htm',
 		'user_predict_mulcov.py.htm',
 		'user_re_scale.py.htm',
