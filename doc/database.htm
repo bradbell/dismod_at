@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Dismod_at Database Tables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Dismod_at Database Tables">
-<meta name="keywords" id="keywords" content=" the dismod_at database tables comment columns primary key name column foreign parent text can be null not empty integer real nan bounds that are type names ">
+<meta name="keywords" id="keywords" content=" the dismod_at database tables comment columns primary key name column foreign parent null bounds integer text can be not empty real nan type names ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -66,10 +66,11 @@ A:active { color : purple }
 <br><a href="database.htm#Name Column" target="_top">Name&nbsp;Column</a>
 <br><a href="database.htm#Foreign Key" target="_top">Foreign&nbsp;Key</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="database.htm#Foreign Key.parent" target="_top">parent</a>
-<br><a href="database.htm#Text can be Null, not Empty" target="_top">Text&nbsp;can&nbsp;be&nbsp;Null,&nbsp;not&nbsp;Empty</a>
-<br><a href="database.htm#Integer Can be Null" target="_top">Integer&nbsp;Can&nbsp;be&nbsp;Null</a>
-<br><a href="database.htm#Real Can be Null, not Nan" target="_top">Real&nbsp;Can&nbsp;be&nbsp;Null,&nbsp;not&nbsp;Nan</a>
-<br><a href="database.htm#Bounds That are Null" target="_top">Bounds&nbsp;That&nbsp;are&nbsp;Null</a>
+<br><a href="database.htm#Null" target="_top">Null</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="database.htm#Null.Bounds" target="_top">Bounds</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="database.htm#Null.Integer" target="_top">Integer</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="database.htm#Null.Text can be Null, not Empty" target="_top">Text&nbsp;can&nbsp;be&nbsp;Null,&nbsp;not&nbsp;Empty</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="database.htm#Null.Real Can be Null, not Nan" target="_top">Real&nbsp;Can&nbsp;be&nbsp;Null,&nbsp;not&nbsp;Nan</a>
 <br><a href="database.htm#Type Names" target="_top">Type&nbsp;Names</a>
 <br><a href="database.htm#Contents" target="_top">Contents</a>
 <br><br>
@@ -150,15 +151,23 @@ in the <code><font color="blue">node</font></code> table and hence this is not a
 
 <br>
 <br>
-<b><big><a name="Text can be Null, not Empty" id="Text can be Null, not Empty">Text can be Null, not Empty</a></big></b>
+<b><big><a name="Null" id="Null">Null</a></big></b>
 <br>
-The empty string is used to represent a <code><font color="blue">null</font></code> text value in a table.
-An error message will be generated if the empty string
-appears in a text field that is read by dismod_at.
+It is an error for a value to be <code><font color="blue">null</font></code>
+unless the documentation for the corresponding column specifies
+a meaning for this case.
+Lower and upper bounds are an exception to this rule (see below).
 
 <br>
 <br>
-<b><big><a name="Integer Can be Null" id="Integer Can be Null">Integer Can be Null</a></big></b>
+<big><a name="Null.Bounds" id="Null.Bounds">Bounds</a></big>
+<br>
+If a lower (upper) bound is <code><font color="blue">null</font></code>,
+it is interpreted as minus (plus) infinity.
+
+<br>
+<br>
+<big><a name="Null.Integer" id="Null.Integer">Integer</a></big>
 <br>
 The minimum integer (negative integer with the largest absolute value)
 is used to represent a <code><font color="blue">null</font></code> integer value in a table.
@@ -167,18 +176,19 @@ the minimum integer appears in a table that is read by dismod_at.
 
 <br>
 <br>
-<b><big><a name="Real Can be Null, not Nan" id="Real Can be Null, not Nan">Real Can be Null, not Nan</a></big></b>
+<big><a name="Null.Text can be Null, not Empty" id="Null.Text can be Null, not Empty">Text can be Null, not Empty</a></big>
+<br>
+The empty string is used to represent a <code><font color="blue">null</font></code> text value in a table.
+An error message will be generated if the empty string
+appears in a text field that is read by dismod_at.
+
+<br>
+<br>
+<big><a name="Null.Real Can be Null, not Nan" id="Null.Real Can be Null, not Nan">Real Can be Null, not Nan</a></big>
 <br>
 If a real value is <code><font color="blue">null</font></code>, it is represented as <code><font color="blue">nan</font></code>.
 An error message will be generated if
 the value <code><font color="blue">nan</font></code> appears in a table that is read by dismod_at.
-
-<br>
-<br>
-<b><big><a name="Bounds That are Null" id="Bounds That are Null">Bounds That are Null</a></big></b>
-<br>
-If a lower (upper) bound is <code><font color="blue">null</font></code>,
-it is interpreted as minus (plus) infinity.
 
 <br>
 <br>
