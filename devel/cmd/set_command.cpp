@@ -62,7 +62,7 @@ $cref/option_value/option_table/Table Format/option_value/$$
 for the specified option name.
 If $icode value$$ is the empty string, null is used for the corresponding
 value in the database; see
-$cref/text can be null, not empty/database/Text can be Null, not Empty/$$.
+$cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$.
 
 $subhead init$$
 The set option commands does not require the $code init$$ to be run first.

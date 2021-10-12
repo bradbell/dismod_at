@@ -240,7 +240,7 @@ $icode child_smooth_id$$.
 $lnext
 Change from text can be empty to text can be null
 (to make it more like other types); see
-$cref/text can be null, not empty/database/Text can be Null, not Empty/$$).
+$cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$).
 $lnext
 Implement the space saving Jacobian and Hessian calculations for the
 $code cppad_mixed fixed likelihood$$
@@ -443,7 +443,7 @@ In addition, the correction of the bug in $code dev::eigen_ode2.cpp$$
 was retained.
 $lnext
 It is now an error if the value $code nan$$ appears in the database;
-see $cref/real cannot be nan/database/Real Can be Null, not Nan/$$.
+see $cref/real cannot be nan/database/Null/Real Can be Null, not Nan/$$.
 $lnext
 Add tracing, during CppAD's forward mode, of values in the
 $code dev::residual_density.cpp$$ function that should not be negative.
@@ -633,7 +633,7 @@ $head 08-21$$
 $list number$$
 Edit discussion of text can be empty
 (now it must be $code null$$ instead of empty) see
-$cref/text can be null, not empty/database/Text can be Null, not Empty/$$).
+$cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$).
 $lnext
 Remove the special prior that is a constant one from the
 $cref user_example$$ examples (since 08-12 $code null$$ can be used to
@@ -992,9 +992,9 @@ $lend
 $head 07-11$$
 $list number$$
 Add an error message when the text value in a table is empty; see
-$cref/text can be null, not empty/database/Text can be Null, not Empty/$$.
+$cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$.
 Allow for $code null$$ integer values; see
-$cref/integer can be null/database/Integer Can be Null/$$.
+$cref/integer/database/Null/Integer/$$.
 $lnext
 The example $code dev::sim_random_xam.cpp.cpp$$ was missing from documentation.
 Increase $icode sample_size$$ in $code sim_random_xam.cpp$$

@@ -401,7 +401,7 @@ $icode option_value$$ is a bound for the absolute value of
 $cref/random effects/model_variables/Random Effects, u/$$.
 If $icode bound_random$$ is $code null$$,
 plus and minus infinity is used for the bounds; see
-$cref/bounds that are null/database/Bounds That are Null/$$.
+$cref/bounds/database/Null/Bounds/$$.
 This bound does not apply for random effects that have their upper
 and lower limits equal; see
 $cref/constant child value priors/rate_table/Child Value Priors/Constant/$$.

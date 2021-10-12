@@ -1,11 +1,11 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
-	     GNU Affero General Public License version 3.0 or later
+            GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
@@ -79,6 +79,7 @@ $end
 # include <dismod_at/get_covariate_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -111,6 +112,11 @@ CppAD::vector<covariate_struct> get_covariate_table(sqlite3* db)
 		covariate_table[i].max_difference  = max_difference[i];
 		if( std::isnan( max_difference[i] ) )
 			covariate_table[i].max_difference  = plus_infinity;
+		if( std::isnan(reference[i]) )
+		{	std::string msg  = "reference value for a covariate is null";
+			size_t covariate_id = i;
+			error_exit(msg, table_name, covariate_id);
+		}
 	}
 	return covariate_table;
 }

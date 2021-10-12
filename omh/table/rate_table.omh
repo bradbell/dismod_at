@@ -176,7 +176,7 @@ The $cref/lower/prior_table/lower/$$ limit
 ($cref/upper/prior_table/upper/$$ limit)
 must be $code null$$,
 which gets interpreted as minus infinity (plus infinity); see
-$cref/bounds that are null/database/Bounds That are Null/$$.
+$cref/bounds/database/Null/Bounds/$$.
 $lnext
 Note that
 $cref/bound_random/option_table/Optimize Random Only/bound_random/$$

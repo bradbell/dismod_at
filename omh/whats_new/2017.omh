@@ -254,7 +254,7 @@ $lnext
 The empty text was sometimes placed in
 the $cref/table_name/log_table/table_name/$$ column of the log table.
 This was a bug and has been fixed by using $code null$$ in these cases; see
-$cref/text can be null, not empty/database/Text can be Null, not Empty/$$.
+$cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$.
 $lnext
 The $code create_connection$$ routine now exist with a fatal
 error message when the specified
@@ -520,7 +520,7 @@ This provides more error messaging when nan's occur in the
 random effects objective.
 $lnext
 The documentation for
-$cref/bounds that are null/database/Bounds That are Null/$$
+$cref/bounds/database/Null/Bounds/$$
 was improved.
 $lend
 

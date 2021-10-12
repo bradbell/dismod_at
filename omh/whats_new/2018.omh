@@ -154,7 +154,7 @@ $lnext
 If the $cref/set option/set_command/option/$$ command had an empty
 string for a value, the empty string was placed in the option table.
 This violated the
-$cref/text can be null, not empty/database/Text can be Null, not Empty/$$
+$cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$
 rule and has been fixed.
 $lnext
 If the $cref/
