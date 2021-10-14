@@ -57,8 +57,17 @@ def get_name_type(connection, tbl_name) :
 	import collections
 	import sys
 	#
-	cmd        = 'pragma table_info(' + tbl_name + ');'
+	# cursor
 	cursor    = connection.cursor()
+	#
+	cmd     = "select * from sqlite_master where type='table' AND name="
+	cmd    += "'" + tbl_name + "';"
+	info    = cursor.execute(cmd).fetchall()
+	if len(info) == 0 :
+		msg = f'get_name_type: table {tbl_name} does not exit in this database'
+		assert False, msg
+	#
+	cmd        = 'pragma table_info(' + tbl_name + ');'
 	cid       = 0
 	found_pk  = False
 	col_name  = list()

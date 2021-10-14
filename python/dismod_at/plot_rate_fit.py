@@ -209,6 +209,10 @@ def plot_rate_fit(database, rate_set, file_name) :
 		# n_age, n_time
 		n_age    = tables['smooth'][smooth_id]['n_age']
 		n_time   = tables['smooth'][smooth_id]['n_time']
+		if len(triple_list) != n_age * n_time :
+			msg  = 'plot_rate_fit: var table and smooth table do not agree '
+			msg += f'in the {database} database'
+			assert False, msg
 		#
 		# triple_list
 		# sort first by age and then by time
