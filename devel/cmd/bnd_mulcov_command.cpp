@@ -89,7 +89,7 @@ In this case, the inequality above only refers to
 covariate multipliers that use this covariate.
 
 $head bnd_mulcov_table$$
-The table $cref bnd_mulcov_table$$ is and input and output for this command.
+The table $cref bnd_mulcov_table$$ is an input and output for this command.
 
 $subhead max_cov_diff$$
 The $cref/max_cov_diff/bnd_mulcov_table/max_cov_diff/$$ column is not changed.
