@@ -244,7 +244,7 @@ double pack_prior::max_abs(size_t var_id) const
 void pack_prior::set_bnd_mulcov(
 	const CppAD::vector<bnd_mulcov_struct>& bnd_mulcov_table )
 {	for(size_t var_id = 0; var_id < prior_vec_.size(); ++var_id)
-	if( ! prior_vec_[var_id].fixed_effect )
+	if( prior_vec_[var_id].fixed_effect )
 	{	size_t mulcov_id = prior_vec_[var_id].mulcov_id;
 		if( mulcov_id != DISMOD_AT_NULL_SIZE_T )
 		{	double max_mulcov = bnd_mulcov_table[mulcov_id].max_mulcov;

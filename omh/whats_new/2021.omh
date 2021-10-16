@@ -60,6 +60,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 10-15$$
+The $cref bnd_mulcov_command$$ was not affecting the limits
+of the covariate multipliers. This has been fixed.
+
 $head 10-14$$
 Add more error detection and reporting to
 $cref get_name_type$$ and $cref plot_rate_fit$$.

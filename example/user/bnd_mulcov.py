@@ -30,14 +30,13 @@
 # $code europe$$.
 #
 # $head True Iota$$
-# For this example, the true incidence rates for europe is
+# For this example, the true incidence rates for europe is given by
 # $srccode%py%
 import math
-mulcov_true  = { 'income' : -1e-3, 'weight' : 2e-2 }
-europe_avg   = { 'income' : 1e3,   'weight' : 50.0 }
-def iota_europe_true(income, weight) :
-	effect  = mulcov_true['income'] * (income - europe_avg['income'])
-	effect += mulcov_true['weight'] * (weight - europe_avg['weight'])
+mulcov_true      = -3e-3
+income_reference = 1e3
+def iota_europe_true(income) :
+	effect  = mulcov_true * (income - income_reference)
 	return 0.01 * math.exp( effect )
 # %$$
 # Here $icode europe_avg$$ contains the reference value for
@@ -50,23 +49,19 @@ def iota_europe_true(income, weight) :
 # the bnd_mulcov command computes its limits for the covariate multiplier.
 #
 # $head Data$$
-# There are five data points measuring Sincidence.
-# The first point is for the world.
-# The next two points have non-reference values for income.
-# The next two have non-reference values for weight.
-# The world data is not in the $cref data_subset_table$$ and
-# hence is not used when converting the maximum covariate effect to bounds
-# on the covariate multiplier.
+# There are four data points measuring Sincidence.
+# The first point is for the world, has a very large income, and is
+# not included when computing the multiplier bounds.
 #
 # $head Model$$
 # There is only one rate $icode iota$$ and it is constant as a function
-# of age and time. In addition, there are two covariate multipliers,
-# one for income and one for weight.
+# of age and time. In addition, there is one covariate multiplier
+# for income.
 #
 # $head bnd_mulcov$$
 # The maximum absolute effect for the this example are
 # $srccode%py%
-max_abs_effect = 3.0
+max_abs_effect = 1.0
 # %$$
 # Note that the bound on the covariate multiplier have units
 # while the maximum absolute effect does not.
@@ -74,10 +69,8 @@ max_abs_effect = 3.0
 # $head max_cov_diff$$
 # The income values in the europe data are
 # its reference, its reference divided by two, and its reference times two.
-# The same is true for the weight values in the europe data.
-# In both cases, the corresponding maximum absolute difference from the
+# The corresponding maximum absolute difference from the
 # reference is equal to the reference.
-#
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -116,8 +109,6 @@ def example_db (file_name) :
 		return ('prior_iota', None, None)
 	def fun_mulcov_income(a, t) :
 		return ('prior_mulcov_income', None, None)
-	def fun_mulcov_weight(a, t) :
-		return ('prior_mulcov_weight', None, None)
 	# ----------------------------------------------------------------------
 	# age table:
 	age_list    = [ 0.0, 50.0, 100.0 ]
@@ -141,13 +132,8 @@ def example_db (file_name) :
 	#
 	# covariate table:
 	covariate_table = [
-		{
-			'name':           'income',
-			'reference':      europe_avg['income'],
-			'max_difference': None,
-		},{
-			'name':           'weight_',
-			'reference':      europe_avg['weight'],
+		{	'name':           'income',
+			'reference':      income_reference,
 			'max_difference': None,
 		}
 	]
@@ -155,19 +141,12 @@ def example_db (file_name) :
 	# mulcov table:
 	# use weight_ for covariate name to avoid confusion with other weight
 	# in data table (this is a problem with create_database).
-	mulcov_table = [
-		{
+	mulcov_table = [ {
 			'covariate': 'income',
 			'type':      'rate_value',
 			'effected':  'iota',
 			'smooth':    'smooth_mulcov_income',
-		},{
-			'covariate': 'weight_',
-			'type':      'rate_value',
-			'effected':  'iota',
-			'smooth':    'smooth_mulcov_weight',
-		}
-	]
+	} ]
 	#
 	# avgint table: empty
 	avgint_table = list()
@@ -192,104 +171,68 @@ def example_db (file_name) :
 	}
 	# Sincidence for world
 	# (make income very large to demonstate it is not inclued by bnd_mulcov)
-	income  = 4.0 * europe_avg['income']
-	weight  = 4.0 * europe_avg['weight']
+	income  = 4.0 * income_reference
 	row['income']     = income
-	row['weight_']    = weight
 	row['node']       = 'world'
-	row['meas_value'] = 2.0 * iota_europe_true(income, weight)
+	row['meas_value'] = 2.0 * iota_europe_true(income)
 	row['meas_std']   = row['meas_value'] / 10.0
 	data_table.append( copy.copy(row) )
 	#
-	# First data point
-	income  = europe_avg['income'] / 2.0
-	weight  = europe_avg['weight']
+	# First included data point
+	income  = income_reference / 2.0
 	row['income']     = income
-	row['weight_']    = weight
 	row['node']       = 'europe'
-	row['meas_value'] = iota_europe_true(income, weight)
+	row['meas_value'] = iota_europe_true(income)
 	row['meas_std']   = row['meas_value'] / 10.0
 	data_table.append( copy.copy(row) )
 	#
-	# Second data point
-	income  = europe_avg['income'] * 2.0
-	weight  = europe_avg['weight']
+	# Second included data point
+	income  = income_reference
 	row['income']     = income
-	row['weight_']    = weight
 	row['node']       = 'europe'
-	row['meas_value'] = iota_europe_true(income, weight)
+	row['meas_value'] = iota_europe_true(income)
 	row['meas_std']   = row['meas_value'] / 10.0
 	data_table.append( copy.copy(row) )
 	#
-	# Third data point
-	income  = europe_avg['income']
-	weight  = europe_avg['weight'] / 2.0
+	# Third included data point
+	income  = 2.0 * income_reference
 	row['income']     = income
-	row['weight_']    = weight
 	row['node']       = 'europe'
-	row['meas_value'] = iota_europe_true(income, weight)
-	row['meas_std']   = row['meas_value'] / 10.0
-	data_table.append( copy.copy(row) )
-	#
-	# Fourth data point
-	income  = europe_avg['income']
-	weight  = europe_avg['weight'] * 2.0
-	row['income']     = income
-	row['weight_']    = weight
-	row['node']       = 'europe'
-	row['meas_value'] = iota_europe_true(income, weight)
+	row['meas_value'] = iota_europe_true(income)
 	row['meas_std']   = row['meas_value'] / 10.0
 	data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
-	income = europe_avg['income']
-	weight = europe_avg['weight']
+	income = income_reference
 	prior_table = [
-		{
-			# prior_iota
+		{	# prior_iota
 			'name':     'prior_iota',
 			'density':  'uniform',
-			'lower':    iota_europe_true(income, weight) / 10.0,
-			'upper':    iota_europe_true(income, weight) * 10.0,
-			'mean':     iota_europe_true(income, weight) * 2.0,
-		},{
-			# prior_mulcov_income
+			'lower':    iota_europe_true(income) / 10.0,
+			'upper':    iota_europe_true(income) * 10.0,
+			'mean':     iota_europe_true(income) * 2.0,
+		},{ # prior_mulcov_income
 			'name':     'prior_mulcov_income',
 			'density':  'uniform',
-			'lower':    - abs(mulcov_true['income']) * 10.0,
-			'upper':    + abs(mulcov_true['income']) * 10.0,
-			'mean':     0.0,
-		},{
-			# prior_mulcov_weight
-			'name':     'prior_mulcov_weight',
-			'density':  'uniform',
-			'lower':    - abs(mulcov_true['weight']) * 10.0,
-			'upper':    + abs(mulcov_true['weight']) * 10.0,
+			'lower':    - abs(mulcov_true) * 10.0,
+			'upper':    + abs(mulcov_true) * 10.0,
 			'mean':     0.0,
 		}
 	]
 	# ----------------------------------------------------------------------
 	# smooth table
 	smooth_table = [
-		{
-			# smooth_iota
+		{	# smooth_iota
 			'name':      'smooth_iota',
 			'age_id':    [0],
 			'time_id':   [0],
 			'fun':      fun_iota
-		},{
-			# smooth_mulcov_income
+		},{	# smooth_mulcov_income
 			'name':      'smooth_mulcov_income',
 			'age_id':    [0],
 			'time_id':   [0],
 			'fun':      fun_mulcov_income
-		},{
-			# smooth_mulcov_weight
-			'name':      'smooth_mulcov_weight',
-			'age_id':    [0],
-			'time_id':   [0],
-			'fun':      fun_mulcov_weight
 		}
 	]
 	# ----------------------------------------------------------------------
@@ -361,47 +304,33 @@ mulcov_table          = dismod_at.get_table_dict(connection, 'mulcov')
 covariate_table       = dismod_at.get_table_dict(connection, 'covariate')
 connection.close()
 #
-# There are two variables in this model, iota and the covariate multiplier
-assert len(var_table) == 3
-assert len(fit_var_table) == 3
+# check max_mulcov
+assert len(bnd_mulcov_table) == 1
+assert len(mulcov_table) == 1
+max_cov_diff = bnd_mulcov_table[0]['max_cov_diff']
+max_mulcov   = bnd_mulcov_table[0]['max_mulcov']
+assert max_cov_diff == income_reference
+assert max_mulcov   == max_abs_effect / max_cov_diff
 #
-# check that this fit is accurate
-income = europe_avg['income']
-weight = europe_avg['weight']
+# There are two variables in this model, iota and the covariate multiplier
+assert len(var_table) == 2
+assert len(fit_var_table) == 2
+#
+# check that covariate multiplier is at its upper bound
+income = income_reference
+count  = 0
 for var_id in range( len(var_table) ) :
 	var_type       = var_table[var_id]['var_type']
 	fit_var_value  = fit_var_table[var_id]['fit_var_value']
-	if var_type == 'rate' :
-		true_value  = iota_europe_true(income, weight)
-		rel_error   = 1.0 - fit_var_value/true_value
-		assert abs(rel_error) < 1e-5
-	else :
-		assert var_type == 'mulcov_rate_value'
+	if var_type == 'mulcov_rate_value' :
 		covariate_id   = var_table[var_id]['covariate_id']
 		covariate_name = covariate_table[covariate_id]['covariate_name']
-		if covariate_name == 'weight_' :
-			true_value  = mulcov_true['weight']
-		else :
-			assert covariate_name == 'income'
-			true_value  = mulcov_true['income']
-		rel_error   = 1.0 - fit_var_value/true_value
-		assert abs(rel_error) < 1e-5
-#
-# check max_mulcov
-assert len(bnd_mulcov_table) == 2
-assert len(mulcov_table) == 2
-for mulcov_id in range(2) :
-	max_cov_diff   = bnd_mulcov_table[mulcov_id]['max_cov_diff']
-	max_mulcov     = bnd_mulcov_table[mulcov_id]['max_mulcov']
-	covariate_id   = mulcov_table[mulcov_id]['covariate_id']
-	covariate_name = covariate_table[covariate_id]['covariate_name']
-	if covariate_name == 'weight_' :
-		assert max_cov_diff == europe_avg['weight']
-		assert max_mulcov is None
-	else :
 		assert covariate_name == 'income'
-		assert max_cov_diff == europe_avg['income']
-		assert max_mulcov   == max_abs_effect / max_cov_diff
+		optimal_value = - max_mulcov
+		rel_error   = 1.0 - fit_var_value/optimal_value
+		assert abs(rel_error) < 1e-3
+		count += 1
+assert count == 1
 #
 # -----------------------------------------------------------------------------
 print('bnd_mulcov.py: OK')

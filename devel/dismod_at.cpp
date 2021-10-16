@@ -56,6 +56,7 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_prior_mean.hpp>
 # include <dismod_at/age_avg_grid.hpp>
 # include <dismod_at/child_data_in_fit.hpp>
+# include <dismod_at/get_bnd_mulcov_table.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -621,6 +622,9 @@ int main(int n_arg, const char** argv)
 			pack_object,
 			s_info_vec
 		);
+		vector<dismod_at::bnd_mulcov_struct> bnd_mulcov_table =
+			dismod_at::get_bnd_mulcov_table(db);
+		var2prior.set_bnd_mulcov(bnd_mulcov_table);
 		//
 		// subset_data_obj
 		vector<dismod_at::subset_data_struct> subset_data_obj;
