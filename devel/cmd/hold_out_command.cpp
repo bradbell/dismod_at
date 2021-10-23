@@ -117,10 +117,6 @@ void hold_out_command(
 	// n_child
 	size_t n_child = child_info4data.child_size();
 	//
-	// clear any previous hold_outs for this integrand
-	for(size_t data_subset_id = 0; data_subset_id < n_subset; ++data_subset_id)
-			data_subset_table[data_subset_id].hold_out = 0;
-	//
 	// src:
 	// src[child_id] are the possible indices for this child_id
 	CppAD::vector< CppAD::vector<int> > src(n_child + 1);
@@ -131,13 +127,17 @@ void hold_out_command(
 		size_t child_id    = child_info4data.table_id2child(data_id);
 		int    hold_out    = data_table[data_id].hold_out;
 		integrand_enum integrand = integrand_table[integrand_id].integrand;
-		//
-		// is this data row in set of rows to choose from
-		bool in_src = true;
-		in_src     &= integrand == this_integrand;
-		in_src     &= hold_out == 0;
-		if( in_src )
-			src[child_id].push_back( int(subset_id) );
+		if( integrand == this_integrand )
+		{	if( hold_out != 0 )
+			{	assert( data_subset_table[subset_id].hold_out == 0 );
+			}
+			else
+			{   // clear the hold_out values for this integrand
+				data_subset_table[subset_id].hold_out = 0;
+				// add this to the possible hold_out set
+				src[child_id].push_back( int(subset_id) );
+			}
+		}
 	}
 	//
 	// src_size
