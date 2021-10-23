@@ -495,6 +495,7 @@ int main(int n_arg, const char** argv)
 			db,
 			integrand_name,
 			max_fit_str,
+            child_info4data,
 			db_input.integrand_table,
 			db_input.data_table
 		);

@@ -18,7 +18,6 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/hold_out_command.hpp>
 # include <dismod_at/error_exit.hpp>
 
-namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
 $begin hold_out_command$$
@@ -55,6 +54,12 @@ $cref/hold_out/data_table/hold_out/$$ zero in the data table,
 points are randomly held out so that there are $icode max_fit$$
 points fit for this integrand.
 
+$subhead Balancing$$
+The choice of which points to include in the fit tries to sample the
+same number of data points from each of the child nodes (and the parent node).
+If there are not sufficiently many data for one of these nodes, the others
+make up the difference.
+
 $head data_subset_table$$
 Only rows of the $cref data_subset_table$$ that correspond to this integrand
 are modified.
@@ -71,15 +76,22 @@ using this command.
 
 $end
 */
+namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
+// ---------------------------------------------------------------------------
 void hold_out_command(
 	sqlite3*                                      db                ,
-	std::string&                                  integrand_name    ,
-	std::string&                                  max_fit_str       ,
+	const std::string&                            integrand_name    ,
+	const std::string&                            max_fit_str       ,
+	const child_info&                             child_info4data   ,
 	const CppAD::vector<integrand_struct>&        integrand_table   ,
 	const CppAD::vector<data_struct>&             data_table        )
 {	using std::string;
 	using CppAD::vector;
 	using CppAD::to_string;
+	//
+	// rng
+	// gsl random number generator
+	gsl_rng* rng = CppAD::mixed::get_gsl_rng();
 	//
 	// data_subset_table
 	vector<data_subset_struct> data_subset_table = get_data_subset(db);
@@ -90,59 +102,98 @@ void hold_out_command(
 	// max_fit
 	size_t max_fit = std::atoi( max_fit_str.c_str() );
 	//
-	// integrand
-	integrand_enum integrand = number_integrand_enum;
+	// this_integrand
+	integrand_enum this_integrand = number_integrand_enum;
 	for(size_t i = 0; i < size_t(number_integrand_enum); ++i)
 	{	if( integrand_enum2name[i] == integrand_name )
-			integrand = integrand_enum(i);
+			this_integrand = integrand_enum(i);
 	}
-	if( integrand == number_integrand_enum )
+	if( this_integrand == number_integrand_enum )
 	{	string msg = "hold_out_command: " + integrand_name;
 		msg       += " is not a valid integrand name";
 		error_exit(msg);
 	}
 	//
-	// src: array of indices to choose from
-	vector<int> src;
+	// n_child
+	size_t n_child = child_info4data.child_size();
+	//
+	// clear any previous hold_outs for this integrand
 	for(size_t data_subset_id = 0; data_subset_id < n_subset; ++data_subset_id)
-	{	size_t data_id      = data_subset_table[data_subset_id].data_id;
-		size_t integrand_id = data_table[data_id].integrand_id;
-		if( integrand ==  integrand_table[integrand_id].integrand )
-		{	if( data_table[data_id].hold_out == 0 )
-				src.push_back( int(data_subset_id) );
-			//
-			// initialize hold_out for this integrand as zero
 			data_subset_table[data_subset_id].hold_out = 0;
-		}
+	//
+	// src:
+	// src[child_id] are the possible indices for this child_id
+	CppAD::vector< CppAD::vector<int> > src(n_child + 1);
+	for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
+	{	// information about this data row
+		size_t data_id      = data_subset_table[subset_id].data_id;
+		size_t integrand_id = data_table[data_id].integrand_id;
+		size_t child_id    = child_info4data.table_id2child(data_id);
+		int    hold_out    = data_table[data_id].hold_out;
+		integrand_enum integrand = integrand_table[integrand_id].integrand;
+		//
+		// is this data row in set of rows to choose from
+		bool in_src = true;
+		in_src     &= integrand == this_integrand;
+		in_src     &= hold_out == 0;
+		if( in_src )
+			src[child_id].push_back( int(subset_id) );
 	}
 	//
-	// check if there will be hold outs in data_subset_table
-	if( max_fit < src.size() )
-	{	// rng: gsl random number generator
-		gsl_rng* rng = CppAD::mixed::get_gsl_rng();
+	// src_size
+	CppAD::vector<size_t> src_size(n_child + 1);
+	for(size_t child_id = 0; child_id <= n_child; ++child_id)
+		src_size[child_id] = src[child_id].size();
+	//
+	// size_order
+	CppAD::vector<size_t> size_order(n_child + 1);
+	CppAD::index_sort(src_size, size_order);
+	//
+	// n_fit
+	size_t n_fit = 0;
+	//
+	for(size_t k = 0; k < n_child + 1; ++k)
+	{	//
+		// child_id
+		size_t child_id = size_order[k];
 		//
-		// n_choose
-		size_t n_choose = src.size() - max_fit;
+		// number of children (or parent) left
+		size_t n_left = n_child + 1 - k;
 		//
-		// dest: array of indices that are chosen
-		vector<int> dest(n_choose);
+		// max_fit_child
+		size_t max_fit_child = 1 + (max_fit - n_fit) / n_left;
+		if( max_fit_child + n_fit > max_fit )
+			max_fit_child = max_fit - n_fit;
 		//
-		// choose which elements to hold out
-		gsl_ran_choose(
-			rng,
-			dest.data(),
-			n_choose,
-			src.data(),
-			src.size(),
-			sizeof(int)
-		);
-		//
-		// hold out the chosen elements
-		for(size_t i = 0; i < n_choose; ++i)
-		{	size_t data_subset_id = dest[i];
-			assert( data_subset_table[data_subset_id].hold_out == 0 );
-			data_subset_table[data_subset_id].hold_out = 1;
+		// check if there will be hold outs for this child
+		if(  max_fit_child < src_size[child_id] )
+		{	//
+			// n_hold_out
+			size_t n_hold_out = src_size[child_id] - max_fit_child;
+			//
+			// dest: array of indices that are chosen
+			CppAD::vector<int> dest(n_hold_out);
+			//
+			// choose which elements to hold out
+			gsl_ran_choose(
+				rng,
+				dest.data(),
+				n_hold_out,
+				src[child_id].data(),
+				src_size[child_id],
+				sizeof(int)
+			);
+			//
+			// hold out the chosen elements
+			for(size_t i = 0; i < n_hold_out; ++i)
+			{	int subset_id = dest[i];
+				assert( data_subset_table[subset_id].hold_out == 0 );
+				data_subset_table[subset_id].hold_out = 1;
+			}
 		}
+		// n_fit
+		size_t n_fit_child = std::min( max_fit, src_size[child_id] );
+		n_fit             += n_fit_child;
 	}
 	//
 	// drop old data_subset table

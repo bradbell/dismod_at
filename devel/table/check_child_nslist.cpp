@@ -112,7 +112,8 @@ void check_child_nslist(
 	string msg;
 	//
 	// parent_node_id
-	int parent_node_id = DISMOD_AT_NULL_INT;
+	int    parent_node_id   = DISMOD_AT_NULL_INT;
+	string parent_node_name = "";
 	for(size_t i = 0; i < option_table.size(); i++)
 	{	if( option_table[i].option_name == "parent_node_id" )
 		{	if( option_table[i].option_value != "" )
@@ -121,16 +122,31 @@ void check_child_nslist(
 		}
 		if( option_table[i].option_name == "parent_node_name" )
 		{	if( option_table[i].option_value != "" )
-			{	string node_name = option_table[i].option_value;
+			{	parent_node_name = option_table[i].option_value;
 				size_t n_node    = node_table.size();
 				for(size_t node_id = 0; node_id < n_node; ++node_id)
-				{	if( node_table[node_id].node_name == node_name )
+				{	if( node_table[node_id].node_name == parent_node_name )
 						parent_node_id = int( node_id );
 				}
 			}
 		}
 	}
-	assert( parent_node_id != DISMOD_AT_NULL_INT );
+	if( parent_node_id == DISMOD_AT_NULL_INT )
+	{	if( parent_node_name != "" )
+		{	msg  = "Cannot find parent_node_name in node table\n";
+			msg += "parent_node_name in option table is ";
+			msg += parent_node_name;
+			error_exit(msg);
+		}
+		msg  = "Cannot find parent_node_name or parent_node_id ";
+		string table_name = "option";
+		error_exit(msg, table_name);
+	}
+	else if( size_t( parent_node_id ) >= node_table.size() )
+	{	msg  = "parent_node_id in option table greater than or equal ";
+		msg += "number of nodes in node table";
+		error_exit(msg);
+	}
 	//
 	// child_node_id
 	CppAD::vector<size_t> child_node_id(0);
