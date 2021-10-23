@@ -94,8 +94,11 @@ For this example there are two integrand,
 <br>
 <b><big><a name="Nodes" id="Nodes">Nodes</a></big></b>
 <br>
-There is only one node called <code><font color="blue">world</font></code> for this example.
-There are no random effects because there are no child nodes.
+The node table is set up so that there are lots of child nodes
+(with no data. This makes sure that the data being fit gets
+evenly distributed between the nodes that do have data and
+reaches <a href="hold_out_command.htm#max_fit" target="_top"><span style='white-space: nowrap'>max_fit</span></a>
+.
 
 <br>
 <br>
@@ -114,7 +117,7 @@ All of the prevalence data is zero, but it is held out using
 <br>
 <big><a name="Data.Sincidence" id="Data.Sincidence">Sincidence</a></big>
 <br>
-There are three incidence data points.
+There are many incidence data points.
 The first Sincidence data value is zero and it is held out using
 the data table <a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
  equal to one.
@@ -156,7 +159,8 @@ for incidence.
 
 <pre><tt>
 <i><font color="#9A1900"># values used to simulate data</font></i>
-iota_true                 <font color="#990000">=</font> <font color="#993399">0.01</font>
+iota_true   <font color="#990000">=</font> <font color="#993399">0.01</font>
+n_node      <font color="#990000">=</font> <font color="#993399">10</font>
 <i><font color="#9A1900"># ------------------------------------------------------------------------</font></i>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
@@ -200,7 +204,9 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># node table:</font></i>
-     node_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'world'</font><font color="#990000">,</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">''</font> <font color="#990000">}</font> <font color="#990000">]</font>
+     node_table <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'n0'</font><font color="#990000">,</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">''</font> <font color="#990000">}</font> <font color="#990000">]</font>
+     <b><font color="#0000FF">for</font></b> node_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">1</font><font color="#990000">,</font> n_node<font color="#990000">)</font> <font color="#990000">:</font>
+          node_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font>f<font color="#FF0000">'n{node_id}'</font><font color="#990000">,</font> <font color="#FF0000">'parent'</font><font color="#990000">:</font><font color="#FF0000">'n0'</font> <font color="#990000">}</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># weight table:</font></i>
      weight_table <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
@@ -232,24 +238,31 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
           <font color="#FF0000">'node'</font><font color="#990000">:</font>         <font color="#FF0000">'world'</font><font color="#990000">,</font>
           <font color="#FF0000">'subgroup'</font><font color="#990000">:</font>     <font color="#FF0000">'world'</font><font color="#990000">,</font>
      <font color="#990000">}</font>
+     <i><font color="#9A1900">#</font></i>
+     <i><font color="#9A1900"># prevalence data point with value 0.0 and held out</font></i>
+     <i><font color="#9A1900"># using option table hold_out command</font></i>
+     row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'n0'</font>
+     row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'prevalence'</font>
+     row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font>
+     row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> False<font color="#990000">;</font>
+     data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
+     <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># Sincidence data point with value 0.0 and data_table hold_out 1</font></i>
+     row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font>       <font color="#990000">=</font> <font color="#FF0000">'n0'</font>
      row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'Sincidence'</font>
      row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> True
      row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font>
      data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># Two Sincidence data points with value iota_true and data_table hold_out 0</font></i>
+     <i><font color="#9A1900"># Sincidence data points with value iota_true and data_table hold_out 0</font></i>
+     <i><font color="#9A1900"># Note that only every other child node has data</font></i>
      row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'Sincidence'</font>
      row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> False
      row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> iota_true
-     data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
-     data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># prevalence data point with value 0.0 and held out in data table 0</font></i>
-     row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'prevalence'</font>
-     row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#993399">0.0</font>
-     row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> False<font color="#990000">;</font>
-     data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
+     <b><font color="#0000FF">for</font></b> node_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> n_node<font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">)</font> <font color="#990000">:</font>
+          row<font color="#990000">[</font><font color="#FF0000">'node'</font><font color="#990000">]</font> <font color="#990000">=</font> f<font color="#FF0000">'n{node_id}'</font>
+          <b><font color="#0000FF">for</font></b> k <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">)</font> <font color="#990000">:</font>
+               data_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> copy<font color="#990000">.</font><b><font color="#000000">copy</font></b><font color="#990000">(</font>row<font color="#990000">)</font> <font color="#990000">)</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
      <i><font color="#9A1900"># prior_table</font></i>
@@ -284,7 +297,7 @@ os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font c
      <i><font color="#9A1900"># option_table</font></i>
      option_table <font color="#990000">=</font> <font color="#990000">[</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>              <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'iota_pos_rho_zero'</font>   <font color="#990000">},</font>
-          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'world'</font>               <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'parent_node_name'</font><font color="#990000">,</font>       <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'n0'</font>                  <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'warn_on_stderr'</font><font color="#990000">,</font>         <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>               <font color="#990000">},</font>
 
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'quasi_fixed'</font><font color="#990000">,</font>            <font color="#FF0000">'value'</font><font color="#990000">:</font><font color="#FF0000">'false'</font>               <font color="#990000">},</font>
@@ -335,9 +348,9 @@ program <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
 <i><font color="#9A1900">#</font></i>
 integrand <font color="#990000">=</font> <font color="#FF0000">'Sincidence'</font>
-max_fit   <font color="#990000">=</font> <font color="#FF0000">"1"</font>
+max_fit   <font color="#990000">=</font> <font color="#993399">2</font> <font color="#990000">*</font> n_node
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'hold_out'</font><font color="#990000">,</font> integrand<font color="#990000">,</font> max_fit <font color="#990000">]</font>
+     <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'hold_out'</font><font color="#990000">,</font> integrand<font color="#990000">,</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_fit<font color="#990000">)</font> <font color="#990000">]</font>
 <font color="#990000">)</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'fixed'</font> <font color="#990000">])</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
@@ -356,76 +369,44 @@ connection<font color="#990000">.</font><b><font color="#000000">close</font></b
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>fit_var_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">1</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># all four data points are in the data_sebset table, so data_subset_id is</font></i>
+<i><font color="#9A1900"># all data points are in the data_sebset table, so data_subset_id is</font></i>
 <i><font color="#9A1900"># the same as data_id (see data subset table documentation).</font></i>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">4</font>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_subset_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">4</font>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>fit_data_subset_table<font color="#990000">)</font> <font color="#990000">==</font> <font color="#993399">4</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_subset_table<font color="#990000">)</font> <font color="#990000">==</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_table<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>fit_data_subset_table<font color="#990000">)</font> <font color="#990000">==</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_table<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check hold_out in data table</font></i>
-<b><font color="#0000FF">assert</font></b> data_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font>
-<b><font color="#0000FF">assert</font></b> data_table<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">][</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<b><font color="#0000FF">assert</font></b> data_table<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">][</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<b><font color="#0000FF">assert</font></b> data_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">][</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check hold_out in data_subset table</font></i>
-count_data_subset_hold_out <font color="#990000">=</font> <font color="#993399">0</font>
-<b><font color="#0000FF">for</font></b> data_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">4</font><font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">assert</font></b> data_id <font color="#990000">==</font> data_subset_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'data_id'</font><font color="#990000">]</font>
-     hold_out        <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>
-     integrand_id    <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
+<i><font color="#9A1900"># check that max_fit Sincidence values are no held out</font></i>
+count_fit <font color="#990000">=</font> <font color="#993399">0</font>
+<b><font color="#0000FF">for</font></b> subset_row <b><font color="#0000FF">in</font></b> data_subset_table <font color="#990000">:</font>
+     data_id         <font color="#990000">=</font> subset_row<font color="#990000">[</font><font color="#FF0000">'data_id'</font><font color="#990000">]</font>
+     data_row        <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">]</font>
+     integrand_id    <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
      integrand_name  <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
-     <b><font color="#0000FF">if</font></b> hold_out <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">assert</font></b> data_subset_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-     <b><font color="#0000FF">if</font></b> integrand_name <font color="#990000">!=</font> <font color="#FF0000">'Sincidence'</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">assert</font></b> data_subset_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-     <b><font color="#0000FF">if</font></b> data_subset_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font> <font color="#990000">:</font>
-          count_data_subset_hold_out <font color="#990000">+=</font> <font color="#993399">1</font>
-<b><font color="#0000FF">assert</font></b> count_data_subset_hold_out <font color="#990000">==</font> <font color="#993399">1</font>
+     <b><font color="#0000FF">if</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'Sincidence'</font> <font color="#990000">:</font>
+          hold_out    <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font> <b><font color="#0000FF">or</font></b> subset_row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font>
+          <b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> hold_out <font color="#990000">:</font>
+               count_fit <font color="#990000">+=</font> <font color="#993399">1</font>
+<b><font color="#0000FF">assert</font></b> count_fit <font color="#990000">==</font> max_fit
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check fitted value for iota</font></i>
 iota_fit <font color="#990000">=</font> fit_var_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">][</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
 <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> iota_fit <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check residual for the second and third data points</font></i>
-<b><font color="#0000FF">for</font></b> data_id <b><font color="#0000FF">in</font></b> <font color="#990000">[</font><font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">:</font>
-     data_row       <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">]</font>
-     fit_row        <font color="#990000">=</font> fit_data_subset_table<font color="#990000">[</font>data_id<font color="#990000">]</font>
-     integrand_id   <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
-     integrand_name <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
-     meas_std       <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
-     <b><font color="#0000FF">assert</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'Sincidence'</font>
-     <b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-     <b><font color="#0000FF">assert</font></b> fit_row<font color="#990000">[</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font> <font color="#990000">*</font> meas_std <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check residual for the first data point (which should be -iota_true)</font></i>
-data_row       <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
-fit_row        <font color="#990000">=</font> fit_data_subset_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
-integrand_id   <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
-integrand_name <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
-meas_std       <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
-<b><font color="#0000FF">assert</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'Sincidence'</font>
-<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">1</font>
-<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<i><font color="#9A1900"># un-weight the residual and flip sign</font></i>
-model_minus_data <font color="#990000">=</font> <font color="#990000">-</font> fit_row<font color="#990000">[</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font> <font color="#990000">*</font> meas_std
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> model_minus_data <font color="#990000">/</font> iota_true <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
-<i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># check residual for the fourth data point (which should be - true prevalence)</font></i>
-data_row       <font color="#990000">=</font> data_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font>
-fit_row        <font color="#990000">=</font> fit_data_subset_table<font color="#990000">[</font><font color="#993399">3</font><font color="#990000">]</font>
-integrand_id   <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
-integrand_name <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
-meas_std       <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
-age            <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>
-<b><font color="#0000FF">assert</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'prevalence'</font>
-<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<b><font color="#0000FF">assert</font></b> data_row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
-<b><font color="#0000FF">assert</font></b> age <font color="#990000">==</font> data_row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>
-<i><font color="#9A1900"># un-weight the residual and flip sign</font></i>
-model_minus_data <font color="#990000">=</font> <font color="#990000">-</font> fit_row<font color="#990000">[</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font> <font color="#990000">*</font> meas_std
-prevalence_true  <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> iota_true <font color="#990000">*</font> age <font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> model_minus_data <font color="#990000">/</font> prevalence_true <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
+<i><font color="#9A1900"># check residuals for non-zero data</font></i>
+<b><font color="#0000FF">for</font></b> <font color="#990000">(</font>subset_id<font color="#990000">,</font> fit_row<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> <b><font color="#000000">enumerate</font></b><font color="#990000">(</font>fit_data_subset_table<font color="#990000">)</font> <font color="#990000">:</font>
+     data_row          <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">]</font>
+     meas_value        <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>
+     meas_std          <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>
+     weighted_residual <font color="#990000">=</font> fit_row<font color="#990000">[</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font>
+     integrand_id      <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
+     integrand_name    <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
+     <b><font color="#0000FF">if</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">:</font>
+          age      <font color="#990000">=</font> data_row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>
+          model    <font color="#990000">=</font> <font color="#993399">1.0</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> iota_fit <font color="#990000">*</font> age <font color="#990000">)</font>
+     <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+          model    <font color="#990000">=</font> iota_fit
+
+     check    <font color="#990000">=</font> <font color="#990000">(</font> meas_value <font color="#990000">-</font> model <font color="#990000">)</font> <font color="#990000">/</font> meas_std
+     <b><font color="#0000FF">assert</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> weighted_residual <font color="#990000">/</font> check <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'hold_out.py: OK'</font><font color="#990000">)</font>

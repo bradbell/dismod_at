@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Hold Out Command: Randomly Sub-sample The Data</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Hold Out Command: Randomly Sub-sample The Data">
-<meta name="keywords" id="keywords" content=" hold out command: randomly sub-sample the data syntax purpose database integrand_name max_fit data_subset_table example ">
+<meta name="keywords" id="keywords" content=" hold out command: randomly sub-sample the data syntax purpose database integrand_name max_fit balancing data_subset_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,6 +68,7 @@ A:active { color : purple }
 <br><a href="hold_out_command.htm#database" target="_top">database</a>
 <br><a href="hold_out_command.htm#integrand_name" target="_top">integrand_name</a>
 <br><a href="hold_out_command.htm#max_fit" target="_top">max_fit</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="hold_out_command.htm#max_fit.Balancing" target="_top">Balancing</a>
 <br><a href="hold_out_command.htm#data_subset_table" target="_top">data_subset_table</a>
 <br><a href="hold_out_command.htm#Example" target="_top">Example</a>
 <br><br>
@@ -122,6 +123,15 @@ points are randomly held out so that there are
 <code><i><font color="black"><span style='white-space: nowrap'>max_fit</span></font></i></code>
 
 points fit for this integrand.
+
+<br>
+<br>
+<big><a name="max_fit.Balancing" id="max_fit.Balancing">Balancing</a></big>
+<br>
+The choice of which points to include in the fit tries to sample the
+same number of data points from each of the child nodes (and the parent node).
+If there are not sufficiently many data for one of these nodes, the others
+make up the difference.
 
 <br>
 <br>
