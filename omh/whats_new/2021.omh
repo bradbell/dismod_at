@@ -60,6 +60,14 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 10-24$$
+The following arguments were added to $cref system_command_prc$$:
+$icode print_command$$,
+$icode return_stdout$$,
+$icode return_stderr$$.
+The default settings for these arguments makes $code system_command_prc$$
+backward compatible.
+
 $head 10-23$$
 $cref/Balancing/hold_out_command/max_fit/Balancing/$$ was added
 to the hold_out command.
@@ -132,8 +140,8 @@ It is still considered under construction.
 
 $head 08-18$$
 $list number$$
-Change the $code system_command_prc$$ function so that it returns
-$cref/stdout/system_command_prc/stdout/$$ as a python string
+Change the $code system_command_prc$$ function so its
+$cref/result/system_command_prc/result/$$ is a python string
 (instead of bytes); e.g., see $cref user_trace_init.py$$.
 $lnext
 If an error occurs during $cref system_command_prc$$,

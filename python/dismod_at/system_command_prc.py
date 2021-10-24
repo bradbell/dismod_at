@@ -15,13 +15,13 @@
 #	str
 #	stdout
 #	stderr
+#	returncode
 # $$
 #
 # $section Print Run and Check a System Command$$
 #
 # $head Syntax$$
-# $icode%stdout% = dismod_at.system_command_prc(%command%)
-# %$$
+# $srcthisfile%0%# BEGIN syntax%# END syntax%1%$$
 #
 # $head Purpose$$
 # This routine combines the following steps:
@@ -42,28 +42,98 @@
 # is a $code list$$ with $code str$$ elements. The first element is the
 # program to execute and the other elements are arguments to the program.
 #
-# $head stdout$$
-# This is the standard output result for this command.
+# $head print_command$$
+# If this argument is true (false) the command will (will not) be printed
+# before it is executed.
+#
+# $head return_stdout$$
+# If this argument is true, the command's standard output will be returned.
+# Otherwise, standard output will be printed during the command execution.
+#
+# $head return_stderr$$
+# If this argument is true, the command's standard error will be returned.
+# Otherwise, if an error occurs, standard error will be printed
+# and $code system_command_prc$$ will terminate execution.
+#
+# $head result$$
+# $list number$$
+# If $icode return_stdout$$ and $icode return stderr$$ are both false,
+# $icode result$$ is $code None$$.
+# $lnext
+# If $icode return_stdout$$ is true and $icode return_stderr$$ is false,
+# $icode result$$ is a $code str$$ with the contents of standard output.
+# $lnext
+# If $icode return_stderr$$ is true and $icode return_stdout$$ is false,
+# $icode result.stderr$$
+# is an $code str$$ with the contents of standard error,
+# and $icode result.returncode$$
+# is an $code int$$ with the command's return code..
+# $lnext
+# If both $icode return_stderr$$ and $icode return_stdout$$ are true,
+# $icode result.stderr$$
+# is an $code str$$ with the contents of standard error,
+# $icode result.stdout$$
+# is an $code str$$ with the contents of standard output,
+# and $icode result.returncode$$
+# is an $code int$$ with the command's return code..
+# $lend
+#
 #
 # $head Example$$
 # Many of the $cref user_example$$ examples use this utility.
 #
 # $end
 # ---------------------------------------------------------------------------
-def system_command_prc(command) :
+def system_command_prc(
+# BEGIN syntax
+# result = system_command_prc(
+	command                ,
+	print_command  = True  ,
+	return_stdout  = True  ,
+	return_stderr  = False ,
+# )
+# END syntax
+	) :
 	import sys
 	import subprocess
 	#
 	# print the system command with arguments separated by spaces
-	print( ' '.join(command) )
+	if print_command :
+		print( ' '.join(command) )
 	#
 	# run the system command
-	result = subprocess.run(
-		command, stdout=subprocess.PIPE,
-		stderr=subprocess.PIPE,
-		encoding='utf-8'
-	)
-	# check the command return cide
+	if return_stderr and return_stdout :
+		result = subprocess.run(
+			command,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			encoding='utf-8'
+		)
+		return result
+	#
+	if return_stderr :
+		result = subprocess.run(
+			command,
+			stderr=subprocess.PIPE,
+			encoding='utf-8'
+		)
+		return result
+	#
+	if return_stdout :
+		result = subprocess.run(
+			command,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			encoding='utf-8'
+		)
+	else :
+		result = subprocess.run(
+			command,
+			stderr=subprocess.PIPE,
+			encoding='utf-8'
+		)
+	#
+	# return_stderr is false so check the command return code
 	if result.returncode != 0 :
 		# print error messages
 		print('system_command_prc failed: returncode = ' , result.returncode)
@@ -71,5 +141,7 @@ def system_command_prc(command) :
 		#
 		# raise an exception
 		assert result.returncode == 0
-    #
-	return result.stdout
+	#
+	if return_stdout :
+		return result.stdout
+	return None
