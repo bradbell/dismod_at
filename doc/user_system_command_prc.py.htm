@@ -1,0 +1,130 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Example using system_command_prc</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Example using system_command_prc">
+<meta name="keywords" id="keywords" content=" example using system_command_prc discussion source code ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_system_command_prc.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user_example</option>
+<option>user_system_command_prc.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="user_sum_residual.py.htm" target="_top">Prev</a>
+</td><td><a href="user_trace_init.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
+</td>
+<td>user_system_command_prc.py</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Example using system_command_prc</big></big></b></center>
+
+<br><a href="user_system_command_prc.py.htm#Discussion" target="_top">Discussion</a>
+<br><a href="user_system_command_prc.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><br>
+<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
+<br>
+This example demonstrates some of the different argument cases for the
+<a href="system_command_prc.htm" target="_top"><span style='white-space: nowrap'>system_command_prc</span></a>
+ function.
+
+<br>
+<br>
+<b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
+
+<pre><tt>
+<b><font color="#000080">import</font></b> sys
+<b><font color="#000080">import</font></b> os
+<b><font color="#000080">import</font></b> time
+<b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
+<i><font color="#9A1900">#</font></i>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/system_command_prc.py'</font>
+<b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
+     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># import dismod_at</font></i>
+local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
+<b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+<b><font color="#000080">import</font></b> dismod_at
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># change into the build/example/user directory</font></i>
+distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># command</font></i>
+command <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'echo'</font><font color="#990000">,</font> <font color="#FF0000">'system_command_prc: Test Output'</font> <font color="#990000">]</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># return_stdout=True, return_stderr=False</font></i>
+result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     command<font color="#990000">,</font> print_command<font color="#990000">=</font>False<font color="#990000">,</font> return_stdout<font color="#990000">=</font>True<font color="#990000">,</font> return_stderr<font color="#990000">=</font>False
+<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> result  <font color="#990000">==</font> command<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># return_stdout=False, return_stderr=False</font></i>
+result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     command<font color="#990000">,</font> print_command<font color="#990000">=</font>False<font color="#990000">,</font> return_stdout<font color="#990000">=</font>False<font color="#990000">,</font> return_stderr<font color="#990000">=</font>False
+<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> result <b><font color="#0000FF">is</font></b> None
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># return_stdout=True, return_stderr=True</font></i>
+result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
+     command<font color="#990000">,</font> print_command<font color="#990000">=</font>False<font color="#990000">,</font> return_stdout<font color="#990000">=</font>True<font color="#990000">,</font> return_stderr<font color="#990000">=</font>True
+<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> result<font color="#990000">.</font>stdout  <font color="#990000">==</font> command<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+
+<i><font color="#9A1900">#</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'system_command_prc.py: OK'</font><font color="#990000">)</font>
+sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font></tt></pre>
+
+<hr>Input File: example/user/system_command_prc.py
+
+</body>
+</html>

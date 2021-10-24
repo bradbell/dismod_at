@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 10-23 10-15 10-14 10-12 10-11 10-07 10-06 09-01 08-30 08-25 08-24 08-23 08-22 08-21 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 10-24 10-23 10-15 10-14 10-12 10-11 10-07 10-06 09-01 08-30 08-25 08-24 08-23 08-22 08-21 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>10-24</option>
 <option>10-23</option>
 <option>10-15</option>
 <option>10-14</option>
@@ -132,6 +133,24 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="10-24" id="10-24">10-24</a></big></b>
+<br>
+The following arguments were added to <a href="system_command_prc.htm" target="_top"><span style='white-space: nowrap'>system_command_prc</span></a>
+:
+
+<code><i><font color="black"><span style='white-space: nowrap'>print_command</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>return_stdout</span></font></i></code>
+,
+
+<code><i><font color="black"><span style='white-space: nowrap'>return_stderr</span></font></i></code>
+.
+The default settings for these arguments makes <code><font color="blue">system_command_prc</font></code>
+backward compatible.
+
+<br>
 <br>
 <b><big><a name="10-23" id="10-23">10-23</a></big></b>
 
@@ -269,9 +288,9 @@ It is still considered under construction.
 <b><big><a name="08-18" id="08-18">08-18</a></big></b>
 
 <ol type="1"><li>
-Change the <code><font color="blue">system_command_prc</font></code> function so that it returns
-<a href="system_command_prc.htm#stdout" target="_top"><span style='white-space: nowrap'>stdout</span></a>
- as a python string
+Change the <code><font color="blue">system_command_prc</font></code> function so its
+<a href="system_command_prc.htm#result" target="_top"><span style='white-space: nowrap'>result</span></a>
+ is a python string
 (instead of bytes); e.g., see <a href="user_trace_init.py.htm" target="_top"><span style='white-space: nowrap'>user_trace_init.py</span></a>
 .
 </li><li>

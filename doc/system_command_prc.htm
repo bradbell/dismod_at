@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Print Run and Check a System Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Print Run and Check a System Command">
-<meta name="keywords" id="keywords" content=" print run check system command syntax purpose stdout example ">
+<meta name="keywords" id="keywords" content=" print run check system command syntax purpose print_command return_stdout return_stderr result example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,15 +69,21 @@ A:active { color : purple }
 <br><a href="system_command_prc.htm#Syntax" target="_top">Syntax</a>
 <br><a href="system_command_prc.htm#Purpose" target="_top">Purpose</a>
 <br><a href="system_command_prc.htm#command" target="_top">command</a>
-<br><a href="system_command_prc.htm#stdout" target="_top">stdout</a>
+<br><a href="system_command_prc.htm#print_command" target="_top">print_command</a>
+<br><a href="system_command_prc.htm#return_stdout" target="_top">return_stdout</a>
+<br><a href="system_command_prc.htm#return_stderr" target="_top">return_stderr</a>
+<br><a href="system_command_prc.htm#result" target="_top">result</a>
 <br><a href="system_command_prc.htm#Example" target="_top">Example</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
-<br>
-
-<code><i><font color="black"><span style='white-space: nowrap'>stdout</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;dismod_at.system_command_prc(</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
+<pre><tt>
+<i><font color="#9A1900"># result = system_command_prc(</font></i>
+     command                <font color="#990000">,</font>
+     print_command  <font color="#990000">=</font> True  <font color="#990000">,</font>
+     return_stdout  <font color="#990000">=</font> True  <font color="#990000">,</font>
+     return_stderr  <font color="#990000">=</font> False <font color="#990000">,</font>
+<i><font color="#9A1900"># )</font></i></tt></pre>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -108,9 +114,86 @@ program to execute and the other elements are arguments to the program.
 
 <br>
 <br>
-<b><big><a name="stdout" id="stdout">stdout</a></big></b>
+<b><big><a name="print_command" id="print_command">print_command</a></big></b>
 <br>
-This is the standard output result for this command.
+If this argument is true (false) the command will (will not) be printed
+before it is executed.
+
+<br>
+<br>
+<b><big><a name="return_stdout" id="return_stdout">return_stdout</a></big></b>
+<br>
+If this argument is true, the command's standard output will be returned.
+Otherwise, standard output will be printed during the command execution.
+
+<br>
+<br>
+<b><big><a name="return_stderr" id="return_stderr">return_stderr</a></big></b>
+<br>
+If this argument is true, the command's standard error will be returned.
+Otherwise, if an error occurs, standard error will be printed
+and <code><font color="blue">system_command_prc</font></code> will terminate execution.
+
+<br>
+<br>
+<b><big><a name="result" id="result">result</a></big></b>
+
+<ol type="1"><li>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stdout</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>return&nbsp;stderr</span></font></i></code>
+ are both false,
+
+<code><i><font color="black"><span style='white-space: nowrap'>result</span></font></i></code>
+ is <code><font color="blue">None</font></code>.
+</li><li>
+
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stdout</span></font></i></code>
+ is true and 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stderr</span></font></i></code>
+ is false,
+
+<code><i><font color="black"><span style='white-space: nowrap'>result</span></font></i></code>
+ is a <code><font color="blue">str</font></code> with the contents of standard output.
+</li><li>
+
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stderr</span></font></i></code>
+ is true and 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stdout</span></font></i></code>
+ is false,
+
+<code><i><font color="black"><span style='white-space: nowrap'>result.stderr</span></font></i></code>
+
+is an <code><font color="blue">str</font></code> with the contents of standard error,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>result.returncode</span></font></i></code>
+
+is an <code><font color="blue">int</font></code> with the command's return code..
+</li><li>
+
+If both 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stderr</span></font></i></code>
+ and 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stdout</span></font></i></code>
+ are true,
+
+<code><i><font color="black"><span style='white-space: nowrap'>result.stderr</span></font></i></code>
+
+is an <code><font color="blue">str</font></code> with the contents of standard error,
+
+<code><i><font color="black"><span style='white-space: nowrap'>result.stdout</span></font></i></code>
+
+is an <code><font color="blue">str</font></code> with the contents of standard output,
+and 
+<code><i><font color="black"><span style='white-space: nowrap'>result.returncode</span></font></i></code>
+
+is an <code><font color="blue">int</font></code> with the command's return code..
+</li></ol>
+
+
 
 <br>
 <br>
