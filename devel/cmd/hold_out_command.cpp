@@ -165,9 +165,15 @@ void hold_out_command(
 		if( max_fit_child + n_fit > max_fit )
 			max_fit_child = max_fit - n_fit;
 		//
-		// check if there will be hold outs for this child
-		if(  max_fit_child < src_size[child_id] )
-		{	//
+		// n_fit
+		if( src_size[child_id] <= max_fit_child )
+		{	// include all the data for this child
+			n_fit += src_size[child_id];
+		}
+		else
+		{   // hold out some data for this child
+			n_fit += max_fit_child;
+			//
 			// n_hold_out
 			size_t n_hold_out = src_size[child_id] - max_fit_child;
 			//
@@ -191,9 +197,6 @@ void hold_out_command(
 				data_subset_table[subset_id].hold_out = 1;
 			}
 		}
-		// n_fit
-		size_t n_fit_child = std::min( max_fit, src_size[child_id] );
-		n_fit             += n_fit_child;
 	}
 	//
 	// drop old data_subset table
