@@ -320,5 +320,6 @@ for (var_id, row) in enumerate(var_table) :
 	tol    = 3.0 * meas_cv / math.sqrt( n_data )
 	assert abs(err) < tol
 # -----------------------------------------------------------------------------
+print(f'Plot file: build/example/user/{pdf_file}')
 print('plot_data_fit.py: OK')
 # END PYTHON

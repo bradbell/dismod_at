@@ -60,6 +60,15 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 10-25$$
+$list number$$
+Use the term standard error (not the rate name) to label
+standard errors plotted by $cref plot_rate_fit$$.
+$lnext
+Print the plot location at the end of
+$cref user_plot_rate_fit.py$$ and $cref user_plot_data_fit.py$$.
+$lend
+
 $head 10-24$$
 The following arguments were added to $cref system_command_prc$$:
 $icode print_command$$,

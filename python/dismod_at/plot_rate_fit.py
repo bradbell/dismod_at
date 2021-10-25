@@ -333,7 +333,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 				#
 				# axis labels
 				pyplot.xlabel('age')
-				pyplot.ylabel('log ' + rate_name)
+				pyplot.ylabel(rate_name)
 				#
 				# y axis sacling and limits
 				pyplot.yscale('log')
@@ -399,7 +399,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 					#
 					# axis labels
 					pyplot.xlabel('age')
-					pyplot.ylabel('log ' + rate_name)
+					pyplot.ylabel('standard error')
 					#
 					# y axis sacling and limits
 					pyplot.yscale('log')
@@ -484,7 +484,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 				#
 				# axis labels
 				pyplot.xlabel('time')
-				pyplot.ylabel('log ' + rate_name)
+				pyplot.ylabel(rate_name)
 				#
 				# y axis sacling and limits
 				pyplot.yscale('log')
@@ -550,7 +550,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 					#
 					# axis labels
 					pyplot.xlabel('time')
-					pyplot.ylabel('log ' + rate_name)
+					pyplot.ylabel('standard error')
 					#
 					# y axis sacling and limits
 					pyplot.yscale('log')

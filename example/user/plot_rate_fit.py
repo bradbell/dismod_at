@@ -320,5 +320,6 @@ for (var_id, row) in enumerate(var_table) :
 	err    = fit_var_value  / check - 1.0
 	assert abs(err) < 1e-6
 # -----------------------------------------------------------------------------
+print(f'Plot file: build/example/user/{pdf_file}')
 print('plot_rate_fit.py: OK')
 # END PYTHON
