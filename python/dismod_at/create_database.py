@@ -41,8 +41,8 @@
 # $head Syntax$$
 # $codei%create_database(
 #	%file_name%,
-#	%age_list%
-#	%time_list%
+#	%age_list%,
+#	%time_list%,
 #	%integrand_table%,
 #	%node_table%,
 #	%subgroup_table%,

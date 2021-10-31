@@ -348,7 +348,10 @@ void init_command(
 				max_cov_diff = std::max( max_abs_diff[index], max_cov_diff);
 			}
 		}
-		row_value[n_col * mulcov_id + 0] = ""; // empty string corresponds
+		// max_mulcov
+		// is a bound so null corresponds to infinity
+		row_value[n_col * mulcov_id + 0] = "";
+		// max_cov_diff
 		row_value[n_col * mulcov_id + 1] = to_string(max_cov_diff);
 	}
 	create_table(
