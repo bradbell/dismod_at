@@ -302,11 +302,13 @@ void init_command(
 		{
 			size_t index        = size_t(data_id) * n_covariate + id;
 			double cov_value    = db_input.data_cov_value[index];
-			double reference    = db_input.covariate_table[id].reference;
-			double abs_diff     = std::fabs(cov_value - reference);
-			//
-			index               = size_t(integrand_id) * n_covariate + id;
-			max_abs_diff[index] = std::max( abs_diff, max_abs_diff[index] );
+			if( not std::isnan( cov_value ) )
+			{	double reference    = db_input.covariate_table[id].reference;
+				double abs_diff     = std::fabs(cov_value - reference);
+				//
+				index               = size_t(integrand_id) * n_covariate + id;
+				max_abs_diff[index] = std::max( abs_diff, max_abs_diff[index] );
+			}
 		}
 	}
 	//

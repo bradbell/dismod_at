@@ -44,6 +44,7 @@ $spell
 	mulcov
 	avgint
 	stdout
+    cov
 $$
 $navigate%
 	Up%Location%
@@ -59,6 +60,11 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 10-31$$
+There was a bug in the calculation of
+$cref/max_cov_diff/bnd_mulcov_table/max_cov_diff/$$
+during an $cref init_command$$. This has been fixed.
 
 $head 10-25$$
 $list number$$
