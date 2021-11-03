@@ -45,6 +45,7 @@ $spell
 	avgint
 	stdout
     cov
+	pdf
 $$
 $navigate%
 	Up%Location%
@@ -60,6 +61,12 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 11-03$$
+Fix bug in $cref plot_rate_fit$$.
+To be specific, if more that one page of times (of ages) was needed to plot
+a rate as a function of age (time), only the last page was included
+in the pdf output file.
 
 $head 10-31$$
 There was a bug in the calculation of

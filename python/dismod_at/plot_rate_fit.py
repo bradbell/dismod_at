@@ -417,10 +417,9 @@ def plot_rate_fit(database, rate_set, file_name) :
 				axis.set_position([
 					box.x0 + box.width*.05 , box.y0, box.width*0.85, box.height
 				])
-		# --------------------------------------------------------------------
-		pdf.savefig( fig )
-		pyplot.close( fig )
-		#
+			# ----------------------------------------------------------------
+			pdf.savefig( fig )
+			pyplot.close( fig )
 		# *******************************************************************-
 		# for each age, plot rate and possibly std as a function of time
 		# ********************************************************************
@@ -568,9 +567,9 @@ def plot_rate_fit(database, rate_set, file_name) :
 				axis.set_position([
 					box.x0 + box.width*.05 , box.y0, box.width*0.85, box.height
 				])
-		# --------------------------------------------------------------------
-		pdf.savefig( fig )
-		pyplot.close( fig )
+			# -----------------------------------------------------------------
+			pdf.savefig( fig )
+			pyplot.close( fig )
 	# *************************************************************************
 	#
 	# end of pages in pdf file
