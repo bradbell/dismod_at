@@ -62,6 +62,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 11-04$$
+The $code plot_data_fit$$ function now plots data that is held out in
+$cref/green/plot_data_fit/Plot Symbol/Green/$$.
+
 $head 11-03$$
 Fix bug in $cref plot_rate_fit$$.
 To be specific, if more that one page of times (of ages) was needed to plot

@@ -42,6 +42,30 @@ in the $cref data_subset_table$$ that correspond to the
 $th i$$ integrand in $icode integrand_list$$.
 If this is less than 2, the $th i$$ integrand is not included
 in the plots.
+ plotted using the point character.
+
+
+$head Plot Symbol$$
+
+$subhead Point Plots$$
+Values that are within the automatically chosen plotting limits
+are plotted using the point character $code .$$ .
+
+$subhead Plus Plots$$
+Values that are outside the automatically chosen plotting limits
+are plotted using the point plus character $code +$$.
+
+$subhead Green$$
+Values that correspond to data that is held out in the data table
+are plotted using the color green.
+(Hold outs using the hold out command or hold out option are not
+plotted in green.)
+
+$subhead Red and Black$$
+Values that correspond to data that is not held out,
+and is not within (is within) the automatically chosen limits,
+are plotted using the color red (black).
+
 
 $head Example$$
 $cref user_plot_data_fit.py$$.
@@ -100,6 +124,9 @@ def plot_data_fit(database, integrand_list, file_name) :
 				# meas_value
 				meas_value  = data_row['meas_value']
 				#
+				# hold_out
+				hold_out    = data_row['hold_out']
+				#
 				# avg_integreand, weighted_residual
 				row               = tables['fit_data_subset'][subset_id]
 				avg_integrand     = row['avg_integrand']
@@ -110,6 +137,7 @@ def plot_data_fit(database, integrand_list, file_name) :
 					'meas_value'        : meas_value ,
 					'model'             : avg_integrand ,
 					'residual'          : weighted_residual ,
+					'hold_out'          : hold_out ,
 				}
 				info_list.append( info )
 		#
@@ -166,13 +194,17 @@ def plot_data_fit(database, integrand_list, file_name) :
 			fig.subplots_adjust(hspace=0)
 			#
 			for subplot_index in range(3) :
+				# sp
+				sp   = pyplot.subplot(3, 1, subplot_index + 1)
 				#
-				# plot this subplot
+				# name, y
 				name = subplot_list[subplot_index]
 				y    =  numpy_info[name]
-				sp   = pyplot.subplot(3, 1, subplot_index + 1)
-				pyplot.scatter(x, y, marker='.', color='black', s = point_size)
+				#
+				# ylabel
 				pyplot.ylabel(name)
+				#
+				# clip_list, limit_list
 				if name == 'residual' :
 					clip_list  = [ r_min, r_max ]
 					limit_list = [ 1.1 * r_min, 1.1 * r_max ]
@@ -180,14 +212,47 @@ def plot_data_fit(database, integrand_list, file_name) :
 					pyplot.yscale('log')
 					clip_list  = [ d_min, d_max ]
 					limit_list = [ 0.9 * d_min, 1.1 * d_max ]
-				for clip in clip_list :
-					flag = y == clip
-					size = marker_size[flag]
-					pyplot.scatter(
-						x[flag], y[flag], marker='+', color='red', s=size
-					)
+				#
+				# ylim
 				pyplot.ylim(limit_list[0], limit_list[1])
 				#
+				# clipped, not_clipped
+				clipped      = (y == clip_list[0])
+				clipped      = numpy.logical_or(clipped, (y == clip_list[1]) )
+				not_clipped  = numpy.logical_not(clipped)
+				#
+				# hold_out, not_hold_out
+				hold_out     = (numpy_info['hold_out'] == 1)
+				not_hold_out = numpy.logical_not(hold_out)
+				#
+				green_point  = numpy.logical_and(hold_out, not_clipped)
+				green_marker = numpy.logical_and(hold_out, clipped)
+				black_point  = numpy.logical_and(not_hold_out, not_clipped)
+				red_marker   = numpy.logical_and(not_hold_out, clipped)
+				#
+				# plot green points
+				size = point_size[green_point]
+				pyplot.scatter(x[green_point], y[green_point],
+					marker='.', color='green', s=size
+				)
+				#
+				# plot green marker
+				size = marker_size[green_marker]
+				pyplot.scatter(x[green_marker], y[green_marker],
+					marker='+', color='green', s=size
+				)
+				#
+				# plot black points
+				size = point_size[black_point]
+				pyplot.scatter(x[black_point], y[black_point],
+					marker='.', color='black', s=size
+				)
+				#
+				# plot red marker
+				size = marker_size[red_marker]
+				pyplot.scatter(x[red_marker], y[red_marker],
+					marker='+', color='red', s=size
+				)
 				if name == 'residual' :
 					y = 0.0
 					pyplot.axhline(
