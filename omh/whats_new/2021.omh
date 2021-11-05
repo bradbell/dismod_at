@@ -62,9 +62,16 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
-$head 11-04$$
+$head 11-05$$
+$list number$$
 The $code plot_data_fit$$ function now plots data that is held out in
 $cref/green/plot_data_fit/Plot Legend/Green/$$.
+$lnext
+$bold API Change$$:
+Split the $icode out$$ column in the data.csv into the
+$cref/d_out/db2csv_command/data.csv/d_out/$$ and
+$cref/s_out/db2csv_command/data.csv/s_out/$$ columns.
+$lend
 
 $head 11-03$$
 Fix bug in $cref plot_rate_fit$$.
@@ -419,8 +426,11 @@ $head 06-12$$
 $list number$$
 Add the $cref hold_out_command$$.
 $lnext
-Change $cref/out/db2csv_command/data.csv/out/$$ in the
+Change $icode out$$ column of the
 data.csv to include the result of all the hold_out settings.
+This has since been changed to the
+$cref/d_out/db2csv_command/data.csv/d_out/$$ and
+$cref/s_out/db2csv_command/data.csv/s_out/$$ columns.
 $lend
 
 $head 06-11$$

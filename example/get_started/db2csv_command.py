@@ -123,7 +123,8 @@ assert row['eta']                == ''
 assert row['nu']                 == ''
 assert row['meas_stdcv']         == row['meas_std']
 assert int( row['data_id'] )     == 0
-assert int(row['out'])           == 0
+assert int(row['d_out'])         == 0
+assert int(row['s_out'])         == 0
 assert float(row['age_lo'])      == 50.0
 assert float(row['age_up'])      == 50.0
 assert float(row['time_lo'])     == 2000.0

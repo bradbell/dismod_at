@@ -417,19 +417,14 @@
 # $cref/time_upper/data_table/time_upper/$$ modified by the
 # time compression interval.
 #
-# $subhead out$$
-# This column is one (zero) if any of the following conditions
-# (none of the following conditions) hold:
-# $list number$$
-# The corresponding data table
-# $cref/hold_out/data_table/hold_out/$$ is one.
-# $lnext
-# The corresponding integrand is in the
-# $cref/hold_out_integrand/option_table/hold_out_integrand/$$ list.
-# $lnext
-# The corresponding data_subset table
-# $cref/hold_out/data_subset_table/hold_out/$$ is one.
-# $lend
+# $subhead d_out$$
+# is the value of
+# $cref/hold_out/data_table/hold_out/$$ in the data table.
+#
+# $subhead s_out$$
+# is the value of
+# $cref/hold_out/data_subset_table/hold_out/$$ in the
+# data_subset table.
 #
 # $subhead density$$
 # is the
@@ -1475,7 +1470,8 @@ def db2csv_command(database_file_arg) :
 		'age_up',
 		'time_lo',
 		'time_up',
-		'out',
+		'd_out',
+		's_out',
 		'density',
 		'eta',
 		'nu',
@@ -1517,6 +1513,8 @@ def db2csv_command(database_file_arg) :
 		row_out['nu']          = convert2output( subset_row['nu'] )
 		row_out['meas_value']  = convert2output( row_in['meas_value'] )
 		row_out['child']       = node_id2child( row_in['node_id'] )
+		row_out['d_out']       = row_in['hold_out']
+		row_out['s_out']       = subset_row['hold_out']
 		#
 		meas_cv     = minimum_meas_cv[ row_in['integrand_id' ] ]
 		meas_stdcv  =  meas_cv * abs( row_in['meas_value'] )
@@ -1547,12 +1545,6 @@ def db2csv_command(database_file_arg) :
 		row_out['subgroup']   = table_lookup(
 			'subgroup', row_in['subgroup_id'], 'subgroup_name'
 		)
-		# out
-		row_out['out'] = row_in['hold_out']
-		if subset_row['hold_out'] != 0 :
-			row_out['out'] = 1
-		if row_out['integrand'] in hold_out_integrand_list :
-			row_out['out'] = 1
 		#
 		# age_lower, age_upper, time_lower, time_upper
 		age_lower  = row_in['age_lower']
