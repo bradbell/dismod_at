@@ -64,7 +64,7 @@ $section Changes and Additions to Dismod_at During 2021$$
 
 $head 11-04$$
 The $code plot_data_fit$$ function now plots data that is held out in
-$cref/green/plot_data_fit/Plot Symbol/Green/$$.
+$cref/green/plot_data_fit/Plot Legend/Green/$$.
 
 $head 11-03$$
 Fix bug in $cref plot_rate_fit$$.

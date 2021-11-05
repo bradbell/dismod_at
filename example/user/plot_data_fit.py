@@ -284,8 +284,8 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 database       = file_name
 integrand_list = [ 'Sincidence', 'mtexcess' ]
 pdf_file       = 'example.pdf'
-n_point_list   = dismod_at.plot_data_fit(database, integrand_list, pdf_file)
-assert n_point_list == len(integrand_list) * [ n_data ]
+n_fit_list     = dismod_at.plot_data_fit(database, integrand_list, pdf_file)
+assert n_fit_list == len(integrand_list) * [ n_data - 1 ]
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

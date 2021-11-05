@@ -19,7 +19,7 @@ $$
 $section Plot The Data Fit By Integrand$$
 
 $head Syntax$$
-$icode%n_point_list% = plot_data_fit(%database%, %integrand_list%, %pdf_file%)
+$icode%n_fit_list% = plot_data_fit(%database%, %integrand_list%, %pdf_file%)
 %$$
 
 $head database$$
@@ -36,33 +36,38 @@ that we are plotting the fit for.
 $head pdf_file$$
 Is the location where the pdf file containing the plot will be placed.
 
-$head n_point_list$$
-The $th i$$ element of this list is the number of  rows
+$head n_fit_list$$
+The $th i$$ element of this list is the number of rows
 in the $cref data_subset_table$$ that correspond to the
-$th i$$ integrand in $icode integrand_list$$.
+$th i$$ integrand in $icode integrand_list$$ and are not
+held out in the data table (see below).
 If this is less than 2, the $th i$$ integrand is not included
 in the plots.
- plotted using the point character.
 
+$head Plot Legend$$
 
-$head Plot Symbol$$
+$subhead Data Table Hold Out$$
+We use data table hold out to refer to values that have
+$icode hold_out$$ equal to one in the data table.
+This does not include hold outs created by the hold out command
+or hold outs created by the hold option.
+The data table hold out values are not included during the automatic
+choice of the plotting limits.
 
-$subhead Point Plots$$
+$subhead Point Symbol$$
 Values that are within the automatically chosen plotting limits
 are plotted using the point character $code .$$ .
 
-$subhead Plus Plots$$
+$subhead Plus Symbol$$
 Values that are outside the automatically chosen plotting limits
 are plotted using the point plus character $code +$$.
 
 $subhead Green$$
 Values that correspond to data that is held out in the data table
 are plotted using the color green.
-(Hold outs using the hold out command or hold out option are not
-plotted in green.)
 
 $subhead Red and Black$$
-Values that correspond to data that is not held out,
+Values that correspond to data that is not held out in the data table,
 and is not within (is within) the automatically chosen limits,
 are plotted using the color red (black).
 
@@ -96,7 +101,7 @@ def plot_data_fit(database, integrand_list, file_name) :
 	# pdf
 	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
 	#
-	n_point_list = list()
+	n_fit_list = list()
 	for integrand_name in integrand_list :
 		#
 		# integrand_id
@@ -141,30 +146,40 @@ def plot_data_fit(database, integrand_list, file_name) :
 				}
 				info_list.append( info )
 		#
-		# n_point, n_point_list
+		# n_point
 		n_point = len( info_list )
-		n_point_list.append( n_point )
 		#
-		if n_point > 1 :
+		# numpy_info
+		keys       = info_list[0].keys()
+		numpy_info = dict()
+		for key in keys :
+			vector = numpy.zeros(n_point, dtype=float)
+			for i in range( n_point ) :
+				vector[i] = info_list[i][key]
+			numpy_info[key] = vector
+		#
+		# hold_out, not_hold_out, n_hold_out
+		hold_out     = (numpy_info['hold_out'] == 1)
+		not_hold_out = numpy.logical_not(hold_out)
+		n_hold_out   = sum( hold_out )
+		#
+		# n_fit_list
+		n_fit_list.append( n_point - n_hold_out )
+		#
+		if n_point - n_hold_out > 1 :
 			#
-			# numpy_info
-			keys       = info_list[0].keys()
-			numpy_info = dict()
-			for key in keys :
-				vector = numpy.zeros(n_point, dtype=float)
-				for i in range( n_point ) :
-					vector[i] = info_list[i][key]
-				numpy_info[key] = vector
 			#
 			# y_min, y_max
-			d_median    = numpy.median( numpy_info['meas_value'] )
+			d_fit       = numpy_info['meas_value'][not_hold_out]
+			d_median    = numpy.median( d_fit )
 			d_max       = d_median * 1e+3
 			d_min       = d_median * 1e-3
 			assert d_min >= 0.0
 			#
 			# r_min, r_max
-			r_norm      = numpy.linalg.norm( numpy_info['residual'] )
-			r_avg_sq    = r_norm * r_norm / n_point
+			r_fit       = numpy_info['residual'][not_hold_out]
+			r_norm      = numpy.linalg.norm( r_fit )
+			r_avg_sq    = r_norm * r_norm / (n_point - n_hold_out)
 			r_max       = 4.0 * numpy.sqrt( r_avg_sq )
 			r_min       = - r_max
 			#
@@ -221,10 +236,6 @@ def plot_data_fit(database, integrand_list, file_name) :
 				clipped      = numpy.logical_or(clipped, (y == clip_list[1]) )
 				not_clipped  = numpy.logical_not(clipped)
 				#
-				# hold_out, not_hold_out
-				hold_out     = (numpy_info['hold_out'] == 1)
-				not_hold_out = numpy.logical_not(hold_out)
-				#
 				green_point  = numpy.logical_and(hold_out, not_clipped)
 				green_marker = numpy.logical_and(hold_out, clipped)
 				black_point  = numpy.logical_and(not_hold_out, not_clipped)
@@ -270,4 +281,4 @@ def plot_data_fit(database, integrand_list, file_name) :
 			pyplot.close( fig )
 	# end of pages in pdf file
 	pdf.close()
-	return n_point_list
+	return n_fit_list
