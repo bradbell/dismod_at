@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv mixed_info.csv variable.csv var_id var_type s_id m_id m_diff bound age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv mixed_info.csv variable.csv var_id var_type s_id m_id m_diff bound age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up d_out s_out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -127,7 +127,8 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.age_up" target="_top">age_up</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.time_lo" target="_top">time_lo</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.time_up" target="_top">time_up</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.out" target="_top">out</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.d_out" target="_top">d_out</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.s_out" target="_top">s_out</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.density" target="_top">density</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#data.csv.nu" target="_top">nu</a>
@@ -859,26 +860,20 @@ time compression interval.
 
 <br>
 <br>
-<big><a name="data.csv.out" id="data.csv.out">out</a></big>
+<big><a name="data.csv.d_out" id="data.csv.d_out">d_out</a></big>
 <br>
-This column is one (zero) if any of the following conditions
-(none of the following conditions) hold:
-<ol type="1"><li>
-The corresponding data table
+is the value of
 <a href="data_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
- is one.
-</li><li>
+ in the data table.
 
-The corresponding integrand is in the
-<a href="option_table.htm#hold_out_integrand" target="_top"><span style='white-space: nowrap'>hold_out_integrand</span></a>
- list.
-</li><li>
-
-The corresponding data_subset table
+<br>
+<br>
+<big><a name="data.csv.s_out" id="data.csv.s_out">s_out</a></big>
+<br>
+is the value of
 <a href="data_subset_table.htm#hold_out" target="_top"><span style='white-space: nowrap'>hold_out</span></a>
- is one.
-</li></ol>
-
+ in the
+data_subset table.
 
 <br>
 <br>

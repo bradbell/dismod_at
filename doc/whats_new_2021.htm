@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 11-03 10-31 10-25 10-24 10-23 10-15 10-14 10-12 10-11 10-07 10-06 09-01 08-30 08-25 08-24 08-23 08-22 08-21 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 11-06 11-05 11-03 10-31 10-25 10-24 10-23 10-15 10-14 10-12 10-11 10-07 10-06 09-01 08-30 08-25 08-24 08-23 08-22 08-21 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>11-06</option>
+<option>11-05</option>
 <option>11-03</option>
 <option>10-31</option>
 <option>10-25</option>
@@ -136,6 +138,35 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="11-06" id="11-06">11-06</a></big></b>
+<br>
+The <a href="plot_data_fit.htm" target="_top"><span style='white-space: nowrap'>plot_data_fit</span></a>
+ routine would crash when one of the
+integrands had no data. This has been fixed.
+
+<br>
+<br>
+<b><big><a name="11-05" id="11-05">11-05</a></big></b>
+
+<ol type="1"><li>
+The <code><font color="blue">plot_data_fit</font></code> function now plots data that is held out in
+<a href="plot_data_fit.htm#Plot Legend.Green" target="_top"><span style='white-space: nowrap'>green</span></a>
+.
+</li><li>
+
+<b>API Change</b>:
+Split the 
+<code><i><font color="black"><span style='white-space: nowrap'>out</span></font></i></code>
+ column in the data.csv into the
+<a href="db2csv_command.htm#data.csv.d_out" target="_top"><span style='white-space: nowrap'>d_out</span></a>
+ and
+<a href="db2csv_command.htm#data.csv.s_out" target="_top"><span style='white-space: nowrap'>s_out</span></a>
+ columns.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="11-03" id="11-03">11-03</a></big></b>
 <br>
@@ -743,9 +774,15 @@ Add the <a href="hold_out_command.htm" target="_top"><span style='white-space: n
 .
 </li><li>
 
-Change <a href="db2csv_command.htm#data.csv.out" target="_top"><span style='white-space: nowrap'>out</span></a>
- in the
+Change 
+<code><i><font color="black"><span style='white-space: nowrap'>out</span></font></i></code>
+ column of the
 data.csv to include the result of all the hold_out settings.
+This has since been changed to the
+<a href="db2csv_command.htm#data.csv.d_out" target="_top"><span style='white-space: nowrap'>d_out</span></a>
+ and
+<a href="db2csv_command.htm#data.csv.s_out" target="_top"><span style='white-space: nowrap'>s_out</span></a>
+ columns.
 </li></ol>
 
 

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Case with no Children; i.e., no Random Effects</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Case with no Children; i.e., no Random Effects">
-<meta name="keywords" id="keywords" content=" case with no children; i.e. random effects nodes rates integrands data n_data measurement noise hold_out source code ">
+<meta name="keywords" id="keywords" content=" case with no children; i.e. random effects nodes rates integrands data n_data measurement noise hold_out call to plot_data_fit source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,6 +70,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_plot_data_fit.py.htm#Data.n_data" target="_top">n_data</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_plot_data_fit.py.htm#Data.Measurement Noise" target="_top">Measurement&nbsp;Noise</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="user_plot_data_fit.py.htm#Data.hold_out" target="_top">hold_out</a>
+<br><a href="user_plot_data_fit.py.htm#Call to plot_data_fit" target="_top">Call&nbsp;to&nbsp;plot_data_fit</a>
 <br><a href="user_plot_data_fit.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Nodes" id="Nodes">Nodes</a></big></b>
@@ -113,15 +114,23 @@ The integrands for this example are
 <a href="avg_integrand.htm#Integrand, I_i(a,t).Sincidence" target="_top"><span style='white-space: nowrap'>Sincidence</span></a>
 ,
 <a href="avg_integrand.htm#Integrand, I_i(a,t).remission" target="_top"><span style='white-space: nowrap'>remission</span></a>
-, and
+,
 <a href="avg_integrand.htm#Integrand, I_i(a,t).mtexcess" target="_top"><span style='white-space: nowrap'>mtexcess</span></a>
+, and
+<a href="avg_integrand.htm#Integrand, I_i(a,t).prevalence" target="_top"><span style='white-space: nowrap'>prevalence</span></a>
 .
-Note that these integrands are direct measurements of the following rates:
+The first three integrands are direct measurements of the following rates:
 <pre><tt>integrand2rate <font color="#990000">=</font> <font color="#990000">{</font>
      <font color="#FF0000">'Sincidence'</font><font color="#990000">:</font>  <font color="#FF0000">'iota'</font>   <font color="#990000">,</font>
      <font color="#FF0000">'remission'</font><font color="#990000">:</font>   <font color="#FF0000">'rho'</font>    <font color="#990000">,</font>
      <font color="#FF0000">'mtexcess'</font><font color="#990000">:</font>    <font color="#FF0000">'chi'</font>    <font color="#990000">,</font>
 <font color="#990000">}</font></tt></pre>
+Prevalence is in the integrand table, but it has no simulated data.
+This shows what happens when there is no data for one of the
+integrands in the <a href="plot_data_fit.htm#integrand_list" target="_top"><span style='white-space: nowrap'>integrand_list</span></a>
+.
+
+<br>
 <br>
 <b><big><a name="Data" id="Data">Data</a></big></b>
 <br>
@@ -166,6 +175,17 @@ The <a href="data_table.htm#hold_out" target="_top"><span style='white-space: no
 (it is zero for all the other data).
 
 <br>
+<br>
+<b><big><a name="Call to plot_data_fit" id="Call to plot_data_fit">Call to plot_data_fit</a></big></b>
+
+<pre><tt>
+database       <font color="#990000">=</font> file_name
+integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font> <font color="#FF0000">'mtexcess'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
+pdf_file       <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
+n_fit_list     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_data_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> integrand_list<font color="#990000">,</font> pdf_file<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> n_fit_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> n_data <font color="#990000">-</font> <font color="#993399">1</font>
+<b><font color="#0000FF">assert</font></b> n_fit_list<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> n_data <font color="#990000">-</font> <font color="#993399">1</font>
+<b><font color="#0000FF">assert</font></b> n_fit_list<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font></tt></pre>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
@@ -213,6 +233,7 @@ random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'Sincidence'</font> <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'remission'</font> <font color="#990000">},</font>
           <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'mtexcess'</font> <font color="#990000">},</font>
+          <font color="#990000">{</font> <font color="#FF0000">'name'</font><font color="#990000">:</font><font color="#FF0000">'prevalence'</font><font color="#990000">},</font>
      <font color="#990000">]</font>
      <i><font color="#9A1900">#</font></i>
      <i><font color="#9A1900"># node table: world -&gt; north_america</font></i>
@@ -254,8 +275,7 @@ random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></
           <font color="#FF0000">'time_upper'</font><font color="#990000">:</font>   <font color="#993399">2000.0</font><font color="#990000">,</font>
      <font color="#990000">}</font>
      <i><font color="#9A1900"># values that change between rows: (one data point for each integrand)</font></i>
-     <b><font color="#0000FF">for</font></b> integrand_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>integrand_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-          integrand_name    <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'name'</font><font color="#990000">]</font>
+     <b><font color="#0000FF">for</font></b> integrand_name <b><font color="#0000FF">in</font></b> integrand2rate <font color="#990000">:</font>
           true_value        <font color="#990000">=</font> rate_true<font color="#990000">[</font> integrand2rate<font color="#990000">[</font>integrand_name<font color="#990000">]</font> <font color="#990000">]</font>
           meas_std          <font color="#990000">=</font> meas_cv <font color="#990000">*</font> true_value
           row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> integrand_name
@@ -360,12 +380,15 @@ program <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'init'</font> <font color="#990000">])</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">([</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'fit'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font> <font color="#990000">])</font>
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># plot_data_fit</font></i>
+<i><font color="#9A1900"># BEGIN call plot_data_fit</font></i>
 database       <font color="#990000">=</font> file_name
-integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font> <font color="#FF0000">'mtexcess'</font> <font color="#990000">]</font>
+integrand_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font> <font color="#FF0000">'mtexcess'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
 pdf_file       <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
-n_point_list   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_data_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> integrand_list<font color="#990000">,</font> pdf_file<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b> n_point_list <font color="#990000">==</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>integrand_list<font color="#990000">)</font> <font color="#990000">*</font> <font color="#990000">[</font> n_data <font color="#990000">]</font>
+n_fit_list     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_data_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> integrand_list<font color="#990000">,</font> pdf_file<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> n_fit_list<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">==</font> n_data <font color="#990000">-</font> <font color="#993399">1</font>
+<b><font color="#0000FF">assert</font></b> n_fit_list<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">==</font> n_data <font color="#990000">-</font> <font color="#993399">1</font>
+<b><font color="#0000FF">assert</font></b> n_fit_list<font color="#990000">[</font><font color="#993399">2</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">0</font>
+<i><font color="#9A1900"># END call plot_data_fit</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># connect to database</font></i>
 new             <font color="#990000">=</font> False

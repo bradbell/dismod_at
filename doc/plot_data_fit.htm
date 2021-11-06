@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Plot The Data Fit By Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Plot The Data Fit By Integrand">
-<meta name="keywords" id="keywords" content=" plot the data fit integrand syntax database integrand_list pdf_file n_point_list example ">
+<meta name="keywords" id="keywords" content=" plot the data fit integrand syntax database integrand_list pdf_file n_fit_list legend table hold out point symbol plus green red black example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,14 +67,20 @@ A:active { color : purple }
 <br><a href="plot_data_fit.htm#database" target="_top">database</a>
 <br><a href="plot_data_fit.htm#integrand_list" target="_top">integrand_list</a>
 <br><a href="plot_data_fit.htm#pdf_file" target="_top">pdf_file</a>
-<br><a href="plot_data_fit.htm#n_point_list" target="_top">n_point_list</a>
+<br><a href="plot_data_fit.htm#n_fit_list" target="_top">n_fit_list</a>
+<br><a href="plot_data_fit.htm#Plot Legend" target="_top">Plot&nbsp;Legend</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_data_fit.htm#Plot Legend.Data Table Hold Out" target="_top">Data&nbsp;Table&nbsp;Hold&nbsp;Out</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_data_fit.htm#Plot Legend.Point Symbol" target="_top">Point&nbsp;Symbol</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_data_fit.htm#Plot Legend.Plus Symbol" target="_top">Plus&nbsp;Symbol</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_data_fit.htm#Plot Legend.Green" target="_top">Green</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_data_fit.htm#Plot Legend.Red and Black" target="_top">Red&nbsp;and&nbsp;Black</a>
 <br><a href="plot_data_fit.htm#Example" target="_top">Example</a>
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
 <br>
 
-<code><i><font color="black"><span style='white-space: nowrap'>n_point_list</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;plot_data_fit(</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pdf_file</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+<code><i><font color="black"><span style='white-space: nowrap'>n_fit_list</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;plot_data_fit(</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pdf_file</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 <br>
 <b><big><a name="database" id="database">database</a></big></b>
@@ -102,16 +108,65 @@ Is the location where the pdf file containing the plot will be placed.
 
 <br>
 <br>
-<b><big><a name="n_point_list" id="n_point_list">n_point_list</a></big></b>
+<b><big><a name="n_fit_list" id="n_fit_list">n_fit_list</a></big></b>
 <br>
-The <code><i>i</i></code>-th element of this list is the number of  rows
+The <code><i>i</i></code>-th element of this list is the number of rows
 in the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
  that correspond to the
 <code><i>i</i></code>-th integrand in 
 <code><i><font color="black"><span style='white-space: nowrap'>integrand_list</span></font></i></code>
-.
+ and are not
+held out in the data table (see below).
 If this is less than 2, the <code><i>i</i></code>-th integrand is not included
 in the plots.
+
+<br>
+<br>
+<b><big><a name="Plot Legend" id="Plot Legend">Plot Legend</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Plot Legend.Data Table Hold Out" id="Plot Legend.Data Table Hold Out">Data Table Hold Out</a></big>
+<br>
+We use data table hold out to refer to values that have
+
+<code><i><font color="black"><span style='white-space: nowrap'>hold_out</span></font></i></code>
+ equal to one in the data table.
+This does not include hold outs created by the hold out command
+or hold outs created by the hold option.
+The data table hold out values are not included during the automatic
+choice of the plotting limits.
+
+<br>
+<br>
+<big><a name="Plot Legend.Point Symbol" id="Plot Legend.Point Symbol">Point Symbol</a></big>
+<br>
+Values that are within the automatically chosen plotting limits
+are plotted using the point character <code><font color="blue">.</font></code> .
+
+<br>
+<br>
+<big><a name="Plot Legend.Plus Symbol" id="Plot Legend.Plus Symbol">Plus Symbol</a></big>
+<br>
+Values that are outside the automatically chosen plotting limits
+are plotted using the point plus character <code><font color="blue">+</font></code>.
+
+<br>
+<br>
+<big><a name="Plot Legend.Green" id="Plot Legend.Green">Green</a></big>
+<br>
+Values that correspond to data that is held out in the data table
+are plotted using the color green.
+
+<br>
+<br>
+<big><a name="Plot Legend.Red and Black" id="Plot Legend.Red and Black">Red and Black</a></big>
+<br>
+Values that correspond to data that is not held out in the data table,
+and is not within (is within) the automatically chosen limits,
+are plotted using the color red (black).
+
 
 <br>
 <br>
