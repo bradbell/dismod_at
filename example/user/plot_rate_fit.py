@@ -72,6 +72,9 @@ def rate_true(rate_name, age, time) :
 meas_cv = 0.2
 # %$$
 #
+# $head Call to plot_rate_fit$$
+# $srcthisfile%0%# BEGIN call plot_rate_fit%# END call plot_rate_fit%1%$$
+#
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end
@@ -272,12 +275,14 @@ dismod_at.system_command_prc(
 	[ program, file_name, 'sample', 'asymptotic', 'both', '20' ]
 )
 # --------------------------------------------------------------------------
-# plot_rate_fit
-database       = file_name
-rate_set       = { 'iota', 'chi' }
-pdf_file       = 'example.pdf'
-plot_set       = dismod_at.plot_rate_fit(database, rate_set, pdf_file)
+# BEGIN call plot_rate_fit
+database   = file_name
+rate_set   = { 'iota', 'chi' }
+pdf_file   = 'example.pdf'
+plot_title = 'Example Rate Plot'
+plot_set   = dismod_at.plot_rate_fit(database, rate_set, pdf_file, plot_title)
 assert plot_set == rate_set
+# END call plot_rate_fit
 # -----------------------------------------------------------------------
 # connect to database
 new             = False

@@ -19,7 +19,9 @@ $$
 $section Plot The Rates for a Fit$$
 
 $head Syntax$$
-$icode%plot_set% = plot_rate_fit(%database%, %rate_set%, %pdf_file%)
+$icode%plot_set% = plot_rate_fit(
+	%database%, %rate_set%, %pdf_file%, %plot_title%
+)
 %$$
 
 $head database$$
@@ -36,6 +38,9 @@ that we are plotting the fit for.
 
 $head pdf_file$$
 Is the location where the pdf file containing the plot will be placed.
+
+$head plot_title$$
+This $code str$$ is a title printed at the top of every plot.
 
 $head plot_set$$
 Each element of this $code set$$ is a $code str$$ containing
@@ -111,7 +116,7 @@ class pair:
 	def __ne__(self, other) :
 		return not __eq__(self, other)
 # ----------------------------------------------------------------------------
-def plot_rate_fit(database, rate_set, file_name) :
+def plot_rate_fit(database, rate_set, file_name, plot_title) :
 	#
 	# color_style_list, n_color_style
 	color_style_list = [
@@ -295,7 +300,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 			# axis
 			# axis for subplot and title for figure
 			axis   = pyplot.subplot(n_subplot, 1, 1)
-			axis.set_title( rate_name )
+			axis.set_title( f'{plot_title}: {rate_name}' )
 			#
 			# start, color_index, stop
 			start  = i_fig * n_line_per_fig
@@ -445,7 +450,7 @@ def plot_rate_fit(database, rate_set, file_name) :
 			# axis
 			# axis for subplot and title for figure
 			axis   = pyplot.subplot(n_subplot, 1, 1)
-			axis.set_title( rate_name )
+			axis.set_title( f'{plot_title}: {rate_name}' )
 			#
 			# start, color_index, stop
 			start  = i_fig * n_line_per_fig

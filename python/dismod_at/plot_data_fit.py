@@ -19,8 +19,9 @@ $$
 $section Plot The Data Fit By Integrand$$
 
 $head Syntax$$
-$icode%n_fit_list% = plot_data_fit(%database%, %integrand_list%, %pdf_file%)
-%$$
+$icode%n_fit_list% = plot_data_fit(
+	%database%, %integrand_list%, %pdf_file%, %plot_title%
+)%$$
 
 $head database$$
 This $code str$$ is the file name for
@@ -35,6 +36,9 @@ that we are plotting the fit for.
 
 $head pdf_file$$
 Is the location where the pdf file containing the plot will be placed.
+
+$head plot_title$$
+This $code str$$ is a title printed at the top of every plot.
 
 $head n_fit_list$$
 The $th i$$ element of this list is the number of rows
@@ -83,7 +87,7 @@ import dismod_at
 from matplotlib import pyplot
 import matplotlib.backends.backend_pdf
 # ----------------------------------------------------------------------------
-def plot_data_fit(database, integrand_list, file_name) :
+def plot_data_fit(database, integrand_list, pdf_file, plot_title) :
 	#
 	# tables
 	new        = False
@@ -99,7 +103,7 @@ def plot_data_fit(database, integrand_list, file_name) :
 	connection.close()
 	#
 	# pdf
-	pdf = matplotlib.backends.backend_pdf.PdfPages(file_name)
+	pdf = matplotlib.backends.backend_pdf.PdfPages(pdf_file)
 	#
 	n_fit_list = list()
 	for integrand_name in integrand_list :
@@ -207,7 +211,7 @@ def plot_data_fit(database, integrand_list, file_name) :
 			x = numpy.array( range( n_point ) )
 			#
 			# plot title
-			pyplot.title( integrand_name )
+			pyplot.title( f'{plot_title}: {integrand_name}' )
 			#
 			# subplot setup
 			fig, axes = pyplot.subplots(3, 1, sharex=True)
@@ -277,7 +281,7 @@ def plot_data_fit(database, integrand_list, file_name) :
 				else :
 					  sp.set_xticklabels( [] )
 				if subplot_index == 0 :
-					pyplot.title( integrand_name )
+					pyplot.title( f'{plot_title}: {integrand_name}' )
 			# x-axis label
 			pyplot.xlabel('data index')
 			#

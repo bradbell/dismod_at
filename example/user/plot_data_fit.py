@@ -292,7 +292,10 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 database       = file_name
 integrand_list = [ 'Sincidence', 'mtexcess', 'prevalence' ]
 pdf_file       = 'example.pdf'
-n_fit_list     = dismod_at.plot_data_fit(database, integrand_list, pdf_file)
+plot_title     = 'Example Data Plot'
+n_fit_list     = dismod_at.plot_data_fit(
+	database, integrand_list, pdf_file, plot_title
+)
 assert n_fit_list[0] == n_data - 1
 assert n_fit_list[1] == n_data - 1
 assert n_fit_list[2] == 0

@@ -63,8 +63,15 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 11-06$$
+$list number$$
 The $cref plot_data_fit$$ routine would crash when one of the
 integrands had no data. This has been fixed.
+$lnext
+$bold API Change$$:
+The $icode plot_title$$ argument was added to the
+$cref plot_rate_fit$$ and $cref plot_data_fit$$ functions.
+$lend
+
 
 $head 11-05$$
 $list number$$
