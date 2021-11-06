@@ -70,6 +70,7 @@ $lnext
 $bold API Change$$:
 The $icode plot_title$$ argument was added to the
 $cref plot_rate_fit$$ and $cref plot_data_fit$$ functions.
+In addition, the $icode max_plot$$ argument was added to $code plot_data_fit$$.
 $lend
 
 

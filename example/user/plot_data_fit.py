@@ -67,6 +67,13 @@ integrand2rate = {
 n_data  = 100
 # %$$
 #
+# $subhead max_plot$$
+# This is the maximum number of data points to plot per integrand.
+# The points are chosen randomly, but there order is preserved.
+# $srccode%py%
+max_plot = int( n_data / 2 )
+# %$$
+#
 # $subhead Measurement Noise$$
 # The data is simulated a Gaussian with mean equal to the
 # corresponding $icode rate_true$$ :
@@ -289,12 +296,16 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 # --------------------------------------------------------------------------
 # BEGIN call plot_data_fit
-database       = file_name
-integrand_list = [ 'Sincidence', 'mtexcess', 'prevalence' ]
-pdf_file       = 'example.pdf'
-plot_title     = 'Example Data Plot'
+database          = file_name
+integrand_list    = [ 'Sincidence', 'mtexcess', 'prevalence' ]
+pdf_file          = 'example.pdf'
+plot_title        = 'Example Data Plot'
 n_fit_list     = dismod_at.plot_data_fit(
-	database, integrand_list, pdf_file, plot_title
+	database          = database,
+	pdf_file          = pdf_file,
+	integrand_list    = integrand_list,
+	plot_title        = plot_title,
+	max_plot          = max_plot,
 )
 assert n_fit_list[0] == n_data - 1
 assert n_fit_list[1] == n_data - 1

@@ -19,26 +19,37 @@ $$
 $section Plot The Data Fit By Integrand$$
 
 $head Syntax$$
-$icode%n_fit_list% = plot_data_fit(
-	%database%, %integrand_list%, %pdf_file%, %plot_title%
-)%$$
+$srcthisfile%0%# BEGIN syntax%# END syntax%1%$$
 
 $head database$$
 This $code str$$ is the file name for
 an existing dismod_at database that contains the results of a
 $cref fit_command$$.
+This argument can't be $code None$$.
 
+$head pdf_file$$
+This $code str$$
+is the location where the pdf file containing the plot will be placed.
+This argument can't be $code None$$.
 
 $head integrand_list$$
 Each element of this $code list$$ is a $code str$$ containing an
 $cref/integrand_name/integrand_table/integrand_name/$$
 that we are plotting the fit for.
-
-$head pdf_file$$
-Is the location where the pdf file containing the plot will be placed.
+This argument can't be $code None$$.
 
 $head plot_title$$
-This $code str$$ is a title printed at the top of every plot.
+This $code str$$ is extra text printed at the beginning of the
+title for each plot.
+This argument can't be $code None$$.
+
+$head max_plot$$
+This is a $code int$$ specifying the maximum number of points
+to plot per integrand.
+If this argument is less that the number of values for an integrand,
+the values are randomly sub-sampled keeping the same order.
+If this argument is $code None$$ no sub-sampling is done.
+The x-axis (data index) is the original index value before sub-sampling.
 
 $head n_fit_list$$
 The $th i$$ element of this list is the number of rows
@@ -82,12 +93,27 @@ $cref user_plot_data_fit.py$$.
 $end
 '''
 # ----------------------------------------------------------------------------
+import random
 import numpy
 import dismod_at
 from matplotlib import pyplot
 import matplotlib.backends.backend_pdf
 # ----------------------------------------------------------------------------
-def plot_data_fit(database, integrand_list, pdf_file, plot_title) :
+def plot_data_fit(
+# BEGIN syntax
+# n_fit_list = plot_data_fit(
+	database          = None,
+	pdf_file          = None,
+	integrand_list    = None,
+	plot_title        = None,
+	max_plot          = None,
+# )
+# END syntax
+) :
+	assert not database is None
+	assert not pdf_file is None
+	assert not integrand_list is None
+	assert not plot_title is None
 	#
 	# tables
 	new        = False
@@ -203,10 +229,6 @@ def plot_data_fit(database, integrand_list, pdf_file, plot_title) :
 				numpy_info[name] = numpy.maximum( numpy_info[name], r_min )
 				numpy_info[name] = numpy.minimum( numpy_info[name], r_max )
 			#
-			# point_size, marker_size
-			point_size  = numpy.array( n_point * [ 1 ] )
-			marker_size = numpy.array( n_point * [ 10 ] )
-			#
 			# x
 			x = numpy.array( range( n_point ) )
 			#
@@ -216,6 +238,34 @@ def plot_data_fit(database, integrand_list, pdf_file, plot_title) :
 			# subplot setup
 			fig, axes = pyplot.subplots(3, 1, sharex=True)
 			fig.subplots_adjust(hspace=0)
+			#
+			if max_plot is None or  n_point <= max_plot :
+				#
+				# n_plot
+				n_plot = n_point
+			else :
+				#
+				# n_plot
+				n_plot = max_plot
+				#
+				# subsample
+				subsample = random.sample( range(n_point), max_plot )
+				subsample = sorted(subsample)
+				#
+				# numpy_info
+				for key in numpy_info :
+					numpy_info[key] = numpy_info[key][subsample]
+				#
+				# hold_out, not_hold_out
+				hold_out     = (numpy_info['hold_out'] == 1)
+				not_hold_out = numpy.logical_not(hold_out)
+				#
+				# x
+				x = x[subsample]
+			#
+			# point_size, marker_size
+			point_size  = numpy.array( n_plot * [ 1 ] )
+			marker_size = numpy.array( n_plot * [ 10 ] )
 			#
 			for subplot_index in range(3) :
 				# sp
