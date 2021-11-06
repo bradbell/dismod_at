@@ -62,6 +62,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 11-06$$
+The $cref plot_data_fit$$ routine would crash when one of the
+integrands had no data. This has been fixed.
+
 $head 11-05$$
 $list number$$
 The $code plot_data_fit$$ function now plots data that is held out in

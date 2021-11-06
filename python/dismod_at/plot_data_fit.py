@@ -149,19 +149,24 @@ def plot_data_fit(database, integrand_list, file_name) :
 		# n_point
 		n_point = len( info_list )
 		#
-		# numpy_info
-		keys       = info_list[0].keys()
-		numpy_info = dict()
-		for key in keys :
-			vector = numpy.zeros(n_point, dtype=float)
-			for i in range( n_point ) :
-				vector[i] = info_list[i][key]
-			numpy_info[key] = vector
-		#
-		# hold_out, not_hold_out, n_hold_out
-		hold_out     = (numpy_info['hold_out'] == 1)
-		not_hold_out = numpy.logical_not(hold_out)
-		n_hold_out   = sum( hold_out )
+		if n_point == 0 :
+			#
+			# n_hold_out
+			n_hold_out = 0
+		else :
+			# numpy_info
+			keys       = info_list[0].keys()
+			numpy_info = dict()
+			for key in keys :
+				vector = numpy.zeros(n_point, dtype=float)
+				for i in range( n_point ) :
+					vector[i] = info_list[i][key]
+				numpy_info[key] = vector
+			#
+			# hold_out, not_hold_out, n_hold_out
+			hold_out     = (numpy_info['hold_out'] == 1)
+			not_hold_out = numpy.logical_not(hold_out)
+			n_hold_out   = sum( hold_out )
 		#
 		# n_fit_list
 		n_fit_list.append( n_point - n_hold_out )

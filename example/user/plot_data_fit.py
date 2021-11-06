@@ -43,9 +43,10 @@
 # $head Integrands$$
 # The integrands for this example are
 # $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
-# $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$, and
-# $cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$.
-# Note that these integrands are direct measurements of the following rates:
+# $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$,
+# $cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$, and
+# $cref/prevalence/avg_integrand/Integrand, I_i(a,t)/prevalence/$$.
+# The first three integrands are direct measurements of the following rates:
 # $srccode%py%
 integrand2rate = {
 	'Sincidence':  'iota'   ,
@@ -53,6 +54,9 @@ integrand2rate = {
 	'mtexcess':    'chi'    ,
 }
 # %$$
+# Prevalence is in the integrand table, but it has no simulated data.
+# This shows what happens when there is no data for one of the
+# integrands in the $cref/integrand_list/plot_data_fit/integrand_list/$$.
 #
 # $head Data$$
 # All of the data corresponds to canada.
@@ -84,6 +88,10 @@ meas_cv = 0.2
 # The outlier is placed in the middle of the data set for each integrand.
 # The $cref/hold_out/data_table/hold_out/$$ for the outliers is set to one
 # (it is zero for all the other data).
+#
+# $head Call to plot_data_fit$$
+# $srcthisfile%0%# BEGIN call plot_data_fit%# END call plot_data_fit%1%$$
+#
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -133,6 +141,7 @@ def example_db (file_name) :
 		{ 'name':'Sincidence' },
 		{ 'name':'remission' },
 		{ 'name':'mtexcess' },
+		{ 'name':'prevalence'},
 	]
 	#
 	# node table: world -> north_america
@@ -174,8 +183,7 @@ def example_db (file_name) :
 		'time_upper':   2000.0,
 	}
 	# values that change between rows: (one data point for each integrand)
-	for integrand_id in range( len(integrand_table) ) :
-		integrand_name    = integrand_table[integrand_id]['name']
+	for integrand_name in integrand2rate :
 		true_value        = rate_true[ integrand2rate[integrand_name] ]
 		meas_std          = meas_cv * true_value
 		row['integrand']  = integrand_name
@@ -280,12 +288,15 @@ program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 # --------------------------------------------------------------------------
-# plot_data_fit
+# BEGIN call plot_data_fit
 database       = file_name
-integrand_list = [ 'Sincidence', 'mtexcess' ]
+integrand_list = [ 'Sincidence', 'mtexcess', 'prevalence' ]
 pdf_file       = 'example.pdf'
 n_fit_list     = dismod_at.plot_data_fit(database, integrand_list, pdf_file)
-assert n_fit_list == len(integrand_list) * [ n_data - 1 ]
+assert n_fit_list[0] == n_data - 1
+assert n_fit_list[1] == n_data - 1
+assert n_fit_list[2] == 0
+# END call plot_data_fit
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
