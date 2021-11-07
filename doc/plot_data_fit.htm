@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Plot The Data Fit By Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Plot The Data Fit By Integrand">
-<meta name="keywords" id="keywords" content=" plot the data fit integrand syntax database integrand_list pdf_file n_fit_list legend table hold out point symbol plus green red black example ">
+<meta name="keywords" id="keywords" content=" plot the data fit integrand syntax database pdf_file integrand_list plot_title max_plot n_fit_dict legend table hold out point symbol plus green red black example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -65,9 +65,11 @@ A:active { color : purple }
 
 <br><a href="plot_data_fit.htm#Syntax" target="_top">Syntax</a>
 <br><a href="plot_data_fit.htm#database" target="_top">database</a>
-<br><a href="plot_data_fit.htm#integrand_list" target="_top">integrand_list</a>
 <br><a href="plot_data_fit.htm#pdf_file" target="_top">pdf_file</a>
-<br><a href="plot_data_fit.htm#n_fit_list" target="_top">n_fit_list</a>
+<br><a href="plot_data_fit.htm#integrand_list" target="_top">integrand_list</a>
+<br><a href="plot_data_fit.htm#plot_title" target="_top">plot_title</a>
+<br><a href="plot_data_fit.htm#max_plot" target="_top">max_plot</a>
+<br><a href="plot_data_fit.htm#n_fit_dict" target="_top">n_fit_dict</a>
 <br><a href="plot_data_fit.htm#Plot Legend" target="_top">Plot&nbsp;Legend</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="plot_data_fit.htm#Plot Legend.Data Table Hold Out" target="_top">Data&nbsp;Table&nbsp;Hold&nbsp;Out</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="plot_data_fit.htm#Plot Legend.Point Symbol" target="_top">Point&nbsp;Symbol</a>
@@ -78,10 +80,14 @@ A:active { color : purple }
 <br><br>
 <b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
 
-<br>
-
-<code><i><font color="black"><span style='white-space: nowrap'>n_fit_list</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;plot_data_fit(</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pdf_file</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
-</span></font></code>
+<pre><tt>
+<i><font color="#9A1900"># n_fit_dict = plot_data_fit(</font></i>
+     database          <font color="#990000">=</font> None<font color="#990000">,</font>
+     pdf_file          <font color="#990000">=</font> None<font color="#990000">,</font>
+     integrand_list    <font color="#990000">=</font> None<font color="#990000">,</font>
+     plot_title        <font color="#990000">=</font> None<font color="#990000">,</font>
+     max_plot          <font color="#990000">=</font> None<font color="#990000">,</font>
+<i><font color="#9A1900"># )</font></i></tt></pre>
 <br>
 <b><big><a name="database" id="database">database</a></big></b>
 <br>
@@ -89,7 +95,15 @@ This <code><font color="blue">str</font></code> is the file name for
 an existing dismod_at database that contains the results of a
 <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
 .
+This argument can't be <code><font color="blue">None</font></code>.
 
+<br>
+<br>
+<b><big><a name="pdf_file" id="pdf_file">pdf_file</a></big></b>
+<br>
+This <code><font color="blue">str</font></code>
+is the location where the pdf file containing the plot will be placed.
+This argument can't be <code><font color="blue">None</font></code>.
 
 <br>
 <br>
@@ -99,26 +113,48 @@ Each element of this <code><font color="blue">list</font></code> is a <code><fon
 <a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
 
 that we are plotting the fit for.
+If this argument is <code><font color="blue">None</font></code> all of the integrands,
+except those with names that begin with <code><font color="blue">mulcov_</font></code>,
+are included.
 
 <br>
 <br>
-<b><big><a name="pdf_file" id="pdf_file">pdf_file</a></big></b>
+<b><big><a name="plot_title" id="plot_title">plot_title</a></big></b>
 <br>
-Is the location where the pdf file containing the plot will be placed.
+This <code><font color="blue">str</font></code> is extra text printed at the beginning of the
+title for each plot.
+If this argument is <code><font color="blue">None</font></code>, there is no extra text.
 
 <br>
 <br>
-<b><big><a name="n_fit_list" id="n_fit_list">n_fit_list</a></big></b>
+<b><big><a name="max_plot" id="max_plot">max_plot</a></big></b>
 <br>
-The <code><i>i</i></code>-th element of this list is the number of rows
-in the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
- that correspond to the
-<code><i>i</i></code>-th integrand in 
+This is a <code><font color="blue">int</font></code> specifying the maximum number of points
+to plot per integrand.
+If this argument is less that the number of values for an integrand,
+the values are randomly sub-sampled keeping the same order.
+The x-axis (data index) is the original index value before sub-sampling.
+If this argument is <code><font color="blue">None</font></code> no sub-sampling is done.
+
+<br>
+<br>
+<b><big><a name="n_fit_dict" id="n_fit_dict">n_fit_dict</a></big></b>
+<br>
+This is a dictionary with keys that are the integrand names
+in 
 <code><i><font color="black"><span style='white-space: nowrap'>integrand_list</span></font></i></code>
- and are not
-held out in the data table (see below).
-If this is less than 2, the <code><i>i</i></code>-th integrand is not included
-in the plots.
+.
+(If 
+<code><i><font color="black"><span style='white-space: nowrap'>integrand_list</span></font></i></code>
+ is <code><font color="blue">None</font></code>, the keys are all the
+integrand names that do not begin with <code><font color="blue">mulcov_</font></code>.)
+The value 
+<code><i><font color="black"><span style='white-space: nowrap'>n_fit_dict</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>key</span></font></i><font color="blue"><span style='white-space: nowrap'>]</span></font></code>
+ is the number of rows
+in the <a href="data_subset_table.htm" target="_top"><span style='white-space: nowrap'>data_subset_table</span></a>
+ that correspond to this integrand and
+are not held out in the data table (see below).
+If this is less than 2, the corresponding integrand is not plotted.
 
 <br>
 <br>

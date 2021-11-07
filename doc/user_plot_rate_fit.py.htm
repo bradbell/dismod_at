@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Case with no Children; i.e., no Random Effects</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Case with no Children; i.e., no Random Effects">
-<meta name="keywords" id="keywords" content=" case with no children; i.e. random effects nodes rates integrands data source code ">
+<meta name="keywords" id="keywords" content=" case with no children; i.e. random effects nodes rates integrands data call to plot_rate_fit source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -67,6 +67,7 @@ A:active { color : purple }
 <br><a href="user_plot_rate_fit.py.htm#Rates" target="_top">Rates</a>
 <br><a href="user_plot_rate_fit.py.htm#Integrands" target="_top">Integrands</a>
 <br><a href="user_plot_rate_fit.py.htm#Data" target="_top">Data</a>
+<br><a href="user_plot_rate_fit.py.htm#Call to plot_rate_fit" target="_top">Call&nbsp;to&nbsp;plot_rate_fit</a>
 <br><a href="user_plot_rate_fit.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Nodes" id="Nodes">Nodes</a></big></b>
@@ -136,6 +137,16 @@ have the following coefficient of variation:
 <pre style='display:inline'><tt>
 meas_cv <font color="#990000">=</font> <font color="#993399">0.2</font>
 </tt></pre>
+<br>
+<b><big><a name="Call to plot_rate_fit" id="Call to plot_rate_fit">Call to plot_rate_fit</a></big></b>
+
+<pre><tt>
+database   <font color="#990000">=</font> file_name
+rate_set   <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'iota'</font><font color="#990000">,</font> <font color="#FF0000">'chi'</font> <font color="#990000">}</font>
+pdf_file   <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
+plot_title <font color="#990000">=</font> <font color="#FF0000">'Example Rate Plot'</font>
+plot_set   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_rate_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> rate_set<font color="#990000">,</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">)</font>
+<b><font color="#0000FF">assert</font></b> plot_set <font color="#990000">==</font> rate_set</tt></pre>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
@@ -335,12 +346,14 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_p
      <font color="#990000">[</font> program<font color="#990000">,</font> file_name<font color="#990000">,</font> <font color="#FF0000">'sample'</font><font color="#990000">,</font> <font color="#FF0000">'asymptotic'</font><font color="#990000">,</font> <font color="#FF0000">'both'</font><font color="#990000">,</font> <font color="#FF0000">'20'</font> <font color="#990000">]</font>
 <font color="#990000">)</font>
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
-<i><font color="#9A1900"># plot_rate_fit</font></i>
-database       <font color="#990000">=</font> file_name
-rate_set       <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'iota'</font><font color="#990000">,</font> <font color="#FF0000">'chi'</font> <font color="#990000">}</font>
-pdf_file       <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
-plot_set       <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_rate_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> rate_set<font color="#990000">,</font> pdf_file<font color="#990000">)</font>
+<i><font color="#9A1900"># BEGIN call plot_rate_fit</font></i>
+database   <font color="#990000">=</font> file_name
+rate_set   <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'iota'</font><font color="#990000">,</font> <font color="#FF0000">'chi'</font> <font color="#990000">}</font>
+pdf_file   <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
+plot_title <font color="#990000">=</font> <font color="#FF0000">'Example Rate Plot'</font>
+plot_set   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_rate_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> rate_set<font color="#990000">,</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> plot_set <font color="#990000">==</font> rate_set
+<i><font color="#9A1900"># END call plot_rate_fit</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># connect to database</font></i>
 new             <font color="#990000">=</font> False
