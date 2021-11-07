@@ -14,6 +14,8 @@ $spell
 	std
 	dismod
 	str
+	mulcov
+	integrands
 $$
 
 $section Plot The Data Fit By Integrand$$
@@ -36,28 +38,32 @@ $head integrand_list$$
 Each element of this $code list$$ is a $code str$$ containing an
 $cref/integrand_name/integrand_table/integrand_name/$$
 that we are plotting the fit for.
-This argument can't be $code None$$.
+If this argument is $code None$$ all of the integrands,
+except those with names that begin with $code mulcov_$$,
+are included.
 
 $head plot_title$$
 This $code str$$ is extra text printed at the beginning of the
 title for each plot.
-This argument can't be $code None$$.
+If this argument is $code None$$, there is no extra text.
 
 $head max_plot$$
 This is a $code int$$ specifying the maximum number of points
 to plot per integrand.
 If this argument is less that the number of values for an integrand,
 the values are randomly sub-sampled keeping the same order.
-If this argument is $code None$$ no sub-sampling is done.
 The x-axis (data index) is the original index value before sub-sampling.
+If this argument is $code None$$ no sub-sampling is done.
 
-$head n_fit_list$$
-The $th i$$ element of this list is the number of rows
-in the $cref data_subset_table$$ that correspond to the
-$th i$$ integrand in $icode integrand_list$$ and are not
-held out in the data table (see below).
-If this is less than 2, the $th i$$ integrand is not included
-in the plots.
+$head n_fit_dict$$
+This is a dictionary with keys that are the integrand names
+in $icode integrand_list$$.
+(If $icode integrand_list$$ is $code None$$, the keys are all the
+integrand names that do not begin with $code mulcov_$$.)
+The value $icode%n_fit_dict%[%key%]%$$ is the number of rows
+in the $cref data_subset_table$$ that correspond to this integrand and
+are not held out in the data table (see below).
+If this is less than 2, the corresponding integrand is not plotted.
 
 $head Plot Legend$$
 
@@ -101,7 +107,7 @@ import matplotlib.backends.backend_pdf
 # ----------------------------------------------------------------------------
 def plot_data_fit(
 # BEGIN syntax
-# n_fit_list = plot_data_fit(
+# n_fit_dict = plot_data_fit(
 	database          = None,
 	pdf_file          = None,
 	integrand_list    = None,
@@ -112,8 +118,6 @@ def plot_data_fit(
 ) :
 	assert not database is None
 	assert not pdf_file is None
-	assert not integrand_list is None
-	assert not plot_title is None
 	#
 	# tables
 	new        = False
@@ -131,7 +135,15 @@ def plot_data_fit(
 	# pdf
 	pdf = matplotlib.backends.backend_pdf.PdfPages(pdf_file)
 	#
-	n_fit_list = list()
+	# integrand_list
+	if integrand_list is None :
+		integrand_list = list()
+		for row in tables['integrand'] :
+			integrand_name = row['integrand_name']
+			if not integrand_name.startswith('mulcov_') :
+				integrand_list.append( integrand_name )
+	#
+	n_fit_dict = dict()
 	for integrand_name in integrand_list :
 		#
 		# integrand_id
@@ -198,8 +210,8 @@ def plot_data_fit(
 			not_hold_out = numpy.logical_not(hold_out)
 			n_hold_out   = sum( hold_out )
 		#
-		# n_fit_list
-		n_fit_list.append( n_point - n_hold_out )
+		# n_fit_dict
+		n_fit_dict[integrand_name] = n_point - n_hold_out
 		#
 		if n_point - n_hold_out > 1 :
 			#
@@ -231,9 +243,6 @@ def plot_data_fit(
 			#
 			# x
 			x = numpy.array( range( n_point ) )
-			#
-			# plot title
-			pyplot.title( f'{plot_title}: {integrand_name}' )
 			#
 			# subplot setup
 			fig, axes = pyplot.subplots(3, 1, sharex=True)
@@ -331,7 +340,10 @@ def plot_data_fit(
 				else :
 					  sp.set_xticklabels( [] )
 				if subplot_index == 0 :
-					pyplot.title( f'{plot_title}: {integrand_name}' )
+					if plot_title is None :
+						pyplot.title( integrand_name )
+					else :
+						pyplot.title( plot_title + ': ' + integrand_name )
 			# x-axis label
 			pyplot.xlabel('data index')
 			#
@@ -340,4 +352,4 @@ def plot_data_fit(
 			pyplot.close( fig )
 	# end of pages in pdf file
 	pdf.close()
-	return n_fit_list
+	return n_fit_dict

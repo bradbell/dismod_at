@@ -300,16 +300,16 @@ database          = file_name
 integrand_list    = [ 'Sincidence', 'mtexcess', 'prevalence' ]
 pdf_file          = 'example.pdf'
 plot_title        = 'Example Data Plot'
-n_fit_list     = dismod_at.plot_data_fit(
+n_fit_dict     = dismod_at.plot_data_fit(
 	database          = database,
 	pdf_file          = pdf_file,
 	integrand_list    = integrand_list,
 	plot_title        = plot_title,
 	max_plot          = max_plot,
 )
-assert n_fit_list[0] == n_data - 1
-assert n_fit_list[1] == n_data - 1
-assert n_fit_list[2] == 0
+assert n_fit_dict['Sincidence'] == n_data - 1
+assert n_fit_dict['mtexcess'] == n_data - 1
+assert n_fit_dict['prevalence'] == 0
 # END call plot_data_fit
 # -----------------------------------------------------------------------
 # connect to database

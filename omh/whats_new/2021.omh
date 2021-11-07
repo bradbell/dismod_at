@@ -62,12 +62,23 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 11-07$$
+$list number$$
+Make the $cref plot_data_fit$$ arguments $icode integrand_list$$
+and $icode plot_title$$ optional.
+In addition, its return value $icode n_fit_dict$$ was changed
+from a list to a dictionary.
+$lnext
+$bold API Change$$:
+The changes on 11-07 and 11-06 are API changes to $code plot_data_fit$$.
+$lend
+
+
 $head 11-06$$
 $list number$$
 The $cref plot_data_fit$$ routine would crash when one of the
 integrands had no data. This has been fixed.
 $lnext
-$bold API Change$$:
 The $icode plot_title$$ argument was added to the
 $cref plot_rate_fit$$ and $cref plot_data_fit$$ functions.
 In addition, the $icode max_plot$$ argument was added to $code plot_data_fit$$.
