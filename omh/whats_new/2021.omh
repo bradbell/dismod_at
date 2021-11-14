@@ -62,6 +62,14 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 11-14$$
+$list number$$
+The $cref connection_file$$ function was added.
+$lnext
+The $cref user_average_integrand.py$$ and $cref user_csv2db.py$$
+examples were added to the $cref user_example$$ list.
+$lend
+
 $head 11-07$$
 $list number$$
 Make the $cref plot_data_fit$$ arguments $icode integrand_list$$

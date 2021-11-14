@@ -7,16 +7,12 @@
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
 """
-$begin user_system_command_prc.py$$
+$begin user_connection_file.py$$
 $spell
 	prc
 $$
 
-$section Example Using system_command_prc$$
-
-$head Discussion$$
-This example demonstrates some of the different argument cases for the
-$cref system_command_prc$$ function.
+$section Example Using connection_file$$
 
 $head Source Code$$
 $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
@@ -26,10 +22,9 @@ $end
 # BEGIN PYTHON
 import sys
 import os
-import time
 import distutils.dir_util
 #
-test_program = 'example/user/system_command_prc.py'
+test_program = 'example/user/connection_file.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -46,28 +41,17 @@ import dismod_at
 distutils.dir_util.mkpath('build/example/user')
 os.chdir('build/example/user')
 #
-# command
-command = [ 'echo', 'system_command_prc: Test Output' ]
+# connection
+new        = True
+database   = 'example.db'
+connection = dismod_at.create_connection(database , new)
 #
-# return_stdout=True, return_stderr=False
-result  = dismod_at.system_command_prc(
-	command, print_command=False, return_stdout=True, return_stderr=False
-)
-assert result  == command[1] + '\n'
+# file_name
+file_name  = dismod_at.connection_file(connection)
 #
-# return_stdout=False, return_stderr=False
-result  = dismod_at.system_command_prc(
-	command, print_command=False, return_stdout=False, return_stderr=False
-)
-assert result is None
+# check
+assert os.path.samefile(file_name,  database)
 #
-# return_stdout=True, return_stderr=True
-result  = dismod_at.system_command_prc(
-	command, print_command=False, return_stdout=True, return_stderr=True
-)
-assert result.stdout  == command[1] + '\n'
-
-#
-print('system_command_prc.py: OK')
+print('connection_file.py: OK')
 sys.exit(0)
 # END PYTHON

@@ -15,6 +15,7 @@
 # $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 # $childtable%
 #	python/dismod_at/average_integrand.py%
+#	python/dismod_at/connection_file.py%
 #	python/dismod_at/create_connection.py%
 #	python/dismod_at/create_database.py%
 #	python/dismod_at/create_table.py%
@@ -38,6 +39,7 @@
 # -----------------------------------------------------------------------------
 # BEGIN_SORT_THIS_LINE_PLUS_1
 from .average_integrand   import average_integrand
+from .connection_file     import connection_file
 from .create_connection   import create_connection
 from .create_database     import create_database
 from .create_table        import create_table

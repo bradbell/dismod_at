@@ -14,11 +14,14 @@ SET(depends "")
 # BEGIN_SORT_THIS_LINE_PLUS_2
 FOREACH(user_case
 	age_avg_split
+	average_integrand
 	bilevel_random
 	bnd_mulcov
 	cascade
 	censor
 	change_grid
+	compress
+	connection_file
 	const_random
 	const_value
 	continue_fit
@@ -38,8 +41,11 @@ FOREACH(user_case
 	jump_at_age
 	lasso_covariate
 	metropolis
+	mulstd
 	no_children
 	one_function
+	plot_data_fit
+	plot_rate_fit
 	predict_fit
 	predict_mulcov
 	re_scale
@@ -47,10 +53,10 @@ FOREACH(user_case
 	sample_asy
 	sample_asy_sim
 	sample_sim
-	average_integrand
 	sim_log
 	subgroup_mulcov
 	sum_residual
+	system_command_prc
 	trace_init
 	warm_start
 	zsum_child_rate

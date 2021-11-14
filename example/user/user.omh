@@ -112,15 +112,18 @@ $head Examples With Explanation$$
 $table
 $comment BEGIN_SORT_THIS_LINE_PLUS_1$$
 $rref user_age_avg_split.py$$
+$rref user_average_integrand.py$$
 $rref user_bilevel_random.py$$
 $rref user_bnd_mulcov.py$$
 $rref user_cascade.py$$
 $rref user_censor.py$$
 $rref user_change_grid.py$$
 $rref user_compress.py$$
+$rref user_connection_file.py$$
 $rref user_const_value.py$$
 $rref user_continue_fit.py$$
 $rref user_covid_19.py$$
+$rref user_csv2db.py$$
 $rref user_data_density.py$$
 $rref user_data_sim.py$$
 $rref user_diabetes.py$$
