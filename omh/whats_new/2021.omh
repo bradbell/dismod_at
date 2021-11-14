@@ -68,6 +68,8 @@ The $cref connection_file$$ function was added.
 $lnext
 The $cref user_average_integrand.py$$ and $cref user_csv2db.py$$
 examples were added to the $cref user_example$$ list.
+$lnext
+Improve the error messages in $cref get_name_type$$.
 $lend
 
 $head 11-07$$

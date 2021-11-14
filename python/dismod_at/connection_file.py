@@ -42,12 +42,12 @@
 # ---------------------------------------------------------------------------
 import sqlite3
 def connection_file(connection) :
-    cursor  = connection.cursor()
-    command = 'PRAGMA database_list'
-    cursor.execute(command)
-    rows      = cursor.fetchall()
-    file_name = None
-    for row in rows :
-        if row[1] == 'main' :
-            file_name = row[2]
-    return file_name
+	cursor  = connection.cursor()
+	command = 'PRAGMA database_list'
+	cursor.execute(command)
+	rows      = cursor.fetchall()
+	file_name = None
+	for row in rows :
+		if row[1] == 'main' :
+			file_name = row[2]
+	return file_name
