@@ -169,10 +169,16 @@ def plot_data_fit(
 			if data_row['integrand_id'] == integrand_id :
 				#
 				# meas_value
-				meas_value  = data_row['meas_value']
+				meas_value = data_row['meas_value']
 				#
 				# hold_out
-				hold_out    = data_row['hold_out']
+				hold_out = data_row['hold_out']
+				#
+				# age
+				age = (data_row['age_lower'] + data_row['age_upper']) / 2.0
+				#
+				# time
+				time = (data_row['time_lower'] + data_row['time_upper']) / 2.0
 				#
 				# avg_integreand, weighted_residual
 				row               = tables['fit_data_subset'][subset_id]
@@ -185,6 +191,9 @@ def plot_data_fit(
 					'model'             : avg_integrand ,
 					'residual'          : weighted_residual ,
 					'hold_out'          : hold_out ,
+					'index'             : len(info_list),
+					'age'               : age,
+					'time'              : time,
 				}
 				info_list.append( info )
 		#
@@ -241,13 +250,6 @@ def plot_data_fit(
 				numpy_info[name] = numpy.maximum( numpy_info[name], r_min )
 				numpy_info[name] = numpy.minimum( numpy_info[name], r_max )
 			#
-			# x
-			x = numpy.array( range( n_point ) )
-			#
-			# subplot setup
-			fig, axes = pyplot.subplots(3, 1, sharex=True)
-			fig.subplots_adjust(hspace=0)
-			#
 			if max_plot is None or  n_point <= max_plot :
 				#
 				# n_plot
@@ -269,87 +271,94 @@ def plot_data_fit(
 				hold_out     = (numpy_info['hold_out'] == 1)
 				not_hold_out = numpy.logical_not(hold_out)
 				#
-				# x
-				x = x[subsample]
 			#
 			# point_size, marker_size
 			point_size  = numpy.array( n_plot * [ 1 ] )
 			marker_size = numpy.array( n_plot * [ 10 ] )
 			#
-			for subplot_index in range(3) :
-				# sp
-				sp   = pyplot.subplot(3, 1, subplot_index + 1)
+			for x_name in [ 'index', 'age', 'time' ] :
 				#
-				# name, y
-				name = subplot_list[subplot_index]
-				y    =  numpy_info[name]
+				# subplot setup
+				fig, axes = pyplot.subplots(3, 1, sharex=True)
+				fig.subplots_adjust(hspace=0)
 				#
-				# ylabel
-				pyplot.ylabel(name)
+				# x
+				x = numpy_info[x_name]
 				#
-				# clip_list, limit_list
-				if name == 'residual' :
-					clip_list  = [ r_min, r_max ]
-					limit_list = [ 1.1 * r_min, 1.1 * r_max ]
-				else :
-					pyplot.yscale('log')
-					clip_list  = [ d_min, d_max ]
-					limit_list = [ 0.9 * d_min, 1.1 * d_max ]
-				#
-				# ylim
-				pyplot.ylim(limit_list[0], limit_list[1])
-				#
-				# clipped, not_clipped
-				clipped      = (y == clip_list[0])
-				clipped      = numpy.logical_or(clipped, (y == clip_list[1]) )
-				not_clipped  = numpy.logical_not(clipped)
-				#
-				green_point  = numpy.logical_and(hold_out, not_clipped)
-				green_marker = numpy.logical_and(hold_out, clipped)
-				black_point  = numpy.logical_and(not_hold_out, not_clipped)
-				red_marker   = numpy.logical_and(not_hold_out, clipped)
-				#
-				# plot green points
-				size = point_size[green_point]
-				pyplot.scatter(x[green_point], y[green_point],
-					marker='.', color='green', s=size
-				)
-				#
-				# plot green marker
-				size = marker_size[green_marker]
-				pyplot.scatter(x[green_marker], y[green_marker],
-					marker='+', color='green', s=size
-				)
-				#
-				# plot black points
-				size = point_size[black_point]
-				pyplot.scatter(x[black_point], y[black_point],
-					marker='.', color='black', s=size
-				)
-				#
-				# plot red marker
-				size = marker_size[red_marker]
-				pyplot.scatter(x[red_marker], y[red_marker],
-					marker='+', color='red', s=size
-				)
-				if name == 'residual' :
-					y = 0.0
-					pyplot.axhline(
-						y, linestyle='solid', color='black', alpha=0.3
-					)
-				else :
-					  sp.set_xticklabels( [] )
-				if subplot_index == 0 :
-					if plot_title is None :
-						pyplot.title( integrand_name )
+				for subplot_index in range(3) :
+					# sp
+					sp   = pyplot.subplot(3, 1, subplot_index + 1)
+					#
+					# name, y
+					name = subplot_list[subplot_index]
+					y    =  numpy_info[name]
+					#
+					# ylabel
+					pyplot.ylabel(name)
+					#
+					# clip_list, limit_list
+					if name == 'residual' :
+						clip_list  = [ r_min, r_max ]
+						limit_list = [ 1.1 * r_min, 1.1 * r_max ]
 					else :
-						pyplot.title( plot_title + ': ' + integrand_name )
-			# x-axis label
-			pyplot.xlabel('data index')
-			#
-			# save plot
-			pdf.savefig( fig )
-			pyplot.close( fig )
+						pyplot.yscale('log')
+						clip_list  = [ d_min, d_max ]
+						limit_list = [ 0.9 * d_min, 1.1 * d_max ]
+					#
+					# ylim
+					pyplot.ylim(limit_list[0], limit_list[1])
+					#
+					# clipped, not_clipped
+					clipped = (y == clip_list[0])
+					clipped = numpy.logical_or(clipped, (y == clip_list[1]) )
+					not_clipped  = numpy.logical_not(clipped)
+					#
+					green_point  = numpy.logical_and(hold_out, not_clipped)
+					green_marker = numpy.logical_and(hold_out, clipped)
+					black_point  = numpy.logical_and(not_hold_out, not_clipped)
+					red_marker   = numpy.logical_and(not_hold_out, clipped)
+					#
+					# plot green points
+					size = point_size[green_point]
+					pyplot.scatter(x[green_point], y[green_point],
+						marker='.', color='green', s=size
+					)
+					#
+					# plot green marker
+					size = marker_size[green_marker]
+					pyplot.scatter(x[green_marker], y[green_marker],
+						marker='+', color='green', s=size
+					)
+					#
+					# plot black points
+					size = point_size[black_point]
+					pyplot.scatter(x[black_point], y[black_point],
+						marker='.', color='black', s=size
+					)
+					#
+					# plot red marker
+					size = marker_size[red_marker]
+					pyplot.scatter(x[red_marker], y[red_marker],
+						marker='+', color='red', s=size
+					)
+					if name == 'residual' :
+						y = 0.0
+						pyplot.axhline(
+							y, linestyle='solid', color='black', alpha=0.3
+						)
+					else :
+						  sp.set_xticklabels( [] )
+					if subplot_index == 0 :
+						if plot_title is None :
+							pyplot.title( integrand_name )
+						else :
+							pyplot.title( plot_title + ': ' + integrand_name )
+				# x-axis label
+				pyplot.xlabel(x_name)
+				#
+				# save plot
+				pdf.savefig( fig )
+				pyplot.close( fig )
 	# end of pages in pdf file
 	pdf.close()
 	return n_fit_dict

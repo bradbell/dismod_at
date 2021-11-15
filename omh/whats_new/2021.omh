@@ -62,6 +62,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 11-15$$
+Change $cref plot_data_fit$$ so that it plots with respect to
+age and time (as well as index).
+
 $head 11-14$$
 $list number$$
 The $cref connection_file$$ function was added.
