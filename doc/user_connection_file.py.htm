@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Example Using system_command_prc</title>
+<title>Example Using connection_file</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Example Using system_command_prc">
-<meta name="keywords" id="keywords" content=" example using system_command_prc discussion source code ">
+<meta name="description" id="description" content="Example Using connection_file">
+<meta name="keywords" id="keywords" content=" example using connection_file source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_system_command_prc.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_connection_file.py_htm.js'>
 </script>
 </head>
 <body>
@@ -35,8 +35,9 @@ A:active { color : purple }
 <select onchange='choose_up0(this)'>
 <option>Location-&gt;</option>
 <option>dismod_at</option>
-<option>user_example</option>
-<option>user_system_command_prc.py</option>
+<option>python</option>
+<option>connection_file</option>
+<option>user_connection_file.py</option>
 </select>
 </td>
 <td>
@@ -49,40 +50,36 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_sum_residual.py.htm" target="_top">Prev</a>
-</td><td><a href="user_trace_init.py.htm" target="_top">Next</a>
+<td><a href="connection_file.htm" target="_top">Prev</a>
+</td><td><a href="create_connection.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
-<script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
+<script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
 </td>
-<td>user_system_command_prc.py</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_connection_file_htm.js'></script>
+</td>
+<td>user_connection_file.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Example Using system_command_prc</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@
 
-<br><a href="user_system_command_prc.py.htm#Discussion" target="_top">Discussion</a>
-<br><a href="user_system_command_prc.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+
+<center><b><big><big>Example Using connection_file</big></big></b></center>
+
+<br><a href="user_connection_file.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
-<b><big><a name="Discussion" id="Discussion">Discussion</a></big></b>
-<br>
-This example demonstrates some of the different argument cases for the
-<a href="system_command_prc.htm" target="_top"><span style='white-space: nowrap'>system_command_prc</span></a>
- function.
-
-<br>
-<br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
 
 <pre><tt>
 <b><font color="#000080">import</font></b> sys
 <b><font color="#000080">import</font></b> os
-<b><font color="#000080">import</font></b> time
 <b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <i><font color="#9A1900">#</font></i>
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/system_command_prc.py'</font>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/connection_file.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -99,32 +96,21 @@ local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><fon
 distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># command</font></i>
-command <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'echo'</font><font color="#990000">,</font> <font color="#FF0000">'system_command_prc: Test Output'</font> <font color="#990000">]</font>
+<i><font color="#9A1900"># connection</font></i>
+new        <font color="#990000">=</font> True
+database   <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
+connection <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>database <font color="#990000">,</font> new<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># return_stdout=True, return_stderr=False</font></i>
-result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     command<font color="#990000">,</font> print_command<font color="#990000">=</font>False<font color="#990000">,</font> return_stdout<font color="#990000">=</font>True<font color="#990000">,</font> return_stderr<font color="#990000">=</font>False
-<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b> result  <font color="#990000">==</font> command<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+<i><font color="#9A1900"># file_name</font></i>
+file_name  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">connection_file</font></b><font color="#990000">(</font>connection<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># return_stdout=False, return_stderr=False</font></i>
-result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     command<font color="#990000">,</font> print_command<font color="#990000">=</font>False<font color="#990000">,</font> return_stdout<font color="#990000">=</font>False<font color="#990000">,</font> return_stderr<font color="#990000">=</font>False
-<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b> result <b><font color="#0000FF">is</font></b> None
+<i><font color="#9A1900"># check</font></i>
+<b><font color="#0000FF">assert</font></b> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">samefile</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font>  database<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
-<i><font color="#9A1900"># return_stdout=True, return_stderr=True</font></i>
-result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     command<font color="#990000">,</font> print_command<font color="#990000">=</font>False<font color="#990000">,</font> return_stdout<font color="#990000">=</font>True<font color="#990000">,</font> return_stderr<font color="#990000">=</font>True
-<font color="#990000">)</font>
-<b><font color="#0000FF">assert</font></b> result<font color="#990000">.</font>stdout  <font color="#990000">==</font> command<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
-
-<i><font color="#9A1900">#</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'system_command_prc.py: OK'</font><font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'connection_file.py: OK'</font><font color="#990000">)</font>
 sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">)</font></tt></pre>
 
-<hr>Input File: example/user/system_command_prc.py
+<hr>Input File: example/user/connection_file.py
 
 </body>
 </html>

@@ -3,6 +3,7 @@ document.write('\
 <select onchange="python_child(this)">\
 <option>python-&gt;</option>\
 <option>average_integrand</option>\
+<option>connection_file</option>\
 <option>create_connection</option>\
 <option>create_database</option>\
 <option>create_table</option>\
@@ -24,6 +25,7 @@ document.write('\
 function python_child(item)
 {	var child_list = [
 		'average_integrand.htm',
+		'connection_file.htm',
 		'create_connection.htm',
 		'create_database.htm',
 		'create_table.htm',

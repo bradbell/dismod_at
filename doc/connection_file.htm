@@ -1,0 +1,113 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Get File Name For a Database Connection</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Get File Name For a Database Connection">
+<meta name="keywords" id="keywords" content=" get file name database connection syntax purpose file_name example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_connection_file_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>connection_file</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="user_average_integrand.py.htm" target="_top">Prev</a>
+</td><td><a href="user_connection_file.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_connection_file_htm.js'></script>
+</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Get File Name For a Database Connection</big></big></b></center>
+
+<br><a href="connection_file.htm#Syntax" target="_top">Syntax</a>
+<br><a href="connection_file.htm#Purpose" target="_top">Purpose</a>
+<br><a href="connection_file.htm#connection" target="_top">connection</a>
+<br><a href="connection_file.htm#file_name" target="_top">file_name</a>
+<br><a href="connection_file.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<br>
+
+<code><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;dismod_at.connection_file_name(</span></font><i><font color="black"><span style='white-space: nowrap'>connection</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+</span></font></code>
+<br>
+<b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
+<br>
+This function can be used for reporting errors that occur
+when using a database connection.
+
+<br>
+<br>
+<b><big><a name="connection" id="connection">connection</a></big></b>
+<br>
+The is a database connection returned by <a href="create_connection.htm" target="_top"><span style='white-space: nowrap'>create_connection</span></a>
+.
+
+<br>
+<br>
+<b><big><a name="file_name" id="file_name">file_name</a></big></b>
+<br>
+The return value is a <code><font color="blue">str</font></code> containing the name of the
+file where the data base is stored.
+
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+The file <a href="user_connection_file.py.htm" target="_top"><span style='white-space: nowrap'>user_connection_file.py</span></a>
+ contains an example and test of
+this routine.
+
+
+<hr>Input File: python/dismod_at/connection_file.py
+
+</body>
+</html>
