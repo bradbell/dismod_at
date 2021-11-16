@@ -62,6 +62,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 11-16$$
+Advance to cppad_mixed-20211025. This improves the
+$cref/warm_start/fit_command/warm_start/$$ option in the fit command.
+
 $head 11-15$$
 Change $cref plot_data_fit$$ so that it plots with respect to
 age and time (as well as index).
