@@ -21,16 +21,17 @@ $head Syntax$$
 $srcthisfile%0%# BEGIN syntax%# END syntax%1%$$
 
 $head pdf_file$$
-is a $code str$$ containing the location where the
-pdf file containing the plot will be placed.
 This argument can't be $code None$$.
+It is a $code str$$ containing the location where the
+pdf file containing the plot will be placed.
 
 $head plot_title$$
-This $code str$$ is a title printed at the top of every plot.
 This argument can be $code None$$.
+It is a $code str$$ title printed at the top of every plot.
 
 $head plot_limit$$
-This is a $code dict$$ with the following keys:
+This argument can't be $code None$$.
+It is a $code dict$$ with the following keys:
 
 $subhead age_min$$
 is a $code float$$ containing the minimum age in the plot region.
@@ -64,6 +65,9 @@ is the age corresponding to this value of $icode z$$.
 $subhead time$$
 For each $icode row$$ in $icode z_list$$, $icode%row%['time']%$$
 is the time corresponding to this value of $icode z$$.
+For each age value in a $icode z_list$$,
+the set of time value must be the same; i.e.,
+the set of age an time values form a rectangular grid.
 
 $subhead value$$
 For each $icode row$$ in $icode z_list$$, $icode%row%['value']%$$
