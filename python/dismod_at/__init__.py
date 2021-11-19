@@ -26,6 +26,7 @@
 #	python/dismod_at/get_table_dict.py%
 #	python/dismod_at/metropolis.py%
 #	python/dismod_at/modify_command.py%
+#	python/dismod_at/plot_curve.py%
 #	python/dismod_at/plot_data_fit.py%
 #	python/dismod_at/plot_rate_fit.py%
 #	python/dismod_at/replace_table.py%
@@ -50,6 +51,7 @@ from .get_row_list        import get_row_list
 from .get_table_dict      import get_table_dict
 from .metropolis          import metropolis
 from .modify_command      import modify_command
+from .plot_curve          import plot_curve
 from .plot_data_fit       import plot_data_fit
 from .plot_rate_fit       import plot_rate_fit
 from .replace_table       import replace_table
