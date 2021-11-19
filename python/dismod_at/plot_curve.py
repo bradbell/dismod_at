@@ -153,6 +153,10 @@ def plot_curve(
 				msg  = f'plot_curve: plot_data[{z_name}]:'
 				msg += 'data is not on a rectangular grid'
 				assert False, msg
+			if len( time_list[age] ) != len( set( time_list[age] ) ) :
+				msg  = f'plot_curve: plot_data[{z_name}]: '
+				msg += 'a time is paired with the same age more than once'
+				assert False, msg
 		n_age  = len( time_list )
 		n_time = len( time_list[last_age] )
 		#
