@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-21 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -176,8 +176,8 @@ $subhead LD_LIBRARY_PATH$$
 After $code ipopt$$ is installed,
 the directory where it's libraries are installed should be in your
 $code LD_LIBRARY_PATH$$.
-If you get an error finding loading the shared library corresponding; e.g.,
-%libname%, use the following command to find it:
+If you get an error finding loading a shared library called
+$icode libname$$, you can use the following command to find it:
 $codei%
 	find -L %dismod_at_prefix% -name '%libname%.*' 2> /dev/null
 %$$
