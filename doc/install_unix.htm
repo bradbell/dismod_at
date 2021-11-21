@@ -307,8 +307,10 @@ see <a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white
 After <code><font color="blue">ipopt</font></code> is installed,
 the directory where it's libraries are installed should be in your
 <code><font color="blue">LD_LIBRARY_PATH</font></code>.
-If you get an error finding loading the shared library corresponding; e.g.,
-%libname%, use the following command to find it:
+If you get an error finding loading a shared library called
+
+<code><i><font color="black"><span style='white-space: nowrap'>libname</span></font></i></code>
+, you can use the following command to find it:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;'</span></font><i><font color="black"><span style='white-space: nowrap'>libname</span></font></i><font color="blue"><span style='white-space: nowrap'>.*'&nbsp;2&gt;&nbsp;/dev/null<br>

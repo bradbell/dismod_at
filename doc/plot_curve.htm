@@ -1,0 +1,247 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Plot A Value With Respect To Age and Time</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Plot A Value With Respect To Age and Time">
+<meta name="keywords" id="keywords" content=" plot value with respect to age time syntax pdf_file plot_title plot_limit age_min age_max time_min time_max plot_data std example ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_plot_curve_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>plot_curve</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="modify_command.py.htm" target="_top">Prev</a>
+</td><td><a href="plot_data_fit.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
+</td>
+<td>plot_curve</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Plot A Value With Respect To Age and Time</big></big></b></center>
+
+<br><a href="plot_curve.htm#Syntax" target="_top">Syntax</a>
+<br><a href="plot_curve.htm#pdf_file" target="_top">pdf_file</a>
+<br><a href="plot_curve.htm#plot_title" target="_top">plot_title</a>
+<br><a href="plot_curve.htm#plot_limit" target="_top">plot_limit</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_curve.htm#plot_limit.age_min" target="_top">age_min</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_curve.htm#plot_limit.age_max" target="_top">age_max</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_curve.htm#plot_limit.time_min" target="_top">time_min</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_curve.htm#plot_limit.time_max" target="_top">time_max</a>
+<br><a href="plot_curve.htm#plot_data" target="_top">plot_data</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_curve.htm#plot_data.age" target="_top">age</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_curve.htm#plot_data.time" target="_top">time</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_curve.htm#plot_data.value" target="_top">value</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="plot_curve.htm#plot_data.std" target="_top">std</a>
+<br><a href="plot_curve.htm#Example" target="_top">Example</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+<pre><tt>
+<i><font color="#9A1900"># plot_curve(</font></i>
+     pdf_file    <font color="#990000">=</font> None <font color="#990000">,</font>
+     plot_title  <font color="#990000">=</font> None <font color="#990000">,</font>
+     plot_limit  <font color="#990000">=</font> None <font color="#990000">,</font>
+     plot_data   <font color="#990000">=</font> None <font color="#990000">,</font>
+<i><font color="#9A1900"># )</font></i></tt></pre>
+<br>
+<b><big><a name="pdf_file" id="pdf_file">pdf_file</a></big></b>
+<br>
+This argument can't be <code><font color="blue">None</font></code>.
+It is a <code><font color="blue">str</font></code> containing the location where the
+pdf file containing the plot will be placed.
+
+<br>
+<br>
+<b><big><a name="plot_title" id="plot_title">plot_title</a></big></b>
+<br>
+This argument can be <code><font color="blue">None</font></code>.
+It is a <code><font color="blue">str</font></code> title printed at the top of every plot.
+
+<br>
+<br>
+<b><big><a name="plot_limit" id="plot_limit">plot_limit</a></big></b>
+<br>
+This argument can't be <code><font color="blue">None</font></code>.
+It is a <code><font color="blue">dict</font></code> with the following keys:
+
+<br>
+<br>
+<big><a name="plot_limit.age_min" id="plot_limit.age_min">age_min</a></big>
+<br>
+is a <code><font color="blue">float</font></code> containing the minimum age in the plot region.
+
+<br>
+<br>
+<big><a name="plot_limit.age_max" id="plot_limit.age_max">age_max</a></big>
+<br>
+is a <code><font color="blue">float</font></code> containing the maximum age in the plot region.
+
+<br>
+<br>
+<big><a name="plot_limit.time_min" id="plot_limit.time_min">time_min</a></big>
+<br>
+is a <code><font color="blue">float</font></code> containing the minimum time in the plot region.
+
+<br>
+<br>
+<big><a name="plot_limit.time_max" id="plot_limit.time_max">time_max</a></big>
+<br>
+is a <code><font color="blue">float</font></code> containing the maximum time in the plot region.
+
+<br>
+<br>
+<b><big><a name="plot_data" id="plot_data">plot_data</a></big></b>
+<br>
+This argument can't be <code><font color="blue">None</font></code>.
+It is a <code><font color="blue">dict</font></code> where each element is a <code><font color="blue">list</font></code>.
+The key for the dictionary is the name of the value 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+ being plotted.
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>z_name</span></font></i></code>
+ is in 
+<code><i><font color="black"><span style='white-space: nowrap'>plot_data</span></font></i></code>
+,
+
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>plot_data</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>z_name</span></font></i><font color="blue"><span style='white-space: nowrap'>]<br>
+</span></font></code>
+is a <code><font color="blue">list</font></code>.
+Each element of this list is a <code><font color="blue">dict</font></code> with the following keys:
+<code><font color="blue">'age'</font></code>, <code><font color="blue">'time'</font></code>, <code><font color="blue">'value'</font></code>.
+In addition, it may also contain the key <code><font color="blue">'std'</font></code>.
+
+<br>
+<br>
+<big><a name="plot_data.age" id="plot_data.age">age</a></big>
+<br>
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ in 
+<code><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>['age']</span></font></code>
+
+is the age corresponding to this value of 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="plot_data.time" id="plot_data.time">time</a></big>
+<br>
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ in 
+<code><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>['time']</span></font></code>
+
+is the time corresponding to this value of 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+.
+For each age value in a 
+<code><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i></code>
+,
+the set of time value must be the same; i.e.,
+the set of age an time values form a rectangular grid.
+
+<br>
+<br>
+<big><a name="plot_data.value" id="plot_data.value">value</a></big>
+<br>
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ in 
+<code><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>['value']</span></font></code>
+
+is the value of 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+.
+
+<br>
+<br>
+<big><a name="plot_data.std" id="plot_data.std">std</a></big>
+<br>
+For each 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i></code>
+ in 
+<code><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i></code>
+, 
+<code><i><font color="black"><span style='white-space: nowrap'>row</span></font></i><font color="blue"><span style='white-space: nowrap'>['std']</span></font></code>
+
+is the standard deviation corresponding to this value of 
+<code><i><font color="black"><span style='white-space: nowrap'>z</span></font></i></code>
+.
+This key is optional. It appears for one element of a 
+<code><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i></code>
+,
+it must appear for all the elements of the 
+<code><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i></code>
+.
+This can change between different 
+<code><i><font color="black"><span style='white-space: nowrap'>z_name</span></font></i></code>
+ values.
+Furthermore, it this appears, it will be plotted and it must not be all zero
+(for one 
+<code><i><font color="black"><span style='white-space: nowrap'>z_list</span></font></i></code>
+).
+
+<br>
+<br>
+<b><big><a name="Example" id="Example">Example</a></big></b>
+<br>
+See the call to this routine in <a href="plot_rate_fit.htm" target="_top"><span style='white-space: nowrap'>plot_rate_fit</span></a>
+
+
+
+<hr>Input File: python/dismod_at/plot_curve.py
+
+</body>
+</html>
