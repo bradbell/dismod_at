@@ -35,6 +35,9 @@ import dismod_at
 # change into the build/test/user directory
 distutils.dir_util.mkpath('build/test/user')
 os.chdir('build/test/user')
+#
+len_data_table = 20
+random_seed    = 12345678
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -92,12 +95,12 @@ def example_db (file_name) :
 	row['meas_value'] = 0.0
 	data_table.append( copy.copy(row) )
 	#
-	# Two Sincidence data points with value iota_true and data_table hold_out 0
+	# rest are Sincidence data with value iota_true and data_table hold_out 0
 	row['integrand']  = 'Sincidence'
 	row['hold_out']   = False
 	row['meas_value'] = iota_true
-	data_table.append( copy.copy(row) )
-	data_table.append( copy.copy(row) )
+	for data_id in range( 1 , len_data_table ) :
+		data_table.append( copy.copy(row) )
 	#
 	# ----------------------------------------------------------------------
 	# prior_table
@@ -134,6 +137,7 @@ def example_db (file_name) :
 		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
 		{ 'name':'parent_node_name',       'value':'world'               },
 		{ 'name':'warn_on_stderr',         'value':'false'               },
+		{ 'name':'random_seed',            'value':str(random_seed)      },
 
 		{ 'name':'quasi_fixed',            'value':'false'               },
 		{ 'name':'max_num_iter_fixed',     'value':'50'                  },
@@ -180,16 +184,16 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 #
 integrand = 'Sincidence'
 #
-# hold out all the data
+# hold out all the data (as a test of putting it back in)
 max_fit   = "0"
 dismod_at.system_command_prc(
 	[ program, file_name, 'hold_out', integrand, max_fit ]
 )
 #
-# hold out none of the data
-max_fit   = "200"
+# hold out half of the data
+max_fit   = len_data_table / 2
 dismod_at.system_command_prc(
-	[ program, file_name, 'hold_out', integrand, max_fit ]
+	[ program, file_name, 'hold_out', integrand, str(max_fit)  ]
 )
 # -----------------------------------------------------------------------
 # read database
@@ -206,18 +210,45 @@ assert len(var_table) == 1
 #
 # all three data points are in the data_sebset table, so data_subset_id is
 # the same as data_id (see data subset table documentation).
-assert len(data_table) == 3
-assert len(data_subset_table) == 3
+assert len(data_table) == len_data_table
+assert len(data_subset_table) == len_data_table
 #
 # check hold_out in data table
-assert data_table[0]['hold_out'] == 1
-assert data_table[1]['hold_out'] == 0
-assert data_table[2]['hold_out'] == 0
-#
-# check hold_out in data_subset table
-for data_id in range(3) :
+fit_list = list()
+for data_id in range(len_data_table) :
 	assert data_id == data_subset_table[data_id]['data_id']
-	assert 0 == data_subset_table[data_id]['hold_out']
+	#
+	hold_out = data_table[data_id]['hold_out'] == 1
+	if data_id == 0 :
+		assert hold_out
+		assert data_subset_table[data_id]['hold_out'] == 0
+	else :
+		assert not hold_out
+	#
+	hold_out = hold_out or data_subset_table[data_id]['hold_out'] == 1
+	if not hold_out :
+		fit_list.append( data_id )
+assert len( fit_list ) == max_fit
+#
+# re-run hold_out command
+dismod_at.system_command_prc(
+	[ program, file_name, 'hold_out', integrand, str(max_fit)  ]
+)
+#
+# data_subset_table
+new                   = False
+connection            = dismod_at.create_connection(file_name, new)
+data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
+connection.close()
+#
+# check that setting random seed yeilds the exact same hold outs
+check_list = list()
+for data_id in range(len_data_table) :
+	hold_out = data_table[data_id]['hold_out'] == 1
+	hold_out = hold_out or data_subset_table[data_id]['hold_out'] == 1
+	if not hold_out :
+		check_list.append( data_id )
+assert fit_list == check_list
 #
 # -----------------------------------------------------------------------------
 print('hold_out.py: OK')
