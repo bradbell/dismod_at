@@ -46,6 +46,7 @@ $spell
 	stdout
     cov
 	pdf
+    podman
 $$
 $navigate%
 	Up%Location%
@@ -61,6 +62,19 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 11-27$$
+$list number$$
+Convert dock_dismod_at.sh from using docker to using podman.
+$lnext
+Advance dock_dismod_at.sh to
+$cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20211121.
+This requires re-running
+$codei%
+    ./dock_dismod_at.sh image mixed
+%$$
+because the version of cppad_mixed changed.
+$lend
 
 $head 11-19$$
 Add the $cref plot_curve$$ utility.

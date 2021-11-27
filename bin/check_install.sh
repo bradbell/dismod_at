@@ -102,16 +102,16 @@ echo_eval dismod_at get_started.db init
 # test running dismodat.py
 echo_eval dismodat.py get_started.db db2csv
 #
-if ! docker images | grep '^dismod_at.image' > /dev/null
+if ! podman images | grep '^localhost/dismod_at.image' > /dev/null
 then
-	echo 'Cannot find docker images, skipping its test'
+	echo 'podman cannot find dismod_at.image, skipping its test'
 	echo 'check_install.sh: OK'
 	exit 0
 fi
 # -----------------------------------------------------------------------------
-# Test that docker image gives the same result
-echo_eval mkdir docker
-echo_eval cd docker
+# Test that OCI image gives the same result
+echo_eval mkdir podman
+echo_eval cd podman
 echo_eval cp ../../../bin/dock_dismod_at.sh dock_dismod_at.sh
 echo_eval cp ../get_started_db.py ../create_db.py .
 echo_eval $python3_executable create_db.py

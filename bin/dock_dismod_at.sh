@@ -17,6 +17,7 @@
 #	dismodat.py
 #	rm
 #	ps
+#   podman
 # $$
 #
 # $section Install and Run dismod_at in a Docker Image$$
@@ -48,7 +49,7 @@
 # control-C in the window where it is running.
 #
 # $head Purpose$$
-# This bash script will create or run a dismod_at docker image
+# This bash script will create or run a dismod_at OCI image
 # and can be run from any directory.
 # Using this script is an  alternative to going through the steps required to
 # $cref/install_dismod_at/install_unix/$$.
@@ -65,7 +66,7 @@
 # In addition, you must have permission to use it.
 # You can test this on your system by trying to execute the following command:
 # $codei%
-#	docker run busybox echo 'Hello World'
+#	podman run busybox echo 'Hello World'
 # %$$
 #
 # $head Building Images$$
@@ -73,23 +74,23 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20210825'
-	dismod_at_hash='b65eefb137c6d7d0db291d829a46f8f165727ffb'
+	dismod_at_version='20211121'
+	dismod_at_hash='f86c33a7f5f4c5d10792893298423c99fe85e7c2'
 # %$$
 #
-# The image commands will not execute if the corresponding docker image
+# The image commands will not execute if the corresponding OCI image
 # already exists.
 # You must remove containers that use an image and then remove the image,
 # before you can execute the image command successfully.
 #
 # $subhead dismod_at.base$$
-# The $code image base$$ syntax creates a new docker image with the name
+# The $code image base$$ syntax creates a new OCI image with the name
 # $code dismod_at.base$$.
 # The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
 # you need to re-execute this command.
 #
 # $subhead dismod_at.mixed$$
-# The $code image mixed$$ syntax creates a new docker image with the name
+# The $code image mixed$$ syntax creates a new OCI image with the name
 # $code dismod_at.mixed$$.
 # The $code dismod_at.base$$ image must exist before the
 # $code dismod_at.mixed$$ image can be created.
@@ -97,7 +98,7 @@
 # you need to re-execute this command.
 #
 # $subhead dismod_at.image$$
-# The $code image dismod_at$$ syntax creates a new docker image with the name
+# The $code image dismod_at$$ syntax creates a new OCI image with the name
 # $code dismod_at.image$$.
 # The $code dismod_at.mixed$$ image must exist before the
 # $code dismod_at.image$$ image can be created.
@@ -109,18 +110,18 @@
 # you will be prompted with the corresponding $icode container_id$$.
 # The command
 # $codei%
-#	docker rm %container_id%
+#	podman rm %container_id%
 # %$$
 # will remove the container.
 # If the container is still running, you will need to use
 # $codei%
-#	docker rm --force %container_id%
+#	podman rm --force %container_id%
 # %$$
 #
 # $subhead Removing Images$$
 # You can remove an old image using the command
 # $codei%
-#	docker rmi %name%
+#	podman rmi %name%
 # %$$
 # For example, $icode name$$ could be
 # $code dismod_at.base$$,
@@ -128,8 +129,8 @@
 # $code dismod_at.image$$.
 # You can keep the old image, under a different name, using the commands
 # $codei%
-#	docker tag %name% %different_name%
-#	docker rmi %name%
+#	podman tag %name% %different_name%
+#	podman rmi %name%
 # %$$
 #
 # $subhead Dockerfile$$
@@ -144,9 +145,9 @@
 # $codei%
 #	 Unable to fetch some archives, maybe run apt-get update %...%
 # %$$
-# There may be an old docker image result for $code apt-get update$$
+# There may be an old OCI image result for $code apt-get update$$
 # that is out of date.
-# You can list the images using the command $code docker images$$.
+# You can list the images using the command $code OCI images$$.
 # Try removing an old image that corresponds to a previous
 # $code apt-get update$$ and then re-run the
 # $code dock_dismod_at.sh build$$ command.
@@ -172,17 +173,17 @@
 # you will be prompted with the corresponding $icode container_id$$.
 # The command
 # $codei%
-#	docker rm %container_id%
+#	podman rm %container_id%
 # %$$
 # will remove the container.
 # If the container is still running, you will need to use
 # $codei%
-#	docker rm --force %container_id%
+#	podman rm --force %container_id%
 # %$$
 #
 # $subhead build_type$$
 # The $icode build_type$$ syntax will run the correspond
-# $cref command$$ in the docker image.
+# $cref command$$ in the OCI image.
 # The argument $icode build_type$$ must be either $code debug$$ or
 # $code release$$.
 # The $code release$$ version should be much faster.
@@ -211,18 +212,18 @@
 # The following instructions are useful for this:
 #
 # $subhead Determine Container Id$$
-# $codei%	docker ps -a%$$
+# $codei%	podman ps --all --storage%$$
 #
 # $subhead Start Container$$
 # If a container status is $code Exited$$, you can start it using:
 # $codei%
-#	docker start %container_id
+#	podman start %container_id
 # %$$
 #
 # $subhead Run Container$$
 # If a container status is $code Up$$, you can run it using:
 # $codei%
-#	docker exec -it %container_id% bash
+#	podman exec -it %container_id% bash
 # %$$
 # You will be in the container until you $code exit$$
 # the $code bash$$ shell that is run by the command above.
@@ -230,7 +231,7 @@
 # $subhead Stop Container$$
 # If a container status is $code Up$$, you can stop it using:
 # $codei%
-#	docker stop %container_id
+#	podman stop %container_id
 # %$$
 #
 # $end
@@ -258,7 +259,7 @@ else
 	fi
 fi
 # ---------------------------------------------------------------------------
-if ! docker ps > /dev/null
+if ! podman ps > /dev/null
 then
 cat << EOF
 Cannot run docker ps
@@ -296,24 +297,24 @@ then
 		echo "Must first remove ./Dockerfile"
 		exit 1
 	fi
-	if docker ps -a | grep "$image_name" > /dev/null
+	if podman ps -a | grep "$image_name" > /dev/null
 	then
 		echo 'dock_dismod_at.sh Error'
-		echo 'Must first remove following docker containers:'
-		docker ps -a | head -1
-		docker ps -a | grep "$image_name"
+		echo 'Must first remove following OCI containers:'
+		podman ps -a | head -1
+		podman ps -a | grep "$image_name"
 		echo 'Use the following command for each container_id above:'
-		echo 'docker rm contain_id'
+		echo 'podman rm contain_id'
 		exit 1
 	fi
-	if docker images | grep "^$image_name " > /dev/null
+	if OCI images | grep "$image_name " > /dev/null
 	then
 		echo 'dock_dismod_at.sh Error'
-		echo 'Must first remove following docker images:'
-		docker images | head -1
-		docker images | grep "^$image_name "
+		echo 'Must first remove following OCI images:'
+		OCI images | head -1
+		OCI images | grep "$image_name "
 		echo 'Use the following command for each image above:'
-		echo 'docker rmi image_id'
+		echo 'podman rmi image_id'
 		exit 1
 	fi
 	echo 'Creating Dockerfile'
@@ -322,7 +323,7 @@ then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
 # Ubuntu 19.10 with dismod_at requirements that are installed using apt-get.
-# The vim editor is included for use when debugging docker containers and
+# The vim editor is included for use when debugging OCI containers and
 # is not required by dismod_at.
 # -----------------------------------------------------------------------------
 FROM ubuntu:20.04
@@ -419,7 +420,7 @@ EOF
 fi
 #
 	echo "Creating $image_name"
-	docker build --tag $image_name .
+	podman build --tag $image_name .
 	#
 	echo "dock_dismod_at.sh $1 $2: OK"
 	exit 0
@@ -465,27 +466,27 @@ then
 fi
 container_name="dismod_at.$USER"
 # check that the previous dismod_at container has been deleted
-if docker ps -a | grep " $container_name\$" > /dev/null
+if podman ps -a | grep " $container_name\$" > /dev/null
 then
 	echo 'dock_dismod_at.sh Error'
-	echo 'Must first remove following docker containers:'
-	docker ps -a | head -1
-	docker ps -a | grep " $container_name\$"
+	echo 'Must first remove following OCI containers:'
+	podman ps -a | head -1
+	podman ps -a | grep " $container_name\$"
 	echo 'Use the following command for each container_id above:'
-	echo 'docker rm contain_id'
+	echo 'podman rm contain_id'
 	exit 1
 fi
 #
 # create a new dismod_at container
-echo "echo 'exit 0' | docker run -i --name $container_name dismod_at.image bash"
-echo 'exit 0' | docker run -i --name "$container_name" dismod_at.image bash
+echo "echo 'exit 0' | podman run -i --name $container_name dismod_at.image bash"
+echo 'exit 0' | podman run -i --name "$container_name" dismod_at.image bash
 #
 # get the id for the new container
-container_id=`docker ps -a -q --filter "name=$container_name"`
+container_id=`podman ps -a -q --filter "name=$container_name"`
 #
 # copy the database to the container
-echo "docker cp $database $container_id:/home/work/$database"
-docker cp "$database"  "$container_id:/home/work/$database"
+echo "podman cp $database $container_id:/home/work/$database"
+podman cp "$database"  "$container_id:/home/work/$database"
 #
 # create a temporary directory
 temporary_dir=`mktemp`
@@ -519,24 +520,24 @@ $program $*
 exit 0
 EOF
 chmod +x $temporary_dir/work.sh
-echo "docker cp $temporary_dir/work.sh $container_id:/home/work/work.sh"
-docker cp "$temporary_dir/work.sh" "$container_id:/home/work/work.sh"
+echo "podman cp $temporary_dir/work.sh $container_id:/home/work/work.sh"
+podman cp "$temporary_dir/work.sh" "$container_id:/home/work/work.sh"
 #
 # start up the container
-echo "docker start $container_id"
-docker start $container_id
+echo "podman start $container_id"
+podman start $container_id
 #
 # execute work.sh
-echo "docker exec -it $container_id ./work.sh"
-docker exec -it $container_id ./work.sh
+echo "podman exec -it $container_id ./work.sh"
+podman exec -it $container_id ./work.sh
 #
 # copy the result back to temporary directory
-echo "docker cp $container_id:/home/work $temporary_dir/work"
-docker cp $container_id:/home/work "$temporary_dir/work"
+echo "podman cp $container_id:/home/work $temporary_dir/work"
+podman cp $container_id:/home/work "$temporary_dir/work"
 #
 # remove the container
-echo "docker rm --force $container_id"
-docker rm --force $container_id
+echo "podman rm --force $container_id"
+podman rm --force $container_id
 #
 # copy the results from temporary directory to working directory
 for file in `ls $temporary_dir/work/*`
