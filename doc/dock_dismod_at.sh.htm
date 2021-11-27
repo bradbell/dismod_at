@@ -129,7 +129,7 @@ control-C in the window where it is running.
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
-This bash script will create or run a dismod_at docker image
+This bash script will create or run a dismod_at OCI image
 and can be run from any directory.
 Using this script is an  alternative to going through the steps required to
 <a href="install_unix.htm" target="_top"><span style='white-space: nowrap'>install_dismod_at</span></a>
@@ -151,7 +151,7 @@ In addition, you must have permission to use it.
 You can test this on your system by trying to execute the following command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;run&nbsp;busybox&nbsp;echo&nbsp;'Hello&nbsp;World'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;run&nbsp;busybox&nbsp;echo&nbsp;'Hello&nbsp;World'<br>
 </span></font></code>
 <br>
 <b><big><a name="Building Images" id="Building Images">Building Images</a></big></b>
@@ -163,10 +163,10 @@ You can test this on your system by trying to execute the following command:
 <br>
 This script will build the following version of dismod_at image:
 <pre style='display:inline'><tt>
-     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20210825'</font>
-     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'b65eefb137c6d7d0db291d829a46f8f165727ffb'</font>
+     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20211121'</font>
+     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'f86c33a7f5f4c5d10792893298423c99fe85e7c2'</font>
 </tt></pre>
-The image commands will not execute if the corresponding docker image
+The image commands will not execute if the corresponding OCI image
 already exists.
 You must remove containers that use an image and then remove the image,
 before you can execute the image command successfully.
@@ -175,7 +175,7 @@ before you can execute the image command successfully.
 <br>
 <big><a name="Building Images.dismod_at.base" id="Building Images.dismod_at.base">dismod_at.base</a></big>
 <br>
-The <code><font color="blue">image base</font></code> syntax creates a new docker image with the name
+The <code><font color="blue">image base</font></code> syntax creates a new OCI image with the name
 <code><font color="blue">dismod_at.base</font></code>.
 The <a href="whats_new_2019.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
  instructions will tell you if
@@ -185,7 +185,7 @@ you need to re-execute this command.
 <br>
 <big><a name="Building Images.dismod_at.mixed" id="Building Images.dismod_at.mixed">dismod_at.mixed</a></big>
 <br>
-The <code><font color="blue">image mixed</font></code> syntax creates a new docker image with the name
+The <code><font color="blue">image mixed</font></code> syntax creates a new OCI image with the name
 <code><font color="blue">dismod_at.mixed</font></code>.
 The <code><font color="blue">dismod_at.base</font></code> image must exist before the
 <code><font color="blue">dismod_at.mixed</font></code> image can be created.
@@ -197,7 +197,7 @@ you need to re-execute this command.
 <br>
 <big><a name="Building Images.dismod_at.image" id="Building Images.dismod_at.image">dismod_at.image</a></big>
 <br>
-The <code><font color="blue">image dismod_at</font></code> syntax creates a new docker image with the name
+The <code><font color="blue">image dismod_at</font></code> syntax creates a new OCI image with the name
 <code><font color="blue">dismod_at.image</font></code>.
 The <code><font color="blue">dismod_at.mixed</font></code> image must exist before the
 <code><font color="blue">dismod_at.image</font></code> image can be created.
@@ -216,13 +216,13 @@ you will be prompted with the corresponding
 The command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 will remove the container.
 If the container is still running, you will need to use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Building Images.Removing Images" id="Building Images.Removing Images">Removing Images</a></big>
@@ -230,7 +230,7 @@ If the container is still running, you will need to use
 You can remove an old image using the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 For example, 
 <code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
@@ -241,8 +241,8 @@ For example,
 You can keep the old image, under a different name, using the commands
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;tag&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;tag&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Building Images.Dockerfile" id="Building Images.Dockerfile">Dockerfile</a></big>
@@ -263,9 +263,9 @@ If you get the error message
 <code><font color="blue"><span style='white-space: nowrap'><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unable&nbsp;to&nbsp;fetch&nbsp;some&nbsp;archives,&nbsp;maybe&nbsp;run&nbsp;apt-get&nbsp;update&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
-There may be an old docker image result for <code><font color="blue">apt-get update</font></code>
+There may be an old OCI image result for <code><font color="blue">apt-get update</font></code>
 that is out of date.
-You can list the images using the command <code><font color="blue">docker images</font></code>.
+You can list the images using the command <code><font color="blue">OCI images</font></code>.
 Try removing an old image that corresponds to a previous
 <code><font color="blue">apt-get update</font></code> and then re-run the
 <code><font color="blue">dock_dismod_at.sh build</font></code> command.
@@ -309,13 +309,13 @@ you will be prompted with the corresponding
 The command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 will remove the container.
 If the container is still running, you will need to use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Run New Container.build_type" id="Run New Container.build_type">build_type</a></big>
@@ -324,7 +324,7 @@ The
 <code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
  syntax will run the correspond
 <a href="command.htm" target="_top"><span style='white-space: nowrap'>command</span></a>
- in the docker image.
+ in the OCI image.
 The argument 
 <code><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i></code>
  must be either <code><font color="blue">debug</font></code> or
@@ -382,7 +382,7 @@ The following instructions are useful for this:
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;ps&nbsp;-a</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;ps&nbsp;--all&nbsp;--storage</span></font></code>
 
 
 <br>
@@ -392,7 +392,7 @@ The following instructions are useful for this:
 If a container status is <code><font color="blue">Exited</font></code>, you can start it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;start&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;start&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
 </span></font></i></code>
 <br>
 <big><a name="Debugging.Run Container" id="Debugging.Run Container">Run Container</a></big>
@@ -400,7 +400,7 @@ If a container status is <code><font color="blue">Exited</font></code>, you can 
 If a container status is <code><font color="blue">Up</font></code>, you can run it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;exec&nbsp;-it&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bash<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;exec&nbsp;-it&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bash<br>
 </span></font></code>
 You will be in the container until you <code><font color="blue">exit</font></code>
 the <code><font color="blue">bash</font></code> shell that is run by the command above.
@@ -412,7 +412,7 @@ the <code><font color="blue">bash</font></code> shell that is run by the command
 If a container status is <code><font color="blue">Up</font></code>, you can stop it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docker&nbsp;stop&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;stop&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
 </span></font></i></code>
 
 <hr>Input File: bin/dock_dismod_at.sh
