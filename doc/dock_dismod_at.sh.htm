@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Install and Run dismod_at in a Docker Image</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Install and Run dismod_at in a Docker Image">
-<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax logging output purpose requirements building images version dismod_at.base dismod_at.mixed dismod_at.image removing containers dockerfile errors new container build_type database command other arguments debugging determine id start stop ">
+<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax oci driver logging output purpose requirements building images version dismod_at.base dismod_at.mixed dismod_at.image removing containers dockerfile errors new container build_type database command other arguments debugging determine id start stop ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -64,6 +64,8 @@ A:active { color : purple }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Install and Run dismod_at in a Docker Image</big></big></b></center>
 
 <br><a href="dock_dismod_at.sh.htm#Syntax" target="_top">Syntax</a>
+<br><a href="dock_dismod_at.sh.htm#OCI" target="_top">OCI</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#OCI.driver" target="_top">driver</a>
 <br><a href="dock_dismod_at.sh.htm#Logging Output" target="_top">Logging&nbsp;Output</a>
 <br><a href="dock_dismod_at.sh.htm#Purpose" target="_top">Purpose</a>
 <br><a href="dock_dismod_at.sh.htm#Requirements" target="_top">Requirements</a>
@@ -103,6 +105,29 @@ A:active { color : purple }
 
 <code><font color="blue"><span style='white-space: nowrap'>./dock_dismod_at.sh&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>build_type</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
+<br>
+<b><big><a name="OCI" id="OCI">OCI</a></big></b>
+<br>
+Both docker and podman create Open Container Initiative
+<a href="https://opencontainers.org/" target="_top"><span style='white-space: nowrap'>OCI</span></a>
+ images and containers.
+
+<br>
+<br>
+<big><a name="OCI.driver" id="OCI.driver">driver</a></big>
+<br>
+The 
+<code><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i></code>
+ program, determined by this setting, can be either
+docker or podman:
+<pre style='display:inline'><tt>
+     <font color="#009900">driver</font><font color="#990000">=</font><font color="#FF0000">'podman'</font>
+</tt></pre>
+Below we referee to the value of this shell variable as 
+<code><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i></code>
+.
+
+<br>
 <br>
 <b><big><a name="Logging Output" id="Logging Output">Logging Output</a></big></b>
 <br>
@@ -145,13 +170,14 @@ install of dismod_at.
 <b><big><a name="Requirements" id="Requirements">Requirements</a></big></b>
 <br>
 You must have a copy of <a href="https://docs.docker.com/" target="_top"><span style='white-space: nowrap'>docker</span></a>
+, or
+<a href="https://podman.io" target="_top"><span style='white-space: nowrap'>podman</span></a>
 
 installed on your system.
-In addition, you must have permission to use it.
 You can test this on your system by trying to execute the following command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;run&nbsp;busybox&nbsp;echo&nbsp;'Hello&nbsp;World'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;run&nbsp;busybox&nbsp;echo&nbsp;'Hello&nbsp;World'<br>
 </span></font></code>
 <br>
 <b><big><a name="Building Images" id="Building Images">Building Images</a></big></b>
@@ -216,13 +242,13 @@ you will be prompted with the corresponding
 The command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 will remove the container.
 If the container is still running, you will need to use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Building Images.Removing Images" id="Building Images.Removing Images">Removing Images</a></big>
@@ -230,7 +256,7 @@ If the container is still running, you will need to use
 You can remove an old image using the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 For example, 
 <code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
@@ -241,8 +267,8 @@ For example,
 You can keep the old image, under a different name, using the commands
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;tag&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;tag&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Building Images.Dockerfile" id="Building Images.Dockerfile">Dockerfile</a></big>
@@ -309,13 +335,13 @@ you will be prompted with the corresponding
 The command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 will remove the container.
 If the container is still running, you will need to use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Run New Container.build_type" id="Run New Container.build_type">build_type</a></big>
@@ -382,17 +408,23 @@ The following instructions are useful for this:
 
 <br>
 
-<code><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;ps&nbsp;--all&nbsp;--storage</span></font></code>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;ps&nbsp;-a<br>
+</span></font></code>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i></code>
+ is podman, the following might work better
 
-
-<br>
+<code><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;ps&nbsp;--all&nbsp;--storage<br>
+</span></font></code>
 <br>
 <big><a name="Debugging.Start Container" id="Debugging.Start Container">Start Container</a></big>
 <br>
 If a container status is <code><font color="blue">Exited</font></code>, you can start it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;start&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;start&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
 </span></font></i></code>
 <br>
 <big><a name="Debugging.Run Container" id="Debugging.Run Container">Run Container</a></big>
@@ -400,7 +432,7 @@ If a container status is <code><font color="blue">Exited</font></code>, you can 
 If a container status is <code><font color="blue">Up</font></code>, you can run it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;exec&nbsp;-it&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bash<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;exec&nbsp;-it&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bash<br>
 </span></font></code>
 You will be in the container until you <code><font color="blue">exit</font></code>
 the <code><font color="blue">bash</font></code> shell that is run by the command above.
@@ -412,7 +444,7 @@ the <code><font color="blue">bash</font></code> shell that is run by the command
 If a container status is <code><font color="blue">Up</font></code>, you can stop it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;stop&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;stop&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
 </span></font></i></code>
 
 <hr>Input File: bin/dock_dismod_at.sh
