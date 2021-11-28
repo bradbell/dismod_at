@@ -65,7 +65,8 @@ $section Changes and Additions to Dismod_at During 2021$$
 
 $head 11-27$$
 $list number$$
-Convert dock_dismod_at.sh from using docker to using podman.
+Add the $cref/driver/dock_dismod_at.sh/OCI/driver/$$ option
+to dock_dismod_at.sh so it can use either docker or podman.
 $lnext
 Advance dock_dismod_at.sh to
 $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20211121.
