@@ -32,6 +32,18 @@
 # $codei%./dock_dismod_at.sh %build_type% %database% %command% %...%
 # %$$
 #
+# $head OCI$$
+# Both docker and podman create Open Container Initiative
+# $href%https://opencontainers.org/%OCI%$$ images and containers.
+#
+# $subhead driver$$
+# The $icode driver$$ program, determined by this setting, can be either
+# docker or podman:
+# $srccode%sh%
+	driver='podman'
+# %$$
+# Below we referee to the value of this shell variable as $icode driver$$.
+#
 # $head Logging Output$$
 # You can save the output of any of the commands above by redirecting
 # standard output and standard error to a file.
@@ -61,12 +73,12 @@
 # install of dismod_at.
 #
 # $head Requirements$$
-# You must have a copy of $href%https://docs.docker.com/%docker%$$
+# You must have a copy of $href%https://docs.docker.com/%docker%$$, or
+# $href%https://podman.io%podman%$$
 # installed on your system.
-# In addition, you must have permission to use it.
 # You can test this on your system by trying to execute the following command:
 # $codei%
-#	podman run busybox echo 'Hello World'
+#	%driver% run busybox echo 'Hello World'
 # %$$
 #
 # $head Building Images$$
@@ -110,18 +122,18 @@
 # you will be prompted with the corresponding $icode container_id$$.
 # The command
 # $codei%
-#	podman rm %container_id%
+#	%driver% rm %container_id%
 # %$$
 # will remove the container.
 # If the container is still running, you will need to use
 # $codei%
-#	podman rm --force %container_id%
+#	%driver% rm --force %container_id%
 # %$$
 #
 # $subhead Removing Images$$
 # You can remove an old image using the command
 # $codei%
-#	podman rmi %name%
+#	%driver% rmi %name%
 # %$$
 # For example, $icode name$$ could be
 # $code dismod_at.base$$,
@@ -129,8 +141,8 @@
 # $code dismod_at.image$$.
 # You can keep the old image, under a different name, using the commands
 # $codei%
-#	podman tag %name% %different_name%
-#	podman rmi %name%
+#	%driver% tag %name% %different_name%
+#	%driver% rmi %name%
 # %$$
 #
 # $subhead Dockerfile$$
@@ -173,12 +185,12 @@
 # you will be prompted with the corresponding $icode container_id$$.
 # The command
 # $codei%
-#	podman rm %container_id%
+#	%driver% rm %container_id%
 # %$$
 # will remove the container.
 # If the container is still running, you will need to use
 # $codei%
-#	podman rm --force %container_id%
+#	%driver% rm --force %container_id%
 # %$$
 #
 # $subhead build_type$$
@@ -212,18 +224,24 @@
 # The following instructions are useful for this:
 #
 # $subhead Determine Container Id$$
-# $codei%	podman ps --all --storage%$$
+# $codei%
+#	%driver% ps -a
+# %$$
+# If $icode driver$$ is podman, the following might work better
+# $codei%
+#	podman ps --all --storage
+# %$$
 #
 # $subhead Start Container$$
 # If a container status is $code Exited$$, you can start it using:
 # $codei%
-#	podman start %container_id
+#	%driver% start %container_id
 # %$$
 #
 # $subhead Run Container$$
 # If a container status is $code Up$$, you can run it using:
 # $codei%
-#	podman exec -it %container_id% bash
+#	%driver% exec -it %container_id% bash
 # %$$
 # You will be in the container until you $code exit$$
 # the $code bash$$ shell that is run by the command above.
@@ -231,7 +249,7 @@
 # $subhead Stop Container$$
 # If a container status is $code Up$$, you can stop it using:
 # $codei%
-#	podman stop %container_id
+#	%driver% stop %container_id
 # %$$
 #
 # $end
@@ -259,7 +277,7 @@ else
 	fi
 fi
 # ---------------------------------------------------------------------------
-if ! podman ps > /dev/null
+if ! $driver ps > /dev/null
 then
 cat << EOF
 Cannot run docker ps
@@ -297,24 +315,24 @@ then
 		echo "Must first remove ./Dockerfile"
 		exit 1
 	fi
-	if podman ps -a | grep "$image_name" > /dev/null
+	if $driver ps -a | grep "$image_name" > /dev/null
 	then
 		echo 'dock_dismod_at.sh Error'
 		echo 'Must first remove following OCI containers:'
-		podman ps -a | head -1
-		podman ps -a | grep "$image_name"
+		$driver ps -a | head -1
+		$driver ps -a | grep "$image_name"
 		echo 'Use the following command for each container_id above:'
-		echo 'podman rm contain_id'
+		echo "$driver rm contain_id"
 		exit 1
 	fi
-	if OCI images | grep "$image_name " > /dev/null
+	if $driver images | grep "$image_name " > /dev/null
 	then
 		echo 'dock_dismod_at.sh Error'
-		echo 'Must first remove following OCI images:'
-		OCI images | head -1
-		OCI images | grep "$image_name "
+		echo 'Must first remove following images:'
+		$driver images | head -1
+		$driver images | grep "$image_name "
 		echo 'Use the following command for each image above:'
-		echo 'podman rmi image_id'
+		echo "$driver rmi image_id"
 		exit 1
 	fi
 	echo 'Creating Dockerfile'
@@ -322,8 +340,8 @@ if [ "$image_name" == 'dismod_at.base' ]
 then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
-# Ubuntu 19.10 with dismod_at requirements that are installed using apt-get.
-# The vim editor is included for use when debugging OCI containers and
+# Ubuntu 20.04 with dismod_at requirements that are installed using apt-get.
+# The vim editor is included for use when debugging containers and
 # is not required by dismod_at.
 # -----------------------------------------------------------------------------
 FROM ubuntu:20.04
@@ -420,7 +438,7 @@ EOF
 fi
 #
 	echo "Creating $image_name"
-	podman build --tag $image_name .
+	$driver build --tag $image_name .
 	#
 	echo "dock_dismod_at.sh $1 $2: OK"
 	exit 0
@@ -466,27 +484,28 @@ then
 fi
 container_name="dismod_at.$USER"
 # check that the previous dismod_at container has been deleted
-if podman ps -a | grep " $container_name\$" > /dev/null
+if $driver ps -a | grep " $container_name\$" > /dev/null
 then
 	echo 'dock_dismod_at.sh Error'
-	echo 'Must first remove following OCI containers:'
-	podman ps -a | head -1
-	podman ps -a | grep " $container_name\$"
+	echo 'Must first remove following containers:'
+	$driver ps -a | head -1
+	$driver ps -a | grep " $container_name\$"
 	echo 'Use the following command for each container_id above:'
-	echo 'podman rm contain_id'
+	echo "$driver rm contain_id"
 	exit 1
 fi
 #
 # create a new dismod_at container
-echo "echo 'exit 0' | podman run -i --name $container_name dismod_at.image bash"
-echo 'exit 0' | podman run -i --name "$container_name" dismod_at.image bash
+echo "echo 'exit 0' | \\"
+echo "$driver run -i --name $container_name dismod_at.image bash"
+echo 'exit 0' | $driver run -i --name "$container_name" dismod_at.image bash
 #
 # get the id for the new container
-container_id=`podman ps -a -q --filter "name=$container_name"`
+container_id=`$driver ps -a -q --filter "name=$container_name"`
 #
 # copy the database to the container
-echo "podman cp $database $container_id:/home/work/$database"
-podman cp "$database"  "$container_id:/home/work/$database"
+echo "$driver cp $database $container_id:/home/work/$database"
+$driver cp "$database"  "$container_id:/home/work/$database"
 #
 # create a temporary directory
 temporary_dir=`mktemp`
@@ -520,24 +539,24 @@ $program $*
 exit 0
 EOF
 chmod +x $temporary_dir/work.sh
-echo "podman cp $temporary_dir/work.sh $container_id:/home/work/work.sh"
-podman cp "$temporary_dir/work.sh" "$container_id:/home/work/work.sh"
+echo "$driver cp $temporary_dir/work.sh $container_id:/home/work/work.sh"
+$driver cp "$temporary_dir/work.sh" "$container_id:/home/work/work.sh"
 #
 # start up the container
-echo "podman start $container_id"
-podman start $container_id
+echo "$driver start $container_id"
+$driver start $container_id
 #
 # execute work.sh
-echo "podman exec -it $container_id ./work.sh"
-podman exec -it $container_id ./work.sh
+echo "$driver exec -it $container_id ./work.sh"
+$driver exec -it $container_id ./work.sh
 #
 # copy the result back to temporary directory
-echo "podman cp $container_id:/home/work $temporary_dir/work"
-podman cp $container_id:/home/work "$temporary_dir/work"
+echo "$driver cp $container_id:/home/work $temporary_dir/work"
+$driver cp $container_id:/home/work "$temporary_dir/work"
 #
 # remove the container
-echo "podman rm --force $container_id"
-podman rm --force $container_id
+echo "$driver rm --force $container_id"
+$driver rm --force $container_id
 #
 # copy the results from temporary directory to working directory
 for file in `ls $temporary_dir/work/*`
