@@ -63,6 +63,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 11-29$$
+In plot_curve, add the assumption that the plot data
+$cref/values/plot_curve/plot_data/value/$$ are non-negative
+and not all zero.
+
 $head 11-27$$
 $list number$$
 Add the $cref/driver/dock_dismod_at.sh/OCI/driver/$$ option

@@ -72,6 +72,8 @@ the set of age an time values form a rectangular grid.
 $subhead value$$
 For each $icode row$$ in $icode z_list$$, $icode%row%['value']%$$
 is the value of $icode z$$.
+All of these values must be non-negative and they must
+not all be zero.
 
 $subhead std$$
 For each $icode row$$ in $icode z_list$$, $icode%row%['std']%$$
@@ -209,6 +211,7 @@ def plot_curve(
 		value_max  = numpy.max(value) * 1.05
 		value_min  = numpy.min(value) * 0.95
 		value_min  = max(value_min , value_max * 1e-6)
+		assert value_max > 0.0
 		#
 		# std_min, std_max
 		if  has_std :
