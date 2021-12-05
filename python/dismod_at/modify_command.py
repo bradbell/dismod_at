@@ -17,6 +17,9 @@
 # $$
 # $section Modify a Column of an Sqlite Database$$
 #
+# $head Deprecated$$
+# This command was deprecated on 2021-12-05.
+#
 # $head Syntax$$
 #
 # $subhead As Program$$

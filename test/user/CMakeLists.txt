@@ -33,6 +33,7 @@ FOREACH(user_case
 	no_data
 	not_ordered
 	parent_node_id
+	perturb_command
 	posterior
 	relrisk
 	scale_gamma

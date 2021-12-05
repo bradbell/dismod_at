@@ -63,6 +63,17 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 12-05$$
+$list number$$
+Add the $cref perturb_command$$.
+This is useful for the cascade where the mean of the prior
+is sometimes very close to the optimization estimate.
+$lnext
+The $cref/csv2db/csv2db_command/Deprecated/$$
+The $cref/modify/modify_command/Deprecated/$$
+were deprecated.
+$lend
+
 $head 11-29$$
 In plot_curve, add the assumption that the plot data
 $cref/values/plot_curve/plot_data/value/$$ are non-negative

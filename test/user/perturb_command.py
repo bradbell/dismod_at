@@ -16,7 +16,7 @@ import sys
 import os
 import distutils.dir_util
 import subprocess
-test_program = 'test/user/no_data.py'
+test_program = 'test/user/perturb_command.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -42,7 +42,6 @@ def fun_iota_parent(a, t) :
 # ------------------------------------------------------------------------
 def example_db (file_name) :
 	import copy
-	import dismod_at
 	import math
 	# ----------------------------------------------------------------------
 	# age table
@@ -127,7 +126,7 @@ def example_db (file_name) :
 		{ 'name':'quasi_fixed',            'value':'true'              },
 		{ 'name':'derivative_test_fixed',  'value':'none'              },
 		{ 'name':'max_num_iter_fixed',     'value':'50'                },
-		{ 'name':'print_level_fixed',      'value':'0'                 },
+		{ 'name':'print_level_fixed',      'value':'5'                 },
 		{ 'name':'tolerance_fixed',        'value':'1e-10'             },
 
 		{ 'name':'derivative_test_random', 'value':'second-order'      },
@@ -176,25 +175,33 @@ def example_db (file_name) :
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-for command in [ 'init', 'fit' ] :
-	cmd = [ program, file_name, command ]
-	if command == 'fit' :
-		variables = 'both'
-		cmd.append(variables)
-	print( ' '.join(cmd) )
-	flag = subprocess.call( cmd )
-	if flag != 0 :
-		sys.exit('The dismod_at ' + command + ' command failed')
+#
+dismod_at.system_command_prc( [program, file_name, 'init' ] )
+#
+os.chdir('../../..')
+dismod_at.system_command_prc( [
+    'bin/dismodat.py', 'build/test/user/example.db',
+    'perturb', 'start_var', '.2'
+] )
+dismod_at.system_command_prc( [
+    'bin/dismodat.py', 'build/test/user/example.db',
+    'perturb', 'scale_var', '.2'
+] )
+os.chdir('build/test/user')
+
+dismod_at.system_command_prc( [program, file_name, 'fit', 'both' ] )
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
-age_table     = dismod_at.get_table_dict(connection, 'age')
-time_table    = dismod_at.get_table_dict(connection, 'time')
-var_table     = dismod_at.get_table_dict(connection, 'var')
-fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+age_table       = dismod_at.get_table_dict(connection, 'age')
+time_table      = dismod_at.get_table_dict(connection, 'time')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+start_var_table = dismod_at.get_table_dict(connection, 'start_var')
+scale_var_table = dismod_at.get_table_dict(connection, 'scale_var')
 #
 n_age  = len( age_table )
 n_time = len( time_table )
@@ -213,9 +220,11 @@ for var_id in range( n_var ) :
 	assert row['var_type'] == 'rate'
 	assert row['node_id'] == parent_node_id
 	assert row['rate_id'] == iota_rate_id
+	assert start_var_table[var_id]['start_var_value'] != iota_mean
+	assert scale_var_table[var_id]['scale_var_value'] != iota_mean
 	max_err = max(max_err, abs( value / iota_mean - 1.0 ) )
 assert abs(value / iota_mean - 1.0 ) <= 1e-10
 # -----------------------------------------------------------------------------
-print('no_data.py: OK')
+print('perturb_command.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

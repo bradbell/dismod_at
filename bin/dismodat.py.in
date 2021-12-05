@@ -53,11 +53,13 @@ import dismod_at
 # ---------------------------------------------------------------------------
 # check usage
 usage  = 'dismodat.py database db2csv\n'
-usage += 'dismodat.py database csv2db configure_csv measure_csv\n'
+usage += 'dismodat.py database pertrub tbl_name sigma'
 #
-usage += 'dismodat.py database modify\\\n'
-usage += '\ttable_name column_name row_expression value_expression\\\n'
-usage += '\t[statement_one [statement_two ...] ]'
+# deprecated
+# usage += 'dismodat.py database csv2db configure_csv measure_csv\n'
+# usage += 'dismodat.py database modify\\\n'
+# usage += '\ttable_name column_name row_expression value_expression\\\n'
+# usage += '\t[statement_one [statement_two ...] ]'
 #
 if len(sys.argv) < 3 :
 	sys.exit(usage)
@@ -69,6 +71,7 @@ arg_list          = sys.argv[3:]
 # begin_time
 begin_time     = int( time.time() )
 # ---------------------------------------------------------------------------
+# deprecated
 # special case where we execute the command first to create the database
 if command_arg == 'csv2db' :
 	if len(sys.argv) != 5 :
@@ -116,9 +119,15 @@ if command_arg == 'db2csv' :
 	if len(sys.argv) != 3 :
 		sys.exit(usage)
 	dismod_at.db2csv_command(database_file_arg)
+elif command_arg == 'perturb' :
+	if len(sys.argv) != 5 :
+		sys.exit(usage)
+	dismod_at.perturb_command(database_file_arg, arg_list[0], arg_list[1])
 elif command_arg == 'csv2db' :
+	# deprecated
 	pass # already executed this command
 elif command_arg == 'modify' :
+	# deprecated
 	if len(sys.argv) < 7 :
 		sys.exit(usage)
 	dismod_at.modify_command(database_file_arg, arg_list)
