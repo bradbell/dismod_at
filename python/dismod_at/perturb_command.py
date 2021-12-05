@@ -54,6 +54,11 @@
 # If this value is below (above) the lower (upper) limit
 # for the table entry the lower (upper) limit is chosen.
 #
+# $subhead Random Seed$$
+# If the $cref/random_seed/option_table/random_seed/$$ is non-zero,
+# it is used to seed the random number generator that is used.
+# Otherwise, the system clock is used to seed the random number generator.
+#
 # $end
 # -----------------------------------------------------------------------------
 import dismod_at
@@ -93,6 +98,14 @@ def get_limit_var_table(database) :
 	if parent_node_id is None :
 		msg = f'parent_node_name = {parent_node_name} is not in node table'
 		assert False, msg
+	#
+	# random_seed
+	random_seed = 0
+	for row in table['option'] :
+		if row['option_name'] == 'random_seed' :
+			random_seed = int( row['option_value'] )
+	if random_seed != 0 :
+		random.seed(random_seed)
 	#
 	# result
 	limit_var_table = list()
