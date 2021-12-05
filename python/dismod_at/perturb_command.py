@@ -208,8 +208,10 @@ def perturb_command(database, tbl_name, sigma_str) :
 		# value
 		value = table[var_id][key]
 		value = multiplier * value
-		value = max(value, limit_row['lower'])
-		value = min(value, limit_row['upper'])
+		if limit_row['lower'] is not None :
+			value = max(value, limit_row['lower'])
+		if limit_row['upper'] is not None :
+			value = min(value, limit_row['upper'])
 		#
 		# table
 		table[var_id][key] = value
