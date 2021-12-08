@@ -1,0 +1,161 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Perturb Command: Random Change to Start or Scale Tables</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Perturb Command: Random Change to Start or Scale Tables">
+<meta name="keywords" id="keywords" content=" perturb command: random change to start scale tables syntax program python function database tbl_name scale_var start_var sigma seed ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_perturb_command_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>perturb_command</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="modify_command.py.htm" target="_top">Prev</a>
+</td><td><a href="plot_curve.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_python_htm.js'></script>
+</td>
+<td>perturb_command</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Perturb Command: Random Change to Start or Scale Tables</big></big></b></center>
+
+<br><a href="perturb_command.htm#Syntax" target="_top">Syntax</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="perturb_command.htm#Syntax.As Program" target="_top">As&nbsp;Program</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="perturb_command.htm#Syntax.As Python Function" target="_top">As&nbsp;Python&nbsp;Function</a>
+<br><a href="perturb_command.htm#database" target="_top">database</a>
+<br><a href="perturb_command.htm#tbl_name" target="_top">tbl_name</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="perturb_command.htm#tbl_name.scale_var" target="_top">scale_var</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="perturb_command.htm#tbl_name.start_var" target="_top">start_var</a>
+<br><a href="perturb_command.htm#sigma" target="_top">sigma</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="perturb_command.htm#sigma.Random Seed" target="_top">Random&nbsp;Seed</a>
+<br><br>
+<b><big><a name="Syntax" id="Syntax">Syntax</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Syntax.As Program" id="Syntax.As Program">As Program</a></big>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismodat.py&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;perturb&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tbl_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
+
+
+<br>
+<br>
+<big><a name="Syntax.As Python Function" id="Syntax.As Python Function">As Python Function</a></big>
+
+<br>
+
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at.perturb_command(</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tbl_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>
+
+
+<br>
+<br>
+<b><big><a name="database" id="database">database</a></big></b>
+<br>
+is the path from the currently directory to the database.
+This must be a <a href="database.htm" target="_top"><span style='white-space: nowrap'>dismod_at</span></a>
+ and
+the <a href="init_command.htm" target="_top"><span style='white-space: nowrap'>init_command</span></a>
+ must have been run on the database.
+
+<br>
+<br>
+<b><big><a name="tbl_name" id="tbl_name">tbl_name</a></big></b>
+<br>
+This is the name of an input table that we are perturbing.
+This must be one of the following choices:
+
+<br>
+<br>
+<big><a name="tbl_name.scale_var" id="tbl_name.scale_var">scale_var</a></big>
+<br>
+In this case the <a href="scale_var_table.htm" target="_top"><span style='white-space: nowrap'>scale_var_table</span></a>
+ is perturbed.
+This can be useful when one starts near the solution where the
+derivative of the objective may be small.
+
+<br>
+<br>
+<big><a name="tbl_name.start_var" id="tbl_name.start_var">start_var</a></big>
+<br>
+In this case the <a href="start_var_table.htm" target="_top"><span style='white-space: nowrap'>start_var_table</span></a>
+ is perturbed.
+This can be useful when one wants to see if the starting point
+has an effect on the solution.
+
+<br>
+<br>
+<b><big><a name="sigma" id="sigma">sigma</a></big></b>
+<br>
+We use 
+<code><i><font color="black"><span style='white-space: nowrap'>multiplier</span></font></i></code>
+ for a randomly chose multiplier,
+that is different for each table entry, and that has a log with
+mean zero and standard deviation 
+<code><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
+.
+The value chosen for each table entry is its original value
+times the multiplier.
+If this value is below (above) the lower (upper) limit
+for the table entry the lower (upper) limit is chosen.
+
+<br>
+<br>
+<big><a name="sigma.Random Seed" id="sigma.Random Seed">Random Seed</a></big>
+<br>
+If the <a href="option_table.htm#random_seed" target="_top"><span style='white-space: nowrap'>random_seed</span></a>
+ is non-zero,
+it is used to seed the random number generator that is used.
+Otherwise, the system clock is used to seed the random number generator.
+
+
+<hr>Input File: python/dismod_at/perturb_command.py
+
+</body>
+</html>

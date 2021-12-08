@@ -14,6 +14,7 @@ document.write('\
 <option>get_table_dict</option>\
 <option>metropolis</option>\
 <option>modify_command</option>\
+<option>perturb_command</option>\
 <option>plot_curve</option>\
 <option>plot_data_fit</option>\
 <option>plot_rate_fit</option>\
@@ -37,6 +38,7 @@ function python_child(item)
 		'get_table_dict.htm',
 		'metropolis.htm',
 		'modify_command.htm',
+		'perturb_command.htm',
 		'plot_curve.htm',
 		'plot_data_fit.htm',
 		'plot_rate_fit.htm',
