@@ -197,7 +197,6 @@ As a check, we include the mtall data with hold_out equal to one.
 <b><font color="#000080">import</font></b> csv
 <b><font color="#000080">import</font></b> numpy
 <b><font color="#000080">import</font></b> scipy<font color="#990000">.</font>integrate
-<b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># dismod_at</font></i>
 local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
@@ -215,7 +214,8 @@ example <font color="#990000">=</font> <font color="#FF0000">'example/user/csv2d
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change into the build/example/user directory</font></i>
-distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">exists</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font> <font color="#990000">:</font>
+    os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># BEGIN RATE_TRUE</font></i>

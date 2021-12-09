@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Print Run and Check a System Command</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Print Run and Check a System Command">
-<meta name="keywords" id="keywords" content=" print run check system command syntax purpose print_command return_stdout return_stderr result example ">
+<meta name="keywords" id="keywords" content=" print run check system command syntax purpose print_command return_stdout return_stderr file_stdout file_stderr write_command result example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -72,6 +72,9 @@ A:active { color : purple }
 <br><a href="system_command_prc.htm#print_command" target="_top">print_command</a>
 <br><a href="system_command_prc.htm#return_stdout" target="_top">return_stdout</a>
 <br><a href="system_command_prc.htm#return_stderr" target="_top">return_stderr</a>
+<br><a href="system_command_prc.htm#file_stdout" target="_top">file_stdout</a>
+<br><a href="system_command_prc.htm#file_stderr" target="_top">file_stderr</a>
+<br><a href="system_command_prc.htm#write_command" target="_top">write_command</a>
 <br><a href="system_command_prc.htm#result" target="_top">result</a>
 <br><a href="system_command_prc.htm#Example" target="_top">Example</a>
 <br><br>
@@ -83,6 +86,9 @@ A:active { color : purple }
      print_command  <font color="#990000">=</font> True  <font color="#990000">,</font>
      return_stdout  <font color="#990000">=</font> True  <font color="#990000">,</font>
      return_stderr  <font color="#990000">=</font> False <font color="#990000">,</font>
+     file_stdout    <font color="#990000">=</font> None  <font color="#990000">,</font>
+     file_stderr    <font color="#990000">=</font> None  <font color="#990000">,</font>
+     write_command  <font color="#990000">=</font> False <font color="#990000">,</font>
 <i><font color="#9A1900"># )</font></i></tt></pre>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -124,6 +130,10 @@ before it is executed.
 <b><big><a name="return_stdout" id="return_stdout">return_stdout</a></big></b>
 <br>
 If this argument is true, the command's standard output will be returned.
+If this argument is false and 
+<code><i><font color="black"><span style='white-space: nowrap'>file_stdout</span></font></i></code>
+ is not None,
+standard error will be written to a file during the command execution.
 Otherwise, standard output will be printed during the command execution.
 
 <br>
@@ -131,8 +141,48 @@ Otherwise, standard output will be printed during the command execution.
 <b><big><a name="return_stderr" id="return_stderr">return_stderr</a></big></b>
 <br>
 If this argument is true, the command's standard error will be returned.
+If this argument is false and 
+<code><i><font color="black"><span style='white-space: nowrap'>file_stderr</span></font></i></code>
+ is not None,
+standard error will be written to a file during the command execution.
 Otherwise, if an error occurs, standard error will be printed
 and <code><font color="blue">system_command_prc</font></code> will terminate execution.
+
+<br>
+<br>
+<b><big><a name="file_stdout" id="file_stdout">file_stdout</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stdout</span></font></i></code>
+ is true, this argument must be None.
+If this argument is not None, it is a file object that is opened for writing
+and standard output will be written to this file.
+
+<br>
+<br>
+<b><big><a name="file_stderr" id="file_stderr">file_stderr</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>return_stderr</span></font></i></code>
+ is true, this argument must be None.
+If this argument is not None, it is a file object that is opened for writing
+and standard error will be written to this file.
+
+<br>
+<br>
+<b><big><a name="write_command" id="write_command">write_command</a></big></b>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>write_command</span></font></i></code>
+ is true (false) the command will
+(will not) be written to 
+<code><i><font color="black"><span style='white-space: nowrap'>file_stdout</span></font></i></code>
+.
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>file_stdout</span></font></i></code>
+ is None, 
+<code><i><font color="black"><span style='white-space: nowrap'>write_command</span></font></i></code>
+ must be false.
 
 <br>
 <br>

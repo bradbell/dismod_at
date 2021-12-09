@@ -74,7 +74,6 @@ A:active { color : purple }
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> copy
 <b><font color="#000080">import</font></b> subprocess
-<b><font color="#000080">import</font></b> distutils<font color="#990000">.</font>dir_util
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># check execution is from distribution directory</font></i>
 example <font color="#990000">=</font> <font color="#FF0000">'example/get_started/fit_command.py'</font>
@@ -95,7 +94,8 @@ sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font colo
 <b><font color="#000080">import</font></b> get_started_db
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change into the build/example/get_started directory</font></i>
-distutils<font color="#990000">.</font>dir_util<font color="#990000">.</font><b><font color="#000000">mkpath</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/get_started'</font><font color="#990000">)</font>
+<b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">exists</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/get_started'</font><font color="#990000">)</font> <font color="#990000">:</font>
+    os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/get_started'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/get_started'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># create get_started.db</font></i>
