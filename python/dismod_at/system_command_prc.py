@@ -48,12 +48,31 @@
 #
 # $head return_stdout$$
 # If this argument is true, the command's standard output will be returned.
+# If this argument is false and $icode file_stdout$$ is not None,
+# standard error will be written to a file during the command execution.
 # Otherwise, standard output will be printed during the command execution.
 #
 # $head return_stderr$$
 # If this argument is true, the command's standard error will be returned.
+# If this argument is false and $icode file_stderr$$ is not None,
+# standard error will be written to a file during the command execution.
 # Otherwise, if an error occurs, standard error will be printed
 # and $code system_command_prc$$ will terminate execution.
+#
+# $head file_stdout$$
+# If $icode return_stdout$$ is true, this argument must be None.
+# If this argument is not None, it is a file object that is opened for writing
+# and standard output will be written to this file.
+#
+# $head file_stderr$$
+# If $icode return_stderr$$ is true, this argument must be None.
+# If this argument is not None, it is a file object that is opened for writing
+# and standard error will be written to this file.
+#
+# $head write_command$$
+# If $icode write_command$$ is true (false) the command will
+# (will not) be written to $icode file_stdout$$.
+# If $icode file_stdout$$ is None, $icode write_command$$ must be false.
 #
 # $head result$$
 # $list number$$
@@ -91,57 +110,75 @@ def system_command_prc(
 	print_command  = True  ,
 	return_stdout  = True  ,
 	return_stderr  = False ,
+	file_stdout    = None  ,
+	file_stderr    = None  ,
+	write_command  = False ,
 # )
 # END syntax
 	) :
 	import sys
 	import subprocess
 	#
-	# print the system command with arguments separated by spaces
+	if file_stdout is not None :
+		assert not return_stdout
+	if file_stderr is not None :
+		assert not return_stderr
+	if file_stdout is None :
+		assert not write_command
+	#
+	# capture_stderr
+	capture_stderr = return_stderr or (file_stderr is not None)
+	#
+	# command_str
+	command_str = ' '.join(command)
+	#
+	# print
 	if print_command :
-		print( ' '.join(command) )
+		print(command_str)
 	#
-	# run the system command
-	if return_stderr and return_stdout :
-		result = subprocess.run(
-			command,
-			stdout=subprocess.PIPE,
-			stderr=subprocess.PIPE,
-			encoding='utf-8'
-		)
-		return result
+	# write
+	if write_command :
+		file_stdout.write(command_str + '\n')
 	#
-	if return_stderr :
-		result = subprocess.run(
-			command,
-			stderr=subprocess.PIPE,
-			encoding='utf-8'
-		)
-		return result
-	#
+	# stdout
 	if return_stdout :
-		result = subprocess.run(
-			command,
-			stdout=subprocess.PIPE,
-			stderr=subprocess.PIPE,
-			encoding='utf-8'
-		)
+		stdout = subprocess.PIPE
 	else :
-		result = subprocess.run(
-			command,
-			stderr=subprocess.PIPE,
-			encoding='utf-8'
-		)
+		stdout = file_stdout
+	#
+	# stderr
+	if return_stderr or file_stderr is None :
+		stderr = subprocess.PIPE
+	else :
+		stderr = file_stderr
+	#
+	# subprocess_return
+	subprocess_return = subprocess.run(
+		command,
+		stdout   = stdout  ,
+		stderr   = stderr  ,
+		encoding = 'utf-8' ,
+	)
+	#
+	# result
+	if return_stderr :
+		result = subprocess_return
+	elif return_stdout :
+		result = subprocess_return.stdout
+	else :
+		result = None
+	#
+	if capture_stderr :
+		return result
 	#
 	# return_stderr is false so check the command return code
-	if result.returncode != 0 :
+	returncode = subprocess_return.returncode
+	if returncode != 0 :
 		# print error messages
-		print('system_command_prc failed: returncode = ' , result.returncode)
-		print( result.stderr )
+		print('system_command_prc failed: returncode = ' , returncode)
+		print( subprocess_return.stderr )
 		#
 		# raise an exception
-		assert result.returncode == 0
+		assert returncode == 0
 	#
-	if return_stdout :
-		return result.stdout
-	return None
+	return result

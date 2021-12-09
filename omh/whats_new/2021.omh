@@ -69,6 +69,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 12-09$$
+Add the $icode file_stdout$$, $icode file_stderr$$, and
+$cref/write_command/system_command_prc/write_command/$$
+arguments to $code system_command_prc$$.
+
 $head 12-08$$
 The $code distutils$$ module has been deprecated.
 Replace all use of $code distutils.dir_util.mkpath$$ with

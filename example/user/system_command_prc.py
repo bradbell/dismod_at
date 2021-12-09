@@ -49,24 +49,60 @@ os.chdir('build/example/user')
 # command
 command = [ 'echo', 'system_command_prc: Test Output' ]
 #
-# return_stdout=True, return_stderr=False
+# result is stdout
 result  = dismod_at.system_command_prc(
-	command, print_command=False, return_stdout=True, return_stderr=False
+	command                ,
+	print_command = False  ,
+	return_stdout = True   ,
+	return_stderr = False  ,
+	file_stdout   = None   ,
+	file_stderr   = None   ,
+	write_command = False  ,
 )
 assert result  == command[1] + '\n'
 #
-# return_stdout=False, return_stderr=False
+# result is None
 result  = dismod_at.system_command_prc(
-	command, print_command=False, return_stdout=False, return_stderr=False
+	command                ,
+	print_command = False  ,
+	return_stdout = False  ,
+	return_stderr = False  ,
+	file_stdout   = None   ,
+	file_stderr   = None   ,
+	write_command = False  ,
 )
 assert result is None
 #
-# return_stdout=True, return_stderr=True
+# result is stdout and stderr
 result  = dismod_at.system_command_prc(
-	command, print_command=False, return_stdout=True, return_stderr=True
+	command                ,
+	print_command = False  ,
+	return_stdout = True   ,
+	return_stderr = True   ,
+	file_stdout   = None   ,
+	file_stderr   = None   ,
+	write_command = False  ,
 )
 assert result.stdout  == command[1] + '\n'
-
+assert result.stderr  == ''
+#
+# file contains stdout
+file_name   = 'system_command_prc.stdout'
+file_stdout = open(file_name, 'w')
+dismod_at.system_command_prc(
+	command                       ,
+	print_command = False         ,
+	return_stdout = False         ,
+	return_stderr = False         ,
+	file_stdout   = file_stdout   ,
+	file_stderr   = None          ,
+	write_command = False         ,
+)
+file_stdout.close()
+file_stdout = open(file_name, 'r')
+result      = file_stdout.read()
+assert result  == command[1] + '\n'
+os.remove(file_name)
 #
 print('system_command_prc.py: OK')
 sys.exit(0)
