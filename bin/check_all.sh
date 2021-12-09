@@ -83,6 +83,8 @@ bin/check_install.sh $build_type >& install.log
 # -----------------------------------------------------------------------------
 # check.log output is generalted by bin/user_test.sh which checks for warnings
 # and re-runs. If a warning occurs a second time, bin/user_tes.sh error exits.
+grep 'The distutils package is deprecated' install.log
+sed -i install.log -e '/The distutils package is deprecated/d'
 for target in cmake speed install
 do
 	if grep -i 'warning:' $target.log

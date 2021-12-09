@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -11,7 +11,6 @@ import sys
 import os
 import copy
 import subprocess
-import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
 test_program = 'test/user/parent_node_id.py'
@@ -33,7 +32,8 @@ sys.path.append( os.getcwd() + '/example/get_started' )
 import get_started_db
 #
 # change into the test/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ---------------------------------------------------------------------------
 # create get_started.db

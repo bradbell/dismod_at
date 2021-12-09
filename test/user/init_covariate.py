@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -19,7 +19,6 @@ n_data           = 51
 import csv
 import sys
 import os
-import distutils.dir_util
 import subprocess
 import copy
 import math
@@ -38,7 +37,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example

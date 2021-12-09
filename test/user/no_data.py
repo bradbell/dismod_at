@@ -14,7 +14,6 @@ iota_mean     = 0.01
 # ------------------------------------------------------------------------
 import sys
 import os
-import distutils.dir_util
 import subprocess
 test_program = 'test/user/no_data.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -31,7 +30,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :

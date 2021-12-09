@@ -23,7 +23,6 @@ import sys
 import os
 import copy
 import numpy
-import distutils.dir_util
 from math import exp
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
@@ -45,7 +44,8 @@ sys.path.append( os.getcwd() + '/example/get_started' )
 import get_started_db
 #
 # change into the build/example/get_started directory
-distutils.dir_util.mkpath('build/example/get_started')
+if not os.path.exists('build/example/get_started') :
+    os.makedirs('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
 # create get_started.db

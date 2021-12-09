@@ -132,7 +132,6 @@ minimum_meas_cv = 0.10
 # BEGIN PYTHON
 import sys
 import os
-import distutils.dir_util
 import math
 import csv
 import copy
@@ -153,7 +152,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
 def fun_omega_parent(a, t):

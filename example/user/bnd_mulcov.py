@@ -81,7 +81,6 @@ max_abs_effect = 1.0
 import sys
 import os
 import csv
-import distutils.dir_util
 import copy
 import math
 test_program = 'example/user/bnd_mulcov.py'
@@ -99,7 +98,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example

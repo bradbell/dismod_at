@@ -47,6 +47,12 @@ $spell
     cov
 	pdf
     podman
+    distutils
+    dir
+    util
+    mkpath
+    makedirs
+
 $$
 $navigate%
 	Up%Location%
@@ -62,6 +68,11 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
+
+$head 12-08$$
+The $code distutils$$ module has been deprecated.
+Replace all use of $code distutils.dir_util.mkpath$$ with
+$code os.makedirs$$.
 
 $head 12-05$$
 $list number$$

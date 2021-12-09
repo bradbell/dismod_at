@@ -15,7 +15,6 @@ gamma_true = meas_std * meas_std
 # ---------------------------------------------------------------------------
 import sys
 import os
-import distutils.dir_util
 import subprocess
 import copy
 import math
@@ -34,7 +33,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ---------------------------------------------------------------------------
 # Note that the a, t values are not used for this example

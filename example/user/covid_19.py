@@ -176,7 +176,6 @@ import os
 import csv
 import copy
 import numpy
-import distutils.dir_util
 import matplotlib.pyplot
 import matplotlib.gridspec
 test_program = 'example/user/covid_19.py'
@@ -194,7 +193,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
 # ------------------------------------------------------------------------------------

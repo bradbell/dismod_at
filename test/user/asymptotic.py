@@ -89,7 +89,6 @@ time_list = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
 import sys
 import os
 import time
-import distutils.dir_util
 import numpy
 test_program = 'test/user/asymptotic.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -105,7 +104,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/tst/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ------------------------------------------------------------------------
 def example_db (file_name) :

@@ -14,7 +14,6 @@ minimum_meas_cv = 0.2;
 # ---------------------------------------------------------------------------
 import sys
 import os
-import distutils.dir_util
 import math
 import subprocess
 import csv
@@ -34,7 +33,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 #
 def constant_one_fun(a, t):

@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-19 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -18,7 +18,6 @@ bound_frac       = 1e-4
 # ------------------------------------------------------------------------
 import sys
 import os
-import distutils.dir_util
 import subprocess
 test_program = 'test/user/bound_frac.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -35,7 +34,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :

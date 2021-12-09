@@ -22,7 +22,6 @@
 import sys
 import os
 import copy
-import distutils.dir_util
 # ---------------------------------------------------------------------------
 # check execution is from distribution directory
 example = 'example/get_started/old2new_command.py'
@@ -43,7 +42,8 @@ sys.path.append( os.getcwd() + '/example/get_started' )
 import get_started_db
 #
 # change into the build/example/get_started directory
-distutils.dir_util.mkpath('build/example/get_started')
+if not os.path.exists('build/example/get_started') :
+    os.makedirs('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
 # create get_started.db

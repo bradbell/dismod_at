@@ -74,7 +74,6 @@ import math
 import time
 import sys
 import os
-import distutils.dir_util
 import copy
 import random
 import statistics
@@ -94,7 +93,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
 def uniform_grid(start, stop, max_step) :

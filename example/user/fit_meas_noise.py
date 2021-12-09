@@ -106,7 +106,6 @@ def gamma_true() :
 # ----------------------------------------------------------------------------
 import sys
 import os
-import distutils.dir_util
 import copy
 test_program = 'example/user/fit_meas_noise.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
@@ -123,7 +122,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example

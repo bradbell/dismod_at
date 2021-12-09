@@ -13,7 +13,6 @@
 # ---------------------------------------------------------------------------
 import sys
 import os
-import distutils.dir_util
 import copy
 import numpy
 test_program = 'test/user/hes_fixed.py'
@@ -31,7 +30,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 #
 prior_omega_std = 0.5e-2

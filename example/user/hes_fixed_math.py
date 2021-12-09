@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -349,7 +349,6 @@ import numpy
 import sys
 import os
 import copy
-import distutils.dir_util
 test_program = 'example/user/hes_fixed_math.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
@@ -365,7 +364,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
 def example_db (file_name) :

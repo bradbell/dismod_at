@@ -99,7 +99,6 @@ import os
 import csv
 import numpy
 import scipy.integrate
-import distutils.dir_util
 #
 # dismod_at
 local_dir = os.getcwd() + '/python'
@@ -117,7 +116,8 @@ if sys.argv[0] != example  or len(sys.argv) != 1 :
 #
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
 # BEGIN RATE_TRUE

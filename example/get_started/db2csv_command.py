@@ -24,7 +24,6 @@
 import sys
 import os
 import copy
-import distutils.dir_util
 import csv
 import math
 # ---------------------------------------------------------------------------
@@ -53,7 +52,8 @@ sys.path.append( os.getcwd() + '/example/get_started' )
 import get_started_db
 #
 # change into the build/example/get_started directory
-distutils.dir_util.mkpath(test_dir)
+if not os.path.exists(test_dir) :
+    os.makedirs(test_dir)
 os.chdir(test_dir)
 # ---------------------------------------------------------------------------
 # create get_started.db

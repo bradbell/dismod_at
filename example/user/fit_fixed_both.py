@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-20 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -96,7 +96,6 @@ united_states_random_effect = +0.5
 # ------------------------------------------------------------------------
 import sys
 import os
-import distutils.dir_util
 import copy
 from math import exp
 test_program = 'example/user/fit_fixed_both.py'
@@ -114,7 +113,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example

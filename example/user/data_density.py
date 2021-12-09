@@ -91,7 +91,6 @@ if random_seed == 0 :
 #
 import sys
 import os
-import distutils.dir_util
 import copy
 import math
 import random
@@ -110,7 +109,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
 import dismod_at
 #
 # change into the build/example/user directory
-distutils.dir_util.mkpath('build/example/user')
+if not os.path.exists('build/example/user') :
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def example_db (file_name) :

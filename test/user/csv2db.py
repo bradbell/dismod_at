@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-18 University of Washington
+#           Copyright (C) 2014-21 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -11,7 +11,6 @@ import sys
 import os
 import csv
 import subprocess
-import distutils.dir_util
 #
 # dismod_at
 local_dir = os.getcwd() + '/python'
@@ -30,7 +29,8 @@ print(test_program)
 #
 #
 # change into the build/test/user directory
-distutils.dir_util.mkpath('build/test/user')
+if not os.path.exists('build/test/user') :
+    os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ============================================================================
 # Test case where age and time grids are all the age and time points
