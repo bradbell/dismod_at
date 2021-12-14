@@ -280,7 +280,7 @@ database   = file_name
 rate_set   = { 'iota', 'chi' }
 pdf_file   = 'example.pdf'
 plot_title = 'Example Rate Plot'
-plot_set   = dismod_at.plot_rate_fit(database, rate_set, pdf_file, plot_title)
+plot_set   = dismod_at.plot_rate_fit(database, pdf_file, plot_title, rate_set)
 assert plot_set == rate_set
 # END call plot_rate_fit
 # -----------------------------------------------------------------------

@@ -20,7 +20,7 @@ $section Plot The Rates for a Fit$$
 
 $head Syntax$$
 $icode%plot_set% = plot_rate_fit(
-	%database%, %rate_set%, %pdf_file%, %plot_title%
+	%database%, %pdf_file%, %plot_title%, %rate_set%
 )
 %$$
 
@@ -31,16 +31,16 @@ $cref/fit/fit_command/$$.
 If there is a $cref sample_table$$ it is assumed
 it was created using a $cref sample_command$$ after the $cref fit_command$$.
 
-$head rate_set$$
-Each element of this $code set$$ an $code str$$ containing a
-$cref/rate_name/rate_table/rate_name/$$
-that we are plotting the fit for.
-
 $head pdf_file$$
 Is the location where the pdf file containing the plot will be placed.
 
 $head plot_title$$
 This $code str$$ is a title printed at the top of every plot.
+
+$head rate_set$$
+Each element of this $code set$$ an $code str$$ containing a
+$cref/rate_name/rate_table/rate_name/$$
+that we are plotting the fit for.
 
 $head plot_set$$
 Each element of this $code set$$ is a $code str$$ containing
@@ -88,7 +88,7 @@ def check4table(cursor, table_name) :
 		result = True
 	return result
 # ----------------------------------------------------------------------------
-def plot_rate_fit(database, rate_set, pdf_file, plot_title) :
+def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
 	#
 	# tables
 	new        = False

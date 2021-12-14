@@ -70,8 +70,14 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2021$$
 
 $head 12-14$$
+$list number$$
 Add the $cref user_plot_curve.py$$ example and fix the title in
 $cref user_plot_rate_fit.py$$, $cref user_plot_data_fit.py$$.
+$lnext
+$bold API Change$$:
+Move $cref/rate_set/plot_rate_fit/rate_set/$$ to the last
+$code plot_rate_fit$$ argument.
+$lend
 
 $head 12-09$$
 Add the $icode file_stdout$$, $icode file_stderr$$, and
