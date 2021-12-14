@@ -77,6 +77,12 @@ $lnext
 $bold API Change$$:
 Move $cref/rate_set/plot_rate_fit/rate_set/$$ to the last
 $code plot_rate_fit$$ argument.
+$lnext
+The $cref system_command_prc$$ function now puts quotes around
+command line arguments that has spaces (when it prints a command).
+$lnext
+The $cref plot_rate_fit$$ and $cref plot_data_fit$$ routines
+now have a command line interface in $code dismodat.py$$.
 $lend
 
 $head 12-09$$

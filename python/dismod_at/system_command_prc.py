@@ -130,7 +130,13 @@ def system_command_prc(
 	capture_stderr = return_stderr or (file_stderr is not None)
 	#
 	# command_str
-	command_str = ' '.join(command)
+	command_str = ''
+	for arg in command :
+		if ' ' in arg :
+			command_str += f" '{arg}'"
+		else :
+			command_str += f' {arg}'
+	command_str = command_str[1:]
 	#
 	# print
 	if print_command :

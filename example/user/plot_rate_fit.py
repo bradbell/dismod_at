@@ -325,6 +325,16 @@ for (var_id, row) in enumerate(var_table) :
 	err    = fit_var_value  / check - 1.0
 	assert abs(err) < 1e-6
 # -----------------------------------------------------------------------------
-print(f'Plot file: build/example/user/{pdf_file}')
+# Run plot at unix command line
+os.chdir('../../..')
+program  = 'bin/dismodat.py'
+database = f'build/example/user/{database}'
+pdf_file = f'build/example/user/{pdf_file}'
+rate_set = 'iota chi'
+dismod_at.system_command_prc( [
+	program, database, 'plot_rate_fit', pdf_file, plot_title, rate_set
+] )
+# -----------------------------------------------------------------------------
+print(f'Plot file: {pdf_file}')
 print('plot_rate_fit.py: OK')
 # END PYTHON

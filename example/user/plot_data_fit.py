@@ -297,15 +297,15 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 # --------------------------------------------------------------------------
 # BEGIN call plot_data_fit
 database          = file_name
-integrand_list    = [ 'Sincidence', 'mtexcess', 'prevalence' ]
 pdf_file          = 'example.pdf'
 plot_title        = 'Example Data Plot'
+integrand_list    = [ 'Sincidence', 'mtexcess', 'prevalence' ]
 n_fit_dict     = dismod_at.plot_data_fit(
 	database          = database,
 	pdf_file          = pdf_file,
-	integrand_list    = integrand_list,
 	plot_title        = plot_title,
 	max_plot          = max_plot,
+	integrand_list    = integrand_list,
 )
 assert n_fit_dict['Sincidence'] == n_data - 1
 assert n_fit_dict['mtexcess'] == n_data - 1
@@ -345,6 +345,15 @@ for (var_id, row) in enumerate(var_table) :
 	tol    = 3.0 * meas_cv / math.sqrt( n_data )
 	assert abs(err) < tol
 # -----------------------------------------------------------------------------
-print(f'Plot file: build/example/user/{pdf_file}')
+# Run plot at unix command line
+os.chdir('../../..')
+program  = 'bin/dismodat.py'
+database = f'build/example/user/{database}'
+pdf_file = f'build/example/user/{pdf_file}'
+max_plot = str(max_plot)
+dismod_at.system_command_prc( [
+	program, database, 'plot_data_fit', pdf_file, plot_title, max_plot
+] )
+print(f'Plot file: {pdf_file}')
 print('plot_data_fit.py: OK')
 # END PYTHON

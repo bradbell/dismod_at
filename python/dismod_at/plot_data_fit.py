@@ -34,14 +34,6 @@ This $code str$$
 is the location where the pdf file containing the plot will be placed.
 This argument can't be $code None$$.
 
-$head integrand_list$$
-Each element of this $code list$$ is a $code str$$ containing an
-$cref/integrand_name/integrand_table/integrand_name/$$
-that we are plotting the fit for.
-If this argument is $code None$$ all of the integrands,
-except those with names that begin with $code mulcov_$$,
-are included.
-
 $head plot_title$$
 This $code str$$ is extra text printed at the beginning of the
 title for each plot.
@@ -54,6 +46,14 @@ If this argument is less that the number of values for an integrand,
 the values are randomly sub-sampled keeping the same order.
 The x-axis (data index) is the original index value before sub-sampling.
 If this argument is $code None$$ no sub-sampling is done.
+
+$head integrand_list$$
+Each element of this $code list$$ is a $code str$$ containing an
+$cref/integrand_name/integrand_table/integrand_name/$$
+that we are plotting the fit for.
+If this argument is $code None$$ all of the integrands,
+except those with names that begin with $code mulcov_$$,
+are included.
 
 $head n_fit_dict$$
 This is a dictionary with keys that are the integrand names
@@ -110,9 +110,9 @@ def plot_data_fit(
 # n_fit_dict = plot_data_fit(
 	database          = None,
 	pdf_file          = None,
-	integrand_list    = None,
 	plot_title        = None,
 	max_plot          = None,
+	integrand_list    = None,
 # )
 # END syntax
 ) :
