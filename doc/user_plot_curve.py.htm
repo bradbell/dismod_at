@@ -1,0 +1,171 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Example Plotting Log-Scaled Values w.r.t Age and Time</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Example Plotting Log-Scaled Values w.r.t Age and Time">
+<meta name="keywords" id="keywords" content=" example plotting log-scaled values w.r.t age time z_name grid function ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_plot_curve.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user_example</option>
+<option>user_plot_curve.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="user_one_function.py.htm" target="_top">Prev</a>
+</td><td><a href="user_plot_data_fit.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
+</td>
+<td>user_plot_curve.py</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Example Plotting Log-Scaled Values w.r.t Age and Time</big></big></b></center>
+
+<br><a href="user_plot_curve.py.htm#z_name" target="_top">z_name</a>
+<br><a href="user_plot_curve.py.htm#Age Grid" target="_top">Age&nbsp;Grid</a>
+<br><a href="user_plot_curve.py.htm#Time Grid" target="_top">Time&nbsp;Grid</a>
+<br><a href="user_plot_curve.py.htm#Function" target="_top">Function</a>
+<br><br>
+<b><big><a name="z_name" id="z_name">z_name</a></big></b>
+<br>
+For this example the name of the z variables are <code><font color="blue">A</font></code>, <code><font color="blue">B</font></code>,
+<code><font color="blue">C</font></code>, and <code><font color="blue">D</font></code>
+
+<br>
+<br>
+<b><big><a name="Age Grid" id="Age Grid">Age Grid</a></big></b>
+<br>
+The age grid for this example in 0.0, 5.0, ..., 100.0.
+
+<br>
+<br>
+<b><big><a name="Time Grid" id="Time Grid">Time Grid</a></big></b>
+<br>
+The time grid for this example is 1980.0, 1985.0, ..., 2020.0.
+
+<br>
+<br>
+<b><big><a name="Function" id="Function">Function</a></big></b>
+<br>
+The function for this example is
+<small>@[@
+
+  f(a, t) = \lambda * \exp \left[
+      - \left( \frac{a - 50}{100} \right)^2
+      - \left( \frac{(t - 2000.0}{20.0} \right)^2
+\right]
+
+@]@</small>
+where <small>@(@
+a
+@)@</small> is age, <small>@(@
+t
+@)@</small> is time, and
+<small>@(@
+lambsa
+@)@</small> is 1, 2, 3, 4 for variables
+<code><font color="blue">A</font></code>, <code><font color="blue">B</font></code>, <code><font color="blue">C</font></code>, <code><font color="blue">D</font></code> respectively.
+
+<pre><tt><b><font color="#000080">import</font></b> sys
+<b><font color="#000080">import</font></b> os
+<b><font color="#000080">import</font></b> string
+<b><font color="#000080">import</font></b> math
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/plot_curve.py'</font>
+<b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
+     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font>test_program<font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># import dismod_at</font></i>
+local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
+<b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+<b><font color="#000080">import</font></b> dismod_at
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># change into the build/example/user directory</font></i>
+<b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">exists</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font> <font color="#990000">:</font>
+     os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># fun</font></i>
+<b><font color="#0000FF">def</font></b> <b><font color="#000000">fun</font></b><font color="#990000">(</font>a<font color="#990000">,</font> t<font color="#990000">,</font> z_name<font color="#990000">)</font> <font color="#990000">:</font>
+     index     <font color="#990000">=</font> <b><font color="#000000">ord</font></b><font color="#990000">(</font>z_name<font color="#990000">)</font> <font color="#990000">-</font> <b><font color="#000000">ord</font></b><font color="#990000">(</font><font color="#FF0000">'A'</font><font color="#990000">)</font>
+     factor    <font color="#990000">=</font> index <font color="#990000">+</font> <font color="#993399">1</font>
+     a_scaled  <font color="#990000">=</font> <font color="#990000">(</font>a <font color="#990000">-</font> <font color="#993399">50.0</font><font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">100.0</font>
+     t_scaled  <font color="#990000">=</font> <font color="#990000">(</font>t <font color="#990000">-</font> <font color="#993399">2000.0</font><font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">20.0</font>
+     quad      <font color="#990000">=</font> a_scaled<font color="#990000">**</font><font color="#993399">2</font> <font color="#990000">+</font> t_scaled<font color="#990000">**</font><font color="#993399">2</font>
+     z         <font color="#990000">=</font> factor <font color="#990000">*</font> math<font color="#990000">.</font><b><font color="#000000">exp</font></b><font color="#990000">(</font> <font color="#990000">-</font> quad <font color="#990000">)</font>
+     <b><font color="#0000FF">return</font></b> z
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># plot_data</font></i>
+plot_data <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
+<b><font color="#0000FF">for</font></b> z_name <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'A'</font><font color="#990000">,</font> <font color="#FF0000">'B'</font><font color="#990000">,</font> <font color="#FF0000">'C'</font><font color="#990000">,</font> <font color="#FF0000">'D'</font> <font color="#990000">]</font> <font color="#990000">:</font>
+     plot_data<font color="#990000">[</font>z_name<font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+     <b><font color="#0000FF">for</font></b> age <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> <font color="#993399">101</font><font color="#990000">,</font> <font color="#993399">5</font><font color="#990000">)</font> <font color="#990000">:</font>
+          <b><font color="#0000FF">for</font></b> time <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">1980</font><font color="#990000">,</font> <font color="#993399">2021</font><font color="#990000">,</font> <font color="#993399">5</font><font color="#990000">)</font> <font color="#990000">:</font>
+               value <font color="#990000">=</font> <b><font color="#000000">fun</font></b><font color="#990000">(</font>age<font color="#990000">,</font> time<font color="#990000">,</font> z_name<font color="#990000">)</font>
+               std   <font color="#990000">=</font> value <font color="#990000">/</font> <font color="#993399">10.0</font>
+               row <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'age'</font><font color="#990000">:</font> age<font color="#990000">,</font> <font color="#FF0000">'time'</font><font color="#990000">:</font> time<font color="#990000">,</font> <font color="#FF0000">'value'</font><font color="#990000">:</font> value<font color="#990000">,</font> <font color="#FF0000">'std'</font><font color="#990000">:</font>  std <font color="#990000">}</font>
+               plot_data<font color="#990000">[</font>z_name<font color="#990000">].</font><b><font color="#000000">append</font></b><font color="#990000">(</font> row <font color="#990000">)</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># plot_limit</font></i>
+plot_limit <font color="#990000">=</font> <font color="#990000">{</font>
+     <font color="#FF0000">'age_min'</font><font color="#990000">:</font> <font color="#993399">0.0</font><font color="#990000">,</font> <font color="#FF0000">'age_max'</font><font color="#990000">:</font> <font color="#993399">100.0</font><font color="#990000">,</font> <font color="#FF0000">'time_min'</font><font color="#990000">:</font> <font color="#993399">1980.0</font><font color="#990000">,</font> <font color="#FF0000">'time_max'</font><font color="#990000">:</font> <font color="#993399">2020.0</font>
+<font color="#990000">}</font>
+<i><font color="#9A1900">#</font></i>
+<i><font color="#9A1900"># plot_curve</font></i>
+pdf_file   <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
+plot_title <font color="#990000">=</font> <font color="#FF0000">'Example Curve Plot'</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">plot_curve</font></b><font color="#990000">(</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">,</font> plot_limit<font color="#990000">,</font> plot_data<font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font>f<font color="#FF0000">'Plot file: build/example/user/{pdf_file}'</font><font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'plot_curve.py: OK'</font><font color="#990000">)</font></tt></pre>
+
+<hr>Input File: example/user/plot_curve.py
+
+</body>
+</html>

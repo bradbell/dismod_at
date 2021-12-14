@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Plot The Rates for a Fit</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Plot The Rates for a Fit">
-<meta name="keywords" id="keywords" content=" plot the rates fit syntax database rate_set pdf_file plot_title plot_set example ">
+<meta name="keywords" id="keywords" content=" plot the rates fit syntax database pdf_file plot_title rate_set plot_set example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,9 +68,9 @@ A:active { color : purple }
 
 <br><a href="plot_rate_fit.htm#Syntax" target="_top">Syntax</a>
 <br><a href="plot_rate_fit.htm#database" target="_top">database</a>
-<br><a href="plot_rate_fit.htm#rate_set" target="_top">rate_set</a>
 <br><a href="plot_rate_fit.htm#pdf_file" target="_top">pdf_file</a>
 <br><a href="plot_rate_fit.htm#plot_title" target="_top">plot_title</a>
+<br><a href="plot_rate_fit.htm#rate_set" target="_top">rate_set</a>
 <br><a href="plot_rate_fit.htm#plot_set" target="_top">plot_set</a>
 <br><a href="plot_rate_fit.htm#Example" target="_top">Example</a>
 <br><br>
@@ -79,7 +79,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>plot_set</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;plot_rate_fit(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_set</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pdf_file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>plot_title</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pdf_file</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>plot_title</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_set</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )<br>
 </span></font></code>
 <br>
@@ -97,15 +97,6 @@ it was created using a <a href="sample_command.htm" target="_top"><span style='w
 
 <br>
 <br>
-<b><big><a name="rate_set" id="rate_set">rate_set</a></big></b>
-<br>
-Each element of this <code><font color="blue">set</font></code> an <code><font color="blue">str</font></code> containing a
-<a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate_name</span></a>
-
-that we are plotting the fit for.
-
-<br>
-<br>
 <b><big><a name="pdf_file" id="pdf_file">pdf_file</a></big></b>
 <br>
 Is the location where the pdf file containing the plot will be placed.
@@ -115,6 +106,15 @@ Is the location where the pdf file containing the plot will be placed.
 <b><big><a name="plot_title" id="plot_title">plot_title</a></big></b>
 <br>
 This <code><font color="blue">str</font></code> is a title printed at the top of every plot.
+
+<br>
+<br>
+<b><big><a name="rate_set" id="rate_set">rate_set</a></big></b>
+<br>
+Each element of this <code><font color="blue">set</font></code> an <code><font color="blue">str</font></code> containing a
+<a href="rate_table.htm#rate_name" target="_top"><span style='white-space: nowrap'>rate_name</span></a>
+
+that we are plotting the fit for.
 
 <br>
 <br>

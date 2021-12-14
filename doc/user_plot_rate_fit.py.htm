@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Case with no Children; i.e., no Random Effects</title>
+<title>Example Plotting The Rates for a Fit</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Case with no Children; i.e., no Random Effects">
-<meta name="keywords" id="keywords" content=" case with no children; i.e. random effects nodes rates integrands data call to plot_rate_fit source code ">
+<meta name="description" id="description" content="Example Plotting The Rates for a Fit">
+<meta name="keywords" id="keywords" content=" example plotting the rates fit nodes integrands data call to plot_rate_fit source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,7 +61,7 @@ A:active { color : purple }
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Case with no Children; i.e., no Random Effects</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Example Plotting The Rates for a Fit</big></big></b></center>
 
 <br><a href="user_plot_rate_fit.py.htm#Nodes" target="_top">Nodes</a>
 <br><a href="user_plot_rate_fit.py.htm#Rates" target="_top">Rates</a>
@@ -145,7 +145,7 @@ database   <font color="#990000">=</font> file_name
 rate_set   <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'iota'</font><font color="#990000">,</font> <font color="#FF0000">'chi'</font> <font color="#990000">}</font>
 pdf_file   <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
 plot_title <font color="#990000">=</font> <font color="#FF0000">'Example Rate Plot'</font>
-plot_set   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_rate_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> rate_set<font color="#990000">,</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">)</font>
+plot_set   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_rate_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">,</font> rate_set<font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> plot_set <font color="#990000">==</font> rate_set</tt></pre>
 <br>
 <b><big><a name="Source Code" id="Source Code">Source Code</a></big></b>
@@ -173,7 +173,7 @@ local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><fon
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change into the build/example/user directory</font></i>
 <b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">exists</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font> <font color="#990000">:</font>
-    os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+     os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 random_seed <font color="#990000">=</font> <b><font color="#000000">int</font></b><font color="#990000">(</font> time<font color="#990000">.</font><b><font color="#000000">time</font></b><font color="#990000">()</font> <font color="#990000">)</font>
@@ -351,7 +351,7 @@ database   <font color="#990000">=</font> file_name
 rate_set   <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'iota'</font><font color="#990000">,</font> <font color="#FF0000">'chi'</font> <font color="#990000">}</font>
 pdf_file   <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
 plot_title <font color="#990000">=</font> <font color="#FF0000">'Example Rate Plot'</font>
-plot_set   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_rate_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> rate_set<font color="#990000">,</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">)</font>
+plot_set   <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_rate_fit</font></b><font color="#990000">(</font>database<font color="#990000">,</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">,</font> rate_set<font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> plot_set <font color="#990000">==</font> rate_set
 <i><font color="#9A1900"># END call plot_rate_fit</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------</font></i>
@@ -396,7 +396,17 @@ n_grid <font color="#990000">=</font> <font color="#990000">(</font> <b><font co
      err    <font color="#990000">=</font> fit_var_value  <font color="#990000">/</font> check <font color="#990000">-</font> <font color="#993399">1.0</font>
      <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font>f<font color="#FF0000">'Plot file: build/example/user/{pdf_file}'</font><font color="#990000">)</font>
+<i><font color="#9A1900"># Run plot at unix command line</font></i>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'../../..'</font><font color="#990000">)</font>
+program  <font color="#990000">=</font> <font color="#FF0000">'bin/dismodat.py'</font>
+database <font color="#990000">=</font> f<font color="#FF0000">'build/example/user/{database}'</font>
+pdf_file <font color="#990000">=</font> f<font color="#FF0000">'build/example/user/{pdf_file}'</font>
+rate_set <font color="#990000">=</font> <font color="#FF0000">'iota chi'</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font> <font color="#990000">[</font>
+     program<font color="#990000">,</font> database<font color="#990000">,</font> <font color="#FF0000">'plot_rate_fit'</font><font color="#990000">,</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">,</font> rate_set
+<font color="#990000">]</font> <font color="#990000">)</font>
+<i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font>f<font color="#FF0000">'Plot file: {pdf_file}'</font><font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'plot_rate_fit.py: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/user/plot_rate_fit.py

@@ -12,10 +12,10 @@ MathJax.Hub.Config({
 >
 </script>
 <head>
-<title>Case with no Children; i.e., no Random Effects</title>
+<title>Example Plotting The Data and Its Fit</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
-<meta name="description" id="description" content="Case with no Children; i.e., no Random Effects">
-<meta name="keywords" id="keywords" content=" case with no children; i.e. random effects nodes rates integrands data n_data max_plot measurement noise hold_out call to plot_data_fit source code ">
+<meta name="description" id="description" content="Example Plotting The Data and Its Fit">
+<meta name="keywords" id="keywords" content=" example plotting the data its fit nodes rates integrands n_data max_plot measurement noise hold_out call to plot_data_fit source code ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_one_function.py.htm" target="_top">Prev</a>
+<td><a href="user_plot_curve.py.htm" target="_top">Prev</a>
 </td><td><a href="user_plot_rate_fit.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
@@ -61,7 +61,7 @@ A:active { color : purple }
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
-\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Case with no Children; i.e., no Random Effects</big></big></b></center>
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Example Plotting The Data and Its Fit</big></big></b></center>
 
 <br><a href="user_plot_data_fit.py.htm#Nodes" target="_top">Nodes</a>
 <br><a href="user_plot_data_fit.py.htm#Rates" target="_top">Rates</a>
@@ -189,15 +189,15 @@ The <a href="data_table.htm#hold_out" target="_top"><span style='white-space: no
 
 <pre><tt>
 database          <font color="#990000">=</font> file_name
-integrand_list    <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font> <font color="#FF0000">'mtexcess'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
 pdf_file          <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
 plot_title        <font color="#990000">=</font> <font color="#FF0000">'Example Data Plot'</font>
+integrand_list    <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font> <font color="#FF0000">'mtexcess'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
 n_fit_dict     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_data_fit</font></b><font color="#990000">(</font>
      database          <font color="#990000">=</font> database<font color="#990000">,</font>
      pdf_file          <font color="#990000">=</font> pdf_file<font color="#990000">,</font>
-     integrand_list    <font color="#990000">=</font> integrand_list<font color="#990000">,</font>
      plot_title        <font color="#990000">=</font> plot_title<font color="#990000">,</font>
      max_plot          <font color="#990000">=</font> max_plot<font color="#990000">,</font>
+     integrand_list    <font color="#990000">=</font> integrand_list<font color="#990000">,</font>
 <font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> n_fit_dict<font color="#990000">[</font><font color="#FF0000">'Sincidence'</font><font color="#990000">]</font> <font color="#990000">==</font> n_data <font color="#990000">-</font> <font color="#993399">1</font>
 <b><font color="#0000FF">assert</font></b> n_fit_dict<font color="#990000">[</font><font color="#FF0000">'mtexcess'</font><font color="#990000">]</font> <font color="#990000">==</font> n_data <font color="#990000">-</font> <font color="#993399">1</font>
@@ -398,15 +398,15 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_p
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># BEGIN call plot_data_fit</font></i>
 database          <font color="#990000">=</font> file_name
-integrand_list    <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font> <font color="#FF0000">'mtexcess'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
 pdf_file          <font color="#990000">=</font> <font color="#FF0000">'example.pdf'</font>
 plot_title        <font color="#990000">=</font> <font color="#FF0000">'Example Data Plot'</font>
+integrand_list    <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'Sincidence'</font><font color="#990000">,</font> <font color="#FF0000">'mtexcess'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font> <font color="#990000">]</font>
 n_fit_dict     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">plot_data_fit</font></b><font color="#990000">(</font>
      database          <font color="#990000">=</font> database<font color="#990000">,</font>
      pdf_file          <font color="#990000">=</font> pdf_file<font color="#990000">,</font>
-     integrand_list    <font color="#990000">=</font> integrand_list<font color="#990000">,</font>
      plot_title        <font color="#990000">=</font> plot_title<font color="#990000">,</font>
      max_plot          <font color="#990000">=</font> max_plot<font color="#990000">,</font>
+     integrand_list    <font color="#990000">=</font> integrand_list<font color="#990000">,</font>
 <font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> n_fit_dict<font color="#990000">[</font><font color="#FF0000">'Sincidence'</font><font color="#990000">]</font> <font color="#990000">==</font> n_data <font color="#990000">-</font> <font color="#993399">1</font>
 <b><font color="#0000FF">assert</font></b> n_fit_dict<font color="#990000">[</font><font color="#FF0000">'mtexcess'</font><font color="#990000">]</font> <font color="#990000">==</font> n_data <font color="#990000">-</font> <font color="#993399">1</font>
@@ -446,7 +446,16 @@ fit_var_table   <font color="#990000">=</font> dismod_at<font color="#990000">.<
      tol    <font color="#990000">=</font> <font color="#993399">3.0</font> <font color="#990000">*</font> meas_cv <font color="#990000">/</font> math<font color="#990000">.</font><b><font color="#000000">sqrt</font></b><font color="#990000">(</font> n_data <font color="#990000">)</font>
      <b><font color="#0000FF">assert</font></b> <b><font color="#000000">abs</font></b><font color="#990000">(</font>err<font color="#990000">)</font> <font color="#990000">&lt;</font> tol
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font>f<font color="#FF0000">'Plot file: build/example/user/{pdf_file}'</font><font color="#990000">)</font>
+<i><font color="#9A1900"># Run plot at unix command line</font></i>
+os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'../../..'</font><font color="#990000">)</font>
+program  <font color="#990000">=</font> <font color="#FF0000">'bin/dismodat.py'</font>
+database <font color="#990000">=</font> f<font color="#FF0000">'build/example/user/{database}'</font>
+pdf_file <font color="#990000">=</font> f<font color="#FF0000">'build/example/user/{pdf_file}'</font>
+max_plot <font color="#990000">=</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_plot<font color="#990000">)</font>
+dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font> <font color="#990000">[</font>
+     program<font color="#990000">,</font> database<font color="#990000">,</font> <font color="#FF0000">'plot_data_fit'</font><font color="#990000">,</font> pdf_file<font color="#990000">,</font> plot_title<font color="#990000">,</font> max_plot
+<font color="#990000">]</font> <font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font>f<font color="#FF0000">'Plot file: {pdf_file}'</font><font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'plot_data_fit.py: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/user/plot_data_fit.py

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Plot The Data Fit By Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Plot The Data Fit By Integrand">
-<meta name="keywords" id="keywords" content=" plot the data fit integrand syntax database pdf_file integrand_list plot_title max_plot n_fit_dict legend table hold out point symbol plus green red black example ">
+<meta name="keywords" id="keywords" content=" plot the data fit integrand syntax database pdf_file plot_title max_plot integrand_list n_fit_dict legend table hold out point symbol plus green red black example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -69,9 +69,9 @@ A:active { color : purple }
 <br><a href="plot_data_fit.htm#Syntax" target="_top">Syntax</a>
 <br><a href="plot_data_fit.htm#database" target="_top">database</a>
 <br><a href="plot_data_fit.htm#pdf_file" target="_top">pdf_file</a>
-<br><a href="plot_data_fit.htm#integrand_list" target="_top">integrand_list</a>
 <br><a href="plot_data_fit.htm#plot_title" target="_top">plot_title</a>
 <br><a href="plot_data_fit.htm#max_plot" target="_top">max_plot</a>
+<br><a href="plot_data_fit.htm#integrand_list" target="_top">integrand_list</a>
 <br><a href="plot_data_fit.htm#n_fit_dict" target="_top">n_fit_dict</a>
 <br><a href="plot_data_fit.htm#Plot Legend" target="_top">Plot&nbsp;Legend</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="plot_data_fit.htm#Plot Legend.Data Table Hold Out" target="_top">Data&nbsp;Table&nbsp;Hold&nbsp;Out</a>
@@ -87,9 +87,9 @@ A:active { color : purple }
 <i><font color="#9A1900"># n_fit_dict = plot_data_fit(</font></i>
      database          <font color="#990000">=</font> None<font color="#990000">,</font>
      pdf_file          <font color="#990000">=</font> None<font color="#990000">,</font>
-     integrand_list    <font color="#990000">=</font> None<font color="#990000">,</font>
      plot_title        <font color="#990000">=</font> None<font color="#990000">,</font>
      max_plot          <font color="#990000">=</font> None<font color="#990000">,</font>
+     integrand_list    <font color="#990000">=</font> None<font color="#990000">,</font>
 <i><font color="#9A1900"># )</font></i></tt></pre>
 <br>
 <b><big><a name="database" id="database">database</a></big></b>
@@ -110,18 +110,6 @@ This argument can't be <code><font color="blue">None</font></code>.
 
 <br>
 <br>
-<b><big><a name="integrand_list" id="integrand_list">integrand_list</a></big></b>
-<br>
-Each element of this <code><font color="blue">list</font></code> is a <code><font color="blue">str</font></code> containing an
-<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
-
-that we are plotting the fit for.
-If this argument is <code><font color="blue">None</font></code> all of the integrands,
-except those with names that begin with <code><font color="blue">mulcov_</font></code>,
-are included.
-
-<br>
-<br>
 <b><big><a name="plot_title" id="plot_title">plot_title</a></big></b>
 <br>
 This <code><font color="blue">str</font></code> is extra text printed at the beginning of the
@@ -138,6 +126,18 @@ If this argument is less that the number of values for an integrand,
 the values are randomly sub-sampled keeping the same order.
 The x-axis (data index) is the original index value before sub-sampling.
 If this argument is <code><font color="blue">None</font></code> no sub-sampling is done.
+
+<br>
+<br>
+<b><big><a name="integrand_list" id="integrand_list">integrand_list</a></big></b>
+<br>
+Each element of this <code><font color="blue">list</font></code> is a <code><font color="blue">str</font></code> containing an
+<a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand_name</span></a>
+
+that we are plotting the fit for.
+If this argument is <code><font color="blue">None</font></code> all of the integrands,
+except those with names that begin with <code><font color="blue">mulcov_</font></code>,
+are included.
 
 <br>
 <br>
