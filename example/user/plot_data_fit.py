@@ -16,7 +16,7 @@
 #	cv
 # $$
 #
-# $section Case with no Children; i.e., no Random Effects$$
+# $section Example Plotting The Data and Its Fit$$
 #
 # $head Nodes$$
 # There are four nodes in this example.

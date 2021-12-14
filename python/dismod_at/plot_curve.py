@@ -15,7 +15,7 @@ $spell
 	str
 $$
 
-$section Plot A Value With Respect To Age and Time$$
+$section Plot Log-Scaled Values With Respect To Age and Time$$
 
 $head Syntax$$
 $srcthisfile%0%# BEGIN syntax%# END syntax%1%$$
@@ -85,7 +85,7 @@ Furthermore, it this appears, it will be plotted and it must not be all zero
 (for one $icode z_list$$).
 
 $head Example$$
-See the call to this routine in $cref plot_rate_fit$$
+See $cref user_plot_curve.py$$
 
 $end
 '''

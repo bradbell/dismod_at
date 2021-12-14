@@ -16,7 +16,7 @@
 #	cv
 # $$
 #
-# $section Case with no Children; i.e., no Random Effects$$
+# $section Example Plotting The Rates for a Fit$$
 #
 # $head Nodes$$
 # There are four nodes in this example.
@@ -102,7 +102,7 @@ import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-    os.makedirs('build/example/user')
+	os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
 random_seed = int( time.time() )
