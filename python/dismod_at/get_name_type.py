@@ -67,7 +67,7 @@ def get_name_type(connection, tbl_name) :
 	cmd    += "'" + tbl_name + "';"
 	info    = cursor.execute(cmd).fetchall()
 	if len(info) == 0 :
-		msg = f'get_name_type: table {tbl_name} does not exit in {database}'
+		msg = f'get_name_type: table {tbl_name} does not exist in {database}'
 		assert False, msg
 	#
 	# pragma table_info for this table
