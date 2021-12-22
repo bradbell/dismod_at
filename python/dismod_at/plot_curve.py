@@ -127,7 +127,7 @@ def plot_curve(
 	n_color_style = len( color_style_list )
 	#
 	# pdf
-	pdf = matplotlib.backends.backend_pdf.PdfPages(pdf_file )
+	pdf = matplotlib.backends.backend_pdf.PdfPages(pdf_file)
 	#
 	# z_name
 	for z_name in plot_data :

@@ -202,7 +202,7 @@ def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
 	}
 	#
 	dismod_at.plot_curve(
-		pdf_file = pdf_file,
+		pdf_file   = pdf_file,
 		plot_title = plot_title,
 		plot_limit = plot_limit,
 		plot_data  = plot_data,
