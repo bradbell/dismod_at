@@ -346,8 +346,6 @@ def plot_data_fit(
 						pyplot.axhline(
 							y, linestyle='solid', color='black', alpha=0.3
 						)
-					else :
-						  sp.set_xticklabels( [] )
 					if subplot_index == 0 :
 						if plot_title is None :
 							pyplot.title( integrand_name )

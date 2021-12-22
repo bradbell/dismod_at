@@ -69,6 +69,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 12-22$$
+Fix x-axis tick labels in $cref plot_data_fit$$ plots.
+
 $head 12-14$$
 $list number$$
 Add the $cref user_plot_curve.py$$ example and fix the title in
