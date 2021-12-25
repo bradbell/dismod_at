@@ -53,8 +53,8 @@ import dismod_at
 # ---------------------------------------------------------------------------
 # check usage
 usage  = 'dismodat.py database db2csv\n'
-usage += 'dismodat.py database pertrub tbl_name sigma'
-usage += 'dismodat.py database plot_rate_fit pdf_file plot_title rate_set'
+usage += 'dismodat.py database pertrub tbl_name sigma\n'
+usage += 'dismodat.py database plot_rate_fit pdf_file plot_title rate_set\n'
 usage += 'dismodat.py database plot_data_fit pdf_file plot_title max_plot'
 #
 # deprecated
