@@ -69,6 +69,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 12-27$$
+The system_command_prc routine used to print the error message
+when $cref/return_stderr/system_command_prc/return_stderr/$$ was false
+and $cref/file_stderr/system_command_prc/file_stderr/$$ was None.
+Now it puts the error message in the assertion that gets generated.
+
 $head 12-22$$
 Fix x-axis tick labels in $cref plot_data_fit$$ plots.
 

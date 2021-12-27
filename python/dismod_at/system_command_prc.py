@@ -24,7 +24,7 @@
 # $srcthisfile%0%# BEGIN syntax%# END syntax%1%$$
 #
 # $head Purpose$$
-# This routine combines the following steps:
+# This routine provides variations on the following steps:
 # $list number$$
 # Print the system command as it would appear in the shell; i.e.,
 # with arguments separated by spaces.
@@ -32,8 +32,8 @@
 # Run the system command and wait for it to complete.
 # $lnext
 # Check the integer value returned by the system command.
-# If it is non-zero, print the contents of stderr and then
-# raise an assertion.
+# If it is non-zero, an assert exception is raised with
+# stderr as the message in the exception.
 # $lnext
 # Return the contents of standard out as a python string.
 # $lend
@@ -56,8 +56,8 @@
 # If this argument is true, the command's standard error will be returned.
 # If this argument is false and $icode file_stderr$$ is not None,
 # standard error will be written to a file during the command execution.
-# Otherwise, if an error occurs, standard error will be printed
-# and $code system_command_prc$$ will terminate execution.
+# Otherwise, if an error occurs, an assertion is generated with
+# the commands standard error as the corresponding message.
 #
 # $head file_stdout$$
 # If $icode return_stdout$$ is true, this argument must be None.
@@ -145,6 +145,7 @@ def system_command_prc(
 	# write
 	if write_command :
 		file_stdout.write(command_str + '\n')
+		file_stdout.flush()
 	#
 	# stdout
 	if return_stdout :
@@ -181,10 +182,10 @@ def system_command_prc(
 	returncode = subprocess_return.returncode
 	if returncode != 0 :
 		# print error messages
-		print('system_command_prc failed: returncode = ' , returncode)
-		print( subprocess_return.stderr )
+		msg  = f'system_command_prc failed: returncode = {returncode}\n'
+		msg += subprocess_return.stderr
 		#
 		# raise an exception
-		assert returncode == 0
+		assert False, msg
 	#
 	return result
