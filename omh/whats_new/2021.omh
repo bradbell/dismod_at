@@ -69,6 +69,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 12-30$$
+Improve the error message that prints the rates when an integrand
+can not be computed; e.g.,
+prevalence can not be computed when S and C are zero.
+
 $head 12-27$$
 The system_command_prc routine used to print the error message
 when $cref/return_stderr/system_command_prc/return_stderr/$$ was false

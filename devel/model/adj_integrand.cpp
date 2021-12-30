@@ -617,11 +617,16 @@ CppAD::vector<Float> adj_integrand::line(
 			if( need_P )
 			{	msg += "S=" + CppAD::to_string(s_out[k]);
 				msg += ", C=" + CppAD::to_string(c_out[k]);
+				msg += ", ";
 			}
+			bool first_rate = true;
 			for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
 			{	if( need_rate[rate_id] )
-				{	msg += ", " + get_rate_name(rate_id) ;
+				{   if( ! first_rate )
+						msg += ", ";
+					msg += get_rate_name(rate_id) ;
 					msg += "=" + CppAD::to_string( rate[rate_id][k] );
+					first_rate = false;
 				}
 			}
 			throw CppAD::mixed::exception( "adj_integrand", msg);
@@ -694,7 +699,7 @@ CppAD::vector<Float> adj_integrand::line(
 }
 
 # define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE(Float)                    \
-    template                                                                \
+	template                                                                \
 	CppAD::vector<Float> adj_integrand::line(                               \
 		const CppAD::vector<double>&                  line_age         ,    \
 		const CppAD::vector<double>&                  line_time        ,    \
