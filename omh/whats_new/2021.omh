@@ -52,6 +52,7 @@ $spell
     util
     mkpath
     makedirs
+	sys
 
 $$
 $navigate%
@@ -72,6 +73,8 @@ $section Changes and Additions to Dismod_at During 2021$$
 $head 12-31$$
 An error message in $cref db2csv_command$$ was missing its assert.
 This has been fixed.
+In addition, all the $code sys.exit(msg)$$ calls were changed to
+$code assert False, msg$$ to make then easier to debug.
 
 $head 12-30$$
 Improve the error message that prints the rates when an integrand

@@ -688,11 +688,11 @@ def db2csv_command(database_file_arg) :
 			ty   = pair[1]
 			if name not in table_info :
 				msg = 'expected column ' + name + ' in table ' + table_name
-				sys.exit(msg)
+				assert False, msg
 			if  ty != table_info[name] :
 				msg  = 'expected type ' + ty +  ' for column ' + name
 				msg += ' of table ' + table_name
-				sys.exit(msg)
+				assert False, msg
 	# -------------------------------------------------------------------------
 	def convert2output(value_in) :
 		if value_in == None :
@@ -720,11 +720,11 @@ def db2csv_command(database_file_arg) :
 				if prior_id == None and const_value == None :
 					msg = 'both value_prior_id and const_value are null '
 					msg += 'in smooth_grid table\n'
-					sys.exit(msg)
+					assert False, msg
 				if prior_id != None and const_value != None :
 					msg = 'both value_prior_id and const_value are not null '
 					msg += 'in smooth_grid table\n'
-					sys.exit(msg)
+					assert False, msg
 			#
 			field_out = 'density' + extension
 			row_out[field_out] = ''
@@ -761,7 +761,7 @@ def db2csv_command(database_file_arg) :
 			if parent_id == node_id :
 				msg  = 'db2csv_command: node_id ' + str(node_id)
 				msg += ' is a descendant of itself, see the node table '
-				sys.exit(msg)
+				assert False, msg
 			if parent_id == parent_node_id :
 				name = table_data['node'][descendant_id]['node_name']
 				return name
@@ -833,7 +833,7 @@ def db2csv_command(database_file_arg) :
 		if not check4table( cursor, table ):
 			msg  = 'db2csv_command: the required table ' + table + '\n'
 			msg += 'is missing from file ' + file_name + '\n'
-			sys.exit(msg)
+			assert False, msg
 	#
 	have_table = dict()
 	have_table['depend_var']      = check4table(cursor, 'depend_var')
@@ -863,7 +863,7 @@ def db2csv_command(database_file_arg) :
 				else :
 					msg  += 'have ' + table + ' = false\n'
 			msg += 'in ' + file_name + '\n'
-			sys.exit(msg)
+			assert False, msg
 	#
 	table_list  = copy.copy( required_table_list )
 	for key in have_table :
@@ -893,7 +893,7 @@ def db2csv_command(database_file_arg) :
 				msg  = 'db2csv_command: tables should have same length:\n'
 				msg += 'length ' + left + '_table = ' + str(len_left) + '\n'
 				msg += 'length ' + right + '_table = ' + str(len_right) + '\n'
-				sys.exit(msg)
+				assert False, msg
 	# ----------------------------------------------------------------------
 	# check types in tables
 	#
@@ -1055,7 +1055,7 @@ def db2csv_command(database_file_arg) :
 	if parent_node_id == None and parent_node_name == None :
 		msg  = 'db2csv_command: neither parent_node_id nor parent_node_name\n'
 		msg += 'is present in the option table\n'
-		sys.exit(msg)
+		assert False, msg
 	if parent_node_id == None :
 		node_table = table_data['node']
 		for node_id in range( len( node_table ) ) :
@@ -1064,7 +1064,7 @@ def db2csv_command(database_file_arg) :
 	if parent_node_id == None :
 		msg  = 'db2csv_command: parent_node_name in option table '
 		msg += 'does not appear in the node table\n'
-		sys.exit(msg)
+		assert False, msg
 	# ----------------------------------------------------------------------
 	# minimum_meas_cv
 	minimum_meas_cv    = list()
@@ -1109,13 +1109,13 @@ def db2csv_command(database_file_arg) :
 		if have_table['fit_var'] :
 			msg = 'Have fit_var table but cannot find '
 			msg += 'fit command in the log table\n'
-			sys.exit(msg)
+			assert False, msg
 		simulate_index = ''
 	fit_simulate_index = simulate_index != ''
 	if fit_simulate_index and not have_table['data_sim'] :
 		msg  = 'Previous fit command in log table used simulated data but\n'
 		msg += 'cannot find data_sim table\n'
-		sys.exit(msg)
+		assert False, msg
 	if not have_table['data_sim'] :
 		simulate_index = None
 	else :
@@ -1182,7 +1182,7 @@ def db2csv_command(database_file_arg) :
 		if not found :
 			msg  = 'Error in option table at option_id = ' + str(option_id)
 			msg += '\noption_name = ' + row['option_name'] + ' is not valid'
-			sys.exit(msg)
+			assert False, msg
 		option_id += 1
 	for row in option_list :
 		if row[0] == 'parent_node_name' :
@@ -1194,7 +1194,7 @@ def db2csv_command(database_file_arg) :
 				msg  = 'Error in option table parent_node_id has name '
 				msg += parent_node_name
 				msg += '\nbut parent_node_name is ' + row[1]
-				sys.exit(msg)
+				assert False, msg
 		row_out = { 'option_name' : row[0], 'option_value' : row[1] }
 		if row[0] == 'hold_out_integrand' :
 			if row[1] == "" or row[1] is None :
@@ -1243,7 +1243,7 @@ def db2csv_command(database_file_arg) :
 		n_sample = len( table_data['sample'] )
 		if n_sample % n_var != 0 :
 			msg = 'length of sample table is not multiple of length var table'
-			sys.exit(msg)
+			assert False, msg
 		n_sample = n_sample / n_var
 		sam_avg  = n_var * [0.]
 		for row in table_data['sample'] :
