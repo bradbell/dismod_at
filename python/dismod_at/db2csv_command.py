@@ -793,6 +793,7 @@ def db2csv_command(database_file_arg) :
 					if parent_id is None :
 						msg  = 'Cannot determine child for row in data_subset '
 						msg += 'table. Must re-run init command'
+						assert False, msg
 				# update result
 				result.add(child_node_id)
 		return result

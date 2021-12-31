@@ -69,6 +69,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2021$$
 
+$head 12-31$$
+An error message in $cref db2csv_command$$ was missing its assert.
+This has been fixed.
+
 $head 12-30$$
 Improve the error message that prints the rates when an integrand
 can not be computed; e.g.,
