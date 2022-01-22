@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 12-14 12-09 12-08 12-05 11-29 11-27 11-19 11-16 11-15 11-14 11-07 11-06 11-05 11-03 10-31 10-25 10-24 10-23 10-15 10-14 10-12 10-11 10-07 10-06 09-01 08-30 08-25 08-24 08-23 08-22 08-21 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 12-31 12-30 12-27 12-22 12-14 12-09 12-08 12-05 11-29 11-27 11-19 11-16 11-15 11-14 11-07 11-06 11-05 11-03 10-31 10-25 10-24 10-23 10-15 10-14 10-12 10-11 10-07 10-06 09-01 08-30 08-25 08-24 08-23 08-22 08-21 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -49,7 +49,7 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="release_notes.htm" target="_top">Prev</a>
+<td><a href="whats_new_2022.htm" target="_top">Prev</a>
 </td><td><a href="whats_new_2020.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
@@ -61,6 +61,10 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>12-31</option>
+<option>12-30</option>
+<option>12-27</option>
+<option>12-22</option>
 <option>12-14</option>
 <option>12-09</option>
 <option>12-08</option>
@@ -149,6 +153,42 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2021</big></big></b></center>
+<br>
+<b><big><a name="12-31" id="12-31">12-31</a></big></b>
+<br>
+An error message in <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'>db2csv_command</span></a>
+ was missing its assert.
+This has been fixed.
+In addition, all the <code><font color="blue">sys.exit(msg)</font></code> calls were changed to
+<code><font color="blue">assert False, msg</font></code> to make then easier to debug.
+
+<br>
+<br>
+<b><big><a name="12-30" id="12-30">12-30</a></big></b>
+<br>
+Improve the error message that prints the rates when an integrand
+can not be computed; e.g.,
+prevalence can not be computed when S and C are zero.
+
+<br>
+<br>
+<b><big><a name="12-27" id="12-27">12-27</a></big></b>
+<br>
+The system_command_prc routine used to print the error message
+when <a href="system_command_prc.htm#return_stderr" target="_top"><span style='white-space: nowrap'>return_stderr</span></a>
+ was false
+and <a href="system_command_prc.htm#file_stderr" target="_top"><span style='white-space: nowrap'>file_stderr</span></a>
+ was None.
+Now it puts the error message in the assertion that gets generated.
+
+<br>
+<br>
+<b><big><a name="12-22" id="12-22">12-22</a></big></b>
+<br>
+Fix x-axis tick labels in <a href="plot_data_fit.htm" target="_top"><span style='white-space: nowrap'>plot_data_fit</span></a>
+ plots.
+
+<br>
 <br>
 <b><big><a name="12-14" id="12-14">12-14</a></big></b>
 
