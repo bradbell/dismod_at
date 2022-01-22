@@ -1,7 +1,7 @@
 $comment
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -43,7 +43,7 @@ $spell
 	integrands
 	covariate
 $$
-$section dismod_at-20211231: User Documentation and API$$
+$section dismod_at-20220122: User Documentation and API$$
 
 $head Purpose$$
 Estimating disease rates as functions of age and time.
