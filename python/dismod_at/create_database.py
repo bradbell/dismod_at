@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -259,7 +259,8 @@
 # eta     $cnext float         $cnext offset in log densities    $rnext
 # nu      $cnext float         $cnext degrees of freed in Student densities
 # $tend
-# The columns keys $code std$$, $code eta$$, and $code nu$$
+# The columns keys
+# $code lower$$, $code upper$$, $code std$$, $code eta$$, and $code nu$$
 # are optional. If they are not present, the value $code null$$ is used
 # for the corresponding row of the prior table.
 #

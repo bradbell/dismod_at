@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -24,6 +24,7 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of dismod_at.
 
 $children%
+	omh/whats_new/2022.omh%
 	omh/whats_new/2021.omh%
 	omh/whats_new/2020.omh%
 	omh/whats_new/2019.omh%
@@ -34,9 +35,10 @@ $children%
 %$$
 
 $head This Year$$
-$cref whats_new_2021$$
+$cref whats_new_2022$$
 
 $head Previous years$$
+$cref/2021/whats_new_2021/$$
 $cref/2020/whats_new_2020/$$,
 $cref/2019/whats_new_2019/$$,
 $cref/2018/whats_new_2018/$$,
