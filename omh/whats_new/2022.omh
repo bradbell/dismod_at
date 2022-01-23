@@ -11,6 +11,7 @@ see http://www.gnu.org/licenses/agpl.txt
 $begin whats_new_2022$$
 $spell
     Dismod
+    mu
 $$
 $navigate%
 	Up%Location%
@@ -26,6 +27,13 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 01-23$$
+The debug version would mistakenly print a warning message about
+$icode mu + eta$$ being less than or equal zero.
+This was a mistake when computing log scaled difference priors because
+the mean mu of the difference does not appear inside the log term; see
+$cref/difference/statistic/Weighted Residual Function, R/Difference/$$.
 
 $head 01-22$$
 Add fact that null is the default value for $icode lower$$ and $icode upper$$

@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -295,20 +295,21 @@ residual_struct<Float> residual_density(
 		case cen_log_gaussian_enum:
 		case cen_log_laplace_enum:
 		print_forward_if_not_positive("delta", delta);
-		print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
 		assert( delta > 0.0 );
-		assert( mu + d_eta + tiny > 0.0 );
+		assert( diff || mu + d_eta + tiny > 0.0 );
 		if( diff )
 		{	assert(prior);
 			sigma = delta;
 			wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / sigma;
 		}
 		else if( prior )
-		{	sigma = log( 1.0 + delta / (mu + d_eta) );
+		{   print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
+            sigma = log( 1.0 + delta / (mu + d_eta) );
 			wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
 		}
 		else // data case
-		{	sigma = delta;
+		{   print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
+	sigma = delta;
 			if( CppAD::isnan(z) )
 				wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
 			else

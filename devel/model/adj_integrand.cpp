@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -349,6 +349,9 @@ CppAD::vector<Float> adj_integrand::line(
 	//
 	// vector of effects
 	vector<Float> effect(n_line), temp(n_line);
+	//
+	// Effect (for error reporting)
+	vector< vector<Float> > effect_mul(number_rate_enum);
 	// -----------------------------------------------------------------------
 	// mulcov is special case: no ode and no effects
 	if( need_mulcov )
@@ -383,6 +386,7 @@ CppAD::vector<Float> adj_integrand::line(
 	for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
 	if( need_rate[rate_id] )
 	{	rate[rate_id].resize(n_line);
+		effect_mul[rate_id].resize(n_line);
 		//
 		// parent rate for each point in the line
 		info             = pack_object_.node_rate_value_info(rate_id, n_child);
@@ -491,7 +495,10 @@ CppAD::vector<Float> adj_integrand::line(
 		//
 		// multiply parent rate by exponential of the total effect
 		for(size_t k = 0; k < n_line; ++k)
-			rate[rate_id][k] *= exp( effect[k] );
+		{	Float mul              = exp( effect[k] );
+			effect_mul[rate_id][k] = mul;
+			rate[rate_id][k]      *= mul;
+		}
 	}
 	// -----------------------------------------------------------------------
 	// solve the ode on the cohort specified by line_age and line_time[0]
@@ -615,17 +622,22 @@ CppAD::vector<Float> adj_integrand::line(
 			msg += integrand_enum2name[integrand];
 			msg += " integrand.\n";
 			if( need_P )
-			{	msg += "S=" + CppAD::to_string(s_out[k]);
-				msg += ", C=" + CppAD::to_string(c_out[k]);
-				msg += ", ";
+			{	msg += "S = " + CppAD::to_string(s_out[k]);
+				msg += ", C = " + CppAD::to_string(c_out[k]);
+				msg += "\n";
 			}
 			bool first_rate = true;
 			for(size_t rate_id = 0; rate_id < number_rate_enum; ++rate_id)
 			{	if( need_rate[rate_id] )
 				{   if( ! first_rate )
 						msg += ", ";
+					Float mul = effect_mul[rate_id][k];
 					msg += get_rate_name(rate_id) ;
-					msg += "=" + CppAD::to_string( rate[rate_id][k] );
+					msg += " = " + CppAD::to_string( rate[rate_id][k] / mul );
+					if( mul != 1.0 )
+					{	msg += " adjusted = ";
+						msg += CppAD::to_string( rate[rate_id][k] );
+					}
 					first_rate = false;
 				}
 			}
