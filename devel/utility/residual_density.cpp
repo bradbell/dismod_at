@@ -5,7 +5,7 @@ dismod_at: Estimating Disease Rates as Functions of Age and Time
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
-	     GNU Affero General Public License version 3.0 or later
+		 GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
@@ -187,7 +187,7 @@ $latex \[
 \]$$
 is equal to
 $codei%
-    %logden_smooth% - fabs(%logden_sub_abs)%)
+	%logden_smooth% - fabs(%logden_sub_abs)%)
 %$$
 see $cref/log-density function
 	/statistic
@@ -199,7 +199,7 @@ $latex \[
 \]$$
 is equal to
 $codei%
-    %logden_smooth% - fabs(%logden_sub_abs)%)
+	%logden_smooth% - fabs(%logden_sub_abs)%)
 %$$
 Both $icode logden_smooth$$ and $icode logden_sub_abs$$
 are smooth functions of $latex \mu$$ and $latex \delta$$.
@@ -303,13 +303,13 @@ residual_struct<Float> residual_density(
 			wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / sigma;
 		}
 		else if( prior )
-		{   print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
-            sigma = log( 1.0 + delta / (mu + d_eta) );
+		{	print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
+			sigma = log( 1.0 + delta / (mu + d_eta) );
 			wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
 		}
 		else // data case
-		{   print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
-	sigma = delta;
+		{	print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
+			sigma = delta;
 			if( CppAD::isnan(z) )
 				wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
 			else
