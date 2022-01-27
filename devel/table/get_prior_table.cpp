@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -188,7 +188,7 @@ CppAD::vector<prior_struct> get_prior_table(
 		if( (number_limit == 1) & (! limit_warning) )
 		{	msg = "A lower or upper limit is null (infinite) but not both.\n"
 				"This can lead to problems in Ipopt initialization.\n"
-				"It is currently a wanring but will be changed to an error.";
+				"It is currently a warning but will be changed to an error.";
 			log_message(db, &std::cerr, "warning", msg, table_name, i);
 			limit_warning = true;
 		}
