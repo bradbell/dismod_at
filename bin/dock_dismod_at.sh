@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -403,7 +403,7 @@ FROM dismod_at.mixed
 WORKDIR /home/dismod_at.git
 
 # LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH='/home/prefix/dismod_at/lib64'
+ENV LD_LIBRARY_PATH=''
 
 # 1. Get source corresponding to dismod_at-$dismod_at_version
 # 2. Check that the corresponding hash is $dismod_at_hash

@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -173,15 +173,14 @@ should find the directory where $icode%pkg%.pc%$$ is located;
 see $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$.
 
 $subhead LD_LIBRARY_PATH$$
-After $code ipopt$$ is installed,
-the directory where it's libraries are installed should be in your
-$code LD_LIBRARY_PATH$$.
-If you get an error finding loading a shared library called
-$icode libname$$, you can use the following command to find it:
-$codei%
-	find -L %dismod_at_prefix% -name '%libname%.*' 2> /dev/null
+The library locations are set at link time using cmake's
+$href%
+https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling%
+always full rpath
 %$$
-see $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$.
+commands.
+Hence, it should not be necessary to set $code LD_LIBRARY_PATH$$ in order for
+$code dismod_at$$ to work.
 
 $subhead PATH$$
 After you install dismod_at (see below)

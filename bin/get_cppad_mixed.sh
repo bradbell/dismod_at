@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -44,8 +44,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='476b04e30317051147d4acce1e311d1ad2accc18'
-version='20211025'
+hash_key='fe86746b7250464b1bc0cb06e92be72b72ef9fb6'
+version='20220205'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -83,8 +83,7 @@ eval $cmd
 cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
 eval $cmd
 # ---------------------------------------------------------------------------
-export LD_LIBRARY_PATH="$dismod_at_prefix/$cmake_libdir"
-export DYLD_LIBRARY_PATH="$LD_LIBRARY_PATH"
+export LD_LIBRARY_PATH=''
 export PKG_CONFIG_PATH="$LD_LIBRARY_PATH/pkgconfig"
 # ---------------------------------------------------------------------------
 # set build link to build.debug or build.release depending on build_type

@@ -152,6 +152,31 @@ ENDIF( NOT "${log_fatal_error}" STREQUAL ""  )
 # ----------------------------------------------------------------------------
 MESSAGE(STATUS "END:")
 # ----------------------------------------------------------------------------
+# https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling
+#
+# use, i.e. don't skip the full RPATH for the build tree
+set(CMAKE_SKIP_BUILD_RPATH FALSE)
+#
+# when building, don't use the install RPATH already
+# (but later on when installing)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+#
+set(CMAKE_INSTALL_RPATH "${dismod_at_prefix}/${cmake_libdir}")
+#
+# add the automatically determined parts of the RPATH
+# which point to directories outside the build tree to the install RPATH
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+#
+# the RPATH to be used when installing, but only if it's not a system directory
+list(FIND
+    CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES
+    "${dismod_at_prefix}/${cmake_libdir}"
+    isSystemDir
+)
+if("${isSystemDir}" STREQUAL "-1")
+    set(CMAKE_INSTALL_RPATH "${dismod_at_pefix}/${cmake_libdir}")
+endif("${isSystemDir}" STREQUAL "-1")
+# ----------------------------------------------------------------------------
 # pkg-config information for: sqlite3, gsl, eigen, ipopt, cppad_mixed, cppad
 FIND_PACKAGE(PkgConfig)
 FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed cppad)

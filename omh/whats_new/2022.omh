@@ -12,6 +12,7 @@ $begin whats_new_2022$$
 $spell
     Dismod
     mu
+    cppad
 $$
 $navigate%
 	Up%Location%
@@ -27,6 +28,11 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 02-05$$
+Advance to cppad_mixed-20220205 as part of removing the need to set
+$cref/LD_LIBRARY_PATH/install_unix/Paths/LD_LIBRARY_PATH/$$
+for the install to work.
 
 $head 01-23$$
 The debug version would mistakenly print a warning message about
