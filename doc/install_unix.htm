@@ -304,19 +304,12 @@ see <a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white
 <br>
 <big><a name="Paths.LD_LIBRARY_PATH" id="Paths.LD_LIBRARY_PATH">LD_LIBRARY_PATH</a></big>
 <br>
-After <code><font color="blue">ipopt</font></code> is installed,
-the directory where it's libraries are installed should be in your
-<code><font color="blue">LD_LIBRARY_PATH</font></code>.
-If you get an error finding loading a shared library called
+The library locations are set at link time using cmake's
+<a href="https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling" target="_top"><span style='white-space: nowrap'>always&nbsp;full&nbsp;rpath</span></a>
 
-<code><i><font color="black"><span style='white-space: nowrap'>libname</span></font></i></code>
-, you can use the following command to find it:
-
-<code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;'</span></font><i><font color="black"><span style='white-space: nowrap'>libname</span></font></i><font color="blue"><span style='white-space: nowrap'>.*'&nbsp;2&gt;&nbsp;/dev/null<br>
-</span></font></code>
-see <a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white-space: nowrap'>dismod_at_prefix</span></a>
-.
+commands.
+Hence, it should not be necessary to set <code><font color="blue">LD_LIBRARY_PATH</font></code> in order for
+<code><font color="blue">dismod_at</font></code> to work.
 
 <br>
 <br>
