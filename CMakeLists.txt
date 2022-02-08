@@ -287,15 +287,12 @@ CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py
 )
 CONFIGURE_FILE(
-	${CMAKE_CURRENT_SOURCE_DIR}/bin/setup.py.in
-	${CMAKE_CURRENT_SOURCE_DIR}/bin/setup.py
-)
-CONFIGURE_FILE(
 	${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.sh.in
 	${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.sh
 )
 # ----------------------------------------------------------------------------
 # subdirectories
+ADD_SUBDIRECTORY(python)
 ADD_SUBDIRECTORY(devel)
 ADD_SUBDIRECTORY(example/devel)
 ADD_SUBDIRECTORY(example/get_started)
@@ -318,15 +315,4 @@ ADD_CUSTOM_TARGET(check DEPENDS
 ADD_CUSTOM_TARGET(speed DEPENDS
 	check_example_user_speed
 	check_example_user_diabetes
-)
-ADD_CUSTOM_TARGET(
-	install_python
-	bin/setup.py install --prefix=${dismod_at_prefix}
-	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
-# ----------------------------------------------------------------------------
-SET(setup_py "bin/setup.py install --prefix=${dismod_at_prefix}" )
-SET(work_dir "${CMAKE_SOURCE_DIR}" )
-INSTALL(CODE
-	"EXECUTE_PROCESS( COMMAND ${setup_py} WORKING_DIRECTORY ${work_dir} )"
 )

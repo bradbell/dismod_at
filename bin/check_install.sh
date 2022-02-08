@@ -61,7 +61,7 @@ fi
 #
 # install fresh copy
 echo_eval cd build
-echo_eval make install
+echo_eval make install install_python
 echo_eval cd ..
 #
 # PATH
