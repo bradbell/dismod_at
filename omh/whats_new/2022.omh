@@ -10,10 +10,11 @@ see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin whats_new_2022$$
 $spell
-    Dismod
-    mu
-    cppad
-    py
+	Dismod
+	mu
+	cppad
+	py
+	distutils
 $$
 $navigate%
 	Up%Location%
@@ -31,7 +32,7 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2022$$
 
 $head 02-08$$
-Change from using $code bin/setup.py$$ to using $code pip$$
+Change from using $code distutils.core.setup$$ to using $code pip$$
 to install the python part of $code dismod_at$$; see
 $cref/install/install_unix/dismod_at/Install/$$.
 
