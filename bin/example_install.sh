@@ -1,7 +1,7 @@
 #! /bin/bash -e
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -95,7 +95,7 @@ then
 fi
 #
 # make check, speed, and install
-for cmd in check speed install
+for cmd in check speed install install_python
 do
 	echo "make $cmd 1>> example_install.log 2>> example_install.err"
 	if ! make $cmd 1>> ../example_install.log 2>> ../example_install.err
