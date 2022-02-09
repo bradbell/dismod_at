@@ -13,6 +13,7 @@ image_link='https://bradbell.github.io/dismod_at'
 # version number (can be empty).
 version_files='
 	omh/dismod_at.omh
+	python/setup.cfg
 '
 #
 # List of special files, for this repository, that the devel tools ignore.
@@ -25,6 +26,7 @@ ignore_files='
 	bin/devel.sh
 	2DO
 	python/pyproject.toml
+	python/README.md
 '
 # ----------------------------------------------------------------------------
 echo "copyright_owner=$copyright_owner"

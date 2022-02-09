@@ -37,6 +37,7 @@ $spell
 	dev
 	libname
 	modversion
+	install install
 $$
 
 $section Installing dismod_at in Unix$$
@@ -309,7 +310,7 @@ build the dismod_at library and executable if necessary,
 and install dismod_at:
 $codep
 	cd build
-	make install
+	make install install_python
 	cd ..
 $$
 
