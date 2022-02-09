@@ -38,6 +38,8 @@ $spell
 	libname
 	modversion
 	install install
+	matplotlib
+	scipy
 $$
 
 $section Installing dismod_at in Unix$$
@@ -76,8 +78,12 @@ program must be installed.
 $subhead python3$$
 The $href%http://www.python.org/%python3%$$,
 programming language.
-Note may need to install some standard python packages; e.g.,
-$code numpy$$.
+The packages listed in the
+$href%https://docs.python.org/3/library/%standard library%$$
+are assumed to be present.
+You need to have the following additional python packages:
+$code numpy$$, $code matplotlib$$, $code scipy$$.
+
 
 $subhead sqlite3$$
 The $href%href%http://sqlite.org/%sqlite3%$$ library,
