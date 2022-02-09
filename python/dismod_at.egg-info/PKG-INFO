@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: dismod-at
+Version: 20220208
+Summary: Disease Rates as Functions of Age and Time
+Home-page: https://github.com/bradbell/dismod_at
+Author: Bradley M. Bell
+Author-email: bradbell@uw.edu
+License: GNU Affero General Public License version 3.0 or later
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: GNU Affero
+
+UNKNOWN
+
