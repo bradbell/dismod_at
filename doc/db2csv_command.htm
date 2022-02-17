@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv mixed_info.csv variable.csv var_id var_type s_id m_id m_diff bound age time rate integrand covariate node group subgroup fixed depend start scale fit_value truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up d_out s_out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv mixed_info.csv variable.csv var_id var_type s_id m_id m_diff bound age time rate integrand covariate node group subgroup fixed depend fit_value start scale truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up d_out s_out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -100,9 +100,9 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.subgroup" target="_top">subgroup</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.fixed" target="_top">fixed</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.depend" target="_top">depend</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.fit_value" target="_top">fit_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.start" target="_top">start</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.scale" target="_top">scale</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.fit_value" target="_top">fit_value</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.truth" target="_top">truth</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.sam_avg" target="_top">sam_avg</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="db2csv_command.htm#variable.csv.sam_std" target="_top">sam_std</a>
@@ -526,6 +526,15 @@ If the <a href="depend_var_table.htm" target="_top"><span style='white-space: no
 
 <br>
 <br>
+<big><a name="variable.csv.fit_value" id="variable.csv.fit_value">fit_value</a></big>
+<br>
+If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
+ has been run, this is the
+<a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
+.
+
+<br>
+<br>
 <big><a name="variable.csv.start" id="variable.csv.start">start</a></big>
 <br>
 is the
@@ -541,15 +550,6 @@ is the
 <a href="scale_var_table.htm#scale_var_value" target="_top"><span style='white-space: nowrap'>scale_var_value</span></a>
 
 for this variable.
-
-<br>
-<br>
-<big><a name="variable.csv.fit_value" id="variable.csv.fit_value">fit_value</a></big>
-<br>
-If the <a href="fit_command.htm" target="_top"><span style='white-space: nowrap'>fit_command</span></a>
- has been run, this is the
-<a href="fit_var_table.htm#fit_var_value" target="_top"><span style='white-space: nowrap'>fit_var_value</span></a>
-.
 
 <br>
 <br>
