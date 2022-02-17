@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -238,6 +238,10 @@
 # $code prior$$ if only the prior depends on this variable,
 # $code both$$ if both the data and the prior depend on this variable.
 #
+# $subhead fit_value$$
+# If the $cref fit_command$$ has been run, this is the
+# $cref/fit_var_value/fit_var_table/fit_var_value/$$.
+#
 # $subhead start$$
 # is the
 # $cref/start_var_value/start_var_table/start_var_value/$$
@@ -247,10 +251,6 @@
 # is the
 # $cref/scale_var_value/scale_var_table/scale_var_value/$$
 # for this variable.
-#
-# $subhead fit_value$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/fit_var_value/fit_var_table/fit_var_value/$$.
 #
 # $subhead truth$$
 # If the truth_var table exists, this is the
@@ -1281,18 +1281,18 @@ def db2csv_command(database_file_arg) :
 		'subgroup',
 		'fixed',
 		'depend',
+		'fit_value',
+		'start',
+		'scale',
+		'truth',
+		'sam_avg',
+		'sam_std',
 		'res_value',
 		'res_dage',
 		'res_dtime',
 		'lag_value',
 		'lag_dage',
 		'lag_dtime',
-		'sam_std',
-		'sam_avg',
-		'truth',
-		'start',
-		'scale',
-		'fit_value',
 	]
 	root_list = 'lower,upper,mean,sim,std,eta,nu,density'.split(',')
 	for extension in ['_v', '_a', '_t' ] :

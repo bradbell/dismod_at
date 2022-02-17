@@ -15,6 +15,8 @@ $spell
 	cppad
 	py
 	distutils
+    std
+    csv
 $$
 $navigate%
 	Up%Location%
@@ -30,6 +32,12 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 02-17$$
+Move the value columns
+$cref/fit_value/db2csv_command/variable.csv/fit_value/$$,
+start, scale, truth, sam_avg, and sam_std to the left in
+the $code variable.csv$$ file.
 
 $head 02-08$$
 Change from using $code distutils.core.setup$$ to using $code pip$$
