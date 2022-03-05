@@ -17,6 +17,7 @@ $spell
 	distutils
     std
     csv
+	homebrew
 $$
 $navigate%
 	Up%Location%
@@ -32,6 +33,17 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 03-04$$
+$list number$$
+Advance to cppad_mixed-20220304. This fixes some problems
+with the install on macOS with homebrew.
+$lnext
+Fix a problem with the setting of the C++ compiler using
+$cref/specific_compiler/run_cmake.sh/specific_compiler/$$.
+$lnext
+Make some improvements to $cref data_density_command$$ documentation.
+$lend
 
 $head 02-17$$
 Move the value columns

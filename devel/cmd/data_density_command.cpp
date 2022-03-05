@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -33,7 +33,7 @@ $section Data Density Command: Change the Density for an Integrand$$
 $head Syntax$$
 $codei%dismod_at %database% data_density
 %$$
-$codei%dismod_at %database% data_density %integrand_name% %eta_factor% %nu%
+$codei%dismod_at %database% data_density %integrand_name% %density_name% %eta_factor% %nu%
 %$$
 
 $head Purpose$$
@@ -44,13 +44,17 @@ $head database$$
 Is an
 $href%http://www.sqlite.org/sqlite/%$$ database containing the
 $code dismod_at$$ $cref input$$ tables which are not modified.
+If this is the only argument, all the data densities are set back to the
+values specified by the $cref data_table$$.
 
 $head integrand_name$$
 This is the
 $cref/integrand/integrand_table/integrand_name/$$ that we setting
 the density for.
-If this argument is not present, the data density is set back to the
-values specified by the $cref data_table$$.
+
+$head density_name$$
+This is the $cref/density_name/density_table/density_name/$$
+that we are using for the new density.
 
 $head eta_factor$$
 This specifies the value of

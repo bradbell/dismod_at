@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -70,8 +70,10 @@ prototype
 $codei%
 	CppAD::vector<std::string>& %result%
 %$$
+If a text value is $code null$$,
+it is returned as the empty string.
 It is an error for any of the text values
-in the database to be $code null$$.
+in the database to be the empty string.
 
 $subhead integer$$
 If the column has type $code integer$$, this argument has

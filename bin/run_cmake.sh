@@ -2,7 +2,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -143,8 +143,7 @@ do
 usage: bin/run_cmake.sh \\
 	[--help] \\
 	[--debug] \\
-	[--verbose] \\
-	[--clang]
+	[--verbose]
 EOF
 		exit 0
 	fi
@@ -154,9 +153,6 @@ EOF
 	elif [ "$1" == '--verbose' ]
 	then
 		verbose_makefile='yes'
-	elif [ "$1" == '--clang' ]
-	then
-		cmake_cxx_compiler='clang++'
 	else
 		echo "'$1' is an invalid option"
 		bin/run_cmake.sh --help
@@ -181,21 +177,43 @@ if [ -e 'CMakeCache.txt' ]
 then
 	rm CMakeCache.txt
 fi
-if [ "$cmake_cxx_compiler" == '' ]
+# --------------------------------------------------------------------------
+# cmake_cxx_compiler
+if echo $specific_compiler | grep 'CXX=' > /dev/null
 then
-	compiler=''
-else
-	compiler="-D CMAKE_CXX_COMPILER=$cmake_cxx_compiler"
-	if [ "$cmake_cxx_compiler" == 'clang++' ]
+	cxx=$(echo $specific_compiler | sed -e 's|.*CXX=\([^ ]*\).*|\1|')
+	if ! which $cxx > /dev/null
 	then
-		compiler="$compiler -D CMAKE_C_COMPILER=clang"
+		echo "run_cmake.sh: specific_compiler: cannot execute $cxx compiler"
+		exit 1
 	fi
+	cxx_path=$(which $cxx)
+	cmake_cxx_compiler="-D CMAKE_CXX_COMPILER=$cxx_path"
+else
+	cmake_cxx_compiler=''
 fi
+# --------------------------------------------------------------------------
+# cmake_c_compiler
+if echo $specific_compiler | grep 'CXX=' > /dev/null
+then
+	cc=$(echo $specific_compiler | sed -e 's|.*CXX=\([^ ]*\).*|\1|')
+	if ! which $cc > /dev/null
+	then
+		echo "run_cmake.sh: specific_compiler: cannot execute $cc compiler"
+		exit 1
+	fi
+	c_path=$(which $cc)
+	cmake_c_compiler="-D CMAKE_C_COMPILER=$c_path"
+else
+	cmake_c_compiler=''
+fi
+# --------------------------------------------------------------------------
 cmake \
 	-Wno-dev \
 	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
 	-D CMAKE_BUILD_TYPE=$build_type \
-	$compiler \
+	$cmake_cxx_compiler \
+	$cmake_c_compiler \
 	\
 	-D python3_executable=$python3_executable \
 	-D extra_cxx_flags="$extra_cxx_flags" \
