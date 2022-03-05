@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Density Command: Change the Density for an Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Density Command: Change the Density for an Integrand">
-<meta name="keywords" id="keywords" content=" data density command: change the integrand syntax purpose database integrand_name eta_factor nu data_subset_table density_id eta example ">
+<meta name="keywords" id="keywords" content=" data density command: change the integrand syntax purpose database integrand_name density_name eta_factor nu data_subset_table density_id eta example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,6 +70,7 @@ A:active { color : purple }
 <br><a href="data_density_command.htm#Purpose" target="_top">Purpose</a>
 <br><a href="data_density_command.htm#database" target="_top">database</a>
 <br><a href="data_density_command.htm#integrand_name" target="_top">integrand_name</a>
+<br><a href="data_density_command.htm#density_name" target="_top">density_name</a>
 <br><a href="data_density_command.htm#eta_factor" target="_top">eta_factor</a>
 <br><a href="data_density_command.htm#nu" target="_top">nu</a>
 <br><a href="data_density_command.htm#data_subset_table" target="_top">data_subset_table</a>
@@ -85,7 +86,7 @@ A:active { color : purple }
 <code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;data_density<br>
 </span></font></code>
 
-<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;data_density&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta_factor</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;data_density&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>density_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta_factor</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nu</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
@@ -102,6 +103,9 @@ Is an
  database containing the
 <code><font color="blue">dismod_at</font></code> <a href="input.htm" target="_top"><span style='white-space: nowrap'>input</span></a>
  tables which are not modified.
+If this is the only argument, all the data densities are set back to the
+values specified by the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
+.
 
 <br>
 <br>
@@ -111,9 +115,14 @@ This is the
 <a href="integrand_table.htm#integrand_name" target="_top"><span style='white-space: nowrap'>integrand</span></a>
  that we setting
 the density for.
-If this argument is not present, the data density is set back to the
-values specified by the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
-.
+
+<br>
+<br>
+<b><big><a name="density_name" id="density_name">density_name</a></big></b>
+<br>
+This is the <a href="density_table.htm#density_name" target="_top"><span style='white-space: nowrap'>density_name</span></a>
+
+that we are using for the new density.
 
 <br>
 <br>
