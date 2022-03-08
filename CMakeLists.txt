@@ -169,12 +169,12 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 #
 # the RPATH to be used when installing, but only if it's not a system directory
 list(FIND
-    CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES
-    "${dismod_at_prefix}/${cmake_libdir}"
-    isSystemDir
+	CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES
+	"${dismod_at_prefix}/${cmake_libdir}"
+	isSystemDir
 )
 if("${isSystemDir}" STREQUAL "-1")
-    set(CMAKE_INSTALL_RPATH "${dismod_at_pefix}/${cmake_libdir}")
+	set(CMAKE_INSTALL_RPATH "${dismod_at_pefix}/${cmake_libdir}")
 endif("${isSystemDir}" STREQUAL "-1")
 # ----------------------------------------------------------------------------
 # pkg-config information for: sqlite3, gsl, eigen, ipopt, cppad_mixed, cppad
