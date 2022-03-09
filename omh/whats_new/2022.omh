@@ -18,6 +18,7 @@ $spell
     std
     csv
 	homebrew
+	suitesparse
 $$
 $navigate%
 	Up%Location%
@@ -33,6 +34,13 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 03-08$$
+$list number$$
+Advance to cppad_mixed-20220304 (more work on macOS homebrew problem).
+$lnext
+Fix linking suitesparse (on some macOS homebrew systems).
+$lend
 
 $head 03-04$$
 $list number$$

@@ -204,6 +204,20 @@ ENDFOREACH(pkg)
 # suitesparse_suffix
 SET(suitesparse_prefix "NOTFOUND")
 SET(suitesparse_suffix "NOTFOUND")
+EXECUTE_PROCESS(
+	COMMAND brew --prefix suitesparse
+	OUTPUT_VARIABLE brew_prefix
+	OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+IF( NOT "${brew_prefix}" STREQUAL "" )
+	FOREACH(suffix "include" "include/suitesparse")
+		IF( EXISTS "${brew_prefix}/${suffix}/cholmod.h" )
+			MESSAGE(STATUS "Using ${brew_prefix}/${suffix}/cholmod.h" )
+			SET(suitesparse_prefix "${brew_prefix}")
+			SET(suitesparse_suffix "${suffix}")
+		ENDIF( EXISTS "${brew_prefix}/${suffix}/cholmod.h" )
+	ENDFOREACH(suffix "include" "include/suitesparse")
+ENDIF( NOT ( "${brew_prefix}" STREQUAL "" ) )
 FOREACH(prefix
 	/usr
 	/usr/local
@@ -214,15 +228,22 @@ FOREACH(prefix
 	FOREACH(suffix "include" "include/suitesparse")
 		IF( EXISTS "${prefix}/${suffix}/cholmod.h" )
 			IF( suitesparse_prefix )
-				MESSAGE(STATUS
-					"warning: found cholmod.h in ${prefix}/${suffix}"
-					" and ${suitesparse_prefix}"
-				)
+				SET(same "yes")
+				IF( NOT "${prefix}" STREQUAL "${suitesparse_prefix}" )
+					SET(same "no")
+				ELSEIF( NOT "${suffix}" STREQUAL "${suitesparse_prefix}" )
+					SET(same "no")
+				ENDIF()
+				IF( same STREQUAL "no" )
+					MESSAGE(STATUS "Not using ${prefix}/${suffix}/cholmod.h")
+				ENDIF( same STREQUAL "no" )
+			ELSE( suitesparse_prefix )
+				MESSAGE(STATUS "Using ${prefix}/${suffix}/cholmod.h" )
+				SET(suitesparse_prefix "${prefix}")
+				SET(suitesparse_suffix "${suffix}")
 			ENDIF( suitesparse_prefix )
-			SET(suitesparse_prefix "${prefix}")
-			SET(suitesparse_suffix "${suffix}")
 		ENDIF( EXISTS "${prefix}/${suffix}/cholmod.h" )
-	ENDFOREACH(suffix in "include" "include/suitesparse")
+	ENDFOREACH(suffix "include" "include/suitesparse")
 ENDFOREACH(prefix)
 #
 # suitesparse_INCLUDE_DIR
