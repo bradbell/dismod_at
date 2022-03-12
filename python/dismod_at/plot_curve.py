@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -94,6 +94,16 @@ import numpy
 import math
 from matplotlib import pyplot
 import matplotlib.backends.backend_pdf
+# ----------------------------------------------------------------------------
+# new_figure
+# Matplotlib cannot handle multiple figures, so we re-use the same figure.
+global_figure = None
+def new_figure() :
+	global global_figure
+	if global_figure is None :
+		global_figure= pyplot.figure()
+	global_figure.clf()
+	return global_figure
 # ----------------------------------------------------------------------------
 def plot_curve(
 # BEGIN syntax
@@ -245,7 +255,7 @@ def plot_curve(
 			save_color_index = color_index
 			#
 			# fig
-			fig    = pyplot.figure()
+			fig    = new_figure()
 			fig.subplots_adjust( hspace = .01 )
 			#
 			# axis
@@ -378,7 +388,6 @@ def plot_curve(
 				])
 			# ----------------------------------------------------------------
 			pdf.savefig( fig )
-			pyplot.close( fig )
 		# *******************************************************************-
 		# for each age, plot value and possibly std as a function of time
 		# ********************************************************************
@@ -398,7 +407,7 @@ def plot_curve(
 			save_color_index = color_index
 			#
 			# fig
-			fig    = pyplot.figure()
+			fig    = new_figure()
 			fig.subplots_adjust( hspace = .01 )
 			#
 			# axis
@@ -531,7 +540,6 @@ def plot_curve(
 				])
 			# -----------------------------------------------------------------
 			pdf.savefig( fig )
-			pyplot.close( fig )
 	# *************************************************************************
 	#
 	# end of pages in pdf file

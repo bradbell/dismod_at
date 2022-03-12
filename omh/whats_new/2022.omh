@@ -19,6 +19,7 @@ $spell
     csv
 	homebrew
 	suitesparse
+	matplotlib
 $$
 $navigate%
 	Up%Location%
@@ -34,6 +35,15 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 03-11$$
+$list number$$
+In $cref plot_curve$$,
+find a way around Matplotlib bug when there are lots of figures.
+This sometimes caused a python crash with an IO error.
+$lnext
+Fix setting of C compiler in $cref run_cmake.sh$$.
+$lend
 
 $head 03-08$$
 $list number$$
