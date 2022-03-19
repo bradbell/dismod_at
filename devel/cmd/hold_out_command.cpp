@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,18 +17,25 @@ see http://www.gnu.org/licenses/agpl.txt
 # include <dismod_at/get_data_subset.hpp>
 # include <dismod_at/hold_out_command.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/balance_pair.hpp>
 
 /*
 -----------------------------------------------------------------------------
 $begin hold_out_command$$
 $spell
 	dismod
+	cov
+	covariate
+	Covariates
 $$
 
 $section Hold Out Command: Randomly Sub-sample The Data$$
 
 $head Syntax$$
+$codei%dismod_at %database% hold_out %integrand_name% %max_fit
+%$$
 $codei%dismod_at %database% hold_out %integrand_name% %max_fit%$$
+$icode%cov_name% %cov_value_1% %cov_value_2%$$
 
 $head Purpose$$
 This command is used to set a maximum number of data values
@@ -54,11 +61,30 @@ $cref/hold_out/data_table/hold_out/$$ zero in the data table,
 points are randomly held out so that there are $icode max_fit$$
 points fit for this integrand.
 
-$subhead Balancing$$
+$head cov_name$$
+If this argument is present, it specifies a covariate column that
+will be balanced; see covariate balancing below:
+
+$head cov_value_1$$
+If this argument is present, it specifies one of the covariate values
+for the balancing. This is a string representation of a $code double$$ value.
+
+$head cov_value_2$$
+If this argument is present, it specifies the opposite covariate value
+for the balancing. This is a string representation of a $code double$$ value.
+
+$head Balancing$$
+
+$subhead Child Nodes$$
 The choice of which points to include in the fit tries to sample the
 same number of data points from each of the child nodes (and the parent node).
 If there are not sufficiently many data for one of these nodes, the others
 make up the difference.
+
+$subhead Covariates$$
+If $icode cov_name$$ is present, any sample that has the
+covariate value $icode cov_value_1$$ or $icode cov_value_2$$
+will be paired with a sample from the opposite value (if possible).
 
 $head data_subset_table$$
 Only rows of the $cref data_subset_table$$ that correspond to this integrand
@@ -82,12 +108,19 @@ void hold_out_command(
 	sqlite3*                                      db                ,
 	const std::string&                            integrand_name    ,
 	const std::string&                            max_fit_str       ,
+	const std::string&                            cov_name          ,
+	const std::string&                            cov_value_1_str   ,
+	const std::string&                            cov_value_2_str   ,
 	const child_info&                             child_info4data   ,
 	const CppAD::vector<integrand_struct>&        integrand_table   ,
-	const CppAD::vector<data_struct>&             data_table        )
+	const CppAD::vector<covariate_struct>&        covariate_table   ,
+	const CppAD::vector<data_struct>&             data_table        ,
+	const CppAD::vector<double>&                  data_cov_value    )
 {	using std::string;
 	using CppAD::vector;
 	using CppAD::to_string;
+	//
+
 	//
 	// rng
 	// gsl random number generator
@@ -112,6 +145,26 @@ void hold_out_command(
 	{	string msg = "hold_out_command: " + integrand_name;
 		msg       += " is not a valid integrand name";
 		error_exit(msg);
+	}
+	//
+	// n_covariate, covariate_id
+	size_t n_covariate = covariate_table.size();
+	size_t covariate_id = n_covariate;
+	for(size_t i = 0; i < n_covariate; ++i)
+		if( covariate_table[i].covariate_name == cov_name )
+			covariate_id = i;
+	if( covariate_id == n_covariate && 0 < cov_name.size() )
+	{	string msg = "hold_out_command: " + cov_name;
+		msg       += " is not a valid covariate name";
+		error_exit(msg);
+	}
+	//
+	// cov_value_1, cov_value_2
+	double cov_value_1 = std::numeric_limits<double>::quiet_NaN();
+	double cov_value_2 = std::numeric_limits<double>::quiet_NaN();
+	if( 0 < cov_name.size() )
+	{	cov_value_1 = std::atof( cov_value_1_str.c_str() );
+		cov_value_2 = std::atof( cov_value_2_str.c_str() );
 	}
 	//
 	// n_child
@@ -170,7 +223,7 @@ void hold_out_command(
 		{	// include all the data for this child
 			n_fit += src_size[child_id];
 		}
-		else
+		else if( cov_name.size() == 0 )
 		{   // hold out some data for this child
 			n_fit += max_fit_child;
 			//
@@ -195,6 +248,43 @@ void hold_out_command(
 			{	int subset_id = dest[i];
 				assert( data_subset_table[subset_id].hold_out == 0 );
 				data_subset_table[subset_id].hold_out = 1;
+			}
+		}
+		else
+		{	assert( covariate_id < n_covariate );
+			assert( ! std::isnan( cov_value_1 ) );
+			assert( ! std::isnan( cov_value_2 ) );
+			//
+			// sample_vec
+			typedef std::pair<size_t, double> pair_t;
+			CppAD::vector<pair_t> pair_vec;
+			size_t n_pair = src_size[child_id];
+			for(size_t i = 0; i < n_pair; ++i)
+			{	size_t subset_id = size_t ( src[child_id][i] );
+				size_t data_id   = data_subset_table[subset_id].data_id;
+				size_t node_id   = data_table[data_id].node_id;
+				size_t index     = data_id * n_covariate + covariate_id;
+				double cov_value = data_cov_value[index];
+				pair_vec.push_back( pair_t( node_id, cov_value ) );
+			}
+			CppAD::vector<size_t> sample_vec = balance_pair(
+				max_fit_child, pair_vec, cov_value_1, cov_value_2
+			);
+			//
+			// hold_out
+			CppAD::vector<bool> hold_out_vec( n_pair );
+			for(size_t i = 0; i < n_pair; ++i)
+				hold_out_vec[i] = true;
+			for(size_t i = 0; i < max_fit_child; ++i)
+				hold_out_vec[ sample_vec[i] ] = false;
+			//
+			// hold out the chosen elements
+			for(size_t i = 0; i < n_pair; ++i)
+			{	if( hold_out_vec[i] )
+				{	size_t subset_id = size_t( src[child_id][i] );
+					assert( data_subset_table[subset_id].hold_out == 0 );
+					data_subset_table[subset_id].hold_out = 1;
+				}
 			}
 		}
 	}

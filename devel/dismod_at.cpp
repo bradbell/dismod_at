@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -80,6 +80,7 @@ int main(int n_arg, const char** argv)
 		{"fit",          5},
 		{"fit",          6},
 		{"hold_out",     5},
+		{"hold_out",     8},
 		{"init",         3},
 		{"old2new",      3},
 		{"predict",      4},
@@ -489,15 +490,28 @@ int main(int n_arg, const char** argv)
 		);
 	}
 	else if( command_arg == "hold_out" )
-	{	string integrand_name = argv[3];
-		string max_fit_str    = argv[4];
+	{	string integrand_name  = argv[3];
+		string max_fit_str     = argv[4];
+		string cov_name        = "";
+		string cov_value_1_str = "";
+		string cov_value_2_str = "";
+		if( n_arg == 8 )
+		{	cov_name        = argv[5];
+			cov_value_1_str = argv[6];
+			cov_value_2_str = argv[7];
+		}
 		dismod_at::hold_out_command(
 			db,
 			integrand_name,
 			max_fit_str,
+			cov_name,
+			cov_value_1_str,
+			cov_value_2_str,
             child_info4data,
 			db_input.integrand_table,
-			db_input.data_table
+			db_input.covariate_table,
+			db_input.data_table,
+			db_input.data_cov_value
 		);
 	}
 	else if( command_arg == "bnd_mulcov" )

@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -230,7 +230,8 @@ The default settings for these arguments makes $code system_command_prc$$
 backward compatible.
 
 $head 10-23$$
-$cref/Balancing/hold_out_command/max_fit/Balancing/$$ was added
+Balancing
+$cref/child nodes/hold_out_command/Balancing/Child Nodes/$$ was added
 to the hold_out command.
 
 $head 10-15$$
