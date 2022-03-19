@@ -170,9 +170,9 @@ void hold_out_command(
 	// n_child
 	size_t n_child = child_info4data.child_size();
 	//
-	// src:
-	// src[child_id] are the possible indices for this child_id
-	CppAD::vector< CppAD::vector<int> > src(n_child + 1);
+	// avail:
+	// avail[child_id] are the available subset indices for this child_id
+	CppAD::vector< CppAD::vector<int> > avail(n_child + 1);
 	for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
 	{	// information about this data row
 		size_t data_id      = data_subset_table[subset_id].data_id;
@@ -188,19 +188,19 @@ void hold_out_command(
 			{   // clear the hold_out values for this integrand
 				data_subset_table[subset_id].hold_out = 0;
 				// add this to the possible hold_out set
-				src[child_id].push_back( int(subset_id) );
+				avail[child_id].push_back( int(subset_id) );
 			}
 		}
 	}
 	//
-	// src_size
-	CppAD::vector<size_t> src_size(n_child + 1);
+	// avail_size
+	CppAD::vector<size_t> avail_size(n_child + 1);
 	for(size_t child_id = 0; child_id <= n_child; ++child_id)
-		src_size[child_id] = src[child_id].size();
+		avail_size[child_id] = avail[child_id].size();
 	//
 	// size_order
 	CppAD::vector<size_t> size_order(n_child + 1);
-	CppAD::index_sort(src_size, size_order);
+	CppAD::index_sort(avail_size, size_order);
 	//
 	// n_fit
 	size_t n_fit = 0;
@@ -219,33 +219,33 @@ void hold_out_command(
 			max_fit_child = max_fit - n_fit;
 		//
 		// n_fit
-		if( src_size[child_id] <= max_fit_child )
+		if( avail_size[child_id] <= max_fit_child )
 		{	// include all the data for this child
-			n_fit += src_size[child_id];
+			n_fit += avail_size[child_id];
 		}
 		else if( cov_name.size() == 0 )
 		{   // hold out some data for this child
 			n_fit += max_fit_child;
 			//
 			// n_hold_out
-			size_t n_hold_out = src_size[child_id] - max_fit_child;
+			size_t n_hold_out = avail_size[child_id] - max_fit_child;
 			//
-			// dest: array of indices that are chosen
-			CppAD::vector<int> dest(n_hold_out);
+			// chosen: array of indices that are chosen
+			CppAD::vector<int> chosen(n_hold_out);
 			//
 			// choose which elements to hold out
 			gsl_ran_choose(
 				rng,
-				dest.data(),
+				chosen.data(),
 				n_hold_out,
-				src[child_id].data(),
-				src_size[child_id],
+				avail[child_id].data(),
+				avail_size[child_id],
 				sizeof(int)
 			);
 			//
-			// hold out the chosen elements
+			// data_subset_table[subset_id].hold_out
 			for(size_t i = 0; i < n_hold_out; ++i)
-			{	int subset_id = dest[i];
+			{	int subset_id = chosen[i];
 				assert( data_subset_table[subset_id].hold_out == 0 );
 				data_subset_table[subset_id].hold_out = 1;
 			}
@@ -258,9 +258,9 @@ void hold_out_command(
 			// sample_vec
 			typedef std::pair<size_t, double> pair_t;
 			CppAD::vector<pair_t> pair_vec;
-			size_t n_pair = src_size[child_id];
+			size_t n_pair = avail_size[child_id];
 			for(size_t i = 0; i < n_pair; ++i)
-			{	size_t subset_id = size_t ( src[child_id][i] );
+			{	size_t subset_id = size_t ( avail[child_id][i] );
 				size_t data_id   = data_subset_table[subset_id].data_id;
 				size_t node_id   = data_table[data_id].node_id;
 				size_t index     = data_id * n_covariate + covariate_id;
@@ -271,17 +271,17 @@ void hold_out_command(
 				max_fit_child, pair_vec, cov_value_1, cov_value_2
 			);
 			//
-			// hold_out
+			// hold_out_vec
 			CppAD::vector<bool> hold_out_vec( n_pair );
 			for(size_t i = 0; i < n_pair; ++i)
 				hold_out_vec[i] = true;
 			for(size_t i = 0; i < max_fit_child; ++i)
 				hold_out_vec[ sample_vec[i] ] = false;
 			//
-			// hold out the chosen elements
+			// data_subset_table[subset_id].hold_out
 			for(size_t i = 0; i < n_pair; ++i)
 			{	if( hold_out_vec[i] )
-				{	size_t subset_id = size_t( src[child_id][i] );
+				{	size_t subset_id = size_t( avail[child_id][i] );
 					assert( data_subset_table[subset_id].hold_out == 0 );
 					data_subset_table[subset_id].hold_out = 1;
 				}
