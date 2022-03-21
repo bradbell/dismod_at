@@ -23,7 +23,7 @@ A:link { color : blue }
 A:visited { color : purple }
 A:active { color : purple }
 </style>
-<script type='text/javascript' language='JavaScript' src='_user_hold_out.py_htm.js'>
+<script type='text/javascript' language='JavaScript' src='_user_hold_out_1.py_htm.js'>
 </script>
 </head>
 <body>
@@ -36,7 +36,7 @@ A:active { color : purple }
 <option>Location-&gt;</option>
 <option>dismod_at</option>
 <option>user_example</option>
-<option>user_hold_out.py</option>
+<option>user_hold_out_1.py</option>
 </select>
 </td>
 <td>
@@ -50,28 +50,28 @@ A:active { color : purple }
 </select>
 </td>
 <td><a href="user_hes_random.py.htm" target="_top">Prev</a>
-</td><td><a href="user_ill_condition.py.htm" target="_top">Next</a>
+</td><td><a href="user_hold_out_2.py.htm" target="_top">Next</a>
 </td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
 </td>
-<td>user_hold_out.py</td>
+<td>user_hold_out_1.py</td>
 </tr></table><br>
 @(@\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\B}[1]{ {\bf #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Using hold_out in Data, Subset Data, and Option Tables</big></big></b></center>
 
-<br><a href="user_hold_out.py.htm#Purpose" target="_top">Purpose</a>
-<br><a href="user_hold_out.py.htm#Integrands" target="_top">Integrands</a>
-<br><a href="user_hold_out.py.htm#Nodes" target="_top">Nodes</a>
-<br><a href="user_hold_out.py.htm#Data" target="_top">Data</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="user_hold_out.py.htm#Data.prevalence" target="_top">prevalence</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="user_hold_out.py.htm#Data.Sincidence" target="_top">Sincidence</a>
-<br><a href="user_hold_out.py.htm#Model" target="_top">Model</a>
-<br><a href="user_hold_out.py.htm#Fit" target="_top">Fit</a>
-<br><a href="user_hold_out.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
+<br><a href="user_hold_out_1.py.htm#Purpose" target="_top">Purpose</a>
+<br><a href="user_hold_out_1.py.htm#Integrands" target="_top">Integrands</a>
+<br><a href="user_hold_out_1.py.htm#Nodes" target="_top">Nodes</a>
+<br><a href="user_hold_out_1.py.htm#Data" target="_top">Data</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_hold_out_1.py.htm#Data.prevalence" target="_top">prevalence</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="user_hold_out_1.py.htm#Data.Sincidence" target="_top">Sincidence</a>
+<br><a href="user_hold_out_1.py.htm#Model" target="_top">Model</a>
+<br><a href="user_hold_out_1.py.htm#Fit" target="_top">Fit</a>
+<br><a href="user_hold_out_1.py.htm#Source Code" target="_top">Source&nbsp;Code</a>
 <br><br>
 <b><big><a name="Purpose" id="Purpose">Purpose</a></big></b>
 <br>
@@ -166,7 +166,7 @@ n_node      <font color="#990000">=</font> <font color="#993399">10</font>
 <b><font color="#000080">import</font></b> os
 <b><font color="#000080">import</font></b> copy
 <b><font color="#000080">import</font></b> math
-test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/hold_out.py'</font>
+test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/hold_out_1.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
      usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
      usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
@@ -409,10 +409,10 @@ iota_fit <font color="#990000">=</font> fit_var_table<font color="#990000">[</fo
      <b><font color="#0000FF">assert</font></b><font color="#990000">(</font> <font color="#993399">1.0</font> <font color="#990000">-</font> weighted_residual <font color="#990000">/</font> check <font color="#990000">)</font> <font color="#990000">&lt;</font> <font color="#993399">1e-6</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
-<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'hold_out.py: OK'</font><font color="#990000">)</font>
+<b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'hold_out_1.py: OK'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i></tt></pre>
 
-<hr>Input File: example/user/hold_out.py
+<hr>Input File: example/user/hold_out_1.py
 
 </body>
 </html>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Hold Out Command: Randomly Sub-sample The Data</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Hold Out Command: Randomly Sub-sample The Data">
-<meta name="keywords" id="keywords" content=" hold out command: randomly sub-sample the data syntax purpose database integrand_name max_fit balancing data_subset_table example ">
+<meta name="keywords" id="keywords" content=" hold out command: randomly sub-sample the data syntax purpose database integrand_name max_fit cov_name cov_value_1 cov_value_2 balancing child nodes covariates data_subset_table example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -68,7 +68,12 @@ A:active { color : purple }
 <br><a href="hold_out_command.htm#database" target="_top">database</a>
 <br><a href="hold_out_command.htm#integrand_name" target="_top">integrand_name</a>
 <br><a href="hold_out_command.htm#max_fit" target="_top">max_fit</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="hold_out_command.htm#max_fit.Balancing" target="_top">Balancing</a>
+<br><a href="hold_out_command.htm#cov_name" target="_top">cov_name</a>
+<br><a href="hold_out_command.htm#cov_value_1" target="_top">cov_value_1</a>
+<br><a href="hold_out_command.htm#cov_value_2" target="_top">cov_value_2</a>
+<br><a href="hold_out_command.htm#Balancing" target="_top">Balancing</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="hold_out_command.htm#Balancing.Child Nodes" target="_top">Child&nbsp;Nodes</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="hold_out_command.htm#Balancing.Covariates" target="_top">Covariates</a>
 <br><a href="hold_out_command.htm#data_subset_table" target="_top">data_subset_table</a>
 <br><a href="hold_out_command.htm#Example" target="_top">Example</a>
 <br><br>
@@ -76,7 +81,13 @@ A:active { color : purple }
 
 <br>
 
+<code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;hold_out&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_fit<br>
+</span></font></i></code>
+
 <code><font color="blue"><span style='white-space: nowrap'>dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>database</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;hold_out&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>max_fit</span></font></i></code>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>cov_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cov_value_1</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cov_value_2</span></font></i></code>
 
 
 <br>
@@ -126,12 +137,52 @@ points fit for this integrand.
 
 <br>
 <br>
-<big><a name="max_fit.Balancing" id="max_fit.Balancing">Balancing</a></big>
+<b><big><a name="cov_name" id="cov_name">cov_name</a></big></b>
+<br>
+If this argument is present, it specifies a covariate column that
+will be balanced; see covariate balancing below:
+
+<br>
+<br>
+<b><big><a name="cov_value_1" id="cov_value_1">cov_value_1</a></big></b>
+<br>
+If this argument is present, it specifies one of the covariate values
+for the balancing. This is a string representation of a <code><font color="blue">double</font></code> value.
+
+<br>
+<br>
+<b><big><a name="cov_value_2" id="cov_value_2">cov_value_2</a></big></b>
+<br>
+If this argument is present, it specifies the opposite covariate value
+for the balancing. This is a string representation of a <code><font color="blue">double</font></code> value.
+
+<br>
+<br>
+<b><big><a name="Balancing" id="Balancing">Balancing</a></big></b>
+
+
+<br>
+<br>
+<big><a name="Balancing.Child Nodes" id="Balancing.Child Nodes">Child Nodes</a></big>
 <br>
 The choice of which points to include in the fit tries to sample the
 same number of data points from each of the child nodes (and the parent node).
 If there are not sufficiently many data for one of these nodes, the others
 make up the difference.
+
+<br>
+<br>
+<big><a name="Balancing.Covariates" id="Balancing.Covariates">Covariates</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>cov_name</span></font></i></code>
+ is present, any sample that has the
+covariate value 
+<code><i><font color="black"><span style='white-space: nowrap'>cov_value_1</span></font></i></code>
+ or 
+<code><i><font color="black"><span style='white-space: nowrap'>cov_value_2</span></font></i></code>
+
+will be paired with a sample from the opposite value (if possible).
 
 <br>
 <br>
@@ -155,9 +206,10 @@ documentation.
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>
 <br>
-The file <a href="user_hold_out.py.htm" target="_top"><span style='white-space: nowrap'>user_hold_out.py</span></a>
- contains an example and test
-using this command.
+The files <a href="user_hold_out_1.py.htm" target="_top"><span style='white-space: nowrap'>user_hold_out_1.py</span></a>
+ and <a href="user_hold_out_2.py.htm" target="_top"><span style='white-space: nowrap'>user_hold_out_2.py</span></a>
+
+contain examples and tests using this command.
 
 
 <hr>Input File: devel/cmd/hold_out_command.cpp

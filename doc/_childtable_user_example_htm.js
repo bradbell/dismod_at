@@ -25,7 +25,8 @@ document.write('\
 <option>user_group_mulcov.py</option>\
 <option>user_hes_fixed_math.py</option>\
 <option>user_hes_random.py</option>\
-<option>user_hold_out.py</option>\
+<option>user_hold_out_1.py</option>\
+<option>user_hold_out_2.py</option>\
 <option>user_ill_condition.py</option>\
 <option>user_jump_at_age.py</option>\
 <option>user_lasso_covariate.py</option>\
@@ -79,7 +80,8 @@ function user_example_child(item)
 		'user_group_mulcov.py.htm',
 		'user_hes_fixed_math.py.htm',
 		'user_hes_random.py.htm',
-		'user_hold_out.py.htm',
+		'user_hold_out_1.py.htm',
+		'user_hold_out_2.py.htm',
 		'user_ill_condition.py.htm',
 		'user_jump_at_age.py.htm',
 		'user_lasso_covariate.py.htm',

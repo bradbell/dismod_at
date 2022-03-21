@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2022 03-08 03-04 02-17 02-08 02-05 01-23 01-22 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2022 03-19 03-11 03-08 03-04 02-17 02-08 02-05 01-23 01-22 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,8 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>03-19</option>
+<option>03-11</option>
 <option>03-08</option>
 <option>03-04</option>
 <option>02-17</option>
@@ -78,6 +80,33 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2022</big></big></b></center>
+<br>
+<b><big><a name="03-19" id="03-19">03-19</a></big></b>
+<br>
+Balancing
+<a href="hold_out_command.htm#Balancing.Covariates" target="_top"><span style='white-space: nowrap'>covariates</span></a>
+ was added
+to the hold_out command; see the new
+<a href="user_hold_out_2.py.htm" target="_top"><span style='white-space: nowrap'>user_hold_out_2.py</span></a>
+ example.
+
+<br>
+<br>
+<b><big><a name="03-11" id="03-11">03-11</a></big></b>
+
+<ol type="1"><li>
+In <a href="plot_curve.htm" target="_top"><span style='white-space: nowrap'>plot_curve</span></a>
+,
+find a way around Matplotlib bug when there are lots of figures.
+This sometimes caused a python crash with an IO error.
+</li><li>
+
+Fix setting of C compiler in <a href="run_cmake.sh.htm" target="_top"><span style='white-space: nowrap'>run_cmake.sh</span></a>
+.
+</li></ol>
+
+
+<br>
 <br>
 <b><big><a name="03-08" id="03-08">03-08</a></big></b>
 

@@ -3,7 +3,7 @@
 // ------------------------------------------------------------ 
 Keyword = 
 [
-{ tag: 'dismod_at', title:'dismod_at-20220308: User Documentation and API', other:' purpose links' },
+{ tag: 'dismod_at', title:'dismod_at-20220321: User Documentation and API', other:' purpose links' },
 { tag: 'math_abstract', title:'An Introduction To The Mathematics of Dismod_at', other:'' },
 { tag: 'math_ode', title:'The Dismod_at Ordinary Differential Equation', other:' susceptible s(a t) with condition c(a prevalence p(a incidence iota(a remission rho(a excess mortality chi(a other cause omega(a initial pini(t)' },
 { tag: 'censor_density', title:'The Censored Gaussian and Laplace Densities', other:' references discussion simulation test g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac)' },
@@ -38,7 +38,8 @@ Keyword =
 { tag: 'user_group_mulcov.py', title:'Using Group Covariate Multipliers', other:' see also purpose true value variables integrand node tables subgroup covariates simulated data rate source code' },
 { tag: 'user_hes_fixed_math.py', title:'Check the Hessian of the Fixed Effects Objective', other:' purpose reference notation problem parameters random likelihood gradient w.r.t. cross term optimal implicit function definition derivatives laplace approximation asymptotic statistics scaling source code' },
 { tag: 'user_hes_random.py', title:'Check the Hessian of the Random Effects Objective', other:' purpose reference notation problem parameters likelihood gradient w.r.t. asymptotic statistics source code' },
-{ tag: 'user_hold_out.py', title:'Using hold_out in Data, Subset Data, and Option Tables', other:' purpose integrands nodes prevalence sincidence model fit source code' },
+{ tag: 'user_hold_out_1.py', title:'Using hold_out in Data, Subset Data, and Option Tables', other:' purpose integrands nodes prevalence sincidence model fit source code' },
+{ tag: 'user_hold_out_2.py', title:'hold_out Command: Balancing Sex Covariate Values', other:' purpose integrands nodes alpha_true iota_avg parent data model fitting source code' },
 { tag: 'user_ill_condition.py', title:'An Ill Conditioned Example Where Re-Scaling is Helpful', other:' notation objective derivative ill-conditioning source code' },
 { tag: 'user_jump_at_age.py', title:'Zero Rate Until a Jump at a Known Age', other:' purpose parameters iota_near_zero iota_after_20 iota_eta age_table time_table model variables truth simulated data source code' },
 { tag: 'user_lasso_covariate.py', title:'Using Lasso on Covariate Multiplier', other:' see also purpose problem parameters age time values variables table mulcov rate data prior iota alpha source code' },
@@ -149,7 +150,7 @@ Keyword =
 { tag: 'depend_command.py', title:'depend Command: Example and Test', other:'' },
 { tag: 'fit_command', title:'The Fit Command', other:' syntax database variables fixed random both simulate_index data_sim_table prior_sim_table warm_start data_subset_table hold_out output tables fit_var_table fit_data_subset_table trace_fixed hes_random_table mixed_info ipopt_info_table effects convergence problems options example' },
 { tag: 'fit_command.py', title:'fit Command: Example and Test', other:'' },
-{ tag: 'hold_out_command', title:'Hold Out Command: Randomly Sub-sample The Data', other:' syntax purpose database integrand_name max_fit balancing data_subset_table example' },
+{ tag: 'hold_out_command', title:'Hold Out Command: Randomly Sub-sample The Data', other:' syntax purpose database integrand_name max_fit cov_name cov_value_1 cov_value_2 balancing child nodes covariates data_subset_table example' },
 { tag: 'init_command', title:'The Initialize Command', other:' syntax purpose deleted tables changing values database age_avg_table var_table data_subset_table hold_out density_id eta nu start_var_table scale_var_table bnd_mulcov_table example' },
 { tag: 'init_command.py', title:'init Command: Example and Test', other:'' },
 { tag: 'old2new_command', title:'Convert an Old Database to New Format', other:' syntax subgroup table avgint mulcov option' },
@@ -196,7 +197,7 @@ Keyword =
 { tag: 'unicode_tuple', title:'Convert an Iterable Object to a Unicode String', other:' syntax quote_string none infinity u_tuple example' },
 { tag: 'unicode_tuple.py', title:'unicode_tuple: Example and Test', other:'' },
 { tag: 'release_notes', title:'Changes and Additions to Dismod_at', other:' introduction this year previous years' },
-{ tag: 'whats_new_2022', title:'Changes and Additions to Dismod_at During 2022', other:' 03-08 03-04 02-17 02-08 02-05 01-23 01-22' },
+{ tag: 'whats_new_2022', title:'Changes and Additions to Dismod_at During 2022', other:' 03-19 03-11 03-08 03-04 02-17 02-08 02-05 01-23 01-22' },
 { tag: 'whats_new_2021', title:'Changes and Additions to Dismod_at During 2021', other:' 12-31 12-30 12-27 12-22 12-14 12-09 12-08 12-05 11-29 11-27 11-19 11-16 11-15 11-14 11-07 11-06 11-05 11-03 10-31 10-25 10-24 10-23 10-15 10-14 10-12 10-11 10-07 10-06 09-01 08-30 08-25 08-24 08-23 08-22 08-21 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08' },
 { tag: 'whats_new_2020', title:'Changes and Additions to Dismod_at During 2020', other:' 12-30 12-29 12-26 12-22 12-17 11-24 11-22 11-23 10-10 08-31 08-23 08-20 08-16 07-02 07-01 06-30 06-24 06-20 06-08 05-30 05-29 05-27 05-21 05-15 03-28 03-27 03-26 03-25 03-24 03-23 03-22 03-21 03-19 03-18 03-15 03-09 03-06 02-29 02-28 02-26 02-20 02-18 02-14 02-13 01-31 01-16 01-08 01-07' },
 { tag: 'whats_new_2019', title:'Changes and Additions to Dismod_at During 2019', other:' 12-07 12-06 12-05 12-04 11-30 11-29 11-28 11-26 11-25 11-24 11-22 11-20 11-18 11-17 10-24 10-09 10-08 10-06 10-02 10-01 09-30 09-24 09-23 09-22 09-21 09-20 09-19 09-17 09-15 09-13 09-12 09-11 08-24 07-25 07-24 07-20 07-19 07-13 07-10 07-06 06-28 06-27 06-26 06-25 06-24 06-23 06-22 06-21 06-07 06-02 06-01 05-24 05-21 05-12 05-07 05-05 05-03 05-02 05-01 04-30 04-29 04-28 04-27 04-26 04-25 04-24 04-23 04-22 04-21 04-20 04-18 04-17 04-15 04-14 04-12 04-11 04-10 04-09 04-08 04-06 02-16 01-26 01-23 01-22 01-16 01-15 01-10' },
