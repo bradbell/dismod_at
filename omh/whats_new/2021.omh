@@ -574,7 +574,7 @@ $lend
 $head 06-10$$
 $list number$$
 Add the $cref/hold_out_integrand/option_table/hold_out_integrand/$$ option
-and $cref user_hold_out.py$$ example.
+and $cref user_hold_out_1.py$$ example.
 $lnext
 Advance to cppad_mixed-20210610.
 This fixes a warning message during $code bin/get_cppad_mixed.sh$$ on ubuntu.

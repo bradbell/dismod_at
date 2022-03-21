@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -79,7 +79,8 @@ $children%
 	example/user/group_mulcov.py%
 	example/user/hes_fixed_math.py%
 	example/user/hes_random.py%
-	example/user/hold_out.py%
+	example/user/hold_out_1.py%
+	example/user/hold_out_2.py%
 	example/user/ill_condition.py%
 	example/user/jump_at_age.py%
 	example/user/lasso_covariate.py%
@@ -135,7 +136,8 @@ $rref user_fit_sim.py$$
 $rref user_group_mulcov.py$$
 $rref user_hes_fixed_math.py$$
 $rref user_hes_random.py$$
-$rref user_hold_out.py$$
+$rref user_hold_out_1.py$$
+$rref user_hold_out_2.py$$
 $rref user_ill_condition.py$$
 $rref user_jump_at_age.py$$
 $rref user_lasso_covariate.py$$

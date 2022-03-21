@@ -97,8 +97,8 @@ See the fit command $cref/hold_out/fit_command/hold_out/$$
 documentation.
 
 $head Example$$
-The file $cref user_hold_out.py$$ contains an example and test
-using this command.
+The files $cref user_hold_out_1.py$$ and $cref user_hold_out_2.py$$
+contain examples and tests using this command.
 
 $end
 */

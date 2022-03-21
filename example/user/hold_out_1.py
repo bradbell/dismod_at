@@ -1,13 +1,13 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
 #	     GNU Affero General Public License version 3.0 or later
 # see http://www.gnu.org/licenses/agpl.txt
 # ---------------------------------------------------------------------------
-# $begin user_hold_out.py$$ $newlinech #$$
+# $begin user_hold_out_1.py$$ $newlinech #$$
 # $spell
 #	num_iter
 #	py
@@ -74,7 +74,7 @@ import sys
 import os
 import copy
 import math
-test_program = 'example/user/hold_out.py'
+test_program = 'example/user/hold_out_1.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
 	usage  = 'python3 ' + test_program + '\n'
 	usage += 'where python3 is the python 3 program on your system\n'
@@ -317,6 +317,6 @@ for (subset_id, fit_row) in enumerate(fit_data_subset_table) :
 	assert( 1.0 - weighted_residual / check ) < 1e-6
 #
 # -----------------------------------------------------------------------------
-print('hold_out.py: OK')
+print('hold_out_1.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

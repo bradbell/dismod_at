@@ -40,7 +40,8 @@ $section Changes and Additions to Dismod_at During 2022$$
 $head 03-19$$
 Balancing
 $cref/covariates/hold_out_command/Balancing/Covariates/$$ was added
-to the hold_out command.
+to the hold_out command; see the new
+$cref user_hold_out_2.py$$ example.
 
 $head 03-11$$
 $list number$$

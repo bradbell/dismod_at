@@ -168,14 +168,10 @@ then
 	bin/build_type.sh run_cmake $dismod_at_prefix $build_type
 fi
 # --------------------------------------------------------------------------
-if [ ! -e build ]
-then
-	echo_eval mkdir build
-fi
 echo_eval cd build
 if [ -e 'CMakeCache.txt' ]
 then
-	rm CMakeCache.txt
+	echo_eval rm CMakeCache.txt
 fi
 # --------------------------------------------------------------------------
 # cmake_cxx_compiler
