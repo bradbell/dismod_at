@@ -37,6 +37,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 03-23$$
+Advance to cppad_mixed-20220323 which will in turn install cppad-20220323.
+
 $head 03-19$$
 Balancing
 $cref/covariates/hold_out_command/Balancing/Covariates/$$ was added
