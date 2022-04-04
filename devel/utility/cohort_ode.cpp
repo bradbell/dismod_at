@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -95,6 +95,7 @@ $end
 */
 # include <dismod_at/cohort_ode.hpp>
 # include <dismod_at/eigen_ode2.hpp>
+# include <dismod_at/trap_ode2.hpp>
 # include <dismod_at/a1_double.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -146,7 +147,7 @@ void cohort_ode(
 	{	// b[1] != 0, b[2] != 0
 		case_number = 4;
 	}
-	assert( case_number != 0 );
+	assert( rate_case == "trapezoidal" || case_number != 0 );
 	// ----------------------------------------------------------------------
 	// initialize for first interval
 	c_out[0] = pini;
@@ -172,8 +173,11 @@ void cohort_ode(
 		yi[1] = c_out[k-1];
 		tf    = age[k] - age[k-1];
 		//
-		// call to eigen_ode2
-		yf = eigen_ode2(case_number, b, yi, tf);
+		// one step in solving ODE for this cohort
+		if( case_number == 0 )
+			yf = trap_ode2(b, yi, tf);
+		else
+			yf = eigen_ode2(case_number, b, yi, tf);
 		//
 		// copy result to output vector
 		s_out[k] = yf[0];

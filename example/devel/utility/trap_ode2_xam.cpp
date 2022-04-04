@@ -40,7 +40,7 @@ bool trap_ode2_xam(void)
 	yi[1] = 2.0;
 	//
 	xf  = dismod_at::eigen_ode2(case_number, b, yi, tf);
-	yf  = dismod_at::trap_ode2(case_number,  b, yi, tf);
+	yf  = dismod_at::trap_ode2(b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-5;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-5;
 	// -------------------------------------------------------------------
@@ -51,7 +51,7 @@ bool trap_ode2_xam(void)
 	b[2] =  0.0 , b[3] = -2.0;
 	//
 	xf  = dismod_at::eigen_ode2(case_number, b, yi, tf);
-	yf  = dismod_at::trap_ode2(case_number,  b, yi, tf);
+	yf  = dismod_at::trap_ode2(b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-5;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-5;
 	// -------------------------------------------------------------------
@@ -62,7 +62,7 @@ bool trap_ode2_xam(void)
 	b[2] =  1.0 , b[3] = -2.0;
 	//
 	xf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
-	yf   = dismod_at::trap_ode2(case_number, b, yi, tf);
+	yf   = dismod_at::trap_ode2(b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-5;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-5;
 	//
@@ -74,7 +74,7 @@ bool trap_ode2_xam(void)
 	b[2] =  1.0 , b[3] = -3.0;
 	//
 	xf   = dismod_at::eigen_ode2(case_number, b, yi, tf);
-	yf   = dismod_at::trap_ode2(case_number,  b, yi, tf);
+	yf   = dismod_at::trap_ode2(b, yi, tf);
 	ok &= fabs( yf[0] / xf[0] - 1.0 ) < 1e-5;
 	ok &= fabs( yf[1] / xf[1] - 1.0 ) < 1e-5;
 	// -------------------------------------------------------------------

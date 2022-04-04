@@ -16,7 +16,6 @@ see http://www.gnu.org/licenses/agpl.txt
 namespace dismod_at {
 	template <class Float>
 	extern CppAD::vector<Float> trap_ode2(
-		size_t                       case_number ,
 		const CppAD::vector<Float>&  b           ,
 		const CppAD::vector<Float>&  yi          ,
 		const Float&                 tf

@@ -91,7 +91,6 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Float>
 CppAD::vector<Float> trap_ode2(
-	size_t                       case_number ,
 	const CppAD::vector<Float>&  b           ,
 	const CppAD::vector<Float>&  yi          ,
 	const Float&                 tf          )
@@ -126,7 +125,6 @@ CppAD::vector<Float> trap_ode2(
 // instantiation macro
 # define DISMOD_AT_INSTANTIATE_TRAP_ODE2(Float)       \
 	template CppAD::vector<Float> trap_ode2<Float>(   \
-		size_t                       case_number ,     \
 		const CppAD::vector<Float>&  b           ,     \
 		const CppAD::vector<Float>&  yi          ,     \
 		const Float&                 tf                \

@@ -37,6 +37,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 04-04$$
+Add the $cref/trapezoidal/option_table/rate_case/trapezoidal/$$
+method as an option for solving the ODE.
+This option's name should be changed from rate_case to ode_method.
+
 $head 03-23$$
 Advance to cppad_mixed-20220323 which will in turn install cppad-20220323.
 
