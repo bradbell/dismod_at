@@ -48,6 +48,7 @@ extern bool child_data_in_fit_xam(void);
 extern bool cohort_ode_xam(void);
 extern bool subset_data_xam(void);
 extern bool eigen_ode2_xam(void);
+extern bool trap_ode2_xam(void);
 extern bool fixed_effect_xam(void);
 extern bool manage_gsl_rng_xam(void);
 extern bool age_avg_grid_xam(void);
@@ -146,6 +147,7 @@ int main(void)
 	RUN(cohort_ode_xam);
 	RUN(subset_data_xam);
 	RUN(eigen_ode2_xam);
+	RUN(trap_ode2_xam);
 	RUN(fixed_effect_xam);
 	RUN(manage_gsl_rng_xam);
 	RUN(age_avg_grid_xam);

@@ -61,6 +61,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/child_info_xam.cpp
 	utility/cohort_ode_xam.cpp
 	utility/eigen_ode2_xam.cpp
+	utility/trap_ode2_xam.cpp
 	utility/fixed_effect_xam.cpp
 	utility/grid2line_xam.cpp
 	utility/manage_gsl_rng_xam.cpp
@@ -73,6 +74,7 @@ ADD_EXECUTABLE(example_devel EXCLUDE_FROM_ALL
 	utility/split_space_xam.cpp
 	utility/subset_data_xam.cpp
 	utility/time_line_vec_xam.cpp
+	utility/trap_ode2_xam.cpp
 )
 # END_SORT_THIS_LINE_MINUS_2
 #
