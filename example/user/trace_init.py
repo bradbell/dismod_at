@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -239,7 +239,9 @@ example_db(file_name)
 #
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
-stdout = dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
+#
+command = [ program, file_name, 'fit', 'both' ]
+stdout  = dismod_at.system_command_prc( command, return_stdout = True )
 # -----------------------------------------------------------------------
 # Check trace_init_fit_model results
 check  = 'Begin dismod_at: fit_model constructor\n'

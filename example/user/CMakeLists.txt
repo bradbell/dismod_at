@@ -60,6 +60,7 @@ FOREACH(user_case
 	sum_residual
 	system_command_prc
 	trace_init
+	trapezoidal
 	warm_start
 	zsum_child_rate
 	zsum_mulcov_meas

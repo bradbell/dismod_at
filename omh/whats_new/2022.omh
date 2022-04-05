@@ -21,6 +21,8 @@ $spell
 	suitesparse
 	matplotlib
 	covariates
+	prc
+	stdout
 $$
 $navigate%
 	Up%Location%
@@ -36,6 +38,16 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 04-05$$
+The $cref user_trapezoidal.py$$ example was added.
+
+$subhead API Change$$
+The $code system_command_prc$$ default value for
+$cref/return_stdout/system_command_prc/return_stdout/$$ was changed from
+False to True.
+This provides compatibility with the way system_command_prc used
+to function before the return_stdout argument was added.
 
 $head 04-04$$
 Add the $cref/trapezoidal/option_table/rate_case/trapezoidal/$$

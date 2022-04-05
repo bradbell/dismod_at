@@ -103,6 +103,7 @@ $children%
 	example/user/sum_residual.py%
 	example/user/system_command_prc.py%
 	example/user/trace_init.py%
+	example/user/trapezoidal.py%
 	example/user/warm_start.py%
 	example/user/zsum_child_rate.py%
 	example/user/zsum_mulcov_meas.py%
@@ -113,6 +114,7 @@ $comment END_SORT_THIS_LINE_MINUS_2$$
 $head Examples With Explanation$$
 $table
 $comment BEGIN_SORT_THIS_LINE_PLUS_1$$
+$rref user_trapezoidal.py$$
 $rref user_age_avg_split.py$$
 $rref user_average_integrand.py$$
 $rref user_bilevel_random.py$$
