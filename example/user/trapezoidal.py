@@ -188,7 +188,7 @@ def example_db (file_name) :
 	option_table = [
 		{ 'name':'rate_case',              'value':'trapezoidal' },
 		{ 'name':'parent_node_name',       'value':'world'       },
-		{ 'name':'ode_step_size',          'value':'1.0'         },
+		{ 'name':'ode_step_size',          'value':'5.0'         },
 		{ 'name':'print_level_fixed',      'value':'0'           },
 	]
 	# ----------------------------------------------------------------------
