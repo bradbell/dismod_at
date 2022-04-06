@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2022 03-23 03-19 03-11 03-08 03-04 02-17 02-08 02-05 01-23 01-22 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2022 04-05 api change 04-04 03-23 03-19 03-11 03-08 03-04 02-17 02-08 02-05 01-23 01-22 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,9 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>04-05</option>
+<option>04-05.API Change</option>
+<option>04-04</option>
 <option>03-23</option>
 <option>03-19</option>
 <option>03-11</option>
@@ -81,6 +84,33 @@ A:active { color : purple }
 
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2022</big></big></b></center>
+<br>
+<b><big><a name="04-05" id="04-05">04-05</a></big></b>
+<br>
+The <a href="user_trapezoidal.py.htm" target="_top"><span style='white-space: nowrap'>user_trapezoidal.py</span></a>
+ example was added.
+
+<br>
+<br>
+<big><a name="04-05.API Change" id="04-05.API Change">API Change</a></big>
+<br>
+The <code><font color="blue">system_command_prc</font></code> default value for
+<a href="system_command_prc.htm#return_stdout" target="_top"><span style='white-space: nowrap'>return_stdout</span></a>
+ was changed from
+False to True.
+This provides compatibility with the way system_command_prc used
+to function before the return_stdout argument was added.
+
+<br>
+<br>
+<b><big><a name="04-04" id="04-04">04-04</a></big></b>
+<br>
+Add the <a href="option_table.htm#rate_case.trapezoidal" target="_top"><span style='white-space: nowrap'>trapezoidal</span></a>
+
+method as an option for solving the ODE.
+This option's name should be changed from rate_case to ode_method.
+
+<br>
 <br>
 <b><big><a name="03-23" id="03-23">03-23</a></big></b>
 <br>

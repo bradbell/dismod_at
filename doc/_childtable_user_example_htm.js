@@ -49,6 +49,7 @@ document.write('\
 <option>user_sum_residual.py</option>\
 <option>user_system_command_prc.py</option>\
 <option>user_trace_init.py</option>\
+<option>user_trapezoidal.py</option>\
 <option>user_warm_start.py</option>\
 <option>user_zsum_child_rate.py</option>\
 <option>user_zsum_mulcov_meas.py</option>\
@@ -104,6 +105,7 @@ function user_example_child(item)
 		'user_sum_residual.py.htm',
 		'user_system_command_prc.py.htm',
 		'user_trace_init.py.htm',
+		'user_trapezoidal.py.htm',
 		'user_warm_start.py.htm',
 		'user_zsum_child_rate.py.htm',
 		'user_zsum_mulcov_meas.py.htm',

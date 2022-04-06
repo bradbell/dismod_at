@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table format option_id option_name option_value default changing values parent node parent_node_id parent_node_name name id children data subset avgint zero sum constraints zero_sum_child_rate zero_sum_mulcov_group extra columns data_extra_columns avgint_extra_columns age average grid ode_step_size age_avg_split rate_case no_ode iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimize fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random meas_noise_effect warn_on_stderr minimum_meas_cv hold_out_integrand random_seed compress_interval trace_init_fit_model example ">
+<meta name="keywords" id="keywords" content=" the option table format option_id option_name option_value default changing values parent node parent_node_id parent_node_name name id children data subset avgint zero sum constraints zero_sum_child_rate zero_sum_mulcov_group extra columns data_extra_columns avgint_extra_columns age average grid ode_step_size age_avg_split rate_case no_ode trapezoidal iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimize fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random meas_noise_effect warn_on_stderr minimum_meas_cv hold_out_integrand random_seed compress_interval trace_init_fit_model example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -93,6 +93,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#Age Average Grid.age_avg_split" target="_top">age_avg_split</a>
 <br><a href="option_table.htm#rate_case" target="_top">rate_case</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.no_ode" target="_top">no_ode</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.trapezoidal" target="_top">trapezoidal</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_zero_rho_zero" target="_top">iota_zero_rho_zero</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_pos_rho_zero" target="_top">iota_pos_rho_zero</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="option_table.htm#rate_case.iota_zero_rho_pos" target="_top">iota_zero_rho_pos</a>
@@ -448,7 +449,8 @@ If this value is null,
 <br>
 <br>
 <b><big><a name="rate_case" id="rate_case">rate_case</a></big></b>
-
+<br>
+This option's name should be changed to ode_method.
 
 <br>
 <br>
@@ -472,6 +474,18 @@ constraining certain rates to be positive or zero.
 
 <br>
 <br>
+<big><a name="rate_case.trapezoidal" id="rate_case.trapezoidal">trapezoidal</a></big>
+<br>
+If 
+<code><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;rate_case</span></font></code>
+ and
+
+<code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;trapezoidal</span></font></code>
+,
+a trapezoidal method is used to approximation the ODE solution.
+
+<br>
+<br>
 <big><a name="rate_case.iota_zero_rho_zero" id="rate_case.iota_zero_rho_zero">iota_zero_rho_zero</a></big>
 <br>
 If 
@@ -487,6 +501,7 @@ the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-s
  and 
 <code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
  must always have lower and upper limit zero.
+In this case an eigen vector method is used to approximate the ODE solution.
 
 <br>
 <br>
@@ -506,6 +521,7 @@ the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-s
 
 <code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
  lower and upper limit zero.
+In this case an eigen vector method is used to approximate the ODE solution.
 
 <br>
 <br>
@@ -525,6 +541,7 @@ the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-s
 
 <code><i><font color="black"><span style='white-space: nowrap'>iota</span></font></i></code>
  lower and upper limit zero.
+In this case an eigen vector method is used to approximate the ODE solution.
 
 <br>
 <br>
@@ -544,6 +561,7 @@ the <a href="rate_table.htm#parent_smooth_id" target="_top"><span style='white-s
 <code><i><font color="black"><span style='white-space: nowrap'>rho</span></font></i></code>
 
 must always have lower limit greater than zero.
+In this case an eigen vector method is used to approximate the ODE solution.
 
 <br>
 <br>

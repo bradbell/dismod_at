@@ -1,0 +1,117 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>Using the Trapezoidal ODE Solver</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="Using the Trapezoidal ODE Solver">
+<meta name="keywords" id="keywords" content=" using the trapezoidal ode solver rates integrands data random effects rate_case ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_user_trapezoidal.py_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>user_example</option>
+<option>user_trapezoidal.py</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="user_trace_init.py.htm" target="_top">Prev</a>
+</td><td><a href="user_warm_start.py.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
+</td>
+<td>user_trapezoidal.py</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Using the Trapezoidal ODE Solver</big></big></b></center>
+
+<br><a href="user_trapezoidal.py.htm#Rates" target="_top">Rates</a>
+<br><a href="user_trapezoidal.py.htm#Integrands" target="_top">Integrands</a>
+<br><a href="user_trapezoidal.py.htm#Data" target="_top">Data</a>
+<br><a href="user_trapezoidal.py.htm#Random Effects" target="_top">Random&nbsp;Effects</a>
+<br><a href="user_trapezoidal.py.htm#rate_case" target="_top">rate_case</a>
+<br><br>
+<b><big><a name="Rates" id="Rates">Rates</a></big></b>
+<br>
+The non-zero rates in this example are iota, rho, chi, and omega.
+They are all constant in age and time because they each have one smoothing
+grid point.
+
+<br>
+<br>
+<b><big><a name="Integrands" id="Integrands">Integrands</a></big></b>
+<br>
+The integrands for this example are prevalence, remission, mtexcess,
+and mtother.
+Modeling the prevalence integrand requires solving the ODE.
+The other integrands are direct measurements of the rates.
+To be specific, remission measures rho,
+mtexcess measures chi, and
+mtother measures omega.
+
+<br>
+<br>
+<b><big><a name="Data" id="Data">Data</a></big></b>
+<br>
+For each of the integrands there is one data point are
+age 50 and time 2000.
+No noise is added to the data but it is modeled as if it
+had a 10 percent coefficient of variation.
+
+<br>
+<br>
+<b><big><a name="Random Effects" id="Random Effects">Random Effects</a></big></b>
+<br>
+There are no random effects in this example.
+
+<br>
+<br>
+<b><big><a name="rate_case" id="rate_case">rate_case</a></big></b>
+<br>
+The rate case for this example is <code><font color="blue">trapezoidal</font></code>.
+This case has does not require any of the rates to be positive,
+so we use a lower limit of one for all the rates.
+
+
+<hr>Input File: example/user/trapezoidal.py
+
+</body>
+</html>
