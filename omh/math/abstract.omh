@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -63,6 +63,7 @@ Algorithmic differentiation is used to make this task feasible.
 
 $childtable%omh/math/ode.omh
 	%omh/math/censor_density.omh
+	%omh/math/prevalence_ode.omh
 %$$
 
 $end

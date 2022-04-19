@@ -23,6 +23,7 @@ $spell
 	covariates
 	prc
 	stdout
+	CppAD
 $$
 $navigate%
 	Up%Location%
@@ -38,6 +39,17 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 04-19$$
+$list number$$
+Advance to cppad_mixed-20220419 which will include
+the CppAD example atomic ODE solver.
+We plan to try using this solver to reduce the dismod_at memory requirements.
+$lnext
+Add a derivation of the $cref/prevalence only ode/prevalence_ode/$$.
+$lnext
+Add age to error message when prevalence cannot be calculated.
+$lend
 
 $head 04-05$$
 The $cref user_trapezoidal.py$$ example was added.

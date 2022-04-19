@@ -622,7 +622,8 @@ CppAD::vector<Float> adj_integrand::line(
 			msg += integrand_enum2name[integrand];
 			msg += " integrand.\n";
 			if( need_P )
-			{	msg += "S = " + CppAD::to_string(s_out[k]);
+			{	msg += "age = " + CppAD::to_string(line_age[k]);
+				msg += ", S = " + CppAD::to_string(s_out[k]);
 				msg += ", C = " + CppAD::to_string(c_out[k]);
 				msg += "\n";
 			}
