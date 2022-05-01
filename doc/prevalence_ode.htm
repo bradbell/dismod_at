@@ -1,0 +1,202 @@
+<html>
+<script type='text/x-mathjax-config'>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath:  [ ['@(@','@)@'] ] ,
+    displayMath: [ ['@[@','@]@'] ]
+  }
+});
+</script>
+<script type='text/javascript' src=
+'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default'
+>
+</script>
+<head>
+<title>The Prevalence Only ODE</title>
+<meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
+<meta name="description" id="description" content="The Prevalence Only ODE">
+<meta name="keywords" id="keywords" content=" the prevalence only ode theorem proof advantage integrands s c ">
+<style type='text/css'>
+body { color : black }
+body { background-color : white }
+A:link { color : blue }
+A:visited { color : purple }
+A:active { color : purple }
+</style>
+<script type='text/javascript' language='JavaScript' src='_prevalence_ode_htm.js'>
+</script>
+</head>
+<body>
+<table><tr>
+<td>
+<a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
+</td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Location-&gt;</option>
+<option>dismod_at</option>
+<option>math_abstract</option>
+<option>prevalence_ode</option>
+</select>
+</td>
+<td>
+<select onchange='choose_across0(this)'>
+<option>Search-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
+<td><a href="censor_density.htm" target="_top">Prev</a>
+</td><td><a href="install.htm" target="_top">Next</a>
+</td><td>
+<script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
+</td>
+<td>
+<script type='text/javascript' language='JavaScript' src='_childtable_math_abstract_htm.js'></script>
+</td>
+<td>prevalence_ode</td>
+</tr></table><br>
+@(@\newcommand{\R}[1]{ {\rm #1} }
+\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\W}[1]{ \; #1 \; }@)@
+
+
+<center><b><big><big>The Prevalence Only ODE</big></big></b></center>
+
+<br><a href="prevalence_ode.htm#Theorem" target="_top">Theorem</a>
+<br><a href="prevalence_ode.htm#Proof" target="_top">Proof</a>
+<br><a href="prevalence_ode.htm#Advantage" target="_top">Advantage</a>
+<br><a href="prevalence_ode.htm#Integrands" target="_top">Integrands</a>
+<br><a href="prevalence_ode.htm#S and C" target="_top">S&nbsp;and&nbsp;C</a>
+<br><br>
+<b><big><a name="Theorem" id="Theorem">Theorem</a></big></b>
+<br>
+If <small>@(@
+S
+@)@</small> and <small>@(@
+C
+@)@</small> satisfy the dismod_at
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+ then prevalence <small>@(@
+P = C / (S + C)
+@)@</small> satisfies
+<small>@[@
+
+    P' = + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Proof" id="Proof">Proof</a></big></b>
+<br>
+Suppose that <small>@(@
+S(a)
+@)@</small> and <small>@(@
+C(a)
+@)@</small> satisfy the dismod_at
+<a href="avg_integrand.htm#Ordinary Differential Equation" target="_top"><span style='white-space: nowrap'>ordinary&nbsp;differential&nbsp;equation</span></a>
+
+<small>@[@
+
+\begin{array}{rrr}
+    S' =&  - ( \iota + \omega ) S &                     + \rho C \\
+    C' =&               + \iota S & - ( \rho + \chi + \omega ) C
+\end{array}
+
+@]@</small>
+It follows that
+<small>@[@
+
+    (S + C)' = - \omega S - ( \omega + \chi ) C
+
+@]@</small>
+Using <small>@(@
+C = (S + C) P
+@)@</small>, we also have
+<small>@[@
+
+\begin{array}{rcl}
+C'         & = & (S + C)' P + (S + C) P'
+\\
+(S + C) P' & = & C' - (S + C)' P
+\\
+(S + C) P' & = &
+    + \iota S - ( \rho + \chi + \omega ) C
+    + \omega S P + ( \omega + \chi ) C P
+\\
+P' & = &
+    + \iota (1 - P) - ( \rho + \chi + \omega ) P
+    + \omega (1 - P) P + ( \omega + \chi ) P^2
+\\
+P' & = & + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
+\end{array}
+
+@]@</small>
+
+<br>
+<br>
+<b><big><a name="Advantage" id="Advantage">Advantage</a></big></b>
+<br>
+One advantage of this approach,
+over the original ODE in <small>@(@
+(S, C)
+@)@</small>,
+is that the solution is stable as <small>@(@
+S + C \rightarrow 0
+@)@</small>.
+The <small>@(@
+(S, C)
+@)@</small>  approach computes <small>@(@
+P = C / (S + C)
+@)@</small>.
+
+<br>
+<br>
+<b><big><a name="Integrands" id="Integrands">Integrands</a></big></b>
+<br>
+All of the current integrands, except for
+<a href="avg_integrand.htm#Integrand, I_i(a,t).susceptible" target="_top"><span style='white-space: nowrap'>susceptible</span></a>
+ and
+<a href="avg_integrand.htm#Integrand, I_i(a,t).withC" target="_top"><span style='white-space: nowrap'>withC</span></a>
+
+can be computed from <small>@(@
+P
+@)@</small> (given that the rates are inputs to the ODE).
+
+<br>
+<br>
+<b><big><a name="S and C" id="S and C">S and C</a></big></b>
+<br>
+If we know all cause mortality <small>@(@
+\alpha = \omega + \chi P
+@)@</small>,
+once we have solved for <small>@(@
+P
+@)@</small>,
+we can compute <small>@(@
+\omega = \alpha - \chi P
+@)@</small>.
+Furthermore
+<small>@[@
+
+	(S + C)' = - \alpha (S + C)
+
+@]@</small>
+We can also compute <small>@(@
+S + C
+@)@</small>, and
+<small>@(@
+C = P (S + C)
+@)@</small>, <small>@(@
+S = (1 - P)(S + C)
+@)@</small>.
+
+
+<hr>Input File: omh/math/prevalence_ode.omh
+
+</body>
+</html>
