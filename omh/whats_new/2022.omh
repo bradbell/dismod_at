@@ -40,6 +40,11 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 05-01$$
+Advance dock_dismod_at.sh to
+$cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20220421.
+You should rebuild all the images for this update.
+
 $head 04-21$$
 Advance to cppad_mixed-20220421.
 This makes the cppad-20220421 available.

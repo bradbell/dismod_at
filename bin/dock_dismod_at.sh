@@ -86,8 +86,8 @@
 # $subhead Version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20211121'
-	dismod_at_hash='f86c33a7f5f4c5d10792893298423c99fe85e7c2'
+	dismod_at_version='20220421'
+	dismod_at_hash='b96c2d107a712537646b41eefaa6dbc5e817f0f3'
 # %$$
 #
 # The image commands will not execute if the corresponding OCI image
@@ -354,15 +354,19 @@ libblas-dev \
 liblapack-dev \
 libsuitesparse-dev \
 libgsl-dev \
+libsqlite3-dev \
 pkg-config \
 python3 \
-python3-distutils-extra \
-python3-matplotlib \
-python3-numpy \
-python3-scipy \
-libsqlite3-dev \
+python3-venv \
+pip \
 vim \
 wget
+#
+Run pip3 install \
+matplotlib \
+numpy \
+scipy \
+build
 
 # 1. Get dismod git repository as /home/dismod_at.git
 WORKDIR /home
@@ -419,7 +423,7 @@ RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
-make install && \
+make install install_python && \
 cd ..
 
 # Install release version of dismod_at
@@ -427,7 +431,7 @@ RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
-make install && \
+make install install_python && \
 cd ..
 
 # Restore run_cmake.sh to its original state
