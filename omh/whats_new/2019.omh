@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -474,9 +474,9 @@ $lend
 
 $head 09-12$$
 $list number$$
-Advance $code dock_dismod_at.sh$$ to
-$cref/version/dock_dismod_at.sh/Building Images/Version/$$
-$code 20190912$$.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20190912.
 $lnext
 If $cref/
 	zero_sum_child_rate/
@@ -578,9 +578,9 @@ Advance to $code cppad-20190719$$.
 This fixes a problem installing the CppAD binary library on the Mac.
 
 $head 07-13$$
-There was a mistake in the value of $icode dismod_at_hash$$
-for $cref/version/dock_dismod_at.sh/Building Images/Version/$$
-$code 20190710$$ of $code dock_dismod_at.sh$$. This has been fixed.
+There was a mistake in the value of $icode dismod_at_hash$$ for
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+20190710 of $code dock_dismod_at.sh$$. This has been fixed.
 
 $head 07-10$$
 $list number$$
@@ -591,8 +591,8 @@ To be specific, one is less likely to an error message indicating
 that the Hessian w.r.t. the random effects is not positive definite.
 $lnext
 There is a new
-$cref/version/dock_dismod_at.sh/Building Images/Version/$$ of
-$code dock_dismod_at.sh$$.
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+in dock_dismod_at.sh.
 In addition, there are new instructions to help with one of the possible
 $cref/errors/dock_dismod_at.sh/Building Images/Errors/$$
 during the $code dock_dismod_at.sh build$$ command.
@@ -642,8 +642,8 @@ The $code build$$ option for $code dock_dismod_at.sh$$ was not updating
 the docker image when the remote repository changed.
 This has been fixed by adding a $code git pull$$
 and checkout of a particular
-$cref/version/dock_dismod_at.sh/Building Images/Version/$$ to the Dockerfile
-created by $code dock_dismod_at.sh$$.
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+in the Dockerfile created by dock_dismod_at.sh.
 In addition, more detection and discussion was added for
 $cref/removing containers
 	/dock_dismod_at.sh

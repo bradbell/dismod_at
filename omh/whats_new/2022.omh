@@ -40,9 +40,15 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 05-02$$
+Add the optional
+$cref/at_cascade.image/dock_dismod_at.sh/Building Images/at_cascade.image/$$
+to dock_dismod_at.sh.
+
 $head 05-01$$
-Advance dock_dismod_at.sh to
-$cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20220421.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20220421.
 You should rebuild all the images for this update.
 
 $head 04-21$$

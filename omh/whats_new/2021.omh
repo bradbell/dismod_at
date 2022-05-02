@@ -137,8 +137,9 @@ $list number$$
 Add the $cref/driver/dock_dismod_at.sh/OCI/driver/$$ option
 to dock_dismod_at.sh so it can use either docker or podman.
 $lnext
-Advance dock_dismod_at.sh to
-$cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20211121.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20211121.
 This requires re-running
 $codei%
     ./dock_dismod_at.sh image mixed

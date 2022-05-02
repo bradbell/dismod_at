@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -164,12 +164,12 @@ and random effect were not being created in some error cases that
 should create them (to help diagnose the problem).
 This required advancing to cppad_mixed-20200702.
 $lnext
-Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200702
-of $code dock_dismod_at.sh$$.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20200702.
 This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
-
 
 $head 07-01$$
 Dismod_at will exit with an error when the
@@ -189,8 +189,9 @@ Now, in addition to the warning about the information matrix,
 the sample table does not exist after the command when this happens.
 
 $head 06-24$$
-Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200620
-of $code dock_dismod_at.sh$$.
+Advance to the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20200620
 This will require building a new
 $cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
 and then
@@ -318,8 +319,9 @@ Add a test of
 $cref/scaling fixed effects/user_hes_fixed_math.py/Scaling Fixed Effects/$$
 to the $code hes_fixed_math.py$$ example.
 $lnext
-Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200325
-of $code dock_dismod_at.sh$$.
+Advance to the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20200325.
 This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
@@ -386,8 +388,9 @@ in the debug build.
 
 $head 03-18$$
 $list number$$
-Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200318
-of $code dock_dismod_at.sh$$.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20200318.
 This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lnext
@@ -411,8 +414,9 @@ $lend
 
 $head 03-15$$
 $list number$$
-Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200315
-of $code dock_dismod_at.sh$$.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20200315.
 This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lnext
@@ -447,8 +451,9 @@ for a fixed effect that was scaled; see
 $cref/scaling fixed effects/prior_table/eta/Scaling Fixed Effects/$$.
 This has been fixed.
 $lnext
-Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200309
-of $code dock_dismod_at.sh$$.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20200309.
 This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
@@ -491,8 +496,9 @@ $lend
 
 
 $head 02-20$$
-Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200218
-of $code dock_dismod_at.sh$$.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20200218.
 This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 
@@ -517,8 +523,9 @@ not being checked for validity.
 This has been changed so that the user gets an informative error message
 when they are outside the valid limits.
 $lnext
-Advance to $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200213
-of $code dock_dismod_at.sh$$.
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 20200213.
 This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
@@ -538,7 +545,9 @@ $cref/database/dock_dismod_at.sh/Run New Container/database/$$ and
 $cref/command/dock_dismod_at.sh/Run New Container/command/$$ under
 running a new container.
 $lnext
-Advance $cref/version/dock_dismod_at.sh/Building Images/Version/$$ 20200108
+Advance the dock_dismod_at.sh
+$cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
+to 2020010.
 of $code dock_dismod_at.sh$$.
 This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.

@@ -82,18 +82,25 @@
 # %$$
 #
 # $head Building Images$$
+# The image commands will not execute if the corresponding OCI image
+# already exists.
+# You must remove containers that use an image and then remove the image,
+# before you can execute the image command successfully.
 #
-# $subhead Version$$
+# $subhead dismod_at_version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
 	dismod_at_version='20220421'
 	dismod_at_hash='b96c2d107a712537646b41eefaa6dbc5e817f0f3'
 # %$$
 #
-# The image commands will not execute if the corresponding OCI image
-# already exists.
-# You must remove containers that use an image and then remove the image,
-# before you can execute the image command successfully.
+# $subhead at_cascade_version$$
+# This script can build the following version of the optional at_cascade image:
+# $srccode%sh%
+    at_cascade_version='2022.4.18'
+    at_cascade_hash='92412aef5c04201c2351ee68c3cef8f02a2fbcad'
+# %$$
+#
 #
 # $subhead dismod_at.base$$
 # The $code image base$$ syntax creates a new OCI image with the name
@@ -114,8 +121,16 @@
 # $code dismod_at.image$$.
 # The $code dismod_at.mixed$$ image must exist before the
 # $code dismod_at.image$$ image can be created.
-# The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
-# you need to re-execute this command.
+#
+# $subhead at_cascade.image$$
+# The $code image at_cascade$$ syntax creates a new OCI image with the name
+# $code at_cascade.image$$.
+# The $code dismod_at.image$$ image must exist before the
+# $code at_cascade.image$$ image can be created.
+# The $href%
+#   https://bradbell.github.io/at_cascade/doc/xsrst/at_cascade.html%
+#   at_cascade
+# %$$ package is an optional add-on to the dismod_at program.
 #
 # $subhead Removing Containers$$
 # If an existing container uses an image that is being created,
@@ -256,11 +271,15 @@
 # ---------------------------------------------------------------------------
 if [ "$1" == 'image' ]
 then
-	if [ "$2" != 'base' ] && [ "$2" != 'mixed' ] && [ "$2" != 'dismod_at' ]
+	if [ "$2" != 'base' ] \
+    && [ "$2" != 'mixed' ] \
+    && [ "$2" != 'dismod_at' ] \
+    && [ "$2" != 'at_cascade' ]
 	then
 		echo 'usage: dock_dismod_at.sh image base'
 		echo 'usage: dock_dismod_at.sh image mixed'
 		echo 'usage: dock_dismod_at.sh image dismod_at'
+		echo 'usage: dock_dismod_at.sh image at_cascade'
 		echo 'usage: dock_dismod_at.sh debug database command ...'
 		echo 'usage: dock_dismod_at.sh release database command ...'
 		exit 1
@@ -271,6 +290,7 @@ else
 		echo 'usage: dock_dismod_at.sh image base'
 		echo 'usage: dock_dismod_at.sh image mixed'
 		echo 'usage: dock_dismod_at.sh image dismod_at'
+		echo 'usage: dock_dismod_at.sh image at_cascade'
 		echo 'usage: dock_dismod_at.sh debug   database command ...'
 		echo 'usage: dock_dismod_at.sh release database command ...'
 		exit 1
@@ -292,7 +312,7 @@ EOF
 	exit 1
 fi
 # ---------------------------------------------------------------------------
-# Build Base Docker image
+# Build images
 # ----------------------------------------------------------------------------
 if [ "$1" == 'image' ]
 then
@@ -305,6 +325,9 @@ then
 	elif [ "$2" == 'dismod_at' ]
     then
 		image_name='dismod_at.image'
+	elif [ "$2" == 'at_cascade' ]
+    then
+		image_name='at_cascade.image'
 	else
         'dock_dismod_at.sh: program error'
         exit 1
@@ -336,6 +359,7 @@ then
 		exit 1
 	fi
 	echo 'Creating Dockerfile'
+# ----------------------------------------------------------------------------
 if [ "$image_name" == 'dismod_at.base' ]
 then
 cat << EOF > Dockerfile
@@ -372,6 +396,7 @@ build
 WORKDIR /home
 RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
 EOF
+# ----------------------------------------------------------------------------
 elif [ "$image_name" == 'dismod_at.mixed' ]
 then
 cat << EOF > Dockerfile
@@ -400,7 +425,9 @@ bin/get_cppad_mixed.sh
 # Restore run_cmake.sh to its original state
 Run git checkout bin/run_cmake.sh
 EOF
-else
+# ----------------------------------------------------------------------------
+elif [ "$image_name" == 'dismod_at.image' ]
+then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
 FROM dismod_at.mixed
@@ -439,6 +466,61 @@ Run git checkout bin/run_cmake.sh
 
 WORKDIR /home/work
 EOF
+# ----------------------------------------------------------------------------
+elif [ "$image_name" == 'at_cascade.image' ]
+then
+dir='/home/prefix'
+cat << EOF > Dockerfile
+FROM dismod_at.image
+
+# LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=''
+
+# 1. Get source corresponding to at_cascasde-$at_cascade_version
+WORKDIR /home
+RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
+cd at_cascade.git && \
+git checkout --quiet $at_cascade_hash && \
+grep "$at_cascade_version" doc.xsrst > /dev/null && \
+sed -i bin/check_all.sh -e '/run_sphinx.sh/d'
+
+RUN if [ ! -e $dir/dismod_at.release ] ; \
+then echo 'Cannot find $dir/dismod_at.release' ; exit 1; fi
+RUN if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
+ln -s $dir/dismod_at.release $dir/dismod_at
+
+# 2. Test debug
+WORKDIR /home/at_cascade.git
+RUN \
+export PATH="\$PATH:$dir/dismod_at/bin" && \
+export PYTHONPATH=\$(find -L $dir/dismod_at -name site-packages) && \
+if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
+ln -s $dir/dismod_at.debug $dir/dismod_at && \
+bin/check_all.sh
+
+# 3. Install debug
+RUN python3 -m build && \
+pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
+    --prefix=$dir/dismod_at
+
+# 4. Test release
+WORKDIR /home/at_cascade.git
+RUN \
+export PATH="\$PATH:$dir/dismod_at/bin" && \
+export PYTHONPATH=\$(find -L $dir/dismod_at -name site-packages) && \
+if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
+ln -s $dir/dismod_at.release $dir/dismod_at && \
+bin/check_all.sh
+
+# 5. Install release
+RUN python3 -m build && \
+pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
+    --prefix=$dir/dismod_at
+EOF
+# ----------------------------------------------------------------------------
+else
+    echo 'dock_dismod_at.sh: program error'
+    exit 1
 fi
 #
 	echo "Creating $image_name"
