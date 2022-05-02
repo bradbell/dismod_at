@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Install and Run dismod_at in a Docker Image</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Install and Run dismod_at in a Docker Image">
-<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax oci driver logging output purpose requirements building images version dismod_at.base dismod_at.mixed dismod_at.image removing containers dockerfile errors new container build_type database command other arguments debugging determine id start stop ">
+<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax oci driver logging output purpose requirements building images dismod_at_version at_cascade_version dismod_at.base dismod_at.mixed dismod_at.image at_cascade.image removing containers dockerfile errors new container build_type database command other arguments debugging determine id start stop ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -70,10 +70,12 @@ A:active { color : purple }
 <br><a href="dock_dismod_at.sh.htm#Purpose" target="_top">Purpose</a>
 <br><a href="dock_dismod_at.sh.htm#Requirements" target="_top">Requirements</a>
 <br><a href="dock_dismod_at.sh.htm#Building Images" target="_top">Building&nbsp;Images</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Version" target="_top">Version</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at_version" target="_top">dismod_at_version</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.at_cascade_version" target="_top">at_cascade_version</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.base" target="_top">dismod_at.base</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.mixed" target="_top">dismod_at.mixed</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.dismod_at.image" target="_top">dismod_at.image</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.at_cascade.image" target="_top">at_cascade.image</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Removing Containers" target="_top">Removing&nbsp;Containers</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Removing Images" target="_top">Removing&nbsp;Images</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="dock_dismod_at.sh.htm#Building Images.Dockerfile" target="_top">Dockerfile</a>
@@ -181,23 +183,29 @@ You can test this on your system by trying to execute the following command:
 </span></font></code>
 <br>
 <b><big><a name="Building Images" id="Building Images">Building Images</a></big></b>
-
-
 <br>
-<br>
-<big><a name="Building Images.Version" id="Building Images.Version">Version</a></big>
-<br>
-This script will build the following version of dismod_at image:
-<pre style='display:inline'><tt>
-     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20220421'</font>
-     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'b96c2d107a712537646b41eefaa6dbc5e817f0f3'</font>
-</tt></pre>
 The image commands will not execute if the corresponding OCI image
 already exists.
 You must remove containers that use an image and then remove the image,
 before you can execute the image command successfully.
 
 <br>
+<br>
+<big><a name="Building Images.dismod_at_version" id="Building Images.dismod_at_version">dismod_at_version</a></big>
+<br>
+This script will build the following version of dismod_at image:
+<pre style='display:inline'><tt>
+     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20220421'</font>
+     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'b96c2d107a712537646b41eefaa6dbc5e817f0f3'</font>
+</tt></pre>
+<br>
+<big><a name="Building Images.at_cascade_version" id="Building Images.at_cascade_version">at_cascade_version</a></big>
+<br>
+This script can build the following version of the optional at_cascade image:
+<pre style='display:inline'><tt>
+    <font color="#009900">at_cascade_version</font><font color="#990000">=</font><font color="#FF0000">'2022.4.18'</font>
+    <font color="#009900">at_cascade_hash</font><font color="#990000">=</font><font color="#FF0000">'92412aef5c04201c2351ee68c3cef8f02a2fbcad'</font>
+</tt></pre>
 <br>
 <big><a name="Building Images.dismod_at.base" id="Building Images.dismod_at.base">dismod_at.base</a></big>
 <br>
@@ -227,9 +235,17 @@ The <code><font color="blue">image dismod_at</font></code> syntax creates a new 
 <code><font color="blue">dismod_at.image</font></code>.
 The <code><font color="blue">dismod_at.mixed</font></code> image must exist before the
 <code><font color="blue">dismod_at.image</font></code> image can be created.
-The <a href="whats_new_2019.htm" target="_top"><span style='white-space: nowrap'>whats_new</span></a>
- instructions will tell you if
-you need to re-execute this command.
+
+<br>
+<br>
+<big><a name="Building Images.at_cascade.image" id="Building Images.at_cascade.image">at_cascade.image</a></big>
+<br>
+The <code><font color="blue">image at_cascade</font></code> syntax creates a new OCI image with the name
+<code><font color="blue">at_cascade.image</font></code>.
+The <code><font color="blue">dismod_at.image</font></code> image must exist before the
+<code><font color="blue">at_cascade.image</font></code> image can be created.
+The <a href="https://bradbell.github.io/at_cascade/doc/xsrst/at_cascade.html" target="_top"><span style='white-space: nowrap'>at_cascade</span></a>
+ package is an optional add-on to the dismod_at program.
 
 <br>
 <br>
