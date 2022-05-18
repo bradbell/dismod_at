@@ -40,6 +40,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 05-18$$
+Advance to cppad_mixed-20220518.
+This makes the cppad-20220518 available.
+
 $head 05-02$$
 Add the optional
 $cref/at_cascade.image/dock_dismod_at.sh/Building Images/at_cascade.image/$$
