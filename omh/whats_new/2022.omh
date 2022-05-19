@@ -40,6 +40,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 05-19$$
+Add $code build$$ to the list of required
+$cref/python3/install_unix/System Requirements/python3/$$ packages.
+
 $head 05-18$$
 Advance to cppad_mixed-20220518.
 This makes the cppad-20220518 available.

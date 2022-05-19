@@ -82,7 +82,7 @@ The packages listed in the
 $href%https://docs.python.org/3/library/%standard library%$$
 are assumed to be present.
 You need to have the following additional python packages:
-$code numpy$$, $code matplotlib$$, $code scipy$$.
+$code numpy$$, $code matplotlib$$, $code scipy$$, $code build$$.
 
 
 $subhead sqlite3$$
