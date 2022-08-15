@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -63,8 +63,11 @@ def iota_true(age, time) :
 # ---------------------------------------------------------------------------
 def average_integrand(integrand_name, grid) :
 	rate    = { 'iota' : iota_true }
-	abs_tol = 1e-6
-	return dismod_at.average_integrand(rate, integrand_name, grid, abs_tol)
+	abs_tol = 1e-10
+	rel_tol = 1e-6
+	return dismod_at.average_integrand(
+        rate, integrand_name, grid, abs_tol, rel_tol
+    )
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
 	# note that the a, t values are not used for this case
@@ -265,7 +268,7 @@ for data_id in range( n_data ) :
 	meas_value    = data_table[data_id]['meas_value']
 	#
 	relerr = 1.0 - avg_integrand / meas_value
-	if abs(relerr) >= 1e-5 :
+	if abs(relerr) >= 1e-6 :
 		msg = 'predict = '       + str(avg_integrand)
 		msg += ', average_integrand = '   + str(meas_value)
 		msg += ', relerr = '     + str(relerr)

@@ -24,6 +24,7 @@ $spell
 	prc
 	stdout
 	CppAD
+    rel_tol
 $$
 $navigate%
 	Up%Location%
@@ -39,6 +40,10 @@ $navigate%
 %$$
 
 $section Changes and Additions to Dismod_at During 2022$$
+
+$head 08-15$$
+Add the optional  $cref/rel_tol/average_integrand/rel_tol/$$
+argument to the average_integrand function.
 
 $head 05-19$$
 Add $code build$$ to the list of required

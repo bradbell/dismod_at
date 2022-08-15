@@ -1,7 +1,7 @@
 """
  --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -17,13 +17,14 @@ $spell
 	pini
 	tol
 	integrands
+    rel
 $$
 
 $section Compute The Average Integrand$$
 
 $head Syntax$$
 $icode%avg_integrand% = dismod_at.average_integrand(
-	%rate%, %integrand_name%, %grid%, %abs_tol%
+	%rate%, %integrand_name%, %grid%, %abs_tol%, %rel_tol%
 )%$$
 
 $head Purpose$$
@@ -71,6 +72,11 @@ lower (upper) time limit for the average
 $head abs_tol$$
 This float is an absolute error bound, that the integrator will achieve.
 
+$head rel_tol$$
+This float is a relative error bound, that the integrator will achieve.
+This argument is optional. If it is not present, the value zero is used;
+i.e., just use the absolute tolerance.
+
 $head avg_integrand$$
 This is the calculated value for the
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
@@ -112,7 +118,7 @@ def trapezoidal_average_2d(fun, age_grid, time_grid) :
 	return trapezoidal_average_1d(fun_time, time_grid)
 #
 # SC_fun
-def SC_fun(a, t, rate, abs_tol) :
+def SC_fun(a, t, rate, abs_tol, rel_tol) :
 	import scipy.integrate
 	#
 	# Overloading the functions S and C, we define the ODE
@@ -154,7 +160,7 @@ def SC_fun(a, t, rate, abs_tol) :
 	#
 	# SC_ode
 	SC_ode = scipy.integrate.ode(f, jac)
-	SC_ode.set_integrator('vode', atol = abs_tol)
+	SC_ode.set_integrator('vode', method='bdf', atol = abs_tol, rtol = rel_tol)
 	SC_ode.set_initial_value( [Sini, Cini], - a )
 	#
 	# integrate ODE from s = -a to s = 0
@@ -162,7 +168,7 @@ def SC_fun(a, t, rate, abs_tol) :
 	return SC
 #
 # integrand_fun
-def integrand_fun(a, t, rate, integrand_name, abs_tol) :
+def integrand_fun(a, t, rate, integrand_name, abs_tol, rel_tol) :
 	import scipy.integrate
 	#
 	# iota, rho, chi, omega
@@ -187,7 +193,7 @@ def integrand_fun(a, t, rate, integrand_name, abs_tol) :
 		return (omega + chi) / omega
 	#
 	# ODE cases
-	(S, C) = SC_fun(a, t, rate, abs_tol)
+	(S, C) = SC_fun(a, t, rate, abs_tol, rel_tol)
 	P      = C / (S + C)
 	integrand_value = {
 		'susceptible' : S,
@@ -209,7 +215,7 @@ def integrand_fun(a, t, rate, integrand_name, abs_tol) :
 	assert False, msg
 #
 # average_integrand
-def average_integrand(rate, integrand_name, grid, abs_tol) :
+def average_integrand(rate, integrand_name, grid, abs_tol, rel_tol = 0.0) :
 	import scipy.integrate
 	#
 	# zero_fun
@@ -231,7 +237,7 @@ def average_integrand(rate, integrand_name, grid, abs_tol) :
 	# function we will average
 	def func(a, t) :
 		return integrand_fun(
-			a, t, rate_extended, integrand_name, abs_tol
+			a, t, rate_extended, integrand_name, abs_tol, rel_tol
 		)
 	#
 	avg = trapezoidal_average_2d(func, age_grid, time_grid)
