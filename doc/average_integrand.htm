@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Compute The Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Compute The Average Integrand">
-<meta name="keywords" id="keywords" content=" compute the average integrand syntax purpose rate integrand_name grid age time abs_tol avg_integrand example ">
+<meta name="keywords" id="keywords" content=" compute the average integrand syntax purpose rate integrand_name grid age time abs_tol rel_tol avg_integrand example ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -73,6 +73,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="average_integrand.htm#grid.age" target="_top">age</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="average_integrand.htm#grid.time" target="_top">time</a>
 <br><a href="average_integrand.htm#abs_tol" target="_top">abs_tol</a>
+<br><a href="average_integrand.htm#rel_tol" target="_top">rel_tol</a>
 <br><a href="average_integrand.htm#avg_integrand" target="_top">avg_integrand</a>
 <br><a href="average_integrand.htm#Example" target="_top">Example</a>
 <br><br>
@@ -81,7 +82,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>avg_integrand</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;dismod_at.average_integrand(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abs_tol</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abs_tol</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rel_tol</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -167,6 +168,14 @@ lower (upper) time limit for the average
 <b><big><a name="abs_tol" id="abs_tol">abs_tol</a></big></b>
 <br>
 This float is an absolute error bound, that the integrator will achieve.
+
+<br>
+<br>
+<b><big><a name="rel_tol" id="rel_tol">rel_tol</a></big></b>
+<br>
+This float is a relative error bound, that the integrator will achieve.
+This argument is optional. If it is not present, the value zero is used;
+i.e., just use the absolute tolerance.
 
 <br>
 <br>
