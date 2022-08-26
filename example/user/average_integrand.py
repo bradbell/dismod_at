@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -128,7 +128,7 @@ random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
 def average_integrand(integrand_name, grid) :
 	rate    = { 'iota' : iota_true }
-	abs_tol = 1e-5
+	abs_tol = 1e-6
 	return dismod_at.average_integrand(rate, integrand_name, grid, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :

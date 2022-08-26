@@ -25,6 +25,8 @@ $spell
 	stdout
 	CppAD
     rel_tol
+	scipi
+	lsoda
 $$
 $navigate%
 	Up%Location%
@@ -41,8 +43,19 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 08-26$$
+$list number$$
+Remove $italic rel_tol$$ argument to $cref average_integrand$$
+because testing with $cref user_average_integrand.py$$ indicates
+that it does not work; i.e., there is a problem with scipi.integrate.ode.
+$lnext
+Change the average_integrand integrator to use lsoda (which switch
+automatically switches between stiff and non-stiff).
+$lend
+
+
 $head 08-15$$
-Add the optional  $cref/rel_tol/average_integrand/rel_tol/$$
+Add the optional $italic rel_tol$$
 argument to the average_integrand function.
 
 $head 05-19$$
