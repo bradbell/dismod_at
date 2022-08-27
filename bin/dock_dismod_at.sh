@@ -29,6 +29,8 @@
 # %$$
 # $codei%./dock_dismod_at.sh image dismod_at
 # %$$
+# $codei%./dock_dismod_at.sh image at_cascade
+# %$$
 # $codei%./dock_dismod_at.sh %build_type% %database% %command% %...%
 # %$$
 #
