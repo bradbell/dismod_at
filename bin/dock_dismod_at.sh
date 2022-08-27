@@ -90,15 +90,15 @@
 # $subhead dismod_at_version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20220421'
-	dismod_at_hash='b96c2d107a712537646b41eefaa6dbc5e817f0f3'
+	dismod_at_version='20220826'
+	dismod_at_hash='bcf01e4dbdf528c2672ca05758493b0fc66ebcfd'
 # %$$
 #
 # $subhead at_cascade_version$$
 # This script can build the following version of the optional at_cascade image:
 # $srccode%sh%
-    at_cascade_version='2022.4.18'
-    at_cascade_hash='92412aef5c04201c2351ee68c3cef8f02a2fbcad'
+    at_cascade_version='2022.8.27'
+    at_cascade_hash='9ebbde05d9ad5742db9d40ae82aca6152f2b7c46'
 # %$$
 #
 #
@@ -128,7 +128,7 @@
 # The $code dismod_at.image$$ image must exist before the
 # $code at_cascade.image$$ image can be created.
 # The $href%
-#   https://bradbell.github.io/at_cascade/doc/xsrst/at_cascade.html%
+#   https://bradbell.github.io/at_cascade/doc/rst/at_cascade.html%
 #   at_cascade
 # %$$ package is an optional add-on to the dismod_at program.
 #
@@ -481,8 +481,8 @@ WORKDIR /home
 RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
 cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
-grep "$at_cascade_version" doc.xsrst > /dev/null && \
-sed -i bin/check_all.sh -e '/run_sphinx.sh/d'
+grep "Version $at_cascade_version\$" at_cascade.xrst > /dev/null && \
+sed -i bin/check_all.sh -e '/run_xrst.sh/d'
 
 RUN if [ ! -e $dir/dismod_at.release ] ; \
 then echo 'Cannot find $dir/dismod_at.release' ; exit 1; fi
