@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2022</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2022">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2022 08-15 05-19 05-18 05-02 05-01 04-21 04-19 04-05 api change 04-04 03-23 03-19 03-11 03-08 03-04 02-17 02-08 02-05 01-23 01-22 ">
+<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2022 08-26 08-15 05-19 05-18 05-02 05-01 04-21 04-19 04-05 api change 04-04 03-23 03-19 03-11 03-08 03-04 02-17 02-08 02-05 01-23 01-22 ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -61,6 +61,7 @@ A:active { color : purple }
 <td>
 <select onchange='choose_current0(this)'>
 <option>Heading-&gt;</option>
+<option>08-26</option>
 <option>08-15</option>
 <option>05-19</option>
 <option>05-18</option>
@@ -92,10 +93,27 @@ A:active { color : purple }
 
 <center><b><big><big>Changes and Additions to Dismod_at During 2022</big></big></b></center>
 <br>
+<b><big><a name="08-26" id="08-26">08-26</a></big></b>
+
+<ol type="1"><li>
+Remove <i>rel_tol</i> argument to <a href="average_integrand.htm" target="_top"><span style='white-space: nowrap'>average_integrand</span></a>
+
+because testing with <a href="user_average_integrand.py.htm" target="_top"><span style='white-space: nowrap'>user_average_integrand.py</span></a>
+ indicates
+that it does not work; i.e., there is a problem with scipi.integrate.ode.
+</li><li>
+
+Change the average_integrand integrator to use lsoda (which switch
+automatically switches between stiff and non-stiff).
+</li></ol>
+
+
+
+<br>
+<br>
 <b><big><a name="08-15" id="08-15">08-15</a></big></b>
 <br>
-Add the optional  <a href="average_integrand.htm#rel_tol" target="_top"><span style='white-space: nowrap'>rel_tol</span></a>
-
+Add the optional <i>rel_tol</i>
 argument to the average_integrand function.
 
 <br>
