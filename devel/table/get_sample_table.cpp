@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-15 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -48,6 +48,7 @@ $head sample_struct$$
 This is a structure with the following fields
 $table
 Type $cnext Field $cnext Description
+$rnext
 $code int$$ $cnext $code sample_index$$ $cnext
 	The $cref/sample_index/sample_table/sample_index/$$
 	for this sampled measurement.
