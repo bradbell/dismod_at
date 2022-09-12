@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -15,11 +15,11 @@
 #	cv
 # $$
 #
+# $section Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero$$
+#
 # $head See Also$$
 # $cref user_zsum_child_rate.py$$,
 # $cref user_zsum_mulcov_rate.py$$
-#
-# $section Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero$$
 #
 # $head Purpose$$
 # This example demonstrates using

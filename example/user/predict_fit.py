@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -105,7 +105,6 @@ canada_effect        = 0.2
 united_states_effect = - canada_effect
 # end problem parameters
 # ---------------------------------------------------------------------------
-# BEGIN PYTHON
 import sys
 import os
 import copy

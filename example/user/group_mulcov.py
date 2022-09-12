@@ -1,7 +1,7 @@
 # $Id$
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -35,7 +35,7 @@
 # The values of the unknown variables that is used to
 # simulate the data are
 # $srcthisfile%
-#	0%# True values used to simulate data%# --------%1
+#	0%# BEGIN True values used to simulate data%# END True values used to simulate data%1
 # %$$
 #
 # $head Integrand$$
@@ -109,11 +109,12 @@
 # $end
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# True values used to simulate data
+# BEGIN True values used to simulate data
 iota_true        = 0.05  # incidence rate
 rho_true         = 0.10  # remission rate
 mulcov_incidence = 1.0   # covariate multiplier for indicence data
 mulcov_remission = 2.0;  # covariate multiplier for remission data
+# END True values used to simulate data
 # ------------------------------------------------------------------------
 import sys
 import os

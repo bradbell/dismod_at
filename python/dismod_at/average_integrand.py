@@ -8,7 +8,7 @@ This program is distributed under the terms of the
 	     GNU Affero General Public License version 3.0 or later
 see http://www.gnu.org/licenses/agpl.txt
 ---------------------------------------------------------------------------
-$begin average_integrand$$ $newlinech #$$
+$begin average_integrand$$
 $spell
 	Dismod
 	sim

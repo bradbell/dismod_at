@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -99,7 +99,7 @@
 # because all the functions are constant with respect to time.
 # The $cref age_table$$ for this problem is given by
 # $srcthisfile%
-#	0%# age_table%	# time_table%1
+#	0%# BEGIN age_table%	# END age_table%1
 # %$$
 # We use $icode n_age$$ to denote the length of this table.
 #
@@ -286,9 +286,11 @@ def example_db (file_name) :
 		{ 'name':'n121',    'parent':'n12' },
 		{ 'name':'n122',    'parent':'n12' },
 	]
-	# age_table
+	# BEGIN age_table
 	age_list = [ 0.0, 20.0, 40.0, 60.0, 80.0, 100.0 ]
-	# time_table
+	# END age_table
+   #
+   # time_table
 	time_list = [ 1990.0, 2020.0 ]
 	# rate_table
 	rate_table = [ {
