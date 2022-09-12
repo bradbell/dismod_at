@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -56,6 +56,7 @@ $rnext
 $code int$$ $cnext
 	$code group_id$$ $cnext
 	The $cref/group_id/subgroup_table/group_id/$$ for this subgroup
+$rnext
 $code std::string$$ $cnext
 	$code group_name$$ $cnext
 	The $cref/group_name/subgroup_table/group_name/$$ for this subgroup
