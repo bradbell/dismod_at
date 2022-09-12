@@ -338,7 +338,8 @@ Advance dock_dismod_at.sh from version 20210624 to version 20210812;
 see the items between 06-24 and 08-12 in this section.
 $lend
 
-$head 08-08$$ $comment Merge std branch$$
+$head 08-08$$
+$comment Merge std branch$$
 $list number$$
 $bold API Change$$:
 The
@@ -680,7 +681,8 @@ $code 'true'$$ to $code 'false'$$ and make the maximum allowable error
 smaller.
 $lend
 
-$head 05-20$$ $comment Merge simulate branch$$
+$head 05-20$$
+$comment Merge simulate branch$$
 During a $cref simulate_command$$,
 the calculation of $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
 $cref data_sim_table$$ often resulted in zero or negative values
