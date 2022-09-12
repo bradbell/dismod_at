@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -9,9 +9,19 @@ This program is distributed under the terms of the
 see http://www.gnu.org/licenses/agpl.txt
 -----------------------------------------------------------------------------
 $begin dismod_at$$
+$spell
+	dismod
+$$
 $comment User documentation for dismod_at$$
 
-$include omh/dismod_at.omh$$
+$section dismod_at-20220827: User Documentation and API$$
+
+$head Purpose$$
+Estimating disease rates as functions of age and time.
+
+$head Links$$
+$href%https://github.com/bradbell/dismod_at%github
+%$$
 
 $childtable%omh/math/abstract.omh
 	%omh/install/install.omh
