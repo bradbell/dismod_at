@@ -46,8 +46,8 @@ $children%
 $comment END_SORT_THIS_LINE_MINUS_2$$
 
 $head Commands$$
+$comment BEGIN_SORT_THIS_LINE_PLUS_2%$$
 $table
-$comment BEGIN_SORT_THIS_LINE_PLUS_1%$$
 $rref bnd_mulcov_command$$
 $rref csv2db_command$$
 $rref data_density_command$$
@@ -63,8 +63,8 @@ $rref predict_command$$
 $rref sample_command$$
 $rref set_command$$
 $rref simulate_command$$
-$comment END_SORT_THIS_LINE_MINUS_1%$$
 $tend
+$comment END_SORT_THIS_LINE_MINUS_2%$$
 
 
 $end
