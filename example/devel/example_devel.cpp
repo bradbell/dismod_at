@@ -10,15 +10,27 @@ see http://www.gnu.org/licenses/agpl.txt
 -------------------------------------------------------------------------- */
 /*
 $begin example_devel.cpp$$
+$spell
+   devel
+   cpp
+$$
 
-$sectin Run C++ Examples$$
+$section Run C++ Examples$$
 
 $head Syntax$$
-$code example/devel/cpp$$
+$code example/devel/example_devel$$
 
 $head Purpose$$
 This runs all the C++ examples and prints out their correctness
 test results together with a summary result at the end.
+
+$head Steps$$
+$codep
+	bin/run_cmake.sh
+	cd build
+	make example_devel
+	example/devel/example_devel
+$$
 
 $end
 -----------------------------------------------------------------------------
