@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-20 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -133,8 +133,8 @@ $codei%
 
 $head max_time_diff$$
 This function find the maximum value for
-$code%
-	%max_time_diff% = %time_line%[%time_index% + 1] - %time_line[%time_index%]
+$codei%
+	%max_time_diff% = %time_line%[%time_index% + 1] - %time_line%[%time_index%]
 %$$
 
 $subhead age_index$$
@@ -150,7 +150,7 @@ It the return value $icode%time_diff% > 0%$$,
 it is the maximum time difference for the time lines in $icode vec$$.
 In addition, $icode%time_index% > 0%$$ and
 $codei%
-	%max_time_diff% = %time_line%[%time_index%] - %time_line[%time_index% - 1]
+	%max_time_diff% = %time_line%[%time_index%] - %time_line%[%time_index% - 1]
 %$$
 where $icode time_line$$ corresponds to $icode age_index$$.
 
