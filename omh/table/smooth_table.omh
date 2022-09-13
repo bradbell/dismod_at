@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -95,7 +95,8 @@ for the points in the smooth_grid_table that are being removed.
 $subhead Example$$
 $cref user_change_grid.py$$
 
-$comment%example/table/smooth_grid_table.py is included by smooth_grid_table.omh
+$comment
+   example/table/smooth_grid_table.py is included by smooth_grid_table.omh
 %$$
 $head Example$$
 The file $cref smooth_grid_table.py$$

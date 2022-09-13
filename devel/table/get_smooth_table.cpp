@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-18 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -74,7 +74,8 @@ $code int$$ $cnext $code mulstd_dtime_prior_id$$ $cnext
 	The $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
 	for this smoothing.
 $tend
-$comment%example/devel/table/get_smooth_grid_xam.cpp in included by smooth_grid.omh
+$comment
+   example/devel/table/get_smooth_grid_xam.cpp is included by smooth_grid.omh
 %$$
 
 $head Example$$

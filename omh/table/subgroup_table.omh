@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -75,10 +75,11 @@ and not require $icode group_id$$ to be monotone and not have to include
 $icode group_name$$ in this table. The problem with this is $code group$$
 is a keyword in SQL and hence it is hard to work with a table named group.
 
-$comment%example/table/subgroup_table.py
+$comment
+   example/table/subgroup_table.py
 %$$
 $head Example$$
-The file $code subgroup_table.py$$
-contains an example subgroup table.
+2DO: create a file $code subgroup_table.py$$
+that contains an example subgroup table.
 
 $end

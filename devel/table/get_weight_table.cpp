@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-19 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -60,7 +60,8 @@ $code int$$ $cnext $code n_time$$ $cnext
 	The $cref/n_time/weight_table/n_time/$$ for this weighting.
 $tend
 
-$comment%example/devel/table/get_weight_grid_xam.cpp in included by weight_grid.omh
+$comment
+   example/devel/table/get_weight_grid_xam.cpp is included by weight_grid.omh
 %$$
 $head Example$$
 The file $cref get_weight_grid_xam.cpp$$ contains an example that uses

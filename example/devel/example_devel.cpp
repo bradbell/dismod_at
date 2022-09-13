@@ -13,6 +13,7 @@ $begin example_devel.cpp$$
 $spell
    devel
    cpp
+   cmake
 $$
 
 $section Run C++ Examples$$
