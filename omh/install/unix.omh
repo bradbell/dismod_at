@@ -149,10 +149,10 @@ to add $icode directory$$ to the path.
 $subhead PKG_CONFIG_PATH$$
 After $code sqlite3$$ and $code gsl$$ are installed
 the following commands should work:
-$codep%
+$codep
 	pkg-config sqlite3 --modversion
 	pkg-config gsl     --modversion
-%$$
+$$
 If one of them fails, a corresponding directory is missing
 from the $code PKG_CONFIG_PATH$$ environment variable.
 If $icode prefix$$ is the prefix where $code gsl$$ was installed,
