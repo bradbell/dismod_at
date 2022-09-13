@@ -1,7 +1,7 @@
 $Id:$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -512,9 +512,8 @@ $head 05-14$$
 There was a bug in the simulation of age difference and time
 difference prior means introduced on
 $cref/04-24/whats_new_2018/$$.
-To be specific
-$latex/sigma/statistic/Log-Transformed Standard Deviation/$$
-was being used where delta should have been.
+To be specific $latex \sigma$$
+was being used where $latex \delta$$ should have been.
 
 
 $head 05-09$$
