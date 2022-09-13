@@ -114,7 +114,6 @@ $comment END_SORT_THIS_LINE_MINUS_2$$
 $head Examples With Explanation$$
 $table
 $comment BEGIN_SORT_THIS_LINE_PLUS_1$$
-$rref user_trapezoidal.py$$
 $rref user_age_avg_split.py$$
 $rref user_average_integrand.py$$
 $rref user_bilevel_random.py$$
@@ -161,12 +160,13 @@ $rref user_subgroup_mulcov.py$$
 $rref user_sum_residual.py$$
 $rref user_system_command_prc.py$$
 $rref user_trace_init.py$$
+$rref user_trapezoidal.py$$
 $rref user_warm_start.py$$
 $rref user_zsum_child_rate.py$$
 $rref user_zsum_mulcov_meas.py$$
 $rref user_zsum_mulcov_rate.py$$
-$comment END_SORT_THIS_LINE_MINUS_1$$
 $tend
+$comment END_SORT_THIS_LINE_MINUS_2$$
 
 $head More Examples$$
 $table
