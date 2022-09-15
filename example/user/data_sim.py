@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -93,7 +93,7 @@
 # This is the measured value; see
 # $cref/y/data_sim_table/Method/y/$$.
 #
-# $subhead Delta$$
+# $subhead Upper Case Delta$$
 # This is the minimum cv standard deviation corresponding to $latex y$$; see
 # $cref/Delta
 #	/data_like
@@ -113,7 +113,7 @@
 # This is the average noise effect corresponding to $latex y$$; see
 # $cref/E/data_sim_table/Method/E/$$.
 #
-# $subhead delta$$
+# $subhead Lower Case delta$$
 # This is the adjusted standard deviation corresponding to $latex y$$; see
 # $cref/delta/data_sim_table/Method/delta/$$.
 #

@@ -4,6 +4,9 @@
 # temporary file used by bin/user_test.sh
 /user_test.tmp
 #
+# 2DO: remove this when done converting xrst labels
+/sphinx/label.sed
+#
 # cmake configuration files that are put in source directory
 /include/dismod_at/configure.hpp
 /bin/dismodat.py
