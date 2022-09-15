@@ -1,6 +1,6 @@
 #  --------------------------------------------------------------------------
 # dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
+#           Copyright (C) 2014-22 University of Washington
 #              (Bradley M. Bell bradbell@uw.edu)
 #
 # This program is distributed under the terms of the
@@ -67,7 +67,7 @@
 # $lnext
 # The prior for the difference in $icode iota$$ between time 1995
 # and time 2015 for the children (parent) is a Gaussian (log Gaussian)
-#  with mean zero and standard deviation 0.1.
+# with mean zero and standard deviation 0.1.
 # $lnext
 # The init command is used to set the
 # $cref/start_var_table/init_command/start_var_table/$$ equal to the
