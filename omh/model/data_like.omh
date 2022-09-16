@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -81,10 +81,12 @@ and $cref/meas_value/data_table/meas_value/$$
 correspond to this data table
 $cref/data_id/data_table/data_id/$$.
 The minimum cv standard deviation is defined by
+$latex \Delta_i = $$
 $pre
-	$$ $latex \Delta_i = $$
+$$
 $codei%max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )%$$
-
+$pre
+$$
 $subhead Transformed Standard Deviation, sigma_i$$
 The transformed standard deviation is
 $latex \[

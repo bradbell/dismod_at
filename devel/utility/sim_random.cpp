@@ -1,7 +1,7 @@
 // $Id:$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -134,8 +134,8 @@ $children%example/devel/utility/sim_random_xam.cpp
 %$$
 $head Example$$
 The file $cref sim_random_xam.cpp$$ is an example and test of this simulation.
-------------------------------------------------------------------------------
 $end
+------------------------------------------------------------------------------
 */
 
 # include <cmath>
