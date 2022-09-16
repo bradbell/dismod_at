@@ -115,7 +115,7 @@
 #
 # $subhead Lower Case delta$$
 # This is the adjusted standard deviation corresponding to $latex y$$; see
-# $cref/delta/data_sim_table/Method/delta/$$.
+# $cref/delta/data_sim_table/Method/Lower Case delta/$$.
 #
 # $head Simulation Notation$$
 #

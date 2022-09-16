@@ -1,7 +1,7 @@
 // $Id$
 /* --------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -146,16 +146,16 @@ $head child_info4data$$
 This is the $cref child_info$$ information corresponding to
 parent node, node table, and data table.
 
-$head n_covariate_$$
+$head data_object.n_covariate_$$
 set to $icode n_covariate$$.
 
-$head ode_step_size_$$
+$head data_object.ode_step_size_$$
 set to $icode ode_step_size$$.
 
-$head pack_object_$$
+$head data_object.pack_object_$$
 set to $icode pack_object$$.
 
-$head minimum_meas_cv_$$
+$head data_object.minimum_meas_cv_$$
 Set to a vector with the same size as $icode integrand_table$$ and
 $codei%
 	%minimum_meas_cv_[%integrand_id%] =

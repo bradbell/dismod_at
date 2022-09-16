@@ -1,7 +1,7 @@
 $Id$
 -----------------------------------------------------------------------------
 dismod_at: Estimating Disease Rates as Functions of Age and Time
-          Copyright (C) 2014-21 University of Washington
+          Copyright (C) 2014-22 University of Washington
              (Bradley M. Bell bradbell@uw.edu)
 
 This program is distributed under the terms of the
@@ -75,7 +75,7 @@ We use $latex y$$ to denote the data table
 $cref/meas_value/data_table/meas_value/$$
 corresponding to this $icode data_id$$.
 
-$subhead Delta$$
+$subhead Upper Case Delta$$
 We use $latex \Delta$$ to denote the
 $cref/minimum cv standard deviation
 	/data_like
@@ -131,7 +131,7 @@ Note that $latex \sigma$$ does not depend on simulated noise
 $latex e$$ defined below (because it is defined using $latex y$$
 instead of $latex z$$).
 
-$subhead delta$$
+$subhead Lower Case delta$$
 We use $latex \delta$$ to denote the
 $cref/adjusted standard deviation
 	/data_like
