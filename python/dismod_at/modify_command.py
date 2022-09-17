@@ -18,7 +18,7 @@
 # $head Syntax$$
 #
 # $subhead As Program$$
-# $codei%dismodat.py %database% %modify% \
+# $codei%dismodat.py %database% modify \
 #  %table_name% %column_name% %row_expression% %value_expression% \
 #  %statement_one% %statement_two% %...%
 # %$$
