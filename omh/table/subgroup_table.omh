@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin subgroup_table$$
 $spell
-    covariate
-    py
+	covariate
+	py
 	mulcov
 $$
 $section The Subgroup Table$$

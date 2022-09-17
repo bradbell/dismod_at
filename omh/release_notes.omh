@@ -5,9 +5,9 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin release_notes$$
 $spell
-    Dismod
-    devel
-    cpp
+	Dismod
+	devel
+	cpp
 $$
 
 $section Changes and Additions to Dismod_at$$

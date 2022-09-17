@@ -48,7 +48,7 @@ Note that $latex \delta$$ has a different definition for different cases:
 $list number$$
 For data cases, $latex \delta$$ is the
 $cref/adjusted standard deviation
-    /data_like
+	/data_like
 	/Adjusted Standard Deviation, delta_i(theta)
 /$$ $latex \delta_i( \theta )$$.
 $lnext

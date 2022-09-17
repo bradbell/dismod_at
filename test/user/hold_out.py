@@ -24,7 +24,7 @@ import dismod_at
 #
 # change into the build/test/user directory
 if not os.path.exists('build/test/user') :
-    os.makedirs('build/test/user')
+	os.makedirs('build/test/user')
 os.chdir('build/test/user')
 #
 len_data_table = 20

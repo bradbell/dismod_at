@@ -164,14 +164,14 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 		}
 		// meas_std_effect
 		if( option_name[option_id] == "meas_std_effect" )
-        {	msg  = "meas_std_effect was deprecated on 2019-04-07\n";
+		{	msg  = "meas_std_effect was deprecated on 2019-04-07\n";
 			msg += "and removed on 2019-11-26.\n";
 			msg += "It should be changed to meas_noise_effect.";
 			error_exit(msg, table_name, option_id);
 		}
 		// zero_sum_random
 		if( option_name[option_id] == "zero_sum_random" )
-        {	option_name[option_id] = "zero_sum_child_rate";
+		{	option_name[option_id] = "zero_sum_child_rate";
 			msg  = "zero_sum_random was changed to zero_sum_child_rate\n";
 			msg += "on 2019-11-29 (you should fix this).\n";
 			msg += "For the time being, this change is automatic.";

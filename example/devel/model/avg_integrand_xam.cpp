@@ -162,7 +162,7 @@ bool avg_integrand_xam(void)
 	/*
 	pack_vec: pini=0, rho=0, chi=0, omega=0, iota=beta:
 	S(a) = exp( -beta * (a - age_ini) )
-    */
+	*/
 	double beta          = 0.01;
 	double random_effect = log(2.0);
 	vector<Float> pack_vec( pack_object.size() );

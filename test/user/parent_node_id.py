@@ -28,7 +28,7 @@ import get_started_db
 #
 # change into the test/user directory
 if not os.path.exists('build/test/user') :
-    os.makedirs('build/test/user')
+	os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ---------------------------------------------------------------------------
 # create get_started.db

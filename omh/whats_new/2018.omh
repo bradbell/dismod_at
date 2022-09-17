@@ -226,7 +226,7 @@ $lnext
 Advance to cppad-0180925 and cppad_mixed-0180925.
 This had the following effect timing result for $code bin/speed.sh$$:
 $table
-        $cnext user time    $cnext memory         $rnext
+		$cnext user time    $cnext memory         $rnext
 before  $cnext 10.395 sec   $cnext 1.265 GB       $rnext
 after   $cnext 9.376  sec   $cnext 1.247 GB
 $tend

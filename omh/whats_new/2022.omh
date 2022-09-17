@@ -10,8 +10,8 @@ $spell
 	cppad
 	py
 	distutils
-    std
-    csv
+	std
+	csv
 	homebrew
 	suitesparse
 	matplotlib
@@ -19,7 +19,7 @@ $spell
 	prc
 	stdout
 	CppAD
-    rel_tol
+	rel_tol
 	scipi
 	lsoda
 $$

@@ -96,7 +96,7 @@ void write_blob_table(
 	sqlite3_stmt* p_stmt;
 	int           n_byte = -1;
 	const char**  pz_tail = nullptr;
-    int rc = sqlite3_prepare_v2(db, cmd.c_str(), n_byte, &p_stmt, pz_tail);
+	int rc = sqlite3_prepare_v2(db, cmd.c_str(), n_byte, &p_stmt, pz_tail);
 	if( rc != SQLITE_OK )
 	{	std::string message = "write_blob_table: following command failed:\n";
 		message            += cmd;
@@ -135,7 +135,7 @@ void read_blob_table(
 	sqlite3_stmt* p_stmt;
 	int           n_byte = -1;
 	const char**  pz_tail = nullptr;
-    int rc = sqlite3_prepare_v2(db, cmd.c_str(), n_byte, &p_stmt, pz_tail);
+	int rc = sqlite3_prepare_v2(db, cmd.c_str(), n_byte, &p_stmt, pz_tail);
 	if( rc != SQLITE_OK )
 	{	std::string message = "read_blob_table: following command failed:\n";
 		message            += cmd;

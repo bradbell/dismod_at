@@ -39,14 +39,14 @@ $spell
 	mulcov
 	avgint
 	stdout
-    cov
+	cov
 	pdf
-    podman
-    distutils
-    dir
-    util
-    mkpath
-    makedirs
+	podman
+	distutils
+	dir
+	util
+	mkpath
+	makedirs
 	sys
 
 $$
@@ -137,7 +137,7 @@ $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 to 20211121.
 This requires re-running
 $codei%
-    ./dock_dismod_at.sh image mixed
+	./dock_dismod_at.sh image mixed
 %$$
 because the version of cppad_mixed changed.
 $lend

@@ -35,4 +35,4 @@
 # Put other sed commands below here and without # at start of line
 /import distutils.dir_util/d
 s|^distutils.dir_util.mkpath(\([^)]*\))|if not os.path.exists(\1) :\
-    os.makedirs(\1)|
+	os.makedirs(\1)|

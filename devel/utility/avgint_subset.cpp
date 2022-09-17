@@ -180,8 +180,8 @@ void avgint_subset(
 	CppAD::vector<bool> ok(n_avgint);
 	for(size_t avgint_id = 0; avgint_id < n_avgint; avgint_id++)
 	{   int integrand_id         = avgint_table[avgint_id].integrand_id;
-        integrand_enum integrand = integrand_table[integrand_id].integrand;
-        size_t child = child_info4avgint.table_id2child(avgint_id);
+		integrand_enum integrand = integrand_table[integrand_id].integrand;
+		size_t child = child_info4avgint.table_id2child(avgint_id);
 		// check if this avgint is for parent or one of its descendants
 		ok[avgint_id] = (child <= n_child) || (integrand == mulcov_enum);
 		if( ok[avgint_id] )

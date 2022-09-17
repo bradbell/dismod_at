@@ -25,7 +25,7 @@ namespace dismod_at {
 		double      time_upper;
 	};
 	extern void avgint_subset(
-        const CppAD::vector<integrand_struct>& integrand_table         ,
+		const CppAD::vector<integrand_struct>& integrand_table         ,
 		const CppAD::vector<avgint_struct>&    avgint_table            ,
 		const CppAD::vector<double>&           avgint_cov_value        ,
 		const CppAD::vector<covariate_struct>& covariate_table         ,

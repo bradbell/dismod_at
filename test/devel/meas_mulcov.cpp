@@ -204,9 +204,9 @@ bool meas_mulcov(void)
 	vector<dismod_at::smooth_struct> smooth_table(s_info_vec.size());
 	for(size_t smooth_id = 0; smooth_id < s_info_vec.size(); smooth_id++)
 	{	smooth_table[smooth_id].n_age  =
-            int( s_info_vec[smooth_id].age_size() );
+			int( s_info_vec[smooth_id].age_size() );
 		smooth_table[smooth_id].n_time =
-            int( s_info_vec[smooth_id].time_size() );
+			int( s_info_vec[smooth_id].time_size() );
 	}
 	// mul_cov
 	size_t omega_rate_id = dismod_at::omega_enum;

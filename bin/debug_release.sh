@@ -59,7 +59,7 @@ N
 N
 N
 s|\$|\\
-    std::cout << "Begin OptionsList::SetStringValue" << std::endl;|
+	std::cout << "Begin OptionsList::SetStringValue" << std::endl;|
 b done
 #
 : seven

@@ -33,7 +33,7 @@ else
 fi
 if [ -e 'soci_example.db' ]
 then
-    rm soci_example.db
+	rm soci_example.db
 fi
 #
 echo 'creating soci_example.cpp'
@@ -51,36 +51,36 @@ using namespace std;
 
 int main()
 {   string db_type="$db_type";
-    try
-    {
-        $connection;
+	try
+	{
+		$connection;
 
-        string name;
-        if( db_type == "mysql" )
-        {   sql << "select schema_name from information_schema.schemata"
-                << " where schema_name = 'soci_example'", into(name);
-            if( name == "soci_example" )
-                sql << "drop database soci_example";
-            sql << "create database soci_example";
-            sql << "use soci_example";
-        }
-        sql << "create table age(age_id int primary key, age real)";
-        sql << "insert into age values(0, 10.)";
-        sql << "insert into age values(1, 30.)";
+		string name;
+		if( db_type == "mysql" )
+		{   sql << "select schema_name from information_schema.schemata"
+				<< " where schema_name = 'soci_example'", into(name);
+			if( name == "soci_example" )
+				sql << "drop database soci_example";
+			sql << "create database soci_example";
+			sql << "use soci_example";
+		}
+		sql << "create table age(age_id int primary key, age real)";
+		sql << "insert into age values(0, 10.)";
+		sql << "insert into age values(1, 30.)";
 
 
-        int n_age;
-        sql << "select count(*) from age", into(n_age);
+		int n_age;
+		sql << "select count(*) from age", into(n_age);
 
-        std::vector<double> age(n_age);
-        sql << "select age from age", into(age);
-        for(int i = 0; i < n_age; i++)
-             cout << "age = " << age[i] << endl;
-    }
-    catch (exception const &e)
-    {
-        cerr << "Error: " << e.what() << '\n';
-    }
+		std::vector<double> age(n_age);
+		sql << "select age from age", into(age);
+		for(int i = 0; i < n_age; i++)
+			 cout << "age = " << age[i] << endl;
+	}
+	catch (exception const &e)
+	{
+		cerr << "Error: " << e.what() << '\n';
+	}
 }
 EOF
 cmd='g++ soci_example.cpp -o soci_example -I /usr/include/soci -lsoci_core'

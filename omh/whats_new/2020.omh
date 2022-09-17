@@ -5,11 +5,11 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2020$$
 $spell
-    Dismod
-    devel
-    cpp
-    optimizer
-    avgint
+	Dismod
+	devel
+	cpp
+	optimizer
+	avgint
 	csv
 	py
 	dage
@@ -22,7 +22,7 @@ $spell
 	eigen
 	Ip
 	ldlt_cholmod
-    std
+	std
 	modversion
 	messaging
 	Chron's
@@ -551,8 +551,8 @@ $lend
 $head 01-07$$
 Fix the following compile error when $code NDEBUG$$ is not defined:
 $codei%
-    %...%/devel/table/get_subgroup_table.cpp:128:31: error:
-    'subgroup_id' was not declared in this scope
+	%...%/devel/table/get_subgroup_table.cpp:128:31: error:
+	'subgroup_id' was not declared in this scope
 %$$
 
 

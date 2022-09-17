@@ -367,7 +367,7 @@ Float avg_noise_effect::rectangle(
 }
 
 # define DISMOD_AT_INSTANTIATE_AVG_NOISE_EFFECT_RECTANGLE(Float) \
-    template                                                   \
+	template                                                   \
 	Float avg_noise_effect::rectangle(                           \
 		double                           age_lower        ,    \
 		double                           age_upper        ,    \

@@ -502,7 +502,7 @@ int main(int n_arg, const char** argv)
 			cov_name,
 			cov_value_1_str,
 			cov_value_2_str,
-            child_info4data,
+			child_info4data,
 			db_input.integrand_table,
 			db_input.covariate_table,
 			db_input.data_table,
@@ -568,7 +568,7 @@ int main(int n_arg, const char** argv)
 		vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
 		vector<double> avgint_subset_cov_value;
 		avgint_subset(
-                db_input.integrand_table,
+				db_input.integrand_table,
 				db_input.avgint_table,
 				db_input.avgint_cov_value,
 				db_input.covariate_table,

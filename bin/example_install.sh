@@ -74,9 +74,9 @@ echo_eval cd build
 #
 if which nproc >& /dev/null
 then
-    n_job=$(nproc)
+	n_job=$(nproc)
 else
-    n_job=$(sysctl -n hw.ncpu)
+	n_job=$(sysctl -n hw.ncpu)
 fi
 #
 # build dismod_at using n_jobs

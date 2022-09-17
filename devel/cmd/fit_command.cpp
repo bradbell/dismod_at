@@ -31,7 +31,7 @@ $spell
 	dismod
 	py
 	std
-    Ipopt
+	Ipopt
 	cppad_mixed
 	hes
 $$

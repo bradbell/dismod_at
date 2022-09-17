@@ -743,7 +743,7 @@ void avg_integrand::add_cohort(
 }
 
 # define DISMOD_AT_INSTANTIATE_AVG_INTEGRAND_RECTANGLE(Float)  \
-    template                                                   \
+	template                                                   \
 	Float avg_integrand::rectangle(                            \
 		double                           age_lower        ,    \
 		double                           age_upper        ,    \
@@ -789,7 +789,7 @@ void avg_integrand::add_cohort(
 		);                                                     \
 	}                                                          \
 \
-    template                                                   \
+	template                                                   \
 	void avg_integrand::add_cohort(                            \
 		double                       time_ini             ,    \
 		double                       time_lower           ,    \

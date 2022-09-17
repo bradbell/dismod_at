@@ -94,8 +94,8 @@
 # $subhead at_cascade_version$$
 # This script can build the following version of the optional at_cascade image:
 # $srccode%sh%
-    at_cascade_version='2022.8.27'
-    at_cascade_hash='9ebbde05d9ad5742db9d40ae82aca6152f2b7c46'
+	at_cascade_version='2022.8.27'
+	at_cascade_hash='9ebbde05d9ad5742db9d40ae82aca6152f2b7c46'
 # %$$
 #
 #
@@ -269,9 +269,9 @@
 if [ "$1" == 'image' ]
 then
 	if [ "$2" != 'base' ] \
-    && [ "$2" != 'mixed' ] \
-    && [ "$2" != 'dismod_at' ] \
-    && [ "$2" != 'at_cascade' ]
+	&& [ "$2" != 'mixed' ] \
+	&& [ "$2" != 'dismod_at' ] \
+	&& [ "$2" != 'at_cascade' ]
 	then
 		echo 'usage: dock_dismod_at.sh image base'
 		echo 'usage: dock_dismod_at.sh image mixed'
@@ -317,18 +317,18 @@ then
 	then
 		image_name='dismod_at.base'
 	elif [ "$2" == 'mixed' ]
-    then
+	then
 		image_name='dismod_at.mixed'
 	elif [ "$2" == 'dismod_at' ]
-    then
+	then
 		image_name='dismod_at.image'
 	elif [ "$2" == 'at_cascade' ]
-    then
+	then
 		image_name='at_cascade.image'
 	else
-        'dock_dismod_at.sh: program error'
-        exit 1
-    fi
+		'dock_dismod_at.sh: program error'
+		exit 1
+	fi
 	if [ -e 'Dockerfile' ]
 	then
 		echo 'dock_dismod_at.sh Error'
@@ -498,7 +498,7 @@ bin/check_all.sh
 # 3. Install debug
 RUN python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
-    --prefix=$dir/dismod_at
+	--prefix=$dir/dismod_at
 
 # 4. Test release
 WORKDIR /home/at_cascade.git
@@ -512,12 +512,12 @@ bin/check_all.sh
 # 5. Install release
 RUN python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
-    --prefix=$dir/dismod_at
+	--prefix=$dir/dismod_at
 EOF
 # ----------------------------------------------------------------------------
 else
-    echo 'dock_dismod_at.sh: program error'
-    exit 1
+	echo 'dock_dismod_at.sh: program error'
+	exit 1
 fi
 #
 	echo "Creating $image_name"

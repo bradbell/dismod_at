@@ -33,12 +33,12 @@ bool avgint_subset_xam(void)
 	using  CppAD::vector;
 	double inf = std::numeric_limits<double>::infinity();
 
-    // integrand table
-    size_t n_integrand = 1;
-    vector<dismod_at::integrand_struct> integrand_table(n_integrand);
-    integrand_table[0].integrand       = dismod_at::Sincidence_enum;
-    integrand_table[0].minimum_meas_cv = 0.0;
-    integrand_table[0].mulcov_id       = DISMOD_AT_NULL_INT;
+	// integrand table
+	size_t n_integrand = 1;
+	vector<dismod_at::integrand_struct> integrand_table(n_integrand);
+	integrand_table[0].integrand       = dismod_at::Sincidence_enum;
+	integrand_table[0].minimum_meas_cv = 0.0;
+	integrand_table[0].mulcov_id       = DISMOD_AT_NULL_INT;
 
 	// covariate table
 	size_t n_covariate = 2;
@@ -95,7 +95,7 @@ bool avgint_subset_xam(void)
 	vector<dismod_at::avgint_subset_struct> avgint_subset_obj;
 	vector<double> avgint_subset_cov_value;
 	avgint_subset(
-        integrand_table,
+		integrand_table,
 		avgint_table,
 		avgint_cov_value,
 		covariate_table,

@@ -46,7 +46,7 @@ import get_started_db
 #
 # change into the build/example/get_started directory
 if not os.path.exists(test_dir) :
-    os.makedirs(test_dir)
+	os.makedirs(test_dir)
 os.chdir(test_dir)
 # ---------------------------------------------------------------------------
 # create get_started.db

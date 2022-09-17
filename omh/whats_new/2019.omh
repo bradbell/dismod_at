@@ -32,14 +32,14 @@ $spell
 	sqlite
 	cppad
 	CppAD
-    messaging
-    Ipopt
+	messaging
+	Ipopt
 	frac
 	Dockerfile
 	num_iter
 	cmake
 	checkpointing
-    Goto
+	Goto
 	nslist
 $$
 $navigate%
@@ -1072,11 +1072,11 @@ The $cref data_sim_table$$ documentation formula for
 $cref/log scaled/density_table/Notation/Log Scaled/$$
 data was
 $latex \[
-    y = \exp(e) * ( A + \eta )
+	y = \exp(e) * ( A + \eta )
 \] $$
 The correct formula is
 $latex \[
-    y = \exp(e) * ( A + \eta ) - \eta
+	y = \exp(e) * ( A + \eta ) - \eta
 \] $$
 The documentation has been fixed
 (the implementation in software was correct).

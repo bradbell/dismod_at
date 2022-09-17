@@ -184,7 +184,7 @@ import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-    os.makedirs('build/example/user')
+	os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
 random.seed(random_seed)

@@ -25,7 +25,7 @@ print(test_program)
 #
 # change into the build/test/user directory
 if not os.path.exists('build/test/user') :
-    os.makedirs('build/test/user')
+	os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ============================================================================
 # Test case where age and time grids are all the age and time points

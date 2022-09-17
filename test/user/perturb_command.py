@@ -25,7 +25,7 @@ import dismod_at
 #
 # change into the build/test/user directory
 if not os.path.exists('build/test/user') :
-    os.makedirs('build/test/user')
+	os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
@@ -174,12 +174,12 @@ dismod_at.system_command_prc( [program, file_name, 'init' ] )
 #
 os.chdir('../../..')
 dismod_at.system_command_prc( [
-    'bin/dismodat.py', 'build/test/user/example.db',
-    'perturb', 'start_var', '.2'
+	'bin/dismodat.py', 'build/test/user/example.db',
+	'perturb', 'start_var', '.2'
 ] )
 dismod_at.system_command_prc( [
-    'bin/dismodat.py', 'build/test/user/example.db',
-    'perturb', 'scale_var', '.2'
+	'bin/dismodat.py', 'build/test/user/example.db',
+	'perturb', 'scale_var', '.2'
 ] )
 os.chdir('build/test/user')
 

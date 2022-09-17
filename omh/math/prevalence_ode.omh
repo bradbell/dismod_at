@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin prevalence_ode$$
 $spell
-    dismod
-    integrands
+	dismod
+	integrands
 $$
 
 $section The Prevalence Only ODE$$
@@ -16,24 +16,24 @@ $cref/ordinary differential equation
 	/avg_integrand/Ordinary Differential Equation
 /$$ then prevalence $latex P = C / (S + C)$$ satisfies
 $latex \[
-    P' = + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
+	P' = + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
 \] $$
 
 $head Proof$$
 Suppose that $latex S(a)$$ and $latex C(a)$$ satisfy the dismod_at
 $cref/
-    ordinary differential equation/
-    avg_integrand/Ordinary Differential Equation
+	ordinary differential equation/
+	avg_integrand/Ordinary Differential Equation
 /$$
 $latex \[
 \begin{array}{rrr}
-    S' =&  - ( \iota + \omega ) S &                     + \rho C \\
-    C' =&               + \iota S & - ( \rho + \chi + \omega ) C
+	S' =&  - ( \iota + \omega ) S &                     + \rho C \\
+	C' =&               + \iota S & - ( \rho + \chi + \omega ) C
 \end{array}
 \] $$
 It follows that
 $latex \[
-    (S + C)' = - \omega S - ( \omega + \chi ) C
+	(S + C)' = - \omega S - ( \omega + \chi ) C
 \] $$
 Using $latex C = (S + C) P$$, we also have
 $latex \[
@@ -43,12 +43,12 @@ C'         & = & (S + C)' P + (S + C) P'
 (S + C) P' & = & C' - (S + C)' P
 \\
 (S + C) P' & = &
-    + \iota S - ( \rho + \chi + \omega ) C
-    + \omega S P + ( \omega + \chi ) C P
+	+ \iota S - ( \rho + \chi + \omega ) C
+	+ \omega S P + ( \omega + \chi ) C P
 \\
 P' & = &
-    + \iota (1 - P) - ( \rho + \chi + \omega ) P
-    + \omega (1 - P) P + ( \omega + \chi ) P^2
+	+ \iota (1 - P) - ( \rho + \chi + \omega ) P
+	+ \omega (1 - P) P + ( \omega + \chi ) P^2
 \\
 P' & = & + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
 \end{array}
