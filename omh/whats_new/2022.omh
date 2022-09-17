@@ -38,6 +38,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 09-16$$
+Change copyright and license declaration to SPDX format.
+
 $head 08-27$$
 Advance the dock_dismod_at.sh
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
