@@ -1,13 +1,7 @@
-# $Id$
-#  --------------------------------------------------------------------------
-# dismod_at: Estimating Disease Rates as Functions of Age and Time
-#           Copyright (C) 2014-21 University of Washington
-#              (Bradley M. Bell bradbell@uw.edu)
-#
-# This program is distributed under the terms of the
-#	     GNU Affero General Public License version 3.0 or later
-# see http://www.gnu.org/licenses/agpl.txt
-# ---------------------------------------------------------------------------
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
 omega_true      = 1e-2
 omega_mean      = 2e-2;
 minimum_meas_cv = 0.2;
